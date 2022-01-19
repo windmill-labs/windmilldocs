@@ -1,0 +1,12 @@
+.question {
+	@apply text-base;
+	@apply font-medium;
+	@apply pt-4;
+	@apply pb-3;
+
+}
+
+
+.answer {
+	@apply text-sm;
+}

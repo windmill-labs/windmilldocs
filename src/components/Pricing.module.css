@@ -1,0 +1,10 @@
+tr td {
+	@apply px-3;
+	@apply text-sm;
+}
+
+
+.header_col{
+	@apply font-medium;
+	@apply text-left;
+}
