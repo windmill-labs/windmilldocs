@@ -1,7 +1,7 @@
 ---
 slug: welcome
 title: Welcome
-authors: [rubenfiszel, malomarrec]
+authors: [rubenfiszel]
 tags: [hello]
 ---
 

@@ -86,7 +86,7 @@ const config = {
 						]
 					}
 				],
-				copyright: `Copyright © ${new Date().getFullYear()} Windmill Labs. By @rubenfiszel and @malomarrec`
+				copyright: `Copyright © ${new Date().getFullYear()} Windmill Labs. By @rubenfiszel`
 			},
 			prism: {
 				theme: lightCodeTheme,
