@@ -1,15 +1,15 @@
-name: Deploy
-on:
-  push:
-    branches: [main]
+# name: Deploy
+# on:
+#   push:
+#     branches: [main]
 
-jobs:
-  build:
-    runs-on: [self-hosted]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build site and deploy
-        run: |
-          yarn install
-          yarn build
-          sudo cp -r build/* /www/
+# jobs:
+#   build:
+#     runs-on: [self-hosted]
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Build site and deploy
+#         run: |
+#           yarn install
+#           yarn build
+#           sudo cp -r build/* /www/
