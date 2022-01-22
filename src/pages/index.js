@@ -26,7 +26,7 @@ function HomepageHeader() {
 							className="button button--secondary button--md self-end mt-6 px-2"
 							href="mailto:alpha@windmill.dev?subject=Request%20demo%20access"
 						>
-							Request access to the beta
+							Request access to the betta
 						</a>
 						<BrowserOnly>
 							{() => 
