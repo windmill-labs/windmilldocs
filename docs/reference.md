@@ -392,6 +392,9 @@ it. This includes:
 Windmill's entire database is partitioned by workspaces such that users, teams
 and orgs can safely co-locate without risk of leakage.
 
+Any user can create his own workspace. When a user create a workspace, he is an
+admin of such workspace and he can invite others to join his workspace.
+
 ## Path
 
 Windmill uniquely identifies [scripts](#script), [variables](#variable),
