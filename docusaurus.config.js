@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-	title: 'Windmill',
+	title: 'windmill.dev',
 	tagline: 'Quickly turn scripts into internal apps',
 	url: 'https://windmill.dev',
 	baseUrl: '/',
@@ -43,9 +43,9 @@ const config = {
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			navbar: {
-				title: 'Windmill',
+				title: 'windmill.dev',
 				logo: {
-					alt: 'Windmill logo',
+					alt: 'windmill.dev logo',
 					src: 'img/windmill.svg'
 				},
 				items: [

@@ -30,7 +30,7 @@ function HomepageHeader() {
 						</a>
 						<a
 							className="button button--secondary button--md self-end mt-6 mx-2 px-2"
-							href="https://wimill.xyz"
+							href="https://alpha.windmill.dev"
 						>
 							Try the open alpha
 						</a>
