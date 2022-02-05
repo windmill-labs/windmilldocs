@@ -3,6 +3,12 @@
 This page contains a succinct but precise definition of the different concepts
 and entities of windmill.
 
+## Users
+
+Users are uniquely identified globally by their email. They also have a unique
+username with respect to each workspace they are member of. An user pick his
+username when he joins a workspace.
+
 ## Job
 
 A job represents a past, present or future "task" or "work" to be executed by a
