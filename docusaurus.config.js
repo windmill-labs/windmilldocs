@@ -64,6 +64,11 @@ const config = {
 						href: '/python',
 						position: 'left',
 						label: 'Python Client'
+					},
+					{
+						href: '/hiring',
+						position: 'right',
+						label: 'Join us - Hiring'
 					}
 					// { to: '/blog', label: 'Blog', position: 'left' },
 					// {
@@ -84,9 +89,18 @@ const config = {
 								href: 'https://discord.gg/PAchGJxsbX'
 							}
 						]
+					},
+					{
+						title: 'Company',
+						items: [
+							{
+								label: 'Join us - Hiring',
+								href: '/hiring',
+							}
+						]
 					}
 				],
-				copyright: `Copyright © ${new Date().getFullYear()} Windmill Labs. By @rubenfiszel`
+				copyright: `Made with passion by @rubenfiszel`
 			},
 			prism: {
 				theme: lightCodeTheme,
