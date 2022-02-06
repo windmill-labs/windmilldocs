@@ -12,12 +12,11 @@ windmill.dev is looking for its first key people. In particular, we are looking
 for the following kind of profiles:
 
 - [Head of BD & Sales](#head-of-bd--sales) - Co-founder (Remote/Paris)
-- [Founding Solutions Engineer](#founding-solutions-engineer) - Head of
-  Solutions - Co-founder (Remote/Paris)
-- [Founding Software Engineer](#founding-software-engineer) - Co-founder
-  (Remote/Paris)
-- [Founding DevOps Engineer](#founding-devops-engineer) (Remote/Paris)
-- [CEO right-hand](#ceo-right-hand) - Internship/new grad (Remote/Paris)
+- Technical co-founder: You fit one or ideally a mix of those 3 profiles:
+  - [Founding Solutions Engineer](#founding-solutions-engineer) - Head of
+    Solutions (Remote/Paris)
+  - [Founding Software Engineer](#founding-software-engineer) (Remote/Paris)
+  - [Founding DevOps Engineer](#founding-devops-engineer) (Remote/Paris)
 
 If you are interested to join the adventure. Apply by sending an email at
 hiring@windmill.dev. Be sure to mention which role you are interested in if any
@@ -42,7 +41,7 @@ or have related experience.
 
 windmill.dev is first and foremost a tool for automations. As a solutions
 engineer you will unlock values for customers by leveraging the product in
-optimal ways for their specific cases. You will work directly with somes
+optimal ways for their specific use cases. You will work directly with somes
 companies and unlock value for all by creating great templates, snippets and
 integrations in a public and open-source manner.
 
@@ -64,15 +63,9 @@ we must ensure high availability in the software and the infrastructure choices
 that we make and in the SLA that we offers. As a founding DevOps engineer, you
 will ensure that we make the right choices in terms of observability, incident
 responses, software design, high-availability and infrastructure. windmill.dev's
-current archtiecture design is stateless replicated rust servers backed by
+current architecture design is stateless replicated rust servers backed by
 postgres instances sharded by workspaces id. We use Hetzner Cloud for cost
 purposes and run on top of nomad for deployment state management.
-
-### CEO right hand
-
-windmill.dev is its infancy and the CEO does a bit of everything. Since we
-cannot clone him yet and a day only has 24h you will assist him in all
-applicable tasks.
 
 ## The hiring process
 
@@ -80,16 +73,6 @@ applicable tasks.
    useful about you.
 2. You will receive an answer in 24h, an invite for a 30min or 1h chat.
 3. We iterate until we both see a mutual fit
-
-## "Co-founder" and "Head of" positions?
-
-Some positions mention either "Head of" or "Co-founder". Being an Head of or
-Co-founder implies significantly more responsibility, expectations and
-commitment, as well as more equity incentives. The mentions means that those
-positions either lead quickly to that role if desired regardless of past
-experience, or given an immediate and extra-ordinary fit, you could start right
-away with that commitment. Co-founder or not, as an early joiner and founding
-member, you will necessarily scale the team and shape it to your mold!
 
 ## Equity
 
