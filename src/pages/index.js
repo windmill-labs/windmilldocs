@@ -23,16 +23,16 @@ function HomepageHeader() {
 					</p>
 					<div className="flex flex-col md:flex-row items-center m-auto ">
 						<a
-							className="button button--secondary button--md self-end mt-6 px-2"
-							href="mailto:alpha@windmill.dev?subject=Request%20demo%20access"
-						>
-							Contact us
-						</a>
-						<a
 							className="button button--secondary button--md self-end mt-6 mx-2 px-2"
 							href="https://alpha.windmill.dev"
 						>
 							Try the open alpha
+						</a>
+						<a
+							className="button button--secondary button--md self-end mt-6 px-2"
+							href="mailto:alpha@windmill.dev?subject=Request%20demo%20access"
+						>
+							Contact us
 						</a>
 						<BrowserOnly>
 							{() => 
