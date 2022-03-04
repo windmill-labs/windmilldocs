@@ -1,5 +1,5 @@
 module.exports = {
-	content: ['./src/**/*.{html,js}'],
+	content: ['./src/**/*.{html,js,jsx,tsx}'],
 	extend: {
 		height: {
 			'80v': '80vh',
@@ -12,5 +12,7 @@ module.exports = {
 			'80v': '80vw',
 			'1/3': '33%'
 		}
-	}
+	},
+	plugins: [],
+
 };

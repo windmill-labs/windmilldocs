@@ -7,7 +7,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
 	title: 'windmill.dev',
-	tagline: 'Quickly turn scripts into internal apps',
 	url: 'https://windmill.dev',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
@@ -15,17 +14,26 @@ const config = {
 	favicon: 'img/logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
-	plugins: ['docusaurus-tailwindcss'],
+	plugins: [
+		async function myPlugin(context, options)
+	{
+		return {
+			name: "docusaurus-tailwindcss",
+			configurePostCss(postcssOptions)
+			{
+				postcssOptions.plugins.push(require("tailwindcss"));
+				postcssOptions.plugins.push(require("autoprefixer"));
+				return postcssOptions;
+			},
+		};
+	},
+],
 	presets: [
 		[
-			'docusaurus-preset-openapi',
+			'classic',
 			// ... other options
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
-				api: {
-					path: 'openapi.yaml',
-					routeBasePath: 'openapi'
-				},
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js')
 				},
@@ -56,51 +64,29 @@ const config = {
 						label: 'Docs'
 					},
 					{
-						href: '/openapi',
-						position: 'left',
-						label: 'OpenAPI'
-					},
-					{
 						href: '/python',
 						position: 'left',
 						label: 'Python Client'
 					},
+
 					{
 						href: '/hiring',
 						position: 'right',
 						label: 'Join us - Hiring'
-					}
+					},
 					// { to: '/blog', label: 'Blog', position: 'left' },
-					// {
-					// 	href: 'https://github.com/windmill-labs/windmill',
-					// 	label: 'GitHub',
-					// 	position: 'right'
-					// }
+					{
+						href: 'https://github.com/windmill-labs/windmill',
+						className: 'header-github-link',
+						'aria-label': 'GitHub repository',
+						position: 'right'
+					}
 				]
 			},
 			footer: {
 				style: 'dark',
-				links: [
-					{
-						title: 'Community',
-						items: [
-							{
-								label: 'Join us on discord',
-								href: 'https://discord.gg/PAchGJxsbX'
-							}
-						]
-					},
-					{
-						title: 'Company',
-						items: [
-							{
-								label: 'Join us - Hiring',
-								href: '/hiring',
-							}
-						]
-					}
-				],
-				copyright: `Made with passion by @rubenfiszel`
+				links: [],
+				copyright: `&copy; 2022 windmill-labs by @rubenfiszel`
 			},
 			prism: {
 				theme: lightCodeTheme,
