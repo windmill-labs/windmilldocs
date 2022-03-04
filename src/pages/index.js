@@ -90,17 +90,19 @@ export default function Home() {
 		<Layout
 			title="Homepage"
 		>
-			<div className='w-full h-full bg-white'>
-			<main className="pt-16 mx-auto max-w-7xl px-4 sm:pt-24 bg-white text-black">
-				<div className='m-auto max-w-screen-lg homepage'>
+			<main className="pt-16">
+				<div className='mx-auto max-w-screen-lg homepage'>
 					<HomepageHeader />
-					<HomepageFeatures />
+				</div>
+
+				<HomepageFeatures />
+				<div className='mx-auto max-w-screen-lg homepage'>
 					<Pricing />
 					<FAQ />
 				</div>
 				<div className='mb-40'></div>
 			</main>
-			</div>
 		</Layout>
 	);
 }
+
