@@ -8,11 +8,11 @@ in the
 be available across all workspaces to kickstart a team's journey. Contributions
 are welcome. r
 
-# Community Blueprints & Examples
+## Blueprints & Examples
 
 TODO: autogenerate from github
 
-# Community Resource types
+## Resource types
 
 import ResourceTypes from '../../src/components/ResourceTypes';
 
