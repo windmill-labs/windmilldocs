@@ -144,7 +144,7 @@ export default function HomepageFeatures() {
 										Many tools do only one thing, and are focused on one specific problem. You need to setup many different niche tools that only a few of your org members will end up using.
 										<br /><br />
 										By reducing the number of tools you use, you standardize and make it easier for your whole team to master the one tool to rule them all (and in darkness, bind them ... as API connector).
-										<br /><br />
+								<br /><br />
 										We do not reinvent the wheel, connect to any API using its standard python client available in Pypi.
 										Any python library becomes a connector.<br />
 										<div className="flex flex-row gap-4 mt-4 justify-center">
@@ -185,19 +185,19 @@ export default function HomepageFeatures() {
 							<div>
 								<div className="mt-6">
 									<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
-										Coding is never the issue, it is almost always everything else
+										Coding is seldom the bottleneck, it is everything else
 									</h2>
 									<p className="mt-4 text-lg text-gray-500">
 										Not just for developers, the generated Apps are meant to be used by all, and the included Webeditor makes it easy and  gratifying to learn the basics of python scripts
-										<br />
-										As a dev, you will feel right at home with Windmill. Indeed, most of the concepts used throughout windmill are the ones you are already familiar as a developer:
-										- scripts are versioned with their hash with a simplified git lineage<br />
-										- deploy from github as part of your CI/CD<br />
-										- groups (similar to unix groups)<br />
-										- jsonschema to for payload and resources validation/definition<br />
-										- permissions are read and write
-										- every item is uniquely identified by a clear hierarchic path
-										<br />
+								<br /><br />
+								As a dev, you will feel right at home with Windmill. Indeed, most of the concepts used throughout windmill are the ones you are already familiar as a developer:
+								- scripts are versioned with their hash with a simplified git lineage<br />
+								- deploy from github as part of your CI/CD<br />
+								- groups (similar to unix groups)<br />
+								- jsonschema to for payload and resources validation/definition<br />
+								- permissions are read and write<br />
+								- every item is uniquely identified by a clear hierarchic path<br />
+								<br /><br />
 										Our webeditor is based on Visual Studio code. It uses monaco. In addition, we provide smart assistants such as black, autocompletion and flycheck (with pyright) through our own LSP servers.
 									</p>
 								</div>
