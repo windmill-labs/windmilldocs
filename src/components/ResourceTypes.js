@@ -7,7 +7,7 @@ export default function ResourceTypes()
         <div>
             <ul>
             {values.map((x) => 
-                <li><a href={`https://github.com/windmill-labs/windmill/blob/main/starter/resource_types/${x.name}.json`}>{x.name}</a> - {x.description}: TODO display content</li>
+                <li><a href={`https://github.com/windmill-labs/windmill/blob/main/starter/resource_types/${x.name}.json`}>{x.name}</a> - {x.description}</li>
             )}
             </ul>
         </div>   
