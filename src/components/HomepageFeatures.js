@@ -147,7 +147,7 @@ export default function HomepageFeatures() {
 										<br /><br />
 										We do not reinvent the wheel, connect to any API using its standard python client available in Pypi.
 										Any python library becomes a connector.<br />
-										<div className="flex flex-row gap-4 justify-center">
+										<div className="flex flex-row gap-4 mt-4 justify-center">
 											<Postgres />
 											<Mysql />
 											<Mongo />
