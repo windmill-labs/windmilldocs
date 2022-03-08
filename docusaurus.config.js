@@ -67,8 +67,12 @@ const config = {
 						href: '/python',
 						position: 'left',
 						label: 'Python Client'
+					}, 
+					{
+						href: '/docs/Blueprints',
+						position: 'left',
+						label: 'Blueprints & Examples'
 					},
-
 					{
 						href: '/hiring',
 						position: 'right',
@@ -91,7 +95,12 @@ const config = {
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme
-			}
+			},
+			colorMode: {
+				defaultMode: 'light',
+				disableSwitch: true,
+				respectPrefersColorScheme: false,
+			},
 		})
 };
 

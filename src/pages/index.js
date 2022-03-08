@@ -4,10 +4,10 @@ import HomepageFeatures from '../components/HomepageFeatures';
 import Pricing from '../components/Pricing';
 import Slideshow from '../components/Slideshow';
 import FAQ from '../components/FAQ';
-import VideoPlayer from '../components/VideoPlayer';
+// import VideoPlayer from '../components/VideoPlayer';
 import 'react-slideshow-image/dist/styles.css';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-import { ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
+// import BrowserOnly from '@docusaurus/BrowserOnly';
+// import { ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
 
 
 
@@ -24,7 +24,7 @@ function HomepageHeader() {
 			<div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
 				<div className="shadow">
 					<a
-						href="https://alpha.windmill.dev"
+						href="https://alpha.windmill.dev/user/login"
 						className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
 					>
 						Sign up, it's free
@@ -38,9 +38,6 @@ function HomepageHeader() {
 						Get started
 					</a>
 				</div>
-			</div>
-			<div className="mt-20  w-full mx-auto h-full">
-				<Slideshow />
 			</div>
 		</div>
 		);
@@ -88,7 +85,7 @@ function HomepageHeader() {
 export default function Home() {
 	return (
 		<Layout
-			title="Homepage"
+			title="windmill.dev landing page"
 		>
 			<main className="pt-16">
 				<div className='mx-auto max-w-screen-lg homepage'>
