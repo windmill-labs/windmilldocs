@@ -191,12 +191,14 @@ export default function HomepageFeatures() {
 										Not just for developers, the generated Apps are meant to be used by all, and the included Webeditor makes it easy and  gratifying to learn the basics of python scripts
 										<br />
 										As a dev, you will feel right at home with Windmill. Indeed, most of the concepts used throughout windmill are the ones you are already familiar as a developer:
-										- scripts are versioned with their hash<br />
+										- scripts are versioned with their hash with a simplified git lineage<br />
 										- deploy from github as part of your CI/CD<br />
 										- groups (similar to unix groups)<br />
-										- jsonschema<br />
+										- jsonschema to for payload and resources validation/definition<br />
+										- permissions are read and write
+										- every item is uniquely identified by a clear hierarchic path
 										<br />
-										Our webeditor is based on Visual Studio code. It uses monaco. In addition, we
+										Our webeditor is based on Visual Studio code. It uses monaco. In addition, we provide smart assistants such as black, autocompletion and flycheck (with pyright) through our own LSP servers.
 									</p>
 								</div>
 							</div>
