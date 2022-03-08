@@ -1,5 +1,6 @@
 import React from 'react';
 import s from './scripts.json'
+import Link from '@docusaurus/Link';
 
 export default function Scripts()
 {
@@ -7,7 +8,7 @@ export default function Scripts()
         <div>
             <ul>
             {Object.entries(s).map((x) => 
-                <li><a href={`https://github.com/windmill-labs/windmill/blob/main/starter/scripts/u/bot/${x[0]}.py`}>{x[1].summary}</a> - {x[1].description}</li>
+                <li><Link to={`/docs/Blueprints/scripts/${x[0]}`}>{x[1].summary}</Link> - {x[1].description}</li>
             )}
             </ul>
         </div>   

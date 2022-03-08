@@ -5,8 +5,30 @@ SCRIPT_P = "/starter/scripts/u/bot/"
 root_path = os.listdir()[0]
 
 
-def build_template(script, json):
-    return ""
+def build_template(script, json, name):
+    return f"""---
+title: {json["summary"]}
+---
+
+[See on Github](https://github.com/windmill-labs/windmill/blob/main/starter/scripts/u/bot/{name}.py)
+
+## Description
+
+{json["description"]}
+
+## Code
+
+```python
+{script}
+```
+
+## Schema
+
+```python
+{json["schema"]}
+```
+
+"""
 
 
 scs = {}
@@ -22,7 +44,7 @@ for s in scripts:
         scs[name] = p
 
         wf = open("../docs/Blueprints/scripts/{}.md".format(name), "w")
-        wf.write(build_template(sc, p))
+        wf.write(build_template(sc, p, name))
         wf.close()
 
 wf = open("../src/components/scripts.json", "w")
