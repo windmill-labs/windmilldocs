@@ -4,11 +4,30 @@ import json
 SCRIPT_P = "/starter/scripts/u/bot/"
 root_path = os.listdir()[0]
 
+
+def build_template(script, json):
+    return ""
+
+
+scs = {}
 scripts = os.listdir("{}{}".format(root_path, SCRIPT_P))
 for s in scripts:
     if s.endswith(".py"):
-        c = open("{}{}{}".format(root_path, SCRIPT_P, s), "r").read()
-        # print(s, c)
+        sc = open("{}{}{}".format(root_path, SCRIPT_P, s), "r").read()
+        name = s.split(".")[0]
+        c = open("{}{}{}.json".format(root_path, SCRIPT_P, name), "r").read()
+        p = json.loads(c)
+
+        p["schema"] = None
+        scs[name] = p
+
+        wf = open("../docs/Blueprints/scripts/{}.md".format(name), "w")
+        wf.write(build_template(sc, p))
+        wf.close()
+
+wf = open("../src/components/scripts.json", "w")
+wf.write(json.dumps(scs, indent=4, sort_keys=True))
+wf.close()
 
 RT_P = "/starter/resource_types/"
 resource_types = os.listdir("{}{}".format(root_path, RT_P))

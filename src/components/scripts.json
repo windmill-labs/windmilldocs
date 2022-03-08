@@ -1,0 +1,32 @@
+{
+    "hello_world": {
+        "description": "",
+        "is_template": false,
+        "schema": null,
+        "summary": "Hello World"
+    },
+    "import_workspace_from_tarball": {
+        "description": "",
+        "is_template": false,
+        "schema": null,
+        "summary": "Import workspace from tarball"
+    },
+    "message_slack": {
+        "description": "Send a message to a channel or person in the connected slack workspace",
+        "is_template": false,
+        "schema": null,
+        "summary": "Send a slack message"
+    },
+    "postgres_example": {
+        "description": "\nAn example of how to use resources from scripts. In this example, we will query the demo database demodb that is set up by default on Windmill.",
+        "is_template": false,
+        "schema": null,
+        "summary": "Query the demodb resource"
+    },
+    "triggered_from_slack_command": {
+        "description": "",
+        "is_template": true,
+        "schema": null,
+        "summary": "Triggered from slack command"
+    }
+}

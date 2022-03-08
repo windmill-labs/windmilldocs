@@ -10,7 +10,9 @@ are welcome.
 
 ## Blueprints & Examples
 
-TODO: autogenerate from github
+import Scripts from '../../src/components/Scripts';
+
+<Scripts />
 
 ## Resource types
 
