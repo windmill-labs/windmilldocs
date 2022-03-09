@@ -2,12 +2,10 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '../components/HomepageFeatures';
 import Pricing from '../components/Pricing';
-import Slideshow from '../components/Slideshow';
+
 import FAQ from '../components/FAQ';
 // import VideoPlayer from '../components/VideoPlayer';
-import 'react-slideshow-image/dist/styles.css';
 // import BrowserOnly from '@docusaurus/BrowserOnly';
-// import { ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
 
 
 

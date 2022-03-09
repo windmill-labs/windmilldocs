@@ -108,3 +108,7 @@ a {
   height: 24px;
   width: 24px;
 }
+
+.react-slideshow-container {
+	margin: 0 auto;
+}

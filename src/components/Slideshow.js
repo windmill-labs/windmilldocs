@@ -1,56 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Fade } from 'react-slideshow-image';
 
+const images = ["scripts", "editor2", "result", "script_detail", "add_resource", "audit_logs", "runs", "workspace_settings"]
 const Slideshow = () => {
 	const style = {
 		textAlign: 'center'
 	};
 
 	return (
-		<Fade autoplay={true} duration={2000}>
-			<div className="each-fade rounded-md" style={style}>
+		<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
+
+		<Fade className="h-full w-full lg:mt-40" autoplay={true} duration={5000}>
+			{images.map((x) => 
+				<div className="h-full w-full">
+
 				<img
-					src={require('../../static/img/sl1.png').default}
+					src={`/img/${x}.png`}
 					alt="animated overview of Windmill"
-					className=" rounded-md"
+					className=" w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5  lg:w-auto m-auto"
 				/>
-			</div>
-			<div className="each-fade rounded-md" style={style}>
-				<img
-					src={require('../../static/img/sl2.png').default}
-					alt="animated overview of Windmill"
-					className=" rounded-md"
-				/>{' '}
-			</div>
-			<div className="each-fade rounded-md" style={style}>
-				<img
-					src={require('../../static/img/sl3.png').default}
-					alt="animated overview of Windmill"
-					className=" rounded-md"
-				/>{' '}
-			</div>
-			<div className="each-fade rounded-md" style={style}>
-				<img
-					src={require('../../static/img/sl4.png').default}
-					alt="animated overview of Windmill"
-					className="rounded-md"
-				/>{' '}
-			</div>
-			<div className="each-fade rounded-md" style={style}>
-				<img
-					src={require('../../static/img/sl5.png').default}
-					alt="animated overview of Windmill"
-					className="rounded-md"
-				/>{' '}
-			</div>
-			<div className="each-fade rounded-md" style={style}>
-				<img
-					src={require('../../static/img/sl6.png').default}
-					alt="animated overview of Windmill"
-					className="rounded-md"
-				/>{' '}
-			</div>
+				</div>
+
+			)}	
 		</Fade>
+		</div>
 	);
 };
 
