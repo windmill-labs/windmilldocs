@@ -35,7 +35,7 @@ function HomepageHeader() {
 							href="https://alpha.windmill.dev/user/login"
 							className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
 						>
-							Sign up, it's free
+							Try it, it's free
 						</a>
 					</div>
 					<div className="mt-3 shadow sm:mt-0 sm:ml-10">
