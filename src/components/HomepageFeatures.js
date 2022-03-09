@@ -38,8 +38,8 @@ const features = [
 		icon: HomeIcon,
 	},
 	{
-		name: 'User and groups Granular Permissions',
-		description: <span>Every item is personal by default. Change ownership or share (read-only or not) with specific users, groups or your entire org</span>,
+		name: 'Granular Permissions & Approval flows (latter coming soon!)',
+		description: <span>Every item is personal by default. Change ownership or share (read-only or not) with specific users, groups or your entire org. Request approval for execution through Slack or text (Coming soon!)</span>,
 		icon: LockClosedIcon,
 	},
 	{
