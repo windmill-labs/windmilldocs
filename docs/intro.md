@@ -66,25 +66,22 @@ need to have a `main` function that will be the script entrypoint. A script
 accepting arguments needs to provide a user interface for users to input
 argument values and a main function accepting those arguments.
 
-- The **arguments section** at the top is where you can define the arguments
-  accepted by the script. At runtime, those arguments will be used to generate a
-  user interface for the script user to pass argument inputs to the script.
-
 - The **code editor** is preloaded by default with a script: let's go through
   it. Every script in Windmill needs to have a **main** function that will be
   called at runtime. It's recommended to add type annotations to that main
   function: Windmill can infer arguments from the main's function signature.
 
-Try clearing arguments from the argument section, and hit the **Infer button**:
-Windmill parses the main function signature, infers argument names and types,
-and pref-fills the arguments section. Note that the arguments in the `main`
-function need to match the arguments defined above. Read more about
-[arguments](reference#script-arguments).
-
 ![Add script](assets/intro/add-script-2.png)
 
+Windmill parses the main function signature, infers argument names and types,
+and pref-fills the arguments section. Read more about
+[arguments](reference#script-arguments).
+
+![Add script](assets/intro/add-script-3.png)
+
 All set! Save your work, and you'll land on the script page. Note that scripts
-are [versioned](reference#versioning), and each new edit creates a new script version.
+are [versioned](reference#versioning), and each new edit creates a new script
+version.
 
 ![view](assets/intro/view-script.png)
 
@@ -94,12 +91,12 @@ Now let's look at what users of this script will do. Click on the **run** button
 to run this script. You'll see the user input form we defined earlier. Note what
 happens if you don't provide input:
 
-![Run](assets/intro/run-user-input.png)
+![Run](assets/intro/run-script.png)
 
 Fill in the fields, then hit run. You should see a run view, as well as your
 logs. All script runs are also available in the **Runs** menu on the left.
 
-![view](assets/intro/run-ran.png)
+![view](assets/intro/view-result.png)
 
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
