@@ -224,8 +224,8 @@ export default function HomepageFeatures() {
 					</div>
 
 
-			<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:grid-flow-col-dense lg:gap-10">
-						<div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:mx-0 lg:px-0">
+			<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-5 lg:grid-flow-col-dense lg:gap-10">
+				<div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:col-span-2 lg:mx-0 lg:px-0">
 							<div>
 								<div className="mt-6">
 									<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
@@ -235,20 +235,22 @@ export default function HomepageFeatures() {
 										Not just for developers, the generated Apps are meant to be used by all, and the included Webeditor makes it easy and gratifying to learn the basics of python scripts.
 								<br /><br />
 								As a dev, you will feel right at home with Windmill. Indeed, most of the concepts used throughout windmill are the ones you are already familiar as a developer:<br />
-								- scripts are versioned with their hash under a simplified git lineage<br />
-								- deploy from github as part of your CI/CD<br />
-								- groups (similar to unix groups)<br />
-								- jsonschemas for payload and resources validation/definition<br />
-								- permissions are read or write to users or groups<br />
-								- every item is uniquely identified by a clear hierarchic path<br />
-								- schedules are defined in a cron format
+								<ul className='list-disc pl-8'>
+									<li>scripts are versioned with their hash under a simplified git lineage</li>
+									<li> deploy from github as part of your CI/CD</li>
+									<li> groups (similar to unix groups)</li>
+									<li> jsonschemas for payload and resources validation/definition</li>
+									<li> permissions are read or write to users or groups</li>
+									<li> every item is uniquely identified by a clear hierarchic path</li>
+									<li> schedules are defined in a cron format</li>
+								</ul>
 								<br /><br />
 								Our webeditor is based on Visual Studio code. It uses monaco. In addition, we provide smart assistants such as black, autocompletion and flycheck (with pyright) through our own LSP servers.
 									</p>
 								</div>
 							</div>
 						</div>
-						<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1 lg:col-span-2">
+						<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1 lg:col-span-3">
 								<Slideshow></Slideshow>
 								{/* <img
 									className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5  lg:w-auto m-auto"
