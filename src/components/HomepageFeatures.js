@@ -75,7 +75,7 @@ const features = [
 export default function HomepageFeatures() {
 	return (
 		<div>
-			<div className="relative pt-16 pb-10 sm:pt-24 lg:pt-32">
+			<div className="relative pt-16 pb-10">
 				<div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
 					<h2 className="text-base font-semibold uppercase tracking-wider text-blue-600">Everything in one-platform</h2>
 					<p className="mx-auto mt-5 max-w-prose text-xl text-gray-500">
