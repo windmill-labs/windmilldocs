@@ -5,12 +5,6 @@
         "schema": null,
         "summary": "Hello World"
     },
-    "import_tarball": {
-        "description": "",
-        "is_template": false,
-        "schema": null,
-        "summary": "Import from tarball"
-    },
     "import_workspace_from_tarball": {
         "description": "Takes a tarball in and import scripts, resources, and resource types from a tarball exported of a workspace.\n\nIs used as webhook target for  the windmill-gh-action-deploy",
         "is_template": false,
