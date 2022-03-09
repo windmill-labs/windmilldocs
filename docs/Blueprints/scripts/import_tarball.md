@@ -1,14 +1,12 @@
 ---
-title: Import workspace from tarball
+title: Import from tarball
 ---
 
-[See on Github](https://github.com/windmill-labs/windmill/blob/main/starter/scripts/u/bot/import_workspace_from_tarball.py)
+[See on Github](https://github.com/windmill-labs/windmill/blob/main/starter/scripts/u/bot/import_tarball.py)
 
 ## Description
 
-Takes a tarball in and import scripts, resources, and resource types from a tarball exported of a workspace.
 
-Is used as webhook target for  the windmill-gh-action-deploy
 
 ## Code
 

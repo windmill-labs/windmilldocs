@@ -6,7 +6,6 @@ import Pricing from '../components/Pricing';
 import FAQ from '../components/FAQ';
 // import VideoPlayer from '../components/VideoPlayer';
 // import BrowserOnly from '@docusaurus/BrowserOnly';
-import { ChevronRightIcon } from '@heroicons/react/solid'
 
 
 function HomepageHeader() {

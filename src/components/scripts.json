@@ -1,12 +1,18 @@
 {
     "hello_world": {
-        "description": "",
+        "description": "The simplest hello world script",
         "is_template": false,
         "schema": null,
         "summary": "Hello World"
     },
-    "import_workspace_from_tarball": {
+    "import_tarball": {
         "description": "",
+        "is_template": false,
+        "schema": null,
+        "summary": "Import from tarball"
+    },
+    "import_workspace_from_tarball": {
+        "description": "Takes a tarball in and import scripts, resources, and resource types from a tarball exported of a workspace.\n\nIs used as webhook target for  the windmill-gh-action-deploy",
         "is_template": false,
         "schema": null,
         "summary": "Import workspace from tarball"
@@ -22,6 +28,18 @@
         "is_template": false,
         "schema": null,
         "summary": "Query the demodb resource"
+    },
+    "return_chart_as_image": {
+        "description": "This script showcase that image can be rendered from their base64 encoding when their dict key is \"png\"",
+        "is_template": false,
+        "schema": null,
+        "summary": "Build seaborn charts and return a rendered image"
+    },
+    "return_table": {
+        "description": "An example of a script that return a table that can get rendered",
+        "is_template": false,
+        "schema": null,
+        "summary": "Return Table"
     },
     "triggered_from_slack_command": {
         "description": "",
