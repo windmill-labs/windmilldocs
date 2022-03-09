@@ -70,7 +70,7 @@ export default function FAQ()
 											</Disclosure.Button>
 										</dt>
 										<Disclosure.Panel as="dd" className="mt-6 pr-12">
-											<p className="font-light text-base text-gray-700">{faq.answer}</p>
+											<p className="font-light text-lg  text-gray-700">{faq.answer}</p>
 										</Disclosure.Panel>
 									</>
 								)}

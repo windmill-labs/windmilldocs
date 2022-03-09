@@ -17,7 +17,7 @@ import
 	LockClosedIcon,
 
 	ShieldCheckIcon,
-
+	ExternalLinkIcon,
 	SwitchHorizontalIcon,
 } from '@heroicons/react/outline'
 
