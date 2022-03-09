@@ -224,7 +224,7 @@ export default function HomepageFeatures() {
 					</div>
 
 
-			<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-5 lg:grid-flow-col-dense lg:gap-10">
+			<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-5 lg:grid-flow-col-dense lg:gap-10 overflow-visible">
 				<div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:col-span-2 lg:mx-0 lg:px-0">
 							<div>
 								<div className="mt-6">
@@ -250,7 +250,7 @@ export default function HomepageFeatures() {
 								</div>
 							</div>
 						</div>
-						<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1 lg:col-span-3">
+				<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1 lg:col-span-3 ">
 								<Slideshow></Slideshow>
 								{/* <img
 									className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5  lg:w-auto m-auto"

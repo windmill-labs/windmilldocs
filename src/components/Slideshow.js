@@ -8,16 +8,16 @@ const Slideshow = () => {
 	};
 
 	return (
-		<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
+		<div className="flex p-4">
 
-		<Fade className="h-full w-full lg:mt-40" autoplay={true} duration={5000}>
+			<Fade className=" w-full lg:mt-40 shadow-xl ring-1 ring-black ring-opacity-5 " autoplay={true} duration={5000}>
 			{images.map((x) => 
-				<div className="h-full w-full">
+				<div className="h-full w-full ">
 
 				<img
 					src={`/img/${x}.png`}
 					alt="animated overview of Windmill"
-					className=" w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5  lg:w-auto m-auto"
+					className=" w-full lg:w-auto m-auto" 
 				/>
 				</div>
 

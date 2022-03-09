@@ -188,8 +188,8 @@ function classNames(...classes)
 export default function Pricing()
 {
 	return (
-		<div className="bg-white">
-			<div className="max-w-7xl mx-auto bg-white py-16 sm:py-24 sm:px-6 lg:px-8">
+		<div className="">
+			<div className="max-w-7xl mx-auto py-16 sm:py-24 sm:px-6 lg:px-8">
 				{/* xs to lg */}
 				<div className="max-w-2xl mx-auto space-y-16 lg:hidden">
 					{tiers.map((tier, tierIdx) => (
