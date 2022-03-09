@@ -6,7 +6,7 @@ title: Triggered from slack command
 
 ## Description
 
-
+An example of a script that can be triggered from script and whom parameters fit exactly the one passed by the slack command trigger
 
 ## Code
 
