@@ -30,38 +30,37 @@ const features = [
 	},
 	{
 		name: 'Schedules',
-		description: 'Trigger scripts using cron-like schedule without needing to manage your own cron deamon and servers',
+		description: 'Trigger scripts and flows using cron-like schedules',
 		icon: ClockIcon,
 	},
 	{
-		name: 'Self-hostable workers (coming soon!)',
-		description: 'If needed, the workers executing your scripts and secrets can be self-hostable on-prem.',
+		name: 'Self-hostable workers (soon)',
+		description: 'The workers executing your scripts can be self-hostable on-prem.',
 		icon: HomeIcon,
 	},
 	{
-		name: 'Granular Permissions & Approval flows (latter coming soon!)',
-		description: <span>Every item is personal by default. Change ownership or share (read-only or not) with specific users, groups or your entire org. Request approval for execution through Slack or text (Coming soon!)</span>,
+		name: 'Granular Permissions & Approval flows',
+		description: <span>Every item is tightly permissioned to users and groups. Ask approvals with one-liners inside your scripts.</span>,
 		icon: LockClosedIcon,
 	},
 	{
-		name: 'Immutable scripts and versioning',
-		description: <span>Scripts are never overwritten, they are versioned using our simplified and integrated git scheme. Each version of a script
-			has its own hash so that you can edit script without worries.</span>,
+		name: 'Versioning',
+		description: <span>Scripts are never overwritten, they are versioned.</span>,
 		icon: ClockIcon,
 	},
 	{
-		name: 'Push to Deploy & exportable workspace: No lock-in',
-		description: <span>Deploy automatically during CI/CD from Github and export at anypoint your entire workspace as tarball. Your scripts are not tied to windmill.</span>,
+		name: 'Push to Deploy & Exportable Workspace',
+		description: <span>Deploy automatically during CI/CD from Github and export at anypoint your entire workspace as tarball. No lock-in</span>,
 		icon: SwitchHorizontalIcon,
 	},
 	{
-		name: 'Secrets & Sensitive values, no trust needed',
-		description: `Secrets encryption can be asymetric if needed so that no one else than the private key holder (you) can see your secrets and sensitive-values when using self-hosted workers.`,
+		name: 'Secrets',
+		description: `Secrets are kept secure and encrypted. When using self-hostable workers, they are not visible to us.`,
 		icon: ShieldCheckIcon,
 	},
 	{
 		name: 'Slack commands and Webhooks',
-		description: 'In addition to the UI and schedules, trigger scripts directly from a /windmill slack command or from internet exposed webhooks!',
+		description: 'scripts are also triggerable from a /windmill slack command or webhooks',
 		icon: ExternalLinkIcon,
 	},
 	{
