@@ -5,7 +5,7 @@
 
 // export default function Pricing() {
 // 	return (
-		
+
 // 		<div className="w-full items-center m-auto text-center align-middle ">
 // 			<h2 className="pb-3 text-2xl font-medium">Pricing</h2>
 // 			<div className="flex flex-col align-middle">
@@ -127,7 +127,7 @@ import React from 'react'
 import { CheckIcon, MinusIcon } from '@heroicons/react/solid'
 
 const tiers = [
-	{ name: 'Free',  pricing: "Free (forever)", description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
+	{ name: 'Free', pricing: '^', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
 	{
 		name: 'Team',
 		pricing: "10$/mo/seat",
@@ -150,7 +150,7 @@ const sections = [
 			{ name: 'Schedules', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Slackbot commands', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Export Workspace', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Embed apps externally (WIP)', tiers: { Free: true, Team: true, Enterprise: true }},
+			{ name: 'Embed apps externally (WIP)', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Custom Python Dependencies (WIP)', tiers: { Team: '1 per seat', Enterprise: 'Unlimited' } },
 			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + exportable', Enterprise: '30 days + exportable' } },
@@ -165,15 +165,15 @@ const sections = [
 		features: [
 			{ name: 'Scripts', tiers: { Free: '10', Team: '50', Enterprise: 'Unlimited' } },
 			{ name: 'Scripts versions', tiers: { Free: 'Last 5', Team: 'Last 50', Enterprise: 'Unlimited' } },
-			{ name: 'Secrets, Resources, Schedules', tiers: { Free: 'Unlimited', Team: "Unlimited", Team: "Unlimited"} },
-			{ name: 'Run of scripts (including previews)', tiers: { Free: '50/day', Team: '500/day/seat', Enterprise: 'Unlimited' }  },
+			{ name: 'Secrets, Resources, Schedules', tiers: { Free: 'Unlimited', Team: "Unlimited", Team: "Unlimited" } },
+			{ name: 'Run of scripts (including previews)', tiers: { Free: '50/day', Team: '500/day/seat', Enterprise: 'Unlimited' } },
 			{ name: 'Cumulated execution time limit @ 1vCPU', tiers: { Free: '100s/day', Team: '3000s/day/seat', Enterprise: 'Unlimited' } },
 		],
 	},
 	{
 		name: 'Support',
 		features: [
-			{ name: 'Github issue', tiers: { Free: true, Team: true, Enterprise: true }},
+			{ name: 'Github issue', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Discord', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Email', tiers: { Free: 'Best effort', Team: 'Response within 48h', Enterprise: 'Response within 3h' } },
 		],
