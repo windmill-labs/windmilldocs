@@ -75,7 +75,7 @@ const features = [
 export default function HomepageFeatures() {
 	return (
 		<div>
-			<div className="relative pt-16 pb-10">
+			<div className="relative pt-8 pb-10">
 				<div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
 					<h2 className="text-base font-semibold uppercase tracking-wider text-blue-600">Everything in one-platform</h2>
 					<p className="mx-auto mt-5 max-w-prose text-xl text-gray-500">
@@ -225,9 +225,9 @@ export default function HomepageFeatures() {
 
 
 			<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-5 lg:grid-flow-col-dense lg:gap-10 overflow-visible">
-				<div className="px-4 max-w-xl mx-auto sm:px-6 lg:py-16 lg:max-w-none lg:col-span-2 lg:mx-0 lg:px-0">
+				<div className="px-4 max-w-xl mx-auto sm:px-6 lg:pb-16 lg:max-w-none lg:col-span-2 lg:mx-0 lg:px-0">
 							<div>
-								<div className="mt-6">
+								<div className="mt-2">
 									<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
 										Coding is seldom the bottleneck, it is everything else
 									</h2>
