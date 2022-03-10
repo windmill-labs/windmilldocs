@@ -124,12 +124,15 @@ export default function HomepageFeatures()
 							</div>
 						</div>
 						<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-span-2">
-							<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full ">
-								<img
-									className="w-full lg:max-w-none m-auto"
-									src="/img/parser.png"
-									alt="UI parser"
-								/>
+							<div className="flex flex-col p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full ">
+								<div className='w-full lg:max-w-none m-auto'>
+									<img
+										className=""
+										src="/img/parser.png"
+										alt="UI parser"
+									/>
+									<p className='text-gray-700 italic  text-sm text-center'>Script parameters are parsed automatically to generate your app UI that you may still refine</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -160,11 +163,16 @@ export default function HomepageFeatures()
 					</div>
 					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
 						<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
-							<img
-								className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5  lg:w-auto m-auto"
-								src="/img/run_script.png"
-								alt="Run UI"
-							/>
+							<div className='w-full lg:max-w-none m-auto'>
+
+								<img
+									className="rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 "
+									src="/img/run_script.png"
+									alt="Run UI"
+								/>
+								<p className='mt-10 text-gray-700 italic  text-sm text-center'>The generated apps are not limited to simple fields. Upload files, use lists, etc...</p>
+
+							</div>
 						</div>
 					</div>
 				</div>
@@ -214,6 +222,8 @@ export default function HomepageFeatures()
 										alt="Slack command"
 									/>
 								</div>
+								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Scripts can be triggered from schedules or interacted with from slack, build custom slackbots in minutes</p>
+
 							</div>
 						</div>
 					</div>
