@@ -39,11 +39,11 @@ function HomepageHeader()
 								</a>
 							</div>
 						</div>
-						<div className="my-8 max-w-md mx-auto">
+						<div className="my-8 max-w-sm mx-auto">
 							<a
 								target='_blank'
 								href="https://forms.gle/9ANRUru75nqrKT6C9"
-								className="w-full shadow flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+								className="mx-20 shadow flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 "
 							>
 								Get a demo
 							</a>
