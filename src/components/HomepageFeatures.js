@@ -20,6 +20,7 @@ import
 	ExternalLinkIcon,
 	SwitchHorizontalIcon,
 	CheckIcon,
+	ClipboardCopyIcon,
 } from '@heroicons/react/outline'
 
 const features = [
@@ -46,7 +47,7 @@ const features = [
 	{
 		name: 'Versioning',
 		description: <span>Scripts are never overwritten, they are versioned.</span>,
-		icon: ClockIcon,
+		icon: ClipboardCopyIcon,
 	},
 	{
 		name: 'Push to Deploy & Exportable Workspace',
