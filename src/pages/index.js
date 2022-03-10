@@ -15,18 +15,10 @@ function HomepageHeader()
 		<div className="pt-8 overflow-hidden sm:pt-12 lg:relative lg:py-5">
 			<div className="mx-auto max-w-md px-4 sm:max-w-3xl sm:px-6 lg:px-8 lg:max-w-7xl lg:grid lg:grid-cols-2 lg:gap-24">
 				<div>
-					<div>
-						<img
-							className="w-auto mx-auto md:m-0"
-							style={{ height: "120px" }}
-							src="/img/windmill_withtext.svg"
-							alt="Workflow"
-						/>
-					</div>
-					<div className="mt-5">
+					<div className="mt-20">
 						<div className="mt-6 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-5xl md:text-6xl font-mono">
-								<span className="block xl:inline">Generate all your internal <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from your python <span className="block text-blue-600 xl:inline">scripts</span></span>
+								<span className="block xl:inline">Company-wide <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal python <span className="block text-blue-600 xl:inline">scripts</span></span>
 							</h1>
 						</div>
 						<div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
