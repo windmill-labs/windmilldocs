@@ -135,10 +135,16 @@ function HomepageHeader()
 
 const roadmapItems = [
 	{ title: "Slack Approval flows", description: "Ask approval to a user or group through Slack or email before a script is ran", when: "End of March" },
+
 	{
 		title: "Self-hostable workers", description: `Self-hostable workers will allow to host the workers on-prem. 
 		The secrets being encrypted assymetrically, this will allow even sensitive environments to run windmill`, when: "End of April"
 	},
+	{
+		title: "Embeddable Apps", description: `Make embeddable the apps/scripts as a Javascript Widget or IFrame to be integrated into external frontends.
+	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of March"
+	},
+
 	{
 		title: "(Work)Flows", description: `(Work)Flows will enable anyone, even less technical users to compose and chain scripts together. 
 		An output to input transform tool will have a dedicated UI in-between scripts to keep scripts as modular as possible`, when: "End of March"
