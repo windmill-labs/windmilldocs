@@ -159,7 +159,7 @@ const roadmapItems = [
 	},
 	{ title: "Advanced Airtable integration", description: `Same as the "Advanced Google workspace integration" but for Airtable`, when: "End of Q2" },
 	{ title: "Advanced Notion integration", description: `Same as the "Advanced Google workspace integration" but for Notion`, when: "End of Q2" },
-	{ title: "Support JS/TS/Ruby", description: "Support other programming languages than Python", when: "End of Q2 and based on feedback" }
+	{ title: "Support Javascript/Typescript", description: "Support other programming languages than Python", when: "End of Q2 and based on feedback" }
 
 ]
 function Roadmap()
