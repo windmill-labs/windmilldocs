@@ -142,14 +142,18 @@ def main(tarball: bytes, dry_run: bool = False):
             content = tar.extractfile(m).read().decode("utf-8")
             resource = json.loads(content)
             if get_resource_response.status_code == 200:
-                print("Updating existing resource")
-                r = update_resource.sync_detailed(
-                    client.workspace,
-                    path=path,
-                    json_body=UpdateResourceJsonBody.from_dict(resource),
-                    client=client.client,
-                )
-                print(r)
+                old_resource = json.loads(get_resource_response.content)
+                if resource['value'] != old_resource['value']:
+                    print("Updating existing resource")
+                    r = update_resource.sync_detailed(
+                        client.workspace,
+                        path=path,
+                        json_body=UpdateResourceJsonBody.from_dict(resource),
+                        client=client.client,
+                    )
+                    print(r)
+                else:
+                    print("Skipping updating identical resource")
             else:
                 print("Creating new resource")
                 r = create_resource.sync_detailed(
@@ -169,14 +173,18 @@ def main(tarball: bytes, dry_run: bool = False):
             resource = json.loads(content)
             print(resource)
             if get_resource_response.status_code == 200:
-                print("Updating existing resource type")
-                r = update_resource_type.sync_detailed(
-                    client.workspace,
-                    path=path,
-                    json_body=UpdateResourceTypeJsonBody.from_dict(resource),
-                    client=client.client,
-                )
-                print(r)
+                old_resource_type = json.loads(get_resource_response.content)
+                if resource['schema'] != old_resource_type['schema']:
+                    print("Updating existing resource type")
+                    r = update_resource_type.sync_detailed(
+                        client.workspace,
+                        path=path,
+                        json_body=UpdateResourceTypeJsonBody.from_dict(resource),
+                        client=client.client,
+                    )
+                    print(r)
+                else:
+                    print("Skipping updating identical resource type")
             else:
                 print("Creating new resource type")
                 r = create_resource_type.sync_detailed(
