@@ -134,8 +134,7 @@ function HomepageHeader()
 }
 
 const roadmapItems = [
-	{ title: "Slack Approval flows", description: "Ask approval to a user or group through Slack or email before a script is ran", when: "End of March" },
-
+	{ title: "Slack Approval module for flows", description: "Ask approval to a user or group through Slack or email as a blocking step of a flow", when: "End of March" },
 	{
 		title: "Self-hostable workers", description: `Self-hostable workers will allow to host the workers on-prem. 
 		The secrets being encrypted assymetrically, this will allow even sensitive environments to run windmill`, when: "End of April"
@@ -143,11 +142,6 @@ const roadmapItems = [
 	{
 		title: "Embeddable Apps", description: `Make embeddable the apps/scripts as a Javascript Widget or IFrame to be integrated into external frontends.
 	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of March"
-	},
-
-	{
-		title: "(Work)Flows", description: `(Work)Flows will enable anyone, even less technical users to compose and chain scripts together. 
-		An output to input transform tool will have a dedicated UI in-between scripts to keep scripts as modular as possible`, when: "End of March"
 	},
 	{
 		title: "Advanced Slack integration", description: `It is currently possible to trigger one script per workspace from Slack. 
@@ -160,8 +154,8 @@ const roadmapItems = [
 	{ title: "Advanced Airtable integration", description: `Same as the "Advanced Google workspace integration" but for Airtable`, when: "End of Q2" },
 	{ title: "Advanced Notion integration", description: `Same as the "Advanced Google workspace integration" but for Notion`, when: "End of Q2" },
 	{ title: "Support Javascript/Typescript", description: "Support other programming languages than Python", when: "End of Q2 and based on feedback" }
-
 ]
+
 function Roadmap()
 {
 
