@@ -47,6 +47,18 @@
         "schema": null,
         "summary": "Send an email (smtp and gmail)"
     },
+    "send_slack_image": {
+        "description": "Send a base64 image to a slack channel or user. Choose one of user or channel but not both.",
+        "is_template": false,
+        "schema": null,
+        "summary": "Send image to slack"
+    },
+    "table_to_pie": {
+        "description": "Transform a table of rows into a pieplot image and return its base64",
+        "is_template": false,
+        "schema": null,
+        "summary": "Table to pie plot"
+    },
     "triggered_from_slack_command": {
         "description": "An example of a script that can be triggered from script and whom parameters fit exactly the one passed by the slack command trigger",
         "is_template": true,
