@@ -7,10 +7,10 @@ export default function Scripts()
     return (
         <div>
             <ul>
-            {Object.entries(s).map((x) => 
-                <li><Link to={`/docs/Blueprints/scripts/${x[0]}`}>{x[1].summary}</Link> - {x[1].description}</li>
-            )}
+                {Object.entries(s).map((x) =>
+                    <li><Link to={`/docs/Blueprints/scripts/${x[0]}`}>{x[1].summary}</Link></li>
+                )}
             </ul>
-        </div>   
+        </div>
     )
 }         
