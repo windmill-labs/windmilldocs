@@ -4,8 +4,8 @@ import HomepageFeatures from '../components/HomepageFeatures';
 import Pricing from '../components/Pricing';
 
 import FAQ from '../components/FAQ';
-// import VideoPlayer from '../components/VideoPlayer';
-// import BrowserOnly from '@docusaurus/BrowserOnly';
+import VideoPlayer from '../components/VideoPlayer';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 
 function HomepageHeader()
@@ -79,13 +79,20 @@ function HomepageHeader()
 							<rect width={404} height={392} fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)" />
 						</svg>
 					</div>
+
 					<div className="relative pl-4 -mr-40 sm:mx-auto sm:max-w-3xl sm:px-0 lg:max-w-none lg:h-full lg:pl-12"
 					>
-						<img
-							className="w-full rounded-md shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none"
-							src="/img/editor.png"
-							alt=""
-						/>
+						<BrowserOnly>
+							{() =>
+								<VideoPlayer>
+									<img
+										className="w-full rounded-md shadow-xl ring-1 ring-black ring-opacity-5 lg:h-full lg:w-auto lg:max-w-none"
+										src="/img/editor.png"
+										alt=""
+									/>
+								</VideoPlayer>
+							}
+						</BrowserOnly>
 					</div>
 				</div>
 			</div>
