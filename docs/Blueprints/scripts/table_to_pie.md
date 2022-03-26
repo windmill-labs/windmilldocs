@@ -54,7 +54,25 @@ def main(rows: list, title: str = ""):
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "rows": {
+            "default": null,
+            "description": "",
+            "type": "array"
+        },
+        "title": {
+            "default": "",
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "rows"
+    ],
+    "type": "object"
+}
 ```
 

@@ -2,67 +2,245 @@
     "hello_world": {
         "description": "The simplest hello world script",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "name": {
+                    "default": "Nicolas Bourbaki",
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [],
+            "type": "object"
+        },
         "summary": "Hello World"
     },
     "http_request": {
         "description": "This example pass a value as JSON data and use a secret as bearer token",
         "is_template": true,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "my_value": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "my_value"
+            ],
+            "type": "object"
+        },
         "summary": "Do a simple HTTP post request"
     },
     "import_workspace_from_tarball": {
         "description": "Takes a tarball in and import scripts, resources, and resource types from a tarball exported of a workspace.\n\nIs used as webhook target for  the windmill-gh-action-deploy",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "dry_run": {
+                    "default": false,
+                    "description": "",
+                    "type": "boolean"
+                },
+                "tarball": {
+                    "contentEncoding": "base64",
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "tarball"
+            ],
+            "type": "object"
+        },
         "summary": "Import workspace from tarball"
     },
     "message_slack": {
         "description": "Send a message to a channel or person in the connected slack workspace",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "channel": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "text": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "user": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "text"
+            ],
+            "type": "object"
+        },
         "summary": "Send a slack message"
     },
     "postgres_example": {
         "description": "\nAn example of how to use resources from scripts. In this example, we will query the demo database demodb that is set up by default on Windmill.",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {},
+            "required": [],
+            "type": "object"
+        },
         "summary": "Query the demodb resource"
     },
     "return_chart_as_image": {
         "description": "This script showcase that image can be rendered from their base64 encoding when their dict key is \"png\"",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "seed": {
+                    "default": 1234,
+                    "description": "",
+                    "type": "integer"
+                }
+            },
+            "required": [],
+            "type": "object"
+        },
         "summary": "Build seaborn charts and return a rendered image"
     },
     "return_table": {
         "description": "An example of a script that return a table that can get rendered",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "seed": {
+                    "default": 123,
+                    "description": ""
+                }
+            },
+            "required": [],
+            "type": "object"
+        },
         "summary": "Return Table"
     },
     "send_email_gmail": {
         "description": "Send an email using smtplib and in particular with a gmail account set with a [secure app password](https://support.google.com/accounts/answer/185833?hl=en).\n\nFor gmail the following smtp configuration set in resource would work:\n```json\n{\n    \"host\": \"smtp.gmail.com\",\n    \"password\": \"$VAR:U_YOU_YOUR_SECURE_PASSWORD\",\n    \"port\": 587,\n    \"user\": \"youremail@gmail.com\"\n}\n```\nwhere you have set the variable `u/you/your_secure_password` as a variable containing the app password.",
         "is_template": true,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "body": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "subject": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "to": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "to",
+                "subject",
+                "body"
+            ],
+            "type": "object"
+        },
         "summary": "Send an email (smtp and gmail)"
     },
     "send_slack_image": {
         "description": "Send a base64 image to a slack channel or user. Choose one of user or channel but not both.",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "channel": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "img_data": {
+                    "contentEncoding": "base64",
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "user": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "img_data"
+            ],
+            "type": "object"
+        },
         "summary": "Send image to slack"
     },
     "table_to_pie": {
         "description": "Transform a table of rows into a pieplot image and return its base64",
         "is_template": false,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "rows": {
+                    "default": null,
+                    "description": "",
+                    "type": "array"
+                },
+                "title": {
+                    "default": "",
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "rows"
+            ],
+            "type": "object"
+        },
         "summary": "Table to pie plot"
     },
     "triggered_from_slack_command": {
-        "description": "An example of a script that can be triggered from script and whom parameters fit exactly the one passed by the slack command trigger",
+        "description": "An example of a script that can be triggered from slack in the workspace settings and whom parameters fit exactly the one passed by the slack command trigger",
         "is_template": true,
-        "schema": null,
+        "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "properties": {
+                "response_url": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                },
+                "text": {
+                    "default": null,
+                    "description": "",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "response_url",
+                "text"
+            ],
+            "type": "object"
+        },
         "summary": "Triggered from slack command"
     }
 }

@@ -198,7 +198,26 @@ def main(tarball: bytes, dry_run: bool = False):
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "dry_run": {
+            "default": false,
+            "description": "",
+            "type": "boolean"
+        },
+        "tarball": {
+            "contentEncoding": "base64",
+            "default": null,
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "tarball"
+    ],
+    "type": "object"
+}
 ```
 

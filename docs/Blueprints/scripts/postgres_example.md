@@ -36,7 +36,12 @@ def main():
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {},
+    "required": [],
+    "type": "object"
+}
 ```
 

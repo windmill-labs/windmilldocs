@@ -39,7 +39,30 @@ def main(
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "channel": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "text": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "user": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "text"
+    ],
+    "type": "object"
+}
 ```
 

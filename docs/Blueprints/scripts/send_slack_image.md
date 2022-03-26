@@ -53,7 +53,31 @@ def main(
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "channel": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "img_data": {
+            "contentEncoding": "base64",
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "user": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "img_data"
+    ],
+    "type": "object"
+}
 ```
 

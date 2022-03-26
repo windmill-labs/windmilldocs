@@ -302,10 +302,11 @@ export default function Pricing()
 												<span className="text-2xl text-gray-900 font-mono">{tier.pricing}</span>
 											</p>
 											<p className="mt-4 mb-10 text-sm text-gray-500">{tier.description}</p>
+											<div className='p-2'></div>
 											{tierIdx > 0 ?
 												<a
 													href="mailto:contact@windmill.dev?subject=Request%20upgrade"
-													className="mt-6 block border border-gray-800 rounded-md bg-gray-800 w-full py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
+													className="absolute bottom-0 block border border-gray-800 rounded-md bg-gray-800 w-full py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
 												>
 													Coming soon, contact us
 												</a> : ''}

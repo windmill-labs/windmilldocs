@@ -25,7 +25,20 @@ def main(
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "my_value": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "my_value"
+    ],
+    "type": "object"
+}
 ```
 

@@ -6,7 +6,7 @@ title: Triggered from slack command
 
 ## Description
 
-An example of a script that can be triggered from script and whom parameters fit exactly the one passed by the slack command trigger
+An example of a script that can be triggered from slack in the workspace settings and whom parameters fit exactly the one passed by the slack command trigger
 
 ## Code
 
@@ -32,7 +32,26 @@ def main(response_url: str, text: str):
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "response_url": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "text": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "response_url",
+        "text"
+    ],
+    "type": "object"
+}
 ```
 

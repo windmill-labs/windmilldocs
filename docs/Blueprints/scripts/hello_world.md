@@ -21,7 +21,18 @@ def main(name: str = "Nicolas Bourbaki"):
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "name": {
+            "default": "Nicolas Bourbaki",
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [],
+    "type": "object"
+}
 ```
 

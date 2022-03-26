@@ -48,7 +48,32 @@ def main(to: str, subject: str, body: str):
 
 ## Schema
 
-```python
-None
+```json
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "properties": {
+        "body": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "subject": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        },
+        "to": {
+            "default": null,
+            "description": "",
+            "type": "string"
+        }
+    },
+    "required": [
+        "to",
+        "subject",
+        "body"
+    ],
+    "type": "object"
+}
 ```
 
