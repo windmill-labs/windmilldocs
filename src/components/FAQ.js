@@ -1,45 +1,41 @@
 import React from 'react';
-import clsx from 'clsx';
-import styles from './FAQ.module.css';
 
 import { Disclosure } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 
 const faqs = [
 	{
-		question: "I'm not a developer. What does Windmill bring to my business?",
-		answer:
-			(<p>Businesses need to automate internal workflows (for example, renewing a user license key
-				and sending an email) to be efficient and scalable. In many companies, developers write
-				quick and dirty scripts to automate repetitive tasks, but these scripts never make it to
-				production and never get widespread adoption. <br /> <br />
-				Developers face a choice : keep the script for themselves - creating bottlenecks for the
-				business - or spend a lot of time to make it usable by other employees - a big waste of
-				developer productivity. What if you could immediately turn these quick and dirty scripts
-				into internal apps with user interfaces, workflows and permissioning? <br />
-				<br />
-				What if automation could flow from developers to the entire company? Windmill is a
-				developer-first platform that quickly turns scripts into user-friendly internal apps,
-				enabling companies to automate and scale internal workflows.</p>)
+		question: "Is Windmill only for developers?",
+		answer: `No. Windmill is developer friendly but it can even be used in orgs without any developers by creating flows in an intuitive UI that chain generic scripts together.
+		But Windmill's sweet spot is hybrid organization with at least a few developers than can write organization specific scripts so that the rest of the organization leverage them as part of their flows that compose org agnostic and org specific steps.`
 	},
 	{
-		question: "Is Windmill a no-code platform?",
-		answer: (<p>					No. We believe that writing code is the most efficient way to build internal apps, for
-			several reasons:
-			<ul className="list-disc mx-12">
-				<li>
-					It is maintainable, versioned, and standard (any developer can read and fix a script).
-					That's not the case with UI builders, that tend do create tech debt.
-				</li>
-				<li>
-					It is not bottlenecked by the limitations of a platform (missing connectors, etc).
-				</li>
-				<li>
-					Developers can rely on a gigantic amount of open source libraries to write code.
-				</li>
-			</ul>
-			However, there are part of building internal apps that are painful and not worth a
-			developer's time: building UI, workflows, permissions. Windmill removes those time sinks.</p>)
+		question: "Is Windmill a no-code or low-code platform?",
+		answer: `Windmill is a code-centric platform that be used without needing to write any code youself.
+			Indeed, flows can be solely created by reusing generic scripts written by the community.
+			However, Windmill is most powerful when those generic scripts are chained together with org specific scripts. 
+			So Windmill is both code-centric and low-code depending on the use you make out of it.`
+	},
+	{
+		question: "What are the benefits of code versus no-code platforms",
+		answer: (
+			<p>
+				Code when used the right way and in the right quantity has several benefits versus other ways to develop business apps:
+				<ul className="list-disc mx-12">
+					<li>
+						It is maintainable, versioned, and standard (any developer can read and fix a script).
+						That's not the case with UI builders, that tend do create tech debt.
+					</li>
+					<li>
+						It is not bottlenecked by the limitations of a platform (missing connectors, etc).
+					</li>
+					<li>
+						Vast amount of open source libraries.
+					</li>
+				</ul>
+				Windmill makes it easy to rely on the right amount of code, no more, no less.
+				Indeed, there are part of building business apps that are painful and not worth a
+				developer's time: building UI, workflows, permissions. Windmill removes those time sinks.</p>)
 	}
 ]
 
