@@ -8,6 +8,11 @@ import VideoPlayer from '../components/VideoPlayer';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
 
+import
+{
+	SparklesIcon
+} from '@heroicons/react/outline'
+
 function HomepageHeader()
 {
 
@@ -16,7 +21,13 @@ function HomepageHeader()
 			<div class="lg:grid lg:grid-cols-12 lg:gap-8">
 				<div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
 					<div >
-						<div className="mt-20 sm:max-w-xl">
+						<div className="mt-10 sm:max-w-xl">
+							<h1 className="text-xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-xl font-mono">
+								<span className="block xl:inline"><SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
+									Fully <a target="_blank" href="https://github.com/windmill-labs/windmill">OSS</a> and self-hostable</span>
+							</h1>
+						</div>
+						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
 								<span className="block xl:inline">Company-wide <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal python <span className="block text-blue-600 xl:inline">scripts</span></span>
 							</h1>
@@ -27,7 +38,7 @@ function HomepageHeader()
 									href="https://alpha.windmill.dev/user/login"
 									className="w-full rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
 								>
-									Sign up
+									Windmill Cloud
 								</a>
 							</div>
 							<div className="mt-3 shadow sm:mt-0 rounded sm:ml-10">

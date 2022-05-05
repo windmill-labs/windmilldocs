@@ -35,8 +35,8 @@ const features = [
 		icon: ClockIcon,
 	},
 	{
-		name: 'Self-hostable OSS workers (soon)',
-		description: 'The workers executing your scripts can be self-hostable on-prem. Workers will be Open-Source Software.',
+		name: 'Self-hostable',
+		description: 'The workers executing your scripts or Windmill as a whole can be self-hostable on-prem.',
 		icon: HomeIcon,
 	},
 	{
