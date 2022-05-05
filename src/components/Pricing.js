@@ -143,7 +143,7 @@ const sections = [
 	{
 		name: 'Features',
 		features: [
-			{ name: 'Automatically generate the UI', tiers: { Free: true, Team: true, Enterprise: true } },
+			{ name: 'Automatically generates the UI', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Deploy from Github', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Webeditor with preview and code intelligence', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Script versioning', tiers: { Free: true, Team: true, Enterprise: true } },
@@ -151,12 +151,11 @@ const sections = [
 			{ name: 'Slackbot commands', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Export Workspace', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Embed apps externally (WIP)', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Custom Python Dependencies (WIP)', tiers: { Team: '1 per seat', Enterprise: 'Unlimited' } },
 			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + exportable', Enterprise: '30 days + exportable' } },
 			{ name: 'Group based permissioning', tiers: { Free: 'While beta', Team: true, Enterprise: true } },
 			{ name: 'Self-hosted worker/agent (WIP)', tiers: { Team: true, Enterprise: true } },
-			{ name: 'Self-hosted everything (on-prem) (WIP)', tiers: { Team: true, Enterprise: true } },
+			{ name: 'Self-hosted everything (on-prem) with a Commercial License', tiers: { Enterprise: true } },
 
 		],
 	},
