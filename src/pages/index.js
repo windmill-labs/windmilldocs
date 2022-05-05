@@ -142,18 +142,18 @@ function HomepageHeader()
 
 
 const roadmapItems = [
-	{ title: "Slack Approval module for flows", description: "Ask approval to a user or group through Slack or email as a blocking step of a flow", when: "End of March" },
+	{ title: "Support Javascript/Typescript", description: "Javascript is now supported for dynamic inputs of flows. Full support of Typescript (with deno) for scripts is coming Mid May", when: "Mid May" },
 	{
-		title: "Self-hostable workers", description: `Self-hostable workers will allow to host the workers on-prem. 
-		The secrets being encrypted assymetrically, this will allow even sensitive environments to run windmill`, when: "End of April"
+		title: "Open-sourcing of Windmill under AGPLv3", description: `Windmill will be fully open-sourced under AGPLv3 and self-hostable`, when: "Mid May"
 	},
+	{ title: "Slack Approval module for flows", description: "Ask approval to a user or group through Slack or email as a blocking step of a flow", when: "End of May" },
 	{
 		title: "Embeddable Apps", description: `Make embeddable the apps/scripts as a Javascript Widget or IFrame to be integrated into external frontends.
-	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of March"
+	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q2"
 	},
 	{
 		title: "Advanced Slack integration", description: `It is currently possible to trigger one script per workspace from Slack. 
-	An advanced integration will allow for any script to be chosen directly from slack, and the input to be set directly from slack using the block UI API.`, when: "Enf of Q2"
+	An advanced integration will allow for any script to be chosen directly from slack, and the input to be set directly from slack using the block UI API.`, when: "End of Q2"
 	},
 	{
 		title: "Advanced Google workspace/gmail/drive/docs/spreadsheet integration", description: `A dedicated oauth integration will allow to connect a workspace to a Google Workspace as easily as it is currently possible for a Slack workspace. The wmill integrated python client will
@@ -161,7 +161,6 @@ const roadmapItems = [
 	},
 	{ title: "Advanced Airtable integration", description: `Same as the "Advanced Google workspace integration" but for Airtable`, when: "End of Q2" },
 	{ title: "Advanced Notion integration", description: `Same as the "Advanced Google workspace integration" but for Notion`, when: "End of Q2" },
-	{ title: "Support Javascript/Typescript", description: "Support other programming languages than Python", when: "End of Q2 and based on feedback" }
 ]
 
 function Roadmap()
