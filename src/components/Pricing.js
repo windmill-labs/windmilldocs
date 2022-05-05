@@ -154,8 +154,8 @@ const sections = [
 			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + exportable', Enterprise: '30 days + exportable' } },
 			{ name: 'Group based permissioning', tiers: { Free: 'While beta', Team: true, Enterprise: true } },
-			{ name: 'Self-hosted worker/agent (WIP)', tiers: { Team: true, Enterprise: true } },
-			{ name: 'Self-hosted everything (on-prem) with a Commercial License', tiers: { Enterprise: true } },
+			{ name: 'Self-hostable worker/agent (WIP)', tiers: { Team: true, Enterprise: true } },
+			{ name: 'Self-hostable everything with a Commercial License', tiers: { Enterprise: true } },
 
 		],
 	},
