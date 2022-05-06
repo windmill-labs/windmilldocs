@@ -14,6 +14,20 @@ const config = {
 	favicon: 'img/logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
+	themes: [
+		[
+		  require.resolve("@easyops-cn/docusaurus-search-local"),
+		  {
+			hashed: true,
+            docsDir: 'docs',
+            docsRouteBasePath: '/docs',
+            indexDocs: true,
+            indexBlog: false,
+            indexPages: false,
+            highlightSearchTermsOnTargetPage: false
+		  },
+		],
+	  ],
 	plugins: [
 		async function myPlugin(context, options)
 	{
@@ -46,7 +60,6 @@ const config = {
 			})
 		]
 	],
-
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
