@@ -35,7 +35,7 @@ function HomepageHeader()
 						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">
 							<div className="shadow">
 								<a
-									href="https://alpha.windmill.dev/user/login"
+									href="https://app.windmill.dev/user/login"
 									className="w-full rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
 								>
 									Windmill Cloud
