@@ -24,7 +24,7 @@ function HomepageHeader()
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-xl font-mono">
 								<span className="block xl:inline"><SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
-									Fully <a target="_blank" href="https://github.com/windmill-labs/windmill">OSS</a> and self-hostable</span>
+									Fully <a target="_blank" href="https://github.com/windmill-labs/windmill">OSS</a> and self-hostable <a className="inline-block" target="_blank" href="https://github.com/windmill-labs/windmill"><img src="https://img.shields.io/github/stars/windmill-labs/windmill?style=flat"></img></a></span>
 							</h1>
 						</div>
 						<div className="mt-10 sm:max-w-xl">
