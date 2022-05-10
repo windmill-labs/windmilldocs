@@ -91,7 +91,7 @@ which is also the end of the trial period. It is granted as stock options.
 ## Salary
 
 We offer salaries in the 90th quantile. Great people deliver immense values and
-should be rewarded in consequence.
+should be rewarded appropriately.
 
 ## Windmill.dev current team
 
