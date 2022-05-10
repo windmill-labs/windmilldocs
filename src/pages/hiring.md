@@ -6,17 +6,26 @@ title: Hiring - Join us!
 
 # Hiring - Join us!
 
+Windmill is part of the YC S22 batch.
+
 ## Open positions
 
 windmill.dev is looking for its first key people. In particular, we are looking
 for the following kind of profiles:
 
 - [Head of BD & Sales](#head-of-bd--sales) - (Remote)
-- Founding Engineer: You fit one or ideally a mix of those 3 profiles:
+- Founding Engineer: If that is of interest, you might grow as Head of
+  Engineering/CTO as the engineering team scale, but you can also chose to stay
+  as an IC with significant impact if you prefer. You fit one or ideally a mix
+  of those 3 profiles:
   - [Founding Solutions Engineer](#founding-solutions-engineer) - Head of
     Solutions (Remote)
   - [Founding Software Engineer](#founding-software-engineer) (Remote)
   - [Founding DevOps Engineer](#founding-devops-engineer) (Remote)
+- Graduate program/Internship: You just graduated and are looking to learn how
+  to grow BD, build a startup or write quality software for OSS in a remote
+  environment for a period of 3 to 6 months. You will have the opportunity join
+  the team at the end.
 
 If you are interested to join the adventure. Apply by sending an email at
 hiring@windmill.dev. Be sure to mention which role you are interested in if any
@@ -28,10 +37,10 @@ quarter.
 
 ### Head of BD & Sales
 
-windmill.dev is a SaaS that can be sold not only to individual and teams but
-also to enterprises, either as self-hostable software or hosted on our cloud.
-You own the relationship with those companies, including the sales process and
-the acquisition funnel.
+windmill.dev is a SaaS that can be sold (through dual-licensing) not only to
+individual and teams but also to enterprises, either as self-hostable software
+or hosted on our cloud. You own the relationship with those companies, including
+the sales process and the acquisition funnel.
 
 Furthermore, windmill.dev can potentially grow as a tool for consultancy shops
 or as a consultancy itself for automations, it is a plus if you are interested
@@ -52,7 +61,7 @@ technical challenge. We are a small but mighty team and we compete with the
 likes of giants. As such, we need to make fast-paced, iterative and sustainable
 software design choices. You can find more information about our architecture in
 the documentation but overall windmill.dev is a highly available compute
-providers, built with rust, postgres, microvms (firecracker) and svelte for the
+providers, built with rust, postgres, sandboxing (nsjail) and svelte for the
 frontend. You will work autonomously as an engineer to make windmill.dev a
 delightful, scalable and performant product.
 
@@ -71,20 +80,20 @@ purposes and run on top of nomad for deployment state management.
 
 1. You send an email at hiring@windmill.dev with all the information you deem
    useful about you.
-2. You will receive an answer in 24h, an invite for a 30min or 1h chat.
+2. You will receive an answer in 24h, an invite for a 30min.
 3. We iterate until we both see a mutual fit
 
 ## Equity
 
 The equity grant is generous and vested over 4 years with a cliff of 6 months
-which is also the end of the trial period. It is granted as stock options or
-BSPCE if applicable.
+which is also the end of the trial period. It is granted as stock options.
 
 ## Salary
 
-We offer competitive salaries.
+We offer salaries in the 90th quantile. Great people deliver immense values and
+should be rewarded in consequence.
 
-## windmill.dev current team
+## Windmill.dev current team
 
 windmill.dev is currently a project led by
 [@rubenfiszel](https://www.linkedin.com/in/rubenfiszel/) as a solo founder &
