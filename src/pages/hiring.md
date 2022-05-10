@@ -11,12 +11,12 @@ title: Hiring - Join us!
 windmill.dev is looking for its first key people. In particular, we are looking
 for the following kind of profiles:
 
-- [Head of BD & Sales](#head-of-bd--sales) - Co-founder (Remote/Paris)
-- Technical co-founder: You fit one or ideally a mix of those 3 profiles:
+- [Head of BD & Sales](#head-of-bd--sales) - (Remote)
+- Founding Engineer: You fit one or ideally a mix of those 3 profiles:
   - [Founding Solutions Engineer](#founding-solutions-engineer) - Head of
-    Solutions (Remote/Paris)
-  - [Founding Software Engineer](#founding-software-engineer) (Remote/Paris)
-  - [Founding DevOps Engineer](#founding-devops-engineer) (Remote/Paris)
+    Solutions (Remote)
+  - [Founding Software Engineer](#founding-software-engineer) (Remote)
+  - [Founding DevOps Engineer](#founding-devops-engineer) (Remote)
 
 If you are interested to join the adventure. Apply by sending an email at
 hiring@windmill.dev. Be sure to mention which role you are interested in if any
