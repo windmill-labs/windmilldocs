@@ -24,8 +24,8 @@ for the following kind of profiles:
   - [Founding DevOps Engineer](#founding-devops-engineer) (Remote)
 - Graduate program/Internship: You just graduated and are looking to learn how
   to grow BD, build a startup or write quality software for OSS in a remote
-  environment for a period of 3 to 6 months. You will have the opportunity join
-  the team at the end.
+  environment for a period of 3 to 6 months. You will have the opportunity to
+  join the team at the end.
 
 If you are interested to join the adventure. Apply by sending an email at
 hiring@windmill.dev. Be sure to mention which role you are interested in if any
