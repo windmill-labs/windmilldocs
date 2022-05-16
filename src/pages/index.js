@@ -29,7 +29,7 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline">Company-wide <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal python <span className="block text-blue-600 xl:inline">scripts</span></span>
+								<span className="block xl:inline">Company-wide <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal python or typescript <span className="block text-blue-600 xl:inline">scripts</span></span>
 							</h1>
 						</div>
 						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">
