@@ -159,7 +159,7 @@ export default function HomepageFeatures()
 									<br /><br />
 									Define visibility, edit rights and executability for your scripts, resources, schedules, etc using <span className='font-bold'>groups' and users' granular permissions</span>.
 									<br /><br />
-									Upskill your less technical members interested in authoring scripts themselves by having them learn Python in an accessible and integrated environment.
+									Upskill your less technical members interested in authoring scripts themselves by having them learn Python or Typescript in an accessible and integrated environment.
 								</p>
 							</div>
 						</div>
@@ -196,14 +196,14 @@ export default function HomepageFeatures()
 									<br /><br />
 									Many tools do only one thing, and are focused on one specific problem. You need to setup many different niche tools from whom you exploit only a tiny portion of the features.
 									<br /><br />
-									Unlike other automation tools, we do not reinvent the wheel with proprietary connectors and UI, connect to any API using any standard python client or dependencies available in PyPI.<br /><br />
-									<span className='font-bold'>Any python library becomes a connector.</span><br />
+									Unlike other automation tools, we do not reinvent the wheel with proprietary connectors and UI, connect to any API using any standard python or typescript client or dependencies available in PyPI or Deno registries.<br /><br />
+									<span className='font-bold'>Any python or typescript (deno) library becomes a connector.</span><br />
 									<div className="flex flex-row gap-4 mt-10 justify-center">
 										<Postgres />
 										<Mysql />
 										<Mongo />
 										<Slack />
-										<span className='text-xs font-mono my-auto'>... anything with a python client</span>
+										<span className='text-xs font-mono my-auto'>... anything with a python or typescript client</span>
 									</div>
 								</p>
 							</div>

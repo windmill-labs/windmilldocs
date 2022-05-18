@@ -167,7 +167,7 @@ const roadmapItems = [
 	An advanced integration will allow for any script to be chosen directly from slack, and the input to be set directly from slack using the block UI API.`, when: "End of Q2"
 	},
 	{
-		title: "Advanced Google workspace/gmail/drive/docs/spreadsheet integration", description: `A dedicated oauth integration will allow to connect a workspace to a Google Workspace as easily as it is currently possible for a Slack workspace. The wmill integrated python client will
+		title: "Advanced Google workspace/gmail/drive/docs/spreadsheet integration", description: `A dedicated oauth integration will allow to connect a workspace to a Google Workspace as easily as it is currently possible for a Slack workspace. The wmill integrated python and typescript client will
 	integrate some utility function to make working with gmail/drive/docs/spreadsheet in a convenience fashion.`, when: "End of Q2"
 	},
 	{ title: "Advanced Airtable integration", description: `Same as the "Advanced Google workspace integration" but for Airtable`, when: "End of Q2" },
