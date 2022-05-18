@@ -16,32 +16,32 @@ const config = {
 	projectName: 'windmill',
 	themes: [
 		[
-		  require.resolve("@easyops-cn/docusaurus-search-local"),
-		  {
-			hashed: true,
-            docsDir: 'docs',
-            docsRouteBasePath: '/docs',
-            indexDocs: true,
-            indexBlog: false,
-            indexPages: false,
-            highlightSearchTermsOnTargetPage: false
-		  },
+			require.resolve("@easyops-cn/docusaurus-search-local"),
+			{
+				hashed: true,
+				docsDir: 'docs',
+				docsRouteBasePath: '/docs',
+				indexDocs: true,
+				indexBlog: false,
+				indexPages: false,
+				highlightSearchTermsOnTargetPage: false
+			},
 		],
-	  ],
+	],
 	plugins: [
 		async function myPlugin(context, options)
-	{
-		return {
-			name: "docusaurus-tailwindcss",
-			configurePostCss(postcssOptions)
-			{
-				postcssOptions.plugins.push(require("tailwindcss"));
-				postcssOptions.plugins.push(require("autoprefixer"));
-				return postcssOptions;
-			},
-		};
-	},
-],
+		{
+			return {
+				name: "docusaurus-tailwindcss",
+				configurePostCss(postcssOptions)
+				{
+					postcssOptions.plugins.push(require("tailwindcss"));
+					postcssOptions.plugins.push(require("autoprefixer"));
+					return postcssOptions;
+				},
+			};
+		},
+	],
 	presets: [
 		[
 			'classic',
@@ -77,10 +77,15 @@ const config = {
 						label: 'Docs'
 					},
 					{
+						href: 'https://doc.deno.land/https://deno.land/x/windmill/index.ts',
+						position: 'left',
+						label: 'Typescript (Deno) Client'
+					},
+					{
 						href: '/python',
 						position: 'left',
 						label: 'Python Client'
-					}, 
+					},
 					{
 						href: '/docs/Blueprints',
 						position: 'left',
