@@ -77,9 +77,10 @@ const config = {
 						label: 'Docs'
 					},
 					{
-						href: 'https://doc.deno.land/https://deno.land/x/windmill/index.ts',
+						to: 'https://doc.deno.land/https://deno.land/x/windmill/index.ts',
 						position: 'left',
-						label: 'Typescript (Deno) Client'
+						label: 'Typescript (Deno) Client',
+
 					},
 					{
 						href: '/python',
