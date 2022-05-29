@@ -43,6 +43,4 @@ def main():
 
 For each resource type that you use, you'll likely rely on a python library
 (psycopg2 in this example). Windmill allows you to
-[define resource types](create_resources) and
-[install any dependency](dependencies) so you are not limited by a set number of
-predefined connectors: any python library can be used as a connector.
+[define resource types](create_resources) and use any dependencies.

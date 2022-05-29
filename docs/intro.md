@@ -102,6 +102,5 @@ This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
 
 - Pass [variables and secrets](how-to/variables_and_secrets) to a script
-- Manage [dependencies and the run environment](how-to/dependencies)
 - Connect to [resources](how-to/create_resources)
 - Run scripts on a [schedule](how-to/schedule)
