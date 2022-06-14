@@ -29,7 +29,7 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline">Company-wide <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal python or typescript <span className="block text-blue-600 xl:inline">scripts</span></span>
+								<span className="block xl:inline">Org-wide multi-steps <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal community and custom <span className="block text-blue-600 xl:inline">scripts</span> (typescript/python)</span>
 							</h1>
 						</div>
 						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">
@@ -153,25 +153,14 @@ function HomepageHeader()
 
 
 const roadmapItems = [
-	{ title: "Support Javascript/Typescript", description: "Javascript is now supported for dynamic inputs of flows. Full support of Typescript (with deno) for scripts is coming Mid May", when: "Mid May" },
+	{ title: "Approval module for flows (Slack/Email/Push)", description: "Ask approval to a user or group through Slack, Email, Push notification as a blocking step of a flow", when: "End of Q2" },
 	{
-		title: "Open-sourcing of Windmill under AGPLv3", description: `Windmill will be fully open-sourced under AGPLv3 and self-hostable`, when: "Mid May"
-	},
-	{ title: "Slack Approval module for flows", description: "Ask approval to a user or group through Slack or email as a blocking step of a flow", when: "End of May" },
-	{
-		title: "Embeddable Apps", description: `Make embeddable the apps/scripts as a Javascript Widget or IFrame to be integrated into external frontends.
+		title: "Embeddable Apps", description: `Make embeddable the apps/flows/scripts as a Javascript Widget or IFrame to be integrated into external frontends.
 	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q2"
 	},
 	{
-		title: "Advanced Slack integration", description: `It is currently possible to trigger one script per workspace from Slack. 
-	An advanced integration will allow for any script to be chosen directly from slack, and the input to be set directly from slack using the block UI API.`, when: "End of Q2"
+		title: "Advanced OAuth account management", description: `Most apps and automations will need tokens that could be conveniently retrieved from an OAuth integration with the external app.`, when: "End of Q2"
 	},
-	{
-		title: "Advanced Google workspace/gmail/drive/docs/spreadsheet integration", description: `A dedicated oauth integration will allow to connect a workspace to a Google Workspace as easily as it is currently possible for a Slack workspace. The wmill integrated python and typescript client will
-	integrate some utility function to make working with gmail/drive/docs/spreadsheet in a convenience fashion.`, when: "End of Q2"
-	},
-	{ title: "Advanced Airtable integration", description: `Same as the "Advanced Google workspace integration" but for Airtable`, when: "End of Q2" },
-	{ title: "Advanced Notion integration", description: `Same as the "Advanced Google workspace integration" but for Notion`, when: "End of Q2" },
 ]
 
 function Roadmap()
