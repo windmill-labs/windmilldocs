@@ -1,13 +1,14 @@
 # Windmill Flows 
+<br>
 Windmill **Flows** allow you to streamline complex processes and operations by chaining together custom scripts to build dynamic apps. Each **Flow** is composed of one or more step scripts that can accept inputs, execute a function and then produce an output which can be used by subsequent step scripts. Flows contain all of the benefits of Windmill Scripts, offering immediate functionality such as third party app integrations, SQL queries, Slack, custom scripts and more!
 
 - **Flow Inputs** arguments for each flow can be edited using the flow input wizard or by editing their json-schema. 
 
 - **Step Scripts** can be dynamically added to each flow by clicking the '+' button. Scripts can be automatically imported from [Windmil Hub](https://hub.windmill.dev/) selecting a Hub path or by using your own custom scripts created in Windmill by selecting a Script path. 
 
-- **Step Script Inputs** can be added to each step script via static arguments or dynamic JavaScript arguments.
+- **Step Script Inputs** for each script correspond to the input spec of the selected script and can be added to each step script statically or dynamically using JavaScript.
 
-- **Dynamic JavaScript Input** arguments unlock the power of Windmill Flows by allowing each step script to access inputs, variables,resources and outputs from other steps in the Flow. 
+- **Dynamic JavaScript Input** arguments unlock the power of Windmill Flows by allowing each step script to access inputs, variables, resources and outputs from other steps in the Flow. 
 
 - **Preview Mode** is available for each Step in a Flow, enabling you to see the output of each step script and how they interact with previous Steps. 
 
@@ -26,7 +27,7 @@ All previously created Flows can be accessed from the Flows dashboard. To create
 Input a title for the Flow and optionally a brief summary of what the Flow will do. A more detailed description of the flow can also be added.
 ![Add script](/assets/flows/flow-metadata.png)
 
-## 4: Add Flow Inputs
+### 4: Add Flow Inputs
 Using the Flow input wizard or the json-schema, an arguments can be given to the flow which can be accessed at any step of the flow.  
 ![Add script](/assets/flows/flow-input.png)
 
@@ -43,7 +44,7 @@ Next, create a new step script by clicking the '+' button. In order to process t
 To output the graph to Slack add one more step script using the Windmill Hub 'send_slack_image' path. Again, use the dynamic JavaScript to connect the output of step script 2 to the input of step script 3.
 ![Add script](/assets/flows/flow-step3.png)
 
-## 8: Preview Flow
+### 8: Preview Flow
 Now that the Flow is complete, use preview mode to see the output of each step script and ensure that there are no errors. 
 ![Add script](/assets/flows/flow-preview.png)
 
