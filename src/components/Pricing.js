@@ -154,9 +154,8 @@ const sections = [
 			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + exportable', Enterprise: '30 days + exportable' } },
 			{ name: 'Group based permissioning', tiers: { Free: 'While beta', Team: true, Enterprise: true } },
-			{ name: 'Self-hostable worker/agent (WIP)', tiers: { Team: true, Enterprise: true } },
-			{ name: 'Self-hostable everything with a Commercial License', tiers: { Enterprise: true } },
-
+			{ name: 'Self-hostable', tiers: { Free: 'up to 3 users', Team: true, Enterprise: true } },
+			{ name: 'SSO', tiers: { Free: '', Team: '', Enterprise: true } },
 		],
 	},
 	{
@@ -174,7 +173,9 @@ const sections = [
 		features: [
 			{ name: 'Github issue', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Discord', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Email', tiers: { Free: 'Best effort', Team: 'Response within 48h', Enterprise: 'Response within 3h' } },
+			{ name: 'Email', tiers: { Free: 'Best effort', Team: 'Response within 24h', Enterprise: 'Response within 1h' } },
+			{ name: 'Dedicated Support and Automation Engineer', tiers: { Free: '', Team: '', Enterprise: true } },
+
 		],
 	},
 ]
