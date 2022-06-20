@@ -37,25 +37,25 @@ output a graph to Slack.
 
 Log into your windmill instance, create or select a workspace and land on the
 windmill dashboard. Select the Flows icon from the navigation bar on the left.
-![Add script](../assets/flows/dashboard.png)
+![Add script](./assets/flows/dashboard.png)
 
 ### 2: Select Flows
 
 All previously created Flows can be accessed from the Flows dashboard. To create
 a new Flow, click the **'New Flow'** button in the top right hand corner.
-![Add script](../assets/flows/flow-dashboard.png)
+![Add script](./assets/flows/flow-dashboard.png)
 
 ### 3: Create New Flow
 
 Input a title for the Flow and optionally a brief summary of what the Flow will
 do. A more detailed description of the flow can also be added.
-![Add script](../assets/flows/flow-metadata.png)
+![Add script](./assets/flows/flow-metadata.png)
 
 ### 4: Add Flow Inputs
 
 Using the Flow input wizard or the json-schema, an arguments can be given to the
 flow which can be accessed at any step of the flow.\
-![Add script](../assets/flows/flow-input.png)
+![Add script](./assets/flows/flow-input.png)
 
 ### 5: Add HTTP Get Request Step Script
 
@@ -66,8 +66,8 @@ Windmill. In order to send a simple HTTP Get Request I will select the Hub icon,
 Once I've found the script, I can click select it and Windmill will
 automatically populate it in the step script. I'll then add a static 'url'
 argument of the end point I want to send a Get Request to in order to access the
-User Growth Data. ![Add script](../assets/flows/search-hub-script.png)
-![Add script](../assets/flows/flow-step1.png)
+User Growth Data. ![Add script](./assets/flows/search-hub-script.png)
+![Add script](./assets/flows/flow-step1.png)
 
 ### 6: Add Python Graph Step Script with Dynamic JavaScript
 
@@ -79,23 +79,23 @@ chart that will be converted to Bytes and output to the next step script. We
 will use the **previous_result** object which contains the result of the
 previous step. Windmill automatically assigns the fieldname **"res1"** for the
 first output of the script if it is not specified.
-![Add script](../assets/flows/flow-step2.png)
+![Add script](./assets/flows/flow-step2.png)
 
 ### 7: Output Graph to Slack
 
 To output the graph to Slack add one more step script using the Windmill Hub
 'send_slack_image' path. Again, use the dynamic JavaScript to connect the output
 of step script 2 to the input of step script 3.
-![Add script](../assets/flows/flow-step3.png)
+![Add script](./assets/flows/flow-step3.png)
 
 ### 8: Preview Flow
 
 Now that the Flow is complete, use preview mode to see the output of each step
 script and ensure that there are no errors.
-![Add script](../assets/flows/flow-preview.png)
+![Add script](./assets/flows/flow-preview.png)
 
 ### Deploy your Flow!
 
 Click the Next button and then save your flow. You can run your newly created
 flow from the Flows page or schedule your Flow on the schedules page.
-![Add script](../assets/flows/slack-output.png)
+![Add script](./assets/flows/slack-output.png)
