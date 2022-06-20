@@ -36,11 +36,11 @@ main concepts: scripts, accepting user input, and runs.
 
 Log into your windmill instance. You will land on the dashboard.
 
-![Dashboard](assets/intro/dashboard.png)
+![Dashboard](../assets/intro/dashboard.png)
 
 ### Step 2: Create a script
 
-![Add script](assets/intro/add-script.png)
+![Add script](../assets/intro/add-script.png)
 
 Use the **Add script** button to create a new script. It'll open the create
 page, with three sections:
@@ -71,19 +71,19 @@ argument values and a main function accepting those arguments.
   called at runtime. It's recommended to add type annotations to that main
   function: Windmill can infer arguments from the main's function signature.
 
-![Add script](assets/intro/add-script-2.png)
+![Add script](../assets/intro/add-script-2.png)
 
 Windmill parses the main function signature, infers argument names and types,
 and pref-fills the arguments section. Read more about
 [arguments](reference#script-arguments).
 
-![Add script](assets/intro/add-script-3.png)
+![Add script](../assets/intro/add-script-3.png)
 
 All set! Save your work, and you'll land on the script page. Note that scripts
 are [versioned](reference#versioning), and each new edit creates a new script
 version.
 
-![view](assets/intro/view-script.png)
+![view](../assets/intro/view-script.png)
 
 ### Step 3: Run!
 
@@ -91,12 +91,12 @@ Now let's look at what users of this script will do. Click on the **run** button
 to run this script. You'll see the user input form we defined earlier. Note what
 happens if you don't provide input:
 
-![Run](assets/intro/run-script.png)
+![Run](../assets/intro/run-script.png)
 
 Fill in the fields, then hit run. You should see a run view, as well as your
 logs. All script runs are also available in the **Runs** menu on the left.
 
-![view](assets/intro/view-result.png)
+![view](../assets/intro/view-result.png)
 
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
