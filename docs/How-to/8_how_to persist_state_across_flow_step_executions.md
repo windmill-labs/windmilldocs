@@ -141,35 +141,29 @@ import * as wmill from "https://deno.land/x/windmill@v1.14.3/index.ts";
 import { Client } from "https://deno.land/x/postgres@v0.16.1/mod.ts";
 
 function getValue(obj) {
-  for (var i in obj) {
-    if (obj.hasOwnProperty(i)) {
-      return obj[i];
+    for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+            return obj[i];
+        }
     }
-  }
 }
 
 export async function main(data: object) {
-  const before = await wmill.getInternalState();
-  var property = "";
-  for (var key in data) {
-    property = key;
+    const before = await wmill.getInternalState();
+    const key = Object.keys(data)[0];
     await wmill.setInternalState({ [key]: data[key] });
-  }
-  const after = await wmill.getInternalState();
+    const after = await wmill.getInternalState();
+    const before_val: number = getValue(before);
+    const after_val: number = getValue(after);
 
-  const before_val: number = getValue(before);
-  const after_val: number = getValue(after);
+    var notification: string =
+        `No new Github stars on the following repo: \n ${key} : ${before_val} Stars`;
+    if (after_val > before_val) {
+        const difference: number = after_val - before_val;
+        notification =
+            `You have received ${difference} new Github stars on the following repo:\n${key} `;
+    }
 
-  var notification: string =
-    `No new Github stars on the following repo: \n ${property} : ${before_val} Stars`;
-  if (after_val > before_val) {
-    const difference: number = after_val - before_val;
-    notification =
-      `You have received ${difference} new Github stars on the following repo:\n${property} `;
-  }
-
-  return notification;
+    return notification;
 }
-
-
 ```
