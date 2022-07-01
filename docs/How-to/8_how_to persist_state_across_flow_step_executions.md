@@ -52,9 +52,8 @@ If the repo is not in the database, the script will add it. Additionally, if the
 ```js
 // only do the following import if you require your script to interact with the windmill
 // for instance to get a variable or resource
-import * as wmill from "https://deno.land/x/windmill@v1.14.6/mod.ts";
+import * as wmill from "https://deno.land/x/windmill@v1.15.1/mod.ts";
 import { Client } from "https://deno.land/x/postgres@v0.16.1/mod.ts";
-import { databaseUrlFromResource } from "https://deno.land/x/windmill@v1.15.1/mod.ts";
 
 export async function main(username: string, new_entries: object) {
   //Postgres Database Connection
