@@ -27,8 +27,10 @@ for the following kind of profiles:
   join the team at the end.
 
 If you are interested to join the adventure. Apply by sending an email at
-hiring@windmill.dev. Be sure to mention which role you are interested in if any
-applicable. You may also define your own role!
+hiring@windmill.dev or on
+<https://www.ycombinator.com/companies/windmill/jobs/WlSHAed-founding-engineer>.
+Be sure to mention which role you are interested in if any applicable. You may
+also define your own role!
 
 We are **FULLY REMOTE** forever but we will organize offsites on a regular
 basis. If you happen to live in Paris, we have a small office in the 15th
