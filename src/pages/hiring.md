@@ -50,12 +50,10 @@ or have related experience.
 See more details on the YC role page:
 <https://www.ycombinator.com/companies/windmill/jobs/WlSHAed-founding-engineer>
 
-## Windmill.dev current team
+## Windmill Labs team
 
-windmill.dev is currently a project led by
-[@rubenfiszel](https://www.linkedin.com/in/rubenfiszel/) as a solo founder &
-CEO. He is a software engineer having conducted research on compilers at EPFL &
-Stanford and led software engineering teams at Palantir and
-[Inpher](https://inpher.io).
+- [@rubenfiszel](https://www.linkedin.com/in/rubenfiszel/) founder.
+- Founding Engineer Frontend: Faton Ramadani
+- Software Engineer Intern: Ross McCrann
 
 </div>
