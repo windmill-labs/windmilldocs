@@ -168,6 +168,9 @@ const roadmapItems = [
 	{
 		title: "SOC 2 and HIPAA compliance", description: ``, when: "End of Q4"
 	},
+	{
+		title: "Adapter for external Queuing and Worker systems such as Kafka and AWS Lambda/Fargate", description: `Windmill works out-of-the-box using Postgres and binary workers for the queuing and the execution of the scripts. We will provide adapters for running Windmill on top of external systems such as Kafka for queuing and AWS Lambda/Fargate for the worker infrastructure. Furthermore, Helm templates will be provided for installation on top of a k8s cluster.`, when: "End of Q4"
+	},
 	{ title: "Flow branching", description: "Flows will be able to branch into 2 different embedded flows based on Javascript predicates.", when: "End of Q3" },
 	{ title: "Flow error handling and recovery", description: "Flows will be able to allow handling of errors with another dedicated flow.", when: "End of Q3" },
 
