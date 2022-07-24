@@ -153,14 +153,25 @@ function HomepageHeader()
 
 
 const roadmapItems = [
-	{ title: "Approval module for flows (Slack/Email/Push)", description: "Ask approval to a user or group through Slack, Email, Push notification as a blocking step of a flow", when: "End of Q2" },
+	{ title: "Approval module for flows (Slack/Email/Push)", description: "Ask approval to a user or group through Slack, Email, Push notification as a blocking step of a flow", when: "End of Q3" },
 	{
-		title: "Embeddable Apps", description: `Make embeddable the apps/flows/scripts as a Javascript Widget or IFrame to be integrated into external frontends.
-	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q2"
+		title: "Embeddable Apps", description: `Make embeddable the Flows and Scripts as javascript Widgets or IFrame to be integrated into external frontends.
+	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q3"
 	},
 	{
-		title: "Advanced OAuth account management", description: `Most apps and automations will need tokens that could be conveniently retrieved from an OAuth integration with the external app.`, when: "End of Q2"
+		title: "Integrate with 100 Oauth2 providers and have 1000+ approved scripts on the WindmillHub", description: `To unlock all the compounding potential of Windmill, we will add the convenience of 
+		adding all main OAuth2 providers and an exhaustive choice of scripts in the Hub for everyone to focus solely on their custom logic.`, when: "End of Q3"
 	},
+	{
+		title: "Standardization of the OpenFlow spec", description: `Flows are serialized as immutables json values. Those flows respect a spec that we call OpenFlow and that will be thoroughly documented and standardized for anyone to implement their own OpenFlow builder and executor.`, when: "End of Q3"
+	},
+	{
+		title: "SOC 2 and HIPAA compliance", description: ``, when: "End of Q4"
+	},
+	{ title: "Flow branching", description: "Flows will be able to branch into 2 different embedded flows based on Javascript predicates.", when: "End of Q3" },
+	{ title: "Flow error handling and recovery", description: "Flows will be able to allow handling of errors with another dedicated flow.", when: "End of Q3" },
+
+
 ]
 
 function Roadmap()
