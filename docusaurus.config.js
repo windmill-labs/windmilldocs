@@ -102,8 +102,17 @@ const config = {
 			},
 			footer: {
 				style: 'dark',
-				links: [],
-				copyright: `&copy; 2022 windmill-labs by @rubenfiszel`
+				links: [
+					{
+						label: 'Privacy Policy',
+						to: '/privacy_policy',
+					},
+					{
+						label: 'Terms of Service',
+						to: '/terms_of_service',
+					},
+				],
+				copyright: `&copy; 2022 Windmill Labs, Inc`
 			},
 			prism: {
 				theme: lightCodeTheme,
