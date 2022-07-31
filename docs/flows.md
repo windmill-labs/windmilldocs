@@ -7,20 +7,25 @@ be used by subsequent step scripts. Flows contain all of the benefits of
 Windmill Scripts, offering immediate functionality such as third party app
 integrations, SQL queries, Slack, custom scripts and more!
 
+Flows in windmill follows the [OpenFlow Spec](/docs/openflow).
+
 - **Flow Inputs** arguments for each flow can be edited using the flow input
   wizard or by editing their jsonschema.
 
-- **Step Scripts** can be dynamically added to each flow by clicking the '+'
-  button. Scripts can be automatically imported from
+- **Scripts** can be dynamically added to each flow by clicking the '+' button.
+  Scripts can be automatically imported from
   [Windmil Hub](https://hub.windmill.dev/) selecting a Hub path or by using your
   own custom scripts created in Windmill by selecting a Script path.
 
-- **Step Script Inputs** for each script correspond to the input spec of the
-  selected script and can be added to each step script statically or dynamically
-  using JavaScript.
+- **Scripts Inputs** for each script correspond to the inputs as defined by the
+  input spec of selected script and can be defined using static values or
+  javascript expressions (and a mix of both using templates)
 
-- **Dynamic JavaScript Input** arguments unlock the power of Windmill Flows by
-  allowing each step script to access inputs, variables, resources and outputs
+- **Raw Javascript Editor**: In most cases, the templating engine using
+  `static value ${js.expr}` for mixing static strings and dynamic expression as
+  string is sufficient. But in some cases, you need the full power of javascript
+  and the Raw Javascript Editor does just that allowing each step script input
+  to be a complex javscript expression inputs, variables, resources and outputs
   from other steps in the Flow.
 
 - **Preview Mode** is available for each Step in a Flow, enabling you to see the

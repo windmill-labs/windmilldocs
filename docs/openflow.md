@@ -1,4 +1,4 @@
-# OpenFlow
+# OpenFlow Spec
 
 OpenFlow is an open standard for defining "Flows" where a flow is a directed
 graph in which every node represents a step of computation. In other words, it
