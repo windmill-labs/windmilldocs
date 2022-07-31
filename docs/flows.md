@@ -1,15 +1,14 @@
-# Windmill Flows
+# Flows
 
-Windmill **Flows** allow you to streamline complex processes and operations by
-chaining together custom scripts to build dynamic apps. Each **Flow** is
-composed of one or more step scripts that can accept inputs, execute a function
-and then produce an output which can be used by subsequent step scripts. Flows
-contain all of the benefits of Windmill Scripts, offering immediate
-functionality such as third party app integrations, SQL queries, Slack, custom
-scripts and more!
+**Flows** allow you to streamline complex processes and operations by chaining
+together custom scripts. Each **Flow** is composed of one or more step scripts
+that can accept inputs, execute a function and then produce an output which can
+be used by subsequent step scripts. Flows contain all of the benefits of
+Windmill Scripts, offering immediate functionality such as third party app
+integrations, SQL queries, Slack, custom scripts and more!
 
 - **Flow Inputs** arguments for each flow can be edited using the flow input
-  wizard or by editing their json-schema.
+  wizard or by editing their jsonschema.
 
 - **Step Scripts** can be dynamically added to each flow by clicking the '+'
   button. Scripts can be automatically imported from
