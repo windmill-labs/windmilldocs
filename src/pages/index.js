@@ -35,7 +35,7 @@ function HomepageHeader()
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane</span>
 							</h2>
 							<h3 className="mt-8 text-sm tracking-tight font-bold text-gray-900 font-mono">
-								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations</span>
+								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations. Replace all your serverless and queue-worker infra.</span>
 							</h3>
 						</div>
 						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">
