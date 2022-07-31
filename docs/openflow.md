@@ -14,7 +14,7 @@ practice, go to WindmillHub and pick a flow (e.g
 [Whenever an HN message contains a mention, publish it to slack](https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack)),
 then Flow -> JSON.
 
-## The language itself
+## OpenFlow
 
 Its OpenApi definition can be found at:
 https://github.com/windmill-labs/windmill/blob/main/openflow.openapi.yaml
@@ -42,6 +42,8 @@ It contains a short line summary, a description, a schema which is the
 JSONSchema that constraints the JSON it takes as an input. FlowValue is where
 the logic of the flow is actually defined:
 
+## FlowValue
+
 ```yaml
 FlowValue:
   type: object
@@ -60,6 +62,8 @@ A Flow is just a sequence of modules, and an optional failure module that will
 be triggered to handle a failure at any point of the flow.
 
 Now let's see what is a module:
+
+## FlowModule and InputTransform
 
 ```yaml
     FlowModule:
@@ -140,6 +144,8 @@ There are also 2 optional fields:
   ignore the runs that have been skipped.
 
 Now let's see how how the Module value is itself defined.
+
+## FlowModuleValue
 
 You will see below that there are 4 kinds of modules:
 
