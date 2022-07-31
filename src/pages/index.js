@@ -17,28 +17,34 @@ function HomepageHeader()
 {
 
 	return (
-		<main class="mx-auto max-w-7xl px-4 sm:mt-20 sm:px-6 ">
-			<div class="lg:grid lg:grid-cols-12 lg:gap-8">
+		<main class="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6 ">
+			<div class="lg:grid lg:grid-cols-12 lg:gap-20">
 				<div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
 					<div >
 						<div className="mt-10 sm:max-w-xl">
-							<h1 className="text-xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-xl font-mono">
+							<h1 className="text-xl tracking-tight font-bold text-gray-900  font-mono">
 								<span className="block xl:inline"><SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
-									Fully <a target="_blank" href="https://github.com/windmill-labs/windmill">OSS</a> and self-hostable <a className="inline-block" target="_blank" href="https://github.com/windmill-labs/windmill"><img src="https://img.shields.io/github/stars/windmill-labs/windmill?style=flat"></img></a></span>
+									Truly <a target="_blank" href="https://github.com/windmill-labs/windmill">Open-source</a> and self-hostable <a className="inline-block" target="_blank" href="https://github.com/windmill-labs/windmill"><img src="https://img.shields.io/github/stars/windmill-labs/windmill?style=flat"></img></a></span>
 							</h1>
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline">Org-wide multi-steps <span className="block text-blue-600 xl:inline">apps</span> and <span className="block text-blue-600 xl:inline">automations</span>{' '}from minimal community and custom <span className="block text-blue-600 xl:inline">scripts</span> (typescript/python)</span>
+								<span className="block xl:inline"><span className="block text-blue-600 xl:inline">Internal apps</span> and <span className="block text-blue-600 xl:inline">integrations</span>{' '}with the full power of code, without the pain</span>
 							</h1>
+							<h2 className="mt-8 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
+								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane</span>
+							</h2>
+							<h3 className="mt-8 text-sm tracking-tight font-bold text-gray-900 font-mono">
+								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations</span>
+							</h3>
 						</div>
 						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">
 							<div className="shadow">
 								<a
 									href="https://app.windmill.dev/user/login"
-									className="w-full rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
+									className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
 								>
-									Windmill Cloud
+									Windmill Cloud (Try it)
 								</a>
 							</div>
 							<div className="mt-3 shadow sm:mt-0 rounded sm:ml-10">
@@ -60,6 +66,9 @@ function HomepageHeader()
 							</a>
 						</div>
 					</div>
+					<div class="mt-14 z-40 flex flex-row-reverse">
+						<div class="text-gray-600 font-md ">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
+					</div>
 				</div>
 				<div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
 					<svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden" width="640" height="784" fill="none" viewBox="0 0 640 784" aria-hidden="true">
@@ -75,7 +84,7 @@ function HomepageHeader()
 						<BrowserOnly>{() =>
 							<VideoPlayer>
 								<button type="button" class="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									<span class="sr-only">Watch our video to learn more</span>
+									<span class="sr-only">Windmill demo</span>
 									<img class="w-full" src="/img/editor.png" alt="" />
 									<div class="absolute inset-0 w-full h-full flex items-center justify-center" aria-hidden="true">
 										<svg class="h-20 w-20 text-blue-600" fill="currentColor" viewBox="0 0 84 84">
@@ -87,10 +96,15 @@ function HomepageHeader()
 							</VideoPlayer>
 						}
 						</BrowserOnly>
+
 					</div>
+
 				</div>
+
 			</div>
+
 		</main>
+
 
 	);
 }
