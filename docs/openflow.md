@@ -19,23 +19,18 @@ then Flow -> JSON.
 Its OpenApi definition can be found at:
 https://github.com/windmill-labs/windmill/blob/main/openflow.openapi.yaml
 
+We will use a typescript equivalent of the OpenApi definition for ease of
+readability throughout the rest of the document.
+
 OpenFlow is portable and its root object is defined as follows:
 
-```yaml
-OpenFlow:
-  type: object
-  properties:
-    summary:
-        type: string
-    description:
-        type: string
-    value:
-        $ref: "#/components/schemas/FlowValue"
-    schema:
-        type: object
-    required:
-    - summary
-    - value
+```typescript
+type OpenFlow = {
+  summary: string;
+  description?: string;
+  value: FlowValue;
+  schema?: any;
+};
 ```
 
 It contains a short line summary, a description, a schema which is the
@@ -44,18 +39,11 @@ the logic of the flow is actually defined:
 
 ## FlowValue
 
-```yaml
-FlowValue:
-  type: object
-  properties:
-    modules:
-      type: array
-      items:
-        $ref: "#/components/schemas/FlowModule"
-    failure_module:
-      $ref: "#/components/schemas/FlowModule"
-  required:
-    - modules
+```typescript
+type FlowValue = {
+  modules: Array<FlowModule>;
+  failure_module?: FlowModule;
+};
 ```
 
 A Flow is just a sequence of modules, and an optional failure module that will
@@ -65,58 +53,49 @@ Now let's see what is a module:
 
 ## FlowModule and InputTransform
 
-```yaml
-    FlowModule:
-      type: object
-      properties:
-        input_transform:
-          type: object
-          additionalProperties:
-            $ref: "#/components/schemas/InputTransform"
-        value:
-          $ref: "#/components/schemas/FlowModuleValue"
-        stop_after_if_expr:
-          type: string
-        skip_if_stopped:
-          type: boolean
-      required:
-        - input_transform
-        - value
+```typescript
+type FlowModule = {
+  input_transform: Record<string, InputTransform>;
+  value: RawScript | PathScript | ForloopFlow | PathFlow;
+  stop_after_if_expr?: string;
+  skip_if_stopped?: boolean;
+};
 
-    InputTransform:
-      oneOf:
-        - $ref: "#/components/schemas/StaticTransform"
-        - $ref: "#/components/schemas/JavascriptTransform"
-      discriminator:
-        propertyName: type
-        mapping:
-          static: "#/components/schemas/StaticTransform"
-          javascript: "#/components/schemas/JavascriptTransform"
+type InputTransform = StaticTransform | JavascriptTransform;
 
-    StaticTransform:
-      type: object
-      properties:
-        value: {}
-        type:
-          type: string
-          enum:
-            - javascript
-      required:
-        - expr
-        - type
+type StaticTransform = {
+  value?: any;
+  type: "static";
+};
 
-    JavascriptTransform:
-      type: object
-      properties:
-        expr:
-          type: string
-        type:
-          type: string
-          enum:
-            - javascript
-      required:
-        - expr
-        - type
+type JavascriptTransform = {
+  expr: string;
+  type: "javascript";
+};
+
+type RawScript = {
+  content: string;
+  language: "deno" | "python3";
+  path?: string;
+  type: "rawscript";
+};
+
+type PathScript = {
+  path: string;
+  type: "script";
+};
+
+type ForloopFlow = {
+  value: FlowValue;
+  iterator: InputTransform;
+  skip_failures: boolean;
+  type: "forloopflow";
+};
+
+type PathFlow = {
+  path?: string;
+  type: "flow";
+};
 ```
 
 So a module contains input_transform as a dict from fields (or input of the
@@ -145,16 +124,14 @@ There are also 2 optional fields:
 
 Now let's see how how the Module value is itself defined.
 
-## FlowModuleValue
+There are 4 kinds of module currently (version 1.26.2):
 
-You will see below that there are 4 kinds of modules:
-
-- rawscript: Embed a full Deno or Javascript script inside the flow. Useful when
-  the script is not generic but only makes sense within this flow.
-- script: When you can refer to a script by path (including a path to the hub
+- `rawscript`: Embed a full Deno or Javascript script inside the flow. Useful
+  when the script is not generic but only makes sense within this flow.
+- `script`: When you can refer to a script by path (including a path to the hub
   using the `hub/` prefix)
-- flow: Refer to another flow by path.
-- forloopflow: Trigger for-loops that will iterate over a list and trigger one
+- `flow`: Refer to another flow by path.
+- `forloopflow`: Trigger for-loops that will iterate over a list and trigger one
   flow per element. The list is built evaluating the javascript expression
   inside `iterator` taking `result` as an input being the result of the previous
   module. For instance in Windmill, most flows use the iterator `result.res1`
@@ -162,87 +139,5 @@ You will see below that there are 4 kinds of modules:
   an input the embedding flow inputs, the entire result of the previous step and
   `_value` and `_index` as respectively the value being iterated and its
   corresponding index.
-
-```yaml
-    FlowModuleValue:
-      oneOf:
-        - $ref: "#/components/schemas/RawScript"
-        - $ref: "#/components/schemas/PathScript"
-        - $ref: "#/components/schemas/ForloopFlow"
-        - $ref: "#/components/schemas/PathFlow"
-      discriminator:
-        propertyName: type
-        mapping:
-          rawscript: "#/components/schemas/RawScript"
-          script: "#/components/schemas/PathScript"
-          forloopflow: "#/components/schemas/ForloopFlow"
-          flow: "#/components/schemas/PathFlow"
-
-      required:
-        - type
-
-    RawScript:
-      type: object
-      properties:
-        content:
-          type: string
-        language:
-          type: string
-          enum:
-            - deno
-            - python3
-        path:
-          type: string
-        type:
-          type: string
-      required:
-        - type
-        - content
-        - language
-
-    PathScript:
-      type: object
-      properties:
-        path:
-          type: string
-        type:
-          type: string
-          enum:
-            - script
-      required:
-        - type
-        - path
-
-    PathFlow:
-      type: object
-      properties:
-        path:
-          type: string
-        type:
-          type: string
-          enum:
-            - flow
-      required:
-        - type
-
-    ForloopFlow:
-      type: object
-      properties:
-        value:
-          $ref: "#/components/schemas/FlowValue"
-        iterator:
-          $ref: "#/components/schemas/InputTransform"
-        skip_failures:
-          type: boolean
-        type:
-          type: string
-          enum:
-            - forloopflow
-      required:
-        - value
-        - iterator
-        - skip_failures
-        - type
-```
 
 Et voilà, we have completed our tour of OpenFlow.
