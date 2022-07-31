@@ -29,7 +29,7 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline"><span className="block text-blue-600 xl:inline">Internal apps</span> and <span className="block text-blue-600 xl:inline">integrations</span>{' '}with the full power of code, without the pain</span>
+								<span className="block xl:inline"><span className="block text-blue-600 xl:inline">Internal apps</span> and <span className="block text-blue-600 xl:inline">integrations</span>{' '}with the full power of code, without the hassle</span>
 							</h1>
 							<h2 className="mt-8 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane</span>
