@@ -112,7 +112,7 @@ const config = {
 						to: '/terms_of_service',
 					},
 				],
-				copyright: `&copy; 2022 Windmill Labs, Inc'
+				copyright: `&copy; 2022 Windmill Labs, Inc`
 			},
 			prism: {
 				theme: lightCodeTheme,
