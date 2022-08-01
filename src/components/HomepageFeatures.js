@@ -166,7 +166,7 @@ export default function HomepageFeatures()
 						<div>
 							<div className="mt-6">
 								<h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
-									Write code as you normally would, chain them as <a href="/docs/openflow">OpenFlows</a> in a low-code UI
+									Write code as you would for a script, chain them as <a href="/docs/openflow">OpenFlows</a> in a low-code UI
 								</h2>
 								<p className="mt-4 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.

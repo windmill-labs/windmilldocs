@@ -175,7 +175,7 @@ const roadmapItems = [
 	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q3"
 	},
 	{
-		title: "Integrate with 100 Oauth2 providers and have 1000+ approved scripts on the WindmillHub", description: `To unlock all the compounding potential of Windmill, we will add the convenience of 
+		title: "Integration with 100+ OAuth providers and 1000+ approved scripts on the WindmillHub", description: `To unlock all the compounding potential of Windmill, we will add the convenience of 
 		adding all main OAuth2 providers and an exhaustive choice of scripts in the Hub for everyone to focus solely on their custom logic.`, when: "End of Q3"
 	},
 	{
