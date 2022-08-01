@@ -19,7 +19,7 @@ function HomepageHeader()
 	return (
 		<main class="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6 ">
 			<div class="lg:grid lg:grid-cols-12 lg:gap-20">
-				<div class="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+				<div class="md:max-w-2xl md:mx-auto lg:col-span-6">
 					<div >
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-xl tracking-tight font-bold text-gray-900  font-mono">
@@ -38,35 +38,37 @@ function HomepageHeader()
 								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations. Replace all your serverless and workflows infra.</span>
 							</h3>
 						</div>
-						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">
-							<div className="shadow">
-								<a
-									href="https://app.windmill.dev/user/login"
-									className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
-								>
-									Windmill Cloud (Try it)
-								</a>
-							</div>
-							<div className="mt-3 shadow sm:mt-0 rounded sm:ml-10">
-								<a
-									href="/docs/intro"
-									className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-								>
-									Quickstart
-								</a>
+						<div class="w-full">
+							<div className="mt-10 grid grid-cols-2 gap-8 max-w-md mx-auto">
+								<div className="shadow w-full col-span-1">
+									<a
+										href="https://app.windmill.dev/user/login"
+										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
+									>
+										Try the cloud app
+									</a>
+								</div>
+								<div className="sm:mt-0 rounded w-full col-span-1">
+									<a
+										href="/docs/intro"
+										className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+									>
+										Quickstart
+									</a>
+								</div>
 							</div>
 						</div>
-						<div className="my-8 max-w-sm mx-auto">
+						<div className="mt-10 text-center w-full">
 							<a
 								target='_blank'
 								href="https://forms.gle/9ANRUru75nqrKT6C9"
-								className="mx-20 shadow flex items-center rounded justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 "
+								className="text-gray-600"
 							>
-								Get a demo
+								Schedule a <span className="text-blue-600">demo</span>
 							</a>
 						</div>
 					</div>
-					<div class="mt-14 z-40 flex flex-row-reverse">
+					<div class="mt-10 z-40 flex flex-row-reverse">
 						<div class="text-gray-600 font-md ">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
 					</div>
 				</div>

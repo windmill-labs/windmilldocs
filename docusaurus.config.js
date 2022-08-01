@@ -87,6 +87,11 @@ const config = {
 						label: 'WindmillHub'
 					},
 					{
+						to: 'https://discord.com/invite/V7PM2YHsPB',
+						position: 'left',
+						label: 'Discord'
+					},
+					{
 						href: '/hiring',
 						position: 'right',
 						label: 'Join us'
