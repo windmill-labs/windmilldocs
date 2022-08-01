@@ -95,7 +95,7 @@ the activity on our Service and we hold certain information.
 Cookies are files with a small amount of data which may include an anonymous
 unique identifier. Cookies are sent to your browser from a website and stored on
 your device. Other tracking technologies are also used such as beacons, tags and
-scripts to collect and track information and to improve and analyse our Service.
+scripts to collect and track information and to improve and analyze our Service.
 
 You can instruct your browser to refuse all cookies or to indicate when a cookie
 is being sent. However, if you do not accept cookies, you may not be able to use
@@ -299,7 +299,7 @@ page of your web browser.
 
 We may employ third party companies and individuals to facilitate our Service
 ("Service Providers"), provide Service on our behalf, perform Service-related
-services or assist us in analyzing how our Service is used.
+services or assist us in analysing how our Service is used.
 
 These third parties have access to your Personal Data only to perform these
 tasks on our behalf and are obligated not to disclose or use it for any other
