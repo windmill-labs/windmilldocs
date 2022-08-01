@@ -198,8 +198,10 @@ function Roadmap()
 
 	return (
 		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
-			<div className="max-w-3xl mx-auto divide-y-2 divide-gray-200">
+			<div className="max-w-3xl mx-auto ">
 				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Roadmap</h2>
+				<p class="text-center text-gray-500 text-sm my-2">Our full updated roadmap is <a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a></p>
+
 				<ul role="list" class="mt-6 divide-y divide-gray-200">
 					{roadmapItems.map((x) =>
 						<li class="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
