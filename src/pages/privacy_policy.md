@@ -95,7 +95,7 @@ the activity on our Service and we hold certain information.
 Cookies are files with a small amount of data which may include an anonymous
 unique identifier. Cookies are sent to your browser from a website and stored on
 your device. Other tracking technologies are also used such as beacons, tags and
-scripts to collect and track information and to improve and analyze our Service.
+scripts to collect and track information and to improve and analyse our Service.
 
 You can instruct your browser to refuse all cookies or to indicate when a cookie
 is being sent. However, if you do not accept cookies, you may not be able to use
@@ -180,7 +180,7 @@ information represents your agreement to that transfer.
 
 Windmill Labs, Inc will take all the steps reasonably necessary to ensure that
 your data is treated securely and in accordance with this Privacy Policy and no
-transfer of your Personal Data will take place to an organization or a country
+transfer of your Personal Data will take place to an organisation or a country
 unless there are adequate controls in place including the security of your data
 and other personal information.
 
