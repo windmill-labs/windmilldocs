@@ -171,7 +171,7 @@ export default function HomepageFeatures()
 								<p className="mt-4 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.
 									<br /><br />
-									Secure your sensitive information and passwords: your <span className='font-bold'>secrets</span> are tightly permissioned.
+									Credentials and sensitive values are tightly permissioned and stored securely as <span className='font-bold'>secrets</span>
 									<br /><br />
 									Keep track of operations with <span className='font-bold'>audit logs</span> enabling you to root cause quickly any mishaps.
 									<br /><br />
