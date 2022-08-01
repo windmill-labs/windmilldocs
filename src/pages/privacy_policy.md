@@ -180,7 +180,7 @@ information represents your agreement to that transfer.
 
 Windmill Labs, Inc will take all the steps reasonably necessary to ensure that
 your data is treated securely and in accordance with this Privacy Policy and no
-transfer of your Personal Data will take place to an organisation or a country
+transfer of your Personal Data will take place to an organization or a country
 unless there are adequate controls in place including the security of your data
 and other personal information.
 
@@ -299,7 +299,7 @@ page of your web browser.
 
 We may employ third party companies and individuals to facilitate our Service
 ("Service Providers"), provide Service on our behalf, perform Service-related
-services or assist us in analysing how our Service is used.
+services or assist us in analyzing how our Service is used.
 
 These third parties have access to your Personal Data only to perform these
 tasks on our behalf and are obligated not to disclose or use it for any other

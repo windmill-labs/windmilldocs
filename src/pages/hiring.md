@@ -32,7 +32,7 @@ hiring@windmill.dev or on
 Be sure to mention which role you are interested in if any applicable. You may
 also define your own role!
 
-We are **FULLY REMOTE** forever but we will organize offsites on a regular
+We are **FULLY REMOTE** forever but we will organize off-sites on a regular
 basis. If you happen to live in Paris, we have a small office in the 15th
 quarter.
 
@@ -44,7 +44,7 @@ or hosted on our cloud. You own the relationship with those companies, including
 the sales process and the acquisition funnel.
 
 Furthermore, windmill.dev can potentially grow as a tool for consultancy shops
-or as a consultancy itself for automations, it is a plus if you are interested
+or as a automation consultancy itself, it is a plus if you are interested
 or have related experience.
 
 ### Founding Engineer
