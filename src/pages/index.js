@@ -29,13 +29,13 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline"><span className="block text-blue-600 xl:inline">Internal apps</span> and <span className="block text-blue-600 xl:inline">integrations</span>{' '}with the full power of code, without the hassle</span>
+								<span className="block xl:inline"><span className="text-blue-600">Internal apps</span> <span className="block text-blue-600">integrations</span> <span className="text-blue-600">workflows</span> with the full power of code, without the hassle</span>
 							</h1>
 							<h2 className="mt-8 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
-								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane</span>
+								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal</span>
 							</h2>
 							<h3 className="mt-8 text-sm tracking-tight font-bold text-gray-900 font-mono">
-								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations. Replace all your serverless and queue-worker infra.</span>
+								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations. Replace all your serverless and workflows infra.</span>
 							</h3>
 						</div>
 						<div className="mt-5  max-w-md mx-auto sm:flex sm:justify-center lg:mt-10">

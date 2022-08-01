@@ -24,6 +24,7 @@ import
 	LibraryIcon,
 	DocumentAddIcon,
 } from '@heroicons/react/outline'
+import Scripts from './Workflow';
 
 const features = [
 	{
@@ -128,7 +129,7 @@ export default function HomepageFeatures()
 							<div>
 								<div className="mt-6">
 									<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
-										Build complex workflows in minutes without accumulating UI tech debt
+										Build complex workflows and apps in minutes by chaining minimal scripts
 									</h2>
 									<p className="mt-4 text-lg text-gray-500">
 										Apps and their UI are automatically generated and continuously updated from your script parameters. Refine the UI if desired.
@@ -138,7 +139,7 @@ export default function HomepageFeatures()
 										Develop and maintain scripts from our feature-complete webeditor or use your own IDE and deploy from Github.
 										<br /><br />
 										<span className='font-bold'>The generated UI makes it very simple to expose your app to non-technical users while
-											requiring minimal efforts to develop and maintain.</span>
+											requiring minimal efforts to develop and maintain. Every script can be a standalone app in itself or be used as a step inside a Flow.</span>
 									</p>
 								</div>
 							</div>
@@ -165,7 +166,7 @@ export default function HomepageFeatures()
 						<div>
 							<div className="mt-6">
 								<h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
-									Make your internal operations production grade with ease
+									Write code as you normally would, chain them as <a href="/docs/openflow">OpenFlows</a> in a low-code UI
 								</h2>
 								<p className="mt-4 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.
@@ -185,12 +186,8 @@ export default function HomepageFeatures()
 						<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
 							<div className='w-full lg:max-w-none m-auto'>
 
-								<img
-									className="rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 "
-									src="/img/run_script.png"
-									alt="Run UI"
-								/>
-								<p className='mt-10 text-gray-700 italic  text-sm text-center'>The generated apps are not limited to simple fields. Upload files, use lists, etc...</p>
+								<Scripts></Scripts>
+								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Rendering of a flow that get scheduled every minute to send notifications every time your company is mentionned on HN. See it on the <a href="https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack">hub</a> or <a href="https://app.windmill.dev/flows/add?hub=13">edit it in windmill directly</a></p>
 
 							</div>
 						</div>
@@ -213,7 +210,7 @@ export default function HomepageFeatures()
 									<br /><br />
 									Many tools do only one thing, and are focused on one specific problem. You need to setup many different niche tools from whom you exploit only a tiny portion of the features.
 									<br /><br />
-									Unlike other automation tools, we do not reinvent the wheel with proprietary connectors and UI, connect to any API using any standard python or typescript client or dependencies available in PyPI or Deno registries.<br /><br />
+									Unlike other automation tools, we do not reinvent the wheel with proprietary connectors and UI, connect to any API using any standard python or typescript client or dependencies available in PyPI or Deno compatible packages.<br /><br />
 									<span className='font-bold'>Any python or typescript (deno) library becomes a connector.</span><br />
 									<div className="flex flex-row gap-4 mt-10 justify-center">
 										<Postgres />

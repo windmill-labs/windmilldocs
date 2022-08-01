@@ -1,0 +1,15 @@
+import React from 'react';
+import Link from '@docusaurus/Link';
+import CodeBlock from '@theme/CodeBlock';
+import denoScript from '!!raw-loader!./denoScript.mdx';
+export default function Scripts()
+{
+    return (
+        <div>
+            <p class="font-black text-lg w-full ml-2"><span>Inputs</span></p> <ul class="my-4 ml-6"><li class="list-disc flex flex-row"><h3><span class="font-semibold">slack<span class="text-sm text-gray-500 ml-2 font-normal">(optional)</span></span> <span class="text-sm italic text-indigo-800">(object, format: resource-slack)</span></h3><span class="ml-4 mt-2 text-xs"></span> </li><li class="list-disc flex flex-row"><h3><span class="font-semibold">channel<span class="text-red-600 font-normal">*</span></span> <span class="text-sm italic text-indigo-800">(string)</span></h3><span class="ml-4 mt-2 text-xs"></span> </li><li class="list-disc flex flex-row"><h3><span class="font-semibold">mentions<span class="text-red-600 font-normal">*</span></span> <span class="text-sm italic text-indigo-800">(array)</span></h3><span class="ml-4 mt-2 text-xs"></span> </li></ul> <p class="font-black text-lg my-6 w-full ml-2"><span>2 Steps</span> <span class="mt-4"></span></p> <ul class="-mb-8 w-full"><li class="w-full"><div class="relative pb-8 w-full"><span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span> <div class="relative flex space-x-3"><div><span class="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center ring-8 ring-white text-white">1</span></div> <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4 w-full"><div class="w-full"><p class="text-sm text-gray-500"><button class="mb-2 underline text-black">Raw deno script</button> <div class="border border-black p-2 bg-gray-50 w-full">
+                <CodeBlock language="ts">{denoScript}</CodeBlock>
+            </div></p></div></div></div></div> </li > <li class="w-full"><div class="relative pb-8 w-full"> <div class="relative flex space-x-3"><div><span class="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center ring-8 ring-white text-white">2</span></div> <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4 w-full"><div class="w-full"><p class="text-sm text-gray-500">For loop over step 1's result':
+                <div class="flow-root w-full p-4"><p class="font-black text-lg my-6 w-full ml-2"><span>1 Step</span> <span class="mt-4"></span></p> <ul class="-mb-8 w-full"><li class="w-full"><div class="relative pb-8 w-full"> <div class="relative flex space-x-3"><div><span class="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center ring-8 ring-white text-white">1</span></div> <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4 w-full"><div class="w-full"><p class="text-sm text-gray-500">Script from the hub 'Send message to Slack Channel' <a target="_blank" href="https://hub.windmill.dev/from_version/111/send_message_to_channel" class="font-medium text-gray-900">hub/111/send_message_to_channel</a></p></div></div></div></div> </li></ul></div></p></div></div></div></div> </li></ul >
+        </div >
+    )
+}

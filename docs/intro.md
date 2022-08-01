@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Intro
 
-Windmill helps turn your scripts into internal apps that automate repetitive
+Windmill turn your scripts into internal apps that automate repetitive
 workflows. It's common for engineers to hack together scripts to automate
 repetitive tasks for a non-technical user (sales, ops, customer support,
 customer success, etc). Examples include:
@@ -21,10 +21,10 @@ those teams. Usually, that doesn't happen because:
 - there's no agreed upon way to run those scripts
 - building a UI for scripts is time consuming
 - many issues arise along the way that are painful to solve (permissions,
-  collaboration, audit logs, secrets)
+  collaboration, audit logs, secrets, deployment)
 
-Windmills solves those problems, and makes sure that scripts become widely
-useful tools. The central tenet is: make building automation fast and easy, and
+Windmill solves those problems, and makes sure that scripts become widely useful
+tools. The central tenet is: make building automation fast and easy, and
 everybody will automate repetitive tasks and save a lot of time.
 
 ## Getting Started
