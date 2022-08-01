@@ -24,7 +24,7 @@ function HomepageHeader()
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-xl tracking-tight font-bold text-gray-900  font-mono">
 								<span className="block xl:inline"><SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
-									Truly <a target="_blank" href="https://github.com/windmill-labs/windmill">Open-source</a> and self-hostable <a className="inline-block" target="_blank" href="https://github.com/windmill-labs/windmill"><img src="https://img.shields.io/github/stars/windmill-labs/windmill?style=flat"></img></a></span>
+									Truly <a target="_blank" href="https://github.com/windmill-labs/windmill">Open-source</a> and self-hostable <a className="inline-block -mb-1" target="_blank" href="https://github.com/windmill-labs/windmill"><img src="https://img.shields.io/github/stars/windmill-labs/windmill?style=social"></img></a></span>
 							</h1>
 						</div>
 						<div className="mt-10 sm:max-w-xl">
@@ -172,11 +172,11 @@ const roadmapItems = [
 	{ title: "Approval module for flows (Slack/Email/Push)", description: "Ask approval to a user or group through Slack, Email, Push notification as a blocking step of a flow", when: "End of Q3" },
 	{
 		title: "Embeddable Apps", description: `Make embeddable the Flows and Scripts as javascript Widgets or IFrame to be integrated into external frontends.
-	 The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q3"
+						The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`, when: "End of Q3"
 	},
 	{
-		title: "Integration with 100+ OAuth providers and 1000+ approved scripts on the WindmillHub", description: `To unlock all the compounding potential of Windmill, we will add the convenience of 
-		adding all main OAuth2 providers and an exhaustive choice of scripts in the Hub for everyone to focus solely on their custom logic.`, when: "End of Q3"
+		title: "Integration with 100+ OAuth providers and 1000+ approved scripts on the WindmillHub", description: `To unlock all the compounding potential of Windmill, we will add the convenience of
+						adding all main OAuth2 providers and an exhaustive choice of scripts in the Hub for everyone to focus solely on their custom logic.`, when: "End of Q3"
 	},
 	{
 		title: "Standardization of the OpenFlow spec", description: `Flows are serialized as immutables json values. Those flows respect a spec that we call OpenFlow and that will be thoroughly documented and standardized for anyone to implement their own OpenFlow builder and executor.`, when: "End of Q3"

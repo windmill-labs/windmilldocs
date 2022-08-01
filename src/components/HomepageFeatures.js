@@ -187,8 +187,7 @@ export default function HomepageFeatures()
 							<div className='w-full lg:max-w-none m-auto'>
 
 								<Scripts></Scripts>
-								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Rendering of a flow that get scheduled every minute to send notifications every time your company is mentioned on HN. See it on the <a href="https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack">hub</a> or <a href="https://app.windmill.dev/flows/add?hub=13">edit it in windmill directly</a></p>
-
+								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Flow that get scheduled every minute to send notifications every time a pattern is mentionned on HN. See it on the <a href="https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack">hub</a> or <a href="https://app.windmill.dev/flows/add?hub=13">edit it in windmill directly</a></p>
 							</div>
 						</div>
 					</div>

@@ -102,6 +102,12 @@ const config = {
 						className: 'header-github-link',
 						'aria-label': 'GitHub repository',
 						position: 'right'
+					},
+					{
+						className: 'header-stars-link',
+						'aria-label': 'GitHub repository',
+						href: 'https://github.com/windmill-labs/windmill',
+						position: 'right'
 					}
 				]
 			},
