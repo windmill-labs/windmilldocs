@@ -149,7 +149,7 @@ requirements file.
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the input of the dependency job. One needs to head the script with the
-follwing comment:
+following comment:
 
 ```python
 #requirements:
@@ -211,11 +211,11 @@ output and metadata in the dedicated details page of the job.
 There are 3 main kinds of jobs, that each have a dedicated tab in the runs page:
 
 - **Script Jobs**: Run a script as defined by the hash of the script (that
-  uniquely and immutabely defines a specific version of a script), its input
+  uniquely and immutably defines a specific version of a script), its input
   arguments (args) and the "permissioned_as" user or group of whom it is gonna
   act on behalf of and inherit the visibility to other items such as resources
   and variables from. An user can **NEVER** escalates his privileges but only
-  de-escelates it by launching a script with either the same permissions as
+  de-escalates it by launching a script with either the same permissions as
   himself or a subset of it (by giving the permissions of a group that he is
   member of).
 
@@ -428,7 +428,7 @@ a postgres connection, shortened as "postgres' and whose schema is:
 ```
 
 Same as for the input spec of a script, you do not have to deal with the
-jsonschema dircetly and should use the UI builder to edit the schema.
+jsonschema directly and should use the UI builder to edit the schema.
 
 ## Schedule
 
