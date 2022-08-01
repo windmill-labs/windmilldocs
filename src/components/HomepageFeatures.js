@@ -34,12 +34,12 @@ const features = [
 	},
 	{
 		name: 'Make it Flow',
-		description: 'Scripts are standalone apps by themselves but you can also chain scripts written by your team or the community in Flows. ',
+		description: 'Scripts are standalone apps that can be reused and chained as building blocks to create more complex Flows.',
 		icon: LinkIcon,
 	},
 	{
 		name: 'Schedules',
-		description: 'Trigger scripts and flows using cron-like schedules',
+		description: 'Trigger scripts and flows using cron-like schedules, or via an automatically generated webhook.',
 		icon: ClockIcon,
 	},
 	{
@@ -58,7 +58,7 @@ const features = [
 		icon: SwitchHorizontalIcon,
 	},
 	{
-		name: 'Powerful webeditor with code inteligence and preview',
+		name: 'Powerful webeditor with code intelligence and preview',
 		description: 'Use your IDE or use ours, the web editor is powered by Monaco and LSP with a preview feature to quickly iterate.',
 		icon: PencilIcon,
 	},
@@ -79,7 +79,7 @@ const features = [
 	},
 	{
 		name: 'WindmillHub',
-		description: <span>Share and reuse scripts from the community in the <a href="https://hub.windmill.dev/">WindmillHub</a> </span>,
+		description: <span>Community driven, vetted and tested. Discover, share and use scripts via <a href="https://hub.windmill.dev/">WindmillHub</a> </span>,
 		icon: LibraryIcon,
 	},
 	{
@@ -187,7 +187,7 @@ export default function HomepageFeatures()
 							<div className='w-full lg:max-w-none m-auto'>
 
 								<Scripts></Scripts>
-								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Rendering of a flow that get scheduled every minute to send notifications every time your company is mentionned on HN. See it on the <a href="https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack">hub</a> or <a href="https://app.windmill.dev/flows/add?hub=13">edit it in windmill directly</a></p>
+								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Rendering of a flow that get scheduled every minute to send notifications every time your company is mentioned on HN. See it on the <a href="https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack">hub</a> or <a href="https://app.windmill.dev/flows/add?hub=13">edit it in windmill directly</a></p>
 
 							</div>
 						</div>
