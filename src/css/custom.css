@@ -109,6 +109,15 @@ a {
   width: 24px;
 }
 
+.header-stars-link::before {
+	background: url("https://img.shields.io/github/stars/windmill-labs/windmill?style=social&logo=''");
+	content: "";
+	display: flex;
+	height: 20px;
+	width: 71px;
+
+}
+
 .react-slideshow-container {
 	margin: 0 auto;
 }
