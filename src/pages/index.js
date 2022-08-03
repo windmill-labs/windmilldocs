@@ -197,11 +197,11 @@ function WhoisItFor()
 {
 	return (
 		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
-			<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Whom is it for ?</h2>
+			<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Whom it is for</h2>
 			<div class="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-lg lg:h-20  font-medium text-gray-900">Individuals and Small Teams</h3>
+						<h3 class="text-lg lg:h-20  font-medium text-gray-900">Individuals and small Teams</h3>
 						<p class="mt-2 text-gray-500">Solo dev or as part of a small nimble team, increase your productivity ten-fold using Windmill for all your workflows, integrations and serverless endpoints. One tool to rule them all.</p>
 					</div>
 				</div>
