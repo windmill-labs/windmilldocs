@@ -2,26 +2,39 @@
 sidebar_position: 1
 ---
 
-# Intro
+# Intro Scripts
 
-Windmill turn your scripts into internal apps that automate repetitive
-workflows. It's common for engineers to hack together scripts to automate
-repetitive tasks for a non-technical user (sales, ops, customer support,
-customer success, etc). Examples include:
+Windmill turns your scripts into internal apps and modules that automate
+repetitive workflows. It's common for engineers to hack together scripts to
+automate repetitive tasks for a non-technical user (sales, ops, customer
+support, customer success, etc). Examples include:
 
+- building data pipelines that need to augment their data from data in multiple
+  services
 - creating users, resetting user licenses
+- integration data from multiple services, reacting to new events from service X
+  (new email, new message in Discord, an HackerNews message matching a given
+  pattern, a new row in a database or a google sheet)
 - customer onboarding that requires setting up multiple systems, including the
   production site and third-party SaaS services
 - team mate onboarding that requires setting up multiple systems
 - moving data to and from CRMs and marketing systems
 
-The difficult part is turning those scripts into usable, self-serve apps for
-those teams. Usually, that doesn't happen because:
+The difficult part is composing those scripts and turning them into:
+
+- self-serve shareable apps for the rest of the teams with an intuitive UI
+- production-grade workflows that always work and that are easy to maintain,
+  iterate and observe the pasts runs of. Those pipelines are triggered by
+  webhooks to react to events, or schedule themselves to poll for new changes.
+
+Usually, that doesn't happen because:
 
 - there's no agreed upon way to run those scripts
-- building a UI for scripts is time consuming
+- building a UI for scripts and flows is time consuming
 - many issues arise along the way that are painful to solve (permissions,
   collaboration, audit logs, secrets, deployment)
+- running scripts on a production-grade infra that is cost-efficient and
+  reliable takes a lot of time to do right
 
 Windmill solves those problems, and makes sure that scripts become widely useful
 tools. The central tenet is: make building automation fast and easy, and
@@ -29,8 +42,17 @@ everybody will automate repetitive tasks and save a lot of time.
 
 ## Getting Started
 
-In this tutorial, we'll create a basic Hello world script, and cover Windmill's
-main concepts: scripts, accepting user input, and runs.
+In this tutorial, we'll create a basic Hello world script, and cover some of the
+Windmill's main concepts: scripts, accepting user input, and runs. Scripts can
+be turned directly into standalone apps, but can also be composed together using
+flows.
+
+We will cover flows in a [separate intro](/intro_flows). In there, we will see
+that in flows, while some of the steps are custom busiess logics scripts from
+your workspace or inlined directly into the flow, most of the steps are generic
+scripts made by the community in the [WindmillHub](https://hub.windmill.dev) and
+directly pickable inside the flow builder when approved by the WindmillHub
+moderators.
 
 ### Step 1: Login
 
@@ -103,4 +125,5 @@ in a real-world use case:
 
 - Pass [variables and secrets](how-to/variables_and_secrets) to a script
 - Connect to [resources](how-to/create_resources)
-- Run scripts on a [schedule](how-to/schedule)
+- Run scripts or flows on a [schedule](how-to/schedule)
+- Compose scripts in [flows](intro_flows)

@@ -1,4 +1,4 @@
-# Flows
+# Intro Flows
 
 **Flows** allow you to streamline complex processes and operations by chaining
 together custom scripts. Each **Flow** is composed of one or more step scripts

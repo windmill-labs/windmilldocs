@@ -35,7 +35,7 @@ function HomepageHeader()
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal</span>
 							</h2>
 							<h3 className="mt-8 text-sm tracking-tight font-bold text-gray-900 font-mono">
-								<span className="block xl:inline">For dev by dev: chain Typescript (deno) and Python scripts in low-code flows, without limitations. Replace all your serverless and workflows infra.</span>
+								<span className="block xl:inline">For dev by dev: chain Typescript (deno), Python scripts and any queries language like SQL in low-code flows, without limitations. Replace all your serverless and workflows infra.</span>
 							</h3>
 						</div>
 						<div class="w-full">
@@ -50,7 +50,7 @@ function HomepageHeader()
 								</div>
 								<div className="sm:mt-0 rounded w-full col-span-1">
 									<a
-										href="/docs/intro"
+										href="/docs/intro_scripts"
 										className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
 									>
 										Quickstart
