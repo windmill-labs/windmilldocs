@@ -1,4 +1,4 @@
-# Intro Flows
+# Getting Started with Flows
 
 **Flows** allow you to streamline complex processes and operations by chaining
 together custom scripts. Each **Flow** is composed of one or more step scripts
@@ -6,6 +6,18 @@ that can accept inputs, execute a function and then produce an output which can
 be used by subsequent step scripts. Flows contain all of the benefits of
 Windmill Scripts, offering immediate functionality such as third party app
 integrations, SQL queries, Slack, custom scripts and more!
+
+:::tip
+
+Signup at [app.windmill.dev](app.windmill.dev) then you can one-click import any
+flows on [hub.windmill.dev](hub.windmill.dev). See
+['Whenever an HN message contains a mention, publish it to slack'](https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack)
+
+<br/>
+
+![Edit in windmill](./assets/edit_in_windmill.png)
+
+:::
 
 Flows in windmill follows the [OpenFlow Spec](/docs/openflow).
 

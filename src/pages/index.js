@@ -50,10 +50,10 @@ function HomepageHeader()
 								</div>
 								<div className="sm:mt-0 rounded w-full col-span-1">
 									<a
-										href="/docs/intro_scripts"
+										href="/docs/intro"
 										className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
 									>
-										Quickstart
+										Get Started
 									</a>
 								</div>
 							</div>
