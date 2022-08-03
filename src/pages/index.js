@@ -97,14 +97,16 @@ function HomepageHeader()
 							</BrowserOnly>
 						</div>
 						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
-							<span className="block xl:inline">Chain Typescript (deno), Python scripts and any query languages like SQL in low-code flows, without limitations. Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> even if you are non technical. Replace all your serverless and workflows infra.</span>
+							<span className="block xl:inline">Chain Typescript (deno), Python scripts and any query languages like SQL in low-code flows, without limitations. Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> intuitive to non technical users too. Replace all your serverless and workflows infra.</span>
 						</h3>
 					</div>
 
 				</div>
 
 			</div>
-
+			<div class="w-full text-center py-16">
+				<div class="text-gray-600 font-md my-16 mx-auto">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
+			</div>
 		</main>
 
 
@@ -191,6 +193,37 @@ const roadmapItems = [
 	{ title: "Flow error handling and recovery", description: "Flows will be able to allow handling of errors with another dedicated flow.", when: "End of Q3" },
 ]
 
+function WhoisItFor()
+{
+	return (
+		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
+			<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Whom is it for ?</h2>
+			<div class="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
+				<div class="sm:flex lg:block">
+					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+						<h3 class="text-lg lg:h-20  font-medium text-gray-900">Individuals and Small Teams</h3>
+						<p class="mt-2 text-gray-500">Solo dev or as part of a small nimble team, increase your productivity ten-fold using Windmill for all your workflows, integrations and serverless endpoints. One tool to rule them all.</p>
+					</div>
+				</div>
+
+				<div class="sm:flex lg:block">
+					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+						<h3 class="text-lg  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
+						<p class="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. Self-hosting is a technical or compliance requirement in many scenarios. Windmill is easy to deploy on-premises. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
+					</div>
+				</div>
+
+				<div class="sm:flex lg:block">
+					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+						<h3 class="text-lg lg:h-20 font-medium text-gray-900">SaaS that provides automations and no-code tools</h3>
+						<p class="mt-2 text-gray-500">Build your tool and automation service on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, contact us to get a commercial license.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	)
+}
 function Roadmap()
 {
 
@@ -232,7 +265,7 @@ export default function Home()
 		>
 			<main>
 				<HomepageHeader />
-
+				<WhoisItFor />
 				<HomepageFeatures />
 				<div className='mx-auto max-w-screen-lg homepage'>
 					<Pricing />
