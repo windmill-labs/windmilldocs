@@ -216,7 +216,9 @@ function WhoisItFor()
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
 						<h3 class="text-lg lg:h-20 font-medium text-gray-900">SaaS that provides automations and no-code tools</h3>
-						<p class="mt-2 text-gray-500">Build your tool and automation service or feature on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, contact us to get a commercial license.</p>
+						<p class="mt-2 text-gray-500">Build your tool and automation service or feature on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, 							<a
+							href="mailto:contact@windmill.dev?subject=Request%20License"
+						>contact us</a> to get a commercial license.</p>
 					</div>
 				</div>
 			</div>
