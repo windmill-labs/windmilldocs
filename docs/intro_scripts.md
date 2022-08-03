@@ -47,7 +47,7 @@ Windmill's main concepts: scripts, accepting user input, and runs. Scripts can
 be turned directly into standalone apps, but can also be composed together using
 flows.
 
-We will cover flows in a [separate intro](/intro_flows). In there, we will see
+We will cover flows in a [separate intro](intro_flows). In there, we will see
 that in flows, while some of the steps are custom busiess logics scripts from
 your workspace or inlined directly into the flow, most of the steps are generic
 scripts made by the community in the [WindmillHub](https://hub.windmill.dev) and
