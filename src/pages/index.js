@@ -181,9 +181,6 @@ const roadmapItems = [
 						adding all main OAuth2 providers and an exhaustive choice of scripts in the Hub for everyone to focus solely on their custom logic.`, when: "End of Q3"
 	},
 	{
-		title: "Standardization of the OpenFlow spec", description: `Flows are serialized as immutables json values. Those flows respect a spec that we call OpenFlow and that will be thoroughly documented and standardized for anyone to implement their own OpenFlow builder and executor.`, when: "End of Q3"
-	},
-	{
 		title: "SOC 2 and HIPAA compliance", description: ``, when: "End of Q4"
 	},
 	{
