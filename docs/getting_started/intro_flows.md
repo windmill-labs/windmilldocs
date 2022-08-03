@@ -9,8 +9,8 @@ integrations, SQL queries, Slack, custom scripts and more!
 
 :::tip
 
-Signup at [app.windmill.dev](app.windmill.dev) then you can one-click import any
-flows on [hub.windmill.dev](hub.windmill.dev). See
+Signup at [app.windmill.dev](https://app.windmill.dev) then you can one-click
+import any flows on [hub.windmill.dev](https://hub.windmill.dev). See
 ['Whenever an HN message contains a mention, publish it to slack'](https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack)
 
 <br/>

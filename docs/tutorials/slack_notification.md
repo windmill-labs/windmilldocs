@@ -5,7 +5,7 @@ title: Send a notification to slack
 
 ### Step 1: Connect your workspace to slack
 
-[How to: Connect your workspace](/docs/How-to/connect_to_slack)
+[How to: Connect your workspace](/docs/how-tos/connect_to_slack)
 
 ### Step 2: Use the send slack message template
 

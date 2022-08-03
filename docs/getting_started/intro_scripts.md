@@ -30,8 +30,8 @@ page, with three sections:
 The **metadata section** contains information useful to the script's users:
 
 - **path:** a unique identifier that consist of the script owner, and the script
-  name. The path has an [ownership path prefix](reference#owner). Select `user`
-  (that means the script is private) and `hello` as your script's name.
+  name. The path has an [ownership path prefix](../reference#owner). Select
+  `user` (that means the script is private) and `hello` as your script's name.
 - **summary:** a short summary of what the script does, that will be displayed
   on the dashboard. Make it clear and short so that your users know what this
   script is for: `Say hello to someone`.
@@ -55,12 +55,12 @@ argument values and a main function accepting those arguments.
 
 Windmill parses the main function signature, infers argument names and types,
 and pref-fills the arguments section. Read more about
-[arguments](reference#script-arguments).
+[arguments](../reference#script-arguments).
 
 ![Add script](./assets/intro/add-script-3.png)
 
 All set! Save your work, and you'll land on the script page. Note that scripts
-are [versioned](reference#versioning), and each new edit creates a new script
+are [versioned](../reference#versioning), and each new edit creates a new script
 version.
 
 ![view](./assets/intro/view-script.png)
@@ -81,7 +81,7 @@ logs. All script runs are also available in the **Runs** menu on the left.
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
 
-- Pass [variables and secrets](how-to/variables_and_secrets) to a script
-- Connect to [resources](how-to/create_resources)
-- Run scripts or flows on a [schedule](how-to/schedule)
+- Pass [variables and secrets](../how-tos/variables_and_secrets) to a script
+- Connect to [resources](../how-tos/create_resources)
+- Run scripts or flows on a [schedule](../how-tos/schedule)
 - Compose scripts in [flows](./intro_flows)

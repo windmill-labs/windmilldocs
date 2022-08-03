@@ -209,13 +209,13 @@ function WhoisItFor()
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
 						<h3 class="text-lg  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
-						<p class="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. Self-hosting is a technical or compliance requirement in many scenarios. Windmill is easy to deploy on-premises. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
+						<p class="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. If on-premises deployment is a technical or compliance requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
 					</div>
 				</div>
 
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-lg lg:h-20 font-medium text-gray-900">SaaS that provides automations and no-code tools</h3>
+						<h3 class="text-lg lg:h-20 font-medium text-gray-900">SaaS that provides automations, and no-code tools</h3>
 						<p class="mt-2 text-gray-500">Build your tool and automation service or feature on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, 							<a
 							href="mailto:contact@windmill.dev?subject=Request%20License"
 						>contact us</a> to get a commercial license.</p>
@@ -233,7 +233,7 @@ function Roadmap()
 		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
 			<div className="max-w-3xl mx-auto ">
 				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Roadmap</h2>
-				<p class="text-center text-gray-500 text-sm my-2">Our full updated roadmap is <a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a></p>
+				<p class="text-center text-gray-500 text-sm my-2">We take open-source seriously, our full updated roadmap is <a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a></p>
 
 				<ul role="list" class="mt-6 divide-y divide-gray-200">
 					{roadmapItems.map((x) =>
