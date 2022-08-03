@@ -31,7 +31,7 @@ function HomepageHeader()
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
 								<span className="block xl:inline">Build and run complex <span className="text-blue-600">workflows</span> and <span className="text-blue-600">internal apps</span> in minutes by chaining scripts <span class="text-xl">(yours and from a curated library)</span></span>
 							</h1>
-							<h2 className="mt-8 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
+							<h2 className="mt-12 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal</span>
 							</h2>
 
