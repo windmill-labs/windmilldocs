@@ -34,9 +34,10 @@ function HomepageHeader()
 							<h2 className="mt-8 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal</span>
 							</h2>
+
 						</div>
 						<div class="w-full">
-							<div className="mt-10 grid grid-cols-2 gap-8 max-w-md mx-auto">
+							<div className="mt-20 grid grid-cols-2 gap-8 max-w-md mx-auto">
 								<div className="shadow w-full col-span-1">
 									<a
 										href="https://app.windmill.dev/user/login"
@@ -65,9 +66,7 @@ function HomepageHeader()
 							</a>
 						</div>
 					</div>
-					<div class="mt-20 z-40 flex flex-row-reverse">
-						<div class="text-gray-600 font-md ">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
-					</div>
+
 				</div>
 				<div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
 					<svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden" width="640" height="784" fill="none" viewBox="0 0 640 784" aria-hidden="true">
