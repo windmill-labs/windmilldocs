@@ -1,9 +1,9 @@
 # Introduction
 
-Windmill turns your scripts into internal apps and modules that automate
-repetitive workflows. It's common for engineers to hack together scripts to
-automate repetitive tasks for a non-technical user (sales, ops, customer
-support, customer success, etc).
+Windmill turns your scripts into internal apps and composable steps of flows
+that automate repetitive workflows. It's common for engineers to hack together
+scripts to automate repetitive tasks for a non-technical user (sales, ops,
+customer support, customer success, etc).
 
 ### Use cases
 

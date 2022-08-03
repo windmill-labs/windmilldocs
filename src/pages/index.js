@@ -29,14 +29,11 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline"><span className="text-blue-600">Internal apps</span> <span className="block text-blue-600">integrations</span> <span className="text-blue-600">workflows</span> with the full power of code, without the hassle</span>
+								<span className="block xl:inline">Build and run complex <span className="text-blue-600">workflows</span> and <span className="text-blue-600">internal apps</span> in minutes by chaining scripts <span class="text-xl">(yours and from a curated library)</span></span>
 							</h1>
 							<h2 className="mt-8 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal</span>
 							</h2>
-							<h3 className="mt-8 text-sm tracking-tight font-bold text-gray-900 font-mono">
-								<span className="block xl:inline">For dev by dev: chain Typescript (deno), Python scripts and any queries language like SQL in low-code flows, without limitations. Replace all your serverless and workflows infra.</span>
-							</h3>
 						</div>
 						<div class="w-full">
 							<div className="mt-10 grid grid-cols-2 gap-8 max-w-md mx-auto">
@@ -68,7 +65,7 @@ function HomepageHeader()
 							</a>
 						</div>
 					</div>
-					<div class="mt-10 z-40 flex flex-row-reverse">
+					<div class="mt-20 z-40 flex flex-row-reverse">
 						<div class="text-gray-600 font-md ">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
 					</div>
 				</div>
@@ -82,23 +79,27 @@ function HomepageHeader()
 						<rect y="72" width="640" height="640" class="text-gray-50" fill="currentColor" />
 						<rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
 					</svg>
-					<div class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-2xl">
-						<BrowserOnly>{() =>
-							<VideoPlayer>
-								<button type="button" class="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									<span class="sr-only">Windmill demo</span>
-									<img class="w-full" src="/img/flows.png" alt="" />
-									<div class="absolute inset-0 w-full h-full flex items-center justify-center" aria-hidden="true">
-										<svg class="h-20 w-20 text-blue-600" fill="currentColor" viewBox="0 0 84 84">
-											<circle opacity="0.5" cx="42" cy="42" r="42" fill="gray" />
-											<path d="M55.5039 40.3359L37.1094 28.0729C35.7803 27.1869 34 28.1396 34 29.737V54.263C34 55.8604 35.7803 56.8131 37.1094 55.9271L55.5038 43.6641C56.6913 42.8725 56.6913 41.1275 55.5039 40.3359Z" />
-										</svg>
-									</div>
-								</button>
-							</VideoPlayer>
-						}
-						</BrowserOnly>
-
+					<div class="mt-20 relative mx-auto w-full lg:max-w-2xl">
+						<div class="rounded-lg shadow-lg">
+							<BrowserOnly>{() =>
+								<VideoPlayer>
+									<button type="button" class="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+										<span class="sr-only">Windmill demo</span>
+										<img class="w-full" src="/img/flows.png" alt="" />
+										<div class="absolute inset-0 w-full h-full flex items-center justify-center" aria-hidden="true">
+											<svg class="h-20 w-20 text-blue-600" fill="currentColor" viewBox="0 0 84 84">
+												<circle opacity="0.5" cx="42" cy="42" r="42" fill="gray" />
+												<path d="M55.5039 40.3359L37.1094 28.0729C35.7803 27.1869 34 28.1396 34 29.737V54.263C34 55.8604 35.7803 56.8131 37.1094 55.9271L55.5038 43.6641C56.6913 42.8725 56.6913 41.1275 55.5039 40.3359Z" />
+											</svg>
+										</div>
+									</button>
+								</VideoPlayer>
+							}
+							</BrowserOnly>
+						</div>
+						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
+							<span className="block xl:inline">Chain Typescript (deno), Python scripts and any query languages like SQL in low-code flows, without limitations. Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> even if you are non technical. Replace all your serverless and workflows infra.</span>
+						</h3>
 					</div>
 
 				</div>
@@ -189,8 +190,6 @@ const roadmapItems = [
 	},
 	{ title: "Flow branching", description: "Flows will be able to branch into 2 different embedded flows based on Javascript predicates.", when: "End of Q3" },
 	{ title: "Flow error handling and recovery", description: "Flows will be able to allow handling of errors with another dedicated flow.", when: "End of Q3" },
-
-
 ]
 
 function Roadmap()

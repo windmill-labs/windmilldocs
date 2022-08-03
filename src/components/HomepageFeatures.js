@@ -95,7 +95,7 @@ export default function HomepageFeatures()
 {
 	return (
 		<div>
-			<div className="relative pt-40  pb-10">
+			<div className="relative pt-28  pb-10">
 				<div className="mx-auto max-w-md px-4 text-center sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
 					<h2 className="text-base font-semibold uppercase tracking-wider text-blue-600">All-in-one platform to power your entire backoffice</h2>
 					<p className="mx-auto mt-5 max-w-prose text-xl text-gray-700">
@@ -129,7 +129,7 @@ export default function HomepageFeatures()
 							<div>
 								<div className="mt-6">
 									<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
-										Build complex workflows and apps in minutes by chaining minimal scripts
+										<span className="block xl:inline"><span className="text-blue-600">Internal apps</span>, <span className="text-blue-600">integrations</span>, <span className="text-blue-600">workflows</span> with the full power of code, without the hassle</span>
 									</h2>
 									<p className="mt-4 text-lg text-gray-500">
 										Apps and their UI are automatically generated and continuously updated from your script parameters. Refine the UI if desired.
