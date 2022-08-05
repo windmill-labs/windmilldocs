@@ -123,7 +123,7 @@ const config = {
 						to: '/terms_of_service',
 					},
 				],
-				copyright: `&copy; 2022 Windmill Labs, Inc. Made with \<3 in the US and France`
+				copyright: `&copy; 2022 Windmill Labs, Inc. Made with love in the US and France`
 			},
 			prism: {
 				theme: lightCodeTheme,
