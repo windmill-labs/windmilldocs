@@ -42,7 +42,7 @@ Scripts when created can have a parent script identified by its **hash**.
 Indeed, scripts are never overwritten, they are instead subsumed by a child
 script which corresponds to the new version of the parent script. This
 guarantees traceability of every actions done on the platform, including editing
-scripts. It also enables versioning. Versioning is good practice from software
+scripts. It also enables versioning. Versioning is a good practice from software
 engineering which everyone familiar with git already knows. Windmill versioning
 is a **simplified git** and makes two main simplifying assumptions:
 
@@ -56,7 +56,7 @@ is a **simplified git** and makes two main simplifying assumptions:
 ### UI automatic generation
 
 By reading the main function parameters, Windmill generates the input
-specification of the script in the [json-schema](https://json-schema.org/)
+specification of the script in the [#jsonschema](https://json-schema.org/)
 format. Windmill then renders the flow's or script's UI from that specification.
 
 You never need to deal with the generated jsonschema directly but here is an
@@ -142,10 +142,9 @@ script and hence there is no need for any additional steps.
 For Python, the imports are automatically analyzed at saving time of the script
 and the corresponding list of Pypi packages are extracted. A dependency job is
 then spawned to associate that list of Pypi package with a lockfile which will
-lock the versions used for that version of that python script. This ensures that
-the same version of a python script is always executed with the same versions of
-its dependencies. It also avoid the hassle of having to maintain a separate
-requirements file.
+lock the versions. This ensures that the same version of a python script is
+always executed with the same versions of its dependencies. It also avoid the
+hassle of having to maintain a separate requirements file.
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the input of the dependency job. One needs to head the script with the
@@ -159,16 +158,106 @@ following comment:
 
 ## Flows
 
-A Flow is the core concept behind windmill. It is a json serializable value that
-consist of an input spec (similar to scripts), and a linear sequence of steps.
-Each step consist of a reference to a script from the hub
+A Flow is the core concept behind windmill. It is a json serializable value in
+the [OpenFlow](./openflow) format that consist of an input spec (similar to
+scripts), and a linear sequence of steps also referred to as modules. Each step
+consist of either:
 
-### Trigger-script
+- A reference to a script from the hub
+- A reference to a script in your workspace
+- An inlined script in Python or Typescript (deno)
+- A forloop that iterate over elements and trigger the execution of an embedded
+  flow for each element. The list is calculated dynamically as an
+  [input transform](#input-transform).
+- (Coming soon) branches to embedded flow given the first predicate that match
+- (Coming soon) A listener to an even that will resume the flow. This is how
+  steps that consist in waiting for an approval by email or slack will be
+  implemented.
+
+Embedded flows (flowception!) are full flows in their own right but their
+definition is embedded inside the parent or embedding flow.
+
+With the mechanism of [input transforms](#input-transform), the input of any
+step can be the output of any previous step, hence flows are actually
+[Directed Acyclic Graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph)
+rather than sequences. However, Windmill has taken the stance that most
+rendering of flows as graph are more gimmicks than productive. To execute any
+graph, one need to do a topological sort to transform it into a sequence, and
+sequences are more intuitive than graphs.
+
+# Input Transform
+
+Every step has an input transform that maps from:
+
+- the flow input
+- any step's result, not only the previous step's result
+- resource/variable
+
+to the different parameters of this specific step.
+
+It does that using a javascript expression that operates in a more restricted
+setting. That javascript is using a restricted subset of the standard library +
+5 functions which are belows:
+
+- `flow_input`: The dict/object containing the different parameters of the flow
+  itself
+- `previous_result`: The result of the previous step
+- `step(i)`: The result of the step i
+- `resource(path)`: The resource at path
+- `variable(path)`: The variable at path
+
+Using javascript in this manner, for every parameters, is extremely flexible and
+what allow Windmill to be extremely generic in the kind of modules it runs.
+
+For each field, one has the option to write the javascript directly or to use
+the quick connect button if the field map one to one with a field of the
+flow_input, a field of the previous_result or of any steps.
+
+### Trigger scripts
 
 A trigger script is a script whose purpose is to be used as a first step of a
 flow in combination with a schedule so that a flow can react to external changes
 and continue triggering the rest of the flow if the changes being listened to as
-new elements.
+new elements. It is not very different than any other script except its purposes
+and that it needs to return a list because the next step will be to forloop over
+all items of the list in an embedded flow. Furthermore, It will very likely make
+use of the convenience helper functions around
+[internal states](#internal-state).
+
+### Internal State
+
+An internal state is just a state which is meant to persist across executions of
+different execution of the same script. This is what enable flows to watch for
+changes in most event watching scenarios. The pattern is as following:
+
+- retrieve the last internal state or, if undefined, assume it is the first time
+  this script was ever run.
+- retrieve the current state in the external system you are watching.E.g: the
+  list of users having starred your repo or the maximum id of posts on Hacker
+  News.
+- calculate the difference between the current state and the last internal
+  state. This difference is what you will want to act upon.
+- set the new internal state as the current state so that you do not process the
+  elements you just processed.
+- return the difference calculated previously so that you can process them in
+  the next steps. You will likely want to forloop over the items and trigger one
+  flow per item. This is exactly the pattern used when your flow is in mode
+  "Watching changes regularly".
+
+The convenience functions do this in Typescript are:
+
+- [getInternalState](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L96) which
+  retrieves an object of any type (internally a simple resource) at a path
+  determined by
+  [getInternalStatePath](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L50)
+  which is basically a path unique to the user currently executing the script,
+  the flow in which it is currently in if it is in one and the path of the
+  script.
+- [setInternalState](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L88) which
+  sets the new state.
+
+The states can be seen in the [Resources](#resource) section with a
+[Resource type](#resource-type) of 'state'.
 
 ## WindmillHub
 
