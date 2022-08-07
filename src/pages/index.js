@@ -32,7 +32,7 @@ function HomepageHeader()
 								<span className="block xl:inline">Build and run complex <span className="text-blue-600">workflows</span> and <span className="text-blue-600">internal apps</span> in minutes by chaining scripts <span class="text-xl">(yours and from a curated library)</span></span>
 							</h1>
 							<h2 className="mt-12 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
-								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal. <a href="https://docs.windmill.dev/docs/benchmark">Faster than AWS Lambda</a></span>
+								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal. <a href="https://docs.windmill.dev/docs/benchmark">Self-hostable AWS Lambda</a></span>
 							</h2>
 
 						</div>

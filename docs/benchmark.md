@@ -1,6 +1,6 @@
 # Benchmark
 
-## TL;DR: faster than AWS Lambda
+## TL;DR: about same performance but initial latency is about 1.75x worse.
 
 Tested with apache bench. If we did it wrong, let us know. AWS Lambda was
 pre-warmed with 5000 requests to avoid cold starts.
@@ -36,7 +36,9 @@ exports.handler = async (event) => {
 };
 ```
 
-## The Test: Apache bench:
+## Empty compute (just start latency)
+
+We use Apache Bench for testing with many requests at once.
 
 ### Windmill
 
@@ -103,12 +105,12 @@ Percentage of the requests served within a certain time (ms)
 ### AWS Lambda
 
 ```
-▶ ab -n 500 -c 20 -p payload.json -m POST -T "application/json"   https://h666b2am3h.execute-api.us-east-1.amazonaws.com/default/hello
+▶ ab -n 500 -c 20 -p payload.json -m POST -T "application/json"  https://uxgdvqiabh.execute-api.eu-central-1.amazonaws.com/default/hello
 This is ApacheBench, Version 2.3 <$Revision: 1901567 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
 
-Benchmarking h666b2am3h.execute-api.us-east-1.amazonaws.com (be patient)
+Benchmarking uxgdvqiabh.execute-api.eu-central-1.amazonaws.com (be patient)
 Completed 100 requests
 Completed 200 requests
 Completed 300 requests
@@ -118,66 +120,62 @@ Finished 500 requests
 
 
 Server Software:        
-Server Hostname:        h666b2am3h.execute-api.us-east-1.amazonaws.com
+Server Hostname:        uxgdvqiabh.execute-api.eu-central-1.amazonaws.com
 Server Port:            443
 SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES128-GCM-SHA256,2048,128
 Server Temp Key:        ECDH P-256 256 bits
-TLS Server Name:        h666b2am3h.execute-api.us-east-1.amazonaws.com
+TLS Server Name:        uxgdvqiabh.execute-api.eu-central-1.amazonaws.com
 
 Document Path:          /default/hello
 Document Length:        20 bytes
 
 Concurrency Level:      20
-Time taken for tests:   9.766 seconds
+Time taken for tests:   5.172 seconds
 Complete requests:      500
-Failed requests:        0
-Total transferred:      95500 bytes
-Total body sent:        97000
-HTML transferred:       10000 bytes
-Requests per second:    51.20 [#/sec] (mean)
-Time per request:       390.621 [ms] (mean)
-Time per request:       19.531 [ms] (mean, across all concurrent requests)
-Transfer rate:          9.55 [Kbytes/sec] received
-                        9.70 kb/s sent
-                        19.25 kb/s total
+Failed requests:        23
+   (Connect: 0, Receive: 0, Length: 23, Exceptions: 0)
+Non-2xx responses:      23
+Total transferred:      95983 bytes
+Total body sent:        92500
+HTML transferred:       10299 bytes
+Requests per second:    96.68 [#/sec] (mean)
+Time per request:       206.861 [ms] (mean)
+Time per request:       10.343 [ms] (mean, across all concurrent requests)
+Transfer rate:          18.12 [Kbytes/sec] received
+                        17.47 kb/s sent
+                        35.59 kb/s total
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:      247  262   8.8    262     300
-Processing:    92  109   9.7    106     156
-Waiting:       92  109   9.6    106     154
-Total:        348  371  14.7    370     426
+Connect:       43  165 114.4    111     453
+Processing:    21   33  13.4     30     133
+Waiting:       20   33  13.3     30     133
+Total:         70  199 116.7    142     487
 
 Percentage of the requests served within a certain time (ms)
-  50%    370
-  66%    375
-  75%    378
-  80%    380
-  90%    390
-  95%    402
-  98%    414
-  99%    417
- 100%    426 (longest request)
+  50%    142
+  66%    301
+  75%    306
+  80%    310
+  90%    326
+  95%    343
+  98%    384
+  99%    475
+ 100%    487 (longest request)
 ```
 
-## Result
-
-### 
-
-### AWS Lambda
+### Result
 
 ```
                    min  mean[+/-sd] median   max
 Windmill:          167  342 124.9    308     678
-AWS Lambda:        348  371  14.7    370     426
+AWS Lambda:        70   199 116.7    142     487
 ```
 
-Windmill has more variance but mean is lower and we haven't yet optimized all we
-could optimize. Windmill wins!
+Windmill's e2e start latency is about 1.75x the one of AWS Lambda. There is
+still lots of room for improvement but it's still in the same ballpark.
 
-## What about actual compute
-
-I knew you would ask. Let's have the endpoints compute:
+## Heavier compute (calculating fibonacci(40))
 
 ```typescript
 export async function main() {
@@ -198,14 +196,23 @@ function fibonacci(nbr) {
 
 ```
                 min  mean[+/-sd]  median   max
-Windmill:       1637 2129 373.1   2136    3062
-AWS Lambda:     1729 1947  76.5   1954    2152
+Windmill:       1621 2046 327.0   1935    2891
+AWS Lambda:     1619 2113 367.9   2124    3068
 ```
 
-Even for heavier workloads, Windmill still win. (The AWS Lambda Memory was
-2048MB which is exactly the configuration of the default worker of Windmill).
+The AWS Lambda Memory is 2048MB which is exactly the configuration of the
+default worker of Windmill
+
+Here the compute dominates the start time, we see that the performance are
+comparable.
 
 Caveat: We have limited number of workers compared to AWS Lambda and if your
 goal is to achieve parrallelism > 100 workers, then at the moment you will get
 better results with Lambda. We will scale to thousands of workers very soon so
 it should not be an easy.
+
+## Conclusion
+
+Windmill is in the same general ballpark as AWS unless you are extremely latency
+sensitive. In most cases, you would not see the difference for compute requiring
+more than 300ms.
