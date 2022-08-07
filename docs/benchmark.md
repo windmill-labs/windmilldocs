@@ -22,7 +22,8 @@ export async function main() {
 
 ### AWS Lambda
 
-We exposed the lambda through the API Gateway
+We exposed the lambda through the API Gateway. Memory of the lambda was 2048MB
+which is comparable to the executor you would get with Windmill.
 
 ```typescript
 exports.handler = async (event) => {
@@ -173,3 +174,33 @@ AWS Lambda:        348  371  14.7    370     426
 
 Windmill has more variance but mean is lower and we haven't yet optimized all we
 could optimize. Windmill wins!
+
+## What about actual compute
+
+I knew you would ask. Let's have the endpoints compute:
+
+```
+export async function main() {
+	return  fibonacci(40)
+}
+
+function fibonacci(nbr) {
+  if(nbr < 2){
+    return nbr;
+  }
+  return fibonacci(nbr - 1) + fibonacci(nbr - 2);
+}
+```
+
+### Result
+
+-n 100, -c 5:
+
+```
+                min  mean[+/-sd]  median   max
+Windmill:       1637 2129 373.1   2136    3062
+AWS Lambda:     1729 1947  76.5   1954    2152
+```
+
+Even for heavier workloads, Windmill still win. (The AWS Memory was 2048 which
+is exactly the configuration of the default worker of Windmill)
