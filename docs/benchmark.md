@@ -202,5 +202,10 @@ Windmill:       1637 2129 373.1   2136    3062
 AWS Lambda:     1729 1947  76.5   1954    2152
 ```
 
-Even for heavier workloads, Windmill still win. (The AWS Memory was 2048 which
-is exactly the configuration of the default worker of Windmill)
+Even for heavier workloads, Windmill still win. (The AWS Lambda Memory was
+2048MB which is exactly the configuration of the default worker of Windmill).
+
+Caveat: We have limited number of workers compared to AWS Lambda and if your
+goal is to achieve parrallelism > 100 workers, then at the moment you will get
+better results with Lambda. We will scale to thousands of workers very soon so
+it should not be an easy.
