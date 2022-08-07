@@ -1,6 +1,6 @@
 # Benchmark
 
-## It is faster than AWS Lambda
+## TL;DR: faster than AWS Lambda
 
 Tested with apache bench. If we did it wrong, let us know. AWS Lambda was
 pre-warmed with 5000 requests to avoid cold starts.
