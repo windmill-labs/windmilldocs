@@ -84,7 +84,7 @@ const features = [
 	},
 	{
 		name: 'Performant, Scalable, production-grade',
-		description: 'Written in Rust, minimal overhead, designed for scale and extremely reliable',
+		description: <span>Written in Rust, minimal overhead, designed for scale and extremely reliable. <a href="https://docs.windmill.dev/docs/benchmark">Faster than AWS Lambda</a></span>,
 		icon: LightningBoltIcon,
 	},
 
