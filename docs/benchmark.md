@@ -179,13 +179,13 @@ could optimize. Windmill wins!
 
 I knew you would ask. Let's have the endpoints compute:
 
-```
+```typescript
 export async function main() {
-	return  fibonacci(40)
+  return fibonacci(40);
 }
 
 function fibonacci(nbr) {
-  if(nbr < 2){
+  if (nbr < 2) {
     return nbr;
   }
   return fibonacci(nbr - 1) + fibonacci(nbr - 2);
