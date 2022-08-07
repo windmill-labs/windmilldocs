@@ -14,7 +14,7 @@ Examples of what
 - trigger ETL in other services and react to their status changes
 - creating users, resetting user licenses, more generally doing database edit
   with templatized sql queries, and getting approval before doing any sensitive
-  operations on the database directly.
+  operations on the database directly
 - reacting to new events from an external service (new email, new message in
   Discord, an HackerNews message matching a given pattern, a new row in a
   database or a google sheet)
@@ -43,6 +43,6 @@ Usually, that doesn't happen because:
 - running scripts on a production-grade infra that is cost-efficient and
   reliable takes a lot of time to do right
 
-Windmill solves those problems, and makes sure that scripts become widely useful
-tools. The central tenet is: make building automation fast and easy, and
+**Windmill solves those problems**, and makes sure that scripts become widely
+useful tools. The central tenet is: make building automation fast and easy, and
 everybody will automate repetitive tasks and save a lot of time.

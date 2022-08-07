@@ -107,7 +107,16 @@ function HomepageHeader()
 			<div class="w-full text-center py-16">
 				<div class="text-gray-600 font-md my-16 mx-auto">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
 			</div>
-		</main>
+			<div class="w-full">
+				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-14">Example of flows</h2>
+
+				<div className='w-full text-center'><div class="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
+					<div class="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
+					<div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
+				</div >
+
+			</div >
+		</main >
 
 
 	);
@@ -193,7 +202,7 @@ const roadmapItems = [
 function WhoisItFor()
 {
 	return (
-		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
+		<div id="whomisitfor" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
 			<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Whom it is for</h2>
 			<div class="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
 				<div class="sm:flex lg:block">

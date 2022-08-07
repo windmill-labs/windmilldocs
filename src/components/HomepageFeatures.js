@@ -150,7 +150,7 @@ export default function HomepageFeatures()
 										src="/img/parser.png"
 										alt="UI parser"
 									/>
-									<p className='text-gray-700 italic  text-sm text-center'>Script parameters are parsed automatically to generate your app UI that you may still refine</p>
+									<p className='text-gray-700 italic  text-sm text-center'>Script parameters are parsed automatically to generate your app UI that you may still refine. Scripts are also transformed into no-code modules this way.</p>
 								</div>
 							</div>
 						</div>
@@ -164,9 +164,9 @@ export default function HomepageFeatures()
 						<div>
 							<div className="mt-6">
 								<h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
-									Write code as you would for a script, chain them as <a href="/docs/openflow">OpenFlows</a> in a low-code UI
+									Upload, create, compose scripts, build your internal backend fast without compromises
 								</h2>
-								<p className="mt-4 text-lg text-gray-500">
+								<p className="mt-8 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.
 									<br /><br />
 									Credentials and sensitive values are tightly permissioned and stored securely as <span className='font-bold'>secrets</span>
@@ -182,11 +182,7 @@ export default function HomepageFeatures()
 					</div>
 					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
 						<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
-							<div className='w-full lg:max-w-none m-auto'>
 
-								<Scripts></Scripts>
-								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Flow that get scheduled every minute to send notifications every time a pattern is mentionned on HN. See it on the <a href="https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack">hub</a> or <a href="https://app.windmill.dev/flows/add?hub=13">edit it in windmill directly</a></p>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -200,7 +196,7 @@ export default function HomepageFeatures()
 								<h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
 									Replace all your sparely used niche tools: <br /> We cover every use-case and to any API
 								</h2>
-								<p className="mt-4 text-lg text-gray-500">
+								<p className="mt-8 text-lg text-gray-500">
 									Windmill is extremely generic, it uses simple but powerful abstractions. If you can script it, then Windmill can do it.
 									<br /><br />
 									Watch for new external events using dedicated trigger scripts.
@@ -255,7 +251,7 @@ export default function HomepageFeatures()
 								<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
 									Coding is seldom the bottleneck, it is everything else
 								</h2>
-								<p className="mt-4 text-lg text-gray-500">
+								<p className="mt-8 text-lg text-gray-500">
 									Not just for developers, the generated Apps are meant to be used by all, and the included powerful Webeditor with previews enable quick feedback loops.
 									<br /><br />
 									As a dev, you will feel right at home with Windmill. It is consistent with software engineering practices and power-user friendly.
@@ -276,7 +272,7 @@ export default function HomepageFeatures()
 
 
 
-		</div>
+		</div >
 	)
 }
 
