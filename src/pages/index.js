@@ -12,6 +12,7 @@ import
 {
 	SparklesIcon
 } from '@heroicons/react/outline'
+import Tabs from '../components/Tabs';
 
 function HomepageHeader()
 {
@@ -29,10 +30,10 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline">Build and run complex <span className="text-blue-600">workflows</span> and <span className="text-blue-600">internal apps</span> in minutes by chaining scripts <span class="text-xl">(yours and from a curated library)</span></span>
+								<span className="block xl:inline"><span className="text-blue-600">Internal apps</span>, <span className="text-blue-600">integrations</span> and <span className="text-blue-600">workflows</span> in minutes using minimal <span className="text-blue-600">scripts</span><span class="text-xl block mt-2">(yours and from a curated library)</span></span>
 							</h1>
 							<h2 className="mt-12 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
-								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal. <a href="https://docs.windmill.dev/docs/benchmark">Self-hostable AWS Lambda</a></span>
+								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal. <a href="/docs/benchmark">Self-hostable AWS Lambda</a></span>
 							</h2>
 
 						</div>
@@ -108,9 +109,9 @@ function HomepageHeader()
 				<div class="text-gray-600 font-md my-16 mx-auto">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
 			</div>
 			<div class="w-full">
-				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-14">Example of flows</h2>
-
-				<div className='w-full text-center'><div class="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
+				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-14">Examples of flows</h2>
+				<div class="mx-auto"><Tabs></Tabs></div>
+				<div className='w-full mt-4 text-center'><div class="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
 					<div class="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
 					<div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
 				</div >
