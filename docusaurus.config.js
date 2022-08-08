@@ -65,7 +65,7 @@ const config = {
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			metadata: [{
-				"http-equiv": "Content-Security-Policy", "content": "default-src 'self' *.windmill.dev; script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com;"
+				"http-equiv": "Content-Security-Policy", "content": "default-src 'self' *.windmill.dev; img-src: *; script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com;"
 			}],
 			navbar: {
 				title: 'Windmill',
