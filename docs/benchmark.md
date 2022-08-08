@@ -11,7 +11,7 @@ firecracker for isolation while Windmill uses nsjail.
 ### Windmill
 
 Comparable very simple scripts. Windmill exposes a
-[sync script execution endpoint similar to Lambda](./references#synchronous-endpoint-for-scripts)
+[sync script execution endpoint similar to Lambda](./reference#synchronous-endpoint-for-scripts)
 and we created a token to go through authorization (which we didn't for AWS
 Lambda since it was a public endpoint so admittedly it's not completely fair,
 Windmill is doing auth too)
