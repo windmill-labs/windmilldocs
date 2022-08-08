@@ -216,7 +216,7 @@ function WhoisItFor()
 				<div className="sm:flex lg:block">
 					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
 						<h3 className="text-xl  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
-						<p className="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. If on-premises deployment is a technical or compliance requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
+						<p className="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scale gracefully with the size of your team. If on-premises deployment is a technical or compliance requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
 					</div>
 				</div>
 
