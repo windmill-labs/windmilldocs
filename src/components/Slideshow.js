@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fade } from 'react-slideshow-image';
 
-const images = ["scripts", "editor2", "result", "script_detail", "add_resource", "connect_app", "audit_logs", "runs"]
+const images = ["scripts_", "editor2_", "result_", "script_detail_", "add_resource_", "connect_app_", "audit_logs_", "runs_"]
 const Slideshow = () =>
 {
 	const style = {
