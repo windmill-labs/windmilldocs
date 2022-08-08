@@ -176,7 +176,13 @@ export default function HomepageFeatures()
 					</div>
 					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
 						<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
-
+							<div className='w-full lg:max-w-none m-auto'>
+								<img
+									className=""
+									src="/flow_lp.png"
+									alt="Flow UI"
+								/>
+							</div>
 						</div>
 					</div>
 				</div>
