@@ -98,7 +98,7 @@ function HomepageHeader()
 							</BrowserOnly>
 						</div>
 						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
-							<span className="block xl:inline">- Chain Typescript (deno), Python scripts and SQL in low-code flows<br />- Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> intuitive to non technical users too. <br />- Single scripts can also be turned into standalone apps<br />- Replace all your serverless and workflows infra.</span>
+							<span className="block xl:inline">- Chain Typescript (deno), Python scripts and SQL in low-code flows<br />- Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> intuitive to non technical users too. <br />- Single scripts can also be turned into standalone apps<br />- Replace all your serverless and workflows infra.<br />- Open standard and portable JSON spec for flows: <a href="/docs/openflow">OpenFlow</a></span>
 						</h3>
 					</div>
 
