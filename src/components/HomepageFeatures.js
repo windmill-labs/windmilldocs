@@ -239,7 +239,7 @@ export default function HomepageFeatures()
 
 			<div className="my-20 w-full">
 
-				<div className="mx-auto max-w-4xl">
+				<div className="mx-auto max-w-6xl">
 					<Slideshow></Slideshow>
 				</div>
 			</div>
