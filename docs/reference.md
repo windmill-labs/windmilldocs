@@ -137,6 +137,15 @@ alias for an object. They are purely type hints for the windmill parser.
 The sql format is specific to Windmill and replaces the normal text field with a
 monaco editor with sql support.
 
+### SQL
+
+For steps and scripts that uses sql, you can leverage the windmill's Sql type to
+display a monaco editor with SQL support in place of the normal textarea. This
+allow for the entire query to be passed on as a parameter. For flows, you can
+still templatize the SQL query as you would for any script.
+
+![SQL](./assets/sql.png)
+
 ### Versioning
 
 Scripts when created can have a parent script identified by its **hash**.

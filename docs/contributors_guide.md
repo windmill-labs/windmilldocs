@@ -33,6 +33,27 @@ then in the Resource Types section, Submit a new Resource Type. You can then add
 your argument one by one or use the monaco editor to edit it as a jsonschema
 directly.
 
+## Add an OAuth provider
+
+To add a new OAuth provider, open a Pull Request to add a new item to:
+[backend/oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json).
+
+The format is as follows:
+
+```json
+"<name_of_resource_type_for_integration>": {
+     "auth_url": "<auth_url>",
+     "token_url": "<token_url>",
+     "scopes": <the list of default scopes to suggest by default>,
+     "extra_params": {
+         "<key>": "<val>",
+     }
+ },
+```
+
+where `extra_params` is an escape hatch to deal with OAuth provider that need
+some extra fields to be passed along to the authorization URL.
+
 ## Add a flow to the WindmillHub
 
 Using the [OpenFlow](./openflow) portable format, one can simply either copy and
