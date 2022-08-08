@@ -87,8 +87,8 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 - Arguments can specify a type `string`, `number` or `object`. User input will
   be validated against that type.
 - One can further constraint the type by having the string following a regex or
-  pattern, or the object be of a specific [#resource-type](Resource Type)
-- Arguments can be made mandatory by adding them to the "required" list. In that
+  pattern, or the object be of a specific [resource type](#resource-type)
+- Arguments can be made mandatory by adding them to the `required` list. In that
   case, the generated UI will check that user input provides required arguments.
 - Each argument can have a description field, that will appear in the generated
   UI.
@@ -96,52 +96,60 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 ### Script parameters to jsonschema
 
 There is a one to one correspondance between a parameter of the main function
-and a field of 'properties' in the jsonschema. The name of the argument become
+and a field of `properties` in the jsonschema. The name of the argument become
 the name of the property, and most of the primitive types in Python and
 Typescript have a corresponding primitive type in JSON and by extension
 jsonschema.
 
 In Python:
 
-- str => string
-- float => number
-- int => integer
-- bool => boolean
-- dict => object
-- list => any[]
-- bytes => string, encodingFormat: base64
-- datetime => str, format: date-time
-- _ => any
+| Python     | jsonschema                       |
+| ---------- | -------------------------------- |
+| `str`      | `string`                         |
+| `float`    | `number`                         |
+| `str`      | `string`                         |
+| `float`    | `number`                         |
+| `int`      | `integer`                        |
+| `bool`     | `boolean`                        |
+| `dict`     | `object`                         |
+| `list`     | `any[]`                          |
+| `bytes`    | `string, encodingFormat: base64` |
+| `datetime` | `str, format: date-time`         |
+| `_`        | `any`                            |
 
 In Deno:
 
-- string => string
-- object => object
-- boolean => boolean
-- bigint => int
-- number => number
-- string[] -> string[]
-- ...
+| Deno       | jsonschema |
+| ---------- | ---------- |
+| `string`   | `string`   |
+| `object`   | `object`   |
+| `boolean`  | `boolean`  |
+| `bigint`   | `int`      |
+| `number`   | `number`   |
+| `string[]` | `string[]` |
+| ...        | ...        |
 
 However in Deno there also some special types that are specific to windmill.
 They are as follows:
 
-- wmill.Base64 => string, encodingFormat: base64
-- wmill.Email => string, format: email
-- wmill.Sql => string, format: sql
-- wmill.Resource<'resource_type'> => object, format: resource-{resource_type}
+| Windmill                          | jsonschema                                   |
+| --------------------------------- | -------------------------------------------- |
+| `wmill.Base64`                    | `string`, encodingFormat: `base64`           |
+| `wmill.Email`                     | `string`, format: `email`                    |
+| `wmill.Sql`                       | `string`, format: `sql`                      |
+| `wmill.Resource<'resource_type'>` | `object`, format: `resource-{resource_type}` |
 
-Base64 and Email are actually a type alias for string, and Resource is a type
-alias for an object. They are purely type hints for the windmill parser.
+`Base64` and `Email` are actually a type alias for `string`, and `Resource` is a type
+alias for an `object`. They are purely type hints for the Windmill parser.
 
-The sql format is specific to Windmill and replaces the normal text field with a
-monaco editor with sql support.
+The `sql` format is specific to Windmill and replaces the normal text field with a
+monaco editor with SQL support.
 
 ### SQL
 
-For steps and scripts that uses sql, you can leverage the windmill's Sql type to
-display a monaco editor with SQL support in place of the normal textarea. This
-allow for the entire query to be passed on as a parameter. For flows, you can
+For steps and scripts that use sql, you can leverage the Windmill's `Sql` type to
+display a monaco editor with SQL support in place of the normal `textarea`. This
+allows for the entire query to be passed on as a parameter. For flows, you can
 still templatize the SQL query as you would for any script.
 
 ![SQL](./assets/sql.png)
@@ -154,9 +162,9 @@ They are based on the format of the result.
 
 If the result is an object/dict with a single key and that key is:
 
-- "gif" or "png" or "jpeg": expect the value to be a base64 encoded gif/png/jpeg
+- `gif`, `png` or `jpeg`: expect the value to be a base64 encoded gif/png/jpeg
   and render it as an image
-- "file": expect the value to be a base64 encoded file and offer it to be
+- `file`: expect the value to be a base64 encoded file and offer it to be
   downloaded
 
 If the result is a list whose first element is also a list, it will display the
@@ -167,10 +175,10 @@ displayed as a table, with the key as the column name.
 
 ### Versioning
 
-Scripts when created can have a parent script identified by its **hash**.
+Scripts, when created, can have a parent script identified by its **hash**.
 Indeed, scripts are never overwritten, they are instead subsumed by a child
 script which corresponds to the new version of the parent script. This
-guarantees traceability of every actions done on the platform, including editing
+guarantees traceability of every action done on the platform, including editing
 scripts. It also enables versioning. Versioning is a good practice from software
 engineering which everyone familiar with git already knows. Windmill versioning
 is a **simplified git** and makes two main simplifying assumptions:
@@ -222,7 +230,7 @@ For Python, the imports are automatically analyzed at saving time of the script
 and the corresponding list of Pypi packages are extracted. A dependency job is
 then spawned to associate that list of Pypi package with a lockfile which will
 lock the versions. This ensures that the same version of a python script is
-always executed with the same versions of its dependencies. It also avoid the
+always executed with the same versions of its dependencies. It also avoids the
 hassle of having to maintain a separate requirements file.
 
 If the imports are not properly analyzed, there exists an escape hatch to
@@ -237,23 +245,23 @@ following comment:
 
 ## Flows
 
-A Flow is the core concept behind windmill. It is a json serializable value in
-the [OpenFlow](./openflow) format that consist of an input spec (similar to
+A **Flow** is the core concept behind windmill. It is a json serializable value in
+the [OpenFlow](./openflow) format that consists of an input spec (similar to
 scripts), and a linear sequence of steps also referred to as modules. Each step
-consist of either:
+consists of either:
 
-- A reference to a script from the hub
-- A reference to a script in your workspace
-- An inlined script in Python or Typescript (deno)
-- A forloop that iterate over elements and trigger the execution of an embedded
+- Reference to a script from the hub
+- Reference to a script in your workspace
+- Inlined script in Python or Typescript (deno)
+- `forloop` that iterates over elements and triggers the execution of an embedded
   flow for each element. The list is calculated dynamically as an
   [input transform](#input-transform).
-- (Coming soon) branches to embedded flow given the first predicate that match
+- (Coming soon) branches to embedded flow given the first predicate that matches
 - (Coming soon) A listener to an even that will resume the flow. This is how
-  steps that consist in waiting for an approval by email or slack will be
+  steps that contain waiting for an approval by email or slack will be
   implemented.
 
-Embedded flows (flowception!) are full flows in their own right but their
+**Embedded flows** (flowception!) are full flows in their own right but their
 definition is embedded inside the parent or embedding flow.
 
 With the mechanism of [input transforms](#input-transform), the input of any
@@ -285,58 +293,59 @@ setting. That javascript is using a restricted subset of the standard library +
 - `resource(path)`: The resource at path
 - `variable(path)`: The variable at path
 
-Using javascript in this manner, for every parameters, is extremely flexible and
-what allow Windmill to be extremely generic in the kind of modules it runs.
+Using javascript in this manner, for every parameter, is extremely flexible and
+allows Windmill to be extremely generic in the kind of modules it runs.
 
 For each field, one has the option to write the javascript directly or to use
 the quick connect button if the field map one to one with a field of the
-flow_input, a field of the previous_result or of any steps.
+`flow_input`, a field of the `previous_result` or of any steps.
 
 ### Trigger scripts
 
 A trigger script is a script whose purpose is to be used as a first step of a
-flow in combination with a schedule so that a flow can react to external changes
-and continue triggering the rest of the flow if the changes being listened to as
-new elements. It is not very different than any other script except its purposes
+flow. In combination with a schedule, flows can react to external changes
+and continue triggering the rest of the flow with the changes being listened
+to as new elements.  
+It is not very different than any other script except its purposes
 and that it needs to return a list because the next step will be to forloop over
-all items of the list in an embedded flow. Furthermore, It will very likely make
-use of the convenience helper functions around
+all items of the list in an embedded flow. Furthermore, it will very likely make
+use of the convenience helper functions around 
 [internal states](#internal-state).
 
 ### Internal State
 
-An internal state is just a state which is meant to persist across executions of
-different execution of the same script. This is what enable flows to watch for
-changes in most event watching scenarios. The pattern is as following:
+An internal state is just a state which is meant to persist across distinct
+executions of the same script. This is what enables flows to watch for
+changes in most event watching scenarios. The pattern is as follows:
 
-- retrieve the last internal state or, if undefined, assume it is the first time
-  this script was ever run.
-- retrieve the current state in the external system you are watching.E.g: the
+- retrieve the last internal state or, if undefined, assume it is the first 
+  execution
+- retrieve the current state in the external system you are watching, e.g. the
   list of users having starred your repo or the maximum id of posts on Hacker
-  News.
+  News
 - calculate the difference between the current state and the last internal
   state. This difference is what you will want to act upon.
 - set the new internal state as the current state so that you do not process the
-  elements you just processed.
-- return the difference calculated previously so that you can process them in
+  elements you just processed
+- return the differences calculated previously so that you can process them in
   the next steps. You will likely want to forloop over the items and trigger one
   flow per item. This is exactly the pattern used when your flow is in mode
-  "Watching changes regularly".
+  "Watching changes regularly"
 
 The convenience functions do this in Typescript are:
 
-- [getInternalState](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L96) which
+- [`getInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L96) which
   retrieves an object of any type (internally a simple resource) at a path
   determined by
-  [getInternalStatePath](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L50)
+  [`getInternalStatePath`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L50)
   which is basically a path unique to the user currently executing the script,
   the flow in which it is currently in if it is in one and the path of the
-  script.
-- [setInternalState](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L88) which
-  sets the new state.
+  script
+- [`setInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L88) which
+  sets the new state
 
 The states can be seen in the [Resources](#resource) section with a
-[Resource type](#resource-type) of 'state'.
+[Resource type](#resource-type) of `state`.
 
 ## WindmillHub
 
@@ -359,10 +368,11 @@ endpoints are authenticated and will require a bearer token of the format:
 
 ### Webhooks
 
-Every script or flows can be run by its hash or path as an http request aka as
+Every script or flow can be run by its hash or path as a http request aka as
 "Webhook". You can find the webhook in the script or flow details page but the
 target URL follows this format:
 
+<!-- FIXME: Update URLs after merging #336 -->
 - Flow by path:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH>
 - Script by hash:
@@ -374,7 +384,7 @@ target URL follows this format:
 
 aka "Lambda style" endpoints
 
-Every script also expose an endpoint that triggers the script but wait for its
+Every script also exposes an endpoint that triggers the script but waits for its
 full execution before returning. The endpoint is:
 <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run_wait/result/$SCRIPT_PATH>
 
@@ -386,22 +396,22 @@ jobs", and are ordered by the time at which they were scheduled for
 (`scheduled_for`). Jobs that are created without being given a future
 `scheduled_for` are scheduled for the time at which they were created.
 
-[Workers](#workers) fetch jobs from the queue, start executing them, set
-atomically their state in the queue to "running", stream the logs while
+[Workers](#workers) fetch jobs from the queue, start executing them, 
+atomically set their state in the queue to "running", stream the logs while
 executing them, then once completed remove them from the queue and create a new
 "completed job".
 
 Every job has a unique UUID attached to it and as long as you have visibility
-over the execution of the script, you are able to insect the execution logs,
+over the execution of the script, you are able to inspect the execution logs,
 output and metadata in the dedicated details page of the job.
 
-### 5 kinds of Jobs
+### Jobs kinds
 
-There are 3 main kinds of jobs, that each have a dedicated tab in the runs page:
+There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
 
 - **Script Jobs**: Run a script as defined by the hash of the script (that
   uniquely and immutably defines a specific version of a script), its input
-  arguments (args) and the "permissioned_as" user or group of whom it is gonna
+  arguments (args) and the `permissioned_as` user or group of whom it is gonna
   act on behalf of and inherit the visibility to other items such as resources
   and variables from. An user can **NEVER** escalates his privileges but only
   de-escalates it by launching a script with either the same permissions as
@@ -413,14 +423,15 @@ There are 3 main kinds of jobs, that each have a dedicated tab in the runs page:
   script editors. Even when code is executed as a preview, you keep a trace of
   its execution.
 
-- **Dependencies Jobs**: Scripts written python generate a lock file when they
+- **Dependencies Jobs**: Scripts written in python generate a lock file when they
   are saved/created. This lockfile ensures that an execution of the same hash
   will always use the same versions. The process of generating this lockfile is
   also a job in itself so you can easily inspect the issues generating the
-  lockfile if any. See [Dependency Management](#dependency-management).
+  lockfile if any. See [Dependency Management](#dependency-management) for 
+  more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
-  every steps of its. The execution of the steps are in-themselves jobs. It is
+  every step. The execution of the steps are in-themselves jobs. It is
   defined similarly to a script job but instead of being defined by a path to a
   script, it is defined by a path to the flow.
 
@@ -431,12 +442,12 @@ There are 3 main kinds of jobs, that each have a dedicated tab in the runs page:
 ### Jobs are run on behalf of
 
 The `permissioned_as` value from script and preview jobs is the most important
-concept to grasp to understand what makes windmill's security and permission
+concept to grasp to understand what makes Windmill's security and permission
 model consistent, predictable and safe. `permissioned_as` is distinct from the
 `created_by` value, even though in the vast majority of jobs, they will be the
-same. It represents the level of permission this job will execute with. As a
+same. It represents the level of permissions this job will execute with. As a
 direct consequence, the variables (including secrets) that are accessible to the
-scripts are only those whom the user or group has visibility on given his
+scripts are only those whom the user or group has visibility on, given his
 [permissions](#permissions).
 
 Similarly for the [Contextual Variable](#contextual-variables) `WM_TOKEN` which
@@ -462,7 +473,7 @@ Workers pull [jobs](#job) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
 a job, it atomically sets its state to "running", runs it, streams its logs then
 once it is complete, saves it back in the database as a "complete job". The
-final result and are logs stored forever.
+final result and logs are stored forever.
 
 The number of workers can be horizontally scaled up or down depending on needs
 without any overhead.
@@ -480,7 +491,7 @@ There are two types of variables in Windmill.
 ### User-defined Variables
 
 User-defined Variables is essentially a key-value store where every user can
-read, set and shares values at given keys as long as they have the privilege to
+read, set and share values at given keys as long as they have the privilege to
 do so.
 
 They are editable in the UI and also readable if they are not
@@ -492,13 +503,17 @@ user-defined variables.
 Python:
 
 ```python
+import wmill 
+
 wmill.get_variable("u/user/foo")
 wmill.set_variable("u/user/foo", value)
 ```
 
 Typescript (deno):
 
-```
+```typescript
+import * as wmill from 'https://deno.land/x/windmill/index.ts'
+
 wmill.getVariable('u/user/foo')
 wmill.setVariable('u/user/foo', value)
 ```
@@ -515,17 +530,17 @@ hash, and both the edit and the execution would be visible from the
 
 ### Contextual Variables
 
-Contextual variables are variables whose values is contextual to the script
-execution. This is how the Deno and Python windmill client gets their implicit
+Contextual variables are variables whose values are contextual to the script
+execution. This is how the Deno and Python windmill client get their implicit
 credentials to interact with the platform.
 
 | Name         | Value                                                                                                               |
 | ------------ | ------------------------------------------------------------------------------------------------------------------- |
-| WM_TOKEN     | Token ephemeral to the current script with equal permission to the permission of the run (Usable as a bearer token) |
-| WM_EMAIL     | Email of the user that executed the current script                                                                  |
-| WM_USERNAME  | Username of the user that executed the current script                                                               |
-| WM_JOB_ID    | Job id of the current job                                                                                           |
-| WM_WORKSPACE | The workspace id of the current job                                                                                 |
+| `WM_TOKEN`     | Token ephemeral to the current script with equal permission to the permission of the run (Usable as a bearer token) |
+| `WM_EMAIL`     | Email of the user that executed the current script                                                                  |
+| `WM_USERNAME`  | Username of the user that executed the current script                                                               |
+| `WM_JOB_ID`    | Job id of the current job                                                                                           |
+| `WM_WORKSPACE` | The workspace id of the current job                                                                                 |
 
 ## Resource
 
@@ -547,7 +562,7 @@ the demodb schema:
 }
 ```
 
-A resource string can refer to a [#variable] using the following pattern:
+A resource string can refer to a [variable](#variables) using the following pattern:
 
 ```
 $var:path
@@ -575,7 +590,7 @@ object value before triggering the script or the flow.
 
 Resource types have a name and a [jsonschema](#jsonschema) value. A resource is
 constrained by its resource type. An example of a resource type is for instance
-a postgres connection, shortened as "postgres' and whose schema is:
+a postgres connection, shortened as `postgresql` and whose schema is:
 
 ```json
 {
@@ -641,7 +656,7 @@ Schedules can not be deleted but they can be disabled.
 
 ## Workspace
 
-Every namable entity or pathable entity in windmill has a workspace attached to
+Every nameable or pathable entity in Windmill has a workspace attached to
 it. This includes:
 
 - users
@@ -655,7 +670,7 @@ it. This includes:
 Windmill's entire database is partitioned by workspaces such that users, teams
 and orgs can safely co-locate without risk of leakage.
 
-Any user can create his own workspace. When a user create a workspace, he is an
+Any user can create his own workspace. When a user creates a workspace, he is an
 admin of such workspace and he can invite others to join his workspace.
 
 ## Path
@@ -690,8 +705,9 @@ An owner is the user or group identified in a [path](#path) through the
 
 Groups have a name and a set of members. They are inspired by unix groups:
 
-- Members are always users.
-- Users can be member of multiple groups.
+- Members are always users
+- Users can be members of multiple groups
+
 
 Groups can own entities: the ownership path prefix of those entities are of the
 form `g/<group>` and can be granted or shared read or write
@@ -729,10 +745,10 @@ everything.
 
 ## Audit Log
 
-Every operation and actions that have side-effects (so every action except
+Every operation, and actions that have side-effects (so every action except
 getting or listing entities) have a log attached to them which contains the user
 at the origin of the operation and some metadata specific to the kind of
-operation. Every kind of audit log have a hierarchical operation name attached
+operation. Every kind of audit log has a hierarchical operation name attached
 to them. Admins of a workspace can see the audit logs of every users of a
 [workspace](#workspace). Simple users can only see their own audit logs. Audit
 logs have different retention policy depending on the plan your team is on.
