@@ -264,7 +264,7 @@ rendering of flows as graph are more gimmicks than productive. To execute any
 graph, one need to do a topological sort to transform it into a sequence, and
 sequences are more intuitive than graphs.
 
-# Input Transform
+## Input Transform
 
 Every step has an input transform that maps from:
 
@@ -381,12 +381,12 @@ full execution before returning. The endpoint is:
 ## Jobs
 
 A job represents a past, present or future "task" or "work" to be executed by a
-[worker](#worker). Future jobs or jobs waiting for a worker are called "queued
+[worker](#workers). Future jobs or jobs waiting for a worker are called "queued
 jobs", and are ordered by the time at which they were scheduled for
 (`scheduled_for`). Jobs that are created without being given a future
 `scheduled_for` are scheduled for the time at which they were created.
 
-[Workers](#worker) fetch jobs from the queue, start executing them, set
+[Workers](#workers) fetch jobs from the queue, start executing them, set
 atomically their state in the queue to "running", stream the logs while
 executing them, then once completed remove them from the queue and create a new
 "completed job".
@@ -453,7 +453,7 @@ permissioned correctly.
 A user can only run a script permissioned as either himself, one of the group
 that he is a member of.
 
-## Worker
+## Workers
 
 Workers are autonomous processes that run one script at a time using the full
 machines resources available to them.

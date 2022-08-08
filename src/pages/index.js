@@ -207,21 +207,21 @@ function WhoisItFor()
 			<div class="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-lg lg:h-20  font-medium text-gray-900">Individuals and small Teams</h3>
+						<h3 class="text-xl lg:h-20  font-medium text-gray-900">Individuals and small Teams</h3>
 						<p class="mt-2 text-gray-500">Solo dev or as part of a small nimble team, increase your productivity ten-fold using Windmill for all your workflows, integrations and serverless endpoints. One tool to rule them all.</p>
 					</div>
 				</div>
 
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-lg  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
+						<h3 class="text-xl  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
 						<p class="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. If on-premises deployment is a technical or compliance requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
 					</div>
 				</div>
 
 				<div class="sm:flex lg:block">
 					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-lg lg:h-20 font-medium text-gray-900">SaaS that provides automations, and no-code tools</h3>
+						<h3 class="text-xl lg:h-20 font-medium text-gray-900">SaaS that provides automations, and no-code tools</h3>
 						<p class="mt-2 text-gray-500">Build your tool and automation service or feature on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, 							<a
 							href="mailto:contact@windmill.dev?subject=Request%20License"
 						>contact us</a> to get a commercial license.</p>

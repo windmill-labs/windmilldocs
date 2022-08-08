@@ -150,7 +150,9 @@ export default function HomepageFeatures()
 										src="/img/parser.png"
 										alt="UI parser"
 									/>
-									<p className='text-gray-700 italic  text-sm text-center'>Script parameters are parsed automatically to generate your app UI that you may still refine. Scripts are also transformed into no-code modules this way.</p>
+								</div>
+								<div className='w-full lg:max-w-lg m-auto'>
+									<p className='text-gray-700 italic  text-sm text-center max-w-lg'>Script parameters are parsed automatically to generate your app UI that you may still refine. Scripts are also transformed into no-code modules this way.</p>
 								</div>
 							</div>
 						</div>
@@ -199,7 +201,7 @@ export default function HomepageFeatures()
 								<p className="mt-8 text-lg text-gray-500">
 									We integrate with any OAuth provider to manage access and refresh tokens. If it does not exist yet, <a href="/docs/contributors_guide#add-an-oauth-provider">we will add it easily</a>.
 									<br /><br />
-									Watch for new external events using dedicated trigger scripts.
+									Watch for new external events using dedicated <a href="/docs/reference#trigger-scripts">trigger scripts</a>.
 									<br /><br />
 									Write SQL queries as parameters of your script in a dedicated SQL editor.
 									<br /><br />
@@ -208,14 +210,7 @@ export default function HomepageFeatures()
 									Many tools do only one thing, and are focused on one specific problem. You need to setup many different niche tools from whom you exploit only a tiny portion of the features.
 									<br /><br />
 									Unlike other automation tools, we do not reinvent the wheel with proprietary connectors and UI, connect to any API using any standard python or typescript client or dependencies available in PyPI or Deno compatible packages.<br /><br />
-									<span className='font-bold'>Any python or typescript (deno) library becomes a connector.</span><br />
-									<div className="flex flex-row gap-4 mt-10 justify-center">
-										<Postgres />
-										<Mysql />
-										<Mongo />
-										<Slack />
-										<span className='text-xs font-mono my-auto'>... anything with a python or typescript client, or exposing an API</span>
-									</div>
+									<span className='font-bold text-black'>Any python or typescript (deno) library becomes a connector. Use REST API otherwise. Hence we have more integrations out-of-the-box than any other tools.</span><br />
 								</p>
 							</div>
 						</div>
@@ -236,7 +231,7 @@ export default function HomepageFeatures()
 										alt="Slack command"
 									/>
 								</div>
-								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Scripts can be triggered from schedules or interacted with from slack, build custom slackbots in minutes</p>
+								<p className='mt-10 text-gray-700 italic  text-sm text-center'>Scripts can be triggered from schedules, http endpoints or interacted with from slack, build custom slackbots in minutes or hook your own frontend</p>
 
 							</div>
 						</div>
@@ -244,31 +239,10 @@ export default function HomepageFeatures()
 				</div>
 			</div>
 
-			<div className="mt-40">
+			<div className="my-20 w-full">
 
-				<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-5 lg:grid-flow-col-dense lg:gap-20 overflow-visible">
-					<div className="px-4 max-w-xl m-auto sm:px-6 lg:pb-16 lg:max-w-none lg:col-span-2 lg:mx-0 lg:px-0">
-						<div>
-							<div className="mt-2">
-								<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
-									Coding is seldom the bottleneck, it is everything else
-								</h2>
-								<p className="mt-8 text-lg text-gray-500">
-									Not just for developers, the generated Apps are meant to be used by all, and the included powerful Webeditor with previews enable quick feedback loops.
-									<br /><br />
-									As a dev, you will feel right at home with Windmill. It is consistent with software engineering practices and power-user friendly.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1 lg:col-span-3 ">
-						<Slideshow></Slideshow>
-						{/* <img
-									className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5  lg:w-auto m-auto"
-									src="/img/editor.png"
-									alt="editor"
-								/> */}
-					</div>
+				<div className="mx-auto max-w-4xl">
+					<Slideshow></Slideshow>
 				</div>
 			</div>
 
