@@ -1,6 +1,6 @@
 # PRIVACY POLICY
 
-<div class="theme-doc-markdown markdown">
+<div className="theme-doc-markdown markdown">
 
 Effective date: 07/25/2022
 

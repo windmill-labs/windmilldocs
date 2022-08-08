@@ -15,7 +15,7 @@ export default function Tabs()
     ]
 
     return (
-        <div class="w-full">
+        <div className="w-full">
             <div className="sm:hidden">
                 <label htmlFor="tabs" className="sr-only">
                     Select a tab

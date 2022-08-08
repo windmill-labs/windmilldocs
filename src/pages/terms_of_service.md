@@ -1,4 +1,4 @@
-<div class="theme-doc-markdown markdown">
+<div className="theme-doc-markdown markdown">
 
 Last updated: 07/25/2022
 

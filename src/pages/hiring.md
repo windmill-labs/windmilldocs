@@ -2,7 +2,7 @@
 title: Hiring - Join us!
 ---
 
-<div class="theme-doc-markdown markdown">
+<div className="theme-doc-markdown markdown">
 
 # Hiring - Join us!
 
@@ -44,8 +44,8 @@ or hosted on our cloud. You own the relationship with those companies, including
 the sales process and the acquisition funnel.
 
 Furthermore, windmill.dev can potentially grow as a tool for consultancy shops
-or as a automation consultancy itself, it is a plus if you are interested
-or have related experience.
+or as a automation consultancy itself, it is a plus if you are interested or
+have related experience.
 
 ### Founding Engineer
 

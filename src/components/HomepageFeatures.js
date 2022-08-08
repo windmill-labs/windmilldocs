@@ -1,30 +1,22 @@
 import React from 'react';
-import Postgres from '../../static/third_party_logos/postgres.svg';
-import Mysql from '../../static/third_party_logos/mysql.svg';
-import Mongo from '../../static/third_party_logos/mongo.svg';
-import Slack from '../../static/third_party_logos/slack.svg';
 import Slideshow from '../components/Slideshow';
 import 'react-slideshow-image/dist/styles.css';
 
 import
 {
 	ClockIcon,
-	EyeIcon,
 	LightningBoltIcon,
 	LockClosedIcon,
 	ShieldCheckIcon,
 	SwitchHorizontalIcon,
 	CheckIcon,
-	ClipboardCopyIcon,
 	LinkIcon,
 	PuzzleIcon,
-	DownloadIcon,
 	LoginIcon,
 	PencilIcon,
 	LibraryIcon,
 	DocumentAddIcon,
 } from '@heroicons/react/outline'
-import Scripts from './Workflow';
 
 const features = [
 	{
@@ -217,7 +209,7 @@ export default function HomepageFeatures()
 					</div>
 					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-span-1">
 						<div className="flex flex-col justify-center p-4 lg:-ml-4 sm:pr-6 lg:px-0 mx-auto lg:h-full ">
-							<div class="my-auto">
+							<div className="my-auto">
 								<img
 									className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:w-auto object-scale-down"
 									src="/img/schedule.png"

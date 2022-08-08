@@ -18,9 +18,9 @@ function HomepageHeader()
 {
 
 	return (
-		<main class="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6 ">
-			<div class="lg:grid lg:grid-cols-12 lg:gap-20">
-				<div class="md:max-w-2xl md:mx-auto lg:col-span-6">
+		<main className="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6 ">
+			<div className="lg:grid lg:grid-cols-12 lg:gap-20">
+				<div className="md:max-w-2xl md:mx-auto lg:col-span-6">
 					<div >
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-xl tracking-tight font-bold text-gray-900  font-mono">
@@ -30,14 +30,14 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline"><span className="text-blue-600">Internal apps</span>, <span className="text-blue-600">integrations</span> and <span className="text-blue-600">workflows</span> in minutes using minimal <span className="text-blue-600">scripts</span><span class="text-xl block mt-2">(yours and from a curated library)</span></span>
+								<span className="block xl:inline"><span className="text-blue-600">Internal apps</span>, <span className="text-blue-600">integrations</span> and <span className="text-blue-600">workflows</span> in minutes using minimal <span className="text-blue-600">scripts</span><span className="text-xl block mt-2">(yours and from a curated library)</span></span>
 							</h1>
 							<h2 className="mt-12 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
 								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal. <a href="/docs/benchmark">Self-hostable AWS Lambda</a></span>
 							</h2>
 
 						</div>
-						<div class="w-full">
+						<div className="w-full">
 							<div className="mt-20 grid grid-cols-2 gap-8 max-w-md mx-auto">
 								<div className="shadow w-full col-span-1">
 									<a
@@ -69,25 +69,25 @@ function HomepageHeader()
 					</div>
 
 				</div>
-				<div class="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-					<svg class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden" width="640" height="784" fill="none" viewBox="0 0 640 784" aria-hidden="true">
+				<div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+					<svg className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden" width="640" height="784" fill="none" viewBox="0 0 640 784" aria-hidden="true">
 						<defs>
 							<pattern id="4f4f415c-a0e9-44c2-9601-6ded5a34a13e" x="118" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-								<rect x="0" y="0" width="4" height="4" class="text-gray-200" fill="currentColor" />
+								<rect x="0" y="0" width="4" height="4" className="text-gray-200" fill="currentColor" />
 							</pattern>
 						</defs>
-						<rect y="72" width="640" height="640" class="text-gray-50" fill="currentColor" />
+						<rect y="72" width="640" height="640" className="text-gray-50" fill="currentColor" />
 						<rect x="118" width="404" height="784" fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)" />
 					</svg>
-					<div class="mt-20 relative mx-auto w-full lg:max-w-2xl">
-						<div class="rounded-lg shadow-lg">
+					<div className="mt-20 relative mx-auto w-full lg:max-w-2xl">
+						<div className="rounded-lg shadow-lg">
 							<BrowserOnly>{() =>
 								<VideoPlayer>
-									<button type="button" class="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-										<span class="sr-only">Windmill demo</span>
-										<img class="w-full" src="/img/flows.png" alt="" />
-										<div class="absolute inset-0 w-full h-full flex items-center justify-center" aria-hidden="true">
-											<svg class="h-20 w-20 text-blue-600" fill="currentColor" viewBox="0 0 84 84">
+									<button type="button" className="relative block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+										<span className="sr-only">Windmill demo</span>
+										<img className="w-full" src="/img/flows.png" alt="" />
+										<div className="absolute inset-0 w-full h-full flex items-center justify-center" aria-hidden="true">
+											<svg className="h-20 w-20 text-blue-600" fill="currentColor" viewBox="0 0 84 84">
 												<circle opacity="0.5" cx="42" cy="42" r="42" fill="gray" />
 												<path d="M55.5039 40.3359L37.1094 28.0729C35.7803 27.1869 34 28.1396 34 29.737V54.263C34 55.8604 35.7803 56.8131 37.1094 55.9271L55.5038 43.6641C56.6913 42.8725 56.6913 41.1275 55.5039 40.3359Z" />
 											</svg>
@@ -105,14 +105,14 @@ function HomepageHeader()
 				</div>
 
 			</div>
-			<div class="w-full text-center py-16">
-				<div class="text-gray-600 font-md my-16 mx-auto">Backed by <img class="inline ml-2" src="ycombinator.svg"></img></div>
+			<div className="w-full text-center py-16">
+				<div className="text-gray-600 font-md my-16 mx-auto">Backed by <img className="inline ml-2" src="ycombinator.svg"></img></div>
 			</div>
-			<div class="w-full">
+			<div className="w-full">
 				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-14">Examples of flows</h2>
-				{/* <div class="mx-auto"><Tabs></Tabs></div> */}
-				<div className='w-full mt-4 text-center'><div class="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
-					<div class="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
+				{/* <div className="mx-auto"><Tabs></Tabs></div> */}
+				<div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
+					<div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
 					<div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
 				</div >
 
@@ -205,25 +205,25 @@ function WhoisItFor()
 	return (
 		<div id="whomisitfor" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
 			<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Whom it is for</h2>
-			<div class="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
-				<div class="sm:flex lg:block">
-					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-xl lg:h-20  font-medium text-gray-900">Individuals and small Teams</h3>
-						<p class="mt-2 text-gray-500">Solo dev or as part of a small nimble team, increase your productivity ten-fold using Windmill for all your workflows, integrations and serverless endpoints. One tool to rule them all.</p>
+			<div className="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
+				<div className="sm:flex lg:block">
+					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+						<h3 className="text-xl lg:h-20  font-medium text-gray-900">Individuals and small Teams</h3>
+						<p className="mt-2 text-gray-500">Solo dev or as part of a small nimble team, increase your productivity ten-fold using Windmill for all your workflows, integrations and serverless endpoints. One tool to rule them all.</p>
 					</div>
 				</div>
 
-				<div class="sm:flex lg:block">
-					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-xl  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
-						<p class="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. If on-premises deployment is a technical or compliance requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
+				<div className="sm:flex lg:block">
+					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+						<h3 className="text-xl  lg:h-20 font-medium text-gray-900">Larger Teams and Organizations (especially those that require self-hosting)</h3>
+						<p className="mt-2 text-gray-500">Collaboration features and tight permissioning makes Windmill scales gracefully with the size of your team. If on-premises deployment is a technical or compliance requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem installation and setup as well as training for your team and conversion of your existing workflows.</p>
 					</div>
 				</div>
 
-				<div class="sm:flex lg:block">
-					<div class="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 class="text-xl lg:h-20 font-medium text-gray-900">SaaS that provides automations, and no-code tools</h3>
-						<p class="mt-2 text-gray-500">Build your tool and automation service or feature on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, 							<a
+				<div className="sm:flex lg:block">
+					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
+						<h3 className="text-xl lg:h-20 font-medium text-gray-900">SaaS that provides automations, and no-code tools</h3>
+						<p className="mt-2 text-gray-500">Build your tool and automation service or feature on top of Windmill. We have done all the hard engineering so you do not have to. If you are non open-source, 							<a
 							href="mailto:contact@windmill.dev?subject=Request%20License"
 						>contact us</a> to get a commercial license.</p>
 					</div>
@@ -240,20 +240,20 @@ function Roadmap()
 		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
 			<div className="max-w-3xl mx-auto ">
 				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Roadmap</h2>
-				<p class="text-center text-gray-500 text-sm my-2">We take open-source seriously, our full updated roadmap is <a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a></p>
+				<p className="text-center text-gray-500 text-sm my-2">We take open-source seriously, our full updated roadmap is <a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a></p>
 
-				<ul role="list" class="mt-6 divide-y divide-gray-200">
-					{roadmapItems.map((x) =>
-						<li class="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600">
-							<div class="flex justify-between space-x-3">
-								<div class="min-w-0 flex-1">
-									<span class="absolute inset-0" aria-hidden="true"></span>
-									<p class="text-sm font-medium text-gray-900 truncate">{x.title}</p>
+				<ul role="list" className="mt-6 divide-y divide-gray-200">
+					{roadmapItems.map((x, i) =>
+						<li className="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600" key={`roadmap-${i}`}>
+							<div className="flex justify-between space-x-3">
+								<div className="min-w-0 flex-1">
+									<span className="absolute inset-0" aria-hidden="true"></span>
+									<p className="text-sm font-medium text-gray-900 truncate">{x.title}</p>
 								</div>
-								<span class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">{x.when}</span>
+								<span className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">{x.when}</span>
 							</div>
-							<div class="mt-1">
-								<p class="line-clamp-2 text-sm text-gray-600">{x.description}</p>
+							<div className="mt-1">
+								<p className="line-clamp-2 text-sm text-gray-600">{x.description}</p>
 							</div>
 						</li>
 					)}

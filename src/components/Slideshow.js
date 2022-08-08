@@ -12,8 +12,8 @@ const Slideshow = () =>
 		<div className="flex p-4">
 
 			<Fade className=" w-full  shadow-xl ring-1 ring-black ring-opacity-5 " autoplay={true} duration={5000}>
-				{images.map((x) =>
-					<div className="h-full w-full ">
+				{images.map((x, i) =>
+					<div className="h-full w-full" key={`slide-${i}`}>
 
 						<img
 							src={`/img/${x}.png`}

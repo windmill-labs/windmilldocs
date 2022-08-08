@@ -29,13 +29,6 @@ const config = {
 		],
 	],
 
-	themeConfig: {
-		metadata: [{
-			"http-equiv": "Content-Security-Policy", "Content-Security-Policy:": "default-src 'self' *.windmill.dev; script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com;"
-		}],
-		// This would become <meta name="keywords" content="cooking, blog"> in the generated HTML
-	},
-
 	plugins: [
 		async function myPlugin(context, options)
 		{
@@ -71,6 +64,9 @@ const config = {
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
+			metadata: [{
+				"http-equiv": "Content-Security-Policy", "Content-Security-Policy:": "default-src 'self' *.windmill.dev; script-src static.cloudflareinsights.com; connect-src cloudflareinsights.com;"
+			}],
 			navbar: {
 				title: 'Windmill',
 				logo: {
