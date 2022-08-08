@@ -34,24 +34,8 @@ passed almost straight as to the main function, with just a few language
 specific transformations from JSON to more adequate types in typescript or
 python if necessary.
 
-Scripts versions are uniquely defined by their hash.
-
-### Versioning
-
-Scripts when created can have a parent script identified by its **hash**.
-Indeed, scripts are never overwritten, they are instead subsumed by a child
-script which corresponds to the new version of the parent script. This
-guarantees traceability of every actions done on the platform, including editing
-scripts. It also enables versioning. Versioning is a good practice from software
-engineering which everyone familiar with git already knows. Windmill versioning
-is a **simplified git** and makes two main simplifying assumptions:
-
-- **Linearity**: the lineage or the chain of script from the one with no
-  ancestor/parent to the one with no child is linear: there is no branching and
-  there is no merging.
-- **Not diff-based**: every versions of a script contains its entire content and
-  not just the diff between him and his direct parent. This is for simplicity
-  and read-performance sake.
+Scripts versions are uniquely defined by their hash. See
+[Versioning](#versioning) for more info about the hashes purposes.
 
 ### UI automatic generation
 
@@ -59,8 +43,14 @@ By reading the main function parameters, Windmill generates the input
 specification of the script in the [#jsonschema](https://json-schema.org/)
 format. Windmill then renders the flow's or script's UI from that specification.
 
-You never need to deal with the generated jsonschema directly but here is an
-example of what it looks like:
+You can but in most cases do not need to deal with the jsonschema directly
+associated to the script directly. It is the result of the
+[analysis of the script parameters of the main function](#script-parameters-to-jsonschema)
+and the UI customisation that you may do in the last step of the flow or script.
+In the UI customisation interface, you may refine all the information that it
+was not possible to infer directly from the parameters such as restricting a
+string to an enum, or precising that a list contains only string. You can also
+add helpful descriptions to each field.
 
 ### Jsonschema
 
@@ -102,6 +92,67 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
   case, the generated UI will check that user input provides required arguments.
 - Each argument can have a description field, that will appear in the generated
   UI.
+
+### Script parameters to jsonschema
+
+There is a one to one correspondance between a parameter of the main function
+and a field of 'properties' in the jsonschema. The name of the argument become
+the name of the property, and most of the primitive types in Python and
+Typescript have a corresponding primitive type in JSON and by extension
+jsonschema.
+
+In Python:
+
+- str => string
+- float => number
+- int => integer
+- bool => boolean
+- dict => object
+- list => any[]
+- bytes => string, encodingFormat: base64
+- datetime => str, format: date-time
+- _ => any
+
+In Deno:
+
+- string => string
+- object => object
+- boolean => boolean
+- bigint => int
+- number => number
+- string[] -> string[]
+- ...
+
+However in Deno there also some special types that are specific to windmill.
+They are as follows:
+
+- wmill.Base64 => string, encodingFormat: base64
+- wmill.Email => string, format: email
+- wmill.Sql => string, format: sql
+- wmill.Resource<'resource_type'> => object, format: resource-{resource_type}
+
+Base64 and Email are actually a type alias for string, and Resource is a type
+alias for an object. They are purely type hints for the windmill parser.
+
+The sql format is specific to Windmill and replaces the normal text field with a
+monaco editor with sql support.
+
+### Versioning
+
+Scripts when created can have a parent script identified by its **hash**.
+Indeed, scripts are never overwritten, they are instead subsumed by a child
+script which corresponds to the new version of the parent script. This
+guarantees traceability of every actions done on the platform, including editing
+scripts. It also enables versioning. Versioning is a good practice from software
+engineering which everyone familiar with git already knows. Windmill versioning
+is a **simplified git** and makes two main simplifying assumptions:
+
+- **Linearity**: the lineage or the chain of script from the one with no
+  ancestor/parent to the one with no child is linear: there is no branching and
+  there is no merging.
+- **Not diff-based**: every versions of a script contains its entire content and
+  not just the diff between him and his direct parent. This is for simplicity
+  and read-performance sake.
 
 ### Python client
 
@@ -265,7 +316,20 @@ The WindmillHub at <https://hub.windmill.dev> is a community hub to ask and
 share generic task-specific scripts, trigger-scripts, flows that be reused in
 everyone's flow in order to not have to reinvent the wheel.
 
-## Webhooks
+## Endpoints to trigger scripts and flows
+
+The script triggers urls are always available on the script details page.
+
+![Script trigger hooks](./assets/script_trigger_hooks.png)
+
+For all of those REST endpoints, the input of the script or flow must be passed
+as a json payload that fits the jsonschema spec of that script or flow. Those
+endpoints are authenticated and will require a bearer token of the format:
+`Authorization: Bearer XXX`. You can create a token in your user settings.
+
+![User settings](./assets/user_settings.png)
+
+### Webhooks
 
 Every script or flows can be run by its hash or path as an http request aka as
 "Webhook". You can find the webhook in the script or flow details page but the
@@ -277,6 +341,12 @@ target URL follows this format:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH>
 - Script by path:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH>
+
+### Synchronous endpoint for scripts aka "Lambda style" endpoints
+
+Every script also expose an endpoint that triggers the script but wait for its
+full execution before returning. The endpoint is:
+<https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run_wait/result/$SCRIPT_PATH>
 
 ## Jobs
 
@@ -463,6 +533,13 @@ for instance:
 
 This is most useful when dealing with sensitive values that should be treated as
 secrets.
+
+### The special resource type payload
+
+In JSON payloads, instead of passing an object with their values, one can use
+the string `$res:u/user/foo` where the second part is the path of the resource.
+The worker will fetch the corresponding object and switch the string with the
+object value before triggering the script or the flow.
 
 ### Resource type
 
