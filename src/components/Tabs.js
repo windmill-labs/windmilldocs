@@ -1,53 +1,35 @@
+import React from 'react'
+import Tabs, { Tab } from 'react-best-tabs';
+import 'react-best-tabs/dist/index.css';
 
-import React from 'react';
 
-
-function classNames(...classes)
+export default function TabsW()
 {
-    return classes.filter(Boolean).join(' ')
-}
-
-export default function Tabs()
-{
-    const tabs = [
-        { name: 'HN items @ name => slack', href: '#', current: true },
-        { name: 'HN items with mention => slack', href: '#', current: false },
-    ]
-
     return (
-        <div className="w-full">
-            <div className="sm:hidden">
-                <label htmlFor="tabs" className="sr-only">
-                    Select a tab
-                </label>
-                <select
-                    id="tabs"
-                    name="tabs"
-                    className="block w-fullfocus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
-                    defaultValue={tabs.find((tab) => tab.current).name}
-                >
-                    {tabs.map((tab) => (
-                        <option key={tab.name}>{tab.name}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="hidden sm:block max-w-lg mx-auto">
-                <nav className="flex space-x-4" aria-label="Tabs">
-                    {tabs.map((tab) => (
-                        <a
-                            key={tab.name}
-                            href={tab.href}
-                            className={classNames(
-                                tab.current ? 'bg-gray-100 text-gray-700' : 'text-gray-500 hover:text-gray-700',
-                                'px-3 py-2 font-medium text-sm rounded-md'
-                            )}
-                            aria-current={tab.current ? 'page' : undefined}
-                        >
-                            {tab.name}
-                        </a>
-                    ))}
-                </nav>
-            </div>
-        </div>
+        <Tabs
+            activeTab="1"
+            className="max-w-4lg mx-auto"
+            ulClassName="max-w-md"
+            activityClassName="bg-success"
+            onClick={(event, tab) => console.log(event, tab)}
+        >
+            <Tab title="HN mention => slack" className="mr-3">
+                <div className="mt-3">
+                    <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
+                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
+                        <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
+                    </div >
+                </div>
+            </Tab>
+            <Tab title="Expense OCR => GSheets" className="mr-3">
+                <div className="mt-3">
+                    <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/21/expense_app' style={{ height: "800px" }}></iframe></div>
+                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=21">Edit/Run in Windmill</a></div>
+                        <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
+                    </div >
+                </div>
+            </Tab>
+        </Tabs>
     )
 }
+

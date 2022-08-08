@@ -12,7 +12,7 @@ import
 {
 	SparklesIcon
 } from '@heroicons/react/outline'
-import Tabs from '../components/Tabs';
+import TabsW from '../components/Tabs';
 
 function HomepageHeader()
 {
@@ -110,12 +110,7 @@ function HomepageHeader()
 			</div>
 			<div className="w-full">
 				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-14">Examples of flows</h2>
-				{/* <div className="mx-auto"><Tabs></Tabs></div> */}
-				<div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
-					<div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
-					<div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
-				</div >
-
+				<TabsW></TabsW>
 			</div >
 		</main >
 

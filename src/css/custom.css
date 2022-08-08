@@ -121,3 +121,7 @@ a {
 .react-slideshow-container {
 	margin: 0 auto;
 }
+
+.rb-tabs-header {
+	@apply flex justify-center;
+}
