@@ -129,7 +129,7 @@ export default function HomepageFeatures()
 							<div>
 								<div className="mt-6">
 									<h2 className="text-3xl font-extrabold tracking-tight font-boldtext-gray-900">
-										<span className="block xl:inline"><span className="text-blue-600">Internal apps</span>, <span className="text-blue-600">integrations</span>, <span className="text-blue-600">workflows</span> with the full power of code, without the hassle</span>
+										<span className="block xl:inline">Any script with any dependency, the full power of code, without the hassle</span>
 									</h2>
 									<p className="mt-8 text-lg text-gray-500">
 										Apps and their UI are automatically generated and continuously updated from your script parameters. Refine the UI if desired.

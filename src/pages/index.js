@@ -98,7 +98,7 @@ function HomepageHeader()
 							</BrowserOnly>
 						</div>
 						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
-							<span className="block xl:inline">Chain Typescript (deno), Python scripts and any query languages like SQL in low-code flows, without limitations. Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> intuitive to non technical users too. Replace all your serverless and workflows infra.</span>
+							<span className="block xl:inline">- Chain Typescript (deno), Python scripts and SQL in low-code flows<br />- Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> intuitive to non technical users too. <br />- Single scripts can also be turned into standalone apps<br />- Replace all your serverless and workflows infra.</span>
 						</h3>
 					</div>
 
@@ -110,7 +110,7 @@ function HomepageHeader()
 			</div>
 			<div class="w-full">
 				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-14">Examples of flows</h2>
-				<div class="mx-auto"><Tabs></Tabs></div>
+				{/* <div class="mx-auto"><Tabs></Tabs></div> */}
 				<div className='w-full mt-4 text-center'><div class="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
 					<div class="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
 					<div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
