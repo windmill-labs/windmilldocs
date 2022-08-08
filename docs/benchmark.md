@@ -1,19 +1,20 @@
 # Benchmark
 
-## TL;DR: about same performance for heavier workloads
+## TL;DR: about same performance than AWS Lambda for heavier workloads, slower cold starts for medium compute
 
 Tested with apache bench. If we did it wrong, let us know. AWS Lambda was
-pre-warmed with 5000 requests to avoid cold starts. AWS Lambda uses firecracker
-for isolation while Windmill uses nsjail.
+pre-warmed with 5000 requests to avoid unfair cold starts. AWS Lambda uses
+firecracker for isolation while Windmill uses nsjail.
 
 ## Setup
 
 ### Windmill
 
-Comparable very simple scripts. Windmill exposes a sync script execution
-endpoint and we created a token to go through authorization (which we didn't for
-AWS Lambda since it was a public endpoint so admittedly it's not completely
-fair, Windmill is doing auth too)
+Comparable very simple scripts. Windmill exposes a
+[sync script execution endpoint similar to Lambda](./references#synchronous-endpoint-for-scripts)
+and we created a token to go through authorization (which we didn't for AWS
+Lambda since it was a public endpoint so admittedly it's not completely fair,
+Windmill is doing auth too)
 
 ```typescript
 export async function main() {
@@ -95,4 +96,5 @@ it should not be an easy.
 ## Conclusion
 
 Windmill is in the same general ballpark as AWS for heavier compute scripts but
-currently doing about 2x worse in terms of latency for workloads around 200ms.
+currently doing about 2x worse in terms of latency for workloads around 200ms on
+1vCPU.

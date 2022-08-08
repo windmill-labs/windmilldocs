@@ -146,6 +146,25 @@ still templatize the SQL query as you would for any script.
 
 ![SQL](./assets/sql.png)
 
+### Rich display rendering
+
+The result renderer will by default render results as a pretty JSON. However,
+there are some cases that are handled specifically, so-called "rich results".
+They are based on the format of the result.
+
+If the result is an object/dict with a single key and that key is:
+
+- "gif" or "png" or "jpeg": expect the value to be a base64 encoded gif/png/jpeg
+  and render it as an image
+- "file": expect the value to be a base64 encoded file and offer it to be
+  downloaded
+
+If the result is a list whose first element is also a list, it will display the
+result as a table.
+
+If the result is a dict/object where every value is an array, it will also be
+displayed as a table, with the key as the column name.
+
 ### Versioning
 
 Scripts when created can have a parent script identified by its **hash**.
@@ -351,7 +370,9 @@ target URL follows this format:
 - Script by path:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH>
 
-### Synchronous endpoint for scripts aka "Lambda style" endpoints
+### Synchronous endpoint for scripts
+
+aka "Lambda style" endpoints
 
 Every script also expose an endpoint that triggers the script but wait for its
 full execution before returning. The endpoint is:
