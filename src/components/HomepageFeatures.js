@@ -216,11 +216,6 @@ export default function HomepageFeatures()
 					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-span-1">
 						<div className="flex flex-col justify-center p-4 lg:-ml-4 sm:pr-6 lg:px-0 mx-auto lg:h-full ">
 							<div className="my-auto">
-								<img
-									className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:w-auto object-scale-down"
-									src="/img/schedule.png"
-									alt="Schedule"
-								/>
 								<div className="object-scale-down w-full lg:w-auto">
 									<img
 										className="m-auto mt-10 rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 "
