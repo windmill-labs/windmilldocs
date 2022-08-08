@@ -7,30 +7,30 @@ customer support, customer success, etc).
 
 ### Use cases
 
-Examples of what
+Examples of what can be built with Windmill include:
 
-- building small to medium size data pipelines that need to augment their data
-  from data in multiple services
+- small to medium size data pipelines to augment datasets from multiple sources
 - trigger ETL in other services and react to their status changes
-- creating users, resetting user licenses, more generally doing database edit
-  with templatized sql queries, and getting approval before doing any sensitive
-  operations on the database directly
-- reacting to new events from an external service (new email, new message in
-  Discord, an HackerNews message matching a given pattern, a new row in a
-  database or a google sheet)
-- customer or teammate onboarding that requires setting up multiple systems,
+- template-based SQL queries with fine grain permissions and wait-for-approval
+  steps: create, ban, delete users, modify their licences, etc.
+- automated triggers for events (new email, new message in Discord,
+  a HackerNews message matching a given pattern, a new row in a 
+  database, a google sheet, etc)
+- onboarding automation that requires setting up multiple systems,
   including the production site and third-party SaaS services
-- moving data to and from CRMs and marketing systems
+- migration service to move data from and to CRMs and marketing systems
 
 ### What you need
 
 Scripts and code is a great way to solve those use-cases. However, the
-difficulty come from using those scripts as:
+difficulty comes from using those scripts to:
 
 - self-serve shareable apps for the rest of the teams with an intuitive UI
-- production-grade workflows that always work and that are easy to maintain,
-  iterate and observe the pasts runs of. Those pipelines are triggered by
-  webhooks to react to events, or schedule themselves to poll for new changes.
+- production-grade workflows with execution history, that always work and
+  that are easy to maintain and to iterate over. 
+  
+Those pipelines are triggered by webhooks to react to events, or schedule 
+themselves to poll for new changes.
 
 ### Why it's hard
 
