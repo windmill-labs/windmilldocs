@@ -1,16 +1,17 @@
 # Getting Started with Scripts
 
-In this tutorial, we'll create a basic Hello world script, and cover some of the
-Windmill's main concepts: scripts, accepting user input, and runs. Scripts can
-be turned directly into standalone apps, but can also be composed together using
-flows.
+In this tutorial, you will create a basic Hello world script, and understand
+some of Windmill's main concepts: scripts, accepting user input, and runs. 
+
+Scripts can act as standalone apps, but can also be chained together to 
+create *flows*.
 
 We will cover flows in a [separate intro](./intro_flows). In there, we will see
-that in flows, while some of the steps are custom busiess logics scripts from
+that in flows, while some of the steps are custom business logics from
 your workspace or inlined directly into the flow, most of the steps are generic
-scripts made by the community in the [WindmillHub](https://hub.windmill.dev) and
-directly pickable inside the flow builder when approved by the WindmillHub
-moderators.
+scripts made by the community in the [WindmillHub](https://hub.windmill.dev). 
+Once a script gets approved by WindmillHub moderators, it becomes available
+to be used directly from the flow builder.
 
 ## Step 1: Login
 
@@ -22,7 +23,7 @@ Log into your windmill instance. You will land on the dashboard.
 
 ![Add script](./assets/intro/add-script.png)
 
-Use the **Add script** button to create a new script. It'll open the create
+Use the **Add script** button to create a new script. It will open the create
 page, with three sections:
 
 ### Metadata
