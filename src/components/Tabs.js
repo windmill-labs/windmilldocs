@@ -8,8 +8,8 @@ export default function TabsW()
     return (
         <Tabs
             activeTab="1"
-            className="max-w-4lg mx-auto"
-            ulClassName="max-w-md"
+            className="max-w-4xl mx-auto"
+            ulClassName="max-w-4xl"
             activityClassName="bg-success"
             onClick={(event, tab) => console.log(event, tab)}
         >
@@ -33,6 +33,22 @@ export default function TabsW()
                 <div className="mt-3">
                     <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/22/expense_app' style={{ height: "800px" }}></iframe></div>
                         <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=22">Edit/Run in Windmill</a></div>
+                        <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
+                    </div >
+                </div>
+            </Tab>
+            <Tab title="Compute activity analytics => slack" className="mr-3">
+                <div className="mt-3">
+                    <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/24/compute_activity' style={{ height: "800px" }}></iframe></div>
+                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=24">Edit/Run in Windmill</a></div>
+                        <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
+                    </div >
+                </div>
+            </Tab>
+            <Tab title="Sign up a user in the database as a backend endpoint" className="mr-3">
+                <div className="mt-3">
+                    <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/23/signup' style={{ height: "800px" }}></iframe></div>
+                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=23">Edit/Run in Windmill</a></div>
                         <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
                     </div >
                 </div>
