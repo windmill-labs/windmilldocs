@@ -158,10 +158,12 @@ export default function HomepageFeatures()
 						<div>
 							<div className="mt-6">
 								<h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
-									Turn scripts into shareable internal apps or complex workflows triggered by webhooks or watching for new events.
+									Turn scripts into shareable internal apps or complex workflows triggered by webhooks, a schedule, or watching for new events.
 								</h2>
 								<p className="mt-8 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.
+									<br /><br />
+									Deploy from GitHub, or write and manage your scripts directly from Windmill, or a mix of both, up to you.
 									<br /><br />
 									Credentials and sensitive values are tightly permissioned and stored securely as <span className='font-bold'>secrets</span>
 									<br /><br />
