@@ -105,7 +105,7 @@ function HomepageHeader()
 				</div>
 
 			</div>
-			<div className="w-full text-center py-16">
+			<div className="w-full text-center py-10">
 				<div className="text-gray-600 font-md my-16 mx-auto">Backed by <img className="inline ml-2" src="ycombinator.svg"></img></div>
 			</div>
 			<div className="w-full">
