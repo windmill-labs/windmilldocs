@@ -158,14 +158,14 @@ export default function HomepageFeatures()
 						<div>
 							<div className="mt-6">
 								<h2 className="text-3xl font-extrabold tracking-tight text-gray-900">
-									Upload, create, compose scripts, build your internal backend fast without compromises
+									Turn scripts into shareable internal apps or complex workflows triggered by webhooks or watching for new events.
 								</h2>
 								<p className="mt-8 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.
 									<br /><br />
 									Credentials and sensitive values are tightly permissioned and stored securely as <span className='font-bold'>secrets</span>
 									<br /><br />
-									Keep track of operations with <span className='font-bold'>audit logs</span> enabling you to root cause quickly any mishaps.
+									See all past executions and keep track of operations with <span className='font-bold'>audit logs</span> enabling you to root cause quickly any mishaps.
 									<br /><br />
 									Define visibility, edit rights and executability for your scripts, resources, schedules, etc using <span className='font-bold'>groups' and users' granular permissions</span>.
 									<br /><br />
