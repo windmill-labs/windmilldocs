@@ -130,7 +130,7 @@ const tiers = [
 	{ name: 'Free', pricing: 'Free forever', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
 	{
 		name: 'Team',
-		pricing: "10$ /mo /seat",
+		pricing: "10$ /mo /user",
 		description: 'Any workspace can be upgraded to be a premium team workspace. Best for teams.',
 	},
 	{
