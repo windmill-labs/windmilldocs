@@ -46,7 +46,7 @@ const features = [
 	},
 	{
 		name: 'Deploy from Github & Exportable Workspace',
-		description: 'Sync with Github and version your flow and scripts externally if needed',
+		description: <span><a href="https://github.com/windmill-labs/deploy-from-github-example">Sync with Github</a> and version your flow and scripts externally if needed</span>,
 		icon: SwitchHorizontalIcon,
 	},
 	{
@@ -126,7 +126,7 @@ export default function HomepageFeatures()
 									<p className="mt-8 text-lg text-gray-500">
 										Apps and their UI are automatically generated and continuously updated from your script parameters. Refine the UI if desired.
 										<br /><br />
-										Develop and maintain scripts from our feature-complete webeditor or use your own IDE and deploy from Github.
+										Develop and maintain scripts from our feature-complete webeditor or use your own IDE and <a href="https://github.com/windmill-labs/deploy-from-github-example">deploy from Github</a>.
 										<br /><br />
 										<span className='font-bold'>The generated UI makes it very simple to expose your app to non-technical users while
 											requiring minimal efforts to develop and maintain. Every script can be a standalone app in itself or be used as a step inside a Flow.</span>
@@ -163,7 +163,7 @@ export default function HomepageFeatures()
 								<p className="mt-8 text-lg text-gray-500">
 									Your team never has to worry about deploying and managing the infra of your internal operations.
 									<br /><br />
-									Deploy from GitHub, or write and manage your scripts directly from Windmill, or a mix of both, up to you.
+									<a href="https://github.com/windmill-labs/deploy-from-github-example">Deploy from GitHub</a>, or write and manage your scripts directly from Windmill, or a mix of both, up to you.
 									<br /><br />
 									Credentials and sensitive values are tightly permissioned and stored securely as <span className='font-bold'>secrets</span>
 									<br /><br />
