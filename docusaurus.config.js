@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-	title: 'windmill.dev',
+	title: 'Windmill',
 	url: 'https://windmill.dev',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
@@ -28,6 +28,7 @@ const config = {
 			},
 		],
 	],
+
 	plugins: [
 		async function myPlugin(context, options)
 		{
@@ -64,12 +65,17 @@ const config = {
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			navbar: {
-				title: 'windmill.dev',
+				title: 'Windmill',
 				logo: {
-					alt: 'windmill.dev logo',
+					alt: 'Windmill logo',
 					src: 'img/windmill.svg'
 				},
 				items: [
+					{
+						to: 'https://app.windmill.dev',
+						position: 'left',
+						label: 'Cloud'
+					},
 					{
 						type: 'doc',
 						docId: 'intro',
@@ -77,25 +83,19 @@ const config = {
 						label: 'Docs'
 					},
 					{
-						to: 'https://doc.deno.land/https://deno.land/x/windmill/index.ts',
+						to: 'https://hub.windmill.dev',
 						position: 'left',
-						label: 'Typescript (Deno) Client',
-
+						label: 'WindmillHub'
 					},
 					{
-						href: '/python',
+						to: 'https://discord.com/invite/V7PM2YHsPB',
 						position: 'left',
-						label: 'Python Client'
-					},
-					{
-						href: '/docs/Blueprints',
-						position: 'left',
-						label: 'Blueprints & Examples'
+						label: 'Discord'
 					},
 					{
 						href: '/hiring',
 						position: 'right',
-						label: 'Join us - Hiring'
+						label: 'Join us'
 					},
 					// { to: '/blog', label: 'Blog', position: 'left' },
 					{
@@ -103,13 +103,28 @@ const config = {
 						className: 'header-github-link',
 						'aria-label': 'GitHub repository',
 						position: 'right'
+					},
+					{
+						className: 'header-stars-link',
+						'aria-label': 'GitHub repository',
+						href: 'https://github.com/windmill-labs/windmill',
+						position: 'right'
 					}
 				]
 			},
 			footer: {
 				style: 'dark',
-				links: [],
-				copyright: `&copy; 2022 windmill-labs by @rubenfiszel`
+				links: [
+					{
+						label: 'Privacy Policy',
+						to: '/privacy_policy',
+					},
+					{
+						label: 'Terms of Service',
+						to: '/terms_of_service',
+					},
+				],
+				copyright: `&copy; 2022 Windmill Labs, Inc. Made with love in the US and France`
 			},
 			prism: {
 				theme: lightCodeTheme,
@@ -120,7 +135,8 @@ const config = {
 				disableSwitch: true,
 				respectPrefersColorScheme: false,
 			},
-		})
+		}),
+
 };
 
 module.exports = config;

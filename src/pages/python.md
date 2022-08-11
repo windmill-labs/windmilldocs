@@ -11,7 +11,7 @@ title: Python Client
 <div className='api__body'>
 
 <div className='api__signature'>
-class <span class="ident">Client</span>(base_url: str = 'http://localhost:8000/api', token: str = '')
+class <span className="ident">Client</span>(base_url: str = 'http://localhost:8000/api', token: str = '')
 </div>
 
 <div className='api__description'>
@@ -26,7 +26,7 @@ class <span class="ident">Client</span>(base_url: str = 'http://localhost:800
 <div className='api__body'>
 
 <div id="wmill.client.Client.base_url" className='api__signature'>
-var <span class="ident">base_url</span> : str
+var <span className="ident">base_url</span> : str
 </div>
 
 <div className='api__description'>
@@ -34,7 +34,7 @@ var <span class="ident">base_url</span> : str
 </div>
 
 <div id="wmill.client.Client.token" className='api__signature'>
-var <span class="ident">token</span> : str
+var <span className="ident">token</span> : str
 </div>
 
 <div className='api__description'>
@@ -53,7 +53,7 @@ var <span class="ident">token</span> : str
 
 <div className='api__body'>
 <div className='api__signature'>
-def <span class="ident">get_job_status</span>(self, job_id: str) ‑> <a title="wmill.client.JobStatus" href="#wmill.client.JobStatus">JobStatus</a>
+def <span className="ident">get_job_status</span>(self, job_id: str) ‑> <a title="wmill.client.JobStatus" href="#wmill.client.JobStatus">JobStatus</a>
 </div>
 
 <div className='api__description'>
@@ -64,15 +64,14 @@ def <span class="ident">get_job_status</span>(self, job_id: str) ‑> <a title
 </div>
 
 </div>
-  
-              
+
 <div className='api'>
 
 #### get_resource <a name="wmill.client.Client.get_resource"/>
 
 <div className='api__body'>
 <div className='api__signature'>
-def <span class="ident">get_resource</span>(self, path: str) ‑> Dict[str, Any]
+def <span className="ident">get_resource</span>(self, path: str) ‑> Dict[str, Any]
 </div>
 
 <div className='api__description'>
@@ -83,15 +82,14 @@ def <span class="ident">get_resource</span>(self, path: str) ‑> Dict[str, A
 </div>
 
 </div>
-  
-              
+
 <div className='api'>
 
 #### get_result <a name="wmill.client.Client.get_result"/>
 
 <div className='api__body'>
 <div className='api__signature'>
-def <span class="ident">get_result</span>(self, job_id: str) ‑> Dict[str, Any]
+def <span className="ident">get_result</span>(self, job_id: str) ‑> Dict[str, Any]
 </div>
 
 <div className='api__description'>
@@ -102,15 +100,14 @@ def <span class="ident">get_result</span>(self, job_id: str) ‑> Dict[str, A
 </div>
 
 </div>
-  
-              
+
 <div className='api'>
 
 #### get_version <a name="wmill.client.Client.get_version"/>
 
 <div className='api__body'>
 <div className='api__signature'>
-def <span class="ident">get_version</span>(self) ‑> str
+def <span className="ident">get_version</span>(self) ‑> str
 </div>
 
 <div className='api__description'>
@@ -121,15 +118,14 @@ def <span class="ident">get_version</span>(self) ‑> str
 </div>
 
 </div>
-  
-              
+
 <div className='api'>
 
 #### run_script_async <a name="wmill.client.Client.run_script_async"/>
 
 <div className='api__body'>
 <div className='api__signature'>
-def <span class="ident">run_script_async</span>(self, hash: str, args: Dict[str, Any] = {}, scheduled_in_secs: Optional[None] = None) ‑> str
+def <span className="ident">run_script_async</span>(self, hash: str, args: Dict[str, Any] = {}, scheduled_in_secs: Optional[None] = None) ‑> str
 </div>
 
 <div className='api__description'>
@@ -140,15 +136,14 @@ def <span class="ident">run_script_async</span>(self, hash: str, args: Dict[st
 </div>
 
 </div>
-  
-              
+
 <div className='api'>
 
 #### run_script_sync <a name="wmill.client.Client.run_script_sync"/>
 
 <div className='api__body'>
 <div className='api__signature'>
-def <span class="ident">run_script_sync</span>(self, hash: str, args: Dict[str, Any] = {}, verbose: bool = False) ‑> Dict[str, Any]
+def <span className="ident">run_script_sync</span>(self, hash: str, args: Dict[str, Any] = {}, verbose: bool = False) ‑> Dict[str, Any]
 </div>
 
 <div className='api__description'>
@@ -173,7 +168,7 @@ def <span class="ident">run_script_sync</span>(self, hash: str, args: Dict[str
 <div className='api__body'>
 
 <div className='api__signature'>
-class <span class="ident">JobStatus</span>(value, names=None, *, module=None, qualname=None, type=None, start=1)
+class <span className="ident">JobStatus</span>(value, names=None, *, module=None, qualname=None, type=None, start=1)
 </div>
 
 <div className='api__description'>
@@ -187,7 +182,7 @@ class <span class="ident">JobStatus</span>(value, names=None, *, module=None, qu
 <div className='api__body'>
 
 <div id="wmill.client.JobStatus.COMPLETED" className='api__signature'>
-var <span class="ident">COMPLETED</span>
+var <span className="ident">COMPLETED</span>
 </div>
 
 <div className='api__description'>
@@ -195,7 +190,7 @@ var <span class="ident">COMPLETED</span>
 </div>
 
 <div id="wmill.client.JobStatus.RUNNING" className='api__signature'>
-var <span class="ident">RUNNING</span>
+var <span className="ident">RUNNING</span>
 </div>
 
 <div className='api__description'>
@@ -203,7 +198,7 @@ var <span class="ident">RUNNING</span>
 </div>
 
 <div id="wmill.client.JobStatus.WAITING" className='api__signature'>
-var <span class="ident">WAITING</span>
+var <span className="ident">WAITING</span>
 </div>
 
 <div className='api__description'>

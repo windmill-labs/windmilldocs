@@ -127,22 +127,23 @@ import React from 'react'
 import { CheckIcon, MinusIcon } from '@heroicons/react/solid'
 
 const tiers = [
-	{ name: 'Free', pricing: '^', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
+	{ name: 'Free', pricing: 'Free forever', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
 	{
 		name: 'Team',
-		pricing: "10$/mo/seat",
+		pricing: "10$ /mo /user",
 		description: 'Any workspace can be upgraded to be a premium team workspace. Best for teams.',
 	},
 	{
 		name: 'Enterprise',
-		pricing: 'Custom pricing',
-		description: 'Best for orgs or teams that require specific and custom on-prem needs or regulatory compliance',
+		pricing: 'Custom',
+		description: 'Best for orgs or teams that use Windmill at scale and/or require a commercial license',
 	},
 ]
 const sections = [
 	{
 		name: 'Features',
 		features: [
+			{ name: 'Flows', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Automatically generates the UI', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Deploy from Github', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Webeditor with preview and code intelligence', tiers: { Free: true, Team: true, Enterprise: true } },
@@ -152,21 +153,22 @@ const sections = [
 			{ name: 'Export Workspace', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Embed apps externally (WIP)', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + exportable', Enterprise: '30 days + exportable' } },
+			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + export to storage', Enterprise: '30 days + export to storage' } },
 			{ name: 'Group based permissioning', tiers: { Free: 'While beta', Team: true, Enterprise: true } },
-			{ name: 'Self-hostable worker/agent (WIP)', tiers: { Team: true, Enterprise: true } },
-			{ name: 'Self-hostable everything with a Commercial License', tiers: { Enterprise: true } },
-
+			{ name: 'self-hosted workers', tiers: { Free: '', Team: true, Enterprise: true } },
+			{ name: 'SSO', tiers: { Free: '', Team: '', Enterprise: true } },
+			{ name: 'Kubernetes setup', tiers: { Free: '', Team: '', Enterprise: true } },
+			{ name: 'Commercial license for self-hosting', tiers: { Free: '', Team: '', Enterprise: true } },
 		],
 	},
 	{
-		name: 'Usage',
+		name: 'Cloud Usage',
 		features: [
 			{ name: 'Scripts', tiers: { Free: '10', Team: '50', Enterprise: 'Unlimited' } },
 			{ name: 'Scripts versions', tiers: { Free: 'Last 5', Team: 'Last 50', Enterprise: 'Unlimited' } },
 			{ name: 'Secrets, Resources, Schedules', tiers: { Free: 'Unlimited', Team: "Unlimited", Team: "Unlimited" } },
-			{ name: 'Run of scripts (including previews)', tiers: { Free: '50/day', Team: '500/day/seat', Enterprise: 'Unlimited' } },
-			{ name: 'Cumulated execution time limit @ 1vCPU', tiers: { Free: '100s/day', Team: '3000s/day/seat', Enterprise: 'Unlimited' } },
+			{ name: 'Flows or standalone Scripts execution', tiers: { Free: '50/day', Team: '500/day/seat', Enterprise: 'Unlimited' } },
+			{ name: 'Cumulated execution time limit @ 1vCPU', tiers: { Free: '600s/day', Team: '6000s/day/seat', Enterprise: 'Unlimited' } },
 		],
 	},
 	{
@@ -174,102 +176,24 @@ const sections = [
 		features: [
 			{ name: 'Github issue', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Discord', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Email', tiers: { Free: 'Best effort', Team: 'Response within 48h', Enterprise: 'Response within 3h' } },
+			{ name: 'Email', tiers: { Free: 'Best effort', Team: 'Response within 24h', Enterprise: 'Response within 1h' } },
+			{ name: 'Dedicated Support and Automation Engineer', tiers: { Free: '', Team: '', Enterprise: true } },
+			{ name: 'Engineer migrating all your automation to Windmill', tiers: { Free: '', Team: '', Enterprise: true } },
+
 		],
 	},
 ]
 
-function classNames(...classes)
-{
-	return classes.filter(Boolean).join(' ')
-}
 
 export default function Pricing()
 {
 	return (
 		<div id="pricing">
 			<div className="max-w-7xl mx-auto py-16 sm:py-24 sm:px-6 lg:px-8">
-				{/* xs to lg */}
-				<div className="max-w-2xl mx-auto space-y-16 lg:hidden">
-					{tiers.map((tier, tierIdx) => (
-						<section key={tier.name}>
-							<div className="px-4 mb-8">
-								<h2 className="leading-6 text-4xl font-light text-gray-900">{tier.name}</h2>
-								<p className="mt-4">
-									<span className="text-2xl text-gray-900 font-mono">{tier.pricing}</span>
-								</p>
-								<p className="mt-4 text-sm text-gray-500">{tier.description}</p>
-								{tierIdx > 0 ?
-									<a
-										href="mailto:contact@windmill.dev?subject=Request%20upgrade"
-										className="mt-6 block border border-gray-800 rounded-md bg-gray-800 w-full py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
-									>
-										Coming soon, contact us
-									</a> : ''}
-							</div>
+				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-8">Pricing</h2>
 
-							{sections.map((section) => (
-								<table key={section.name} className="w-full table">
-									<caption className="bg-gray-50 border-t border-gray-200 py-3 px-4 text-sm font-medium text-gray-900 text-left">
-										{section.name}
-									</caption>
-									<thead>
-										<tr>
-											<th className="sr-only" scope="col">
-												Feature
-											</th>
-											<th className="sr-only" scope="col">
-												Included
-											</th>
-										</tr>
-									</thead>
-									<tbody className="divide-y divide-gray-200">
-										{section.features.map((feature) => (
-											<tr key={feature.name} className="border-t border-gray-200">
-												<th className="py-5 px-4 text-sm font-normal text-gray-500 text-left" scope="row">
-													{feature.name}
-												</th>
-												<td className="py-5 pr-4">
-													{typeof feature.tiers[tier.name] === 'string' ? (
-														<span className="block text-sm text-gray-700 text-right">{feature.tiers[tier.name]}</span>
-													) : (
-														<>
-															{feature.tiers[tier.name] === true ? (
-																<CheckIcon className="ml-auto h-5 w-5 text-green-500" aria-hidden="true" />
-															) : (
-																<MinusIcon className="ml-auto h-5 w-5 text-gray-400" aria-hidden="true" />
-															)}
 
-															<span className="sr-only">{feature.tiers[tier.name] === true ? 'Yes' : 'No'}</span>
-														</>
-													)}
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
-							))}
-
-							<div
-								className={classNames(
-									tierIdx < tiers.length - 1 ? 'py-5 border-b' : 'pt-5',
-									'border-t border-gray-200 px-4'
-								)}
-							>
-								{tierIdx > 0 ?
-									<a
-										href="mailto:contact@windmill.dev?subject=Request%20upgrade"
-										className="mt-6 block border border-gray-800 rounded-md bg-gray-800 w-full py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
-									>
-										Coming soon, contact us
-									</a> : ''}
-							</div>
-						</section>
-					))}
-				</div>
-
-				{/* lg+ */}
-				<div className="hidden lg:block">
+				<div className="">
 					<table className="w-full h-px table-fixed table ">
 						<caption className="sr-only">Pricing plan comparison</caption>
 						<thead>
@@ -298,16 +222,16 @@ export default function Pricing()
 									<td key={tier.name} className="h-full py-8 px-6 align-top">
 										<div className="relative h-full table">
 											<p>
-												<span className="text-2xl text-gray-900 font-mono">{tier.pricing}</span>
+												<span className="text-xl sm:text-2xl text-gray-900 font-mono">{tier.pricing}</span>
 											</p>
 											<p className="mt-4 mb-10 text-sm text-gray-500">{tier.description}</p>
 											<div className='p-2'></div>
 											{tierIdx > 0 ?
 												<a
 													href="mailto:contact@windmill.dev?subject=Request%20upgrade"
-													className="absolute bottom-0 block border border-gray-800 rounded-md bg-gray-800 w-full py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
+													className="absolute bottom-0 block border border-gray-800 rounded-md bg-gray-800 py-1 px-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
 												>
-													Coming soon, contact us
+													contact us
 												</a> : ''}
 										</div>
 									</td>
@@ -353,24 +277,6 @@ export default function Pricing()
 								</Fragment>
 							))}
 						</tbody>
-						<tfoot>
-							<tr className="border-t border-gray-200">
-								<th className="sr-only" scope="row">
-									Choose your plan
-								</th>
-								{tiers.map((tier, tierIdx) => (
-									<td key={tier.name} className="pt-5 px-6">
-										{tierIdx > 0 ?
-											<a
-												href="mailto:contact@windmill.dev?subject=Request%20upgrade"
-												className="mt-6 block border border-gray-800 rounded-md bg-gray-800 w-full py-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
-											>
-												Coming soon, contact us
-											</a> : ''}
-									</td>
-								))}
-							</tr>
-						</tfoot>
 					</table>
 				</div>
 			</div>
