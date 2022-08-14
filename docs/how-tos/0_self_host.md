@@ -41,3 +41,10 @@ It will not give windmill users access to all your databases, just that one
 because the schema public is not shared accross database, it is contained wholly
 inside each database:
 <https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PUBLIC>
+
+Then last, run the following commands
+
+```
+GRANT windmill_admin TO nonsuperuser;
+GRANT windmill_user TO nonsuperuser;
+```
