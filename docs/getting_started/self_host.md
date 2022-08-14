@@ -27,7 +27,7 @@ support for LSP, but with a Postgres database. It is suitable for
 local deployments, and for discovering of the product. 
 
 If you want to deploy Windmill in a production setting, in a 
-internet facing environment, a few things extra things are required.
+internet facing environment, a few extra things are required.
 
 Below you will find a condensed list of high-level steps needed to get
 Windmill up and running. We will drill more into details in the 
@@ -36,22 +36,21 @@ later parts of this tutorial.
 ### Checklist
 
 Self-host pre-flight checklist for deployment using Traefik with TLS, 
-using ports `80` and `443` for HTTP and HTTPS respectively.:
+using ports `80` and `443` for HTTP and HTTPS respectively:
 
 Configuration: 
 
 - [ ] Did I set a strong `DB_PASSWORD` in the `.env` file?
 - [ ] Did I set the `BASE_URL` variable for `windmill` service in the 
  `docker-compose.yml` file?
-- [ ] Did I set a strong `APP_USER_PASSWORD` in the `docker-compose.yml` file?
 - [ ] Did I add the lsp service to the `docker-compose.yml` file?
 - [ ] Did I add a reverse proxy service (e.g. Traefik) to the 
   `docker-compose.yml` file?
-- Is the `windmill` service exposing a port different than `80` ?
+- [ ] Is the `windmill` service exposing a port different than `80` ?
 
 Running: 
 
-- [ ] Is the traefik gateway running?
+- [ ] Is the Traefik gateway running?
 - [ ] Is the lsp server running?
 - [ ] Did I route the `/ws` traffic to the lsp server?
 - [ ] Is my database hidden from the internet?
@@ -156,14 +155,11 @@ services:
       - 8000:8000
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
-      - APP_USER_PASSWORD=changeme
       - BASE_URL=http://windmill.localhost
       - BASE_INTERNAL_URL=http://localhost:8000
       - RUST_LOG=info
       - NUM_WORKERS=3
       - RUST_BACKTRACE=1
-      - GITHUB_OAUTH_CLIENT_ID=${GITHUB_OAUTH_CLIENT_ID}
-      - GITHUB_OAUTH_CLIENT_SECRET=${GITHUB_OAUTH_CLIENT_SECRET}
       - DISABLE_NUSER=false
     depends_on:
       db:
