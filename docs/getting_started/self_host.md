@@ -196,11 +196,13 @@ http:
     app:
       rule: "Host(`windmill.localhost`)"
       service: "windmill-windmill@docker"
-      tls: {}
-    lsp: 
+      tls:
+        certResolver: le
+    lsp:
       rule: "Host(`windmill.localhost`) && PathPrefix(`/ws/`)"
       service: "lsp-windmill@docker"
-      tls: {}
+      tls:
+        certResolver: le
 ```
 
 #### `traefik.yml`
