@@ -1,13 +1,23 @@
-# How to trigger a Flow: Watching for changes Vs Webhook & UI 
-There are two ways to trigger a Windmill Flow. Flows can watch for changes regularly or flows can be triggered by UI or webhook.
+# Trigger a Flow: Watching for changes Vs Webhook & UI
 
-**Watching for changes regularly**  -
-The first module of this type of flow is a trigger script whose purpose is to pull data from an external source and return all new items since the last run. This type of flow is meant to be scheduled very regularly to reduce latency when reacting to new events. It will trigger the rest of the flow once per new item that is returned. If there are no new items, the flow will be skipped.
+There are two ways to trigger a Windmill Flow. Flows can watch for changes
+regularly or flows can be triggered by UI or webhook.
 
-Flows can be scheduled through the flow UI using a cron expression and then activating the schedule as seen in the image below.
+**Watching for changes regularly** - The first module of this type of flow is a
+trigger script whose purpose is to pull data from an external source and return
+all new items since the last run. This type of flow is meant to be scheduled
+very regularly to reduce latency when reacting to new events. It will trigger
+the rest of the flow once per new item that is returned. If there are no new
+items, the flow will be skipped.
+
+Flows can be scheduled through the flow UI using a cron expression and then
+activating the schedule as seen in the image below.
 ![Schedule Scripts](../assets/how_to/schedule-flow.png)
 
-The following is an example of the first module of a flow that pulls data regularly from an external data source, in this case, through a fetch request to an API endpoint that returns new user sign up data which is returned as a dictionary of new entries.
+The following is an example of the first module of a flow that pulls data
+regularly from an external data source, in this case, through a fetch request to
+an API endpoint that returns new user sign up data which is returned as a
+dictionary of new entries.
 
 ```js
 import * as wmill from "https://deno.land/x/windmill@v1.27.2/mod.ts";
@@ -46,14 +56,20 @@ export async function main(url: string, db: wmill.Resource<"postgresql">) {
 }
 ```
 
-**Triggered by webhook**
-The first module of this type of flow is a script who's purpose is to run when it receives an input from it's associated webhook or when it is run manually through the flow's automatically generated UI.
+**Triggered by webhook** The first module of this type of flow is a script who's
+purpose is to run when it receives an input from it's associated webhook or when
+it is run manually through the flow's automatically generated UI.
 
-
-Webhooks can be retrieved once a flow is saved from the flow's summary page as seen in the image below.
+Webhooks can be retrieved once a flow is saved from the flow's summary page as
+seen in the image below.
 ![Schedule Scripts](../assets/how_to/retrieve-webhook.png)
 
-The following module is triggered by a webhook (obtained from the flow summary page) that sends user sign up data (email, password, name) to the flow. The flow could also be triggered by manually entering the user data through the user generated interface or be setting up a schedule. The first module of the flow takes in the user email from the flow input and begins the flow if the email is not already present in the database.
+The following module is triggered by a webhook (obtained from the flow summary
+page) that sends user sign up data (email, password, name) to the flow. The flow
+could also be triggered by manually entering the user data through the user
+generated interface or be setting up a schedule. The first module of the flow
+takes in the user email from the flow input and begins the flow if the email is
+not already present in the database.
 
 ```js
 import * as wmill from "https://deno.land/x/windmill@v1.27.2/mod.ts";
@@ -75,4 +91,3 @@ export async function main(
   return (check_user["rows"] ? [`${email}`] : []);
 }
 ```
-
