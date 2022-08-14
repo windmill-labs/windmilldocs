@@ -36,3 +36,8 @@ psql <DATABASE_URL> -f init-db-as-superuser.sql
 
 where `init-db-as-superuser.sql` is this
 [file](https://github.com/windmill-labs/windmill/blob/main/init-db-as-superuser.sql)
+
+It will not give windmill users access to all your databases, just that one
+because the schema public is not shared accross database, it is contained wholly
+inside each database:
+<https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PUBLIC>
