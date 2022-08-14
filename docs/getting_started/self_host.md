@@ -155,7 +155,7 @@ services:
       - 8000:8000
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
-      - BASE_URL=http://windmill.localhost
+      - BASE_URL=http://windmill.example.com
       - BASE_INTERNAL_URL=http://localhost:8000
       - RUST_LOG=info
       - NUM_WORKERS=3
@@ -190,12 +190,12 @@ Example above assumes these files are in `traefik` directory.
 http:
   routers:
     app:
-      rule: "Host(`windmill.localhost`)"
+      rule: "Host(`windmill.example.com`)"
       service: "windmill-windmill@docker"
       tls:
         certResolver: le
     lsp:
-      rule: "Host(`windmill.localhost`) && PathPrefix(`/ws/`)"
+      rule: "Host(`windmill.example.com`) && PathPrefix(`/ws/`)"
       service: "lsp-windmill@docker"
       tls:
         certResolver: le
