@@ -20,7 +20,7 @@ const sidebars = {
       {
         type: 'category',
         label: 'Getting Started',
-        items: ['getting_started/intro_scripts', 'getting_started/intro_flows'],
+        items: ['getting_started/intro_scripts', 'getting_started/intro_flows', 'getting_started/self_host'],
         collapsed: false,
       },
       {
