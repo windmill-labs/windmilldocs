@@ -16,13 +16,10 @@ are not suitable for production deployments.
 
 ## Intro
 
-To follow this tutorial, you will need Docker, `docker-compose` and a clone
-of the main [Windmill repository][windmill]:  
-
-`$ git clone git@github.com:windmill-labs/windmill.git`
+To follow this tutorial, you will need `docker-compose`.
 
 
-The repository comes with a minimal `docker-compose` file, without the 
+The Windmill repository comes with a minimal `docker-compose` file, without the 
 support for LSP, but with a Postgres database. It is suitable for 
 local deployments, and for discovering of the product. 
 
@@ -67,7 +64,7 @@ To enable LSP you need to add the following service to the `docker-compose.yml` 
 
 ```yaml
 lsp:
-  build: ./lsp
+  image: ghcr.io/windmill-labs/windmill-lsp:latest
   ports:
     - 3001:3001
 ```
@@ -143,7 +140,7 @@ services:
       timeout: 5s
       retries: 5
   lsp:
-    build: ./lsp
+    image: ghcr.io/windmill-labs/windmill-lsp:latest
     restart: unless-stopped
     ports:
       - 3001:3001
