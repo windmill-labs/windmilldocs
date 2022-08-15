@@ -167,8 +167,8 @@ const sections = [
 			{ name: 'Scripts', tiers: { Free: '10', Team: '50', Enterprise: 'Unlimited' } },
 			{ name: 'Scripts versions', tiers: { Free: 'Last 5', Team: 'Last 50', Enterprise: 'Unlimited' } },
 			{ name: 'Secrets, Resources, Schedules', tiers: { Free: 'Unlimited', Team: "Unlimited", Team: "Unlimited" } },
-			{ name: 'Flows or standalone Scripts execution', tiers: { Free: '50/day', Team: '500/day/seat', Enterprise: 'Unlimited' } },
-			{ name: 'Cumulated execution time limit @ 1vCPU', tiers: { Free: '600s/day', Team: '6000s/day/seat', Enterprise: 'Unlimited' } },
+			{ name: 'Flows or standalone Scripts execution', tiers: { Free: '100/day', Team: '5000/day/seat', Enterprise: 'Unlimited' } },
+			{ name: 'Cumulated execution time limit @ 1vCPU', tiers: { Free: '100s/day', Team: '10000s/day/seat', Enterprise: 'Unlimited' } },
 		],
 	},
 	{
