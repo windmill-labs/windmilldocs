@@ -1,11 +1,13 @@
 # Self-hosting
 
+Windmill can be self-hosted with two files. 
+
 In this tutorial, you will learn how to self- host Windmill. 
-We will use [Traefik][traefik] as reverse proxy.  
+We will use [Caddy][caddy] as reverse proxy.  
 
 At the end of this tutorial, you will have a full-fledged version of Windmill,
-with LSP and a Postgres database running on your own server. We will deploy 
-with automatic LetsEncrypt encryption, handled by Traefik, using sensible
+with LSP and a Postgres running on your own server. We will deploy 
+with automatic LetsEncrypt encryption, handled by Caddy, using sensible
 defaults. 
 
 All the files required to achieve that are provided at the end of this
@@ -32,8 +34,7 @@ later parts of this tutorial.
 
 ### Checklist
 
-Self-host pre-flight checklist for deployment using Traefik with TLS, 
-using ports `80` and `443` for HTTP and HTTPS respectively:
+Self-host checklist for deployment:
 
 Configuration: 
 
@@ -41,13 +42,10 @@ Configuration:
 - [ ] Did I set the `BASE_URL` variable for `windmill` service in the 
  `docker-compose.yml` file?
 - [ ] Did I add the lsp service to the `docker-compose.yml` file?
-- [ ] Did I add a reverse proxy service (e.g. Traefik) to the 
   `docker-compose.yml` file?
-- [ ] Is the `windmill` service exposing a port different than `80` ?
 
 Running: 
 
-- [ ] Is the Traefik gateway running?
 - [ ] Is the lsp server running?
 - [ ] Did I route the `/ws` traffic to the lsp server?
 - [ ] Is my database hidden from the internet?
@@ -77,58 +75,48 @@ that role was fulfilled by [Caddy][caddy].
 ## Reverse proxy
 
 Windmill requires to be reverse-proxied at the `/ws` api prefix. In this example
-you will learn how to use [Traefik][traefik] to achieve that.
-
-Traefik is a modern HTTP reverse proxy and load balancer that makes 
-deploying microservices easy. We need to be able to route traffic 
-to different docker services, based on the url of our deployment. 
+you will continue using Caddy to achieve that.
 
 Windmill bundles the optimized frontend files, so we only need to route
-to two services - the backend/frontend and the lsp:
+to two services - the `windmill` backend/frontend and the lsp:
 
 - All the traffic goes to the `windmill` service, except:
 - All `/ws` prefixed traffic goes to the `lsp` container
 
-
-You need to create two files: `/traefik/dynamic_conf.yml` and `/traefik/traefik.yml`. 
-Those files will configure Traefik and will be mounted into the container.
-
-You need to add Traefik to the `docker-compose.yml` file, and mount the configuration
-files at `/etc/traefik`.
-
-
 Make sure that the `windmill` service in the `docker-compose.yml` file 
 exposes a port different than `80`.
 
-**Note:** Complete `docker-compose.yml` file at the end of this page. 
-
-
-### TLS
-
-If you want to deploy as internet-facing, it's a good idea to add encryption. 
-Traefik can handle this automatically, see the 
-[Traefik documentation][traefik-tls] for more information.
-
-The example file provided below comes with TLS enabled, all 
-you need to do is change all the variables containing the `example.com` 
-domain to yours and it should run *as is*.
 
 
 ## Example files
 
+### `Caddyfile`
+
+```
+*.example.com:80 {
+  bind {$ADDRESS}
+  reverse_proxy /api/* http://windmill:8000
+  reverse_proxy /* http://windmill:8000
+  reverse_proxy /ws/* http://lsp:3001 {
+    lb_policy header "Authorization"
+  }
+}
+```
+
 ### `docker-compose.yaml`
 
-```yaml
+```yml
 # docker-compose.yaml
 version: '3.7'
 
 services:
+
   db:
     image: postgres:14
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./init-db.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      # - ./init-db.sql:/docker-entrypoint-initdb.d/create_tables.sql
     ports:
       - 5432:5432
     environment:
@@ -139,11 +127,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  lsp:
-    image: ghcr.io/windmill-labs/windmill-lsp:latest
-    restart: unless-stopped
-    ports:
-      - 3001:3001
   windmill:
     image: ghcr.io/windmill-labs/windmill:main
     privileged: true
@@ -152,7 +135,7 @@ services:
       - 8000:8000
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
-      - BASE_URL=http://windmill.example.com
+      - BASE_URL=http://localhost
       - BASE_INTERNAL_URL=http://localhost:8000
       - RUST_LOG=info
       - NUM_WORKERS=3
@@ -161,75 +144,23 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  gateway:
-    image: traefik:v2.8
-    restart: always
+  lsp:
+    image: ghcr.io/windmill-labs/windmill-lsp:latest
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+  caddy:
+    image: caddy:2.5.2-alpine
+    restart: unless-stopped
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
     ports:
       - 80:80
       - 443:443
-    volumes:
-      - ./traefik/traefik:/etc/traefik
-      - /var/run/docker.sock:/var/run/docker.sock
-      - certificates:/letsencrypt
 
 volumes:
   db_data: null
-  certificates: null
 ```
-
-### Traefik 
-
-Example above assumes these files are in `traefik` directory.
-
-#### `dynamic_conf.yml`
-
-```yaml
-http:
-  routers:
-    app:
-      rule: "Host(`windmill.example.com`)"
-      service: "windmill-windmill@docker"
-      tls:
-        certResolver: le
-    lsp:
-      rule: "Host(`windmill.example.com`) && PathPrefix(`/ws/`)"
-      service: "lsp-windmill@docker"
-      tls:
-        certResolver: le
-```
-
-#### `traefik.yml`
-
-```yaml
-log:
-  level: INFO
-providers:
-  docker:
-    endpoint: "unix:///var/run/docker.sock"
-    exposedByDefault: true
-  file:
-    filename: /etc/traefik/dynamic_conf.yml
-    watch: true
-entryPoints:
-  web:
-    address: :80
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-  websecure:
-    address: :443
-certificatesResolvers:
-  le:
-    acme:
-      email: contact@example.com
-      storage: /letsencrypt/acme.json
-      tlsChallenge: {}
-      httpChallenge:
-        entryPoint: websecure
-```
-
 
 
 <!-- Resources -->
