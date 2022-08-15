@@ -93,7 +93,7 @@ exposes a port different than `80`.
 ### `Caddyfile`
 
 ```
-*.example.com:80 {
+windmill.example.com:80 {
   bind {$ADDRESS}
   reverse_proxy /api/* http://windmill:8000
   reverse_proxy /* http://windmill:8000
@@ -135,7 +135,7 @@ services:
       - 8000:8000
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
-      - BASE_URL=http://localhost
+      - BASE_URL=http://windmill.example.com
       - BASE_INTERNAL_URL=http://localhost:8000
       - RUST_LOG=info
       - NUM_WORKERS=3
