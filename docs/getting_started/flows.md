@@ -7,6 +7,7 @@ be used by subsequent step scripts. Flows contain all of the benefits of
 Windmill Scripts, offering immediate functionality such as third party app
 integrations, SQL queries, Slack, custom scripts and more!
 
+
 :::tip
 
 Signup at [app.windmill.dev](https://app.windmill.dev) then you can one-click
@@ -19,19 +20,20 @@ import any flows on [hub.windmill.dev](https://hub.windmill.dev). See
 
 :::
 
-Flows in windmill follows the [OpenFlow Spec](/docs/openflow).
+Flows in windmill follow the [OpenFlow Spec](/docs/openflow).
 
 - **Flow Inputs** arguments for each flow can be edited using the flow input
-  wizard or by editing their jsonschema.
+  wizard or copying the first stpe schema.
 
 - **Scripts** can be dynamically added to each flow by clicking the '+' button.
   Scripts can be automatically imported from
-  [Windmil Hub](https://hub.windmill.dev/) selecting a Hub path or by using your
+  [WindmilHub](https://hub.windmill.dev/) selecting a Hub path or by using your
   own custom scripts created in Windmill by selecting a Script path.
 
-- **Scripts Inputs** for each script correspond to the inputs as defined by the
-  input spec of selected script and can be defined using static values or
-  javascript expressions (and a mix of both using templates)
+- **Scripts Inputs**: Each script has inputs, and each of them can be filled
+  with either static values, a templatized string or a full javascript
+  expression. Those expressions can refer to any step's output or the flow
+  input. This makes the worklow more similar to a DAG than to just a sequence.
 
 - **Raw Javascript Editor**: In most cases, the templating engine using
   `static value ${js.expr}` for mixing static strings and dynamic expression as

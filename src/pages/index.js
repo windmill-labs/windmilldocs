@@ -30,10 +30,10 @@ function HomepageHeader()
 						</div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
-								<span className="block xl:inline"><span className="text-blue-600">Internal apps</span>, <span className="text-blue-600">integrations</span> and <span className="text-blue-600">workflows</span> in minutes using minimal <span className="text-blue-600">scripts</span><span className="text-xl block mt-2">(yours and from a curated library)</span></span>
+								<span className="block xl:inline">Scripts to <span className="text-blue-600">internal apps</span> and <span className="text-blue-600">workflows</span> in minutes<span className="text-xl block mt-2">(your scripts and from a <a href="https://hub.windmill.dev">curated library</a>)</span></span>
 							</h1>
-							<h2 className="mt-12 text-xl tracking-tight font-bold text-gray-900 sm:text-xl md:text-xl font-mono">
-								<span className="block xl:inline">Open-source alternative to Pipedream, Airplane and simplified Temporal. <a href="/docs/benchmark">Self-hostable AWS Lambda</a></span>
+							<h2 className="mt-12  tracking-tight font-bold text-gray-900 text-lg font-mono">
+								<span className="block xl:inline">open-source alternative to Pipedream, Airplane - simplified Temporal - <a href="/docs/benchmark">self-hostable AWS Lambda</a></span>
 							</h2>
 
 						</div>
@@ -98,7 +98,7 @@ function HomepageHeader()
 							</BrowserOnly>
 						</div>
 						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
-							<span className="block xl:inline">- Chain Typescript (deno), Python scripts and SQL in low-code flows<br />- Compose from a <a href="https://hub.windmill.dev">curated community library of scripts</a> intuitive to non technical users too. <br />- Single scripts can also be turned into standalone apps<br />- Replace all your serverless and workflows infra.<br />- Open standard and portable JSON spec for flows: <a href="/docs/openflow">OpenFlow</a></span>
+							<span className="block xl:inline">- Chain Typescript (deno), Python scripts and SQL in productive low-code flows<br />- mix and match custom code with pre-made code-modules <a href="https://hub.windmill.dev">from a curated community library</a> <br />- Single scripts are standalone apps by themselves<br />- Unique runtime for scripts, workflows to deploy them as serverless webhooks<br />- Open standard and portable JSON spec for flows: <a href="/docs/openflow">OpenFlow</a></span>
 						</h3>
 					</div>
 
