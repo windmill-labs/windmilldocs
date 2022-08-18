@@ -1,4 +1,4 @@
-# Getting Started with Flows
+# Flows
 
 **Flows** allow you to streamline complex processes and operations by chaining
 together scripts, either custom to your flow or taken from the
@@ -31,7 +31,9 @@ Flows in windmill follow the [OpenFlow Spec](/docs/openflow).
   own custom scripts created in Windmill by selecting a Script path.
 
 - **Scripts Inputs**: Each script has inputs, and each of them can be filled
-  with either static values, templatized
+  with either static values, a templatized string or a full javascript
+  expression. Those expressions can refer to any step's output or the flow
+  input. This makes the worklow more similar to a DAG than to just a sequence.
 
 - **Raw Javascript Editor**: In most cases, the templating engine using
   `static value ${js.expr}` for mixing static strings and dynamic expression as
