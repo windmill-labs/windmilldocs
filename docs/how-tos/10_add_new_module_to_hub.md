@@ -1,4 +1,4 @@
-# Add a new module to WindmillHub
+# Add module to WindmillHub
 
 New modules/scripts can be added to Windmill Hub by logging in and navigating to
 the homepage at [Windmill Hub](https://hub.windmill.dev/).
