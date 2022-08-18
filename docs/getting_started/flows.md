@@ -1,12 +1,12 @@
 # Flows
 
 **Flows** allow you to streamline complex processes and operations by chaining
-together scripts, either custom to your flow or taken from the
-[WindmillHub](https://hub.windmill.dev) library. Each **Flow** is composed of
-one or more step scripts that can accept inputs, execute a function and then
-produce an output which can be used by subsequent step scripts. Flows contain
-all of the benefits of Windmill Scripts, offering immediate functionality such
-as third party app integrations, SQL queries, Slack, custom scripts and more!
+together custom scripts. Each **Flow** is composed of one or more step scripts
+that can accept inputs, execute a function and then produce an output which can
+be used by subsequent step scripts. Flows contain all of the benefits of
+Windmill Scripts, offering immediate functionality such as third party app
+integrations, SQL queries, Slack, custom scripts and more!
+
 
 :::tip
 
