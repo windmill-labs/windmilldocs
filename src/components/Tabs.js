@@ -16,7 +16,7 @@ export default function TabsW()
             <Tab title="HN mention => Slack" className="mr-3">
                 <div className="mt-3">
                     <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack' style={{ height: "800px" }}></iframe></div>
-                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
+                        <div className="my-4 font-bold text-xl underline"><a href="https://app.windmill.dev/flows/add?hub=13">Edit/Run in Windmill</a></div>
                         <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
                     </div >
                 </div>
@@ -24,7 +24,7 @@ export default function TabsW()
             <Tab title="Expense OCR => Slack" className="mr-3">
                 <div className="mt-3">
                     <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/21/expense_app' style={{ height: "800px" }}></iframe></div>
-                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=21">Edit/Run in Windmill</a></div>
+                        <div className="my-4 font-bold text-xl underline"><a href="https://app.windmill.dev/flows/add?hub=21">Edit/Run in Windmill</a></div>
                         <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
                     </div >
                 </div>
@@ -32,7 +32,7 @@ export default function TabsW()
             <Tab title="UI/Webhook => Ban a user" className="mr-3">
                 <div className="mt-3">
                     <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/22/expense_app' style={{ height: "800px" }}></iframe></div>
-                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=22">Edit/Run in Windmill</a></div>
+                        <div className="my-4 font-bold text-xl  underline"><a href="https://app.windmill.dev/flows/add?hub=22">Edit/Run in Windmill</a></div>
                         <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
                     </div >
                 </div>
@@ -40,7 +40,7 @@ export default function TabsW()
             <Tab title="Compute activity analytics => slack" className="mr-3">
                 <div className="mt-3">
                     <div className='w-full mt-4 text-center'><div className="border shadow w-full  mx-auto max-w-3xl p-4 rounded"><iframe frameBorder="0" className='w-full' src='https://hub.windmill.dev/embed/flow/24/compute_activity' style={{ height: "800px" }}></iframe></div>
-                        <div className="my-4 underline"><a href="https://app.windmill.dev/flows/add?hub=24">Edit/Run in Windmill</a></div>
+                        <div className="my-4 font-bold  text-lg underline"><a href="https://app.windmill.dev/flows/add?hub=24">Edit/Run in Windmill</a></div>
                         <div>See more flows on <a href="https://hub.windmill.dev">WindmillHub</a></div>
                     </div >
                 </div>
