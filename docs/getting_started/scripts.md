@@ -1,4 +1,4 @@
-# Getting Started with Scripts
+# Scripts
 
 In this tutorial, you will create a basic Hello world script, and understand
 some of Windmill's main concepts: scripts, accepting user input, and runs. 
