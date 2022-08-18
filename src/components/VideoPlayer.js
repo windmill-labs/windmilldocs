@@ -25,7 +25,7 @@ export default class VideoPlayer extends React.Component
 				<ModalVideo
 					channel="youtube"
 					isOpen={this.state.isOpen}
-					videoId="IpeMUrvKbto"
+					videoId="rfnM70y52X8"
 					onClose={() => this.setState({ isOpen: false })}
 				/>
 				<div className='w-full h-full cursor-pointer' onClick={this.openModal}>
