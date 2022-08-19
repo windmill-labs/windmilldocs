@@ -6,7 +6,7 @@ some of Windmill's main concepts: scripts, accepting user input, and runs.
 Scripts can act as standalone apps, but can also be chained together to 
 create *flows*.
 
-We will cover flows in a [separate intro](./intro_flows). In there, we will see
+We will cover flows in a [separate intro][flows]. In there, we will see
 that in flows, while some of the steps are custom business logics from
 your workspace or inlined directly into the flow, most of the steps are generic
 scripts made by the community in the [WindmillHub](https://hub.windmill.dev). 
@@ -93,4 +93,7 @@ in a real-world use case:
 - Pass [variables and secrets](../how-tos/variables_and_secrets) to a script
 - Connect to [resources](../how-tos/create_resources)
 - Run scripts or flows on a [schedule](../how-tos/schedule)
-- Compose scripts in [flows](./intro_flows)
+- Compose scripts in [flows][flows]
+
+<!-- Resources -->
+[flows]: ./flows
