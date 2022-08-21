@@ -67,6 +67,12 @@ endpoint and you will get the appropriate return as response.
 The bearer token must be passed as either an `Authorization: Bearer XXX` header,
 or as a query arg: `https://<instance>/<route>?token=<token>`
 
+e.g:
+
+```
+curl -X POST --data '{}' -H "Content-Type: application/json" "https://app.windmill.dev/api/w/demo/jobs/run_wait_result/p/u/bot/hello_world_deno?token=wwHC5MeGyKN8SYcsq3tzlulKYn3M9q"
+```
+
 You can find an example using only standard Deno libraries on the
 [Windmill Hub][script].
 
