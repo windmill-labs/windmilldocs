@@ -50,8 +50,12 @@ You can generate tokens for your own account on the
 [User Settings][user-settings] page on the app. Labels are only used to allow
 users to easily distinguish keys.
 
-:::caution You can only see the token once, when it's created. Make sure to
-store it securely! :::
+:::caution
+
+You can only see the token once, when it's created. Make sure to store it
+securely!
+
+:::
 
 ![](./assets/webhooks/2-tokens.png)
 
