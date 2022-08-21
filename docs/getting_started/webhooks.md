@@ -1,7 +1,11 @@
 # Webhooks
 
-:::tip Snippet of a Deno/TypeScript script using only native JavaScript to
-trigger a webhook can be found on [Windmill Hub][script]. :::
+:::tip
+
+Snippet of a Deno/TypeScript script using only native JavaScript to trigger a
+webhook can be found on [Windmill Hub][script].
+
+:::
 
 ## Getting started
 
