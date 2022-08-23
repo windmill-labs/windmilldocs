@@ -154,7 +154,7 @@ const sections = [
 			{ name: 'Embed apps externally (WIP)', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
 			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + export to storage', Enterprise: '30 days + export to storage' } },
-			{ name: 'Group based permissioning', tiers: { Free: 'While beta', Team: true, Enterprise: true } },
+			{ name: 'Group based permissioning', tiers: { Free: 'While in beta', Team: true, Enterprise: true } },
 			{ name: 'self-hosted workers', tiers: { Free: '', Team: true, Enterprise: true } },
 			{ name: 'SSO', tiers: { Free: '', Team: '', Enterprise: true } },
 			{ name: 'Kubernetes setup', tiers: { Free: '', Team: '', Enterprise: true } },

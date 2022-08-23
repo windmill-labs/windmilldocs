@@ -1,7 +1,7 @@
 # Flows
 
 :::tip
-Signup at [app.windmill.dev](https://app.windmill.dev) then you can one-click
+Sign up at [app.windmill.dev](https://app.windmill.dev) then you can one-click
 import any flows on [hub.windmill.dev](https://hub.windmill.dev). See
 ['Whenever an HN message contains a mention, publish it to slack'.](https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack)
 
@@ -99,7 +99,7 @@ automatically populate it in the step script.
 Add a static 'url' argument of the end point you want to send a Get Request
 to in order to access the User Growth Data. 
 
-<!-- FIXME: Already outated -->
+<!-- FIXME: Already outdated -->
 <!-- ![Add script](./assets/flows/search-hub-script.png) -->
 ![Add script](./assets/flows/flow-step1.png)
 
