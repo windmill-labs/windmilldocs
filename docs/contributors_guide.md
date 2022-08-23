@@ -1,9 +1,23 @@
-# Guide for contributors to Windmill
+# Contributor's guide
 
-Thank you for showing interest in contributing to Windmill. Herebelow different
-ways of being able to contribute.
+## Getting started 
 
-## Add a resource type to the WindmillHub
+Thank you for showing interest in contributing to Windmill. 
+
+Community contributes to Windmill in a variety of ways, from code and 
+documentation, to resources (Scripts, Flows, ResourceTypes, OAuth providers) 
+others can use. 
+
+The best way to share your Windmill resources with the community is by 
+using the [WindmillHub][wm-hub]. There, anyone can share their Scripts, 
+Flows, OAuth providers and Resource Types. If the submissions meet 
+the quality standards, they get approved, and become available for 
+anyone to use directly from their instance of Windmill.
+
+Below you will find guides on how to contribute those to the Hub, 
+and thank you for being part of the community!
+
+## Resource Type
 
 [Resource types](./reference/#resource_types) are simply
 [jsonschema](./reference/#jsonschema) whose reason of being is to give a "type"
@@ -19,7 +33,7 @@ a JSON object. In addition, they serve two main purposes in Windmill:
 
 Adding a resource type to the hub will, once approved by the Windmill Team, be
 automatically merged into the
-[community/ folder of the windmil repo](https://github.com/windmill-labs/windmill/tree/main/community/resource_types)
+[community/ folder of the Windmill repo](https://github.com/windmill-labs/windmill/tree/main/community/resource_types)
 through a
 [github action](https://github.com/windmill-labs/windmill/blob/main/.github/workflows/pull-hub.yml).
 
@@ -33,7 +47,7 @@ then in the Resource Types section, Submit a new Resource Type. You can then add
 your argument one by one or use the monaco editor to edit it as a jsonschema
 directly.
 
-## Add an OAuth provider
+## OAuth providers
 
 To add a new OAuth provider, open a Pull Request to add a new item to:
 [backend/oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json).
@@ -54,7 +68,7 @@ The format is as follows:
 where `extra_params` is an escape hatch to deal with OAuth provider that need
 some extra fields to be passed along to the authorization URL.
 
-## Add a flow to the WindmillHub
+## Flows
 
 Using the [OpenFlow](./openflow) portable format, one can simply either copy and
 paste the exported Json of the flow in the
@@ -68,12 +82,17 @@ into the flows page of **every workspace of every instances of Windmill**.
 
 ![Approved flow](./assets/approved_flows.png)
 
-## Add a script or trigger script to the WindmillHub
+## Scripts
+
+:::tip
+More information on adding scripts to the WindmillHub can be found in the
+[How-Tos](../docs/how-tos/10_add_new_module_to_hub.md) section.
+:::
 
 The [WindmillHub](https://hub.windmill.dev) only supports deno scripts. You can
 add a trigger or standard script to the Hub by going to the appropriate section
-and click "Submit a new script" or "Submit a new trigger script", then give it
-an explicit summary and submit.
+and clicking "Submit a new script" or "Submit a new trigger script", then giving it
+an explicit summary, and submitting.
 
 ![Add new script](./assets/add_new_script.png)
 
@@ -81,3 +100,7 @@ Once approved by the Windmill team, the script or trigger script will be
 available for all to use directly inside their flows.
 
 ![Pick a hub script](./assets/pick_a_hub_script.png)
+
+
+<!-- Resources -->
+[wm-hub]: hub.windmill.dev/
