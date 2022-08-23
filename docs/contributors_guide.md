@@ -86,7 +86,7 @@ into the flows page of **every workspace of every instances of Windmill**.
 
 :::tip
 More information on adding scripts to the WindmillHub can be found in the
-[How-Tos](../docs/how-tos/10_add_new_module_to_hub.md) section.
+[How-Tos](../docs/how-tos/6_add_new_module_to_hub.md) section.
 :::
 
 The [WindmillHub](https://hub.windmill.dev) only supports deno scripts. You can
@@ -103,4 +103,4 @@ available for all to use directly inside their flows.
 
 
 <!-- Resources -->
-[wm-hub]: hub.windmill.dev/
+[wm-hub]: http://hub.windmill.dev/
