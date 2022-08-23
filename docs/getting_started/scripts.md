@@ -37,6 +37,28 @@ said, keep them short, as they are displayed throughout the UI.
 Description supports Markdown formatting, and is where you should 
 include examples on how to use your script.
 
+#### Trigger Scripts
+
+Scripts can be categorized as `Trigger` Scripts. It's a special category
+of Scripts, where the purpose is to pull data from an external source and
+compare it to the previously saved state. If there are changes, *trigger*
+the rest of the flow, i.e. subsequent scripts. 
+
+#### Template Scripts
+
+In order to allow other users to rapidly write scripts, you can define
+templates. This is particularly useful with resources for example: you can
+define a template script that can be rapidly used with that resource.
+
+When creating a script as a template, the script's code will be pre-filled with
+the template code.
+
+Templates are just scripts! In addition, they get listed as templates in the
+Scripts page:
+
+![Add from template](../assets/how_to/add_from_template.png)
+
+
 ### Code
 
 In Windmill, scripts need to have a `main` function that will be the script
@@ -93,10 +115,31 @@ main's function signature.
 Write and edit your typescript code in a powerful webeditor with autocompletion
 and type inference.
 
-![Add script in Python too](./assets/intro/add-script-2-python.png)
+:::tip
+It is possible to import other scripts into your script.
 
-It works with Python too.
+For now, this is only possible in TypeScript, and any script you have read
+rights on can be imported:
 
+```ts
+import * as other from "https://app.windmill.dev/api/w/demo/scripts/raw/p/u/bot/other.ts"`
+```
+
+The format for the import url is:
+
+By path:
+
+```
+https://<instance>/api/w/<workspace>/scripts/raw/p/<path>.ts"
+```
+
+By hash:
+
+```
+https://<instance>/api/w/<workspace>/scripts/raw/h/<hash>.ts"
+```
+
+:::
 
 #### UI Customization
 

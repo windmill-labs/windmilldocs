@@ -6,12 +6,12 @@ import { ChevronDownIcon } from '@heroicons/react/outline'
 const faqs = [
 	{
 		question: "Is Windmill only for developers?",
-		answer: `No. Windmill is developer friendly but it can even be used in orgs witho few developers by creating flows in an intuitive UI that chain generic scripts together.
+		answer: `No. Windmill is developer friendly but it can even be used in orgs with few developers by creating flows in an intuitive UI that chain generic scripts together.
 		But Windmill's sweet spot is hybrid organization with a strong tech team than can write organization specific scripts so that the rest of the organization leverage them as part of their flows.`
 	},
 	{
 		question: "Is Windmill a no-code or low-code platform?",
-		answer: `Windmill is a developer platform around that makes it easy to write and tweak code but that be used without needing to write any code youself.
+		answer: `Windmill is a developer platform around that makes it easy to write and tweak code but that be used without needing to write any code yourself.
 			Indeed, flows can be solely created by reusing generic scripts written by the community.
 			However, Windmill is most powerful when those generic scripts are chained together with org specific scripts. 
 			So Windmill is both code-centric and low-code depending on the use you make out of it.`

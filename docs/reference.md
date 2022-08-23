@@ -95,7 +95,7 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 
 ### Script parameters to jsonschema
 
-There is a one to one correspondance between a parameter of the main function
+There is a one to one correspondence between a parameter of the main function
 and a field of `properties` in the jsonschema. The name of the argument become
 the name of the property, and most of the primitive types in Python and
 Typescript have a corresponding primitive type in JSON and by extension

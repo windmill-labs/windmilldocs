@@ -89,7 +89,7 @@ In i=40, the compute dominates the start time, we see that the performance are
 comparable.
 
 Caveat: We have limited number of workers compared to AWS Lambda and if your
-goal is to achieve parrallelism > 100 workers, then at the moment you will get
+goal is to achieve parallelism > 100 workers, then at the moment you will get
 better results with Lambda. We will scale to thousands of workers very soon so
 it should not be an easy.
 
