@@ -1,6 +1,6 @@
 ---
 id: variables_and_secrets
-title: Save variables and secrets
+title: Variables and Secrets
 ---
 
 # Save variables and secrets
@@ -11,16 +11,17 @@ and reserved variables.
 
 ## Reserved variables
 
-Reserved variables are automatically set by Windmill. See the variables page for
+Reserved variables are automatically set by Windmill. See the 
+[variables page](https://app.windmill.dev/variables) for
 the list of reserved variables and what they are used for.
 
 ## Add a variable or secret
 
 You can define variables from the **Variables** page. Like all objects in
-Windmill, variable ownership are defined by a **path** (see
+Windmill, variable ownership is defined by the **path** (see
 [ownership path prefix](../reference#owner)).
 
-Variables also have a **name**, that is generated from the path. Names are used
+Variables also have a **name**, generated from the path, and names are used
 to access variables from scripts.
 
 A variable can be made **secret**. In that case, its value will not be visible

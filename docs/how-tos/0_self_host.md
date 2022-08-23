@@ -1,4 +1,16 @@
+---
+title: Self-host
+---
+
 # Self-host Windmill
+
+## Getting started
+
+Windmill GitHub repository contains all the necessary files to run 
+Windmill locally, or to self-host it.
+
+We encourage docker-based deployments, and provide a docker-compose
+file to help you get started.
 
 ## Docker
 
@@ -9,7 +21,7 @@ Simplified instruction for docker-compose in the
 
 :::info
 When talking about the 'compose', or 'caddyfile', we explicitly refer
-to the ones on [Windmill's GitHub repository][windmill-docker-compose].
+to the ones on [Windmill's GitHub repository][windmill-gh].
 :::
 
 Using docker and caddy, Windmill can be deployed using two files, 
@@ -36,7 +48,7 @@ WM_BASE_URL=windmill.example.com
 ```
 
 Setting the `WM_BASE_URL` configures Windmill to use it as its base url, 
-but also configures the Caddy to use it as the domain.
+but also configures Caddy to use it as the domain.
 
 ### Deployment
 
@@ -45,6 +57,10 @@ Once you have setup your environment for deployment, you can run the following c
 `$ docker compose up` 
 
 That's it! Head over to your domain and you should be greeted with the login screen.
+
+:::tip
+Default credentials are `admin@windmill.dev` and `changeme`
+:::
 
 ## Compile from source
 

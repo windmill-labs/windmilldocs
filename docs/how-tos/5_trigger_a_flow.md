@@ -1,7 +1,9 @@
-# Trigger a Flow: Watching for changes Vs Webhook & UI
+# Trigger Flows
 
 There are two ways to trigger a Windmill Flow. Flows can watch for changes
 regularly or flows can be triggered by UI or webhook.
+
+## Scheduled
 
 **Watching for changes regularly** - The first module of this type of flow is a
 trigger script whose purpose is to pull data from an external source and return
@@ -56,7 +58,14 @@ export async function main(url: string, db: wmill.Resource<"postgresql">) {
 }
 ```
 
-**Triggered by webhook** The first module of this type of flow is a script who's
+## Triggered
+
+
+A flow that can be triggered always starts 
+with a [trigger script](../reference#trigger-scripts).
+It determines whether the remainder of the flow will be executed. 
+
+The first module of this type of flow is a script who's
 purpose is to run when it receives an input from it's associated webhook or when
 it is run manually through the flow's automatically generated UI.
 
