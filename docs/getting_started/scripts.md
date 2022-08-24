@@ -50,11 +50,16 @@ In order to allow other users to rapidly write scripts, you can define
 templates. This is particularly useful with resources for example: you can
 define a template script that can be rapidly used with that resource.
 
-When creating a script as a template, the script's code will be pre-filled with
+When creating a script from a template, the script's code will be pre-filled with
 the template code.
 
-Templates are just scripts! In addition, they get listed as templates in the
-Scripts page:
+While you can create as many Template Scripts as you want, Windmill comes with
+a few built-in types. One of the provided templates for TypeScript/Deno 
+is the PostgreSQL template. This template showcases how to quickly create a
+parameterized statement for a PostgreSQL database. Template Scripts can be used
+as a standalone Script, or as a part of a Flow.
+
+Indeed, templates are just scripts! 
 
 ![Add from template](../assets/how_to/add_from_template.png)
 
