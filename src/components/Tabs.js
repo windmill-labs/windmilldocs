@@ -7,6 +7,19 @@ export default function TabsW() {
 		<>
 			<div className="grid grid-cols-1 gap-8 max-w-4xl">
 				<Example
+					title="Ban a user and notify him and us"
+					description={
+						<>
+							Ban a user, notify them by{' '}
+							<span class="text-transparent bg-clip-text bg-red-600 font-extrabold">email</span>,
+							and us by{' '}
+							<span class="text-transparent bg-clip-text bg-[#611f69] font-extrabold">Slack</span>
+						</>
+					}
+					src="https://hub.windmill.dev/embed/flow/22/compute_activity"
+					href="https://app.windmill.dev/flows/add?hub=22"
+				/>
+				<Example
 					title="Whenever an Hacker News message contains a mention, publish it to slack with sentiment analysed"
 					description={
 						<>
@@ -70,12 +83,6 @@ export default function TabsW() {
 
 				{open && (
 					<>
-						<Example
-							title="Trigger user ban flow with a webhook"
-							description="Ban a user, notify them by email, and us by Slack"
-							src="https://hub.windmill.dev/embed/flow/22/compute_activity"
-							href="https://app.windmill.dev/flows/add?hub=22"
-						/>
 						<Example
 							title="Generate a weekly report and share it to Slack channel"
 							description="See account data over the last 3 days as a pie chart"
