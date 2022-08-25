@@ -57,7 +57,8 @@ While you can create as many Template Scripts as you want, Windmill comes with
 a few built-in types. One of the provided templates for TypeScript/Deno 
 is the PostgreSQL template. This template showcases how to quickly create a
 parameterized statement for a PostgreSQL database. Template Scripts can be used
-as a standalone Script, or as a part of a Flow.
+as a standalone Script, or as a part of a Flow. Visit the Postgres 
+[integration tutorial](../integrations/postgresql.md) to learn more. 
 
 Indeed, templates are just scripts! 
 
