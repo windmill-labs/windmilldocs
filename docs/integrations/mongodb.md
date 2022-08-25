@@ -1,13 +1,13 @@
-# Postgres
+# MongoDB
 
 ## Getting started
 
-We will see how to connect your Windmill instance to an external Postgres 
+We will see how to connect your Windmill instance to an external MongoDB 
 database, then use it in scripts.
 
 ## Create Resource
 
-We need to define a `postgresql` [*Resource*][docs-resources]. 
+We need to define a `mongodb` [*Resource*][docs-resources]. 
 
 Windmill provides integration with multiple different services and apps.
 We call them *Resources Types*, and offer integrations with databases, 
@@ -36,42 +36,47 @@ the resource
 - **Description**, while not obligatory, is always a good idea. You can include
 any and all information to users of the resource. Let's put a warning that
 this is a production database, and users should be weary about their actions.
-- **Resource type** is postgresql.
+- **Resource type** is `mongodb`.
 
 :::tip
 You can use Markdown formatting in the **Description** field.
 :::
 
-![define resource metadata](../assets/integrations/postgres/1_1.png)
+![define resource metadata](../assets/integrations/mongodb/1_1.png)
 
 Once the metadata defined, click the "Next" button to fill the connection
 details. 
 
 Fill in your connection details, and click "Save" to create the resource.
 
-![define resource connection details](../assets/integrations/postgres/1_2.png)
+:::tip
+If you ever have any doubt about the format of fields in pre-defined
+resources, you can see the full schema by clicking on a Resource Type and 
+switching to 'advanced' tab
+:::
+
+
+![define resource connection details](../assets/integrations/mongodb/1_2.png)
 
 Once created, it can be seen in the *Resources* [section][wm-app-resources].
 
-![define resource connection details](../assets/integrations/postgres/1_3.png)
+![define resource connection details](../assets/integrations/mongodb/1_3.png)
 
-Congratulations, you have just created a shared Postgres database resource!
+Congratulations, you have just created a shared MongoDB database resource!
 
 ## Create Script
 
 Next, let's create a Script that will use the newly created resource.
-We will use Postgres' parameterized queries template.
 
 Head on to the Script tab and click on the "New Script" button.
 
-We will be using a TypeScript/Deno as language, and we will use the PostgreSQL
-template.
+We will be using a TypeScript/Deno as language
 
-![create script](../assets/integrations/postgres/2_1.png)
+![create script](../assets/integrations/mongodb/2_1.png)
 
 Let's add the Script's code:
 
-![create script code](../assets/integrations/postgres/2_2.png)
+![create script code](../assets/integrations/mongodb/2_2.png)
 
 :::tip
 You can specify default values for parameters, they will automatically be 
@@ -88,7 +93,7 @@ From the dropdown menu, you can select the database we created in
 previous step. Note you can see the description you provided in the previous
 step.
 
-![create script customization](../assets/integrations/postgres/2_3.png)
+![create script customization](../assets/integrations/mongodb/2_3.png)
 
 Once you're done, click on Save to save the Script to your workspace. 
 You can now use the created Script in your Flows, or as standalone.
