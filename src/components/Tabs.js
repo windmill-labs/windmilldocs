@@ -7,7 +7,7 @@ export default function TabsW() {
 		<>
 			<div className="grid grid-cols-1 gap-8 max-w-4xl">
 				<Example
-					title="Trigger user ban flow with a webhook"
+					title="Ban a user and notify him and us"
 					description={
 						<>
 							Ban a user, notify them by{' '}
