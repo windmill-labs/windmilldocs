@@ -127,7 +127,7 @@ import React from 'react'
 import { CheckIcon, MinusIcon } from '@heroicons/react/solid'
 
 const tiers = [
-	{ name: 'Free', pricing: 'Free forever', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
+	{ name: 'Free', pricing: 'free-tier + self-hostable', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
 	{
 		name: 'Team',
 		pricing: "10$ /mo /user",
@@ -135,7 +135,7 @@ const tiers = [
 	},
 	{
 		name: 'Enterprise',
-		pricing: 'Custom',
+		pricing: 'custom',
 		description: 'Best for orgs or teams that use Windmill at scale and/or require a commercial license',
 	},
 ]

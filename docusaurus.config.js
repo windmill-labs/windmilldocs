@@ -72,6 +72,11 @@ const config = {
 				},
 				items: [
 					{
+						href: '/#pricing',
+						position: 'left',
+						label: 'Pricing'
+					},
+					{
 						to: 'https://app.windmill.dev',
 						position: 'left',
 						label: 'Cloud'
@@ -88,16 +93,17 @@ const config = {
 						label: 'WindmillHub'
 					},
 					{
-						to: 'https://discord.com/invite/V7PM2YHsPB',
-						position: 'left',
-						label: 'Discord'
-					},
-					{
 						href: '/hiring',
 						position: 'right',
 						label: 'Join us'
 					},
 					// { to: '/blog', label: 'Blog', position: 'left' },
+					{
+						href: 'https://discord.com/invite/V7PM2YHsPB',
+						className: 'header-discord-link',
+						'aria-label': 'Discord',
+						position: 'right'
+					},
 					{
 						href: 'https://github.com/windmill-labs/windmill',
 						className: 'header-github-link',
