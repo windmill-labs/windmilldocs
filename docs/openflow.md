@@ -55,53 +55,46 @@ Now let's see what is a module:
 
 ```typescript
 type FlowModule = {
-  input_transform: Record<string, InputTransform>;
-  value: RawScript | PathScript | ForloopFlow | PathFlow;
-  stop_after_if_expr?: string;
-  skip_if_stopped?: boolean;
+  input_transforms: Record<string, StaticTransform | JavascriptTransform>;
+  value: RawScript | PathScript | ForloopFlow;
+  stop_after_if?: { expr: string, skip_if_stopped: boolean};
 };
 
-type InputTransform = StaticTransform | JavascriptTransform;
-
 type StaticTransform = {
-  value?: any;
   type: "static";
+  value?: any;
 };
 
 type JavascriptTransform = {
-  expr: string;
   type: "javascript";
+  expr: string;
 };
 
+
 type RawScript = {
+  type: "rawscript";
   content: string;
   language: "deno" | "python3";
   path?: string;
-  type: "rawscript";
 };
 
 type PathScript = {
-  path: string;
   type: "script";
+  path: string;
 };
 
 type ForloopFlow = {
-  value: FlowValue;
-  iterator: InputTransform;
-  skip_failures: boolean;
   type: "forloopflow";
-};
-
-type PathFlow = {
-  path?: string;
-  type: "flow";
+  modules: Array<FlowModule>;
+  iterator: InputTransform;
+  skip_failures?: boolean;
 };
 ```
 
-So a module contains input_transform as a dict from fields (or input of the
+So a module contains `input_transforms` as a dict from fields (or input of the
 module) to either either a static json value or a javascript expression.
 
-The input_transform is the way to do the piping from any other previous steps or
+The `input_transforms` is the way to do the piping from any other previous steps or
 from variable, or resources to one of the input of your script/module. Since it
 is actual javascript (although a restricted javascript, you cannot fetch
 externally outside of getting secrets and variables for instance), it is very
@@ -112,12 +105,14 @@ Windmill Editor makes it very easy to do so using the properties picker.
 
 ![Prop picker](./assets/prop_picker.png)
 
-There are also 2 optional fields:
+There are also the `stop_after_if` optional object:
 
-- stop_after_if_expr: Evaluate a javascript expression that takes the result as
-  an input to decide if the flow should stop there. For instance useful to stop
+If present
+
+- `stop_after_if.expr`: Evaluate a javascript expression that takes the result as
+  an input to decide if the flow should stop there. Useful to stop
   a flow that is meant to watch for changes if there are no changes.
-- skip_if_stopped: A flag in the case the the above expression stops the flow to
+- `stop_after_if.skip_if_stopped`: A flag in the case the the above expression stops the flow to
   consider the flow to be a skip or a success. A skip is useful in the context
   of flows being triggered very often to watch for changes as you might want to
   ignore the runs that have been skipped.
@@ -134,10 +129,10 @@ There are 4 kinds of module currently (version 1.26.2):
 - `forloopflow`: Trigger for-loops that will iterate over a list and trigger one
   flow per element. The list is built evaluating the javascript expression
   inside `iterator` taking `result` as an input being the result of the previous
-  module. For instance in Windmill, most flows use the iterator `result.res1`
+  module. For instance in Windmill, most flows use the iterator `result`
   and expect the previous step to return a list. The flow triggered will take as
-  an input the embedding flow inputs, the entire result of the previous step and
-  `_value` and `_index` as respectively the value being iterated and its
+  an input the embedding flow inputs, and
+  `iter.value` and `iter.index` as respectively the value being iterated and its
   corresponding index.
 
 Et voilà, we have completed our tour of OpenFlow.
