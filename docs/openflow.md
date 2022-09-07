@@ -43,11 +43,27 @@ the logic of the flow is actually defined:
 type FlowValue = {
   modules: Array<FlowModule>;
   failure_module?: FlowModule;
+  retry?: {
+    constant?: {
+      attempts: integer;
+      seconds: integer;
+    };
+    exponential?: {
+      attempts: integer;
+      multiplier: integer;
+      seconds: integer;
+    };
+  };
 };
 ```
 
 A Flow is just a sequence of modules, and an optional failure module that will
 be triggered to handle a failure at any point of the flow.
+
+Retry sets the retry policy for the flow, it is optional and is reset on every
+success. `constant` retry just retry N times after a `seconds` delay.
+`exponential` applies exponential backoff duration increase in between every
+retry. If all the retries are exhausted, the failure module, if any, is called.
 
 Now let's see what is a module:
 
@@ -55,9 +71,11 @@ Now let's see what is a module:
 
 ```typescript
 type FlowModule = {
+  summary?: string;
   input_transforms: Record<string, StaticTransform | JavascriptTransform>;
   value: RawScript | PathScript | ForloopFlow;
-  stop_after_if?: { expr: string, skip_if_stopped: boolean};
+  stop_after_if?: { expr: string; skip_if_stopped: boolean };
+  suspend?: integer;
 };
 
 type StaticTransform = {
@@ -69,7 +87,6 @@ type JavascriptTransform = {
   type: "javascript";
   expr: string;
 };
-
 
 type RawScript = {
   type: "rawscript";
@@ -94,9 +111,9 @@ type ForloopFlow = {
 So a module contains `input_transforms` as a dict from fields (or input of the
 module) to either either a static json value or a javascript expression.
 
-The `input_transforms` is the way to do the piping from any other previous steps or
-from variable, or resources to one of the input of your script/module. Since it
-is actual javascript (although a restricted javascript, you cannot fetch
+The `input_transforms` is the way to do the piping from any other previous steps
+or from variable, or resources to one of the input of your script/module. Since
+it is actual javascript (although a restricted javascript, you cannot fetch
 externally outside of getting secrets and variables for instance), it is very
 flexible. One interesting pattern that is allows is that you can compose complex
 string directly from there so you could imagine composing your email body or SQL
@@ -109,13 +126,20 @@ There are also the `stop_after_if` optional object:
 
 If present
 
-- `stop_after_if.expr`: Evaluate a javascript expression that takes the result as
-  an input to decide if the flow should stop there. Useful to stop
-  a flow that is meant to watch for changes if there are no changes.
-- `stop_after_if.skip_if_stopped`: A flag in the case the the above expression stops the flow to
-  consider the flow to be a skip or a success. A skip is useful in the context
-  of flows being triggered very often to watch for changes as you might want to
-  ignore the runs that have been skipped.
+- `stop_after_if.expr`: Evaluate a javascript expression that takes the result
+  as an input to decide if the flow should stop there. Useful to stop a flow
+  that is meant to watch for changes if there are no changes.
+- `stop_after_if.skip_if_stopped`: A flag in the case the the above expression
+  stops the flow to consider the flow to be a skip or a success. A skip is
+  useful in the context of flows being triggered very often to watch for changes
+  as you might want to ignore the runs that have been skipped.
+
+The `suspend?` integer represents, when present, the number of events needed to
+be received for the flow to be resumed after being paused just after the
+execution of the module. This is used for instance for approval flows when a
+notification is sent to email/android/slack to approve or disprove the flow
+before it is resumed. If the event is of type disprove, the flow is failed
+instead of being resumed.
 
 Now let's see how how the Module value is itself defined.
 
@@ -129,10 +153,9 @@ There are 4 kinds of module currently (version 1.26.2):
 - `forloopflow`: Trigger for-loops that will iterate over a list and trigger one
   flow per element. The list is built evaluating the javascript expression
   inside `iterator` taking `result` as an input being the result of the previous
-  module. For instance in Windmill, most flows use the iterator `result`
-  and expect the previous step to return a list. The flow triggered will take as
-  an input the embedding flow inputs, and
-  `iter.value` and `iter.index` as respectively the value being iterated and its
-  corresponding index.
+  module. For instance in Windmill, most flows use the iterator `result` and
+  expect the previous step to return a list. The flow triggered will take as an
+  input the embedding flow inputs, and `iter.value` and `iter.index` as
+  respectively the value being iterated and its corresponding index.
 
 Et voilà, we have completed our tour of OpenFlow.
