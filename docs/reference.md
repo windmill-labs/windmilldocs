@@ -11,9 +11,9 @@ username when he joins a workspace.
 
 ## Scripts
 
-In Windmill, a script is always a python or typescript (deno) script. Its 2 most
-important components are its input [jsonschema](#jsonchema) specification and
-its code content. The code must always have a main function:
+In Windmill, a script is always a python, typescript (deno) or go script. Its 2
+most important components are its input [jsonschema](#jsonchema) specification
+and its code content. The code must always have a main function:
 
 - Python:
 
@@ -139,18 +139,18 @@ They are as follows:
 | `wmill.Sql`                       | `string`, format: `sql`                      |
 | `wmill.Resource<'resource_type'>` | `object`, format: `resource-{resource_type}` |
 
-`Base64` and `Email` are actually a type alias for `string`, and `Resource` is a type
-alias for an `object`. They are purely type hints for the Windmill parser.
+`Base64` and `Email` are actually a type alias for `string`, and `Resource` is a
+type alias for an `object`. They are purely type hints for the Windmill parser.
 
-The `sql` format is specific to Windmill and replaces the normal text field with a
-monaco editor with SQL support.
+The `sql` format is specific to Windmill and replaces the normal text field with
+a monaco editor with SQL support.
 
 ### SQL
 
-For steps and scripts that use sql, you can leverage the Windmill's `Sql` type to
-display a monaco editor with SQL support in place of the normal `textarea`. This
-allows for the entire query to be passed on as a parameter. For flows, you can
-still templatize the SQL query as you would for any script.
+For steps and scripts that use sql, you can leverage the Windmill's `Sql` type
+to display a monaco editor with SQL support in place of the normal `textarea`.
+This allows for the entire query to be passed on as a parameter. For flows, you
+can still templatize the SQL query as you would for any script.
 
 ![SQL](./assets/sql.png)
 
@@ -245,16 +245,16 @@ following comment:
 
 ## Flows
 
-A **Flow** is the core concept behind windmill. It is a json serializable value in
-the [OpenFlow](./openflow) format that consists of an input spec (similar to
+A **Flow** is the core concept behind windmill. It is a json serializable value
+in the [OpenFlow](./openflow) format that consists of an input spec (similar to
 scripts), and a linear sequence of steps also referred to as modules. Each step
 consists of either:
 
 - Reference to a script from the hub
 - Reference to a script in your workspace
 - Inlined script in Python or Typescript (deno)
-- `forloop` that iterates over elements and triggers the execution of an embedded
-  flow for each element. The list is calculated dynamically as an
+- `forloop` that iterates over elements and triggers the execution of an
+  embedded flow for each element. The list is calculated dynamically as an
   [input transform](#input-transform).
 - (Coming soon) branches to embedded flow given the first predicate that matches
 - (Coming soon) A listener to an even that will resume the flow. This is how
@@ -303,22 +303,21 @@ the quick connect button if the field map one to one with a field of the
 ### Trigger scripts
 
 A trigger script is a script whose purpose is to be used as a first step of a
-flow. In combination with a schedule, flows can react to external changes
-and continue triggering the rest of the flow with the changes being listened
-to as new elements.  
-It is not very different than any other script except its purposes
-and that it needs to return a list because the next step will be to forloop over
-all items of the list in an embedded flow. Furthermore, it will very likely make
-use of the convenience helper functions around 
-[internal states](#internal-state).
+flow. In combination with a schedule, flows can react to external changes and
+continue triggering the rest of the flow with the changes being listened to as
+new elements.\
+It is not very different than any other script except its purposes and that it
+needs to return a list because the next step will be to forloop over all items
+of the list in an embedded flow. Furthermore, it will very likely make use of
+the convenience helper functions around [internal states](#internal-state).
 
 ### Internal State
 
 An internal state is just a state which is meant to persist across distinct
-executions of the same script. This is what enables flows to watch for
-changes in most event watching scenarios. The pattern is as follows:
+executions of the same script. This is what enables flows to watch for changes
+in most event watching scenarios. The pattern is as follows:
 
-- retrieve the last internal state or, if undefined, assume it is the first 
+- retrieve the last internal state or, if undefined, assume it is the first
   execution
 - retrieve the current state in the external system you are watching, e.g. the
   list of users having starred your repo or the maximum id of posts on Hacker
@@ -334,15 +333,15 @@ changes in most event watching scenarios. The pattern is as follows:
 
 The convenience functions do this in Typescript are:
 
-- [`getInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L96) which
-  retrieves an object of any type (internally a simple resource) at a path
+- [`getInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L96)
+  which retrieves an object of any type (internally a simple resource) at a path
   determined by
   [`getInternalStatePath`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L50)
   which is basically a path unique to the user currently executing the script,
   the flow in which it is currently in if it is in one and the path of the
   script
-- [`setInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L88) which
-  sets the new state
+- [`setInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L88)
+  which sets the new state
 
 The states can be seen in the [Resources](#resource) section with a
 [Resource type](#resource-type) of `state`.
@@ -373,6 +372,7 @@ Every script or flow can be run by its hash or path as a http request aka as
 target URL follows this format:
 
 <!-- FIXME: Update URLs after merging #336 -->
+
 - Flow by path:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH>
 - Script by hash:
@@ -396,10 +396,9 @@ jobs", and are ordered by the time at which they were scheduled for
 (`scheduled_for`). Jobs that are created without being given a future
 `scheduled_for` are scheduled for the time at which they were created.
 
-[Workers](#workers) fetch jobs from the queue, start executing them, 
-atomically set their state in the queue to "running", stream the logs while
-executing them, then once completed remove them from the queue and create a new
-"completed job".
+[Workers](#workers) fetch jobs from the queue, start executing them, atomically
+set their state in the queue to "running", stream the logs while executing them,
+then once completed remove them from the queue and create a new "completed job".
 
 Every job has a unique UUID attached to it and as long as you have visibility
 over the execution of the script, you are able to inspect the execution logs,
@@ -423,17 +422,17 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
   script editors. Even when code is executed as a preview, you keep a trace of
   its execution.
 
-- **Dependencies Jobs**: Scripts written in python generate a lock file when they
-  are saved/created. This lockfile ensures that an execution of the same hash
-  will always use the same versions. The process of generating this lockfile is
-  also a job in itself so you can easily inspect the issues generating the
-  lockfile if any. See [Dependency Management](#dependency-management) for 
-  more information.
+- **Dependencies Jobs**: Scripts written in python generate a lock file when
+  they are saved/created. This lockfile ensures that an execution of the same
+  hash will always use the same versions. The process of generating this
+  lockfile is also a job in itself so you can easily inspect the issues
+  generating the lockfile if any. See
+  [Dependency Management](#dependency-management) for more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
-  every step. The execution of the steps are in-themselves jobs. It is
-  defined similarly to a script job but instead of being defined by a path to a
-  script, it is defined by a path to the flow.
+  every step. The execution of the steps are in-themselves jobs. It is defined
+  similarly to a script job but instead of being defined by a path to a script,
+  it is defined by a path to the flow.
 
 - **Preview Flow Jobs**: A preview flow is a job that contains the raw json
   definition of the flow instead of merely a path to it. It is the underlying
@@ -512,10 +511,10 @@ wmill.set_variable("u/user/foo", value)
 Typescript (deno):
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/index.ts'
+import * as wmill from "https://deno.land/x/windmill/index.ts";
 
-wmill.getVariable('u/user/foo')
-wmill.setVariable('u/user/foo', value)
+wmill.getVariable("u/user/foo");
+wmill.setVariable("u/user/foo", value);
 ```
 
 #### Secret Variables
@@ -534,8 +533,8 @@ Contextual variables are variables whose values are contextual to the script
 execution. This is how the Deno and Python windmill client get their implicit
 credentials to interact with the platform.
 
-| Name         | Value                                                                                                               |
-| ------------ | ------------------------------------------------------------------------------------------------------------------- |
+| Name           | Value                                                                                                               |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
 | `WM_TOKEN`     | Token ephemeral to the current script with equal permission to the permission of the run (Usable as a bearer token) |
 | `WM_EMAIL`     | Email of the user that executed the current script                                                                  |
 | `WM_USERNAME`  | Username of the user that executed the current script                                                               |
@@ -562,7 +561,8 @@ the demodb schema:
 }
 ```
 
-A resource string can refer to a [variable](#variables) using the following pattern:
+A resource string can refer to a [variable](#variables) using the following
+pattern:
 
 ```
 $var:path
@@ -656,8 +656,8 @@ Schedules can not be deleted but they can be disabled.
 
 ## Workspace
 
-Every nameable or pathable entity in Windmill has a workspace attached to
-it. This includes:
+Every nameable or pathable entity in Windmill has a workspace attached to it.
+This includes:
 
 - users
 - [groups](#group)
@@ -708,7 +708,6 @@ Groups have a name and a set of members. They are inspired by unix groups:
 - Members are always users
 - Users can be members of multiple groups
 
-
 Groups can own entities: the ownership path prefix of those entities are of the
 form `g/<group>` and can be granted or shared read or write
 [permissions](#permission-and-acl) to entities.
@@ -748,7 +747,7 @@ everything.
 Every operation, and actions that have side-effects (so every action except
 getting or listing entities) have a log attached to them which contains the user
 at the origin of the operation and some metadata specific to the kind of
-operation. Every kind of audit log has a hierarchical operation name attached
-to them. Admins of a workspace can see the audit logs of every users of a
+operation. Every kind of audit log has a hierarchical operation name attached to
+them. Admins of a workspace can see the audit logs of every users of a
 [workspace](#workspace). Simple users can only see their own audit logs. Audit
 logs have different retention policy depending on the plan your team is on.

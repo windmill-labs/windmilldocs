@@ -162,7 +162,7 @@ export default function HomepageFeatures()
 									<br /><br />
 									Define visibility, edit rights and executability for your scripts, resources, schedules, etc using <span className='font-bold'>groups' and users' granular permissions</span>.
 									<br /><br />
-									Upskill your less technical members interested in authoring scripts themselves by having them learn Python or Typescript in an accessible and integrated environment.
+									Upskill your less technical members interested in authoring scripts themselves by having them learn Python, Typescript or Go in an accessible and integrated environment.
 								</p>
 							</div>
 						</div>
@@ -217,12 +217,12 @@ export default function HomepageFeatures()
 									<br />
 									<br />
 									Unlike other automation tools, we do not reinvent the wheel with proprietary
-									connectors and UI, connect to any API using any standard python or typescript
+									connectors and UI, connect to any API using any standard python, typescript or go
 									client or dependencies available in PyPI or Deno compatible packages.
 									<br />
 									<br />
 									<span className="font-bold text-black">
-										Any python or typescript (deno) library becomes a connector. Use REST API
+										Any python, typescript (deno) or Go library becomes a connector. Use REST API
 										otherwise. Hence we have more integrations out-of-the-box than any other tools.
 									</span>
 									<br />
