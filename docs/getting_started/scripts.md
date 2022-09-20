@@ -28,7 +28,7 @@ selecting group will make it available to all users of the given group.
 
 <!-- FIXME: Languages -> Runtimes ? -->
 
-Windmill supports three **Languages**: Python, {Java, Type}Script, and Go.
+Windmill supports three **Languages**: Python, TypeScript, and Go.
 
 **Summary** and **Description** are both optional, but highly recommended.
 If the Summary is absent, the UI will use the `path` by default. That being
