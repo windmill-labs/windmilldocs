@@ -182,13 +182,12 @@ modules.
 
 Now let's see how how the Module value is itself defined.
 
-There are 4 kinds of module currently (version 1.35.0):
+There are 3 kinds of module currently (version 1.35.0):
 
 - `rawscript`: Embed a full Deno or JavaScript script inside the flow. Useful
   for ad-hoc scripts.
 - `script`: When you can refer to a script by its path (including a path to the hub
   using the `hub/` prefix)
-- `flow`: Refer to another flow by its path.
 - `forloopflow`: Trigger for-loops that will iterate over a list and trigger one
   flow per element. The list is built evaluating the JavaScript expression
   inside `iterator` taking `result` as an input being the result of the previous
