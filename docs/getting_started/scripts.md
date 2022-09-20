@@ -2,18 +2,19 @@
 
 ## Getting started
 
-Scripts can act as standalone apps, but can also be chained together to create
+Scripts can act as standalone apps, and can also be chained together to create
 [Flows][flows].
 
 They can also be shared on the [Windmill Hub][wm-hub], where once verified by
-moderators, they become available to everyone, directly from within the app.
+moderators, they become available to everyone, directly from within Windmill.
 
 In Windmill, both Scripts and Flows consist of two parts:
 
 - **Metadata**, which contains information about the Script or Flow itself, such
   as its path, description, and author, and;
 - **Logic**, which in case of a Script is the code, and in case of a Flow is the
-  list of Scripts to be executed.
+  list of Scripts to be executed. For more information see the 
+  [OpenFlow Spec.][openflow]
 
 ### Metadata
 
@@ -21,13 +22,13 @@ In Windmill, both Scripts and Flows consist of two parts:
 
 **Path** is the unique identifier that consist of the
 [script's owner](../reference#owner), and the script's name. The owner can be
-either a user, or a group. This influences the permissions on the platform.
+either a user, or a group. This defines the permissions on the platform.
 Selecting user will keep the script _private_ to the selected account, while
 selecting group will make it available to all users of the given group.
 
 <!-- FIXME: Languages -> Runtimes ? -->
 
-Windmill supports three **Languages**: JavaScript, TypeScript, and Go.
+Windmill supports three **Languages**: Python, {Java, Type}Script, and Go.
 
 **Summary** and **Description** are both optional, but highly recommended.
 If the Summary is absent, the UI will use the `path` by default. That being
@@ -64,11 +65,12 @@ Indeed, templates are just scripts!
 
 ### Code
 
-In Windmill, scripts need to have a `main` function that will be the script
-entrypoint. Parameters of the main function are used to compute the input spec
-of that script. That input spec is used for both generating the frontend form
-that you see when using that script as a standalone app, and for the inputs that
-it takes when it is a step of a flow.
+In Windmill, scripts need to have a `main` function that will be the script's
+entrypoint.  
+Parameters of the main function are used to compute the input spec
+of that script. That input spec is in turn used for both generating the 
+frontend form that you see when using that script as a standalone app, and 
+for the inputs that it takes when it is a step of a flow.
 
 Type annotations are used to generate the UI form, and help pre-validate inputs.
 While not mandatory, they are highly recommended.
@@ -121,13 +123,15 @@ signature.
 Write and edit your typescript code in a powerful webeditor with autocompletion
 and type inference.
 
-:::tip It is possible to import other scripts into your script.
+:::tip 
+
+It is possible to import other scripts into your script.
 
 For now, this is only possible in TypeScript, and any script you have read
 rights on can be imported:
 
 ```ts
-import * as other from "https://app.windmill.dev/api/w/demo/scripts/raw/p/u/bot/other.ts"`
+import * as other from "<script_url>"`
 ```
 
 The format for the import url is:
@@ -186,5 +190,6 @@ in a real-world use case:
 [app-scripts]: https://app.windmill.dev/scripts
 [deno]: https://deno.land/
 [flows]: ./flows
+[openflow]: ../openflow.md
 [python]: https://www.python.org/
 [wm-hub]: https://hub.windmill.dev
