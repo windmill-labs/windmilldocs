@@ -29,7 +29,7 @@ selecting group will make it available to all users of the given group.
 
 Windmill supports three **Languages**: JavaScript, TypeScript, and Go.
 
-**Summary** and **Description** are both optional, but highly recommended.\
+**Summary** and **Description** are both optional, but highly recommended.
 If the Summary is absent, the UI will use the `path` by default. That being
 said, keep them short, as they are displayed throughout the UI. Description
 supports Markdown formatting, and is where you should include examples on how to
