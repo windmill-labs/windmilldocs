@@ -11,7 +11,7 @@ username when he joins a workspace.
 
 ## Scripts
 
-In Windmill, a script is always a python, typescript (deno) or go script. Its 2
+In Windmill, a script is always a Python, TypeScript (deno) or Go script. Its 2
 most important components are its input [jsonschema](#jsonchema) specification
 and its code content. The code must always have a main function:
 

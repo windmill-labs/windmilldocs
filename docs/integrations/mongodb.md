@@ -32,7 +32,7 @@ of our workspace:
 the resource
 - **Owner** should be `all`, for the aforementioned reasons
 - Since we're creating an inventory database resource, let's **Name** it
-`pg_inventory`.
+`mongo_inventory`.
 - **Description**, while not obligatory, is always a good idea. You can include
 any and all information to users of the resource. Let's put a warning that
 this is a production database, and users should be weary about their actions.
