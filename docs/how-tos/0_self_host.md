@@ -62,6 +62,15 @@ That's it! Head over to your domain and you should be greeted with the login scr
 Default credentials are `admin@windmill.dev` and `changeme`
 :::
 
+### Update
+
+To update to newer version of Windmill, all you have to do is run: 
+
+`docker compose pull` or `docker compose pull windmill` if you wish to update 
+only the Windmill image.
+
+Database volume is persistent, so updating the database image is safe too.
+
 ## Compile from source
 
 1. Go to `frontend/`: `npm run install`, `npm run generate-backend-client` then
