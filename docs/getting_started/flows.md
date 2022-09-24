@@ -7,7 +7,7 @@ import any flows on [hub.windmill.dev](https://hub.windmill.dev). See
 
 <br/>
 
-![Edit in windmill](./assets/edit_in_windmill.png)
+![Edit in windmill](../assets/getting_started/edit_in_windmill.png)
 :::
 
 ## Getting started
@@ -18,10 +18,13 @@ simple steps together. Each Flow is composed of one or more steps.
 Steps are [Scripts][scripts] that accept inputs, execute a function and then produce an
 output, usually used in subsequent steps. Flows contain all of the benefits of
 Windmill Scripts, offering immediate functionality such as third party app
-integrations, SQL queries, Slack, custom scripts and more!
+integrations, SQL queries, Slack, custom scripts, retries and more!
 
+
+:::tip 
 Windmill Flows are based on a declarative language for chaining scripts, we call it 
 **OpenFlow**, you can read the OpenFlow spec [here](/docs/openflow).
+:::
 
 In Windmill, both Scripts and Flows consist of two parts: 
 
@@ -30,10 +33,10 @@ In Windmill, both Scripts and Flows consist of two parts:
 - **Logic**, which in case of a Script is the code, and in case of a Flow is the 
   list of Scripts to be executed.
 
-### Metadata
+### Settings
 
-**Flow Inputs** arguments for each flow can be edited using the flow input wizard
-or copying the first step schema.
+**Flow Inputs**, or arguments, can be created using the flow input wizard
+or by copying up from the schema of the first step.
 
 **Scripts** can be dynamically added to each flow by clicking the '+' button.
 Scripts can be automatically imported from [
@@ -43,17 +46,32 @@ own custom scripts created in Windmill by selecting a Script path.
 Each script has **Scripts Inputs**, and each of them can be filled
 with either static values, a templated string or a full JavaScript
 expression. Those expressions can refer to any step's output or the flow
-input. This makes the workflow more similar to a DAG than to just a sequence.
+input. This makes the workflow more similar to a [DAG][dag] than to just a sequence.
 
 In most cases, the templating engine using
 `static value ${js.expr}` for mixing static strings and dynamic expression as
-string is sufficient. But in some cases, you need the full power of javascript
+string is sufficient. But in some cases, you need the full power of JavaScript
 and the **Raw Javascript Editor** does just that allowing each step script input
 to be a complex JavaScript expression inputs, variables, resources and outputs
 from other steps in the Flow.
 
-**Preview Mode** is available for each Step in a Flow, enabling you to see the
-output of each step script and how they interact with previous Steps.
+**Preview Mode** is available for each Step, enabling you to see the
+output of scripts and how they interact with previous Steps.
+
+In addition, Flows can be **Scheduled** using standard [`cron`][wiki-cron] 
+syntax, to plan systematic execution. Don't worry if you don't remember the 
+syntax, we provide you with a few handy examples to get you started.
+
+Flows can also be programmed to be automatically **Retried** in case of 
+failure. Windmill supports regular interval and exponential back-off retries.
+Both strategies can also be turned on together, in which case first, the 
+regular interval and then exponential back-off retries are applied before 
+finally failing.
+
+:::tip
+We are currently working hard on adding the retry feature on script level as 
+well. Stay tuned!
+:::
 
 ## Creating a Flow
 
@@ -61,29 +79,21 @@ In this tutorial, you will create a Flow that fetches data from an endpoint,
 processes it in Python using Pandas to generate a plot, and finally output
 the resulting graph to a Slack channel.
 
-### Log in to Windmill
-
 Log into your Windmill instance, create or select a workspace and land on the
 windmill dashboard. Select the Flows icon from the navigation bar on the left.
-![Add script](./assets/flows/dashboard.png)
 
-### Select Flows
-
-All previously created Flows can be accessed from the Flows dashboard. To create
+All previously created Flows can be accessed from the Flows screen. To create
 a new Flow, click the **New Flow** button in the top right hand corner.
-![Add script](./assets/flows/flow-dashboard.png)
-
-### Create New Flow
 
 Input a title for the Flow and optionally a brief summary of what the Flow will
 do. A more detailed description of the flow can also be added.
-![Add script](./assets/flows/flow-metadata.png)
+![Add script](../assets/getting_started/flows/flow-metadata.png)
 
 ### Add Flow Inputs
 
 Using the Flow input wizard or the json-schema, arguments can be given to the
 flow. They are globally available to all the steps in the Flow.
-![Add script](./assets/flows/flow-input.png)
+![Add script](../assets/getting_started/flows/flow-input.png)
 
 ### Add HTTP Get Request Step Script
 
@@ -100,8 +110,8 @@ Add a static 'url' argument of the end point you want to send a Get Request
 to in order to access the User Growth Data. 
 
 <!-- FIXME: Already outdated -->
-<!-- ![Add script](./assets/flows/search-hub-script.png) -->
-![Add script](./assets/flows/flow-step1.png)
+<!-- ![Add script](../assets/getting_started/flows/search-hub-script.png) -->
+![Add script](../assets/getting_started/flows/flow-step1.png)
 
 ### Add Python Graph Step Script with Dynamic JavaScript
 
@@ -117,27 +127,29 @@ converted to Bytes and output to the next step script.
 We will use the `previous_result` object which contains the inputs and 
 result of the previous step.
 
-![Add script](./assets/flows/flow-step2.png)
+![Add script](../assets/getting_started/flows/flow-step2.png)
 
 ### Output Graph to Slack
 
 To output the graph to Slack add one more step script using the Windmill Hub
 `send_slack_image` path. Again, use the dynamic JavaScript to connect the output
 of step script 2 to the input of step script 3.
-![Add script](./assets/flows/flow-step3.png)
+![Add script](../assets/getting_started/flows/flow-step3.png)
 
 ### Preview Flow
 
 Now that the Flow is complete, use preview mode to see the output of each step
 script and ensure that there are no errors.
-![Add script](./assets/flows/flow-preview.png)
+![Add script](../assets/getting_started/flows/flow-preview.png)
 
 ### Deploy your Flow!
 
 Click the Next button and then save your flow. You can run your newly created
 flow from the Flows page or schedule your Flow on the schedules page.
-![Add script](./assets/flows/slack-output.png)
+![Add script](../assets/getting_started/flows/slack-output.png)
 
 
 <!-- Resources -->
-[scripts]: ./scripts
+[scripts]: ../reference#scripts
+[dag]: https://en.wikipedia.org/wiki/Directed_acyclic_graph
+[wiki-cron]: https://en.wikipedia.org/wiki/Cron

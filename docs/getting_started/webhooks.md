@@ -17,7 +17,7 @@ body.
 
 ### Addresses
 
-![](./assets/webhooks/1-create_script.png)
+![](../assets/getting_started/webhooks/1-create_script.png)
 
 Webhooks links can be found in the Script/Flow's details page, for more
 information about Scripts, refer to the
@@ -57,7 +57,7 @@ securely!
 
 :::
 
-![](./assets/webhooks/2-tokens.png)
+![](../assets/getting_started/webhooks/2-tokens.png)
 
 ## Triggering
 
