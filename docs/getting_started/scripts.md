@@ -113,7 +113,7 @@ signature.
 
 ![Add script](../assets/getting_started/intro/add-script-2.png)
 
-Write and edit your typescript code in a powerful webeditor with autocompletion
+Write and edit your code in a powerful webeditor with autocompletion
 and type inference.
 
 :::tip 
