@@ -83,23 +83,16 @@ from.
 In this tutorial, you will create a basic Hello world script, and understand
 some of Windmill's main concepts: scripts, accepting user input, and runs.
 
-### Login
-
-Log into your windmill instance. You will land on the dashboard.
-
-![Dashboard](./assets/intro/dashboard.png)
-
-### Create a script
 
 Head over to the [Scripts][app-scripts] tab and use the **New script** button in
 the top right corner to create a new script. It will open the create page, with
 three sections:
 
-![Add script](./assets/intro/add-script.png)
+![Add script](../assets/getting_started/intro/add-script.png)
 
 #### Metadata
 
-- **Path**: Select `user` (that means the script is private) and `hello` as your
+- **Path**: Select `user` (that means the script is private) and `my_script` as your
   script's name.
 
 - **Language** Choose Typescript (Deno)
@@ -118,9 +111,9 @@ at runtime. Even in python, it is extremely recommended to add type annotations
 to that main function: Windmill can infer arguments from the main's function
 signature.
 
-![Add script](./assets/intro/add-script-2.png)
+![Add script](../assets/getting_started/intro/add-script-2.png)
 
-Write and edit your typescript code in a powerful webeditor with autocompletion
+Write and edit your code in a powerful webeditor with autocompletion
 and type inference.
 
 :::tip 
@@ -154,27 +147,22 @@ https://<instance>/api/w/<workspace>/scripts/raw/h/<hash>.ts"
 
 Windmill parses the main function signature, infers argument names and types.
 
-![Add script](./assets/intro/add-script-3.png)
+![Add script](../assets/getting_started/intro/add-script-3.png)
 
 All set! Save your work, and you'll land on the script page. Note that scripts
 are [versioned](../reference#versioning), and each new edit creates a new script
 version.
 
-![view](./assets/intro/view-script.png)
-
 ### Run!
 
 Now let's look at what users of this script will do. Click on the **Run** button
-to run this script. You'll see the user input form we defined earlier. Note what
-happens if you don't provide input:
-
-![Run](./assets/intro/run-script.png)
+to load this script. You'll see the user input form we defined earlier. Note 
 
 Fill in the fields, then hit run. You should see a run view, as well as your
 logs. All script runs are also available in the [Runs][app-runs] menu on the
 left.
 
-![view](./assets/intro/view-result.png)
+![view](../assets/getting_started/intro/view-result.png)
 
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
