@@ -71,6 +71,26 @@ only the Windmill image.
 
 Database volume is persistent, so updating the database image is safe too.
 
+## Helm chart
+
+We also provide a convenient helm chart for Kubernetes based self-hosted setup.
+
+Detailed instructions can be found in the [README][helm-readme] file in the 
+[official repository][helm] of the chart.
+
+:::tip
+If you're familiar with helm and want to get started quickly, 
+you can deploy in one command, with paths relative to the official 
+[repository][helm]:
+
+```bash
+helm install windmill-chart windmill/  \
+      --values windmill/values.yaml    \
+      --namespace=windmill             \
+      --create-namespace
+```
+:::
+
 ## Compile from source
 
 1. Go to `frontend/`: `npm run install`, `npm run generate-backend-client` then
@@ -121,3 +141,5 @@ GRANT windmill_user TO nonsuperuser;
 [windmill-gh]: https://github.com/windmill-labs/windmill
 [windmill-docker-compose]: https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml
 [windmill-caddyfile]: https://github.com/windmill-labs/windmill/blob/main/Caddyfile
+[helm]: https://github.com/windmill-labs/windmill-helm-charts
+[helm-readme]: https://github.com/windmill-labs/windmill-helm-charts/blob/main/README.md
