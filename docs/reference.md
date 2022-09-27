@@ -280,8 +280,8 @@ Retries are an important tool to make your flows more robust, and more flexible.
 
 :::info 
 
-Retries are currently only available on Flow level, but we are working hard on
-bringing them to Scripts as well. Stay tuned!
+Retries are are only available at the top-level of a Flow but upon popular
+demand we will also bring them to the individual module level. Stay tuned!
 
 :::
 
