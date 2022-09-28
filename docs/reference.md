@@ -239,8 +239,28 @@ following comment:
 
 ```python
 #requirements:
-#dependency_with_version_specified=0.4
-#dependency_without
+#pinned_dependency=0.4
+#dependency
+
+import dependency
+
+def main(...):
+  ...
+```
+
+In addition to that, environment variables can be set to customize 
+`pip`'s index-url and extra-index-url. This is useful for private repositories.
+
+To illustrate, in a docker-compose file, you would add following lines: 
+
+```dockerfile
+windmill:
+  ...
+  environment: 
+    ...
+    - PIP_INDEX_URL=https://pypi.org/simple
+    - PIP_EXTRA_INDEX_URL=https://pypi.org/simple
+    - PIP_TRUSTED_HOST=pypi.org
 ```
 
 ## Flows
