@@ -237,14 +237,10 @@ If the imports are not properly analyzed, there exists an escape hatch to
 override the input of the dependency job. One needs to head the script with the
 following comment:
 
-:::warning
-Beware that you have to pin all the dependencies if you want to override them
-this way.
-:::
-
 ```python
 #requirements:
-#dependency=0.4
+#dependency
+#version_pinned_dependency==0.4
 
 import dependency
 
