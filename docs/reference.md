@@ -61,19 +61,19 @@ compatible with its most advanced features yet.
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "properties": {
-    "your_name": {
-      "description": "The name to hello world to",
-      "type": "string"
-    },
-    "your_nickname": {
-      "description": "If you prefer a nickname, that's fine too",
-      "type": "string"
-    }
-  },
-  "required": []
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"your_name": {
+			"description": "The name to hello world to",
+			"type": "string"
+		},
+		"your_nickname": {
+			"description": "If you prefer a nickname, that's fine too",
+			"type": "string"
+		}
+	},
+	"required": []
 }
 ```
 
@@ -227,20 +227,24 @@ For Typescript (Deno), the dependencies and their versions are directly in the
 script and hence there is no need for any additional steps.
 
 For Python, the imports are automatically analyzed at saving time of the script
-and the corresponding list of Pypi packages are extracted. A dependency job is
-then spawned to associate that list of Pypi package with a lockfile which will
-lock the versions. This ensures that the same version of a python script is
-always executed with the same versions of its dependencies. It also avoids the
-hassle of having to maintain a separate requirements file.
+and the corresponding list of Pypi packages is extracted. A dependency job is
+then spawned to associate that list of Pypi packages with a lockfile, which
+will lock the versions. This ensures that the same version of a python script
+is always executed with the same versions of its dependencies. It also avoids
+the hassle of having to maintain a separate requirements file.
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the input of the dependency job. One needs to head the script with the
 following comment:
 
+:::warning
+Beware that you have to pin all the dependencies if you want to override them
+this way.
+:::
+
 ```python
 #requirements:
-#pinned_dependency=0.4
-#dependency
+#dependency=0.4
 
 import dependency
 
@@ -248,15 +252,15 @@ def main(...):
   ...
 ```
 
-In addition to that, environment variables can be set to customize 
+In addition to that, environment variables can be set to customize
 `pip`'s index-url and extra-index-url. This is useful for private repositories.
 
-To illustrate, in a docker-compose file, you would add following lines: 
+To illustrate, in a docker-compose file, you would add following lines:
 
 ```dockerfile
 windmill:
   ...
-  environment: 
+  environment:
     ...
     - PIP_INDEX_URL=https://pypi.org/simple
     - PIP_EXTRA_INDEX_URL=https://pypi.org/simple
@@ -298,30 +302,29 @@ sequences are more intuitive than graphs.
 
 Retries are an important tool to make your flows more robust, and more flexible.
 
-:::info 
+:::info
 
 Retries are are only available at the top-level of a Flow but upon popular
 demand we will also bring them to the individual module level. Stay tuned!
 
 :::
 
-Windmill supports two types of retries: regular or constant intervals and 
+Windmill supports two types of retries: regular or constant intervals and
 exponential back-off.
 
 Both strategies are based on the number of retries and the time interval between
-them. 
+them.
 
 For both strategies you can define how many times the flow should be retried,
 and how long should the execution be delayed between retries.
 
-You can also combine both strategies, in which case, the linear strategy will 
+You can also combine both strategies, in which case, the linear strategy will
 be executed first, followed by the exponential back-off strategy.
 
-From a more technical standpoint, applying either retry strategy results 
+From a more technical standpoint, applying either retry strategy results
 it in being the default retry strategy for all steps in the Flow,
-including the error handler. It also becomes the default strategy to use 
+including the error handler. It also becomes the default strategy to use
 in case of failure of any steps in the Flow.
-
 
 ## Input Transform
 
@@ -553,7 +556,7 @@ user-defined variables.
 Python:
 
 ```python
-import wmill 
+import wmill
 
 wmill.get_variable("u/user/foo")
 wmill.set_variable("u/user/foo", value)
@@ -562,10 +565,10 @@ wmill.set_variable("u/user/foo", value)
 Typescript (deno):
 
 ```typescript
-import * as wmill from "https://deno.land/x/windmill/index.ts";
+import * as wmill from 'https://deno.land/x/windmill/index.ts';
 
-wmill.getVariable("u/user/foo");
-wmill.setVariable("u/user/foo", value);
+wmill.getVariable('u/user/foo');
+wmill.setVariable('u/user/foo', value);
 ```
 
 #### Secret Variables
@@ -603,12 +606,12 @@ the demodb schema:
 
 ```json
 {
-  "dbname": "demo",
-  "host": "demodb.delightool.xyz",
-  "password": "demo",
-  "port": 6543,
-  "sslmode": "disable",
-  "user": "demo"
+	"dbname": "demo",
+	"host": "demodb.delightool.xyz",
+	"password": "demo",
+	"port": 6543,
+	"sslmode": "disable",
+	"user": "demo"
 }
 ```
 
@@ -623,7 +626,7 @@ for instance:
 
 ```json
 {
-  "simple": "$var:u/user/foo"
+	"simple": "$var:u/user/foo"
 }
 ```
 
@@ -645,47 +648,36 @@ a postgres connection, shortened as `postgresql` and whose schema is:
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "properties": {
-    "dbname": {
-      "description": "The database name",
-      "type": "string"
-    },
-    "host": {
-      "description": "The instance host",
-      "type": "string"
-    },
-    "password": {
-      "description": "The postgres users password",
-      "type": "string"
-    },
-    "port": {
-      "description": "The instance port",
-      "type": "integer"
-    },
-    "sslmode": {
-      "description": "The sslmode",
-      "enum": [
-        "disable",
-        "allow",
-        "prefer",
-        "require",
-        "verify-ca",
-        "verify-full"
-      ],
-      "type": "string"
-    },
-    "user": {
-      "description": "The postgres username",
-      "type": "string"
-    }
-  },
-  "required": [
-    "dbname",
-    "user",
-    "password"
-  ],
-  "type": "object"
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"properties": {
+		"dbname": {
+			"description": "The database name",
+			"type": "string"
+		},
+		"host": {
+			"description": "The instance host",
+			"type": "string"
+		},
+		"password": {
+			"description": "The postgres users password",
+			"type": "string"
+		},
+		"port": {
+			"description": "The instance port",
+			"type": "integer"
+		},
+		"sslmode": {
+			"description": "The sslmode",
+			"enum": ["disable", "allow", "prefer", "require", "verify-ca", "verify-full"],
+			"type": "string"
+		},
+		"user": {
+			"description": "The postgres username",
+			"type": "string"
+		}
+	},
+	"required": ["dbname", "user", "password"],
+	"type": "object"
 }
 ```
 
