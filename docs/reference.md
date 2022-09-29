@@ -37,7 +37,7 @@ python if necessary.
 Scripts versions are uniquely defined by their hash. See
 [Versioning](#versioning) for more info about the hashes purposes.
 
-### UI automatic generation
+### Automatic UI generation
 
 By reading the main function parameters, Windmill generates the input
 specification of the script in the [#jsonschema](https://json-schema.org/)
