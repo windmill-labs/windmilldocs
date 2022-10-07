@@ -31,6 +31,36 @@ In Windmill, both Scripts and Flows consist of two parts:
 - **Logic**, which in case of a Script is the code, and in case of a Flow 
   is the list of Scripts to be executed.
 
+### For-loops
+
+One functionality that is specific to Flows is the ability to wrap a part 
+of its sequence into a loop.
+
+The expected input is a list, and it is usually coming from either previous
+steps (see this [example][hub-flow2]), or from the Flow's inputs. 
+The variable name to iterate over, can be defined in the `Iterator 
+expression` field of the loop.
+
+For example, to iterate over a list provided as the Flow's input, 
+called `myList`, you would use `previous_result.myList` as the iterator 
+expression.
+
+![for-loop-picker](../assets/getting_started/flows/for-loop-picker.png)
+
+:::tip
+Technically speaking, a for-loop is a flow itself, separate from the 
+main flow. It has its own `flow_input`, composed of the current iteration's 
+value and the embedding flow's inputs.
+:::
+
+
+For-loops add an extra object to the execution context, called `iter`.
+It is nested under both `flow_input`, and for the first step of the loop
+under `previous_result`, too.  
+It contains the current `index` and `value` of the iteration, and is
+what should be used to provide inputs to the loop's steps.
+
+
 ### Settings
 
 **Flow Inputs**, or arguments, can be created using the flow input wizard
@@ -159,8 +189,9 @@ flow from the Flows page or schedule your Flow on the schedules page.
 
 <!-- Resources -->
 
-[scripts]: ../reference#scripts
 [dag]: https://en.wikipedia.org/wiki/Directed_acyclic_graph
-[wiki-cron]: https://en.wikipedia.org/wiki/Cron
 [hub-flow1]: https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack
+[hub-flow2]: https://hub.windmill.dev/flows/20/a-very-simple-flow-to-showcase-for-loops
 [hub]: https://hub.windmill.dev/
+[scripts]: ../reference#scripts
+[wiki-cron]: https://en.wikipedia.org/wiki/Cron
