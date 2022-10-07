@@ -292,21 +292,14 @@ rendering of flows as graph are more gimmicks than productive. To execute any
 graph, one need to do a topological sort to transform it into a sequence, and
 sequences are more intuitive than graphs.
 
-### Retries
+## Retries
 
-<!-- TODO: Once Script retries implemented, move this part one header level higher -->
-
-Retries are an important tool to make your flows more robust, and more flexible.
-
-:::info
-
-Retries are are only available at the top-level of a Flow but upon popular
-demand we will also bring them to the individual module level. Stay tuned!
-
-:::
+Retries are an important tool to make your Flows, and their individual steps
+more robust, and more flexible.
 
 Windmill supports two types of retries: regular or constant intervals and
-exponential back-off.
+exponential back-off. Both of these types can be applied at the global Flow 
+level, or per step individually.
 
 Both strategies are based on the number of retries and the time interval between
 them.
