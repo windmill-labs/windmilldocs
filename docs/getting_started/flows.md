@@ -42,12 +42,15 @@ The variable name to iterate over, can be defined in the `Iterator
 expression` field of the loop.
 
 For example, to iterate over a list provided as the Flow's input, 
-called `myList`, you would use `result.myList` as the iterator expression.
+called `myList`, you would use `previous_result.myList` as the iterator 
+expression.
 
+![for-loop-picker](../assets/getting_started/flows/for-loop-picker.png)
 
 :::tip
 Technically speaking, a for-loop is a flow itself, separate from the 
-main flow. It has its own `flow_input`, composed of the current iteration's value and the embedding flow's inputs.
+main flow. It has its own `flow_input`, composed of the current iteration's 
+value and the embedding flow's inputs.
 :::
 
 
