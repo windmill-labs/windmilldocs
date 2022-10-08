@@ -61,6 +61,7 @@ const config = {
 			})
 		]
 	],
+	scripts: [{src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev'}],
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
@@ -118,7 +119,6 @@ const config = {
 					}
 				]
 			},
-			scripts: [{src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev'}],
 			footer: {
 				style: 'dark',
 				links: [
