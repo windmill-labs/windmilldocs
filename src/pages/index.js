@@ -17,7 +17,7 @@ function HomepageHeader() {
 				<div className="md:max-w-2xl md:mx-auto lg:col-span-6">
 					<div>
 						<div className="mt-10 sm:max-w-xl">
-							<h1 className="text-xl tracking-tight font-bold text-gray-900  font-mono">
+							<h1 className="text-sm tracking-tight font-bold text-gray-900  font-mono">
 								<span className="block xl:inline">
 									<SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
 									Truly{' '}
@@ -40,15 +40,11 @@ function HomepageHeader() {
 								<span className="block xl:inline">
 									Scripts to <span className="text-blue-600">internal apps</span> and{' '}
 									<span className="text-blue-600">workflows</span> in minutes
-									<span className="text-xl block mt-2">
-										(your scripts and from a <a href="https://hub.windmill.dev">curated library</a>)
-									</span>
 								</span>
 							</h1>
-							<h2 className="mt-12  tracking-tight font-bold text-gray-900 text-lg font-mono">
+							<h2 className="mt-12  tracking-tight font-bold text-gray-900 text-sm font-mono">
 								<span className="block xl:inline">
-									open-source alternative to Pipedream, Airplane - simplified Temporal -{' '}
-									<a href="/docs/benchmark">self-hostable AWS Lambda</a>
+									open-source alternative to Pipedream, Airplane, Temporal
 								</span>
 							</h2>
 						</div>
@@ -62,24 +58,15 @@ function HomepageHeader() {
 										Try the cloud app
 									</a>
 								</div>
-								<div className="sm:mt-0 rounded w-full col-span-1">
+								<div className="shadow w-full col-span-1">
 									<a
-										href="/docs/intro"
+										href="https://forms.gle/9ANRUru75nqrKT6C9"
 										className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
 									>
-										Get Started
+										Schedule a demo
 									</a>
 								</div>
 							</div>
-						</div>
-						<div className="mt-10 text-center w-full">
-							<a
-								target="_blank"
-								href="https://forms.gle/9ANRUru75nqrKT6C9"
-								className="text-gray-600"
-							>
-								Schedule a <span className="text-blue-600">demo</span>
-							</a>
 						</div>
 					</div>
 				</div>
@@ -148,22 +135,11 @@ function HomepageHeader() {
 								)}
 							</BrowserOnly>
 						</div>
-						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
-							<span className="block xl:inline">
-								- Chain Typescript (deno), Python scripts, Go and SQL in productive low-code flows
-								<br />- mix and match custom code with pre-made code-modules{' '}
-								<a href="https://hub.windmill.dev">from a curated community library</a> <br />-
-								Single scripts are standalone apps by themselves
-								<br />- Unique runtime for scripts, workflows to deploy them as serverless webhooks
-								<br />- Open standard and portable JSON spec for flows:{' '}
-								<a href="/docs/openflow">OpenFlow</a>
-							</span>
-						</h3>
 					</div>
 				</div>
 			</div>
-			<div className="w-full text-center py-10">
-				<div className="text-gray-600 font-md my-16 mx-auto">
+			<div className="w-full text-center py-24">
+				<div className="text-gray-600 font-md my-16 2xl:mt-44 mx-auto">
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
 			</div>
