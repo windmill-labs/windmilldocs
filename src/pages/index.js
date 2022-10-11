@@ -153,7 +153,7 @@ function HomepageHeader() {
 					</div>
 				</div>
 			</div>
-			<div className="w-full text-center py-24">
+			<div className="w-full text-center py-16">
 				<div className="text-gray-600 font-md my-16 2xl:mt-44 mx-auto">
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
