@@ -7,20 +7,7 @@ export default function TabsW() {
 		<>
 			<div className="grid grid-cols-1 gap-8 max-w-4xl">
 				<Example
-					title="Ban a user and notify him and us"
-					description={
-						<>
-							Ban a user, notify them by{' '}
-							<span class="text-transparent bg-clip-text bg-red-600 font-extrabold">email</span>,
-							and us by{' '}
-							<span class="text-transparent bg-clip-text bg-[#611f69] font-extrabold">Slack</span>
-						</>
-					}
-					src="https://hub.windmill.dev/embed/flow/22/compute_activity"
-					href="https://app.windmill.dev/flows/add?hub=22"
-				/>
-				<Example
-					title="Whenever an Hacker News message contains a mention, publish it to slack with sentiment analysed"
+					title="Whenever an Hacker News message contains a mention, publish it to Slack with sentiment analysis"
 					description={
 						<>
 							Whenever an{' '}
@@ -79,6 +66,19 @@ export default function TabsW() {
 					}
 					src="https://hub.windmill.dev/embed/flow/23/expense_app"
 					href="https://app.windmill.dev/flows/add?hub=23"
+				/>
+				<Example
+					title="Ban a user and notify him and us"
+					description={
+						<>
+							Ban a user, notify them by{' '}
+							<span class="text-transparent bg-clip-text bg-red-600 font-extrabold">email</span>,
+							and us by{' '}
+							<span class="text-transparent bg-clip-text bg-[#611f69] font-extrabold">Slack</span>
+						</>
+					}
+					src="https://hub.windmill.dev/embed/flow/22/compute_activity"
+					href="https://app.windmill.dev/flows/add?hub=22"
 				/>
 
 				{open && (

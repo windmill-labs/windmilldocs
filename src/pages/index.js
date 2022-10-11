@@ -17,7 +17,7 @@ function HomepageHeader() {
 				<div className="md:max-w-2xl md:mx-auto lg:col-span-6">
 					<div>
 						<div className="mt-10 sm:max-w-xl">
-							<h1 className="text-xl tracking-tight font-bold text-gray-900  font-mono">
+							<h1 className="text-sm tracking-tight font-bold text-gray-900  font-mono">
 								<span className="block xl:inline">
 									<SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
 									Truly{' '}
@@ -36,50 +36,52 @@ function HomepageHeader() {
 							</h1>
 						</div>
 						<div className="mt-10 sm:max-w-xl">
-							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
+							<h1 className="text-3xl tracking-tight font-bold text-blue-600 sm:text-4xl md:text-4xl font-mono">
 								<span className="block xl:inline">
-									Scripts to <span className="text-blue-600">internal apps</span> and{' '}
-									<span className="text-blue-600">workflows</span> in minutes
-									<span className="text-xl block mt-2">
-										(your scripts and from a <a href="https://hub.windmill.dev">curated library</a>)
-									</span>
+									Scripts to internal apps and workflows in minutes
 								</span>
 							</h1>
-							<h2 className="mt-12  tracking-tight font-bold text-gray-900 text-lg font-mono">
-								<span className="block xl:inline">
-									open-source alternative to Pipedream, Airplane - simplified Temporal -{' '}
-									<a href="/docs/benchmark">self-hostable AWS Lambda</a>
-								</span>
+							<h2 className="mt-6 tracking-tight text-gray-900 text-base font-medium ">
+								{/* <p className="mb-3">
+									Instantly turn scripts into endpoints, build powerful low-code workflows and
+									internal UIs, and run them at scale.
+								</p>
+								<p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
+								<ul className="mb-3 ml-6 list-disc">
+									<li>Instantly turn scripts into endpoints</li>
+									<li>Build powerful low-code workflows and internal UIs</li>
+									<li>Run them at scale</li>
+									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
+								</ul>
 							</h2>
 						</div>
 						<div className="w-full">
 							<div className="mt-20 grid grid-cols-2 gap-8 max-w-md mx-auto">
-								<div className="shadow w-full col-span-1">
-									<a
-										href="https://app.windmill.dev/user/login"
-										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
-									>
-										Try the cloud app
-									</a>
+								<div className="w-full col-span-1 flex flex-col">
+									<div>
+										<a
+											href="https://app.windmill.dev/user/login"
+											className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 hover:text-white md:py-4 md:text-lg md:px-10"
+										>
+											Try the cloud app
+										</a>
+									</div>
+									<div className=" text-center text-sm">
+										or{' '}
+										<a className="hover:underline" href="/docs/intro">
+											read the docs
+										</a>
+									</div>
 								</div>
-								<div className="sm:mt-0 rounded w-full col-span-1">
+								<div className="w-full col-span-1">
 									<a
-										href="/docs/intro"
-										className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+										href="https://forms.gle/9ANRUru75nqrKT6C9"
+										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-gray-50 hover:underline md:py-4 md:text-lg md:px-10"
 									>
-										Get Started
+										Schedule a demo
 									</a>
 								</div>
 							</div>
-						</div>
-						<div className="mt-10 text-center w-full">
-							<a
-								target="_blank"
-								href="https://forms.gle/9ANRUru75nqrKT6C9"
-								className="text-gray-600"
-							>
-								Schedule a <span className="text-blue-600">demo</span>
-							</a>
 						</div>
 					</div>
 				</div>
@@ -148,22 +150,11 @@ function HomepageHeader() {
 								)}
 							</BrowserOnly>
 						</div>
-						<h3 className="mt-20 text-sm tracking-tight font-bold text-gray-900 font-mono">
-							<span className="block xl:inline">
-								- Chain Typescript (deno), Python scripts, Go and SQL in productive low-code flows
-								<br />- mix and match custom code with pre-made code-modules{' '}
-								<a href="https://hub.windmill.dev">from a curated community library</a> <br />-
-								Single scripts are standalone apps by themselves
-								<br />- Unique runtime for scripts, workflows to deploy them as serverless webhooks
-								<br />- Open standard and portable JSON spec for flows:{' '}
-								<a href="/docs/openflow">OpenFlow</a>
-							</span>
-						</h3>
 					</div>
 				</div>
 			</div>
-			<div className="w-full text-center py-10">
-				<div className="text-gray-600 font-md my-16 mx-auto">
+			<div className="w-full text-center py-24">
+				<div className="text-gray-600 font-md my-16 2xl:mt-44 mx-auto">
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
 			</div>
@@ -177,7 +168,8 @@ function HomepageHeader() {
 				</h1>
 
 				<p class="mb-6 text-md font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48">
-					From simple scripts to complex flows, explore the many examples to get going.
+					Simple scripts or complex workflows. Get started with WindmillHub, our curated community
+					library.
 				</p>
 
 				<form action="https://hub.windmill.dev">
