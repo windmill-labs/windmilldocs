@@ -36,32 +36,47 @@ function HomepageHeader() {
 							</h1>
 						</div>
 						<div className="mt-10 sm:max-w-xl">
-							<h1 className="text-3xl tracking-tight font-bold text-gray-900 sm:text-4xl md:text-4xl font-mono">
+							<h1 className="text-3xl tracking-tight font-bold text-blue-600 sm:text-4xl md:text-4xl font-mono">
 								<span className="block xl:inline">
-									Scripts to <span className="text-blue-600">internal apps</span> and{' '}
-									<span className="text-blue-600">workflows</span> in minutes
+									Scripts to internal apps and workflows in minutes
 								</span>
 							</h1>
-							<h2 className="mt-12  tracking-tight font-bold text-gray-900 text-sm font-mono">
-								<span className="block xl:inline">
-									open-source alternative to Pipedream, Airplane, Temporal
-								</span>
+							<h2 className="mt-6 tracking-tight text-gray-900 text-base font-medium ">
+								{/* <p className="mb-3">
+									Instantly turn scripts into endpoints, build powerful low-code workflows and
+									internal UIs, and run them at scale.
+								</p>
+								<p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
+								<ul className="mb-3 ml-6 list-disc">
+									<li>Instantly turn scripts into endpoints</li>
+									<li>Build powerful low-code workflows and internal UIs</li>
+									<li>Run them at scale</li>
+									<li>Open-source alternative to Airplane, Superblocks, Retool.</li>
+								</ul>
 							</h2>
 						</div>
 						<div className="w-full">
 							<div className="mt-20 grid grid-cols-2 gap-8 max-w-md mx-auto">
-								<div className="shadow w-full col-span-1">
-									<a
-										href="https://app.windmill.dev/user/login"
-										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-10"
-									>
-										Try the cloud app
-									</a>
+								<div className="w-full col-span-1 flex flex-col">
+									<div>
+										<a
+											href="https://app.windmill.dev/user/login"
+											className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 hover:text-white md:py-4 md:text-lg md:px-10"
+										>
+											Try the cloud app
+										</a>
+									</div>
+									<div className=" text-center text-sm">
+										or{' '}
+										<a className="hover:underline" href="/docs/intro">
+											read the docs
+										</a>
+									</div>
 								</div>
-								<div className="shadow w-full col-span-1">
+								<div className="w-full col-span-1">
 									<a
 										href="https://forms.gle/9ANRUru75nqrKT6C9"
-										className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
+										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-gray-50 hover:underline md:py-4 md:text-lg md:px-10"
 									>
 										Schedule a demo
 									</a>
@@ -153,7 +168,8 @@ function HomepageHeader() {
 				</h1>
 
 				<p class="mb-6 text-md font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48">
-					From simple scripts to complex flows, explore the many examples to get going.
+					Simple scripts or complex workflows. Get started with WindmillHub, our curated community
+					library.
 				</p>
 
 				<form action="https://hub.windmill.dev">
