@@ -16,7 +16,7 @@ const config = {
 	projectName: 'windmill',
 	themes: [
 		[
-			require.resolve("@easyops-cn/docusaurus-search-local"),
+			require.resolve('@easyops-cn/docusaurus-search-local'),
 			{
 				hashed: true,
 				docsDir: 'docs',
@@ -25,23 +25,21 @@ const config = {
 				indexBlog: false,
 				indexPages: false,
 				highlightSearchTermsOnTargetPage: false
-			},
-		],
+			}
+		]
 	],
 
 	plugins: [
-		async function myPlugin(context, options)
-		{
+		async function myPlugin(context, options) {
 			return {
-				name: "docusaurus-tailwindcss",
-				configurePostCss(postcssOptions)
-				{
-					postcssOptions.plugins.push(require("tailwindcss"));
-					postcssOptions.plugins.push(require("autoprefixer"));
+				name: 'docusaurus-tailwindcss',
+				configurePostCss(postcssOptions) {
+					postcssOptions.plugins.push(require('tailwindcss'));
+					postcssOptions.plugins.push(require('autoprefixer'));
 					return postcssOptions;
-				},
+				}
 			};
-		},
+		}
 	],
 	presets: [
 		[
@@ -61,7 +59,9 @@ const config = {
 			})
 		]
 	],
-	scripts: [{src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev'}],
+	scripts: [
+		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' }
+	],
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
@@ -124,12 +124,12 @@ const config = {
 				links: [
 					{
 						label: 'Privacy Policy',
-						to: '/privacy_policy',
+						to: '/privacy_policy'
 					},
 					{
 						label: 'Terms of Service',
-						to: '/terms_of_service',
-					},
+						to: '/terms_of_service'
+					}
 				],
 				copyright: `&copy; 2022 Windmill Labs, Inc. Made with love in the US and France`
 			},
@@ -140,9 +140,9 @@ const config = {
 			colorMode: {
 				defaultMode: 'light',
 				disableSwitch: true,
-				respectPrefersColorScheme: false,
-			},
-		}),
+				respectPrefersColorScheme: false
+			}
+		})
 };
 
 module.exports = config;

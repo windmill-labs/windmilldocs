@@ -51,7 +51,7 @@ function HomepageHeader() {
 									<li>Instantly turn scripts into endpoints</li>
 									<li>Build powerful low-code workflows and internal UIs</li>
 									<li>Run them at scale</li>
-									<li>Open-source alternative to Airplane, Superblocks, Retool.</li>
+									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
 								</ul>
 							</h2>
 						</div>
