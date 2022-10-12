@@ -87,7 +87,11 @@ function HomepageHeader() {
 									</div>
 									<div className=" text-center text-sm">
 										or{' '}
-										<a className="hover:underline" href="/docs/intro">
+										<a
+											onClick={() => window.plausible('read-docs')}
+											className="hover:underline"
+											href="/docs/intro"
+										>
 											read the docs
 										</a>
 									</div>
