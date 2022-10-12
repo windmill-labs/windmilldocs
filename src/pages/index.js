@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '../components/HomepageFeatures';
 import Pricing from '../components/Pricing';
@@ -11,6 +11,10 @@ import { SparklesIcon } from '@heroicons/react/outline';
 import TabsW from '../components/Tabs';
 
 function HomepageHeader() {
+	useEffect(() => {
+		window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+	})
+
 	return (
 		<main className="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6">
 			<div className="lg:grid lg:grid-cols-12 lg:gap-20">
@@ -21,7 +25,7 @@ function HomepageHeader() {
 								<span className="block xl:inline">
 									<SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
 									Truly{' '}
-									<a target="_blank" href="https://github.com/windmill-labs/windmill">
+									<a data-analytics='"github-tagline"' target="_blank" href="https://github.com/windmill-labs/windmill">
 										open-source
 									</a>{' '}
 									and <a href="/docs/how-tos/self_host">self-hostable</a>{' '}
@@ -29,6 +33,7 @@ function HomepageHeader() {
 										className="inline-block -mb-1"
 										target="_blank"
 										href="https://github.com/windmill-labs/windmill"
+										data-analytics='"github-stars"' 
 									>
 										<img src="https://img.shields.io/github/stars/windmill-labs/windmill?style=social"></img>
 									</a>
@@ -48,10 +53,9 @@ function HomepageHeader() {
 								</p>
 								<p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
 								<ul className="mb-3 ml-6 list-disc">
-									<li>Instantly turn any Python, Typescript and Go scripts into endpoints, UIs and workflow modules automatically</li>
+									<li>Instantly turn any Python, Typescript and Go scripts into endpoints, UIs and workflow modules</li>
 									<li>Build powerful low-code workflows and internal UIs</li>
 									<li>Run them at scale on your infra or ours</li>
-									<li>Manage schedules, secrets, connections and environments with roles</li>
 									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
 								</ul>
 							</h2>
@@ -63,6 +67,7 @@ function HomepageHeader() {
 										<a
 											href="https://app.windmill.dev/user/login"
 											className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 hover:text-white md:py-4 md:text-lg md:px-10"
+											data-analytics='"try-cloud"' 
 										>
 											Try the cloud app
 										</a>
@@ -77,6 +82,7 @@ function HomepageHeader() {
 								<div className="w-full col-span-1">
 									<a
 										href="https://cal.com/team/windmill/demo"
+										data-analytics='"schedule-demo"' 
 										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-gray-50 hover:underline md:py-4 md:text-lg md:px-10"
 									>
 										Schedule a demo
@@ -155,7 +161,7 @@ function HomepageHeader() {
 				</div>
 			</div>
 			<div className="w-full text-center py-16">
-				<div className="text-gray-600 font-md my-16 2xl:mt-44 mx-auto">
+				<div className="text-gray-600 font-md my-16 2xl:mt-20 mx-auto">
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
 			</div>
