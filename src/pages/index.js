@@ -25,7 +25,7 @@ function HomepageHeader() {
 								<span className="block xl:inline">
 									<SparklesIcon className="h-6 w-6 inline mr-2" aria-hidden="true" />
 									Truly{' '}
-									<a data-analytics='"github-tagline"' target="_blank" href="https://github.com/windmill-labs/windmill">
+									<a onClick={() => window.plausible('github-tagline')} data-analytics='"github-tagline"' target="_blank" href="https://github.com/windmill-labs/windmill">
 										open-source
 									</a>{' '}
 									and <a href="/docs/how-tos/self_host">self-hostable</a>{' '}
