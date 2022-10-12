@@ -93,11 +93,11 @@ const config = {
 						position: 'left',
 						label: 'WindmillHub'
 					},
-					{
-						href: '/hiring',
-						position: 'right',
-						label: 'Join us'
-					},
+					// {
+					// 	href: '/hiring',
+					// 	position: 'right',
+					// 	label: 'Join us'
+					// },
 					// { to: '/blog', label: 'Blog', position: 'left' },
 					{
 						href: 'https://discord.com/invite/V7PM2YHsPB',
