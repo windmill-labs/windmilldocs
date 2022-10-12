@@ -50,7 +50,8 @@ function HomepageHeader() {
 								<ul className="mb-3 ml-6 list-disc">
 									<li>Instantly turn Python, Typescript and Go scripts into endpoints and auto-generated UIs</li>
 									<li>Build powerful low-code workflows and internal UIs</li>
-									<li>Run them at scale</li>
+									<li>Run them at scale on your infra or ours</li>
+									<li>Manage your schedules, secrets, integrations, and permissions</li>
 									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
 								</ul>
 							</h2>
