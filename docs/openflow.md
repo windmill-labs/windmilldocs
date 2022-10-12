@@ -43,8 +43,29 @@ the logic of the flow is actually defined:
 
 ```typescript
 type FlowValue = {
-  modules: Array<FlowModule>;
+  modules: FlowModule[];
   failure_module?: FlowModule;
+  same_worker: boolean
+};
+```
+
+A Flow is just a sequence of modules, and an optional failure module that will
+be triggered to handle a failure at any point of the flow (think `try/catch` in
+terms of programming languages).
+
+
+## FlowModule
+
+An OpenFlow module is defined as follows:
+
+```typescript
+type FlowModule = {
+  summary?: string;
+  input_transforms: Record<string, StaticTransform | JavascriptTransform>;
+  value: RawScript | PathScript | ForloopFlow | Branching;
+  stop_after_if?: { expr: string; skip_if_stopped: boolean };
+  sleep?: StaticTransform | JavascriptTransform
+  suspend?: { required_events?: integer, timeout: integer };
   retry?: {
     constant?: {
       attempts: integer;
@@ -57,59 +78,40 @@ type FlowValue = {
     };
   };
 };
-```
-
-A Flow is just a sequence of modules, and an optional failure module that will
-be triggered to handle a failure at any point of the flow (think `try/catch` in
-terms of programming languages).
-
-`Retry` sets the retry policy for the flow. It is optional and is reset on every
-successful run:
-
-- `constant` retry N times after a `seconds` delay.
-- `exponential` applies exponential backoff duration increase in between every
-retry. If all the retries are exhausted, the failure module, if any, is called.
-
-## FlowModule
-
-An OpenFlow module is defined as follows:
-
-```typescript
-type FlowModule = {
-  summary?: string;
-  input_transforms: Record<string, StaticTransform | JavascriptTransform>;
-  value: RawScript | PathScript | ForloopFlow;
-  stop_after_if?: { expr: string; skip_if_stopped: boolean };
-  suspend?: integer;
-};
 
 type StaticTransform = {
-  type: "static";
-  value?: any;
+  value: any;
 };
 
 type JavascriptTransform = {
-  type: "javascript";
   expr: string;
 };
 
 type RawScript = {
-  type: "rawscript";
   content: string;
   language: "deno" | "python3";
   path?: string;
 };
 
 type PathScript = {
-  type: "script";
   path: string;
 };
 
 type ForloopFlow = {
-  type: "forloopflow";
-  modules: Array<FlowModule>;
+  modules: FlowModule[];
   iterator: InputTransform;
   skip_failures?: boolean;
+};
+
+type Branches = {
+  default: FlowModule[];
+  branches: Branch[];
+};
+
+type Branch = {
+  summary?: string;
+  expr: string
+  modules: FlowModule[]
 };
 ```
 
@@ -177,6 +179,15 @@ Alternatively, a job can be immediately cancelled by a request to a similar endp
 at `../jobs/cancel/..`.  In this case, the flow will quit, with the cancellation
 payload as the result, without retrying or running further steps or the failure
 modules.
+
+### Retries
+
+`Retry` sets the retry policy for the flow. It is optional and is reset on every
+successful run:
+
+- `constant` retry N times after a `seconds` delay.
+- `exponential` applies exponential backoff duration increase in between every
+retry. If all the retries are exhausted, the failure module, if any, is called.
 
 ### Value
 
