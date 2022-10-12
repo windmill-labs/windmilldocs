@@ -12,7 +12,7 @@ username when he joins a workspace.
 ## Scripts
 
 In Windmill, a script is always a Python, TypeScript (deno) or Go script. Its 2
-most important components are its input [jsonschema](#jsonchema) specification
+most important components are its input [JSON Schema](#jsonchema) specification
 and its code content. The code must always have a main function:
 
 - Python:
@@ -40,10 +40,10 @@ Scripts versions are uniquely defined by their hash. See
 ### Automatic UI generation
 
 By reading the main function parameters, Windmill generates the input
-specification of the script in the [#jsonschema](https://json-schema.org/)
+specification of the script in the [JSON Schema](https://json-schema.org/)
 format. Windmill then renders the flow's or script's UI from that specification.
 
-You can but in most cases do not need to deal with the jsonschema directly
+You can but in most cases do not need to deal with the JSON Schema directly
 associated to the script directly. It is the result of the
 [analysis of the script parameters of the main function](#script-parameters-to-jsonschema)
 and the UI customisation that you may do in the last step of the flow or script.
@@ -52,10 +52,10 @@ was not possible to infer directly from the parameters such as restricting a
 string to an enum, or precising that a list contains only string. You can also
 add helpful descriptions to each field.
 
-### Jsonschema
+### JSON Schema
 
-Below is a simplified spec of jsonschema. See
-[here for its fullspec](https://json-schema.org/). Windmill is compatible with
+Below is a simplified spec of JSON Schema. See
+[here for its full spec](https://json-schema.org/). Windmill is compatible with
 the [2020-12 version](https://json-schema.org/draft/2020-12/schema). It is not
 compatible with its most advanced features yet.
 
@@ -93,17 +93,17 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 - Each argument can have a description field, that will appear in the generated
   UI.
 
-### Script parameters to jsonschema
+### Script parameters to JSON Schema
 
 There is a one to one correspondence between a parameter of the main function
-and a field of `properties` in the jsonschema. The name of the argument become
+and a field of `properties` in the JSON Schema. The name of the argument become
 the name of the property, and most of the primitive types in Python and
 Typescript have a corresponding primitive type in JSON and by extension
-jsonschema.
+JSON Schema.
 
 In Python:
 
-| Python     | jsonschema                       |
+| Python     | JSON Schema                       |
 | ---------- | -------------------------------- |
 | `str`      | `string`                         |
 | `float`    | `number`                         |
@@ -119,7 +119,7 @@ In Python:
 
 In Deno:
 
-| Deno       | jsonschema |
+| Deno       | JSON Schema |
 | ---------- | ---------- |
 | `string`   | `string`   |
 | `object`   | `object`   |
@@ -132,7 +132,7 @@ In Deno:
 However in Deno there also some special types that are specific to windmill.
 They are as follows:
 
-| Windmill                          | jsonschema                                   |
+| Windmill                          | JSON Schema                                   |
 | --------------------------------- | -------------------------------------------- |
 | `wmill.Base64`                    | `string`, encodingFormat: `base64`           |
 | `wmill.Email`                     | `string`, format: `email`                    |
@@ -292,35 +292,19 @@ rendering of flows as graph are more gimmicks than productive. To execute any
 graph, one need to do a topological sort to transform it into a sequence, and
 sequences are more intuitive than graphs.
 
-### Retries
+## Retries
 
-<!-- TODO: Once Script retries implemented, move this part one header level higher -->
+Retries are an important of the toolkit provided by Windmill.
+It facilitates the Flow's modules, making them more robust and resilient.  
+Windmill supports two types of retries: regular intervals and
+exponential back-off. They can be applied independently, or jointly.
 
-Retries are an important tool to make your flows more robust, and more flexible.
+Both strategies are based on the number of retries and the time interval 
+to be applied between them.
 
-:::info
-
-Retries are are only available at the top-level of a Flow but upon popular
-demand we will also bring them to the individual module level. Stay tuned!
-
-:::
-
-Windmill supports two types of retries: regular or constant intervals and
-exponential back-off.
-
-Both strategies are based on the number of retries and the time interval between
-them.
-
-For both strategies you can define how many times the flow should be retried,
-and how long should the execution be delayed between retries.
-
-You can also combine both strategies, in which case, the linear strategy will
-be executed first, followed by the exponential back-off strategy.
-
-From a more technical standpoint, applying either retry strategy results
-it in being the default retry strategy for all steps in the Flow,
-including the error handler. It also becomes the default strategy to use
-in case of failure of any steps in the Flow.
+Strategies can also be combined, in which case, the linear strategy 
+(regular intervals) will be applied first, followed by the exponential 
+back-off strategy.
 
 ## Input Transform
 
@@ -409,7 +393,7 @@ The script triggers urls are always available on the script details page.
 ![Script trigger hooks](./assets/script_trigger_hooks.png)
 
 For all of those REST endpoints, the input of the script or flow must be passed
-as a json payload that fits the jsonschema spec of that script or flow. Those
+as a json payload that fits the JSON Schema spec of that script or flow. Those
 endpoints are authenticated and will require a bearer token of the format:
 `Authorization: Bearer XXX`. You can create a token in your user settings.
 
@@ -596,8 +580,8 @@ credentials to interact with the platform.
 A resource is similar to a [variable](#variables) in that it stores a
 permissioned value that is meant to be used by scripts. However, a resource
 represents a "complex" object: a JSON object. That JSON object is constrained by
-its [resource type](#resource-type) jsonschema, the same way the possible input
-of a scripts are constrained by the input jsonschema. An example of resource is
+its [resource type](#resource-type) JSON Schema, the same way the possible input
+of a scripts are constrained by the input JSON Schema. An example of resource is
 the demodb schema:
 
 ```json
@@ -638,7 +622,7 @@ object value before triggering the script or the flow.
 
 ### Resource type
 
-Resource types have a name and a [jsonschema](#jsonschema) value. A resource is
+Resource types have a name and a [JSON Schema](#jsonschema) value. A resource is
 constrained by its resource type. An example of a resource type is for instance
 a postgres connection, shortened as `postgresql` and whose schema is:
 
@@ -678,7 +662,7 @@ a postgres connection, shortened as `postgresql` and whose schema is:
 ```
 
 Same as for the input spec of a script, you do not have to deal with the
-jsonschema directly and should use the UI builder to edit the schema.
+JSON Schema directly and should use the UI builder to edit the schema.
 
 ## Schedule
 
