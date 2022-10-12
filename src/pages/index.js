@@ -53,7 +53,10 @@ function HomepageHeader() {
 								</p>
 								<p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
 								<ul className="mb-3 ml-6 list-disc">
-									<li>Instantly turn any Python, Typescript and Go scripts into endpoints, UIs and workflow modules</li>
+									<li>
+										Instantly turn any Python, Typescript and Go scripts into endpoints, UIs and
+										workflow modules
+									</li>
 									<li>Build powerful low-code workflows and internal UIs</li>
 									<li>Run them at scale on your infra or ours</li>
 									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
@@ -120,13 +123,6 @@ function HomepageHeader() {
 								/>
 							</pattern>
 						</defs>
-						<rect y="72" width="640" height="640" className="text-gray-50" fill="currentColor" />
-						<rect
-							x="118"
-							width="404"
-							height="784"
-							fill="url(#4f4f415c-a0e9-44c2-9601-6ded5a34a13e)"
-						/>
 					</svg>
 					<div className="mt-20 relative mx-auto w-full lg:max-w-2xl">
 						<div className="rounded-lg shadow-lg">
@@ -161,7 +157,7 @@ function HomepageHeader() {
 				</div>
 			</div>
 			<div className="w-full text-center py-16">
-				<div className="text-gray-600 font-md my-16 2xl:mt-20 mx-auto">
+				<div className="text-gray-600 font-md my-12 2xl:mt-44 mx-auto">
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
 			</div>
@@ -264,7 +260,7 @@ const roadmapItems = [
 		title: 'SOC 2 and HIPAA compliance',
 		description: ``,
 		when: 'End of Q4'
-	},
+	}
 ];
 
 function WhoisItFor() {
