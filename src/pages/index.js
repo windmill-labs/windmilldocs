@@ -38,7 +38,7 @@ function HomepageHeader() {
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-blue-600 sm:text-4xl md:text-4xl font-mono">
 								<span className="block xl:inline">
-									Scripts to internal apps and workflows in minutes
+									Developer platform to turn scripts into internal UIs and workflows
 								</span>
 							</h1>
 							<h2 className="mt-6 tracking-tight text-gray-900 text-base font-medium ">
@@ -48,7 +48,7 @@ function HomepageHeader() {
 								</p>
 								<p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
 								<ul className="mb-3 ml-6 list-disc">
-									<li>Instantly turn scripts into endpoints</li>
+									<li>Instantly turn Python, Typescript and Go scripts into endpoints and auto-generated UIs</li>
 									<li>Build powerful low-code workflows and internal UIs</li>
 									<li>Run them at scale</li>
 									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
