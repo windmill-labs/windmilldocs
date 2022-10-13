@@ -227,7 +227,7 @@ export default function HomepageFeatures() {
 						<div>
 							<div className="mt-6">
 								<h2 className="subsection-title">
-									<span className="block xl:inline">Chain apps into Flows</span>
+									<span className="block xl:inline">Chain modules into Flows</span>
 								</h2>
 								<p className="section-text">
 									Build complex Flows from atomic apps. Automatically trigger apps and Flow from
