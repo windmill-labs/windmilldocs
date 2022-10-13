@@ -132,3 +132,31 @@ a {
 .rb-tabs-header {
 	@apply flex justify-center;
 }
+
+
+.section{
+	@apply mt-24;
+	@apply mb-12;
+}
+
+.section-header{
+	@apply mx-auto max-w-md px-4;
+	@apply text-center;
+	@apply sm:max-w-3xl lg:max-w-7xl;
+	@apply sm:px-6 lg:px-8;
+	@apply mb-12
+
+}
+
+.section-title{
+	@apply subpixel-antialiased mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-4xl lg:text-5xl;
+}
+
+.subsection-title {
+	@apply text-3xl tracking-tight text-gray-600 font-extrabold 
+}
+
+.section-text {
+	@apply mt-8 text-lg text-gray-500
+}
+
