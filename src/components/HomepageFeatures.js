@@ -137,7 +137,7 @@ export default function HomepageFeatures() {
 				<h1 class="section-title">Turn scripts into internal workflows and UIs</h1>
 			</div>
 			<div className="overflow-hidden">
-				<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:grid-flow-col-dense ">
+				<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:grid-flow-col-dense -mb-12">
 					<div className="px-4 max-w-xl mx-auto sm:px-6 lg:max-w-none lg:mx-0 lg:px-0">
 						<div>
 							<div className="mt-6">
@@ -165,16 +165,20 @@ export default function HomepageFeatures() {
 						</div>
 					</div>
 					<div className="lg:col-span-2">
-						<div className="flex flex-col p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full ">
+						<div className="flex flex-col p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
 							<div className="w-full lg:max-w-none m-auto">
-								<img className="" src="/img/parser.png" alt="UI parser" />
+								<img
+									className="object-scale-down h-2/3 m-auto mt-12"
+									src="/img/landing_page/script_editor.png"
+									alt="Script editor"
+								/>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div className="mt-12">
+			<div className="mb-12">
 				<div className="lg:mx-auto lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:grid-flow-col-dense lg:gap-20">
 					<div className="px-4 max-w-xl sm:px-6 lg:max-w-none lg:mx-0 lg:px-0 lg:col-start-2">
 						<div>
@@ -234,8 +238,12 @@ export default function HomepageFeatures() {
 					</div>
 					<div className="lg:col-span-2">
 						<div className="flex flex-col p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full ">
-							<div className="w-full lg:max-w-none m-auto">
-								<img className="" src="/flow_lp.png" alt="Flow UI" />
+							<div className="w-full lg:max-w-none m-auto pt-12 pr-24">
+								<img
+									className="object-scale-down max-h-96 m-auto"
+									src="../img/landing_page/flow_zoomed.png"
+									alt="Flow UI"
+								/>
 							</div>
 						</div>
 					</div>
@@ -279,7 +287,11 @@ export default function HomepageFeatures() {
 					<div className="mt-12 sm:mt-16 lg:mt-0 lg:col-start-1">
 						<div className="flex p-4 lg:-ml-4 sm:pr-6 lg:px-0  lg:h-full">
 							<div className="w-full lg:max-w-none m-auto">
-								<img className="" src="/flow_lp.png" alt="Flow UI" />
+								<img
+									className="object-scale-down max-h-96 m-auto"
+									src="../img/audit_logs_.png"
+									alt="Audit logs and enterprise features"
+								/>
 							</div>
 						</div>
 					</div>
