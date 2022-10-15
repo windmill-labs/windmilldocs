@@ -203,107 +203,19 @@ function HomepageHeader() {
 		</main>
 	);
 }
-const roadmapItems = [
-	{
-		title: 'Embeddable Apps',
-		description: `Make embeddable the Flows and Scripts as javascript Widgets or IFrame to be integrated into external frontends.
-						The widget/iframe would have 2 modes. One to be executable without sign-in as a static user and one other allowing the user to sign in directly from the widget if not already signed-in`,
-		when: 'End of Q4'
-	},
-	{
-		title: 'Integration with 100+ OAuth providers and 1000+ approved scripts on the WindmillHub',
-		description: `To unlock all the compounding potential of Windmill, we will add the convenience of
-						adding all main OAuth2 providers and an exhaustive choice of scripts in the Hub for everyone to focus solely on their custom logic.`,
-		when: 'End of Q4'
-	},
-	{
-		title: 'SOC 2 and HIPAA compliance',
-		description: ``,
-		when: 'End of Q4'
-	}
-];
 
-function WhoisItFor() {
+function OSS() {
 	return (
-		<div id="whomisitfor" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
-			<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Whom it is for</h2>
-			<div className="mt-16 grid grid-cols-1 gap-y-10 gap-x-10 lg:grid-cols-3">
-				<div className="sm:flex lg:block">
-					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 className="text-xl lg:h-20  font-medium text-gray-900">
-							Individuals and small Teams
-						</h3>
-						<p className="mt-2 text-gray-500">
-							Solo dev or as part of a small nimble team, increase your productivity ten-fold using
-							Windmill for all your workflows, integrations and serverless endpoints. One tool to
-							rule them all.
-						</p>
-					</div>
-				</div>
-
-				<div className="sm:flex lg:block">
-					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 className="text-xl  lg:h-20 font-medium text-gray-900">
-							Larger Teams and Organizations (especially those that require self-hosting)
-						</h3>
-						<p className="mt-2 text-gray-500">
-							Collaboration features and tight permissioning makes Windmill scale gracefully with
-							the size of your team. If on-premises deployment is a technical or compliance
-							requirement, Windmill is easy to self-host. We can provide SLA around support, on-prem
-							installation and setup as well as training for your team and conversion of your
-							existing workflows.
-						</p>
-					</div>
-				</div>
-
-				<div className="sm:flex lg:block">
-					<div className="mt-4 sm:mt-0 sm:ml-6 lg:mt-6 lg:ml-0">
-						<h3 className="text-xl lg:h-20 font-medium text-gray-900">
-							SaaS that provides automations, and no-code tools
-						</h3>
-						<p className="mt-2 text-gray-500">
-							Build your tool and automation service or feature on top of Windmill. We have done all
-							the hard engineering so you do not have to. If you are non open-source,{' '}
-							<a href="mailto:contact@windmill.dev?subject=Request%20License">contact us</a> to get
-							a commercial license.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-}
-function Roadmap() {
-	return (
-		<div id="roadmap" className="max-w-7xl mx-auto py-12 px-4 sm:py-16 sm:px-6 lg:px-8">
+		<div id="oss" className="max-w-7xl mx-auto pt-12 px-4 sm:px-6 lg:px-8">
 			<div className="max-w-3xl mx-auto ">
-				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">Roadmap</h2>
+				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">
+					Committed to open source
+				</h2>
 				<p className="text-center text-gray-500 text-sm my-2">
-					We take open-source seriously, our full updated roadmap is{' '}
-					<a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a>
+					We take open-source seriously. Our full roadmap is{' '}
+					<a href="https://github.com/orgs/windmill-labs/projects/2">public on GitHub</a>. Join us
+					on <a href="https://discord.com/invite/V7PM2YHsPB">Discord</a>!
 				</p>
-
-				<ul role="list" className="mt-6 divide-y divide-gray-200">
-					{roadmapItems.map((x, i) => (
-						<li
-							className="relative bg-white py-5 px-4 hover:bg-gray-50 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600"
-							key={`roadmap-${i}`}
-						>
-							<div className="flex justify-between space-x-3">
-								<div className="min-w-0 flex-1">
-									<span className="absolute inset-0" aria-hidden="true"></span>
-									<p className="text-sm font-medium text-gray-900 truncate">{x.title}</p>
-								</div>
-								<span className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
-									{x.when}
-								</span>
-							</div>
-							<div className="mt-1">
-								<p className="line-clamp-2 text-sm text-gray-600">{x.description}</p>
-							</div>
-						</li>
-					))}
-				</ul>
 			</div>
 		</div>
 	);
@@ -315,11 +227,10 @@ export default function Home() {
 			<main>
 				<HomepageHeader />
 				<HomepageFeatures />
-				<WhoisItFor />
 				<div className="mx-auto max-w-screen-lg homepage">
 					<Pricing />
 					<FAQ />
-					<Roadmap />
+					<OSS />
 				</div>
 				<div className="mb-40"></div>
 			</main>
