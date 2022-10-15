@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 
 export default function TabsW() {
 	const [open, setOpen] = useState(false);
+	useEffect(() => {
+		window.plausible =
+			window.plausible ||
+			function () {
+				(window.plausible.q = window.plausible.q || []).push(arguments);
+			};
+	});
 
 	return (
 		<>
@@ -116,7 +123,10 @@ function Example({ title, description, src, href }) {
 			<div className="p-4 flex justify-between">
 				<button
 					type="button"
-					onClick={() => (window.location = href)}
+					onClick={() => {
+						window.location = href;
+						window.plausible('run-on-windmill');
+					}}
 					className=" inline-flex items-center  py-2 px-3 text-sm font-medium text-center text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-lg mr-2 "
 				>
 					<svg
