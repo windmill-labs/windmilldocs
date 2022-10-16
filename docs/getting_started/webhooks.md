@@ -73,21 +73,26 @@ endpoint and you will get the appropriate return as response.
 The bearer token must be passed as either an `Authorization: Bearer XXX` header,
 or as a `token` query parameter: `https://<instance>/<route>?token=<token>`
 
+Because of security reasons it is highly recommended to pass it in the header.
+If it's not possible, then URL that contains the token should be treated as a
+secret (for more context please check [OWASP ref.1] and [OWASP ref.2])
+
 e.g:
 
-```bash
-# Query parameter
-curl -X POST                               \
-    --data '{}'                            \
-    -H "Content-Type: application/json"    \
-    ".../w/demo/jobs/run_wait_result/p/u/bot/hello_world_deno?token=supersecret"
-
+```console
 # Header
 curl -X POST \
     --data '{}'                            \
     -H "Content-Type: application/json"    \
     -H "Authorization: Bearer supersecret" \
     ".../w/demo/jobs/run_wait_result/p/u/bot/hello_world_deno"
+```
+```console
+# Query parameter
+curl -X POST                               \
+    --data '{}'                            \
+    -H "Content-Type: application/json"    \
+    ".../w/demo/jobs/run_wait_result/p/u/bot/hello_world_deno?token=supersecret"
 ```
 
 You can find an example using only standard Deno libraries on the
@@ -101,3 +106,5 @@ encountered issues), by checking the [Audit Logs][audit-logs] tab on the app.
 [audit-logs]: https://app.windmill.dev/audit_logs
 [user-settings]: https://app.windmill.dev/user/settings
 [script]: https://hub.windmill.dev/scripts/windmill/1325/trigger-windmill-webhook-with-native-fetch-api-windmill
+[OWASP ref.1]: https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#sensitive-information-in-http-requests
+[OWASP ref.2]: https://github.com/OWASP/CheatSheetSeries/blob/083890d18ca40bcfc4bdfa80e04dd0a2245c34ea/cheatsheets_draft/Webhook_Security_Guidelines_CheatSheet.md#treat-webhooks-as-secrets
