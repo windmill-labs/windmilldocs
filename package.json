@@ -2,6 +2,10 @@
 	"name": "delightdocs",
 	"version": "0.0.0",
 	"private": true,
+	"engines": {
+		"node": ">=16",
+		"yarn": "^1.22.5"
+	},
 	"scripts": {
 		"docusaurus": "docusaurus",
 		"start": "docusaurus start",

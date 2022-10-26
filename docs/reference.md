@@ -575,6 +575,10 @@ credentials to interact with the platform.
 | `WM_JOB_ID`    | Job id of the current job                                                                                           |
 | `WM_WORKSPACE` | The workspace id of the current job                                                                                 |
 
+You can use them in a script by clicking on "Contextual Variable":
+
+![contextual variable](./assets/use_contextual_variable.png)
+
 ## Resource
 
 A resource is similar to a [variable](#variables) in that it stores a

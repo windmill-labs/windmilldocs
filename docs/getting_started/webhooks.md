@@ -73,9 +73,15 @@ endpoint and you will get the appropriate return as response.
 The bearer token must be passed as either an `Authorization: Bearer XXX` header,
 or as a `token` query parameter: `https://<instance>/<route>?token=<token>`
 
-Because of security reasons it is highly recommended to pass it in the header.
-If it's not possible, then URL that contains the token should be treated as a
-secret (for more context please check [OWASP ref.1] and [OWASP ref.2])
+
+:::caution
+
+Because of security reasons it is highly recommended to pass token in the
+header. If it's not possible, then URL that contains the token should be
+treated as a secret (for more context please check [OWASP ref.1] and [OWASP
+ref.2])
+
+:::
 
 e.g:
 
