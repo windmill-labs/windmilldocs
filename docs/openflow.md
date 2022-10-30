@@ -28,9 +28,16 @@ OpenFlow is portable and its root object is defined as follows:
 
 ```typescript
 type OpenFlow = {
-  summary: string;
+
+  //an optional one-liner summary-line
+  summary?: string;
+
   description?: string;
+
+  //the actual logic of the flow
   value: FlowValue;
+  
+  //the input spec of the flow as defined by a json schema
   schema?: any;
 };
 ```
@@ -43,8 +50,14 @@ the logic of the flow is actually defined:
 
 ```typescript
 type FlowValue = {
+
+  //a sequence of modules, some modules containing themselves modules like for-loop and branches
   modules: FlowModule[];
+
+  //the error handler to call for unrecoverable error
   failure_module?: FlowModule;
+
+  //force this flow to be executed all on the same worker and share a mounted folder to pass heavy data
   same_worker: boolean
 };
 ```
@@ -60,22 +73,24 @@ An OpenFlow module is defined as follows:
 
 ```typescript
 type FlowModule = {
-  summary?: string;
+
+  //all the kinds of modules, see below for more details
   value: Identity | RawScript | PathScript | ForloopFlow | BranchOne | BranchAll ;
+
+  //an optional summary line
+  summary?: string;
+
+  //stop the flow at this step if condition is met
   stop_after_if?: { expr: string; skip_if_stopped: boolean };
+
+  //sleep for a static or dynamic number of seconds
   sleep?: StaticTransform | JavascriptTransform
+
+  //suspend the flow until the flow is resumed by receiving a certain number of events before a timeout
   suspend?: { required_events?: integer, timeout: integer };
-  retry?: {
-    constant?: {
-      attempts: integer;
-      seconds: integer;
-    };
-    exponential?: {
-      attempts: integer;
-      multiplier: integer;
-      seconds: integer;
-    };
-  };
+  
+  //number of time to retry this module before passing it to the error handler
+  retry?: Retry
 };
 
 type StaticTransform = {
@@ -122,13 +137,25 @@ type BrancheAll = {
   }>;
 };
 
+type Retry {
+  constant?: {
+    attempts: integer;
+    seconds: integer;
+  };
+  exponential?: {
+    attempts: integer;
+    multiplier: integer;
+    seconds: integer;
+  };
+}
 
 ```
 
 ### Value
 
-There are 5 kinds of modules.
+There are 6 kinds of modules.
 
+- `identity`: Just pass its input as output, useful for debugging.
 - `rawscript`: Embed a full Typescript/Python/Go script inside the flow. Useful
   for ad-hoc scripts.
 - `script`: When you can refer to a script by its path (including a path to the hub
