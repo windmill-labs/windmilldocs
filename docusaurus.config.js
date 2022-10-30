@@ -22,7 +22,7 @@ const config = {
 				docsDir: 'docs',
 				docsRouteBasePath: '/docs',
 				indexDocs: true,
-				indexBlog: false,
+				// indexBlog: false,
 				indexPages: false,
 				highlightSearchTermsOnTargetPage: false
 			}
@@ -50,9 +50,9 @@ const config = {
 				docs: {
 					sidebarPath: require.resolve('./sidebars.js')
 				},
-				blog: {
-					showReadingTime: true
-				},
+				// blog: {
+				// 	showReadingTime: true
+				// },
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
 				}
