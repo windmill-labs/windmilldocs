@@ -61,8 +61,7 @@ An OpenFlow module is defined as follows:
 ```typescript
 type FlowModule = {
   summary?: string;
-  input_transforms: Record<string, StaticTransform | JavascriptTransform>;
-  value: RawScript | PathScript | ForloopFlow | Branching;
+  value: Identity | RawScript | PathScript | ForloopFlow | BranchOne | BranchAll ;
   stop_after_if?: { expr: string; skip_if_stopped: boolean };
   sleep?: StaticTransform | JavascriptTransform
   suspend?: { required_events?: integer, timeout: integer };
@@ -88,12 +87,14 @@ type JavascriptTransform = {
 };
 
 type RawScript = {
+  input_transforms: Record<string, StaticTransform | JavascriptTransform>;
   content: string;
   language: "deno" | "python3";
   path?: string;
 };
 
 type PathScript = {
+  input_transforms: Record<string, StaticTransform | JavascriptTransform>;
   path: string;
 };
 
@@ -103,21 +104,47 @@ type ForloopFlow = {
   skip_failures?: boolean;
 };
 
-type Branches = {
+type BrancheOne = {
   default: FlowModule[];
-  branches: Branch[];
+  branches: Array<{
+    summary?: string;
+    expr: string;
+    modules: FlowModule[];
+  }>;
 };
 
-type Branch = {
-  summary?: string;
-  expr: string
-  modules: FlowModule[]
+type BrancheAll = {
+  default: FlowModule[];
+  branches: Array<{
+    summary?: string;
+    skip_failure: boolean;
+    modules: FlowModule[];
+  }>;
 };
+
+
 ```
+
+### Value
+
+There are 5 kinds of modules.
+
+- `rawscript`: Embed a full Typescript/Python/Go script inside the flow. Useful
+  for ad-hoc scripts.
+- `script`: When you can refer to a script by its path (including a path to the hub
+  using the `hub/` prefix)
+- `branchone`: Branch to one list of modules based on the first predicate that match (evaluated in-order) or the default modules if none match.
+- `branchall`: Branch to all branch of modules, from start to end and branches being evaluated in-order. One can decide to skip failure of a particular branch. The result of this module are the branches' results collected as a list.
+- `forloopflow`: Trigger for-loops that will iterate over a list and trigger one
+  flow per element. The list is built evaluating the JavaScript expression
+  inside `iterator` taking `result` as an input being the result of the previous
+  module. 
+
+
 
 ### Input transforms
 
-Modules contain `input_transforms`, which is a mapping between fields 
+`RawScript` and `PathScript` modules contain `input_transforms`, which is a mapping between fields 
 (i.e. input of the module) to either a static JSON value, or a raw 
 JavaScript expression.
 
@@ -189,25 +216,5 @@ successful run:
 - `exponential` applies exponential backoff duration increase in between every
 retry. If all the retries are exhausted, the failure module, if any, is called.
 
-### Value
-
-Now let's see how how the Module value is itself defined.
-
-There are 3 kinds of module currently (version 1.35.0):
-
-- `rawscript`: Embed a full Deno or JavaScript script inside the flow. Useful
-  for ad-hoc scripts.
-- `script`: When you can refer to a script by its path (including a path to the hub
-  using the `hub/` prefix)
-- `forloopflow`: Trigger for-loops that will iterate over a list and trigger one
-  flow per element. The list is built evaluating the JavaScript expression
-  inside `iterator` taking `result` as an input being the result of the previous
-  module. 
-
-In Windmill, most flows use the iterator `result` and expect the previous 
-step to return a list. Flows triggered inside other Flows, take as an
-input the embedding flow's inputs. The inputs are extended with `iter.value` 
-and `iter.index` as respectively the value being iterated and its 
-corresponding index.
 
 Et voilà, we have completed our tour of OpenFlow.
