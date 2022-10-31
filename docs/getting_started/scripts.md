@@ -16,6 +16,12 @@ In Windmill, both Scripts and Flows consist of two parts:
   list of Scripts to be executed. For more information see the 
   [OpenFlow Spec.][openflow]
 
+You can create new script from scratch or by importing it
+![Import script](../assets/getting_started/intro/import-script.png)
+
+Don't worry, when creating a new Script, you always get a template you can start
+from.
+
 ### Metadata
 
 **Metadata** contains information useful to the script's users.
@@ -26,8 +32,6 @@ either a user, or a group. This defines the permissions on the platform.
 Selecting user will keep the script _private_ to the selected account, while
 selecting group will make it available to all users of the given group.
 
-<!-- FIXME: Languages -> Runtimes ? -->
-
 Windmill supports three **Languages**: Python, TypeScript, and Go.
 
 **Summary** and **Description** are both optional, but highly recommended.
@@ -36,12 +40,27 @@ said, keep them short, as they are displayed throughout the UI. Description
 supports Markdown formatting, and is where you should include examples on how to
 use your script.
 
+#### Common Scripts
+
+Common scripts are the basic building blocks for the flows.
+
 #### Trigger Scripts
 
-Scripts can be categorized as `Trigger` Scripts. It's a special category of
-Scripts, where the purpose is to pull data from an external source and compare
-it to the previously saved state. If there are changes, _trigger_ the rest of
-the flow, i.e. subsequent scripts.
+They are used as a first flow step most commonly with an internal state and a
+schedule to watch for changes on an external system, and compare it to the
+previously saved state. If there are changes, _trigger_ the rest of the flow,
+i.e. subsequent scripts.
+
+#### Approval Scripts
+
+Use them in order to suspend a flow until it's approved. Main usecase for
+approval scripts is to send an external notification with an URL that can be
+used to resume or cancel a flow. For more details check [Suspend/Resume a flow
+tutorial](../how-tos/6_suspend_resume_a_flow.md).
+
+#### Error Handlers
+
+Handle errors for flows after all retries attempts have been exhausted.
 
 #### Template Scripts
 
@@ -61,28 +80,23 @@ as a standalone Script, or as a part of a Flow. Visit the Postgres
 
 Indeed, templates are just scripts!
 
-![Add from template](../assets/how_to/add_from_template.png)
 
 ### Code
 
 In Windmill, scripts need to have a `main` function that will be the script's
-entrypoint.  
+entrypoint.
 Parameters of the main function are used to compute the input spec
-of that script. That input spec is in turn used for both generating the 
-frontend form that you see when using that script as a standalone app, and 
+of that script. That input spec is in turn used for both generating the
+frontend form that you see when using that script as a standalone app, and
 for the inputs that it takes when it is a step of a flow.
 
 Type annotations are used to generate the UI form, and help pre-validate inputs.
 While not mandatory, they are highly recommended.
 
-Don't worry, when creating a new Script, you always get a template you can start
-from.
-
 ## Creating a Script
 
 In this tutorial, you will create a basic Hello world script, and understand
 some of Windmill's main concepts: scripts, accepting user input, and runs.
-
 
 Head over to the [Scripts][app-scripts] tab and use the **New script** button in
 the top right corner to create a new script. It will open the create page, with
