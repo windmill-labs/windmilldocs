@@ -46,17 +46,17 @@ Common scripts are the basic building blocks for the flows.
 
 #### Trigger Scripts
 
-They are used as a first flow step most commonly with an internal state and a
+They are used as a first flow step, most commonly with an internal state and a
 schedule to watch for changes on an external system, and compare it to the
 previously saved state. If there are changes, _trigger_ the rest of the flow,
 i.e. subsequent scripts.
 
 #### Approval Scripts
 
-Use them in order to suspend a flow until it's approved. Main usecase for
-approval scripts is to send an external notification with an URL that can be
-used to resume or cancel a flow. For more details check [Suspend/Resume a flow
-tutorial](../how-tos/6_suspend_resume_a_flow.md).
+Use them in order to suspend a flow until it's approved. Most common scenario
+for approval scripts is to send an external notification with an URL that can
+be used to resume or cancel a flow. For more details check [Suspend/Resume a
+flow tutorial](../how-tos/6_suspend_resume_a_flow.md).
 
 #### Error Handlers
 
