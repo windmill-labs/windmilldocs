@@ -16,7 +16,7 @@ approvals from all authorized people or only from one.
 
 ![Required approvals](../assets/how_to/flow-number-of-approvals.png)
 
-## Approval script example - Gmail
+## Approval script - Gmail example
 
 #### Adding Gmail resource
 
@@ -77,4 +77,58 @@ You can now resume a flow and see that the flow finished with "Success" status.
 
 Cool, isn't it?
 
-## Approval script example - Slack
+## Notifying about approver(s) that resumed a flow - Slack example
+
+In this example we're extending the flow with approval step from previous
+example. Windmill will send a notification as a message in Slack channel about
+approver(s) that resumed a flow.
+
+#### Adding Slack resource
+
+First lets add a Slack resource. From "Resources" view select "Connect an API"
+and then select Slack
+
+![Connect an API](../assets/how_to/6_examples/connect-api.png)
+
+![Connect Slack resource](../assets/how_to/6_examples/connect-slack-resource.png)
+
+![Allow Slack access](../assets/how_to/6_examples/allow-slack-access.png)
+
+![Connection in progress](../assets/how_to/6_examples/connection-to-slack-in-progress.png)
+
+#### Re-using script from WindmillHub
+
+Now let's extend our existing flow (that already has an approval step) with a
+script that will use "The list of approvers" from the "Step Context"
+
+![Extend flow](../assets/how_to/6_examples/extend-flow.png)
+
+![Script from hub](../assets/how_to/6_examples/script-from-hub.png)
+
+![Reuse Slack script](../assets/how_to/6_examples/reuse-slack-script-from-hub.png)
+
+#### Step Context magic
+
+This is where the magic begins - the "Step Context". You can notice that we
+have access to the list of approves from previous approval step.
+
+![The list of approvers](../assets/how_to/6_examples/the-list-of-approvers.png)
+
+Now all we have to do is to inject this particular step context to the
+"approvers" argument of our script! There is more than one way of doing this,
+but this time we will use the UI feature. All you have to do is to click on
+"link" icon and then select "approvers"
+
+![Inject approvers 1](../assets/how_to/6_examples/inject-approvers-1.png)
+
+![Inject approvers 2](../assets/how_to/6_examples/inject-approvers-2.png)
+
+#### Lets test it
+
+Run the flow. Resume it ...
+
+![Resume flow](../assets/how_to/6_examples/resume-flow.png)
+
+... and find the notification on Slack channel
+
+![Notification](../assets/how_to/6_examples/notification.png)
