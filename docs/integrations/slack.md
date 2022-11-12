@@ -28,9 +28,9 @@ Let's connect now with some Slack workspace
 
 ![Allow Slack access](../assets/integrations/slack/03-allow-access.png)
 
-Great! We've established Windmill-Slack channel, but it's not over yet. We need
-a Windmill script that will be invoked on the event triggered by `/windmill`
-command.
+Great! We've established Windmill-Slack connection, but it's not over yet. We
+need a Windmill script that will be invoked on the event triggered by
+`/windmill` command.
 
 :::caution
 
@@ -86,3 +86,18 @@ job that was triggered by the `/winmill` command.
 
 After job successfully finished, bot sent additional message with the text that
 you used with `/windmill` command.
+
+## Slack as Windmill resource
+
+Our goal here is to allow Windmill scripts acting on Slack on your behalf.
+
+Lets add a Slack resource. From "Resources" view select "Connect an API"
+and then select Slack
+
+![Connect an API](../assets/how_to/6_examples/connect-api.png)
+
+![Connect Slack resource](../assets/how_to/6_examples/connect-slack-resource.png)
+
+![Allow Slack access](../assets/how_to/6_examples/allow-slack-access.png)
+
+![Connection in progress](../assets/how_to/6_examples/connection-to-slack-in-progress.png)
