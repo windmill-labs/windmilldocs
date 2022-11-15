@@ -345,7 +345,7 @@ needs to return a list because the next step will be to forloop over all items
 of the list in an embedded flow. Furthermore, it will very likely make use of
 the convenience helper functions around [internal states](#internal-state).
 
-### Internal State
+### State / Internal State
 
 An internal state is just a state which is meant to persist across distinct
 executions of the same script. This is what enables flows to watch for changes
@@ -367,15 +367,13 @@ in most event watching scenarios. The pattern is as follows:
 
 The convenience functions do this in Typescript are:
 
-- [`getInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L96)
+- `getState`
   which retrieves an object of any type (internally a simple resource) at a path
   determined by
-  [`getInternalStatePath`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L50)
-  which is basically a path unique to the user currently executing the script,
+  `getStatePath` a path unique to the user currently executing the script,
   the flow in which it is currently in if it is in one and the path of the
   script
-- [`setInternalState`](https://deno.land/x/windmill@v1.28.1/mod.ts?code#L88)
-  which sets the new state
+- `setState` which sets the new state
 
 The states can be seen in the [Resources](#resource) section with a
 [Resource type](#resource-type) of `state`.
@@ -550,6 +548,10 @@ import * as wmill from 'https://deno.land/x/windmill/index.ts';
 wmill.getVariable('u/user/foo');
 wmill.setVariable('u/user/foo', value);
 ```
+
+Note that there is a similar api for getting and setting [resources](#resource) which are simply variables that can contain any json values, not just string and that are labeled with a [resource type](#resource-type) to be automatically discriminated in the auto-generated form to be of the proper type (e.g a parameter in Typescript of type `pg: wmill.Resource<'postgres'>` is only gonna offer a selection over the resources of type postgres in the auto-generated UI)
+
+There is also a concept of [state](#state--internal-state) to share values across script executions.
 
 #### Secret Variables
 
