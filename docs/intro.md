@@ -3,7 +3,7 @@
 Windmill turns your scripts into internal apps and composable steps of flows
 that automate repetitive workflows. It's common for engineers to hack together
 scripts to automate repetitive tasks for a non-technical user (sales, ops,
-customer support, customer success, etc).
+customer support, customer success, etc). 
 
 ### Use cases
 
@@ -26,7 +26,7 @@ Scripts and code is a great way to solve those use-cases. However, the
 difficulty comes from using those scripts to:
 
 - self-serve shareable apps for the rest of the teams with an intuitive UI
-- production-grade workflows with execution history, that always work and
+- build production-grade workflows with execution history, that always work and
   that are easy to maintain and to iterate over. 
   
 Those pipelines are triggered by webhooks to react to events, or schedule 
