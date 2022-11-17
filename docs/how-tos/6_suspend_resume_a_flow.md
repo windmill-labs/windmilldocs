@@ -4,6 +4,17 @@ Flows can be suspended until resume or cancel event(s) are received. This
 feature is most useful to implement approval steps but can be used flexibly for
 other purpose.
 
+:::tip
+
+On WindmillHub you can find ready-to-use scripts that use this feature. For
+example:
+* [Suspend/resume a flow by sending approval URL via
+  email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail)
+* [Suspend/resume a flow by sending approval URL via slack direct
+  message](https://hub.windmill.dev/scripts/slack/1398/suspend%2Fresume-a-flow-by-sending-approval-url-via-slack-direct-message-slack)
+
+:::
+
 ![Adding approval step](../assets/how_to/flow-approval-step.png)
 
 You can think of a scenario where only specific people can resume (or cancel)
