@@ -57,7 +57,7 @@ i.e. subsequent scripts.
 Use them in order to suspend a flow until it's approved. Most common scenario
 for approval scripts is to send an external notification with an URL that can
 be used to resume or cancel a flow. For more details check [Suspend/Resume a
-flow tutorial](../how-tos/6_suspend_resume_a_flow.md).
+flow tutorial](./how-tos/6_suspend_resume_a_flow.md).
 
 #### Error Handlers
 
@@ -77,7 +77,7 @@ few built-in types. One of the provided templates for TypeScript/Deno is the
 PostgreSQL template. This template showcases how to quickly create a
 parameterized statement for a PostgreSQL database. Template Scripts can be used
 as a standalone Script, or as a part of a Flow. Visit the Postgres
-[integration tutorial](../integrations/postgresql) to learn more.
+[integration tutorial](./integrations/postgresql) to learn more.
 
 Indeed, templates are just scripts!
 

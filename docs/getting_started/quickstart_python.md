@@ -124,7 +124,7 @@ moderators before becoming available to everyone right within Windmill.
 
 [app-runs]: https://app.windmill.dev/runs
 [app-scripts]: https://app.windmill.dev/scripts
-[flows]: ./flows
+[flows]: ../how-tos/1_use_flows.md
 [deno]: https://deno.land/
 [openflow]: ../openflow.md
 [python]: https://www.python.org/
