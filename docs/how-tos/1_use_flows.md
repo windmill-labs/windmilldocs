@@ -2,7 +2,7 @@
 
 :::tip
 You can import Flows and Scripts from the [Windmill Hub][hub] in one click.
-It is also a great place to share your creations with the community.
+It is also a great place to share with the community.
 
 <br/>
 
@@ -15,23 +15,23 @@ It is also a great place to share your creations with the community.
 simple steps together. Each Flow is composed of one or more steps.
 
 Steps are [Scripts][scripts] that accept inputs, execute a function and then
-produce an output, usually used in subsequent steps. Flows contain all of the
-benefits of Windmill Scripts, offering immediate functionality such as third
-party app integrations, SQL queries, Slack, custom scripts, retries and more!
+produce an output, usually used in subsequent steps. Flows support all the
+functions of Windmill Script such as third party app integrations, SQL queries, 
+Slack, custom scripts, retries and more!
 
 :::tip
-Windmill Flows are based on a declarative language for chaining scripts, we
-call it **OpenFlow**, you can read the OpenFlow spec [here](/docs/openflow).
+Windmill Flows are based on a declarative language for chaining scripts: **OpenFlow**. 
+You can read the OpenFlow spec [here](/docs/openflow).
 :::
 
 In Windmill, both Scripts and Flows consist of two parts:
 
-- **Metadata**, which contains information about the Script or Flow itself, 
-  such as its path, description, and author, and;
+- **Metadata:** information about the Script or Flow itself, 
+  such as its path, description, and author
 - **Logic**, which in case of a Script is the code, and in case of a Flow 
   is the list of Scripts to be executed.
 
-### For-loops
+### For loops
 
 One functionality that is specific to Flows is the ability to wrap a part 
 of its sequence into a loop.
@@ -53,13 +53,11 @@ main flow. It has its own `flow_input`, composed of the current iteration's
 value and the embedding flow's inputs.
 :::
 
-
 For-loops add an extra object to the execution context, called `iter`.
 It is nested under both `flow_input`, and for the first step of the loop
 under `previous_result`, too.  
 It contains the current `index` and `value` of the iteration, and is
 what should be used to provide inputs to the loop's steps.
-
 
 ### Settings
 

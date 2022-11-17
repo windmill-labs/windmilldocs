@@ -20,8 +20,7 @@ body.
 ![](../assets/getting_started/webhooks/1-create_script.png)
 
 Webhooks links can be found in the Script/Flow's details page, for more
-information about Scripts, refer to the
-[Getting Started with Scripts](./scripts) section.
+information about Scripts, refer to the Getting Started section.
 
 **Asynchronous**
 

@@ -37,6 +37,50 @@ python if necessary.
 Scripts versions are uniquely defined by their hash. See
 [Versioning](#versioning) for more info about the hashes purposes.
 
+### Script kings
+
+You can attach additional functionalities to scripts by specializing them into specific Script kinds.
+
+#### Common Scripts
+
+Common Scripts are the basic building blocks for the flows.
+
+#### Trigger Scripts
+
+They are used as a first flow step, most commonly with an internal state and a
+schedule to watch for changes on an external system, and compare it to the
+previously saved state. If there are changes, _trigger_ the rest of the flow,
+i.e. subsequent scripts.
+
+#### Approval Scripts
+
+Use them in order to suspend a flow until it's approved. Most common scenario
+for approval scripts is to send an external notification with an URL that can
+be used to resume or cancel a flow. For more details check [Suspend/Resume a
+flow tutorial](./how-tos/6_suspend_resume_a_flow.md).
+
+#### Error Handlers
+
+Handle errors for flows after all retries attempts have been exhausted.
+
+#### Template Scripts
+
+In order to allow other users to rapidly write scripts, you can define
+templates. This is particularly useful with resources for example: you can
+define a template script that can be rapidly used with that resource.
+
+When creating a script from a template, the script's code will be pre-filled
+with the template code.
+
+While you can create as many Template Scripts as you want, Windmill comes with a
+few built-in types. One of the provided templates for TypeScript/Deno is the
+PostgreSQL template. This template showcases how to quickly create a
+parameterized statement for a PostgreSQL database. Template Scripts can be used
+as a standalone Script, or as a part of a Flow. Visit the Postgres
+[integration tutorial](./integrations/postgresql) to learn more.
+
+Indeed, templates are just scripts!
+
 ### Automatic UI generation
 
 By reading the main function parameters, Windmill generates the input
