@@ -5,7 +5,7 @@ way to integrate with Slack:
 
 1. As a Windmill workspace admin allowing Windmill Slack Bot integration via
    `/windmill` command.
-2. As a regular user allowing Windmill scripts performing opeartions on your
+2. As a regular user allowing Windmill scripts performing operations on your
    behalf in Slack.
 3. By providing a Slack token. Actions are constrained by the token kind and
    scopes.
@@ -13,20 +13,40 @@ way to integrate with Slack:
 
 ## Slack Bot integration
 
-Our goal here is to be able to invoke a Windmill script from Slack, by using
-`/windmill` command.
+Our goal here is to be able to:
+* use slack bot token in Windmill scripts
+* invoke a Windmill script from Slack, by using `/windmill` command
+
+:::tip
+
+All members of `g/slack` group can use Slack bot token. It allows Windmill
+script to act on behalf of the installed app of the connected workspace.
+
+:::
 
 First of all you need to be a workspace admin. Then you should go to [workspace
 settings page](https://app.windmill.dev/workspace_settings).
 
 ![Go to workspace](../assets/integrations/slack/01-go-to-workspace.png)
 
-#### Connect to Slack workspace
+### Connect to Slack workspace
 
 Let's connect now with some Slack workspace
 ![Connect Slack](../assets/integrations/slack/02-connect-to-slack.png)
 
 ![Allow Slack access](../assets/integrations/slack/03-allow-access.png)
+
+
+### Using slack bot token in Windmill scripts
+
+You need to be in `g/slack` group to be able to use this token:
+![slack group](../assets/integrations/slack/slack-group.png)
+
+Then it will be available in resources:
+![slack token](../assets/integrations/slack/slack-bot-token.png)
+
+
+### Using /windmill command in Slack
 
 Great! We've established Windmill-Slack connection, but it's not over yet. We
 need a Windmill script that will be invoked on the event triggered by
@@ -87,7 +107,7 @@ job that was triggered by the `/winmill` command.
 After job successfully finished, bot sent additional message with the text that
 you used with `/windmill` command.
 
-## Slack as Windmill resource
+## Windmill acting on Slack on users behalf
 
 Our goal here is to allow Windmill scripts acting on Slack on your behalf.
 
