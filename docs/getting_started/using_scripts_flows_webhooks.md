@@ -19,7 +19,7 @@ We'll build two Scripts to do this, then put it together in a flow.
 
 Let's start with the fastest part: let's write a script that takes in a repo name (eg. `acme-corp/myrepo`), an issue number, and a list of labels to apply, and labels the issue. This script will need to access a GitHub access token to be able to POST to GitHub's rest API. Let's call that Script `label_issues`.
 
-This Script is available as a template in the [Hub](TODO).
+This Script is available as a template in the [Hub](https://hub.windmill.dev/scripts/noapp/1401/add-labels-to-a-github-issue-noapp).
 
 ```golang
 package inner
@@ -107,11 +107,11 @@ var keyWordToLabel = map[string]string{
 
 Start by creating a script, called **triage_issues**. Go to the script's page, and scroll to the bottom:
 
-![Find the Windmill webhook URL](../assets/getting_started/quickstart/tutroial-add-webhook.png)
+![Find the Windmill webhook URL](../assets/getting_started/quickstart/tutorial-add-webhook.png)
 
 Posting to this Windmill [webhook](../how-tos/1_use_webhooks.md) URL will trigger a script run. Hit create a token, and save that token somewhere. We'll need it to make sure GitHub can authentify to Windmill. Copy the webhook `path` URL as well. Let's setup GitHub to post there when an issue is created. Head to the GitHub repo you want to add the triage bot to. Go to the **Settings** then **webhooks**. Hit **add webhook**.
 
-![Add a variable](../assets/getting_started/quickstart/tutroial-add-webhook.png)
+![Add a variable](../assets/getting_started/quickstart/tutorial-add-webhook.png)
 
 - Paste the Windmill webhook URL into the **Payload URL** field, and append `?token=<INSERT WINDMILL TOKEN HERE>`, substituting the Windmill token you created earlier.
 - Under **Content type**, pick `application/json`. Windmill expects json payloads.
