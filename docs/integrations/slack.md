@@ -107,7 +107,7 @@ job that was triggered by the `/winmill` command.
 After job successfully finished, bot sent additional message with the text that
 you used with `/windmill` command.
 
-## Windmill acting on Slack on users behalf
+## Windmill acting on Slack on user's behalf
 
 Our goal here is to allow Windmill scripts acting on Slack on your behalf.
 
