@@ -91,6 +91,18 @@ helm install windmill-chart windmill/  \
 ```
 :::
 
+### Enterprise deployment with Helm
+
+The Enterprise edition of Windmill uses different base images and supports additional features.  One important feature is better caching for depencies in a super cache supported by S3.  
+
+You need:
+
+1. An Enterprise license key
+2. An AWS account and S3 bucket
+3. AWS credentials or IAM roles prepared for access from the Windmill worker pods
+
+See the helm chart repo readme for more details. The exact setup for S3 access will vary according to your environment.
+
 ## Compile from source
 
 1. Go to `frontend/`: `npm run install`, `npm run generate-backend-client` then
