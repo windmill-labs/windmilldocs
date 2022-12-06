@@ -37,7 +37,7 @@ python if necessary.
 Scripts versions are uniquely defined by their hash. See
 [Versioning](#versioning) for more info about the hashes purposes.
 
-### Script kings
+### Script Kinds
 
 You can attach additional functionalities to scripts by specializing them into specific Script kinds.
 
@@ -147,7 +147,7 @@ JSON Schema.
 
 In Python:
 
-| Python     | JSON Schema                       |
+| Python     | JSON Schema                      |
 | ---------- | -------------------------------- |
 | `str`      | `string`                         |
 | `float`    | `number`                         |
@@ -164,19 +164,19 @@ In Python:
 In Deno:
 
 | Deno       | JSON Schema |
-| ---------- | ---------- |
-| `string`   | `string`   |
-| `object`   | `object`   |
-| `boolean`  | `boolean`  |
-| `bigint`   | `int`      |
-| `number`   | `number`   |
-| `string[]` | `string[]` |
-| ...        | ...        |
+| ---------- | ----------- |
+| `string`   | `string`    |
+| `object`   | `object`    |
+| `boolean`  | `boolean`   |
+| `bigint`   | `int`       |
+| `number`   | `number`    |
+| `string[]` | `string[]`  |
+| ...        | ...         |
 
 However in Deno there also some special types that are specific to windmill.
 They are as follows:
 
-| Windmill                          | JSON Schema                                   |
+| Windmill                          | JSON Schema                                  |
 | --------------------------------- | -------------------------------------------- |
 | `wmill.Base64`                    | `string`, encodingFormat: `base64`           |
 | `wmill.Email`                     | `string`, format: `email`                    |
