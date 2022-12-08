@@ -80,12 +80,14 @@ Detailed instructions can be found in the [README][helm-readme] file in the
 
 :::tip
 If you're familiar with helm and want to get started quickly, 
-you can deploy in one command, with paths relative to the official 
+you can deploy quickly with the snippet below. detailed instructions in the official 
 [repository][helm]:
 
 ```bash
-helm install windmill-chart windmill/  \
-      --values windmill/values.yaml    \
+# add the Windmill helm repo
+helm repo add windmill https://windmill-labs.github.io/windmill-helm-charts/
+# install chart with default values
+helm install windmill-chart windmill/windmill  \
       --namespace=windmill             \
       --create-namespace
 ```
