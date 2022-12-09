@@ -122,3 +122,5 @@ If any provision of this Agreement is found to be unenforceable or invalid, that
 ### 12. Data privacy
 
 Where we process any customer personal data in connection with this Agreement, we can enter into a separate GDPR Data Processing Agreement upon request, the exact terms of which will vary depending on the nature of the installation, how personal data is being processed, and where it is stored. Our standard form agreement can be viewed here.
+
+</div>
