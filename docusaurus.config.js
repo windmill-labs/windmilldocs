@@ -129,6 +129,10 @@ const config = {
 					{
 						label: 'Terms of Service',
 						to: '/terms_of_service'
+					},
+					{
+						label: 'License Terms',
+						to: '/terms'
 					}
 				],
 				copyright: `&copy; 2022 Windmill Labs, Inc. Made with love in the US and France`
