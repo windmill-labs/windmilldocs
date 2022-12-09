@@ -1,5 +1,9 @@
 # Windmill Terms 
 
+<div className="theme-doc-markdown markdown">
+
+Effective date: 12/01/2022
+
 ## Windmill Self-Hosted License Terms
 
 These terms apply to any of our Self-hosted plans, including Self-hosted Enterprise.
