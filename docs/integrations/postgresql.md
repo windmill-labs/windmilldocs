@@ -19,6 +19,10 @@ section.
 Head to the Resources tab and click on "Add a resource" button in the top
 right corner.
 
+![resource](../assets/integrations/resources.png)
+
+![postgres resource](../assets/integrations/postgres/postgres-resouorce.png)
+
 Next we need to define the metadata.
 
 **Path** is the unique identifier on the platform. It defines
@@ -36,16 +40,12 @@ the resource
 - **Description**, while not obligatory, is always a good idea. You can include
 any and all information to users of the resource. Let's put a warning that
 this is a production database, and users should be weary about their actions.
-- **Resource type** is postgresql.
 
 :::tip
 You can use Markdown formatting in the **Description** field.
 :::
 
 ![define resource metadata](../assets/integrations/postgres/1_1.png)
-
-Once the metadata defined, click the "Next" button to fill the connection
-details.
 
 Fill in your connection details, and click "Save" to create the resource.
 
@@ -60,14 +60,12 @@ Congratulations, you have just created a shared Postgres database resource!
 ## Create Script
 
 Next, let's create a Script that will use the newly created resource.
-We will use Postgres' parameterized queries template.
 
-Head on to the Script tab and click on the "New Script" button.
+![create script](../assets/integrations/postgres/2_0.png)
 
-We will be using a TypeScript/Deno as language, and we will use the PostgreSQL
-template.
+We will use Postgres' parameterized queries template in TypeScript/Deno as language.
 
-![create script](../assets/integrations/postgres/2_1.png)
+![postgres template](../assets/integrations/postgres/2_1.png)
 
 Let's add the Script's code:
 
@@ -78,7 +76,7 @@ You can specify default values for parameters, they will automatically be
 used in the next step
 :::
 
-Click Next to move on to the UI Customization step.
+Click Next to move on to the Advanced step.
 
 
 Here we can customize the UI of the Script, give parameters descriptions, and
