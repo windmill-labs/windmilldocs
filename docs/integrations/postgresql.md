@@ -61,7 +61,7 @@ Congratulations, you have just created a shared Postgres database resource!
 
 Next, let's create a Script that will use the newly created resource.
 
-![create script](../assets/integrations/postgres/2_0.png)
+![create script](../assets/integrations/create-a-script.png)
 
 We will use Postgres' parameterized queries template in TypeScript/Deno as language.
 
