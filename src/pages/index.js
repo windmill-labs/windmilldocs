@@ -22,7 +22,7 @@ function HomepageHeader() {
 	return (
 		<main className="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6">
 			<div className="lg:grid lg:grid-cols-12 lg:gap-20">
-				<div className="md:max-w-2xl md:mx-auto lg:col-span-6">
+				<div className="md:max-w-2xl md:mx-auto lg:col-span-5">
 					<div>
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-sm tracking-tight font-bold text-gray-900  font-mono">
@@ -50,9 +50,9 @@ function HomepageHeader() {
 							</h1>
 						</div>
 						<div className="mt-10 sm:max-w-xl">
-							<h1 className="text-3xl tracking-tight font-bold text-blue-600 sm:text-4xl md:text-4xl font-mono">
+							<h1 className="text-3xl tracking-tight font-bold text-black-700 sm:text-4xl md:text-4xl">
 								<span className="block xl:inline">
-									Developer platform to turn scripts into internal UIs and workflows
+									Build workflows and internal UIs, faster and without compromises
 								</span>
 							</h1>
 							<h2 className="mt-6 tracking-tight text-gray-900 text-base font-medium ">
@@ -110,7 +110,7 @@ function HomepageHeader() {
 						</div>
 					</div>
 				</div>
-				<div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+				<div className="mt-12 relative sm:max-w-4xl sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-7 lg:flex lg:items-center">
 					<svg
 						className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 scale-75 origin-top sm:scale-100 lg:hidden"
 						width="640"
@@ -139,9 +139,10 @@ function HomepageHeader() {
 							</pattern>
 						</defs>
 					</svg>
-					<div className="mt-20 relative mx-auto w-full lg:max-w-2xl">
+					<div className="mt-20 relative mx-auto w-full lg:max-w-4xl">
 						<div className="rounded-lg shadow-lg">
-							<BrowserOnly>
+							<img className="rounded-lg shadow-lg" src="/img/flows.png" alt="" />
+							{/* <BrowserOnly>
 								{() => (
 									<VideoPlayer>
 										<button
@@ -166,12 +167,12 @@ function HomepageHeader() {
 										</button>
 									</VideoPlayer>
 								)}
-							</BrowserOnly>
+							</BrowserOnly> */}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className="w-full text-center py-16">
+			<div className="w-full text-center pb-16 pt-8">
 				<div className="text-gray-600 font-md my-12 2xl:mt-44 mx-auto">
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
