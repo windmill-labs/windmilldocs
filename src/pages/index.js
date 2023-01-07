@@ -63,10 +63,9 @@ function HomepageHeader() {
 								// <p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
 								<ul className="mb-3 ml-6 list-disc">
 									<li>
-										Instantly turn any Python, Typescript and Go scripts into endpoints, UIs and
-										workflow modules
+										Instantly turn any Python, Typescript, Go, Bash scripts into endpoints and build
+										powerful long-running workflows and self-serving UIs in minutes.
 									</li>
-									<li>Build powerful low-code workflows and internal UIs</li>
 									<li>Run them at scale on your infra or ours</li>
 									<li>Open-source alternative to Airplane, Superblocks, Retool</li>
 								</ul>
