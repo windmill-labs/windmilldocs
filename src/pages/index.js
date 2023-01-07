@@ -52,7 +52,7 @@ function HomepageHeader() {
 						<div className="mt-10 sm:max-w-xl">
 							<h1 className="text-3xl tracking-tight font-bold text-black-700 sm:text-4xl md:text-4xl">
 								<span className="block xl:inline">
-									Build workflows and internal UIs, faster and without compromises
+									Developer infrastructure for internal tools, workflows and UIs
 								</span>
 							</h1>
 							<h2 className="mt-6 tracking-tight text-gray-900 text-base font-medium ">
@@ -60,7 +60,7 @@ function HomepageHeader() {
 									Instantly turn scripts into endpoints, build powerful low-code workflows and
 									internal UIs, and run them at scale.
 								</p>
-								<p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
+								// <p className="block ">Open-source alternative to Airplane, Superblocks, Retool.</p> */}
 								<ul className="mb-3 ml-6 list-disc">
 									<li>
 										Instantly turn any Python, Typescript and Go scripts into endpoints, UIs and
