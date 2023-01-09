@@ -307,6 +307,40 @@ windmill:
     - PIP_TRUSTED_HOST=pypi.org
 ```
 
+### Python relative imports for sharing common logic
+
+It is possible to import directly from other python scripts. One can simply follow the path layout. For instance, `import foo from f.<foldername>.script_name`. A fuller example below:
+
+```python
+# u/rubenfiszel/common_logic
+
+# you will still need a main function, so that the script is still recognized as valid
+def main():
+  pass
+
+def foo():
+  print('Common logic!')
+
+```
+
+And in another script:
+```python
+from u.rubenfiszel.common_logic import foo
+
+def main():
+  return foo()
+```
+
+It works with scripts contained in folders, and in scripts contained in user-spaces.
+e.g: 
+`f.<foldername>.script_path`
+`u.<username>.script_path`
+
+Beware that you can only imports scripts that you can see.
+
+The folder layout follow exactly the one of the CLI for syncing scripts locally and on windmill. As a consequence, the IDE will treat it as a relative imports and will behave as expected.
+
+
 ## Flows
 
 A **Flow** is the core concept behind windmill. It is a json serializable value
