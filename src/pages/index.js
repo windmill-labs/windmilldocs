@@ -97,7 +97,7 @@ function HomepageHeader() {
 								</div>
 								<div className="w-full col-span-1">
 									<a
-										href="https://cal.com/team/windmill/demo"
+										href="https://cal.com/ruben-windmill/windmill-demo"
 										data-analytics='"schedule-demo"'
 										onClick={() => window.plausible('schedule-demo')}
 										className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-gray-50 hover:underline md:py-4 md:text-lg md:px-10"

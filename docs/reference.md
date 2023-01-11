@@ -11,37 +11,52 @@ username when he joins a workspace.
 
 ## Scripts
 
-In Windmill, a script is always a Python, TypeScript (deno) or Go script. Its 2
+In Windmill, a script is always a Python, TypeScript (deno), Go or Bash script. Its 2
 most important components are its input [JSON Schema](#jsonchema) specification
-and its code content. The code must always have a main function:
+and its code content. Python and Go scripts also have an auto-genreated lockfile that ensure that executions of the same script always use the exact same dependencies. The code must always have a main function:
 
 - Python:
 
 ```python
 def main(param1: str, param2: dict, ...):
+  ...
 ```
 
 - Typescript:
 
 ```typescript
-async function main(param1: string, param2: object, param3: Resource<'postgres'>) {
+async function main(param1: string, param2: { nested: string }, param3: Resource<'postgres'>) {
+  ...
+}
 ```
 
-which is its entrypoint.
+- Go
 
-When a [job](#Job) is run, it is given input arguments. The input arguments are
-passed almost straight as to the main function, with just a few language
-specific transformations from JSON to more adequate types in typescript or
-python if necessary.
+```go
+func main(x string, nested struct{ Foo string \`json:"foo"\` }) (interface{}, error) {
+  ...
+}
+```
 
-Scripts versions are uniquely defined by their hash. See
-[Versioning](#versioning) for more info about the hashes purposes.
+which is its entrypoint when executed as an individual serverless endpoint or a flow module.
 
-### Script Kinds
+### Job Input -> Script Parameters
+
+[Jobs](#Job) take a JSON object/dict as input which can be empty. The different key-value pairs of the objects are passed as the different parameters of the main of the main function, with just a few language
+specific transformations from JSON to a more adequate types in the target language if necessary (e.g base64/datetime encoding). Values can be JSON object themselves but we recommend trying to keep the input specification flat when possible.
+
+### Script hashes
+
+Scripts versions are uniquely defined by their hash. It is an immutable reference similar to a git commit sha. See
+[Versioning](#versioning) for more details. Scripts also have a path and many versions share the same path. When a script is saved at a path, it creates a new hash which becomes the "HEAD" of the path, the previous "HEAD" is archived (but still deployed forever).
+
+When a script is saved, it is immediately deployed
+
+### Specific-purpose scripts
 
 You can attach additional functionalities to scripts by specializing them into specific Script kinds.
 
-#### Common Scripts
+#### Action
 
 Common Scripts are the basic building blocks for the flows.
 
