@@ -93,6 +93,11 @@ const config = {
 						position: 'left',
 						label: 'WindmillHub'
 					},
+					{
+						to: 'https://app.windmill.dev/openapi.html',
+						position: 'left',
+						label: 'OpenAPI'
+					},
 					// {
 					// 	href: '/hiring',
 					// 	position: 'right',
