@@ -351,7 +351,7 @@ e.g:
 `f.<foldername>.script_path`
 `u.<username>.script_path`
 
-Beware that you can only imports scripts that you can see.
+Beware that you can only imports scripts that you have visibility on. Furtheremore, if you make any import in the common logic, you will need to add the same import in the script that imports it as well otherwise the automatic dependency management will not work.
 
 The folder layout follow exactly the one of the CLI for syncing scripts locally and on windmill. As a consequence, the IDE will treat it as a relative imports and will behave as expected.
 
