@@ -329,10 +329,6 @@ It is possible to import directly from other python scripts. One can simply foll
 ```python
 # u/rubenfiszel/common_logic
 
-# you will still need a main function, so that the script is still recognized as valid
-def main():
-  pass
-
 def foo():
   print('Common logic!')
 
