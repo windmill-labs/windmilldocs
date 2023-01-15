@@ -90,7 +90,7 @@ function HomepageHeader() {
 					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 				</div>
 			</div>
-			<div className="lg:grid lg:grid-cols-12 lg:gap-20">
+			<div className="lg:grid lg:grid-cols-12 lg:gap-20 my-40">
 				<div className="md:max-w-2xl md:mx-auto lg:col-span-5">
 					<div>
 						<div className="mt-10 sm:max-w-xl">
@@ -140,7 +140,7 @@ function HomepageHeader() {
 							</pattern>
 						</defs>
 					</svg>
-					<div className="mt-20 relative mx-auto w-full lg:max-w-4xl">
+					<div className="relative mx-auto w-full lg:max-w-4xl">
 						<div className="rounded-lg shadow-lg">
 							<img className="rounded-lg shadow-lg" src="/img/flows.png" alt="" />
 							{/* <BrowserOnly>
@@ -174,7 +174,7 @@ function HomepageHeader() {
 				</div>
 			</div>
 
-			<div className="w-full flex items-center flex-col text-center">
+			<div className="w-full flex items-center flex-col text-center mt-10">
 				<h1 class="section-title">
 					What can you build with{' '}
 					<span class="text-transparent bg-clip-text bg-gradient-to-r to-blue-600 from-blue-500">
