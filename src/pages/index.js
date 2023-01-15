@@ -3,11 +3,7 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '../components/HomepageFeatures';
 import Pricing from '../components/Pricing';
 
-import FAQ from '../components/FAQ';
-import VideoPlayer from '../components/VideoPlayer';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-
-import { SparklesIcon } from '@heroicons/react/outline';
+import { SiGnubash, SiGo, SiPython, SiTypescript } from 'react-icons/si/index';
 import TabsW from '../components/Tabs';
 
 function HomepageHeader() {
@@ -47,7 +43,14 @@ function HomepageHeader() {
 					</a>{' '}
 					and <a href="/docs/how-tos/self_host">self-hostable</a> serverless runtime and platform
 					combining the power of code with the velocity of low-code. Scalable, reliable, blazingly
-					fast, any dependencies in Python/Typescript/Go/Bash
+					fast, any dependencies in
+					<div className="inline-flex gap-8 mt-8 h-20">
+						<SiPython size={'50px'} className="inline-block" />
+						<SiTypescript size={'50px'} className="inline-block" />
+						<SiGo size={'50px'} className="inline-block" />
+
+						<SiGnubash size={'50px'} className="inline-block" />
+					</div>
 				</span>
 			</h2>
 
