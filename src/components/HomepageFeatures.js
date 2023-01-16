@@ -143,7 +143,7 @@ export default function HomepageFeatures() {
 							<div className="mt-6">
 								<h2 className="subsection-title">
 									<span className="block xl:inline">Start with a script</span>
-									<span className="font-light ">, or pick one from WindmillHub</span>
+									<span className="font-light ">or pick one from WindmillHub</span>
 								</h2>
 								<p className="section-text">
 									Develop and maintain scripts from our feature-complete webeditor or use your own
