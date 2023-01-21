@@ -351,6 +351,18 @@ Beware that you can only imports scripts that you have visibility on. Furtheremo
 
 The folder layout follow exactly the one of the CLI for syncing scripts locally and on windmill. As a consequence, the IDE will treat it as a relative imports and will behave as expected.
 
+### Deno relative imports for sharing common logic
+
+Similarly to python, it is possible to import directly from other typescript scripts. One can simply follow the path layout. For instance, `import { foo } from "/f/<foldername>/script_name.ts"`. A fuller example below:
+
+```typescript
+import { main as foo, util } from "/f/common/my_script_path.ts"
+
+export async function main() {
+  await foo()
+  util()
+}
+```
 
 ## Flows
 
