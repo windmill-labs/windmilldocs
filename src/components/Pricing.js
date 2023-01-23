@@ -321,30 +321,36 @@ export default function Pricing() {
 
 							<div class="grow" />
 							{planTitle == 'Enterprise' ? (
-								<Quote
-									props={{
-										includedSeats: 1,
-										includedComputations: 10000,
-										perAuthor: 16,
-										perOperator: 8,
-										perComputation: 0.002,
-										basis: 100,
-										displayMultitenant: true
-									}}
-								/>
+								<div>
+									<Quote
+										props={{
+											includedSeats: 1,
+											includedComputations: 10000,
+											perAuthor: 16,
+											perOperator: 8,
+											perComputation: 0.002,
+											basis: 100,
+											displayMultitenant: true
+										}}
+									/>
+									<div className="text-center mt-2 w-full">Interested? contact@windmill.dev</div>
+								</div>
 							) : undefined}
 							{planTitle == 'Team' ? (
-								<Quote
-									props={{
-										includedSeats: 1,
-										includedComputations: 10000,
-										perAuthor: 8,
-										perOperator: 4,
-										perComputation: 0.001,
-										basis: 10,
-										displayMultitenant: false
-									}}
-								/>
+								<div>
+									<Quote
+										props={{
+											includedSeats: 1,
+											includedComputations: 10000,
+											perAuthor: 8,
+											perOperator: 4,
+											perComputation: 0.001,
+											basis: 10,
+											displayMultitenant: false
+										}}
+									/>
+									<div className="text-center mt-2 w-full">Sign in and upgrade your workspace</div>
+								</div>
 							) : undefined}
 						</div>
 					))}
