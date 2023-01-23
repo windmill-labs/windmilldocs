@@ -213,7 +213,7 @@ export default function Pricing() {
 	const [selectedTab, setTab] = useState('Cloud');
 
 	return (
-		<div id="pricing w-full">
+		<div id="pricing">
 			<div className="w-full mt-20 mb-20">
 				<h1 className="section-title text-center">Pricing</h1>
 			</div>
