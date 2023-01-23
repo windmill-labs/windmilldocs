@@ -180,8 +180,7 @@ So the event generated for `UPDATE` looks like this:
 ## Powerful workflow
 
 It should be already clear that the combination of Windmill and Supabase allows
-you to build powerful workflows. Detailed instructions how to build Windmill
-flows can be found in [this how-to](../how-tos/1_use_flows.md). You can also
-find example flow here: https://hub.windmill.dev/flows/33/flow-triggered-by-database-event-with-different-branches
+you to build powerful workflows.  You can find more
+flow examples here: <https://hub.windmill.dev/flows>
 
 Just remember that Windmill Flows also expose webhook URL.

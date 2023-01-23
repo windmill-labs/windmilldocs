@@ -49,7 +49,7 @@ via Gmail on your behalf.
 #### Reusing script from WindmillHub
 
 Let's create a flow as described in the getting started
-section ([go](../getting_started/quickstart_go.md), [typescript](../getting_started/quickstart_ts.md), [python](../getting_started/quickstart_python.md)). Our first step will be
+section ([go](../getting_started/quickstart_go.md), [typescript](../getting_started/2_quickstart_ts.md), [python](../getting_started/1_quickstart_python.md)). Our first step will be
 approval script from WindmillHub
 
 ![Approval step from Hub](../assets/how_to/6_examples/approval-step-from-hub.png)
