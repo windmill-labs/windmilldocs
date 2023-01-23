@@ -358,7 +358,7 @@ export default function Pricing() {
 								</span>
 							</li>
 							<li class="mt-2">Windmill Enterprise Edition Plugins</li>
-							<ul class="list-disc p-4 text-lg">
+							<ul class="list-disc mb-2 text-lg">
 								<li>Audit Logs exports</li>
 								<li>Distributed dependency cache</li>
 							</ul>
