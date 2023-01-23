@@ -143,7 +143,7 @@ const plans = {
 			<b>+ $4/mo</b> per extra operators in the workspace.
 		</span>,
 		<span>
-			<b>$0.001</b> per extra computation
+			<b>+ $0.001</b> per extra computation
 		</span>,
 		<span>
 			Google/Github/Microsoft/Gitlab <b>SSO</b>
@@ -324,7 +324,9 @@ export default function Pricing() {
 					<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
 						<h2 class="mb-4 text-4xl">Free and Open-source</h2>
 						<ul class="list-disc p-4 text-lg">
-							<li class="mt-2">AGPLv3 License</li>
+							<li class="mt-2">
+								<b>AGPLv3</b> License
+							</li>
 							<li class="mt-2">No restrictions whatsoever</li>
 							<li class="mt-2">Google/Github/Microsoft/Gitlab SSO</li>
 							<li class="mt-2">Easy to deploy on Fargate/Docker/Kubernetes</li>
@@ -335,7 +337,9 @@ export default function Pricing() {
 						<h2 class="mb-4 text-4xl">Enterprise Edition</h2>
 
 						<ul class="list-disc p-4 text-lg">
-							<li class="mt-2">Commercial License</li>
+							<li class="mt-2">
+								<b>Commercial</b> License
+							</li>
 
 							<li class="mt-2">
 								<span>
@@ -354,7 +358,7 @@ export default function Pricing() {
 							</li>
 							<li class="mt-2">
 								<span>
-									<b>$0.001</b> per extra computation
+									<b>+ $0.001</b> per extra computation
 								</span>
 							</li>
 							<li class="mt-2">Windmill Enterprise Edition Plugins</li>
