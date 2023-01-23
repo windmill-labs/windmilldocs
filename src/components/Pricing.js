@@ -218,8 +218,8 @@ export default function Pricing() {
 				<h1 className="section-title text-center">Pricing</h1>
 			</div>
 
-			<div class="mb-10 mx-auto max-w-2xl">
-				<div class="divide-y divide-gray-100">
+			<div class="mb-10 mx-auto max-w-2xl ">
+				<div class="divide-y divide-gray-100 mx-4">
 					<details class="group">
 						<summary class="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
 							Operator vs Author
