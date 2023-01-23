@@ -134,16 +134,16 @@ const plans = {
 	],
 	Team: [
 		<span>
-			<b>$10/mo</b>, includes 1 user/author + 10k computations
+			<b>$10/mo</b>, includes 1 user/author + 10k computations at no cost
 		</span>,
 		<span>
-			<b>+ $8/mo</b> per extra user/author in the workspace (1 included)
+			<b>+ $8/mo</b> per extra user/author in the workspace
 		</span>,
 		<span>
 			<b>+ $4/mo</b> per extra operators in the workspace.
 		</span>,
 		<span>
-			<b>$0.001</b> per additional computation (10k included)
+			<b>$0.001</b> per extra computation
 		</span>,
 		<span>
 			Google/Github/Microsoft/Gitlab <b>SSO</b>
@@ -159,7 +159,7 @@ const plans = {
 	],
 	Enterprise: [
 		<span>
-			<b>$100/mo</b>, includes 1 user/author + 10k computations
+			<b>$100/mo</b>, includes 1 user/author + 10k computations at no cost
 		</span>,
 		<span>
 			<b>+ $16/mo</b> per extra user/author in the workspace (1 included)
@@ -168,12 +168,12 @@ const plans = {
 			<b>+ $8/mo</b> per extra operators in the workspace.
 		</span>,
 		<span>
-			<b>$0.002</b> per additional computation (10k included)
+			<b>$0.002</b> per extra computation
 		</span>,
 		<span>
-			<b>Dedicated</b> cluster available for <b>+400$/mo</b>
+			<b>Dedicated</b> cluster available for <b>+$400/mo</b> (subdomain + dedicated workers and
+			database)
 		</span>,
-		<span>Everything in Team +</span>,
 		<span>
 			<b>SAML</b> support
 		</span>,
@@ -345,7 +345,7 @@ export default function Pricing() {
 							</li>
 							<li class="mt-2">
 								<span>
-									<b>+ $8/mo</b> per extra user/author in the workspace (1 included)
+									<b>+ $8/mo</b> per extra user/author in the workspace
 								</span>
 							</li>
 							<li class="mt-2">
@@ -355,7 +355,7 @@ export default function Pricing() {
 							</li>
 							<li class="mt-2">
 								<span>
-									<b>$0.001</b> per additional computation (10k included)
+									<b>$0.001</b> per extra computation
 								</span>
 							</li>
 							<li class="mt-2">Windmill Enterprise Edition Plugins</li>
