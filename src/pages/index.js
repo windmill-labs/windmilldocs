@@ -19,7 +19,7 @@ function HomepageHeader() {
 		<main className="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6">
 			<h1 className="text-5xl mb-20 mt-28 tracking-tight text-center font-bold text-black">
 				<span className="block 4xl:inline">
-					Build endpoints, workflows & ETL, UIs with code only where it matters
+					Build endpoints, workflows & ETLs, UIs with code only where it matters
 				</span>
 			</h1>
 
