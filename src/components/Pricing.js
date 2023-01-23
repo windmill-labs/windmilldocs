@@ -334,7 +334,6 @@ export default function Pricing() {
 					<div class="box p-4 flex flex-col h-full overflow-hidden">
 						<h2 class="mb-4 text-4xl">Enterprise Edition</h2>
 
-						<div>Everything in the Free and Open-Source version +</div>
 						<ul class="list-disc p-4 text-lg">
 							<li class="mt-2">Commercial License</li>
 
