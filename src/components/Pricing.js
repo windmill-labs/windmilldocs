@@ -428,6 +428,7 @@ export default function Pricing() {
 								displayMultitenant: false
 							}}
 						/>
+						<div className="text-center mt-2 w-full">Interested? contact@windmill.dev</div>
 					</div>
 				</div>
 			)}
