@@ -124,6 +124,7 @@
 
 import React from 'react';
 import { useState } from 'react';
+import Quote from './Quote';
 
 const plans = {
 	Free: [
@@ -319,6 +320,32 @@ export default function Pricing() {
 							</ul>
 
 							<div class="grow" />
+							{planTitle == 'Enterprise' ? (
+								<Quote
+									props={{
+										includedSeats: 1,
+										includedComputations: 10000,
+										perAuthor: 16,
+										perOperator: 8,
+										perComputation: 0.002,
+										basis: 100,
+										displayMultitenant: true
+									}}
+								/>
+							) : undefined}
+							{planTitle == 'Team' ? (
+								<Quote
+									props={{
+										includedSeats: 1,
+										includedComputations: 10000,
+										perAuthor: 8,
+										perOperator: 4,
+										perComputation: 0.001,
+										basis: 10,
+										displayMultitenant: false
+									}}
+								/>
+							) : undefined}
 						</div>
 					))}
 				</div>
@@ -383,6 +410,18 @@ export default function Pricing() {
 								<b>Design partners for Roadmap</b>
 							</li>
 						</ul>
+
+						<Quote
+							props={{
+								includedSeats: 1,
+								includedComputations: 10000,
+								perAuthor: 8,
+								perOperator: 4,
+								perComputation: 0.001,
+								basis: 100,
+								displayMultitenant: false
+							}}
+						/>
 					</div>
 				</div>
 			)}
