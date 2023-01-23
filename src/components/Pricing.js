@@ -168,7 +168,7 @@ const plans = {
 			<b>+ $8/mo</b> per extra operators in the workspace.
 		</span>,
 		<span>
-			<b>$0.002</b> per extra computation
+			<b>+ $0.002</b> per extra computation
 		</span>,
 		<span>
 			<b>Dedicated</b> cluster available for <b>+$400/mo</b> (subdomain + dedicated workers and
