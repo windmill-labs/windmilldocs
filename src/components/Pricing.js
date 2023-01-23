@@ -171,7 +171,7 @@ const plans = {
 			<b>+ $0.002</b> per extra computation
 		</span>,
 		<span>
-			<b>Dedicated</b> cluster available for <b>+$400/mo</b> (subdomain + dedicated workers and
+			<b>Dedicated</b> cluster available for <b>+ $400/mo</b> (subdomain + dedicated workers and
 			database)
 		</span>,
 		<span>
