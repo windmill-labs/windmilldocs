@@ -162,7 +162,7 @@ const plans = {
 			<b>$100/mo</b>, includes 1 user/author + 10k computations at no cost
 		</span>,
 		<span>
-			<b>+ $16/mo</b> per extra user/author in the workspace (1 included)
+			<b>+ $16/mo</b> per extra user/author in the workspace
 		</span>,
 		<span>
 			<b>+ $8/mo</b> per extra operators in the workspace.
