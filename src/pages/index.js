@@ -25,25 +25,27 @@ function HomepageHeader() {
 
 			<h2 className="text-1xl my-10 tracking-tight text-center  text-gray-500">
 				<span className="block 4xl:inline">
-					<a
-						onClick={() => window.plausible('github-tagline')}
-						data-analytics='"github-tagline"'
-						target="_blank"
-						href="https://github.com/windmill-labs/windmill"
-					>
-						open-source
-					</a>{' '}
-					<a
-						className="inline-block -mb-0.5"
-						target="_blank"
-						href="https://github.com/windmill-labs/windmill"
-						data-analytics='"github-stars"'
-					>
-						<img src="https://img.shields.io/github/stars/windmill-labs/windmill?logo=_&style=social"></img>
-					</a>{' '}
-					and <a href="/docs/how-tos/self_host">self-hostable</a> serverless runtime and platform
-					combining the power of code with the velocity of low-code. Scalable, reliable, blazingly
-					fast, any dependencies in
+					<div>
+						<a
+							onClick={() => window.plausible('github-tagline')}
+							data-analytics='"github-tagline"'
+							target="_blank"
+							href="https://github.com/windmill-labs/windmill"
+						>
+							open-source
+						</a>{' '}
+						<a
+							className="inline-block -mb-0.5"
+							target="_blank"
+							href="https://github.com/windmill-labs/windmill"
+							data-analytics='"github-stars"'
+						>
+							<img src="https://img.shields.io/github/stars/windmill-labs/windmill?logo=_&style=social"></img>
+						</a>{' '}
+						and <a href="/docs/how-tos/self_host">self-hostable</a> serverless runtime and platform
+						combining the power of code with the velocity of low-code. Scalable, reliable, blazingly
+						fast, any dependencies in
+					</div>
 					<div className="inline-flex gap-8 mt-8 h-20">
 						<SiPython size={'50px'} className="inline-block" />
 						<SiTypescript size={'50px'} className="inline-block" />
@@ -228,7 +230,7 @@ export default function Home() {
 			<main>
 				<HomepageHeader />
 				<HomepageFeatures />
-				<div className="mx-auto max-w-screen-lg homepage">
+				<div className="mx-auto max-w-7xl homepage">
 					<Pricing />
 					{/* <FAQ /> */}
 					{/* <OSS /> */}

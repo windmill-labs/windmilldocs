@@ -22,8 +22,13 @@
 nav {
 	font-family: var(--ifm-font-family-base);
 }
+
+footer {
+	font-family: var(--ifm-font-family-base);
+}
+
 :root {
-	--ifm-font-family-base: 'Inter';
+	--ifm-font-family-base: 'Inter', 'Arial';
 	--ifm-color-primary: rgb(59, 130, 246);
 	--ifm-color-primary-dark: rgb(37, 102, 206);
 	--ifm-color-primary-darker: rgb(23, 70, 146);
@@ -32,6 +37,10 @@ nav {
 	--ifm-color-primary-lighter: rgb(132, 152, 241);
 	--ifm-color-primary-lightest: rgb(169, 175, 211);
 	--ifm-code-font-size: 95%;
+}
+
+.markdown {
+	font-size: 18px;
 }
 
 .docusaurus-highlight-code-line {
@@ -171,4 +180,8 @@ a {
 
 .section-text {
 	@apply mt-8 text-lg text-gray-500;
+}
+
+.box {
+	@apply border border-gray-600 rounded-lg shadow-md p-4 mx-2;
 }

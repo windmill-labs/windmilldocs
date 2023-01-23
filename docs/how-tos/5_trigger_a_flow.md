@@ -1,7 +1,6 @@
-# Trigger Flows
+# Trigger flows based on external changes
 
-There are two ways to trigger a Windmill Flow. Flows can watch for changes
-regularly or flows can be triggered by UI or webhook.
+There are two ways to trigger a Windmill Flow. Flows can be scheduled or flows can be triggered by Windmill's UI or through the flow's webhook.
 
 ## Scheduled
 

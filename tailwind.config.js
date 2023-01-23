@@ -14,7 +14,7 @@ module.exports = {
 		},
 		fontFamily: {
 			// add double quotes if there is space in font name
-			main: ['Inter', 'sans-serif'],
+			main: ['Inter', 'Arial'],
 			mono: [
 				'ui-monospace',
 				'SFMono-Regular',

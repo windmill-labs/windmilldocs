@@ -1,6 +1,6 @@
 ---
 id: schedule
-title: Schedules
+title: Schedule a script or flow
 ---
 
 # Run on a schedule

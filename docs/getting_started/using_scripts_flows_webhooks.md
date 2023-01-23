@@ -1,4 +1,4 @@
-# Using Scripts, Flows and webhooks to build an issue triage bot
+# Build an issue triage bot flow
 
 In this tutorial, we'll use Windmill to build a bot that automatically labels new issues created in one or more GitHub repositories.
 

@@ -122,164 +122,264 @@
 // 	);
 // }
 
-import { Fragment } from 'react'
-import React from 'react'
-import { CheckIcon, MinusIcon } from '@heroicons/react/solid'
+import React from 'react';
+import { useState } from 'react';
 
-const tiers = [
-	{ name: 'Free', pricing: 'free-tier + self-hostable', description: 'As a free user you can create and be member of at most 3 non-premium workspaces. Best for personal uses.' },
-	{
-		name: 'Team',
-		pricing: "10$ /mo /user",
-		description: 'Any workspace can be upgraded to be a premium team workspace. Best for teams.',
-	},
-	{
-		name: 'Enterprise',
-		pricing: 'custom',
-		description: 'Best for orgs or teams that use Windmill at scale and/or require a commercial license',
-	},
-]
-const sections = [
-	{
-		name: 'Features',
-		features: [
-			{ name: 'Flows', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Automatically generates the UI', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Deploy from Github', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Webeditor with preview and code intelligence', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Script versioning', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Schedules', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Slackbot commands', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Export Workspace', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Embed apps externally (WIP)', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'User based permissioning', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Audit logs', tiers: { Free: '1 day', Team: '30 days + export to storage', Enterprise: '30 days + export to storage' } },
-			{ name: 'Group based permissioning', tiers: { Free: 'While in beta', Team: true, Enterprise: true } },
-			{ name: 'self-hosted workers', tiers: { Free: '', Team: true, Enterprise: true } },
-			{ name: 'SSO', tiers: { Free: '', Team: '', Enterprise: true } },
-			{ name: 'Kubernetes setup', tiers: { Free: '', Team: '', Enterprise: true } },
-			{ name: 'Commercial license for self-hosting', tiers: { Free: '', Team: '', Enterprise: true } },
-		],
-	},
-	{
-		name: 'Cloud Usage',
-		features: [
-			{ name: 'Scripts', tiers: { Free: '10', Team: '50', Enterprise: 'Unlimited' } },
-			{ name: 'Scripts versions', tiers: { Free: 'Last 5', Team: 'Last 50', Enterprise: 'Unlimited' } },
-			{ name: 'Secrets, Resources, Schedules', tiers: { Free: 'Unlimited', Team: "Unlimited", Team: "Unlimited" } },
-			{ name: 'Flows or standalone Scripts execution', tiers: { Free: '100/day', Team: '5000/day/seat', Enterprise: 'Unlimited' } },
-			{ name: 'Cumulated execution time limit @ 1vCPU', tiers: { Free: '100s/day', Team: '10000s/day/seat', Enterprise: 'Unlimited' } },
-		],
-	},
-	{
-		name: 'Support',
-		features: [
-			{ name: 'Github issue', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Discord', tiers: { Free: true, Team: true, Enterprise: true } },
-			{ name: 'Email', tiers: { Free: 'Best effort', Team: 'Response within 24h', Enterprise: 'Response within 1h' } },
-			{ name: 'Dedicated Support and Automation Engineer', tiers: { Free: '', Team: '', Enterprise: true } },
-			{ name: 'Engineer migrating all your automation to Windmill', tiers: { Free: '', Team: '', Enterprise: true } },
+const plans = {
+	Free: [
+		<span>
+			<b>1 000</b> free global executions per month
+		</span>,
+		<span>Community support on Discord</span>
+	],
+	Team: [
+		<span>
+			<b>$10/mo</b>, includes 1 user/author + 10k computations
+		</span>,
+		<span>
+			<b>+ $8/mo</b> per extra user/author in the workspace (1 included)
+		</span>,
+		<span>
+			<b>+ $4/mo</b> per extra operators in the workspace.
+		</span>,
+		<span>
+			<b>$0.001</b> per additional computation (10k included)
+		</span>,
+		<span>
+			Google/Github/Microsoft/Gitlab <b>SSO</b>
+		</span>,
+		<span>
+			<b>Unlimited</b> variables/resources/scripts/apps/flows
+		</span>,
+		<span>
+			<b>Support 24/7 with 48h response time</b>
+		</span>,
 
-		],
-	},
-]
+		<span>Limited to 10 seats</span>
+	],
+	Enterprise: [
+		<span>
+			<b>$100/mo</b>, includes 1 user/author + 10k computations
+		</span>,
+		<span>
+			<b>+ $16/mo</b> per extra user/author in the workspace (1 included)
+		</span>,
+		<span>
+			<b>+ $8/mo</b> per extra operators in the workspace.
+		</span>,
+		<span>
+			<b>$0.002</b> per additional computation (10k included)
+		</span>,
+		<span>
+			<b>Dedicated</b> cluster available for <b>+400$/mo</b>
+		</span>,
+		<span>Everything in Team +</span>,
+		<span>
+			<b>SAML</b> support
+		</span>,
+		<span>
+			<b>SLA</b>
+		</span>,
+		<span>
+			<b>Priority Support 24/7 with 3h response time and automation engineer assistance</b>
+		</span>,
+		<span>
+			<b>Design partners for Roadmap</b>
+		</span>
+	]
+};
 
+/*
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+*/
+const tabs = [{ name: 'Self-hosted' }, { name: 'Cloud' }];
 
-export default function Pricing()
-{
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ');
+}
+
+export default function Pricing() {
+	const [selectedTab, setTab] = useState('Cloud');
+
 	return (
-		<div id="pricing">
-			<div className="max-w-7xl mx-auto py-16 sm:py-24 sm:px-6 lg:px-8">
-				<h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl mb-8">Pricing</h2>
+		<div id="pricing w-full">
+			<div className="w-full mt-20 mb-20">
+				<h1 className="section-title text-center">Pricing</h1>
+			</div>
 
-
-				<div className="">
-					<table className="w-full h-px table-fixed table ">
-						<caption className="sr-only">Pricing plan comparison</caption>
-						<thead>
-							<tr>
-								<th className="pb-4 px-6 text-sm font-medium text-gray-900 text-left" scope="col">
-									<span className="sr-only">Feature by</span>
-									<span>Plans</span>
-								</th>
-								{tiers.map((tier) => (
-									<th
-										key={tier.name}
-										className="w-1/4 pb-4 px-6 leading-6 text-4xl  font-light text-gray-900 text-left"
-										scope="col"
-									>
-										{tier.name}
-									</th>
-								))}
-							</tr>
-						</thead>
-						<tbody className="border-t border-gray-200 divide-y divide-gray-200">
-							<tr>
-								<th className="py-8 px-6 text-sm font-medium text-gray-900 text-left align-top" scope="row">
-									Pricing
-								</th>
-								{tiers.map((tier, tierIdx) => (
-									<td key={tier.name} className="h-full py-8 px-6 align-top">
-										<div className="relative h-full table">
-											<p>
-												<span className="text-xl sm:text-2xl text-gray-900 font-mono">{tier.pricing}</span>
-											</p>
-											<p className="mt-4 mb-10 text-sm text-gray-500">{tier.description}</p>
-											<div className='p-2'></div>
-											{tierIdx > 0 ?
-												<a
-													href="mailto:contact@windmill.dev?subject=Request%20upgrade"
-													className="absolute bottom-0 block border border-gray-800 rounded-md bg-gray-800 py-1 px-2 text-sm font-semibold text-white text-center hover:bg-gray-900"
-												>
-													contact us
-												</a> : ''}
-										</div>
-									</td>
-								))}
-							</tr>
-							{sections.map((section) => (
-								<Fragment key={section.name}>
-									<tr>
-										<th
-											className="bg-gray-50 py-3 pl-6 text-sm font-medium text-gray-900 text-left"
-											colSpan={4}
-											scope="colgroup"
-										>
-											{section.name}
-										</th>
-									</tr>
-									{section.features.map((feature) => (
-										<tr key={feature.name}>
-											<th className="py-5 px-6 text-sm font-normal text-gray-500 text-left" scope="row">
-												{feature.name}
-											</th>
-											{tiers.map((tier) => (
-												<td key={tier.name} className="py-5 px-6">
-													{typeof feature.tiers[tier.name] === 'string' ? (
-														<span className="block text-sm text-gray-700">{feature.tiers[tier.name]}</span>
-													) : (
-														<>
-															{feature.tiers[tier.name] === true ? (
-																<CheckIcon className="h-5 w-5 text-green-500" aria-hidden="true" />
-															) : (
-																<MinusIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-															)}
-
-															<span className="sr-only">
-																{feature.tiers[tier.name] === true ? 'Included' : 'Not included'} in {tier.name}
-															</span>
-														</>
-													)}
-												</td>
-											))}
-										</tr>
-									))}
-								</Fragment>
-							))}
-						</tbody>
-					</table>
+			<div class="mb-10 mx-auto max-w-2xl">
+				<div class="divide-y divide-gray-100">
+					<details class="group">
+						<summary class="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
+							Operator vs Author
+							<div class="text-secondary-500">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+									/>
+								</svg>
+							</div>
+						</summary>
+						<div class="pb-4 text-secondary-500">
+							An author can write scripts/flows/apps/variables/resources. An operator can only
+							run/view them.
+						</div>
+					</details>
+					<details class="group">
+						<summary class="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
+							What is a computation?
+							<div class="text-secondary-500">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+									/>
+								</svg>
+							</div>
+						</summary>
+						<div class="pb-4 text-secondary-500">
+							{' '}
+							The single credit-unit is called a "computation". An computation corresponds to a
+							single job whose duration is less than 1s. For any additional seconds of computation,
+							an additional computation is accounted for. Jobs are executed on one powerful virtual
+							CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
+						</div>
+					</details>
 				</div>
 			</div>
+
+			<div>
+				<div className="w-full mb-10">
+					<div className="border-b border-gray-200">
+						<nav className="-mb-px flex" aria-label="Tabs">
+							{tabs.map((tab) => (
+								<a
+									key={tab.name}
+									onClick={(e) => {
+										e.preventDefault();
+										setTab(tab.name);
+									}}
+									href="#"
+									className={classNames(
+										selectedTab == tab.name
+											? 'border-gray-700 text-gray-800'
+											: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+										'w-1/2  py-4 px-1 text-center border-b-2 font-medium text-md'
+									)}
+									aria-current={selectedTab == tab.name ? 'page' : undefined}
+								>
+									{tab.name}
+								</a>
+							))}
+						</nav>
+					</div>
+				</div>
+			</div>
+
+			{selectedTab == 'Cloud' ? (
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					{Object.entries(plans).map(([planTitle, planDesc]) => (
+						<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
+							<h2 class="mb-4 text-4xl">{planTitle}</h2>
+							<ul class="list-disc p-4 text-lg">
+								{planDesc.map((item) => (
+									<li class="mt-2">{item}</li>
+								))}
+							</ul>
+
+							<div class="grow" />
+						</div>
+					))}
+				</div>
+			) : (
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
+						<h2 class="mb-4 text-4xl">Free and Open-source</h2>
+						<ul class="list-disc p-4 text-lg">
+							<li class="mt-2">AGPLv3 License</li>
+							<li class="mt-2">No restrictions whatsoever</li>
+							<li class="mt-2">Google/Github/Microsoft/Gitlab SSO</li>
+							<li class="mt-2">Easy to deploy on Fargate/Docker/Kubernetes</li>
+							<li class="mt-2">Community support on Discord</li>
+						</ul>
+					</div>
+					<div class="box p-4 flex flex-col h-full overflow-hidden">
+						<h2 class="mb-4 text-4xl">Enterprise Edition</h2>
+
+						<div>Everything in the Free and Open-Source version +</div>
+						<ul class="list-disc p-4 text-lg">
+							<li class="mt-2">Commercial License</li>
+
+							<li class="mt-2">
+								<span>
+									<b>$100/mo</b>, includes 1 user/author + 10k computations
+								</span>
+							</li>
+							<li class="mt-2">
+								<span>
+									<b>+ $8/mo</b> per extra user/author in the workspace (1 included)
+								</span>
+							</li>
+							<li class="mt-2">
+								<span>
+									<b>+ $4/mo</b> per extra operators in the workspace.
+								</span>
+							</li>
+							<li class="mt-2">
+								<span>
+									<b>$0.001</b> per additional computation (10k included)
+								</span>
+							</li>
+							<li class="mt-2">Windmill Enterprise Edition Plugins</li>
+							<ul class="list-disc p-4 text-lg">
+								<li>Audit Logs exports</li>
+								<li>Distributed dependency cache</li>
+							</ul>
+							<li class="">
+								<b>SAML</b> support including groups synchronization
+							</li>
+							<li class="mt-2">
+								<b>SLA</b>
+							</li>
+							<li class="mt-2">
+								<b>Priority Support 24/7</b> with 3h response time and automation engineer
+								assistance
+							</li>
+							<li class="mt-2">
+								<b>Design partners for Roadmap</b>
+							</li>
+						</ul>
+					</div>
+				</div>
+			)}
 		</div>
-	)
+	);
 }
