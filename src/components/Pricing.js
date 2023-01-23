@@ -171,8 +171,11 @@ const plans = {
 			<b>+ $0.002</b> per extra computation
 		</span>,
 		<span>
-			<b>Dedicated</b> cluster available for <b>+ $400/mo</b> (subdomain + dedicated workers and
-			database)
+			<b>Dedicated</b> isolated workers and database available for <b>+ $400/mo</b> (available in
+			US/EU/Asia)
+		</span>,
+		<span>
+			<b>Dedicated</b> entire kubernetes cluster <b>+ $4000/mo</b> (available in US/EU/Asia)
 		</span>,
 		<span>
 			<b>SAML</b> support
