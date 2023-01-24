@@ -27,6 +27,14 @@ footer {
 	font-family: var(--ifm-font-family-base);
 }
 
+li {
+	font-family: var(--ifm-font-family-base);
+}
+
+body {
+	font-family: var(--ifm-font-family-base);
+}
+
 :root {
 	--ifm-font-family-base: 'Inter', 'Arial';
 	--ifm-color-primary: rgb(59, 130, 246);
