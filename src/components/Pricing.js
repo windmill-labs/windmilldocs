@@ -160,16 +160,16 @@ const plans = {
 	],
 	Enterprise: [
 		<span>
-			<b>$100/mo</b>, includes 1 user/author + 10k computations at no cost
+			<b>$200/mo</b>, includes 1 user/author + 10k computations at no cost
 		</span>,
 		<span>
-			<b>+ $16/mo</b> per extra user/author in the workspace
+			<b>+ $32/mo</b> per extra user/author in the workspace
 		</span>,
 		<span>
-			<b>+ $8/mo</b> per extra operators in the workspace.
+			<b>+ $16/mo</b> per extra operators in the workspace.
 		</span>,
 		<span>
-			<b>+ $0.002</b> per extra computation
+			<b>+ $0.004</b> per extra computation
 		</span>,
 		<span>
 			<b>Dedicated</b> isolated workers and database available for <b>+ $400/mo</b> (available in
@@ -326,10 +326,10 @@ export default function Pricing() {
 										props={{
 											includedSeats: 1,
 											includedComputations: 10000,
-											perAuthor: 16,
-											perOperator: 8,
-											perComputation: 0.002,
-											basis: 100,
+											perAuthor: 32,
+											perOperator: 16,
+											perComputation: 0.004,
+											basis: 200,
 											displayMultitenant: true
 										}}
 									/>
@@ -384,17 +384,17 @@ export default function Pricing() {
 							</li>
 							<li class="mt-2">
 								<span>
-									<b>+ $8/mo</b> per extra user/author in the workspace
+									<b>+ $16/mo</b> per extra user/author in the workspace
 								</span>
 							</li>
 							<li class="mt-2">
 								<span>
-									<b>+ $4/mo</b> per extra operators in the workspace.
+									<b>+ $8/mo</b> per extra operators in the workspace.
 								</span>
 							</li>
 							<li class="mt-2">
 								<span>
-									<b>+ $0.001</b> per extra computation
+									<b>+ $0.002</b> per extra computation
 								</span>
 							</li>
 							<li class="mt-2">
@@ -423,9 +423,9 @@ export default function Pricing() {
 							props={{
 								includedSeats: 1,
 								includedComputations: 10000,
-								perAuthor: 8,
-								perOperator: 4,
-								perComputation: 0.001,
+								perAuthor: 16,
+								perOperator: 8,
+								perComputation: 0.002,
 								basis: 100,
 								displayMultitenant: false
 							}}
