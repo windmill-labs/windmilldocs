@@ -313,7 +313,7 @@ export default function Pricing() {
 					{Object.entries(plans).map(([planTitle, planDesc]) => (
 						<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
 							<h2 class="mb-4 text-4xl">{planTitle}</h2>
-							<ul class="list-disc p-4 text-lg">
+							<ul class="list-disc p-4 text-md">
 								{planDesc.map((item) => (
 									<li class="mt-2">{item}</li>
 								))}
@@ -346,7 +346,8 @@ export default function Pricing() {
 											perOperator: 4,
 											perComputation: 0.001,
 											basis: 10,
-											displayMultitenant: false
+											displayMultitenant: false,
+											maxSeats: 10
 										}}
 									/>
 									<div className="text-center mt-2 w-full">Sign in and upgrade your workspace</div>
@@ -359,7 +360,7 @@ export default function Pricing() {
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 					<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
 						<h2 class="mb-4 text-4xl">Free and Open-source</h2>
-						<ul class="list-disc p-4 text-lg">
+						<ul class="list-disc p-4 text-md">
 							<li class="mt-2">
 								<b>AGPLv3</b> License
 							</li>
@@ -372,7 +373,7 @@ export default function Pricing() {
 					<div class="box p-4 flex flex-col h-full overflow-hidden">
 						<h2 class="mb-4 text-4xl">Enterprise Edition</h2>
 
-						<ul class="list-disc p-4 text-lg">
+						<ul class="list-disc p-4 text-md">
 							<li class="mt-2">
 								<b>Commercial</b> License
 							</li>

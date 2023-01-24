@@ -9,24 +9,35 @@ export default function Quote(props) {
 		perAuthor,
 		perOperator,
 		perComputation,
-		displayMultitenant
+		displayMultitenant,
+		maxSeats
 	} = props.props;
 	const [seats, changeSeats] = useState(includedSeats);
 	const [seatsOperator, changeSeatsOperator] = useState(0);
 	const [computations, changeComputations] = useState(includedComputations);
 	const [multitenant, changeMultitenant] = useState('multi');
 
-	const handleChangeSeats = (e) => changeSeats(e.target.value);
-	const handleChangeSeatsOp = (e) => changeSeatsOperator(e.target.value);
+	const handleChangeSeats = (e) => {
+		if (maxSeats && e.target.value > maxSeats) {
+			e.target.value = maxSeats;
+		}
+		changeSeats(e.target.value);
+	};
+	const handleChangeSeatsOp = (e) => {
+		if (maxSeats && e.target.value > maxSeats) {
+			e.target.value = maxSeats;
+		}
+		changeSeatsOperator(e.target.value);
+	};
 	const handleChangeComp = (e) => changeComputations(e.target.value);
 	const handleChangeMulti = (e) => changeMultitenant(e.target.value);
 	function quote() {
-		return (
+		return Math.floor(
 			basis +
-			Math.max(0, seats - includedSeats) * perAuthor +
-			Math.max(0, seatsOperator) * perOperator +
-			Math.max(0, computations - includedComputations) * perComputation +
-			(multitenant === 'multi' ? 0 : multitenant === 'dedicated' ? 400 : 4000)
+				Math.min(maxSeats ?? 999999, Math.max(0, seats - includedSeats)) * perAuthor +
+				Math.max(0, seatsOperator) * perOperator +
+				Math.max(0, computations - includedComputations) * perComputation +
+				(multitenant === 'multi' ? 0 : multitenant === 'dedicated' ? 400 : 4000)
 		);
 	}
 	return (
@@ -37,6 +48,7 @@ export default function Quote(props) {
 				<input
 					className="w-20"
 					min={includedSeats}
+					max={maxSeats}
 					type="number"
 					value={seats}
 					onChange={handleChangeSeats}
@@ -47,6 +59,7 @@ export default function Quote(props) {
 				<input
 					className="w-20"
 					min={0}
+					max={maxSeats}
 					type="number"
 					value={seatsOperator}
 					onChange={handleChangeSeatsOp}
