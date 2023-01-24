@@ -397,8 +397,10 @@ export default function Pricing() {
 									<b>+ $0.001</b> per extra computation
 								</span>
 							</li>
-							<li class="mt-2">Windmill Enterprise Edition Plugins</li>
-							<ul class="list-disc mb-2 text-lg">
+							<li class="mt-2">
+								Windmill Enterprise Edition <b>Plugins</b>
+							</li>
+							<ul class="list-disc mb-2 ml-8 text-lg">
 								<li>Audit Logs exports</li>
 								<li>Distributed dependency cache</li>
 							</ul>
