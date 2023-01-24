@@ -17,85 +17,88 @@ function HomepageHeader() {
 
 	return (
 		<main className="mx-auto max-w-7xl px-4 sm:mt-4 sm:px-6">
-			<h1 className="text-5xl mb-20 mt-28 tracking-tight text-center font-bold text-black">
-				<span className="block 4xl:inline">
-					Build endpoints, workflows & ETLs, UIs with code only where it matters
-				</span>
-			</h1>
+			<div className="min-h-screen my-auto">
+				<h1 className="text-5xl mb-20 mt-20 tracking-tight text-center font-bold text-black">
+					<span className="block 4xl:inline">
+						Build endpoints, workflows & ETLs, UIs with code only where it matters
+					</span>
+				</h1>
 
-			<h2 className="text-1xl my-10 tracking-tight text-center  text-gray-500">
-				<span className="block 4xl:inline">
-					<div>
-						<a
-							onClick={() => window.plausible('github-tagline')}
-							data-analytics='"github-tagline"'
-							target="_blank"
-							href="https://github.com/windmill-labs/windmill"
-						>
-							open-source
-						</a>{' '}
-						<a
-							className="inline-block -mb-0.5"
-							target="_blank"
-							href="https://github.com/windmill-labs/windmill"
-							data-analytics='"github-stars"'
-						>
-							<img src="https://img.shields.io/github/stars/windmill-labs/windmill?logo=_&style=social"></img>
-						</a>{' '}
-						and <a href="/docs/how-tos/self_host">self-hostable</a> serverless runtime and platform
-						combining the power of code with the velocity of low-code. Scalable, reliable, blazingly
-						fast, any dependencies in
+				<h2 className="text-1xl my-10 tracking-tight text-center  text-gray-500">
+					<span className="block 4xl:inline">
+						<div>
+							<a
+								onClick={() => window.plausible('github-tagline')}
+								data-analytics='"github-tagline"'
+								target="_blank"
+								href="https://github.com/windmill-labs/windmill"
+							>
+								open-source
+							</a>{' '}
+							<a
+								className="inline-block -mb-0.5"
+								target="_blank"
+								href="https://github.com/windmill-labs/windmill"
+								data-analytics='"github-stars"'
+							>
+								<img src="https://img.shields.io/github/stars/windmill-labs/windmill?logo=_&style=social"></img>
+							</a>{' '}
+							and <a href="/docs/how-tos/self_host">self-hostable</a> serverless runtime and
+							platform combining the power of code with the velocity of low-code. Scalable,
+							reliable, blazingly fast, any dependencies in
+						</div>
+						<div className="inline-flex gap-8 mt-8 h-20">
+							<SiPython size={'50px'} className="inline-block" />
+							<SiTypescript size={'50px'} className="inline-block" />
+							<SiGo size={'50px'} className="inline-block" />
+
+							<SiGnubash size={'50px'} className="inline-block" />
+						</div>
+					</span>
+				</h2>
+
+				<div className="mt-12 grid grid-cols-2 gap-8 max-w-md mx-auto">
+					<div className="w-full col-span-1 flex flex-col">
+						<div>
+							<a
+								href="https://app.windmill.dev/user/login"
+								className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 hover:text-white md:py-4 md:text-lg md:px-10"
+								onClick={() => window.plausible('try-cloud')}
+								data-analytics='"try-cloud"'
+							>
+								Try Windmill for Free
+							</a>
+						</div>
+						<div className=" text-center text-sm">
+							or{' '}
+							<a
+								onClick={() => window.plausible('read-docs')}
+								className="hover:underline"
+								href="/docs/intro"
+							>
+								read the docs
+							</a>
+						</div>
 					</div>
-					<div className="inline-flex gap-8 mt-8 h-20">
-						<SiPython size={'50px'} className="inline-block" />
-						<SiTypescript size={'50px'} className="inline-block" />
-						<SiGo size={'50px'} className="inline-block" />
-
-						<SiGnubash size={'50px'} className="inline-block" />
-					</div>
-				</span>
-			</h2>
-
-			<div className="mt-20 grid grid-cols-2 gap-8 max-w-md mx-auto">
-				<div className="w-full col-span-1 flex flex-col">
-					<div>
+					<div className="w-full col-span-1">
 						<a
-							href="https://app.windmill.dev/user/login"
-							className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-white bg-blue-600 hover:bg-blue-700 hover:text-white md:py-4 md:text-lg md:px-10"
-							onClick={() => window.plausible('try-cloud')}
-							data-analytics='"try-cloud"'
+							href="https://cal.com/ruben-windmill/windmill-demo"
+							data-analytics='"schedule-demo"'
+							onClick={() => window.plausible('schedule-demo')}
+							className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-gray-50 hover:underline md:py-4 md:text-lg md:px-10"
 						>
-							Try Windmill for Free
+							Schedule a demo
 						</a>
 					</div>
-					<div className=" text-center text-sm">
-						or{' '}
-						<a
-							onClick={() => window.plausible('read-docs')}
-							className="hover:underline"
-							href="/docs/intro"
-						>
-							read the docs
-						</a>
+				</div>
+				<div className="w-full text-center mt-20">
+					<div className="text-gray-600 font-md my-12 mx-auto">
+						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 					</div>
 				</div>
-				<div className="w-full col-span-1">
-					<a
-						href="https://cal.com/ruben-windmill/windmill-demo"
-						data-analytics='"schedule-demo"'
-						onClick={() => window.plausible('schedule-demo')}
-						className="w-full whitespace-nowrap rounded flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium text-blue-600 bg-gray-50 hover:underline md:py-4 md:text-lg md:px-10"
-					>
-						Schedule a demo
-					</a>
-				</div>
 			</div>
-			<div className="w-full text-center mt-20">
-				<div className="text-gray-600 font-md my-12 mx-auto">
-					Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
-				</div>
-			</div>
-			<div className="lg:grid lg:grid-cols-12 lg:gap-20 my-40">
+
+			<div className="lg:grid lg:grid-cols-12 lg:gap-20 mb-40">
 				<div className="md:max-w-2xl md:mx-auto lg:col-span-5">
 					<div>
 						<div className="mt-10 sm:max-w-xl">
@@ -178,7 +181,6 @@ function HomepageHeader() {
 					</div>
 				</div>
 			</div>
-
 			<div className="w-full flex items-center flex-col text-center mt-10">
 				<h1 class="section-title">
 					What can you build with{' '}
