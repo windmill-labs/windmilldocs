@@ -42,9 +42,10 @@ but if you want an integration to be supported by Windmill directly, please subm
 
 You can reference the type of a Supabase resource in a script the following way:
 
-> To get the latest supported resource types, check for the latest version of the Windmill Deno package at https://deno.land/x/windmill/mod.ts
-
 ```ts
+// To get the latest supported resource types, 
+// check for the latest version of the Windmill Deno 
+// package at https://deno.land/x/windmill/mod.ts
 import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
 
 export async function main(auth: Resource<"supabase">) {
@@ -52,4 +53,6 @@ export async function main(auth: Resource<"supabase">) {
 }
 ```
 
-**You can find more examples and premade scripts at [Supabase integrations on Windmill Hub](https://hub.windmill.dev/integrations/supabase)**
+:::tip
+You can find more examples and premade scripts at [Supabase integrations on Windmill Hub](https://hub.windmill.dev/integrations/supabase)
+:::
