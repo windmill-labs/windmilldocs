@@ -28,11 +28,7 @@ export default function Hero() {
 			</svg>
 			<div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-					<img
-						className="h-11 animate-[spin_4s_linear_infinite]"
-						src="img/windmill.svg"
-						alt="Your Company"
-					/>
+					<img className="h-11" src="img/windmill.svg" alt="Your Company" />
 
 					<h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 						Turn scripts into internal workflows and UIs in minutes

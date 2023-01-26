@@ -37,16 +37,16 @@ export default function FlowSection() {
 					schedule, watching for events, or slack.
 				</span>
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+					<div class="flex flex-col w-full gap-2 italic">
+						<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
+						<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
+					</div>
 					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 						{data.map((item) => (
 							<FeatureCard title={item.title} color="green">
 								{item.description}
 							</FeatureCard>
 						))}
-					</div>
-					<div class="flex flex-col w-full gap-2 italic">
-						<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
-						<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
 					</div>
 				</div>
 				<div className="flex">

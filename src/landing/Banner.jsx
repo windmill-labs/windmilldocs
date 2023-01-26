@@ -7,9 +7,7 @@ export default function Banner() {
 				<div className="pr-16 sm:px-16 sm:text-center">
 					<p className="font-medium text-white">
 						<span className="md:hidden">Announcing our $4 million seed!</span>
-						<span className="hidden md:inline">
-							Announcing our $4 million seed from Y Combinator, Gradient Ventures, and more.
-						</span>
+						<span className="hidden md:inline">Announcing our $4 million seed from ...</span>
 						<span className="block sm:ml-2 sm:inline-block">
 							<a href="#" className="font-bold text-white underline">
 								Learn more
