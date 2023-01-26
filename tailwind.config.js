@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
 	content: ['./src/**/*.{html,js,jsx,tsx}'],
 	extend: {
@@ -27,5 +29,17 @@ module.exports = {
 			]
 		}
 	},
-	plugins: [require('@tailwindcss/forms')]
+	plugins: [
+		require('@tailwindcss/forms'),
+		plugin(({ addBase }) => {
+			addBase({
+				// Sets the style of the titles in the article list
+				'h2 > a[href*="/blog/"]': {
+					fontSize: '1.8rem',
+					lineHeight: '105%',
+					fontWeight: '500',
+				}
+			});
+		})
+	]
 };

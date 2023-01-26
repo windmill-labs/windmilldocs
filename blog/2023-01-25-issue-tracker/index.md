@@ -5,29 +5,47 @@ authors: [adamkov]
 tags: [issues, tracker, app, supabase, deno, typescript, v2]
 ---
 
-The following tutorial will showcase how you could build an issue tracker application with Windmill and Supabase, without ever having to leave your browser. 
-While running projects, you’ll quickly get lost if you don't keep an eye on the pain points, so tracking and categorising issues is critical in any field. 
-Let's start creating your custom application with setting up a database.
+The following tutorial will showcase how you could build an issue tracker
+application with Windmill and Supabase, without ever having to leave your
+browser.
+
+<!--truncate-->
+
+While running projects, you’ll quickly get lost if you don't keep an eye on the
+pain points, so tracking and categorising issues is critical in any field. Let's
+start creating your custom application with setting up a database.
 
 ## Supabase setup
 
-[Supabase](https://supabase.com/) is a [VC backed](https://supabase.com/blog/supabase-series-b), [open-source](https://github.com/supabase/supabase) Backend as a Service with a generous free tier, which also means you don't need to setup payment when you are just starting out.
+[Supabase](https://supabase.com/) is a
+[VC backed](https://supabase.com/blog/supabase-series-b),
+[open-source](https://github.com/supabase/supabase) Backend as a Service with a
+generous free tier, which also means you don't need to setup payment when you
+are just starting out.
 
-It’s always a good idea to start with the database and come up with the shape of the data you are going to use. So after creating an account and logging in to Supabase, go ahead and create a project by clicking “New project” on the Projects page.  Name it `issue-tracker`, enter a password (we recommend using the “Generate” button) and select the region closest to your users. You can leave the pricing plan at free and click “Create new project”.
+It’s always a good idea to start with the database and come up with the shape of
+the data you are going to use. So after creating an account and logging in to
+Supabase, go ahead and create a project by clicking “New project” on the
+Projects page. Name it `issue-tracker`, enter a password (we recommend using the
+“Generate” button) and select the region closest to your users. You can leave
+the pricing plan at free and click “Create new project”.
 
 ![Supabase new project creation](./1-supabase-project.png)
 
-After your project is provisioned (it usually takes just a few minutes), navigate to the Database page, click “New table” in to top-right corner and create a database table called `users` with the following columns:
+After your project is provisioned (it usually takes just a few minutes),
+navigate to the Database page, click “New table” in to top-right corner and
+create a database table called `users` with the following columns:
 
-| Name  | Type    | Default Value      | Primary | Define as Array |
-| ----- | ------- | ------------------ | ------- | --------------- |
-| id    | uuid    | uuid_generate_v4() | TRUE    | FALSE           |
-| name  | text    | NULL               | FALSE   | FALSE           |
-| roles | text    | NULL               | FALSE   | TRUE            |
+| Name  | Type | Default Value      | Primary | Define as Array |
+| ----- | ---- | ------------------ | ------- | --------------- |
+| id    | uuid | uuid_generate_v4() | TRUE    | FALSE           |
+| name  | text | NULL               | FALSE   | FALSE           |
+| roles | text | NULL               | FALSE   | TRUE            |
 
 ![Supabase users table creation](./2-supabase-users-table.png)
 
-Repeat the previous step and create one more table called `issues` with the following columns:
+Repeat the previous step and create one more table called `issues` with the
+following columns:
 
 | Name        | Type                  | Default Value         | Primary | Define as Array |
 | ----------- | --------------------- | --------------------- | ------- | --------------- |
@@ -42,8 +60,10 @@ Repeat the previous step and create one more table called `issues` with the foll
 
 ![Supabase issues table creation](./3-supabase-issues-table.png)
 
-Now that the tables are ready to receive data, let's populate them by running some SQL queries. Navigate to the SQL Editor 
-page, click "New query" in the top-left corner and paste in the following code, which will add 8 people to the `users` table.
+Now that the tables are ready to receive data, let's populate them by running
+some SQL queries. Navigate to the SQL Editor page, click "New query" in the
+top-left corner and paste in the following code, which will add 8 people to the
+`users` table.
 
 ```sql
 -- Insert users
@@ -61,7 +81,8 @@ VALUES
 
 ![Supabase insert users](./4-supabase-users-insert.png)
 
-After running the first query, click "New query" once more and run the next one, which will insert 4 mock issues to the `issues` table.
+After running the first query, click "New query" once more and run the next one,
+which will insert 4 mock issues to the `issues` table.
 
 ```sql
 -- Insert issues
@@ -109,13 +130,16 @@ VALUES
 
 ## Windmill setup
 
-You can create resources that will allow you to reuse secrets like passwords and 
-tokens without exposing them. To create your Supabase resource, check out the 
-[How to Integrate Supabase with Windmill](/blog/setup-supabase-on-windmill) tutorial - it takes only 2 minutes.
+You can create resources that will allow you to reuse secrets like passwords and
+tokens without exposing them. To create your Supabase resource, check out the
+[How to Integrate Supabase with Windmill](/blog/setup-supabase-on-windmill)
+tutorial - it takes only 2 minutes.
 
-After you added your resource, navigate to the [Home](https://app.windmill.dev/) page and create a new App in the top-right corner. 
-You can enter an optional App summary on the left side of the header, let’s use `Issue Tracker`. 
-Click "Save" on the other end of the top row, name your app `issue-tracker` and click "Create app".
+After you added your resource, navigate to the [Home](https://app.windmill.dev/)
+page and create a new App in the top-right corner. You can enter an optional App
+summary on the left side of the header, let’s use `Issue Tracker`. Click "Save"
+on the other end of the top row, name your app `issue-tracker` and click "Create
+app".
 
 ![Windmill base application](./6-wm-app-setup.png)
 
@@ -164,18 +188,18 @@ now - name it `Load Users`. The code should be the same, except that the client
 should query from the `‘users’` table instead of `‘issues’`. Change this on line
 6 of the script.
 
-:::caution
-Don’t forget to repeat the last step as well on the second background script to make it work.
-:::
+:::caution Don’t forget to repeat the last step as well on the second background
+script to make it work. :::
 
 ![Load users in the background](./9-wm-bg-users.png)
 
 ### Display the issues
 
-Now we have the data ready and loaded, so let's insert a `Table` and configure it:
+Now we have the data ready and loaded, so let's insert a `Table` and configure
+it:
 
 1. Select `Compute` as the input type and click `Create an inline script`.
-	![Add table component](./10-wm-table.png)
+   ![Add table component](./10-wm-table.png)
 2. Choose `Deno` as language.
 3. Name it `Shape Data`
 4. Paste in the following code:
@@ -194,29 +218,25 @@ Now we have the data ready and loaded, so let's insert a `Table` and configure i
      });
    }
    ```
-	:::info
-	The script is needed so the table will display only the relevant properties of the issues.
-	:::
-	![Shaping table data](./11-wm-table-script.png)
+   :::info The script is needed so the table will display only the relevant
+   properties of the issues. ::: ![Shaping table data](./11-wm-table-script.png)
 
 5. On the right pane under the `Settings` tab, select `Connect` as input type of
-   the `issues` input. Now you can select the `result` field of the `Load Issues` 
-	 background script you just created. To do this, locate the `Background` element 
-	 on the left pane that has *4 items* in the result property and click on `result`.
-	![Connecting scripts](./12-wm-connect-result.png)
+   the `issues` input. Now you can select the `result` field of the
+   `Load Issues` background script you just created. To do this, locate the
+   `Background` element on the left pane that has _4 items_ in the result
+   property and click on `result`.
+   ![Connecting scripts](./12-wm-connect-result.png)
 
-   :::info
-	 At this point the issues should be displayed in the table.
+   :::info At this point the issues should be displayed in the table.
 
 6. Finally, to enable searching in the data, select the table component, scroll
    down to `Configuration` in the `Settings` tab of the right pane and select
    `By Component` for the `Search` input.
-	![Finished table displaying the issues](./13-wm-finished-table.png)
+   ![Finished table displaying the issues](./13-wm-finished-table.png)
 
-:::tip
-Windmill auto saves your progress but if you are sceptical about it, now would
-be a good time to click "Save" in the top right corner.
-:::
+:::tip Windmill auto saves your progress but if you are sceptical about it, now
+would be a good time to click "Save" in the top right corner. :::
 
 ### Add charts
 
@@ -228,17 +248,15 @@ Before adding more components, try locking the existing ones in place by
 hovering them in the editor and clicking the anchor in the top right corner.
 This will prevent them from changing position while you drag around the charts.
 
-:::tip
-To prevent layout shifting, it's a good practice to lock every component 
-in place with the anchor button when you are done with positioning it - although 
-you'll still be able to move them manually.
-:::
+:::tip To prevent layout shifting, it's a good practice to lock every component
+in place with the anchor button when you are done with positioning it - although
+you'll still be able to move them manually. :::
 
 **Add a chart for the statuses**
 
 1. Insert a `Pie Chart`.
 2. Select `Compute` as the input type in the right pane.
-	![Compute chart input](./14-wm-status-chart.png)
+   ![Compute chart input](./14-wm-status-chart.png)
 3. Click `Create an inline script`.
 4. Choose `Deno` as the language.
 5. Name the script `Get Status Chart Data`.
@@ -266,18 +284,18 @@ you'll still be able to move them manually.
    }
    ```
 
-   :::info
-	 As you can see, the pie chart takes the data in a specific shape. The input shouldbe be an object
-   with 2 properties: `labels` and `data`, both of which hold arrays as values. The *label*
-   at position `[0]` corresponds to the *data* at position `[0]`. In short, the
-   TypeScript type of the return value should be the following:
+   :::info As you can see, the pie chart takes the data in a specific shape. The
+   input shouldbe be an object with 2 properties: `labels` and `data`, both of
+   which hold arrays as values. The _label_ at position `[0]` corresponds to the
+   _data_ at position `[0]`. In short, the TypeScript type of the return value
+   should be the following:
 
    `{ labels: string[], data: number[] }`
 
 7. Configure the `issues` input of the script on the right pane to be `Connect`
    type and then select the `result` value of the `background` script that is
    responsible for the querying of the issues.
-	![Connected chart input](./15-wm-connect-chart.png)
+   ![Connected chart input](./15-wm-connect-chart.png)
 
 **Add a chart for the severity levels**
 
@@ -337,23 +355,25 @@ handled by `Select` components.
 
 #### Created By and Assigned To fields
 
-Since the `Select` components require input data to be in a certain shape,
-let's create a `Background` script first to convert the `users` list. Add a new `Background` script, select `Deno` as language and paste in the following code:
+Since the `Select` components require input data to be in a certain shape, let's
+create a `Background` script first to convert the `users` list. Add a new
+`Background` script, select `Deno` as language and paste in the following code:
 
 ```tsx
 export async function main(users: undefined | any[]) {
-	if (!Array.isArray(users)) return [];
-	return users.map(({ id, name }) => ({ value: id, label: name }));
+  if (!Array.isArray(users)) return [];
+  return users.map(({ id, name }) => ({ value: id, label: name }));
 }
 ```
 
-Finally, connect the `users` argument to the result of the `Load Users` background script. In essence, this will chain the two background scripts to transgorm the data into the desired shape.
+Finally, connect the `users` argument to the result of the `Load Users`
+background script. In essence, this will chain the two background scripts to
+transgorm the data into the desired shape.
 
-:::info
-This script will return the users in the required shape by the `Select`
+:::info This script will return the users in the required shape by the `Select`
 components. The TypeScript type looks like this: `{ label: string, value: any }`
 :::
-	
+
 ![Shape the users list](./18-wm-bg-shape-users.png)
 
 Now insert the components that will use the newly created `users` list.
@@ -361,15 +381,13 @@ Now insert the components that will use the newly created `users` list.
 1. Insert a `Text` component, set the style attribute to `Label` and align it
    vertically on the bottom.
 2. Insert a `Select` component under the label text.
-4. Connect the `items` configuration inputs to the result of the recently added 
-	 `Get User Selection List` background script.
+3. Connect the `items` configuration inputs to the result of the recently added
+   `Get User Selection List` background script.
 
 ![User selection components](./19-wm-user-select.png)
 
-:::caution
-Make sure that you selected the correct background script before proceeding to 
-the next steps.
-:::
+:::caution Make sure that you selected the correct background script before
+proceeding to the next steps. :::
 
 #### Status field
 
@@ -420,8 +438,8 @@ the next steps.
 #### Submit button
 
 Now that all the input fields are added and wired up, now the only thing left is
-to insert a `Button` component, which collects all the values entered by the user 
-and sends them to the database.
+to insert a `Button` component, which collects all the values entered by the
+user and sends them to the database.
 
 1. Insert a `Button` component.
 2. Set the `Label` to `Create Issue`.
@@ -429,11 +447,10 @@ and sends them to the database.
 4. Find the ID of the `Load Issues` background script and check `Recompute` on
    it in the `Recompute others` section.
 
-	:::info
-	This will result in reloading the issues every time a new one is added and
-	therefore it will be added to the table as well.
-5. Click `Create an inline script`, select `Deno` as language, name it 
-	`Create Issue` and paste in the following code:
+   :::info This will result in reloading the issues every time a new one is
+   added and therefore it will be added to the table as well.
+5. Click `Create an inline script`, select `Deno` as language, name it
+   `Create Issue` and paste in the following code:
 
    ```tsx
    import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
@@ -472,16 +489,16 @@ and sends them to the database.
 Table components can have actions which will be added to the end of each row in
 the form of buttons. Select the `Table` component and follow the steps:
 
-1. Under the "Settings" tab in the right pane, add an action from the `Table actions` section.
+1. Under the "Settings" tab in the right pane, add an action from the
+   `Table actions` section.
 2. Click the newly added action.
 3. Set the `Label` argument to `Delete`.
 4. Set the `Color` argument to `red`.
 5. Find the ID of the `Load Issues` background script and check `Recompute` on
    it in the `Recompute others` section.
 
-	:::info
-	Because of this, the `issues` data will be reloaded from the database every 
-	time an issue is deleted.
+   :::info Because of this, the `issues` data will be reloaded from the database
+   every time an issue is deleted.
 6. Click `Create an inline script`, select `Deno` as language, name it
    `Delete Issue` and paste in the following code:
 
@@ -500,13 +517,12 @@ the form of buttons. Select the `Table` component and follow the steps:
 8. Select the `Column` input type for the `id` argument and enter `id` as the
    value.
 
-	:::info
-	This will result in the `id` argument being filled by the value of the `id`
-	column from the row that the action button was clicked in.
+   :::info This will result in the `id` argument being filled by the value of
+   the `id` column from the row that the action button was clicked in.
 
 ![Table component with action buttons](./23-wm-table-action.png)
 
 ## Next steps
 
-In the following article, we'll add functionality to update issues, add more 
+In the following article, we'll add functionality to update issues, add more
 charts and configure the app to fit mobile screens as well.
