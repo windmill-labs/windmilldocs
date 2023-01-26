@@ -267,10 +267,11 @@ you'll still be able to move them manually.
    ```
 
    :::info
-	 As you can see, the pie chart takes the data in a specific shape: an object
-   `labels` and `data` keys, both of which hold arrays as values. The label
-   at position `[0]` corresponds to the data at position `[0]`. In short, the
+	 As you can see, the pie chart takes the data in a specific shape. The input shouldbe be an object
+   with 2 properties: `labels` and `data`, both of which hold arrays as values. The *label*
+   at position `[0]` corresponds to the *data* at position `[0]`. In short, the
    TypeScript type of the return value should be the following:
+
    `{ labels: string[], data: number[] }`
 
 7. Configure the `issues` input of the script on the right pane to be `Connect`
