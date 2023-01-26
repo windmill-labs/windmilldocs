@@ -505,3 +505,8 @@ the form of buttons. Select the `Table` component and follow the steps:
 	column from the row that the action button was clicked in.
 
 ![Table component with action buttons](./23-wm-table-action.png)
+
+## Next steps
+
+In the following article, we'll add functionality to update issues, add more 
+charts and configure the app to fit mobile screens as well.
