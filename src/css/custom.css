@@ -195,3 +195,20 @@ a {
 .box {
 	@apply border border-gray-600 rounded-lg shadow-md p-4 mx-2;
 }
+
+
+.landing-section-gradient-background {
+	background:linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%), linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%), linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #ffffff;
+}
+
+.dark-gray-font {
+	color: #212427
+}
+
+.card-shadow {
+	box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px
+}
+
+.landing-section-gradient-background-dark {
+	background:linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%), linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%), linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #000;
+}

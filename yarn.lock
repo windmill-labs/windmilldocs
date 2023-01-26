@@ -1874,16 +1874,6 @@
   "resolved" "https://registry.npmjs.org/@mdx-js/util/-/util-1.6.22.tgz"
   "version" "1.6.22"
 
-"@node-rs/jieba-linux-x64-gnu@1.6.1":
-  "integrity" "sha512-f6hhlrbi2wel0xZG7m3Wvksimt9MSu1f3aYO2Kwavf4qjMRZqJzLz9HlCJAal6AXB9Qgg+685P+gftsWve47qw=="
-  "resolved" "https://registry.npmjs.org/@node-rs/jieba-linux-x64-gnu/-/jieba-linux-x64-gnu-1.6.1.tgz"
-  "version" "1.6.1"
-
-"@node-rs/jieba-linux-x64-musl@1.6.1":
-  "integrity" "sha512-cTVcdR6zWqpnmdEUyWEII9zfE5lTeWN53TbiOPx8TCA+291/31Vqd7GA8YEPndUO8qgCx5uShSDFStBAEIhYNQ=="
-  "resolved" "https://registry.npmjs.org/@node-rs/jieba-linux-x64-musl/-/jieba-linux-x64-musl-1.6.1.tgz"
-  "version" "1.6.1"
-
 "@node-rs/jieba@^1.6.0":
   "integrity" "sha512-pISKu8NIYKRvZp7mhYZYA8VCjJMqTsCe+mQcFFnAi3GNJsijGjef2peMFeDcvP72X8MsnNeYeg3rHkAybtefyQ=="
   "resolved" "https://registry.npmjs.org/@node-rs/jieba/-/jieba-1.6.1.tgz"
