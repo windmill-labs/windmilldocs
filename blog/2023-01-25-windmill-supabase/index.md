@@ -2,7 +2,7 @@
 slug: setup-supabase-on-windmill
 title: How to Integrate Supabase with Windmill
 authors: [adamkov]
-tags: [supabase, windmill, setup, integrate, connect]
+tags: [supabase, windmill, resource, setup, integrate, connect]
 ---
 
 *This tutorial assumes that you already have a [Windmill](https://app.windmill.dev) account and a 

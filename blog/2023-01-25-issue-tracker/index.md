@@ -2,7 +2,7 @@
 slug: create-issue-tracker-in-15-minutes
 title: Create an Issue Tracker App in 15 Minutes
 authors: [adamkov]
-tags: [issues, app]
+tags: [issues, tracker, app, supabase, deno, typescript, v2]
 ---
 
 The following tutorial will showcase how you could build an issue tracker application with Windmill and Supabase, without ever having to leave your browser. 
@@ -113,7 +113,7 @@ You can create resources that will allow you to reuse secrets like passwords and
 tokens without exposing them. To create your Supabase resource, check out the 
 [How to Integrate Supabase with Windmill](/blog/setup-supabase-on-windmill) tutorial - it takes only 2 minutes.
 
-Navigate to the [Home](https://app.windmill.dev/) page and create a new App in the top-right corner. 
+After you added your resource, navigate to the [Home](https://app.windmill.dev/) page and create a new App in the top-right corner. 
 You can enter an optional App summary on the left side of the header, let’s use `Issue Tracker`. 
 Click "Save" on the other end of the top row, name your app `issue-tracker` and click "Create app".
 
@@ -139,7 +139,7 @@ This can be achieved by Background scripts.
 
 1. Click `Add` next to the `Background scripts` label on the bottom left side.
 2. Make sure the new script is selected and choose `Deno` as the language.
-3. _(optional)_ Name the script `Load Issues`.
+3. Name the script `Load Issues`.
 4. Paste in the following code:
 
    ```tsx
@@ -177,7 +177,7 @@ Now we have the data ready and loaded, so let's insert a `Table` and configure i
 1. Select `Compute` as the input type and click `Create an inline script`.
 	![Add table component](./10-wm-table.png)
 2. Choose `Deno` as language.
-3. _(optional)_ Name it `Shape Data`
+3. Name it `Shape Data`
 4. Paste in the following code:
 
    ```tsx
@@ -194,12 +194,15 @@ Now we have the data ready and loaded, so let's insert a `Table` and configure i
      });
    }
    ```
+	:::info
+	The script is needed so the table will display only the relevant properties of the issues.
+	:::
 	![Shaping table data](./11-wm-table-script.png)
 
 5. On the right pane under the `Settings` tab, select `Connect` as input type of
-   the `issues` input. Now you can select the `result` field of the background
-   script you just created. To do this, locate the `Background` element on the
-   left pane and click on `result`.
+   the `issues` input. Now you can select the `result` field of the `Load Issues` 
+	 background script you just created. To do this, locate the `Background` element 
+	 on the left pane that has *4 items* in the result property and click on `result`.
 	![Connecting scripts](./12-wm-connect-result.png)
 
    :::info
@@ -217,13 +220,19 @@ be a good time to click "Save" in the top right corner.
 
 ### Add charts
 
-It’s always nice to be able to quickly get a general overview of statistics and
+It’s always nice to be able to quickly get a general overview of statistics, and
 charts are really good at conveying data at a glance. Let’s display the number
-of issues in each status and severity levels on pie charts.
+of issues in each status and severity level on pie charts.
 
 Before adding more components, try locking the existing ones in place by
 hovering them in the editor and clicking the anchor in the top right corner.
 This will prevent them from changing position while you drag around the charts.
+
+:::tip
+To prevent layout shifting, it's a good practice to lock every component 
+in place with the anchor button when you are done with positioning it - although 
+you'll still be able to move them manually.
+:::
 
 **Add a chart for the statuses**
 
@@ -232,7 +241,7 @@ This will prevent them from changing position while you drag around the charts.
 	![Compute chart input](./14-wm-status-chart.png)
 3. Click `Create an inline script`.
 4. Choose `Deno` as the language.
-5. _(optional)_ Name the script `Get Status Chart Data`.
+5. Name the script `Get Status Chart Data`.
 6. Paste in the following code:
 
    ```tsx
@@ -303,11 +312,6 @@ Finally, connect the result value of the background script to the `issues`
 argument of the script, just like in the last step of the other chart.
 
 ![Severity chart](./16-wm-severity-chart.png)
-
-:::tip
-To prevent layout shifting, it's a good practice to lock every component 
-in place with the anchor button when you are done with positioning it.
-:::
 
 ### Creating issues
 
@@ -467,12 +471,16 @@ and sends them to the database.
 Table components can have actions which will be added to the end of each row in
 the form of buttons. Select the `Table` component and follow the steps:
 
-1. Add an action in the `Table actions` section on the right pane.
+1. Under the "Settings" tab in the right pane, add an action from the `Table actions` section.
 2. Click the newly added action.
 3. Set the `Label` argument to `Delete`.
 4. Set the `Color` argument to `red`.
 5. Find the ID of the `Load Issues` background script and check `Recompute` on
    it in the `Recompute others` section.
+
+	:::info
+	Because of this, the `issues` data will be reloaded from the database every 
+	time an issue is deleted.
 6. Click `Create an inline script`, select `Deno` as language, name it
    `Delete Issue` and paste in the following code:
 
@@ -494,3 +502,5 @@ the form of buttons. Select the `Table` component and follow the steps:
 	:::info
 	This will result in the `id` argument being filled by the value of the `id`
 	column from the row that the action button was clicked in.
+
+![Table component with action buttons](./23-wm-table-action.png)
