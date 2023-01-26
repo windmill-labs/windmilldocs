@@ -16,6 +16,8 @@ _This tutorial assumes that you already have a
 [Windmill documentation](https://docs.windmill.dev/docs/intro) or the
 [Supabase documentation](https://supabase.com/docs) to find out more._
 
+![Header](./0-header.png)
+
 ## Get the API keys
 
 In order to make authenticated requests to the database, you'll need your API

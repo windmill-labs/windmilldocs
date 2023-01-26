@@ -1,13 +1,14 @@
 ---
 slug: create-issue-tracker-in-15-minutes
-title: Create an Issue Tracker App in 15 Minutes
+title: Create an Issue Tracker App with Supabase in 15 Minutes
 authors: [adamkov]
 tags: [issues, tracker, app, supabase, deno, typescript, v2]
+image: ./0-header.png
 ---
 
 The following tutorial will showcase how you could build an issue tracker
-application with Windmill and Supabase, without ever having to leave your
-browser.
+application with [Windmill](https://docs.windmill.dev) and
+[Supabase](https://supabase.com/), without ever having to leave your browser.
 
 <!--truncate-->
 
@@ -15,10 +16,11 @@ While running projects, you’ll quickly get lost if you don't keep an eye on th
 pain points, so tracking and categorising issues is critical in any field. Let's
 start creating your custom application with setting up a database.
 
+![Header](./0-header.png)
+
 ## Supabase setup
 
-[Supabase](https://supabase.com/) is a
-[VC backed](https://supabase.com/blog/supabase-series-b),
+Supabase is a [VC backed](https://supabase.com/blog/supabase-series-b),
 [open-source](https://github.com/supabase/supabase) Backend as a Service with a
 generous free tier, which also means you don't need to setup payment when you
 are just starting out.
@@ -188,8 +190,12 @@ now - name it `Load Users`. The code should be the same, except that the client
 should query from the `‘users’` table instead of `‘issues’`. Change this on line
 6 of the script.
 
-:::caution Don’t forget to repeat the last step as well on the second background
-script to make it work. :::
+:::caution
+
+Don’t forget to repeat the last step as well on the second background script to
+make it work.
+
+:::
 
 ![Load users in the background](./9-wm-bg-users.png)
 
@@ -218,8 +224,14 @@ it:
      });
    }
    ```
-   :::info The script is needed so the table will display only the relevant
-   properties of the issues. ::: ![Shaping table data](./11-wm-table-script.png)
+   :::info
+
+   The script is needed so the table will display only the relevant properties
+   of the issues.
+
+   :::
+
+   ![Shaping table data](./11-wm-table-script.png)
 
 5. On the right pane under the `Settings` tab, select `Connect` as input type of
    the `issues` input. Now you can select the `result` field of the
@@ -228,15 +240,21 @@ it:
    property and click on `result`.
    ![Connecting scripts](./12-wm-connect-result.png)
 
-   :::info At this point the issues should be displayed in the table.
+   :::info
+
+   At this point the issues should be displayed in the table.
 
 6. Finally, to enable searching in the data, select the table component, scroll
    down to `Configuration` in the `Settings` tab of the right pane and select
    `By Component` for the `Search` input.
    ![Finished table displaying the issues](./13-wm-finished-table.png)
 
-:::tip Windmill auto saves your progress but if you are sceptical about it, now
-would be a good time to click "Save" in the top right corner. :::
+:::tip
+
+Windmill auto saves your progress but if you are sceptical about it, now would
+be a good time to click "Save" in the top right corner.
+
+:::
 
 ### Add charts
 
@@ -248,9 +266,13 @@ Before adding more components, try locking the existing ones in place by
 hovering them in the editor and clicking the anchor in the top right corner.
 This will prevent them from changing position while you drag around the charts.
 
-:::tip To prevent layout shifting, it's a good practice to lock every component
-in place with the anchor button when you are done with positioning it - although
-you'll still be able to move them manually. :::
+:::tip
+
+To prevent layout shifting, it's a good practice to lock every component in
+place with the anchor button when you are done with positioning it - although
+you'll still be able to move them manually.
+
+:::
 
 **Add a chart for the statuses**
 
@@ -284,9 +306,11 @@ you'll still be able to move them manually. :::
    }
    ```
 
-   :::info As you can see, the pie chart takes the data in a specific shape. The
-   input shouldbe be an object with 2 properties: `labels` and `data`, both of
-   which hold arrays as values. The _label_ at position `[0]` corresponds to the
+   :::info
+
+   As you can see, the pie chart takes the data in a specific shape. The input
+   shouldbe be an object with 2 properties: `labels` and `data`, both of which
+   hold arrays as values. The _label_ at position `[0]` corresponds to the
    _data_ at position `[0]`. In short, the TypeScript type of the return value
    should be the following:
 
@@ -370,8 +394,13 @@ Finally, connect the `users` argument to the result of the `Load Users`
 background script. In essence, this will chain the two background scripts to
 transgorm the data into the desired shape.
 
-:::info This script will return the users in the required shape by the `Select`
-components. The TypeScript type looks like this: `{ label: string, value: any }`
+:::info
+
+This script will return the users in the required shape by the `Select`
+components. The TypeScript type looks like this:
+
+`{ label: string, value: any }`
+
 :::
 
 ![Shape the users list](./18-wm-bg-shape-users.png)
@@ -386,8 +415,12 @@ Now insert the components that will use the newly created `users` list.
 
 ![User selection components](./19-wm-user-select.png)
 
-:::caution Make sure that you selected the correct background script before
-proceeding to the next steps. :::
+:::caution
+
+Make sure that you selected the correct background script before proceeding to
+the next steps.
+
+:::
 
 #### Status field
 
@@ -447,8 +480,10 @@ user and sends them to the database.
 4. Find the ID of the `Load Issues` background script and check `Recompute` on
    it in the `Recompute others` section.
 
-   :::info This will result in reloading the issues every time a new one is
-   added and therefore it will be added to the table as well.
+   :::info
+
+   This will result in reloading the issues every time a new one is added and
+   therefore it will be added to the table as well.
 5. Click `Create an inline script`, select `Deno` as language, name it
    `Create Issue` and paste in the following code:
 
@@ -497,8 +532,10 @@ the form of buttons. Select the `Table` component and follow the steps:
 5. Find the ID of the `Load Issues` background script and check `Recompute` on
    it in the `Recompute others` section.
 
-   :::info Because of this, the `issues` data will be reloaded from the database
-   every time an issue is deleted.
+   :::info
+
+   Because of this, the `issues` data will be reloaded from the database every
+   time an issue is deleted.
 6. Click `Create an inline script`, select `Deno` as language, name it
    `Delete Issue` and paste in the following code:
 
@@ -517,8 +554,10 @@ the form of buttons. Select the `Table` component and follow the steps:
 8. Select the `Column` input type for the `id` argument and enter `id` as the
    value.
 
-   :::info This will result in the `id` argument being filled by the value of
-   the `id` column from the row that the action button was clicked in.
+   :::info
+
+   This will result in the `id` argument being filled by the value of the `id`
+   column from the row that the action button was clicked in.
 
 ![Table component with action buttons](./23-wm-table-action.png)
 
