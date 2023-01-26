@@ -1,5 +1,5 @@
-import { ChevronRightIcon } from '@heroicons/react/outline';
 import React from 'react';
+
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">

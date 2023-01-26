@@ -9,7 +9,6 @@ import LandingSection from '../landing/LandingSection';
 import FeatureCard from '../landing/FeatureCard';
 import Hero from '../landing/Hero';
 import Banner from '../landing/Banner';
-import WindmillFeatures from '../landing/WindmillFeatures';
 import ScriptSection from '../landing/ScriptSection';
 import FlowSection from '../landing/FlowSection';
 import AppSection from '../landing/AppSection';
@@ -30,7 +29,6 @@ function HomepageHeader() {
 			<ScriptSection />
 			<FlowSection />
 			<AppSection />
-			<WindmillFeatures />
 		</div>
 	);
 }

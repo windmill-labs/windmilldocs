@@ -3,7 +3,6 @@ import 'react-slideshow-image/dist/styles.css';
 import Slideshow from '../components/Slideshow';
 
 import {
-	CheckIcon,
 	ClockIcon,
 	DocumentAddIcon,
 	LibraryIcon,
@@ -15,7 +14,7 @@ import {
 	PuzzleIcon,
 	ShieldCheckIcon,
 	SwitchHorizontalIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 
 const features = [
 	{

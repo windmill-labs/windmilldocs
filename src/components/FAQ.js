@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Disclosure } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 const faqs = [
 	{

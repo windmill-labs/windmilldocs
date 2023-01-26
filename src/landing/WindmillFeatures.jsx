@@ -5,7 +5,7 @@ import {
 	EnvelopeIcon,
 	GlobeAltIcon,
 	ScaleIcon
-} from '@heroicons/react/outline';
+} from '@heroicons/react/24/outline';
 
 const transferFeatures = [
 	{

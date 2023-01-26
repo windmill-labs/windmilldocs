@@ -1,6 +1,8 @@
 import React from 'react';
 import LandingSection from '../landing/LandingSection';
 import FeatureCard from '../landing/FeatureCard';
+import Tabs from '../landing/Tabs';
+import NeoTabs from '../landing/tabs/NeoTabs';
 
 const data = [
 	{
@@ -36,25 +38,27 @@ export default function FlowSection() {
 					Build complex Flows from atomic apps. Automatically trigger apps and Flow from webhooks, a
 					schedule, watching for events, or slack.
 				</span>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-					<div class="flex flex-col w-full gap-2 italic">
-						<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
-						<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
+				<NeoTabs>
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+						<div class="flex flex-col w-full gap-2 italic">
+							<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
+							<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							{data.map((item) => (
+								<FeatureCard title={item.title} color="green">
+									{item.description}
+								</FeatureCard>
+							))}
+						</div>
 					</div>
-					<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-						{data.map((item) => (
-							<FeatureCard title={item.title} color="green">
-								{item.description}
-							</FeatureCard>
-						))}
-					</div>
-				</div>
+				</NeoTabs>
 				<div className="flex">
 					<button
 						type="button"
 						className="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 					>
-						Explore scripts on the Hub
+						Explore flows on the Hub
 					</button>
 				</div>
 			</div>
