@@ -1,7 +1,12 @@
 import { ReactNode, useState } from 'react';
 import { LucideIcon } from 'lucide-react';
 
-export type Tab = { label: string; id: string; icon: LucideIcon };
+export type Tab = {
+	children: ReactNode;
+	label: string;
+	id: string;
+	icon: LucideIcon;
+};
 
 export function useTabs({
 	tabs,

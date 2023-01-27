@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
-import Layout from '@theme/Layout';
-import HomepageFeatures from '../components/HomepageFeatures';
-import Pricing from '../components/Pricing';
-
-import { SiGnubash, SiGo, SiPython, SiTypescript } from 'react-icons/si/index';
-import TabsW from '../components/Tabs';
-import LandingSection from '../landing/LandingSection';
-import FeatureCard from '../landing/FeatureCard';
 import Hero from '../landing/Hero';
-import Banner from '../landing/Banner';
 import ScriptSection from '../landing/ScriptSection';
 import FlowSection from '../landing/FlowSection';
 import AppSection from '../landing/AppSection';
+import Footer from '../landing/Footer';
+import LandingHeader from '../landing/LandingHeader';
 
 function HomepageHeader() {
 	useEffect(() => {
@@ -24,25 +17,20 @@ function HomepageHeader() {
 
 	return (
 		<div className="divide-y">
-			<Banner />
+			<LandingHeader />
 			<Hero />
 			<ScriptSection />
 			<FlowSection />
 			<AppSection />
+			<Footer />
 		</div>
 	);
 }
 
 export default function Home() {
 	return (
-		<Layout title="Home">
-			<main>
-				<HomepageHeader />
-				<div className="mx-auto max-w-7xl homepage">
-					<Pricing />
-				</div>
-				<div className="mb-40"></div>
-			</main>
-		</Layout>
+		<main>
+			<HomepageHeader />
+		</main>
 	);
 }

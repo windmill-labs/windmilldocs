@@ -52,9 +52,9 @@ const Tabs = ({
               "text-md relative rounded-md flex items-center h-8 px-4 z-20 bg-transparent text-sm cursor-pointer select-none transition-colors",
 
               selectedTabIndex === i
-									? 'bg-green-100 text-green-700'
-									: 'text-gray-500 hover:text-gray-700',
-								'px-3 py-2 font-medium text-sm rounded-md flex flex-row gap-2'
+                ? 'bg-green-100 text-green-700'
+                : 'text-gray-500 hover:text-gray-700',
+              'px-3 py-2 font-medium text-sm rounded-md flex flex-row gap-2'
             )}
             ref={(el) => (buttonRefs[i] = el)}
             onPointerEnter={() => {
@@ -67,7 +67,7 @@ const Tabs = ({
               setSelectedTab([i, i > selectedTabIndex ? 1 : -1]);
             }}
           >
-            							<item.icon className="w-5 h-5" aria-hidden="true" />
+            <item.icon className="w-5 h-5" aria-hidden="true" />
 
             {item.label}
           </motion.button>
@@ -103,7 +103,7 @@ const Tabs = ({
           />
         )}
       </AnimatePresence>
-      {selectedRect && navRect &&(
+      {selectedRect && navRect && (
         <motion.div
           className="absolute z-10 top-0 left-0 rounded-md bg-green-200"
 
@@ -142,19 +142,19 @@ const Content = ({
   className?: string;
 }): JSX.Element => {
   return (
-    <AnimatePresence exitBeforeEnter={false} custom={direction}>
+    <AnimatePresence mode="sync" custom={direction}>
       <motion.div
         key={selectedTabIndex}
         variants={{
           enter: (direction) => ({
             opacity: 0,
-            x: direction > 0 ? 100 : -100,
+            x: direction > 0 ? 256 : -256,
             scale: 0.8,
           }),
-          center: { opacity: 1, x: 0, scale: 1, rotate: 0 },
+          center: { opacity: 1, x: 0, scale: 1 },
           exit: (direction) => ({
             opacity: 0,
-            x: direction > 0 ? -100 : 100,
+            x: direction > 0 ? -256 : 256,
             scale: 0.8,
             position: "absolute",
           }),

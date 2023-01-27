@@ -1,26 +1,32 @@
 import React from 'react';
 import LandingSection from '../landing/LandingSection';
 import FeatureCard from '../landing/FeatureCard';
+import { Code } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 const data = [
 	{
 		title: 'Polyglott',
-		description: 'Python, Typescript, Go, Bash scripts with any dependencies'
+		description: 'Python, Typescript, Go, Bash scripts with any dependencies',
+		icon: Code
 	},
 
 	{
 		title: 'Scalable',
-		description: 'Run them at scale on your infra or ours'
+		description: 'Run them at scale on your infra or ours',
+		icon: Code
 	},
 	{
 		title: 'Open source',
 		description:
-			'Open-source alternative to Airplane, Superblocks, Retool. Simplified Temporal, Airflow.'
+			'Open-source alternative to Airplane, Superblocks, Retool. Simplified Temporal, Airflow.',
+		icon: Code
 	},
 	{
 		title: 'Schedules',
 		description:
-			'Trigger scripts and flows using cron-like schedules, or via an automatically generated webhook'
+			'Trigger scripts and flows using cron-like schedules, or via an automatically generated webhook',
+		icon: Code
 	}
 ];
 
@@ -44,7 +50,7 @@ export default function FlowSection() {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
 					<div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
 						{data.map((item) => (
-							<FeatureCard title={item.title} color="orange">
+							<FeatureCard title={item.title} color="orange" Icon={item.icon}>
 								{item.description}
 							</FeatureCard>
 						))}
@@ -60,6 +66,7 @@ export default function FlowSection() {
 						className="inline-flex items-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
 					>
 						Explore apps on the Hub
+						<ExternalLink className="ml-2 h-5" />
 					</button>
 				</div>
 			</div>

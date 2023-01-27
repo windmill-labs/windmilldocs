@@ -3,7 +3,7 @@
 		"jsx": "react",
 		"target": "ES2020",
 		"module": "CommonJS",
-		"lib": ["ES2020"],
+		"lib": ["ES2020", "DOM"],
 		"types": ["@cloudflare/workers-types"],
 		"esModuleInterop": true
 	}

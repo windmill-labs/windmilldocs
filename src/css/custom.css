@@ -205,8 +205,16 @@ a {
 	color: #212427
 }
 
-.card-shadow {
-	box-shadow: rgba(23, 92, 230, 0.15) 0px 4px 24px
+.card-shadow-blue {
+	box-shadow: rgba(0, 0, 255, 0.2) 0px 4px 24px
+}
+
+.card-shadow-green {
+	box-shadow: rgba(0, 128, 0, 0.2) 0px 4px 24px
+}
+
+.card-shadow-orange {
+	box-shadow: rgba(255, 166, 0, 0.2) 0px 4px 24px
 }
 
 .landing-section-gradient-background-dark {
