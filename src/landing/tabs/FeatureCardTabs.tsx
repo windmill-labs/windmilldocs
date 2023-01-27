@@ -11,7 +11,7 @@ export default function FeatureCardTabs({ children, tabs }) {
 	const framer = useTabs(hookProps);
 	return (
 		<div>
-			<div className="sm:hidden">
+			<div className="sm:hidden ">
 				<label htmlFor="tabs" className="sr-only">
 					Select a tab
 				</label>
@@ -37,7 +37,7 @@ export default function FeatureCardTabs({ children, tabs }) {
 			</div>
 			<div className="hidden sm:block">
 				<div className="w-full flex flex-col items-center justify-center">
-					<div className="max-w-6xl">
+					<div className="max-w-7xl">
 						<Framer.Tabs {...framer.tabProps} />
 						<Framer.Content
 							{...framer.contentProps}

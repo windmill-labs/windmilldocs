@@ -61,13 +61,14 @@ export default function FlowSection() {
 					</div>
 				</div>
 				<div className="flex">
-					<button
+					<a
+						href="https://hub.windmill.dev/apps"
 						type="button"
 						className="inline-flex items-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
 					>
 						Explore apps on the Hub
 						<ExternalLink className="ml-2 h-5" />
-					</button>
+					</a>
 				</div>
 			</div>
 		</LandingSection>

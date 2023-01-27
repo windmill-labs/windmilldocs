@@ -5,6 +5,8 @@ import FlowSection from '../landing/FlowSection';
 import AppSection from '../landing/AppSection';
 import Footer from '../landing/Footer';
 import LandingHeader from '../landing/LandingHeader';
+import LandingSection from '../landing/LandingSection';
+import CallToAction from '../landing/CallToAction';
 
 function HomepageHeader() {
 	useEffect(() => {
@@ -16,12 +18,14 @@ function HomepageHeader() {
 	});
 
 	return (
-		<div className="divide-y">
-			<LandingHeader />
+		<div className="">
 			<Hero />
 			<ScriptSection />
 			<FlowSection />
 			<AppSection />
+			<LandingSection bgClass="bg-white">
+				<CallToAction />
+			</LandingSection>
 			<Footer />
 		</div>
 	);

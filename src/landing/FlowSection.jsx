@@ -119,7 +119,7 @@ const tabs = [
 export default function FlowSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-green-50">
-			<div className="flex flex-col gap-8 justify-center">
+			<div className="flex flex-col gap-8 justify-center w-full">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-green-600">
 					Flows
 				</h1>
@@ -129,13 +129,14 @@ export default function FlowSection() {
 				</span>
 				<FeatureCardTabs tabs={tabs} />
 				<div className="flex">
-					<button
+					<a
+						href="https://hub.windmill.dev/flows"
 						type="button"
 						className="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 					>
 						Explore flows on the Hub
 						<ExternalLink className="ml-2 h-5" />
-					</button>
+					</a>
 				</div>
 			</div>
 		</LandingSection>

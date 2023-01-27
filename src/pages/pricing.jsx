@@ -7,7 +7,7 @@ import Pricing from '../components/Pricing';
 
 export default function PricingPage() {
 	return (
-		<main className="divide-y">
+		<main>
 			<LandingHeader />
 			<LandingSection bgClass="bg-white">
 				<Pricing />

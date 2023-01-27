@@ -1,5 +1,5 @@
 import React from 'react';
-
+import LandingHeader from './LandingHeader';
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
@@ -26,6 +26,8 @@ export default function Hero() {
 					fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
 				/>
 			</svg>
+			<LandingHeader />
+
 			<div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
 					<h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">

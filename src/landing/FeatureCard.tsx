@@ -30,7 +30,7 @@ function FadeInWhenVisible({ children }) {
 			transition={{ duration: 0.5 }}
 			variants={{
 				visible: { opacity: 1, y: 0 },
-				hidden: { opacity: 0, y: direction === 'up' ? -50 : 50 }
+				hidden: { opacity: 0, y: direction === 'up' ? 32 : -32 }
 			}}
 		>
 			{children}
