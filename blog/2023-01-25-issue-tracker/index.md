@@ -563,5 +563,6 @@ the form of buttons. Select the `Table` component and follow the steps:
 
 ## Next steps
 
-In the following article, we'll add functionality to update issues, add more
-charts and configure the app to fit mobile screens as well.
+In a following article, which will be released in the coming days, we'll add
+functionality to update issues, add more charts and configure the app to fit
+mobile screens as well.
