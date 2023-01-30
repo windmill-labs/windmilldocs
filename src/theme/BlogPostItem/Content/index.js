@@ -1,16 +1,21 @@
 import React from 'react';
-import { useBlogPost } from '@docusaurus/theme-common/internal'
-import Content from '@theme-original/BlogPostItem/Content';
-
-export default function ContentWrapper(props) {
-  const { metadata } = useBlogPost()
+import clsx from 'clsx';
+import {blogPostContainerID} from '@docusaurus/utils-common';
+import {useBlogPost} from '@docusaurus/theme-common/internal';
+import MDXContent from '@theme/MDXContent';
+export default function BlogPostItemContent({children, className}) {
+  const {isBlogPostPage, metadata} = useBlogPost();
 	const windmillPromo = metadata.frontMatter?.windmillPromo ?? true
 
   return (
-    <>
-      <Content {...props} />
+    <div
+      // This ID is used for the feed generation to locate the main content
+      id={isBlogPostPage ? blogPostContainerID : undefined}
+      className={clsx('markdown', className)}
+      itemProp="articleBody">
+      <MDXContent>{children}</MDXContent>
 			{
-				windmillPromo && 
+				isBlogPostPage && windmillPromo && 
 				<div className='flex items-start bg-blue-50 rounded-md mt-12 p-4'>
 					<img
 						src='https://hub.windmill.dev/icons/integrations/windmill.svg'
@@ -27,6 +32,6 @@ export default function ContentWrapper(props) {
 					</div>
 				</div>
 			}
-    </>
+    </div>
   );
 }
