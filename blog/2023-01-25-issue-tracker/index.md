@@ -274,7 +274,7 @@ you'll still be able to move them manually.
 
 :::
 
-**Add a chart for the statuses**
+**Add a chart for the status**
 
 1. Insert a `Pie Chart`.
 2. Select `Compute` as the input type in the right pane.
@@ -309,7 +309,7 @@ you'll still be able to move them manually.
    :::info
 
    As you can see, the pie chart takes the data in a specific shape. The input
-   shouldbe be an object with 2 properties: `labels` and `data`, both of which
+   should be an object with 2 properties: `labels` and `data`, both of which
    hold arrays as values. The _label_ at position `[0]` corresponds to the
    _data_ at position `[0]`. In short, the TypeScript type of the return value
    should be the following:
