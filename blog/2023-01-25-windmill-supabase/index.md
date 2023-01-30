@@ -16,7 +16,7 @@ _This tutorial assumes that you already have a
 [Windmill documentation](https://docs.windmill.dev/docs/intro) or the
 [Supabase documentation](https://supabase.com/docs) to find out more._
 
-![Header](./0-header.png)
+![Integrattion between Supabase and Windmill](./0-header.png "Connect a Supabase project with Windmill")
 
 ## Get the API keys
 

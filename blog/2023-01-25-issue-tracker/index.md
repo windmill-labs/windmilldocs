@@ -16,7 +16,7 @@ While running projects, you’ll quickly get lost if you don't keep an eye on th
 pain points, so tracking and categorising issues is critical in any field. Let's
 start creating your custom application with setting up a database.
 
-![Header](./0-header.png)
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png "Integrate Supabase with Windmill in an issue tracker application")
 
 ## Supabase setup
 
