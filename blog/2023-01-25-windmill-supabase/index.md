@@ -43,12 +43,12 @@ want an integration to be supported by Windmill directly, please submit a new
 **Navigate to the [Resources](https://app.windmill.dev/resources) page**
 ![Resources page](./2-1-resources.png)
 
-**Click `Add a resource/API`** ![Resource selector](./2-2-drawer.png)
+**Click "Add a resource/API"** ![Resource selector](./2-2-drawer.png)
 
 **Search for `Supabase` and select the resource type**
 ![Resource selector](./2-3-search.png)
 
-**Enter the API key and the URL from Supabase and click `Save`**
+**Enter the API key and the URL from Supabase and click "Save"**
 ![Resource selector](./2-4-resource.png)
 
 ## Use the resource
@@ -66,6 +66,9 @@ export async function main(auth: Resource<"supabase">) {
 }
 ```
 
-:::tip You can find more examples and premade scripts at
+:::tip
+
+You can find more examples and premade scripts at
 [Supabase integrations on Windmill Hub](https://hub.windmill.dev/integrations/supabase)
+
 :::
