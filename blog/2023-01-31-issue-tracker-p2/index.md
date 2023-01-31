@@ -21,6 +21,14 @@ find it [here](../2023-01-25-issue-tracker/index.md).
 
 ![Create an Issue Tracker App with Supabase and Windmill](./0-header.png "Integrate Supabase with Windmill in an issue tracker application")
 
+:::tip
+
+Windmill has a community website called [Windmill Hub](https://hub.windmill.dev)
+where - among other Scripts and Flows - you can find the
+[full version of this App](https://hub.windmill.dev/apps/7/issue-tracker).
+
+:::
+
 ## Where we left off
 
 In the previous article, we created a basic Issue Tracker application with
