@@ -16,6 +16,13 @@ While running projects, you’ll quickly get lost if you don't keep an eye on th
 pain points, so tracking and categorising issues is critical in any field. Let's
 start creating your custom application with setting up a database.
 
+:::info
+
+This article is part of a series. If you are looking for the second part, you
+can find it [here](../2023-01-31-issue-tracker-p2/index.md).
+
+:::
+
 ![Create an Issue Tracker App with Supabase and Windmill](./0-header.png "Integrate Supabase with Windmill in an issue tracker application")
 
 ## Supabase setup
@@ -580,6 +587,7 @@ the form of buttons. Select the `Table` component and follow the steps:
 
 ## Next steps
 
-In a following article, which will be released in the coming days, we'll add
-functionality to update issues, add more charts and configure the app to fit
-mobile screens as well.
+In the following article
+["Create an Issue Tracker App with Supabase - Part 2"](../2023-01-31-issue-tracker-p2/index.md),
+we'll add functionality to update issues, add more charts and configure the app
+to fit mobile screens as well.
