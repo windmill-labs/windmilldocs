@@ -1,6 +1,6 @@
-# How to setup OAuth login
+# How to setup OAuth
 
-## Google
+## Google login
 
 Create Google OAuth keys
 
@@ -26,4 +26,20 @@ First, you need to create a Google OAuth Client:
 }
 ```
 
+## Keycloak
 
+Setup your realm in Keycload then add the following to your `oauth.json`:
+
+```
+{
+    "keycloak_<realm>": {
+        "id": "...",
+        "secret": "...",
+        "connect_config": {
+            "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
+            "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
+            "scopes": ["openid", "offline_access"]
+        }
+    }
+}
+```
