@@ -20,10 +20,9 @@ start creating your custom application with setting up a database.
 
 ## Supabase setup
 
-Supabase is a [VC backed](https://supabase.com/blog/supabase-series-b),
-[open-source](https://github.com/supabase/supabase) Backend as a Service with a
-generous free tier, which also means you don't need to setup payment when you
-are just starting out.
+Supabase is an [open-source](https://github.com/supabase/supabase) Backend as a
+Service with a generous free tier, which means you don't need to setup payment
+when you are just starting out.
 
 It’s always a good idea to start with the database and come up with the shape of
 the data you are going to use. So after creating an account and logging in to
@@ -35,37 +34,48 @@ the pricing plan at free and click “Create new project”.
 ![Supabase new project creation](./1-supabase-project.png)
 
 After your project is provisioned (it usually takes just a few minutes),
-navigate to the Database page, click “New table” in to top-right corner and
-create a database table called `users` with the following columns:
+navigate to the SQL Editor page, click “New query” in to top-left corner and
+paste in the following SQL query, which will create both `users` and `issues`
+table:
 
-| Name  | Type | Default Value      | Primary | Define as Array |
-| ----- | ---- | ------------------ | ------- | --------------- |
-| id    | uuid | uuid_generate_v4() | TRUE    | FALSE           |
-| name  | text | NULL               | FALSE   | FALSE           |
-| roles | text | NULL               | FALSE   | TRUE            |
+```sql
+-- Create tables
+DROP TABLE IF EXISTS issues;
+DROP TABLE IF EXISTS users;
 
-![Supabase users table creation](./2-supabase-users-table.png)
+CREATE TABLE users(
+	id UUID NOT NULL DEFAULT uuid_generate_v4(),
+	name TEXT DEFAULT NULL,
+	roles TEXT[] DEFAULT NULL,
+	PRIMARY KEY(id)
+);
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 
-Repeat the previous step and create one more table called `issues` with the
-following columns:
+CREATE TABLE issues(
+	id UUID NOT NULL DEFAULT uuid_generate_v4(),
+	created_at TIMESTAMPTZ DEFAULT (now() AT TIME ZONE 'utc'),
+	created_by UUID NOT NULL,
+	summary TEXT DEFAULT NULL,
+	description TEXT DEFAULT NULL,
+	severity TEXT DEFAULT NULL,
+	status TEXT DEFAULT 'PENDING',
+	assigned_to UUID DEFAULT NULL,
+	PRIMARY KEY(id),
+	CONSTRAINT fk_created_by
+		FOREIGN KEY(created_by)
+		REFERENCES users(id),
+	CONSTRAINT fk_assigned_to
+		FOREIGN KEY(assigned_to)
+		REFERENCES users(id)
+);
+ALTER TABLE issues ENABLE ROW LEVEL SECURITY;
+```
 
-| Name        | Type                  | Default Value         | Primary | Define as Array |
-| ----------- | --------------------- | --------------------- | ------- | --------------- |
-| id          | uuid                  | uuid_generate_v4()    | TRUE    | FALSE           |
-| created_at  | timestamp             | now() at timezone UTC | FALSE   | FALSE           |
-| created_by  | FOREIGN KEY(users.id) | NULL                  | FALSE   | FALSE           |
-| summary     | text                  | NULL                  | FALSE   | FALSE           |
-| description | text                  | NULL                  | FALSE   | FALSE           |
-| severity    | text                  | NULL                  | FALSE   | FALSE           |
-| status      | text                  | PENDING               | FALSE   | FALSE           |
-| assigned_to | FOREIGN KEY(users.id) | NULL                  | FALSE   | FALSE           |
-
-![Supabase issues table creation](./3-supabase-issues-table.png)
+![Supabase users table creation](./2-supabase-tables.png)
 
 Now that the tables are ready to receive data, let's populate them by running
-some SQL queries. Navigate to the SQL Editor page, click "New query" in the
-top-left corner and paste in the following code, which will add 8 people to the
-`users` table.
+two more SQL queries. Click "New query" again in the top-left corner and paste
+in the following code, which will add 8 people to the `users` table.
 
 ```sql
 -- Insert users
@@ -83,8 +93,15 @@ VALUES
 
 ![Supabase insert users](./4-supabase-users-insert.png)
 
-After running the first query, click "New query" once more and run the next one,
-which will insert 4 mock issues to the `issues` table.
+After populating the `users` table, click "New query" once more and run the next
+one, which will insert 4 mock issues to the `issues` table.
+
+:::caution
+
+It is important to add the users first, because the following query will make
+use of the data in that table.
+
+:::
 
 ```sql
 -- Insert issues
