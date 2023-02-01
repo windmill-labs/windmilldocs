@@ -2,7 +2,7 @@ import React from 'react';
 import LandingSection from '../landing/LandingSection';
 import FeatureCard from '../landing/FeatureCard';
 import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, List } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { BoltIcon } from '@heroicons/react/24/outline';
 import { Code } from 'lucide-react';
@@ -35,18 +35,39 @@ const data = [
 
 const tabs = [
 	{
-		label: 'Trigger',
+		label: 'Flow editor',
+		icon: List,
+		id: 'flow-editor',
+		children: (
+			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
+				<div class="flex flex-col w-full gap-2 italic justify-center">
+					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
+					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
+				</div>
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					{data.map((item, index) => (
+						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
+							{item.description}
+						</FeatureCard>
+					))}
+				</div>
+			</div>
+		)
+	},
+
+	{
+		label: 'For loops',
 		icon: BoltIcon,
 		id: 'trigger',
 		children: (
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic">
-					<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
+				<div class="flex flex-col w-full gap-2 italic justify-center">
+					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
 					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon}>
+					{data.map((item, index) => (
+						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
 							{item.description}
 						</FeatureCard>
 					))}
@@ -55,20 +76,20 @@ const tabs = [
 		)
 	},
 	{
-		label: 'Approval',
+		label: 'Branching',
 		icon: Verified,
 		id: 'approval',
 		children: (
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon}>
+					{data.map((item, index) => (
+						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
 							{item.description}
 						</FeatureCard>
 					))}
 				</div>
-				<div class="flex flex-col w-full gap-2 italic">
-					<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
+				<div class="flex flex-col w-full gap-2 italic justify-center">
+					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
 					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
 				</div>
 			</div>
@@ -80,13 +101,13 @@ const tabs = [
 		id: 'branches',
 		children: (
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic">
-					<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
+				<div class="flex flex-col w-full gap-2 italic justify-center">
+					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
 					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon}>
+					{data.map((item, index) => (
+						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
 							{item.description}
 						</FeatureCard>
 					))}
@@ -100,13 +121,13 @@ const tabs = [
 		id: 'loops',
 		children: (
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic">
-					<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
+				<div class="flex flex-col w-full gap-2 italic justify-center">
+					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
 					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon}>
+					{data.map((item, index) => (
+						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
 							{item.description}
 						</FeatureCard>
 					))}
@@ -123,15 +144,19 @@ export default function FlowSection() {
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-green-600">
 					Flows
 				</h1>
+				<h2 className="text-gray-600 text-2xl font-semibold">
+					Workflow engine on-par with Airflow/Temporal
+				</h2>
 				<span className="text-lg text-gray-600 max-w-3xl">
 					Build complex Flows from atomic apps. Automatically trigger apps and Flow from webhooks, a
 					schedule, watching for events, or slack.
 				</span>
-				<FeatureCardTabs tabs={tabs} />
+				<FeatureCardTabs tabs={tabs} color="green" />
 				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/flows"
 						type="button"
+						target="_blank"
 						className="inline-flex items-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
 					>
 						Explore flows on the Hub

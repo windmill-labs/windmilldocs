@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Framer } from './framer';
 import { useTabs } from './useTabs';
 
-export default function FeatureCardTabs({ children, tabs }) {
+export default function FeatureCardTabs({ children, tabs, color='blue' as 'blue' | 'green' | 'orange' }) {
 	const [hookProps] = useState({
 		tabs: tabs,
 		initialTabId: 'trigger'
@@ -38,7 +38,7 @@ export default function FeatureCardTabs({ children, tabs }) {
 			<div className="hidden sm:block">
 				<div className="w-full flex flex-col items-center justify-center">
 					<div className="max-w-7xl">
-						<Framer.Tabs {...framer.tabProps} />
+						<Framer.Tabs {...framer.tabProps} color={color}/>
 						<Framer.Content
 							{...framer.contentProps}
 							className=" py-8 flex flex-col "

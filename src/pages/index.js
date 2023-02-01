@@ -4,7 +4,7 @@ import ScriptSection from '../landing/ScriptSection';
 import FlowSection from '../landing/FlowSection';
 import AppSection from '../landing/AppSection';
 import Footer from '../landing/Footer';
-import LandingHeader from '../landing/LandingHeader';
+import IntergrationList from '../landing/IntergrationList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 
@@ -18,11 +18,13 @@ function HomepageHeader() {
 	});
 
 	return (
-		<div className="">
+		<div>
 			<Hero />
 			<ScriptSection />
 			<FlowSection />
 			<AppSection />
+
+			<IntergrationList />
 			<LandingSection bgClass="bg-white">
 				<CallToAction />
 			</LandingSection>

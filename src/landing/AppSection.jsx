@@ -42,28 +42,37 @@ export default function FlowSection() {
 						Alpha
 					</span>
 				</div>
+				<h2 className="text-gray-600 text-2xl font-semibold">
+					Retool-like builder for advanced UIs
+				</h2>
 
 				<span className="text-lg text-gray-600 max-w-3xl">
-					Build complex Flows from atomic apps. Automatically trigger apps and Flow from webhooks, a
-					schedule, watching for events, or slack.
+					Build your own UI using our Wisiwig editor. Simply drag and drop components, connect your
+					data and deploy your app in minutes.
 				</span>
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-					<div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
-						{data.map((item) => (
-							<FeatureCard title={item.title} color="orange" Icon={item.icon}>
-								{item.description}
-							</FeatureCard>
-						))}
-					</div>
-					<div class="flex flex-col w-full gap-2 italic">
-						<img className="border-2 h-full rounded-xl" src="homescreen.png"></img>
-						<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
+					<FeatureCard title={'hle'} color="orange" Icon={Code} index={0}>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat reiciendis earum illo
+						pariatur doloribus. Deserunt et modi reprehenderit earum, tempore blanditiis id, odit
+						quis similique maxime qui ullam repellendus at.
+					</FeatureCard>
+					<div class="flex flex-col w-full  ">
+						<video
+							className="border-2 h-full rounded-xl object-cover w-full"
+							autoPlay
+							loop
+							src="/videos/apps.mp4"
+						/>
+						<span className="text-gray-500 text-center w-full text-sm italic">
+							Build an app to send custom messages on Slack in 2 minutes
+						</span>
 					</div>
 				</div>
 				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/apps"
 						type="button"
+						target="_blank"
 						className="inline-flex items-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
 					>
 						Explore apps on the Hub

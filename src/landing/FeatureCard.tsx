@@ -1,44 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import classNames from 'classnames';
+import React from 'react';
+import FadeInWhenVisible from './FadeInWhenVisible';
 
-function FadeInWhenVisible({ children }) {
-	let oldScrollY = 0;
 
-	const [direction, setDirection] = useState('up');
-
-	const controlDirection = () => {
-		if (window.scrollY > oldScrollY) {
-			setDirection('down');
-		} else {
-			setDirection('up');
-		}
-		oldScrollY = window.scrollY;
-	};
-
-	useEffect(() => {
-		window.addEventListener('scroll', controlDirection);
-		return () => {
-			window.removeEventListener('scroll', controlDirection);
-		};
-	}, []);
-
-	return (
-		<motion.div
-			initial="hidden"
-			whileInView="visible"
-			viewport={{ once: false }}
-			transition={{ duration: 0.5 }}
-			variants={{
-				visible: { opacity: 1, y: 0 },
-				hidden: { opacity: 0, y: direction === 'up' ? 32 : -32 }
-			}}
-		>
-			{children}
-		</motion.div>
-	);
-}
-
-export default function FeatureCard({ children, title, Icon, color = 'blue' }) {
+export default function FeatureCard({ children, title, Icon,selected, color = 'blue', index }) {
 	const borders = {
 		blue: 'border-blue-300',
 		green: 'border-green-300',
@@ -65,9 +30,11 @@ export default function FeatureCard({ children, title, Icon, color = 'blue' }) {
 	}
 
 	return (
-		<FadeInWhenVisible>
+		<FadeInWhenVisible delta={index*50}>
 			<div
-				className={`w-full border ${borders[color]} rounded-xl ${shadow[color]} p-8 gap-2 flex flex-col bg-white relative`}
+				className={classNames(`w-full border ${borders[color]} rounded-xl ${shadow[color]} p-8 gap-2 flex flex-col bg-white relative text-left`,
+				selected ? 'outline outline-2 outline-offset-4 outline-blue-500' : 'outline-none',
+				)}
 			>
 				<Icon
 					className={`absolute top-4 right-4 w-8 h-8 ${iconColor[color]}`}
@@ -77,7 +44,9 @@ export default function FeatureCard({ children, title, Icon, color = 'blue' }) {
 				>
 					{title}
 				</span>
+				<span className='text-sm'>
 				{children}
+				</span>
 			</div>
 		</FadeInWhenVisible>
 	);

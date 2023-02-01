@@ -14,16 +14,36 @@ type Props = {
   selectedTabIndex: number;
   tabs: Tab[];
   setSelectedTab: (input: [number, number]) => void;
+  color: 'blue' | 'green' | 'orange'
 };
 
 const Tabs = ({
   tabs,
   selectedTabIndex,
   setSelectedTab,
+  color = 'blue'
 }: Props): JSX.Element => {
   const [buttonRefs, setButtonRefs] = useState<Array<HTMLButtonElement | null>>(
     []
   );
+
+  const bgByColor = {
+    blue: 'bg-blue-100 text-blue-700',
+    green: 'bg-green-100 text-green-700',
+    orange: 'bg-orange-100 text-orange-700'
+  }
+
+  const bgLowByColor = {
+    blue: 'bg-blue-100',
+    green: 'bg-green-100',
+    orange: 'bg-orange-100'
+  }
+
+  const bgHighByColor = {
+    blue: 'bg-blue-200',
+    green: 'bg-green-200',
+    orange: 'bg-orange-200'
+  }
 
   useEffect(() => {
     setButtonRefs((prev) => prev.slice(0, tabs.length));
@@ -52,7 +72,7 @@ const Tabs = ({
               "text-md relative rounded-md flex items-center h-8 px-4 z-20 bg-transparent text-sm cursor-pointer select-none transition-colors",
 
               selectedTabIndex === i
-                ? 'bg-green-100 text-green-700'
+                ? bgByColor[color]
                 : 'text-gray-500 hover:text-gray-700',
               'px-3 py-2 font-medium text-sm rounded-md flex flex-row gap-2'
             )}
@@ -77,7 +97,7 @@ const Tabs = ({
         {hoveredRect && navRect && (
           <motion.div
             key={"hover"}
-            className="absolute z-10 top-0 left-0 rounded-md bg-green-100"
+            className={classNames("absolute z-10 top-0 left-0 rounded-md", bgLowByColor[color])}
             initial={{
               x: hoveredRect.left - navRect.left,
               y: hoveredRect.top - navRect.top,
@@ -105,7 +125,9 @@ const Tabs = ({
       </AnimatePresence>
       {selectedRect && navRect && (
         <motion.div
-          className="absolute z-10 top-0 left-0 rounded-md bg-green-200"
+          className={
+            classNames("absolute z-10 top-0 left-0 rounded-md ", bgHighByColor[color])
+          }
 
           initial={false}
           animate={{

@@ -46,10 +46,9 @@ export default function About() {
 					<div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
 						<h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Meet our team</h2>
 						<p className="text-xl text-gray-500">
-							We are a team of passionate people who are dedicated to making to Lorem ipsum dolor
-							sit amet, consectetur adipisicing elit. Aliquid, molestiae voluptates. Unde, placeat.
-							Amet labore, pariatur ipsum sit corrupti quia fugit placeat quod perferendis, alias
-							quis nobis, inventore distinctio hic!
+							We are a team of passionate people who are dedicated simplifying and streamlining the
+							process of creating internal tools, making it accessible and efficient for
+							organizations of all sizes.
 						</p>
 					</div>
 					<ul

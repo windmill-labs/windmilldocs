@@ -160,7 +160,11 @@ export default function Example() {
 					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
 						Pricing
 					</a>
-					<a href="/docs/intro" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a
+						href="/docs/intro"
+						onClick={() => window.plausible('read-docs')}
+						className="text-base font-medium text-gray-500 hover:text-gray-900"
+					>
 						Documentation
 					</a>
 
@@ -218,13 +222,15 @@ export default function Example() {
 						href="https://cal.com/ruben-windmill/windmill-demo"
 						data-analytics='"schedule-demo"'
 						onClick={() => window.plausible('schedule-demo')}
-						className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-200 px-4 py-2 text-base font-medium text-blue-800 shadow-sm hover:bg-blue-300"
+						className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
 					>
 						Book a demo
 					</a>
 					<a
-						href="#"
-						className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+						href="https://app.windmill.dev/user/login"
+						onClick={() => window.plausible('try-cloud')}
+						data-analytics='"try-cloud"'
+						className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
 					>
 						Start for free
 					</a>
@@ -248,11 +254,7 @@ export default function Example() {
 						<div className="px-5 pt-5 pb-6">
 							<div className="flex items-center justify-between">
 								<div>
-									<img
-										className="h-8 w-auto"
-										src="https://tailwindui.com/img/logos/mark.svg?color=blue&shade=600"
-										alt="Your Company"
-									/>
+									<img className="h-8" src="img/windmill.svg" alt="Windmill Labs" />
 								</div>
 								<div className="-mr-2">
 									<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">

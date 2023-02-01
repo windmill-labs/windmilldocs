@@ -34,17 +34,24 @@ export default function Hero() {
 						Turn scripts into internal workflows and UIs in minutes
 					</h1>
 					<p className="mt-6 text-lg leading-8 text-gray-600">
-						Easily create internal tools and customer apps with code where it matters. Open source,
+						Easily create internal tools and apps with code only where it matters. Open source,
 						scalable, reliable, and blazingly fast.
 					</p>
+
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
-							href="#"
-							className="rounded-md bg-blue-600 px-4 py-2 text-base font-semibold leading-7 text-white shadow-xl hover:bg-blue-500 hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+							href="https://app.windmill.dev/user/login"
+							onClick={() => window.plausible('try-cloud')}
+							data-analytics='"try-cloud"'
+							className="rounded-md bg-blue-600 px-4 py-2 text-base font-semibold leading-7 text-white shadow-xl hover:bg-blue-800 hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 !no-underline"
 						>
 							Try Windmill for Free
 						</a>
-						<a href="#" className="text-base font-semibold leading-7 text-gray-900">
+						<a
+							href="/docs/intro"
+							onClick={() => window.plausible('read-docs')}
+							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
+						>
 							Documentation <span aria-hidden="true">→</span>
 						</a>
 					</div>
