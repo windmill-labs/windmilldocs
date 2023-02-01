@@ -1,6 +1,5 @@
 import React from 'react';
 import LandingSection from '../landing/LandingSection';
-import FeatureCard from '../landing/FeatureCard';
 import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
 import { ExternalLink, List } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
@@ -11,25 +10,45 @@ const data = [
 	{
 		title: 'Polyglott',
 		description: 'Python, Typescript, Go, Bash scripts with any dependencies',
-		icon: Code
+		icon: Code,
+		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 21
+		}
 	},
 
 	{
 		title: 'Scalable',
 		description: 'Run them at scale on your infra or ours',
-		icon: Code
+		icon: Code,
+		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 21
+		}
 	},
 	{
 		title: 'Open source',
 		description:
 			'Open-source alternative to Airplane, Superblocks, Retool. Simplified Temporal, Airflow.',
-		icon: Code
+		icon: Code,
+		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 21
+		}
 	},
 	{
 		title: 'Schedules',
 		description:
 			'Trigger scripts and flows using cron-like schedules, or via an automatically generated webhook',
-		icon: Code
+		icon: Code,
+		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 21
+		}
 	}
 ];
 
@@ -38,102 +57,32 @@ const tabs = [
 		label: 'Flow editor',
 		icon: List,
 		id: 'flow-editor',
-		children: (
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic justify-center">
-					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
-					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
-				</div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item, index) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
-							{item.description}
-						</FeatureCard>
-					))}
-				</div>
-			</div>
-		)
+		data
 	},
 
 	{
 		label: 'For loops',
 		icon: BoltIcon,
 		id: 'trigger',
-		children: (
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic justify-center">
-					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
-					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
-				</div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item, index) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
-							{item.description}
-						</FeatureCard>
-					))}
-				</div>
-			</div>
-		)
+		data
 	},
 	{
 		label: 'Branching',
 		icon: Verified,
 		id: 'approval',
-		children: (
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item, index) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
-							{item.description}
-						</FeatureCard>
-					))}
-				</div>
-				<div class="flex flex-col w-full gap-2 italic justify-center">
-					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
-					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
-				</div>
-			</div>
-		)
+		data
 	},
 	{
 		label: 'Branches',
 		icon: GitBranch,
 		id: 'branches',
-		children: (
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic justify-center">
-					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
-					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
-				</div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item, index) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
-							{item.description}
-						</FeatureCard>
-					))}
-				</div>
-			</div>
-		)
+		data
 	},
 	{
 		label: 'Loops',
 		icon: Repeat,
 		id: 'loops',
-		children: (
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
-				<div class="flex flex-col w-full gap-2 italic justify-center">
-					<img className="border-2 h-auto rounded-xl" src="homescreen.png"></img>
-					<span className="text-gray-500 text-center w-full text-sm">Lorem ipsum</span>
-				</div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-					{data.map((item, index) => (
-						<FeatureCard title={item.title} color="green" Icon={item.icon} index={index}>
-							{item.description}
-						</FeatureCard>
-					))}
-				</div>
-			</div>
-		)
+		data
 	}
 ];
 
@@ -151,7 +100,8 @@ export default function FlowSection() {
 					Build complex Flows from atomic apps. Automatically trigger apps and Flow from webhooks, a
 					schedule, watching for events, or slack.
 				</span>
-				<FeatureCardTabs tabs={tabs} color="green" />
+
+				<FeatureCardTabs tabs={tabs} initialTabId="flow-editor" color="green" />
 				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/flows"

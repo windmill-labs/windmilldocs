@@ -30,7 +30,7 @@ const data = [
 	}
 ];
 
-export default function FlowSection() {
+export default function AppSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-orange-50">
 			<div className="flex flex-col gap-8 justify-center">

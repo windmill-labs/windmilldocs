@@ -1,14 +1,20 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Framer } from './framer';
-import { useTabs } from './useTabs';
+import TabContent from './TabContent';
+import { Tab, useTabs } from './useTabs';
 
-export default function FeatureCardTabs({ children, tabs, color='blue' as 'blue' | 'green' | 'orange' }) {
+export default function FeatureCardTabs({
+	tabs,
+	initialTabId,
+	color = 'blue' as 'blue' | 'green' | 'orange'
+}) {
 	const [hookProps] = useState({
 		tabs: tabs,
-		initialTabId: 'trigger'
+		initialTabId
 	});
 	const framer = useTabs(hookProps);
+	const data = framer.selectedTab.data;
+
 	return (
 		<div>
 			<div className="sm:hidden ">
@@ -24,26 +30,22 @@ export default function FeatureCardTabs({ children, tabs, color='blue' as 'blue'
 						framer.tabProps.setSelectedTab([1, 1]);
 					}}
 				>
-					{tabs.map((tab) => (
+					{tabs.map((tab: Tab) => (
 						<option key={tab.label}>{tab.label}</option>
 					))}
 				</select>
 				<Framer.Content
 					{...framer.contentProps}
-					className="text-center rounded-3xl py-9 flex flex-col items-center "
 				>
-					{children}
+					<TabContent data={data} color={color} />
 				</Framer.Content>
 			</div>
 			<div className="hidden sm:block">
 				<div className="w-full flex flex-col items-center justify-center">
 					<div className="max-w-7xl">
-						<Framer.Tabs {...framer.tabProps} color={color}/>
-						<Framer.Content
-							{...framer.contentProps}
-							className=" py-8 flex flex-col "
-						>
-							{framer.tabProps.tabs[framer.tabProps.selectedTabIndex].children}
+						<Framer.Tabs {...framer.tabProps} color={color} />
+						<Framer.Content {...framer.contentProps} >
+							<TabContent data={data}color={color}/>
 						</Framer.Content>
 					</div>
 				</div>

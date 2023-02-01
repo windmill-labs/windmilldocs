@@ -2,7 +2,16 @@ import { ReactNode, useState } from 'react';
 import { LucideIcon } from 'lucide-react';
 
 export type Tab = {
-	children: ReactNode;
+	data: Array<{
+		title: string;
+		description: string;
+		icon: JSX.Element;
+		caption: string;
+		video: {
+			videoSrc: string;
+			videoLength: number;
+		};
+	}>;
 	label: string;
 	id: string;
 	icon: LucideIcon;
