@@ -99,7 +99,16 @@ const tabs = [
 		label: 'Error handler',
 		icon: Bug,
 		id: 'etl',
-		data
+		data: [
+			{
+				title: 'Recovers from errors',
+				description:
+					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
+				icon: Bug,
+				caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+				imageSrc: '/images/error-handler.png'
+			}
+		]
 	}
 ];
 

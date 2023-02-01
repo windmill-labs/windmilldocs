@@ -1,5 +1,6 @@
 import React from 'react';
 import LandingHeader from './LandingHeader';
+
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
@@ -47,12 +48,13 @@ export default function Hero() {
 						>
 							Try Windmill for Free
 						</a>
+
 						<a
-							href="/docs/intro"
+							href="/docs/how-tos/self_host"
 							onClick={() => window.plausible('read-docs')}
 							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
 						>
-							Documentation <span aria-hidden="true">→</span>
+							Self-host <span aria-hidden="true">→</span>
 						</a>
 					</div>
 					<div className="w-full text-center mt-16">

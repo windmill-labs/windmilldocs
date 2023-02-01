@@ -26,7 +26,6 @@ export default function FeatureCard({ description, title, Icon,selected, color =
 		blue: 'card-shadow-blue',
 		green: 'card-shadow-teal',
 		orange: 'card-shadow-orange'
-
 	}
 
 	const outlineColor = {

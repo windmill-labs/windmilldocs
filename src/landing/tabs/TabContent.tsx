@@ -38,9 +38,9 @@ export default function TabContent({ data, color }) {
               Icon={item.icon}
               index={index}
               selected={index === selectedIndex}
-              description={item.description} 
+              description={item.description}
             />
-             
+
           </button>
         ))}
       </div>
@@ -54,12 +54,17 @@ export default function TabContent({ data, color }) {
             exit={{ opacity: 0, scale: 0.8, position: 'absolute' }}
           >
             <div className="flex flex-col w-full gap-2 italic justify-center h-[512px]">
-              <video
-                className="border-2 rounded-xl object-cover w-full"
-                autoPlay
-                loop
-                src={data[selectedIndex].video?.videoSrc}
-              />
+
+              {data[selectedIndex].video ? (
+                <video
+                  className="border-2 rounded-xl object-cover w-full"
+                  autoPlay
+                  loop
+                  src={data[selectedIndex].video?.videoSrc}
+                />
+              ) : (
+                <img className="border-2 rounded-xl object-cover w-full" src={data[selectedIndex].imageSrc} />
+              )}
 
               <span className="text-gray-500 text-center w-full text-sm">
                 {data[selectedIndex].caption}

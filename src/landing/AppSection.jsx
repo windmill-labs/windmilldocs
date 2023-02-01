@@ -117,8 +117,8 @@ export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-orange-50">
 			<div className="flex flex-col gap-4 justify-center">
-				<div className="flex flex-col gap-4 justify-center">
-					<div className="flex-row gap-2 flex items-center">
+				<div className="flex flex-col gap-8 justify-center">
+					<div className="flex-row gap-4 flex items-center">
 						<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-orange-600">
 							Apps
 						</h1>
@@ -127,9 +127,9 @@ export default function ScriptSection() {
 							Alpha
 						</span>
 					</div>
-					<h2 className="text-gray-600 text-2xl font-semibold">
-						Build your own UI using our Wisiwig editor. Simply drag and drop components, connect
-						your data and deploy your app in minutes.
+					<h2 className="text-gray-600 text-2xl font-semibold max-w-3xl">
+						Build your own UI: Simply drag and drop components, connect your data and deploy your
+						app in minutes.
 					</h2>
 				</div>
 

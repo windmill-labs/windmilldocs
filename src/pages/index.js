@@ -7,6 +7,7 @@ import Footer from '../landing/Footer';
 import IntergrationList from '../landing/IntergrationList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
+import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 
 function HomepageHeader() {
 	useEffect(() => {
@@ -27,6 +28,9 @@ function HomepageHeader() {
 			</div>
 
 			<IntergrationList />
+			<LandingSection bgClass="bg-white">
+				<EntrepriseFeatures />
+			</LandingSection>
 			<LandingSection bgClass="bg-white">
 				<CallToAction />
 			</LandingSection>
