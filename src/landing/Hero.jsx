@@ -54,7 +54,7 @@ export default function Hero() {
 							onClick={() => window.plausible('read-docs')}
 							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
 						>
-							Self-host <span aria-hidden="true">→</span>
+							Or self-host yourself <span aria-hidden="true">→</span>
 						</a>
 					</div>
 					<div className="w-full text-center mt-16">

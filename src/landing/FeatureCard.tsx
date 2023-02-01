@@ -35,7 +35,7 @@ export default function FeatureCard({ description, title, Icon,selected, color =
 	}
 
 	return (
-		<FadeInWhenVisible delta={index*50}>
+		<FadeInWhenVisible delta={index*32}>
 			<div
 				className={classNames(`w-full border ${borders[color]} rounded-xl ${shadow[color]} p-6 gap-2 flex flex-col bg-white relative text-left`,
 				selected ? `outline outline-2 outline-offset-4 ${outlineColor[color]}` : 'outline-none',

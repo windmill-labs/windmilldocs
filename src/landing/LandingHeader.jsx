@@ -53,11 +53,11 @@ const features = [
 const resources = [
 	{
 		name: 'Team',
-		description: 'Get all of your questions answered in our forums or contact support.',
-		href: '#'
+		description: 'Find out who we are and why we do what we do.',
+		href: '/about'
 	},
 
-	{ name: 'Blog', description: 'Understand how we take your privacy seriously.', href: '#' }
+	{ name: 'Blog', description: 'Stay up to date with our latest news and articles.', href: '/blog' }
 ];
 
 function classNames(...classes) {
