@@ -20,9 +20,11 @@ function HomepageHeader() {
 	return (
 		<div>
 			<Hero />
-			<ScriptSection />
-			<FlowSection />
-			<AppSection />
+			<div className="divide-y ">
+				<ScriptSection />
+				<FlowSection />
+				<AppSection />
+			</div>
 
 			<IntergrationList />
 			<LandingSection bgClass="bg-white">

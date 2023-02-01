@@ -1,12 +1,12 @@
 import React from 'react';
 import LandingSection from './LandingSection';
-import { Code, FormInput, Key } from 'lucide-react';
+import { Code, FormInput, Github, Key, KeyIcon, Server, WebhookIcon } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
 import FeatureCardTabs from './tabs/FeatureCardTabs';
 
 const data = [
 	{
-		title: 'Languages',
+		title: 'Web IDE & LSP',
 		description: 'Python, Typescript, Go, Bash scripts with any dependencies',
 		icon: Code,
 		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
@@ -41,19 +41,83 @@ const data = [
 	}
 ];
 
+const infrastructureData = [
+	{
+		title: 'Instant deployment',
+		description:
+			'Windmill is self-hosted, so you can run it on your own infrastructure. You can also run it on our cloud.',
+		icon: Server,
+		caption: 'Windmill is self-hosted, so you can run it on your own infrastructure',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 44
+		}
+	},
+
+	{
+		title: 'Deployement from Github',
+		description:
+			'Windmill is horizontally scalable, so you can run as many scripts as you want. You can also run it on our cloud.',
+		icon: Github,
+		caption: 'Windmill is horizontally scalable, so you can run as many scripts as you want',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 44
+		}
+	},
+	{
+		title: 'Versioned',
+		description:
+			"Each script is versioned with a unique hash, so you can easily rollback to a previous version if something goes wrong. ",
+		icon: KeyIcon,
+		caption: 'Each script is versioned with a unique hash',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 44
+		}
+	}
+]
+
+const webhookData = [
+	{
+		title: 'Webhooks',
+		description:
+			'Windmill is self-hosted, so you can run it on your own infrastructure. You can also run it on our cloud.',
+		icon: Server,
+		caption: 'Windmill is self-hosted, so you can run it on your own infrastructure',
+		video: {
+			videoSrc: '/videos/languages.mp4',
+			videoLength: 44
+		}
+	}
+]
+
 const tabs = [
 	{
 		label: 'Script Editor',
 		icon: Code,
 		id: 'script',
 		data
+	},
+	{
+		label: 'Infrastructure',
+		icon: Server,
+		id: 'infrastructure',
+		data: infrastructureData
+	},
+	{
+		label: 'Webhooks',
+		icon: WebhookIcon,
+		id: 'webhooks',
+		data: webhookData
 	}
 ];
+
 
 export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-blue-50">
-			<div className="flex flex-col gap-8 justify-center">
+			<div className="flex flex-col gap-4 justify-center">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
 						Scripts
@@ -69,13 +133,15 @@ export default function ScriptSection() {
 					useful scripts with Windmill.
 				</span>
 
-				<FeatureCardTabs tabs={tabs} initialTabId="script-editor" color='blue' />
+
+				<FeatureCardTabs tabs={tabs} color='blue' />
+
 				<div className="flex">
 					<a
 						type="button"
 						href="https://hub.windmill.dev/"
 						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-white"
 					>
 						Explore scripts on the Hub
 						<ExternalLink className="ml-2 h-5" />

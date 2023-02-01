@@ -5,18 +5,17 @@ import { Tab, useTabs } from './useTabs';
 
 export default function FeatureCardTabs({
 	tabs,
-	initialTabId,
 	color = 'blue' as 'blue' | 'green' | 'orange'
 }) {
 	const [hookProps] = useState({
 		tabs: tabs,
-		initialTabId
+		initialTabId: tabs[0].id
 	});
 	const framer = useTabs(hookProps);
 	const data = framer.selectedTab.data;
 
 	return (
-		<div>
+		<div className=''>
 			<div className="sm:hidden ">
 				<label htmlFor="tabs" className="sr-only">
 					Select a tab
@@ -42,9 +41,9 @@ export default function FeatureCardTabs({
 			</div>
 			<div className="hidden sm:block">
 				<div className="w-full flex flex-col items-center justify-center">
-					<div className="max-w-7xl">
+					<div className="max-w-7xl gap-8 flex flex-col">
 						<Framer.Tabs {...framer.tabProps} color={color} />
-						<Framer.Content {...framer.contentProps} >
+						<Framer.Content {...framer.contentProps} className="relative">
 							<TabContent data={data}color={color}/>
 						</Framer.Content>
 					</div>

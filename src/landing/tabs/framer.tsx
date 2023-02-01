@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-
+import { AnimatePresence, motion } from "framer-motion"; 
 import { Tab } from "./useTabs";
 
 const transition = {
@@ -29,19 +28,19 @@ const Tabs = ({
 
   const bgByColor = {
     blue: 'bg-blue-100 text-blue-700',
-    green: 'bg-green-100 text-green-700',
+    green: 'bg-teal-100 text-teal-700',
     orange: 'bg-orange-100 text-orange-700'
   }
 
   const bgLowByColor = {
     blue: 'bg-blue-100',
-    green: 'bg-green-100',
+    green: 'bg-teal-100',
     orange: 'bg-orange-100'
   }
 
   const bgHighByColor = {
     blue: 'bg-blue-200',
-    green: 'bg-green-200',
+    green: 'bg-teal-200',
     orange: 'bg-orange-200'
   }
 
@@ -164,21 +163,22 @@ const Content = ({
   className?: string;
 }): JSX.Element => {
   return (
-    <AnimatePresence mode="sync" custom={direction}>
+    <AnimatePresence mode="sync" custom={direction} >
       <motion.div
         key={selectedTabIndex}
         variants={{
           enter: (direction) => ({
             opacity: 0,
             x: direction > 0 ? 256 : -256,
-            scale: 0.8,
+            scale: 1,
           }),
           center: { opacity: 1, x: 0, scale: 1 },
           exit: (direction) => ({
             opacity: 0,
             x: direction > 0 ? -256 : 256,
-            scale: 0.8,
+            scale: 1,
             position: "absolute",
+            top: 48
           }),
         }}
         transition={{ duration: 0.25 }}
