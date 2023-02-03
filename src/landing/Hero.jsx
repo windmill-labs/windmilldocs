@@ -1,6 +1,6 @@
 import React from 'react';
 import LandingHeader from './LandingHeader';
-
+import GitHubButton from 'react-github-btn';
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
@@ -31,11 +31,21 @@ export default function Hero() {
 
 			<div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+					<GitHubButton
+						href="https://github.com/windmill-labs/windmill"
+						data-icon="octicon-star"
+						data-show-count="true"
+						data-size="large"
+						aria-label="Star windmill-labs/windmill on GitHub"
+					>
+						Star
+					</GitHubButton>
 					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 						Turn scripts into invicible workflows and UIs in minutes
 					</h1>
 					<p className="mt-6 text-lg leading-8 text-gray-600">
 						Easily create internal apps and invicible workflows with code only where it matters.
+						<span> </span>
 						Open source, scalable, reliable, fast
 					</p>
 
@@ -46,7 +56,7 @@ export default function Hero() {
 							data-analytics='"try-cloud"'
 							className="rounded-md bg-blue-600 px-4 py-2 text-base font-semibold leading-7 text-white shadow-xl hover:bg-blue-800 hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 !no-underline"
 						>
-							Try Windmill for Free
+							Try Windmill Cloud
 						</a>
 
 						<a

@@ -47,15 +47,19 @@ const tabs = [
 				title: 'For Loops',
 				description: 'Create for loops to iterate over a list of items.',
 				icon: Repeat,
-				caption: 'TODO',
-				imageSrc: '/images/flow-editor.png'
+				caption: 'Create for loops to iterate over a list of items',
+				video: {
+					videoSrc: '/videos/flow-loop.mp4',
+					videoLength: '28'
+				}
 			},
 			{
 				title: 'Error Handler',
 				description:
 					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
 				icon: Bug,
-				caption: 'TODO',
+				caption:
+					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
 				imageSrc: '/images/error-handler.png'
 			}
 		]
@@ -70,7 +74,8 @@ const tabs = [
 				description:
 					'Send request for approval by email, slack, anything and get a dedicate approval page',
 				icon: Verified,
-				caption: 'TODO',
+				caption:
+					'Send request for approval by email, slack, anything and get a dedicate approval page',
 				video: {
 					videoSrc: '/videos/flow-approval.mp4',
 					videoLength: '47'
@@ -81,7 +86,7 @@ const tabs = [
 				description:
 					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
 				icon: Verified,
-				caption: 'TODO',
+				caption: 'Resume Workflows with secret webhooks',
 				imageSrc: ''
 			}
 		]
@@ -96,7 +101,7 @@ const tabs = [
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
 				icon: Repeat,
-				caption: 'TODO',
+				caption: 'Easily retry failed steps',
 				video: {
 					videoSrc: '/videos/flow-retries.mp4',
 					videoLength: '15'
@@ -104,6 +109,7 @@ const tabs = [
 			}
 		]
 	},
+	/*
 	{
 		label: 'Hub scripts',
 		icon: Globe,
@@ -134,8 +140,9 @@ const tabs = [
 			}
 		]
 	},
+	*/
 	{
-		label: 'Schedules/Webhooks/UI/CLI',
+		label: 'Execute a flow',
 		icon: Play,
 		id: 'schedules-webhooks-ui-cli',
 		data: [
@@ -171,8 +178,8 @@ const tabs = [
 			{
 				title: 'CLI',
 				icon: Terminal,
-				caption: 'TODO',
-				imageSrc: ''
+				caption: 'Execute a flow from the CLI',
+				imageSrc: '/images/setup.gif'
 			}
 		]
 	}

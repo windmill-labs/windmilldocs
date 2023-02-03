@@ -53,6 +53,12 @@ export default function Example() {
 					>
 						Documentation
 					</a>
+					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
+						Hub
+					</a>
+					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
+						OpenAPI
+					</a>
 
 					<Popover className="relative">
 						{({ open }) => (
@@ -106,14 +112,6 @@ export default function Example() {
 
 				<div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 gap-4">
 					<a
-						className="inline-block"
-						target="_blank"
-						href="https://github.com/windmill-labs/windmill"
-						data-analytics='"github-stars"'
-					>
-						<img src="https://img.shields.io/github/stars/windmill-labs/windmill?logo=_&style=social" />
-					</a>
-					<a
 						href="https://cal.com/ruben-windmill/windmill-demo"
 						data-analytics='"schedule-demo"'
 						onClick={() => window.plausible('schedule-demo')}
@@ -127,7 +125,7 @@ export default function Example() {
 						data-analytics='"try-cloud"'
 						className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
 					>
-						Start for free
+						Windmill Cloud
 					</a>
 				</div>
 			</div>

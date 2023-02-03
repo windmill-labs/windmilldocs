@@ -5,7 +5,7 @@ export default function CallToAction() {
 			<div className="">
 				<div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
 					<h2 className="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-white">
-						Boost your productivity today.
+						Build endpoints, workflows & ETLs, UIs with code only where it matters
 					</h2>
 					<p className="mx-auto mt-6 max-w-4xl text-lg leading-8 text-gray-300">
 						Get started building your internal tool in under 10 minutes

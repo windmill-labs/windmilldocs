@@ -1,6 +1,5 @@
 import React from 'react';
 const navigation = {
-	solutions: [{ name: 'Benchmark', href: 'https://github.com/windmill-labs/windmill' }],
 	support: [
 		{ name: 'Pricing', href: '/pricing' },
 		{ name: 'Documentation', href: '/docs/intro' },
@@ -42,29 +41,15 @@ export default function Footer() {
 			</h2>
 			<div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
 				<div className="xl:grid xl:grid-cols-3 xl:gap-8">
-					<div className="space-y-8">
-						<img className="h-7" src="img/windmill.svg" alt="Windmill Labs" />
+					<div className="space-y-8 text-left">
+						<img className="h-16" src="img/windmill.svg" alt="Windmill Labs" />
 						<p className="text-sm leading-6 text-gray-600">
 							Made with passion in 🇺🇸 🇫🇷 🇨🇭 🇩🇪 and 🇭🇺
 						</p>
 					</div>
 					<div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
 						<div className="md:grid md:grid-cols-2 md:gap-8">
-							<div>
-								<h3 className="text-sm font-semibold leading-6 text-gray-900">Solutions</h3>
-								<ul role="list" className="mt-6 space-y-4">
-									{navigation.solutions.map((item) => (
-										<li key={item.name}>
-											<a
-												href={item.href}
-												className="text-sm leading-6 text-gray-600 hover:text-gray-900"
-											>
-												{item.name}
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
+							<div></div>
 							<div className="mt-10 md:mt-0">
 								<h3 className="text-sm font-semibold leading-6 text-gray-900">Support</h3>
 								<ul role="list" className="mt-6 space-y-4">

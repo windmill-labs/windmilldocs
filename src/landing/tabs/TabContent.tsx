@@ -2,8 +2,13 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import FeatureCard from '../FeatureCard';
-
+import { useInView } from 'react-intersection-observer';
 export default function TabContent({ data, color }) {
+
+  const { ref, inView, entry } = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   let timeout = null;
@@ -24,7 +29,7 @@ export default function TabContent({ data, color }) {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full ">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full " ref={ref}>
 
       <div className="h-full flex flex-col gap-4 justify-start col-span-2 lg:col-span-1 ">
         {data.map((item, index: number) => (
@@ -55,16 +60,20 @@ export default function TabContent({ data, color }) {
           >
             <div className="flex flex-col w-full gap-2 italic justify-start h-[512px]">
 
-              {data[selectedIndex].video ? (
-                <video
-                  className="border-2 rounded-xl object-cover w-full"
-                  autoPlay
-                  loop
-                  src={data[selectedIndex].video?.videoSrc}
-                />
-              ) : (
-                <img className="border-2 rounded-xl object-cover w-full" src={data[selectedIndex].imageSrc} />
-              )}
+              {inView ? (<div>
+                {data[selectedIndex].video ? (
+                  <video
+                    className="border-2 rounded-xl object-cover w-full"
+                    autoPlay
+                    loop
+                    src={data[selectedIndex].video?.videoSrc}
+
+                  />
+                ) : (
+                  <img className="border-2 rounded-xl object-cover w-full" src={data[selectedIndex].imageSrc} />
+                )}
+              </div>) : <span>Loading</span>}
+
 
               <span className="text-gray-500 text-center w-full text-sm">
                 {data[selectedIndex].caption}
