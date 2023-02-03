@@ -140,7 +140,7 @@ const config = {
 						to: '/terms'
 					}
 				],
-				copyright: `&copy; 2022 Windmill Labs, Inc. &nbsp;&nbsp;&nbsp; <span class="px-4"></span> Made with passion in the US and France</span>`
+				copyright: `&copy; 2023 Windmill Labs, Inc. &nbsp;&nbsp;&nbsp; <span class="px-4"></span> Made with passion in the US and France</span>`
 			},
 			prism: {
 				theme: lightCodeTheme,
