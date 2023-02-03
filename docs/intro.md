@@ -5,15 +5,16 @@ All code is not made equal and can be split in 2 categories:
 - **Code that matters**: high-value code containing your business logic, data transformation, internal API calls, and all the logic of your internal long-running services and workflows. This is the crux of the value-added of your engineering. Usually that code is prototyped and started under the form of scripts and SQL files, until it is turned at great expense into micro-services and hard to maintain custom internal tools.
 - **Boilerplate**: All the rest is boilerplate, be it UI and frontends that allow you to call the code above, api calls to external services, error handling, retries, logic to make your code scalable, dependency management, CI/CD, managing secrets, schedule, permissions, authentification, etc, etc. That code is boilerplate because it *feels* like you shouldn't have to reinvent the wheel, over and over again.
 
-Many services labels themselves as **no-code** or **low-code**, and they address indeed the challenge of getting rid of the boilerplate and provide a comprehensive platform accessible to all members of a diverse organization not made solely of engineers. However, we believe they lack the full power and flexibility of code as they either hide it completely, or only allow under extremely restricted forms.
+Many services labels themselves as **no-code** or **low-code**, and they address indeed the challenge of getting rid of the boilerplate and provide a comprehensive platform accessible to all members of a diverse organization not made solely of engineers. However, we believe they lack the full power and flexibility of code as they either hide it completely, or only allow it under restricted forms.
 
-Windmill is different, it allows building production internal tools through code much faster without sacrificing reliability, scalability, performance, flexibility, or control. It empowers semi-technical users to access and edit that code without being overwhelmed by the usual barrier of entry (git, IDE, local environments, secrets managements, etc), and it is compatible with senior/staff software engineers high standards for production-grade yet flexible yet customizable with code.
+Windmill is different, it allows building production internal tools through code much faster, without sacrificing reliability, scalability, performance, flexibility, or control. It empowers semi-technical users to access and edit that code without being overwhelmed by the usual barrier of entry (git, IDE, local environments, secrets managements, etc), and it is compatible with senior/staff software engineers high standards for a devtool.
 
 Windmill embeds: 
 - A blazingly fast runtime to run code in Python/Typescript/Go/Bash/SQL from a self-managed job queue, at scale, with any dependencies, with no overhead, and minimal cold start. 
 - A parser that will infer the dependencies and arguments from the code itself and generate **lockfiles** and **input specs**.
   - The **lockfile** allows the script being deployed to maintain exactly the same set of versioned dependencies forever
   - An input spec (which is actually a JSON schema) used to generate a minimal UI automatically for both using the script as a standalone or as a step of a flow
+- An auto-generated UI for every scripts thanks to the input spec mentionned above
 - A powerful *web IDE* to write scripts with autocompletion and syntax checking
 - A low-code builder and **workflow engine** to build and run complex flows by composing custom scripts and generic scripts shared on the [Hub](https://hub.windmill.dev). Those flows can, among others, do:
   - **retries** with fixed and exponential backoff

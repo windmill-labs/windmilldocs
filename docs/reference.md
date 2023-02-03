@@ -13,7 +13,7 @@ username when he joins a workspace.
 
 In Windmill, a script is always a Python, TypeScript (deno), Go or Bash script. Its 2
 most important components are its input [JSON Schema](#jsonchema) specification
-and its code content. Python and Go scripts also have an auto-genreated lockfile that ensure that executions of the same script always use the exact same dependencies. The code must always have a main function:
+and its code content. Python and Go scripts also have an auto-genreated lockfile that ensure that executions of the same script always use the exact same set of versioned dependencies. The code must always have a main function:
 
 - Python:
 
@@ -42,8 +42,8 @@ which is its entrypoint when executed as an individual serverless endpoint or a 
 
 ### Job Input -> Script Parameters
 
-[Jobs](#Job) take a JSON object/dict as input which can be empty. The different key-value pairs of the objects are passed as the different parameters of the main of the main function, with just a few language
-specific transformations from JSON to a more adequate types in the target language if necessary (e.g base64/datetime encoding). Values can be JSON object themselves but we recommend trying to keep the input specification flat when possible.
+[Jobs](#Job) take a JSON object/dict as input which can be empty. That input is passed as the payload of the POST request that triggers the script. The different key-value pairs of the objects are passed as the different parameters of the main of the main function, with just a few language
+specific transformations from JSON to a more adequate types in the target language if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves but we recommend trying to keep the input flat when possible.
 
 ### Script hashes
 
@@ -58,43 +58,25 @@ You can attach additional functionalities to scripts by specializing them into s
 
 #### Action
 
-Common Scripts are the basic building blocks for the flows.
+Action are the basic building blocks for the flows.
 
 #### Trigger Scripts
 
 They are used as a first flow step, most commonly with an internal state and a
 schedule to watch for changes on an external system, and compare it to the
-previously saved state. If there are changes, _trigger_ the rest of the flow,
+previously saved state. If there are changes,it  _triggers_ the rest of the flow,
 i.e. subsequent scripts.
 
 #### Approval Scripts
 
-Use them in order to suspend a flow until it's approved. Most common scenario
+Suspend a flow until it's approved. An approval script will interact with the windmill API using any of the windmill clients to retrieve a secret approval URL and resume/cancel endpoints. Most common scenario
 for approval scripts is to send an external notification with an URL that can
 be used to resume or cancel a flow. For more details check [Suspend/Resume a
 flow tutorial](./how-tos/6_suspend_resume_a_flow.md).
 
 #### Error Handlers
 
-Handle errors for flows after all retries attempts have been exhausted.
-
-#### Template Scripts
-
-In order to allow other users to rapidly write scripts, you can define
-templates. This is particularly useful with resources for example: you can
-define a template script that can be rapidly used with that resource.
-
-When creating a script from a template, the script's code will be pre-filled
-with the template code.
-
-While you can create as many Template Scripts as you want, Windmill comes with a
-few built-in types. One of the provided templates for TypeScript/Deno is the
-PostgreSQL template. This template showcases how to quickly create a
-parameterized statement for a PostgreSQL database. Template Scripts can be used
-as a standalone Script, or as a part of a Flow. Visit the Postgres
-[integration tutorial](./integrations/postgresql) to learn more.
-
-Indeed, templates are just scripts!
+Handle errors for flows after all retries attempts have been exhausted. If it does not return an exception itself, the flow is considered to be "recovered" and will have a success status. So in most cases, you will to rethrow an error to have it be listed as a failed flow.
 
 ### Automatic UI generation
 
@@ -102,13 +84,12 @@ By reading the main function parameters, Windmill generates the input
 specification of the script in the [JSON Schema](https://json-schema.org/)
 format. Windmill then renders the flow's or script's UI from that specification.
 
-You can but in most cases do not need to deal with the JSON Schema directly
+You do not need to deal with the JSON Schema directly
 associated to the script directly. It is the result of the
 [analysis of the script parameters of the main function](#script-parameters-to-jsonschema)
-and the UI customisation that you may do in the last step of the flow or script.
-In the UI customisation interface, you may refine all the information that it
-was not possible to infer directly from the parameters such as restricting a
-string to an enum, or precising that a list contains only string. You can also
+and the UI customisation that you can optionaly do.
+In the UI customisation interface, you may refine all the information that were not possible to infer directly from the parameters such as restricting a
+string to an enum, or precising that a list contains only numbers. You can also
 add helpful descriptions to each field.
 
 ### JSON Schema
@@ -152,7 +133,7 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 - Each argument can have a description field, that will appear in the generated
   UI.
 
-### Script parameters to JSON Schema
+### Script parameters -> JSON Schema
 
 There is a one to one correspondence between a parameter of the main function
 and a field of `properties` in the JSON Schema. The name of the argument become
@@ -204,6 +185,14 @@ type alias for an `object`. They are purely type hints for the Windmill parser.
 The `sql` format is specific to Windmill and replaces the normal text field with
 a monaco editor with SQL support.
 
+Note: the equivalent of the type `wmill.Resource<'my_resource_type'>` in Python is to do the following:
+```
+my_resource_type = dict
+
+def main(x: my_resource_type):
+  ...
+```
+
 ### SQL
 
 For steps and scripts that use sql, you can leverage the Windmill's `Sql` type
@@ -240,7 +229,7 @@ script which corresponds to the new version of the parent script. This
 guarantees traceability of every action done on the platform, including editing
 scripts. It also enables versioning. Versioning is a good practice from software
 engineering which everyone familiar with git already knows. Windmill versioning
-is a **simplified git** and makes two main simplifying assumptions:
+is a **simplified git** with two simplifying assumptions:
 
 - **Linearity**: the lineage or the chain of script from the one with no
   ancestor/parent to the one with no child is linear: there is no branching and
@@ -285,7 +274,7 @@ async function main(...) {
 For Typescript (Deno), the dependencies and their versions are directly in the
 script and hence there is no need for any additional steps.
 
-For Python, the imports are automatically analyzed at saving time of the script
+For Python, the imports are automatically analyzed when the script is saved
 and the corresponding list of Pypi packages is extracted. A dependency job is
 then spawned to associate that list of Pypi packages with a lockfile, which
 will lock the versions. This ensures that the same version of a python script
@@ -310,7 +299,7 @@ def main(...):
 In addition to that, environment variables can be set to customize
 `pip`'s index-url and extra-index-url. This is useful for private repositories.
 
-To illustrate, in a docker-compose file, you would add following lines:
+In a docker-compose file, you would add following lines:
 
 ```dockerfile
 windmill:
@@ -366,38 +355,31 @@ export async function main() {
 
 ## Flows
 
-A **Flow** is the core concept behind windmill. It is a json serializable value
+A **Flow** is a core concept. It is a json serializable value
 in the [OpenFlow](./openflow) format that consists of an input spec (similar to
 scripts), and a linear sequence of steps also referred to as modules. Each step
 consists of either:
 
 - Reference to a script from the hub
 - Reference to a script in your workspace
-- Inlined script in Python or Typescript (deno)
+- Inlined script in Python, Typescript (deno), Go Bash
+- Trigger scripts which are a kind of scripts that are meant to be first step of a scheduled flow that watch for external events and early exit the flow if there is no new events
 - `forloop` that iterates over elements and triggers the execution of an
   embedded flow for each element. The list is calculated dynamically as an
   [input transform](#input-transform).
-- (Coming soon) branches to embedded flow given the first predicate that matches
-- (Coming soon) A listener to an even that will resume the flow. This is how
-  steps that contain waiting for an approval by email or slack will be
-  implemented.
-
-**Embedded flows** (flowception!) are full flows in their own right but their
-definition is embedded inside the parent or embedding flow.
+- Branches to one subflow given for the first predicate that match (evaluated in-order)
+- Branches to all subflow and collect the result of each branch as an array
+- Approval/Suspend steps which suspend the flow at no cost until it is resumed by getting an approval/resume signal. [More details](#approval-scripts)
+- Inner flows
 
 With the mechanism of [input transforms](#input-transform), the input of any
 step can be the output of any previous step, hence flows are actually
 [Directed Acyclic Graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph)
-rather than sequences. However, Windmill has taken the stance that most
-rendering of flows as graph are more gimmicks than productive. To execute any
-graph, one need to do a topological sort to transform it into a sequence, and
-sequences are more intuitive than graphs.
+rather than sequences. You refer to the result of any step using its step id.
 
 ## Retries
 
-Retries are an important of the toolkit provided by Windmill.
-It facilitates the Flow's modules, making them more robust and resilient.  
-Windmill supports two types of retries: regular intervals and
+Every step of a flow can be configured with two types of retries: regular intervals and
 exponential back-off. They can be applied independently, or jointly.
 
 Both strategies are based on the number of retries and the time interval 
@@ -406,6 +388,8 @@ to be applied between them.
 Strategies can also be combined, in which case, the linear strategy 
 (regular intervals) will be applied first, followed by the exponential 
 back-off strategy.
+
+The retries are tried when a step errors, until there are no retries attempt left, in which case the flow either pass the error to the [error handler](#error-handlers) if any, or fail the flow itself if no error handler.
 
 ## Input Transform
 
@@ -423,8 +407,7 @@ setting. That javascript is using a restricted subset of the standard library +
 
 - `flow_input`: The dict/object containing the different parameters of the flow
   itself
-- `previous_result`: The result of the previous step
-- `step(i)`: The result of the step i
+- `results.{id}`: The 
 - `resource(path)`: The resource at path
 - `variable(path)`: The variable at path
 
