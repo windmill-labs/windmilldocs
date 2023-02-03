@@ -37,7 +37,7 @@ vCPU is proportional to the memory so you can assume you get a decent vCPU.
 
 ```typescript
 exports.handler = async (event) => {
-  // TODO implement
+  //  implement
   const response = {
     statusCode: 200,
     body: JSON.stringify(fibonacci(i)),

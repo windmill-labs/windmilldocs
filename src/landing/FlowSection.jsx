@@ -120,7 +120,7 @@ const tabs = [
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
 				icon: Code,
-				caption: 'TODO',
+				caption: '',
 				imageSrc: ''
 			}
 		]
@@ -135,7 +135,7 @@ const tabs = [
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
 				icon: Database,
-				caption: 'TODO',
+				caption: '',
 				imageSrc: ''
 			}
 		]
@@ -172,7 +172,7 @@ const tabs = [
 			{
 				title: 'Webhooks',
 				icon: WebhookIcon,
-				caption: 'TODO',
+				caption: '',
 				imageSrc: ''
 			},
 			{

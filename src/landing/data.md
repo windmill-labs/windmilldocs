@@ -77,7 +77,7 @@
 
 ## Deploy faster
 
-### TODO description
+###  description
 
 - Audit logs:
   - See all past executions, and find the root cause of mishaps quickly.
