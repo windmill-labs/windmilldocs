@@ -24,7 +24,7 @@ export default function FadeInWhenVisible({ children, delta = 0 }) {
 
 	return (
 		<motion.div
-			initial="visible"
+			initial="hidden"
 			whileInView="visible"
 			viewport={{ once: false }}
 			transition={{ duration: 0.5 }}

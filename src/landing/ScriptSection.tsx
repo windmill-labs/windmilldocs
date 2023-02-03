@@ -23,7 +23,10 @@ const newTabs = [
 				description: 'Windmill uses deno as the typescript runtime.',
 				icon: SiDeno,
 				caption: 'Windmill uses deno as the typescript runtime.',
-				imageSrc: '/images/error-handler.png',
+				video: {
+					videoSrc: '/videos/deno.mp4',
+					videoLength: '33'
+				}
 			},
 			{
 				title: 'Go',
