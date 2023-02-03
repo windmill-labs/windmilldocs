@@ -16,10 +16,7 @@ const newTabs = [
 				description: 'Windmill provides a python 3.11 environment.'
 				, icon: SiPython,
 				caption: 'Windmill provides a python 3.11 environment.',
-				video: {
-					videoSrc: '/videos/python.mp4',
-					videoLength: '35'
-				}
+				imageSrc: '/images/python.png',
 			},
 			{
 				title: 'Typescript',
@@ -35,21 +32,21 @@ const newTabs = [
 				title: 'Go',
 				icon: SiGo,
 				caption: 'TODO',
-				imageSrc: '/images/error-handler.png',
+				imageSrc: '/images/go.png',
 
 			},
 			{
 				title: 'Bash',
 				icon: SiGnubash,
 				caption: 'TODO',
-				imageSrc: '/images/error-handler.png',
+				imageSrc: '/images/bash.png',
 			},
 			{
 				title: 'PostgreSQL / MySQL',
 				icon: Database,
 				caption: 'TODO',
 
-				imageSrc: '/images/error-handler.png',
+				imageSrc: '/images/sql.png',
 			}
 		]
 	},
