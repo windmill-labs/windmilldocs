@@ -71,7 +71,7 @@ export default function Hero() {
 						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 					</div>
 				</div>
-				<div className="mx-auto">
+				<div className="mx-auto mt-16 sm:mt-0">
 					<div className="flex-none">
 							<img
 								src="homescreen.png"
