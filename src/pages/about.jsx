@@ -4,31 +4,31 @@ const people = [
 	{
 		name: 'Ruben Fiszel',
 		role: 'CEO & Founder',
-		imageUrl: 'team/ruben-fiszel.jpg',
+		imageUrl: '/team/ruben-fiszel.jpg',
 		linkedinUrl: '#'
 	},
 	{
 		name: 'Faton Ramadani',
 		role: 'Founding engineer',
-		imageUrl: 'team/faton-ramadani.jpg',
+		imageUrl: '/team/faton-ramadani.jpg',
 		linkedinUrl: '#'
 	},
 	{
 		name: 'Ádám Kovács',
 		role: 'Frontend Engineer',
-		imageUrl: 'team/adam-kovacs.jpg',
+		imageUrl: '/team/adam-kovacs.jpg',
 		linkedinUrl: '#'
 	},
 	{
 		name: 'Kai Jellinghaus',
 		role: 'Software engineer',
-		imageUrl: 'team/kai-jellinghaus.jpg',
+		imageUrl: '/team/kai-jellinghaus.jpg',
 		linkedinUrl: '#'
 	},
 	{
 		name: 'Henri Courdent',
 		role: 'Chief of Staff',
-		imageUrl: 'team/henri-courdent.jpg',
+		imageUrl: '/team/henri-courdent.jpg',
 		linkedinUrl: '#'
 	}
 ];
