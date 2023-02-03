@@ -24,9 +24,9 @@ export default function TabContent({ data, color }) {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full ">
 
-      <div className="h-full flex flex-col gap-4 justify-center">
+      <div className="h-full flex flex-col gap-4 justify-start col-span-2 lg:col-span-1 ">
         {data.map((item, index: number) => (
           <button
             onClick={() => onSelect(index)}
@@ -53,7 +53,7 @@ export default function TabContent({ data, color }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8, position: 'absolute' }}
           >
-            <div className="flex flex-col w-full gap-2 italic justify-center h-[512px]">
+            <div className="flex flex-col w-full gap-2 italic justify-start h-[512px]">
 
               {data[selectedIndex].video ? (
                 <video

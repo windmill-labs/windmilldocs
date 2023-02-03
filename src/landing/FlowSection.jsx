@@ -1,112 +1,178 @@
 import React from 'react';
 import LandingSection from '../landing/LandingSection';
 import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
-import { ExternalLink, List, Database, Bug } from 'lucide-react';
+import {
+	ExternalLink,
+	List,
+	Database,
+	Bug,
+	Play,
+	CalendarClock,
+	FormInput,
+	WebhookIcon,
+	Terminal,
+	Globe
+} from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
-import { BoltIcon } from '@heroicons/react/24/outline';
 import { Code } from 'lucide-react';
-
-const data = [
-	{
-		title: 'Polyglott',
-		description: 'Python, Typescript, Go, Bash scripts with any dependencies',
-		icon: Code,
-		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
-		video: {
-			videoSrc: '/videos/languages.mp4',
-			videoLength: 21
-		}
-	},
-
-	{
-		title: 'Scalable',
-		description: 'Run them at scale on your infra or ours',
-		icon: Code,
-		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
-		video: {
-			videoSrc: '/videos/languages.mp4',
-			videoLength: 21
-		}
-	},
-	{
-		title: 'Open source',
-		description:
-			'Open-source alternative to Airplane, Superblocks, Retool. Simplified Temporal, Airflow.',
-		icon: Code,
-		caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
-		video: {
-			videoSrc: '/videos/languages.mp4',
-			videoLength: 21
-		}
-	}
-];
-
-/**
- *     Flow Management:
-        Flow web editor
-
-    Steps:
-        For loops step
-        Branching step
-        Approval step
-        Sleep step
-        Error handler
-
-    Data Processing:
-        ETL/Data processing
-        Nested flow
- */
 
 const tabs = [
 	{
 		label: 'Flow editor',
 		icon: List,
 		id: 'flow-editor',
-		data
-	},
-
-	{
-		label: 'Trigger',
-		icon: BoltIcon,
-		id: 'trigger',
-		data
-	},
-	{
-		label: 'Approval',
-		icon: Verified,
-		id: 'approval',
-		data
-	},
-	{
-		label: 'Branches',
-		icon: GitBranch,
-		id: 'branches',
-		data
-	},
-	{
-		label: 'Loops',
-		icon: Repeat,
-		id: 'loops',
-		data
-	},
-	{
-		label: 'ETL / Data processing',
-		icon: Database,
-		id: 'etl',
-		data
-	},
-	{
-		label: 'Error handler',
-		icon: Bug,
-		id: 'etl',
 		data: [
 			{
-				title: 'Recovers from errors',
+				title: 'Sequence',
+				description: 'Build complex Flows from atomic scripts.',
+				icon: List,
+				caption: 'Write scripts in Typescript, Python, Go and Bash or use scripts from the hub',
+				video: {
+					videoSrc: '/videos/flow-sequence.mp4',
+					videoLength: '28'
+				}
+			},
+
+			{
+				title: 'Branching',
+				description: 'Built-in branching logic to create complex workflows.',
+				icon: GitBranch,
+				caption: 'Built-in branching logic to create complex workflows',
+				video: {
+					videoSrc: '/videos/flow-branch.mp4',
+					videoLength: '28'
+				}
+			},
+			{
+				title: 'For Loops',
+				description: 'Create for loops to iterate over a list of items.',
+				icon: Repeat,
+				caption: 'TODO',
+				imageSrc: '/images/flow-editor.png'
+			},
+			{
+				title: 'Error Handler',
 				description:
 					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
 				icon: Bug,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+				caption: 'TODO',
 				imageSrc: '/images/error-handler.png'
+			}
+		]
+	},
+	{
+		label: 'Suspend/Approval Step',
+		icon: Verified,
+		id: 'suspend-approval',
+		data: [
+			{
+				title: 'Approval step',
+				description:
+					'Send request for approval by email, slack, anything and get a dedicate approval page',
+				icon: Verified,
+				caption: 'TODO',
+				video: {
+					videoSrc: '/videos/flow-approval.mp4',
+					videoLength: '47'
+				}
+			},
+			{
+				title: 'Resume Workflows with secret webhooks',
+				description:
+					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
+				icon: Verified,
+				caption: 'TODO',
+				imageSrc: ''
+			}
+		]
+	},
+	{
+		label: 'Retries',
+		icon: Repeat,
+		id: 'retries',
+		data: [
+			{
+				title: 'Customize number of retries for each individual step',
+				description:
+					'Automatically retry failed steps. Customize the number of retries for each individual step.',
+				icon: Repeat,
+				caption: 'TODO',
+				video: {
+					videoSrc: '/videos/flow-retries.mp4',
+					videoLength: '15'
+				}
+			}
+		]
+	},
+	{
+		label: 'Hub scripts',
+		icon: Globe,
+		id: 'hub-scripts',
+		data: [
+			{
+				title: 'Short video of usig a script from the hub',
+				description:
+					'Automatically retry failed steps. Customize the number of retries for each individual step.',
+				icon: Code,
+				caption: 'TODO',
+				imageSrc: ''
+			}
+		]
+	},
+	{
+		label: 'ETL/Data processing',
+		icon: Database,
+		id: 'etl-data-processing',
+		data: [
+			{
+				title: 'Shared folder between folders to write and read heavy data',
+				description:
+					'Automatically retry failed steps. Customize the number of retries for each individual step.',
+				icon: Database,
+				caption: 'TODO',
+				imageSrc: ''
+			}
+		]
+	},
+	{
+		label: 'Schedules/Webhooks/UI/CLI',
+		icon: Play,
+		id: 'schedules-webhooks-ui-cli',
+		data: [
+			{
+				title: 'Schedules',
+				description:
+					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
+				icon: CalendarClock,
+				caption:
+					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
+				video: {
+					videoSrc: '/videos/flow-schedule.mp4',
+					videoLength: '15'
+				}
+			},
+
+			{
+				title: 'UI',
+				description: 'You can directly trigger a script using the autogenerated UI.',
+				icon: FormInput,
+				caption: 'You can directly trigger a script using the autogenerated UI.',
+				video: {
+					videoSrc: '/videos/flow-ui.mp4',
+					videoLength: '14'
+				}
+			},
+			{
+				title: 'Webhooks',
+				icon: WebhookIcon,
+				caption: 'TODO',
+				imageSrc: ''
+			},
+			{
+				title: 'CLI',
+				icon: Terminal,
+				caption: 'TODO',
+				imageSrc: ''
 			}
 		]
 	}
@@ -115,13 +181,16 @@ const tabs = [
 export default function FlowSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-teal-50">
-			<div className="flex flex-col gap-8 justify-center w-full">
-				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-600">
-					Flows
-				</h1>
-				<h2 className="text-gray-600 text-2xl font-semibold">
-					Workflow engine on-par with Airflow/Temporal
-				</h2>
+			<div className="flex flex-col gap-4 justify-center w-full">
+				<div className="flex flex-col gap-2">
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-800">
+						Flows
+					</h1>
+					<h2 className="text-gray-600 text-2xl font-semibold">
+						Workflow engine on-par with Airflow/Temporal
+					</h2>
+				</div>
+
 				<span className="text-lg text-gray-600 max-w-3xl">
 					Build complex Flows from atomic apps. Automatically trigger apps and Flow from webhooks, a
 					schedule, watching for events, or slack.

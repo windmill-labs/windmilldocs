@@ -29,14 +29,14 @@ export default function Hero() {
 			</svg>
 			<LandingHeader />
 
-			<div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8">
+			<div className="mx-auto max-w-7xl px-6 pt-10 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-					<h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-						Turn scripts into internal workflows and UIs in minutes
+					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+						Turn scripts into invicible workflows and UIs in minutes
 					</h1>
 					<p className="mt-6 text-lg leading-8 text-gray-600">
-						Easily create internal tools and apps with code only where it matters. Open source,
-						scalable, reliable, and blazingly fast.
+						Easily create internal apps and invicible workflows with code only where it matters.
+						Open source, scalable, reliable, fast
 					</p>
 
 					<div className="mt-10 flex items-center gap-x-6">
@@ -57,7 +57,7 @@ export default function Hero() {
 							Or self-host yourself <span aria-hidden="true">→</span>
 						</a>
 					</div>
-					<div className="w-full text-center mt-16">
+					<div className="w-full text-left mt-8">
 						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 					</div>
 				</div>

@@ -14,6 +14,12 @@ export default function FeatureCardTabs({
 	const framer = useTabs(hookProps);
 	const data = framer.selectedTab.data;
 
+	const selectFocusColors = {
+		blue: 'focus:border-blue-500 focus:ring-blue-500',
+		green: 'focus:border-teal-500 focus:ring-teal-500',
+		orange: 'focus:border-orange-500 focus:ring-orange-500'
+	};
+
 	return (
 		<div className=''>
 			<div className="sm:hidden ">
@@ -23,10 +29,13 @@ export default function FeatureCardTabs({
 				<select
 					id="tabs"
 					name="tabs"
-					className="block w-full rounded-md border-gray-300 focus:border-green-500 focus:ring-green-500"
+					className={`block w-full rounded-md border-gray-300 mb-4 ${selectFocusColors[color]}`}
 					defaultValue={'Company'}
-					onSelect={(e) => {
-						framer.tabProps.setSelectedTab([1, 1]);
+					onChange={(e) => {
+			
+						const tabIndex = tabs.findIndex((tab) => tab.label === e.target.value);
+
+						framer.tabProps.setSelectedTab([tabIndex, 1]);
 					}}
 				>
 					{tabs.map((tab: Tab) => (
@@ -44,7 +53,7 @@ export default function FeatureCardTabs({
 					<div className="max-w-7xl gap-8 flex flex-col">
 						<Framer.Tabs {...framer.tabProps} color={color} />
 						<Framer.Content {...framer.contentProps} className="relative">
-							<TabContent data={data}color={color}/>
+							<TabContent data={data} color={color}/>
 						</Framer.Content>
 					</div>
 				</div>

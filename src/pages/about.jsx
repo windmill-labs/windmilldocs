@@ -47,8 +47,8 @@ export default function About() {
 						<h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Meet our team</h2>
 						<p className="text-xl text-gray-500">
 							We are a team of passionate people who are dedicated simplifying and streamlining the
-							process of creating internal tools, making it accessible and efficient for
-							organizations of all sizes.
+							process of creating internal tools and critical workflows, making it accessible and
+							efficient for organizations of all sizes.
 						</p>
 					</div>
 					<ul

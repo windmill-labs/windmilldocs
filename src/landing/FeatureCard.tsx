@@ -3,7 +3,7 @@ import React from 'react';
 import FadeInWhenVisible from './FadeInWhenVisible';
 
 
-export default function FeatureCard({ description, title, Icon,selected, color = 'blue', index }) {
+export default function FeatureCard({ description, title, Icon, selected, color = 'blue', index }) {
 	const borders = {
 		blue: 'border-blue-300',
 		green: 'border-teal-300',
@@ -24,7 +24,7 @@ export default function FeatureCard({ description, title, Icon,selected, color =
 
 	const shadow = {
 		blue: 'card-shadow-blue',
-		green: 'card-shadow-teal',
+		green: 'card-shadow-green',
 		orange: 'card-shadow-orange'
 	}
 
@@ -35,23 +35,24 @@ export default function FeatureCard({ description, title, Icon,selected, color =
 	}
 
 	return (
-		<FadeInWhenVisible delta={index*32}>
+		<FadeInWhenVisible delta={index * 8}>
 			<div
-				className={classNames(`w-full border ${borders[color]} rounded-xl ${shadow[color]} p-6 gap-2 flex flex-col bg-white relative text-left`,
-				selected ? `outline outline-2 outline-offset-4 ${outlineColor[color]}` : 'outline-none',
+				className={classNames(`w-full border rounded-md ${borders[color]} p-6 gap-2 flex flex-col bg-white relative text-left`,
+					selected ? `outline outline-2 outline-offset-4 ${outlineColor[color]}` : 'outline-none',
 				)}
 			>
 				<Icon
-					className={`absolute top-4 right-4 w-8 h-8 ${iconColor[color]}`}
+					className={`absolute top-4 right-4 w-6 h-6 ${iconColor[color]}`}
 				/>
 				<span
-					className={`text-lg font-bold text-transparent bg-clip-text bg-gradient-to-br ${fromTo[color]}`}
+					className={`text-md font-bold text-transparent bg-clip-text bg-gradient-to-br ${fromTo[color]} max-w-[18rem]`}
 				>
 					{title}
 				</span>
-				<span className='text-sm'>
-				{description}
-				</span>
+				{description && (
+					<span className="text-gray-500 text-sm">{description}</span>
+				)}
+
 			</div>
 		</FadeInWhenVisible>
 	);

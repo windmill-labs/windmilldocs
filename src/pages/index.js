@@ -28,9 +28,7 @@ function HomepageHeader() {
 			</div>
 
 			<IntergrationList />
-			<LandingSection bgClass="bg-white">
-				<EntrepriseFeatures />
-			</LandingSection>
+			<EntrepriseFeatures />
 			<LandingSection bgClass="bg-white">
 				<CallToAction />
 			</LandingSection>
