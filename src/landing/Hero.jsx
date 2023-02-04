@@ -41,10 +41,10 @@ export default function Hero() {
 						Star
 					</GitHubButton>
 					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-						Turn scripts into invicible workflows and UIs in minutes
+						Turn scripts into invincible workflows and UIs in minutes
 					</h1>
 					<p className="mt-6 text-lg leading-8 text-gray-600">
-						Easily create internal apps and invicible workflows with code only where it matters.
+						Easily create internal apps and invincible workflows with code only where it matters.
 						<span> </span>
 						<a href="https://github.com/windmill-labs/windmill">Open-source</a>, scalable, reliable, fast
 					</p>
@@ -71,7 +71,7 @@ export default function Hero() {
 						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 					</div>
 				</div>
-				<div className="mx-auto mt-16 sm:mt-0">
+				<div className="mx-auto mt-16 sm:mt-8">
 					<div className="flex-none">
 							<img
 								src="homescreen.png"

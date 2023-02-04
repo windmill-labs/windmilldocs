@@ -27,9 +27,9 @@ const Tabs = ({
   );
 
   const bgByColor = {
-    blue: 'bg-blue-100 text-blue-700',
-    green: 'bg-teal-100 text-teal-700',
-    orange: 'bg-orange-100 text-orange-700'
+    blue: 'bg-blue-100 text-gray-700',
+    green: 'bg-teal-100 text-gray-700',
+    orange: 'bg-orange-100 text-gray-700'
   }
 
   const bgLowByColor = {
@@ -60,7 +60,7 @@ const Tabs = ({
   return (
     <nav
       ref={navRef}
-      className="flex relative z-0 py-2 gap-4"
+      className="flex relative z-0 mt-4 py-2 gap-4"
       onPointerLeave={(e) => setHoveredTabIndex(null)}
     >
       {tabs.map((item, i) => {
@@ -68,12 +68,12 @@ const Tabs = ({
           <motion.button
             key={i}
             className={classNames(
-              "text-md relative rounded-md font-semibold flex items-center h-10 px-4 z-20 bg-transparent text-sm cursor-pointer select-none transition-colors",
+              "relative rounded-md font-semibold flex items-center h-10 px-4 z-20 bg-transparent cursor-pointer select-none transition-colors",
 
               selectedTabIndex === i
                 ? bgByColor[color]
                 : 'text-gray-500 hover:text-gray-700',
-              'px-3 py-2 font-medium text-sm rounded-md flex flex-row gap-2'
+              'px-3 py-2 font-medium text-lg rounded-md flex flex-row gap-2'
             )}
             ref={(el) => (buttonRefs[i] = el)}
             onPointerEnter={() => {

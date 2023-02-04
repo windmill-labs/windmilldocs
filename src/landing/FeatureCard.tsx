@@ -23,9 +23,9 @@ export default function FeatureCard({ description, title, Icon, selected, color 
 	};
 
 	const fromTo = {
-		blue: 'from-blue-400 to-blue-600',
-		green: 'from-teal-400 to-teal-600',
-		orange: 'from-orange-400 to-orange-600'
+		blue: 'from-blue-600 to-blue-800',
+		green: 'from-teal-600 to-teal-800',
+		orange: 'from-orange-600 to-orange-800'
 	};
 
 	const shadow = {
@@ -43,7 +43,7 @@ export default function FeatureCard({ description, title, Icon, selected, color 
 	return (
 		<FadeInWhenVisible delta={index * 8}>
 			<div
-				className={classNames(`w-full border rounded-md ${borders[color]} ${hovers[color]} p-6 gap-2 flex flex-col bg-white relative text-left`,
+				className={classNames(`w-full border rounded-md ${borders[color]} ${hovers[color]} px-6 py-4 gap-2 flex flex-col bg-white relative text-left`,
 					selected ? `outline outline-2 outline-offset-4 ${outlineColor[color]}` : 'outline-none',
 				)}
 			>
