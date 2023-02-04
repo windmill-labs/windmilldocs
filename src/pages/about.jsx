@@ -17,19 +17,19 @@ const people = [
 		name: 'Ádám Kovács',
 		role: 'Frontend Engineer',
 		imageUrl: '/team/adam-kovacs.jpg',
-		linkedinUrl: '#'
+		linkedinUrl: 'https://www.linkedin.com/in/adam-kov/'
 	},
 	{
 		name: 'Kai Jellinghaus',
 		role: 'Software engineer',
 		imageUrl: '/team/kai-jellinghaus.jpg',
-		linkedinUrl: '#'
+		linkedinUrl: 'https://www.linkedin.com/in/kai-jellinghaus/'
 	},
 	{
 		name: 'Henri Courdent',
 		role: 'Chief of Staff',
 		imageUrl: '/team/henri-courdent.jpg',
-		linkedinUrl: '#'
+		linkedinUrl: 'https://www.linkedin.com/in/henri-courdent/'
 	}
 ];
 
