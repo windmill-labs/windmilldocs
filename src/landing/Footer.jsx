@@ -4,7 +4,7 @@ const navigation = {
 		{ name: 'Pricing', href: '/pricing' },
 		{ name: 'Documentation', href: '/docs/intro' },
 		{ name: 'Github', href: 'https://github.com/windmill-labs/windmill' },
-		{ name: 'Open API', href: 'https://app.windmill.dev/openapi.html#/' },
+		{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' },
 		{ name: 'Discord', href: 'https://discord.gg/7NF8GNeuwR' }
 	],
 	company: [

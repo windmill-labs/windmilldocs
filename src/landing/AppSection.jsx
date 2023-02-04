@@ -100,15 +100,15 @@ export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-orange-50">
 			<div className="flex flex-col w-full gap-4 justify-center">
-				<div className="flex flex-col gap-8 justify-center">
+				<div className="flex flex-col gap-2 justify-center">
 					<div className="flex-row gap-4 flex items-center">
 						<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-orange-600">
 							Apps
 						</h1>
 
-						<span className=" inline-flex items-center rounded-full bg-yellow-100 border-yellow-500 border px-3 py-0.5 text-sm font-medium text-yellow-800 mt-2">
+						{/* <span className=" inline-flex items-center rounded-full bg-yellow-100 border-yellow-500 border px-3 py-0.5 text-sm font-medium text-yellow-800 mt-2">
 							Alpha
-						</span>
+						</span> */}
 					</div>
 					<h2 className="text-gray-600 text-2xl font-semibold max-w-3xl">
 						Easy to use WISIWYG app editor

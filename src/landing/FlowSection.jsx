@@ -196,8 +196,7 @@ export default function FlowSection() {
 				</div>
 
 				<span className="text-lg text-gray-600 max-w-3xl">
-					Build complex Flows from atomic apps. Automatically trigger apps and Flow from webhooks, a
-					schedule, watching for events, or slack.
+					Build complex Flows from atomic scripts, either from your workspace or the <a href="hub.windmill.dev">Hub</a>.
 				</span>
 
 				<FeatureCardTabs tabs={tabs} color="green" />
