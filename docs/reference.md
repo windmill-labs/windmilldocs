@@ -1,7 +1,7 @@
 # Reference
 
 This page contains a succinct but precise definition of the different concepts
-of windmill.
+of Windmill.
 
 ## Users
 
@@ -11,9 +11,11 @@ username when he joins a workspace.
 
 ## Scripts
 
-In Windmill, a script is always a Python, TypeScript (deno), Go or Bash script. Its 2
-most important components are its input [JSON Schema](#jsonchema) specification
-and its code content. Python and Go scripts also have an auto-genreated lockfile that ensure that executions of the same script always use the exact same dependencies. The code must always have a main function:
+In Windmill, a script is always a Python, TypeScript (deno), Go or Bash script.
+Its 2 most important components are its input [JSON Schema](#jsonchema)
+specification and its code content. Python and Go scripts also have an
+auto-genreated lockfile that ensure that executions of the same script always
+use the exact same dependencies. The code must always have a main function:
 
 - Python:
 
@@ -22,7 +24,7 @@ def main(param1: str, param2: dict, ...):
   ...
 ```
 
-- Typescript:
+- TypeScript:
 
 ```typescript
 async function main(param1: string, param2: { nested: string }, param3: Resource<'postgres'>) {
@@ -38,23 +40,32 @@ func main(x string, nested struct{ Foo string \`json:"foo"\` }) (interface{}, er
 }
 ```
 
-which is its entrypoint when executed as an individual serverless endpoint or a flow module.
+which is its entrypoint when executed as an individual serverless endpoint or a
+flow module.
 
 ### Job Input -> Script Parameters
 
-[Jobs](#Job) take a JSON object/dict as input which can be empty. The different key-value pairs of the objects are passed as the different parameters of the main of the main function, with just a few language
-specific transformations from JSON to a more adequate types in the target language if necessary (e.g base64/datetime encoding). Values can be JSON object themselves but we recommend trying to keep the input specification flat when possible.
+[Jobs](#Job) take a JSON object/dict as input which can be empty. The different
+key-value pairs of the objects are passed as the different parameters of the
+main of the main function, with just a few language specific transformations
+from JSON to a more adequate types in the target language if necessary (e.g
+base64/datetime encoding). Values can be JSON object themselves but we recommend
+trying to keep the input specification flat when possible.
 
 ### Script hashes
 
-Scripts versions are uniquely defined by their hash. It is an immutable reference similar to a git commit sha. See
-[Versioning](#versioning) for more details. Scripts also have a path and many versions share the same path. When a script is saved at a path, it creates a new hash which becomes the "HEAD" of the path, the previous "HEAD" is archived (but still deployed forever).
+Scripts versions are uniquely defined by their hash. It is an immutable
+reference similar to a git commit sha. See [Versioning](#versioning) for more
+details. Scripts also have a path and many versions share the same path. When a
+script is saved at a path, it creates a new hash which becomes the "HEAD" of the
+path, the previous "HEAD" is archived (but still deployed forever).
 
 When a script is saved, it is immediately deployed
 
 ### Specific-purpose scripts
 
-You can attach additional functionalities to scripts by specializing them into specific Script kinds.
+You can attach additional functionalities to scripts by specializing them into
+specific Script kinds.
 
 #### Action
 
@@ -70,9 +81,9 @@ i.e. subsequent scripts.
 #### Approval Scripts
 
 Use them in order to suspend a flow until it's approved. Most common scenario
-for approval scripts is to send an external notification with an URL that can
-be used to resume or cancel a flow. For more details check [Suspend/Resume a
-flow tutorial](./how-tos/6_suspend_resume_a_flow.md).
+for approval scripts is to send an external notification with an URL that can be
+used to resume or cancel a flow. For more details check
+[Suspend/Resume a flow tutorial](./how-tos/6_suspend_resume_a_flow.md).
 
 #### Error Handlers
 
@@ -120,19 +131,19 @@ compatible with its most advanced features yet.
 
 ```json
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"type": "object",
-	"properties": {
-		"your_name": {
-			"description": "The name to hello world to",
-			"type": "string"
-		},
-		"your_nickname": {
-			"description": "If you prefer a nickname, that's fine too",
-			"type": "string"
-		}
-	},
-	"required": []
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "your_name": {
+      "description": "The name to hello world to",
+      "type": "string"
+    },
+    "your_nickname": {
+      "description": "If you prefer a nickname, that's fine too",
+      "type": "string"
+    }
+  },
+  "required": []
 }
 ```
 
@@ -157,8 +168,8 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 There is a one to one correspondence between a parameter of the main function
 and a field of `properties` in the JSON Schema. The name of the argument become
 the name of the property, and most of the primitive types in Python and
-Typescript have a corresponding primitive type in JSON and by extension
-JSON Schema.
+TypeScript have a corresponding primitive type in JSON and by extension JSON
+Schema.
 
 In Python:
 
@@ -188,7 +199,7 @@ In Deno:
 | `string[]` | `string[]`  |
 | ...        | ...         |
 
-However in Deno there also some special types that are specific to windmill.
+However in Deno there also some special types that are specific to Windmill.
 They are as follows:
 
 | Windmill                          | JSON Schema                                  |
@@ -252,7 +263,7 @@ is a **simplified git** and makes two main simplifying assumptions:
 ### Python client
 
 By authenticating with the [reserved variable](#reserved-variable) `WM_TOKEN`,
-the python client can interact with the windmill platform from within the script
+the python client can interact with the Windmill platform from within the script
 jobs. This can be used, for instance, to:
 
 - get resources
@@ -268,9 +279,9 @@ def main(...):
   wmill.get_resource('my_resource_path')
 ```
 
-### Typescript (deno) client
+### TypeScript (Deno) client
 
-Similarly for Typescript (deno):
+Similarly for TypeScript (Deno):
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill/index.ts'
@@ -282,15 +293,15 @@ async function main(...) {
 
 ### Dependency management
 
-For Typescript (Deno), the dependencies and their versions are directly in the
+For TypeScript (Deno), the dependencies and their versions are directly in the
 script and hence there is no need for any additional steps.
 
 For Python, the imports are automatically analyzed at saving time of the script
 and the corresponding list of Pypi packages is extracted. A dependency job is
-then spawned to associate that list of Pypi packages with a lockfile, which
-will lock the versions. This ensures that the same version of a python script
-is always executed with the same versions of its dependencies. It also avoids
-the hassle of having to maintain a separate requirements file.
+then spawned to associate that list of Pypi packages with a lockfile, which will
+lock the versions. This ensures that the same version of a python script is
+always executed with the same versions of its dependencies. It also avoids the
+hassle of having to maintain a separate requirements file.
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the input of the dependency job. One needs to head the script with the
@@ -307,8 +318,8 @@ def main(...):
   ...
 ```
 
-In addition to that, environment variables can be set to customize
-`pip`'s index-url and extra-index-url. This is useful for private repositories.
+In addition to that, environment variables can be set to customize `pip`'s
+index-url and extra-index-url. This is useful for private repositories.
 
 To illustrate, in a docker-compose file, you would add following lines:
 
@@ -324,17 +335,19 @@ windmill:
 
 ### Python relative imports for sharing common logic
 
-It is possible to import directly from other python scripts. One can simply follow the path layout. For instance, `import foo from f.<foldername>.script_name`. A fuller example below:
+It is possible to import directly from other python scripts. One can simply
+follow the path layout. For instance,
+`import foo from f.<foldername>.script_name`. A fuller example below:
 
 ```python
 # u/rubenfiszel/common_logic
 
 def foo():
   print('Common logic!')
-
 ```
 
 And in another script:
+
 ```python
 from u.rubenfiszel.common_logic import foo
 
@@ -342,38 +355,43 @@ def main():
   return foo()
 ```
 
-It works with scripts contained in folders, and in scripts contained in user-spaces.
-e.g: 
-`f.<foldername>.script_path`
-`u.<username>.script_path`
+It works with scripts contained in folders, and in scripts contained in
+user-spaces. e.g: `f.<foldername>.script_path` `u.<username>.script_path`
 
-Beware that you can only imports scripts that you have visibility on. Furtheremore, if you make any import in the common logic, you will need to add the same import in the script that imports it as well otherwise the automatic dependency management will not work.
+Beware that you can only imports scripts that you have visibility on.
+Furtheremore, if you make any import in the common logic, you will need to add
+the same import in the script that imports it as well otherwise the automatic
+dependency management will not work.
 
-The folder layout follow exactly the one of the CLI for syncing scripts locally and on windmill. As a consequence, the IDE will treat it as a relative imports and will behave as expected.
+The folder layout follow exactly the one of the CLI for syncing scripts locally
+and on Windmill. As a consequence, the IDE will treat it as a relative imports
+and will behave as expected.
 
 ### Deno relative imports for sharing common logic
 
-Similarly to python, it is possible to import directly from other typescript scripts. One can simply follow the path layout. For instance, `import { foo } from "/f/<foldername>/script_name.ts"`. A fuller example below:
+Similarly to python, it is possible to import directly from other TypeScript
+scripts. One can simply follow the path layout. For instance,
+`import { foo } from "/f/<foldername>/script_name.ts"`. A fuller example below:
 
 ```typescript
-import { main as foo, util } from "/f/common/my_script_path.ts"
+import { main as foo, util } from "/f/common/my_script_path.ts";
 
 export async function main() {
-  await foo()
-  util()
+  await foo();
+  util();
 }
 ```
 
 ## Flows
 
-A **Flow** is the core concept behind windmill. It is a json serializable value
+A **Flow** is the core concept behind Windmill. It is a json serializable value
 in the [OpenFlow](./openflow) format that consists of an input spec (similar to
 scripts), and a linear sequence of steps also referred to as modules. Each step
 consists of either:
 
 - Reference to a script from the hub
 - Reference to a script in your workspace
-- Inlined script in Python or Typescript (deno)
+- Inlined script in Python or TypeScript (Deno)
 - `forloop` that iterates over elements and triggers the execution of an
   embedded flow for each element. The list is calculated dynamically as an
   [input transform](#input-transform).
@@ -395,17 +413,16 @@ sequences are more intuitive than graphs.
 
 ## Retries
 
-Retries are an important of the toolkit provided by Windmill.
-It facilitates the Flow's modules, making them more robust and resilient.  
-Windmill supports two types of retries: regular intervals and
-exponential back-off. They can be applied independently, or jointly.
+Retries are an important of the toolkit provided by Windmill. It facilitates the
+Flow's modules, making them more robust and resilient.\
+Windmill supports two types of retries: regular intervals and exponential
+back-off. They can be applied independently, or jointly.
 
-Both strategies are based on the number of retries and the time interval 
-to be applied between them.
+Both strategies are based on the number of retries and the time interval to be
+applied between them.
 
-Strategies can also be combined, in which case, the linear strategy 
-(regular intervals) will be applied first, followed by the exponential 
-back-off strategy.
+Strategies can also be combined, in which case, the linear strategy (regular
+intervals) will be applied first, followed by the exponential back-off strategy.
 
 ## Input Transform
 
@@ -466,14 +483,12 @@ in most event watching scenarios. The pattern is as follows:
   flow per item. This is exactly the pattern used when your flow is in mode
   "Watching changes regularly"
 
-The convenience functions do this in Typescript are:
+The convenience functions do this in TypeScript are:
 
-- `getState`
-  which retrieves an object of any type (internally a simple resource) at a path
-  determined by
-  `getStatePath` a path unique to the user currently executing the script,
-  the flow in which it is currently in if it is in one and the path of the
-  script
+- `getState` which retrieves an object of any type (internally a simple
+  resource) at a path determined by `getStatePath` a path unique to the user
+  currently executing the script, the flow in which it is currently in if it is
+  in one and the path of the script
 - `setState` which sets the new state
 
 The states can be seen in the [Resources](#resource) section with a
@@ -586,7 +601,7 @@ Similarly for the [Contextual Variable](#contextual-variables) `WM_TOKEN` which
 contains an ephemeral token (ephemeral to the script execution), which has the
 same privilege and permissions as the owner in `permissioned_as`. The
 [python client](#client) inside the script implicitly uses that same token to be
-granted privilege to do windmill operations (like running other scripts or
+granted privilege to do Windmill operations (like running other scripts or
 getting resources), meaning that the same script ran by 2 different users, will
 run differently and may be unauthorized to do partially or all operations of the
 script. This is what enables anyone to share scripts doing sensitive operations
@@ -629,7 +644,7 @@ do so.
 They are editable in the UI and also readable if they are not
 [Secret Variables](#secret-variables)
 
-Inside the scripts, one would use the windmill client to interact with the
+Inside the scripts, one would use the Windmill client to interact with the
 user-defined variables.
 
 Python:
@@ -641,18 +656,24 @@ wmill.get_variable("u/user/foo")
 wmill.set_variable("u/user/foo", value)
 ```
 
-Typescript (deno):
+TypeScript (Deno):
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/index.ts';
+import * as wmill from "https://deno.land/x/windmill/index.ts";
 
-wmill.getVariable('u/user/foo');
-wmill.setVariable('u/user/foo', value);
+wmill.getVariable("u/user/foo");
+wmill.setVariable("u/user/foo", value);
 ```
 
-Note that there is a similar api for getting and setting [resources](#resource) which are simply variables that can contain any json values, not just string and that are labeled with a [resource type](#resource-type) to be automatically discriminated in the auto-generated form to be of the proper type (e.g a parameter in Typescript of type `pg: wmill.Resource<'postgres'>` is only gonna offer a selection over the resources of type postgres in the auto-generated UI)
+Note that there is a similar api for getting and setting [resources](#resource)
+which are simply variables that can contain any json values, not just string and
+that are labeled with a [resource type](#resource-type) to be automatically
+discriminated in the auto-generated form to be of the proper type (e.g a
+parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only gonna
+offer a selection over the resources of type postgres in the auto-generated UI)
 
-There is also a concept of [state](#state--internal-state) to share values across script executions.
+There is also a concept of [state](#state--internal-state) to share values
+across script executions.
 
 #### Secret Variables
 
@@ -667,7 +688,7 @@ hash, and both the edit and the execution would be visible from the
 ### Contextual Variables
 
 Contextual variables are variables whose values are contextual to the script
-execution. This is how the Deno and Python windmill client get their implicit
+execution. This is how the Deno and Python Windmill client get their implicit
 credentials to interact with the platform.
 
 | Name           | Value                                                                                                               |
@@ -693,12 +714,12 @@ the demodb schema:
 
 ```json
 {
-	"dbname": "demo",
-	"host": "demodb.delightool.xyz",
-	"password": "demo",
-	"port": 6543,
-	"sslmode": "disable",
-	"user": "demo"
+  "dbname": "demo",
+  "host": "demodb.delightool.xyz",
+  "password": "demo",
+  "port": 6543,
+  "sslmode": "disable",
+  "user": "demo"
 }
 ```
 
@@ -713,7 +734,7 @@ for instance:
 
 ```json
 {
-	"simple": "$var:u/user/foo"
+  "simple": "$var:u/user/foo"
 }
 ```
 
@@ -735,41 +756,48 @@ a postgres connection, shortened as `postgresql` and whose schema is:
 
 ```json
 {
-	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"properties": {
-		"dbname": {
-			"description": "The database name",
-			"type": "string"
-		},
-		"host": {
-			"description": "The instance host",
-			"type": "string"
-		},
-		"password": {
-			"description": "The postgres users password",
-			"type": "string"
-		},
-		"port": {
-			"description": "The instance port",
-			"type": "integer"
-		},
-		"sslmode": {
-			"description": "The sslmode",
-			"enum": ["disable", "allow", "prefer", "require", "verify-ca", "verify-full"],
-			"type": "string"
-		},
-		"user": {
-			"description": "The postgres username",
-			"type": "string"
-		}
-	},
-	"required": ["dbname", "user", "password"],
-	"type": "object"
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "dbname": {
+      "description": "The database name",
+      "type": "string"
+    },
+    "host": {
+      "description": "The instance host",
+      "type": "string"
+    },
+    "password": {
+      "description": "The postgres users password",
+      "type": "string"
+    },
+    "port": {
+      "description": "The instance port",
+      "type": "integer"
+    },
+    "sslmode": {
+      "description": "The sslmode",
+      "enum": [
+        "disable",
+        "allow",
+        "prefer",
+        "require",
+        "verify-ca",
+        "verify-full"
+      ],
+      "type": "string"
+    },
+    "user": {
+      "description": "The postgres username",
+      "type": "string"
+    }
+  },
+  "required": ["dbname", "user", "password"],
+  "type": "object"
 }
 ```
 
-Same as for the input spec of a script, you do not have to deal with the
-JSON Schema directly and should use the UI builder to edit the schema.
+Same as for the input spec of a script, you do not have to deal with the JSON
+Schema directly and should use the UI builder to edit the schema.
 
 ## Schedule
 

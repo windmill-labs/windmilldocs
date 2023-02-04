@@ -8,17 +8,18 @@ other purpose.
 
 On WindmillHub you can find ready-to-use scripts that use this feature. For
 example:
-* [Suspend/resume a flow by sending approval URL via
+
+- [Suspend/resume a flow by sending approval URL via
   email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail)
-* [Suspend/resume a flow by sending approval URL via slack direct
+- [Suspend/resume a flow by sending approval URL via slack direct
   message](https://hub.windmill.dev/scripts/slack/1398/suspend%2Fresume-a-flow-by-sending-approval-url-via-slack-direct-message-slack)
 
 :::
 
 ![Adding approval step](../assets/how_to/flow-approval-step.png)
 
-You can think of a scenario where only specific people can resume (or cancel)
-a flow. To achieve this they would need to receive personalized URL via some
+You can think of a scenario where only specific people can resume (or cancel) a
+flow. To achieve this they would need to receive personalized URL via some
 external communication channel (like email, SMS or chat message).
 
 Important thing to remember is that a number of required approvals can be
@@ -48,8 +49,10 @@ via Gmail on your behalf.
 
 #### Reusing script from WindmillHub
 
-Let's create a flow as described in the getting started
-section ([go](../getting_started/quickstart_go.md), [typescript](../getting_started/2_quickstart_ts.md), [python](../getting_started/1_quickstart_python.md)). Our first step will be
+Let's create a flow as described in the getting started section
+([Go](../getting_started/quickstart_go.md),
+[TypeScript](../getting_started/2_quickstart_ts.md),
+[Python](../getting_started/1_quickstart_python.md)). Our first step will be
 approval script from WindmillHub
 
 ![Approval step from Hub](../assets/how_to/6_examples/approval-step-from-hub.png)
@@ -120,8 +123,8 @@ script that will use "The list of approvers" from the "Step Context"
 
 #### Step Context magic
 
-This is where the magic begins - the "Step Context". You can notice that we
-have access to the list of approves from previous approval step.
+This is where the magic begins - the "Step Context". You can notice that we have
+access to the list of approves from previous approval step.
 
 ![The list of approvers](../assets/how_to/6_examples/the-list-of-approvers.png)
 

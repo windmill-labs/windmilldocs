@@ -2,30 +2,26 @@
 
 ## Getting started
 
-We will see how to build Windmill workflow that's triggered by the [Supabase
-Database Webhooks](https://supabase.com/docs/guides/database/webhooks).
+We will see how to build Windmill workflow that's triggered by the
+[Supabase Database Webhooks](https://supabase.com/docs/guides/database/webhooks).
 
-:::tip
-Supabase Database Webhooks allow you to send real-time data from your database
-to Windmill whenever a table event occurs. You can hook into three table
-events: `INSERT`, `UPDATE`, and `DELETE`. All events are fired after a database row
-is changed.
-:::
-
+:::tip Supabase Database Webhooks allow you to send real-time data from your
+database to Windmill whenever a table event occurs. You can hook into three
+table events: `INSERT`, `UPDATE`, and `DELETE`. All events are fired after a
+database row is changed. :::
 
 We will leverage [Windmill Webhooks](../how-tos/1_use_webhooks.md) that allow
 triggering Windmill scripts or Windmill flows via `HTTP POST` request.
 
-
 ## Check Supabase event structure
 
-Let's create a simple Windmill script to test the integration and
-preview the structure of Supabase events (official Supabase specification can
-be found at https://supabase.com/docs/guides/database/webhooks#payload).
+Let's create a simple Windmill script to test the integration and preview the
+structure of Supabase events (official Supabase specification can be found at
+https://supabase.com/docs/guides/database/webhooks#payload).
 
 ![create script](../assets/integrations/create-a-script.png)
 
-![typescript example](../assets/integrations/supabase/typescript-example.png)
+![TypeScript example](../assets/integrations/supabase/typescript-example.png)
 
 The idea here is just to sneak peak incoming event from Supabase so we will
 create a void script, use it's webhook and inspect the logs of script run that
@@ -38,29 +34,23 @@ was triggered by Supabase.
 ### Webhook URL
 
 There are two kinds of Windmill Webhooks: `Hash` and `Path`. Let's copy the
-`Hash` one. For more details check [Windmill Webhooks](../how-tos/1_use_webhooks.md) docs.
+`Hash` one. For more details check
+[Windmill Webhooks](../how-tos/1_use_webhooks.md) docs.
 
-:::warning
-If you've chosen `Hash` webhook and you later modify your script then your
-script will have a new `Hash` webhook URL. The previous webhook `Hash` URL will
-still run the old version of the script!
-:::
+:::warning If you've chosen `Hash` webhook and you later modify your script then
+your script will have a new `Hash` webhook URL. The previous webhook `Hash` URL
+will still run the old version of the script! :::
 
 If your intention is that later script modifications should propagate to
 previously created webhooks, then you should use the `Path` webhook URL.
 
-:::caution
-Webhook URLs should be treated as a secret
-:::
+:::caution Webhook URLs should be treated as a secret :::
 
 ![webhook url](../assets/integrations/supabase/webhook-url.png)
 
-
 Save the URL somewhere, we will need it a bit later.
 
-:::info
-Windmill flows also have their webhook URLs
-:::
+:::info Windmill flows also have their webhook URLs :::
 
 ### Windmill token used by Supabase
 
@@ -71,18 +61,14 @@ dedicated token.
 
 Make sure to label the token with some meaningful name.
 
-:::tip
-It's a good idea to have a dedicated tokens per integration.
-:::
+:::tip It's a good idea to have a dedicated tokens per integration. :::
 
 Optionally you can put an expiration date, so that the token will expire after
 e.g. 3 months.
 
-:::warning
-Setting token lifetime is aligned "good security practices" point of view but
-on the other hand you might not remember to rotate it and the integration will
-stop working at some point.
-:::
+:::warning Setting token lifetime is aligned "good security practices" point of
+view but on the other hand you might not remember to rotate it and the
+integration will stop working at some point. :::
 
 ![for supabase](../assets/integrations/supabase/create-token-for-supabase.png)
 
@@ -91,13 +77,10 @@ this.
 
 ![copy token](../assets/integrations/supabase/copy-token.png)
 
+:::caution Tokens should be treated as a secret :::
 
-:::caution
-Tokens should be treated as a secret
-:::
-
-Save the token value somewhere, we will still need it a bit later in this tutorial.
-
+Save the token value somewhere, we will still need it a bit later in this
+tutorial.
 
 ## Hook into Supabase database table events
 
@@ -111,13 +94,11 @@ Make sure to have some meaningful name, subscribe to `INSERT`, `UPDATE` and
 
 ![subabase webhook preferences](../assets/integrations/supabase/supabase-webhook-02.png)
 
-Make sure to select the `POST` HTTP Request method, paste the windmill webhook
+Make sure to select the `POST` HTTP Request method, paste the Windmill webhook
 URL and add `Authorization` header that contains the token (e.g.
 `Authorization: Bearer SuperSecretToken`).
 
-:::caution
-Notice the `Bearer` keyword and the space before the actual token
-:::
+:::caution Notice the `Bearer` keyword and the space before the actual token :::
 
 ![subabase webhook integration](../assets/integrations/supabase/supabase-webhook-03.png)
 
@@ -127,8 +108,8 @@ Congratulations! We're hooked in!
 
 ### Test integration
 
-Let's check if it works. So let's log in to our Supabase PostgreSQL database
-and do some `INSERT` into the table where we're "hooked in":
+Let's check if it works. So let's log in to our Supabase PostgreSQL database and
+do some `INSERT` into the table where we're "hooked in":
 
 ![SQL insert](../assets/integrations/supabase/test-integration-01.png)
 
@@ -158,13 +139,12 @@ it's no longer void!
 
 ![script not void anymore](../assets/integrations/supabase/void-script-not-anymore-02.png)
 
-:::caution
-If you used Windmill Webhook `Hash` URL in previous steps, then you will need
-to create a new Supabase Database Webhook - otherwise old version of the script
-will be triggered.
-:::
+:::caution If you used Windmill Webhook `Hash` URL in previous steps, then you
+will need to create a new Supabase Database Webhook - otherwise old version of
+the script will be triggered. :::
 
-This script is also available on WindmillHub: https://hub.windmill.dev/scripts/supabase/1455/preview-supabase-event-supabase
+This script is also available on WindmillHub:
+https://hub.windmill.dev/scripts/supabase/1455/preview-supabase-event-supabase
 
 ### Other database events
 
@@ -176,11 +156,10 @@ So the event generated for `UPDATE` looks like this:
 
 ![DELETE event](../assets/integrations/supabase/test-integration-06.png)
 
-
 ## Powerful workflow
 
 It should be already clear that the combination of Windmill and Supabase allows
-you to build powerful workflows.  You can find more
-flow examples here: <https://hub.windmill.dev/flows>
+you to build powerful workflows. You can find more flow examples here:
+<https://hub.windmill.dev/flows>
 
 Just remember that Windmill Flows also expose webhook URL.

@@ -9,7 +9,6 @@ Each resource has a **resource type** (for example MySQL, MongoDB, Slack, etc),
 that defines the schema that any resource of this type needs to implement.
 Schemas implement the [json-schema specification](https://json-schema.org/).
 
-
 ## Create a Resource
 
 To create a resource using an existing type, go to the **Resources** page, then
@@ -53,7 +52,6 @@ default, etc). You can also view the schema using the advanced tab:
 
 ![Resource type schema view](../assets/how_to/resource_type_advanced.png)
 
-
 ## Using Resources
 
 In Windmill, [resources](../reference#resource) represent connections to third
@@ -75,7 +73,7 @@ posgtgres resource we would:
 
 ```python
 psycopg2 # we want to connect to a PostgreSQL database, so we import the `psycopg2` connector
-import wmill # the windmill client, used to access resources
+import wmill # the Windmill client, used to access resources
 
 
 def main():

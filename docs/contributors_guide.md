@@ -1,21 +1,21 @@
 # Contributor's guide
 
-## Getting started 
+## Getting started
 
-Thank you for showing interest in contributing to Windmill. 
+Thank you for showing interest in contributing to Windmill.
 
-Community contributes to Windmill in a variety of ways, from code and 
-documentation, to resources (Scripts, Flows, ResourceTypes, OAuth providers) 
-others can use. 
+Community contributes to Windmill in a variety of ways, from code and
+documentation, to resources (Scripts, Flows, ResourceTypes, OAuth providers)
+others can use.
 
-The best way to share your Windmill resources with the community is by 
-using the [WindmillHub][wm-hub]. There, anyone can share their Scripts, 
-Flows, OAuth providers and Resource Types. If the submissions meet 
-the quality standards, they get approved, and become available for 
-anyone to use directly from their instance of Windmill.
+The best way to share your Windmill resources with the community is by using the
+[WindmillHub][wm-hub]. There, anyone can share their Scripts, Flows, OAuth
+providers and Resource Types. If the submissions meet the quality standards,
+they get approved, and become available for anyone to use directly from their
+instance of Windmill.
 
-Below you will find guides on how to contribute those to the Hub, 
-and thank you for being part of the community!
+Below you will find guides on how to contribute those to the Hub, and thank you
+for being part of the community!
 
 ## Resource Type
 
@@ -35,7 +35,7 @@ Adding a resource type to the hub will, once approved by the Windmill Team, be
 automatically merged into the
 [community/ folder of the Windmill repo](https://github.com/windmill-labs/windmill/tree/main/community/resource_types)
 through a
-[github action](https://github.com/windmill-labs/windmill/blob/main/.github/workflows/pull-hub.yml).
+[GitHub Action](https://github.com/windmill-labs/windmill/blob/main/.github/workflows/pull-hub.yml).
 
 Once added to the community folder of the repo, the
 [windmill-gh-action-deploy](https://github.com/windmill-labs/windmill-gh-action-deploy)
@@ -84,15 +84,13 @@ into the flows page of **every workspace of every instances of Windmill**.
 
 ## Scripts
 
-:::tip
-More information on adding scripts to the WindmillHub can be found in the
-[How-Tos](../docs/how-tos/7_add_new_module_to_hub.md) section.
-:::
+:::tip More information on adding scripts to the WindmillHub can be found in the
+[How-Tos](../docs/how-tos/7_add_new_module_to_hub.md) section. :::
 
 The [WindmillHub](https://hub.windmill.dev) only supports deno scripts. You can
 add a trigger or standard script to the Hub by going to the appropriate section
-and clicking "Submit a new script" or "Submit a new trigger script", then giving it
-an explicit summary, and submitting.
+and clicking "Submit a new script" or "Submit a new trigger script", then giving
+it an explicit summary, and submitting.
 
 ![Add new script](./assets/add_new_script.png)
 
@@ -101,6 +99,6 @@ available for all to use directly inside their flows.
 
 ![Pick a hub script](./assets/pick_a_hub_script.png)
 
-
 <!-- Resources -->
+
 [wm-hub]: http://hub.windmill.dev/
