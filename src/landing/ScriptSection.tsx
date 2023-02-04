@@ -7,7 +7,7 @@ import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
 
 const newTabs = [
 	{
-		label: ' Python/Typescript/Go/Bash',
+		label: 'Polyglot',
 		icon: Code,
 		id: 'script',
 		data: [
@@ -68,7 +68,7 @@ const newTabs = [
 		]
 	},
 	{
-		label: 'Web IDE/Github Sync',
+		label: 'Web IDE/Github',
 		icon: FileCode,
 		id: 'web-ide-github-sync',
 		data: [
@@ -97,7 +97,7 @@ const newTabs = [
 		]
 	},
 	{
-		label: 'Secrets/Permissions',
+		label: 'Secrets & State',
 		icon: Key,
 		id: 'secrets-permissions',
 		data: [
@@ -118,7 +118,7 @@ const newTabs = [
 		]
 	},
 	{
-		label: 'Execute a script',
+		label: 'Multiple Triggers',
 		icon: Play,
 		id: 'schedules-webhooks-ui-cli',
 		data: [

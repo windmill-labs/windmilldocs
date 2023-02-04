@@ -139,7 +139,7 @@ const tabs = [
 	},
 	*/
 	{
-		label: 'Execute a flow',
+		label: 'Multiple Triggers',
 		icon: Play,
 		id: 'schedules-webhooks-ui-cli',
 		data: [

@@ -68,7 +68,7 @@ const Tabs = ({
           <motion.button
             key={i}
             className={classNames(
-              "relative rounded-md font-semibold flex items-center h-10 px-4 z-20 bg-transparent cursor-pointer select-none transition-colors",
+              "relative rounded-md font-semibold flex items-center px-4 z-20 bg-transparent cursor-pointer select-none transition-colors",
 
               selectedTabIndex === i
                 ? bgByColor[color]
