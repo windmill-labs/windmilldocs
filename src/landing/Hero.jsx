@@ -58,7 +58,7 @@ export default function Hero() {
 						>
 							Try Windmill Cloud
 						</a>
-
+						
 						<a
 							href="/docs/how-tos/self_host"
 							onClick={() => window.plausible('read-docs')}
@@ -67,7 +67,17 @@ export default function Hero() {
 							Or self-host yourself <span aria-hidden="true">→</span>
 						</a>
 					</div>
-					<div className="w-full text-left mt-8">
+
+											
+					<a
+							href="/docs/intro"
+							onClick={() => window.plausible('getting-started')}
+							className="text-xs ml-60 mt-2 leading-7 text-gray-600 text"
+						>
+							Getting started
+						</a>
+
+					<div className="w-full text-left mt-16">
 						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
 					</div>
 				</div>
