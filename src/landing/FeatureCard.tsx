@@ -4,6 +4,12 @@ import FadeInWhenVisible from './FadeInWhenVisible';
 
 
 export default function FeatureCard({ description, title, Icon, selected, color = 'blue', index }) {
+	const hovers = {
+		blue: 'hover:border-blue-500',
+		green: 'hover:border-teal-500',
+		orange: 'hover:border-orange-500'
+	};
+
 	const borders = {
 		blue: 'border-blue-300',
 		green: 'border-teal-300',
@@ -37,7 +43,7 @@ export default function FeatureCard({ description, title, Icon, selected, color 
 	return (
 		<FadeInWhenVisible delta={index * 8}>
 			<div
-				className={classNames(`w-full border rounded-md ${borders[color]} p-6 gap-2 flex flex-col bg-white relative text-left`,
+				className={classNames(`w-full border rounded-md ${borders[color]} ${hovers[color]} p-6 gap-2 flex flex-col bg-white relative text-left`,
 					selected ? `outline outline-2 outline-offset-4 ${outlineColor[color]}` : 'outline-none',
 				)}
 			>

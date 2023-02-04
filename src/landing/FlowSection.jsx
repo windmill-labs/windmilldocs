@@ -4,17 +4,14 @@ import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
 import {
 	ExternalLink,
 	List,
-	Database,
 	Bug,
 	Play,
 	CalendarClock,
 	FormInput,
 	WebhookIcon,
 	Terminal,
-	Globe
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
-import { Code } from 'lucide-react';
 
 const tabs = [
 	{

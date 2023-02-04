@@ -50,7 +50,7 @@ export default function FeatureCardTabs({
 			</div>
 			<div className="hidden sm:block">
 				<div className="w-full flex flex-col items-center justify-center">
-					<div className="max-w-7xl gap-8 flex flex-col">
+					<div className="max-w-7xl w-full gap-8 flex flex-col">
 						<Framer.Tabs {...framer.tabProps} color={color} />
 						<Framer.Content {...framer.contentProps} className="relative">
 							<TabContent data={data} color={color}/>

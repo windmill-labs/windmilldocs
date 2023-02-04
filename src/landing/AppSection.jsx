@@ -99,7 +99,7 @@ const tabs = [
 export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-orange-50">
-			<div className="flex flex-col gap-4 justify-center">
+			<div className="flex flex-col w-full gap-4 justify-center">
 				<div className="flex flex-col gap-8 justify-center">
 					<div className="flex-row gap-4 flex items-center">
 						<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-orange-600">

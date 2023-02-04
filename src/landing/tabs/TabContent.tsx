@@ -58,19 +58,19 @@ export default function TabContent({ data, color }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8, position: 'absolute' }}
           >
-            <div className="flex flex-col w-full gap-2 italic justify-start h-[512px]">
+            <div className="flex flex-col w-full gap-2 italic justify-start  h-[512px]">
 
               {inView ? (<div>
                 {data[selectedIndex].video ? (
                   <video
-                    className="border-2 rounded-xl object-cover w-full"
+                    className="border-2 rounded-xl object-cover w-full h-full"
                     autoPlay
                     loop
                     src={data[selectedIndex].video?.videoSrc}
 
                   />
                 ) : (
-                  <img className="border-2 rounded-xl object-cover w-full" src={data[selectedIndex].imageSrc} />
+                  <img className="border-2 rounded-xl object-cover w-full h-full" src={data[selectedIndex].imageSrc} />
                 )}
               </div>) : <span>Loading</span>}
 

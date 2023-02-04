@@ -13,16 +13,16 @@ const newTabs = [
 		data: [
 			{
 				title: 'Python',
-				description: 'Windmill provides a python 3.11 environment.'
+				description: ''
 				, icon: SiPython,
-				caption: 'Windmill provides a python 3.11 environment.',
+				caption: 'Python 3.11 environment.',
 				imageSrc: '/images/python.png',
 			},
 			{
 				title: 'Typescript',
-				description: 'Windmill uses deno as the typescript runtime.',
+				description: '',
 				icon: SiDeno,
-				caption: 'Windmill uses deno as the typescript runtime.',
+				caption: 'Deno as the typescript runtime.',
 				video: {
 					videoSrc: '/videos/deno.mp4',
 					videoLength: '33'
@@ -159,7 +159,7 @@ const newTabs = [
 export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-blue-50">
-			<div className="flex flex-col gap-4 justify-center">
+			<div className="flex flex-col w-full gap-4 justify-center">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
 						Scripts
