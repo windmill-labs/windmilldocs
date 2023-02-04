@@ -5,13 +5,13 @@ const people = [
 		name: 'Ruben Fiszel',
 		role: 'CEO & Founder',
 		imageUrl: '/team/ruben-fiszel.jpg',
-		linkedinUrl: '#'
+		linkedinUrl: 'https://www.linkedin.com/in/rubenfiszel/'
 	},
 	{
 		name: 'Faton Ramadani',
 		role: 'Founding engineer',
 		imageUrl: '/team/faton-ramadani.jpg',
-		linkedinUrl: '#'
+		linkedinUrl: 'https://www.linkedin.com/in/faton-ramadani-4b65ab191/'
 	},
 	{
 		name: 'Ádám Kovács',
