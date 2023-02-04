@@ -60,7 +60,7 @@ export default function Hero() {
 						</a>
 						
 						<a
-							href="/docs/how-tos/self_host"
+							href="https://docs.windmill.dev/docs/how-tos/self_host"
 							onClick={() => window.plausible('read-docs')}
 							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
 						>
@@ -70,7 +70,7 @@ export default function Hero() {
 
 											
 					<a
-							href="/docs/intro"
+							href="https://docs.windmill.dev/docs/intro"
 							onClick={() => window.plausible('getting-started')}
 							className="text-xs ml-60 mt-2 leading-7 text-gray-600 text"
 						>

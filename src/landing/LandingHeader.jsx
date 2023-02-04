@@ -47,7 +47,7 @@ export default function Example() {
 						Pricing
 					</a>
 					<a
-						href="/docs/intro"
+						href="https://docs.windmill.dev/docs/intro"
 						onClick={() => window.plausible('read-docs')}
 						className="text-base font-medium text-gray-500 hover:text-gray-900"
 					>
@@ -167,7 +167,7 @@ export default function Example() {
 								</a>
 
 								<a
-									href="/docs/intro"
+									href="https://docs.windmill.dev/docs/intro"
 									onClick={() => window.plausible('read-docs')}
 									className="text-base font-medium text-gray-900 hover:text-gray-700"
 								>

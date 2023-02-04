@@ -330,7 +330,7 @@ export default function HomepageFeatures() {
 										<li className="px-3">Reuse code, connectors and integrations</li>
 										<li className="px-3">Centrally manage secrets, users and roles, audit logs</li>
 										<li className="px-3">
-											And <a href="/docs/intro">more</a>
+											And <a href="https://docs.windmill.dev/docs/intro">more</a>
 										</li>
 									</ul>
 								</p>
