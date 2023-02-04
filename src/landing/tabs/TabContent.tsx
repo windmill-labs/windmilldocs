@@ -58,7 +58,7 @@ export default function TabContent({ data, color }) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8, position: 'absolute' }}
           >
-            <div className="flex flex-col w-full gap-2 italic justify-start  h-[512px]">
+            <div className="flex flex-col w-full gap-2 italic justify-start  min-h-[512px]">
 
               {inView ? (<div>
                 {data[selectedIndex].video ? (
