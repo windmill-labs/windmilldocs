@@ -16,7 +16,7 @@ const newTabs = [
 				description: ''
 				, icon: SiPython,
 				caption: 'Python 3.11 environment.',
-				imageSrc: '/images/python.png',
+				svg: '/images/python-code.svg',
 			},
 			{
 				title: 'Typescript',
