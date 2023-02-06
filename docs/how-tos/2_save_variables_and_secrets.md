@@ -19,30 +19,33 @@ are kept safe in three different ways:
   groups. A secret in `u/alice/secret` will only be accessible by `alice`,
   unless explicitly shared.
 - Secrets cannot be viewed outside of scripts. Note that a user could still
-  `print` a secret they have access to from a script.
+  `print` a secret if they have access to it from a script.
 - Accessing secrets generates `variables.decrypt_secret` event that ends up in
-  audit log. It means than you can audit who accesses secrets. Additionally you
-  can audit result, logs and script code of every script run.
+  the [Audit Logs](https://app.windmill.dev/audit_logs). It means that you can
+  audit who accesses secrets. Additionally you can audit results, logs and
+  script code for every script run.
 
 :::
 
 ## Reserved variables
 
-Reserved variables are automatically set by Windmill. See section `Contextual
-Variables` in [variables page](https://app.windmill.dev/variables) for the list
-of reserved variables and what they are used for.
+Reserved variables are automatically set by Windmill. See the `Contextual` tab
+on the [Variables page](https://app.windmill.dev/variables) for the list of
+reserved variables and what they are used for.
 
 ## Add a variable or secret
 
 You can define variables from the **Variables** page. Like all objects in
-Windmill, variable ownership is defined by the **path** (see
-[ownership path prefix](../reference#owner)).
+Windmill, variable ownership is defined by the **path** - see
+[ownership path prefix](../reference#owner).
 
-Variables also have a **name**, generated from the path, and names are used
-to access variables from scripts.
+Variables also have a **name**, generated from the path, and names are used to
+access variables from scripts.
 
-A variable can be made **secret**. In that case, its value will not be visible
-outside of a script (see [secrets security note](#secrets-security-note)).
+A variable can be made **secret**. In this case, the value of it will not be
+visible outside of a script.
+
+<!-- - see [secrets security note](#secrets-security-note). -->
 
 ![Add variable](../assets/how_to/add_variable.png)
 
@@ -50,5 +53,7 @@ outside of a script (see [secrets security note](#secrets-security-note)).
 
 At runtime, all the variables you have access to are set as environment
 variables. Easiest way to use a variable in your script is to add it via UI.
+Click the "+Variable" button in the header row of the editor to open the
+variable picker.
 
-![use variable](../assets/how_to/use-variable.png)
+![Use variable](../assets/how_to/use-variable.png)
