@@ -124,24 +124,6 @@ const config = {
 					}
 				]
 			},
-			footer: {
-				style: 'dark',
-				links: [
-					{
-						label: 'Privacy Policy',
-						to: '/privacy_policy'
-					},
-					{
-						label: 'Terms of Service',
-						to: '/terms_of_service'
-					},
-					{
-						label: 'License Terms',
-						to: '/terms'
-					}
-				],
-				copyright: `&copy; 2022 Windmill Labs, Inc. &nbsp;&nbsp;&nbsp; <span class="px-4"></span> Made with passion in the US and France</span>`
-			},
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme

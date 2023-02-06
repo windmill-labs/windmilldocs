@@ -19,8 +19,8 @@ Many services labels themselves as **no-code** or **low-code**, and they address
 indeed the challenge of getting rid of the boilerplate and provide a
 comprehensive platform accessible to all members of a diverse organization not
 made solely of engineers. However, we believe they lack the full power and
-flexibility of code as they either hide it completely, or only allow under
-extremely restricted forms.
+flexibility of code as they either hide it completely, or only allow it under
+restricted forms.
 
 Windmill is different, it allows building production internal tools through code
 much faster without sacrificing reliability, scalability, performance,
