@@ -30,21 +30,21 @@ const newTabs = [
 				title: 'Go',
 				icon: SiGo,
 				caption: '',
-				imageSrc: '/images/go.png',
+				svg: '/images/go-code.svg',
 
 			},
 			{
 				title: 'Bash',
 				icon: SiGnubash,
 				caption: '',
-				imageSrc: '/images/bash.png',
+				svg: '/images/bash-code.svg',
 			},
 			{
 				title: 'PostgreSQL / MySQL',
 				icon: Database,
 				caption: '',
 
-				imageSrc: '/images/sql.png',
+				svg: '/images/sql-code.svg',
 			}
 		]
 	},
