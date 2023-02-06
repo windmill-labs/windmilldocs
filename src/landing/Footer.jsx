@@ -92,7 +92,7 @@ export default function Footer() {
 					</div>
 				
 					<div className="space-y-8 text-left mx-auto">
-						<img className="h-16" src="img/windmill.svg" alt="Windmill Labs" />
+						<img className="h-16" src="/img/windmill.svg" alt="Windmill Labs" />
 						<p className="text-sm leading-6 text-gray-600">
 							Made with passion in San Francisco and Paris.
 						</p>
