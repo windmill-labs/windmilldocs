@@ -64,7 +64,7 @@ export default function Hero() {
 							onClick={() => window.plausible('read-docs')}
 							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
 						>
-							Or self-host yourself <span aria-hidden="true">→</span>
+							Self-host yourself <span aria-hidden="true">→</span>
 						</a>
 					</div>
 
@@ -72,9 +72,9 @@ export default function Hero() {
 					<a
 							href="https://docs.windmill.dev/docs/intro"
 							onClick={() => window.plausible('getting-started')}
-							className="text-xs ml-60 mt-2 leading-7 text-gray-600 text"
+							className="text-xs ml-60 mt-6 leading-7 text-gray-600 text"
 						>
-							Getting started
+							Read the docs
 						</a>
 
 					<div className="w-full text-left mt-16">

@@ -12,7 +12,7 @@ const navigation = {
 		{ name: 'Blog', href: '/blog' }
 	],
 	legal: [
-		{ name: 'Privacy Policy', href: '/terms_of_service' },
+		{ name: 'Privacy Policy', href: '/privacy_policy' },
 		{ name: 'Terms of Service', href: '/terms_of_service' },
 		{ name: 'License Terms', href: '/terms' }
 	],
@@ -94,7 +94,7 @@ export default function Footer() {
 					<div className="space-y-8 text-left mx-auto">
 						<img className="h-16" src="img/windmill.svg" alt="Windmill Labs" />
 						<p className="text-sm leading-6 text-gray-600">
-							Made with passion in 🇺🇸 🇫🇷 🇨🇭 🇩🇪 and 🇭🇺
+							Made with passion in San Francisco and Paris.
 						</p>
 						<div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
 							<p className="text-xs leading-5 text-gray-500">

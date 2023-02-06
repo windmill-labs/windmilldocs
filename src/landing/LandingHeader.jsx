@@ -53,10 +53,10 @@ export default function Example() {
 					>
 						Documentation
 					</a>
-					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a href="https://hub.windmill.dev" className="text-base font-medium text-gray-500 hover:text-gray-900">
 						Hub
 					</a>
-					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a href="https://app.windmill.dev/openapi.html" className="text-base font-medium text-gray-500 hover:text-gray-900">
 						OpenAPI
 					</a>
 
