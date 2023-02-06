@@ -206,8 +206,8 @@ a monaco editor with SQL support.
 
 :::info
 
-The equivalent of the type `wmill.Resource<'my_resource_type'>` in Python is to
-do the following:
+The equivalent of the type `wmill.Resource<'my_resource_type'>` in Python is the
+following:
 
 ```
 my_resource_type = dict
