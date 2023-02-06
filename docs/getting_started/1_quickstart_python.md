@@ -155,7 +155,7 @@ the left.
 
 ![Run hello world in Python](../assets/getting_started/quickstart/run_python.png)
 
-## What's next ?
+## What's next?
 
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
