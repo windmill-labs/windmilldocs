@@ -12,21 +12,19 @@ const newTabs = [
 		id: 'script',
 		data: [
 			{
+				title: 'Typescript',
+				description: '',
+				icon: SiDeno,
+				caption: 'Deno as the typescript runtime.',
+				svg: '/images/typescript-code.svg',
+
+			},
+			{
 				title: 'Python',
 				description: ''
 				, icon: SiPython,
 				caption: 'Python 3.11 environment.',
 				svg: '/images/python-code.svg',
-			},
-			{
-				title: 'Typescript',
-				description: '',
-				icon: SiDeno,
-				caption: 'Deno as the typescript runtime.',
-				video: {
-					videoSrc: '/videos/deno.mp4',
-					videoLength: '33'
-				}
 			},
 			{
 				title: 'Go',
