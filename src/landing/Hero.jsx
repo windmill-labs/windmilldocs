@@ -84,7 +84,7 @@ export default function Hero() {
 				<div className="mx-auto mt-16 sm:mt-8">
 					<div className="flex-none">
 							<img
-								src="homescreen.png"
+								src="homescreen.svg"
 								alt="App screenshot"
 								className="w-full"
 							/>
