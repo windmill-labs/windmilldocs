@@ -188,12 +188,9 @@ const examples = [
 		name: <span>Hackernews rss</span>,
 		description: (
 			<>
-				Whenever an{' '}
-				<span class="text-transparent bg-clip-text bg-orange-500 font-semibold">Hacker News</span>{' '}
-				message contains a mention, publish it to{' '}
-				<span class="text-transparent bg-clip-text bg-[#611f69] font-semibold">Slack</span> with{' '}
-				<span class="text-transparent bg-clip-text bg-sky-500 font-semibold">NLTK</span> sentiment
-				analysed.
+				Whenever an <span class="text-orange-500 font-semibold">Hacker News</span> message contains
+				a mention, publish it to <span class="text-[#611f69] font-semibold">Slack</span> with NLTK
+				sentiment analysed.
 			</>
 		),
 		href: 'https://app.windmill.dev/flows/add?hub=13'
@@ -203,11 +200,8 @@ const examples = [
 		description: (
 			<>
 				When new expenses are uploaded to{' '}
-				<span class="text-transparent bg-clip-text  bg-[#3D6EC9] font-semibold">Google Drive</span>{' '}
-				, extract text using{' '}
-				<span class="text-transparent bg-clip-text  bg-[#159957] font-semibold">Tesseract</span> and
-				notify on{' '}
-				<span class="text-transparent bg-clip-text bg-[#611f69] font-semibold">Slack</span>.
+				<span class="text-[#3D6EC9] font-semibold">Google Drive</span> , extract text using{' '}
+				Tesseract and notify on <span class="text-[#611f69] font-semibold">Slack</span>.
 			</>
 		),
 		href: 'https://app.windmill.dev/flows/add?hub=21'
@@ -217,12 +211,9 @@ const examples = [
 		description: (
 			<>
 				Upon new user signup, check for existence in{' '}
-				<span class="text-transparent bg-clip-text bg-slate-600 font-semibold">Postgres</span>, hash
-				password, add record to{' '}
+				<span class="text-blue-900 font-semibold">Postgres</span>, hash password, add record to{' '}
 				<span class="text-transparent bg-clip-text bg-slate-600 ">Postgres</span> and{' '}
-				<span class="text-transparent bg-clip-text bg-[#FFBF00] font-semibold">Airtable</span>, send
-				an <span class="text-transparent bg-clip-text bg-red-600 font-semibold">Email</span> to new
-				user.
+				<span class="text-yellow-600 font-semibold">Airtable</span>, send an Email to new user.
 			</>
 		),
 		href: 'https://app.windmill.dev/flows/add?hub=23'
