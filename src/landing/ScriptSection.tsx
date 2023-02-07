@@ -171,40 +171,58 @@ const newTabs = [
 
 const examples = [
 	{
-		name: (
-			<span>
+		name: <span>Slack messaging</span>,
+		description: (
+			<>
+				Send message to a specific channel on{' '}
 				<a
-					className="text-indigo-500 cursor-pointer !no-underline hover:text-indigo-700"
 					href="https://hub.windmill.dev/integrations/slack"
 					target="_blank"
+					className="!no-underline"
 				>
-					Slack
-				</a>{' '}
-				messaging
-			</span>
+					<mark className="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+						Slack
+					</mark>
+				</a>
+			</>
 		),
-		description: 'Send message to a specific channel on Slack.',
 		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
 	},
 	{
-		name: (
-			<span>
-				Generate image using&nbsp;
-				<span className="text-indigo-500">OpenAI</span>
-			</span>
+		name: 'Generate image using OpenAI',
+		description: (
+			<>
+				Given a prompt, generate an image using{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/slack"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-purple-100 hover:bg-purple-200 px-2 rounded whitespace-nowrap  text-purple-800 font-semibold">
+						OpenAI
+					</mark>
+				</a>
+			</>
 		),
-		description: 'Given a prompt, generate an image using OpenAI.',
 		href: 'https://hub.windmill.dev/scripts/openai/1451/generate-image-openai'
 	},
 	{
-		name: (
-			<span>
-				Search&nbsp;
-				<span className="text-indigo-500">MongoDB</span>&nbsp; Documents
-			</span>
+		name: 'Search documents in MongoDB',
+		description: (
+			<>
+				Selects documents in a{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/mongodb"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-green-100 hover:bg-green-200 px-2 rounded whitespace-nowrap  text-green-800 font-semibold">
+						MongoDB
+					</mark>
+				</a>{' '}
+				collection or view and returns a cursor to the selected documents
+			</>
 		),
-		description:
-			'Selects documents in a collection or view and returns a cursor to the selected documents.',
 		href: 'https://hub.windmill.dev/scripts/mongodb/839/search-documents-mongodb'
 	}
 ];
