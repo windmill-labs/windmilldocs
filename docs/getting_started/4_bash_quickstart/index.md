@@ -1,3 +1,0 @@
-# Bash Quicksart
-
-## TODO

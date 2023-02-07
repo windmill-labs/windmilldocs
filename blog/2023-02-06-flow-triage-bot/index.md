@@ -13,7 +13,7 @@ We'll create Windmill Scripts, Flows, and webhooks using the Go language. This
 tutorial assumes you're already familiar with the basics of Windmill, so it's
 recommended to complete the
 
-[Go quickstart](/docs/getting_started/go_quickstart) first.
+[Go quickstart](/docs/getting_started/scripts_quickstart/go) first.
 
 ## Triage bot
 

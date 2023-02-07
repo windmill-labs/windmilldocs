@@ -32,20 +32,26 @@ yet customizable with code.
 
 Windmill embeds:
 
-- A blazingly fast runtime to run code in Python/TypeScript/Go/Bash/SQL from a
-  self-managed job queue, at scale, with any dependencies, with no overhead, and
+- A super fast runtime to run code in
+  [TypeScript](./getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md),
+  [Python](./getting_started/0_scripts_quickstart/2_python_quickstart/index.md),
+  [Go](./getting_started/0_scripts_quickstart/3_go_quickstart/index.md),
+  [Bash](./getting_started/0_scripts_quickstart/4_bash_quickstart/index.md) and
+  even [SQL](./getting_started/0_scripts_quickstart/5_sql_quickstart/index.md)
+  from a self-managed job queue, at scale, with any dependency, no overhead, and
   minimal cold start.
 - A parser that will infer the dependencies and arguments from the code itself
   and generate **lockfiles** and **input specs**.
   - The **lockfile** allows the script being deployed to maintain exactly the
     same set of versioned dependencies forever
   - An input spec (which is actually a JSON schema) used to generate a minimal
-    UI automatically for both using the script as a standalone or as a step of a
-    flow
-- A powerful _web IDE_ to write scripts with autocompletion and syntax checking
-- A low-code builder and **workflow engine** to build and run complex flows by
-  composing custom scripts and generic scripts shared on
-  [Windmill Hub](https://hub.windmill.dev). Those flows can, among others, do:
+    UI automatically for both using the script as a standalone compute or as a
+    step of a Flow
+- A powerful _web IDE_ to write Scripts with autocompletion and syntax checking
+- A low-code builder and **workflow engine** to build and run complex
+  [Flows](./getting_started/6_flows_quickstart/index.md) by composing your
+  custom scripts and generic scripts shared on
+  [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
   - **retries** with fixed and exponential backoff
   - **error handling**
   - **for loops** over list triggering one flow per item
@@ -55,19 +61,23 @@ Windmill embeds:
     external webhook who may contain payloads
   - **approval steps** leveraging being suspended and reactivated at some secret
     urls known only by the approvers
-- A low-code UI builder build complex admin panels and dashboard using inline
-  scripts in Python/TypeScript/Go/Bash/SQL or trigger the scripts and flows of
-  the workspace
+- A [low-code UI builder](./getting_started/7_apps_quickstart/index.md) to build
+  complex admin panels and dashboards using inline scripts in TypeScript,
+  Python, Go, Bash and SQL or trigger the Scripts and Flows of the workspace
 - An enterprise-grade platform with tight permissioning, secret management,
-  groups and folders enabling RBAC permissions, OAuth handling for fetching and
+  groups and folders enabling
+  [RBAC permissions](./reference/index.md#permissions-and-acl),
+  [OAuth handling](./advanced/2_setup_oauth/index.md) for fetching and
   refreshing credentials
-- **Webhooks** for every scripts and flows to be triggered externally and an
-  open api to be easily embedded into your current infrastructure
-- A scheduler to trigger script and flows. Combined with state storage, it can
-  be used to watch for external events (triggering a flow only if the external
-  state is different from the last stored state)
-- A **CLI** and GitHub Actions for **GitHub** and local based developement and
-  code management
+- [Webhooks](./core_concepts/4_webhooks/index.md) for every scripts and flows to
+  be triggered externally and an open api to be easily embedded into your
+  current infrastructure
+- A [scheduler](./core_concepts/5_schedules/index.md) to trigger Scripts and
+  Flows. Combined with state storage, it can be used to watch for external
+  events - for example triggering a Flow only if the external state is different
+  from the one stored previously
+- A [CLI](https://github.com/windmill-labs/windmill/tree/main/cli) and GitHub
+  Actions for **GitHub** and local based developement and code management
 
 ### Use cases
 

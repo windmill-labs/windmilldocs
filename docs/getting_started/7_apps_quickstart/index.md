@@ -1,3 +1,3 @@
-# Apps Quicksart
+# Apps Quickstart
 
-## TODO
+## Coming soon

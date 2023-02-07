@@ -1,3 +1,8 @@
+---
+title: "TypeScript"
+slug: "/getting_started/scripts_quickstart/typescript"
+---
+
 # TypeScript Quickstart
 
 In this quick start guide, we will write our first script in TypeScript.
@@ -25,8 +30,8 @@ first step of script creation: metadata.
 ## Metadata
 
 - **Path** is the Script's unique identifier that consist of the
-  [script's owner](../../reference/index.md#owner), and the script's name. The
-  owner can be either a user, or a group. This defines the permissions on
+  [script's owner](../../../reference/index.md#owner), and the script's name.
+  The owner can be either a user, or a group. This defines the permissions on
   Windmill: selecting user will keep the script _private_ to the selected
   account, while selecting group will make it available to all users of the
   given group. Let's save this script under your path, and call it
@@ -38,7 +43,7 @@ first step of script creation: metadata.
   Go, Bash and SQL. <!-- You can read more about environments.  -->Let's pick
   TypeScript!
 - **Advanced** gives you access to more options, such as creating
-  [specialized scripts](../../reference/index.md) and saving the script as a
+  [specialized scripts](../../../reference/index.md) and saving the script as a
   template. We won't go into this in this quickstart.
 
 Now hit "Next" in the top right corner, and let's build our Hello World!
@@ -85,8 +90,8 @@ entrypoint. There are a few important things to note about the `main`.
 Also take a look at the import statement lines that are commented out. You can
 use NPM imports directly in Windmill. The last import line imports the Windmill
 client, that is needed for example to access
-[variables](../../core_concepts/2_variables_and_secrets/index.md) or
-[resources](../../core_concepts/3_resources_and_types/index.md). We won't go
+[variables](../../../core_concepts/2_variables_and_secrets/index.md) or
+[resources](../../../core_concepts/3_resources_and_types/index.md). We won't go
 into that here.
 
 Back to our Hello World. We can clear up unused import statements, change the
@@ -147,10 +152,11 @@ This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
 
 - Pass
-  [variables and secrets](../../core_concepts/2_variables_and_secrets/index.md)
+  [variables and secrets](../../../core_concepts/2_variables_and_secrets/index.md)
   to a script
-- Connect to [resources](../../core_concepts/3_resources_and_types/index.md)
-- Run scripts or flows on a [schedule](../../core_concepts/5_schedules/index.md)
+- Connect to [resources](../../../core_concepts/3_resources_and_types/index.md)
+- Run scripts or flows on a
+  [schedule](../../../core_concepts/5_schedules/index.md)
 - Compose scripts in [Flows][flows]
 - You can share your scripts with the community on [Windmill Hub][wm-hub]. Once
   submitted, they will be verified by moderators before becoming available to
@@ -158,9 +164,10 @@ in a real-world use case:
 
 <!-- Resources -->
 
+[flows]: ../../../getting_started/6_flows_quickstart/index.md
 [app-runs]: https://app.windmill.dev/runs
 [app-scripts]: https://app.windmill.dev/scripts
 [deno]: https://deno.land/
-[openflow]: ../../openflow/index.md
+[openflow]: ../../../openflow/index.md
 [python]: https://www.python.org/
 [wm-hub]: https://hub.windmill.dev

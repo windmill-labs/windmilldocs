@@ -1,7 +1,11 @@
-# Python Quickstart
+---
+title: "Go"
+slug: "/getting_started/scripts_quickstart/go"
+---
 
-In this quick start guide, we will write our first script in Python. Windmill
-provides a Python `3.11` environment.
+# Go Quickstart
+
+In this quick start guide, we will write our first script in Go.
 
 Scripts are the basic building blocks in Windmill. They can be run as standalone
 apps, chained together to create [Flows][flows].
@@ -20,25 +24,25 @@ In this quick start guide, we'll create a Script that greets the operator
 running it. From the **Home** page, click "+Script". This will take you to the
 first step of script creation: metadata.
 
-![New script](./create_script_python.png)
+![New script](./create_script_go.png)
 
 ## Metadata
 
 - **Path** is the Script's unique identifier that consist of the
-  [script's owner](../../reference/index.md#owner), and the script's name. The
-  owner can be either a user, or a group. This defines the permissions on
+  [script's owner](../../../reference/index.md#owner), and the script's name.
+  The owner can be either a user, or a group. This defines the permissions on
   Windmill: selecting user will keep the script _private_ to the selected
   account, while selecting group will make it available to all users of the
   given group. Let's save this script under your path, and call it
-  `hello_world_python`.
+  `hello_world_go`.
 - **Summary** (optional) is a short, human-readable summary of the Script. It
   will be displayed across Windmill. If omitted, the UI will use the `path` by
   default. Let's use "Greet the user by name".
 - **Language** the language of the script. Windmill supports TypeScript, Python,
   Go, Bash and SQL. <!-- You can read more about environments.  -->Let's pick
-  Python!
+  Go!
 - **Advanced** gives you access to more options, such as creating
-  [specialized scripts](../../reference/index.md) and saving the script as a
+  [specialized scripts](../../../reference/index.md) and saving the script as a
   template. We won't go into this in this quickstart.
 
 Now hit "Next" in the top right corner, and let's build our Hello World!
@@ -50,53 +54,29 @@ the editor itself. The right-side lets you preview the UI that Windmill will
 generate from the Script's signature and show to Script users. You can easily
 preview that UI, provide input values, and test your script there.
 
-![Editor for python](./editor_python.png)
+![Editor for Go](./editor_go.png)
 
-We picked `python` for this example, so Windmill provided some python
-boilerplate. Let's take a look:
+We picked `go` for this example, so Windmill provided some Go boilerplate. Let's
+take a look:
 
-```python
-import os
-import wmill
+```
+package inner
 
-# You can import any package from PyPI, even if the assistant complains
+import (
+	"fmt"
+	"rsc.io/quote"
+	// wmill "github.com/windmill-labs/windmill-go-client"
+)
 
-"""
-Use Cmd/Ctrl + S to autoformat the code. Reset content in the bar to start from a clean template.
-The client is used to interact with Windmill itself through its standard API.
-One can explore the methods available through autocompletion of `wmill.XXX`.
-"""
+// the main must return (interface{}, error)
 
-def main(no_default: str,
-         name = "Nicolas Bourbaki",
-         age = 42,
-         obj: dict = {"even": "dicts"},
-         l: list = ["or", "lists!"],
-         file_: bytes = bytes(0)):
-    """A main function is required for the script to be able to accept arguments.
-    Types are recommended."""
-    print(f"Hello World and a warm welcome especially to {name}")
-    print("and its acolytes..", age, obj, l, len(file_))
-    # retrieve variables, including secrets by querying the windmill platform.
-    # secret fetching is audited by windmill.
-
-    try:
-      secret = wmill.get_variable("f/examples/secret")
-    except:
-      secret = "No secret yet at f/examples/secret !"
-
-    print(f"The variable at `f/examples/secret`: {secret}")
-    
-    # Get last state of this script execution by the same trigger/user
-    last_state = wmill.get_state()
-    new_state = {"foo": 42} if last_state is None else last_state
-    new_state["foo"] += 1
-    wmill.set_state(new_state)
-
-    # fetch reserved variables as environment variables
-    user = os.environ.get("WM_USERNAME")
-    # the return value is then parsed and can be retrieved by other scripts conveniently
-    return {"splitted": name.split(), "user": user, "state": new_state}
+func main(x string, nested struct{ Foo string `json:"foo"` }) (interface{}, error) {
+	fmt.Println("Hello, World")
+	fmt.Println(nested.Foo)
+	fmt.Println(quote.Opt())
+	// v, _ := wmill.GetVariable("f/examples/secret")
+	return x, nil
+}
 ```
 
 In Windmill, scripts need to have a `main` function that will be the script's
@@ -107,11 +87,15 @@ entrypoint. There are a few important things to note about the `main`.
 - Type annotations are used to generate the UI form, and help pre-validate
   inputs. While not mandatory, they are highly recommended. You can customize
   the UI in later steps (but not change the input type!).
+- The main of Go Scripts **need** to return `(interface{}, error)`.
 
-Also take a look at the import statement. The `import wmill` imports the
-Windmill client, that is needed for example to access
-[variables](../../core_concepts/2_variables_and_secrets/index.md) or
-[resources](../../core_concepts/3_resources_and_types/index.md). We won't go
+Note that this Script is defined as a package named `inner`. Windmill expects an
+`inner` package, so that cannot be changed.
+
+Also take a look at the import statement line that's commented out. This is for
+importing the Windmill client, that is needed for example to access
+[variables](../../../core_concepts/2_variables_and_secrets/index.md) or
+[resources](../../../core_concepts/3_resources_and_types/index.md). We won't go
 into that here.
 
 Back to our Hello World. We can clear up unused import statements, change the
@@ -119,14 +103,22 @@ main to take in the user's name. Let's also return the `name`, maybe we can use
 this later if we use this Script within a Flow and need to pass it on.
 
 ```
-def main(name:str):
-  print("Hello world. Oh, it's you {}? Greetings!".format(name))
-  return name
+package inner
+
+import (
+	"fmt"
+)
+
+// the main must return (interface{}, error)
+func main(name string) (interface{}, error) {
+	fmt.Printf("Hello, World. Oh, it's you %s. Greetings!", name)
+	return name, nil
+}
 ```
 
 Look at the UI preview on the right: it was updated to match the input
-signature. Run a preview (`Ctrl` + `Enter`) to verify everything works. Now
-let's go to the last step: the "Advanced" settings.
+signature. Run a preview to verify everything works. Now let's go to the last
+step: the "Advanced" settings.
 
 ## Advanced settings
 
@@ -140,7 +132,7 @@ In this step, you can:
   name with only alphanumeric characters: `^[A-Za-z0-9]*$`. Let's still allow
   numbers in case you're some tech billionaire's kid.
 
-![Advanced settings for Python script](./advanced_python.png)
+![Advanced settings for Go script](./advanced_go.png)
 
 We're done! Save your script. Note that Scripts are versioned in Windmill, and
 each script version is uniquely identified by a hash.
@@ -154,7 +146,7 @@ Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs][app-runs] menu on
 the left.
 
-![Run hello world in Python](./run_python.png)
+![Run Hello World in Go](./run_go.png)
 
 ## What's next?
 
@@ -162,10 +154,11 @@ This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
 
 - Pass
-  [variables and secrets](../../core_concepts/2_variables_and_secrets/index.md)
+  [variables and secrets](../../../core_concepts/2_variables_and_secrets/index.md)
   to a script
-- Connect to [resources](../../core_concepts/3_resources_and_types/index.md)
-- Run scripts or flows on a [schedule](../../core_concepts/5_schedules/index.md)
+- Connect to [resources](../../../core_concepts/3_resources_and_types/index.md)
+- Run scripts or flows on a
+  [schedule](../../../core_concepts/5_schedules/index.md)
 - Compose scripts in [Flows][flows]
 - You can share your scripts with the community on [Windmill Hub][wm-hub]. Once
   submitted, they will be verified by moderators before becoming available to
@@ -173,9 +166,10 @@ in a real-world use case:
 
 <!-- Resources -->
 
+[flows]: ../../../getting_started/6_flows_quickstart/index.md
 [app-runs]: https://app.windmill.dev/runs
 [app-scripts]: https://app.windmill.dev/scripts
 [deno]: https://deno.land/
-[openflow]: ../../openflow/index.md
+[openflow]: ../../../openflow/index.md
 [python]: https://www.python.org/
 [wm-hub]: https://hub.windmill.dev

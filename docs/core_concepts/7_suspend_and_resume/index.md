@@ -50,10 +50,10 @@ via Gmail on your behalf.
 #### Reusing script from WindmillHub
 
 Let's create a flow as described in the getting started section
-([Go](../../getting_started/3_go_quickstart/index.md),
-[TypeScript](../../getting_started/1_typescript_quickstart/index.md),
-[Python](../../getting_started/3_go_quickstart/index.md)). Our first step will
-be approval script from WindmillHub
+([TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md),
+[Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.md),
+[Go](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.md)). Our
+first step will be approval script from WindmillHub
 
 ![Approval step from Hub](./approval-step-from-hub.png)
 
