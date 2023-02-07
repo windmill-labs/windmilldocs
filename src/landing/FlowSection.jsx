@@ -188,9 +188,21 @@ const examples = [
 		name: <span>Hackernews rss</span>,
 		description: (
 			<>
-				Whenever an <span class="text-orange-500 font-semibold">Hacker News</span> message contains
-				a mention, publish it to <span class="text-[#611f69] font-semibold">Slack</span> with NLTK
-				sentiment analysed.
+				Whenever an{' '}
+				<mark class="leading-none bg-orange-100 text-orange-600 px-2 rounded font-semibold whitespace-nowrap">
+					Hacker News
+				</mark>{' '}
+				message contains a mention, publish it to{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/slack"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark class="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+						Slack
+					</mark>
+				</a>{' '}
+				with NLTK sentiment analysed.
 			</>
 		),
 		href: 'https://app.windmill.dev/flows/add?hub=13'
@@ -200,8 +212,26 @@ const examples = [
 		description: (
 			<>
 				When new expenses are uploaded to{' '}
-				<span class="text-[#3D6EC9] font-semibold">Google Drive</span> , extract text using{' '}
-				Tesseract and notify on <span class="text-[#611f69] font-semibold">Slack</span>.
+				<a
+					href="https://hub.windmill.dev/integrations/gdrive"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark class="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
+						Google Drive
+					</mark>
+				</a>
+				, extract text using Tesseract and notify on{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/slack"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark class="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+						Slack
+					</mark>
+				</a>
+				.
 			</>
 		),
 		href: 'https://app.windmill.dev/flows/add?hub=21'
@@ -211,9 +241,36 @@ const examples = [
 		description: (
 			<>
 				Upon new user signup, check for existence in{' '}
-				<span class="text-blue-900 font-semibold">Postgres</span>, hash password, add record to{' '}
-				<span class="text-transparent bg-clip-text bg-slate-600 ">Postgres</span> and{' '}
-				<span class="text-yellow-600 font-semibold">Airtable</span>, send an Email to new user.
+				<a
+					href="https://hub.windmill.dev/integrations/postgres"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark class="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
+						Postgres
+					</mark>
+				</a>{' '}
+				, hash password, add record to{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/gdrive"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark class="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
+						Google Drive
+					</mark>
+				</a>{' '}
+				and{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/airtable"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark class="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
+						Airtable
+					</mark>
+				</a>
+				, send an Email to new user.
 			</>
 		),
 		href: 'https://app.windmill.dev/flows/add?hub=23'
