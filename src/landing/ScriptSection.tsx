@@ -15,9 +15,10 @@ import {
 	FileCode,
 	FileLock2
 } from 'lucide-react';
-import { ExternalLink } from 'lucide-react';
 import FeatureCardTabs from './tabs/FeatureCardTabs';
 import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
+import SectionExamples from './SectionExamples';
+import { ExternalLink } from 'lucide-react';
 
 const newTabs = [
 	{
@@ -168,6 +169,46 @@ const newTabs = [
 	}
 ];
 
+const examples = [
+	{
+		name: (
+			<span>
+				<a
+					className="text-indigo-500 cursor-pointer !no-underline hover:text-indigo-700"
+					href="https://hub.windmill.dev/integrations/slack"
+					target="_blank"
+				>
+					Slack
+				</a>{' '}
+				messaging
+			</span>
+		),
+		description: 'Send message to a specific channel on Slack.',
+		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
+	},
+	{
+		name: (
+			<span>
+				Generate image using&nbsp;
+				<span className="text-indigo-500">OpenAI</span>
+			</span>
+		),
+		description: 'Given a prompt, generate an image using OpenAI.',
+		href: 'https://hub.windmill.dev/scripts/openai/1451/generate-image-openai'
+	},
+	{
+		name: (
+			<span>
+				Search&nbsp;
+				<span className="text-indigo-500">MongoDB</span>&nbsp; Documents
+			</span>
+		),
+		description:
+			'Selects documents in a collection or view and returns a cursor to the selected documents.',
+		href: 'https://hub.windmill.dev/scripts/mongodb/839/search-documents-mongodb'
+	}
+];
+
 export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-blue-50">
@@ -188,7 +229,7 @@ export default function ScriptSection() {
 				</span>
 
 				<FeatureCardTabs tabs={newTabs} color="blue" />
-
+				<SectionExamples examples={examples} />
 				<div className="flex">
 					<a
 						type="button"

@@ -9,9 +9,10 @@ import {
 	CalendarClock,
 	FormInput,
 	WebhookIcon,
-	Terminal,
+	Terminal
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
+import SectionExamples from './SectionExamples';
 
 const tabs = [
 	{
@@ -182,6 +183,52 @@ const tabs = [
 	}
 ];
 
+const examples = [
+	{
+		name: <span>Hackernews rss</span>,
+		description: (
+			<>
+				Whenever an{' '}
+				<span class="text-transparent bg-clip-text bg-orange-500 font-semibold">Hacker News</span>{' '}
+				message contains a mention, publish it to{' '}
+				<span class="text-transparent bg-clip-text bg-[#611f69] font-semibold">Slack</span> with{' '}
+				<span class="text-transparent bg-clip-text bg-sky-500 font-semibold">NLTK</span> sentiment
+				analysed.
+			</>
+		),
+		href: 'https://app.windmill.dev/flows/add?hub=13'
+	},
+	{
+		name: <span>Expense report internal workflow</span>,
+		description: (
+			<>
+				When new expenses are uploaded to{' '}
+				<span class="text-transparent bg-clip-text  bg-[#3D6EC9] font-semibold">Google Drive</span>{' '}
+				, extract text using{' '}
+				<span class="text-transparent bg-clip-text  bg-[#159957] font-semibold">Tesseract</span> and
+				notify on{' '}
+				<span class="text-transparent bg-clip-text bg-[#611f69] font-semibold">Slack</span>.
+			</>
+		),
+		href: 'https://app.windmill.dev/flows/add?hub=21'
+	},
+	{
+		name: <span>Sign up a user in the database</span>,
+		description: (
+			<>
+				Upon new user signup, check for existence in{' '}
+				<span class="text-transparent bg-clip-text bg-slate-600 font-semibold">Postgres</span>, hash
+				password, add record to{' '}
+				<span class="text-transparent bg-clip-text bg-slate-600 ">Postgres</span> and{' '}
+				<span class="text-transparent bg-clip-text bg-[#FFBF00] font-semibold">Airtable</span>, send
+				an <span class="text-transparent bg-clip-text bg-red-600 font-semibold">Email</span> to new
+				user.
+			</>
+		),
+		href: 'https://app.windmill.dev/flows/add?hub=23'
+	}
+];
+
 export default function FlowSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-teal-50">
@@ -196,10 +243,13 @@ export default function FlowSection() {
 				</div>
 
 				<span className="text-lg text-gray-600 max-w-3xl">
-					Build complex Flows from atomic scripts, either from your workspace or the <a href="hub.windmill.dev">Hub</a>.
+					Build complex Flows from atomic scripts, either from your workspace or the{' '}
+					<a href="hub.windmill.dev">Hub</a>.
 				</span>
 
 				<FeatureCardTabs tabs={tabs} color="green" />
+				<SectionExamples examples={examples} />
+
 				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/flows"
@@ -207,7 +257,7 @@ export default function FlowSection() {
 						target="_blank"
 						className="inline-flex items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
 					>
-						Explore flows on the Hub
+						Explore more flows on the Hub
 						<ExternalLink className="ml-2 h-5" />
 					</a>
 				</div>

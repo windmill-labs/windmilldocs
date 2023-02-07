@@ -35,20 +35,25 @@ export default function HeroExample() {
 	useEffect(() => {
 		const video = document.getElementById('main-video') as HTMLVideoElement;
 
+		if (framer.selectedTab.id === 'scripts') {
+			video.currentTime = 0;
+		}
 		if (framer.selectedTab.id === 'flows') {
-			video.currentTime = 80;
+			video.currentTime = 66;
+		}
+		if (framer.selectedTab.id === 'apps') {
+			video.currentTime = 127;
 		}
 	}, [framer.selectedTab]);
 
 	return (
-		<LandingSection bgClass="bg-gray-50">
+		<LandingSection bgClass="bg-white">
 			<div className="w-full gap-8 flex flex-col">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-slate-500 to-slate-800">
 					Supercharge your scripts
 				</h1>
 				<span className="text-lg text-gray-600 max-w-3xl">
-					We have a growing list of integrations with third party services available on the Hub.
-					Connect your apps and services to automate your workflows.
+					Got some script laying around? Turn it into a flow, or an app. Or both
 				</span>
 				<Framer.Tabs {...framer.tabProps} color="blue" />
 
