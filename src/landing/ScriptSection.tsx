@@ -230,7 +230,7 @@ const examples = [
 export default function ScriptSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-blue-50">
-			<div className="flex flex-col w-full gap-4 justify-center">
+			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
 						Scripts

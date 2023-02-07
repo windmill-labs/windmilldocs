@@ -185,11 +185,11 @@ const tabs = [
 
 const examples = [
 	{
-		name: <span>Hackernews rss</span>,
+		name: <span>Hacker News mentions</span>,
 		description: (
 			<>
 				Whenever an{' '}
-				<mark class="leading-none bg-orange-100 text-orange-600 px-2 rounded font-semibold whitespace-nowrap">
+				<mark className="leading-none bg-orange-100 text-orange-600 px-2 rounded font-semibold whitespace-nowrap">
 					Hacker News
 				</mark>{' '}
 				message contains a mention, publish it to{' '}
@@ -198,7 +198,7 @@ const examples = [
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark class="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+					<mark className="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
 						Slack
 					</mark>
 				</a>{' '}
@@ -217,7 +217,7 @@ const examples = [
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark class="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
+					<mark className="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
 						Google Drive
 					</mark>
 				</a>
@@ -227,7 +227,7 @@ const examples = [
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark class="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+					<mark className="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
 						Slack
 					</mark>
 				</a>
@@ -246,7 +246,7 @@ const examples = [
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark class="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
+					<mark className="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
 						Postgres
 					</mark>
 				</a>{' '}
@@ -256,7 +256,7 @@ const examples = [
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark class="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
+					<mark className="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
 						Google Drive
 					</mark>
 				</a>{' '}
@@ -266,7 +266,7 @@ const examples = [
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark class="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
+					<mark className="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
 						Airtable
 					</mark>
 				</a>
@@ -280,7 +280,7 @@ const examples = [
 export default function FlowSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-teal-50">
-			<div className="flex flex-col gap-4 justify-center w-full">
+			<div className="flex flex-col gap-4 justify-center w-full" id="flow-section">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-800">
 						Flows
