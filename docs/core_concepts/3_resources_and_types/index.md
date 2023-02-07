@@ -28,9 +28,9 @@ present.
 ![Add resource example](./add_resource_postgresql.png)
 
 Resources commonly need to access secrets or re-use
-[Variables](variables_and_secrets), for example passwords or API tokens. To
-insert a Variable into a Resource, use **Insert variable** (the `$` sign button)
-and select a Variable. The name of a Variable will look like
+[Variables](../2_variables_and_secrets/index.md), for example passwords or API
+tokens. To insert a Variable into a Resource, use **Insert variable** (the `$`
+sign button) and select a Variable. The name of a Variable will look like
 `$VAR:<NAME_OF_VAR>`. When resources are called from a Script, the Variable
 reference will be replaced by its value.
 

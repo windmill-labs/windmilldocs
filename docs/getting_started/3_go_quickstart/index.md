@@ -148,9 +148,11 @@ the left.
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
 
-- Pass [variables and secrets](../how-tos/variables_and_secrets) to a script
-- Connect to [resources](../how-tos/create_resources)
-- Run scripts or flows on a [schedule](../how-tos/schedule)
+- Pass
+  [variables and secrets](../../core_concepts/2_variables_and_secrets/index.md)
+  to a script
+- Connect to [resources](../../core_concepts/3_resources_and_types/index.md)
+- Run scripts or flows on a [schedule](../../core_concepts/5_schedules/index.md)
 - Compose scripts in [Flows][flows]
 - You can share your scripts with the community on [Windmill Hub][wm-hub]. Once
   submitted, they will be verified by moderators before becoming available to
