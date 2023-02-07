@@ -32,8 +32,8 @@ export default function Example() {
 			<div className="flex items-center justify-between md:justify-start md:space-x-10">
 				<div className="flex justify-start lg:w-0 lg:flex-1">
 					<a href="/">
-						<span className="sr-only">Your Company</span>
-						<img className="h-11" src="img/windmill.svg" alt="Windmill Labs" />
+						<span className="sr-only">Windmill</span>
+						<img className="h-11" src="/img/windmill.svg" alt="Windmill Labs" />
 					</a>
 				</div>
 				<div className="-my-2 -mr-2 md:hidden">
@@ -53,10 +53,10 @@ export default function Example() {
 					>
 						Documentation
 					</a>
-					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a href="https://hub.windmill.dev" className="text-base font-medium text-gray-500 hover:text-gray-900">
 						Hub
 					</a>
-					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a href="https://app.windmill.dev/openapi.html" className="text-base font-medium text-gray-500 hover:text-gray-900">
 						OpenAPI
 					</a>
 

@@ -26,6 +26,13 @@ const newTabs = [
 		id: 'script',
 		data: [
 			{
+				title: 'Typescript',
+				description: '',
+				icon: SiDeno,
+				caption: 'Deno as the typescript runtime.',
+				svg: '/images/typescript-code.svg'
+			},
+			{
 				title: 'Python',
 				description: '',
 				icon: SiPython,
@@ -33,33 +40,23 @@ const newTabs = [
 				svg: '/images/python-code.svg'
 			},
 			{
-				title: 'Typescript',
-				description: '',
-				icon: SiDeno,
-				caption: 'Deno as the typescript runtime.',
-				video: {
-					videoSrc: '/videos/deno.mp4',
-					videoLength: '33'
-				}
-			},
-			{
 				title: 'Go',
 				icon: SiGo,
 				caption: '',
-				imageSrc: '/images/go.png'
+				svg: '/images/go-code.svg'
 			},
 			{
 				title: 'Bash',
 				icon: SiGnubash,
 				caption: '',
-				imageSrc: '/images/bash.png'
+				svg: '/images/bash-code.svg'
 			},
 			{
 				title: 'PostgreSQL / MySQL',
 				icon: Database,
 				caption: '',
 
-				imageSrc: '/images/sql.png'
+				svg: '/images/sql-code.svg'
 			}
 		]
 	},

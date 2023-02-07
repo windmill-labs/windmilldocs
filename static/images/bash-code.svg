@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   id="svg435508"
+   sodipodi:docname="bash-code.svg"
+   width="606.30664"
+   height="146.64453"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs435512" />
+  <sodipodi:namedview
+     id="namedview435510"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="2.4764687"
+     inkscape:cx="199.47759"
+     inkscape:cy="142.13788"
+     inkscape:window-width="2560"
+     inkscape:window-height="1440"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg435508" />
+  <rect
+     style="fill:#ffffff"
+     id="rect435555"
+     width="606.30664"
+     height="146.64453"
+     x="0"
+     y="0"
+     rx="2.3649042"
+     ry="2.3649042" />
+  <g
+     font-family="monospace"
+     font-size="14px"
+     id="g435506"
+     transform="translate(0.04101562,-3.3632813)">
+    <text
+       x="0"
+       y="14"
+       xml:space="preserve"
+       id="text435434"><tspan
+         fill="#888888"
+         font-style="italic"
+         id="tspan435432"># arguments of the form X=&quot;$I&quot; are parsed as parameters X of type string</tspan></text>
+    <text
+       x="0"
+       y="33"
+       xml:space="preserve"
+       id="text435450"><tspan
+         fill="#888888"
+         font-style="italic"
+         id="tspan435436" /><tspan
+         fill="#b04040"
+         id="tspan435438">msg</tspan><tspan
+         fill="#666666"
+         id="tspan435440">=</tspan><tspan
+         fill="#b83838"
+         id="tspan435442">&quot;</tspan><tspan
+         fill="#b04040"
+         id="tspan435444">$1</tspan><tspan
+         fill="#b83838"
+         id="tspan435446">&quot;</tspan><tspan
+         fill="#a89028"
+         id="tspan435448" /></text>
+    <text
+       x="0"
+       y="52"
+       xml:space="preserve"
+       id="text435454"><tspan
+         fill="#a89028"
+         id="tspan435452" /></text>
+    <text
+       x="0"
+       y="71"
+       xml:space="preserve"
+       id="text435460"><tspan
+         fill="#a89028"
+         id="tspan435456" /><tspan
+         fill="#888888"
+         font-style="italic"
+         id="tspan435458"># run any command!</tspan></text>
+    <text
+       x="0"
+       y="90"
+       xml:space="preserve"
+       id="text435472"><tspan
+   fill="#888888"
+   font-style="italic"
+   id="tspan435462" />helm<tspan
+   fill="#a89028"
+   id="tspan435464"> </tspan>upgrade<tspan
+   fill="#a89028"
+   id="tspan435466"> </tspan>-i<tspan
+   fill="#a89028"
+   id="tspan435468"> </tspan>...<tspan
+   fill="#a89028"
+   id="tspan435470" /></text>
+    <text
+       x="0"
+       y="109"
+       xml:space="preserve"
+       id="text435476"><tspan
+         fill="#a89028"
+         id="tspan435474" /></text>
+    <text
+       x="0"
+       y="128"
+       xml:space="preserve"
+       id="text435482"><tspan
+         fill="#a89028"
+         id="tspan435478" /><tspan
+         fill="#888888"
+         font-style="italic"
+         id="tspan435480"># the last line of the stdout is the return value</tspan></text>
+    <text
+       x="0"
+       y="147"
+       xml:space="preserve"
+       id="text435500"><tspan
+         fill="#888888"
+         font-style="italic"
+         id="tspan435484" /><tspan
+         fill="#388038"
+         id="tspan435486">echo</tspan><tspan
+         fill="#a89028"
+         id="tspan435488"> </tspan><tspan
+         fill="#b83838"
+         id="tspan435490">&quot;</tspan><tspan
+         fill="#b83838"
+         id="tspan435492">Hello </tspan><tspan
+         fill="#b04040"
+         id="tspan435494">$msg</tspan><tspan
+         fill="#b83838"
+         id="tspan435496">&quot;</tspan><tspan
+         fill="#a89028"
+         id="tspan435498" /></text>
+    <text
+       x="0"
+       y="166"
+       xml:space="preserve"
+       id="text435504"><tspan
+         fill="#a89028"
+         id="tspan435502" /></text>
+  </g>
+</svg>

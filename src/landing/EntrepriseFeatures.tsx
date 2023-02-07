@@ -20,14 +20,14 @@ const features = [
   {
     name: 'Open-source',
     description:
-      'State-of-the-art tech stack that you can read and contribute to',
+      'State-of-the-art tech stack that you can read and contribute to.',
     href: 'https://github.com/windmill-labs/',
     icon: Github,
   },
   {
     name: 'Self-hostable',
     description:
-      'Easy to self-host and deploy on bare EC2 instances, kubernetes and even fargate',
+      'Easy to self-host and deploy on bare EC2 instances, kubernetes and even fargate.',
     href: '/docs/how-tos/self_host',
     icon: Server,
   },
@@ -39,7 +39,7 @@ const features = [
   {
     name: 'Air-gapped',
     description:
-      'It only require a connection to the internet if you use hub scripts, otherwise it’s air-gapped and autonomous',
+      'It only require a connection to the internet if you use hub scripts, otherwise it’s air-gapped and autonomous.',
     icon: Landmark,
   },
 ]
@@ -50,10 +50,10 @@ export default function EnterpriseFeatures() {
 
       <div className="w-full gap-8 flex flex-col">
         <h1 className="tracking-tight leading-tight text-left font-bold text-black">
-          Enterprise ready platform
+          Enterprise-ready platform
         </h1>
         <span className="text-lg text-gray-600 max-w-3xl">
-          Deploy faster, build invincible and reliable workflows in an enterprise-grade platform
+          Deploy faster, build invincible and reliable workflows in an enterprise-grade platform.
         </span>
         <div className="mx-auto w-full">
           <dl className="grid grid-cols-1 lg:grid-cols-3 border">
