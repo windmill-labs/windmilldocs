@@ -39,9 +39,9 @@ const tabs = [
 			},
 			{
 				title: 'Building blocks',
-				description: 'Quickly start building complex apps using our 20 built-in components',
+				description: 'Quickly start building complex apps using our 20 built-in components.',
 				icon: Puzzle,
-				caption: 'Quickly start building complex apps using our 20 built-in components',
+				caption: 'Quickly start building complex apps using our 20 built-in components.',
 				video: {
 					videoSrc: '/videos/components.mp4',
 					videoLength: '19'
@@ -52,7 +52,7 @@ const tabs = [
 				description:
 					'Run any script or flow from the app editor. In Python, Go, Bash or Typescript.',
 				icon: Code2,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
 				video: {
 					videoSrc: '/videos/app-scripts.mp4',
 					videoLength: '16'
@@ -69,7 +69,7 @@ const tabs = [
 				title: 'Build complex admin panel with table, action',
 				description: 'Build complex apps from atomic components.',
 				icon: FormInput,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
 				video: {
 					videoSrc: '/videos/admin-crm.mp4',
 					videoLength: '21'
@@ -86,7 +86,7 @@ const tabs = [
 				title: 'Build BI dashboards with charts',
 				description: 'Build complex apps from atomic components.',
 				icon: BarChart,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts',
+				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
 				video: {
 					videoSrc: '/videos/bi-charts.mp4',
 					videoLength: '14'
