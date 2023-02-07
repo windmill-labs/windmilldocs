@@ -111,7 +111,7 @@ export default function ScriptSection() {
 						</span> */}
 					</div>
 					<h2 className="text-gray-600 text-2xl font-semibold max-w-3xl">
-						Easy to use WISIWYG app editor
+						Easy to use WYSIWYG app editor
 					</h2>
 				</div>
 
