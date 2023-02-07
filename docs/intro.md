@@ -44,8 +44,8 @@ Windmill embeds:
     flow
 - A powerful _web IDE_ to write scripts with autocompletion and syntax checking
 - A low-code builder and **workflow engine** to build and run complex flows by
-  composing custom scripts and generic scripts shared on the
-  [Hub](https://hub.windmill.dev). Those flows can, among others, do:
+  composing custom scripts and generic scripts shared on
+  [Windmill Hub](https://hub.windmill.dev). Those flows can, among others, do:
   - **retries** with fixed and exponential backoff
   - **error handling**
   - **for loops** over list triggering one flow per item
