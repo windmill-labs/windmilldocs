@@ -39,15 +39,7 @@ const config = {
 					return postcssOptions;
 				}
 			};
-		},
-		[
-			'./src/plugins/blog-plugin',
-			{
-				id: 'blog',
-				routeBasePath: 'blog',
-				path: './blog'
-			}
-		]
+		}
 	],
 	presets: [
 		[
@@ -63,8 +55,7 @@ const config = {
 				// },
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
-				},
-				blog: false
+				}
 			})
 		]
 	],
