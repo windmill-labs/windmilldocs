@@ -46,7 +46,7 @@ export default function Hero() {
 					<p className="mt-6 text-lg leading-8 text-gray-600">
 						Easily create internal apps and invincible workflows with code only where it matters.
 						<span> </span>
-						<a href="https://github.com/windmill-labs/windmill">Open-source</a>, scalable, reliable, fast
+						<a href="https://github.com/windmill-labs/windmill">Open-source</a>, scalable, reliable, fast.
 					</p>
 
 					<div className="mt-10 flex items-center gap-x-6">
