@@ -23,3 +23,7 @@ In addition to the component outputs, the app context is also displayed. The app
 - email: The email of the current user.
 - username: The username of the current user.
 - query: The query parameters of the URL.
+
+### Connecting inputs
+
+Inputs can be connected to any outputs. When connecting, you can click on the output to connect the input to the output. Note that you can select nested outputs, objects and arrays.
