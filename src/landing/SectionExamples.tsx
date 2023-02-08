@@ -23,6 +23,7 @@ export default function SectionExamples({ examples }) {
 							<div className="flex flex-auto flex-col text-base leading-7 text-gray-600 gap-2">
 								<p className="text-md font-bold">{example.name}</p>
 								<p className="flex-auto text-sm">{example.description}</p>
+								<p className="text-xs text-right">See example -{'>'}</p>
 							</div>
 						</a>
 					))}

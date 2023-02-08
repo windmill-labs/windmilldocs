@@ -205,7 +205,7 @@ const examples = [
 				with NLTK sentiment analysed.
 			</>
 		),
-		href: 'https://app.windmill.dev/flows/add?hub=13'
+		href: 'https://hub.windmill.dev/flows/13'
 	},
 	{
 		name: <span>Expense report internal workflow</span>,
@@ -234,7 +234,7 @@ const examples = [
 				.
 			</>
 		),
-		href: 'https://app.windmill.dev/flows/add?hub=21'
+		href: 'https://hub.windmill.dev/flows/21'
 	},
 	{
 		name: <span>Sign up a user in the database</span>,
@@ -273,7 +273,7 @@ const examples = [
 				, send an Email to new user.
 			</>
 		),
-		href: 'https://app.windmill.dev/flows/add?hub=23'
+		href: 'https://hub.windmill.dev/flows/23'
 	}
 ];
 

@@ -4,20 +4,15 @@ import {
 	BarChart,
 	Code,
 	Code2,
-	Database,
 	FormInput,
-	Github,
 	Hand,
-	Key,
-	KeyIcon,
 	LayoutDashboard,
 	PieChart,
-	Puzzle,
-	Server,
-	WebhookIcon
+	Puzzle
 } from 'lucide-react';
 import { ExternalLink } from 'lucide-react';
 import FeatureCardTabs from './tabs/FeatureCardTabs';
+import SectionExamples from './SectionExamples';
 
 const tabs = [
 	{
@@ -96,7 +91,75 @@ const tabs = [
 	}
 ];
 
-export default function ScriptSection() {
+/**
+ *  Issue tracker
+- CRM
+- MongoDB Admin
+
+ */
+
+const examples = [
+	{
+		name: <span>Issue tracker</span>,
+		description: (
+			<>
+				Create an Issue Tracker App with{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/supabase"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-green-100 text-green-600 px-2 rounded font-semibold whitespace-nowrap">
+						Supabase
+					</mark>
+				</a>{' '}
+				in 15 Minutes
+			</>
+		),
+		href: 'https://hub.windmill.dev/apps/7/issue-tracker'
+	},
+	{
+		name: <span>Admin CRM</span>,
+		description: (
+			<>
+				See all of your customers, statistics and send e-mails using Admin panel for the sample
+				Customers dataset of{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/gmail"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-red-100 hover:bg-red-200 px-2 rounded whitespace-nowrap  text-red-800 font-semibold">
+						Gmail
+					</mark>
+				</a>{' '}
+				directly from the app
+			</>
+		),
+		href: 'https://hub.windmill.dev/apps/3/crm'
+	},
+	{
+		name: <span>MongoDB Admin</span>,
+		description: (
+			<>
+				Admin panel for the sample Customers dataset of{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/mongodb"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-green-100 hover:bg-green-200 px-2 rounded whitespace-nowrap  text-green-800 font-semibold">
+						MongoDB
+					</mark>
+				</a>{' '}
+				Cloud
+			</>
+		),
+		href: 'https://hub.windmill.dev/apps/5/mongodb-admin'
+	}
+];
+
+export default function AppSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-orange-50">
 			<div className="flex flex-col w-full gap-4 justify-center" id="app-section">
@@ -121,6 +184,7 @@ export default function ScriptSection() {
 				</span>
 
 				<FeatureCardTabs tabs={tabs} color="orange" />
+				<SectionExamples examples={examples} />
 
 				<div className="flex">
 					<a
