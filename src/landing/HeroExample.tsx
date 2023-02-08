@@ -39,10 +39,10 @@ export default function HeroExample() {
 			video.currentTime = 0;
 		}
 		if (framer.selectedTab.id === 'flows') {
-			video.currentTime = 56;
+			video.currentTime = 34;
 		}
 		if (framer.selectedTab.id === 'apps') {
-			video.currentTime = 117;
+			video.currentTime = 70;
 		}
 	}, [framer.selectedTab]);
 
@@ -53,10 +53,10 @@ export default function HeroExample() {
 			if (video.currentTime < 0) {
 				framer.tabProps.setSelectedTab([0, 1]);
 			}
-			if (video.currentTime > 56 && video.currentTime < 117) {
+			if (video.currentTime > 34 && video.currentTime < 70) {
 				framer.tabProps.setSelectedTab([1, 1]);
 			}
-			if (video.currentTime > 117) {
+			if (video.currentTime > 70) {
 				framer.tabProps.setSelectedTab([2, 1]);
 			}
 		});
@@ -82,6 +82,7 @@ export default function HeroExample() {
 					className="border-2 rounded-xl object-cover w-full h-full"
 					autoPlay
 					loop
+					controls
 					id="main-video"
 					src="/videos/main.mp4"
 				/>
