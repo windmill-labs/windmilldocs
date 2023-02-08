@@ -2,13 +2,42 @@
 
 The app component library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
 
-### Inserting components
+## Inserting components
 
 Click on a component in the component library to insert it in the app canvas.
 
-### Component list
+## Component list
 
 Windmill provides a set of components that can be used to build apps. Here is the list of the available components:
+
+### Button API
+
+The component triggers a runnable when clicked.
+
+![Button API](../assets/how_to/13_app_component_library/button.png)
+
+#### Button Props
+
+| Name           |                Type                 | Default  | Description                                   |
+| -------------- | :---------------------------------: | :------: | --------------------------------------------- |
+| label          |               string                | Press me | The button label.                             |
+| color          | blue, red, dark, light, green, gray |   blue   | The button color.                             |
+| size           |         xs, sm, md , lg, xl         |    sm    | The button size.                              |
+| Fill container |               boolean               |  false   | Whether the button should fill the container. |
+| disabled       |               boolean               |  false   | Whether the button should be disabled.        |
+
+### Form API
+
+The component allows you to create a form.
+
+![Form API](../assets/how_to/13_app_component_library/form.png)
+
+#### Text Input Props
+
+| Name          |  Type  | Default | Description                          |
+| ------------- | :----: | :-----: | ------------------------------------ |
+| placeholder   | string |         | The text input placeholder.          |
+| default value | string |         | The default value of the text input. |
 
 - Button: A button component can be used to trigger an action.
   - Label `string`: The button label.
