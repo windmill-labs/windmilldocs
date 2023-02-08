@@ -19,7 +19,7 @@ The header has the following elements:
 
 Components can be positioned by dragging and dropping them on the canvas. You can also move components by clicking on the move handler on the top-right corner of the component.
 
-![App moving](../assets/how_to/11_app_canvas/app-canvas-moving.mp4)
+![App moving](../assets/how_to/12_app_canvas/app-canvas-moving.mp4)
 
 ### Resizing
 
