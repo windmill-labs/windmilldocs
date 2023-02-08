@@ -39,10 +39,10 @@ export default function HeroExample() {
 			video.currentTime = 0;
 		}
 		if (framer.selectedTab.id === 'flows') {
-			video.currentTime = 66;
+			video.currentTime = 56;
 		}
 		if (framer.selectedTab.id === 'apps') {
-			video.currentTime = 127;
+			video.currentTime = 117;
 		}
 	}, [framer.selectedTab]);
 
@@ -53,10 +53,10 @@ export default function HeroExample() {
 			if (video.currentTime < 0) {
 				framer.tabProps.setSelectedTab([0, 1]);
 			}
-			if (video.currentTime > 66 && video.currentTime < 127) {
+			if (video.currentTime > 56 && video.currentTime < 117) {
 				framer.tabProps.setSelectedTab([1, 1]);
 			}
-			if (video.currentTime > 127) {
+			if (video.currentTime > 117) {
 				framer.tabProps.setSelectedTab([2, 1]);
 			}
 		});
