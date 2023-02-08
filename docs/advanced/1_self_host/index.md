@@ -154,7 +154,7 @@ available at `/usr/local/bin/python3` and Deno at `/usr/bin/deno`. It will also
 assume that you are connected to PostgreSQL using a superuser. If you cannot use
 a superuser, see the following section.
 
-## Run Windmill without using a postgres superuser
+## Run Windmill without using a Postgres superuser
 
 Create the database with your non-super user as owner:
 
