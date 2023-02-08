@@ -1,100 +1,93 @@
 # Trigger Flows
 
-There are two ways to trigger a Windmill Flow. Flows can be scheduled or flows
-can be triggered by Windmill's UI or through the flow's webhook.
+There are two ways to trigger a Windmill Flow: by a [Schedule](../5_schedules/)
+or by direct trigger. Direct triggering can be done through the Windmill UI or
+the [Webhook](../4_webhooks/index.md) of the Flow.
 
 ## Scheduled
 
-**Watching for changes regularly** - The first module of this type of flow is a
-trigger script whose purpose is to pull data from an external source and return
-all new items since the last run. This type of flow is meant to be scheduled
-very regularly to reduce latency when reacting to new events. It will trigger
-the rest of the flow once per new item that is returned. If there are no new
-items, the flow will be skipped.
+The first module - first step in other words - of this type of Flow is a
+**Trigger Script** whose purpose is to pull data from an external source and
+return all of the new items since the last run. This type of Flow is meant to be
+scheduled regularly to reduce latency when reacting to new events. It will
+trigger the rest of the Flow once per new item that is returned. If there are no
+new items, the flow will be skipped.
 
-Flows can be scheduled through the flow UI using a cron expression and then
+:::tip
+
+Think of this as someone who checks the mailbox every day. If there is a new
+letter, they will continue to process it - open and read it - and if there is no
+new letter, they won't do anything.
+
+The key part is that opened letters are not placed back in the mailbox. In
+Windmill, a **Trigger Script** has the job to keep track of what's processed and
+what's not.
+
+:::
+
+Flows can be scheduled through the Flow UI using a CRON expression and then
 activating the schedule as seen in the image below.
 ![Schedule Scripts](./schedule-flow.png)
 
-The following is an example of the first module of a flow that pulls data
-regularly from an external data source, in this case, through a fetch request to
-an API endpoint that returns new user sign up data which is returned as a
-dictionary of new entries.
+The following TypeScript code is an example of the first module of a Flow that
+checks for new documents in a MongoDB collection on a regular schedule. In this
+case we query documents that were created after a specific time, expressed with
+a timestamp. The timestamp is stored with the help of Windmill's built-in
+[state functions](../../reference/index.md#state--internal-state) and is updated
+in each run.
 
-```js
-import * as wmill from "https://deno.land/x/windmill@v1.27.2/mod.ts";
-import { Client } from "https://deno.land/x/postgres@v0.16.1/mod.ts";
+```ts
+import {
+  getState,
+  type Resource,
+  setState,
+} from "https://deno.land/x/windmill/mod.ts";
+import { MongoClient, ObjectId } from "https://deno.land/x/atlas_sdk/mod.ts";
 
-export async function main(url: string, db: wmill.Resource<"postgresql">) {
-
-    let resp = await fetch(
-        url,
-        {
-            method: "GET",
-        },
-    );
-
-    let data = await resp.json();
-
-    let new_entries = {};
-    for (let i in data) {
-      db.database = db.dbname;
-      db.hostname = db.host;
-      const client = new Client(db);
-      await client.connect();
-
-      let check_user_query = `SELECT user_id FROM usr WHERE email='${data[i]["email"]}'`;
-      let check_user = await client.queryObject(check_user_query);
-
-      if(check_user["rows"]){      
-        new_entries[data[i]["email"]] = {
-          password: data[i]["password"],
-          name: data[i]["name"],
-          };
-      }
-    }
-    
-    return new_entries;
+export async function main(
+  auth: Resource<"mongodb_rest">,
+  data_source: string,
+  database: string,
+  collection: string,
+) {
+  const client = new MongoClient({
+    endpoint: auth.endpoint,
+    dataSource: data_source,
+    auth: { apiKey: auth.api_key },
+  });
+  const documents = client.database(database).collection(collection);
+  const lastCheck = await getState() || 0;
+  await setState(Date.now() / 1000);
+  const id = ObjectId.createFromTime(lastCheck);
+  return await documents.find({ "_id": { "$gt": id } });
 }
 ```
+
+:::tip
+
+You can find this exact Trigger Script on
+[Windmill Hub](https://hub.windmill.dev/scripts/mongodb/1462/get-recently-inserted-documents-mongodb),
+or many more examples [here](https://hub.windmill.dev/triggers).
+
+:::
 
 ## Triggered
 
-A flow that can be triggered always starts with a
-[trigger script](../../reference/index.md#trigger-scripts). It determines
-whether the remainder of the flow will be executed.
+A Flow can start with a
+[Trigger Script](../../reference/index.md#trigger-scripts), which determines
+whether the remainder of the Flow will be executed.
 
-The first module of this type of flow is a script who's purpose is to run when
+The first module of this type of Flow is a Script who's purpose is to run when
 it receives an input from it's associated webhook or when it is run manually
-through the flow's automatically generated UI.
+through the Flow's automatically generated UI.
 
-Webhooks can be retrieved once a flow is saved from the flow's summary page as
-seen in the image below. ![Schedule Scripts](./retrieve-webhook.png)
+Webhooks can be retrieved from the "Details" page of a Flow as seen in the image
+below.
 
-The following module is triggered by a webhook (obtained from the flow summary
-page) that sends user sign up data (email, password, name) to the flow. The flow
-could also be triggered by manually entering the user data through the user
-generated interface or be setting up a schedule. The first module of the flow
-takes in the user email from the flow input and begins the flow if the email is
-not already present in the database.
+![Flow webhooks](./retrieve-webhook.png)
 
-```js
-import * as wmill from "https://deno.land/x/windmill@v1.27.2/mod.ts";
-import { Client } from "https://deno.land/x/postgres@v0.16.1/mod.ts";
+:::tip
 
-export async function main(
-  db: wmill.Resource<"postgresql">,
-  email: string,
-) {
+You can find examples of how to start a FLow using curl below the webhooks.
 
-  db.database = db.dbname;
-  db.hostname = db.host;
-  const client = new Client(db);
-  await client.connect();
-
-  const check_user_query = `SELECT user_id FROM usr WHERE email='${email}'`;
-  let check_user = await client.queryObject(check_user_query);
-
-  return (check_user["rows"] ? [`${email}`] : []);
-}
-```
+:::

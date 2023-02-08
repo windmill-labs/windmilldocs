@@ -10,8 +10,8 @@ build upon it and to develop new UIs that target OpenFlow, or create new
 executors.
 
 Flows can be shared and showcased on the
-[WindmillHub](https://hub.windmill.dev). To see an example of an OpenFlow in
-practice, go to WindmillHub and pick a flow (e.g
+[Windmill Hub](https://hub.windmill.dev). To see an example of an OpenFlow in
+practice, go to Windmill Hub and pick a flow (e.g
 [Whenever an HN message contains a mention, publish it to slack](https://hub.windmill.dev/flows/13/whenever-an-hn-message-contains-a-mention%2C-publish-it-to-slack)),
 then Flow -> JSON.
 

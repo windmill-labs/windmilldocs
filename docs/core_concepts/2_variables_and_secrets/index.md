@@ -52,8 +52,8 @@ visible outside of a script.
 ## Access a variable from a script
 
 At runtime, all the variables you have access to are set as environment
-variables. Easiest way to use a variable in your script is to add it via UI.
+variables. Easiest way to use a variable in your script is to add it via the UI.
 Click the "+Variable" button in the header row of the editor to open the
-variable picker.
+variable picker and select the one you need.
 
 ![Use variable](./use-variable.png)

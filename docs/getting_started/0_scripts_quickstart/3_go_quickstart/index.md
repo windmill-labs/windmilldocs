@@ -51,8 +51,9 @@ Now hit "Next" in the top right corner, and let's build our Hello World!
 
 Windmill gives you an online editor to work on your Scripts. The left-side is
 the editor itself. The right-side lets you preview the UI that Windmill will
-generate from the Script's signature and show to Script users. You can easily
-preview that UI, provide input values, and test your script there.
+generate from the Script's signature - this will be visible to the users of the
+Script. You can easily preview that UI, provide input values, and test your
+script there.
 
 ![Editor for Go](./editor_go.png)
 

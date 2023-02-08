@@ -78,11 +78,11 @@ const features = [
 		icon: DocumentAddIcon
 	},
 	{
-		name: 'WindmillHub',
+		name: 'Windmill Hub',
 		description: (
 			<span>
 				Community driven, vetted and tested. Discover, share and use scripts via{' '}
-				<a href="https://hub.windmill.dev/">WindmillHub</a>{' '}
+				<a href="https://hub.windmill.dev/">Windmill Hub</a>{' '}
 			</span>
 		),
 		icon: LibraryIcon
@@ -142,7 +142,7 @@ export default function HomepageFeatures() {
 							<div className="mt-6">
 								<h2 className="subsection-title">
 									<span className="block xl:inline">Start with a script</span>
-									<span className="font-light "> or pick one from WindmillHub</span>
+									<span className="font-light "> or pick one from Windmill Hub</span>
 								</h2>
 								<p className="section-text">
 									Develop and maintain scripts from our feature-complete webeditor or use your own
@@ -153,7 +153,7 @@ export default function HomepageFeatures() {
 									.
 								</p>
 								<p className="section-text">
-									Explore common scripts from <a href="https://hub.windmill.dev/">WindmillHub</a>.
+									Explore common scripts from <a href="https://hub.windmill.dev/">Windmill Hub</a>.
 									Build and share your own with your team, or with the community.
 								</p>
 								<p className="section-text">

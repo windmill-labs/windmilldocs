@@ -18,12 +18,12 @@ resource/API".
 
 ![Add a resource](./add_resource.png)
 
-Just like most objects in Windmill, resources have a path that define their
+Just like most objects in Windmill, Resources have a path that define their
 permissions - see [ownership path prefix](../../reference/index.md#owner).
 
-Each resource has a **Resource Type**, that defines what fields that resource
-contains. Select one from the list and check the schema to see what fields are
-present.
+Each **Resource** has a **Resource Type**, that defines what fields that
+resource contains. Select one from the list and check the schema to see what
+fields are present.
 
 ![Add resource example](./add_resource_postgresql.png)
 

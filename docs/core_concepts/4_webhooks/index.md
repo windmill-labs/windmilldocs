@@ -19,8 +19,11 @@ arguments as body.
 
 ![Webhook endpoints](./webhook_endpoints.png)
 
-Webhook links can be found in the Script/Flow's details page, for more
-information about Scripts, refer to the Getting Started section.
+Webhook links can be found on the "Details" page of the Scripts and Flows. For
+more information about
+[Scripts](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md)
+or [Flows](../../getting_started/6_flows_quickstart/index.md), refer to the
+Getting Started section.
 
 Each webhook has two URLs, one with the path to the script, i.e.
 `/p/u/<your_user>/<your_script_name>`, which will always trigger the latest

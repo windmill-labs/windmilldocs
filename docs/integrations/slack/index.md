@@ -59,12 +59,12 @@ value for you on each Slack event.
 
 :::
 
-#### Re-using script from WindmillHub
+#### Re-using script from Windmill Hub
 
 Having in mind that our script needs to implement specific interface let's not
 reinvent the wheel but use
 [already existing script from
-WindmillHub](https://hub.windmill.dev/scripts/slack/1405/example-of-responding-to-a-slack-command-slack)
+Windmill Hub](https://hub.windmill.dev/scripts/slack/1405/example-of-responding-to-a-slack-command-slack)
 
 ![Create a script](./04-create-script.png)
 

@@ -143,7 +143,7 @@ it's no longer void!
 will need to create a new Supabase Database Webhook - otherwise old version of
 the script will be triggered. :::
 
-This script is also available on WindmillHub:
+This script is also available on Windmill Hub:
 https://hub.windmill.dev/scripts/supabase/1455/preview-supabase-event-supabase
 
 ### Other database events

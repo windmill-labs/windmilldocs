@@ -499,9 +499,9 @@ The convenience functions do this in TypeScript are:
 The states can be seen in the [Resources](#resource) section with a
 [Resource type](#resource-type) of `state`.
 
-## WindmillHub
+## Windmill Hub
 
-The WindmillHub at <https://hub.windmill.dev> is a community hub to ask and
+The Windmill Hub at <https://hub.windmill.dev> is a community hub to ask and
 share generic task-specific scripts, trigger-scripts, flows that be reused in
 everyone's flow in order to not have to reinvent the wheel.
 
