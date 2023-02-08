@@ -9,6 +9,8 @@ import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 
+import HeroExample from '../landing/HeroExample';
+
 function HomepageHeader() {
 	useEffect(() => {
 		window.plausible =
@@ -21,6 +23,7 @@ function HomepageHeader() {
 	return (
 		<div>
 			<Hero />
+			<HeroExample />
 			<div className="divide-y ">
 				<ScriptSection />
 				<FlowSection />
