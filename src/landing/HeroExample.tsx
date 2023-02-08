@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LandingSection from './LandingSection';
-import { Code } from 'lucide-react';
+import { Code, LayoutDashboard, List } from 'lucide-react';
 import { useTabs } from './tabs/useTabs';
 import { Framer } from './tabs/framer';
 
@@ -13,13 +13,13 @@ const tabs = [
 	},
 	{
 		label: 'Flows',
-		icon: Code,
+		icon: List,
 		id: 'flows',
 		data: []
 	},
 	{
 		label: 'Apps',
-		icon: Code,
+		icon: LayoutDashboard,
 		id: 'apps',
 		data: []
 	}
@@ -73,7 +73,7 @@ export default function HeroExample() {
 				</h1>
 				<span className="text-lg text-gray-600 max-w-3xl">
 					Make your current scripts production grade
-					without any effort, and build all of your internal tools with normal scripts. Run everything at scale on your infra or ours, with optimal
+					without any effort, and build all of your internal tools with standard Python/Typescript/Go/Bash/Sql. Run everything at scale on your infra or ours, with optimal
 					reliability, tight permissioning and clear monitoring. We are fully open-source and easy to deploy on small and large infra.
 				</span>
 				<Framer.Tabs {...framer.tabProps} color="slate" />
