@@ -5,6 +5,20 @@ import LandingSection from './LandingSection';
 
 const features = [
   {
+    name: 'Open-source',
+    description:
+      'State of the art tech stack that you can read and contribute to.',
+    href: 'https://github.com/windmill-labs/',
+    icon: Github,
+  },
+  {
+    name: 'Self-hostable',
+    description:
+      'Easy to self-host and deploy on bare EC2 instances, kubernetes and even fargate.',
+    href: '/docs/advanced/self_host',
+    icon: Server,
+  },
+  {
     name: 'Audit Logs',
     description:
       'See all past executions, and find the root cause of mishaps quickly.',
@@ -18,20 +32,6 @@ const features = [
     icon: Key,
   },
   {
-    name: 'Open-source',
-    description:
-      'State-of-the-art tech stack that you can read and contribute to.',
-    href: 'https://github.com/windmill-labs/',
-    icon: Github,
-  },
-  {
-    name: 'Self-hostable',
-    description:
-      'Easy to self-host and deploy on bare EC2 instances, kubernetes and even fargate.',
-    href: '/docs/how-tos/self_host',
-    icon: Server,
-  },
-  {
     name: 'Scalable',
     description: 'Our workers are horizontally scalable, we scale from 0 to infinity to power all your internal services.',
     icon: ServerStackIcon,
@@ -39,7 +39,7 @@ const features = [
   {
     name: 'Air-gapped',
     description:
-      'It only require a connection to the internet if you use hub scripts, otherwise it’s air-gapped and autonomous.',
+      'It only require a connection to the internet if you use Hub scripts, otherwise it’s air-gapped and autonomous.',
     icon: Landmark,
   },
 ]
