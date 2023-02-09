@@ -201,7 +201,7 @@ export default function AppSection() {
 						type="button"
 						href="https://app.windmill.dev/apps/add?nodraft=true"
 						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-gray-50 px-4 py-2 text-sm font-medium text-stone-600 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-stone-600"
+						className="inline-flex items-center rounded-md border border-transparent bg-gray-50 px-4 py-2 text-sm font-medium text-stone-500 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-stone-800"
 					>
 						Try building apps
 						<ExternalLink className="ml-2 h-5" />
