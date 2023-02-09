@@ -265,7 +265,7 @@ export default function ScriptSection() {
 						href="https://app.windmill.dev/scripts/add"
 						type="button"
 						target="_blank"
-						className="text-base font-medium leading-7 text-gray-900 !no-underline"
+						className="inline-flex items-center rounded-md border border-transparent bg-gray-50 px-4 py-2 text-sm text-zinc-500 font-medium text-white shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-white"
 						Try building scripts
 						<ExternalLink className="ml-2 h-5" />
 					</a>
