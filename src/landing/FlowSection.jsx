@@ -303,7 +303,7 @@ export default function FlowSection() {
 						href="https://hub.windmill.dev/flows"
 						type="button"
 						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
+						className="inline-flex items-center rounded-md border border-transparent bg-teal-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
 					>
 						Explore more flows on the Hub
 						<ExternalLink className="ml-2 h-5" />

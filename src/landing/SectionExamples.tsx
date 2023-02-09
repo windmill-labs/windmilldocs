@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function SectionExamples({ examples }) {
 	return (
-		<div className="mx-auto w-full mt-16 transition-all flex gap-2 flex-col">
+		<div className="mx-auto w-full mb-4 mt-20 transition-all flex gap-2 flex-col">
 			<span className="tracking-tight leading-tight text-left font-semibold text-gray-600 text-xl">
 				Examples
 			</span>
