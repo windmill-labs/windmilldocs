@@ -313,7 +313,7 @@ export default function FlowSection() {
 						href="https://app.windmill.dev/flows/add?nodraft=true"
 						type="button"
 						target="_blank"
-						className="text-sm font-semibold leading-7 text-white !no-underline"
+						className="inline-flex items-center rounded-md border border-transparent bg-teal-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
 						Try building flows
 						<ExternalLink className="ml-2 h-5" />
 					</a>
