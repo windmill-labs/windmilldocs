@@ -298,7 +298,7 @@ export default function FlowSection() {
 				<FeatureCardTabs tabs={tabs} color="green" />
 				<SectionExamples examples={examples} />
 
-				<div className="flex">
+				<div className="flex gap-4">
 					<a
 						href="https://hub.windmill.dev/flows"
 						type="button"
@@ -308,6 +308,17 @@ export default function FlowSection() {
 						Explore more flows on the Hub
 						<ExternalLink className="ml-2 h-5" />
 					</a>
+
+					<a
+						type="button"
+						href="https://app.windmill.dev/flows/add?nodraft=true"
+						target="_blank"
+						className="inline-flex items-center rounded-md border border-transparent bg-slate-50 px-4 py-2 text-sm font-medium text-stone-600 shadow-sm hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-blue-600"
+					>
+						Try building flows
+						<ExternalLink className="ml-2 h-5" />
+					</a>
+
 				</div>
 			</div>
 		</LandingSection>
