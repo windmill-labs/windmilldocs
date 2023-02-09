@@ -313,7 +313,7 @@ export default function FlowSection() {
 						href="https://app.windmill.dev/user/login"
 						type="button"
 						target="_blank"
-						className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"					>
+						className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"					>
 						Try building flows
 						<ExternalLink className="ml-2 h-5" />
 					</a>
