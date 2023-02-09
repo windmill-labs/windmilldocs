@@ -1,4 +1,4 @@
-# App runnables
+# Runnables
 
 On the bottom of the app editor, you can find the runnable editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnable), and background scripts.
 

@@ -1,4 +1,4 @@
-# App Toolbar
+# Toolbar
 
 The app toolbar is present on the top of the app editor. It allows you to configure app settings, toggle preview (desktop/mobile) and debug runs.
 
@@ -23,18 +23,18 @@ The menu allows you to access the following options:
 - Publish to Hub: Publish the app to the Windmill Hub.
 - Hub compatible JSON: View the JSON representation of the app in a format compatible with the Windmill Hub.
 
-![App Menu](../assets/how_to/10_app_toolbar/app-menu.png)
+![App Menu](../assets/apps/1_app_toolbar/app-menu.png)
 
 ### App inputs configuration
 
 The app inputs menu displays the list of all inputs of each component.
 A toggle allows you to only display resources inputs, so you can easily configure your third-party resources of an app imported from the Hub, for example.
 
-![App inputs configuration](../assets/how_to/10_app_toolbar/app-inputs-configuration.png)
+![App inputs configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png)
 
 ### Debug runs
 
-![App debug runs](../assets/how_to/10_app_toolbar/app-debug-runs.png)
+![App debug runs](../assets/apps/1_app_toolbar/app-debug-runs.png)
 
 ### Publish
 
@@ -44,7 +44,7 @@ An app can be publish in two ways:
 - Read-access required: The app can be accessed by anyone who has read access to the app.
 - Publish publicly: The app can be accessed by anyone knowing the secret URL. If set to `Publish publicly`, the secret url will be displayed here.
 
-![App Publish](../assets/how_to/10_app_toolbar/app-publish.png)
+![App Publish](../assets/apps/1_app_toolbar/app-publish.png)
 
 ### Save
 

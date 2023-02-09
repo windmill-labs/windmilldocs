@@ -1,4 +1,4 @@
-# App Canvas
+# Canvas
 
 The app canvas is the main area of the app editor. It displays the app components and allows you to configure them.
 You can move and resize components and lock them to prevent them from being moved or resized by another component.
@@ -19,7 +19,7 @@ The header has the following elements:
 
 Components can be positioned by dragging and dropping them on the canvas. You can also move components by clicking on the move handler on the top-right corner of the component.
 
-![App moving](../assets/how_to/12_app_canvas/app-canvas-moving.mp4)
+![App moving](../assets/apps/3_app_canvas/app-canvas-moving.mp4)
 
 ### Resizing
 

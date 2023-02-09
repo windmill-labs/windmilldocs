@@ -1,4 +1,4 @@
-# App Editor: Overview
+# Overview
 
 Windmill's App editor allows you to build applications. Windmill's App editor has the following major components:
 
@@ -8,4 +8,4 @@ Windmill's App editor allows you to build applications. Windmill's App editor ha
 - [Component Library](http://localhost/docs/how-tos/app-component-library): Insert any component or modify the property or styling.
 - [Runnable editor](http://localhost/docs/how-tos/app-runnable-editor): Create, edit or manage the scripts or flows linked to components (Runnable), and background scripts.
 
-  ![App Editor](../assets/how_to/9_app_editor/plain-app-editor.png)
+  ![App Editor](../assets/apps/0_app_editor/plain-app-editor.png)

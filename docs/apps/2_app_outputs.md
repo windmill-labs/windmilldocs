@@ -1,4 +1,4 @@
-# App outputs
+# Outputs
 
 ### Component outputs
 
@@ -12,7 +12,7 @@ For example, the `Table` component has the following outputs:
 - search: The search value of the table.
 - selectedRowIndex: The selected row index.
 
-![App outputs](../assets/how_to/11_app_outputs/app_outputs.png)
+![App outputs](../assets/apps/2_app_outputs/app_outputs.png)
 
 The outputs are used to quickly visualize the current state of the app.
 
