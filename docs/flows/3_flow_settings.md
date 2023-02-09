@@ -19,10 +19,22 @@ Permissions can be configured in two ways:
 
 ## Schedule
 
-The schedule tab allows you set a schedule for the flow.
-
-:::info
-
 Flows can be triggered by any schedules, their webhooks or their UI but they only have only one primary schedules with which they share the same path. The primary schedule can be set here.
 
-:::
+A CRON expression is used to define the schedule. Schedules can also be disabled.
+
+![Flow Schedule](../assets/flows/flow_settings_schedule.png)
+
+## Shared Directory
+
+Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
+
+Beware that the `./shared` folder is not preserved across suspends and sleeps.
+
+![Flow Shared Directory](../assets/flows/flow_settings_shared_directory.png)
+
+## Graph
+
+Flows can be visualized in a graph view. The graph view is useful to quickly understand the flow structure, with loops and branches.
+
+![Flow Graph](../assets/flows/flow_settings_graph.png)
