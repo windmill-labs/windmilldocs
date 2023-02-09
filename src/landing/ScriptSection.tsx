@@ -250,7 +250,7 @@ export default function ScriptSection() {
 
 				<FeatureCardTabs tabs={newTabs} color="blue" />
 				<SectionExamples examples={examples} />
-				<div className="flex">
+				<div className="flex gap-4">
 					<a
 						type="button"
 						href="https://hub.windmill.dev/"
