@@ -17,7 +17,7 @@ Inc
 
 Our Privacy Policy also governs your use of our Service and explains how we
 collect, safeguard and disclose information that results from your use of our
-web pages. Please read it here https://windmill.dev/privacy.
+web pages. Please read it here https://windmill.dev/privacy_policy.
 
 Your agreement with us includes these Terms and our Privacy Policy
 ("Agreements"). You acknowledge that you have read and understood Agreements,

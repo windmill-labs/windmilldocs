@@ -79,6 +79,9 @@ Windmill embeds:
 - A [CLI](https://github.com/windmill-labs/windmill/tree/main/cli) and GitHub
   Actions for **GitHub** and local based developement and code management
 
+On top of all these, you'll get a splendid community and a responsive support
+team to attend you in your journey.
+
 ### Use cases
 
 Examples of what can be built with Windmill include:
@@ -97,30 +100,35 @@ Examples of what can be built with Windmill include:
   production site and third-party SaaS services
 - Migration service to move data from and to CRMs and marketing systems
 
+You can find plenty of examples and inspirations on the
+[Hub](https://hub.windmill.dev) or on our [Blog](/blog).
+
 ### What pain points are immediately solved
 
-- There's no agreed upon way to run scripts
-- Building even minimal UIs for script is time consuming
-- Many issues arise along the way that are painful to solve (permissions,
+- There's **no agreed upon way** to run scripts
+- Building even minimal UIs for script is **time consuming**
+- Many issues arise along the way that are **painful to solve** (permissions,
   collaboration, audit logs, secrets, deployment)
 - Running scripts on a production-grade infra that is cost-efficient, reliable
-  and easily monitorable takes a lot of time to do right
+  and easily monitorable takes a lot of **skill and time to do right**
 
 **Windmill solves those problems**, and makes sure that scripts become widely
-useful tools. The central tenet is: make building automation fast and easy, and
-everybody will automate repetitive tasks and save a lot of time.
+useful tools. The central tenet is: _make building automation fast and easy, and
+everybody will automate repetitive tasks and save a lot of time_.
 
 ### Honorable mentions
 
-Windmill is not the only framework out there, but it is the only one to provide
-this comprehensive set of feature and to be fully open-source at the same time.
-Some other very interesting frameworks that Windmill shares overlap with:
+**Windmill is not the only framework out there**, but it is the only one to
+provide this comprehensive set of feature and to be fully open-source at the
+same time. Some other very interesting frameworks that Windmill shares overlap
+with:
 
-- Temporal and Airflow for the workflow engine, both open-source. They are both
-  heavily code-based, have no low-code builders for the flows, are complex to
-  set up and operate, and do not allow to share scripts easily or build UIs.
-- Retool for building admin panels, and its other open-source alternatives:
-  Tooljet, Appsmith
-- Airplane and Superblocks, comparable set of features, but not open-source nor
-  self-hostable, limited workflow engines, not made for scalability and no open
-  apis.
+- _Temporal_ and _Airflow_ for the workflow engine, both open-source. They are
+  both **heavily code-based**, have **no low-code builders** for the flows, are
+  **complex to set up** and operate, and do not allow to share scripts easily or
+  build UIs.
+- _Retool_ for building admin panels, and its other open-source alternatives:
+  _Tooljet_, _Appsmith_
+- _Airplane_ and _Superblocks_ have comparable set of features, but **not
+  open-source nor self-hostable**, **limited workflow** engines, **not made for
+  scalability** and have **no open APIs**.

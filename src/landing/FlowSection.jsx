@@ -9,9 +9,10 @@ import {
 	CalendarClock,
 	FormInput,
 	WebhookIcon,
-	Terminal,
+	Terminal
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
+import SectionExamples from './SectionExamples';
 
 const tabs = [
 	{
@@ -182,10 +183,104 @@ const tabs = [
 	}
 ];
 
+const examples = [
+	{
+		name: <span>Hacker News mentions</span>,
+		description: (
+			<>
+				Whenever an{' '}
+				<mark className="leading-none bg-orange-100 text-orange-600 px-2 rounded font-semibold whitespace-nowrap">
+					Hacker News
+				</mark>{' '}
+				message contains a mention, publish it to{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/slack"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+						Slack
+					</mark>
+				</a>{' '}
+				with NLTK sentiment analysed.
+			</>
+		),
+		href: 'https://hub.windmill.dev/flows/13'
+	},
+	{
+		name: <span>Expense report internal workflow</span>,
+		description: (
+			<>
+				When new expenses are uploaded to{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/gdrive"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
+						Google Drive
+					</mark>
+				</a>
+				, extract text using Tesseract and notify on{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/slack"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-pink-100 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
+						Slack
+					</mark>
+				</a>
+				.
+			</>
+		),
+		href: 'https://hub.windmill.dev/flows/21'
+	},
+	{
+		name: <span>Sign up a user in the database</span>,
+		description: (
+			<>
+				Upon new user signup, check for existence in{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/postgres"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
+						Postgres
+					</mark>
+				</a>{' '}
+				, hash password, add record to{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/gdrive"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
+						Google Drive
+					</mark>
+				</a>{' '}
+				and{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/airtable"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
+						Airtable
+					</mark>
+				</a>
+				, send an Email to new user.
+			</>
+		),
+		href: 'https://hub.windmill.dev/flows/23'
+	}
+];
+
 export default function FlowSection() {
 	return (
 		<LandingSection bgClass="bg-gradient-to-br from-white to-teal-50">
-			<div className="flex flex-col gap-4 justify-center w-full">
+			<div className="flex flex-col gap-4 justify-center w-full" id="flow-section">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-800">
 						Flows
@@ -196,18 +291,21 @@ export default function FlowSection() {
 				</div>
 
 				<span className="text-lg text-gray-600 max-w-3xl">
-					Build complex Flows from atomic scripts, either from your workspace or the <a href="hub.windmill.dev">Hub</a>.
+					Build complex Flows from atomic scripts, either from your workspace or the{' '}
+					<a href="hub.windmill.dev">Hub</a>.
 				</span>
 
 				<FeatureCardTabs tabs={tabs} color="green" />
+				<SectionExamples examples={examples} />
+
 				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/flows"
 						type="button"
 						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
+						className="inline-flex items-center rounded-md border border-transparent bg-teal-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
 					>
-						Explore flows on the Hub
+						Explore more flows on the Hub
 						<ExternalLink className="ml-2 h-5" />
 					</a>
 				</div>

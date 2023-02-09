@@ -25,8 +25,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="1.262278"
-     inkscape:cx="639.32032"
-     inkscape:cy="422.25245"
+     inkscape:cx="621.89153"
+     inkscape:cy="423.04469"
      inkscape:window-width="2560"
      inkscape:window-height="1440"
      inkscape:window-x="0"
@@ -35,6 +35,15 @@
      inkscape:current-layer="svg717" />
   <style
      id="style2"><![CDATA[.B{direction:ltr}.C{word-spacing:0px}.D{writing-mode:horizontal-tb}.E{font-family:Inter, sans-serif}.F{dominant-baseline:text-after-edge}.G{font-size:16px}.H{text-decoration:rgb(17, 24, 39)}.I{fill:#111827}.J{unicode-bidi:isolate}.K{fill:#fff}.L{unicode-bidi:normal}.M{font-size:14px}.N{font-style:italic}.O{text-decoration:rgb(55, 48, 163)}.P{fill:#3730a3}.Q{pointer-events:none}.R{font-weight:600}.S{stroke-width:.633}.T{font-size:12px}.U{fill:#dc2626}.V{fill:#374151}.W{fill:#5e81ac}.X{fill:#4b5563}.Y{text-decoration:rgb(75, 85, 99)}.Z{text-decoration:rgb(220, 38, 38)}.a{text-decoration:rgb(55, 65, 81)}.b{text-decoration:rgb(94, 129, 172)}.c{fill:#6b7280}.d{stroke:#d1d5db}.e{fill:#bcd4fc}.f{stroke:#6b7280}.g{stroke-width:2}.h{stroke-linejoin:round}.i{stroke-linecap:round}.j{text-decoration:rgb(107, 114, 128)}.k{text-decoration:rgb(243, 244, 246)}.l{fill:#f3f4f6}.m{stroke-linecap:square}.n{dominant-baseline:central}.o{text-rendering:optimizelegibility}.p{fill:rgba(0, 0, 0, 0)}]]></style>
+  <rect
+     style="fill:#ffffff"
+     id="rect436218"
+     width="929.3493"
+     height="750.31897"
+     x="0"
+     y="0"
+     rx="2.3649042"
+     ry="2.3649042" />
   <g
      font-family="monospace"
      font-size="14px"

@@ -5,14 +5,14 @@ const navigation = {
 		{ name: 'Documentation', href: '/docs/intro' },
 		{ name: 'Github', href: 'https://github.com/windmill-labs/windmill' },
 		{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' },
-		{ name: 'Discord', href: 'https://discord.gg/7NF8GNeuwR' }
+		{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' }
 	],
 	company: [
 		{ name: 'About', href: '/about' },
 		{ name: 'Blog', href: '/blog' }
 	],
 	legal: [
-		{ name: 'Privacy Policy', href: '/terms_of_service' },
+		{ name: 'Privacy Policy', href: '/privacy_policy' },
 		{ name: 'Terms of Service', href: '/terms_of_service' },
 		{ name: 'License Terms', href: '/terms' }
 	],
@@ -41,64 +41,64 @@ export default function Footer() {
 			</h2>
 			<div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
 				<div className="flex flex-row-reverse flex-wrap justify-between gap-8 lg:gap-20">
-				<div></div>
+					<div></div>
 
-						<div className="mx-auto grid grid-cols-3 gap-20">
-							<div className="">
-								<h3 className="text-sm font-semibold leading-6 text-gray-900">Support</h3>
-								<ul role="list" className="mt-6 space-y-4">
-									{navigation.support.map((item) => (
-										<li key={item.name}>
-											<a
-												href={item.href}
-												className="text-sm leading-6 text-gray-600 hover:text-gray-900"
-											>
-												{item.name}
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
-							<div>
-								<h3 className="text-sm font-semibold leading-6 text-gray-900">Company</h3>
-								<ul role="list" className="mt-6 space-y-4">
-									{navigation.company.map((item) => (
-										<li key={item.name}>
-											<a
-												href={item.href}
-												className="text-sm leading-6 text-gray-600 hover:text-gray-900"
-											>
-												{item.name}
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
-							<div className="">
-								<h3 className="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
-								<ul role="list" className="mt-6 space-y-4">
-									{navigation.legal.map((item) => (
-										<li key={item.name}>
-											<a
-												href={item.href}
-												className="text-sm leading-6 text-gray-600 hover:text-gray-900"
-											>
-												{item.name}
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
+					<div className="mx-auto grid grid-cols-3 gap-20">
+						<div className="">
+							<h3 className="text-sm font-semibold leading-6 text-gray-900">Support</h3>
+							<ul role="list" className="mt-6 space-y-4">
+								{navigation.support.map((item) => (
+									<li key={item.name}>
+										<a
+											href={item.href}
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+										>
+											{item.name}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+						<div>
+							<h3 className="text-sm font-semibold leading-6 text-gray-900">Company</h3>
+							<ul role="list" className="mt-6 space-y-4">
+								{navigation.company.map((item) => (
+									<li key={item.name}>
+										<a
+											href={item.href}
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+										>
+											{item.name}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+						<div className="">
+							<h3 className="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
+							<ul role="list" className="mt-6 space-y-4">
+								{navigation.legal.map((item) => (
+									<li key={item.name}>
+										<a
+											href={item.href}
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+										>
+											{item.name}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
 					</div>
-				
+
 					<div className="space-y-8 text-left mx-auto">
-						<img className="h-16" src="img/windmill.svg" alt="Windmill Labs" />
+						<img className="h-16" src="/img/windmill.svg" alt="Windmill Labs" />
 						<p className="text-sm leading-6 text-gray-600">
-							Made with passion in 🇺🇸 🇫🇷 🇨🇭 🇩🇪 and 🇭🇺
+							Made with passion in San Francisco and Paris.
 						</p>
 						<div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
 							<p className="text-xs leading-5 text-gray-500">
-								&copy; 2023 Windmill Labs, Inc. All rights reserved. <br/>
+								&copy; 2023 Windmill Labs, Inc. All rights reserved. <br />
 								1111B S Governors Ave, Dover, DE 19904, USA
 							</p>
 						</div>

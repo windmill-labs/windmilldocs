@@ -1,6 +1,6 @@
 ---
 slug: create-issue-tracker-part-2
-title: Create an Issue Tracker App with Supabase - Part 2
+title: Create an Issue Tracker App with Supabase - Part 2 Customize Your App
 authors: [adamkov]
 tags: [issues, tracker, app, supabase, deno, typescript, v2]
 image: ./0-header.png

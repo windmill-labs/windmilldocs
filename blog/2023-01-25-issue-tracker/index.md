@@ -595,6 +595,7 @@ the form of buttons. Select the `Table` component and follow the steps:
 
 ## Next steps
 
+You now know how to create your Issue Tracker App with Supabase and Windmill.
 In the following article
 ["Create an Issue Tracker App with Supabase - Part 2"](../2023-01-31-issue-tracker-p2/index.md),
 we'll add functionality to update issues, add more charts and configure the app

@@ -1,6 +1,7 @@
 import React from 'react';
 import LandingHeader from './LandingHeader';
 import GitHubButton from 'react-github-btn';
+
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
@@ -29,7 +30,7 @@ export default function Hero() {
 			</svg>
 			<LandingHeader />
 
-			<div className="mx-auto max-w-7xl px-6 pt-10 gap-8 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8 mt-4">
+			<div className="mx-auto max-w-7xl px-6 pt-10 gap-y-8 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
 					<GitHubButton
 						href="https://github.com/windmill-labs/windmill"
@@ -46,7 +47,8 @@ export default function Hero() {
 					<p className="mt-6 text-lg leading-8 text-gray-600">
 						Easily create internal apps and invincible workflows with code only where it matters.
 						<span> </span>
-						<a href="https://github.com/windmill-labs/windmill">Open-source</a>, scalable, reliable, fast
+						<a className='underline' href="https://github.com/windmill-labs/windmill">Fully Open-source</a>, highly scalable, reliable,
+						fast.
 					</p>
 
 					<div className="mt-10 flex items-center gap-x-6">
@@ -58,24 +60,23 @@ export default function Hero() {
 						>
 							Try Windmill Cloud
 						</a>
-						
+
 						<a
 							href="https://docs.windmill.dev/docs/how-tos/self_host"
 							onClick={() => window.plausible('read-docs')}
 							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
 						>
-							Or self-host yourself <span aria-hidden="true">→</span>
+							Self-host yourself <span aria-hidden="true">→</span>
 						</a>
 					</div>
 
-											
 					<a
-							href="https://docs.windmill.dev/docs/intro"
-							onClick={() => window.plausible('getting-started')}
-							className="text-xs ml-60 mt-2 leading-7 text-gray-600 text"
-						>
-							Getting started
-						</a>
+						href="https://docs.windmill.dev/docs/intro"
+						onClick={() => window.plausible('getting-started')}
+						className="text-xs ml-60 mt-6 leading-7 text-gray-600 text"
+					>
+						Read the docs
+					</a>
 
 					<div className="w-full text-left mt-16">
 						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
@@ -83,11 +84,7 @@ export default function Hero() {
 				</div>
 				<div className="mx-auto mt-16 sm:mt-8">
 					<div className="flex-none">
-							<img
-								src="homescreen.png"
-								alt="App screenshot"
-								className="w-full"
-							/>
+						<img src="homescreen.svg" alt="App screenshot" className="w-full" />
 					</div>
 				</div>
 			</div>
