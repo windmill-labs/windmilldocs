@@ -292,7 +292,7 @@ export default function FlowSection() {
 
 				<span className="text-lg text-gray-600 max-w-3xl">
 					Build complex Flows from atomic scripts, either from your workspace or the{' '}
-					<a href="hub.windmill.dev">Hub</a>.
+					<a href="https://hub.windmill.dev">Hub</a>.
 				</span>
 
 				<FeatureCardTabs tabs={tabs} color="green" />
