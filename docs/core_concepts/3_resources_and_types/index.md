@@ -72,7 +72,7 @@ them from scripts.
 Provided you have the right permissions, you can access resources from scripts
 using the Windmill client. For example, to access the `u/user/my_postgresql`
 resource of the `posgtgresql` Resource Type we would create a
-[Script](../../reference/index.md#script):
+[Script](../../reference/index.md#scripts):
 
 ```typescript
 import { Resource } from "https://deno.land/x/windmill/mod.ts";

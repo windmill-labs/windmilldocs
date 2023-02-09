@@ -34,8 +34,8 @@ The following TypeScript code is an example of the first module of a Flow that
 checks for new documents in a MongoDB collection on a regular schedule. In this
 case we query documents that were created after a specific time, expressed with
 a timestamp. The timestamp is stored with the help of Windmill's built-in
-[state functions](../../reference/index.md#state--internal-state) and is updated
-in each run.
+[state functions](../../reference/index.md#state-and-internal-state) and is
+updated in each run.
 
 ```ts
 import {
