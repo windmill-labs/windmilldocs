@@ -110,12 +110,19 @@ export default function Example() {
 					</Popover>
 				</Popover.Group>
 
-				<div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 gap-4">
+				<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8">
+					<a
+						href="https://discord.com/invite/V7PM2YHsPB"
+						data-analytics='"discord"'
+						onClick={() => window.plausible('discord')}
+						className="header-discord-link"
+					>
+					</a>
 					<a
 						href="https://cal.com/ruben-windmill/windmill-demo"
 						data-analytics='"schedule-demo"'
 						onClick={() => window.plausible('schedule-demo')}
-						className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
+						className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
 					>
 						Book a demo
 					</a>
@@ -186,17 +193,11 @@ export default function Example() {
 							</div>
 							<div className="mt-6">
 								<a
-									href="#"
+									href="https://app.windmill.dev"
 									className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
 								>
-									Start for free
+									Windmill Cloud
 								</a>
-								<p className="mt-6 text-center text-base font-medium text-gray-500">
-									Existing customer?{' '}
-									<a href="#" className="text-blue-600 hover:text-blue-500">
-										Sign in
-									</a>
-								</p>
 							</div>
 						</div>
 					</div>
