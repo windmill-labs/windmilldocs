@@ -3,7 +3,8 @@
 > **⚠ Disclaimer: you will have to self-host Windmill and Selenoid for this method to work**  
 
 ## Introduction
-We will look at how to use Windmill and Selenoid for the ultimate web scarping setup. We will go over on how to install and configure Selenoid and Windmill using docker compose.
+We will look at how to use Windmill and Selenoid, and Selenium Wire for the ultimate web scraping setup. We will go over on how to install and configure Selenoid and Windmill using docker compose.
+Seleniumwire is not necessarily needed for webscraping but it allows for more advanced usecases. If you do not need Selenium-wire you also do not need to open additional ports in the docker compose file.
 
 ## Prerequisite
 - Docker installed
@@ -16,7 +17,7 @@ Download the [docker-compose.yml](https://github.com/windmill-labs/windmill/blob
 - Remove the `caddy` service
 - Remove the `windmill_worker` service (we will be running the worker's inside the `windmill_server`) 
 
-it should look something like this
+It should look something like this
 
 ```yml
 version: '3.7'
@@ -47,13 +48,13 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
-      - "9920-9930:9920-9930" # <- added this
+      - "9920-9930:9920-9930" # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
       - BASE_URL=http://${WM_BASE_URL}
       - RUST_LOG=info
-      - NUM_WORKERS=10 # <- increased this
-      - TIMEOUT=99999999 # <- add this
+      - NUM_WORKERS=10 # <- an increased number of workers is helpful when running a lot of scraping scripts in parallel
+      - TIMEOUT=99999999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
       - DISABLE_SERVER=false
       - METRICS_ADDR=false
     depends_on:
@@ -118,7 +119,10 @@ We will also use docker to configue Selenoid.
     }
 }
 ```
-> **ⓘ Info: you will have to pull the browser images you specified in the `browsers.json` file yourself.**  
+> **ⓘ Info: you will have to pull the browser images you specified in the `browsers.json` file yourself.**
+> If you want to run Selenium with Docker on an Apple Silicon chip you need to pull custom images. Please follow this tutorial:
+> https://medium.com/@SergeyChechaev/build-selenoid-image-for-apple-silicon-m1-6dc6fc1a50c1
+> Example image for Mac M1/M2 chips: dumbdumbych/selenium_vnc_chrome_arm64:91.0.b
 ```bash
 docker pull selenoid/chrome:104.0
 docker pull selenoid/vnc_chrome:104.0
@@ -244,33 +248,85 @@ import selenium
 from seleniumwire import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+def initiateDriver(macM1=False):
+    print("initiating driver")
+    from seleniumwire import webdriver  # Import from seleniumwire
+    if macM1: #if we are on mac m1 -> custom image by selecting the browser version 91.0
+        i = 9921
+        while True:
+            try:
+                i += 1
+                HOST = 'host.docker.internal'
+                options = {
+                    'auto_config': False,
+                    # the addr and the port where the proxy should start: -> starts it in the windmill container
+                    'addr': '0.0.0.0',
+                    'port': i,
+                }
+
+                chrome_capabilities = {
+                    "browserName": "chrome",
+                    "browserVersion": "91.0",
+                    "selenoid:options": {
+                        "enableVNC": True
+                    },
+                    'goog:chromeOptions': {'extensions': [],
+                                        'args': [f'--proxy-server=host.docker.internal:{i}',
+                                                    '--ignore-certificate-errors']
+                                        }
+                }
+
+                driver = webdriver.Remote(command_executor='http://{}:4444/wd/hub'.format(HOST),
+                                            desired_capabilities=chrome_capabilities,seleniumwire_options=options) 
+
+                print(f"initiated successfully with port:{i}")
+                break
+            except:
+                print(f"initiating driver with port:{i}")
+                if i > 9960:
+                    print("port limit exceeded")
+                    break
+
+    else: #windows image
+        i = 9921
+        while True:
+            try:
+                i += 1
+                HOST = 'host.docker.internal'
+                options = {
+                    'auto_config': False,
+                    # the addr and the port where the proxy should start: -> starts it in the windmill container
+                    'addr': '0.0.0.0',
+                    'port': i,
+                }
+
+                chrome_capabilities = {
+                    "browserName": "chrome",
+                    #"browserVersion": "91.0", #on Windows we can use the latest version by not specifying the version number
+                    "selenoid:options": {
+                        "enableVNC": True
+                    },
+                    'goog:chromeOptions': {'extensions': [],
+                                        'args': [f'--proxy-server=host.docker.internal:{i}',
+                                                    '--ignore-certificate-errors']
+                                        }
+                }
+
+                driver = webdriver.Remote(command_executor='http://{}:4444/wd/hub'.format(HOST),
+                                            desired_capabilities=chrome_capabilities,seleniumwire_options=options) 
+
+                print(f"initiated successfully with port:{i}")
+                break
+            except:
+                print(f"initiating driver with port:{i}")   
+                if i > 9960:
+                    print("port limit exceeded")
+                    break
+
+    return driver
 
 def main():
-  if True:
-      HOST = 'host.docker.internal'
-      PORT = 9920
-      options = {
-          'auto_config': False,
-          'addr': '0.0.0.0',
-          'port': PORT,
-      }
-
-      chrome_capabilities = {
-          "browserName": "chrome",
-          "selenoid:options": {
-              "enableVNC": True
-          },
-          'goog:chromeOptions': {'extensions': [],
-                              'args': [f'--proxy-server={HOST}:{PORT}',
-                                          '--ignore-certificate-errors']
-                              }
-      }
-
-      driver = webdriver.Remote(command_executor='http://{}:4444/wd/hub'.format(HOST),
-                                desired_capabilities=chrome_capabilities,seleniumwire_options=options)
-  else:
-      driver = webdriver.Chrome(executable_path=ChromeDriverManager().install())
-
+  driver = initiateDriver(macM1=False))
   driver.get('https://www.github.com')
 
   # Test whether Seleniumwire is working
