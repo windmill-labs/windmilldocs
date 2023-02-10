@@ -10,7 +10,7 @@ const config = {
 	url: 'https://docs.windmill.dev',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
-	onBrokenMarkdownLinks: 'warn',
+	onBrokenMarkdownLinks: 'throw',
 	favicon: 'img/logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',

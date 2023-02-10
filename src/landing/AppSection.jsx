@@ -186,7 +186,7 @@ export default function AppSection() {
 				<FeatureCardTabs tabs={tabs} color="orange" />
 				<SectionExamples examples={examples} />
 
-				<div className="flex">
+				<div className="flex gap-4">
 					<a
 						type="button"
 						href="https://hub.windmill.dev/apps"
@@ -194,6 +194,16 @@ export default function AppSection() {
 						className="inline-flex items-center rounded-md border border-transparent bg-orange-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-white"
 					>
 						Explore more apps on the Hub
+						<ExternalLink className="ml-2 h-5" />
+					</a>
+
+					<a
+						type="button"
+						href="https://app.windmill.dev/apps/add?nodraft=true"
+						target="_blank"
+						className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 !no-underline hover:text-orange-600"
+					>
+						Try building apps
 						<ExternalLink className="ml-2 h-5" />
 					</a>
 				</div>
