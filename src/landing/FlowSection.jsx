@@ -85,7 +85,7 @@ const tabs = [
 					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
 				icon: Verified,
 				caption: 'Resume Workflows with secret webhooks',
-				imageSrc: ''
+				imageSrc: '/images/resume-workflow.png'
 			}
 		]
 	},
