@@ -32,7 +32,7 @@ export default function FeatureCardTabs({
 					className={`block w-full rounded-md border-gray-300 mb-4 ${selectFocusColors[color]}`}
 					defaultValue={'Company'}
 					onChange={(e) => {
-			
+
 						const tabIndex = tabs.findIndex((tab) => tab.label === e.target.value);
 
 						framer.tabProps.setSelectedTab([tabIndex, 1]);
@@ -53,7 +53,7 @@ export default function FeatureCardTabs({
 					<div className="max-w-7xl w-full gap-8 flex flex-col">
 						<Framer.Tabs {...framer.tabProps} color={color} />
 						<Framer.Content {...framer.contentProps} className="relative">
-							<TabContent data={data} color={color}/>
+							<TabContent data={data} color={color} />
 						</Framer.Content>
 					</div>
 				</div>
