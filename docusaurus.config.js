@@ -73,7 +73,7 @@ const config = {
 				},
 				items: [
 					{
-						href: '/#pricing',
+						href: '/pricing',
 						position: 'left',
 						label: 'Pricing'
 					},
