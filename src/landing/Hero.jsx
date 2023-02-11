@@ -32,6 +32,7 @@ export default function Hero() {
 
 			<div className="mx-auto max-w-7xl px-6 pt-10 gap-y-8 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+					<div className='h-8'>
 					<GitHubButton
 						alt="Stars"
 						href="https://github.com/windmill-labs/windmill"
@@ -41,6 +42,7 @@ export default function Hero() {
 						aria-label="Star windmill-labs/windmill on GitHub"
 					>
 					</GitHubButton>
+					</div>
 					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 						Turn scripts into workflows and UIs in minutes
 					</h1>
