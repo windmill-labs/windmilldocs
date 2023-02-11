@@ -19,7 +19,14 @@ The header has the following elements:
 
 Components can be positioned by dragging and dropping them on the canvas. You can also move components by clicking on the move handler on the top-right corner of the component.
 
-![App moving](../assets/apps/3_app_canvas/app-canvas-moving.mp4)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/app-canvas-moving.mp4"
+/>
 
 ### Resizing
 
