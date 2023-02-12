@@ -64,8 +64,8 @@ export default function Hero() {
 						</a>
 
 						<a
-							href="https://docs.windmill.dev/docs/how-tos/self_host"
-							onClick={() => window.plausible('read-docs')}
+							href="https://docs.windmill.dev/docs/advanced/self_host/"
+							onClick={() => window.plausible('self-host')}
 							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
 						>
 							Self-host yourself <span aria-hidden="true">→</span>
