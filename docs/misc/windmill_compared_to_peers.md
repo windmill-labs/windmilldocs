@@ -23,7 +23,7 @@ examples: _Temporal_ & _Airflow_
 
 ## Admin panels builders
 
-Getting closer to Windmill. Those players have a blent on admin panels. Therefore their are strong on UIs and now-code features.
+Getting closer to Windmill. Those players have a blent on admin panels. Therefore they are strong on UIs and now-code features.
 They allow you to use code in the process. However we believe **they lack flexibility for building complex workflows**.
 
 examples: _Retool_, _n8n_ and their open source alternatives _Tooljet_ & _Appsmith_
@@ -40,13 +40,13 @@ examples: _Airplane_ and _Superblocks_
 We are working to build a solution with a clear approach (targeting developers who do not want to compromise on flexibility)
 and the aim to solve main issues (scalability, technicity for advanced use cases, open-source).
 
-We beliveve Windmill is different because:
+We believe Windmill is different because:
 
-- it allows building internal tools through code much faster, without sacrificing on one side visibility and intuitivity and on the other side,
-  control, reliability, performance, flexibility and scalability
-- it empowers semi-technical users to access and edit that code without being overwhelmed by the usual barriers to entry
+- it allows building internal tools through code much faster, without sacrificing on one side **intuitivity** and visibility, and on the other side,
+  **control**, reliability, performance, flexibility and scalability
+- it **empowers semi-technical users** to access and edit that code without being overwhelmed by the usual barriers to entry
   (git, IDE, local environments, secrets managements, etc.)
-- it is compatible with senior/staff software engineers high standards for production-grade yet flexible yet customizable with code.
+- it is compatible with **senior/staff software engineers** high standards for production-grade yet flexible yet customizable with code.
 
 **We ourselves have our own limits**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
 
