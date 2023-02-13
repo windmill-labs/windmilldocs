@@ -10,7 +10,7 @@ const config = {
 	url: 'https://docs.windmill.dev',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
-	onBrokenMarkdownLinks: 'warn',
+	onBrokenMarkdownLinks: 'throw',
 	favicon: 'img/logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
@@ -69,11 +69,12 @@ const config = {
 				title: 'Windmill',
 				logo: {
 					alt: 'Windmill logo',
-					src: 'img/windmill.svg'
+					src: 'img/windmill.svg',
+					href: 'https://www.windmill.dev'
 				},
 				items: [
 					{
-						href: '/#pricing',
+						href: '/pricing',
 						position: 'left',
 						label: 'Pricing'
 					},

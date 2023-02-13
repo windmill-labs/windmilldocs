@@ -191,7 +191,7 @@ function HomepageHeader() {
 				</h1>
 
 				<p class="mb-6 text-md font-normal text-gray-500 lg:text-lg sm:px-16 xl:px-48">
-					Simple scripts or complex workflows. Get started with WindmillHub, our curated community
+					Simple scripts or complex workflows. Get started with Windmill Hub, our curated community
 					library.
 				</p>
 
@@ -200,7 +200,7 @@ function HomepageHeader() {
 						type="submit"
 						class="mb-8 py-2 px-3 text-sm font-medium text-center text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 rounded-lg mr-2 "
 					>
-						View all examples on WindmillHub
+						View all examples on Windmill Hub
 					</button>
 				</form>
 				<TabsW></TabsW>

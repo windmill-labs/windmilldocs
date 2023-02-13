@@ -85,7 +85,7 @@ const tabs = [
 					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
 				icon: Verified,
 				caption: 'Resume Workflows with secret webhooks',
-				imageSrc: ''
+				imageSrc: '/images/resume-workflow.png'
 			}
 		]
 	},
@@ -292,13 +292,13 @@ export default function FlowSection() {
 
 				<span className="text-lg text-gray-600 max-w-3xl">
 					Build complex Flows from atomic scripts, either from your workspace or the{' '}
-					<a href="hub.windmill.dev">Hub</a>.
+					<a href="https://hub.windmill.dev">Hub</a>.
 				</span>
 
 				<FeatureCardTabs tabs={tabs} color="green" />
 				<SectionExamples examples={examples} />
 
-				<div className="flex">
+				<div className="flex gap-4">
 					<a
 						href="https://hub.windmill.dev/flows"
 						type="button"
@@ -306,6 +306,16 @@ export default function FlowSection() {
 						className="inline-flex items-center rounded-md border border-transparent bg-teal-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
 					>
 						Explore more flows on the Hub
+						<ExternalLink className="ml-2 h-5" />
+					</a>
+
+					<a
+						type="button"
+						href="https://app.windmill.dev/flows/add?nodraft=true"
+						target="_blank"
+						className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-teal-600"
+					>
+						Try building flows
 						<ExternalLink className="ml-2 h-5" />
 					</a>
 				</div>
