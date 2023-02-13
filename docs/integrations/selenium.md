@@ -1,18 +1,18 @@
 # Windmill X Selenium / Selenoid
 
-> **⚠ Disclaimer: you will have to self-host Windmill and Selenoid for this method to work**  
+> **⚠ Disclaimer: you will have to self-host Windmill and Selenoid for this method to work or request a dedicated instance at contact@windmill.dev**  
 
 ## Introduction
 We will look at how to use Windmill and Selenoid, and Selenium Wire for the ultimate web scraping setup. We will go over on how to install and configure Selenoid and Windmill using docker compose.
-Seleniumwire is not necessarily needed for webscraping but it allows for more advanced usecases. If you do not need Selenium-wire you also do not need to open additional ports in the docker compose file.
+Seleniumwire is not necessarily needed for webscraping but it allows for more advanced usecases.
 
 ## Prerequisite
 - Docker installed
 
 ## Step 1: Windmill configuration
 Download the [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) file from the official Windmill repository and make the following changes.
-- Increase the number of workers. This is basically the number of scripts you can run at the same time. we will increase it to 10.
-- Increase the default timeout of the workers. 
+- Increase the number of workers. This is basically the number of scripts you can run at the same time. We will increase it to 10 workers.
+- Increase the default timeout of the workers (default is set to 48 hours). 
 - Open a range of ports on the `windmill_server` containers so Windmill and Selenoid can communicate.<br/>
 - Remove the `caddy` service
 - Remove the `windmill_worker` service (we will be running the worker's inside the `windmill_server`) 
@@ -67,25 +67,15 @@ services:
     ports:
       - 3001:3001
 
-  caddy:
-    image: caddy:2.5.2-alpine
-    restart: unless-stopped
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-    ports:
-      - 80:80
-      - 443:443
-    environment:
-      - BASE_URL=${WM_BASE_URL}
-
 volumes:
   db_data: null
 ```
 create an `.env` file in the same directory as the `docker-compose.yml` file and add the following.
 ````
 DB_PASSWORD=changeme
+WM_BASE_URL=localhost
 ````
-This is the PostgreSQL database password used by Windmill. 
+This is the PostgreSQL database password used by Windmill and the base url of Windmill. 
 
 ## Step 2: Selenoid configuration
 We will also use docker to configue Selenoid.
@@ -168,8 +158,8 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
-      - "5433:5432"
+      - 5432:5432
+      - 5433:5432
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: windmill
@@ -186,13 +176,13 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
-      - "9920-9930:9920-9930"
+      - "9920-9930:9920-9930" # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
       - BASE_URL=http://${WM_BASE_URL}
       - RUST_LOG=info
-      - NUM_WORKERS=10
-      - TIMEOUT=99999999
+      - NUM_WORKERS=10 # <- an increased number of workers is helpful when running a lot of scraping scripts in parallel
+      - TIMEOUT=99999999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
       - DISABLE_SERVER=false
       - METRICS_ADDR=false
     depends_on:
@@ -206,8 +196,8 @@ services:
       - 3001:3001
 
   selenoid:
-    image: aerokube/selenoid:latest-release
     network_mode: bridge
+    image: aerokube/selenoid:latest-release
     volumes:
       - "/path/to/config:/etc/selenoid" # <- change this
       - "/path/to/config/video:/opt/selenoid/video" # <- change this
@@ -233,9 +223,20 @@ volumes:
   db_data: null
 ```
 
+Final structure
+```
+.
+├── config/
+│   ├── browsers.json
+│   ├── video 
+│   └── logs
+├── .env
+└── docker-compose.yml
+````
+
 ## Usage
 now that the setup is done. you can start everything with `docker compose up -d`. <br/>
-Navigate to Windmill `localhost:8000` and sign in `admin@windmill.dev` `changeme` <br/>
+Navigate to Windmill `localhost:8000` and sign in with `admin@windmill.dev` `changeme` <br/>
 Create a new python script and paste the following code and run it.
 ```python
 #requirements:
@@ -326,7 +327,7 @@ def initiateDriver(macM1=False):
     return driver
 
 def main():
-  driver = initiateDriver(macM1=False))
+  driver = initiateDriver(macM1=False)
   driver.get('https://www.github.com')
 
   # Test whether Seleniumwire is working
@@ -413,4 +414,7 @@ https://github.githubassets.com/images/modules/site/codespaces/illo-ports.png 20
 https://github.githubassets.com/assets/chunk-app_components_primer_experimental_toggle-switch-element_ts-c749d10d53a7.js 200 application/javascript
 ````
 
-to run multiple scripts at once you will have to give a unique port to each script if you want to run all of them at once. In the first step we opened the ports between `9920 - 9930` you can increase them or decrease the range as you want but remember to increase / decrease the workers number to
+to run multiple scripts at once you will have to give a unique port to each script. In the first step we opened the ports between `9920 - 9930` you can increase them or decrease the range as you want but remember to increase / decrease the workers number too.
+
+
+> **_Info:_**  This is a community contributed tutorial by [Krestoufer Toumas](https://github.com/Toumask) and [Felix Becker](https://github.com/tfbecker).
