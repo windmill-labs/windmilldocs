@@ -14,8 +14,14 @@ help you get started.
 
 :::tip
 
-Simplified instruction for docker-compose in the
+Simplified instruction for docker compose in the
 [README](https://github.com/windmill-labs/windmill#how-to-self-host).
+
+:::
+
+:::warning
+
+Use `docker compose` and not `docker-compose`
 
 :::
 
