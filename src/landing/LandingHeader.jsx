@@ -1,15 +1,6 @@
 import React, { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
-import {
-	ArrowPathIcon,
-	Bars3Icon,
-	ChartBarIcon,
-	CursorArrowRaysIcon,
-	DocumentChartBarIcon,
-	ShieldCheckIcon,
-	Squares2X2Icon,
-	XMarkIcon
-} from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 const resources = [
@@ -53,10 +44,16 @@ export default function Example() {
 					>
 						Documentation
 					</a>
-					<a href="https://hub.windmill.dev" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a
+						href="https://hub.windmill.dev"
+						className="text-base font-medium text-gray-500 hover:text-gray-900"
+					>
 						Hub
 					</a>
-					<a href="https://app.windmill.dev/openapi.html" className="text-base font-medium text-gray-500 hover:text-gray-900">
+					<a
+						href="https://app.windmill.dev/openapi.html"
+						className="text-base font-medium text-gray-500 hover:text-gray-900"
+					>
 						OpenAPI
 					</a>
 
@@ -116,8 +113,7 @@ export default function Example() {
 						data-analytics='"discord"'
 						onClick={() => window.plausible('discord')}
 						className="header-discord-link"
-					>
-					</a>
+					></a>
 					<a
 						href="https://cal.com/ruben-windmill/windmill-demo"
 						data-analytics='"schedule-demo"'

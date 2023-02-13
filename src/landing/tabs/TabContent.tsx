@@ -3,29 +3,6 @@ import React, { useState, useEffect } from 'react';
 import FeatureCard from '../FeatureCard';
 import { useInView } from 'react-intersection-observer';
 
-const SvgInline = (props) => {
-	const [svg, setSvg] = useState(null);
-	const [isLoaded, setIsLoaded] = useState(false);
-	const [isErrored, setIsErrored] = useState(false);
-
-	useEffect(() => {
-		fetch(props.url)
-			.then((res) => res.text())
-			.then(setSvg)
-			.catch(setIsErrored)
-			.then(() => setIsLoaded(true));
-	}, [props.url]);
-
-	return (
-		<div
-			className={`max-w-full svgInline svgInline--${isLoaded ? 'loaded' : 'loading'} ${
-				isErrored ? 'svgInline--errored' : ''
-			}`}
-			dangerouslySetInnerHTML={{ __html: svg }}
-		/>
-	);
-};
-
 export default function TabContent({ data, color }) {
 	const { ref, inView, entry } = useInView({
 		/* Optional options */
@@ -73,9 +50,6 @@ export default function TabContent({ data, color }) {
 					src={data[selectedIndex].svg}
 				/>
 			);
-			// return (<div className="border-2 rounded-xl object-cover w-full h-full">
-			//   <SvgInline url={data[selectedIndex].svg}></SvgInline>
-			// </div>)
 		} else {
 			return <span>Loading</span>;
 		}
