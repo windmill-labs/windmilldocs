@@ -6,7 +6,7 @@ Out of transparency, here is our (subjective) impression on other players you mi
 
 ## No-code solutions
 
-Those names are well-known to the general public and contributied to grow awareness in the workflow building space.
+Those names are well-known to the general public and contributied to grow awareness in the workflows building space.
 They are made for **operational teams**, have pretty UIs but are limited in terms of use cases, power & flexibility.
 We do not compare ourselves to them.
 
