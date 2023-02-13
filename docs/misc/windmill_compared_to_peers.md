@@ -26,15 +26,12 @@ examples: _Temporal_ & _Airflow_
 Getting closer to Windmill. Those players have a blent on admin panels. Therefore their are strong on UIs and now-code features.
 They allow you to use code in the process. However we believe **they lack flexibility for building complex workflows**.
 
-
 examples: _Retool_, _n8n_ and their open source alternatives _Tooljet_ & _Appsmith_
-
 
 ## Most comparable players
 
 Those ones have comparable set of features, they have the **flexibility of code** and are time-saving for developers.
 Yet, they may show limited workflow engines, they are not open-sourcen have no open APIs and re not made for scalability.
-
 
 examples: _Airplane_ and _Superblocks_
 
@@ -44,17 +41,16 @@ We are working to build a solution with a clear approach (targeting developers w
 and the aim to solve main issues (scalability, technicity for advanced use cases, open-source).
 
 We beliveve Windmill is different because:
+
 - it allows building internal tools through code much faster, without sacrificing on one side visibility and intuitivity and on the other side,
-control, reliability, performance, flexibility and scalability
+  control, reliability, performance, flexibility and scalability
 - it empowers semi-technical users to access and edit that code without being overwhelmed by the usual barriers to entry
-(git, IDE, local environments, secrets managements, etc.)
+  (git, IDE, local environments, secrets managements, etc.)
 - it is compatible with senior/staff software engineers high standards for production-grade yet flexible yet customizable with code.
 
 **We ourselves have our own limits**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
 
-
-Please note that this comparison is made with at least **two biases**: 1. we want to convince you of the power of our product and
-2. we are never safe from hiding things from ourselves about the strengths of competitors.
+Please note that this comparison is made with at least **two biases**: 1. we want to convince you of the power of our product and 2. we are never safe from hiding things from ourselves about the strengths of competitors.
 
 Anyway, we are committed to the culture of transparency and of _face your own problems_, so if you have any objections or suggestions,
 please contact us at contact@windmill.dev.
