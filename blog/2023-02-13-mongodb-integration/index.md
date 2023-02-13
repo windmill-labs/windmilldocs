@@ -152,6 +152,13 @@ Now try running the Script again with the same arguments, **except for the
 filter**, which should be `{ "_id": "5eb3d668b31de5d588f4293b" }`. You should
 see the same restaurant named "Nordic Delicacies" returned.
 
+:::tip
+
+You can find more Script examples related to MongoDB on
+[Windmill Hub][hub-mongo].
+
+:::
+
 Once you're done, click on "Save", which will save it to your workspace. You can
 now use this Script in your [Flows][docs-flows], [Apps][docs-apps] or as
 standalone.
@@ -161,6 +168,7 @@ standalone.
 [wm-app-resources]: https://app.windmill.dev/resources
 [wm-app-home]: https://app.windmill.dev
 [hub-resources]: https://hub.windmill.dev/resources
+[hub-mongo]: https://hub.windmill.dev/integrations/mongodb
 [docs-resources]: /docs/core_concepts/resources_and_types
 [docs-path]: /docs/reference#path
 [docs-flows]: /docs/getting_started/flows_quickstart
