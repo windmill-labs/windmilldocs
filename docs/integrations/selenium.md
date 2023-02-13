@@ -239,12 +239,6 @@ now that the setup is done. you can start everything with `docker compose up -d`
 Navigate to Windmill `localhost:8000` and sign in with `admin@windmill.dev` `changeme` <br/>
 Create a new python script and paste the following code and run it.
 ```python
-#requirements:
-#selenium
-#selenium-wire
-#webdriver_manager
-
-
 import selenium
 from seleniumwire import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -253,7 +247,7 @@ def initiateDriver(macM1=False):
     print("initiating driver")
     from seleniumwire import webdriver  # Import from seleniumwire
     if macM1: #if we are on mac m1 -> custom image by selecting the browser version 91.0
-        i = 9921
+        i = 9919
         while True:
             try:
                 i += 1
@@ -284,12 +278,12 @@ def initiateDriver(macM1=False):
                 break
             except:
                 print(f"initiating driver with port:{i}")
-                if i > 9960:
+                if i > 9930:
                     print("port limit exceeded")
                     break
 
     else: #windows image
-        i = 9921
+        i = 9919
         while True:
             try:
                 i += 1
@@ -320,7 +314,7 @@ def initiateDriver(macM1=False):
                 break
             except:
                 print(f"initiating driver with port:{i}")   
-                if i > 9960:
+                if i > 9930:
                     print("port limit exceeded")
                     break
 
@@ -340,79 +334,12 @@ def main():
           )
 ```
 it should reutrn this
-````commandline
-job 0186366f-1f2b-9013-1dc9-fc67392d7fc1 on worker dt-worker-YhrsY-pnsPS
+![Windmill script with selenoid](../assets/integrations/selenium/windmill_script_selenoid_screenshot.png)
+<br/><br/>
+go to `localhost:8080` (selenoid-ui) to see your script in action!
+![Selenoid UI home-screen](../assets/integrations/selenium/selenoid_ui_screenshot.png)
+![Selenoid UI broser](../assets/integrations/selenium/seleniud_ui_vnc_screenshot.png)
 
-resolving dependencies...
-content of requirements:
-selenium
-selenium-wire
-webdriver_manager
-
---- PYTHON CODE EXECUTION ---
-
-https://accounts.google.com/ListAccounts?gpsia=1&source=ChromiumBrowser&json=standard 200 application/json; charset=utf-8
-https://www.github.com/ 301 None
-https://github.com/ 200 text/html; charset=utf-8
-https://github.com/webgl-globe/data/data.json 200 application/json; charset=utf-8
-https://github.githubassets.com/assets/light-719f1193e0c0.css 200 text/css
-https://github.githubassets.com/assets/site-a015b1c08678.css 200 text/css
-https://github.githubassets.com/assets/dashboard-721c31c54b4a.css 200 text/css
-https://github.githubassets.com/assets/dark-0c343b529849.css 200 text/css
-https://github.githubassets.com/assets/primer-3e0c23f0f191.css 200 text/css
-https://github.githubassets.com/assets/global-3cf05c0b86b4.css 200 text/css
-https://github.githubassets.com/assets/github-2645938a5e10.css 200 text/css
-https://github.githubassets.com/assets/home-campaign-43696372e176.css 200 text/css
-https://github.githubassets.com/assets/home-3bba68f788b5.css 200 text/css
-https://github.githubassets.com/static/fonts/github/mona-sans.woff2 200 binary/octet-stream
-https://github.githubassets.com/assets/wp-runtime-ac273d933deb.js 200 application/javascript
-https://github.githubassets.com/assets/environment-056aee03b442.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_smoothscroll-polyfill_dist_smoothscroll_js-node_modules_stacktrace-parse-297da6-e9c57502fa51.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_selector-observer_dist_index_esm_js-2646a2c533e3.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_delegated-events_dist_index_js-node_modules_github_details-dialog-elemen-63debe-c04540d458d4.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_auto-complete-element_dist_index_js-node_modules_github_catalyst_-6afc16-e779583c369f.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_clipboard-copy-element_dist_index_esm_js-node_modules_github_mark-f079ea-28d13f5dc945.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_file-attachment-element_dist_index_js-node_modules_github_text-ex-3415a8-7ecc10fb88d0.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_filter-input-element_dist_index_js-node_modules_github_remote-inp-b4f804-a484ac7b8d06.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_relative-time-element_dist_index_js-52e1ce026ad1.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_primer_view-components_app_components_primer_primer_js-node_modules_gith-6a1af4-5aa2b7194bed.js 200 application/javascript
-https://github.githubassets.com/assets/github-elements-cd740e3641d5.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/hero-bg.webp 200 image/webp
-https://github.githubassets.com/assets/element-registry-cd542bce9398.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_lit-html_lit-html_js-9d9fe1859ce5.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_manuelpuyol_turbo_dist_turbo_es2017-esm_js-4140d67f0cc2.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_mini-throttle_dist_index_js-node_modules_github_alive-client_dist-bf5aa2-424aa982deef.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_hotkey_dist_index_js-node_modules_github_hydro-analytics-client_d-047034-e1f405a05c74.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_remote-form_dist_index_js-node_modules_github_template-parts_lib_-273494-1221cc21243c.js 200 application/javascript
-https://github.githubassets.com/assets/app_assets_modules_github_updatable-content_ts-cfb228eb374b.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/lines-hero.svg 200 image/svg+xml
-https://github.githubassets.com/assets/vendors-node_modules_github_paste-markdown_dist_index_esm_js-node_modules_github_quote-select-c15b39-ba2ec46e1360.js 200 application/javascript
-https://github.githubassets.com/assets/app_assets_modules_github_sticky-scroll-into-view_ts-8c72dbb06086.js 200 application/javascript
-https://github.githubassets.com/assets/app_assets_modules_github_behaviors_keyboard-shortcuts-helper_ts-app_assets_modules_github_be-d820ce-ac734f7d527c.js 200 application/javascript
-https://github.githubassets.com/assets/app_assets_modules_github_behaviors_user-content_ts-app_assets_modules_github_blob-anchor_ts--b39cba-ebacc0658b7e.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/hero-drone.webp 200 image/webp
-https://github.githubassets.com/assets/app_assets_modules_github_behaviors_commenting_edit_ts-app_assets_modules_github_behaviors_ht-83c235-79b9893b9598.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/logos/mercedes.svg 200 image/svg+xml
-https://github.githubassets.com/assets/behaviors-804d56bc4347.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/logos/kpmg.svg 200 image/svg+xml
-https://github.githubassets.com/images/modules/site/home-campaign/logos/pinterest.svg 200 image/svg+xml
-https://github.githubassets.com/assets/notifications-global-83502d97888b.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_delegated-events_dist_index_js-node_modules_github_catalyst_lib_index_js-06ff531-32d7d1e94817.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/logos/stripe.svg 200 image/svg+xml
-https://github.githubassets.com/assets/vendors-node_modules_delegated-events_dist_index_js-node_modules_stacktrace-parser_dist_stack-8189f0-7e70a0a9f758.js 200 application/javascript
-https://github.githubassets.com/assets/marketing-c98588ee9c2b.js 200 application/javascript
-https://github.githubassets.com/assets/vendors-node_modules_github_webgl-globe_dist_js_main_js-c61608acc916.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home-campaign/logos/telus.svg 200 image/svg+xml
-https://github.githubassets.com/images/modules/site/home-campaign/logos/pg.svg 200 image/svg+xml
-https://github.githubassets.com/images/modules/site/home-campaign/astrocat.png 200 image/png
-https://github.githubassets.com/assets/home-0369a2a6b0c5.js 200 application/javascript
-https://github.githubassets.com/assets/webgl-globe-0fd6a24e0678.js 200 application/javascript
-https://github.githubassets.com/assets/home-campaign-e84e2074962a.js 200 application/javascript
-https://github.githubassets.com/assets/sessions-f05f1914a3a6.js 200 application/javascript
-https://github.githubassets.com/images/modules/site/home/globe.jpg?width=619 200 image/webp
-https://github.githubassets.com/images/modules/site/codespaces/illo-ports.png 200 image/png
-https://github.githubassets.com/assets/chunk-app_components_primer_experimental_toggle-switch-element_ts-c749d10d53a7.js 200 application/javascript
-````
 
 to run multiple scripts at once you will have to give a unique port to each script. In the first step we opened the ports between `9920 - 9930` you can increase them or decrease the range as you want but remember to increase / decrease the workers number too.
 
