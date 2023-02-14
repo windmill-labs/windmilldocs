@@ -20,6 +20,8 @@ request a dedicated instance at contact@windmill.dev
 
 :::
 
+![Integrattion between Selenium and Windmill](./0-header.png "Connect Selenium with Windmill")
+
 ## Prerequisite
 
 - Docker installed
