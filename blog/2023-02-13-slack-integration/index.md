@@ -18,7 +18,7 @@ you can find the one that suits you best.
 :::info
 
 This guide assumes that you already have a Slack account and a workspace where
-you have admin rights. Minor experience with Windmill also helps.
+you have admin rights. Some experience with Windmill helps, but not required.
 
 :::
 
