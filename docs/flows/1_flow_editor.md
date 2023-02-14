@@ -9,4 +9,5 @@ Windmill's Flow editor allows you to build flows. Windmill's Flow editor has the
 - [Flow Inputs](./5_flow_input.md): View all flow inputs
 - [Actions](./8_flow_action.md): Steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
 - [Error Handler](./7_flow_error_handler.md): Configure the flow error handler.
-- [Action editor](./9_flow_action_editor.md): Edit a step.
+- [Action](./8_flow_action.md): Steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
+- [Action editor](./9_flow_action_editor.md): Configure the action.

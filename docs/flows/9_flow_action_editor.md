@@ -70,7 +70,7 @@ JS expression that will be evaluated at runtime.
 
 #### Insert mode
 
-They are two insert modes:
+There are two insert modes:
 
 - **Append**: Append a context variable, a flow input or a resource at the cursor position
 - **Connect**: Replace the current value by a context variable, a flow input or a resource

@@ -8,6 +8,10 @@ When selected, the step will be highlighted.
 
 For loops are represented by a single step in the mini map. However, a for loop has sub-steps.The sub-steps will be displayed in the mini map shifted to the right. When a for loop is deleted, all the sub-steps will be deleted as well.
 
+:::info
+See [For loops](./12_flow_loops.md) for more information.
+:::
+
 ## Branches
 
 Branches are represented by a single step in the mini map. The branches are displayed as boxes in the mini map. When a branch step is deleted, all the branches will be deleted as well. You can add a new branch by clicking on the `Add branch` button.

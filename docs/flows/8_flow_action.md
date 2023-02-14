@@ -1,4 +1,4 @@
-# Flow Actions
+# Actions
 
 An action script is simply a script that is neither a trigger nor an approval
 script. Those are the majority of the scripts.
