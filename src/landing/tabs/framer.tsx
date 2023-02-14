@@ -20,10 +20,10 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 	const [buttonRefs, setButtonRefs] = useState<Array<HTMLButtonElement | null>>([]);
 
 	const bgByColor = {
-		blue: 'bg-blue-100 text-gray-700',
-		green: 'bg-teal-100 text-gray-700',
-		orange: 'bg-orange-100 text-gray-700',
-		slate: 'bg-slate-200 text-slate-700'
+		blue: 'bg-blue-100 text-blue-800',
+		green: 'bg-teal-100 text-teal-800',
+		orange: 'bg-orange-100 text-orange-800',
+		slate: 'bg-slate-200 text-slate-800'
 	};
 
 	const bgLowByColor = {
@@ -46,9 +46,7 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 
 	const navRef = useRef<HTMLDivElement>(null);
 	const navRect = navRef.current?.getBoundingClientRect();
-
 	const selectedRect = buttonRefs[selectedTabIndex]?.getBoundingClientRect();
-
 	const [hoveredTabIndex, setHoveredTabIndex] = useState<number | null>(null);
 	const hoveredRect = buttonRefs[hoveredTabIndex ?? -1]?.getBoundingClientRect();
 
