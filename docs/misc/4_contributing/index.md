@@ -6,17 +6,18 @@ title: "Contributing"
 
 ## Getting started
 
-**First, thank you for showing interest in contributing to Windmill.**
+**First, thank you for showing interest in contributing to Windmill**.
 
-You can contribute to Windmill in two ways:
+You can contribute to Windmill in three ways:
 
 - [Sharing Scripts, Flows, Apps and Resource Types](../1_share_on_hub/index.md)
-  on [Windmill Hub](https://hub.windmill.dev/)
+  on [Windmill Hub](https://hub.windmill.dev/).
 - Contributing to the
-  [Windmill codebase](https://github.com/windmill-labs/windmill)
+  [Windmill codebase](https://github.com/windmill-labs/windmill).
+- Join our [Discord](https://discord.com/invite/V7PM2YHsPB) to make suggestions or even help other users.
 
 The best way to share what you created on Windmill with the community, is to
-submit it on [Windmill Hub][wm-hub]. If the submission meets our quality
+submit it on [Windmill Hub](https://hub.windmill.dev/). If the submission meets our quality
 standards, they get approved, and become available for anyone to use directly
 from their instance of Windmill. For this use case, please refer to the
 [Share on Windmill Hub](../1_share_on_hub/index.md) guide.

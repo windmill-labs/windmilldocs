@@ -7,7 +7,7 @@ database, then use it in scripts.
 
 ## Create Resource
 
-We need to define a `postgresql` [_Resource_][docs-resources].
+We need to define a `postgresql` [Resource][docs-resources].
 
 Windmill provides integration with multiple different services and apps. We call
 them _Resources Types_, and offer integrations with databases, enterprise chat
@@ -33,23 +33,26 @@ For this example we want to create a resource shareable to all the users of our
 workspace:
 
 - For **Owner Kind**, choose `group`, allowing everyone in that group to access
-  the resource
-- **Owner** should be `all`, for the aforementioned reasons
+  the resource.
+- **Owner** should be `all`, for the aforementioned reasons.
 - Since we're creating an inventory database resource, let's **Name** it
   `pg_inventory`.
 - **Description**, while not obligatory, is always a good idea. You can include
   any and all information to users of the resource. Let's put a warning that
   this is a production database, and users should be weary about their actions.
 
-:::tip You can use Markdown formatting in the **Description** field. :::
+:::tip You can use Markdown formatting in the Description field.
+<br />
 
 ![define resource metadata](./1_1.png)
+:::
+
 
 Fill in your connection details, and click "Save" to create the resource.
 
 ![define resource connection details](./1_2.png)
 
-Once created, it can be seen in the _Resources_ [section][wm-app-resources].
+Once created, it can be seen in the [Resources][wm-app-resources] section.
 
 ![define resource connection details](./1_3.png)
 
@@ -70,18 +73,24 @@ Let's add the Script's code:
 
 ![create script code](./2_2.png)
 
-:::tip You can specify default values for parameters, they will automatically be
-used in the next step :::
+:::tip You can specify default values for parameters, they will automatically be used in the next step
+
+<br />
 
 Click Next to move on to the Advanced step.
+
+<br />
 
 Here we can customize the UI of the Script, give parameters descriptions, and
 default values.
 
-From the dropdown menu, you can select the database we created in previous step.
-Note you can see the description you provided in the previous step.
+<br />
 
 ![create script customization](./2_3.png)
+:::
+
+From the dropdown menu, you can select the database we created in previous step.
+Note you can see the description you provided in the previous step.
 
 Once you're done, click on Save to save the Script to your workspace. You can
 now use the created Script in your Flows, or as standalone.

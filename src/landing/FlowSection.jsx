@@ -313,6 +313,8 @@ export default function FlowSection() {
 						type="button"
 						href="https://app.windmill.dev/flows/add?nodraft=true"
 						target="_blank"
+						onClick={() => window.plausible('try-cloud')}
+						data-analytics='"try-cloud"'
 						className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-teal-600"
 					>
 						Try building flows

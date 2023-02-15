@@ -1,6 +1,6 @@
 # Windmill compared to its peers
 
-We are aware other framework exist out there. Some of them might suit your specific needs. We believe Windmill is **the only solution to provide this comprehensive set of feature and to be fully open-source** at the same time.
+We are aware other frameworks exist out there. Some of them might suit your specific needs. We believe Windmill is **the only solution to provide this comprehensive set of feature and to be fully open-source** at the same time.
 
 Out of transparency, here is our (subjective) impression on other players you might come across.
 
@@ -14,7 +14,7 @@ examples: _Zapier_ or _Make_
 
 ## Code-based workflow engines
 
-On the opposite side, you could chose to go on code-based solutions. They give a solid foundation for building your workflows and clean up your code.
+On the opposite side, you could chose to go on code-based solutions. They give a solid foundation for building workflows and clean up your code.
 However, these solutions are less intuitive as they are **complex to set up and operate**. Also, they do not allow to share scripts easily or build UIs.
 
 Although these approaches are interesting, **these players do not seek to reduce the same problems as Windmill**.
@@ -48,7 +48,7 @@ We believe Windmill is different because:
   (git, IDE, local environments, secrets managements, etc.)
 - it is compatible with **senior/staff software engineers** high standards for production-grade yet flexible yet customizable with code.
 
-**We ourselves have our own limits**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
+**We ourselves have our own limitations**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
 
 Please note that this comparison is made with at least **two biases**: 1. we want to convince you of the power of our product and 2. we are never safe from hiding things from ourselves about the strengths of competitors.
 

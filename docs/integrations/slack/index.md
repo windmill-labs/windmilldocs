@@ -3,11 +3,11 @@
 Windmill features built-in Slack integration. There is actually more than one
 way to integrate with Slack:
 
-1. As a Windmill workspace admin allowing Windmill Slack Bot integration via
-   `/windmill` command.
-2. As a regular user allowing Windmill scripts performing operations on your
-   behalf in Slack.
-3. By providing a Slack token. Actions are constrained by the token kind and
+1. as a **Windmill workspace admin** allowing Windmill Slack Bot integration via
+   `/windmill` command
+2. as a **regular user** allowing Windmill scripts performing operations on your
+   behalf in Slack
+3. by providing a **Slack token**: actions are constrained by the token kind and
    scopes.
 
 ## Slack Bot integration
@@ -25,16 +25,20 @@ script to act on behalf of the installed app of the connected workspace.
 :::
 
 First of all you need to be a workspace admin. Then you should go to
-[workspace settings page](https://app.windmill.dev/workspace_settings).
+[workspace settings page](https://app.windmill.dev/workspace_settings) (this page is only available for admin of workspaces).
 
 ![Go to workspace](./01-go-to-workspace.png)
 
 ### Connect to Slack workspace
 
-Let's connect now with some Slack workspace
+Let's connect now with some Slack workspace:
+<br/>
+
 ![Connect Slack](./02-connect-to-slack.png)
 
 ![Allow Slack access](./03-allow-access.png)
+
+You're now connected to Slack!
 
 ### Using slack bot token in Windmill scripts
 
@@ -62,9 +66,9 @@ value for you on each Slack event.
 #### Re-using script from Windmill Hub
 
 Having in mind that our script needs to implement specific interface let's not
-reinvent the wheel but use
+reinvent the wheel but use an 
 [already existing script from
-Windmill Hub](https://hub.windmill.dev/scripts/slack/1405/example-of-responding-to-a-slack-command-slack)
+Windmill Hub](https://hub.windmill.dev/scripts/slack/1405/example-of-responding-to-a-slack-command-slack).
 
 ![Create a script](./04-create-script.png)
 
@@ -119,3 +123,5 @@ then select Slack
 ![Allow Slack access](./allow-slack-access.png)
 
 ![Connection in progress](./connection-to-slack-in-progress.png)
+
+You're now all set for having WIndmill adcting on Slack on your behalf!

@@ -6,7 +6,7 @@ title: Schedules
 # Run on a Schedule
 
 Windmill allows you to define Schedules for Scripts and Flows. Once a Schedule
-is defined, it will automatically run the script at the set frequency. Think of
+is defined, **it will automatically run the script at the set frequency**. Think of
 it as an easy-to-use CRON scheduler that you can share with other users.
 
 A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON
@@ -14,14 +14,14 @@ expression** that controls the execution frequency.
 
 :::tip
 
-If you're not experienced with CRON syntax make sure to use https://crontab.guru
+If you're not experienced with CRON syntax make sure to use https://crontab.guru.
 
 :::
 
 ## Creating a Schedule
 
 To create a Schedule, go to the [Schedules](https://app.windmill.dev/schedules)
-page and click on **New schedule**.
+page on the side menu and click on **New schedule**.
 
 ![Schedule creation](./schedule.png)
 

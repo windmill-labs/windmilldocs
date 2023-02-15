@@ -2,7 +2,7 @@
 
 :::info
 
-**TLDR:** About same performance as AWS Lambda for heavier workloads, slower on
+**TLDR**: About same performance as AWS Lambda for heavier workloads, slower on
 cold starts for medium compute.
 
 :::
@@ -21,7 +21,7 @@ Comparable very simple scripts. Windmill exposes a
 [sync script execution endpoint](../../reference#synchronous-endpoint-for-scripts)
 similar to Lambda and we created a token to go through authorization (which we
 didn't for AWS Lambda since it was a public endpoint so admittedly it's not
-completely fair, Windmill is doing auth too)
+completely fair, Windmill is doing auth too).
 
 ```typescript
 export async function main() {
@@ -96,7 +96,7 @@ comparable.
 
 :::info
 
-**Caveat:** We have limited number of workers compared to AWS Lambda and if your
+**Caveat**: We have limited number of workers compared to AWS Lambda and if your
 goal is to achieve parallelism > 100 workers, then at the moment you will get
 better results with Lambda. On the other hand, will scale to thousands of
 workers very soon.

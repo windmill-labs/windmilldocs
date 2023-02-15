@@ -201,6 +201,8 @@ export default function AppSection() {
 						type="button"
 						href="https://app.windmill.dev/apps/add?nodraft=true"
 						target="_blank"
+						onClick={() => window.plausible('try-cloud')}
+						data-analytics='"try-cloud"'
 						className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 !no-underline hover:text-orange-600"
 					>
 						Try building apps

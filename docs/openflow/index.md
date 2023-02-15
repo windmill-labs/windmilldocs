@@ -162,21 +162,21 @@ type Retry {
 
 The `value` field of the `FlowModule` type can be one of these 6 kinds:
 
-- `identity`: The most simple one, it passes its input as output. Useful for
+- `identity`: the most simple one, it passes its input as output. Useful for
   debugging.
-- `rawscript`: Embed a full TypeScript/Python/Go/Bash/SQL Script inside the
+- `rawscript`: embed a full TypeScript/Python/Go/Bash/SQL Script inside the
   Flow. Useful for custom logic and ad-hoc scripts.
-- `script`: A reference to a Script by its path (including a path to the Hub
-  using the `hub/` prefix)
-- `forloopflow`: Run a for-loop, which iterates over an iterator - a list in
+- `script`: a reference to a Script by its path (including a path to the Hub
+  using the `hub/` prefix).
+- `forloopflow`: run a for-loop, which iterates over an iterator - a list in
   general - that is constructed by evaluating the javascript expression in:
   `iterator`. The result of this module is the results of the iterations
   collected as a list.
-- `branchone`: Run exactly one branch out of many, based on a predicate.
+- `branchone`: run exactly one branch out of many, based on a predicate.
   Predicates are evaluated in-order and the first one that matches, gets to run.
   In case none matches, the default branch is run. The result of this module is
   the result of the branch that was run.
-- `branchall`: Run many branches with all their modules. Every branch is being
+- `branchall`: run many branches with all their modules. Every branch is being
   evaluated in-order. One can decide to skip failure of a particular branch. The
   result of this module is the results of the branches collected as a list.
 
@@ -191,8 +191,8 @@ steps, variable, or resources to one of the inputs of your script/module. Since
 it is actual JavaScript (although a restricted JavaScript, for example, fetch is
 limited to getting secrets and variables), it is very flexible.
 
-One interesting pattern that this allows is that you can compose complex strings
-directly, so you could imagine composing your email body or SQL query using
+One interesting pattern that this allows is that you can **compose complex strings
+directly**, so you could imagine composing your email body or SQL query using
 string interpolation and populating it with previous results. The Windmill
 Editor makes it very easy to do so, using the properties picker:
 
@@ -200,7 +200,7 @@ Editor makes it very easy to do so, using the properties picker:
 
 ### Conditional stop after
 
-There's also the `stop_after_if` optional object
+There's also the `stop_after_if` optional object:
 
 ```typescript
 type stop_after_if = {
@@ -212,14 +212,20 @@ type stop_after_if = {
 
 If present:
 
-- `stop_after_if.expr`: Evaluate a JavaScript expression that takes the result
-  as an input to decide if the Flow should stop there. Useful to stop a Flow
+- `stop_after_if.expr`: evaluate a JavaScript expression that takes the result
+  as an input to decide if the Flow should stop there.
+  
+  Useful to stop a Flow
   that is meant to watch for changes if there are no changes.
-- `stop_after_if.skip_if_stopped`: Used to flag failed runs as skippable. It is
+- `stop_after_if.skip_if_stopped`: used to flag failed runs as skippable.
+  
+  It is
   useful in the context of Flows being triggered very often to watch for changes
   as you might want to ignore the runs that have been skipped.
-- `suspend` _(optional)_: A non-negative integer that determines the number of
-  events (resume messages) needed to progress to the next step in the Flow. This
+- `suspend` _(optional)_: a non-negative integer that determines the number of
+  events (resume messages) needed to progress to the next step in the Flow.
+  
+  This
   is useful for inserting user inputs during the execution of a Flow, such as
   approving (resum) or disapproving (cancel) a Flow.
 
