@@ -52,5 +52,5 @@ We believe Windmill is different because:
 
 Please note that this comparison is made with at least **two biases**: 1. we want to convince you of the power of our product and 2. we are never safe from hiding things from ourselves about the strengths of competitors.
 
-Anyway, we are committed to the culture of transparency and of _face your own problems_, so if you have any objections or suggestions,
+Anyway, we are committed to the culture of transparency and of _confronting the facts_, so if you have any objections or suggestions,
 please contact us at contact@windmill.dev.
