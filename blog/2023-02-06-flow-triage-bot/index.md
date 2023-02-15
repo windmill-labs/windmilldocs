@@ -2,7 +2,7 @@
 unlisted: true
 ---
 
-# Build an issue triage bot flow
+# Build an Issue Triage Bot Flow
 
 In this tutorial, we'll use Windmill to build a bot that automatically labels
 new issues created in one or more GitHub repositories.
