@@ -189,12 +189,22 @@ export default function Example() {
 							</div>
 							<div className="mt-6">
 								<a
+									href="https://cal.com/ruben-windmill/windmill-demo"
+									data-analytics='"schedule-demo"'
+									onClick={() => window.plausible('schedule-demo')}
+									className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 mb-4"
+								>
+									Book a demo
+								</a>
+								<a
 									href="https://app.windmill.dev"
 									className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
 								>
 									Windmill Cloud
 								</a>
 							</div>
+
+
 						</div>
 					</div>
 				</Popover.Panel>
