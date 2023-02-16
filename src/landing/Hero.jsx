@@ -22,14 +22,15 @@ export default function Hero() {
 					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 						Turn scripts into workflows and UIs in minutes
 					</h1>
-					<p className="mt-6 text-lg leading-8 text-gray-600">
+					<h2 className="mt-6 text-lg leading-8 text-gray-600">
 						Easily create internal apps and invincible workflows with code only where it matters.
-						<span> </span>
+						<br />Self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
+						<br />
 						<a className="underline" href="https://github.com/windmill-labs/windmill">
 							Fully Open-source
 						</a>{' '}
-						and self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
-					</p>
+						alternative to <i>Airplane</i>, <i>Superblocks</i> & <i>Retool</i>. 
+					</h2>
 
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
