@@ -263,6 +263,8 @@ export default function ScriptSection() {
 						type="button"
 						href="https://app.windmill.dev/scripts/add"
 						target="_blank"
+						onClick={() => window.plausible('try-cloud')}
+						data-analytics='"try-cloud"'
 						className="inline-flex items-center rounded-md  px-4 py-2 text-sm font-medium text-gray-600  hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-blue-600"
 					>
 						Try building scripts

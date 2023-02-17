@@ -1,6 +1,6 @@
 # Suspend and Resume
 
-Flows can be suspended until resume or cancel event(s) are received. This
+Flows can be suspended until resumed or cancelled event(s) are received. This
 feature is most useful to implement approval steps but can be used for other
 purposes as well.
 
@@ -9,8 +9,8 @@ purposes as well.
 You can find ready-to-use [Approval Scripts](https://hub.windmill.dev/approvals)
 on Windmill Hub. For example:
 
-- [Suspend/resume a Flow by sending approval URL via email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail)
-- [Ask channel for approval](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack)
+- [Suspend/resume a Flow by sending approval URL via email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail).
+- [Ask channel for approval](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack).
 
 :::
 
@@ -20,10 +20,10 @@ on Windmill Hub. For example:
 
 You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
-external communication channel (like email, SMS or chat message).
+external communication channel (like e-mail, SMS or chat message).
 
-Important thing to remember is that a number of required approvals can be
-customized. This allows some flexibility for cases where you either require
+Important thing to remember is that **the number of required approvals can be
+customized**. This allows some flexibility for cases where you either require
 approvals from all authorized people or only from one.
 
 ![Required approvals](./flow-number-of-approvals.png)
@@ -40,7 +40,7 @@ resource/API", select the `gmail` OAuth API and click "Sign in with Google".
 
 As Google is an OAuth provider, you will be redirected to select your Google
 account. To make the Approval Script work, you need to sign in and allow
-Windmill to send emails on your behalf.
+Windmill to send e-mails on your behalf.
 
 :::
 
@@ -82,7 +82,7 @@ corner.
 ![Running the Flow](./running.png)
 
 You can notice that after the first step, the Flow is suspended and is waiting
-for approval. An email should have been sent to the email addresses you
+for approval. An e-mail should have been sent to the email addresses you
 specified. It contains a link to a webpage that looks like the following:
 
 ![Waiting for approval](./approval.png)

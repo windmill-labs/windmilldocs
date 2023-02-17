@@ -2,18 +2,18 @@
 
 ## Google login
 
-Create Google OAuth keys
+**Create Google OAuth keys**
 
 First, you need to create a Google OAuth Client:
 
 - Go to https://console.developers.google.com/apis/credentials.
-- Click "Create Credentials", then click "OAuth Client ID" in the drop-down menu
+- Click "Create Credentials", then click "OAuth Client ID" in the drop-down menu.
 - Enter the following:
   - Application Type: Web Application
   - Name: Windmill
   - Authorized Redirect URLs: https://<YOUR_INSTANCE>/login_callback/google
-- Click Create
-- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal
+- Click Create.
+- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 - Edit your `oauth.json` to look like:
 
 ```json

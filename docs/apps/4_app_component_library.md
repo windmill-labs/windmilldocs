@@ -6,33 +6,58 @@ The app component library is located on the right-hand side of the app editor. I
 
 Component can be configured in three ways:
 
-- **Inputs** : Inputs can be connected to an output or computed using a runnable.
-  - `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
-- **Configuration** : Property such as the button label, the text input placeholder, etc.
-  - `Table` component has a configuration property that allows you to configure the search bar: Client-side search, Server-side search, or no search.
+- **Inputs**: inputs can be connected to an output or computed using a runnable.
+  - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
+- **Configuration**: property such as the button label, the text input placeholder, etc.
+  - e.g. `Table` component has a configuration property that allows you to configure the search bar: Client-side search, Server-side search, or no search.
 
 ## Component outputs
 
-- **Runnable**: Some component can trigger a runnable when an event occurs, usually when a user interacts with the component. The result of the runnable is stored in the component output in the key `result`. It also stores the `loading` state of the component.
-  - `Button` component can trigger a runnable when clicked.
+- **Runnable**: some component can trigger a runnable when an event occurs, usually when a user interacts with the component. The result of the runnable is stored in the component output in the key `result`. It also stores the `loading` state of the component.
+  - e.g. `Button` component can trigger a runnable when clicked.
 - **Own outputs**: Some component have outputs defined by the component.
-  - `Table` component has a selectedRow output
+  - e.g. `Table` component has a selectedRow output
 
 ## Inserting components
 
-Click on a component in the component library to insert it in the app canvas.
+Click on a component in the component library to insert it in the app canvas. It will be automatically positioned.
 
 ## Component list
 
-Windmill provides a set of components that can be used to build apps. Here is the list of the available components:
+Windmill provides a set of components that can be used to build apps. Here is the list of the available components (constantly growing according to our users' expectations):
+
+- Button
+- Form
+- Form Modal
+- Text Input
+- Password Input
+- Number Input
+- Slider
+- Range
+- Date Input
+- Toggle
+- Select
+- HTML
+- Vega Lite
+- Plotly
+- Text
+- Table
+- Pie Chart
+- Bar/Line Chart
+- Scatter Chart
+- Timeseries
+- Result
+
+Below you will find details about each component.
+
 
 ### Button API
 
 The component triggers a runnable when clicked. If the runnable has parameters, they need to be configured in the component configuration.
 The runnable parameters are defined:
 
-- **Static**: The parameter is defined in the component configuration.
-- **Connected**: The parameter is connected to an output.
+- **Static**: the parameter is defined in the component configuration.
+- **Connected**: the parameter is connected to an output.
 
 ![Button API](../assets/apps/4_app_component_library/button.png)
 
@@ -58,11 +83,11 @@ The runnable parameters are defined:
 The form component allows you to create a form. It has a submit button that triggers a runnable when clicked.
 The runnable parameters are defined:
 
-- **Static**: The parameter is defined in the component configuration.
-- **User input**: The parameter is defined by the user input.
-- **Connected**: The parameter is connected to an output.
+- **Static**: the parameter is defined in the component configuration.
+- **User input**: the parameter is defined by the user input.
+- **Connected**: the parameter is connected to an output.
 
-Only user input are displayed in the form.
+Only user inputs are displayed in the form.
 
 ![Form API](../assets/apps/4_app_component_library/form.png)
 
@@ -87,11 +112,11 @@ The form modal component allows you to create a form. It has a submit button tha
 
 The runnable parameters are defined:
 
-- **Static**: The parameter is defined in the component configuration.
-- **User input**: The parameter is defined by the user input.
-- **Connected**: The parameter is connected to an output.
+- **Static**: the parameter is defined in the component configuration.
+- **User input**: the parameter is defined by the user input.
+- **Connected**: the parameter is connected to an output.
 
-Only user input are displayed in the form in the modal.
+Only user inputs are displayed in the form in the modal.
 
 ![Form Modal Button](../assets/apps/4_app_component_library/form-modal-button.png)
 ![Form Modal API](../assets/apps/4_app_component_library/form-modal.png)
@@ -163,7 +188,7 @@ The number input component allows you to get a number from the user.
 | Name          |  Type  | Connectable | Templatable | Default | Description                           |
 | ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------- |
 | placeholder   | string |    false    |    false    | Type... | The number input placeholder.         |
-| default value | number |    true     |    false    |         | The default value of the number input |
+| default value | number |    true     |    false    |         | The default value of the number input. |
 
 #### Outputs
 
@@ -189,6 +214,28 @@ The slider component allows you to get a number from the user.
 | Name   |  Type  | Description       |
 | ------ | :----: | ----------------- |
 | result | number | The slider value. |
+
+
+### Range API
+
+The slider component allows you to get a range of numbers from the user.
+
+![Range API](../assets/apps/4_app_component_library/range.png)
+
+
+#### Range configuration
+
+| Name |  Type  | Connectable | Templatable | Default | Description                      |
+| ---- | :----: | :---------: | :---------: | :-----: | -------------------------------- |
+| min  | number |    false    |    false    |    0    | The minimum value of the range. |
+| max  | number |    false    |    false    |   42    | The maximum value of the range. |
+
+#### Outputs
+
+| Name   |  Type  | Description       |
+| ------ | :----: | ----------------- |
+| result 0 | number | The range bottom value. |
+| result 1 | number | The range top value. |
 
 ### Date Input API
 

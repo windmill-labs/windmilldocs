@@ -6,11 +6,11 @@ On the left-hand side of the app editor, you can find the app outputs. Each comp
 
 For example, the `Table` component has the following outputs:
 
-- selectedRow: The selected row as an object.
-- loading: The loading state of the table.
-- result: The result of the table.
-- search: The search value of the table.
-- selectedRowIndex: The selected row index.
+- selectedRow: the selected row as an object
+- loading: the loading state of the table
+- result: the result of the table
+- search: the search value of the table
+- selectedRowIndex: the selected row index
 
 ![App outputs](../assets/apps/2_app_outputs/app_outputs.png)
 
@@ -20,9 +20,9 @@ The outputs are used to quickly visualize the current state of the app.
 
 In addition to the component outputs, the app context is also displayed. The app context contains the following outputs:
 
-- email: The email of the current user.
-- username: The username of the current user.
-- query: The query parameters of the URL.
+- email: the email of the current user
+- username: the username of the current user
+- query: the query parameters of the URL
 
 ### Connecting inputs
 

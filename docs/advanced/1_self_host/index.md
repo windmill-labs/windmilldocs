@@ -21,7 +21,7 @@ Simplified instruction for docker compose in the
 
 :::warning
 
-Use `docker compose` and not `docker-compose`
+Use `docker compose` and not `docker-compose`.
 
 :::
 
@@ -95,7 +95,7 @@ Database volume is persistent, so updating the database image is safe too.
 ## Helm Chart
 
 We also provide a convenient [Helm Chart](https://helm.sh/docs/topics/charts/)
-for Kubernetes based self-hosted setup.
+for Kubernetes based self-hosted set-up.
 
 Detailed instructions can be found in the [README][helm-readme] file in the
 [official repository][helm] of the chart.
@@ -105,8 +105,6 @@ Detailed instructions can be found in the [README][helm-readme] file in the
 If you're familiar with Helm and want to jump right in, you can deploy quickly
 with the snippet below.
 
-Detailed instructions in the official [repository][helm].
-
 ```bash
 # add the Windmill helm repo
 helm repo add windmill https://windmill-labs.github.io/windmill-helm-charts/
@@ -115,6 +113,7 @@ helm install windmill-chart windmill/windmill  \
       --namespace=windmill             \
       --create-namespace
 ```
+Detailed instructions in the official [repository][helm].
 
 :::
 
@@ -125,13 +124,12 @@ additional features. One important feature is better caching for depencies in a
 super cache supported by S3.
 
 You need:
+- an Enterprise license key
+- an AWS account and S3 bucket
+- AWS credentials or IAM roles prepared for access from the Windmill worker pods.
+<br/>
 
-1. An Enterprise license key
-2. An AWS account and S3 bucket
-3. AWS credentials or IAM roles prepared for access from the Windmill worker
-   pods
-
-See the [Helm Chart repository README][helm] for more details. The exact setup
+See the [Helm Chart repository README][helm] [repository][helm] for more details. The exact setup
 for S3 access will vary according to your environment.
 
 ## Compile from source
@@ -142,7 +140,7 @@ for S3 access will vary according to your environment.
    npm run generate-backend-client
    npm run build
    ```
-2. Install the [LLD Linker](https://lld.llvm.org/)
+2. Install the [LLD Linker](https://lld.llvm.org/).
 3. Go to `backend` folder ([source][windmill-gh-backend]) and run:
    ```bash
    SQLX_OFFLINE=true cargo build --release

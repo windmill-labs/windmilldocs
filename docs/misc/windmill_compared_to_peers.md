@@ -1,6 +1,6 @@
 # Windmill compared to its peers
 
-We are aware other framework exist out there. Some of them might suit your specific needs. We believe Windmill is **the only solution to provide this comprehensive set of feature and to be fully open-source** at the same time.
+We are aware other frameworks exist out there. Some of them might suit your specific needs. We believe Windmill is **the only solution to provide this comprehensive set of feature and to be fully open-source** at the same time.
 
 Out of transparency, here is our (subjective) impression on other players you might come across.
 
@@ -48,17 +48,17 @@ examples: _Airplane_ and _Superblocks_
 We are working to build a solution with a clear approach (targeting developers who do not want to compromise on flexibility)
 and the aim to solve main issues (scalability, technicity for advanced use cases, open-source).
 
-We beliveve Windmill is different because:
+We believe Windmill is different because:
 
-- it allows building internal tools through code much faster, without sacrificing on one side visibility and intuitivity and on the other side,
-  control, reliability, performance, flexibility and scalability
-- it empowers semi-technical users to access and edit that code without being overwhelmed by the usual barriers to entry
+- it allows building internal tools through code much faster, without sacrificing on one side **intuitivity** and visibility, and on the other side,
+  **control**, reliability, performance, flexibility and scalability
+- it **empowers semi-technical users** to access and edit that code without being overwhelmed by the usual barriers to entry
   (git, IDE, local environments, secrets managements, etc.)
-- it is compatible with senior/staff software engineers high standards for production-grade yet flexible and customizable with code.
+- it is compatible with **senior/staff software engineers** high standards for production-grade yet flexible yet customizable with code.
 
-**We ourselves have our own limits**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
+**We ourselves have our own limitations**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
 
 Please note that this comparison is made with at least **two biases**: 1. we want to convince you of the power of our product and 2. we are never safe from hiding things from ourselves about the strengths of competitors.
 
-Anyway, we are committed to the culture of transparency and of _face your own problems_, so if you have any objections or suggestions,
+Anyway, we are committed to the culture of transparency and of _confronting the facts_, so if you have any objections or suggestions,
 please contact us at contact@windmill.dev.

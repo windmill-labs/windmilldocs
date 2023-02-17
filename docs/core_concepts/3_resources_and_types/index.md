@@ -5,8 +5,8 @@ title: Resources and Resource Types
 
 # Resources and Resource Types
 
-Each Resource has a **Resource Type** (**RT** for short), for example MySQL,
-MongoDB, Slack, etc, that defines the schema that the resource of this type
+Each Resource has a **Resource Type** (**RT** for short) - for example MySQL,
+MongoDB, Slack, etc. - that defines the schema that the resource of this type
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
 
@@ -36,7 +36,7 @@ reference will be replaced by its value.
 
 :::tip
 
-It's a good practice to link a script template to Resources, so that users can
+It's a good practice to **link a script template to Resources**, so that users can
 easily get started with it. You can use markdown in the description field to add
 a link, for example:
 
@@ -49,7 +49,7 @@ a link, for example:
 ## Create a Resource Type
 
 Windmill comes preloaded with some common Resource Types (databases, apps, SMTP,
-etc - see the list on [Windmill Hub](https://hub.windmill.dev/resources)). You
+etc. - see the list on [Windmill Hub](https://hub.windmill.dev/resources)). You
 can also add custom Resource Types by clicking "Add a resource type" on the
 [Resources](https://app.windmill.dev/resources) page.
 
@@ -57,14 +57,14 @@ can also add custom Resource Types by clicking "Add a resource type" on the
 
 Use the "Add Property" button to add a field to the resource type. You can
 specify constraints for the field (a type, making it mandatory, specifying a
-default, etc). You can also view the schema by toggling the "As JSON" option:
+default, etc?). You can also view the schema by toggling the "As JSON" option:
 
 ![Resource type schema view](./resource_type_json.png)
 
 ## Using Resources
 
 In Windmill, [Resources](../../reference/index.md#resource) represent
-connections to third party systems. Resources are a good way to define a
+**connections to third party systems**. Resources are a good way to define a
 connection to a frequently used third party system such as a database. Think of
 Resources as a structured way to store configuration and credentials, and access
 them from scripts.
@@ -88,8 +88,8 @@ And then select the Resource in the arguments section on the right:
 
 :::tip
 
-You can also edit the Resource or even create a new one right from the Script
-editor.
+You can also edit the Resource or even create a new one right **from the Script
+editor**.
 
 :::
 

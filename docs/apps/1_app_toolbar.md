@@ -15,34 +15,36 @@ The app editor mode can be toggled between `Editor` and `Preview` mode. The prev
 
 Switch the canvas mode in `Mobile` or `Desktop` layout from the toolbar.
 
-### Menu
+### Menu `⋮`
 
-The menu allows you to access the following options:
+The `⋮` menu allows you to access the following options:
 
-- JSON: View the JSON representation of the app.
-- Publish to Hub: Publish the app to the Windmill Hub.
-- Hub compatible JSON: View the JSON representation of the app in a format compatible with the Windmill Hub.
+- JSON: view the JSON representation of the app.
+- Publish to Hub: publish the app to the Windmill Hub.
+- Hub compatible JSON: view the JSON representation of the app in a format compatible with the Windmill Hub.
 
 ![App Menu](../assets/apps/1_app_toolbar/app-menu.png)
 
 ### App inputs configuration
 
 The app inputs menu displays the list of all inputs of each component.
-A toggle allows you to only display resources inputs, so you can easily configure your third-party resources of an app imported from the Hub, for example.
+A toggle allows you to only display resources inputs, so you can easily configure your third-party resources of an app imported from the Hub, for example:
 
 ![App inputs configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png)
 
 ### Debug runs
+
+The app builder allows you to have a look at latests runs to spot potential bugs.
 
 ![App debug runs](../assets/apps/1_app_toolbar/app-debug-runs.png)
 
 ### Publish
 
 Publish the app as a standalone app, via an URL.
-An app can be publish in two ways:
+An app can be published in two ways:
 
-- Read-access required: The app can be accessed by anyone who has read access to the app.
-- Publish publicly: The app can be accessed by anyone knowing the secret URL. If set to `Publish publicly`, the secret url will be displayed here.
+- Read-access required: the app can be accessed by anyone who has read access to the app.
+- Publish publicly: the app can be accessed by anyone knowing the secret URL. If set to `Publish publicly`, the secret url will be displayed here.
 
 ![App Publish](../assets/apps/1_app_toolbar/app-publish.png)
 

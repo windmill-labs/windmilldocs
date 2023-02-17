@@ -9,9 +9,9 @@ The apps are defined by two layouts: `Mobile` and `Desktop`. The layout can be t
 
 The header has the following elements:
 
-- A reload button to reload the app.
-- A schedule button to schedule the app.
-- On behalf of: The user on behalf of which the app is running.
+- a reload button to reload the app
+- a schedule button to schedule the app
+- on behalf of: the user on behalf of which the app is running
 
 ## Canvas
 

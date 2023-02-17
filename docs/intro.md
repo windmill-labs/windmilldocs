@@ -132,3 +132,5 @@ with:
 - _Airplane_ and _Superblocks_ have comparable set of features, but **not
   open-source nor self-hostable**, **limited workflow** engines, **not made for
   scalability** and have **no open APIs**.
+
+You will find more details on our view over our space and competitors in the [Windmill compared to its peers page](https://docs.windmill.dev/docs/misc/windmill_compared_to_peers) page.

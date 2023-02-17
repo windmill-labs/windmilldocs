@@ -1,7 +1,6 @@
 # Triggering Flows
 
-There are two ways to trigger a Windmill Flow: by a
-[Schedule](../5_schedules/index.md) or by direct trigger. Direct triggering can
+There are two ways to trigger a Windmill Flow: by direct triggers or by [Schedules](../5_schedules/index.md). Direct triggering can
 be done through the Windmill UI or the [Webhook](../4_webhooks/index.md) of the
 Flow.
 
@@ -21,13 +20,14 @@ letter, they will continue to process it - open and read it - and if there is no
 new letter, they won't do anything.
 
 The key part is that opened letters are not placed back in the mailbox. In
-Windmill, a **Trigger Script** has the job to keep track of what's processed and
-what's not.
+Windmill, **a Trigger Script has the job to keep track of what's processed and
+what's not**.
 
 :::
 
-Flows can be scheduled through the Flow UI using a CRON expression and then
+**Flows can be scheduled through the Flow UI** using a CRON expression and then
 activating the schedule as seen in the image below.
+
 ![Schedule Scripts](./schedule-flow.png)
 
 The following TypeScript code is an example of the first module of a Flow that
@@ -89,6 +89,6 @@ below.
 
 :::tip
 
-You can find examples of how to start a FLow using curl below the webhooks.
+You can find examples of how to start a Flow using curl below the webhooks.
 
 :::

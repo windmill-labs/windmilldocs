@@ -7,7 +7,9 @@ of Windmill.
 
 Users are uniquely identified globally by their email. They also have a unique
 username with respect to each workspace they are member of. A user picks his
-username when he joins a workspace.
+username when he joins a workspace. There are two kinds of Users:
+-  **authors**: they can write scripts/flows/apps/variables/resources.
+- **operators**: they can only run and view scripts/flows/apps/variables/resources.
 
 ## Scripts
 
@@ -548,6 +550,8 @@ target URL follows this format:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH>
 - Script by path:
   <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH>
+
+Find more information on the [Webhooks section](https://docs.windmill.dev/docs/core_concepts/webhooks/).
 
 ### Synchronous endpoint for Scripts
 
