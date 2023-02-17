@@ -1,4 +1,4 @@
-# Trigger Flows
+# Triggering Flows
 
 There are two ways to trigger a Windmill Flow: by direct triggers or by [Schedules](../5_schedules/index.md). Direct triggering can
 be done through the Windmill UI or the [Webhook](../4_webhooks/index.md) of the

@@ -2,14 +2,40 @@
 <svg
    data-stacking-context="true"
    aria-owns="html1"
-   width="997.41583"
-   height="700.28662"
-   viewBox="193 99 997.41584 700.28662"
+   width="788.89062"
+   height="892.29816"
+   viewBox="193 99 788.89063 892.29816"
    version="1.1"
    id="svg3771"
+   sodipodi:docname="typescript-code.svg"
+   inkscape:export-filename="typescript-code.png"
+   inkscape:export-xdpi="31.0266"
+   inkscape:export-ydpi="31.0266"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4223"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.1466733"
+     inkscape:cx="470.0554"
+     inkscape:cy="375.8699"
+     inkscape:window-width="2560"
+     inkscape:window-height="1440"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="html1" />
   <defs
      id="defs3775">
     <mask
@@ -1882,7 +1908,7 @@
     <filter
        style="color-interpolation-filters:sRGB"
        id="filter74412"
-       x="-0.076631725"
+       x="-0.076631723"
        y="-0.11812812"
        width="1.1620538"
        height="1.250749">
@@ -2620,7 +2646,7 @@
     <filter
        style="color-interpolation-filters:sRGB"
        id="filter100652"
-       x="-0.14012904"
+       x="-0.14012905"
        y="-0.15282825"
        width="1.2974501"
        height="1.3244065">
@@ -2660,13 +2686,13 @@
 /* @font-face { font-family: codicon; src: url(&quot;https://app.windmill.dev/_app/immutable/assets/codicon-c99115f8.ttf&quot;) format(&quot;truetype&quot;); font-display: block; } */
     </style>
   <rect
-     style="fill:#ffffff"
+     style="fill:#ffffff;stroke-width:0.859403"
      id="rect390876"
-     width="973.146"
+     width="718.73865"
      height="678.00946"
      x="193"
      y="99"
-     rx="2.3649042"
+     rx="1.7466526"
      ry="2.3649042" />
   <g
      font-family="monospace"
@@ -3258,7 +3284,7 @@
        data-z-index="auto"
        data-stacking-context="true"
        aria-owns="head1 outline-none1"
-       transform="matrix(0.59122604,0,0,0.59122604,-9.9686272,109.34709)"
+       transform="matrix(0.62000469,0,0,0.62000469,-134.00412,113.35486)"
        style="filter:url(#filter74412)">
       <g
          data-tag="head"
@@ -21259,8 +21285,8 @@
        id="rect86807"
        width="349"
        height="320"
-       x="794.21082"
-       y="458.00638"
+       x="521.08099"
+       y="674.81793"
        rx="2.3649042"
        ry="2.3649042" />
     <g
@@ -21272,7 +21298,7 @@
        role="document"
        mask="url(#mask-for-outline-none11-4)"
        aria-owns="div1 context-view1 monaco-aria-container1"
-       transform="translate(-348.78917,-72.993618)">
+       transform="translate(-619.95284,124.67138)">
       <mask
          id="mask87555">
         <rect
@@ -21652,7 +21678,8 @@
          id="div1-32"
          data-z-index="auto"
          data-stacking-context="true"
-         aria-owns="drawer1 div2 wrap1 svelte-announcer">
+         aria-owns="drawer1 div2 wrap1 svelte-announcer"
+         transform="translate(9.2531939,25.673832)">
         <g
            data-tag="div"
            id="div2-4"

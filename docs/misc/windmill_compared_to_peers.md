@@ -6,7 +6,7 @@ Out of transparency, here is our (subjective) impression on other players you mi
 
 ## No-code solutions
 
-Those names are well-known to the general public and contributied to grow awareness in the workflows building space.
+Those names are well-known to the general public and contributed to grow awareness in the workflow building space.
 They are made for **operational teams**, have pretty UIs but are limited in terms of use cases, power & flexibility.
 We do not compare ourselves to them.
 
@@ -14,7 +14,7 @@ examples: _Zapier_ or _Make_
 
 ## Code-based workflow engines
 
-On the opposite side, you could chose to go on code-based solutions. They give a solid foundation for building workflows and clean up your code.
+On the opposite side, you could choose to go on code-based solutions. They give a solid foundation for building your workflows and clean up your code.
 However, these solutions are less intuitive as they are **complex to set up and operate**. Also, they do not allow to share scripts easily or build UIs.
 
 Although these approaches are interesting, **these players do not seek to reduce the same problems as Windmill**.
@@ -26,12 +26,20 @@ examples: _Temporal_ & _Airflow_
 Getting closer to Windmill. Those players have a blent on admin panels. Therefore they are strong on UIs and now-code features.
 They allow you to use code in the process. However we believe **they lack flexibility for building complex workflows**.
 
-examples: _Retool_, _n8n_ and their open source alternatives _Tooljet_ & _Appsmith_
+examples: _Retool_ and their open source alternatives _Tooljet_ & _Appsmith_
+
+## Workflow builder: n8n
+
+n8n has no UI builder and is source-available but not open-source. n8n only supports javascript and is not centered around organizing your scipts, it is mostly around building workflows with pre-made integrations and inlined javascript code. n8n require pre-installation of the dependencies and does not handle per-node dependency. It is centered around integrations to external services.
+
+## Workflow builder: Pipedream
+
+Pipedream has no UI builder and is not open-source (although their library of integrations is). Pipedream itself is neither open-source, nor self-hostable. Forthermore, it is centered around integrations to external services.
 
 ## Most comparable players
 
 Those ones have comparable set of features, they have the **flexibility of code** and are time-saving for developers.
-Yet, they may show limited workflow engines, they are not open-sourcen have no open APIs and re not made for scalability.
+Yet, they may show limited workflow engines, they are not open-source and have no open APIs and re not made for scalability.
 
 examples: _Airplane_ and _Superblocks_
 
