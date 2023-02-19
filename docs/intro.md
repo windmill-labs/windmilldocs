@@ -11,9 +11,9 @@ All code is not made equal and can be split in 2 categories:
 - **Boilerplate**: all the rest is boilerplate, be it UI and frontends that
   allow you to call the code above, api calls to external services, error
   handling, retries, logic to make your code scalable, dependency management,
-  CI/CD, managing secrets, schedule, permissions, authentification, etc.
-  That code is boilerplate because it _feels_ like you shouldn't have to
-  reinvent the wheel, over and over again.
+  CI/CD, managing secrets, schedule, permissions, authentification, etc. That
+  code is boilerplate because it _feels_ like you shouldn't have to reinvent the
+  wheel, over and over again.
 
 Many services labels themselves as **no-code** or **low-code**, and they address
 indeed the challenge of getting rid of the boilerplate and provide a
@@ -23,12 +23,15 @@ flexibility of code** as they either hide it completely, or only allow it under
 restricted forms.
 
 Windmill is different:
-- it allows building **internal tools through code** much faster, without sacrificing on one side
-visibility and intuitivity and on the other side, control, reliability, performance, flexibility and scalability
-- it **empowers semi-technical users** to access and edit that code without being overwhelmed
-by the usual barriers to entry (git, IDE, local environments, secrets managements, etc.)
-- it is compatible with senior/staff software engineers **high standards for production-grade** yet flexible
-yet customizable with code.
+
+- it allows building **internal tools through code** much faster, without
+  sacrificing on one side visibility and intuitivity and on the other side,
+  control, reliability, performance, flexibility and scalability
+- it **empowers semi-technical users** to access and edit that code without
+  being overwhelmed by the usual barriers to entry (git, IDE, local
+  environments, secrets managements, etc.)
+- it is compatible with senior/staff software engineers **high standards for
+  production-grade** yet flexible yet customizable with code.
 
 Windmill embeds:
 
@@ -40,14 +43,15 @@ Windmill embeds:
   even [SQL](./getting_started/0_scripts_quickstart/5_sql_quickstart/index.md)
   from a self-managed job queue, at scale, with any dependency, no overhead, and
   minimal cold start
-- a **parser that will infer the dependencies and arguments** from the code itself
-  and generate **lockfiles** and **input specs**
-  - the _lockfile_ allows the script being deployed to maintain exactly the
-    same set of versioned dependencies forever
-  - the in _input spec_ (which is actually a JSON schema) is used to generate a minimal
-    UI automatically for both using the script as a standalone compute or as a
-    step of a Flow
-- a powerful **web IDE** to write Scripts with autocompletion and syntax checking
+- a **parser that will infer the dependencies and arguments** from the code
+  itself and generate **lockfiles** and **input specs**
+  - the _lockfile_ allows the script being deployed to maintain exactly the same
+    set of versioned dependencies forever
+  - the in _input spec_ (which is actually a JSON schema) is used to generate a
+    minimal UI automatically for both using the script as a standalone compute
+    or as a step of a Flow
+- a powerful **web IDE** to write Scripts with autocompletion and syntax
+  checking
 - a **low-code builder and workflow engine** to build and run complex
   [Flows](./getting_started/6_flows_quickstart/index.md) by composing your
   custom scripts and generic scripts shared on
@@ -76,8 +80,8 @@ Windmill embeds:
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
-- a [CLI](https://github.com/windmill-labs/windmill/tree/main/cli) and GitHub
-  Actions for **GitHub** and local based developement and code management.
+- a [CLI](./advanced/3_cli/index.md) and GitHub Actions for **GitHub** and local
+  based developement and code management.
 
 On top of all these, you'll get a splendid community and a responsive support
 team to attend you in your journey.
@@ -127,10 +131,12 @@ with:
   both **heavily code-based**, have **no low-code builders** for the flows, are
   **complex to set up** and operate, and do not allow to share scripts easily or
   build UIs.
-- _Retool_ for building **admin panels**, and its other open-source alternatives:
-  _Tooljet_, _Appsmith_.
+- _Retool_ for building **admin panels**, and its other open-source
+  alternatives: _Tooljet_, _Appsmith_.
 - _Airplane_ and _Superblocks_ have comparable set of features, but **not
   open-source nor self-hostable**, **limited workflow** engines, **not made for
   scalability** and have **no open APIs**.
 
-You will find more details on our view over our space and competitors in the [Windmill compared to its peers page](https://docs.windmill.dev/docs/misc/windmill_compared_to_peers) page.
+You will find more details on our view over our space and competitors in the
+[Windmill compared to its peers page](https://docs.windmill.dev/docs/misc/windmill_compared_to_peers)
+page.
