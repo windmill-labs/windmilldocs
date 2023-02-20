@@ -13,7 +13,8 @@ import {
 	History,
 	FormInputIcon,
 	FileCode,
-	FileLock2
+	FileLock2,
+	Folder
 } from 'lucide-react';
 import FeatureCardTabs from './tabs/FeatureCardTabs';
 import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
@@ -90,7 +91,7 @@ const newTabs = [
 		]
 	},
 	{
-		label: 'Web IDE/Github',
+		label: 'Web IDE/Local',
 		icon: FileCode,
 		id: 'web-ide-github-sync',
 		data: [
@@ -101,13 +102,19 @@ const newTabs = [
 				imageSrc: '/images/web-ide.png'
 			},
 			{
-				title: 'Github Sync',
-				description: 'Use the CLI to sync your scripts with Github.',
+				title: 'Sync locally',
+				description: 'Use the CLI to sync local folders with Windmill. Scripts are executable locally.',
+				icon: Folder,
+				imageSrc: '/images/setup.gif'
+			},
+			{
+				title: 'Deploy from Github',
+				description: 'Deploy scripts from Github on merge to main',
 				icon: Github,
 				imageSrc: '/images/setup.gif'
 			},
 			{
-				title: 'Version',
+				title: 'Versionning',
 				description: 'Scripts are always versioned.',
 				caption: 'Explore previous versions of your scripts.',
 				icon: History,
