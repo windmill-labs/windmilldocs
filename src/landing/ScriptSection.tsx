@@ -173,6 +173,13 @@ const newTabs = [
 				icon: Terminal,
 				caption: 'Execute a script using the CLI.',
 				imageSrc: '/images/setup.gif'
+			},
+			{
+				title: 'Slack',
+				description: 'Run scripts from a slack command.',
+				icon: Terminal,
+				caption: 'Trigger scripts from commands and approve flows directly from slack.',
+				imageSrc: '/images/slack-trigger.png'
 			}
 		]
 	}
