@@ -257,9 +257,7 @@ export default function ScriptSection() {
 				</div>
 
 				<span className="text-lg text-gray-600 max-w-3xl">
-					Develop and maintain scripts from our feature-complete web editor or use your own IDE and
-					deploy from Github. Upskill your less technical teammates. It's easier to learn writing
-					useful scripts with Windmill.
+					Run long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the auto-generated UI and monitor them easily.
 				</span>
 
 				<FeatureCardTabs tabs={newTabs} color="blue" />
