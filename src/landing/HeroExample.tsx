@@ -96,20 +96,22 @@ export default function HeroExample() {
 				</p>
 
 				<div className="relative">
-					{!played && (
-						<div className="absolute top-0 bottom-0 left-0 right-0 bg-black opacity-75 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
+					{!played && (<div>
+						<div className="absolute top-0 bottom-0 left-0 right-0 bg-black opacity-10 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
+						</div>
+						<div className="absolute top-0 bottom-0 left-0 right-0 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
 							<PlayCircle
 								size={80}
 								onClick={() => setPlayed(true)}
-								className="text-white hover:text-blue-400 cursor-pointer transition-all"
+								className="text-gray-700 hover:text-blue-400 cursor-pointer transition-all"
 							/>
-							<span className="text-white font-bold text-2xl">Windmill in 58 secs</span>
+							<span className="text-gray-700 font-bold text-2xl">Windmill in 58 secs</span>
+						</div>
 						</div>
 					)}
 
 					<video
 						className="border-2 rounded-xl object-cover w-full h-full"
-						loop
 						controls={played}
 						id="main-video"
 						src="/videos/main.mp4"
