@@ -41,13 +41,16 @@ export default function TabContent({ data, color }) {
 				<img
 					className="border-2 rounded-xl object-cover w-full h-full"
 					src={data[selectedIndex].imageSrc}
-				/>
+					style={{ maxHeight: data[selectedIndex].height }}
+
+					/>
 			);
 		} else if (data[selectedIndex].svg) {
 			return (
 				<img
-					className="border-2 p-2 bg-white rounded-xl object-cover w-full h-full"
+					className="border-2 p-2 bg-white rounded-xl object-cover w-full mx-auto h-full"
 					src={data[selectedIndex].svg}
+					style={{ maxHeight: data[selectedIndex].height }}
 				/>
 			);
 		} else {
