@@ -45,7 +45,7 @@ For example to retrieve resources.
 
 To do so you will need to fill out the context variables that will otherwise be
 filled out by the windmill runtime for you. The most important ones are
-`WM_TOKEN` and `BASE_URL`. Set `BASE_URL` to the URL of you windmill instance,
+`WM_TOKEN` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you windmill instance,
 for example `https://app.windmill.dev`, note that you can never include a
 trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
 token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.md)
@@ -55,7 +55,7 @@ various environments.
 ### Terminal
 
 On UNIX platforms you can simply do
-`BASE_URL=https://app.windmill.dev WM_TOKEN=ThisIsAToken deno run -A my_script.ts`
+`BASE_INTERNAL_URL=https://app.windmill.dev WM_TOKEN=ThisIsAToken deno run -A my_script.ts`
 with the relevant info provided, the same will work for python.
 
 On windows this is not possible, you will have to use
@@ -63,7 +63,7 @@ On windows this is not possible, you will have to use
 For example:
 
 ```cmd
-set "BASE_URL=https://app.windmill.dev"
+set "BASE_INTERNAL_URL=https://app.windmill.dev"
 set "WM_TOKEN=ThisIsAToken"
 ```
 
@@ -100,7 +100,7 @@ For example, for deno:
       "runtimeExecutable": "deno",
       "runtimeArgs": ["run", "--inspect-brk", "-A", "${file}"],
       "env" {
-        "BASE_URL": "https://app.windmill.dev",
+        "BASE_INTERNAL_URL": "https://app.windmill.dev",
         "WM_TOKEN": "ThisIsAToken"
       },
       "envFile": ".env"
@@ -119,7 +119,7 @@ your
 and add two lines
 
 ```
-BASE_URL = https://app.windmill.dev
+BASE_INTERNAL_URL = https://app.windmill.dev
 WM_TOKEN = ThisIsAToken
 ```
 
