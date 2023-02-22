@@ -7,7 +7,7 @@ export default function Hero() {
 		<div className="relative isolate overflow-hidden bg-white">
 			<LandingHeader />
 
-			<div className="mx-auto max-w-7xl px-6 pt-10 gap-y-8 pb-24 sm:pb-32 lg:flex lg:py-20 lg:px-8 mt-4">
+			<div className="mx-auto max-w-7xl px-6 pt-4 gap-y-8 pb-24 sm:pb-32 lg:flex lg:pt-10 lg:pb-36 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
 					<div className="h-8">
 						<GitHubButton

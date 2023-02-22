@@ -1,8 +1,8 @@
 ---
-title: Local Development
+title: Developing scripts locally
 ---
 
-# Local Development
+# Developing scripts locally
 
 ## Deno
 
@@ -45,12 +45,12 @@ For example to retrieve resources.
 
 To do so you will need to fill out the context variables that will otherwise be
 filled out by the windmill runtime for you. The most important ones are
-`WM_TOKEN` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you windmill instance,
+`WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you windmill instance,
 for example `https://app.windmill.dev`, note that you can never include a
 trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
 token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.md)
-using `wmill user create-token`. Below are some examples on how to do this in
-various environments.
+using `wmill user create-token`. And then `WM_WORKSPACE` corresponds to your workspace id.
+Below are some examples on how to do this in various environments.
 
 ### Terminal
 
@@ -65,6 +65,7 @@ For example:
 ```cmd
 set "BASE_INTERNAL_URL=https://app.windmill.dev"
 set "WM_TOKEN=ThisIsAToken"
+set "WM_WORKSPACE=workspace_id"
 ```
 
 then simply run the relevant command for your language.
@@ -101,7 +102,8 @@ For example, for deno:
       "runtimeArgs": ["run", "--inspect-brk", "-A", "${file}"],
       "env" {
         "BASE_INTERNAL_URL": "https://app.windmill.dev",
-        "WM_TOKEN": "ThisIsAToken"
+        "WM_TOKEN": "ThisIsAToken",
+        "WM_WORKSPACE": "workspace_id"
       },
       "envFile": ".env"
     }
@@ -121,6 +123,7 @@ and add two lines
 ```
 BASE_INTERNAL_URL = https://app.windmill.dev
 WM_TOKEN = ThisIsAToken
+WM_WORKSPACE= workspace_id
 ```
 
 :::caution
@@ -128,3 +131,15 @@ WM_TOKEN = ThisIsAToken
 Make sure you are not checking your Token into git.
 
 :::
+
+
+## Pushing your scripts to Windmill
+
+Once you are done developing your script, you can push it to Windmill using the CLI!
+
+Be sure to add wmill to your path after installing.
+```
+deno install --unstable -A https://deno.land/x/wmill/main.ts
+wmill workspace add
+wmill sync push
+```
