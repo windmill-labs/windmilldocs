@@ -83,6 +83,7 @@ export default function HeroExample() {
 				<video
 					className="border-2 rounded-xl object-cover w-full h-full"
 					autoPlay
+					alt="Windmill tutorial"
 					loop
 					controls
 					id="main-video"

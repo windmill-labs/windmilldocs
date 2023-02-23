@@ -1,4 +1,4 @@
-# PRIVACY POLICY
+# Privacy Policy
 
 <div className="theme-doc-markdown markdown">
 

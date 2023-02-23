@@ -8,6 +8,7 @@ import IntergrationList from '../landing/IntergrationList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
+import Head from '@docusaurus/Head';
 
 import HeroExample from '../landing/HeroExample';
 
@@ -43,6 +44,11 @@ function HomepageHeader() {
 export default function Home() {
 	return (
 		<main>
+			<Head>
+				<title>Windmill | Open source platform to build internal tools with scripts</title>
+				<meta name="title" content="Internal tools with scripts." />
+				<meta name="description" content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes" />
+			</Head>
 			<HomepageHeader />
 		</main>
 	);

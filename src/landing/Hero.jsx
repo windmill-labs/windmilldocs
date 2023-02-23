@@ -67,7 +67,7 @@ export default function Hero() {
 					<div className="flex-none">
 						<img
 							src="/homescreen.svg"
-							alt="App screenshot"
+							alt="Windmill infrastructure"
 							className="w-full"
 							width="1825"
 							height="1920"
