@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import LandingSection from './LandingSection';
 import { Code, LayoutDashboard, List, PlayCircle } from 'lucide-react';
 import { useTabs } from './tabs/useTabs';
-import { Framer } from './tabs/framer';
-
+import { VolumeX } from 'lucide-react';
 const tabs = [
 	{
 		label: 'Scripts',
@@ -105,7 +104,7 @@ export default function HeroExample() {
 								onClick={() => setPlayed(true)}
 								className="text-gray-700 hover:text-blue-400 cursor-pointer transition-all"
 							/>
-							<span className="text-gray-700 font-bold text-2xl">Windmill in 58 secs</span>
+							<span className="text-gray-700 font-bold text-2xl inline-flex gap-2 items-center ">A tour of Windmill in 58s <div className='inline-flex items-center'>(<VolumeX size="30px" />)</div></span>
 						</div>
 						</div>
 					)}

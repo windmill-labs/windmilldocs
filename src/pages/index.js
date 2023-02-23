@@ -8,6 +8,7 @@ import IntergrationList from '../landing/IntergrationList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
+import Head from '@docusaurus/Head';
 
 import HeroExample from '../landing/HeroExample';
 

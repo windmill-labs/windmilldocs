@@ -1,7 +1,7 @@
 import React from 'react';
 import LandingHeader from './LandingHeader';
 import GitHubButton from 'react-github-btn';
-
+import { VolumeX } from 'lucide-react'
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
