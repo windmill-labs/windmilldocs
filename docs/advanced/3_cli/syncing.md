@@ -16,7 +16,7 @@ We provide example repos for various use cases:
 - Pushing to a remote only:
   [windmill-push-example](https://github.com/windmill-labs/windmill-push-example)
 - Syncing with a remote:
-  [windmill-backup-example](https://github.com/windmill-labs/windmill-sync-example)
+  [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example)
 
 ## Raw Syncing
 
