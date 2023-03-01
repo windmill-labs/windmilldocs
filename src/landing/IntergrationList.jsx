@@ -3,9 +3,21 @@ import LandingSection from './LandingSection';
 import { ExternalLink } from 'lucide-react';
 
 const integrations = [
-	{ name: 'Airtable', src: 'third_party_logos/airtable.svg' },
-	{ name: 'Clickhouse', src: 'third_party_logos/clickhouse.svg' },
-	{ name: 'Faunadb', src: 'third_party_logos/faunadb.svg' },
+	{
+		name: 'Airtable',
+		src: 'third_party_logos/airtable.svg',
+		url: 'https://hub.windmill.dev/integrations/airtable'
+	},
+	{
+		name: 'Clickhouse',
+		src: 'third_party_logos/clickhouse.svg',
+		url: 'https://hub.windmill.dev/integrations/clickhouse'
+	},
+	{
+		name: 'Faunadb',
+		src: 'third_party_logos/faunadb.svg',
+		url: 'https://hub.windmill.dev/integrations/faunadb'
+	},
 	{ name: 'Gdrive', src: 'third_party_logos/gdrive.svg' },
 	{ name: 'Gmail', src: 'third_party_logos/gmail.svg' },
 	{ name: 'Linkding', src: 'third_party_logos/linkding.svg' },
@@ -20,8 +32,7 @@ const integrations = [
 	{ name: 'Github', src: 'third_party_logos/github.svg' },
 	{ name: 'Gsheets', src: 'third_party_logos/gsheets.svg' },
 	{ name: 'Hubspot', src: 'third_party_logos/hubspot.svg' },
-	{ name: 'Mailchamp', src: 'third_party_logos/mailchamp.png' },
-	{ name: 'Mongo', src: 'third_party_logos/mongo.svg' },
+	{ name: 'Mailchimp', src: 'third_party_logos/mailchimp.svg' },
 	{ name: 'Openai', src: 'third_party_logos/openai.svg' },
 	{ name: 'Sendgrid', src: 'third_party_logos/sendgrid.svg' },
 	{ name: 'Supabase', src: 'third_party_logos/supabase.svg' },
@@ -34,7 +45,11 @@ const integrations = [
 	{ name: 'Matrix', src: 'third_party_logos/matrix.svg' },
 	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
 	{ name: 'S3', src: 'third_party_logos/s3.svg' },
-	{ name: 'Stripe', src: 'third_party_logos/stripe.svg' }
+	{ name: 'Stripe', src: 'third_party_logos/stripe.svg' },
+	{ name: 'Mongo DB', src: 'third_party_logos/mongodb.svg' },
+	{ name: 'Surreal DB', src: 'third_party_logos/surrealdb.svg' },
+	{ name: 'Telegram', src: 'third_party_logos/telegram.svg' },
+	{ name: 'toggl', src: 'third_party_logos/toggl.svg' }
 ];
 
 export default function IntergrationList() {
@@ -50,12 +65,16 @@ export default function IntergrationList() {
 				</span>
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
 					{integrations.map((item) => (
-						<div
+						<a
 							key={item.name}
-							className="bg-gray-50  col-span-1 flex justify-center rounded-xl border p-4"
+							className="bg-gray-50  col-span-1 flex justify-center rounded-xl border p-4 cursor-pointer hover:bg-gray-100"
+							href={`https://hub.windmill.dev/integrations/${item.name
+								.toLowerCase()
+								.replace(/\s/g, '')}`}
+							target="_blank"
 						>
-							<img src={item.src} alt={item.name} className="w-auto h-6" />
-						</div>
+							<img src={item.src} alt={item.name} className="w-auto h-8" />
+						</a>
 					))}
 				</div>
 				<div className="flex">
