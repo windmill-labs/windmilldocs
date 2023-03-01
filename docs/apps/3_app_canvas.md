@@ -25,7 +25,7 @@ Components can be positioned by dragging and dropping them on the canvas. You ca
     loop
     controls
     id="main-video"
-    src="/videos/app-canvas-moving.mp4"
+    src="/videos/component-moving.mp4"
 />
 
 ### Resizing

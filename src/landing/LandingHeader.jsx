@@ -10,7 +10,16 @@ const resources = [
 		href: '/about'
 	},
 
-	{ name: 'Blog', description: 'Stay up to date with our latest news and articles.', href: '/blog' }
+	{
+		name: 'Blog',
+		description: 'Stay up to date with our latest news and articles.',
+		href: '/blog'
+	},
+	{
+		name: 'Jobs',
+		description: 'See our current job openings and apply for a position.',
+		href: 'https://www.ycombinator.com/companies/windmill/jobs'
+	}
 ];
 
 function classNames(...classes) {
@@ -203,8 +212,6 @@ export default function Example() {
 									Windmill Cloud
 								</a>
 							</div>
-
-
 						</div>
 					</div>
 				</Popover.Panel>
