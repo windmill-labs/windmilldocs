@@ -95,17 +95,22 @@ export default function HeroExample() {
 				</p>
 
 				<div className="relative">
-					{!played && (<div>
-						<div className="absolute top-0 bottom-0 left-0 right-0 bg-black opacity-10 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
-						</div>
-						<div className="absolute top-0 bottom-0 left-0 right-0 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
-							<PlayCircle
-								size={80}
-								onClick={() => setPlayed(true)}
-								className="text-gray-700 hover:text-blue-400 cursor-pointer transition-all"
-							/>
-							<span className="text-gray-700 font-bold text-2xl inline-flex gap-2 items-center ">A tour of Windmill in 58s <div className='inline-flex items-center'>(<VolumeX size="30px" />)</div></span>
-						</div>
+					{!played && (
+						<div>
+							<div className="absolute top-0 bottom-0 left-0 right-0 bg-black opacity-10 rounded-xl z-50 flex justify-center items-center flex-col gap-2"></div>
+							<div className="absolute top-0 bottom-0 left-0 right-0 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
+								<PlayCircle
+									size={80}
+									onClick={() => setPlayed(true)}
+									className="text-gray-700 hover:text-blue-400 cursor-pointer transition-all"
+								/>
+								<span className="text-gray-700 font-bold text-2xl inline-flex gap-2 items-center ">
+									A tour of Windmill in 58s{' '}
+									<div className="inline-flex items-center">
+										(<VolumeX size="30px" />)
+									</div>
+								</span>
+							</div>
 						</div>
 					)}
 

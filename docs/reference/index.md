@@ -540,16 +540,21 @@ endpoints are authenticated and will require a bearer token of the format:
 
 Every Script or Flow can be run by its hash or path as a HTTP request aka as a
 **Webhook**. You can find the webhook on the Script or Flow detail page but the
-target URL follows this format:
+target URL follows this format (those are templates URL):
 
 <!-- FIXME: Update URLs after merging #336 -->
 
-- Flow by path:
-  <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH>
-- Script by hash:
-  <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH>
-- Script by path:
-  <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH>
+- Flow by path: 
+<a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH</a>
+
+
+- Script by hash: 
+<a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH</a>
+
+
+- Script by path: 
+<a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH</a>
+
 
 Find more information on the [Webhooks section](https://docs.windmill.dev/docs/core_concepts/webhooks/).
 

@@ -1,4 +1,4 @@
-# Windmill Terms 
+# License Terms
 
 <div className="theme-doc-markdown markdown">
 

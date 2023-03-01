@@ -5,7 +5,6 @@
 
 // export default function Pricing() {
 // 	return (
-
 // 		<div className="w-full items-center m-auto text-center align-middle ">
 // 			<h2 className="pb-3 text-2xl font-medium">Pricing</h2>
 // 			<div className="flex flex-col align-middle">
