@@ -7,7 +7,7 @@ Although Windmill provides **auto-generated UIs to scripts and flows**, you can 
 Windmill applications are customized UIs to interact with datasources (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
 
 In short, what you need to remember about apps:
-- they work on a **drag-and-drop basis**
+- they work on a **what-you-see-is-what-you-get basis**
 - you can connect apps and components to **datasources**
 - components can be **empowered by Windmill [scripts](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript)**
 
@@ -53,11 +53,14 @@ Check out all of our components at [this page](https://docs.windmill.dev/docs/ap
 
 ### Empower components with scripts
 
-The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](https://docs.windmill.dev/docs/apps/app-runnable)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnable), and background scripts.
+The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](https://docs.windmill.dev/docs/apps/app-runnable)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and background scripts.
 
 ![Runnable editor](./apps_runnables.png)
 
 :::tip Add a script to a component
+
+The following video showcases how to call a script either from workspace/hub or add it directly inline.
+<br/>
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -65,14 +68,12 @@ The beauty of Windmill App editor is the integrations of scripts & workflows to 
     loop
     controls
     id="main-video"
-    src="./script_and_flows_components.mp4"
+    src="/videos/script_and_flows_components.mp4"
 />
-
-<!-- Don't know yet how to load a video -->
 
 :::
 
-The **[Ouputs](https://docs.windmill.dev/docs/apps/app_outputs)** of each component can be found on the left side menu. Each of them is associated with a component (you can see the component id).
+The **[Ouputs](https://docs.windmill.dev/docs/apps/app_outputs)** of each component can be found on the left side menu. Each of them is associated with a component (see the component id).
 
 ![Apps outputs](./apps_ouputs.png)
 
@@ -82,7 +83,7 @@ The **[Ouputs](https://docs.windmill.dev/docs/apps/app_outputs)** of each compon
 ![Connect inputs to outputs](./connect_inputs_outputs.png)
 
 
-At any time, have a look at your app's **Inputs** associated with each component on the dedicated `App inputs` menu.
+At any time, have a look at your app's **Inputs** associated with each component on the dedicated `App inputs` tab.
 
 ![Apps inputs](./apps_inputs.png)
 
@@ -90,7 +91,7 @@ At any time, have a look at your app's **Inputs** associated with each component
 
 ### Tailor the look of your app
 
-At the **component level**, on the `Settings` tab, configure the style of each component (color, size, label, etc.)
+At the **component level**, on the `Settings` tab, configure the style of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Settings` tab).
 
 ![Cutomize components](./customize_component.png)
 
@@ -99,7 +100,21 @@ At the **app level**, you can give a harmonized style to your app with CSS. On t
 
 ![Customize CSS](./customize_css.png)
 
+### Time to test
 
-- Debug runs
-- Publish & save
-- JSON & Hub compatible JSON
+While building you app, you can try each component clicking on refresh button.
+
+You can do a refresh all for the whole app with the refesh button on top of the canvas, or even schedule automatic refesh.
+
+![Refresh app](./refresh_app.png)
+
+For possible bugs, there is a `Debug Runs` tab to review past runs with details per component.
+
+![Debug runs](./debug_runs.png)
+
+
+### Then what?
+
+When you're done with the editing of your app, `Save` the current version to the relevant users/folders with a proper and explicit name.
+
+Once it's saved, it's ready to use! You can also `Publish` it, or even `Publish to Hub` and export it in JSON or Hub compatible JSON from the `⋮` tab.
