@@ -8,6 +8,9 @@ Component can be configured in three ways:
 
 - **Inputs**: inputs can be connected to an output or computed using a runnable.
   - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
+  <br/>
+
+
 - **Configuration**: property such as the button label, the text input placeholder, etc.
   - e.g. `Table` component has a configuration property that allows you to configure the search bar: Client-side search, Server-side search, or no search.
 
@@ -15,7 +18,9 @@ Component can be configured in three ways:
 
 - **Runnable**: some component can trigger a runnable when an event occurs, usually when a user interacts with the component. The result of the runnable is stored in the component output in the key `result`. It also stores the `loading` state of the component.
   - e.g. `Button` component can trigger a runnable when clicked.
-- **Own outputs**: Some component have outputs defined by the component.
+<br/>
+
+- **Own outputs**: some component have outputs defined by the component.
   - e.g. `Table` component has a selectedRow output
 
 ## Inserting components
