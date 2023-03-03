@@ -84,6 +84,14 @@ export async function main(
 }
 ```
 
+```python
+postgresql = dict
+
+def main(postgres: postgresql):
+    # Use Resource...
+```
+
+
 And then select the Resource in the arguments section on the right:
 
 :::tip
