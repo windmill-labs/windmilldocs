@@ -52,6 +52,17 @@ token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.md)
 using `wmill user create-token`. And then `WM_WORKSPACE` corresponds to your workspace id.
 Below are some examples on how to do this in various environments.
 
+### State
+
+to use the `getState` and `setState` functions, you will have to set `WM_STATE_PATH`. We recommend using your script path name as the state path, for example:
+
+```ts
+let fullUrl = import.meta.url
+let pathS = fullUrl.substring(8, fullUrl.length - 3).split('/')
+const path = pathS.slice(pathS.length - 3, pathS.length).join('/')
+Deno.env.set('WM_STATE_PATH', path)
+```
+
 ### Terminal
 
 On UNIX platforms you can simply do
