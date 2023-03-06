@@ -4,7 +4,7 @@ title: Upgrade
 
 # How to Upgrade Windmill
 
-Using Windmill is free, as we are committed to **[open-source](https://github.com/windmill-labs/windmill)**. You can either:
+Using Windmill is free, as we are committed to [open-source](https://github.com/windmill-labs/windmill). You can either:
 - **[self-host](https://docs.windmill.dev/docs/advanced/self_host/)** it to use Windmill without restrictions (AGPLv3 License)
 - use the **[cloud app](https://app.windmill.dev/user/login)**, building scripts, flows and apps for free.
 
@@ -13,7 +13,14 @@ However, you might need to upgrade your plan (from free) to Team or Enterprise e
 - Cloud: More computations, authors & operators, Dedicated isolated workers and database, Dedicated entire kubernetes cluster...
 - Both: SAML, SLA and Priority support & design partners...
 
-All details about plans are available on **[Pricing][pricing]** page.
+All details about plans are available on [Pricing][pricing] page.
+
+**Plans on Windmill work at the workspace level**. The free-tier is global across any non-upgraded workspace, so upgrading Windmill means _upgrading the workspace_ to premium, not the account.
+
+The exact billing of the subscription will then take into account number of users, among other things (computations, dedicated isolated workers and database, dedicated cluster etc).
+
+Plans based on a workspace basis allow you to easily manage authorisations among users and track executions in aggregate.
+
 
 ## Enterprise Edition
 
