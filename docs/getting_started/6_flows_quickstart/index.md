@@ -29,8 +29,7 @@ You can always go back to this menu by clicking on Settings on top of the flow e
 
 ### Flow editor
 
-The proper flow editor is the side menu on the left. From there you can architecture your flow and take action at each step. When you flow becomes complex, you can take a step back & visualize at `Graph`.
-
+The proper flow editor is the side menu on the left. From there you can architecture your flow and take action at each step.
 ![Flow editor menu](./flow_editor_menu.png)
 
 There are four kinds of scripts: [Action](https://docs.windmill.dev/docs/flows/flow_action), [Trigger](https://docs.windmill.dev/docs/flows/flow_trigger), [Approval](https://docs.windmill.dev/docs/flows/flow_approval) and [Error handler](https://docs.windmill.dev/docs/flows/flow_error_handler). You can sequence them how you want.
@@ -72,11 +71,6 @@ But the Flow editor is not just for sequence of steps, but also for more complex
 - **branch one**: allows you to execute a branch if a condition is true
 - **branch all**: allows you to execute all the branches in parallel, as if each branch is a flow.
 
-
-
-If gets too complex, use the `Graph` view to visualize you workflow.
-
-![Flows branches](./branches.png)
 
 
 ### Suspend/Approval Step
