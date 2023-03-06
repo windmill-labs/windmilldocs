@@ -1,5 +1,18 @@
 # How to setup OAuth
 
+The oauth.json need to be mounted from your windmill server instances. On the docker-compose.yml, this would correspond to uncommenting thoese [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L41-L42) and have an oauth.json file in the same folder as the docker-compose.yml.
+
+The oauth.json has the following structure:
+```json
+{
+  "<integration>": {
+    "id": "...",
+    "secret": "..."
+  },
+  ....
+}
+```
+
 ## Google login
 
 **Create Google OAuth keys**
@@ -25,6 +38,22 @@ First, you need to create a Google OAuth Client:
   }
 }
 ```
+
+## Slack
+
+1. Create a new slack app at <https://api.slack.com/apps?new_app=1>
+
+2. 
+```json
+{
+  ...
+  "slack": {
+    "id": "<CLIENT_ID>",
+    "secret": "<CLIENT_SECRET>",
+  }
+}
+```
+
 
 ## Keycloak
 
