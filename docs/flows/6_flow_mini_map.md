@@ -1,8 +1,8 @@
 # Mini map
 
-The mini map allows you to view the flow in a mini map. You can quickly navigate to a specific step by clicking on the step in the mini map. You can also insert a step by clicking on the plus icon in the mini map. A step can be deleted by clicking on the cross icon when hovering over the step.
+The mini map allows you to view the flow in a mini map. You can quickly navigate to a specific step by clicking on the step in the mini map. You can also insert a step by clicking on the plus icon in the mini map. A step can be deleted by clicking on the cross icon when hovering over the step. When selected, the step will be highlighted.
 
-When selected, the step will be highlighted.
+The mini map and the settings menu are separated by an interactive divider, so that you can increase one of them when you need.
 
 ## For loops
 

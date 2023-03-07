@@ -27,7 +27,7 @@ The output of each step will be produced in json by Windmill. For any output tha
 shared directory is of help.
 
 
-You can always go back to this menu by clicking on Settings on top of the flow editor.
+You can always go back to this menu by clicking on `Settings` on top of the [mini map](https://docs.windmill.dev/docs/flows/flow_mini_map) or on the name of the flow on the [toolbar](https://docs.windmill.dev/docs/flows/flow_toolbar).
 
 ### Flow editor
 
@@ -124,6 +124,6 @@ You can even trigger flows without leaving **[Slack](https://docs.windmill.dev/b
 
 ### Time to test
 
-You don't have to explore all flows editor possibilities at once. At each step, **test what you're building** to keep control on your wonder.
+You don't have to explore all flows editor possibilities at once. At each step, **test what you're building** to keep control on your wonder. You can also test up to a certain step by clicking on an action (x) and then on `Test up to x`.
 
 When you're done, save your flow to run it, schedule it, share it, or even [publish it to Hub](https://docs.windmill.dev/docs/misc/share_on_hub/).

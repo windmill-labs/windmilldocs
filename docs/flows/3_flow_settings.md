@@ -5,15 +5,14 @@ The flow settings are divided into four tabs:
 - [Metadata](#metadata)
 - [Schedule](#schedule)
 - [Shared Directory](#shared-directory)
-- [Graph](#graph)
 
 ## Metadata
 
 The metadata tab allows you to configure the flow name, summary, and description.
 Permissions can be configured in two ways:
 
-- By user: Select a user
-- By folder: Select a folder
+- by User: select a user
+- by Folder: select a folder
 
 ![Flow Metadata](../assets/flows/flow_settings_metadata.png)
 
@@ -32,9 +31,3 @@ Steps will share a folder at `./shared` in which they can store heavier data and
 Beware that the `./shared` folder is not preserved across suspends and sleeps.
 
 ![Flow Shared Directory](../assets/flows/flow_settings_shared_directory.png)
-
-## Graph
-
-Flows can be visualized in a graph view. The graph view is useful to quickly understand the flow structure, with loops and branches.
-
-![Flow Graph](../assets/flows/flow_settings_graph.png)

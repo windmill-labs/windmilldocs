@@ -5,9 +5,9 @@ script. Those are the majority of the scripts.
 
 There are two ways to create an action script:
 
-- Write it directly in the flow editor
-- Import it from the Hub
-- Import it from the workspace
+- Write it directly in the flow editor.
+- Import it from the Hub.
+- Import it from the workspace.
 
 ## Inline action script
 
