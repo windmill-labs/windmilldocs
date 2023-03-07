@@ -24,13 +24,12 @@ restricted forms.
 
 Windmill is different:
 
-- it allows building **internal tools through code** much faster, without
-  sacrificing on one side visibility and intuitivity and on the other side,
-  control, reliability, performance, flexibility and scalability
-- it **empowers semi-technical users** to access and edit that code without
+- Windmill is an [open-source](https://github.com/windmill-labs/windmill) **developer platform and infra to build all internal tools through code**, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash). Without sacrificing on one side visibility and intuitivity and on the other side,
+  control, reliability, performance, flexibility and scalability.
+- It **empowers semi-technical users** to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
-  environments, secrets managements, etc.)
-- it is compatible with senior/staff software engineers **high standards for
+  environments, secrets managements, etc).
+- It is compatible with senior/staff software engineers **high standards for
   production-grade** yet flexible yet customizable with code.
 
 Windmill embeds:
@@ -65,25 +64,25 @@ Windmill embeds:
     external webhook who may contain payloads
   - **approval steps** leveraging being suspended and reactivated at some secret
     urls known only by the approvers
-- a [low-code UI builder](./getting_started/7_apps_quickstart/index.md) to build
-  complex admin panels and dashboards using inline scripts in TypeScript,
+- a **[low-code UI builder](./getting_started/7_apps_quickstart/index.md)** to build
+  complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
   Python, Go, Bash and SQL or trigger the Scripts and Flows of the workspace
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
   [RBAC permissions](./reference/index.md#permissions-and-acl),
   [OAuth handling](./advanced/2_setup_oauth/index.md) for fetching and
   refreshing credentials
-- [webhooks](./core_concepts/4_webhooks/index.md) for every scripts and flows to
+- **[webhooks](./core_concepts/4_webhooks/index.md)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
   current infrastructure
-- a [scheduler](./core_concepts/5_schedules/index.md) to trigger Scripts and
+- a **[scheduler](./core_concepts/5_schedules/index.md)** to trigger Scripts and
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
-- a [CLI](./advanced/3_cli/index.md) and GitHub Actions for **GitHub** and local
+- a **[CLI](./advanced/3_cli/index.md)** and GitHub Actions for **GitHub** and local
   based developement and code management.
 
-On top of all these, you'll get a splendid community and a responsive support
+On top of all these, you'll get a splendid [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.
 
 ### Use cases
@@ -138,5 +137,11 @@ with:
   scalability** and have **no open APIs**.
 
 You will find more details on our view over our space and competitors in the
-[Windmill compared to its peers page](https://docs.windmill.dev/docs/misc/windmill_compared_to_peers)
-page.
+[Windmill compared to its peers](https://docs.windmill.dev/docs/misc/windmill_compared_to_peers) page.
+
+:::info About
+**[Windmill](https://docs.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](https://docs.windmill.dev/docs/advanced/self_host/)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.
+
+You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** Windmill using a docker compose up, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
+
+:::

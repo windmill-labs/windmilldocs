@@ -1,4 +1,4 @@
-# Windmill compared to its peers
+# Windmill Compared to its Peers
 
 We are aware other frameworks exist out there. Some of them might suit your specific needs. We believe Windmill is **the only solution to provide this comprehensive set of feature and to be fully open-source** at the same time.
 

@@ -11,6 +11,8 @@ Windmill uses [Deno](https://deno.land/) as the TypeScript runtime.
 Scripts are the basic building blocks in Windmill. They can be run as standalone
 apps, chained together to create [Flows][flows].
 
+[Here](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail) is a simple example of a script built in TypeScript with Windmill.
+
 In Windmill, Scripts consist of three parts:
 
 - **Metadata**: information about the Script such as its path, description, and
