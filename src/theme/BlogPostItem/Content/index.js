@@ -29,6 +29,10 @@ export default function BlogPostItemContent({children, className}) {
 						runtime and platform combining the power of code with the velocity 
 						of low-code. We turn your scripts into internal apps and composable
 						steps of flows that automate repetitive workflows.
+						<br/><br/>
+						
+						You can <a href='https://docs.windmill.dev/docs/advanced/self_host/#deployment'>self-host</a> Windmill using a docker compose up, our go with the <a href='https://app.windmill.dev/user/login'>cloud app</a>.
+
 					</div>
 				</div>
 			}

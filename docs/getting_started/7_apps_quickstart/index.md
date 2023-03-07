@@ -6,6 +6,8 @@ Although Windmill provides **auto-generated UIs to scripts and flows**, you can 
 
 Windmill applications are customized UIs to interact with datasources (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
 
+[Here](https://hub.windmill.dev/apps/3/crm) is an example of an app built with Windmill.
+
 In short, what you need to remember about apps:
 - they work on a **what-you-see-is-what-you-get basis**
 - you can connect apps and components to **datasources**

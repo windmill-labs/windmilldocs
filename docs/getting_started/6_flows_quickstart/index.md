@@ -2,6 +2,8 @@
 
 The present document will introduce you to flows and how to build your first one.
 
+[Here](https://hub.windmill.dev/flows/13/whenever-an-hackernews-message-contains-a-mention%2C-publish-it-to-slack-with-sentiment-analysed) is an example of a simple flow built with Windmill.
+
 It is important to have in mind that **scripts are at the basis of Windmill**. To sum up roughly, workflows are an architecture of scripts. You can have a look at the [Script Quickstart](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript) in the precedent section (in the programming language of your choice). But don't worry, you will not have to build each script by hand, as you can always use scripts from your workspace or from the [Hub](https://hub.windmill.dev/).
 
 

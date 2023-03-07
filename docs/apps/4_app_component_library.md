@@ -1,10 +1,10 @@
-# Component library
+# Components Library
 
-The app component library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
+The app components library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
 
-## Component properties
+## Components properties
 
-Component can be configured in three ways:
+Components can be configured in three ways:
 
 - **Inputs**: inputs can be connected to an output or computed using a runnable.
   - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
@@ -27,9 +27,12 @@ Component can be configured in three ways:
 
 Click on a component in the component library to insert it in the app canvas. It will be automatically positioned.
 
-## Component list
+## Components list
 
-Windmill provides a set of components that can be used to build apps. Here is the list of the available components (constantly growing according to our users' expectations):
+Windmill provides a set of components that can be used to build apps. The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](https://docs.windmill.dev//docs/misc/getting_help/).
+
+
+Here is the list of the available components:
 
 - Button
 - Form
