@@ -70,7 +70,7 @@ Windmill embeds:
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
   [RBAC permissions](./reference/index.md#permissions-and-acl),
-  [OAuth handling](./advanced/2_setup_oauth/index.md) for fetching and
+  [OAuth handling](https://docs.windmill.dev/docs/misc/setup_oauth/) for fetching and
   refreshing credentials
 - **[webhooks](./core_concepts/4_webhooks/index.md)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
