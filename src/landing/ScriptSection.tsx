@@ -123,7 +123,7 @@ const newTabs = [
 				altText: 'Github Sync'
 			},
 			{
-				title: 'Versionning',
+				title: 'Versioning',
 				description: 'Scripts are always versioned.',
 				caption: 'Explore previous versions of your scripts.',
 				icon: History,
