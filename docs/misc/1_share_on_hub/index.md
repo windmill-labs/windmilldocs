@@ -18,7 +18,7 @@ Below you will find guides on how to contribute to the Hub, thank you for being 
 
 Currently [Windmill Hub][wm-hub] supports TypeScript(Deno), Python, Go and Bash
 scripts. You can add Common, Error Handler, Approval and Trigger Scripts by
-going to the [New Script](https://hub.windmill.dev/scripts/add) page. The
+going to the <a rel="nofollow" href="https://hub.windmill.dev/scripts/add">New Script</a> page. The
 **Summary** will be the title of the Script, **Integration** should have the name of
 the app it integrates with (if there is one), and **Description** should be a
 short description of the script - it supports Markdown.
@@ -71,12 +71,11 @@ Adding a Resource Type to the [Hub][wm-hub] will be available for **every
 Windmill user**, once it is approved by the Windmill Team.
 
 If it gets approved, the
-[windmill-gh-action-deploy](https://github.com/windmill-labs/windmill-gh-action-deploy)
-will deploy it in the starter workspace of Windmill Cloud. Being deployed on the
+windmill-gh-action-deploy will deploy it in the starter workspace of Windmill Cloud. Being deployed on the
 starter workspace means that it will be available to **all workspaces**.
 
 ________
-**Thank you for your interest in sharing your work on the Hub**. Community is essential to our work to build a tool that is useful, powerful and fun to use.
+Thank you for your interest in sharing your work on the Hub. Community is essential to our work to build a tool that is useful, powerful and fun to use.
 
 <!-- Resources -->
 
