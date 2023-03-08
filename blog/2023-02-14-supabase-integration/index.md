@@ -7,7 +7,7 @@ image: ./0-header.png
 ---
 
 We will see how to build a Windmill workflow that can be triggered by the
-[Supabase Database Webhooks][supabase-webhook].
+[Supabase Database Webhooks](https://supabase.com/docs/guides/database/webhooks).
 
 <!--truncate-->
 
