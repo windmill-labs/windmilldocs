@@ -18,6 +18,20 @@ if (import.meta.main) {
 You can then use your script like normal (for example,
 `deno run -A --watch my_script.ts`), and even write tests inside.
 
+If you'd like to tweak the client settings more directly, use:
+
+```ts
+wmill.setClient(<TOKEN>, <API BASE URL>)
+```
+
+On import, the wmill client does the following:
+
+```ts
+setClient(Deno.env.get("WM_TOKEN") ?? 'no_token', Deno.env.get("BASE_INTERNAL_URL") ?? Deno.env.get("BASE_URL") ?? 'http://localhost:8000')
+```
+
+which is why we recommend setting those environment variables in the sections below.
+
 For more information on deno development in general,
 [see the official docs](https://deno.land/manual@v1.30.3/getting_started)
 
