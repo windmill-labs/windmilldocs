@@ -39,7 +39,7 @@ Pipedream has no UI builder and is not open-source (although their library of in
 ## Most comparable players
 
 Those ones have comparable set of features, they have the **flexibility of code** and are time-saving for developers.
-Yet, they may show limited workflow engines, they are not open-source and have no open APIs and re not made for scalability.
+Yet, they may show limited workflow engines, they are not open-source and have no open APIs and are not made for scalability.
 
 examples: _Airplane_ and _Superblocks_
 
