@@ -53,6 +53,7 @@ Buttons
 Inputs
 - Text Input
 - Password
+- Email Input
 - Number
 - Currency
 - Slider
@@ -302,14 +303,14 @@ The text input component allows you to get a string from the user.
 
 | Name          |  Type  | Connectable | Templatable | Default | Description                          |
 | ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------ |
-| placeholder   | string |    false    |    false    | Type... | The text input placeholder.          |
-| default value | string |    true     |    false    |         | The default value of the text input. |
+| Placeholder   | string |    false    |    false    | Type... | The text input placeholder.          |
+| Default value | string |    true     |    false    |         | The default value of the text input. |
 
 #### Outputs
 
 | Name   |  Type  | Description           |
 | ------ | :----: | --------------------- |
-| result | string | The text input value. |
+| Result | string | The text input value. |
 
 ### Password Input API
 
@@ -321,13 +322,33 @@ The password input component allows you to get a password from the user.
 
 | Name        |  Type  | Connectable | Templatable | Default  | Description                     |
 | ----------- | :----: | :---------: | :---------: | :------: | ------------------------------- |
-| placeholder | string |    false    |    false    | Password | The password input placeholder. |
+| Placeholder | string |    false    |    false    | Password | The password input placeholder. |
 
 #### Outputs
 
 | Name   |  Type  | Description               |
 | ------ | :----: | ------------------------- |
-| result | string | The password input value. |
+| Result | string | The password input value. |
+
+### Email Input API
+
+The email input component allows you to get an email from the user.
+
+![Email Input API](../assets/apps/4_app_component_library/email.png)
+
+#### Email Input configuration
+
+| Name        |  Type  | Connectable | Templatable | Default  | Description                     |
+| ----------- | :----: | :---------: | :---------: | :------: | ------------------------------- |
+| Placeholder | string |    false    |    false    | Email | The email input placeholder. |
+| Default value | string |    true    |    false    | Email | The email input default value. |
+
+#### Outputs
+
+| Name   |  Type  | Description               |
+| ------ | :----: | ------------------------- |
+| Result | string | The email input value. |
+
 
 ### Number Input API
 
