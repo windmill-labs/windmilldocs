@@ -92,15 +92,24 @@ export default function Footer() {
 					</div>
 
 					<div className="space-y-8 text-left mx-auto">
-						<img className="h-16" src="/img/windmill.svg" alt="Windmill Labs" />
-						<p className="text-sm leading-6 text-gray-600">
-							Made with passion in San Francisco and Paris.
-						</p>
+						<div className="flex items-center">
+							<img className="h-16 mr-3" src="/img/windmill.svg" alt="Windmill Labs" />
+							<p className="text-sm leading-6 text-gray-600">
+								Made with passion in <br />
+								San Francisco and Paris.
+							</p>
+						</div>
 						<div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
-							<p className="text-xs leading-5 text-gray-500">
+							<p className="text-center text-xs leading-5 text-gray-500">
 								&copy; 2023 Windmill Labs, Inc. All rights reserved. <br />
 								1111B S Governors Ave, Dover, DE 19904, USA
 							</p>
+							<div className="flex justify-center items-center mt-4">
+								<img className="h-10" src="/img/soc.png" alt="SOC Compliance badge" />
+								<p className="text-xs text-left leading-6 text-gray-500 ml-2">
+									Windmill Labs is SOC 2 Type I compliant
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
