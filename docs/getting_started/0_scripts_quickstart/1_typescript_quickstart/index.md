@@ -15,7 +15,7 @@ Windmill uses [Deno](https://deno.land/) as the TypeScript runtime.
     loop
     controls
     id="main-video"
-    src="/videos/typescrit_quickstart.mov"
+    src="/videos/typescrit_quickstart.mp4"
 />
 
 <br/>
