@@ -8,10 +8,6 @@ slug: "/getting_started/scripts_quickstart/typescript"
 In this quick start guide, we will write our first script in TypeScript.
 Windmill uses [Deno](https://deno.land/) as the TypeScript runtime.
 
-Scripts are the basic building blocks in Windmill. They can be run as standalone
-apps, chained together to create [Flows][flows].
-
-[Here](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail) is a simple example of a script built in TypeScript with Windmill.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -21,6 +17,13 @@ apps, chained together to create [Flows][flows].
     id="main-video"
     src="/videos/typescrit_quickstart.mov"
 />
+
+<br/>
+
+Scripts are the basic building blocks in Windmill. They can be run as standalone
+apps, chained together to create [Flows][flows].
+
+[This](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail) is a simple example of a script built in TypeScript with Windmill.
 
 In Windmill, Scripts consist of three parts:
 
