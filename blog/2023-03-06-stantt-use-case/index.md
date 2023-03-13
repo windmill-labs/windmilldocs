@@ -18,7 +18,7 @@ This is a testimonial written by Windmill Community member [Jeffrey Knorr](https
 
 ![Stantt Windmill use case](./0-header.png "Stantt Windmill testimonial")
 
-## What before windmill?
+## What before Windmill?
 
 **[Stantt][stantt]** is a menswear brand based in New York City and is currently in over 350 retail locations. We focus on finding the perfect fit for shirts, pants, suits etc, with 99 unique sizes and the ability to make and deliver custom fit and styled garments in only 7-10 days.
 

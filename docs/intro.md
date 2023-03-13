@@ -142,6 +142,6 @@ You will find more details on our view over our space and competitors in the
 :::info About
 **[Windmill](https://docs.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](https://docs.windmill.dev/docs/advanced/self_host/)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.
 
-You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** Windmill using a docker compose up, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
+You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** Windmill using a `docker compose up`, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
 
 :::

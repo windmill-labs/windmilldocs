@@ -13,6 +13,15 @@ apps, chained together to create [Flows][flows].
 
 [Here](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail) is a simple example of a script built in TypeScript with Windmill.
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/typescrit_quickstart.mov"
+/>
+
 In Windmill, Scripts consist of three parts:
 
 - **Metadata**: information about the Script such as its path, description, and
