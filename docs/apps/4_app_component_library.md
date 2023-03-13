@@ -90,7 +90,16 @@ Below you will find details about each component.
 
 Containers allow you to host other components in a box. Moving a container means moving all the components inside.
 
-![Container](../assets/apps/4_app_component_library/container.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/container.mp4"
+    alt="container component"
+/>
+<br/>
 
 To add a component to a container, you can either click on `Insert` while you selected the container, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
@@ -106,7 +115,16 @@ To add a component to a container, you can either click on `Insert` while you se
 
 Tabs components allow you to host other components in several tabs of box, they are containers with tabs.
 
-![Tabs](../assets/apps/4_app_component_library/tabs.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/tabs.mp4"
+    alt="tabs component"
+/>
+<br/>
 
 To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
@@ -154,7 +172,16 @@ Divider Y is a vertical line.
 
 The drawer is container called by a button. Once you click on the button, a side tab will appear on which you can display other components.
 
-![Drawer](../assets/apps/4_app_component_library/drawer.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/drawer.mp4"
+    alt="drawer component"
+/>
+<br/>
 
 To add a component to a container, you can either click on `Insert` while you selected the opened drawer, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
@@ -175,7 +202,16 @@ To add a component to a container, you can either click on `Insert` while you se
 
 Container split in x number of panes vertically.
 
-![Vertical Split Panes](../assets/apps/4_app_component_library/vertical_split_panes.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/vertical_split.mp4"
+    alt="vertical split panes"
+/>
+<br/>
 
 To add a component to a vertical split pane, you can either click on `Insert` while you selected the vertical split pane, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
@@ -190,7 +226,17 @@ To add a component to a vertical split pane, you can either click on `Insert` wh
 
 Container split in x number of panes horizontally.
 
-![Horizontal Split Panes](../assets/apps/4_app_component_library/horizontal_split_panes.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/horizontal_split.mp4"
+    alt="horizontal split panes"
+/>
+<br/>
+
 
 To add a component to a horizontal split pane, you can either click on `Insert` while you selected the horizontal split pane, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
@@ -688,7 +734,16 @@ Search can be configured in the following ways:
 
 The AgGrid table component allows you to display an agnostic grid table.
 
-![AgGrid Table](../assets/apps/4_app_component_library/aggrid_table.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/aggrid_table.mp4"
+    alt="aggrid table"
+/>
+<br/>
 
 #### AgGird Table Input
 
