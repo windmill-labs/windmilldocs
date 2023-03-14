@@ -45,9 +45,10 @@ export default function Home() {
 	return (
 		<main>
 			<Head>
-				<title>Windmill | Open source platform to build internal tools with scripts</title>
+				<title>Windmill | Open source platform to build internal tools with scripts </title>
 				<meta name="title" content="Internal tools with scripts." />
 				<meta name="description" content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes" />
+				<link rel="canonical" href="https://www.windmill.dev/" />
 			</Head>
 			<HomepageHeader />
 		</main>

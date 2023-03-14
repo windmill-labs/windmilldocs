@@ -137,7 +137,7 @@ with:
   scalability** and have **no open APIs**.
 
 You will find more details on our view over our space and competitors in the
-[Windmill compared to its peers](https://docs.windmill.dev/docs/misc/windmill_compared_to_peers) page.
+[Windmill compared to its peers](https://docs.windmill.dev/docs/misc/windmill_compared%20to%20peers/) page.
 
 :::info About
 **[Windmill](https://docs.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](https://docs.windmill.dev/docs/advanced/self_host/)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.
