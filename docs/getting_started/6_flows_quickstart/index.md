@@ -22,10 +22,11 @@ Also, you can give succintly a Name, a Summary and a Description to your flow. T
 
 Then, you will configure the **[Schedule](https://docs.windmill.dev/docs/flows/flow_settings#schedule)**. Flows can be triggered by any schedules, their webhooks or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
 
-**[Shared Directory](https://docs.windmill.dev/docs/flows/flow_settings#shared-directory)**. This tab is to request a folder to be shared by all the steps at path xx to pass heavy/ETL kind of data.
-The output of each step will be produced in json by Windmill. For any output that is not suitable for json, this is where the
-shared directory is of help.
+**[Shared Directory](https://docs.windmill.dev/docs/flows/flow_settings#shared-directory)**:
 
+Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
+
+For heavier ETLs and any output that is not suitable for json, you might want to use the `Shared Directory` to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
 You can always go back to this menu by clicking on `Settings` on top of the [mini map](https://docs.windmill.dev/docs/flows/flow_mini_map) or on the name of the flow on the [toolbar](https://docs.windmill.dev/docs/flows/flow_toolbar).
 
