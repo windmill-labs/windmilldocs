@@ -1,6 +1,6 @@
 ---
 slug: newsroom-case-study
-title: Trigger Windmill from Slack - Newsroom Case Study
+title: Trigger Workflows from Slack - Newsroom Case Study
 authors: [atelier]
 tags: [case study, testimonial, slack commands, non-technical users, monitoring, scheduling]
 image: ./0-header.jpg
