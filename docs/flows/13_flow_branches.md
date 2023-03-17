@@ -7,11 +7,12 @@ There are two types of branches:
 
 ## Branch one
 
-A branch one is a special type of step that allows you to execute a branch if a condition is true. If the condition is false, the default branch will be executed. Each branch is a flow.
+A branch one is a special type of step that allows you to execute a branch if a condition is true. If the condition is false, the default branch will be executed. If several branches are true, the first one will execute. Each branch is a flow.
 
 Clicking on one branch will open the branch editor. You can configure the:
 
-- **Predicate expression**: the expression that will be evaluated to determine if the branch should be executed.
+- **Summary**: gives a name to the branch, useful when several branches. By default Branch 1, 2, 3...
+- **Predicate expression**: the expression that will be evaluated to determine if the branch should be executed. It can be simple `true`/`false` but also comparison operators (`results.c.command === 'email'`, `flow_input.number >= 2` etc.)
 
 ![Branch one step](../assets/flows/flow_branch_one.png)
 
