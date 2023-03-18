@@ -150,13 +150,17 @@ The second - and more experimental - option is to only use frontend scripts.
 This is the simpler way to achieve the goal, but it has some drawbacks. The main one is obviously
 that everything will be available to the client, so you shouldn't use any secrets in frontend
 scripts. They are also a bit less convenient for the developers as it is pure JavaScript, meaning
-there is no type safety, so you have to be familiar with the Supabase API and the data structure
+there is no type safety, so they have to be familiar with the Supabase API and the data structure
 of your table.
 
 We have another [Supabase Authentication Example][supabase-auth-fe-example] on the Hub that uses
 only frontend scripts. Click "Edit/Run in Windmill" to open the app in the editor.
 
 ![Example app with frontend scripts only](./3-wm-default-fe.png 'Example app with frontend scripts only')
+
+The only setup you need to do is to update the `Login` inline script with the **URL** and the
+**public API key** of your Supabase project. Refer to the
+[Supabase credentials](#supabase-credentials) section to see how to obtain them.
 
 ### Try the app
 
