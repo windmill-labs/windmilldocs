@@ -91,18 +91,69 @@ have one by clicking the plus sign - you can find instructions in the creation f
 
 Now when you login with the credentials of a Supabase user, the `Login` script attached to the
 button component will be executed, which signs in to Supabase and returns the given `access_token`
-and `refresh_token`. If the authentication is successful, the `Load data` and `Open Data tab`
+and `refresh_token`.
+
+```typescript
+// Inline script: Login
+import { Resource } from 'https://deno.land/x/windmill@v1.76.0/mod.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
+
+export async function main(auth: Resource<'supabase'>, email: string, password: string) {
+	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+	const { data, error } = await client.auth.signInWithPassword({ email, password });
+	if (error) {
+		return {
+			access_token: undefined,
+			refresh_token: undefined,
+			error: error.message
+		};
+	}
+	return {
+		access_token: data?.session?.access_token,
+		refresh_token: data?.session?.refresh_token,
+		error: undefined
+	};
+}
+```
+
+If the authentication is successful, the `Load data` and `Open Data tab`
 _background scripts_ will run right after. `Load data` also receives the `access_token` and
 creates an authenticated Supabase client, which is used to query the database.
+
+```typescript
+// Background script: Load data
+import { Resource } from 'https://deno.land/x/windmill@v1.76.0/mod.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
+
+export async function main(auth: Resource<'supabase'>, access_token: string) {
+	if (!access_token) {
+		return [];
+	}
+	const client = createClient(auth.supabaseUrl, auth.supabaseKey, {
+		global: { headers: { Authorization: `bearer ${access_token}` } }
+	});
+	const { data } = await client.from('my_table').select();
+	return data;
+}
+```
+
+```typescript
+// Background script: Open Data tab
+if (!k?.result?.error) {
+	setTab('a', 1);
+}
+```
 
 ## Frontend only
 
 The second - and more experimental - option is to only use frontend scripts.
-This is the simpler way to achieve the goal, but it has some drawbacks. The main one is that their
-is no type safety, so you have to be familiar with the Supabase API and the data structure of your
-table.
+This is the simpler way to achieve the goal, but it has some drawbacks. The main one is obviously
+that everything will be available to the client, so you shouldn't use any secrets in frontend
+scripts. They are also a bit less convenient for the developers as it is pure JavaScript, meaning
+there is no type safety, so you have to be familiar with the Supabase API and the data structure
+of your table.
 
-There is another [Supabase Authentication Example][supabase-auth-fe-example] on the Hub that uses
+We have another [Supabase Authentication Example][supabase-auth-fe-example] on the Hub that uses
 only frontend scripts. Click "Edit/Run in Windmill" to open the app in the editor.
 
 ![Example app with frontend scripts only](./3-wm-default-fe.png 'Example app with frontend scripts only')
@@ -111,9 +162,60 @@ only frontend scripts. Click "Edit/Run in Windmill" to open the app in the edito
 
 Now when you login with the credentials of a Supabase user, the `Login` script will be executed,
 which creates a Supabase client with an `Authorization` header attached and saves it to the local
-state of the app. When the authentication is done, the `Load data` _background script_ will take
+state of the app.
+
+```typescript
+// Inline script: Login
+state.supabase = {
+	// You'll need to insert the URL and the public API key of your Supabase project here
+	url: '',
+	publicKey: '',
+	client: state?.supabase?.client ?? undefined,
+	error: undefined
+};
+
+const sb = await import('https://esm.sh/@supabase/supabase-js@2.10.0');
+const client = sb.createClient(state.supabase.url, state.supabase.publicKey);
+const { data, error, error_description } = await client.auth.signInWithPassword({
+	// In frontend scripts you can directly reference components by their IDs
+	email: i.result,
+	password: j.result
+});
+if (data?.session?.access_token) {
+	state.supabase.client = sb.createClient(state.supabase.url, state.supabase.publicKey, {
+		global: { headers: { Authorization: `bearer ${data.session.access_token}` } }
+	});
+} else {
+	state.supabase.client = undefined;
+	state.supabase.error = error_description ?? error ?? undefined;
+}
+```
+
+When the authentication is done, the `Load data` _background script_ will take
 the newly created client from the state and use it to query the data. After everything is loaded,
 you should be navigated to the "Data" tab.
+
+```typescript
+// Background script: Load data
+if (!state.supabase.error) {
+	try {
+		const { data, error, error_description } = await state.supabase.client
+			.from('my_table')
+			.select();
+		const err = error_description ?? error ?? undefined;
+		if (err) {
+			throw Error(err);
+		}
+		state.data = data;
+		setTab('a', 1);
+	} catch (err) {
+		state.supabase.error = err;
+		state.data = [];
+	}
+} else {
+	state.data = [];
+}
+```
 
 ## Comparison
 
@@ -132,8 +234,8 @@ you should be navigated to the "Data" tab.
 			<td>Type safety</td>
 		</tr>
 		<tr>
-			<td style={{borderBottomWidth: '2px'}}>Less execution units consumed</td>
-			<td style={{borderBottomWidth: '2px'}}>Secret API keys could be used</td>
+			<td style={{borderBottomWidth: '2px'}}>Doesn't consume execution units</td>
+			<td style={{borderBottomWidth: '2px'}}>Secrets are not exposed to the client</td>
 		</tr>
 		<tr>
 			<td rowspan="1" style={{fontWeight: 700}}>Cons</td>
