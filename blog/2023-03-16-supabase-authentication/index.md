@@ -154,19 +154,19 @@ there is no type safety, so they have to be familiar with the Supabase API and t
 of your table.
 
 We have another [Supabase Authentication Example][supabase-auth-fe-example] on the Hub that uses
-only frontend scripts. Click "Edit/Run in Windmill" to open the app in the editor.
+_only frontend scripts_. Click "Edit/Run in Windmill" to open the app in the editor.
 
 ![Example app with frontend scripts only](./3-wm-default-fe.png 'Example app with frontend scripts only')
 
-The only setup you need to do is to update the `Login` inline script with the **URL** and the
+The only setup you need to do is to update the `Login` _inline script_ with the **URL** and the
 **public API key** of your Supabase project. Refer to the
 [Supabase credentials](#supabase-credentials) section to see how to obtain them.
 
 ### Try the app
 
-Now when you login with the credentials of a Supabase user, the `Login` script will be executed,
-which creates a Supabase client with an `Authorization` header attached and saves it to the local
-state of the app.
+Now when you login with the credentials of a Supabase user, the `Login` _inline script_ will be
+executed, which creates a Supabase client with an `Authorization` header attached and saves it to
+the local state of the app.
 
 ```typescript
 // Inline script: Login
