@@ -242,7 +242,11 @@ if (!state.supabase.error) {
 			<td style={{borderBottomWidth: '2px'}}>Secrets are not exposed to the client</td>
 		</tr>
 		<tr>
-			<td rowspan="1" style={{fontWeight: 700}}>Cons</td>
+			<td rowspan="2" style={{fontWeight: 700}}>Cons</td>
+			<td>Everything is exposed to the client</td>
+			<td>Consumes execution units</td>
+		</tr>
+		<tr>
 			<td>No type safety</td>
 			<td>More boilerplate code</td>
 		</tr>
