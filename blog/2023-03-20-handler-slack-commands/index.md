@@ -1,6 +1,6 @@
 ---
 slug: handler-slack-commands
-title: Build a Handler of Slack Commands with Windmill Workflows
+title: Build a Slackbot with Windmill Workflows
 authors: [henricourdent]
 tags: [tutorial, slack, slackbot, commands, workflow]
 image: ./0-header.png
