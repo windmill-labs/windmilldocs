@@ -30,7 +30,7 @@ Components can be positioned by dragging and dropping them on the canvas. You ca
 
 ### Resizing
 
-Components can be resized by dragging the resize handler on the bottom-right corner of the component.
+Components can be resized by dragging the resize handler on the top-right corner of the component.
 
 ### Component locking
 
@@ -42,4 +42,18 @@ Moving or moving a component will move all unlocked components on its way.
 
 ### Component selection
 
-Components can be selected by clicking on them. The selected component will be highlighted with a blue border.
+Components can be selected by clicking on them. The selected component will be highlighted with a indigo border.
+When hovering a component, a blue border will be displayed around the component.
+
+### Expand a component
+
+Components can be expanded by clicking on the expand button on the top-right corner of the component. It will try to expand the component to take as much width as possible and at most 12 columns of height, taking into account the other components on the canvas.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/component-expand.mp4"
+/>
