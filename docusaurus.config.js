@@ -106,6 +106,11 @@ const config = {
 						position: 'left',
 						label: 'OpenAPI'
 					},
+					{
+						href: '/blog',
+						position: 'left',
+						label: 'Blog'
+					},
 					// {
 					// 	href: '/hiring',
 					// 	position: 'right',
