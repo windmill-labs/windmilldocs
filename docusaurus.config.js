@@ -92,6 +92,11 @@ const config = {
 						label: 'Docs'
 					},
 					{
+						href: '/blog',
+						position: 'left',
+						label: 'Blog'
+					},
+					{
 						to: 'https://app.windmill.dev',
 						position: 'left',
 						label: 'Cloud App'
