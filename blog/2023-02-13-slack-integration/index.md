@@ -169,6 +169,12 @@ You can find a more complete version of this Script on
 
 :::
 
+:::note What's next?
+
+We go deeper in a [further article](2023-03-20-handler-slack-commands/index.md), integrating multiple commands, resources and Slack approval steps.
+:::
+
+
 <!-- Links -->
 
 [wm-slack-settings]: https://app.windmill.dev/workspace_settings?tab=slack
