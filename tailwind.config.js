@@ -2,9 +2,6 @@ const plugin = require('tailwindcss/plugin');
 
 module.exports = {
 	content: ['./src/**/*.{html,js,jsx,tsx}'],
-	corePlugins: {
-		preflight: false
-	},
 	extend: {
 		height: {
 			'80v': '80vh',

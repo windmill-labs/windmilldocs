@@ -10,11 +10,29 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Inter";
-  src: url('/static/Inter-Variable.ttf') format('truetype');
-	font-weight: 400;
-  font-style: normal;
+@layer base {
+	@font-face {
+		font-family: 'Inter';
+		src: url('/Inter-Variable.ttf');
+		font-weight: 100 900;
+		font-display: swap;
+	}
+}
+
+nav {
+	font-family: var(--ifm-font-family-base);
+}
+
+footer {
+	font-family: var(--ifm-font-family-base);
+}
+
+li {
+	font-family: var(--ifm-font-family-base);
+}
+
+body {
+	font-family: var(--ifm-font-family-base);
 }
 
 :root {
@@ -30,18 +48,9 @@
 }
 
 .markdown {
-  color: rgb(71, 70, 69);
-  font-size: 16px;
-  line-height: 24px;
-}
-
-.markdown li {
-  list-style-type: disc;
-  margin-left: 20px;
-}
-
-.markdown ul {
-  margin-left: 20px;
+	color: rgb(71, 70, 69);
+	font-size: 16px;
+	line-height: 24px;
 }
 
 .docusaurus-highlight-code-line {
@@ -58,7 +67,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .api {
 	margin-bottom: 4rem;
 }
-
 .api h3 {
 	color: #fff;
 	background: #555;
@@ -67,7 +75,6 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 .api__body {
 	margin: 0 0 0 1rem;
 }
-
 .api__signature {
 	font-family: var(--ifm-font-family-monospace);
 	font-size: var(--ifm-code-font-size);
@@ -76,6 +83,35 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 .api__description {
 	margin: 1rem 0;
+}
+
+h1 {
+	@apply text-5xl;
+	@apply font-semibold;
+}
+
+h2 {
+	@apply text-3xl;
+	@apply font-normal;
+}
+
+h3 {
+	@apply text-2xl;
+	@apply font-medium;
+}
+
+h4 {
+	@apply text-lg;
+	@apply font-bold;
+}
+
+div.markdown li {
+	list-style-type: disc !important;
+	margin-left: 20px !important;
+}
+
+div.markdown ul {
+	margin-left: 20px !important;
 }
 
 a {
@@ -184,3 +220,4 @@ a {
 .landing-section-gradient-background-dark {
 	background:linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%), linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%), linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #000;
 }
+
