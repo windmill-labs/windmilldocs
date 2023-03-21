@@ -12,13 +12,7 @@ Slackbots are great tools to save time and reduce the need for manual input. The
 
 Building a Slack commands handler requires a little bit of Windmill mastering, but it's also a perfect way to get familiar with Windmill, as some key features are used (scripts, worfklows, branches, approval steps).
 
-Also, know that non-technical users can totally build such tools. I myself am not a developer.
-
-:::info
-
-Windmill was not made for building slackbots. They are one of the side effects of our modular product.
-
-:::
+Also, know that non-technical users can totally build such tools. I'm myself not a developer.
 
 ![Windmill Slack](./0-header.png "Windmill & Slack")
 
@@ -57,8 +51,8 @@ Before going deeper, let's take a look at this first workflow because its logic 
 
 ### Inputs
 
-There are two workflow inputs:
-- **response_url**: this is the slack webhook url provided by Windmill. It will be automatically completed by the command once you've connected Slack to the Windmill workspace.
+There are two workflow inputs that are passed to your flow everytime a command is emitted after you have setup the Slack command integration in Windmill:
+- **response_url**: this is the url to be used by your flow to respond to the caller using the slack client. It will be automatically completed by the command once you've connected Slack to the Windmill workspace.
 - **text**: the text following the `/windmill` command and written on Slack. The following step will make sense of it.
 
 ### Text parser
@@ -171,7 +165,7 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
 
 <br/>
 
-All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: a lot of resources are [already available](https://hub.windmill.dev/resources), or you can [create your own](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource).
+All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource).
 
 One specificity of triggering resources from Slack is that **you have to let Windmill know Slack can interact with them**.
 
