@@ -1,8 +1,33 @@
 # Outputs
 
+On the left-hand side of the app editor, you can find the app outputs. They are three types of outputs:
+
+- Context and state
+- Component outputs
+- Background script outputs
+
+When a component or a background script is selected, the outputs of the component or the background script are displayed.
+You can manually open an output by clicking on the header of the output. Once manually opened, the output will stay open until you close it.
+
+You can search for an output by typing in the search bar. It searches in the output name and in the output object keys.
+
+### Context
+
+The app context contains the following outputs:
+
+- email: the email of the current user
+- username: the username of the current user
+- query: the query parameters of the URL
+
+### State
+
+The app state is a client-side store that can be used to store data. The app statec can be manipulated by frontend scripts.
+
 ### Component outputs
 
-On the left-hand side of the app editor, you can find the app outputs. Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded or collapsed by clicking on the arrow on the left-hand side of the output.
+Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded by clicking on the `{...}` button. Next to the button, you can see the number of outputs.
+
+![App outputs](../assets/apps/2_app_outputs/app-output-collapsed.png)
 
 For example, the `Table` component has the following outputs:
 
@@ -16,13 +41,22 @@ For example, the `Table` component has the following outputs:
 
 The outputs are used to quickly visualize the current state of the app.
 
-### Context
+### Containers
 
-In addition to the component outputs, the app context is also displayed. The app context contains the following outputs:
+Some components are "containers" and can contain other components. They are 4 types of containers:
 
-- email: the email of the current user
-- username: the username of the current user
-- query: the query parameters of the URL
+- Containers: Plain container that can contain other components
+- Tabs: Tabs that can contain other components
+- Horizontal split: Horizontal split that can contain other components
+- Vertical split: Vertical split that can contain other components
+
+The components contained in a container have their outputs displayed in the container outputs.
+
+![App outputs](../assets/apps/2_app_outputs/app-output-container.png)
+
+### Background script outputs
+
+A background script is a script that runs in the background and can be used to perform actions that are not related to the UI.
 
 ### Connecting inputs
 
