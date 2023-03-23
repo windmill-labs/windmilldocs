@@ -9,12 +9,8 @@ using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
 ## Example Repos
 
-We provide example repos for various use cases:
+We provide an example repo for syncing with windmill:
 
-- Mirroring/Backup of a remote:
-  [windmill-backup-example](https://github.com/windmill-labs/windmill-backup-example)
-- Pushing to a remote only:
-  [windmill-push-example](https://github.com/windmill-labs/windmill-push-example)
 - Syncing with a remote:
   [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example)
 
@@ -47,20 +43,6 @@ or git(hub) repository with a windmill instance. The CLI will automatically
 maintain state for you and ensure modifications that happen concurrently on the
 remote and locally stay in sync.
 
-### Initializing
-
-To get started, run `wmill sync init` this will initialize the current folder
-with a `.wmill` folder, where internal state will be stored, and a
-`.wmillignore`, which you can use to ignore some files.
-
-:::caution
-
-`wmill sync init` will store the
-[selected workspace](./workspace-management.md#selected-workspace) as part of
-the state. Make sure to select the correct workspace.
-
-:::
-
 ### Pulling
 
 Pulling with `wmill sync pull` will first update the internal state, and then
@@ -69,13 +51,6 @@ actually modified files. Possible conflicts will warn the user.
 
 ### Pushing
 
-Pushing with `wmill sync push` will first update the internal state, and then
-generate a diff between your local files and this state, only sending the
-relevant local updates to the remote server.
-
-:::tip
-
-Run `wmill sync pull` right after `push` if you intend to keep updating the
-folder. This will ensure your folder stays in sync.
-
-:::
+Pushing with `wmill sync push` will push all local files to the remote and then update the internal state to avoid being out-of-sync due to the push.
+Using `sync push` without `--skip-pull` will start the push by doing a pull first to ensure the user is not
+overriding changes made to the remote.
