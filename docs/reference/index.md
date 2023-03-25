@@ -8,7 +8,8 @@ of Windmill.
 Users are uniquely identified globally by their email. They also have a unique
 username with respect to each workspace they are member of. A user picks his
 username when he joins a workspace. There are two kinds of Users:
--  **authors**: they can write scripts/flows/apps/variables/resources.
+
+- **authors**: they can write scripts/flows/apps/variables/resources.
 - **operators**: they can only run and view scripts/flows/apps/variables/resources.
 
 ## Scripts
@@ -116,19 +117,19 @@ compatible with its most advanced features yet.
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "properties": {
-    "your_name": {
-      "description": "The name to hello world to",
-      "type": "string"
-    },
-    "your_nickname": {
-      "description": "If you prefer a nickname, that's fine too",
-      "type": "string"
-    }
-  },
-  "required": []
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"your_name": {
+			"description": "The name to hello world to",
+			"type": "string"
+		},
+		"your_nickname": {
+			"description": "If you prefer a nickname, that's fine too",
+			"type": "string"
+		}
+	},
+	"required": []
 }
 ```
 
@@ -395,11 +396,11 @@ Scripts. One can simply follow the path layout. For instance,
 below:
 
 ```typescript
-import { main as foo, util } from "/f/common/my_script_path.ts";
+import { main as foo, util } from '/f/common/my_script_path.ts';
 
 export async function main() {
-  await foo();
-  util();
+	await foo();
+	util();
 }
 ```
 
@@ -544,17 +545,14 @@ target URL follows this format (those are templates URL):
 
 <!-- FIXME: Update URLs after merging #336 -->
 
-- Flow by path: 
-<a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH</a>
+- Flow by path:
+  <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH</a>
 
+- Script by hash:
+  <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH</a>
 
-- Script by hash: 
-<a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH</a>
-
-
-- Script by path: 
-<a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH</a>
-
+- Script by path:
+  <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH</a>
 
 Find more information on the [Webhooks section](https://docs.windmill.dev/docs/core_concepts/webhooks/).
 
@@ -593,7 +591,7 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
 
 - **Script Jobs**: Run a script as defined by the hash of the script (that
   uniquely and immutably defines a specific version of a script), its input
-  arguments (args) and the `permissioned_as` user or group of whom it is gonna
+  arguments (args) and the `permissioned_as` user or group of whom it is going to
   act on behalf of and inherit the visibility to other items such as resources
   and variables from. An user can **NEVER** escalates his privileges but only
   de-escalates it by launching a script with either the same permissions as
@@ -695,17 +693,17 @@ wmill.set_variable("u/user/foo", value)
 TypeScript (Deno):
 
 ```typescript
-import * as wmill from "https://deno.land/x/windmill/index.ts";
+import * as wmill from 'https://deno.land/x/windmill/index.ts';
 
-wmill.getVariable("u/user/foo");
-wmill.setVariable("u/user/foo", value);
+wmill.getVariable('u/user/foo');
+wmill.setVariable('u/user/foo', value);
 ```
 
 Note that there is a similar API for getting and setting [Resources](#resource)
 which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](#resource-type) to be automatically
 discriminated in the auto-generated form to be of the proper type (e.g a
-parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only gonna
+parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only going to
 offer a selection over the resources of type postgres in the auto-generated UI)
 
 There is also a concept of [state](#state-and-internal-state) to share values
@@ -750,12 +748,12 @@ of a Resource is the `demodb` schema:
 
 ```json
 {
-  "dbname": "demo",
-  "host": "demodb.delightool.xyz",
-  "password": "demo",
-  "port": 6543,
-  "sslmode": "disable",
-  "user": "demo"
+	"dbname": "demo",
+	"host": "demodb.delightool.xyz",
+	"password": "demo",
+	"port": 6543,
+	"sslmode": "disable",
+	"user": "demo"
 }
 ```
 
@@ -770,7 +768,7 @@ For instance:
 
 ```json
 {
-  "simple": "$var:u/user/foo"
+	"simple": "$var:u/user/foo"
 }
 ```
 
@@ -793,43 +791,36 @@ like the following:
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "properties": {
-    "dbname": {
-      "description": "The database name",
-      "type": "string"
-    },
-    "host": {
-      "description": "The instance host",
-      "type": "string"
-    },
-    "password": {
-      "description": "The postgres users password",
-      "type": "string"
-    },
-    "port": {
-      "description": "The instance port",
-      "type": "integer"
-    },
-    "sslmode": {
-      "description": "The sslmode",
-      "enum": [
-        "disable",
-        "allow",
-        "prefer",
-        "require",
-        "verify-ca",
-        "verify-full"
-      ],
-      "type": "string"
-    },
-    "user": {
-      "description": "The postgres username",
-      "type": "string"
-    }
-  },
-  "required": ["dbname", "user", "password"],
-  "type": "object"
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"properties": {
+		"dbname": {
+			"description": "The database name",
+			"type": "string"
+		},
+		"host": {
+			"description": "The instance host",
+			"type": "string"
+		},
+		"password": {
+			"description": "The postgres users password",
+			"type": "string"
+		},
+		"port": {
+			"description": "The instance port",
+			"type": "integer"
+		},
+		"sslmode": {
+			"description": "The sslmode",
+			"enum": ["disable", "allow", "prefer", "require", "verify-ca", "verify-full"],
+			"type": "string"
+		},
+		"user": {
+			"description": "The postgres username",
+			"type": "string"
+		}
+	},
+	"required": ["dbname", "user", "password"],
+	"type": "object"
 }
 ```
 
