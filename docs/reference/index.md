@@ -566,8 +566,10 @@ full execution before returning.
 The endpoint has the following format:
 
 ```bash
-https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run_wait/result/$SCRIPT_PATH
+https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run_wait_result/$SCRIPT_PATH
 ```
+
+where $SCRIPT_PATH is the path of the Script in the workspace, including the prefix `u/` or `f/`
 
 ## Jobs
 
