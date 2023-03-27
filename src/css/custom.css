@@ -86,23 +86,31 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 h1 {
-	@apply text-5xl;
-	@apply font-semibold;
+	@apply text-3xl;
+	@apply font-bold;
 }
 
 h2 {
-	@apply text-3xl;
-	@apply font-normal;
+	@apply text-2xl;
+	@apply font-bold;
 }
 
 h3 {
-	@apply text-2xl;
-	@apply font-medium;
+	@apply text-xl;
+	@apply font-bold;
 }
 
 h4 {
 	@apply text-lg;
-	@apply font-bold;
+	@apply font-semibold;
+}
+
+/**
+ * Only apply to images in the docs
+ */
+#__docusaurus.img {
+	@apply border-2;
+	@apply rounded-xl;
 }
 
 div.markdown li {
@@ -219,5 +227,27 @@ a {
 
 .landing-section-gradient-background-dark {
 	background:linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%), linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%), linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #000;
+}
+
+table {
+  font-family: 'Inter', sans-serif; /* Use Inter font */
+  font-size: 14px; /* Set small text size */
+  border-collapse: collapse; /* Merge table borders */	
+	width: 100%;
+	display: inline-table;
+}
+th,
+td {
+  text-align: left; /* Left align table cells */
+  padding: 8px; /* Add padding to table cells */
+  border: 1px solid #ddd; /* Add border to table cells */
+}
+
+td:nth-of-type(2):first-child {
+	background-color: red;
+}
+
+th {
+  background-color: #f2f2f2; /* Add light gray background to table header */
 }
 

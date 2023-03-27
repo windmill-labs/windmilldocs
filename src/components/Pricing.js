@@ -221,19 +221,19 @@ export default function Pricing() {
 				<h1 className="section-title text-center">Pricing</h1>
 			</div>
 
-			<div class="mb-10 mx-auto max-w-2xl ">
-				<div class="divide-y divide-gray-100 mx-4">
-					<details class="group">
-						<summary class="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
+			<div className="mb-10 mx-auto max-w-2xl ">
+				<div className="divide-y divide-gray-100 mx-4">
+					<details className="group">
+						<summary className="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
 							Operator vs Author
-							<div class="text-secondary-500">
+							<div className="text-secondary-500">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
 									stroke-width="1.5"
 									stroke="currentColor"
-									class="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
+									className="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
 								>
 									<path
 										stroke-linecap="round"
@@ -243,22 +243,22 @@ export default function Pricing() {
 								</svg>
 							</div>
 						</summary>
-						<div class="pb-4 text-secondary-500">
+						<div className="pb-4 text-secondary-500">
 							An author can write scripts/flows/apps/variables/resources. An operator can only
 							run/view them.
 						</div>
 					</details>
-					<details class="group">
-						<summary class="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
+					<details className="group">
+						<summary className="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
 							What is a computation?
-							<div class="text-secondary-500">
+							<div className="text-secondary-500">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
 									stroke-width="1.5"
 									stroke="currentColor"
-									class="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
+									className="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
 								>
 									<path
 										stroke-linecap="round"
@@ -268,7 +268,7 @@ export default function Pricing() {
 								</svg>
 							</div>
 						</summary>
-						<div class="pb-4 text-secondary-500">
+						<div className="pb-4 text-secondary-500">
 							{' '}
 							The single credit-unit is called a "computation". An computation corresponds to a
 							single job whose duration is less than 1s. For any additional seconds of computation,
@@ -308,17 +308,17 @@ export default function Pricing() {
 			</div>
 
 			{selectedTab == 'Cloud' ? (
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 					{Object.entries(plans).map(([planTitle, planDesc]) => (
-						<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
-							<h2 class="mb-4 text-4xl">{planTitle}</h2>
-							<ul class="list-disc p-4 text-md">
+						<div className="box p-4 text-sm  flex flex-col h-full overflow-hidden">
+							<h2 className="mb-4 text-4xl">{planTitle}</h2>
+							<ul className="list-disc p-4 text-md">
 								{planDesc.map((item) => (
-									<li class="mt-2">{item}</li>
+									<li className="mt-2">{item}</li>
 								))}
 							</ul>
 
-							<div class="grow" />
+							<div className="grow" />
 							{planTitle == 'Enterprise' ? (
 								<div>
 									<Quote
@@ -356,65 +356,65 @@ export default function Pricing() {
 					))}
 				</div>
 			) : (
-				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div class="box p-4 text-sm  flex flex-col h-full overflow-hidden">
-						<h2 class="mb-4 text-4xl">Free and Open-source</h2>
-						<ul class="list-disc p-4 text-md">
-							<li class="mt-2">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="box p-4 text-sm  flex flex-col h-full overflow-hidden">
+						<h2 className="mb-4 text-4xl">Free and Open-source</h2>
+						<ul className="list-disc p-4 text-md">
+							<li className="mt-2">
 								<b>AGPLv3</b> License
 							</li>
-							<li class="mt-2">No restrictions whatsoever</li>
-							<li class="mt-2">Google/Github/Microsoft/Gitlab SSO</li>
-							<li class="mt-2">Easy to deploy on Fargate/Docker/Kubernetes</li>
-							<li class="mt-2">Community support on Discord</li>
+							<li className="mt-2">No restrictions whatsoever</li>
+							<li className="mt-2">Google/Github/Microsoft/Gitlab SSO</li>
+							<li className="mt-2">Easy to deploy on Fargate/Docker/Kubernetes</li>
+							<li className="mt-2">Community support on Discord</li>
 						</ul>
 					</div>
-					<div class="box p-4 flex flex-col h-full overflow-hidden">
-						<h2 class="mb-4 text-4xl">Enterprise Edition</h2>
+					<div className="box p-4 flex flex-col h-full overflow-hidden">
+						<h2 className="mb-4 text-4xl">Enterprise Edition</h2>
 
-						<ul class="list-disc p-4 text-md">
-							<li class="mt-2">
+						<ul className="list-disc p-4 text-md">
+							<li className="mt-2">
 								<b>Commercial</b> License
 							</li>
 
-							<li class="mt-2">
+							<li className="mt-2">
 								<span>
 									<b>$100/mo</b>, includes 1 user/author + 10k computations
 								</span>
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								<span>
 									<b>+ $16/mo</b> per extra user/author in the workspace
 								</span>
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								<span>
 									<b>+ $8/mo</b> per extra operators in the workspace.
 								</span>
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								<span>
 									<b>+ $0.002</b> per extra computation
 								</span>
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								Windmill Enterprise Edition <b>Plugins</b>
 							</li>
-							<ul class="list-disc mb-2 ml-8 text-lg">
+							<ul className="list-disc mb-2 ml-8 text-lg">
 								<li>Audit Logs exports</li>
 								<li>Distributed dependency cache</li>
 							</ul>
-							<li class="">
+							<li className="">
 								<b>SAML</b> support including groups synchronization
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								<b>SLA</b>
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								<b>Priority Support 24/7</b> with 3h response time and automation engineer
 								assistance
 							</li>
-							<li class="mt-2">
+							<li className="mt-2">
 								<b>Design partners for Roadmap</b>
 							</li>
 						</ul>

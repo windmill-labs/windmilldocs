@@ -1,4 +1,4 @@
-const plugin = require('tailwindcss/plugin')
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
 	content: ['./src/**/*.{html,js,jsx,tsx}'],
@@ -37,7 +37,7 @@ module.exports = {
 				'h2 > a[href*="/blog/"]': {
 					fontSize: '1.8rem',
 					lineHeight: '105%',
-					fontWeight: '500',
+					fontWeight: '500'
 				}
 			});
 		})
