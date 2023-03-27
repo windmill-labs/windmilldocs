@@ -1,6 +1,6 @@
 ---
 slug: handler-slack-commands
-title: Build a Handler of Slack Commands with Windmill Workflows
+title: Build a Slackbot with Windmill Workflows
 authors: [henricourdent]
 tags: [tutorial, slack, slackbot, commands, workflow]
 image: ./0-header.png
@@ -165,7 +165,7 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
 
 <br/>
 
-All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource).
+All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource-type).
 
 One specificity of triggering resources from Slack is that **you have to let Windmill know Slack can interact with them**.
 
