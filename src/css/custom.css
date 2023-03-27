@@ -86,7 +86,14 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 h1 {
-	@apply !text-3xl font-bold;
+	@apply text-3xl font-bold;
+}
+
+/**
+ * Making sure blog article header styles are overwritten
+ */
+h1[itemprop='headline'] {
+	@apply !text-3xl !font-bold;
 }
 
 h2 {
