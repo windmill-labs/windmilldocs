@@ -404,6 +404,14 @@ export async function main() {
 }
 ```
 
+You may also use simple relative imports:
+
+```typescript
+import { main as foo, util } from '../my_script_path.ts';
+```
+
+Note that path in windmill can have as many depth as needed, so you can have paths like this `f/folder/subfolder/my_script_path.ts` and relative imports will work at any level. Hence, it will work exactly the same as on local.
+
 ## Flows
 
 A **Flow** is a core concept. It is a JSON serializable value in the
