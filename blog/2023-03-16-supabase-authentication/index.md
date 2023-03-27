@@ -74,27 +74,27 @@ the same app!
 
 :::
 
-There are two scripts that has an argument named `auth`, which is a [Resource][resource-doc] of
-type `supabase`. This means it will hold the **URL** and the **public API key** of your
-Supabase project. Read the [Supabase credentials](#supabase-credentials) section to see how to
-obtain them. To make the scripts work, you need to create a new `supabase` resource if you don't
-have one by clicking the plus sign - you can find instructions in the creation form as well.
+Some scripts take `auth` as an argument of type `Resource<'supabase'>`. [Resource][resource-doc] is
+a special type in Windmill that are treated accordingly. The `supabase` type
+contains the URL and the public API key of your Supabase project. Read the
+[Supabase credentials](#supabase-credentials) section to see how to obtain them.
 
 ![Pass in the auth argument](./2-wm-args.png 'Pass in the auth argument')
 
 ### Try the app
 
-Now when you login with the credentials of a Supabase user, the `Login` script attached to the
+Now when you login with the credentials of a Supabase user, the script attached to the
 button component will be executed, which signs in to Supabase and returns the given `access_token`
-and `refresh_token`.
+and `refresh_token`. Every script that is dependant on the token will be executed after the
+sign in script.
 
 ```typescript
-// Inline script: Login
+// Hub script: Authenticate with email and password (Supabase)
 import { Resource } from 'https://deno.land/x/windmill@v1.76.0/mod.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
 export async function main(auth: Resource<'supabase'>, email: string, password: string) {
-	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+	const client = createClient(auth.url, auth.key);
 	const { data, error } = await client.auth.signInWithPassword({ email, password });
 	if (error) {
 		return {
@@ -111,6 +111,13 @@ export async function main(auth: Resource<'supabase'>, email: string, password: 
 }
 ```
 
+:::info
+
+This script was imported from [Windmill Hub][hub-supabase-auth] but you could also copy the code
+and paste it into an "Inline script".
+
+:::
+
 If the authentication is successful, the `Load data` and `Open Data tab`
 _background scripts_ will run right after. `Load data` also receives the `access_token` and
 creates an authenticated Supabase client, which is used to query the database.
@@ -124,13 +131,20 @@ export async function main(auth: Resource<'supabase'>, access_token: string) {
 	if (!access_token) {
 		return [];
 	}
-	const client = createClient(auth.supabaseUrl, auth.supabaseKey, {
+	const client = createClient(auth.url, auth.key, {
 		global: { headers: { Authorization: `bearer ${access_token}` } }
 	});
 	const { data } = await client.from('my_table').select();
 	return data;
 }
 ```
+
+:::tip
+
+You can find a more [generalised version of the data fetching script][hub-supabase-fetch]
+on the Hub.
+
+:::
 
 ```typescript
 // Background script: Open Data tab
@@ -228,12 +242,16 @@ if (!state.supabase.error) {
 	</thead>
 	<tbody>
 		<tr>
-			<td rowspan="2" style={{fontWeight: 700, borderBottomWidth: '2px'}}>Pros</td>
+			<td rowspan="3" style={{fontWeight: 700, borderBottomWidth: '2px'}}>Pros</td>
 			<td>Doesn't consume execution units</td>
 			<td>Secrets are not exposed to the client</td>
 		</tr>
 		<tr>
-			<td style={{borderBottomWidth: '2px'}}>Simple</td>
+			<td>Simple</td>
+			<td>Premade scripts can be imported from <a href="https://hub.windmill.dev" target="_blank">Windmill Hub</a></td>
+		</tr>
+		<tr>
+			<td style={{borderBottomWidth: '2px'}}></td>
 			<td style={{borderBottomWidth: '2px'}}>Type safety</td>
 		</tr>
 		<tr>
@@ -257,3 +275,5 @@ if (!state.supabase.error) {
 [supabase-auth-fe-example]: https://hub.windmill.dev/apps/9/supabase-authentication-example---frontend-scripts-version
 [supabase-auth-be-example]: https://hub.windmill.dev/apps/11/supabase-authentication-example---backend-scripts-version
 [resource-doc]: https://docs.windmill.dev/docs/core_concepts/resources_and_types
+[hub-supabase-auth]: https://hub.windmill.dev/scripts/supabase/1540/authenticate-with-email-and-password-supabase
+[hub-supabase-fetch]: https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase
