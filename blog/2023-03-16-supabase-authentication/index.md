@@ -8,7 +8,8 @@ image: ./0-header.png
 
 This example shows how to use Supabase Authentication on Windmill to query tables which have
 [RLS](https://supabase.com/docs/guides/auth/row-level-security) enabled. It can be achieved in two
-ways: using **frontend scripts only** or **involving the backend** as well.
+ways: using scripts executed on the **server** and a new experimental method where Supabase would be
+queried by scripts executed in the **browser** directly.
 
 <!--truncate-->
 
@@ -20,15 +21,9 @@ the sake of simplicity.
 
 :::
 
-![Integrattion between Supabase and Windmill](./0-header.png 'Use Supabase Auth with Windmill')
+![Integration between Supabase and Windmill](./0-header.png 'Use Supabase Auth with Windmill')
 
 ## Preface
-
-:::tip
-
-TLDR comparison at the [end of the article](#comparison).
-
-:::
 
 In case you don't have a table, or just want to test out things first, run the following SQL
 script to create the table `my_table`:
@@ -62,7 +57,7 @@ project. You can find them in the "API" menu of the "Project Settings" page in y
 
 ![Supabase project settings](./1-sb-settings.png 'Supabase project settings')
 
-## Involving the backend
+## Option 1: Using backend scripts
 
 Let's start with the "backend scripts" approach by forking the
 [Supabase Authentication Example][supabase-auth-be-example] from the Hub. Click "Edit/Run in
@@ -144,7 +139,7 @@ if (!k?.result?.error) {
 }
 ```
 
-## Frontend only
+## Option 2 (experimental): Using frontend scripts
 
 The second - and more experimental - option is to only use frontend scripts.
 This is the simpler way to achieve the goal, but it has some drawbacks. The main one is obviously
@@ -227,28 +222,32 @@ if (!state.supabase.error) {
 	<thead>
 		<tr>
 			<th></th>
-			<th>Frontend only</th>
-			<th>With backend</th>
+			<th>Frontend scripts</th>
+			<th>Backend scripts</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td rowspan="2" style={{fontWeight: 700, borderBottomWidth: '2px'}}>Pros</td>
-			<td>Simple</td>
-			<td>Type safety</td>
+			<td>Doesn't consume execution units</td>
+			<td>Secrets are not exposed to the client</td>
 		</tr>
 		<tr>
-			<td style={{borderBottomWidth: '2px'}}>Doesn't consume execution units</td>
-			<td style={{borderBottomWidth: '2px'}}>Secrets are not exposed to the client</td>
+			<td style={{borderBottomWidth: '2px'}}>Simple</td>
+			<td style={{borderBottomWidth: '2px'}}>Type safety</td>
 		</tr>
 		<tr>
-			<td rowspan="2" style={{fontWeight: 700}}>Cons</td>
+			<td rowspan="3" style={{fontWeight: 700}}>Cons</td>
 			<td>Everything is exposed to the client</td>
 			<td>Consumes execution units</td>
 		</tr>
 		<tr>
+			<td>Not every browser support ESM imports</td>
+			<td>Possibly more verbose scripts</td>
+		</tr>
+		<tr>
 			<td>No type safety</td>
-			<td>More boilerplate code</td>
+			<td></td>
 		</tr>
 	</tbody>
 </table>
