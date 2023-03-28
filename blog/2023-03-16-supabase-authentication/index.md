@@ -83,6 +83,14 @@ contains the URL and the public API key of your Supabase project. Read the
 
 ### Try the app
 
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	id="backend-video"
+	src="/videos/supabase-auth-backend.mp4"
+/>
+<br/>
+
 Now when you login with the credentials of a Supabase user, the script attached to the
 button component will be executed, which signs in to Supabase and returns the given `access_token`
 and `refresh_token`. Every script that is dependant on the token will be executed after the
