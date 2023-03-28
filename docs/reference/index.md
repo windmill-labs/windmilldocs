@@ -376,17 +376,25 @@ def main():
   return foo()
 ```
 
-It works with Scripts contained in folders, and in Scripts contained in
+It works with Scripts contained in folders, and for scripts contained in
 user-spaces, e.g: `f.<foldername>.script_path` or `u.<username>.script_path`.
 
-Beware that you can only import Scripts that you have visibility on.
-Furtheremore, if you make any import in the common logic, you will need to add
-the same import in the Script that imports it as well, otherwise the automatic
+You can also do relative imports to the current script. For instance.
+
+```python
+# if common_logic is a script in the same folder or user-space
+from .common_logic import foo
+# otherwise if you need to access the folder 'folder'
+from ..folder.common_logic import foo
+```
+
+Beware that you can only import scripts that you have view rights on on at time of execution.
+Furthermore, if you make any imports in the common logic, you will need to add
+the same imports in the Script that is being imported, otherwise the automatic
 dependency management will not work.
 
 The folder layout is identical with the one that works with the CLI for syncing
-Scripts locally and on Windmill. As a consequence, the IDE will treat it as a
-relative import and will behave as expected.
+scripts locally and on Windmill. See [Developing scripts locally](../advanced/4_local_development/index.md)
 
 ### Deno relative imports for sharing common logic
 
