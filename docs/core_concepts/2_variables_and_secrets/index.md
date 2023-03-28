@@ -60,28 +60,26 @@ Reserved variables are passed to the job as environment variables. For example, 
 There are 2 main ways variables are used withing scripts:
 
 1. passing variables as parameters to scripts
+   Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow it to access the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+
 2. fetching them from within a script by using the wmill client in the respective language
 
-3. Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow it to access the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+   ```typescript
+   wmill.getVariable('u/user/foo');
+   ```
 
-4. Within a script, one can the wmill client of their respective language. For instance, for the variable `u/user/foo`:
+   ```python
+   wmill.get_variable("u/user/foo")
+   ```
 
-```typescript
-wmill.getVariable('u/user/foo');
-```
+   ```go
+   wmill.GetVariable("u/user/foo")
+   ```
 
-```python
-wmill.get_variable("u/user/foo")
-```
+   ```bash
+   curl -s -H "Authorization: Bearer $WM_TOKEN" \
+     "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/variables/get/u/user/foo" \
+       | jq -r .value
+   ```
 
-```go
-wmill.GetVariable("u/user/foo")
-```
-
-```bash
-curl -s -H "Authorization: Bearer $WM_TOKEN" \
-  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/variables/get/u/user/foo" \
-    | jq -r .value
-```
-
-The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.
+   The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.
