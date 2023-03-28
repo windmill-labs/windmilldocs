@@ -64,22 +64,30 @@ There are 2 main ways variables are used withing scripts:
 
 2. fetching them from within a script by using the wmill client in the respective language
 
-   ```typescript
-   wmill.getVariable('u/user/foo');
-   ```
+#### Fetching a variable in Typescript
 
-   ```python
-   wmill.get_variable("u/user/foo")
-   ```
+```typescript
+wmill.getVariable('u/user/foo');
+```
 
-   ```go
-   wmill.GetVariable("u/user/foo")
-   ```
+### Fetching a variable in Python
 
-   ```bash
-   curl -s -H "Authorization: Bearer $WM_TOKEN" \
-     "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/variables/get/u/user/foo" \
-       | jq -r .value
-   ```
+```python
+wmill.get_variable("u/user/foo")
+```
 
-   The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.
+### Fetching a variable in Go
+
+```go
+wmill.GetVariable("u/user/foo")
+```
+
+### Fetching a variable in Bash
+
+```bash
+curl -s -H "Authorization: Bearer $WM_TOKEN" \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/variables/get/u/user/foo" \
+    | jq -r .value
+```
+
+The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.
