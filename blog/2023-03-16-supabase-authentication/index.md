@@ -60,10 +60,10 @@ project. You can find them in the "API" menu of the "Project Settings" page in y
 ## General approach
 
 The general approach is to use the "Tabs" component to separate the sign in step from the display
-of data. "Tabs" allow us to associate a set of nested components with a label, meaning the login
-step will have it's own page on the first tab. It will return the access token after a successful
-login, which then can be used on the second tab to query the database. The passing of credentials
-works a bit differently in the two approaches, so let's dive in and see which one suits you better.
+of data. Tabs allow us to associate sets of nested components with labels, meaning the login step
+will have it's own page on the first tab. It will return the access token after a successful login,
+which then can be used on the second tab to query the database. The passing of credentials works a
+bit differently in the two approaches, so let's dive in and see which one suits you better.
 
 ## Option 1: Using backend scripts
 
