@@ -6,7 +6,7 @@ tags: [case study, testimonial, geospacial data processing, windmill, sourcepol,
 image: ./0-header.png
 ---
 
-This is a testimonial written by Windmill Community member [Pirmin Kalberer](https://github.com/pka), Managin Director at [Sourcepole](https://sourcepole.ch/). Thanks to him for his trust.
+This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Managin Director at [Sourcepole](https://sourcepole.ch/).
 
 <!--truncate-->
 
@@ -30,6 +30,22 @@ In particular, we use Windmill for:
 - **Scheduled ETL** of files from public repositories to PostgreSQL.
 - Its **UIs** where users can simply upload their own data to publish it as a file ready for downloading.
 - We are starting to have **workspaces dedicated to each customer** where they can use our workflows straightforwardly.
+
+:::tip Examples
+
+<br/>
+
+A workflow made by Sourcepole being executed:
+
+![Workflow being executed](./sourcepole_execution.png "Workflow being executed")
+
+<br/>
+
+The associated results:
+
+![Workflow results](./sourcepole_results.png "Workflow results")
+
+:::
 
 You can have more details on our use of worflow engines for geospatial data processing with this [video](https://pretalx.com/fossgis2023/talk/JAMMJ8/) (in German 🇩🇪) of my lecture at the 2023 Berlin FOSSGIS conference on free and open source software for geographic information systems.
 
