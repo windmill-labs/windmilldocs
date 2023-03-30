@@ -323,7 +323,7 @@ On our side, we'll show you in a further article how to introduce a human-in-the
 
 <br/>
 
-On your side, see the [details][wm-hub-flow] of the flow and fork it to [use it on Windmill]((https://docs.windmill.dev/docs/getting_started/how_to_use_windmill)).
+On your side, see the [details][wm-hub-flow] of the flow and fork it to [use it on Windmill](https://docs.windmill.dev/docs/getting_started/how_to_use_windmill).
 
 :::
 
