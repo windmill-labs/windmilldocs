@@ -330,4 +330,4 @@ On your side, see the [details][wm-hub-flow] of the flow and fork it to [use it 
 
 <!-- Links -->
 
-[wm-hub-flow]: https://hub.windmill.dev/flows/38/automatically-populate-crm-contact-details-from-simple-email
+[wm-hub-flow]: https://hub.windmill.dev/flows/38/
