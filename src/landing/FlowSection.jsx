@@ -195,6 +195,35 @@ const tabs = [
 
 const examples = [
 	{
+		name: <span>Populate Contact Details from Simple Email</span>,
+		description: (
+			<>
+				From a signup’s email, parse the email and make a Google search. Use {' '}
+				<a
+					href="https://hub.windmill.dev/integrations/openai"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
+						OpenAI
+					</mark>
+				</a>{' '}
+				to make sense of the results and fill the contact details in an{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/airtable"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
+						Airtable
+					</mark>
+				</a>
+				CRM.
+			</>
+		),
+		href: 'https://www.windmill.dev/blog/automatically-populate-crm'
+	},
+	{
 		name: <span>Hacker News mentions</span>,
 		description: (
 			<>
@@ -245,35 +274,6 @@ const examples = [
 			</>
 		),
 		href: 'https://hub.windmill.dev/flows/21'
-	},
-	{
-		name: <span>Populate Contact Details from Simple Email</span>,
-		description: (
-			<>
-				From a signup’s email, parse the email and make a Google search. Use {' '}
-				<a
-					href="https://hub.windmill.dev/integrations/openai"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
-						OpenAI
-					</mark>
-				</a>{' '}
-				to make sense of the results and fill the contact details in an{' '}
-				<a
-					href="https://hub.windmill.dev/integrations/airtable"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
-						Airtable
-					</mark>
-				</a>
-				CRM.
-			</>
-		),
-		href: 'https://www.windmill.dev/blog/automatically-populate-crm'
 	}
 ];
 
