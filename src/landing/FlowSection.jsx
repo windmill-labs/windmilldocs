@@ -273,7 +273,7 @@ const examples = [
 				CRM.
 			</>
 		),
-		href: 'https://hub.windmill.dev/flows/38/'
+		href: 'https://www.windmill.dev/blog/automatically-populate-crm'
 	}
 ];
 
