@@ -6,7 +6,7 @@ tags: [case study, testimonial, geospacial data processing, windmill, sourcepol,
 image: ./0-header.png
 ---
 
-This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Managin Director at [Sourcepole](https://sourcepole.ch/).
+This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Managing Director at [Sourcepole](http://sourcepole.com/).
 
 <!--truncate-->
 
@@ -16,7 +16,7 @@ This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Mana
 
 ## What before Windmill?
 
-**[Sourcepole.ch](https://sourcepole.ch/)** is a software development company based in Switzerland. We develop customer-specific solutions in the field of geoinformatics based on open source software components.
+**[Sourcepole](http://sourcepole.com/)** is a software development company based in Switzerland. We develop customer-specific solutions in the field of geoinformatics based on open source software components.
 
 Data science requires the manipulation of large amounts of data from multiple sources. Workflow engines are crucial as they provide the infrastructure to define, execute, and monitor a sequence of steps in a data manipulation process.
 
@@ -47,7 +47,7 @@ The associated results:
 
 :::
 
-You can have more details on our use of worflow engines for geospatial data processing with this [video](https://pretalx.com/fossgis2023/talk/JAMMJ8/) (in German 🇩🇪) of my lecture at the 2023 Berlin FOSSGIS conference on free and open source software for geographic information systems.
+You can have more details on our use of worflow engines for geospatial data processing with this [video](https://pretalx.com/fossgis2023/talk/JAMMJ8/) (in German 🇩🇪) of my presentation at the 2023 Berlin FOSSGIS conference on free and open source software for geographic information systems.
 
 ## How to use Windmill?
 
