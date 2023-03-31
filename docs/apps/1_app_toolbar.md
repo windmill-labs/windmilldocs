@@ -17,7 +17,7 @@ The app editor mode can be toggled between `Editor` and `Preview` mode. The prev
 
 ### Desktop/mobile mode
 
-Switch the canvas mode in `Mobile` or `Desktop` layout from the toolbar.
+Switch the canvas mode in `Mobile` or `Desktop` layout from the toolbar. You can manually set the position and size of the components in both modes.
 
 ### Menu `⋮`
 
