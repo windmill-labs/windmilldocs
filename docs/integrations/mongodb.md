@@ -1,10 +1,4 @@
----
-slug: connect-mongodb-with-windmill
-title: How to Connect MongoDB Atlas with Windmill
-authors: [adamkov]
-tags: [mongodb, windmill, resource, setup, integrate, connect, v2]
-image: ./0-header.png
----
+# Mongodb Integration
 
 This guide aims to show you how to create a connection from your Windmill
 instance to an external MongoDB Atlas database, then use it to make queries.
@@ -22,7 +16,7 @@ You can find more information about setting up MongoDB Atlas
 
 :::
 
-![Integrattion between MongoDB and Windmill](./0-header.png "Connect a MongoDB Atlas project with Windmill")
+![Integrattion between MongoDB and Windmill](../assets/integrations/0-header.png "Connect a MongoDB Atlas project with Windmill")
 
 ## Create Resource
 
@@ -41,7 +35,9 @@ You can find a list of all the officially supported Resource Types on
 Head to the [Resources][wm-app-resources] page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `mongodb_rest` type.
 
-![Select Resource Type](./1-resources.png)
+![Select Resource Type](../assets/integrations/1-resources.png)
+
+
 
 :::caution
 
@@ -55,7 +51,7 @@ To enable access to your database, follow the instructions in
 [this article][mongo-api] and paste your **API key** and **endpoint** in
 Windmill. When it's done, click "Save".
 
-![Paste in Resource Values](./2-mongo-rt.png)
+![Paste in Resource Values](../assets/integrations/2-mongo-rt.png)
 
 ## Create Script
 
@@ -72,7 +68,7 @@ Windmill uses Deno as the TypeScript runtime.
 Name the Script `my_mongodb_script`, give it a summary, "Query the Example
 MongoDB Dataset" for example and click "Next".
 
-![Script creation first step](./3-script-creation.png)
+![Script creation first step](../assets/integrations/3-script-creation.png)
 
 Paste in the following code into the editor:
 
@@ -113,7 +109,7 @@ After filling the inputs, try running the Script by clicking "Test" or pressing
 `Ctrl` + `Enter`. You should see exactly one restaurant returned in the bottom
 right corner.
 
-![Run the Script](./4-script-test.png)
+![Run the Script](../assets/integrations/4-script-test.png)
 
 If you tried querying by the `_id` field, you might have noticed that it didn't
 return anything. That's because it is stored as an ObjectID, which is a special

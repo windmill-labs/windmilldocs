@@ -1,6 +1,6 @@
 # Airtable Integration
 
-There are two resources associated with Airtable. Both are required to use Airtable's API from Windmill.
+There are two resources associated with [Airtable](https://www.airtable.com/). Both are required to use Airtable's API from Windmill.
 
 ## Airtable Account
 
@@ -16,7 +16,7 @@ There are two resources associated with Airtable. Both are required to use Airta
 
 You'll need to land on Airtable's [Developer hub](https://airtable.com/create/tokens) from where click on "API key" and paste it on Windmill.
 
-| Property | Type   | Description            | Default          | Mandatory | Where to find                                  |
+| Property | Type   | Description            | Default          | Required | Where to find                                  |
 |----------|--------|------------------------|------------------|-----------|------------------------------------------------|
 | apiKey   | string | Airtable API key       | keyXXXXXXXXXXXXXX| true      | Airtable Account > API > Generate API Key      |
 
@@ -44,11 +44,12 @@ Now specify Airtable which databse and table you want to interact with:
 | baseId     | string  |         Unique identifier for a specific Airtable base     | True     | Page URL |
 | tableName  | string  |        Name of an individual table within that base     | True     | In Airtable. Name of the tab of a database |
 
+<br/><br/>
 
 :::tip
 
 Find some pre-set interactions with Airtable on the [Hub](https://hub.windmill.dev/integrations/airtable).
 
-Feel free to create your own Airtable scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md)
+Feel free to create your own Airtable scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
 
 :::
