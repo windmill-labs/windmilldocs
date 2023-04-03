@@ -247,30 +247,20 @@ const examples = [
 		href: 'https://hub.windmill.dev/flows/21'
 	},
 	{
-		name: <span>Sign up a user in the database</span>,
+		name: <span>Populate Contact Details from Simple Email</span>,
 		description: (
 			<>
-				Upon new user signup, check for existence in{' '}
+				From a signup’s email, parse the email and make a Google search. Use {' '}
 				<a
-					href="https://hub.windmill.dev/integrations/postgres"
+					href="https://hub.windmill.dev/integrations/openai"
 					target="_blank"
 					className="!no-underline"
 				>
 					<mark className="leading-none bg-blue-100 text-blue-600 hover:bg-blue-200 px-2 rounded font-semibold whitespace-nowrap">
-						Postgres
+						OpenAI
 					</mark>
 				</a>{' '}
-				, hash password, add record to{' '}
-				<a
-					href="https://hub.windmill.dev/integrations/gdrive"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-sky-100 text-sky-600 px-2 rounded font-semibold whitespace-nowrap hover:bg-sky-200">
-						Google Drive
-					</mark>
-				</a>{' '}
-				and{' '}
+				to make sense of the results and fill the contact details in an{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/airtable"
 					target="_blank"
@@ -280,10 +270,10 @@ const examples = [
 						Airtable
 					</mark>
 				</a>
-				, send an Email to new user.
+				CRM.
 			</>
 		),
-		href: 'https://hub.windmill.dev/flows/23'
+		href: 'https://www.windmill.dev/blog/automatically-populate-crm'
 	}
 ];
 
