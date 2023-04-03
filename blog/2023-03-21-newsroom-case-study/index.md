@@ -6,7 +6,7 @@ tags: [case study, testimonial, slack commands, non-technical users, monitoring,
 image: ./0-header.jpg
 ---
 
-This is a testimonial written by Windmill Community member Wei Chih, Independent Journalist for a newsroom in Singapore. Thanks to him for his trust.
+This is a testimonial written by Wei Chih, Independent Journalist for a newsroom in Singapore.
 
 <!--truncate-->
 
