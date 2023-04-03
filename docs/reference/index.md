@@ -310,48 +310,6 @@ async function main(...) {
 }
 ```
 
-### Dependency management
-
-For TypeScript (Deno), the dependencies and their versions are directly in the
-script and hence there is no need for any additional steps.
-
-For Python, the imports are automatically analyzed when the script is saved and
-the corresponding list of PyPi packages is extracted. A dependency job is then
-spawned to associate that list of PyPi packages with a lockfile, which will lock
-the versions. This ensures that the same version of a Python script is always
-executed with the same versions of its dependencies. It also avoids the hassle
-of having to maintain a separate requirements file.
-
-If the imports are not properly analyzed, there exists an escape hatch to
-override the input of the dependency job. One needs to head the Script with the
-following comment:
-
-```python
-#requirements:
-#dependency
-#version_pinned_dependency==0.4
-
-import dependency
-
-def main(...):
-  ...
-```
-
-In addition to that, environment variables can be set to customize `pip`'s
-index-url and extra-index-url. This is useful for private repositories.
-
-In a docker-compose file, you would add following lines:
-
-```dockerfile
-windmill:
-  ...
-  environment:
-    ...
-    - PIP_INDEX_URL=https://pypi.org/simple
-    - PIP_EXTRA_INDEX_URL=https://pypi.org/simple
-    - PIP_TRUSTED_HOST=pypi.org
-```
-
 ## Flows
 
 A **Flow** is a core concept. It is a JSON serializable value in the
@@ -558,7 +516,7 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
   hash will always use the same versions. The process of generating this
   lockfile is also a job in itself so you can easily inspect the issues
   generating the lockfile if any. See
-  [Dependency Management](#dependency-management) for more information.
+  [Dependency Management](../advanced/6_imports/index.md) for more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
   every step. The execution of the steps are in-themselves jobs. It is defined
