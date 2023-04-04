@@ -51,7 +51,7 @@ of the app.
 First, create a new app from the [Windmill Cloud][app] Home page by clicking "App" in the top right
 corner. Let's add our first element, which should be a "Tabs" component. Find the item named "Tabs"
 in the right-hand panel and click on it to add it to the canvas. Rename the tabs to "Login" and
-"Data" and add two components to the "Login" tab:
+"Data". Finally, add two components to the "Login" tab:
 
 - an "Email input" component
 - and a "Password" component
@@ -90,12 +90,13 @@ the **output** of the "Button" component to show/hide the warning message.
 
 The "Button" component has a "Click" event that we can use to run a script. The script will try to
 authenticate the user with given credentials and return an access token. If the authentication is
-successful, the access token will be stored in the **result** of the component. We can use this
+successful, the access token will be stored in the **result** of the component. In short, the
+`result` field on the button will hold the value returned from the attached script. We can use this
 result to determine whether the user is logged in or not.
 
 The input of the "Text" component is a simple [JavaScript template string][js-template-string] by
 default. To reference the ouput of a component, we just need to use the component's ID. In our case,
-`f` is the ID of the login button component so the template string will look like this:
+`f` is the ID of the login button, so the template string will look like this:
 
 ```js
 ${f?.result?.access_token ? ' ' : 'You need to be logged in to load the data'}
