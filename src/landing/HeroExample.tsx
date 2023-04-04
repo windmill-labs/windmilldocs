@@ -105,7 +105,7 @@ export default function HeroExample() {
 									className="text-gray-700 hover:text-blue-400 cursor-pointer transition-all"
 								/>
 								<span className="text-gray-700 font-bold text-2xl inline-flex gap-2 items-center ">
-									A tour of Windmill in 58s{' '}
+									A tour of Windmill in 52s{' '}
 									<div className="inline-flex items-center">
 										(<VolumeX size="30px" />)
 									</div>
