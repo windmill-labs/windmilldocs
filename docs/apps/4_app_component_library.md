@@ -7,9 +7,9 @@ The app components library is located on the right-hand side of the app editor. 
 Components can be configured in two ways:
 
 - **Inputs**: inputs can be connected to an output or computed using a runnable.
-  - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
-  <br/>
 
+  - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
+    <br/>
 
 - **Configuration**: property such as the button label, the text input placeholder, etc.
   - e.g. `Table` component has a configuration property that allows you to configure the search bar: Client-side search, Server-side search, or no search.
@@ -17,15 +17,16 @@ Components can be configured in two ways:
 ## Component outputs
 
 - **Runnable**: some component can trigger a runnable when an event occurs, usually when a user interacts with the component. The result of the runnable is stored in the component output in the key `result`. It also stores the `loading` state of the component.
+
   - e.g. `Button` component can trigger a runnable when clicked.
-<br/>
+    <br/>
 
 - **Own outputs**: some component have outputs defined by the component.
   - e.g. `Table` component has a selectedRow output
 
 ## Inserting components
 
-Click on a component in the component library to insert it in the app canvas. It will be automatically positioned.
+Click on a component in the component library to insert it in the app canvas. It will be automatically positioned to the first available spot starting from the top left corner
 
 ## Components list
 
@@ -33,54 +34,58 @@ Windmill provides a set of components that can be used to build apps.
 
 The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](https://docs.windmill.dev/docs/misc/getting_help/).
 
-
 Even though the list of components is never as up to date as on [Windmill Cloud](https://app.windmill.dev/user/login), here is the list of the available components:
 
-Layout
-- Container
-- Tabs
-- Divider X
-- Divider Y
-- Drawer
-- Vertical Split Panes
-- Horizontal Split Panes
+### Layout
 
-Buttons
-- Button
-- Form
-- Modal Form
+The layout components are used to organize the components in the app canvas.
 
-Inputs
-- Text Input
-- Password
-- Email Input
-- Number
-- Currency
-- Slider
-- Range
-- Date
-- File Input
-- Toggle
-- Select
-- MultiSelect
+- [Container](#container)
+- [Tabs](#tabs)
+- [Divider X](#divider-x)
+- [Dvider Y](#divider-y)
+- [Drawer](#drawer)
+- [Vertical Split Panes](#vertical-split-panes)
+- [Horizontal Split Panes](#horizontal-split-panes)
 
-Display
-- Text
-- Icon
-- Image
-- Map
-- HTML
-- Table
-- AgGrid Table
-- Bar/Line Chart
-- Pie Chart
-- Vega Lite
-- Plotly
-- Scatter Chart
-- Timeseries
-- PDF
-- Rich Result
+### Buttons
 
+- [Button](#button)
+- [Modal Form](#form-)
+- [Form](#form)
+
+### Inputs
+
+- [Text Input](#text-input)
+- [Password](#password)
+- [Email Input](#email-input)
+- [Number](#number)
+- [Currency](#currency)
+- [Slider](#slider)
+- [Range](#range)
+- [Date](#date)
+- [File Input](#file-input)
+- [Toggle](#toggle)
+- [Select](#select)
+- [MultiSelect](#multiselect)
+
+### Display
+
+- [Text](#text)
+- [Icon](#icon)
+- [Image](#image)
+- [Map](#map)
+- [HTML](#html)
+- [Table](#table)
+- [AgGrid Table](#aggrid-table)
+- [Bar/Line Chart](#barline-chart)
+- [Pie Chart](#pie-chart)
+- [Vega Lite](#vega-lite)
+- [Plotly](#plotly)
+- [Scatter Chart](#scatter-chart)
+- [Timeseries](#timeseries)
+- [PDF](#pdf)
+- [Rich Result](#rich-result)
 
 Below you will find details about each component.
 
@@ -103,17 +108,18 @@ Containers allow you to host other components in a box. Moving a container means
 
 To add a component to a container, you can either click on `Insert` while you selected the container, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
-
 #### Container configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| No Padding | boolean |    false    |    false    |  false  | Whether you want to add extra space between the component and the border. |
-
+The container component has no configuration.
 
 ### Tabs
 
-Tabs components allow you to host other components in several tabs of box, they are containers with tabs.
+Tabs components allow you to host other components in several tabs. Each tab is a container.
+Tabs have three display modes:
+
+- `Tabs`: the tabs are displayed horizontally.
+- `Sidebar`: the tabs are displayed vertically.
+- `Invisible on view`: The tabs are not displayed when the app is viewed. They are only displayed in the app editor. This is useful to make multi-page apps, where each page is a tab.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -126,21 +132,19 @@ Tabs components allow you to host other components in several tabs of box, they 
 />
 <br/>
 
-To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
-
+To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or your can move an existing component by cutting it and pasting it in the tabs component. See [Moving components](#moving-components).
 
 #### Tabs configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| No Padding | boolean |    false    |    false    |  false  | Whether you want to add extra space between the component and the border. |
+| Name      |               Type               | Connectable | Templatable | Default | Description                   |
+| --------- | :------------------------------: | :---------: | :---------: | :-----: | ----------------------------- |
+| Tabs Kind | Tabs, Sidebar, Invisible on view |    false    |    false    |  Tabs   | The display mode of the tabs. |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
+| Name             |  Type  | Description                     |
+| ---------------- | :----: | ------------------------------- |
 | selectedTabIndex | number | The number of the selected tab. |
-
 
 ### Divider X
 
@@ -150,10 +154,10 @@ Divider X is a horizontal line.
 
 #### Divider X configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| Size | number |    false    |    false    |  2  | The thickness of the line. |
-| Color |    string    | false |    false    |    #00000060    |  The color of the line in hexadecimal color notation.  |
+| Name  |  Type  | Connectable | Templatable |  Default  | Description                                          |
+| ----- | :----: | :---------: | :---------: | :-------: | ---------------------------------------------------- |
+| Size  | number |    false    |    false    |     2     | The thickness of the line.                           |
+| Color | string |    false    |    false    | #00000060 | The color of the line in hexadecimal color notation. |
 
 ### Divider Y
 
@@ -163,10 +167,10 @@ Divider Y is a vertical line.
 
 #### Divider Y configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| Size | number |    false    |    false    |  2  | The thickness of the line. |
-| Color |    string    | false |    false    |    #00000060    |  The color of the line in hexadecimal color notation.  |
+| Name  |  Type  | Connectable | Templatable |  Default  | Description                                          |
+| ----- | :----: | :---------: | :---------: | :-------: | ---------------------------------------------------- |
+| Size  | number |    false    |    false    |     2     | The thickness of the line.                           |
+| Color | string |    false    |    false    | #00000060 | The color of the line in hexadecimal color notation. |
 
 ### Drawer
 
@@ -185,18 +189,17 @@ The drawer is container called by a button. Once you click on the button, a side
 
 To add a component to a container, you can either click on `Insert` while you selected the opened drawer, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
-
 #### Drawer configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| No Padding | boolean |    false    |    false    |  false  | Whether you want to add extra space between the component and the border. |
-| Drawer Title |    string    | false |    false    |    Drawer title    |  The title of the container called by Drawer.  |
-| Label |               string                |    true     |    false    | Press me  | The button label. |
-| Color          | blue, red, dark, light, green, gray, none |    false    |    false    |   blue   | The button color.                             |
-| Size  |         xs, sm, md , lg, xl         |    false    |    false    |   xs    | The button size.  |
-| Fill container |               boolean               |    false    |    false    |  false   | Whether the button should fill the container. |
-| Disabled       |               boolean               |    false    |    false    |  false   | Whether the button should be disabled.        |
+| Name           |                   Type                    | Connectable | Templatable |   Default    | Description                                                               |
+| -------------- | :---------------------------------------: | :---------: | :---------: | :----------: | ------------------------------------------------------------------------- |
+| No Padding     |                  boolean                  |    false    |    false    |    false     | Whether you want to add extra space between the component and the border. |
+| Drawer Title   |                  string                   |    false    |    false    | Drawer title | The title of the container called by Drawer.                              |
+| Label          |                  string                   |    true     |    false    |   Press me   | The button label.                                                         |
+| Color          | blue, red, dark, light, green, gray, none |    false    |    false    |     blue     | The button color.                                                         |
+| Size           |            xs, sm, md , lg, xl            |    false    |    false    |      xs      | The button size.                                                          |
+| Fill container |                  boolean                  |    false    |    false    |    false     | Whether the button should fill the container.                             |
+| Disabled       |                  boolean                  |    false    |    false    |    false     | Whether the button should be disabled.                                    |
 
 ### Vertical Split Panes
 
@@ -215,11 +218,10 @@ Container split in x number of panes vertically.
 
 To add a component to a vertical split pane, you can either click on `Insert` while you selected the vertical split pane, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
-
 #### Vertical Split Panes configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
+| Name       |  Type   | Connectable | Templatable | Default | Description                                                               |
+| ---------- | :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------- |
 | No Padding | boolean |    false    |    false    |  false  | Whether you want to add extra space between the component and the border. |
 
 ### Horizontal Split Panes
@@ -237,18 +239,17 @@ Container split in x number of panes horizontally.
 />
 <br/>
 
-
 To add a component to a horizontal split pane, you can either click on `Insert` while you selected the horizontal split pane, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
 
 #### Horizontal Split Panes configuration
 
-| Name     |  Type   | Connectable | Templatable | Default | Description                      |
-| -------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
+| Name       |  Type   | Connectable | Templatable | Default | Description                                                               |
+| ---------- | :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------- |
 | No Padding | boolean |    false    |    false    |  false  | Whether you want to add extra space between the component and the border. |
 
 ## Buttons
 
-### Button API
+### Button
 
 The component triggers a runnable when clicked. If the runnable has parameters, they need to be configured in the component configuration.
 The runnable parameters are defined:
@@ -260,13 +261,46 @@ The runnable parameters are defined:
 
 #### Button configuration
 
-| Name           |                Type                 | Connectable | Templatable | Default  | Description                                   |
-| -------------- | :---------------------------------: | :---------: | :---------: | :------: | --------------------------------------------- |
-| label          |               string                |    true     |    false    | Press me | The button label.                             |
-| color          | blue, red, dark, light, green, gray |    false    |    false    |   blue   | The button color.                             |
-| size           |         xs, sm, md , lg, xl         |    false    |    false    |    sm    | The button size.                              |
-| Fill container |               boolean               |    false    |    false    |  false   | Whether the button should fill the container. |
-| disabled       |               boolean               |    false    |    false    |  false   | Whether the button should be disabled.        |
+| Name                |                Type                 | Connectable | Templatable |  Default  | Description                                                |
+| ------------------- | :---------------------------------: | :---------: | :---------: | :-------: | ---------------------------------------------------------- |
+| label               |               string                |    true     |    false    | Press me  | The button label.                                          |
+| color               | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                                          |
+| size                |         xs, sm, md , lg, xl         |    false    |    false    |    sm     | The button size.                                           |
+| Fill container      |               boolean               |    false    |    false    |   false   | Whether the button should fill the container.              |
+| disabled            |               boolean               |    false    |    false    |   false   | Whether the button should be disabled.                     |
+| Before Icon         |               string                |    false    |    false    | Undefined | The icon to display before the label.                      |
+| After Icon          |               string                |    false    |    false    | Undefined | The icon to display after the label.                       |
+| Trigger on App load |               boolean               |    false    |    false    |   false   | Whether the button script should be triggered on app load. |
+
+Special parameters:
+
+#### Button On Success
+
+The button component has a special parameter called `On Success`. This parameter is used to trigger one of the following actions:
+
+- **Do nothing**: the button does nothing after the runnable is executed.
+- **Go to an URL**: the button redirects the user to the specified URL after the runnable is executed.
+- **Set the tab of a Tabs component**: the button sets the tab of a Tabs component after the runnable is executed.
+- **Display a toast**: the button displays a toast after the runnable is executed.
+
+##### **Go to an URL configuration:**
+
+| Name    |  Type   | Connectable | Templatable |    Default    | Description                                    |
+| ------- | :-----: | :---------: | :---------: | :-----------: | ---------------------------------------------- |
+| URL     | string  |    true     |    false    | /apps/get/foo | The URL to redirect the user to.               |
+| New Tab | boolean |    false    |    false    |     true      | Whether the URL should be opened in a new tab. |
+
+##### **Set the tab of a Tabs component configuration:**
+
+| Name    |               Type                | Connectable | Templatable | Default | Description                                                                             |
+| ------- | :-------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------------------------------- |
+| Set Tab | Array<{id: string, index:number}> |    false    |    false    |   []    | The tabs to set. The id is the id of the Tabs component and the index is the tab index. |
+
+##### **Display a toast configuration:**
+
+| Name    |  Type  | Connectable | Templatable |   Default   | Description                          |
+| ------- | :----: | :---------: | :---------: | :---------: | ------------------------------------ |
+| Message | string |    true     |    false    | Hello there | The message to display in the toast. |
 
 #### Outputs
 
@@ -275,7 +309,7 @@ The runnable parameters are defined:
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
 
-### Form API
+### Form
 
 The form component allows you to create a form. It has a submit button that triggers a runnable when clicked.
 The runnable parameters are defined:
@@ -296,6 +330,10 @@ Only user inputs are displayed in the form.
 | color | blue, red, dark, light, green, gray |    false    |    false    |  dark   | The button color. |
 | size  |         xs, sm, md , lg, xl         |    false    |    false    |   sm    | The button size.  |
 
+:::info
+The form component has a special parameter called `On Success`. See the button component for more information.
+:::
+
 #### Outputs
 
 | Name    |  Type   | Description                      |
@@ -303,7 +341,7 @@ Only user inputs are displayed in the form.
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
 
-### Form Modal API
+### Form Modal
 
 The form modal component allows you to create a form. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
 
@@ -330,6 +368,10 @@ Only user inputs are displayed in the form in the modal.
 The button label is used as the modal title.
 :::
 
+:::info
+The form modal component has a special parameter called `On Success`. See the button component for more information.
+:::
+
 #### Outputs
 
 | Name    |  Type   | Description                      |
@@ -339,7 +381,7 @@ The button label is used as the modal title.
 
 ## Inputs
 
-### Text Input API
+### Text Input
 
 The text input component allows you to get a string from the user.
 
@@ -358,7 +400,7 @@ The text input component allows you to get a string from the user.
 | ------ | :----: | --------------------- |
 | Result | string | The text input value. |
 
-### Password Input API
+### Password Input
 
 The password input component allows you to get a password from the user.
 
@@ -376,7 +418,7 @@ The password input component allows you to get a password from the user.
 | ------ | :----: | ------------------------- |
 | Result | string | The password input value. |
 
-### Email Input API
+### Email Input
 
 The email input component allows you to get an email from the user.
 
@@ -384,19 +426,18 @@ The email input component allows you to get an email from the user.
 
 #### Email Input configuration
 
-| Name        |  Type  | Connectable | Templatable | Default  | Description                     |
-| ----------- | :----: | :---------: | :---------: | :------: | ------------------------------- |
-| Placeholder | string |    false    |    false    | Email | The email input placeholder. |
-| Default value | string |    true    |    false    | Email | The email input default value. |
+| Name          |  Type  | Connectable | Templatable | Default | Description                    |
+| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------ |
+| Placeholder   | string |    false    |    false    |  Email  | The email input placeholder.   |
+| Default value | string |    true     |    false    |  Email  | The email input default value. |
 
 #### Outputs
 
-| Name   |  Type  | Description               |
-| ------ | :----: | ------------------------- |
+| Name   |  Type  | Description            |
+| ------ | :----: | ---------------------- |
 | Result | string | The email input value. |
 
-
-### Number Input API
+### Number Input
 
 The number input component allows you to get a number from the user.
 
@@ -404,9 +445,9 @@ The number input component allows you to get a number from the user.
 
 #### Number Input configuration
 
-| Name          |  Type  | Connectable | Templatable | Default | Description                           |
-| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------- |
-| placeholder   | string |    false    |    false    | Type... | The number input placeholder.         |
+| Name          |  Type  | Connectable | Templatable | Default | Description                            |
+| ------------- | :----: | :---------: | :---------: | :-----: | -------------------------------------- |
+| placeholder   | string |    false    |    false    | Type... | The number input placeholder.          |
 | default value | number |    true     |    false    |         | The default value of the number input. |
 
 #### Outputs
@@ -415,8 +456,7 @@ The number input component allows you to get a number from the user.
 | ------ | :----: | ---------------------- |
 | result | number | The number input value |
 
-
-### Currency Input API
+### Currency Input
 
 The currency input component allows you to get a written amount of money in a set currency from the user.
 
@@ -424,21 +464,20 @@ The currency input component allows you to get a written amount of money in a se
 
 #### Currency Input configuration
 
-| Name          |  Type  | Connectable | Templatable | Default | Description                           |
-| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------- |
-| default value | number |    true     |    false    |     /    | The default value of the currency input. |
-| is negative allowed | boolean |    false     |    false    |     false    | If negative amounts will be accepted. |
-| currency | string: USD, EUR, GBP, CAD, AUD, JPY, CNY, INR, BRL |    false     |    false    |     USD    | The default value of the currency input. |
-| locale | string: en-US, en-GB, en-IE, de-DE, fr-FR, br-FR, ja-JP, pt-TL, fr-CA, en-CA|    false     |    false    |     en-US    | The format of the amount. |
+| Name                |                                     Type                                     | Connectable | Templatable | Default | Description                              |
+| ------------------- | :--------------------------------------------------------------------------: | :---------: | :---------: | :-----: | ---------------------------------------- |
+| default value       |                                    number                                    |    true     |    false    |    /    | The default value of the currency input. |
+| is negative allowed |                                   boolean                                    |    false    |    false    |  false  | If negative amounts will be accepted.    |
+| currency            |             string: USD, EUR, GBP, CAD, AUD, JPY, CNY, INR, BRL              |    false    |    false    |   USD   | The default value of the currency input. |
+| locale              | string: en-US, en-GB, en-IE, de-DE, fr-FR, br-FR, ja-JP, pt-TL, fr-CA, en-CA |    false    |    false    |  en-US  | The format of the amount.                |
 
 #### Outputs
 
-| Name   |  Type  | Description            |
-| ------ | :----: | ---------------------- |
+| Name   |  Type  | Description              |
+| ------ | :----: | ------------------------ |
 | result | number | The currency input value |
 
-
-### Slider API
+### Slider
 
 The slider component allows you to get a number from the user.
 
@@ -457,29 +496,27 @@ The slider component allows you to get a number from the user.
 | ------ | :----: | ----------------- |
 | result | number | The slider value. |
 
-
-### Range API
+### Range
 
 The slider component allows you to get a range of numbers from the user.
 
 ![Range API](../assets/apps/4_app_component_library/range.png)
 
-
 #### Range configuration
 
-| Name |  Type  | Connectable | Templatable | Default | Description                      |
-| ---- | :----: | :---------: | :---------: | :-----: | -------------------------------- |
+| Name |  Type  | Connectable | Templatable | Default | Description                     |
+| ---- | :----: | :---------: | :---------: | :-----: | ------------------------------- |
 | min  | number |    false    |    false    |    0    | The minimum value of the range. |
 | max  | number |    false    |    false    |   42    | The maximum value of the range. |
 
 #### Outputs
 
-| Name   |  Type  | Description       |
-| ------ | :----: | ----------------- |
+| Name     |  Type  | Description             |
+| -------- | :----: | ----------------------- |
 | result 0 | number | The range bottom value. |
-| result 1 | number | The range top value. |
+| result 1 | number | The range top value.    |
 
-### Date Input API
+### Date Input
 
 The date input component allows you to get a date from the user.
 
@@ -499,8 +536,7 @@ The date input component allows you to get a date from the user.
 | ------ | :----: | --------------------- |
 | result | string | The date input value. |
 
-
-### File Input API
+### File Input
 
 The file input allows users to drop files into the app.
 
@@ -508,20 +544,19 @@ The file input allows users to drop files into the app.
 
 #### File Input configuration
 
-| Name          |  Type   | Connectable | Templatable | Default | Description                      |
-| ------------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| Accepted File Types         | array  |    false     |    false    |  "image/*" ; "application/pdf"  | The types of files you accept to be submitted.                |
-| Allow Multiple | boolean |    false     |    false    |     false    | If allowed, the user will be able to select more than one file |
-| Text | string |    false     |    false    |     Drag and drop files or click to select them    | The text displayed on the file input. |
+| Name                |  Type   | Connectable | Templatable |                   Default                   | Description                                                    |
+| ------------------- | :-----: | :---------: | :---------: | :-----------------------------------------: | -------------------------------------------------------------- |
+| Accepted File Types |  array  |    false    |    false    |       "image/\*" ; "application/pdf"        | The types of files you accept to be submitted.                 |
+| Allow Multiple      | boolean |    false    |    false    |                    false                    | If allowed, the user will be able to select more than one file |
+| Text                | string  |    false    |    false    | Drag and drop files or click to select them | The text displayed on the file input.                          |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
+| Name   |  Type  | Description                  |
+| ------ | :----: | ---------------------------- |
 | result | string | The name of the loaded file. |
 
-
-### Toggle API
+### Toggle
 
 The toggle component allows you to get a boolean from the user.
 
@@ -536,11 +571,11 @@ The toggle component allows you to get a boolean from the user.
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
+| Name   |  Type   | Description              |
+| ------ | :-----: | ------------------------ |
 | result | boolean | The state of the toggle. |
 
-### Select API
+### Select
 
 The select component allows you to get a string from the user.
 
@@ -548,20 +583,20 @@ The select component allows you to get a string from the user.
 
 #### Select configuration
 
-| Name     |  Type  | Connectable | Templatable | Default | Description                     |
-| -------- | :----: | :---------: | :---------: | :-----: | ------------------------------- |
-| items    | Array  |    true     |    false    |         | The select items.               |
-| item key | string |    true     |    false    |         | The key of the item to display. |
-| create | boolean |    false     |    false    |     false    | If users can create values. |
+| Name          |  Type   | Connectable | Templatable | Default | Description                     |
+| ------------- | :-----: | :---------: | :---------: | :-----: | ------------------------------- |
+| items         |  Array  |    true     |    false    |         | The select items.               |
+| item key      | string  |    true     |    false    |         | The key of the item to display. |
+| create        | boolean |    false    |    false    |  false  | If users can create values.     |
 | default value | boolean |    true     |    false    |         | The default value of the input. |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
+| Name   |  Type  | Description        |
+| ------ | :----: | ------------------ |
 | result | string | The selected item. |
 
-### Multiselect API
+### Multiselect
 
 The multiselect component allows you to get multiple strings from the user.
 
@@ -569,20 +604,20 @@ The multiselect component allows you to get multiple strings from the user.
 
 #### Multiselect configuration
 
-| Name     |  Type  | Connectable | Templatable | Default | Description                     |
-| -------- | :----: | :---------: | :---------: | :-----: | ------------------------------- |
-| items    | string  |    true     |    false    |     "Foo" ; "Bar"    | The select items.               |
-| placeholder | string |    true     |    false    |     Select items    | The text that will be displayed by default. |
+| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
+| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
+| items       | string |    true     |    false    | "Foo" ; "Bar" | The select items.                           |
+| placeholder | string |    true     |    false    | Select items  | The text that will be displayed by default. |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
+| Name   |  Type  | Description         |
+| ------ | :----: | ------------------- |
 | result | string | The selected items. |
 
 ## Display
 
-### Text API
+### Text
 
 The text component allows you to display text.
 
@@ -608,7 +643,7 @@ The text component allows you to display text.
 | result  | string  | The text.                                |
 | loading | boolean | The loading state of the text component. |
 
-### Icon API
+### Icon
 
 The Icon API allows you to display an icon chosen in a library of icons.
 
@@ -616,14 +651,14 @@ The Icon API allows you to display an icon chosen in a library of icons.
 
 #### Icon configuration
 
-| Name     |  Type  | Connectable | Templatable | Default | Description                     |
-| -------- | :----: | :---------: | :---------: | :-----: | ------------------------------- |
-| Icon    | string  |    true     |    false    |     Smile    | The actual icon.           |
-| Color | string |    true     |    false    |     currentColor    | The color of the icon. |
-| Size | number |    false     |    false    |     24    | The size of the icon. |
-| Stroke Width | number |    false     |    false    |     2    | The width of the icon stroke. |
+| Name         |  Type  | Connectable | Templatable |   Default    | Description                   |
+| ------------ | :----: | :---------: | :---------: | :----------: | ----------------------------- |
+| Icon         | string |    true     |    false    |    Smile     | The actual icon.              |
+| Color        | string |    true     |    false    | currentColor | The color of the icon.        |
+| Size         | number |    false    |    false    |      24      | The size of the icon.         |
+| Stroke Width | number |    false    |    false    |      2       | The width of the icon stroke. |
 
-### Image API
+### Image
 
 The Image component allows you to display a picture.
 
@@ -631,20 +666,19 @@ The Image component allows you to display a picture.
 
 #### Image configuration
 
-| Name     |  Type  | Connectable | Templatable | Default | Description                     |
-| -------- | :----: | :---------: | :---------: | :-----: | ------------------------------- |
-| Source    | string  |    true     |    false    |     /logo.svg    | The image.           |
-| Image Fit | string: contain, cover, fill |    false     |    false    |     contain    | How the image will fit the component box. |
-| Alt text | string |    false     |    false    |     /    | This text will appear if the image can't be loaded for any reason. |
+| Name      |             Type             | Connectable | Templatable |  Default  | Description                                                        |
+| --------- | :--------------------------: | :---------: | :---------: | :-------: | ------------------------------------------------------------------ |
+| Source    |            string            |    true     |    false    | /logo.svg | The image.                                                         |
+| Image Fit | string: contain, cover, fill |    false    |    false    |  contain  | How the image will fit the component box.                          |
+| Alt text  |            string            |    false    |    false    |     /     | This text will appear if the image can't be loaded for any reason. |
 
 #### Outputs
 
-| Name    |  Type   | Description                              |
-| ------- | :-----: | ---------------------------------------- |
+| Name    |  Type   | Description                               |
+| ------- | :-----: | ----------------------------------------- |
 | loading | boolean | The loading state of the Image component. |
 
-
-### Map API
+### Map
 
 The Map component allows you to display an interactive map.
 
@@ -652,23 +686,22 @@ The Map component allows you to display an interactive map.
 
 #### Map configuration
 
-| Name     |  Type  | Connectable | Templatable | Default | Description                     |
-| -------- | :----: | :---------: | :---------: | :-----: | ------------------------------- |
-| Longitude    | number  |    true     |    false    |     15    | The longitude of the center of the map.   |
-| Latitude    | number  |    true     |    false    |     50    | The latitude of the center of the map.   |
-| Zoom    | number  |    true     |    false    |     3    | The zoom of the map.   |
-| Markers    | object  |    true     |    false    |         | The map data.   |
+| Name      |  Type  | Connectable | Templatable | Default | Description                             |
+| --------- | :----: | :---------: | :---------: | :-----: | --------------------------------------- |
+| Longitude | number |    true     |    false    |   15    | The longitude of the center of the map. |
+| Latitude  | number |    true     |    false    |   50    | The latitude of the center of the map.  |
+| Zoom      | number |    true     |    false    |    3    | The zoom of the map.                    |
+| Markers   | object |    true     |    false    |         | The map data.                           |
 
 #### Outputs
 
-| Name    |  Type   | Description                              |
-| ------- | :-----: | ---------------------------------------- |
-| Map region | string | The region where the displayed map is located. |
-| topLeft lat & long | number | Latitude & longitude of the top left corner of the map. |
+| Name                   |  Type  | Description                                                 |
+| ---------------------- | :----: | ----------------------------------------------------------- |
+| Map region             | string | The region where the displayed map is located.              |
+| topLeft lat & long     | number | Latitude & longitude of the top left corner of the map.     |
 | bottomRight lat & long | number | Latitude & longitude of the bottom right corner of the map. |
 
-
-### HTML API
+### HTML
 
 The HTML component allows you to display HTML content.
 
@@ -687,8 +720,7 @@ The HTML component allows you to display HTML content.
 | result  | string  | The HTML.                                |
 | loading | boolean | The loading state of the HTML component. |
 
-
-### Table API
+### Table
 
 The table component allows you to display a table.
 
@@ -753,23 +785,23 @@ The AgGrid table component allows you to display an agnostic grid table.
 
 #### AgGrid Table configuration
 
-| Name  |  Type   | Connectable | Templatable | Default | Description                  |
-| ----- | :-----: | :---------: | :---------: | :-----: | ---------------------------- |
-| Column Defs | object  |    true    |    false    |  Id, Name, Age | The definition of the columns & their name. |
-| All Editable  | boolean |    false    |    false    |  false  | Whether you want all columns to be editable. |
-| Pagination  | boolean |    false    |    false    |  false  | Whether you want pages on your table. |
-| Page size  | number |    false    |    false    |  10  | The maximum number of rows on each page. |
+| Name         |  Type   | Connectable | Templatable |    Default    | Description                                  |
+| ------------ | :-----: | :---------: | :---------: | :-----------: | -------------------------------------------- |
+| Column Defs  | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.  |
+| All Editable | boolean |    false    |    false    |     false     | Whether you want all columns to be editable. |
+| Pagination   | boolean |    false    |    false    |     false     | Whether you want pages on your table.        |
+| Page size    | number  |    false    |    false    |      10       | The maximum number of rows on each page.     |
 
 #### Outputs
 
-| Name             |  Type   | Description                              |
-| ---------------- | :-----: | ---------------------------------------- |
+| Name             |  Type   | Description                                     |
+| ---------------- | :-----: | ----------------------------------------------- |
 | result           | Object  | The AgGrid table data.                          |
 | loading          | boolean | The loading state of the AgGrid table component |
-| selectedRow      | Object  | The selected row                         |
-| selectedRowIndex | number  | The selected row index                   |
+| selectedRow      | Object  | The selected row                                |
+| selectedRowIndex | number  | The selected row index                          |
 
-### Bar/Line Chart API
+### Bar/Line Chart
 
 The Bar Chart component allows you to display a Bar Chart using the [Chart.js](https://www.chartjs.org/) library. It can also be used to display a Line Chart.
 
@@ -795,8 +827,7 @@ The Bar Chart component allows you to display a Bar Chart using the [Chart.js](h
 | result  | Object  | The bar chart data.                           |
 | loading | boolean | The loading state of the bar chart component. |
 
-
-### Pie Chart API
+### Pie Chart
 
 The Pie Chart component allows you to display a Pie Chart using the [Chart.js](https://www.chartjs.org/) library.
 
@@ -822,8 +853,7 @@ The Pie Chart component allows you to display a Pie Chart using the [Chart.js](h
 | result  | Object  | The pie chart data.                           |
 | loading | boolean | The loading state of the pie chart component. |
 
-
-### Vega Lite API
+### Vega Lite
 
 The Vega Lite component allows you to display a Vega Lite chart.
 
@@ -848,7 +878,7 @@ The Vega Lite component allows you to display a Vega Lite chart.
 | result  | Object  | The Vega Lite chart data.                |
 | loading | boolean | The loading state of the Vega Lite chart |
 
-### Plotly API
+### Plotly
 
 The Plotly component allows you to display a Plotly chart.
 
@@ -866,8 +896,7 @@ The Plotly component allows you to display a Plotly chart.
 | ------ | :----: | ---------------------- |
 | result | Object | The Plotly chart data. |
 
-
-### Scatter Chart API
+### Scatter Chart
 
 The Scatter Chart component allows you to display a Scatter Chart using the [Chart.js](https://www.chartjs.org/) library.
 
@@ -893,7 +922,7 @@ The Scatter Chart component allows you to display a Scatter Chart using the [Cha
 | result  | Object  | The scatter chart data.                           |
 | loading | boolean | The loading state of the scatter chart component. |
 
-### Timeseries API
+### Timeseries
 
 The Timeseries component allows you to display a Timeseries using the [Chart.js](https://www.chartjs.org/) library.
 
@@ -920,7 +949,7 @@ The Timeseries component allows you to display a Timeseries using the [Chart.js]
 | result  | Object  | The timeseries data.                           |
 | loading | boolean | The loading state of the timeseries component. |
 
-### PDF API
+### PDF
 
 The PDF component allows you to display a PDF file.
 
@@ -928,17 +957,17 @@ The PDF component allows you to display a PDF file.
 
 #### PDF configuration
 
-| Name              |  Type   | Connectable | Templatable | Default | Description                         |
-| ----------------- | :-----: | :---------: | :---------: | :-----: | ----------------------------------- |
-| Source | boolean |    string    |    true    |  /dummy.pdf  | The PDF file. |
-| Zoom | number |    string    |    true    |  100  | The zoom on the PDF view. |
+| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
+| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
+| Source | boolean |   string    |    true     | /dummy.pdf | The PDF file.             |
+| Zoom   | number  |   string    |    true     |    100     | The zoom on the PDF view. |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
+| Name    |  Type   | Description                             |
+| ------- | :-----: | --------------------------------------- |
 | loading | boolean | The loading state of the PDF component. |
 
-### Rich Result API
+### Rich Result
 
 The Result component allows you to display the result of a Runnable. It tries to display the result in a human-readable way.

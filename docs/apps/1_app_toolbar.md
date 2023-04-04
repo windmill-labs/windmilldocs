@@ -7,6 +7,10 @@ The app toolbar is present on the top of the app editor. It allows you to config
 The app summary can be edited in left side of the toolbar. The app summary is used to describe the app and is visible in the app list.
 The default summary is the app name.
 
+### Undo/redo
+
+The undo/redo buttons allow you to undo or redo the last action.
+
 ### Preview mode
 
 The app editor mode can be toggled between `Editor` and `Preview` mode. The preview mode allows you to see the app in action.
@@ -51,3 +55,15 @@ An app can be published in two ways:
 ### Save
 
 Save the app.
+
+The first time you save the app, you will be asked to choose the owner of the app. You can either choose a user or a folder.
+
+#### Owner: user
+
+![App Publish](../assets/apps/1_app_toolbar/app-save-user.png)
+
+#### Owner: folder
+
+Read and write permissions are given to groups and users at the folder level and shared by all items inside the folder.
+
+![App Publish](../assets/apps/1_app_toolbar/app-save-folder.png)

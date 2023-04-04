@@ -7,6 +7,7 @@ Windmill's App editor allows you to build internal applications. Windmill's App 
 - [Canvas](./app_canvas): drag, drop and resize components on the canvas.
 - [Component Library](./app_component_library): insert any component or modify the property or styling.
 - [Runnable editor](./app-runnable): create, edit or manage the scripts or flows linked to components (Runnable), and background scripts.
+- [Settings](./app_settings): configure the components settings.
 
   ![App Editor](../assets/apps/0_app_editor/plain-app-editor.png)
 

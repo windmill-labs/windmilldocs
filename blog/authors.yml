@@ -8,6 +8,11 @@ adamkov:
   title: Front-end Developer at Windmill
   url: https://github.com/adam-kov
   image_url: https://github.com/adam-kov.png
+henricourdent:
+  name: Henri Courdent
+  title: Operations at Windmill
+  url: https://github.com/hcourdent
+  image_url: https://github.com/hcourdent.png
 toumask:
   name: Krestoufer Toumas (community)
   title: Contributor from the Windmill Community
@@ -23,3 +28,16 @@ jeffknorr:
   title: Contributor from the Windmill Community
   url: https://github.com/JeffKnorr
   image_url: https://github.com/JeffKnorr.png
+atelier:
+  name: Wei Chih (community)
+  title: Contributor from the Windmill Community
+pirminkalberer:
+  name: Pirmin Kalberer (community)
+  title: Contributor from the Windmill Community
+  url: https://github.com/pka
+  image_url: https://github.com/pka.png
+malomarrec:
+  name: Malo Marrec
+  title: Contributor from the Windmill Community
+  url: https://github.com/malomarrec
+  image_url: https://github.com/malomarrec.png

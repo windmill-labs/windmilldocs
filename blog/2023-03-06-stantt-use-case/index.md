@@ -6,7 +6,7 @@ tags: [case study, testimonial, backend, windmill, stantt, ecommerce, python, sc
 image: ./0-header.png
 ---
 
-This is a testimonial written by Windmill Community member [Jeffrey Knorr](https://www.linkedin.com/in/jeffreyknorr), Director of Technology at [Stantt](https://stantt.com/). Thanks to him for his trust.
+This is a testimonial written by [Jeffrey Knorr](https://www.linkedin.com/in/jeffreyknorr), Director of Technology at [Stantt](https://stantt.com/).
 
 
 <!--truncate-->

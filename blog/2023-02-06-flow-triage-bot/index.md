@@ -1,5 +1,8 @@
 ---
-unlisted: true
+slug: issue-triage-bot-flow
+title: Build an Issue Triage Bot Flow
+authors: [malomarrec]
+tags: [issue triage, bot, workflow]
 ---
 
 # Build an Issue Triage Bot Flow
