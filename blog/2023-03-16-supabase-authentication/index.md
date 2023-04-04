@@ -31,8 +31,6 @@ the sake of simplicity.
 
 :::
 
-![Integration between Supabase and Windmill](./0-header.png 'Use Supabase Auth with Windmill')
-
 ## Create a new Windmill app
 
 :::info
