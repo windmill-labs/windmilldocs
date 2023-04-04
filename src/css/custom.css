@@ -105,13 +105,20 @@ h4 {
 	@apply font-bold;
 }
 
-div.markdown li {
+div.markdown ul > li {
 	list-style-type: disc !important;
 	margin-left: 20px !important;
 }
 
-div.markdown ul {
+div.markdown ol > li {
+	list-style-type: decimal !important;
 	margin-left: 20px !important;
+}
+
+div.markdown ul,
+div.markdown ol {
+	margin-left: 20px !important;
+	margin-bottom: 20px !important;
 }
 
 a {
@@ -196,28 +203,31 @@ a {
 	@apply border border-gray-600 rounded-lg shadow-md p-4 mx-2;
 }
 
-
 .landing-section-gradient-background {
-	background:linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%), linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%), linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #ffffff;
+	background: linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%),
+		linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%),
+		linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%),
+		#ffffff;
 }
 
 .dark-gray-font {
-	color: #212427
+	color: #212427;
 }
 
 .card-shadow-blue {
-	box-shadow: rgba(59, 130, 246, 0.4) 0px 4px 24px
+	box-shadow: rgba(59, 130, 246, 0.4) 0px 4px 24px;
 }
 
 .card-shadow-green {
-	box-shadow: rgba(34, 197, 94, 0.4) 0px 4px 24px
+	box-shadow: rgba(34, 197, 94, 0.4) 0px 4px 24px;
 }
 
 .card-shadow-orange {
-	box-shadow: rgba( 	249, 115, 22, 0.4) 0px 4px 24px
+	box-shadow: rgba(249, 115, 22, 0.4) 0px 4px 24px;
 }
 
 .landing-section-gradient-background-dark {
-	background:linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%), linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%), linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #000;
+	background: linear-gradient(327.21deg, #bcd4fc 3.65%, rgba(59, 130, 246, 0) 40.32%),
+		linear-gradient(245.93deg, rgba(59, 130, 246, 0.16) 0%, rgba(59, 130, 246, 0) 36.63%),
+		linear-gradient(147.6deg, rgba(59, 130, 246, 0) 29.79%, rgba(59, 130, 246, 0.01) 85.72%), #000;
 }
-
