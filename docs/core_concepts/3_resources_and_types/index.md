@@ -57,7 +57,7 @@ can also add custom Resource Types by clicking "Add a resource type" on the
 
 Use the "Add Property" button to add a field to the resource type. You can
 specify constraints for the field (a type, making it mandatory, specifying a
-default, etc?). You can also view the schema by toggling the "As JSON" option:
+default, etc). You can also view the schema by toggling the "As JSON" option:
 
 ![Resource type schema view](./resource_type_json.png)
 

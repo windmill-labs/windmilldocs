@@ -19,7 +19,7 @@ The oauth.json has the following structure:
 
 First, you need to create a Google OAuth Client:
 
-- Go to https://console.developers.google.com/apis/credentials.
+- Go to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
 - Click "Create Credentials", then click "OAuth Client ID" in the drop-down menu.
 - Enter the following:
   - Application Type: Web Application
