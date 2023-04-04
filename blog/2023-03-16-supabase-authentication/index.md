@@ -163,8 +163,8 @@ src="/videos/supabase-auth/create-supabase-table.mp4"
 <br/>
 
 Currently `my_table` is only accessible with the secret API key of your project. Executing the
-following SQL command will allow users to read from `my_table` only if they are authenticated and
-have the public key:
+following SQL command will allow users to read from `my_table` with the public key as well, but
+only if they are authenticated:
 
 ```sql
 CREATE POLICY "Enable reads for authenticated users only" ON "public"."my_table"
