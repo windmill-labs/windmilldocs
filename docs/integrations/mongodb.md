@@ -38,7 +38,6 @@ Head to the [Resources][wm-app-resources] page in the Windmill app, click on
 ![Select Resource Type](../assets/integrations/1-resources.png)
 
 
-
 :::caution
 
 There is a `mongodb` and a `mongodb_rest` Resource Type. Make sure that you

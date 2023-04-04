@@ -10,7 +10,7 @@
 />
 <br/>
 
-To integrate [Discord](https://discord.com/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Discord](https://discord.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 | Property   | Type    | Description             | Default | Required | Where to Find                                                                                |
 |------------|---------|-------------------------|---------|----------|----------------------------------------------------------------------------------------------|

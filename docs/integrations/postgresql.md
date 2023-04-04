@@ -1,17 +1,9 @@
----
-slug: connect-postgres-with-windmill
-title: How to Connect PostgreSQL with Windmill
-authors: [adamkov]
-tags: [postgres, postgresql, windmill, resource, setup, integrate, connect, v2]
-image: ./0-header.png
----
+# PostgreSQL Integration
 
 We will see how to connect your Windmill instance to an external PostgreSQL
 service and then send queries to the database using Windmill Scripts.
 
-<!--truncate-->
-
-![Integrattion between PostgreSQL and Windmill](./0-header.png "Connect a PostgreSQL instance with Windmill")
+![Integrattion between PostgreSQL and Windmill](../assets/integrations/psql-0-header.png "Connect a PostgreSQL instance with Windmill")
 
 ## Create Resource
 
@@ -30,7 +22,7 @@ You can find a list of all the officially supported Resource Types on
 Head to the [Resources][wm-app-resources] page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `postgresql` type.
 
-![Select Resource Type](./1-resources.png)
+![Select Resource Type](../assets/integrations/psql-1-resources.png)
 
 Fill out the form with the information of your PostgreSQL instance.
 
@@ -41,7 +33,7 @@ every user. It is available unde the path `f/examples/demodb`.
 
 :::
 
-![Paste in Resource Values](./2-postgres-rt.png)
+![Paste in Resource Values](../assets/integrations/psql-2-postgres-rt.png)
 
 ## Create Script
 
@@ -50,7 +42,7 @@ the [Home][wm-app-home] page and click on the "+Script" button. Name the Script
 `my_postgres_script`, give it a summary, "Query a PostgreSQL Database" for
 example, select "PostgreSQL" as the language and finally, click "Next".
 
-![Script creation first step](./3-script-creation.png)
+![Script creation first step](../assets/integrations/psql-3-script-creation.png)
 
 We will use Postgres' parameterized queries with the template being written in
 TypeScript. Paste the following code in the editor:

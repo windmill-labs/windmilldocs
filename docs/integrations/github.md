@@ -11,11 +11,11 @@
 
 <br/>
 
-To integrate [Github](https://github.com/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Github](https://github.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 | Property | Type    | Description              | Default | Required | Where to Find                                                                   |
 |----------|---------|--------------------------|---------|----------|---------------------------------------------------------------------------------|
-| token    | string  | GitHub personal access token |         | true     | Sign in from Windmill |
+| token    | string  | OAuth token	 |         | true     | Sign in from Windmill |
 
 <br/><br/>
 

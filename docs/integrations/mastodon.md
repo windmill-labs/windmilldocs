@@ -1,7 +1,7 @@
 # Mastodon Integration
 
 
-To integrate [Mastodon](https://mastodon.social/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Mastodon](https://mastodon.social/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 ![Add Mastodon Resource](../assets/integrations/add-mastodon.png)
 

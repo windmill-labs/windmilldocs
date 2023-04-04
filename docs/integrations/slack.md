@@ -1,19 +1,11 @@
----
-slug: connect-slack-with-windmill
-title: How to Connect Slack with Windmill
-authors: [adamkov]
-tags: [slack, windmill, resource, setup, integrate, connect, v2]
-image: ./0-header.png
----
+# Slack Integration
 
 Learn how to integrate Slack with Windmill. There are two ways to build
 interactions between the two: run code on Windmill by a Slack command or use the
 Slack API directly from Windmill. In this guide, we'll cover both approaches, so
 you can find the one that suits you best.
 
-<!--truncate-->
-
-![Integrattion between Slack and Windmill](./0-header.png "Connect Slack with Windmill")
+![Integrattion between Slack and Windmill](../assets/integrations/slack-0-header.png "Connect Slack with Windmill")
 
 :::info
 
@@ -30,7 +22,16 @@ should go to
 [workspace settings page](https://app.windmill.dev/workspace_settings) and
 select the "Slack Command" tab. On there, click "Connect to Slack".
 
-![Workspace settings](./1-workspace-settings.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/adding_slack_resource.mp4"
+/>
+
+<br/>
 
 Slack will ask you to allow Windmill to access your workspace. Click "Allow".
 
@@ -41,7 +42,7 @@ are working on getting the app approved but you can safely ignore it for now.
 
 :::
 
-![Allow Slack access](./2-allow-access.png)
+![Allow Slack access](../assets/integrations/slack-2-allow-access.png)
 
 ### Using commands on Slack
 
@@ -49,7 +50,7 @@ Once you allow access, you will be redirected to the Slack settings in Windmill.
 We'll create a command handler Script first, so let's click "Create a script to
 handle slack command".
 
-![Connected settings](./3-connected.png)
+![Connected settings](../assets/integrations/slack-3-connected.png)
 
 You will be navigated to the Script editor. Give your script the name
 `slack_command_handler`, a short summary of "Slack command handler", leave the
@@ -69,7 +70,7 @@ After the Script is saved, navigate back to the
 [Slack settings][wm-slack-settings], choose the "Script" option for adding a
 command handler and select your newly created Script.
 
-![Choose handler Script](./4-set-handler.png)
+![Choose handler Script](../assets/integrations/slack-4-set-handler.png)
 
 Congratulations! You've just created a Slack command handler. Now you can use
 the `/windmill` command in your Slack workspace to trigger the Script. Try it
@@ -83,14 +84,14 @@ are integrating with Slack.
 
 :::
 
-![Use the Windmill command](./5-slack-command.png)
+![Use the Windmill command](../assets/integrations/slack-5-slack-command.png)
 
 :::info
 
 You can see who ran the `/windmill` command by going to the [Runs page][wm-runs]
 on Windmill. The runs will be permissioned through the `g/slack` global group.
 
-![Run info](./6-run-info.png)
+![Run info](../assets/integrations/slack-6-run-info.png)
 
 :::
 
@@ -102,7 +103,7 @@ To give the permission, go to "Resources" (and "Variables") menu, click on `Shar
 
 <br/>
 
-![Share to slack group](./10-slack_group.png)
+![Share to slack group](../assets/integrations/slack-10-slack_group.png)
 
 <br/>
 
@@ -110,11 +111,11 @@ One simplier way to handle permissions is to host resources and variables on a f
 
 <br/>
 
-![Share variable to folder](./11-variable_to_folder.png)
+![Share variable to folder](../assets/integrations/slack-11-variable_to_folder.png)
 
 <br/>
 
-![Share folder to group](./12-folder_to_group.png)
+![Share folder to group](../assets/integrations/slack-12-folder_to_group.png)
 
 
 :::
@@ -134,7 +135,7 @@ You can read more about Resources in the documentation [here][docs-resource].
 
 :::
 
-![Create Slack resource](./7-resources.png)
+![Create Slack resource](../assets/integrations/slack-7-resources.png)
 
 Select the `slack` Resource Type from the "OAuth APIs" list and by clicking
 "Connect", you will be redirected to Slack just like in the
@@ -143,7 +144,7 @@ Windmill access your Slack workspace. Once that's done, you will be redirected
 back to Windmill, where you can name your Slack Resource. Let's leave the
 default name `my_slack` and click "Save" in the top right corner.
 
-![Save resource](./8-slack-resource.png)
+![Save resource](../assets/integrations/slack-8-slack-resource.png)
 
 Let's head to the [Home page][wm-home] and click "+Script" to create a new
 Script. Give it the name `list_slack_users`, add the summary "List Slack users"
@@ -160,7 +161,7 @@ export async function main(auth: Resource<"slack">) {
 }
 ```
 
-![Test script](./9-script-result.png)
+![Test script](../assets/integrations/slack-9-script-result.png)
 
 :::tip
 
@@ -171,7 +172,7 @@ You can find a more complete version of this Script on
 
 :::note What's next?
 
-We go deeper in a [further article](2023-03-20-handler-slack-commands/index.md), integrating multiple commands, resources and Slack approval steps.
+We go deeper in a [further article](https://docs.windmill.dev/blog/handler-slack-commands), integrating multiple commands, resources and Slack approval steps.
 :::
 
 

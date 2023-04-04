@@ -11,7 +11,7 @@
 
 <br/>
 
-To integrate [Gmail](https://mail.google.com/mail/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Gmail](https://mail.google.com/mail/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 | Property | Type    | Description                                | Default | Required | Where to Find                                                             |
 |----------|---------|--------------------------------------------|---------|----------|---------------------------------------------------------------------------|

@@ -1,6 +1,6 @@
 # Funkwhale Integration
 
-To integrate [Funkywhale](https://funkwhale.audio/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Funkywhale](https://funkwhale.audio/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 ![Add Funkwhale Resource](../assets/integrations/add-funkwhale.png)
 

@@ -1,7 +1,7 @@
 # Hubspot Integration
 
 
-To integrate [Hubspot](https://www.hubspot.com/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Hubspot](https://www.hubspot.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 ![Add Hubspot Resource](../assets/integrations/add-hubspot.png)
 

@@ -21,7 +21,6 @@ You'll need to land on Airtable's [Developer hub](https://airtable.com/create/to
 | apiKey   | string | Airtable API key       | keyXXXXXXXXXXXXXX| true      | Airtable Account > API > Generate API Key      |
 
 
-
 ## Airtable Table
 
 <video

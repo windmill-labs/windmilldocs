@@ -1,15 +1,6 @@
----
-slug: setup-supabase-on-windmill
-title: How to Integrate Supabase with Windmill
-authors: [adamkov]
-tags: [supabase, windmill, resource, setup, integrate, connect]
-image: ./0-header.png
----
+# Supabase Integration
 
-Learn how to connect to your Supabase project from Windmill Scripts, Flows and
-Apps.
-
-<!--truncate-->
+Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
 _This tutorial assumes that you already have a
 [Windmill](https://app.windmill.dev) account and a
@@ -17,7 +8,7 @@ _This tutorial assumes that you already have a
 [Windmill documentation](https://docs.windmill.dev/docs/intro) or the
 [Supabase documentation](https://supabase.com/docs) to find out more._
 
-![Integrattion between Supabase and Windmill](./0-header.png "Connect a Supabase project with Windmill")
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png "Connect a Supabase project with Windmill")
 
 ## Get the API keys
 
@@ -26,7 +17,7 @@ key and the URL of your endpoint from Supabase. To get these, select your
 project, navigate to the `Project Settings` page and select `API` from the menu.
 You'll find the URL and 2 keys here.
 
-![API settings](./1-1-settings.png)
+![API settings](../assets/integrations/sb-1-1-settings.png)
 
 As the description says, the access level of the `public` key will be controlled
 by the policies you add and the `secret` key will bypass all of them. You can
@@ -41,15 +32,15 @@ want an integration to be supported by Windmill directly, please submit a new
 `resource type` on [Windmill Hub](https://hub.windmill.dev/resources).
 
 **Navigate to the [Resources](https://app.windmill.dev/resources) page**
-![Resources page](./2-1-resources.png)
+![Resources page](../assets/integrations/sb-2-1-resources.png)
 
-**Click "Add a resource/API"** ![Resource selector](./2-2-drawer.png)
+**Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png)
 
 **Search for `Supabase` and select the resource type**
-![Resource selector](./2-3-search.png)
+![Resource selector](../assets/integrations/sb-2-3-search.png)
 
 **Enter the API key and the URL from Supabase and click "Save"**
-![Resource selector](./2-4-resource.png)
+![Resource selector](../assets/integrations/sb-2-4-resource.png)
 
 ## Use the resource
 

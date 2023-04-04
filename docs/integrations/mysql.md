@@ -1,7 +1,7 @@
 # MySLQ Integration
 
 
-To integrate [MySQL](https://www.mysql.com/) on Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [MySQL](https://www.mysql.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 ![Add MySQL Resource](../assets/integrations/add-matrix.png)
 
