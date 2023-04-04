@@ -27,7 +27,7 @@ Also, **our colleagues are not super tech-savvy**, it would be hard to ask them 
 
 ## How did Windmill help?
 
-Windmill provides an amazing open-sourced platform that we can try and error at a very low cost, and we are able to [trigger the command from Slack](../2023-02-13-slack-integration/index.md), which is a big plus to our reporters.
+Windmill provides an amazing open-sourced platform that we can try and error at a very low cost, and we are able to [trigger the command from Slack](https://docs.windmill.dev/docs/integrations/slack), which is a big plus to our reporters.
 
 We use Windmill for:
 1. **Media monitoring**: We are maintaining a large collection of RSS feeds and use some NLP libraries to analyse what is happening around the world.
