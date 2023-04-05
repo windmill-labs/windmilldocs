@@ -59,15 +59,15 @@ of the app.
 First, create a new app from the [Windmill Cloud][app] Home page by clicking "App" in the top right
 corner. Let's add our first component:
 
-1. click on "Tabs" in the right-hand panel to add it to the canvas
-1. select "invisibleOnView" for the _Tabs Kind_ setting (this will hide the tab row when the app is in
-   _preview_ or _published_ mode)
-1. rename the tabs to "Login" and "Data"
+1. Click on "Tabs" in the right-hand panel to add it to the canvas.
+1. Select "invisibleOnView" for the _Tabs Kind_ setting (this will hide the tab row when the app is in
+   _preview_ or _published_ mode).
+1. Rename the tabs to "Login" and "Data".
 
 When the Tabs are ready, add two components inside the "Login" tab:
 
 - an "Email input" component
-- and a "Password" component
+- a "Password" component
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
@@ -265,11 +265,11 @@ script, so click the Login button to run it first. Windmill will update the shap
 
 Create a new background script:
 
-1. choose Deno as the runtime
-1. name it "Load data"
-1. paste in the code below
-1. turn off "Run on start"
-1. update the script inputs
+1. Choose Deno as the runtime.
+1. Name the script "Load data".
+1. Paste in the code below.
+1. Turn off "Run on start".
+1. Update the script arguments.
 
 ```typescript
 // Background script: Load data
@@ -307,10 +307,10 @@ a utility function for **frontend scripts** called `setTab`. The first argument 
 
 Create a new background script:
 
-1. choose JavaScript
-1. name it "Open Data tab"
-1. paste in the code below
-1. turn off "Run on start"
+1. Choose JavaScript.
+1. Name the script "Open Data tab".
+1. Paste in the code below.
+1. Turn off "Run on start".
 
 ```javascript
 // Background script: Open Data tab
@@ -384,18 +384,18 @@ Windmill" to open the app in the editor.
 The second - and more experimental - option is to only use **frontend scripts**.
 This is the simpler way to achieve the goal, but it has some drawbacks:
 
-- everything will be available to the client - you **shouldn't use any secrets** in frontend
-  scripts
-- less convenient for the developers - frontend scripts use JavaScript, so there is no type safety
+- Everything will be available to the client - you **shouldn't use any secrets** in frontend
+  scripts.
+- Less convenient for the developers - frontend scripts use JavaScript, so there is no type safety.
 
 ### User authentication script
 
 Select the login button and click "Create an inline script":
 
-1. choose JavaScript
-1. name it "Login"
-1. paste in the code below
-1. update `url` and `publicKey` with the [values from your Supabase project](#supabase-credentials)
+1. Choose JavaScript.
+1. Name the script "Login".
+1. Paste in the code below.
+1. Update `url` and `publicKey` with the [values from your Supabase project](#supabase-credentials).
 
 ```javascript
 // Inline script: Login
@@ -426,12 +426,12 @@ if (data?.session?.access_token) {
 
 The "Login" script works as follows:
 
-1. it saves the Supabase settings to the local state of the app
-1. it imports the Supabase client library (**warning:** not all browsers support ESM imports)
-1. it sends a request to the Supabase API to sign in with credentials entered in the form
-1. if the request was _successful_, it creates a new Supabase client with the `access_token` attached
-   to the `Authorization` header
-1. if the request _failed_, it saves the error message to the local state of the app
+1. It saves the Supabase settings to the local state of the app.
+1. It imports the Supabase client library (**warning:** not all browsers support ESM imports).
+1. It sends a request to the Supabase API to sign in with credentials entered in the form.
+1. If the request was _successful_, it creates a new Supabase client with the `access_token` attached
+   to the `Authorization` header.
+1. If the request _failed_, it saves the error message to the local state of the app.
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
@@ -449,10 +449,10 @@ component that is going to display the data.
 
 Create a new background script:
 
-1. choose JavaScript
-1. name it "Load data"
-1. paste in the code below
-1. turn off "Run on start"
+1. Choose JavaScript.
+1. Name the script "Load data".
+1. Paste in the code below.
+1. Turn off "Run on start".
 
 ```javascript
 // Background script: Load data
