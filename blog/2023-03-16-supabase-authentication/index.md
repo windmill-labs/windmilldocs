@@ -229,6 +229,16 @@ The authentication script will always return an object with three properties:
 - **`refresh_token`**: the refresh token of the user if the authentication _succeeded_, otherwise `undefined`
 - **`error`**: the error message if the authentication _failed_, otherwise `undefined`
 
+:::caution
+
+The Supabase `access_token` has a default expiration time of 1 hour. It is plenty enough for this
+example, but in case you want to handle longer sessions, you can use the `refresh_token` to:
+
+- Refresh the `access_token` periodically (like every 59 minutes).
+- Authenticate the user again when a request returns a "JWT Expired" error.
+
+:::
+
 :::info
 
 In case you wonder, you can't just create one Supabase client and pass it directly to backend
