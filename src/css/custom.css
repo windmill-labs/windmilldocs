@@ -119,13 +119,20 @@ h4 {
 	@apply rounded-xl;
 }
 
-div.markdown li {
+div.markdown ul > li {
 	list-style-type: disc !important;
 	margin-left: 20px !important;
 }
 
-div.markdown ul {
+div.markdown ol > li {
+	list-style-type: decimal !important;
 	margin-left: 20px !important;
+}
+
+div.markdown ul,
+div.markdown ol {
+	margin-left: 20px !important;
+	margin-bottom: 20px !important;
 }
 
 a {
