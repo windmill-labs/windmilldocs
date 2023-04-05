@@ -52,12 +52,11 @@ start of each option.
 The general approach is to use the "Tabs" component to separate the sign in step from the display
 of data. Tabs allow us to associate sets of nested components with labels, meaning the login step
 will have it's own page on the first tab. A successful login will return an access token, then we
-can send authenticated requests to the database using said token on the second tab. The passing of
-credentials works a bit differently in the two approaches, so let's dive in and create the skeleton
-of the app.
+can send authenticated requests to the database using said token on the second tab.
 
-First, create a new app from the [Windmill Cloud][app] Home page by clicking "App" in the top right
-corner. Let's add our first component:
+The passing of credentials works a bit differently in the two approaches, so first, create a base
+"skeleton" app. Go to the [Windmill Cloud][app] Home page by click "App" in the top right corner.
+Let's add our first component:
 
 1. Click on "Tabs" in the right-hand panel to add it to the canvas.
 1. Select "invisibleOnView" for the _Tabs Kind_ setting (this will hide the tab row when the app is in
