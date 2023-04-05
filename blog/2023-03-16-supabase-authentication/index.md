@@ -1,6 +1,6 @@
 ---
 slug: supabase-authentication-and-rls-protected-tables-on-windmill
-title: Use Supabase Authentication on Windmill to query RLS protected tables
+title: Use Supabase Authentication on Windmill to query RLS protected tables for external apps
 authors: [adamkov]
 tags: [supabase, authentication, rls, postgresql, windmill, integrate, connect, v2]
 image: ./0-header.png
@@ -13,6 +13,14 @@ or using a new experimental method, where code runs in the end user's **browser*
 directly (**frontend script**).
 
 <!--truncate-->
+
+:::info
+
+One of our clients, [Teracapital][tera] has been using Supabase with Windmill for their
+applications. This example is a simplified version of how they serve protected data to their own
+clients.
+
+:::
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
@@ -33,7 +41,7 @@ the sake of simplicity.
 
 ## Create a new Windmill app
 
-:::info
+:::tip
 
 You may skip this step if you are interested only in the end result, as we provide pre-built apps
 for both approaches on our community website, [Windmill Hub][hub]. You can find the examples at the
@@ -49,9 +57,14 @@ credentials works a bit differently in the two approaches, so let's dive in and 
 of the app.
 
 First, create a new app from the [Windmill Cloud][app] Home page by clicking "App" in the top right
-corner. Let's add our first element, which should be a "Tabs" component. Find the item named "Tabs"
-in the right-hand panel and click on it to add it to the canvas. Rename the tabs to "Login" and
-"Data". Finally, add two components to the "Login" tab:
+corner. Let's add our first component:
+
+1. click on "Tabs" in the right-hand panel to add it to the canvas
+1. select "invisibleOnView" for the _Tabs Kind_ setting (this will hide the tab row when the app is in
+   _preview_ or _published_ mode)
+1. rename the tabs to "Login" and "Data"
+
+When the Tabs are ready, add two components inside the "Login" tab:
 
 - an "Email input" component
 - and a "Password" component
@@ -73,9 +86,7 @@ src="/videos/supabase-auth/add-input-labels.mp4"
 />
 <br/>
 
-We also need a "Button" component to submit the form. I suggest to change the text to something
-more descriptive, like "Login" or "Sign in". Other than that, feel free to customize the button
-to your liking.
+Now add a "Button" component to do the login. Feel free to customize the button to your liking.
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
@@ -84,42 +95,42 @@ src="/videos/supabase-auth/add-login-button.mp4"
 />
 <br/>
 
-With that, the skeleton of the "Login" tab is ready. Let's switch to the "Data" tab and add a
-"Text" component to display a warning message when the user is not logged in. We are going to use
-the **output** of the "Button" component to show/hide the warning message.
+Let's handle login errors. The "Button" component has a "Click" event that we can use to run a
+script. The script will try to authenticate the user with given credentials and return either an
+access token or an error (this will be implemented at a later step). The value is stored in the
+**result** of the component. In short, the `result` field on the button will hold the value
+returned from the attached script. We can use this result to determine whether the authentication
+was successful or not.
 
-The "Button" component has a "Click" event that we can use to run a script. The script will try to
-authenticate the user with given credentials and return an access token. If the authentication is
-successful, the access token will be stored in the **result** of the component. In short, the
-`result` field on the button will hold the value returned from the attached script. We can use this
-result to determine whether the user is logged in or not.
-
-The input of the "Text" component is a simple [JavaScript template string][js-template-string] by
-default. To reference the ouput of a component, we just need to use the component's ID. In our case,
-`f` is the ID of the login button, so the template string will look like this:
+Add a "Text" component under the button to display the possible error
+messages. The input of the "Text" component is a simple
+[JavaScript template string][js-template-string] by default. Windmill allows to hook into the
+**output** of components through their IDs. In our case, `f` is the ID of the login button, so the
+template string will look like this:
 
 ```js
-${f?.result?.access_token ? ' ' : 'You need to be logged in to load the data'}
+${f?.result?.error ?? ' '}
 ```
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
 controls
-src="/videos/supabase-auth/add-warning-text.mp4"
+src="/videos/supabase-auth/add-warning.mp4"
 />
 <br/>
 
 :::info
 
 As you can see in the video, we used a TailwindCSS class to style the color of the text. If you are
-not familiar with TailwindCSS, you can also use direct CSS styles. For that, I recommend using the
+not familiar with TailwindCSS, you can also use direct CSS styles. For that, we recommend using the
 **Rich Editor**. We provide a built-in color picker and many other features to help you customize
 your app.
 
 :::
 
-Lastly, we need to add a "Table" component to display the data. Let's leave the placeholder data
-for now, because we will query the database differently in the two approaches.
+With that, the skeleton of the "Login" tab is ready. Let's switch to the "Data" tab and add a
+"Table" component to display the data. You can leave the placeholder data for now, because we will
+fetch the data differently in the two approaches.
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
@@ -128,8 +139,8 @@ src="/videos/supabase-auth/add-data-table.mp4"
 />
 <br/>
 
-Your skeleton app now has every component we need to start working on the scripts. It's a good time
-to save your progress now. If you want to create an app for each approach (using
+At this point your skeleton app has every component we need to start working on the scripts. Now is
+a good time to save your progress. If you want to create an app for each approach (using
 **backend scripts** and **frontend scripts**), you can use this skeleton as a template for both
 from the Home page.
 
@@ -197,7 +208,7 @@ IntelliSense.
 
 ### User authentication script
 
-Select the login button and click "Select a script or flow". Select the "Hub Scripts" tab and find
+Select the login button and click "Select a script or flow". Open the "Hub Scripts" tab and find
 the Supabase script named "Authenticate with email and password". All you have to do now is provide
 the arguments for the script.
 
@@ -213,7 +224,7 @@ you can share your own Resources with the community!
 
 :::
 
-This script will always return an object with three properties:
+The authentication script will always return an object with three properties:
 
 - **`access_token`**: the access token of the user if the authentication _succeeded_, otherwise `undefined`
 - **`refresh_token`**: the refresh token of the user if the authentication _succeeded_, otherwise `undefined`
@@ -222,9 +233,9 @@ This script will always return an object with three properties:
 :::info
 
 In case you wonder, you can't just create one Supabase client and pass it directly to backend
-scripts as an argument, because it will be converted to a JSON object and it will lose its methods
-in the process. On the other hand, this makes it possible to use multiple programming languages in
-the same app!
+scripts as an argument. The arguments will be converted to a JSON object, so they will lose all
+methods in the process. On the other hand, this makes it possible to use multiple programming
+languages in the same app!
 
 :::
 
@@ -409,7 +420,7 @@ if (data?.session?.access_token) {
 	});
 } else {
 	state.supabase.client = undefined;
-	state.supabase.error = error_description ?? error ?? undefined;
+	state.supabase.error = error_description ?? error?.message ?? error ?? undefined;
 }
 ```
 
@@ -472,7 +483,8 @@ src="/videos/supabase-auth/data-fe-script.mp4"
 />
 <br/>
 
-Don't forget to recompute the "Load data" script after the "Login" script finished executing.
+Don't forget to recompute the "Load data" script after the "Login" script finished executing from
+the login button.
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full"
@@ -481,12 +493,12 @@ src="/videos/supabase-auth/recompute-fe-script.mp4"
 />
 <br/>
 
-You also need to update the "Text" component on the "Data" tab, because the
+You also need to update the "Text" component below the login button, because the
 success of an authentication is now represented by the `supabase` object saved in the local state.
 Paste in the following code to the _Data Source_ of the "Text" component:
 
 ```javascript
-${state?.supabase?.client ? ' ' : 'You need to be logged in to load the data'}
+${state?.supabase?.error ?? ' '}
 ```
 
 ### Display the data
@@ -567,6 +579,7 @@ navigated to the "Data" tab.
 
 <!-- Links -->
 
+[tera]: https://www.teracapital.com.br/
 [hub]: https://hub.windmill.dev
 [hub-resources]: https://hub.windmill.dev/resources
 [app]: https://app.windmill.dev/
