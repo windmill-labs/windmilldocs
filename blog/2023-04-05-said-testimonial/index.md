@@ -8,6 +8,9 @@ image: ./0-header.jpg
 
 This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of books and newsletters.
 
+> "Within a few weeks of usage, Windmill replaced all my previous workflows and automation tools, consolidating my flows into a single, efficient platform."
+
+
 <!--truncate-->
 
 <br/>
@@ -17,14 +20,14 @@ This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author 
 
 ## What before Windmill?
 
-As an independent author, I have always been on the lookout for ways to optimize my workflows and simplify my processes to focus on my core job: writing content. The key challenges are around managing subscriptions, purchases and keeping my internal databases up to date.
+As an independent author, I have always been on the lookout for ways to optimize my workflows and simplify processes to focus on my core job: writing content. The key challenges are around managing subscriptions, purchases and keeping my internal databases up to date.
 
 I did not wait Windmill to use workflows. I succinctly used Meta API (code-based automation), then Amazon Lambda.
 
 
 ## How did Windmill help?
 
-I use Windmill to build workflows meant to be **automatically triggered** (either [scheduled](https://docs.windmill.dev/docs/core_concepts/schedules) or [by exertal events](https://docs.windmill.dev/docs/core_concepts/trigger_flows)). I only use a few workflows - 2 or 3 on a daily basis - but they are **business critical**.
+I use Windmill to build workflows meant to be **automatically triggered** (either [scheduled](https://docs.windmill.dev/docs/core_concepts/schedules) or [by external events](https://docs.windmill.dev/docs/core_concepts/trigger_flows)). I only use a few workflows - 2 or 3 on a daily basis - but they are **business critical**.
 
 Within a few weeks of usage, **Windmill replaced all my previous workflows and automation tools**, consolidating my flows into a single, efficient platform.
 
@@ -72,9 +75,11 @@ Like Retool, you can design your admin console and [connect it to your database]
 
 Its job runs panel is intuitive. Each job [run’s audit is shown graphically](https://docs.windmill.dev/docs/getting_started/flows_quickstart). You can **track the progress visually in real-time** when a transaction is triggered. It is easy to tell the exact flow your logic traversed in each run, making AWS CloudWatch logging look basic in comparison.
 
+:::tip About the team
 
-At last, I want to talk about its team and founder, Ruben. A product is only as good as its founder. I a few weeks of using Windmill, significant changes and updates were made, that have improved my experience with the product. Windmill welcomes feedback and deploys extremely quickly for improvements.
+At last, I want to talk about its team and founder, Ruben. In a few weeks of using Windmill, **significant changes and updates were made**. All these changes improved my experience with the product. Windmill welcomes feedback and deploys extremely quickly for improvements.
 
+:::
 
 ## How to use Windmill?
 
