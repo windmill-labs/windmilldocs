@@ -12,9 +12,17 @@ it as an easy-to-use CRON scheduler that you can share with other users.
 A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON
 expression** that controls the execution frequency.
 
-:::tip
+:::info
 
 If you're not experienced with CRON syntax make sure to use https://crontab.guru.
+
+:::
+
+<br/>
+
+:::tip
+
+Have more details and hints on our [Job Scheduling Tutorial](https://docs.windmill.dev/blog/cron-job-schedules).
 
 :::
 
