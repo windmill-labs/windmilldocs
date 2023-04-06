@@ -8,10 +8,10 @@ image: ./0-header.jpg
 
 This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of books and newsletters.
 
+<!--truncate-->
+
 > "Within a few weeks of usage, Windmill replaced all my previous workflows and automation tools, consolidating my flows into a single, efficient platform."
 
-
-<!--truncate-->
 
 <br/>
 
@@ -20,7 +20,7 @@ This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author 
 
 ## What before Windmill?
 
-As an independent author, I have always been on the lookout for ways to optimize my workflows and simplify processes to focus on my core job: writing content. The key challenges are around managing subscriptions, purchases and keeping my internal databases up to date.
+As an independent author, I am always on the lookout for ways to optimize my workflows and simplify processes to focus on my core job: writing content. The key challenges are around managing subscriptions, purchases and keeping my internal databases up to date.
 
 I did not wait Windmill to use workflows. I succinctly used Meta API (code-based automation), then Amazon Lambda.
 
