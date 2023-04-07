@@ -46,7 +46,7 @@ This workflow handles a multi-code redemption process, allowing users to choose 
 
 #### ... and process scraped data
 
-![Process Scraped Data](./process_scraped_data.jpg "Process Scraped Data")
+![Process Scraped Data](./process_scraped_data.png "Process Scraped Data")
 
 The goal here is not to detail these workflows as I made them unique to my own stakes. As you can see, **Windmill can handle even the most intricate branchy flows seamlessly**. To build them, I used [Hub scripts](https://hub.windmill.dev/), my few skills in programming (I am not a developer) and Windmill's attentive support.
 
