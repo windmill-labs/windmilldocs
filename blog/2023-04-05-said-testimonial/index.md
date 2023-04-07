@@ -6,7 +6,7 @@ tags: [case study, testimonial, audience management, branches, workflows]
 image: ./0-header.jpg
 ---
 
-This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of books.
+This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of productivity books.
 
 <!--truncate-->
 
