@@ -6,7 +6,7 @@ tags: [case study, testimonial, audience management, branches, workflows]
 image: ./0-header.jpg
 ---
 
-This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of books and newsletters.
+This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of books.
 
 <!--truncate-->
 
@@ -22,7 +22,7 @@ This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author 
 
 As an independent author, I am always on the lookout for ways to optimize my workflows and simplify processes to focus on my core job: writing content. The key challenges are around managing subscriptions, purchases and keeping my internal databases up to date.
 
-I did not wait Windmill to use workflows. I succinctly used Meta API (code-based automation), then Amazon Lambda.
+Before transitioning to Windmill, I had been using Meta API (code-based automation), followed by Amazon Lambda to help me manage my workflows.
 
 
 ## How did Windmill help?
@@ -35,7 +35,7 @@ In particular, I use Windmill for:
 
 #### Automatically managing purchases and redemptions
 
-This workflow handles a multi-code redemption process: users can redeem one code or two codes, on which the redemption will depend.
+This workflow handles a multi-code redemption process, allowing users to choose between redeeming one or two codes which will determine the result of the redemption.
 
 ![Process Purchase Redemption](./process_purchase_redemption.jpg "Process Purchase Redemption")
 
@@ -48,12 +48,12 @@ This workflow handles a multi-code redemption process: users can redeem one code
 
 ![Process Scraped Data](./process_scraped_data.jpg "Process Scraped Data")
 
-The goal here is not to detail these workflows as I made them unique to my own stakes. As you can see, **Windmill can handle branchy flows seamlessly**. To build them, I used [Hub scripts](https://hub.windmill.dev/), my few skills in programming (I am not a developer) and Windmill's attentive support.
+The goal here is not to detail these workflows as I made them unique to my own stakes. As you can see, **Windmill can handle even the most intricate branchy flows seamlessly**. To build them, I used [Hub scripts](https://hub.windmill.dev/), my few skills in programming (I am not a developer) and Windmill's attentive support.
 
 I also use Windmill for:
 - updating my CRM with customer information
-- supervising book reviews
-- orchestrating blog subscriptions
+- monitoring book reviews
+- segmenting blog subscriptions
 
 What you need to know is that all those workflows are **fully automated** and **interact with internal databases**.
 
