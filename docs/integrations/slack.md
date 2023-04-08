@@ -5,12 +5,12 @@ interactions between the two: run code on Windmill by a Slack command or use the
 Slack API directly from Windmill. In this guide, we'll cover both approaches, so
 you can find the one that suits you best.
 
-![Integrattion between Slack and Windmill](../assets/integrations/slack-0-header.png "Connect Slack with Windmill")
+![Integration between Slack and Windmill](../assets/integrations/slack-0-header.png 'Connect Slack with Windmill')
 
 :::info
 
 This guide assumes that you already have a Slack account and a workspace where
-you have admin rights. Some experience with Windmill helps, but not required.
+you have admin rights. For **self-hosted instances**, you will need to [setup oauth](../misc/2_setup_oauth/index.md) first.
 
 :::
 
@@ -59,10 +59,10 @@ editor and click "Save":
 
 ```typescript
 export async function main(response_url: string, text: string) {
-  await fetch(response_url, {
-    method: "POST",
-    body: JSON.stringify({ text: `ROGER ${text}` }),
-  });
+	await fetch(response_url, {
+		method: 'POST',
+		body: JSON.stringify({ text: `ROGER ${text}` })
+	});
 }
 ```
 
@@ -117,7 +117,6 @@ One simplier way to handle permissions is to host resources and variables on a f
 
 ![Share folder to group](../assets/integrations/slack-12-folder_to_group.png)
 
-
 :::
 
 ## Action on Slack from Windmill
@@ -152,12 +151,12 @@ and click "Next". Paste the following code in the editor and click "Test" - you
 should see the list of users and bots in your Slack workspace.
 
 ```typescript
-import { Resource } from "https://deno.land/x/windmill@v1.62.0/mod.ts";
-import { SlackAPI } from "https://deno.land/x/deno_slack_api@1.6.0/mod.ts";
+import { Resource } from 'https://deno.land/x/windmill@v1.62.0/mod.ts';
+import { SlackAPI } from 'https://deno.land/x/deno_slack_api@1.6.0/mod.ts';
 
-export async function main(auth: Resource<"slack">) {
-  const client = SlackAPI(auth.token);
-  return await client.users.list();
+export async function main(auth: Resource<'slack'>) {
+	const client = SlackAPI(auth.token);
+	return await client.users.list();
 }
 ```
 
@@ -174,7 +173,6 @@ You can find a more complete version of this Script on
 
 We go deeper in a [further article](https://docs.windmill.dev/blog/handler-slack-commands), integrating multiple commands, resources and Slack approval steps.
 :::
-
 
 <!-- Links -->
 
