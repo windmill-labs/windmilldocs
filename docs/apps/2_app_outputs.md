@@ -72,12 +72,12 @@ Inputs can be connected to any outputs. When connecting, you can click on the ou
     src="/videos/app-connections.mp4"
 />
 
-Here are the stpes to connect an input to an output:
+Here are the steps to connect an input to an output:
 
 - Click on the component input you want to connect to an output
 - Click the right arrow to open the connection menu
-- You can now navigate you app, without running any scripts
-- When you hover a component, the corresponding outputs are highlighted in orange
-- If you click on a component, the output will be pinned and stays open
+  - You can now navigate you app, without running any scripts
+  - When you hover a component, the corresponding outputs are highlighted in orange
+  - If you click on a component, the output will be pinned and stays open
 - You can now click on the output you want to connect to the input
 - The input is now connected to the output
