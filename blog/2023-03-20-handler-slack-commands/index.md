@@ -1,6 +1,6 @@
 ---
 slug: handler-slack-commands
-title: Build a Handler of Slack Commands with Windmill Workflows
+title: Build a Slackbot with Windmill Workflows
 authors: [henricourdent]
 tags: [tutorial, slack, slackbot, commands, workflow]
 image: ./0-header.png
@@ -27,7 +27,7 @@ You will be able to build a Slackbot from which you can create events on your ca
 
 <br/>
 
-We've seen in a [previous article](2023-02-13-slack-integration/index.md) how to connect Slack with Windmill and have briefly explored how to build a first slackbot for a single command (using a script).
+We've seen in a [previous article](https://docs.windmill.dev/docs/integrations/slack) how to connect Slack with Windmill and have briefly explored how to build a first slackbot for a single command (using a script).
 
 Long story short, the first article explained how to connect Slack with Windmill and to create a `/windmill` command on Slack linked to a script hosted on Windmill. Handling several commands on your Slackbot uses just the same logic, but we'll use one single Windmill workflow instead of a script.
 
@@ -39,7 +39,7 @@ As we will use only one master workflow to handle all Slack commands, branches w
 
 ## Connecting a first workflow handler to your workspace
 
-Just like the [slack integration tutorial](2023-02-13-slack-integration/index.md), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
+Just like the [slack integration tutorial](https://docs.windmill.dev/docs/integrations/slack), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
 
 ![Create Flow Handler](./2-create-flow-handler.png "Create a flow to handle Slack Commands")
 
@@ -165,7 +165,7 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
 
 <br/>
 
-All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource).
+All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource-type).
 
 One specificity of triggering resources from Slack is that **you have to let Windmill know Slack can interact with them**.
 

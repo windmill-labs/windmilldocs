@@ -166,7 +166,7 @@ VALUES
 
 You can create resources that will allow you to reuse secrets like passwords and
 tokens without exposing them. To create your Supabase resource, check out the
-[How to Integrate Supabase with Windmill](/blog/setup-supabase-on-windmill)
+[How to Integrate Supabase with Windmill](https://docs.windmill.dev/docs/integrations/supabase)
 tutorial - it takes only 2 minutes.
 
 After you added your resource, navigate to the [Home](https://app.windmill.dev/)

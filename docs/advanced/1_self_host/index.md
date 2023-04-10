@@ -52,11 +52,19 @@ address:
 ```bash
 # .env
 DB_PASSWORD=supersecret
-WM_BASE_URL=windmill.example.com
+WM_BASE_URL=http://windmill.example.com
+CADDY_REVERSE_PROXY=http://windmill.example.com
 ```
 
-Setting the `WM_BASE_URL` configures Windmill to use it as its base url, but
-also configures Caddy to use it as the domain.
+Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The reverse proxy is also configured at the same domain. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
+
+```
+http://{$BASE_URL} {
+        bind {$ADDRESS}
+        reverse_proxy /ws/* http://lsp:3001
+        reverse_proxy /* http://windmill_server:8000
+}
+```
 
 ### Deployment
 
@@ -113,6 +121,7 @@ helm install windmill-chart windmill/windmill  \
       --namespace=windmill             \
       --create-namespace
 ```
+
 Detailed instructions in the official [repository][helm].
 
 :::
@@ -124,10 +133,11 @@ additional features. One important feature is better caching for depencies in a
 super cache supported by S3.
 
 You need:
+
 - an Enterprise license key
 - an AWS account and S3 bucket
 - AWS credentials or IAM roles prepared for access from the Windmill worker pods.
-<br/>
+  <br/>
 
 See the [Helm Chart repository README][helm] [repository][helm] for more details. The exact setup
 for S3 access will vary according to your environment.
@@ -175,7 +185,6 @@ psql <DATABASE_URL> -f init-db-as-superuser.sql
 
 where `init-db-as-superuser.sql` is
 [this file](https://github.com/windmill-labs/windmill/blob/main/init-db-as-superuser.sql).
-
 
 Then finally, run the following commands:
 
