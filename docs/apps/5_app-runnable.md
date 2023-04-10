@@ -34,7 +34,7 @@ See [Recompute Others](./app-runnable#recompute-others) for more information.
 
 #### Changes of values:
 
-When a runnable has an input connected to an output of a component, the runnable is executed when the output value changes. See [Connections](./app-runnable#connections) for more information.
+When a runnable has an input connected to an output of a component, the runnable is executed when the output value changes. See [Connections](./app_outputs#connecting-inputs) for more information.
 
 #### Background script
 
