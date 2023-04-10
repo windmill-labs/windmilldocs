@@ -9,7 +9,11 @@ Windmill's App editor allows you to build internal applications. Windmill's App 
 - [Runnable editor](./app-runnable): create, edit or manage the scripts or flows linked to components (Runnable), and background scripts.
 - [Settings](./app_settings): configure the components settings.
 
-  ![App Editor](../assets/apps/0_app_editor/plain-app-editor.png)
+![App Editor](../assets/apps/0_app_editor/plain-app-editor.png)
 
-&nbsp;  
-You will find more details in the next pages.
+## App
+
+An app is a collection of components. An app can be used to build a dashboard, a workflow, a form, a CRM, etc. An app is made of:
+
+- **Components**: the components are the building blocks of an app. They can be used to display data, to perform actions, to create forms, etc. The components are displayed on a grid and can be nested in containers.
+- **Runnables**: the runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc

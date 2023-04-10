@@ -18,10 +18,11 @@ The app context contains the following outputs:
 - email: the email of the current user
 - username: the username of the current user
 - query: the query parameters of the URL
+- hash: the hash parameters of the URL
 
 ### State
 
-The app state is a client-side store that can be used to store data. The app statec can be manipulated by frontend scripts.
+The app state is a client-side store that can be used to store data. The app state can be manipulated by frontend scripts.
 
 ### Component outputs
 
@@ -61,3 +62,22 @@ A background script is a script that runs in the background and can be used to p
 ### Connecting inputs
 
 Inputs can be connected to any outputs. When connecting, you can click on the output to connect the input to the output. Note that you can select nested outputs, objects and arrays.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/app-connections.mp4"
+/>
+
+Here are the steps to connect an input to an output:
+
+- Click on the component input you want to connect to an output
+- Click the right arrow to open the connection menu
+  - You can now navigate you app, without running any scripts
+  - When you hover a component, the corresponding outputs are highlighted in orange
+  - If you click on a component, the output will be pinned and stays open
+- You can now click on the output you want to connect to the input
+- The input is now connected to the output
