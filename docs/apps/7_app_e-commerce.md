@@ -20,8 +20,6 @@ It showcases a variety of features that are available in the Windmill app builde
 
 We use Supabase as a backend for this app. It is a great alternative to Firebase and it is free to use. It is a great way to get started with building your app. You can read more about Supabase [here](https://supabase.io/). Windmill has a [Supabase integration](/docs/integrations/supabase/) on the HUB that allows you to easily connect your app to Supabase, and integrate it with your app.
 
-A blog post is available on the [Integrate Supabase with Windmill](/blog/setup-supabase-on-windmill) that explains how to integrate Supabase with Windmill.
-
 We will use the following scripts from the Hub:
 
 - [Fetch data from Supabase](https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase)
