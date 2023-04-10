@@ -643,6 +643,18 @@ The text component allows you to display text.
 | result  | string  | The text.                                |
 | loading | boolean | The loading state of the text component. |
 
+#### Inline editor
+
+You can directly edit the text by click the `Pen` icon on the app editor. You can also double click on the text to edit it.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    src="/videos/text_editor.mp4"
+/>
+
 ### Icon
 
 The Icon API allows you to display an icon chosen in a library of icons.
