@@ -3,53 +3,38 @@ import LandingSection from './LandingSection';
 import { ExternalLink } from 'lucide-react';
 
 const integrations = [
-	{
-		name: 'Airtable',
-		src: 'third_party_logos/airtable.svg',
-		url: 'https://hub.windmill.dev/integrations/airtable'
-	},
-	{
-		name: 'Clickhouse',
-		src: 'third_party_logos/clickhouse.svg',
-		url: 'https://hub.windmill.dev/integrations/clickhouse'
-	},
-	{
-		name: 'Faunadb',
-		src: 'third_party_logos/faunadb.svg',
-		url: 'https://hub.windmill.dev/integrations/faunadb'
-	},
+	{ name: 'Airtable', src: 'third_party_logos/airtable.svg' },
+	{ name: 'ClickHouse', src: 'third_party_logos/clickhouse.svg' },
+	{ name: 'FaunaDB', src: 'third_party_logos/faunadb.svg' },
 	{ name: 'Gdrive', src: 'third_party_logos/gdrive.svg' },
 	{ name: 'Gmail', src: 'third_party_logos/gmail.svg' },
-	{ name: 'Linkding', src: 'third_party_logos/linkding.svg' },
 	{ name: 'Mastodon', src: 'third_party_logos/mastodon.svg' },
-	{ name: 'Mysql', src: 'third_party_logos/mysql.svg' },
-	{ name: 'Postgres', src: 'third_party_logos/postgres.svg' },
+	{ name: 'MySQL', src: 'third_party_logos/mysql.svg' },
+	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'Slack', src: 'third_party_logos/slack.svg' },
-
 	{ name: 'Appwrite', src: 'third_party_logos/appwrite.svg' },
 	{ name: 'Datadog', src: 'third_party_logos/datadog.svg' },
 	{ name: 'Funkwhale', src: 'third_party_logos/funkwhale.svg' },
-	{ name: 'Github', src: 'third_party_logos/github.svg' },
+	{ name: 'GitHub', src: 'third_party_logos/github.svg' },
 	{ name: 'Gsheets', src: 'third_party_logos/gsheets.svg' },
-	{ name: 'Hubspot', src: 'third_party_logos/hubspot.svg' },
+	{ name: 'HubSpot', src: 'third_party_logos/hubspot.svg' },
 	{ name: 'Mailchimp', src: 'third_party_logos/mailchimp.svg' },
-	{ name: 'Openai', src: 'third_party_logos/openai.svg' },
+	{ name: 'OpenAI', src: 'third_party_logos/openai.svg' },
 	{ name: 'Sendgrid', src: 'third_party_logos/sendgrid.svg' },
 	{ name: 'Supabase', src: 'third_party_logos/supabase.svg' },
-
-	{ name: 'Aws', src: 'third_party_logos/aws.svg' },
+	{ name: 'AWS', src: 'third_party_logos/aws.svg' },
 	{ name: 'Discord', src: 'third_party_logos/discord.svg' },
 	{ name: 'Gcal', src: 'third_party_logos/gcal.svg' },
-	{ name: 'Gitlab', src: 'third_party_logos/gitlab.svg' },
-	{ name: 'Linkedin', src: 'third_party_logos/linkedin.svg' },
+	{ name: 'GitLab', src: 'third_party_logos/gitlab.svg' },
+	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg' },
 	{ name: 'Matrix', src: 'third_party_logos/matrix.svg' },
 	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
 	{ name: 'S3', src: 'third_party_logos/s3.svg' },
 	{ name: 'Stripe', src: 'third_party_logos/stripe.svg' },
-	{ name: 'Mongo DB', src: 'third_party_logos/mongodb.svg' },
-	{ name: 'Surreal DB', src: 'third_party_logos/surrealdb.svg' },
+	{ name: 'MongoDB', src: 'third_party_logos/mongodb.svg' },
+	{ name: 'SurrealDB', src: 'third_party_logos/surrealdb.svg' },
 	{ name: 'Telegram', src: 'third_party_logos/telegram.svg' },
-	{ name: 'toggl', src: 'third_party_logos/toggl.svg' }
+	{ name: 'Toggl', src: 'third_party_logos/toggl.svg' }
 ];
 
 export default function IntergrationList() {
