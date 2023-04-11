@@ -8,7 +8,8 @@ of Windmill.
 Users are uniquely identified globally by their email. They also have a unique
 username with respect to each workspace they are member of. A user picks his
 username when he joins a workspace. There are two kinds of Users:
--  **authors**: they can write scripts/flows/apps/variables/resources.
+
+- **authors**: they can write scripts/flows/apps/variables/resources.
 - **operators**: they can only run and view scripts/flows/apps/variables/resources.
 
 ## Scripts
@@ -116,19 +117,19 @@ compatible with its most advanced features yet.
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "type": "object",
-  "properties": {
-    "your_name": {
-      "description": "The name to hello world to",
-      "type": "string"
-    },
-    "your_nickname": {
-      "description": "If you prefer a nickname, that's fine too",
-      "type": "string"
-    }
-  },
-  "required": []
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"type": "object",
+	"properties": {
+		"your_name": {
+			"description": "The name to hello world to",
+			"type": "string"
+		},
+		"your_nickname": {
+			"description": "If you prefer a nickname, that's fine too",
+			"type": "string"
+		}
+	},
+	"required": []
 }
 ```
 
@@ -309,100 +310,6 @@ async function main(...) {
 }
 ```
 
-### Dependency management
-
-For TypeScript (Deno), the dependencies and their versions are directly in the
-script and hence there is no need for any additional steps.
-
-For Python, the imports are automatically analyzed when the script is saved and
-the corresponding list of PyPi packages is extracted. A dependency job is then
-spawned to associate that list of PyPi packages with a lockfile, which will lock
-the versions. This ensures that the same version of a Python script is always
-executed with the same versions of its dependencies. It also avoids the hassle
-of having to maintain a separate requirements file.
-
-If the imports are not properly analyzed, there exists an escape hatch to
-override the input of the dependency job. One needs to head the Script with the
-following comment:
-
-```python
-#requirements:
-#dependency
-#version_pinned_dependency==0.4
-
-import dependency
-
-def main(...):
-  ...
-```
-
-In addition to that, environment variables can be set to customize `pip`'s
-index-url and extra-index-url. This is useful for private repositories.
-
-In a docker-compose file, you would add following lines:
-
-```dockerfile
-windmill:
-  ...
-  environment:
-    ...
-    - PIP_INDEX_URL=https://pypi.org/simple
-    - PIP_EXTRA_INDEX_URL=https://pypi.org/simple
-    - PIP_TRUSTED_HOST=pypi.org
-```
-
-### Python relative imports for sharing common logic
-
-It is possible to import directly from other Python scripts. One can simply
-follow the path layout. For instance,
-`import foo from f.<foldername>.script_name`. A more complete example below:
-
-```python
-# u/user/common_logic
-
-def foo():
-  print('Common logic!')
-```
-
-And in another Script:
-
-```python
-# u/user/custom_script
-
-from u.user.common_logic import foo
-
-def main():
-  return foo()
-```
-
-It works with Scripts contained in folders, and in Scripts contained in
-user-spaces, e.g: `f.<foldername>.script_path` or `u.<username>.script_path`.
-
-Beware that you can only import Scripts that you have visibility on.
-Furtheremore, if you make any import in the common logic, you will need to add
-the same import in the Script that imports it as well, otherwise the automatic
-dependency management will not work.
-
-The folder layout is identical with the one that works with the CLI for syncing
-Scripts locally and on Windmill. As a consequence, the IDE will treat it as a
-relative import and will behave as expected.
-
-### Deno relative imports for sharing common logic
-
-Similarly to Python, it is possible to import directly from other TypeScript
-Scripts. One can simply follow the path layout. For instance,
-`import { foo } from "/f/<foldername>/script_name.ts"`. A more verbose example
-below:
-
-```typescript
-import { main as foo, util } from "/f/common/my_script_path.ts";
-
-export async function main() {
-  await foo();
-  util();
-}
-```
-
 ## Flows
 
 A **Flow** is a core concept. It is a JSON serializable value in the
@@ -540,16 +447,18 @@ endpoints are authenticated and will require a bearer token of the format:
 
 Every Script or Flow can be run by its hash or path as a HTTP request aka as a
 **Webhook**. You can find the webhook on the Script or Flow detail page but the
-target URL follows this format:
+target URL follows this format (those are templates URL):
 
 <!-- FIXME: Update URLs after merging #336 -->
 
 - Flow by path:
-  <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH>
+  <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/f/$FLOW_PATH</a>
+
 - Script by hash:
-  <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH>
+  <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/h/$SCRIPT_HASH</a>
+
 - Script by path:
-  <https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH>
+  <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH</a>
 
 Find more information on the [Webhooks section](https://docs.windmill.dev/docs/core_concepts/webhooks/).
 
@@ -563,8 +472,10 @@ full execution before returning.
 The endpoint has the following format:
 
 ```bash
-https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run_wait/result/$SCRIPT_PATH
+https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run_wait_result/$SCRIPT_PATH
 ```
+
+where $SCRIPT_PATH is the path of the Script in the workspace, including the prefix `u/` or `f/`
 
 ## Jobs
 
@@ -588,7 +499,7 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
 
 - **Script Jobs**: Run a script as defined by the hash of the script (that
   uniquely and immutably defines a specific version of a script), its input
-  arguments (args) and the `permissioned_as` user or group of whom it is gonna
+  arguments (args) and the `permissioned_as` user or group of whom it is going to
   act on behalf of and inherit the visibility to other items such as resources
   and variables from. An user can **NEVER** escalates his privileges but only
   de-escalates it by launching a script with either the same permissions as
@@ -605,7 +516,7 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
   hash will always use the same versions. The process of generating this
   lockfile is also a job in itself so you can easily inspect the issues
   generating the lockfile if any. See
-  [Dependency Management](#dependency-management) for more information.
+  [Dependency Management](../advanced/6_imports/index.md) for more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
   every step. The execution of the steps are in-themselves jobs. It is defined
@@ -690,17 +601,17 @@ wmill.set_variable("u/user/foo", value)
 TypeScript (Deno):
 
 ```typescript
-import * as wmill from "https://deno.land/x/windmill/index.ts";
+import * as wmill from 'https://deno.land/x/windmill/index.ts';
 
-wmill.getVariable("u/user/foo");
-wmill.setVariable("u/user/foo", value);
+wmill.getVariable('u/user/foo');
+wmill.setVariable('u/user/foo', value);
 ```
 
 Note that there is a similar API for getting and setting [Resources](#resource)
 which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](#resource-type) to be automatically
 discriminated in the auto-generated form to be of the proper type (e.g a
-parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only gonna
+parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only going to
 offer a selection over the resources of type postgres in the auto-generated UI)
 
 There is also a concept of [state](#state-and-internal-state) to share values
@@ -745,12 +656,12 @@ of a Resource is the `demodb` schema:
 
 ```json
 {
-  "dbname": "demo",
-  "host": "demodb.delightool.xyz",
-  "password": "demo",
-  "port": 6543,
-  "sslmode": "disable",
-  "user": "demo"
+	"dbname": "demo",
+	"host": "demodb.delightool.xyz",
+	"password": "demo",
+	"port": 6543,
+	"sslmode": "disable",
+	"user": "demo"
 }
 ```
 
@@ -765,7 +676,7 @@ For instance:
 
 ```json
 {
-  "simple": "$var:u/user/foo"
+	"simple": "$var:u/user/foo"
 }
 ```
 
@@ -788,43 +699,36 @@ like the following:
 
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "properties": {
-    "dbname": {
-      "description": "The database name",
-      "type": "string"
-    },
-    "host": {
-      "description": "The instance host",
-      "type": "string"
-    },
-    "password": {
-      "description": "The postgres users password",
-      "type": "string"
-    },
-    "port": {
-      "description": "The instance port",
-      "type": "integer"
-    },
-    "sslmode": {
-      "description": "The sslmode",
-      "enum": [
-        "disable",
-        "allow",
-        "prefer",
-        "require",
-        "verify-ca",
-        "verify-full"
-      ],
-      "type": "string"
-    },
-    "user": {
-      "description": "The postgres username",
-      "type": "string"
-    }
-  },
-  "required": ["dbname", "user", "password"],
-  "type": "object"
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"properties": {
+		"dbname": {
+			"description": "The database name",
+			"type": "string"
+		},
+		"host": {
+			"description": "The instance host",
+			"type": "string"
+		},
+		"password": {
+			"description": "The postgres users password",
+			"type": "string"
+		},
+		"port": {
+			"description": "The instance port",
+			"type": "integer"
+		},
+		"sslmode": {
+			"description": "The sslmode",
+			"enum": ["disable", "allow", "prefer", "require", "verify-ca", "verify-full"],
+			"type": "string"
+		},
+		"user": {
+			"description": "The postgres username",
+			"type": "string"
+		}
+	},
+	"required": ["dbname", "user", "password"],
+	"type": "object"
 }
 ```
 

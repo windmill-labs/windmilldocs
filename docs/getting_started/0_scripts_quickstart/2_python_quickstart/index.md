@@ -11,6 +11,9 @@ provides a Python `3.11` environment.
 Scripts are the basic building blocks in Windmill. They can be run as standalone
 apps, chained together to create [Flows][flows].
 
+
+[Here](https://app.windmill.dev/scripts/get/636d928308d3b905?workspace_id=demo) is a simple example of a script built in Python with Windmill.
+
 In Windmill, Scripts consist of three parts:
 
 - **Metadata**: information about the Script such as its path, description, and

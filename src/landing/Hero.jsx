@@ -1,7 +1,7 @@
 import React from 'react';
 import LandingHeader from './LandingHeader';
 import GitHubButton from 'react-github-btn';
-import { VolumeX } from 'lucide-react'
+import { VolumeX } from 'lucide-react';
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
@@ -22,14 +22,15 @@ export default function Hero() {
 					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
 						Turn scripts into workflows and UIs in minutes
 					</h1>
-					<h2 className="mt-6 text-lg leading-8 text-gray-600">
+					<h2 className="mt-6 text-lg leading-8 text-gray-600 font-medium">
 						Easily create internal apps and invincible workflows with code only where it matters.
-						<br />Self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
+						<br />
+						Self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
 						<br />
 						<a className="underline" href="https://github.com/windmill-labs/windmill">
 							Fully Open-source
 						</a>{' '}
-						alternative to <i>Airplane</i>, <i>Superblocks</i> & <i>Retool</i>. 
+						alternative to <i>Airplane</i>, <i>Superblocks</i> & <i>Retool</i>.
 					</h2>
 
 					<div className="mt-10 flex items-center gap-x-6">
@@ -67,7 +68,7 @@ export default function Hero() {
 					<div className="flex-none">
 						<img
 							src="/homescreen.svg"
-							alt="App screenshot"
+							alt="Windmill infrastructure"
 							className="w-full"
 							width="1825"
 							height="1920"

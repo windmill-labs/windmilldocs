@@ -11,6 +11,7 @@ const config = {
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
+	trailingSlash: false,
 	favicon: 'img/logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
@@ -104,6 +105,11 @@ const config = {
 						to: 'https://app.windmill.dev/openapi.html',
 						position: 'left',
 						label: 'OpenAPI'
+					},
+					{
+						href: '/blog',
+						position: 'left',
+						label: 'Blog'
 					},
 					// {
 					// 	href: '/hiring',

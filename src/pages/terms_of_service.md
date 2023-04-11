@@ -1,8 +1,8 @@
+# Terms of service
+
 <div className="theme-doc-markdown markdown">
 
 Last updated: 07/25/2022
-
-# TERMS OF SERVICE
 
 ## 1. Introduction
 

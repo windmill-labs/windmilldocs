@@ -14,9 +14,19 @@ on Windmill Hub. For example:
 
 :::
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/flow-approval.mp4"
+/>
+
+
 ## Add Approval Script
 
-![Adding approval step](./flow-approval-step.png)
+![Adding approval step](./approval-step.png)
 
 You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
@@ -71,11 +81,6 @@ Gmail resource and define email addresses in the `approver_emails` input.
 
 ### Run the Flow
 
-For the sake of this example let's add a "dummy" Script as a second step in our
-Flow.
-
-![Dummy script](./dummy-script.png)
-
 The Flow is now ready for testing, let's click "Test flow" in the top-right
 corner.
 
@@ -91,3 +96,9 @@ Let's approve and resume the Flow and see that it has successfully ran the
 second step as well.
 
 ![Finished flow](./finished-flow.png)
+
+:::info 
+
+You can find more information on approval steps on the [dedicated section](../../flows/11_flow_approval.md).
+
+:::

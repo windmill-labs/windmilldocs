@@ -29,6 +29,7 @@ const tabs = [
 					'Simply drag and drop components, connect your data and deploy your app in minutes.',
 				video: {
 					videoSrc: '/videos/dnd.mp4',
+					altText: 'Drag and drop',
 					videoLength: '21'
 				}
 			},
@@ -39,6 +40,7 @@ const tabs = [
 				caption: 'Quickly start building complex apps using our 20 built-in components.',
 				video: {
 					videoSrc: '/videos/components.mp4',
+					altText: 'Building blocks',
 					videoLength: '19'
 				}
 			},
@@ -50,6 +52,7 @@ const tabs = [
 				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
 				video: {
 					videoSrc: '/videos/app-scripts.mp4',
+					altText: 'Run any script and flow',
 					videoLength: '16'
 				}
 			}
@@ -67,6 +70,7 @@ const tabs = [
 				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
 				video: {
 					videoSrc: '/videos/admin-crm.mp4',
+					altText: 'Admin crm',
 					videoLength: '21'
 				}
 			}
@@ -84,6 +88,7 @@ const tabs = [
 				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
 				video: {
 					videoSrc: '/videos/bi-charts.mp4',
+					altText: 'BI charts',
 					videoLength: '14'
 				}
 			}

@@ -11,12 +11,29 @@ debugging code, add this snippet to your file:
 
 ```ts
 if (import.meta.main) {
-  // Add your testing & debugging code here.
+	// Add your testing & debugging code here.
 }
 ```
 
 You can then use your script like normal (for example,
 `deno run -A --watch my_script.ts`), and even write tests inside.
+
+If you'd like to tweak the client settings more directly, use:
+
+```ts
+wmill.setClient(<TOKEN>, <API BASE URL>)
+```
+
+On import, the wmill client does the following:
+
+```ts
+setClient(
+	Deno.env.get('WM_TOKEN') ?? 'no_token',
+	Deno.env.get('BASE_INTERNAL_URL') ?? Deno.env.get('BASE_URL') ?? 'http://localhost:8000'
+);
+```
+
+which is why we recommend setting those environment variables in the sections below.
 
 For more information on deno development in general,
 [see the official docs](https://deno.land/manual@v1.30.3/getting_started)
@@ -32,8 +49,7 @@ if __name__ == 'main':
     pass
 ```
 
-You can then use your script like normal (for example, `python my_script.py`),
-and even write tests inside.
+You can then run your script: `python -m f/folder/my_script` and even write tests inside.
 
 For more information on python development in general,
 [see the official docs](https://www.python.org/doc/)
@@ -51,6 +67,17 @@ trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
 token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.md)
 using `wmill user create-token`. And then `WM_WORKSPACE` corresponds to your workspace id.
 Below are some examples on how to do this in various environments.
+
+### State
+
+to use the `getState` and `setState` functions, you will have to set `WM_STATE_PATH`. We recommend using your script path name as the state path, for example:
+
+```ts
+let fullUrl = import.meta.url;
+let pathS = fullUrl.substring(8, fullUrl.length - 3).split('/');
+const path = pathS.slice(pathS.length - 3, pathS.length).join('/');
+Deno.env.set('WM_STATE_PATH', path);
+```
 
 ### Terminal
 
@@ -132,12 +159,12 @@ Make sure you are not checking your Token into git.
 
 :::
 
-
 ## Pushing your scripts to Windmill
 
 Once you are done developing your script, you can push it to Windmill using the CLI!
 
 Be sure to add wmill to your path after installing.
+
 ```
 deno install --unstable -A https://deno.land/x/wmill/main.ts
 wmill workspace add

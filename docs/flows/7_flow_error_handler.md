@@ -8,11 +8,11 @@ Steps are retried until they succeed, or until the maximum number of retries def
 
 You can write error handler scripts in:
 
-- [Python](https://docs.windmill.dev/flows/flow-scripting/python)
-- [Typescript](https://docs.windmill.dev/flows/flow-scripting/javascript)
-- [Go](https://docs.windmill.dev/flows/flow-scripting/go)
+- [Python](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/python/)
+- [Typescript](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript/)
+- [Go](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/go/)
 
 On the Hub, two examples of error handlers are provided:
 
-- [Slack error handler](https://hub.windmill.dev/scripts/slack/1525/send-error-to-slack-channel-slack): sends a message to a Slack channel when an error occurs:
-- [Discord error handler](https://hub.windmill.dev/scripts/discord/1523/send-the-error-to-discord-discord): sends a message to a Discord channel when an error occurs
+- [Slack error handler](https://hub.windmill.dev/scripts/slack/1525/send-error-to-slack-channel-slack): sends a message to a Slack channel when an error occurs.
+- [Discord error handler](https://hub.windmill.dev/scripts/discord/1523/send-the-error-to-discord-discord): sends a message to a Discord channel when an error occurs.

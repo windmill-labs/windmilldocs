@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from '@docusaurus/Head';
 
 const people = [
 	{
@@ -40,6 +41,11 @@ import Footer from '../landing/Footer';
 export default function About() {
 	return (
 		<main>
+			<Head>
+				<title>Team | Windmill</title>
+				<meta name="title" content="Windmill Team." />
+				<meta name="description" content="We are a team commited to open source, with a strong will to improve internal tools for everyone." />
+			</Head>
 			<LandingHeader />
 			<LandingSection bgClass="bg-white">
 				<div className="space-y-12 text-center ">
