@@ -5,7 +5,7 @@ By default, adding a trigger will set the schedule to 15 minutes.
 
 :::tip
 
-Check an example on how to schedule flows [here](https://www.windmill.dev/blog/cron-job-schedules).
+Check an example on how to schedule flows [here](../getting_started/8_scheduling_scripts_flows/index.md).
 
 :::
 
