@@ -77,10 +77,9 @@ the `/windmill` command in your Slack workspace to trigger the Script. Try it
 out with `/windmill foo` and you should get back `ROGER foo`. Go ahead and
 customize the Script to your needs.
 
-:::tip
+:::tip Handle multiple commands on your slackbot
 
-You can find many pre-made Scripts and Flows on [Windmill Hub][hub-slack] that
-are integrating with Slack.
+We cover in a [subsequent article](https://docs.windmill.dev/blog/handler-slack-commands) how to manage multiple commands from your slackbot. Spoiler: it uses [branches](https://www.windmill.dev/docs/flows/flow_branches) and a text parser.
 
 :::
 
