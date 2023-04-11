@@ -16,7 +16,7 @@ Windmill has the same set of features of cron, with an UI and control panels.
     loop
     controls
     id="main-video"
-    src="/videos/schedule-cron.mp4"
+    src="/videos/schedule-cron-menu.mp4"
 />
 
 <br/>
@@ -40,19 +40,63 @@ Managing scripts, flows and apps on Windmill works at the [workspace](https://do
 
 <br/>
 
-Cron jobs are one of many ways to [trigger workflows](https://docs.windmill.dev/docs/core_concepts/trigger_flows) in Windmill (among [webhooks](https://docs.windmill.dev/docs/core_concepts/webhooks), [customized UIs](https://docs.windmill.dev/docs/getting_started/apps_quickstart), [Command Line Interface](https://docs.windmill.dev/docs/advanced/cli), [Slackbots](../2023-03-20-handler-slack-commands/index.md) etc.)
+Cron jobs are one of **many ways to [trigger workflows](https://docs.windmill.dev/docs/core_concepts/trigger_flows) in Windmill** (among [webhooks](https://docs.windmill.dev/docs/core_concepts/webhooks), [customized UIs](https://docs.windmill.dev/docs/getting_started/apps_quickstart), [Command Line Interface](https://docs.windmill.dev/docs/advanced/cli), [Slackbots](../2023-03-20-handler-slack-commands/index.md) etc.)
 
 :::
 
-## How Windmill Handles Time-based Job Schedules
+## Configure Schedules for Each Task ([Script](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript),  [Workflows](https://docs.windmill.dev/docs/getting_started/flows_quickstart))
 
-### Configure Schedules for Each Flow
+From your workspace, go to the dedidcated `Schedules` menu and pick `New Schedule`.
+
+![Schedules menu](./6-schedules-menu.png "Schedules menu")
+
+1. Configure the **schedule frequency** using cron syntax or the simplified builder.
+
+2. Pick a **runnable** ([script](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript) or [flow](https://docs.windmill.dev/docs/getting_started/flows_quickstart)) from your workspace.
+
+3. Fill the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow](https://docs.windmill.dev/docs/getting_started/flows_quickstart).
+
+![Schedule a task](./12-schedule-a-task.png "Schedule a task")
+
+Click on `Schedule` button and you're good! The schedule will be automatically 'Enabled'. Toggle that off if needed.
+
+![Scheduled task](./13-scheduled-script.png "Scheduled task")
+
+
+:::tip Handle Several Schedules for the Same Workflow
+
+The previous configuration can be replicated multiple times for the same workflow and therefore several schedules can work in parallel.
+
+:::
+
+If the Schedules menu allows you to control future executions of scripts and workflows, you can check all past and future runs from the `Runs` tab ...
+
+![Runs menu](./10-runs-menu.png "Runs menu")
+
+... where you can get details on each run:
+
+![Run details](./11-run-details.png "Run details")
+
+## Configure Schedules from Flow Editor
+
+The same method can be done from the flow editor.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/schedule-cron.mp4"
+/>
+
+<br/>
 
 From your workspace, pick the workflow you want to schedule.
 
 ![Go to workflow](./1-from-workspace.png "Go to workflow")
 
-Go to the "Schedule" menu ...
+Go to the `Schedule` menu ...
 
 ![Pick Schedule menu](./2-schedule-menu.png "Pick Schedule menu")
 
@@ -60,25 +104,17 @@ and either schedule in cron or in Basic mode that will automatically be translat
 
 ![Basic or cron schedule](./3-basic-schedule.png "Basic or cron schedule")
 
-Fill the inputs, toggle the "Schedule Enabled", save and you're all set!
+Fill the inputs, toggle the `Schedule Enabled`, save and you're all set!
 
 ![Save and schedule](./4-inputs-toggle.png "Save and schedule")
 
-### Control permissions and errors
+## Control Permissions and Errors
 
-:::tip Tip n°1: Manage permissions from the workflow
+### Be notified every time a scheduled workflow has been executed (or failed)
 
-From the metadata menu, change the owner to a folder (group of people) to handle view and editing rights.
+Add a simple step to your workflow to be informed on the execution of the scheduled flow.
 
-![Manage permissions](./5-manage-rights.png "Manage permissions")
-
-:::
-
-<br/>
-
-:::tip Tip n°2: Be notified every time a scheduled workflow has been executed (or failed)
-
-Add a simple step to your workflow to be informed on the execution of the scheduled flow. In this example I chose to [receive an email](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail), it could have been on [Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack), [Discord](https://hub.windmill.dev/scripts/discord/1292/send-message-to-channel-using-webhook-discord) or anything your imagination and API calls can create.
+In this example I chose to [receive an email](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail), it could have been on [Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack), [Discord](https://hub.windmill.dev/scripts/discord/1292/send-message-to-channel-using-webhook-discord) or anything your imagination and API calls can create.
 
 ![Add an email step](./7-add-email-step.png "Add an email step")
 
@@ -98,25 +134,18 @@ And watch your mailbox.
 
 Given how [flows](https://docs.windmill.dev/docs/getting_started/flows_quickstart) work on Windmill, it means that once the previous step has been successful, the Email step will trigger.
 
-<br/>
+:::tip Error handler
 
-If you want to handle failure and receive another message in that case, add an **[Error Handler](https://docs.windmill.dev/docs/flows/flow_error_handler)** to your workflow that will let you know if a failure happened at any step.
+If you want to handle failure and receive another message in that case, add an [Error Handler](https://docs.windmill.dev/docs/flows/flow_error_handler) to your workflow that will let you know if a failure happened at any step.
 
 :::
 
-### Manage all Schedules
+### Manage permissions from the workflow
 
-Now you can manage all the scheduled workflows on the dedicated "Schedules" menu.
+From the metadata menu, change the owner to a folder (group of people) to handle view and editing rights.
 
-![Schedules menu](./6-schedules-menu.png "Schedules menu")
+![Manage permissions](./5-manage-rights.png "Manage permissions")
 
-And check all past and future runs from the "Runs" tab ...
-
-![Runs menu](./10-runs-menu.png "Runs menu")
-
-... where you can get details on each run:
-
-![Run details](./11-run-details.png "Run details")
 
 <br/>
 

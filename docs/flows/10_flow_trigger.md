@@ -4,7 +4,8 @@ Triggers are special actions that run periodically given a schedule.
 By default, adding a trigger will set the schedule to 15 minutes.
 
 :::tip
-Schedule can be edited in the settings: See [Settings](./3_flow_settings.md#schedule)
+
+Check an example on how to schedule flows [here](https://www.windmill.dev/blog/cron-job-schedules).
 
 :::
 

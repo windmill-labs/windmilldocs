@@ -24,6 +24,12 @@ A CRON expression is used to define the schedule. Schedules can also be disabled
 
 ![Flow Schedule](../assets/flows/flow_settings_schedule.png)
 
+:::tip
+
+Have more details on how to schedule automatic flows [here](https://www.windmill.dev/blog/cron-job-schedules).
+
+:::
+
 ## Shared Directory
 
 Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
