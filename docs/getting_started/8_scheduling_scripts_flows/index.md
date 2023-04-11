@@ -1,12 +1,12 @@
 ---
-slug: cron-job-schedules
-title: 'Cron to Windmill: Task Scheduling with an UI, Run History and Enhanced Permissions'
-authors: [henricourdent]
+title: 'Scheduling Scripts and Flows'
 tags: [tutorial, cron job, schedules, automation]
 image: ./0-header.png
 ---
 
-Windmill has the same set of features of cron, with an UI and control panels.
+Windmill has the same set of features of cron, with an UI and control panels. It allows you to define Schedules for Scripts and Flows. Once a Schedule is defined, it will **automatically run the script at the set frequency**. Think of it as an easy-to-use CRON scheduler that you can share with other users.
+
+A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON expression** that controls the execution frequency.
 
 <!--truncate-->
 
@@ -36,15 +36,15 @@ However, as with any powerful tool, using cron comes with its own set of challen
 
 <br/>
 
-Managing scripts, flows and apps on Windmill works at the [workspace](https://docs.windmill.dev/docs/reference#workspace)-level. Admins invite authors and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
+Managing scripts, flows and apps on Windmill works at the [workspace](../../reference/index.md#workspace)-level. Admins invite authors and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
 
 <br/>
 
-Cron jobs are one of **many ways to [trigger workflows](https://docs.windmill.dev/docs/core_concepts/trigger_flows) in Windmill** (among [webhooks](https://docs.windmill.dev/docs/core_concepts/webhooks), [customized UIs](https://docs.windmill.dev/docs/getting_started/apps_quickstart), [Command Line Interface](https://docs.windmill.dev/docs/advanced/cli), [Slackbots](../2023-03-20-handler-slack-commands/index.md) etc.)
+Cron jobs are one of **many ways to [trigger workflows](https://docs.windmill.dev/docs/core_concepts/trigger_flows) in Windmill** (among [webhooks](../../core_concepts/4_webhooks/index.md), [customized UIs](../7_apps_quickstart/index.md), [Command Line Interface](../../advanced/3_cli/index.md), [Slackbots](https://docs.windmill.dev/blog/handler-slack-commands) etc.)
 
 :::
 
-## Configure Schedules for Each Task ([Script](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript),  [Workflows](https://docs.windmill.dev/docs/getting_started/flows_quickstart))
+## Configure Schedules for Each Task ([Script](../0_scripts_quickstart/1_typescript_quickstart/index.md), [Workflows](../6_flows_quickstart/index.md))
 
 From your workspace, go to the dedidcated `Schedules` menu and pick `New Schedule`.
 
@@ -52,9 +52,9 @@ From your workspace, go to the dedidcated `Schedules` menu and pick `New Schedul
 
 1. Configure the **schedule frequency** using cron syntax or the simplified builder.
 
-2. Pick a **runnable** ([script](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript) or [flow](https://docs.windmill.dev/docs/getting_started/flows_quickstart)) from your workspace.
+2. Pick a **runnable** ([script](../0_scripts_quickstart/1_typescript_quickstart/index.md) or [flow](../6_flows_quickstart/index.md)) from your workspace.
 
-3. Fill the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow](https://docs.windmill.dev/docs/getting_started/flows_quickstart).
+3. Fill the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow](../6_flows_quickstart/index.md).
 
 ![Schedule a task](./12-schedule-a-task.png "Schedule a task")
 
@@ -100,7 +100,7 @@ Go to the `Schedule` menu ...
 
 ![Pick Schedule menu](./2-schedule-menu.png "Pick Schedule menu")
 
-and either schedule in cron or in Basic mode that will automatically be translated in cron. Once it's done, you can see in next picture that the cron expression is now visible on the toolbar.
+and either schedule in [cron](https://crontab.guru) or in Basic mode that will automatically be translated in cron. Once it's done, you can see in next picture that the cron expression is now visible on the toolbar.
 
 ![Basic or cron schedule](./3-basic-schedule.png "Basic or cron schedule")
 
@@ -132,11 +132,11 @@ And watch your mailbox.
 
 <br/>
 
-Given how [flows](https://docs.windmill.dev/docs/getting_started/flows_quickstart) work on Windmill, it means that once the previous step has been successful, the Email step will trigger.
+Given how [flows](../6_flows_quickstart/index.md) work on Windmill, it means that once the previous step has been successful, the Email step will trigger.
 
 :::tip Error handler
 
-If you want to handle failure and receive another message in that case, add an [Error Handler](https://docs.windmill.dev/docs/flows/flow_error_handler) to your workflow that will let you know if a failure happened at any step.
+If you want to handle failure and receive another message in that case, add an [Error Handler](../../flows/7_flow_error_handler.md) to your workflow that will let you know if a failure happened at any step.
 
 :::
 
@@ -151,4 +151,4 @@ From the metadata menu, change the owner to a folder (group of people) to handle
 
 Voilà, all done! The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
 
-Not only can you build scheduled jobs [from Windmill](https://docs.windmill.dev/docs/getting_started/how_to_use_windmill) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](../2023-03-06-stantt-use-case/index.md) for their own scheduled jobs.
+Not only can you build scheduled jobs [from Windmill](../00_how_to_use_windmill/index.md) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](https://docs.windmill.dev/blog/stantt-case-study) for their own scheduled jobs.

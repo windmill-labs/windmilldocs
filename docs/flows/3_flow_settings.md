@@ -26,7 +26,7 @@ A CRON expression is used to define the schedule. Schedules can also be disabled
 
 :::tip
 
-Have more details on how to schedule automatic flows [here](https://www.windmill.dev/blog/cron-job-schedules).
+Have more details on how to schedule automatic flows [here](../getting_started/8_scheduling_scripts_flows/index.md).
 
 :::
 
