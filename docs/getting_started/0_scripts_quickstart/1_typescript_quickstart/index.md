@@ -173,7 +173,7 @@ in a real-world use case:
   to a script.
 - Connect to [resources](../../../core_concepts/3_resources_and_types/index.md).
 - Run scripts or flows on a
-  [schedule](../../../core_concepts/5_schedules/index.md).
+  [schedule](../../../getting_started/8_scheduling_scripts_flows/index.md).
 - Compose scripts in [Flows][flows].
 - You can [share your scripts](https://docs.windmill.dev/docs/misc/share_on_hub/) with the community on [Windmill Hub][wm-hub]. Once
   submitted, they will be verified by moderators before becoming available to
