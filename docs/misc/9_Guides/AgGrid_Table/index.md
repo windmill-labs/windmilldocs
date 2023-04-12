@@ -21,7 +21,7 @@ But if you want the user to be able to sort the table, edit a value, adjust widt
 
 :::info Transformer     
   If you want to do basic sorting, or edit the column header name from the script you can use the Transformer script. 
-  See <#TODO: ref to info about Tranformer> for more information
+  See the [documentation](../../../apps/6_app_settings.md#tranformers) for more information
 ::: 
 
 ## Column definitions. 
