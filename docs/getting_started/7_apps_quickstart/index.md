@@ -2,9 +2,11 @@
 
 Welcome to the Apps Quickstart! This document will provide you with 95% of the knowledge on building apps, in a few minutes.
 
+:::info
 Although Windmill provides **auto-generated UIs to scripts and flows**, you can build your own internal applications designed to your needs.
+:::
 
-Windmill applications are customized UIs to interact with datasources (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
+**Windmill applications are customized UIs to interact with datasources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
 
 [Here](https://hub.windmill.dev/apps/3/crm) is an example of an app built with Windmill.
 
