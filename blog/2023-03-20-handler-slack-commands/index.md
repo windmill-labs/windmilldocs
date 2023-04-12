@@ -169,7 +169,7 @@ All commands (except the default one) of this slackbot deal with [resources](htt
 
 One specificity of triggering resources from Slack is that **you have to let Windmill know Slack can interact with them**.
 
-You won't be able to have Slack interact with your resources and variables before adding them to the `slack` group that was automatically created by Windmill after you set up your Slack workspace on Windmill.
+You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](https://www.windmill.dev/docs/core_concepts/groups_and_folders) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
 
 :::tip Allow resources to be triggered from Slack
 
@@ -181,7 +181,7 @@ To give the permission, go to "Resources" (and "Variables") menu, click on `Shar
 
 <br/>
 
-One simplier way to handle permissions is to host resources and variables on a folder that is part of the group `slack`.
+One simplier way to handle permissions is to host resources and variables on a [folder](https://www.windmill.dev/docs/core_concepts/groups_and_folders#folders) that is part of the [group](https://www.windmill.dev/docs/core_concepts/groups_and_folders#groups) `slack`.
 
 <br/>
 
