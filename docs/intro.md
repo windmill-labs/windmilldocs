@@ -24,7 +24,7 @@ restricted forms.
 
 Windmill is different:
 
-- Windmill is an [open-source](https://github.com/windmill-labs/windmill) **developer platform and infra to build all internal tools through code**, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash). Without sacrificing on one side visibility and intuitivity and on the other side,
+- Windmill is an [open-source](https://github.com/windmill-labs/windmill) alternative to Retool, Airplane and n8n to **build all your internal tools (endpoints, workflows, UIs) through simple scripts** - in Typescript, Python, Go & Bash - and low code builders. Without sacrificing on one side visibility and intuitivity and on the other side,
   control, reliability, performance, flexibility and scalability.
 - It **empowers semi-technical users** to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
