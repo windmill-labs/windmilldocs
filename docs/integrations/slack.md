@@ -96,7 +96,7 @@ on Windmill. The runs will be permissioned through the `g/slack` global group.
 
 :::danger
 
-You won't be able to have Slack interact with your resources and variables before adding them to the `slack` group that was automatically created by Windmill after you set up your Slack workspace on Windmill.
+You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.md#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
 
 To give the permission, go to "Resources" (and "Variables") menu, click on `Share`, `Group` and pick `slack`.
 
@@ -106,7 +106,7 @@ To give the permission, go to "Resources" (and "Variables") menu, click on `Shar
 
 <br/>
 
-One simplier way to handle permissions is to host resources and variables on a folder that is part of the group `slack`.
+One simplier way to handle permissions is to host resources and variables on a [folder](../core_concepts/8_groups_and_folders/index.md#folders) that is part of the [group](../core_concepts/8_groups_and_folders/index.md#groups) `slack`.
 
 <br/>
 
