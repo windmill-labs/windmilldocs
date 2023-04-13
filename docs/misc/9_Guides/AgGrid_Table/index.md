@@ -9,33 +9,33 @@ It provides you with a lot of advanced features. It comes in a free and a Enterp
 All features below are part of the free version of AgGrid. 
 
 :::info Enterprise 
-  There has been no need for the enterprise version, if you do need it, contact us and we will help you get it working.
+If you need the enterprise version of AgGrid, please contact us.
 ::: 
 
 ## AgGrid vs Table component 
 
 In windmill there are 2 table components, One simply called [Table](../../../apps/4_app_component_library.md#table) and AgGrid. 
 
-The table component is create for basic usecases. It takes an array of objects as input, and uses the key of the object as the header of the table. It also provides you with one or more action buttons to trigger an action for the row. 
+The table component is for basic usecases. It takes an array of objects as input, and uses the key of the object as the header of the table. It also provides you with one or more action buttons to trigger an action for the row. 
 But if you want the user to be able to sort the table, edit a value, adjust width and more you want to reach for AgGrid. 
 
 :::info Transformer     
-  If you want to do basic sorting, or edit the column header name from the script you can use the Transformer script. 
+  If you want to do basic sorting, or edit the column header name from the script you can also use a Transformer script. 
   See the [documentation](../../../apps/6_app_settings.md#tranformers) for more information
 ::: 
 
 ## Column definitions. 
 
 AgGrid needs two inputs, rowdata and column definitions. 
-By default agGrid do not show the rowdata. You need to specify the properties of each column. 
+By default agGrid does not show the rowdata. You need to specify the properties of each column. 
 This is done in the Configuration on the right side.
 
 ![Column definitions](./../../../../static/img/guide/coldef.png)
 TODO: Picture size...
 
 
-As you see here, you can staticly set the properties of each column.
-There are a lot of properties to set. Let's walk trough the one you may be most likley to use:
+You can staticly set the properties of each column and many properties are available.
+Let's walk trough the one you may be most likley to use:
 
 * field (string) - which field to use from the rowdata  | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-columns-field)
 * headerName (string) - rename the column header to something other than the field name | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-header-headerName)
