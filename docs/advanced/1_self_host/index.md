@@ -53,7 +53,6 @@ address:
 # .env
 DB_PASSWORD=supersecret
 WM_BASE_URL=http://windmill.example.com
-CADDY_REVERSE_PROXY=http://windmill.example.com
 ```
 
 Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The reverse proxy is also configured at the same domain. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
