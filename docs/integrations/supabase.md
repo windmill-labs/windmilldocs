@@ -21,7 +21,7 @@ You'll find the URL and 2 keys here.
 
 As the description says, the access level of the `public` key will be controlled
 by the policies you add and the `secret` key will bypass all of them. You can
-safely use the `secret` key in Windmill because it'll never be sent to users
+safely use the `service_rolesecret` `secret` key in Windmill because it'll never be sent to users
 directly.
 
 ## Create a resource

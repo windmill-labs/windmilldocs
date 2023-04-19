@@ -98,6 +98,44 @@ const tabs = [
 
 const examples = [
 	{
+		name: <span>E-Commerce Back-Office</span>,
+		description: (
+			<>
+				Build a comprehensive CRM to monitor your products, customers and orders data hosted on {' '}
+				<a
+					href="https://hub.windmill.dev/integrations/supabase"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-green-100 text-green-600 px-2 rounded font-semibold whitespace-nowrap">
+						Supabase
+					</mark>
+				</a>{' '}
+				.
+			</>
+		),
+		href: 'https://docs.windmill.dev/docs/apps/app_e-commerce'
+	},
+	{
+		name: <span>MongoDB Admin</span>,
+		description: (
+			<>
+				Admin panel for the sample Customers dataset of{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/mongodb"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-red-100 hover:bg-red-200 px-2 rounded whitespace-nowrap  text-red-800 font-semibold">
+						MongoDB
+					</mark>
+				</a>{' '}
+				Cloud
+			</>
+		),
+		href: 'https://hub.windmill.dev/apps/5/mongodb-admin'
+	},
+	{
 		name: <span>Issue tracker</span>,
 		description: (
 			<>
@@ -115,45 +153,6 @@ const examples = [
 			</>
 		),
 		href: 'https://hub.windmill.dev/apps/7/issue-tracker'
-	},
-	{
-		name: <span>Admin CRM</span>,
-		description: (
-			<>
-				See all of your customers, statistics and send e-mails using Admin panel for the sample
-				Customers dataset of{' '}
-				<a
-					href="https://hub.windmill.dev/integrations/gmail"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-red-100 hover:bg-red-200 px-2 rounded whitespace-nowrap  text-red-800 font-semibold">
-						Gmail
-					</mark>
-				</a>{' '}
-				directly from the app
-			</>
-		),
-		href: 'https://hub.windmill.dev/apps/3/crm'
-	},
-	{
-		name: <span>MongoDB Admin</span>,
-		description: (
-			<>
-				Admin panel for the sample Customers dataset of{' '}
-				<a
-					href="https://hub.windmill.dev/integrations/mongodb"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-green-100 hover:bg-green-200 px-2 rounded whitespace-nowrap  text-green-800 font-semibold">
-						MongoDB
-					</mark>
-				</a>{' '}
-				Cloud
-			</>
-		),
-		href: 'https://hub.windmill.dev/apps/5/mongodb-admin'
 	}
 ];
 
