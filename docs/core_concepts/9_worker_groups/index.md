@@ -27,6 +27,8 @@ You can customize the worker group of a worker by passing as env variable:
 WORKER_TAGS=deno,light
 ```
 
+The default WORKER_TAGS of workers is `deno,python3,bash,go,flow,hub,dependency`.
+
 The configuration above will make the workers accept only deno jobs and jobs with the `light` tag.
 
 To make custom tags selectable from the UI, you need to pass the following env variable to the windmill server:
