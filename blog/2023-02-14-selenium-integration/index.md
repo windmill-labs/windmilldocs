@@ -20,7 +20,7 @@ request a dedicated instance at contact@windmill.dev
 
 :::
 
-![Integrattion between Selenium and Windmill](./0-header.png "Connect Selenium with Windmill")
+![Integrattion between Selenium and Windmill](./0-header.png 'Connect Selenium with Windmill')
 
 ## Prerequisite
 
@@ -46,7 +46,6 @@ It should look something like this:
 version: '3.7'
 
 services:
-
   db:
     image: postgres:14
     restart: unless-stopped
@@ -59,7 +58,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: windmill
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -70,8 +69,8 @@ services:
       replicas: 1
     restart: unless-stopped
     ports:
-      - "8000:8000"
-      - "9920-9930:9920-9930" # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
+      - '8000:8000'
+      - '9920-9930:9920-9930' # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
       - BASE_URL=http://${WM_BASE_URL}
@@ -99,8 +98,9 @@ add the following:
 
 ```bash
 DB_PASSWORD=changeme
+#use your public base url here
 WM_BASE_URL=http://localhost
-CADDY_REVERSE_PROXY=http://localhost
+CADDY_REVERSE_PROXY=":80"
 ```
 
 This is the PostgreSQL database password used by Windmill and the base URL of
@@ -119,28 +119,28 @@ We will also use Docker to configue Selenoid.
 
 ```json
 {
-  "firefox": {
-    "default": "104.0",
-    "versions": {
-      "104.0": {
-        "image": "selenoid/firefox:104.0",
-        "port": "4444",
-        "path": "/wd/hub",
-        "env": ["TZ=Europe/Berlin"]
-      }
-    }
-  },
-  "chrome": {
-    "default": "104.0",
-    "versions": {
-      "104.0": {
-        "image": "selenoid/chrome:104.0",
-        "port": "4444",
-        "path": "/",
-        "env": ["TZ=Europe/Berlin"]
-      }
-    }
-  }
+	"firefox": {
+		"default": "104.0",
+		"versions": {
+			"104.0": {
+				"image": "selenoid/firefox:104.0",
+				"port": "4444",
+				"path": "/wd/hub",
+				"env": ["TZ=Europe/Berlin"]
+			}
+		}
+	},
+	"chrome": {
+		"default": "104.0",
+		"versions": {
+			"104.0": {
+				"image": "selenoid/chrome:104.0",
+				"port": "4444",
+				"path": "/",
+				"env": ["TZ=Europe/Berlin"]
+			}
+		}
+	}
 }
 ```
 
@@ -168,29 +168,37 @@ add these two containers (`selenoid` and `selenoid-ui`). Don't forget to change
 the path to your `config` directory path.
 
 ```yml
-  selenoid:
-    network_mode: bridge
-    image: aerokube/selenoid:latest-release
-    volumes:
-      - "/path/to/config:/etc/selenoid" # <- change this
-      - "/path/to/config/video:/opt/selenoid/video" # <- change this
-      - "/path/to/config/logs:/opt/selenoid/logs" # <- change this
-      - "/var/run/docker.sock:/var/run/docker.sock"
-    environment:
-      - OVERRIDE_VIDEO_OUTPUT_DIR=./config/video
-    command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs"]
-    ports:
-      - "4444:4444"
+selenoid:
+  network_mode: bridge
+  image: aerokube/selenoid:latest-release
+  volumes:
+    - '/path/to/config:/etc/selenoid' # <- change this
+    - '/path/to/config/video:/opt/selenoid/video' # <- change this
+    - '/path/to/config/logs:/opt/selenoid/logs' # <- change this
+    - '/var/run/docker.sock:/var/run/docker.sock'
+  environment:
+    - OVERRIDE_VIDEO_OUTPUT_DIR=./config/video
+  command:
+    [
+      '-conf',
+      '/etc/selenoid/browsers.json',
+      '-video-output-dir',
+      '/opt/selenoid/video',
+      '-log-output-dir',
+      '/opt/selenoid/logs'
+    ]
+  ports:
+    - '4444:4444'
 
-  selenoid-ui:
-    image: "aerokube/selenoid-ui"
-    network_mode: bridge
-    restart: always
-    links:
-      - selenoid
-    ports:
-      - "8080:8080"
-    command: ["--selenoid-uri", "http://selenoid:4444"]
+selenoid-ui:
+  image: 'aerokube/selenoid-ui'
+  network_mode: bridge
+  restart: always
+  links:
+    - selenoid
+  ports:
+    - '8080:8080'
+  command: ['--selenoid-uri', 'http://selenoid:4444']
 ```
 
 Your `docker-compose.yml` should look like something like this:
@@ -199,7 +207,6 @@ Your `docker-compose.yml` should look like something like this:
 version: '3.7'
 
 services:
-
   db:
     image: postgres:14
     restart: unless-stopped
@@ -212,7 +219,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: windmill
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -223,8 +230,8 @@ services:
       replicas: 1
     restart: unless-stopped
     ports:
-      - "8000:8000"
-      - "9920-9930:9920-9930" # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
+      - '8000:8000'
+      - '9920-9930:9920-9930' # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
       - BASE_URL=${WM_BASE_URL}
@@ -247,25 +254,33 @@ services:
     network_mode: bridge
     image: aerokube/selenoid:latest-release
     volumes:
-      - "/path/to/config:/etc/selenoid" # <- change this
-      - "/path/to/config/video:/opt/selenoid/video" # <- change this
-      - "/path/to/config/logs:/opt/selenoid/logs" # <- change this
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - '/path/to/config:/etc/selenoid' # <- change this
+      - '/path/to/config/video:/opt/selenoid/video' # <- change this
+      - '/path/to/config/logs:/opt/selenoid/logs' # <- change this
+      - '/var/run/docker.sock:/var/run/docker.sock'
     environment:
       - OVERRIDE_VIDEO_OUTPUT_DIR=./config/video
-    command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs"]
+    command:
+      [
+        '-conf',
+        '/etc/selenoid/browsers.json',
+        '-video-output-dir',
+        '/opt/selenoid/video',
+        '-log-output-dir',
+        '/opt/selenoid/logs'
+      ]
     ports:
-      - "4444:4444"
+      - '4444:4444'
 
   selenoid-ui:
-    image: "aerokube/selenoid-ui"
+    image: 'aerokube/selenoid-ui'
     network_mode: bridge
     restart: always
     links:
       - selenoid
     ports:
-      - "8080:8080"
-    command: ["--selenoid-uri", "http://selenoid:4444"]
+      - '8080:8080'
+    command: ['--selenoid-uri', 'http://selenoid:4444']
 
 volumes:
   db_data: null
@@ -277,7 +292,7 @@ Final structure:
 .
 ├── config/
 │   ├── browsers.json
-│   ├── video 
+│   ├── video
 │   └── logs
 ├── .env
 └── docker-compose.yml
@@ -324,7 +339,7 @@ def initiateDriver(macM1=False):
                 }
 
                 driver = webdriver.Remote(command_executor='http://{}:4444/wd/hub'.format(HOST),
-                                            desired_capabilities=chrome_capabilities,seleniumwire_options=options) 
+                                            desired_capabilities=chrome_capabilities,seleniumwire_options=options)
 
                 print(f"initiated successfully with port:{i}")
                 break
@@ -360,12 +375,12 @@ def initiateDriver(macM1=False):
                 }
 
                 driver = webdriver.Remote(command_executor='http://{}:4444/wd/hub'.format(HOST),
-                                            desired_capabilities=chrome_capabilities,seleniumwire_options=options) 
+                                            desired_capabilities=chrome_capabilities,seleniumwire_options=options)
 
                 print(f"initiated successfully with port:{i}")
                 break
             except:
-                print(f"initiating driver with port:{i}")   
+                print(f"initiating driver with port:{i}")
                 if i > 9930:
                     print("port limit exceeded")
                     break
