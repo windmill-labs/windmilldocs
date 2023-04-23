@@ -9,7 +9,7 @@ Windmill allows you to run your scripts and flows on different machines with dif
 
 Individual scripts saved on a workspace and inline scripts of a flow can be assigned a custom worker group. By default, they are assigned the worker group that correspond to their languages.
 
-Workers can be part of different worker groups. The default worker groups a worker is part of are:
+Workers can be assigned to different worker groups at the same time. The default worker groups a worker is part of are:
 
 - `dependency`: Where dependency jobs are run.
 - `deno`: The default worker group for deno scripts.
@@ -34,3 +34,14 @@ To make custom tags selectable from the UI, you need to pass the following env v
 ```
 CUSTOM_TAGS=light
 ```
+
+## How to assign a custom worker group to a script
+
+For scripts saved on the script editor, select the corresponding worker group tag in the metadata section.
+
+![Worker group tag](./select_script_builder.png)
+
+For scripts inlined in the flow editor, select it in the module header:
+![Worker group tag](./select_flow_builder.png)
+
+If no worker group is assigned to a script, it will be assigned the default worker group for its language.
