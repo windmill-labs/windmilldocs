@@ -44,6 +44,7 @@ For scripts saved on the script editor, select the corresponding worker group ta
 ![Worker group tag](./select_script_builder.png)
 
 For scripts inlined in the flow editor, select it in the module header:
-![Worker group tag](./select_flow_builder.png)
+
+![Worker group tag](./select_flow.png)
 
 If no worker group is assigned to a script, it will be assigned the default worker group for its language.
