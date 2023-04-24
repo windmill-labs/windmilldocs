@@ -76,7 +76,7 @@ services:
       - BASE_URL=http://${WM_BASE_URL}
       - RUST_LOG=info
       - NUM_WORKERS=10 # <- an increased number of workers is helpful when running a lot of scraping scripts in parallel
-      - TIMEOUT=99999999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
+      - TIMEOUT=99999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
       - DISABLE_SERVER=false
       - METRICS_ADDR=false
     depends_on:
@@ -237,7 +237,7 @@ services:
       - BASE_URL=${WM_BASE_URL}
       - RUST_LOG=info
       - NUM_WORKERS=10 # <- an increased number of workers is helpful when running a lot of scraping scripts in parallel
-      - TIMEOUT=99999999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
+      - TIMEOUT=99999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
       - DISABLE_SERVER=false
       - METRICS_ADDR=false
     depends_on:
