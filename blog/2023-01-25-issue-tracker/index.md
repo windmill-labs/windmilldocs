@@ -201,7 +201,7 @@ This can be achieved by Background scripts.
 4. Paste in the following code:
 
    ```tsx
-   import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
+   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
    export async function main(auth: Resource<"supabase">) {
@@ -520,7 +520,7 @@ user and sends them to the database.
    `Create Issue` and paste in the following code:
 
    ```tsx
-   import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
+   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
    export async function main(
@@ -572,7 +572,7 @@ the form of buttons. Select the `Table` component and follow the steps:
    `Delete Issue` and paste in the following code:
 
    ```tsx
-   import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
+   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
    export async function main(auth: Resource<"supabase">, id: string) {

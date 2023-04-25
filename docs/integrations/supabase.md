@@ -8,7 +8,7 @@ _This tutorial assumes that you already have a
 [Windmill documentation](https://docs.windmill.dev/docs/intro) or the
 [Supabase documentation](https://supabase.com/docs) to find out more._
 
-![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png "Connect a Supabase project with Windmill")
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
 
 ## Get the API keys
 
@@ -50,10 +50,10 @@ You can reference the type of a Supabase resource in a script the following way:
 // To get the latest supported resource types,
 // check for the latest version of the Windmill Deno
 // package at https://deno.land/x/windmill/mod.ts
-import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
+import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 
-export async function main(auth: Resource<"supabase">) {
-  // Function contents
+export async function main(auth: Resource<'supabase'>) {
+	// Function contents
 }
 ```
 

@@ -112,7 +112,7 @@ Finally, we need to add a `Button` component to submit the form:
    `Update Issue` and paste in the following code:
 
    ```ts
-   import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
+   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
    export async function main(
