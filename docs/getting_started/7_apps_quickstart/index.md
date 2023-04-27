@@ -2,8 +2,19 @@
 
 Welcome to the Apps Quickstart! This document will provide you with 95% of the knowledge on building apps, in a few minutes.
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/app_editor_fast.mp4"
+/>
+
+<br/>
+
 :::info
-Although Windmill provides **auto-generated UIs to scripts and flows**, you can build your own internal applications designed to your needs.
+Although Windmill provides **[auto-generated UIs to scripts and flows](../../core_concepts/6_auto_generated_uis/index.md)**, you can build your own internal applications designed to your needs. This is what the app editor is for.
 :::
 
 **Windmill applications are customized UIs to interact with datasources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
@@ -11,9 +22,16 @@ Although Windmill provides **auto-generated UIs to scripts and flows**, you can 
 [Here](https://hub.windmill.dev/apps/3/crm) is an example of an app built with Windmill.
 
 In short, what you need to remember about apps:
-- they work on a **what-you-see-is-what-you-get basis**
-- you can connect apps and components to **datasources**
-- components can be **empowered by Windmill [scripts](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript)**
+- They work on a **what-you-see-is-what-you-get basis**.
+- You can connect apps and components to **datasources**.
+- Components can be **empowered by Windmill [scripts](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript)**.
+
+:::tip
+
+Follow our [detailed pages](../../apps/0_app_editor.md) on the App Editor for more information.
+
+:::
+
 
 To create your first app, you could pick one from our [Hub](https://hub.windmill.dev/apps) and fork it. Here, we're going to build our own app from scratch, step by step.
 
@@ -122,3 +140,5 @@ For possible bugs, there is a `Debug Runs` tab to review past runs with details 
 When you're done with the editing of your app, `Save` the current version to the relevant users/folders with a proper and explicit name.
 
 Once it's saved, it's ready to use! You can also `Publish` it, or even `Publish to Hub` and export it in JSON or Hub compatible JSON from the `⋮` tab.
+
+Follow our [detailed pages](../../apps/0_app_editor.md) on the App Editor for more information.

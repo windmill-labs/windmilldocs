@@ -14,7 +14,17 @@ Building a Slack commands handler requires a little bit of Windmill mastering, b
 
 Also, know that non-technical users can totally build such tools. I'm myself not a developer.
 
-![Windmill Slack](./0-header.png "Windmill & Slack")
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/generated_email.mp4"
+    alt="container component"
+/>
+
+<br/>
 
 :::tip After this article
 
@@ -27,11 +37,11 @@ You will be able to build a Slackbot from which you can create events on your ca
 
 <br/>
 
-We've seen in a [previous article](https://docs.windmill.dev/docs/integrations/slack) how to connect Slack with Windmill and have briefly explored how to build a first slackbot for a single command (using a script).
+We've seen in a [previous article](/docs/integrations/slack) how to connect Slack with Windmill and have briefly explored how to build a first slackbot for a single command (using a script).
 
 Long story short, the first article explained how to connect Slack with Windmill and to create a `/windmill` command on Slack linked to a script hosted on Windmill. Handling several commands on your Slackbot uses just the same logic, but we'll use one single Windmill workflow instead of a script.
 
-[Workflows](https://www.windmill.dev/docs/getting_started/flows_quickstart) on Windmill are based on scripts. Workflows are the architecture that allows you to chain scripts with branches, loops etc. while connecting scripts' inputs to previous ouputs.
+[Workflows](/docs/getting_started/flows_quickstart) on Windmill are based on scripts. Workflows are the architecture that allows you to chain scripts with branches, loops etc. while connecting scripts' inputs to previous ouputs.
 
 ![Windmill Workflows](./1-windmill-workflows.png "Windmill workflows")
 
@@ -39,7 +49,7 @@ As we will use only one master workflow to handle all Slack commands, branches w
 
 ## Connecting a first workflow handler to your workspace
 
-Just like the [slack integration tutorial](https://docs.windmill.dev/docs/integrations/slack), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
+Just like the [slack integration tutorial](/docs/integrations/slack), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
 
 ![Create Flow Handler](./2-create-flow-handler.png "Create a flow to handle Slack Commands")
 
@@ -77,7 +87,7 @@ interface Output {
 
 ### Branches
 
-[Branches](https://docs.windmill.dev/docs/flows/flow_branches) on Windmill are twofold: _Branch all_ and _Branch one_. Here we'll use _Branch one_ as they allow to execute one single branch based on a condition, with also a default branch executed if error.
+[Branches](/docs/flows/flow_branches) on Windmill are twofold: _Branch all_ and _Branch one_. Here we'll use _Branch one_ as they allow to execute one single branch based on a condition, with also a default branch executed if error.
 
 Although you can theoretically condition branches with any criterium, on your commands handler we'll link them to the output of the parser that set apart the "command" from the Slack input (e.g. `results.c.command === 'echo'`). Here, each branch will match a behavior you expect from the Slackbot.
 
@@ -165,11 +175,11 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
 
 <br/>
 
-All commands (except the default one) of this slackbot deal with [resources](https://docs.windmill.dev/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](https://docs.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource-type).
+All commands (except the default one) of this slackbot deal with [resources](/docs/core_concepts/resources_and_types). Adding resources is easy on Windmill: many resource types are [already available](https://hub.windmill.dev/resources), or you can [create your own resource type](/docs/core_concepts/resources_and_types#create-a-resource-type).
 
 One specificity of triggering resources from Slack is that **you have to let Windmill know Slack can interact with them**.
 
-You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](https://www.windmill.dev/docs/core_concepts/groups_and_folders) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
+You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](/docs/core_concepts/groups_and_folders) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
 
 :::tip Allow resources to be triggered from Slack
 
@@ -181,7 +191,7 @@ To give the permission, go to "Resources" (and "Variables") menu, click on `Shar
 
 <br/>
 
-One simplier way to handle permissions is to host resources and variables on a [folder](https://www.windmill.dev/docs/core_concepts/groups_and_folders#folders) that is part of the [group](https://www.windmill.dev/docs/core_concepts/groups_and_folders#groups) `slack`.
+One simplier way to handle permissions is to host resources and variables on a [folder](/docs/core_concepts/groups_and_folders#folders) that is part of the [group](/docs/core_concepts/groups_and_folders#groups) `slack`.
 
 <br/>
 
@@ -221,4 +231,4 @@ The example above chains simple scripts to make them into a powerful Slackbot:
 
 To make it more convenient, we also introduce the command `/windmill send` to make marginal changes on the Open AI completion and send the email directly to a recipient.
 
-Now you know how to articulate a workflow handler of Slack commands. The potential is unlimited as slackbots can basically behave as a trigger on any of your workflows. Your Slackbot will never be as efficient as the one you built yourself. Start now using the [Hub](https://hub.windmill.dev/) for inspiration, and iterate on our [cloud app](https://app.windmill.dev/user/login).
+Now you know how to articulate a workflow handler of Slack commands. The potential is unlimited as slackbots can basically behave as a trigger on any of your workflows. Your Slackbot will never be as efficient as the one you built yourself. Start now using the [Hub](https://hub.windmill.dev/) for inspiration, and iterate on our <a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>.

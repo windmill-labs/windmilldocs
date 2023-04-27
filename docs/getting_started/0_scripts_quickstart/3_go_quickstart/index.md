@@ -93,7 +93,7 @@ entrypoint. There are a few important things to note about the `main`.
 Note that this Script is defined as a package named `inner`. Windmill expects an
 `inner` package, so that cannot be changed.
 
-Also take a look at the import statement line that's commented out. This is for
+Also take a look at the [import](../../../advanced/6_imports/index.md) statement line that's commented out. This is for
 importing the Windmill client, that is needed for example to access
 [variables](../../../core_concepts/2_variables_and_secrets/index.md) or
 [resources](../../../core_concepts/3_resources_and_types/index.md). We won't go
@@ -161,7 +161,7 @@ in a real-world use case:
   to a script.
 - Connect to [resources](../../../core_concepts/3_resources_and_types/index.md).
 - Run scripts or flows on a
-  [schedule](../../../getting_started/8_scheduling_scripts_flows/index.md).
+  [schedule](../../../core_concepts/1_scheduling/index.md).
 - Compose scripts in [Flows][flows].
 - You can share your scripts with the community on [Windmill Hub][wm-hub]. Once
   submitted, they will be verified by moderators before becoming available to

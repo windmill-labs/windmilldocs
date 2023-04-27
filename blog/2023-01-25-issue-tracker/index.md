@@ -7,7 +7,7 @@ image: ./0-header.png
 ---
 
 The following tutorial will showcase how you could build an issue tracker
-application with [Windmill](https://docs.windmill.dev) and
+application with [Windmill](https://www.windmill.dev/) and
 [Supabase](https://supabase.com/), without ever having to leave your browser.
 
 <!--truncate-->
@@ -169,7 +169,7 @@ tokens without exposing them. To create your Supabase resource, check out the
 [How to Integrate Supabase with Windmill](https://docs.windmill.dev/docs/integrations/supabase)
 tutorial - it takes only 2 minutes.
 
-After you added your resource, navigate to the [Home](https://app.windmill.dev/)
+After you added your resource, navigate to the `Home`
 page and create a new App in the top-right corner. You can enter an optional App
 summary on the left side of the header, let’s use `Issue Tracker`. Click "Save"
 on the other end of the top row, name your app `issue-tracker` and click "Create

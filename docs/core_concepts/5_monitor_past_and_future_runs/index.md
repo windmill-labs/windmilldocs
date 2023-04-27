@@ -1,8 +1,3 @@
----
-id: monitor_past_and_future_runs
-title: Monitor Past and Future Runs
----
-
 # Monitor Past and Future Runs
 
 Each workspace has a dedicated Runs menu that allows you to visualise all past and future runs.
@@ -30,7 +25,7 @@ View of a past run:
 
 ![Details per run](./2-detail-per-run.png "Details per run")
 
-You can also have a view on runs that are [scheduled](../../getting_started/8_scheduling_scripts_flows/index.md) from the run menu, with a view on arguments used and next trigger.
+You can also have a view on runs that are [scheduled](../1_scheduling/index.md) from the run menu, with a view on arguments used and next trigger.
 
 View of a scheduled run:
 

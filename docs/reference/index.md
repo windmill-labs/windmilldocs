@@ -59,23 +59,23 @@ specific Script kinds.
 
 Actions - or Common Scripts - are the basic building blocks for the flows.
 
-#### Trigger Scripts
+#### [Trigger Scripts](../flows/10_flow_trigger.md)
 
 These are used as the first step in Flows, most commonly with an internal
 [state](#state-and-internal-state) and a schedule to watch for changes on an
 external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
-#### Approval Scripts
+#### [Approval Scripts](../flows/11_flow_approval.md)
 
 Suspend a flow until it's approved. An Approval Script will interact with the
 Windmill API using any of the Windmill clients to retrieve a secret approval URL
 and resume/cancel endpoints. Most common scenario for Approval Scripts is to
 send an external notification with an URL that can be used to resume or cancel a
 flow. For more details check
-[Suspend and Resume tutorial](../core_concepts/7_suspend_and_resume/index.md).
+[Suspend and Resume tutorial](../flows/11_flow_approval.md).
 
-#### Error Handlers
+#### [Error Handlers](../flows/7_flow_error_handler.md)
 
 Handle errors for Flows after all retries attempts have been exhausted. If it
 does not return an exception itself, the Flow is considered to be "recovered"
@@ -92,7 +92,7 @@ path, the previous "HEAD" is archived (but still deployed forever).
 
 When a script is saved, it is immediately deployed.
 
-### Automatic UI generation
+### [Automatic UI generation](../core_concepts/6_auto_generated_uis/index.md)
 
 By reading the main function parameters, Windmill generates the input
 specification of the script in the [JSON Schema](https://json-schema.org/)
@@ -217,13 +217,9 @@ def main(x: my_resource_type):
 
 ### Job inputs and Script parameters
 
-[Jobs](#jobs) take a JSON object as input which can be empty. That input is
-passed as the payload of the POST request that triggers the Script. The
-different key-value pairs of the objects are passed as the different parameters
-of the main function, with just a few language specific transformations to more
-adequate types in the target language, if necessary (e.g base64/datetime
-encoding). Values can be nested JSON objects themselves but we recommend trying
-to keep the input flat when possible.
+[Jobs](#jobs) take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible. 
+
+If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
 
 ### SQL
 
@@ -312,23 +308,23 @@ async function main(...) {
 
 ## Flows
 
-A **Flow** is a core concept. It is a JSON serializable value in the
+A **[Flow](../getting_started/6_flows_quickstart/index.md)** is a core concept. It is a JSON serializable value in the
 [OpenFlow](../openflow/index.md) format that consists of an input spec (similar
 to Scripts), and a linear sequence of steps, also referred to as modules. Each
 step consists of either:
 
-- Reference to a Script from the Hub
-- Reference to a Script in your workspace
-- Inlined Script in TypeScript (Deno), Python, Go or Bash
-- Trigger Scripts which are a kind of Scripts that are meant to be first step of
+- Reference to a Script from the [Hub](https://hub.windmill.dev/)
+- Reference to a Script in your [workspace](#workspace)
+- Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.md), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md) or [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md)
+- [Trigger Scripts](../flows/10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of
   a scheduled Flow, that watch for external events and early exit the Flow if
   there is no new events
-- `forloop` that iterates over elements and triggers the execution of an
+- [for loop](../flows/12_flow_loops.md) that iterates over elements and triggers the execution of an
   embedded flow for each element. The list is calculated dynamically as an
   [input transform](#input-transform).
-- Branch to the first subflow that has a truthy predicate (evaluated in-order)
-- Branches to all subflows and collect the results of each branch into an array
-- Approval/Suspend steps which suspend the flow at no cost until it is resumed
+- [Branch](../flows/13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order)
+- [Branches to all](../flows/13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array
+- [Approval/Suspend steps](../flows/11_flow_approval.md) which suspend the flow at no cost until it is resumed
   by getting an approval/resume signal - [more details here](#approval-scripts)
 - Inner flows
 
@@ -367,18 +363,18 @@ the quick connect button if the field map one to one with a field of the
 
 ### Trigger Scripts
 
-A [Trigger Script](#trigger-scripts) is a Script whose purpose is to be used as
-the first step of a Flow. In combination with a Schedule, Flows can react to
+A [Trigger Script](../flows/10_flow_trigger.md) is a Script whose purpose is to be used as
+the first step of a Flow. In combination with a [Schedule](../core_concepts/1_scheduling/index.md), Flows can react to
 external changes and continue triggering the rest of the flow with the changes
 being listened to as new elements.
 
 It is not very different than any other Script, except its purposes and that it
-needs to return a list because the next step will be a `forloop` over all items
+needs to return a list because the next step will be a [forloop](../flows/12_flow_loops.md) over all items
 of the list in an embedded flow. Furthermore, it will very likely make use of
 the convenience helper functions around
 [internal states](#state-and-internal-state).
 
-### Retries
+### [Retries](../flows/14_retries.md)
 
 Every step of a Flow can be configured with two types of retries: "regular
 intervals" and "exponential back-off". They can be applied independently, or
@@ -400,19 +396,19 @@ An internal state is just a state which is meant to persist across distinct
 executions of the same Script. This is what enables Flows to watch for changes
 in most event watching scenarios. The pattern is as follows:
 
-- retrieve the last internal state or, if undefined, assume it is the first
-  execution
-- retrieve the current state in the external system you are watching, e.g. the
+- Retrieve the last internal state or, if undefined, assume it is the first
+  execution.
+- Retrieve the current state in the external system you are watching, e.g. the
   list of users having starred your repo or the maximum ID of posts on Hacker
-  News
-- calculate the difference between the current state and the last internal
+  News.
+- Calculate the difference between the current state and the last internal
   state. This difference is what you will want to act upon.
-- set the new internal state as the current state so that you do not process the
-  elements you just processed
-- return the differences calculated previously so that you can process them in
-  the next steps. You will likely want to `forloop` over the items and trigger
+- Set the new internal state as the current state so that you do not process the
+  elements you just processed.
+- Return the differences calculated previously so that you can process them in
+  the next steps. You will likely want to [forloop](../flows/12_flow_loops.md) over the items and trigger
   one Flow per item. This is exactly the pattern used when your Flow is in the
-  mode of "Watching changes regularly"
+  mode of "Watching changes regularly".
 
 The convenience functions do this in TypeScript are:
 
@@ -422,8 +418,8 @@ The convenience functions do this in TypeScript are:
   called in - if any - and the path of the Script
 - `setState` which sets the new state
 
-The states can be seen in the [Resources](#resource) section with a
-[Resource Type](#resource-type) of `state`.
+The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.md) section with a
+[Resource Type](../core_concepts/3_resources_and_types/index.md#create-a-resource-type) of `state`.
 
 ## Windmill Hub
 
@@ -438,12 +434,9 @@ The Script trigger URLs are always available on the Script details page.
 
 ![Script trigger hooks](./script_webhook.png)
 
-For all of the REST endpoints, the input of the Script or Flow must be passed as
-a JSON payload that fits the JSON Schema spec of that Script or Flow. Those
-endpoints are authenticated and will require a bearer token of the format:
-`Authorization: Bearer XXX`. You can create a token by clicking "Create token".
+For all of the REST endpoints, the input of the Script or Flow should be passed as a JSON payload that matches a JSON Schema spec that contains at least the input keys of that Script or Flow. However, if the payload contains extra keys that are not defined in the schema, they will be ignored, allowing you to work with arbitrary JSON payloads. Those endpoints are authenticated and will require a bearer token of the format: `Authorization: Bearer XXX`. You can create a token by clicking "Create token".
 
-### Webhooks
+### [Webhooks](../core_concepts/4_webhooks/index.md)
 
 Every Script or Flow can be run by its hash or path as a HTTP request aka as a
 **Webhook**. You can find the webhook on the Script or Flow detail page but the
@@ -483,7 +476,7 @@ A job represents a past, present or future "task" or "work" to be executed by a
 [worker](#workers). Future jobs or jobs waiting for a worker are called "queued
 jobs", and are ordered by the time at which they were scheduled for
 (`scheduled_for`). Jobs that are created without being given a future
-`scheduled_for` are scheduled for the time at which they were created.
+`scheduled_for` are [scheduled](../core_concepts/1_scheduling/index.md) for the time at which they were created.
 
 [Workers](#workers) fetch jobs from the queue, start executing them, atomically
 set their state in the queue to "running", stream the logs while executing them,
@@ -495,7 +488,7 @@ output and metadata in the dedicated details page of the job.
 
 ### Job kinds
 
-There are 5 main kinds of jobs, that each have a dedicated tab in the runs page:
+There are 5 main kinds of jobs, that each have a dedicated tab in the [runs page](../core_concepts/5_monitor_past_and_future_runs/index.md):
 
 - **Script Jobs**: Run a script as defined by the hash of the script (that
   uniquely and immutably defines a specific version of a script), its input
@@ -566,7 +559,7 @@ final result and logs are stored forever.
 The number of workers can be horizontally scaled up or down depending on needs
 without any overhead.
 
-## Variables
+## [Variables](../core_concepts/2_variables_and_secrets/index.md)
 
 Variables are dynamic values that have a key associated to them and can be
 retrieved during the execution of a Script or Flow.
@@ -617,7 +610,7 @@ offer a selection over the resources of type postgres in the auto-generated UI)
 There is also a concept of [state](#state-and-internal-state) to share values
 across script executions.
 
-#### Secret Variables
+#### [Secret Variables](../core_concepts/2_variables_and_secrets/index.md)
 
 [User-defined Variables](#user-defined-variables) can be set as **Secret**. Once
 set, secret variables cannot be viewed from the dashboard, making sure no
@@ -627,7 +620,7 @@ variable discretely as every version of any scripts is stored forever with its
 hash, and both the edit and the execution would be visible from the
 [Audit Logs](#audit-log).
 
-### Contextual Variables
+### [Contextual Variables](../core_concepts/2_variables_and_secrets/index.md#contextual-variables)
 
 Contextual Variables are variables whose values are contextual to the Script
 execution. This is how the Deno and Python clients get their implicit
@@ -645,7 +638,7 @@ You can use them in a Script by clicking on "+Context Var":
 
 ![contextual variable](./context_variables.png)
 
-## Resource
+## [Resource](../core_concepts/3_resources_and_types/index.md)
 
 A Resource is similar to a [Variable](#variables) in that it stores a
 permissioned value that is meant to be used by Scripts. However, a Resource
@@ -690,7 +683,7 @@ the string `$res:u/user/foo` where the second part is the path of the resource.
 The worker will fetch the corresponding object and switch the string with the
 object value before triggering the script or the flow.
 
-### Resource Type
+### [Resource Type](../core_concepts/3_resources_and_types/index.md)
 
 Resource Types have a name and a [JSON Schema](#jsonschema) value. A Resource is
 constrained by its Resource Type. An example of a Resource Type is for instance
@@ -735,7 +728,7 @@ like the following:
 Same as for the input spec of a Script, you do not have to deal with the JSON
 Schema directly and should use the UI builder to edit the schema.
 
-## Schedule
+## [Schedule](../core_concepts/1_scheduling/index.md)
 
 A Schedule is defined by a [path](#path), a periodicity
 [as a CRON string](https://en.wikipedia.org/wiki/Cron#Overview), a Script hash
@@ -796,7 +789,7 @@ An owner is the user or group identified in a [path](#path) through the
 "ownership path prefix" (`u/<user>` or `g/<group>`). An owner always has write
 [permission](#permissions-and-acl) over the entity.
 
-## Groups
+## [Groups](../core_concepts/8_groups_and_folders/index.md)
 
 Groups have a name and a set of members. They are inspired by unix groups:
 

@@ -2,7 +2,7 @@
 
 Windmill is fully [open-source](https://github.com/windmill-labs/windmill). Therefore, we want it to be as easy to use as possible.
 
-## Self-host Windmill
+## Self-Host Windmill
 
 You can choose to self-host Windmill on your own servers.
 

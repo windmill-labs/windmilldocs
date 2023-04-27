@@ -1,13 +1,21 @@
-# Dependency management
+# Dependency Management & Imports
 
-Windmill strength lies in its ability to run scripts without having to deal with separate dependency files. This is achieved by automatically parsing the imports and resolving the dependencies. Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its dependencies. If no version is specified, the latest version is used. Windmill's workers cache dependencies to ensure fast performance without the need to pre-package dependencies (Most jobs take under 100ms end-to-end). On the enterprise edition, windmill's caches can be configured to sync their cache with a central s3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
+Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files. This is achieved by automatically parsing the imports and resolving the dependencies.
 
-To import other scripts from your workpace, see [Sharing common logic](../5_sharing_common_logic/index.md)
+Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its dependencies. If no version is specified, the latest version is used. Windmill's workers cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+
+On the enterprise edition, Windmill's caches can be configured to sync their cache with a central s3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
+
+:::info
+
+To import other scripts from your workpace, see [Sharing common logic](../5_sharing_common_logic/index.md).
+
+:::
 
 ## Typescript
 
 The dependencies and their versions are contained in the
-script and hence there is no need for any additional steps. The resolution is done by deno.
+script and hence there is no need for any additional steps. The resolution is done by [deno](https://deno.com/runtime).
 
 e.g:
 

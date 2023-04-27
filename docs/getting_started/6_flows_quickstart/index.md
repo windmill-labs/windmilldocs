@@ -10,7 +10,13 @@ It is important to have in mind that **scripts are at the basis of Windmill**. T
 To create your first workflow, you could also pick one from our [Hub](https://hub.windmill.dev/flows) and fork it. Here, we're going to build our own flow from scratch, step by step.
 
 From [Windmill](https://app.windmill.dev/user/login), click on `+ Flow`, and let's get started!
+
+:::tip
+
+Follow our [detailed pages](../../flows/1_flow_editor.md) on the Flow Editor for more information.
  
+:::
+
 
 ### Settings
 
@@ -128,3 +134,5 @@ You can even trigger flows without leaving **[Slack](https://docs.windmill.dev/b
 You don't have to explore all flows editor possibilities at once. At each step, **test what you're building** to keep control on your wonder. You can also test up to a certain step by clicking on an action (x) and then on `Test up to x`.
 
 When you're done, save your flow to run it, schedule it, share it, or even [publish it to Hub](https://docs.windmill.dev/docs/misc/share_on_hub/).
+
+Follow our [detailed pages](../../flows/1_flow_editor.md) on the Flow Editor for more information.

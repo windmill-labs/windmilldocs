@@ -2,6 +2,9 @@
 
 Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
+<<<<<<< HEAD
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png "Connect a Supabase project with Windmill")
+=======
 :::info
 This tutorial assumes that you already have a
 [Windmill](https://app.windmill.dev) account and a
@@ -14,6 +17,16 @@ This tutorial assumes that you already have a
 <br/>
 
 ![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
+>>>>>>> main
+
+:::info
+
+This tutorial assumes that you already have a <a href='https://app.windmill.dev/user/login' rel="nofollow">Windmill</a> account and a
+[Supabase](https://supabase.com) project. If you don't, visit the
+[Windmill documentation](/docs/getting_started/how_to_use_windmill) or the
+[Supabase documentation](https://supabase.com/docs) to find out more.
+
+:::
 
 ## Get the API keys
 
@@ -65,6 +78,8 @@ export async function main(auth: Resource<'supabase'>) {
 :::tip
 
 You can find more examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
+<<<<<<< HEAD
+=======
 
 <br/>
 
@@ -74,5 +89,15 @@ More tutorials on Supabase:
 - [Create an Issue Tracker App with Supabase in 15 Minutes](https://docs.windmill.dev/blog/create-issue-tracker-in-15-minutes)
 - [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](https://docs.windmill.dev/blog/create-issue-tracker-part-2)
 - [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](https://docs.windmill.dev/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
+>>>>>>> main
+
+<br/>
+
+More tutorials on Supabase:
+- [How to Send Database Events From Supabase to Windmill](/blog/database-events-from-supabase-to-windmill)
+- [Create an E-commerce backoffice](../apps/7_app_e-commerce.md)
+- [Create an Issue Tracker App with Supabase in 15 Minutes](/blog/create-issue-tracker-in-15-minutes)
+- [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](/blog/create-issue-tracker-part-2)
+- [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
 
 :::

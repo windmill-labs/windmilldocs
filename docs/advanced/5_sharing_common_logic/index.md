@@ -1,4 +1,4 @@
-# Sharing common logic
+# Sharing Common Logic
 
 It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and Deno.
 

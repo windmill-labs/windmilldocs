@@ -1,9 +1,10 @@
----
-id: create_resources
-title: Resources and Resource Types
----
-
 # Resources and Resource Types
+
+In Windmill, **[Resources](../../reference/index.md#resource)** represent
+connections to third party systems. Resources are a good way to define a
+connection to a frequently used third party system such as a database. Think of
+Resources as a structured way to store configuration and credentials, and access
+them from scripts.
 
 Each Resource has a **Resource Type** (**RT** for short) - for example MySQL,
 MongoDB, Slack, etc. - that defines the schema that the resource of this type
@@ -63,13 +64,7 @@ default, etc). You can also view the schema by toggling the "As JSON" option:
 
 ## Using Resources
 
-In Windmill, [Resources](../../reference/index.md#resource) represent
-**connections to third party systems**. Resources are a good way to define a
-connection to a frequently used third party system such as a database. Think of
-Resources as a structured way to store configuration and credentials, and access
-them from scripts.
-
-Provided you have the right permissions, you can access resources from scripts
+Provided you have the right permissions, you can access resources from scripts, flows and apps
 using the Windmill client. For example, to access the `u/user/my_postgresql`
 resource of the `posgtgresql` Resource Type we would create a
 [Script](../../reference/index.md#scripts):

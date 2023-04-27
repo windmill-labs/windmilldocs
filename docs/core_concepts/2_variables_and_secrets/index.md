@@ -1,28 +1,22 @@
----
-id: variables_and_secrets
-title: Variables and Secrets
----
-
-# Save Variables and Secrets
+# Variables and Secrets
 
 When writing scripts, you may want to reuse variables, or safely pass secrets to
 scripts. You can do that with **Variables**. Windmill has user-defined variables
 and contextual variables.
 
-:::caution
+:::info Secrets
 
 Secrets are encrypted when stored on Windmill. From a usage standpoint, secrets
 are kept safe in three different ways:
 
-- Secrets can only be accessed by users with the right permissions, as defined
+- Secrets can only be accessed by **users with the right permissions**, as defined
   by their path. In addition, secrets can be explicitly shared with users or
   groups. A secret in `u/alice/secret` will only be accessible by `alice`,
   unless explicitly shared. A secret in `f/devops/secret` will be accessible by anyone with read access to `f/devops`.
-- Secrets cannot be viewed outside of scripts. Note that a user could still
+- Secrets **cannot be viewed outside of scripts**. Note that a user could still
   `print` a secret if they have access to it from a script.
 - Accessing secrets generates `variables.decrypt_secret` event that ends up in
-  the [Audit Logs](https://app.windmill.dev/audit_logs). It means that you can
-  audit who accesses secrets. Additionally you can audit results, logs and
+  the [Audit Logs](https://app.windmill.dev/audit_logs). It means that **you can audit who accesses secrets**. Additionally you can audit results, logs and
   script code for every script run.
 
 :::

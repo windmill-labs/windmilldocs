@@ -1,8 +1,3 @@
----
-id: groups_and_folders
-title: Groups and Folders
----
-
 # Groups and Folders
 
 Groups and folders are made to split and share permissions within workspace.
