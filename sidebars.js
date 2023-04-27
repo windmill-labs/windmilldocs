@@ -40,6 +40,7 @@ const sidebars = {
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
 				'core_concepts/groups_and_folders/index',
+				'core_concepts/worker_groups/index',
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/webhooks/index',
 				'core_concepts/scheduling/index',
