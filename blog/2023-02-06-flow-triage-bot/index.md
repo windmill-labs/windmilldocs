@@ -14,9 +14,7 @@ new issues created in one or more GitHub repositories.
 
 We'll create Windmill Scripts, Flows, and webhooks using the Go language. This
 tutorial assumes you're already familiar with the basics of Windmill, so it's
-recommended to complete the
-
-[Go quickstart](/docs/getting_started/scripts_quickstart/go) first.
+recommended to complete the [Go quickstart](/docs/getting_started/scripts_quickstart/go) first.
 
 ## Triage bot
 
@@ -136,7 +134,7 @@ var keyWordToLabel = map[string]string{
 Start by creating a script, called **triage_issues**. Go to the script's page,
 and scroll to the bottom:
 
-![Find the Windmill webhook URL](./tutorial-add-webhook.png)
+![Find the Windmill webhook URL](./tutorial-find-webhook.png)
 
 Posting to this Windmill [webhook](/docs/core_concepts/webhooks) URL will
 trigger a script run. Hit create a token, and save that token somewhere. We'll
@@ -159,7 +157,7 @@ Save the webhook, and check that it's successfully posting to Windmill by going
 to the **Recent deliveries** tab. Check the shape of the payload: we'll need
 that to write our script.
 
-Go back to Windill, and check in **Runs** that your empty script was indeed
+Go back to Windill, and check in [Runs](/docs/core_concepts/monitor_past_and_future_runs) that your empty script was indeed
 triggered by the webhook. Great! We're now receiving a payload every time
 there's an issue event. Now let's build our bot.
 
@@ -200,9 +198,7 @@ func main(
 }
 ```
 
-This is the scaffold of the script. We The full script is available
-[here](https://app.windmill.dev/scripts/get/b92a261494cc63e0), we won't get into
-the details here.
+This is the scaffold of the script. We won't get into the details here.
 
 ## Putting it all together in a Flow
 
@@ -210,7 +206,7 @@ Now we have a script that can be triggered by a GitHub webhook, and return
 labels to apply. We also have a script to apply labels to issues. Let's put it
 all together in a Flow.
 
-Create a **Flow** and save it as is. Go to the flow page, and copy the flow
+Create a [Flow](/docs/getting_started/flows_quickstart) and save it as is. Go to the flow page, and copy the flow
 **webhook URL**. Replace that in the GitHub webhook settings page, so that new
 GitHub issues triggers the Flow and not the script.
 
@@ -229,7 +225,7 @@ Now, let's add our two Scripts as tests. Windmill supports many types of steps,
 but here we'll pick **Script from workflace** as we want to reuse the scripts we
 defined previously. Pick the script that accepts the incoming GitHub payload.
 You can read more about all the capabilities of Flows
-[here](/docs/core_concepts/trigger_flows).
+[here](/docs/getting_started/trigger_flows).
 
 Each step in a flow needs to be connected to the next one. For this first step,
 we need to connect the inputs of the Flow to the Script. You can do that in the

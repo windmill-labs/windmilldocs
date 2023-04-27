@@ -27,7 +27,7 @@ Windmill facilitates the creation of robust workflows by enabling seamless seque
 We tried other solutions and found the configuration of parameters between steps was difficult, making it painful to create simple worflows.
 
 In particular, we use Windmill for:
-- **Scheduled ETL** of files from public repositories to PostgreSQL.
+- **[Scheduled](/docs/core_concepts/scheduling) ETL** of files from public repositories to PostgreSQL.
 - Its **UIs** where users can simply upload their own data to publish it as a file ready for downloading.
 - We are starting to have **workspaces dedicated to each customer** where they can use our workflows straightforwardly.
 
@@ -51,4 +51,4 @@ You can have more details on our use of worflow engines for geospatial data proc
 
 ## How to use Windmill?
 
-You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
+You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>**.

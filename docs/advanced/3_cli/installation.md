@@ -4,9 +4,15 @@ title: CLI Installation
 
 # Installation
 
-Simply install the wmill cli using
-`deno install --unstable -A https://deno.land/x/wmill/main.ts`. You will need
+Simply install the wmill cli using:
+
+`deno install --unstable -A https://deno.land/x/wmill/main.ts`
+
+You will need
 [deno installed](https://deno.land/manual@v1.30.3/getting_started/installation).
+
+Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example: `export PATH="/Users/yourusername/.deno/bin:$PATH"`
+
 
 ## Upgrade
 

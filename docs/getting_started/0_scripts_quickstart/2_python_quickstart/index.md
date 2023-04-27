@@ -117,7 +117,7 @@ entrypoint. There are a few important things to note about the `main`.
   inputs. While not mandatory, they are highly recommended. You can customize
   the UI in later steps (but not change the input type!).
 
-Also take a look at the import statement. The `import wmill` imports the
+Also take a look at the [import](../../../advanced/6_imports/index.md) statement. The `import wmill` imports the
 Windmill client, that is needed for example to access
 [variables](../../../core_concepts/2_variables_and_secrets/index.md) or
 [resources](../../../core_concepts/3_resources_and_types/index.md). We won't go
@@ -177,7 +177,7 @@ in a real-world use case:
   to a script.
 - Connect to [resources](../../../core_concepts/3_resources_and_types/index.md).
 - Run scripts or flows on a
-  [schedule](../../../getting_started/8_scheduling_scripts_flows/index.md).
+  [schedule](../../../core_concepts/1_scheduling/index.md).
 - Compose scripts in [Flows][flows].
 - You can [share your scripts](https://docs.windmill.dev/docs/misc/share_on_hub/) with the community on [Windmill Hub][wm-hub]. Once
   submitted, they will be verified by moderators before becoming available to

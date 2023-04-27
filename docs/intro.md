@@ -75,7 +75,7 @@ Windmill embeds:
 - **[webhooks](./core_concepts/4_webhooks/index.md)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
   current infrastructure
-- a **[scheduler](./getting_started/8_scheduling_scripts_flows/index.md)** to trigger Scripts and
+- a **[scheduler](./core_concepts/1_scheduling/index.md)** to trigger Scripts and
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously

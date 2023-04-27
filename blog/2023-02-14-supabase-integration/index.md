@@ -14,11 +14,11 @@ We will see how to build a Windmill workflow that can be triggered by the
 :::info
 
 This guide assumes that you already have a Supabase project where you have admin
-rights. Some experience with Windmill helps, but not required.
+rights. Some experience with [Windmill](/docs/intro) helps, but not required.
 
 :::
 
-![Integrattion between Supabase and Windmill](./0-header.png "Connect Supabase with Windmill")
+![Integration between Supabase and Windmill](./0-header.png "Connect Supabase with Windmill")
 
 :::tip
 
@@ -35,10 +35,9 @@ Windmill Scripts and Flows via `HTTP POST` requests.
 ## Create Windmill Script
 
 In order to be able to receive the events from Supabase we need to create a
-Script that will be triggered by the Supabase webhook. Let's create a simple
-one, that will just return the event payload.
+[Script](/docs/getting_started/scripts_quickstart/typescript) that will be triggered by the Supabase webhook. Let's create a simple one, that will just return the event payload.
 
-Navigate to the [Home page][wm-home] and click "+Script" to create a new Script.
+Navigate to the `Home page` and click "+Script" to create a new Script.
 Name it `supabase_hook`, add the summary "Supabase hook" and click "Next". Paste
 the following code in the editor and click "Save":
 
@@ -135,7 +134,7 @@ with**.
 ![SQL insert](./6-insert-query.png)
 
 The `INSERT` event should be propagated to Windmill and trigger the Script. You
-can check it on the [Runs][wm-runs] page in Windmill. If the Script was indeed
+can check it on the [Runs](/docs/core_concepts/monitor_past_and_future_runs) page in Windmill. If the Script was indeed
 triggered, you should see a result like this:
 
 ![Run result](./7-run-result.png)
@@ -151,7 +150,6 @@ just customize the Script to your needs straight away!
 
 <!-- Links -->
 
-[wm-home]: https://app.windmill.dev
 [wm-runs]: https://app.windmill.dev/runs
 [supabase-webhook]: https://supabase.com/docs/guides/database/webhooks
 [docs-webhook]: /docs/core_concepts/webhooks

@@ -39,7 +39,7 @@ the sake of simplicity.
 
 :::
 
-## Create a new Windmill app
+## Create a new [Windmill App](/docs/getting_started/apps_quickstart)
 
 :::tip
 
@@ -55,8 +55,9 @@ will have it's own page on the first tab. A successful login will return an acce
 can send authenticated requests to the database using said token on the second tab.
 
 The passing of credentials works a bit differently in the two approaches, so first, create a base
-"skeleton" app. Go to the [Windmill Cloud][app] Home page by click "App" in the top right corner.
+"skeleton" app. Go to the <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a> Home page by click "App" in the top right corner.
 Let's add our first component:
+
 
 1. Click on "Tabs" in the right-hand panel to add it to the canvas.
 1. Select "invisibleOnView" for the _Tabs Kind_ setting (this will hide the tab row when the app is in
@@ -120,7 +121,7 @@ src="/videos/supabase-auth/add-warning.mp4"
 
 :::info
 
-As you can see in the video, we used a TailwindCSS class to style the color of the text. If you are
+As you can see in the video, we used a [TailwindCSS class](https://tailwind.build/classes) to style the color of the text. If you are
 not familiar with TailwindCSS, you can also use direct CSS styles. For that, we recommend using the
 **Rich Editor**. We provide a built-in color picker and many other features to help you customize
 your app.
@@ -138,7 +139,7 @@ src="/videos/supabase-auth/add-data-table.mp4"
 />
 <br/>
 
-At this point your skeleton app has every component we need to start working on the scripts. Now is
+At this point your skeleton app has every component we need to start working on the [scripts](/docs/getting_started/scripts_quickstart/typescript). Now is
 a good time to save your progress. If you want to create an app for each approach (using
 **backend scripts** and **frontend scripts**), you can use this skeleton as a template for both
 from the Home page.
@@ -187,6 +188,12 @@ USING (true)
 
 In both approaches you'll need the **URL** and the **public API key** of your Supabase
 project. You can find them in the "API" menu of the "Project Settings" page in your Supabase project.
+
+:::tip
+
+Find more help on our [Supabase Integration](/docs/integrations/supabase) tutorial.
+
+:::
 
 ![Supabase project settings](./1-sb-settings.png 'Supabase project settings')
 
@@ -369,7 +376,7 @@ src="/videos/supabase-auth/connect-table.mp4"
 
 Now when you login with the credentials of a Supabase user, the script attached to the
 button component will be executed, which signs in to Supabase and returns the given `access_token`
-and `refresh_token`. Every script that is dependant on the token will be executed after the
+and `refresh_token`. Every script that is dependent on the token will be executed after the
 login script, meaning the data will be fetched and the "Data" tab will be displayed.
 
 <video

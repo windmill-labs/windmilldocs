@@ -4,12 +4,12 @@ title: CLI Syncing
 
 # Syncing
 
-Syncronizing folders & git repositories to a windmill instance is made easy
+Syncronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
 ## Example Repos
 
-We provide an example repo for syncing with windmill:
+We provide an example repo for syncing with Windmill:
 
 - Syncing with a remote:
   [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example)

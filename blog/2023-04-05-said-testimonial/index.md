@@ -27,7 +27,7 @@ Before transitioning to Windmill, I had been using Meta API (code-based automati
 
 ## How did Windmill help?
 
-I use Windmill to build workflows meant to be **automatically triggered** (either [scheduled](https://docs.windmill.dev/docs/core_concepts/schedules) or [by external events](https://docs.windmill.dev/docs/core_concepts/trigger_flows)). I only use a few workflows - 2 or 3 on a daily basis - but they are **business critical**.
+I use Windmill to build workflows meant to be **automatically triggered** (either [scheduled](/docs/core_concepts/scheduling) or [by external events](/docs/getting_started/trigger_flows)). I only use a few workflows - 2 or 3 on a daily basis - but they are **business critical**.
 
 Within a few weeks of usage, **Windmill replaced all my previous workflows and automation tools**, consolidating my flows into a single, efficient platform.
 
@@ -61,19 +61,19 @@ Now you have the context. I would like to highlight a few reasons why Windmill h
 
 ### User Interface
 
-While AWS Lambda lets you write scripts in a traditional way, Windmill lets you write and design them with a beautiful [graph-based interface](https://docs.windmill.dev/docs/flows/flow_mini_map). This makes the process of designing flows for complex projects quicker and more error free because you can **visualize the logic** while building them.
+While AWS Lambda lets you write scripts in a traditional way, Windmill lets you write and design them with a beautiful graph-based interface. This makes the process of designing flows for complex projects quicker and more error free because you can **visualize the logic** while building them.
 
 ### Approval Steps
 
-I was amazed by its “[flow approval](https://docs.windmill.dev/docs/flows/flow_approval)” function that allows you to set up an approval flow. That feature led me to streamline some of my processes and is now an **integral part of my operations**. I no longer need to do the laborious tasks of accessing a system, validate the transaction, data patch, and rerun a script. All I need now is to receive an approval request email in real time, review on the go, hit approve/reject, and my flow will resume/abandon.
+I was amazed by its “[flow approval](/docs/flows/flow_approval)” function that allows you to set up an approval flow. That feature led me to streamline some of my processes and is now an **integral part of my operations**. I no longer need to do the laborious tasks of accessing a system, validate the transaction, data patch, and rerun a script. All I need now is to receive an approval request email in real time, review on the go, hit approve/reject, and my flow will resume/abandon.
 
 ### Interconnectivity
 
-Like Retool, you can design your admin console and [connect it to your database](https://docs.windmill.dev/docs/integrations/integrations_on_windmill). **Windmill allows you to connect to your existing scripts and flows** that you have already designed inside Windmill i.e. you can reuse them, which saves a lot of time.
+Like Retool, you can design your admin console and [connect it to your database](/docs/integrations/integrations_on_windmill). **Windmill allows you to connect to your existing scripts and flows** that you have already designed inside Windmill i.e. you can reuse them, which saves a lot of time.
 
 ### Clear Visualization
 
-Its job runs panel is intuitive. Each job [run’s audit is shown graphically](https://docs.windmill.dev/docs/getting_started/flows_quickstart). You can **track the progress visually in real-time** when a transaction is triggered. It is easy to tell the exact flow your logic traversed in each run, making AWS CloudWatch logging look basic in comparison.
+Its job runs panel is intuitive. Each job [run’s audit is shown graphically](/docs/getting_started/flows_quickstart). You can **track the progress visually in real-time** when a transaction is triggered. It is easy to tell the exact flow your logic traversed in each run, making AWS CloudWatch logging look basic in comparison.
 
 :::tip About the team
 
@@ -83,4 +83,4 @@ At last, I want to talk about its team and founder, Ruben. In a few weeks of usi
 
 ## How to use Windmill?
 
-You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
+You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>**.

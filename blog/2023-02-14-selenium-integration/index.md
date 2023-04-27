@@ -13,9 +13,9 @@ needed for webscraping but it allows for more advanced usecases.
 
 <!--truncate-->
 
-:::caution
+:::info
 
-You will have to self-host Windmill and Selenoid for this method to work or
+You will have to [self-host](/docs/advanced/self_host) Windmill and Selenoid for this method to work or
 request a dedicated instance at contact@windmill.dev
 
 :::

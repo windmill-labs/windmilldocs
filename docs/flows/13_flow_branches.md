@@ -16,6 +16,9 @@ Clicking on one branch will open the branch editor. You can configure the:
 
 ![Branch one step](../assets/flows/flow_branch_one.png)
 
+_Example of branches to [handle a Slackbot](/blog/handler-slack-commands)_.
+
+
 All the predicates can also be configured in the `Run one branch` step (parent box). The predicates are evaluated in the order they are defined. The first predicate that evaluates to true will be executed. If no predicate evaluates to true, the default branch will be executed.
 
 ## Branch all
