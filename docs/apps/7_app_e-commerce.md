@@ -1,4 +1,4 @@
-# E-commerce CRM app
+# Example: E-commerce CRM app
 
 We will now use the Windmill app builder to build a simple E-commerce backoffice app. It is a simple CRM app that allows you to manage your products, customers and orders of a e-commerce store.
 
@@ -11,20 +11,28 @@ We will now use the Windmill app builder to build a simple E-commerce backoffice
     src="/videos/app-ecomm-demo.mp4"
 />
 
+<br/>
+
 It showcases a variety of features that are available in the Windmill app builder, such as:
 
-- [Runnables](/docs/apps/app-runnable/)
-- [Components](/docs/apps/app_component_library/)Components Library
+- [Runnables](/docs/apps/app-runnable/): scripts or flows that are executed on demand.
+- [Components](/docs/apps/app_component_library/): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
+
+:::tip
+
+This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be used on our [Demo workspace](https://app.windmill.dev/user/login) with the proper Supabase integration.
+
+:::
 
 ## Features
 
-We use Supabase as a backend for this app. It is a great alternative to Firebase and it is free to use. It is a great way to get started with building your app. You can read more about Supabase [here](https://supabase.io/). Windmill has a [Supabase integration](/docs/integrations/supabase/) on the HUB that allows you to easily connect your app to Supabase, and integrate it with your app.
+We use [Supabase](https://supabase.com/) as a backend for this app. It is a great alternative to Firebase and it is free to use. It is a great way to get started with building your app. You can read more about Supabase [here](https://supabase.com/docs). Windmill has a [Supabase integration](/docs/integrations/supabase/) on the [Hub](https://hub.windmill.dev/) that allows you to easily connect your app to Supabase, and integrate it with your app.
 
 We will use the following scripts from the Hub:
 
-- [Fetch data from Supabase](https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase)
-- [Create a new record in Supabase](https://hub.windmill.dev/scripts/supabase/1513/insert-data-supabase)
-- [Update a record in Supabase](https://hub.windmill.dev/scripts/supabase/1514/update-data-supabase)
+- [Fetch data from Supabase](https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase).
+- [Create a new record in Supabase](https://hub.windmill.dev/scripts/supabase/1513/insert-data-supabase).
+- [Update a record in Supabase](https://hub.windmill.dev/scripts/supabase/1514/update-data-supabase).
 
 We will structure the app as follows:
 
@@ -53,7 +61,7 @@ We will structure the app as follows:
 
 ### Products Tab
 
-We will split the product view into two parts, with the vertical split. The left part will be a list of products, and the right part will be a form to edit the currently selected product.
+We will split the product view into two parts, with the [vertical split](../apps/4_app_component_library.md#vertical-split-panes). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -75,11 +83,11 @@ A product has the folowing fields:
 - **price** - the price of the product
 - **quantity** - the quantity of the product
 
-First we need to configure the data source for the Table component. We will pick the "Fetch data (supabase)" script, available in the hub.
+First we need to configure the data source for the Table component. We will pick the [Fetch data (supabase)](https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase) script, available in the Hub.
 
 This script has multilpe input, but we only need to specify the table name and the auth token.
 
-Normally the component has now thrown an error: The Table component is expecting an array but got an object. This is because the script returns an object with the data in the `data` field. We can use a transformer to fix this.
+Normally the component has now thrown an error: The Table component is expecting an array but got an object. This is because the script returns an object with the data in the `data` field. We can use a **transformer** to fix this.
 
 ```js
 return result.data;
@@ -107,6 +115,8 @@ Now we can add the form to the right side of the split. We will use Text and inp
     id="main-video"
     src="/videos/app-builder-ecomm-step2.mp4"
 />
+
+<br/>
 
 One powerful feature of Windmill is the ability to connect an output of one component to the input of another component. This allows us to connect the default value of an input to a value of the selected row of the table.
 
@@ -161,6 +171,8 @@ but we will use a different transformer to remove the fields that we don't need.
     id="main-video"
     src="/videos/app-builder-ecomm-step4.mp4"
 />
+
+<br/>
 
 Like the products, we need to add a transformer to the Table component to remove the fields that we don't need.
 
@@ -316,7 +328,7 @@ export async function main(users: any[]) {
 
 #### Product selection
 
-We will use a table to display the list of products. This is the same list of products that we used in the products tab. But we need to add a table action to the products table to add the selected product to the cart
+We will use a table to display the list of products. This is the same list of products that we used in the products tab. But we need to add a table action to the products table to add the selected product to the cart.
 
 We can now use the concept of frontent script. Frontend scripts are scripts that are executed in the browser. We can use frontend scripts to interact with the local state of the app. Given that the id of the table is `ao`:
 

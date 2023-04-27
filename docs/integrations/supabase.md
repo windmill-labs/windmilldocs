@@ -2,7 +2,22 @@
 
 Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
+<<<<<<< HEAD
 ![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png "Connect a Supabase project with Windmill")
+=======
+:::info
+This tutorial assumes that you already have a
+[Windmill](https://app.windmill.dev) account and a
+[Supabase](https://supabase.com) project. If you don't, visit the
+[Windmill documentation](https://docs.windmill.dev/docs/intro) or the
+[Supabase documentation](https://supabase.com/docs) to find out more.
+:::
+
+
+<br/>
+
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
+>>>>>>> main
 
 :::info
 
@@ -24,7 +39,7 @@ You'll find the URL and 2 keys here.
 
 As the description says, the access level of the `public` key will be controlled
 by the policies you add and the `secret` key will bypass all of them. You can
-safely use the `secret` key in Windmill because it'll never be sent to users
+safely use the `service_rolesecret` `secret` key in Windmill because it'll never be sent to users
 directly.
 
 ## Create a resource
@@ -53,16 +68,28 @@ You can reference the type of a Supabase resource in a script the following way:
 // To get the latest supported resource types,
 // check for the latest version of the Windmill Deno
 // package at https://deno.land/x/windmill/mod.ts
-import { Resource } from "https://deno.land/x/windmill@v1.60.0/mod.ts";
+import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 
-export async function main(auth: Resource<"supabase">) {
-  // Function contents
+export async function main(auth: Resource<'supabase'>) {
+	// Function contents
 }
 ```
 
 :::tip
 
 You can find more examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
+<<<<<<< HEAD
+=======
+
+<br/>
+
+More tutorials on Supabase:
+- [How to Send Database Events From Supabase to Windmill](https://docs.windmill.dev/blog/database-events-from-supabase-to-windmill)
+- [Create an E-commerce backoffice](../apps/7_app_e-commerce.md)
+- [Create an Issue Tracker App with Supabase in 15 Minutes](https://docs.windmill.dev/blog/create-issue-tracker-in-15-minutes)
+- [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](https://docs.windmill.dev/blog/create-issue-tracker-part-2)
+- [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](https://docs.windmill.dev/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
+>>>>>>> main
 
 <br/>
 

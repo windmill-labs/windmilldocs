@@ -12,26 +12,6 @@ help you get started.
 
 ## Docker
 
-:::tip
-
-Simplified instruction for docker compose in the
-[README](https://github.com/windmill-labs/windmill#how-to-self-host).
-
-:::
-
-:::warning
-
-Use `docker compose` and not `docker-compose`.
-
-:::
-
-:::info
-
-When talking about the `compose`, or `caddyfile`, we explicitly refer to the
-ones on [Windmill's GitHub repository][windmill-gh].
-
-:::
-
 Using Docker and Caddy, Windmill can be deployed using two files,
 ([`docker-compose.yml`][windmill-docker-compose] and
 [`Caddyfile`][windmill-caddyfile]) and in a single command.
@@ -39,6 +19,14 @@ Using Docker and Caddy, Windmill can be deployed using two files,
 [Caddy][caddy] takes care of managing the TLS certificate and the reverse proxy,
 Postgres of storage, Windmill-LSP provides editor intellisense. All managed by
 one [`docker-compose.yml`][windmill-docker-compose] file.
+
+```
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
+
+docker compose up -d --pull always
+```
 
 ### Configuration
 
@@ -53,12 +41,13 @@ address:
 # .env
 DB_PASSWORD=supersecret
 WM_BASE_URL=http://windmill.example.com
+CADDY_REVERSE_PROXY=":80"
 ```
 
-Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The reverse proxy is also configured at the same domain. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
+Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The reverse proxy is configured at `CADDY_REVERSE_PROXY`. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
 
 ```
-http://{$BASE_URL} {
+:80 {
         bind {$ADDRESS}
         reverse_proxy /ws/* http://lsp:3001
         reverse_proxy /* http://windmill_server:8000

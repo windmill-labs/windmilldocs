@@ -3,7 +3,7 @@
 We will see how to connect your Windmill instance to an external PostgreSQL
 service and then send queries to the database using Windmill Scripts.
 
-![Integrattion between PostgreSQL and Windmill](../assets/integrations/psql-0-header.png "Connect a PostgreSQL instance with Windmill")
+![Integrattion between PostgreSQL and Windmill](../assets/integrations/psql-0-header.png 'Connect a PostgreSQL instance with Windmill')
 
 ## Create Resource
 
@@ -48,21 +48,16 @@ We will use Postgres' parameterized queries with the template being written in
 TypeScript. Paste the following code in the editor:
 
 ```typescript
-import {
-  pgSql,
-  type Resource,
-} from "https://deno.land/x/windmill@v1.62.0/mod.ts";
+import { pgSql, type Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 
 //PG parameterized statement. No SQL injection is possible.
 export async function main(
-  db: Resource<"postgresql"> = "$res:g/all/demodb",
-  key: number,
-  value: string,
+	db: Resource<'postgresql'> = '$res:g/all/demodb',
+	key: number,
+	value: string
 ) {
-  const query = await pgSql(
-    db,
-  )`INSERT INTO demo VALUES (${key}, ${value}) RETURNING *;`;
-  return query.rows;
+	const query = await pgSql(db)`INSERT INTO demo VALUES (${key}, ${value}) RETURNING *;`;
+	return query.rows;
 }
 ```
 

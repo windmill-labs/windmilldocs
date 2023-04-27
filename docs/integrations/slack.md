@@ -150,7 +150,7 @@ and click "Next". Paste the following code in the editor and click "Test" - you
 should see the list of users and bots in your Slack workspace.
 
 ```typescript
-import { Resource } from 'https://deno.land/x/windmill@v1.62.0/mod.ts';
+import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 import { SlackAPI } from 'https://deno.land/x/deno_slack_api@1.6.0/mod.ts';
 
 export async function main(auth: Resource<'slack'>) {

@@ -1,13 +1,12 @@
 ---
-title: "TypeScript"
-slug: "/getting_started/scripts_quickstart/typescript"
+title: 'TypeScript'
+slug: '/getting_started/scripts_quickstart/typescript'
 ---
 
 # TypeScript Quickstart
 
 In this quick start guide, we will write our first script in TypeScript.
 Windmill uses [Deno](https://deno.land/) as the TypeScript runtime.
-
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -79,17 +78,17 @@ boilerplate. Let's take a look:
 // Ctrl+. to cache dependencies on imports hover, Ctrl+S to format.
 
 // import { toWords } from "npm:number-to-words@1"
-// import * as wmill from "https://deno.land/x/windmill@v1.61.1/mod.ts"
+// import * as wmill from "https://deno.land/x/windmill@v1.89.1/mod.ts"
 
 export async function main(
-  a: number,
-  b: "my" | "enum",
-  d = "inferred type string from default arg",
-  c = { nested: "object" },
-  //e: wmill.Base64
+	a: number,
+	b: 'my' | 'enum',
+	d = 'inferred type string from default arg',
+	c = { nested: 'object' }
+	//e: wmill.Base64
 ) {
-  // let x = await wmill.getVariable('u/user/foo')
-  return { foo: a };
+	// let x = await wmill.getVariable('u/user/foo')
+	return { foo: a };
 }
 ```
 
@@ -115,8 +114,8 @@ this later if we use this Script within a Flow and need to pass it on.
 
 ```typescript
 export async function main(name: string) {
-  console.log("Hello world! Oh, it's you %s? Greetings!", name);
-  return { name };
+	console.log("Hello world! Oh, it's you %s? Greetings!", name);
+	return { name };
 }
 ```
 

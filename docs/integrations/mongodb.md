@@ -16,7 +16,7 @@ You can find more information about setting up MongoDB Atlas
 
 :::
 
-![Integrattion between MongoDB and Windmill](../assets/integrations/0-header.png "Connect a MongoDB Atlas project with Windmill")
+![Integrattion between MongoDB and Windmill](../assets/integrations/0-header.png 'Connect a MongoDB Atlas project with Windmill')
 
 ## Create Resource
 
@@ -36,7 +36,6 @@ Head to the [Resources][wm-app-resources] page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `mongodb_rest` type.
 
 ![Select Resource Type](../assets/integrations/1-resources.png)
-
 
 :::caution
 
@@ -72,23 +71,23 @@ MongoDB Dataset" for example and click "Next".
 Paste in the following code into the editor:
 
 ```typescript
-import { Resource } from "https://deno.land/x/windmill@v1.55.0/mod.ts";
-import { MongoClient } from "https://deno.land/x/atlas_sdk@v1.0.3/mod.ts";
+import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
+import { MongoClient } from 'https://deno.land/x/atlas_sdk@v1.0.3/mod.ts';
 
 export async function main(
-  auth: Resource<"mongodb_rest">,
-  data_source: string,
-  database: string,
-  collection: string,
-  filter: Record<string, any>,
+	auth: Resource<'mongodb_rest'>,
+	data_source: string,
+	database: string,
+	collection: string,
+	filter: Record<string, any>
 ) {
-  const client = new MongoClient({
-    endpoint: auth.endpoint,
-    dataSource: data_source,
-    auth: { apiKey: auth.api_key },
-  });
-  const documents = client.database(database).collection(collection);
-  return await documents.find(filter);
+	const client = new MongoClient({
+		endpoint: auth.endpoint,
+		dataSource: data_source,
+		auth: { apiKey: auth.api_key }
+	});
+	const documents = client.database(database).collection(collection);
+	return await documents.find(filter);
 }
 ```
 
@@ -117,29 +116,26 @@ ObjectID first. Replace your code with the following to make it able to query by
 ID:
 
 ```typescript
-import { Resource } from "https://deno.land/x/windmill@v1.55.0/mod.ts";
-import {
-  MongoClient,
-  ObjectId,
-} from "https://deno.land/x/atlas_sdk@v1.0.3/mod.ts";
+import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
+import { MongoClient, ObjectId } from 'https://deno.land/x/atlas_sdk@v1.0.3/mod.ts';
 
 export async function main(
-  auth: Resource<"mongodb_rest">,
-  data_source: string,
-  database: string,
-  collection: string,
-  filter: Record<string, any>,
+	auth: Resource<'mongodb_rest'>,
+	data_source: string,
+	database: string,
+	collection: string,
+	filter: Record<string, any>
 ) {
-  const client = new MongoClient({
-    endpoint: auth.endpoint,
-    dataSource: data_source,
-    auth: { apiKey: auth.api_key },
-  });
-  const documents = client.database(database).collection(collection);
-  if ("_id" in filter) {
-    filter["_id"] = new ObjectId(filter["_id"]);
-  }
-  return await documents.find(filter);
+	const client = new MongoClient({
+		endpoint: auth.endpoint,
+		dataSource: data_source,
+		auth: { apiKey: auth.api_key }
+	});
+	const documents = client.database(database).collection(collection);
+	if ('_id' in filter) {
+		filter['_id'] = new ObjectId(filter['_id']);
+	}
+	return await documents.find(filter);
 }
 ```
 
