@@ -145,7 +145,7 @@ More details on our page dedicated to [Webhooks](../../core_concepts/4_webhooks/
 
 The `wmill` cli allows you to interact with Windmill instances right from your terminal.
 
-![Trigger Windmill from Command Line Interface](../../../../windmill/cli/vhs/output/setup.gif)
+![Trigger Windmill from Command Line Interface](../../assets/advanced/cli/setup.gif)
 
 :::info
 
