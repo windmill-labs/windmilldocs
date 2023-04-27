@@ -1,8 +1,3 @@
----
-id: worker_groups
-title: Worker Groups
----
-
 # Worker Groups
 
 Windmill allows you to run your scripts and flows on different machines with different specs. This is useful if you want to run some scripts on a GPU machine, or if you want to run some scripts on a machine with a lot of memory.
