@@ -277,7 +277,7 @@ is a **simplified git** with two simplifying assumptions:
 
 ### Python client
 
-By authenticating with the [reserved variable](#contextual-variables)
+By authenticating with the [reserved variable](../core_concepts/2_variables_and_secrets/index.md#contextual-variables)
 `WM_TOKEN`, the Python client can interact with the Windmill platform from
 within the script jobs. This can be used, for instance, to:
 
@@ -531,7 +531,7 @@ direct consequence, the variables (including secrets) that are accessible to the
 scripts are only those whom the user or group has visibility on, given his
 [permissions](#permissions-and-acl).
 
-Similarly for the [Contextual Variable](#contextual-variables) `WM_TOKEN` which
+Similarly for the [Contextual Variable](../core_concepts/2_variables_and_secrets/index.md#contextual-variables) `WM_TOKEN` which
 contains an ephemeral token (ephemeral to the script execution), which has the
 same privilege and permissions as the owner in `permissioned_as`. The
 [Python client](#python-client) inside the script implicitly uses that same
@@ -623,20 +623,12 @@ hash, and both the edit and the execution would be visible from the
 ### [Contextual Variables](../core_concepts/2_variables_and_secrets/index.md#contextual-variables)
 
 Contextual Variables are variables whose values are contextual to the Script
-execution. This is how the Deno and Python clients get their implicit
+execution. They are are automatically set by Windmill. This is how the Deno and Python clients get their implicit
 credentials to interact with the platform.
-
-| Name           | Value                                                                                                               |
-| -------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `WM_TOKEN`     | Token ephemeral to the current script with equal permission to the permission of the run (Usable as a bearer token) |
-| `WM_EMAIL`     | Email of the user that executed the current script                                                                  |
-| `WM_USERNAME`  | Username of the user that executed the current script                                                               |
-| `WM_JOB_ID`    | Job id of the current job                                                                                           |
-| `WM_WORKSPACE` | The workspace id of the current job                                                                                 |
 
 You can use them in a Script by clicking on "+Context Var":
 
-![contextual variable](./context_variables.png)
+![contextual variable](../core_concepts/2_variables_and_secrets/context_variables.png)
 
 ## [Resource](../core_concepts/3_resources_and_types/index.md)
 
