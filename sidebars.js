@@ -61,6 +61,7 @@ const sidebars = {
 				'flows/flow_loops',
 				'flows/flow_branches',
 				'flows/flow_trigger',
+				'flows/early_stop',
 				'flows/sleep',
 				'flows/flow_approval',
 			],

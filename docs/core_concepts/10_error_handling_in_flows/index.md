@@ -1,6 +1,6 @@
 # Error Handling in Flows
 
-Error in flows can be handled with two features.
+Error in flows can be handled with three features.
 
 ## Retries
 
@@ -44,5 +44,26 @@ If defined, the error handler will take as input, the result of the step that er
 :::info
 
 More details on our pages dedicated to [Error Handlers](../../flows/7_flow_error_handler.md).
+
+:::
+
+## Early Stop / Break
+
+If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/early_stop.mp4"
+/>
+
+<br/>
+
+:::info
+
+More details on our pages dedicated to [Early Stop / Break](../../flows/2_early_stop.md).
 
 :::

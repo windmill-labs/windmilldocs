@@ -8,14 +8,14 @@ All code is not made equal and can be split in 2 categories:
   your engineering. Usually that code is prototyped and started under the form
   of scripts and SQL files, until it is turned at great expense into
   micro-services and hard to maintain custom internal tools.
-- **Boilerplate**: all the rest is boilerplate, be it UI and frontends that
-  allow you to call the code above, api calls to external services, error
+- **Boilerplate**: all the rest is boilerplate. Be it UI and frontends that
+  allow you to call the code above, API calls to external services, error
   handling, retries, logic to make your code scalable, dependency management,
   CI/CD, managing secrets, schedule, permissions, authentification, etc. That
   code is boilerplate because it _feels_ like you shouldn't have to reinvent the
   wheel, over and over again.
 
-Many services labels themselves as **no-code** or **low-code**, and they address
+Many services labels themselves as **no-code** or **low-code**, as they address
 indeed the challenge of getting rid of the boilerplate and provide a
 comprehensive platform accessible to all members of a diverse organization not
 made solely of engineers. However, **we believe they lack the full power and
@@ -89,7 +89,7 @@ team to attend you in your journey.
 
 Examples of what can be built with Windmill include:
 
-- Turns your scripts into internal apps that you can easily share. It's common
+- Turn your scripts into internal apps that you can easily share. It's common
   for engineers to piece together scripts to automate repetitive tasks for a
   non-technical user (sales, ops, customer support, customer success, etc).
 - ETL done entirely within Windmill.

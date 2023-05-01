@@ -16,6 +16,7 @@ Also, the Flow Editor has the following features which are the subject of specif
 - [For Loops](./12_flow_loops.md): iterate a series of tasks.
 - [Branches](./13_flow_branches.md): split the execution of the flow based on a condition.
 - [Trigger Scripts](./10_flow_trigger.md): trigger flow upon a given event.
+- [Early Stop / Break](./2_early_stop.md): stop early a flow based on a step's result.
 - [Sleep / Delays](./15_sleep.md): pause a step for a given time.
 - [Approval Steps](./11_flow_approval.md): have users approve a step to keep the flow running.
 
@@ -228,7 +229,7 @@ The header is composed of:
 - **Summary**: edit the summary of the script.
 - **Shortcuts**: shortcut to advanced configuration.
   1. **[Retries](./14_retries.md)**: configure the number of retries and the delay between each retry.
-  2. **[Early stop/Break](#early-stopbreak)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
+  2. **[Early stop/Break](./2_early_stop.md)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
   3. **[Suspend](./11_flow_approval.md)**: if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
   4. **[Sleep](./15_sleep.md)**: if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
 
@@ -304,7 +305,7 @@ Configure the number of [retries](./14_retries.md) and the delay between each re
 
 ##### Early stop/Break
 
-If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
+If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should [stop early](./2_early_stop.md). Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.md) page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
 
 ![Early stop](../assets/flows/flow_early_stop.png)
 
