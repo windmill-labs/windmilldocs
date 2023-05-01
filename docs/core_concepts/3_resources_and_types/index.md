@@ -62,6 +62,12 @@ default, etc). You can also view the schema by toggling the "As JSON" option:
 
 ![Resource type schema view](./resource_type_json.png)
 
+## States
+
+In Windmill, states are resources (but excluded from the Workspace tab for clarity). States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
+
+They are displayed on the Resources menu, with a dedicated tab.
+
 ## Using Resources
 
 Provided you have the right permissions, you can access resources from scripts, flows and apps

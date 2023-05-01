@@ -69,7 +69,7 @@ They are two ways to define the script:
 
 Once the script is defined, we can see the script in the Runnable pannel
 
-##### Tranformers
+#### Tranformers
 
 A transformer is an optional frontend script that is executed right after the component's script whose purpose is to do lightweight transformation in the browser. It takes the previous computation's result as `result`.
 
