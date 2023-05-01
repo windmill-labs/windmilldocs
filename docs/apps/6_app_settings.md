@@ -89,7 +89,13 @@ When a component is updated, we can choose to recompute the other components, to
 
 ### Custom CSS
 
-We can add custom CSS to the component. They are two ways to add custom CSS:
+You can add custom CSS to the component. They are two ways to add custom CSS:
 
 - **Plain CSS**: add a CSS class to the component. For example: `background-color: red;`
 - **Tailwind classes**: add a Tailwind class to the component. For example: `bg-red-500`.
+
+:::tip Styling
+
+More details on styling in Windmill App Editor on our [dedicated section](./8_app_styling.md).
+
+:::

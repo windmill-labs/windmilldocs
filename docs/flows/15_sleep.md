@@ -23,7 +23,7 @@ This feature is made to hold a flow **inside of it**. Based on your specific nee
 
 :::
 
-Each step of a flow can be paused after execution of a given amount of seconds. Although in seconds, this input can in fact handle several hours, days, months (years).
+Each step of a flow can be paused after execution of a given amount of seconds. Although in seconds, this input can in fact handle several hours, days, months (years). Sleeping is passive and does not consume any resources.
 
 From a single flow, this feature can for example help you with:
 - **Customer relations**: after each user signs up, hold off for one day before dispatching a welcome email to prevent information overload.
