@@ -113,12 +113,12 @@ At any time, have a look at your app's **Inputs** associated with each component
 
 ### Tailor the look of your app
 
-At the **component level**, on the `Settings` tab, configure the style of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Settings` tab).
+At the **component level**, on the `Settings` tab, configure the [style](../../apps/8_app_styling.md) of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Settings` tab).
 
 ![Cutomize components](./customize_component.png)
 
 
-At the **app level**, you can give a harmonized style to your app with CSS. On the `CSS` tab, give details either in boxes or in JSON.
+At the **app level**, you can give a [harmonized style](../../apps/8_app_styling.md#global-styling) to your app with CSS. On the `CSS` tab, give details either in boxes or in JSON.
 
 ![Customize CSS](./customize_css.png)
 
