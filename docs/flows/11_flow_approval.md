@@ -18,7 +18,7 @@ purposes as well.
 :::info
 
 If you look for ways to pause a workflow, you might be interested in:
-- **[Early stop/Break](./1_flow_editor.md#early-stopbreak)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
+- **[Early stop/Break](./2_early_stop.md)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
 - **[Sleep](./15_sleep.md)**: if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
 - **[Retry](./14_retries.md)** a step a step until it comes successful.
 - **[Schedule the trigger](../core_concepts/1_scheduling/index.md)** of a script or flow.
