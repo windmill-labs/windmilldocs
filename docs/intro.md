@@ -1,5 +1,21 @@
 # Introduction
 
+<div class="text-xl mb-2 font-semibold">Learn about Windmill</div>
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
+   <div class="text-lg font-semibold text-gray-800">Lorem</div>
+    <div class="text-sm text-gray-500">Lorem ipsum</div>
+  </a>
+   <a href="/" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
+    <div class="text-lg font-semibold text-gray-800">Lorem</div>
+    <div class="text-sm text-gray-500">Lorem ipsum</div>
+  </a>
+   <a  href="/" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
+    <div class="text-lg font-semibold text-gray-800">Lorem</div>
+    <div class="text-sm text-gray-500">Lorem ipsum</div>
+  </a>
+</div>
+
 All code is not made equal and can be split in 2 categories:
 
 - **Code that matters**: high-value code containing your business logic, data
