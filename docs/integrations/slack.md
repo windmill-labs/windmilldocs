@@ -5,7 +5,18 @@ interactions between the two: run code on Windmill by a Slack command or use the
 Slack API directly from Windmill. In this guide, we'll cover both approaches, so
 you can find the one that suits you best.
 
-![Integration between Slack and Windmill](../assets/integrations/slack-0-header.png 'Connect Slack with Windmill')
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/generated_email.mp4"
+    alt="container component"
+/>
+
+<br/>
+
 
 :::info
 

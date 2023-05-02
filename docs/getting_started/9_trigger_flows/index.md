@@ -146,6 +146,10 @@ Each script and flow have their own webhooks on Windmill ...
 
 More details on our page dedicated to [Webhooks](../../core_concepts/4_webhooks/index.md).
 
+<br/>
+
+One use case of webhooks is [building a Slackbot with Windmill](/blog/handler-slack-commands).
+
 :::
 
 
