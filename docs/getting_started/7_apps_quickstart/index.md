@@ -75,7 +75,7 @@ Check out all of our components at [this page](https://docs.windmill.dev/docs/ap
 
 ### Empower components with scripts
 
-The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](https://docs.windmill.dev/docs/apps/app-runnable)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and background scripts.
+The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](https://docs.windmill.dev/docs/apps/app-runnable)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and background runnables.
 
 ![Runnable editor](./apps_runnables.png)
 

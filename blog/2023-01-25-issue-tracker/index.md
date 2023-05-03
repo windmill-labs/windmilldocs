@@ -193,9 +193,9 @@ Insert a `Text` component and configure it as the followings:
 
 We will use the array of issues in more than one component, so it would be a
 good idea to query the data once and pass it to the individual components later.
-This can be achieved by Background scripts.
+This can be achieved by Background runnables.
 
-1. Click `Add` next to the `Background scripts` label on the bottom left side.
+1. Click `Add` next to the `Background runnables` label on the bottom left side.
 2. Make sure the new script is selected and choose `Deno` as the language.
 3. Name the script `Load Issues`.
 4. Paste in the following code:
@@ -217,14 +217,14 @@ This can be achieved by Background scripts.
 
 ![Load issues in the background](./8-wm-bg-issues.png)
 
-Create one more background script the same way as last time, but for the users
+Create one more background runnable the same way as last time, but for the users
 now - name it `Load Users`. The code should be the same, except that the client
 should query from the `‘users’` table instead of `‘issues’`. Change this on line
 6 of the script.
 
 :::caution
 
-Don’t forget to repeat the last step as well on the second background script to
+Don’t forget to repeat the last step as well on the second background runnable to
 make it work.
 
 :::
@@ -267,7 +267,7 @@ it:
 
 5. On the right pane under the `Settings` tab, select `Connect` as input type of
    the `issues` input. Now you can select the `result` field of the
-   `Load Issues` background script you just created. To do this, locate the
+   `Load Issues` background runnable you just created. To do this, locate the
    `Background` element on the left pane that has _4 items_ in the result
    property and click on `result`.
    ![Connecting scripts](./12-wm-connect-result.png)
@@ -349,7 +349,7 @@ you'll still be able to move them manually.
    `{ labels: string[], data: number[] }`
 
 7. Configure the `issues` input of the script on the right pane to be `Connect`
-   type and then select the `result` value of the `background` script that is
+   type and then select the `result` value of the `background` runnable that is
    responsible for the querying of the issues.
    ![Connected chart input](./15-wm-connect-chart.png)
 
@@ -383,7 +383,7 @@ export async function main(issues: any[]) {
 }
 ```
 
-Finally, connect the result value of the background script to the `issues`
+Finally, connect the result value of the background runnable to the `issues`
 argument of the script, just like in the last step of the other chart.
 
 ![Severity chart](./16-wm-severity-chart.png)
@@ -423,8 +423,8 @@ export async function main(users: undefined | any[]) {
 ```
 
 Finally, connect the `users` argument to the result of the `Load Users`
-background script. In essence, this will chain the two background scripts to
-transgorm the data into the desired shape.
+background runnable. In essence, this will chain the two background runnables to
+transform the data into the desired shape.
 
 :::info
 
@@ -443,13 +443,13 @@ Now insert the components that will use the newly created `users` list.
    vertically on the bottom.
 2. Insert a `Select` component under the label text.
 3. Connect the `items` configuration inputs to the result of the recently added
-   `Get User Selection List` background script.
+   `Get User Selection List` background runnable.
 
 ![User selection components](./19-wm-user-select.png)
 
 :::caution
 
-Make sure that you selected the correct background script before proceeding to
+Make sure that you selected the correct background runnable before proceeding to
 the next steps.
 
 :::
@@ -509,7 +509,7 @@ user and sends them to the database.
 1. Insert a `Button` component.
 2. Set the `Label` to `Create Issue`.
 3. Set the `Size` to `md`
-4. Find the ID of the `Load Issues` background script and check `Recompute` on
+4. Find the ID of the `Load Issues` background runnable and check `Recompute` on
    it in the `Recompute others` section.
 
    :::info
@@ -561,7 +561,7 @@ the form of buttons. Select the `Table` component and follow the steps:
 2. Click the newly added action.
 3. Set the `Label` argument to `Delete`.
 4. Set the `Color` argument to `red`.
-5. Find the ID of the `Load Issues` background script and check `Recompute` on
+5. Find the ID of the `Load Issues` background runnable and check `Recompute` on
    it in the `Recompute others` section.
 
    :::info

@@ -52,7 +52,7 @@ See [Column Properties](https://www.ag-grid.com/javascript-data-grid/column-prop
 
 As with most things, Windmill lets you **dropdown to code** when you want to do more advanced stuff, where the gui is more in the way then helping.
 
-The Windmill way wil be to first create a background script and then connecting it with the col def
+The Windmill way wil be to first create a background runnable and then connecting it with the col def.
 
 ![Column definitions](./../../../../static/img/guide/coldef-connect.png)
 
@@ -62,7 +62,7 @@ Below is a series of snippest that will help you get started.
 
 #### Provide default values for all columns
 
-Create a background script in deno with the following content:
+Create a background runnable in deno with the following content:
 ```js 
    export async function main() {
   const columnDef = [
@@ -86,7 +86,7 @@ Create a background script in deno with the following content:
 
 #### Provide default values for all columns
 
-Create a background script in deno with the following content:
+Create a background runnable in deno with the following content:
 ```ts 
    export async function main() {
   const columnDef = [
