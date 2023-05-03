@@ -37,6 +37,7 @@ const sidebars = {
 			type: 'category',
 			label: 'Core Concepts',
 			items: [
+				'core_concepts/draft_and_deploy/index',
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
 				'core_concepts/groups_and_folders/index',
