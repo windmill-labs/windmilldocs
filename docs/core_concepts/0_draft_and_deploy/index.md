@@ -35,3 +35,5 @@ Scripts have as many deployed versions as they have Hash -> Ruben
 :::
 
 If you want to have several versions of the same runnable, just fork it with the `Fork`button on the drop down menu of `Deploy`.
+
+![Recap Draft and Deploy](./recap_draft_and_deploy.png)
