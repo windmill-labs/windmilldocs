@@ -269,9 +269,9 @@ services. All of them can be imported directly into your Windmill projects.
 
 :::
 
-### Background scripts
+### Background runnables
 
-A **background script** represents code that is not attached to any component. Background scripts
+A **background runnable** represents code that is not attached to any component. Background runnables
 are most useful when you want to load data and pass that data to more than one component. In our
 case however, we just want to decouple data fetching from the "Table" component that is going to
 display the data.
@@ -279,16 +279,16 @@ display the data.
 Let's add the script that queries the database. We'll need to connect to the result of the login
 script, so click the Login button to run it first. Windmill will update the shape of the result.
 
-Create a new background script:
+Create a new background runnable:
 
 1. Choose Deno as the runtime.
 1. Name the script "Load data".
 1. Paste in the code below.
 1. Turn off "Run on start".
-1. Update the script arguments.
+1. Update the runnable arguments.
 
 ```typescript
-// Background script: Load data
+// Background runnable: Load data
 import { Resource } from 'https://deno.land/x/windmill@v1.76.0/mod.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
@@ -317,11 +317,11 @@ src="/videos/supabase-auth/add-query-script.mp4"
 />
 <br/>
 
-We can add another background script to programmatically change the selected tab. Windmill provides
+We can add another background runnable to programmatically change the selected tab. Windmill provides
 a utility function for **frontend scripts** called `setTab`. The first argument is the ID of the
 "Tabs" component, the second one is the zero based index of the tab to select.
 
-Create a new background script:
+Create a new background runnable:
 
 1. Choose JavaScript.
 1. Name the script "Open Data tab".
@@ -329,7 +329,7 @@ Create a new background script:
 1. Turn off "Run on start".
 
 ```javascript
-// Background script: Open Data tab
+// Background runnable: Open Data tab
 if (!f?.result?.error) {
 	setTab('a', 1);
 }
@@ -342,7 +342,7 @@ src="/videos/supabase-auth/add-tab-switch-script.mp4"
 />
 <br/>
 
-It would be nice to run the two background scripts after the login script has finished. We can do
+It would be nice to run the two background runnables after the login script has finished. We can do
 just that by updating the "Recompute others" setting of the login button. This will make sure that
 the "Load data" and "Open Data tab" scripts are executed each time the _login script_
 successfully finished running.
@@ -456,14 +456,14 @@ src="/videos/supabase-auth/login-fe-script.mp4"
 />
 <br/>
 
-### Background script
+### Background runnable
 
-As it was mentioned above, a **background script** represents code that is not attached to any
-component. Background scripts are most useful when you want to load data and pass that data to more
+As it was mentioned above, a **background runnable** represents code that is not attached to any
+component. Background runnables are most useful when you want to load data and pass that data to more
 than one component. In our case however, we just want to decouple data fetching from the "Table"
 component that is going to display the data.
 
-Create a new background script:
+Create a new background runnable:
 
 1. Choose JavaScript.
 1. Name the script "Load data".
@@ -471,7 +471,7 @@ Create a new background script:
 1. Turn off "Run on start".
 
 ```javascript
-// Background script: Load data
+// Background runnable: Load data
 if (!state.supabase.error) {
 	try {
 		const { data, error, error_description } = await state.supabase.client
@@ -541,7 +541,7 @@ Now when you login with the credentials of a Supabase user, the `Login` _inline 
 executed. This script creates a Supabase client with an `Authorization` header attached. The client
 is then saved to the local state of the app.
 
-After a successful authentication, the `Load data` _background script_ will take the newly created
+After a successful authentication, the `Load data` _background runnable_ will take the newly created
 client from the state and use it to query the data. When the data is loaded, you should be
 navigated to the "Data" tab.
 

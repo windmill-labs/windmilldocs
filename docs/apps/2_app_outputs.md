@@ -4,9 +4,9 @@ On the left-hand side of the app editor, you can find the app outputs. They are 
 
 - Context and state
 - Component outputs
-- Background script outputs
+- Background runnables outputs
 
-When a component or a background script is selected, the outputs of the component or the background script are displayed.
+When a component or a background runnable is selected, the outputs of the component or the background runnable are displayed.
 You can manually open an output by clicking on the header of the output. Once manually opened, the output will stay open until you close it.
 
 You can search for an output by typing in the search bar. It searches in the output name and in the output object keys.
@@ -55,9 +55,9 @@ The components contained in a container have their outputs displayed in the cont
 
 ![App outputs](../assets/apps/2_app_outputs/app-output-container.png)
 
-### Background script outputs
+### Background runnables outputs
 
-A background script is a script that runs in the background and can be used to perform actions that are not related to the UI.
+A background runnable is a script or flow that runs in the background and can be used to perform actions that are not related to the UI.
 
 ### Connecting inputs
 

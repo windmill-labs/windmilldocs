@@ -1,13 +1,13 @@
 # Runnables
 
-On the bottom of the app editor, you can find the runnable editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnable), and background scripts.
+On the bottom of the app editor, you can find the runnable editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnable), and background runnables .
 
 They are 4 types of runnables:
 
 - **Inline scripts**: scripts that are defined on the app editor, linked to a component.
-- **Workspace/Hub**: scripts linked to a component, but defined in the workspace or the Hub.
-- **Background scripts**: scripts that are not linked to a component, but run in the background.
-- **Frontend scripts**: script can be used to manipulate the client app state. They can either be linked to a component or be a background script. If they are a background script, they are not executed unless manually set to run when the app starts or reloads.
+- **Workspace/Hub**: runnables (scripts; flows) linked to a component, but defined in the workspace or the Hub.
+- **Background runnables**: runnables that are not linked to a component, but run in the background.
+- **Frontend scripts**: script can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
 
 ## Component runnable
 
@@ -36,18 +36,18 @@ See [Recompute Others](./app-runnable#recompute-others) for more information.
 
 When a runnable has an input connected to an output of a component, the runnable is executed when the output value changes. See [Connections](./app_outputs#connecting-inputs) for more information.
 
-#### Background script
+#### Background runnable
 
-Background scripts are triggered upon global refresh or when their input changes. The result of a background script can be shared among many components. They are not linked to a specific component.
+Background runnables are triggered upon global refresh or when their input changes. The result of a background runnable can be shared among many components. They are not linked to a specific component.
 
 You can disable the automatic execution on app start and refresh by unchecking the `Run on start and app refresh` checkbox.
-You may want to disable this so that the background script is only triggered by changes to other values or triggered by another computation on a button (See 'Recompute Others')
+You may want to disable this so that the background runnable is only triggered by changes to other values or triggered by another computation on a button (See 'Recompute Others')
 
-Background scripts executed on the server can also disable the automatic execution when an input value changes by checking the `do NOT recompute on input changes` checkbox.
+Background runnables executed on the server can also disable the automatic execution when an input value changes by checking the `do NOT recompute on input changes` checkbox.
 
 #### Frontend script
 
-Frontend scripts are backgroud script executed in the browser and can manipulate the app context directly.
+Frontend scripts are backgroud runnable executed in the browser and can manipulate the app context directly.
 See [Frontend scripts](./app-runnable#frontend-scripts) for more information.
 
 :::info Frontend scripts

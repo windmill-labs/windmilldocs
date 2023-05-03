@@ -37,7 +37,7 @@ The data source is the data that will be used by the component. For example, the
 They are 4 ways to define the data source, depending on the component:
 
 - **Static**: the data source is defined in the settings panel.
-- **Connect**: the data source is connected to the output of another component, to an output of a background script, the state or the context.
+- **Connect**: the data source is connected to the output of another component, to an output of a background runnable, the state or the context.
 - **Compute**: the data source is the result of a script
 - **Template**: the data source is a result of a template. A template is a special type of input where we can use variables. For example, if we have a variable `username` the context, we can use it in the template like this: `Hello ${username}}`. Not all components support templates.
 
@@ -47,7 +47,7 @@ Each type of data source has a different editor. For example, the `Text` data so
 
 #### Connect
 
-The data source can be connected to the output of another component, to an output of a background script, the state or the context.
+The data source can be connected to the output of another component, to an output of a background runnable, the state or the context.
 
 The status of the connection if displayed.
 

@@ -106,7 +106,7 @@ Finally, we need to add a `Button` component to submit the form:
 1. Insert a `Button` component.
 1. Enter `Update Issue` as the Label.
 1. Align it to the bottom-left corner.
-1. Find the ID of the `Load Issues` background script and check `Recompute` on
+1. Find the ID of the `Load Issues` background runnable and check `Recompute` on
    it in the `Recompute others` section.
 1. Click `Create an inline script`, select `Deno` as language, name it
    `Update Issue` and paste in the following code:
@@ -201,7 +201,7 @@ Lastly, add the actual chart component to display the data:
      };
    }
    ```
-1. Select the `result` property of the `Load Issues` background script for the
+1. Select the `result` property of the `Load Issues` background runnable for the
    `issues` argument.
 1. Select the `result` property of the recently created `Number` component for
    the `days` argument.
