@@ -35,9 +35,9 @@ const tabs = [
 			},
 			{
 				title: 'Building blocks',
-				description: 'Quickly start building complex apps using our 20 built-in components.',
+				description: 'Quickly start building complex apps using our 40 built-in components.',
 				icon: Puzzle,
-				caption: 'Quickly start building complex apps using our 20 built-in components.',
+				caption: 'Quickly start building complex apps using our 40 built-in components.',
 				video: {
 					videoSrc: '/videos/components.mp4',
 					altText: 'Building blocks',
@@ -172,7 +172,7 @@ export default function AppSection() {
 				</div>
 
 				<span className="text-lg text-gray-600 max-w-3xl">
-					Build your own UI Simply drag and drop components, connect your data and deploy your app
+					Build your own UI. Simply drag and drop components, connect your data and deploy your app
 					in minutes.
 				</span>
 

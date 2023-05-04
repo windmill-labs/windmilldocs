@@ -56,10 +56,10 @@ const sidebars = {
 			label: 'Flow Editor',
 			items: [
 				'flows/flow_editor',
+				'flows/flow_branches',
+				'flows/flow_loops',
 				'flows/flow_error_handler',
 				'flows/retries',
-				'flows/flow_loops',
-				'flows/flow_branches',
 				'flows/flow_trigger',
 				'flows/early_stop',
 				'flows/sleep',
