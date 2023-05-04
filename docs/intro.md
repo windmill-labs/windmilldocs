@@ -4,8 +4,6 @@ Windmill is an **[open-source](https://github.com/windmill-labs/windmill)** alte
 
 Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow">Cloud App</a>** (no card required) or **[Self-Host](./advanced/1_self_host/index.md)** yourself.
 
-- link to integrations
-
 ## Learn about Windmill
 
 <div class="text-xl mb-2 font-semibold"></div>
