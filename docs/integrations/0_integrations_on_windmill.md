@@ -30,6 +30,7 @@ Just **[reach out to us](../misc/6_getting_help/index.md)**, we'll be happy to l
 | [AWS](./aws.md) | Cloud computing platform offering various services like computing, storage, databases, and more |
 | [Amazon S3](./aws-s3.md) | Cloud storage service |
 | [Clickhouse](./clickhouse.md) | Open-source column-oriented database management system |
+| [Cloudlare R2](./cloudlare-r2.md) | Cloud object storage service for data-intensive applications |
 | [Datadog](./datadog.md) | Monitoring and analytics platform for cloud-scale infrastructure and applications |
 | [Discord](./discord.md) | Voice, video, and text communication platform for gamers |
 | [FaunaDB](./faunadb.md) | Serverless, document-oriented database for modern applications |
@@ -49,9 +50,12 @@ Just **[reach out to us](../misc/6_getting_help/index.md)**, we'll be happy to l
 | [Matrix](./matrix.md) | Open standard for decentralized, real-time communication |
 | [MongoDB](./mongodb.md) | NoSQL document-oriented database |
 | [MySQL](./mysql.md) | Open-source relational database management system |
+| [Neon.tech](./neon.md) | Open-source database management system |
 | [OpenAI](./openai.md) | Research laboratory consisting of the for-profit OpenAI LP and the non-profit OpenAI Inc |
 | [PostgreSQL](./postgresql.md) | Open-source object-relational database management system |
+| [Redis](./redis.md) | In-memory data structure store used as a database, cache, and message broker |
 | [RSS](./rss.md) | Web feed that allows users and applications to access updates to websites |
+| [S3 compatible APIs](./s3.md) | Cloud-based object storage service designed to store and retrieve any amount of data. |
 | [SendGrid](./sendgrid.md) | Email API and delivery service |
 | [Slack](./slack.md) | Instant messaging and collaboration platform |
 | [SMTP](./smtp.md) | Internet standard for electronic mail transmission |
@@ -61,3 +65,4 @@ Just **[reach out to us](../misc/6_getting_help/index.md)**, we'll be happy to l
 | [SurrealDB](./surrealdb.md) | Cloud-hosted NoSQL database |
 | [Telegram](./telegram.md) | Cloud-based instant messaging and voice over IP service |
 | [Toggl](./toggl.md) | Time tracking software |
+| [Upstash](./upstash.md) | Serverless and low-latency Redis-compatible data store for modern applications |

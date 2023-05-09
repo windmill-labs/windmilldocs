@@ -100,7 +100,7 @@ Loading output
 Calling as input
 ![Flow Shared Folder 1](../assets/flows/flow_shared_folder_2.png)
 
-This flow can be found on the Demo workspace/.
+This flow can be found on the Demo workspace.
 
 :::
 
