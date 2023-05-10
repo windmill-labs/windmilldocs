@@ -10,6 +10,8 @@ run Windmill locally, or to self-host it.
 We encourage Docker-based deployments, and provide a `docker-compose` file to
 help you get started.
 
+The default credentials are admin@windmill.dev / changeme. From there you can easily setup another account as part of the setup step.
+
 ## Docker
 
 Using Docker and Caddy, Windmill can be deployed using two files,
@@ -134,8 +136,9 @@ for S3 access will vary according to your environment.
 
 1. Navigate to the `frontend` folder ([source][windmill-gh-frontend]) and run:
    ```bash
-   npm run install
+   npm install
    npm run generate-backend-client
+   // on mac use: npm run generate-backend-client-mac
    npm run build
    ```
 2. Install the [LLD Linker](https://lld.llvm.org/).
