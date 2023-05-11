@@ -11,6 +11,16 @@ MongoDB, Slack, etc. - that defines the schema that the resource of this type
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
 
+:::tip Available pre-made integrations
+
+Check our [list of integrations](../../integrations/0_integrations_on_windmill.md) (or, pre-made resource types).
+
+<br/>
+
+If one is missing, this very page details how to [create your own](#create-a-resource-type).
+
+:::
+
 ## Create a Resource
 
 To create a resource using an existing type, go to the

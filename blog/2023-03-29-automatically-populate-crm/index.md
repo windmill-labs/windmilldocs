@@ -1,6 +1,6 @@
 ---
 slug: automatically-populate-crm
-title: Automatically Populate CRM from Simple Emails with OpenAI and Windmill Worfklows
+title: Use OpenAI to Automatically Populate CRM from Simple Emails with Windmill Worfklows
 authors: [henricourdent]
 tags: [tutorial, automation, CRM, email, OpenAI, workflow]
 image: ./0-header.jpg
