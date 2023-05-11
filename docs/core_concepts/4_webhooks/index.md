@@ -5,6 +5,10 @@
 Snippet of a Deno/TypeScript script using only native JavaScript to trigger a
 webhook can be found on [Windmill Hub][script].
 
+<br/>
+
+Some use cases include triggering scripts and flows from [Slack](/blog/handler-slack-commands) or [Emails](../../integrations/mailchimp_mandrill.md).
+
 :::
 
 ## Getting started

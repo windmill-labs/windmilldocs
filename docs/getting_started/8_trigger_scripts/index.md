@@ -10,7 +10,7 @@ On-demand triggers:
 - [Schedule the Execution of a Script](#schedule-the-execution-of-a-script)
 
 Triggers from external events:
-- [Trigger Scripts from Webhooks](#trigger-scripts-from-webhooks)
+- [Trigger Scripts from Webhooks](#trigger-scripts-from-webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack) or [Emails](#webhooks-trigger-scripts-from-emails)
 
 
 :::info Scripts in Windmill
@@ -29,7 +29,6 @@ By analyzing the main function parameters, it creates an input specification in 
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    loop
     controls
     id="main-video"
     src="/videos/auto_generated_uis.mp4"
@@ -41,7 +40,6 @@ This feature is also usable directly in the script editor to **test a script in 
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    loop
     controls
     id="main-video"
     src="/videos/ui_from_script_editor.mp4"
@@ -61,7 +59,6 @@ Windmill embeds a WYSIWYG app editor. It allows you to build your own UI with dr
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    loop
     controls
     id="main-video"
     src="/videos/app_editor_fast.mp4"
@@ -81,7 +78,6 @@ Flows are basically sequences of scripts that execute on after each other or [in
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    loop
     controls
     id="main-video"
     src="/videos/crm-automation-execution.mp4"
@@ -103,7 +99,6 @@ You can create schedules by specifying a script or flow, its arguments, and a CR
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    loop
     controls
     id="main-video"
     src="/videos/schedule-cron-menu.mp4"
@@ -159,8 +154,36 @@ Each script (and flow) has its own webhooks on Windmill ...
 
 More details on our page dedicated to [Webhooks](../../core_concepts/4_webhooks/index.md).
 
-<br/>
+:::
+
+#### Webhooks: Trigger Scripts from Slack
 
 One use case of webhooks is [building a Slackbot with Windmill](/blog/handler-slack-commands).
 
-:::
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/generated_email.mp4"
+    alt="container component"
+/>
+
+<br/>
+
+Windmill uses Slack to trigger scripts and flows by establishing Slackbots and creating specific commands. By connecting Slack with Windmill, parsing incoming Slack commands, and leveraging Windmill workflows, operational teams can trigger complex automations directly from Slack.
+
+
+#### Webhooks: Trigger Scripts from Emails
+
+One use case of webhooks is [triggering scripts via inbound emails using Mailchimp](../../integrations/mailchimp_mandrill.md).
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/trigger_mandrill.mp4"
+/>
+
+<br/>
+
+Windmill leverages Mailchimp Mandrill's capabilities to initiate scripts and flows via email-triggered events. By parsing inbound emails and routing the content to Windmill through webhooks, scripts or flows are activated, enabling automation based on email content or just their arrival.
