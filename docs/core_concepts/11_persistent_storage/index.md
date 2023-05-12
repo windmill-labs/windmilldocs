@@ -18,9 +18,9 @@ This present document gives a list of trusted services to use alongside Windmill
 
 There are 4 kinds of persistent storage in Windmill:
 
-1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persistent on Windmill itself.
+1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Warehouse.
+2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
 3. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
 
