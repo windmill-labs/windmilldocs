@@ -76,22 +76,32 @@ With "x" = our only input `flow_input.mandrill_events`.
 
 ### Extract information from directly routed e-mails
 
-If you configured a route for an e-mail address meant to be only sent direct e-mails (meaning, if e-mail A forwarding B to your route address, treat e-mail A and not B as the main e-mail), that will be easy to extract the information:
+If your routing rules are set to capture emails that are directly addressed to certain recipients (for instance, any emails sent to name@company.com), extracting the relevant information from these emails is straightforward. It works as followed:
 
 - Mailchimp already parses the e-mail's details.
 - The parsed results are sent as an array, of which Windmill treats each element as a potential output & input.
 
-The you just have to pick the details you want by "connecting inputs" of the JSON.parse step.
+:::info Mailbox Routing
+In email systems, routing rules are not strictly tied to a single email address. Instead, they're flexible mechanisms that govern how an email server handles incoming messages based on various criteria.
+
+<br/>
+
+A Mailbox Route allows at the server-level incoming emails to be automatically directed to specific destinations based on predefined rules. These rules match criteria like recipient address or subject line, and the system performs actions such as delivering the message to a mailbox, forwarding it, or applying filters
+
+<br/>
+
+Thus, you can use the Mailchimp address effectively and have most emails be parsed directly without anyone knowing there is a Mailchimp domain. For instance: all emails sent to sales@domain.com and joe@domain.com will also be sent to windmill@windmill.domain.com to be analyzed and parsed by Windmill and if deemed relevant added to the CRM.
+:::
+
+Then you just have to pick the details you want by "connecting inputs" of the JSON.parse step.
 
 ![Get details from email](../assets/integrations/mailchimp_email_inputs.png)
 
 > _On the bottom right corner, relevant details from the email to be picked as inputs for further steps_
 
-<br/>
-
 ### Extract information from forwarded e-mails
 
-If you configured a route for an e-mail address meant to be only sent forwarded e-mails (meaning, if e-mail A forwarding B to your route address, treat e-mail B and not A as the main e-mail), then you should add just one step to extract the information.
+If your routing rules are designed to process emails that are forwarded from certain recipients (for instance, any emails forwarded by name@company.com), you'll need an additional step to extract the relevant information from the original emails.
 
 Indeed, Mailchimp already parses the e-mail's details but does it as a single e-mail. So for example the considered sender will be the one who forwarded the e-mail, not the sender of the original e-mail.
 
