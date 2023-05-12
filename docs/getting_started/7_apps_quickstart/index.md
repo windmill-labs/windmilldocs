@@ -13,6 +13,10 @@ Welcome to the Apps Quickstart! This document will provide you with 95% of the k
 
 <br/>
 
+> _Have more details on that app on our [e-commerce CRM app tutorial](../../apps/7_app_e-commerce.md)_.
+
+<br/>
+
 :::info
 Although Windmill provides **[auto-generated UIs to scripts and flows](../../core_concepts/6_auto_generated_uis/index.md)**, you can build your own internal applications designed to your needs. This is what the app editor is for.
 :::
