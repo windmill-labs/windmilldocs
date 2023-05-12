@@ -36,7 +36,7 @@ setClient(
 which is why we recommend setting those environment variables in the sections below.
 
 For more information on deno development in general,
-[see the official docs](https://deno.land/manual@v1.30.3/getting_started)
+[see the official docs](https://deno.land/manual@v1.30.3/getting_started).
 
 ## Python
 
@@ -56,12 +56,12 @@ For more information on python development in general,
 
 ## Interacting with Windmill locally
 
-Often you will need to test a script locally that also interacts with windmill.
+Often you will need to test a script locally that also interacts with Windmill.
 For example to retrieve resources.
 
 To do so you will need to fill out the context variables that will otherwise be
-filled out by the windmill runtime for you. The most important ones are
-`WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you windmill instance,
+filled out by the Windmill runtime for you. The most important ones are
+`WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you Windmill instance,
 for example `https://app.windmill.dev`, note that you can never include a
 trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
 token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.md)
