@@ -1,8 +1,8 @@
 # Introduction
 
-Windmill is an **[open-source](https://github.com/windmill-labs/windmill)** alternative to Retool, Airplane and n8n to **build all your internal tools (endpoints, workflows, UIs) through simple scripts** - in Typescript, Python, Go & Bash - and low code builders.
+Windmill is an **<a href="https://github.com/windmill-labs/windmill" target="_blank">open-source</a>** alternative to Retool, Airplane and n8n to **build all your internal tools (endpoints, workflows, UIs) through simple scripts** - in Typescript, Python, Go & Bash - and low code builders.
 
-Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow">Cloud App</a>** (no card required) or **[Self-Host](./advanced/1_self_host/index.md)** yourself.
+Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow" target="_blank">Cloud App</a>** (no card required) or **<a href="/docs/advanced/self_host" target="_blank">Self-Host</a>** yourself.
 
 ## Learn about Windmill
 
@@ -76,11 +76,15 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
    <div class="text-lg font-semibold text-gray-800">Worker Groups</div>
     <div class="text-sm text-gray-500">Worker Groups allow users to run scripts and flows on different machines with varying specifications.</div>
   </a>
+  <a href="/docs/core_concepts/persistent_storage" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+   <div class="text-lg font-semibold text-gray-800">Persistent Storage</div>
+    <div class="text-sm text-gray-500"></div>
+  </a>
 </div>
 
 <br/>
 
-<a href="/docs/flows/flow_editor" class="rounded-md p-6 mb-4 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+<a href="/docs/getting_started/flows_quickstart" class="rounded-md p-6 mb-4 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
   <div class="text-lg font-semibold text-gray-800">Flows</div>
   <div class="text-m text-gray-800">Build complex workflows with flexibility.</div>
   <div class="grid grid-cols-2 gap-2 mt-4">
@@ -113,7 +117,7 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 
 <br/>
 
-<a href="/docs/apps/app_editor" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+<a href="/docs/getting_started/apps_quickstart" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
   <div class="text-lg font-semibold text-gray-800">Apps</div>
   <div class="text-m text-gray-800">Create your own UIs using drag-and-drop components along with custom scripts and flows.</div>
   <div class="grid grid-cols-2 gap-2 mt-4">

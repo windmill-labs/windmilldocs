@@ -2,33 +2,40 @@
 
 Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
-<<<<<<< HEAD
 ![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png "Connect a Supabase project with Windmill")
-=======
-:::info
-This tutorial assumes that you already have a
-[Windmill](https://app.windmill.dev) account and a
-[Supabase](https://supabase.com) project. If you don't, visit the
-[Windmill documentation](https://docs.windmill.dev/docs/intro) or the
-[Supabase documentation](https://supabase.com/docs) to find out more.
-:::
-
-
-<br/>
-
-![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
->>>>>>> main
 
 :::info
 
-This tutorial assumes that you already have a <a href='https://app.windmill.dev/user/login' rel="nofollow">Windmill</a> account and a
-[Supabase](https://supabase.com) project. If you don't, visit the
-[Windmill documentation](/docs/getting_started/how_to_use_windmill) or the
-[Supabase documentation](https://supabase.com/docs) to find out more.
+This tutorial assumes that you already have a <a href='https://app.windmill.dev/user/login' rel="nofollow">Windmill</a> account and a [Supabase](https://supabase.com) project. If you don't, visit the [Windmill documentation](/docs/getting_started/how_to_use_windmill) or the [Supabase documentation](https://supabase.com/docs) to find out more.
 
 :::
 
-## Get the API keys
+## Through Postgres Protocol
+
+You can execute queries on Supabase through the regular Postgres protocol.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/supabase_postgres_integration.mp4"
+/>
+
+1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" target="_blank">Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
+
+2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
+
+3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
+	- Go to the `Settings` section.
+	- Click `Database`.
+	- Find your Connection Info and Connection String. Direct connections are on port 5432.
+
+4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the sslmode to "disable".
+
+
+## Through Supabase API
+
+### Get the API keys
 
 In order to make authenticated requests to the database, you'll need your API
 key and the URL of your endpoint from Supabase. To get these, select your
@@ -42,7 +49,7 @@ by the policies you add and the `secret` key will bypass all of them. You can
 safely use the `service_rolesecret` `secret` key in Windmill because it'll never be sent to users
 directly.
 
-## Create a resource
+### Create a resource
 
 To safely use secret values throughout Windmill, you can save them in
 `reources`. We are regularly updating the list of approved resources but if you
@@ -60,7 +67,7 @@ want an integration to be supported by Windmill directly, please submit a new
 **Enter the API key and the URL from Supabase and click "Save"**
 ![Resource selector](../assets/integrations/sb-2-4-resource.png)
 
-## Use the resource
+### Use the resource
 
 You can reference the type of a Supabase resource in a script the following way:
 
@@ -78,18 +85,6 @@ export async function main(auth: Resource<'supabase'>) {
 :::tip
 
 You can find more examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
-<<<<<<< HEAD
-=======
-
-<br/>
-
-More tutorials on Supabase:
-- [How to Send Database Events From Supabase to Windmill](https://docs.windmill.dev/blog/database-events-from-supabase-to-windmill)
-- [Create an E-commerce backoffice](../apps/7_app_e-commerce.md)
-- [Create an Issue Tracker App with Supabase in 15 Minutes](https://docs.windmill.dev/blog/create-issue-tracker-in-15-minutes)
-- [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](https://docs.windmill.dev/blog/create-issue-tracker-part-2)
-- [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](https://docs.windmill.dev/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
->>>>>>> main
 
 <br/>
 

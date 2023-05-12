@@ -16,7 +16,7 @@ You can find more information about setting up MongoDB Atlas
 
 :::
 
-![Integrattion between MongoDB and Windmill](../assets/integrations/0-header.png 'Connect a MongoDB Atlas project with Windmill')
+![Integration between MongoDB and Windmill](../assets/integrations/0-header.png 'Connect a MongoDB Atlas project with Windmill')
 
 ## Create Resource
 
@@ -39,9 +39,12 @@ Head to the [Resources][wm-app-resources] page in the Windmill app, click on
 
 :::caution
 
-There is a `mongodb` and a `mongodb_rest` Resource Type. Make sure that you
-select **`mongodb_rest`** as this will make it easier to connect to MongoDB
-Atlas.
+There is a `mongodb` and a `mongodb_rest` Resource Type.
+
+- [mongodb_rest](https://hub.windmill.dev/resource_types/65/mongodb_rest) uses an API Key and Endpoint
+- [mongodb](https://hub.windmill.dev/resource_types/22/mongodb) uses a custom configuration (asking for db, tls, servers, and credentials)
+
+For the present section, we'll select **`mongodb_rest`** as this will make it easier to connect to MongoDB Atlas.
 
 :::
 
@@ -50,6 +53,29 @@ To enable access to your database, follow the instructions in
 Windmill. When it's done, click "Save".
 
 ![Paste in Resource Values](../assets/integrations/2-mongo-rt.png)
+
+### Using Custom Configuration
+
+Integration MongoDB through the [mongodb resource type](https://hub.windmill.dev/resource_types/22/mongodb) can be made by providing the following parameters.
+
+<details>
+  <summary>Parameters below:</summary>
+
+  | Property       | Type    | Description                                | Default      | Required | Where to Find                          | Additional Details                                   |
+|----------------|---------|--------------------------------------------|--------------|----------|----------------------------------------|-------------------------------------------------------|
+| db             | string  | Database name                              |              | true     | MongoDB Atlas Dashboard                 | Name of the database you want to connect to           |
+| tls            | boolean | Use TLS for connections                    | true         | false    | Your own preference                    | Set to true for secure connections                    |
+| servers        | array   | Array of server objects                    |              | true     | MongoDB Atlas Dashboard                 | Each server object should contain `host` and `port`  |
+| host (nested)  | string  | Server address                             |              | true     | MongoDB Atlas Dashboard                 | Hostname of the MongoDB instance                      |
+| port (nested)  | integer | Port number                                | 27017        | false    | MongoDB Atlas Dashboard                 | Default MongoDB port is `27017`                       |
+| credential     | object  | Authentication information                 |              | true     | MongoDB Atlas Dashboard                 | Contains `username`, `password`, `db`, `mechanism`    |
+| username (nested) | string  | Database username                          |              | true     | MongoDB Atlas Dashboard                 | Your database user's username                         |
+| password (nested) | string  | Database password                          |              | true     | MongoDB Atlas Dashboard                 | Your database user's password                         |
+| db (nested)    | string  | Authentication database                    |              | true     | MongoDB Atlas Dashboard                 | The database used for authentication                  |
+| mechanism (nested) | string  | Authentication mechanism                   | SCRAM-SHA-1  | false    | Your own preference                    | Default authentication mechanism is `"SCRAM-SHA-1"`  |
+</details>
+
+
 
 ## Create Script
 
