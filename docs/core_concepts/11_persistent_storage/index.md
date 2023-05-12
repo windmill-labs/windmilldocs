@@ -2,7 +2,7 @@
 
 Persistent storage refers to any method of storing data that remains intact and accessible even after a system is powered off, restarted, or experiences a crash.
 
-In the context of Windmill, the stakes are: **where to store the data manipulated by Windmill** (ETL, data ingestion and preprocessing, data migration and sync etc.)?
+In the context of Windmill, the stakes are: **where to store the data manipulated by Windmill**? (ETL, data ingestion and preprocessing, data migration and sync etc.)
 
 :::info TLDR
 
@@ -13,6 +13,18 @@ Within Windmill, it is recommended to only store Windmill-specific elements ([re
 This present document gives a list of trusted services to use alongside Windmill.
 
 :::
+
+<br/>
+
+There are 4 kinds of persistent storage in Windmill:
+
+1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persistent on Windmill itself.
+
+2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Warehouse.
+
+3. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
+
+4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
 
 ## You already have your own database
@@ -25,7 +37,7 @@ Otherwise, create access to your service provider through a [new resource type](
 
 ## Within Windmill: not recommended
 
-Windmill is not designed to store data that goes beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
+Windmill is not designed to store heavy data that goes beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
 
 Instead, Windmill is very convenient to use alongside data storage providers to manipulate big amounts of data.
 
@@ -33,7 +45,7 @@ There are however internal methods to persist data between executions of jobs.
 
 ### Internal States
 
-Within Windmill, you can use Internal States as a way to persist states between executions of jobs.
+Within Windmill, you can use Internal States as a way to store a transient state - that can be represented as small JSON.
 
 [States](../3_resources_and_types/index.md#states) are actually resources (but excluded from the Workspace tab for clarity). They are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
 
@@ -267,7 +279,7 @@ To use Redis with Windmill:
 
 2. [Create a database](https://developer.redis.com/create).
 
-3. [Integrate it to Windmill](../../integrations/mongodb.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
+3. [Integrate it to Windmill](../../integrations/redis.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
 
 
 ### Upstash
@@ -280,4 +292,4 @@ To use Upstash with Windmill:
 
 2. [Create a database](https://docs.upstash.com/redis).
 
-3. [Integrate it to Windmill](../../integrations/mongodb.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
+3. [Integrate it to Windmill](../../integrations/upstash.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
