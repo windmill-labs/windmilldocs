@@ -1,5 +1,10 @@
 # Mailchimp Integration
 
+:::info Using emails to trigger scripts & flows
+
+If you're looking for a way to trigger scripts and flows by emails using Mailchimp, check the [Mailchimp Mandrill Integration](./mailchimp_mandrill.md).
+
+:::
 
 To integrate [Mailchimp](https://mailchimp.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 

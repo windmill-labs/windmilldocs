@@ -10,7 +10,7 @@ On-demand triggers:
 
 Triggers from external events:
 - [Scheduling + Trigger Scripts](#scheduling--trigger-scripts)
-- [Trigger Flows from Webhooks](#trigger-flows-from-webhooks)
+- [Trigger Flows from Webhooks](#trigger-flows-from-webhooks), including from [Slack](#webhooks-trigger-flows-from-slack) or [Emails](#webhooks-trigger-flows-from-emails)
 
 ## On-demand Triggers
 
@@ -146,11 +146,39 @@ Each script and flow have their own webhooks on Windmill ...
 
 More details on our page dedicated to [Webhooks](../../core_concepts/4_webhooks/index.md).
 
-<br/>
+:::
+
+#### Webhooks: Trigger Flows from Slack
 
 One use case of webhooks is [building a Slackbot with Windmill](/blog/handler-slack-commands).
 
-:::
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/generated_email.mp4"
+    alt="container component"
+/>
+
+<br/>
+
+Windmill uses Slack to trigger scripts and flows by establishing Slackbots and creating specific commands. By connecting Slack with Windmill, parsing incoming Slack commands, and leveraging Windmill workflows, operational teams can trigger complex automations directly from Slack.
+
+
+#### Webhooks: Trigger Flows from Emails
+
+One use case of webhooks is [triggering scripts via inbound emails using Mailchimp](../../integrations/mailchimp_mandrill.md).
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/trigger_mandrill.mp4"
+/>
+
+<br/>
+
+Windmill leverages Mailchimp Mandrill's capabilities to initiate scripts and flows via email-triggered events. By parsing inbound emails and routing the content to Windmill through webhooks, scripts or flows are activated, enabling automation based on email content or just their arrival.
 
 
 <!-- Resources -->

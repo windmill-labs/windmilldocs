@@ -45,6 +45,7 @@ Just **[reach out to us](../misc/6_getting_help/index.md)**, we'll be happy to l
 | [LinkedIn](./linkedin.md) | Professional networking and career development platform |
 | [Linkding](./linkding.md) | Bookmarking service that allows users to save and share links |
 | [Mailchimp](./mailchimp.md) | All-in-one marketing platform for small businesses |
+| [Mailchimp Mandrill](./mailchimp_mandrill.md) | Delivery service for transactional emails from websites and application: used for triggering scripts and flows via e-mail |
 | [Mastodon](./mastodon.md) | Open-source, decentralized social network |
 | [Matrix](./matrix.md) | Open standard for decentralized, real-time communication |
 | [MongoDB](./mongodb.md) | NoSQL document-oriented database |
