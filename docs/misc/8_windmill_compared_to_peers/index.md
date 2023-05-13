@@ -34,7 +34,7 @@ n8n has no UI builder and is source-available but not open-source. n8n only supp
 
 ## Workflow builder: Pipedream
 
-Pipedream has no UI builder and is not open-source (although their library of integrations is). Pipedream itself is neither open-source, nor self-hostable. Forthermore, it is centered around integrations to external services.
+Pipedream has no UI builder and is not open-source (although their library of integrations is). Pipedream itself is neither open-source, nor self-hostable. Furthermore, it is centered around integrations to external services.
 
 ## Most comparable players
 
