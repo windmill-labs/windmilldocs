@@ -30,11 +30,11 @@ examples: _Retool_ and their open source alternatives _Tooljet_ & _Appsmith_
 
 ## Workflow builder: n8n
 
-n8n has no UI builder and is source-available but not open-source. n8n only supports javascript and is not centered around organizing your scipts, it is mostly around building workflows with pre-made integrations and inlined javascript code. n8n require pre-installation of the dependencies and does not handle per-node dependency. It is centered around integrations to external services.
+n8n has no UI builder and is source-available but not open-source. n8n only supports javascript and is not centered around organizing your scripts, it is mostly around building workflows with pre-made integrations and inlined javascript code. n8n require pre-installation of the dependencies and does not handle per-node dependency. It is centered around integrations to external services.
 
 ## Workflow builder: Pipedream
 
-Pipedream has no UI builder and is not open-source (although their library of integrations is). Pipedream itself is neither open-source, nor self-hostable. Forthermore, it is centered around integrations to external services.
+Pipedream has no UI builder and is not open-source (although their library of integrations is). Pipedream itself is neither open-source, nor self-hostable. Furthermore, it is centered around integrations to external services.
 
 ## Most comparable players
 
