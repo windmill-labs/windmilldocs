@@ -236,6 +236,8 @@ The result renderer will by default render results as a pretty JSON. However,
 there are some cases that are handled specifically, so-called "rich results".
 They are based on the format of the result.
 
+This feature is useful if you want to display an image, a gif or a file instead of the the JSON of it.
+
 If the result is an object/dict with a single key (except for `approval`, which
 needs 3), you can leverage the following rich results:
 
