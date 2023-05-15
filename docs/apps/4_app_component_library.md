@@ -1,4 +1,4 @@
-# Components Library
+# Component Library
 
 The app components library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
 
@@ -41,18 +41,25 @@ Even though the list of components is never as up to date as on [Windmill Cloud]
 The layout components are used to organize the components in the app canvas.
 
 - [Container](#container)
-- [Tabs](#tabs)
 - [Divider X](#divider-x)
 - [Dvider Y](#divider-y)
 - [Drawer](#drawer)
 - [Vertical Split Panes](#vertical-split-panes)
 - [Horizontal Split Panes](#horizontal-split-panes)
+- [Modal](#modal-layout)
+- [Stepper](#stepper)
+
+### Tabs
+
+- [Tabs](#tabs)
+- [Conditional Tabs](#conditional-tabs)
 
 ### Buttons
 
 - [Button](#button)
 - [Modal Form](#form-)
 - [Form](#form)
+- [Download Button](#download-button)
 
 ### Inputs
 
@@ -71,13 +78,12 @@ The layout components are used to organize the components in the app canvas.
 
 ### Display
 
+- [Form] (#form-input)
 - [Text](#text)
 - [Icon](#icon)
 - [Image](#image)
 - [Map](#map)
 - [HTML](#html)
-- [Table](#table)
-- [AgGrid Table](#aggrid-table)
 - [Bar/Line Chart](#barline-chart)
 - [Pie Chart](#pie-chart)
 - [Vega Lite](#vega-lite)
@@ -86,6 +92,11 @@ The layout components are used to organize the components in the app canvas.
 - [Timeseries](#timeseries)
 - [PDF](#pdf)
 - [Rich Result](#rich-result)
+
+### Table
+
+- [Table](#table)
+- [AgGrid Table](#aggrid-table)
 
 Below you will find details about each component.
 
@@ -111,34 +122,6 @@ To add a component to a container, you can either click on `Insert` while you se
 #### Container configuration
 
 The container component has no configuration.
-
-### Tabs
-
-Tabs components allow you to host other components in several tabs. Each tab is a container.
-Tabs have three display modes:
-
-- `Tabs`: the tabs are displayed horizontally.
-- `Sidebar`: the tabs are displayed vertically.
-- `Invisible on view`: The tabs are not displayed when the app is viewed. They are only displayed in the app editor. This is useful to make multi-page apps, where each page is a tab.
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/tabs.mp4"
-    alt="tabs component"
-/>
-<br/>
-
-To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or your can move an existing component by cutting it and pasting it in the tabs component. See [Moving components](#moving-components).
-
-#### Tabs configuration
-
-| Name      |               Type               | Connectable | Templatable | Default | Description                   |
-| --------- | :------------------------------: | :---------: | :---------: | :-----: | ----------------------------- |
-| Tabs Kind | Tabs, Sidebar, Invisible on view |    false    |    false    |  Tabs   | The display mode of the tabs. |
 
 #### Outputs
 
@@ -246,6 +229,89 @@ To add a component to a horizontal split pane, you can either click on `Insert` 
 | Name       |  Type   | Connectable | Templatable | Default | Description                                                               |
 | ---------- | :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------- |
 | No Padding | boolean |    false    |    false    |  false  | Whether you want to add extra space between the component and the border. |
+
+### Modal
+
+The modal is container called by a button. Once you click on the button, a modal will appear on which you can display other components.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="modal-layout"
+    src="/videos/modal-layout.mp4"
+    alt="modal component"
+/>
+
+#### Modal configuration
+
+| Name                |                   Type                    | Connectable | Templatable |   Default   | Description                                   |
+| ------------------- | :---------------------------------------: | :---------: | :---------: | :---------: | --------------------------------------------- |
+| modalTitle          |                  string                   |    false    |    false    | Modal title | The title of the modal.                       |
+| buttonLabel         |                  string                   |    true     |    false    |  Press me   | The button label.                             |
+| buttonColor         | blue, red, dark, light, green, gray, none |    false    |    false    |    blue     | The button color.                             |
+| buttonSize          |            xs, sm, md , lg, xl            |    false    |    false    |     xs      | The button size.                              |
+| buttonFillContainer |                  boolean                  |    false    |    false    |    false    | Whether the button should fill the container. |
+| buttonDisabled      |                  boolean                  |    false    |    false    |    false    | Whether the button should be disabled.        |
+
+## Tabs
+
+### Tabs
+
+Tabs components allow you to host other components in several tabs. Each tab is a container.
+Tabs have three display modes:
+
+- `Tabs`: the tabs are displayed horizontally.
+- `Sidebar`: the tabs are displayed vertically.
+- `Invisible on view`: The tabs are not displayed when the app is viewed. They are only displayed in the app editor. This is useful to make multi-page apps, where each page is a tab.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/tabs.mp4"
+    alt="tabs component"
+/>
+<br/>
+
+To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or your can move an existing component by cutting it and pasting it in the tabs component. See [Moving components](#moving-components).
+
+#### Tabs configuration
+
+| Name      |               Type               | Connectable | Templatable | Default | Description                   |
+| --------- | :------------------------------: | :---------: | :---------: | :-----: | ----------------------------- |
+| Tabs Kind | Tabs, Sidebar, Invisible on view |    false    |    false    |  Tabs   | The display mode of the tabs. |
+
+### Conditional Tabs
+
+Conditional tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="conditional-tabs-video"
+    src="/videos/conditional-tabs.mp4"
+    alt="Conditional tabs component"
+/>
+<br/>
+
+#### Conditional Tabs configuration
+
+| Name       |   Type    | Connectable | Templatable | Default | Description                            |
+| ---------- | :-------: | :---------: | :---------: | :-----: | -------------------------------------- |
+| Conditions | boolean[] |    false    |    false    |  false  | The conditions that will be evaluated. |
+
+#### Outputs
+
+| Name                   |   Type    | Description                         |
+| ---------------------- | :-------: | ----------------------------------- |
+| conditions             | boolean[] | The conditions evalutation          |
+| selectedConditionIndex |  number   | The index of the selected condition |
 
 ## Buttons
 
@@ -378,6 +444,24 @@ The form modal component has a special parameter called `On Success`. See the bu
 | ------- | :-----: | -------------------------------- |
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
+
+### Download Button
+
+The download button component allows you to download a file.
+
+#### Download Button configuration
+
+| Name           |                Type                 | Connectable | Templatable |  Default  | Description                                   |
+| -------------- | :---------------------------------: | :---------: | :---------: | :-------: | --------------------------------------------- |
+| source         |           string or File            |    true     |    false    |           | The source of the file to download.           |
+| filename       |               string                |    true     |    false    |           | The name of the file to download.             |
+| label          |               string                |    true     |    false    | Press me  | The button label.                             |
+| color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                             |
+| size           |         xs, sm, md , lg, xl         |    false    |    false    |    sm     | The button size.                              |
+| Fill container |               boolean               |    false    |    false    |   false   | Whether the button should fill the container. |
+| disabled       |               boolean               |    false    |    false    |   false   | Whether the button should be disabled.        |
+| Before Icon    |               string                |    false    |    false    | Undefined | The icon to display before the label.         |
+| After Icon     |               string                |    false    |    false    | Undefined | The icon to display after the label.          |
 
 ## Inputs
 
@@ -777,8 +861,8 @@ Search can be configured in the following ways:
 ### AgGrid Table
 
 :::tip Guide
-  If you are new to Ag Grid, check out our [Introduction guide](../misc/9_Guides/AgGrid_Table/index.md).
-::: 
+If you are new to Ag Grid, check out our [Introduction guide](../misc/9_Guides/AgGrid_Table/index.md).
+:::
 
 The AgGrid table component allows you to display an agnostic grid table.
 
