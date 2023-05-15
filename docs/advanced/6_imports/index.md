@@ -12,7 +12,7 @@ To import other scripts from your workpace, see [Sharing common logic](../5_shar
 
 :::
 
-## Typescript
+## Imports in Typescript
 
 The dependencies and their versions are contained in the
 script and hence there is no need for any additional steps. The resolution is done by [deno](https://deno.com/runtime).
@@ -36,7 +36,7 @@ windmill_worker:
     - NPM_CONFIG_REGISTRY=https://registry.yarnpkg.com.
 ```
 
-## Python
+## Imports in Python
 
 For Python, the imports are automatically parsed on saving of the script and a list of imports is generated. A dependency job is then
 spawned to associate that list of PyPi packages with a lockfile, which will lock
@@ -78,7 +78,7 @@ windmill_worker:
     - PIP_TRUSTED_HOST=pypi.org
 ```
 
-## Go
+## Imports in Go
 
 For Go, the dependencies and their versions are contained in the
 script and hence there is no need for any additional steps.
