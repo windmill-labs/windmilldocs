@@ -23,7 +23,7 @@ Here is how to install the extention on Chrome (details [here](https://codeium.c
 4. To have it work on Windmill, add it to your Codeium allowlist:
     - Click on Codeium extention icon.
     - Select `Open Options Page`.
-    - In the Allowlist, write `https:\/\/app\.windmill\.dev\/.*`.
+    - In the Allowlist, write `https:\/\/app\.windmill\.dev\/.*` (or your domain, if self-hosting).
     - `Save Allowlist`.
 
 Now you're good to have Codeium suggest code in Windmill's code editor (scripts, flows, apps).
