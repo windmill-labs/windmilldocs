@@ -1,215 +1,289 @@
-import React, { useState } from 'react';
-import Quote from './Quote';
+import { useState } from 'react';
+import { RadioGroup } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/20/solid';
+import React from 'react';
+import { Circle, CircleDot } from 'lucide-react';
 
-const plans = {
-	SelfHosted: [
-		<span>
-			<b>Free and Open-source</b>
-			<ul>
-				<li>AGPLv3 License</li>
-				<li>Unlimited users & executions</li>
-				<li>Google/Github/Microsoft/Gitlab SSO</li>
-				<li>Easy to deploy on Fargate/Docker/Kubernetes</li>
-				<li>Community support on Discord</li>
-			</ul>
-		</span>,
-		<span>
-			<b>Enterprise edition</b>
-			<ul>
-				<li>Commercial license</li>
-				<li>
-					$50/month per worker: 1 worker can execute about 13mio executions per month. (on average a
-					script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5 * 60 * 60
-					* 24 * 30 = 13mio)
-				</li>
-				<li>$20/month per author</li>
-				<li>$10/month per operator</li>
-				<li>SAML support including groups synchronization</li>
-				<li>SLA</li>
-				<li>Priority Support 24/7 with 3h response time and automation engineer assistance</li>
-				<li>Design partners for Roadmap</li>
-				<li>Global cache synchronization</li>
-			</ul>
-			<p>2 workers, 1 author: $120/month</p>
-		</span>
+const types = [
+	{ value: 'selfhost', label: 'Self-hosted' },
+	{ value: 'cloud', label: 'Cloud' }
+];
+
+const periods = [
+	{ value: 'monthly', label: 'Monthly' },
+	{ value: 'annually', label: 'Annually' }
+];
+
+function calculatePrice(monthlyPrice, period) {
+	if (period === 'annually') {
+		return monthlyPrice * 12 * 0.8; // 20% discount for annual period
+	}
+	return monthlyPrice;
+}
+
+const pricing = {
+	selfhost: [
+		{
+			name: 'Free and Open-source',
+			id: 'tier-free',
+			href: '#',
+			price: {},
+			description: 'Unlimited users & executions',
+			features: [
+				'Google/Github/Microsoft/Gitlab SSO',
+				'Easy to deploy on Fargate/Docker/Kubernetes',
+				'Community support on Discord'
+			],
+			mostPopular: false
+		},
+		{
+			name: 'Enterprise edition',
+			id: 'tier-enterprise',
+			href: '#',
+			price: {
+				worker: {
+					monthly: 50,
+					description:
+						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+					default: 2
+				},
+				author: {
+					monthly: 20,
+					description: 'An author can create scripts and flows',
+					default: 1
+				},
+				operator: {
+					monthly: 10,
+					description: 'An operator can execute scripts and flows',
+					default: 0
+				}
+			},
+			description: 'Dedicated support and infrastructure for your company.',
+			features: [
+				'SAML support including groups synchronization',
+				'SLA',
+				'Priority Support 24/7 with 3h response time and automation engineer assistance',
+				'Design partners for Roadmap',
+				'Global cache synchronization'
+			],
+			mostPopular: true
+		}
 	],
-	Cloud: [
-		<span>
-			<b>Free</b>
-			<ul>
-				<li>1000 executions per month</li>
-				<li>Community support on Discord</li>
-				<li>Google/Github/Microsoft/Gitlab SSO</li>
-				<li>Unlimited variables/resources/scripts/apps/flows * (except abuse)</li>
-			</ul>
-		</span>,
-		<span>
-			<b>Team</b>
-			<ul>
-				<li>$10/month per author</li>
-				<li>$5/month per operator</li>
-				<li>Everything in Free</li>
-				<li>Support 24/7 with 48h response time</li>
-				<li>Limited to 10 seats</li>
-				<li>10k executions per month per seat (10k sec of compute time per month per seat)</li>
-			</ul>
-		</span>,
-		<span>
-			<b>Enterprise</b>
-			<ul>
-				<li>$500/month for the dedicated namespace ($1000 for dedicated cluster)</li>
-				<li>$200/month per worker</li>
-				<li>$40/month per author</li>
-				<li>$20/month per operator</li>
-				<li>10k executions per month per seat (10k sec of compute time per month per seat)</li>
-				<li>SAML support including groups synchronization</li>
-				<li>SLA</li>
-				<li>Priority Support 24/7 with 3h response time and automation engineer assistance</li>
-				<li>Design partners for Roadmap</li>
-			</ul>
-		</span>
+	cloud: [
+		{
+			name: 'Free',
+			id: 'tier-free',
+			href: '#',
+			price: {},
+			description: 'Discover the platform with no commitment',
+			features: [
+				'1000 executions per month',
+				'Community support on discord',
+				'Google/Github/Microsoft/Gitlab SSO',
+				'Unlimited variables/resources/scripts/apps/flows * (except abuse)'
+			],
+			mostPopular: false
+		},
+		{
+			name: 'Team',
+			id: 'tier-team',
+			href: '#',
+			price: {
+				author: {
+					monthly: 10,
+					description: 'An author can create scripts and flows',
+					default: 1
+				},
+				operator: {
+					monthly: 5,
+					description: 'An operator can execute scripts and flows',
+					default: 0
+				}
+			},
+			description: 'For small teams that want to automate their processes.',
+			features: [
+				'Google/Github/Microsoft/Gitlab SSO',
+				'Unlimited variables/resources/scripts/apps/flows',
+				'Support 24/7 with 48h response time',
+				'10k executions per month per seat (10k sec of compute time per month per seat)',
+				'Limited to 10 seats'
+			],
+			mostPopular: true
+		},
+		{
+			name: 'Enterprise',
+			id: 'tier-enterprise',
+			href: '#',
+			price: {
+				worker: {
+					monthly: 200,
+					description:
+						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+					default: 2
+				},
+				author: {
+					monthly: 40,
+					description: 'An author can create scripts and flows',
+					default: 1
+				},
+				operator: {
+					monthly: 20,
+					description: 'An operator can execute scripts and flows',
+					default: 0
+				}
+			},
+			description: 'Dedicated support and infrastructure for your company.',
+			features: [
+				'SAML support including groups synchronization',
+				'SLA',
+				'Priority Support 24/7 with 3h response time and automation engineer assistance',
+				'Design partners for Roadmap',
+				'Global cache synchronization'
+			],
+			mostPopular: false
+		}
 	]
 };
-
-const tabs = [{ name: 'Self-hosted' }, { name: 'Cloud' }];
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
 export default function Pricing() {
-	const [selectedTab, setTab] = useState('Cloud');
+	const [frequency, setFrequency] = useState(types[1]);
+	const [period, setPeriod] = useState(periods[0]);
 
 	return (
-		<div id="pricing">
-			<div className="w-full mb-20">
-				<h1 className="section-title text-center">Pricing</h1>
-			</div>
-
-			<div className="mb-10 mx-auto max-w-2xl ">
-				<div className="divide-y divide-gray-100 mx-4">
-					<details className="group">
-						<summary className="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
-							Operator vs Author
-							<div className="text-secondary-500">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth="1.5"
-									stroke="currentColor"
-									className="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-									/>
-								</svg>
-							</div>
-						</summary>
-						<div className="pb-4 text-secondary-500">
-							An author can write scripts/flows/apps/variables/resources. An operator can only
-							run/view them.
-						</div>
-					</details>
-					<details className="group">
-						<summary className="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-medium text-secondary-900">
-							What is a computation?
-							<div className="text-secondary-500">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									strokeWidth="1.5"
-									stroke="currentColor"
-									className="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
-								>
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-									/>
-								</svg>
-							</div>
-						</summary>
-						<div className="pb-4 text-secondary-500">
-							The single credit-unit is called a "computation". A computation corresponds to a
-							single job whose duration is less than 1s. For any additional seconds of computation,
-							an additional computation is accounted for. Jobs are executed on one powerful virtual
-							CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
-						</div>
-					</details>
+		<div className="bg-white py-12">
+			<div className="mx-auto max-w-7xl px-6 lg:px-8">
+				<div className="mx-auto max-w-4xl text-center">
+					<p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+						Pricing plans for teams of all sizes
+					</p>
 				</div>
-			</div>
-
-			<div>
-				<div className="w-full mb-10">
-					<div className="border-b border-gray-200">
-						<nav className="-mb-px flex" aria-label="Tabs">
-							{tabs.map((tab) => (
-								<a
-									key={tab.name}
-									onClick={(e) => {
-										e.preventDefault();
-										setTab(tab.name);
-									}}
-									href="#"
-									className={classNames(
-										selectedTab === tab.name
-											? 'border-gray-700 text-gray-800'
-											: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-										'w-1/2 py-4 px-1 text-center border-b-2 font-medium text-md'
-									)}
-									aria-current={selectedTab === tab.name ? 'page' : undefined}
-								>
-									{tab.name}
-								</a>
-							))}
-						</nav>
-					</div>
+				<p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
+					Choose an affordable plan that’s packed with the best features for engaging your audience,
+					creating customer loyalty, and driving sales.
+				</p>
+				<div className="mt-16 flex justify-center flex-row gap-2">
+					<RadioGroup
+						value={frequency}
+						onChange={setFrequency}
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
+					>
+						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
+						{types.map((option) => (
+							<RadioGroup.Option
+								key={option.value}
+								value={option}
+								className={({ checked }) =>
+									classNames(
+										checked ? 'bg-blue-600 text-white' : 'text-gray-500',
+										'cursor-pointer rounded-full px-2.5 py-1',
+										'transition-all'
+									)
+								}
+							>
+								<span>{option.label}</span>
+							</RadioGroup.Option>
+						))}
+					</RadioGroup>
+					<RadioGroup
+						value={period}
+						onChange={setPeriod}
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
+					>
+						<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
+						{periods.map((option) => (
+							<RadioGroup.Option
+								key={option.value}
+								value={option}
+								className={({ checked }) =>
+									classNames(
+										checked ? 'bg-orange-600 text-white' : 'text-gray-500',
+										'cursor-pointer rounded-full px-2.5 py-1',
+										'transition-all'
+									)
+								}
+							>
+								<span>{option.label}</span>
+							</RadioGroup.Option>
+						))}
+					</RadioGroup>
 				</div>
-			</div>
-
-			{selectedTab === 'Cloud' ? (
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					{plans.Cloud.map((planDesc, index) => (
-						<div className="box p-4 text-sm flex flex-col h-full overflow-hidden" key={index}>
-							<h2 className="mb-4 text-4xl">
-								{index === 0 ? 'Free' : index === 1 ? 'Team' : 'Enterprise'}
-							</h2>
-							{planDesc}
-						</div>
-					))}
-				</div>
-			) : (
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					{plans.SelfHosted.map((planDesc, index) => (
-						<div className="box p-4 flex flex-col h-full overflow-hidden" key={index}>
-							<h2 className="mb-4 text-4xl">
-								{index === 0 ? 'Free and Open-source' : 'Enterprise edition'}
-							</h2>
-							{planDesc}
-							{index === 1 && (
-								<div>
-									<Quote
-										props={{
-											includedSeats: 1,
-											includedComputations: 10000,
-											perAuthor: 20,
-											perOperator: 10,
-											perComputation: 0.002,
-											basis: 50,
-											displayMultitenant: false
-										}}
-									/>
-									<div className="text-center mt-2 w-full">Interested? contact@windmill.dev</div>
-								</div>
+				<div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+					{pricing[frequency.value].map((tier, index) => (
+						<div
+							key={tier.id}
+							className={classNames(
+								tier.mostPopular ? 'ring-2 ring-blue-600' : 'ring-1 ring-gray-200',
+								'rounded-3xl p-8 xl:p-10'
 							)}
+						>
+							<div className="flex items-center justify-between gap-x-4">
+								<h3
+									id={tier.id}
+									className={classNames(
+										tier.mostPopular ? 'text-blue-600' : 'text-gray-900',
+										'text-lg font-semibold leading-8'
+									)}
+								>
+									{tier.name}
+								</h3>
+								{period.value === 'annually' && Object.keys(tier.price).length > 0 ? (
+									<p className="rounded-full bg-blue-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+										20% discount
+									</p>
+								) : null}
+							</div>
+							<p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
+							<p className="mt-6 flex items-baseline gap-x-1">
+								<ul class="flex flex-col gap-2 w-full">
+									{Object.keys(tier.price).map((key) => (
+										<li key={key} className="flex flex-row justify-between w-full items-center">
+											<div className="text-md font-semibold tracking-tight text-gray-900 capitalize ">
+												{key}:
+											</div>
+											<div>
+												<span className="text-lg text-gray-900 font-semibold">
+													${calculatePrice(tier.price[key].monthly, period.value).toFixed(2)}
+												</span>
+												<span className="text-sm text-gray-500">
+													{period.value === 'annually' ? '/year' : '/month'}
+												</span>
+											</div>
+										</li>
+									))}
+								</ul>
+							</p>
+							{index == 0 ? (
+								<p className="mt-6 text-sm leading-6 text-gray-500">No payment required.</p>
+							) : (
+								<a
+									href={tier.href}
+									aria-describedby={tier.id}
+									className={classNames(
+										tier.mostPopular
+											? 'bg-blue-600 text-white shadow-sm hover:bg-blue-500'
+											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
+										'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+									)}
+								>
+									Contact us
+								</a>
+							)}
+							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
+								{tier.features.map((feature) => (
+									<li key={feature} className="flex gap-x-3">
+										<Circle className="h-2 w-2 flex-none text-blue-600 mt-2" aria-hidden="true" />
+										{feature}
+									</li>
+								))}
+							</ul>
 						</div>
 					))}
 				</div>
-			)}
+			</div>
 		</div>
 	);
 }
