@@ -184,6 +184,10 @@ GRANT windmill_admin TO nonsuperuser;
 GRANT windmill_user TO nonsuperuser;
 ```
 
+## Complete New Windmill Setup
+
+In the Admin Workspace execute the New User Setup App. This will import the default resources from WindmillHub and update the default user credentails
+
 <!-- Resources -->
 
 [caddy]: https://caddyserver.com/
