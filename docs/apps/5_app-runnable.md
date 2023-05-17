@@ -9,6 +9,21 @@ They are 4 types of runnables:
 - **Background runnables**: runnables that are not linked to a component, but run in the background.
 - **Frontend scripts**: script can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
 
+:::tip Auto-complete code with AI
+
+Note that you can have [AI suggest code on Windmill](../misc/11_code_autocompletion/index.md):
+
+<br/>
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/codeium_example.mp4"
+/>
+
+:::
+
 ## Component runnable
 
 A component can have a **Runnable** attached to it. The runnable is a script or flow that is executed when the component is clicked or loaded. For example, a button can have a runnable linked to it. When the button is clicked, the runnable is executed. For a table, the runnable is executed when the table is loaded.

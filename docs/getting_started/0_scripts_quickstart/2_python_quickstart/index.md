@@ -61,6 +61,21 @@ script there.
 
 ![Editor for python](./editor_python.png)
 
+:::tip Auto-complete code with AI
+
+Note that you can have [AI suggest code on Windmill](../../../misc/11_code_autocompletion/index.md):
+
+<br/>
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/codeium_example.mp4"
+/>
+
+:::
+
 As we picked `python` for this example, Windmill provided some python
 boilerplate. Let's take a look:
 

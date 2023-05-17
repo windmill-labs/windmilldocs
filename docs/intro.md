@@ -78,7 +78,11 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
   </a>
   <a href="/docs/core_concepts/persistent_storage" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
    <div class="text-lg font-semibold text-gray-800">Persistent Storage</div>
-    <div class="text-sm text-gray-500">Ensure that your data is safely stored and easily accessible whenever required</div>
+    <div class="text-sm text-gray-500">Ensure that your data is safely stored and easily accessible whenever required.</div>
+  </a>
+  <a href="/docs/misc/code_autocompletion" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+   <div class="text-lg font-semibold text-gray-800">Auto-Complete Code with AI</div>
+    <div class="text-sm text-gray-500">Have AI suggest code on Windmill for you.</div>
   </a>
 </div>
 
