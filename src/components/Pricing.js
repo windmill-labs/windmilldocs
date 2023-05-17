@@ -1,211 +1,76 @@
-// import React from 'react';
-// import styles from './Pricing.module.css';
-// import Greencheck from '../../static/green_check.svg';
-// import Link from '@docusaurus/Link';
-
-// export default function Pricing() {
-// 	return (
-// 		<div className="w-full items-center m-auto text-center align-middle ">
-// 			<h2 className="pb-3 text-2xl font-medium">Pricing</h2>
-// 			<div className="flex flex-col align-middle">
-// 				<table className="m-auto rounded-md table-fixed overflow-hidden">
-// 					<tr className="border-t-0 ">
-// 						<th className="w-1/4 font-medium border-t-0 border-l-0 border-r-0 "></th>
-// 						<th className="w-1/4 font-medium border-t-0 border-l-0 border-r-0 ">Free</th>
-// 						<th className=" w-1/4 font-medium border-t-0 border-l-0 border-r-0 ">Team</th>
-// 						<th className=" w-1/4 font-medium border-t-0 border-l-0 border-r-0 ">Enterprise</th>
-// 					</tr>
-// 					<tbody className="border-l-2 border-r-2 px-12 bg-white">
-// 						<tr className="">
-// 							<td className={styles.header_col}>Users</td>
-// 							<td>1</td>
-// 							<td>1-50</td>
-// 							<td>Unlimited</td>
-// 						</tr>
-// 						<tr className="">
-// 							<td className={styles.header_col}>Workspaces</td>
-// 							<td>1</td>
-// 							<td>5</td>
-// 							<td>Unlimited</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Scripts, Secrets, Resources, Schedules</td>
-// 							<td>
-// 								Unlimited<sup>**</sup>
-// 							</td>
-// 							<td>Unlimited</td>
-// 							<td>Unlimited</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Custom dependencies</td>
-// 							<td>
-// 								<sup>*</sup>
-// 							</td>
-// 							<td>
-// 								<sup>*</sup>
-// 							</td>
-// 							<td>
-// 								<Greencheck className="m-auto" />
-// 							</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Run compute time at 1 vCPU</td>
-// 							<td>5h / month (extra mins billed)</td>
-// 							<td>25h / user / month (extra mins billed)</td>
-// 							<td>Unlimited</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Runs rate limit (per min)</td>
-// 							<td>30</td>
-// 							<td>200 / user</td>
-// 							<td>Unlimited</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>SSO</td>
-// 							<td></td>
-// 							<td></td>
-// 							<td>
-// 								<Greencheck className="m-auto" />
-// 							</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Permission groups</td>
-// 							<td></td>
-// 							<td>
-// 								<Greencheck className="m-auto" />
-// 							</td>
-// 							<td>
-// 								<Greencheck className="m-auto" />
-// 							</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Audit logs</td>
-// 							<td></td>
-// 							<td>3 days, exportable</td>
-// 							<td>Unlimited, exportable</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Self-hostable</td>
-// 							<td></td>
-// 							<td></td>
-// 							<td>
-// 								<Greencheck className="m-auto" />
-// 							</td>
-// 						</tr>
-// 						<tr>
-// 							<td className={styles.header_col}>Price</td>
-// 							<td>Free forever</td>
-// 							<td>
-// 								Price per seat, <a href="mailto:sales@windmill.dev">contact us</a>
-// 							</td>
-// 							<td>
-// 								<a href="mailto:sales@windmill.dev">Contact us</a>
-// 							</td>
-// 						</tr>
-// 					</tbody>
-// 				</table>
-// 				<div className="m-auto text-xs flex-col mt-1 mb-12">
-// 					<div>
-// 						This pricing reflects our current vision, we will do our best to keep it stable, but it
-// 						may change.
-// 					</div>
-// 					<div>
-// 						* Windmill tries its best to provide all{' '}
-// 						<Link to="/docs/how-to/dependencies">reasonable dependencies by default.</Link> ** Supply
-// 						while it lasts! Windmill is a Beta product.
-// 					</div>
-// 					<div></div>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// }
-
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Quote from './Quote';
 
 const plans = {
-	Free: [
+	SelfHosted: [
 		<span>
-			<b>1 000</b> free global executions per month
+			<b>Free and Open-source</b>
+			<ul>
+				<li>AGPLv3 License</li>
+				<li>Unlimited users & executions</li>
+				<li>Google/Github/Microsoft/Gitlab SSO</li>
+				<li>Easy to deploy on Fargate/Docker/Kubernetes</li>
+				<li>Community support on Discord</li>
+			</ul>
 		</span>,
-		<span>Community support on Discord</span>
+		<span>
+			<b>Enterprise edition</b>
+			<ul>
+				<li>Commercial license</li>
+				<li>
+					$50/month per worker: 1 worker can execute about 13mio executions per month. (on average a
+					script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5 * 60 * 60
+					* 24 * 30 = 13mio)
+				</li>
+				<li>$20/month per author</li>
+				<li>$10/month per operator</li>
+				<li>SAML support including groups synchronization</li>
+				<li>SLA</li>
+				<li>Priority Support 24/7 with 3h response time and automation engineer assistance</li>
+				<li>Design partners for Roadmap</li>
+				<li>Global cache synchronization</li>
+			</ul>
+			<p>2 workers, 1 author: $120/month</p>
+		</span>
 	],
-	Team: [
+	Cloud: [
 		<span>
-			<b>$10/mo</b>, includes 1 user/author + 10k computations at no cost
+			<b>Free</b>
+			<ul>
+				<li>1000 executions per month</li>
+				<li>Community support on Discord</li>
+				<li>Google/Github/Microsoft/Gitlab SSO</li>
+				<li>Unlimited variables/resources/scripts/apps/flows * (except abuse)</li>
+			</ul>
 		</span>,
 		<span>
-			<b>+ $8/mo</b> per extra user/author in the workspace
+			<b>Team</b>
+			<ul>
+				<li>$10/month per author</li>
+				<li>$5/month per operator</li>
+				<li>Everything in Free</li>
+				<li>Support 24/7 with 48h response time</li>
+				<li>Limited to 10 seats</li>
+				<li>10k executions per month per seat (10k sec of compute time per month per seat)</li>
+			</ul>
 		</span>,
 		<span>
-			<b>+ $4/mo</b> per extra operators in the workspace.
-		</span>,
-		<span>
-			<b>+ $0.001</b> per extra computation
-		</span>,
-		<span>
-			Google/Github/Microsoft/Gitlab <b>SSO</b>
-		</span>,
-		<span>
-			<b>Unlimited</b> variables/resources/scripts/apps/flows
-		</span>,
-		<span>
-			<b>Support 24/7 with 48h response time</b>
-		</span>,
-
-		<span>Limited to 10 seats</span>
-	],
-	Enterprise: [
-		<span>
-			<b>$200/mo</b>, includes 1 user/author + 10k computations at no cost
-		</span>,
-		<span>
-			<b>+ $32/mo</b> per extra user/author in the workspace
-		</span>,
-		<span>
-			<b>+ $16/mo</b> per extra operators in the workspace.
-		</span>,
-		<span>
-			<b>+ $0.004</b> per extra computation
-		</span>,
-		<span>
-			<b>Dedicated</b> isolated workers and database available for <b>+ $400/mo</b> (available in
-			US/EU/Asia)
-		</span>,
-		<span>
-			<b>Dedicated</b> entire kubernetes cluster <b>+ $4000/mo</b> (available in US/EU/Asia)
-		</span>,
-		<span>
-			<b>SAML</b> support
-		</span>,
-		<span>
-			<b>SLA</b>
-		</span>,
-		<span>
-			<b>Priority Support 24/7 with 3h response time and automation engineer assistance</b>
-		</span>,
-		<span>
-			<b>Design partners for Roadmap</b>
+			<b>Enterprise</b>
+			<ul>
+				<li>$500/month for the dedicated namespace ($1000 for dedicated cluster)</li>
+				<li>$200/month per worker</li>
+				<li>$40/month per author</li>
+				<li>$20/month per operator</li>
+				<li>10k executions per month per seat (10k sec of compute time per month per seat)</li>
+				<li>SAML support including groups synchronization</li>
+				<li>SLA</li>
+				<li>Priority Support 24/7 with 3h response time and automation engineer assistance</li>
+				<li>Design partners for Roadmap</li>
+			</ul>
 		</span>
 	]
 };
 
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 const tabs = [{ name: 'Self-hosted' }, { name: 'Cloud' }];
 
 function classNames(...classes) {
@@ -231,13 +96,13 @@ export default function Pricing() {
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									stroke="currentColor"
 									className="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
 								>
 									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 										d="M19.5 8.25l-7.5 7.5-7.5-7.5"
 									/>
 								</svg>
@@ -256,21 +121,20 @@ export default function Pricing() {
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
-									stroke-width="1.5"
+									strokeWidth="1.5"
 									stroke="currentColor"
 									className="block h-5 w-5 transition-all duration-300 group-open:rotate-180"
 								>
 									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
+										strokeLinecap="round"
+										strokeLinejoin="round"
 										d="M19.5 8.25l-7.5 7.5-7.5-7.5"
 									/>
 								</svg>
 							</div>
 						</summary>
 						<div className="pb-4 text-secondary-500">
-							{' '}
-							The single credit-unit is called a "computation". An computation corresponds to a
+							The single credit-unit is called a "computation". A computation corresponds to a
 							single job whose duration is less than 1s. For any additional seconds of computation,
 							an additional computation is accounted for. Jobs are executed on one powerful virtual
 							CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
@@ -292,12 +156,12 @@ export default function Pricing() {
 									}}
 									href="#"
 									className={classNames(
-										selectedTab == tab.name
+										selectedTab === tab.name
 											? 'border-gray-700 text-gray-800'
 											: 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-										'w-1/2  py-4 px-1 text-center border-b-2 font-medium text-md'
+										'w-1/2 py-4 px-1 text-center border-b-2 font-medium text-md'
 									)}
-									aria-current={selectedTab == tab.name ? 'page' : undefined}
+									aria-current={selectedTab === tab.name ? 'page' : undefined}
 								>
 									{tab.name}
 								</a>
@@ -307,131 +171,43 @@ export default function Pricing() {
 				</div>
 			</div>
 
-			{selectedTab == 'Cloud' ? (
+			{selectedTab === 'Cloud' ? (
 				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-					{Object.entries(plans).map(([planTitle, planDesc]) => (
-						<div className="box p-4 text-sm  flex flex-col h-full overflow-hidden">
-							<h2 className="mb-4 text-4xl">{planTitle}</h2>
-							<ul className="list-disc p-4 text-md">
-								{planDesc.map((item) => (
-									<li className="mt-2">{item}</li>
-								))}
-							</ul>
-
-							<div className="grow" />
-							{planTitle == 'Enterprise' ? (
-								<div>
-									<Quote
-										props={{
-											includedSeats: 1,
-											includedComputations: 10000,
-											perAuthor: 32,
-											perOperator: 16,
-											perComputation: 0.004,
-											basis: 200,
-											displayMultitenant: true
-										}}
-									/>
-									<div className="text-center mt-2 w-full">Interested? contact@windmill.dev</div>
-								</div>
-							) : undefined}
-							{planTitle == 'Team' ? (
-								<div>
-									<Quote
-										props={{
-											includedSeats: 1,
-											includedComputations: 10000,
-											perAuthor: 8,
-											perOperator: 4,
-											perComputation: 0.001,
-											basis: 10,
-											displayMultitenant: false,
-											maxSeats: 10
-										}}
-									/>
-									<div className="text-center mt-2 w-full">Sign in and upgrade your workspace</div>
-								</div>
-							) : undefined}
+					{plans.Cloud.map((planDesc, index) => (
+						<div className="box p-4 text-sm flex flex-col h-full overflow-hidden" key={index}>
+							<h2 className="mb-4 text-4xl">
+								{index === 0 ? 'Free' : index === 1 ? 'Team' : 'Enterprise'}
+							</h2>
+							{planDesc}
 						</div>
 					))}
 				</div>
 			) : (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div className="box p-4 text-sm  flex flex-col h-full overflow-hidden">
-						<h2 className="mb-4 text-4xl">Free and Open-source</h2>
-						<ul className="list-disc p-4 text-md">
-							<li className="mt-2">
-								<b>AGPLv3</b> License
-							</li>
-							<li className="mt-2">No restrictions whatsoever</li>
-							<li className="mt-2">Google/Github/Microsoft/Gitlab SSO</li>
-							<li className="mt-2">Easy to deploy on Fargate/Docker/Kubernetes</li>
-							<li className="mt-2">Community support on Discord</li>
-						</ul>
-					</div>
-					<div className="box p-4 flex flex-col h-full overflow-hidden">
-						<h2 className="mb-4 text-4xl">Enterprise Edition</h2>
-
-						<ul className="list-disc p-4 text-md">
-							<li className="mt-2">
-								<b>Commercial</b> License
-							</li>
-
-							<li className="mt-2">
-								<span>
-									<b>$100/mo</b>, includes 1 user/author + 10k computations
-								</span>
-							</li>
-							<li className="mt-2">
-								<span>
-									<b>+ $16/mo</b> per extra user/author in the workspace
-								</span>
-							</li>
-							<li className="mt-2">
-								<span>
-									<b>+ $8/mo</b> per extra operators in the workspace.
-								</span>
-							</li>
-							<li className="mt-2">
-								<span>
-									<b>+ $0.002</b> per extra computation
-								</span>
-							</li>
-							<li className="mt-2">
-								Windmill Enterprise Edition <b>Plugins</b>
-							</li>
-							<ul className="list-disc mb-2 ml-8 text-lg">
-								<li>Audit Logs exports</li>
-								<li>Distributed dependency cache</li>
-							</ul>
-							<li className="">
-								<b>SAML</b> support including groups synchronization
-							</li>
-							<li className="mt-2">
-								<b>SLA</b>
-							</li>
-							<li className="mt-2">
-								<b>Priority Support 24/7</b> with 3h response time and automation engineer
-								assistance
-							</li>
-							<li className="mt-2">
-								<b>Design partners for Roadmap</b>
-							</li>
-						</ul>
-
-						<Quote
-							props={{
-								includedSeats: 1,
-								includedComputations: 10000,
-								perAuthor: 16,
-								perOperator: 8,
-								perComputation: 0.002,
-								basis: 100,
-								displayMultitenant: false
-							}}
-						/>
-						<div className="text-center mt-2 w-full">Interested? contact@windmill.dev</div>
-					</div>
+					{plans.SelfHosted.map((planDesc, index) => (
+						<div className="box p-4 flex flex-col h-full overflow-hidden" key={index}>
+							<h2 className="mb-4 text-4xl">
+								{index === 0 ? 'Free and Open-source' : 'Enterprise edition'}
+							</h2>
+							{planDesc}
+							{index === 1 && (
+								<div>
+									<Quote
+										props={{
+											includedSeats: 1,
+											includedComputations: 10000,
+											perAuthor: 20,
+											perOperator: 10,
+											perComputation: 0.002,
+											basis: 50,
+											displayMultitenant: false
+										}}
+									/>
+									<div className="text-center mt-2 w-full">Interested? contact@windmill.dev</div>
+								</div>
+							)}
+						</div>
+					))}
 				</div>
 			)}
 		</div>
