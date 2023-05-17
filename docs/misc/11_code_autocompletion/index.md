@@ -16,12 +16,12 @@ With minimum effort, you can use AI help to complete code on Windmill, and gain 
 
 <br/>
 
-Here is how to install the extention on Chrome (details [here](https://codeium.com/chrome_tutorial)):
-1. Install the [extention](https://chrome.google.com/webstore/detail/codeium-ai-code-autocompl/hobjkcpmjhlegmobgonaagepfckjkceh).
+Here is how to install the extension on Chrome (details [here](https://codeium.com/chrome_tutorial)):
+1. Install the [extension](https://chrome.google.com/webstore/detail/codeium-ai-code-autocompl/hobjkcpmjhlegmobgonaagepfckjkceh).
 2. Sign in to Codeium using  an e-mail or Google.
-3. If it works, you should see the Codeium extention turn green.
+3. If it works, you should see the Codeium extension turn green.
 4. To have it work on Windmill, add it to your Codeium allowlist:
-    - Click on Codeium extention icon.
+    - Click on Codeium extension icon.
     - Select `Open Options Page`.
     - In the Allowlist, write `https:\/\/app\.windmill\.dev\/.*` (or your domain, if self-hosting).
     - `Save Allowlist`.
