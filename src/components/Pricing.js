@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
-import { CheckIcon } from '@heroicons/react/20/solid';
 import React from 'react';
-import { Circle, CircleDot } from 'lucide-react';
+
+import PricingFAQ from './pricing/PricingFAQ';
+import FeatureList from './pricing/FeatureList';
+
+const plans = [
+	{ name: 'Multi-tenant', description: 'Lorem ipsum', price: 0 },
+	{ name: 'Isolated workers and database ', description: 'Available in US/EU/Asia', price: 500 },
+	{
+		name: 'Dedicated cluster',
+		description: 'Dedicated entire kubernetes cluster. Available in US/EU/Asia',
+		price: 1000
+	}
+];
 
 const types = [
 	{ value: 'selfhost', label: 'Self-hosted' },
@@ -16,7 +27,7 @@ const periods = [
 
 function calculatePrice(monthlyPrice, period) {
 	if (period === 'annually') {
-		return monthlyPrice * 12 * 0.8; // 20% discount for annual period
+		return monthlyPrice * 10; // 20% discount for annual period
 	}
 	return monthlyPrice;
 }
@@ -25,46 +36,82 @@ const pricing = {
 	selfhost: [
 		{
 			name: 'Free and Open-source',
-			id: 'tier-free',
+			id: 'tier-free-selfhost',
 			href: '#',
 			price: {},
 			description: 'Unlimited users & executions',
 			features: [
-				'Google/Github/Microsoft/Gitlab SSO',
-				'Easy to deploy on Fargate/Docker/Kubernetes',
-				'Community support on Discord'
+				{ text: 'Google/Github/Microsoft/Gitlab SSO' },
+				{ text: 'Easy to deploy on Fargate/Docker/Kubernetes' },
+				{ text: 'Community support on Discord' }
 			],
 			mostPopular: false
 		},
 		{
 			name: 'Enterprise edition',
-			id: 'tier-enterprise',
-			href: '#',
+			id: 'tier-enterprise-selfhost',
+			href: 'mailto:contact@windmill.dev',
 			price: {
 				worker: {
 					monthly: 50,
 					description:
-						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2
 				},
-				author: {
+				seat: {
 					monthly: 20,
 					description: 'An author can create scripts and flows',
 					default: 1
-				},
-				operator: {
-					monthly: 10,
-					description: 'An operator can execute scripts and flows',
-					default: 0
 				}
 			},
 			description: 'Dedicated support and infrastructure for your company.',
 			features: [
-				'SAML support including groups synchronization',
-				'SLA',
-				'Priority Support 24/7 with 3h response time and automation engineer assistance',
-				'Design partners for Roadmap',
-				'Global cache synchronization'
+				{
+					text: (
+						<span>
+							<b>Commercial</b> licence
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							Windmill Enterprise Edition <b>Plugins</b>
+						</span>
+					),
+					features: [{ text: 'Audit log exports' }, { text: 'Distributed dependency cache' }]
+				},
+				{
+					text: (
+						<span>
+							<b>SAML</b> support including groups synchronization
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SLA</b>
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+						</span>
+					)
+				},
+				{
+					text: 'Global cache synchronization'
+				},
+				{
+					text: (
+						<span>
+							<b>Design partners for Roadmap</b>
+						</span>
+					)
+				}
 			],
 			mostPopular: true
 		}
@@ -77,43 +124,78 @@ const pricing = {
 			price: {},
 			description: 'Discover the platform with no commitment',
 			features: [
-				'1000 executions per month',
-				'Community support on discord',
-				'Google/Github/Microsoft/Gitlab SSO',
-				'Unlimited variables/resources/scripts/apps/flows * (except abuse)'
+				{
+					text: (
+						<span>
+							<b>1000</b> free global executions per month
+						</span>
+					)
+				},
+				{
+					text: <span>Community support on Discord</span>
+				},
+				{
+					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
+				},
+				{
+					text: (
+						<span>
+							<b>Unlimited</b> variables/resources/scripts/apps/flows * (except abuse)
+						</span>
+					)
+				}
 			],
+
 			mostPopular: false
 		},
 		{
 			name: 'Team',
 			id: 'tier-team',
-			href: '#',
+			href: 'https://docs.windmill.dev/docs/misc/upgrade#team-edition',
 			price: {
-				author: {
+				seat: {
 					monthly: 10,
 					description: 'An author can create scripts and flows',
 					default: 1
-				},
-				operator: {
-					monthly: 5,
-					description: 'An operator can execute scripts and flows',
-					default: 0
 				}
 			},
 			description: 'For small teams that want to automate their processes.',
 			features: [
-				'Google/Github/Microsoft/Gitlab SSO',
-				'Unlimited variables/resources/scripts/apps/flows',
-				'Support 24/7 with 48h response time',
-				'10k executions per month per seat (10k sec of compute time per month per seat)',
-				'Limited to 10 seats'
+				{
+					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
+				},
+				{
+					text: (
+						<span>
+							<b>Unlimited</b> variables/resources/scripts/apps/flows
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>Priority Support 24/7 </b> with 48h response time and automation engineer
+							assistance
+						</span>
+					)
+				},
+
+				{
+					text: (
+						<span>
+							Limited to <b>10</b> seats
+						</span>
+					),
+					features: [{ text: '10k executions per month per seat' }]
+				}
 			],
-			mostPopular: true
+			mostPopular: true,
+			customMessage: 'Sign in and upgrade your workspace'
 		},
 		{
 			name: 'Enterprise',
 			id: 'tier-enterprise',
-			href: '#',
+			href: 'mailto:contact@windmill.dev',
 			price: {
 				worker: {
 					monthly: 200,
@@ -121,24 +203,48 @@ const pricing = {
 						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2
 				},
-				author: {
+				seat: {
 					monthly: 40,
 					description: 'An author can create scripts and flows',
 					default: 1
-				},
-				operator: {
-					monthly: 20,
-					description: 'An operator can execute scripts and flows',
-					default: 0
 				}
 			},
 			description: 'Dedicated support and infrastructure for your company.',
 			features: [
-				'SAML support including groups synchronization',
-				'SLA',
-				'Priority Support 24/7 with 3h response time and automation engineer assistance',
-				'Design partners for Roadmap',
-				'Global cache synchronization'
+				{
+					text: <span>Everything in team</span>
+				},
+				{
+					text: (
+						<span>
+							<b>SAML</b> support including groups synchronization
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SLA</b>
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+						</span>
+					)
+				},
+				{
+					text: 'Global cache synchronization'
+				},
+				{
+					text: (
+						<span>
+							<b>Design partners for Roadmap</b>
+						</span>
+					)
+				}
 			],
 			mostPopular: false
 		}
@@ -152,6 +258,7 @@ function classNames(...classes) {
 export default function Pricing() {
 	const [frequency, setFrequency] = useState(types[1]);
 	const [period, setPeriod] = useState(periods[0]);
+	const [selected, setSelected] = useState(plans[0]);
 
 	return (
 		<div className="bg-white py-12">
@@ -162,8 +269,7 @@ export default function Pricing() {
 					</p>
 				</div>
 				<p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-					Choose an affordable plan that’s packed with the best features for engaging your audience,
-					creating customer loyalty, and driving sales.
+					Choose an option that works best for your team.
 				</p>
 				<div className="mt-16 flex justify-center flex-row gap-2">
 					<RadioGroup
@@ -200,7 +306,7 @@ export default function Pricing() {
 								value={option}
 								className={({ checked }) =>
 									classNames(
-										checked ? 'bg-orange-600 text-white' : 'text-gray-500',
+										checked ? 'bg-sky-600 text-white' : 'text-gray-500',
 										'cursor-pointer rounded-full px-2.5 py-1',
 										'transition-all'
 									)
@@ -211,7 +317,12 @@ export default function Pricing() {
 						))}
 					</RadioGroup>
 				</div>
-				<div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+				<div
+					className={classNames(
+						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
+						frequency.value === 'selfhost' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
+					)}
+				>
 					{pricing[frequency.value].map((tier, index) => (
 						<div
 							key={tier.id}
@@ -231,31 +342,13 @@ export default function Pricing() {
 									{tier.name}
 								</h3>
 								{period.value === 'annually' && Object.keys(tier.price).length > 0 ? (
-									<p className="rounded-full bg-blue-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
-										20% discount
+									<p className="rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+										16% Discount
 									</p>
 								) : null}
 							</div>
 							<p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
-							<p className="mt-6 flex items-baseline gap-x-1">
-								<ul class="flex flex-col gap-2 w-full">
-									{Object.keys(tier.price).map((key) => (
-										<li key={key} className="flex flex-row justify-between w-full items-center">
-											<div className="text-md font-semibold tracking-tight text-gray-900 capitalize ">
-												{key}:
-											</div>
-											<div>
-												<span className="text-lg text-gray-900 font-semibold">
-													${calculatePrice(tier.price[key].monthly, period.value).toFixed(2)}
-												</span>
-												<span className="text-sm text-gray-500">
-													{period.value === 'annually' ? '/year' : '/month'}
-												</span>
-											</div>
-										</li>
-									))}
-								</ul>
-							</p>
+
 							{index == 0 ? (
 								<p className="mt-6 text-sm leading-6 text-gray-500">No payment required.</p>
 							) : (
@@ -269,21 +362,101 @@ export default function Pricing() {
 										'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
 								>
-									Contact us
+									{tier.customMessage ? tier.customMessage : 'Contact us'}
 								</a>
 							)}
 							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
-								{tier.features.map((feature) => (
-									<li key={feature} className="flex gap-x-3">
-										<Circle className="h-2 w-2 flex-none text-blue-600 mt-2" aria-hidden="true" />
-										{feature}
-									</li>
-								))}
+								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
+
+							<div className="mt-16 grow flex flex-col justify-start">
+								{Object.keys(tier.price).length > 0 ? (
+									<div className="text-md font-semibold leading-8">Pricing</div>
+								) : null}
+								<p className="mt-4 flex items-baseline gap-x-1">
+									<ul class="flex flex-col gap-2 w-full">
+										{Object.keys(tier.price).map((key) => (
+											<li key={key} className="flex flex-row justify-between w-full items-center">
+												<div>
+													<span className="text-sm text-gray-500">1 </span>
+													<span className="text-sm font-semibold tracking-tight text-gray-900 ">
+														{key}:
+													</span>
+												</div>
+												<div>
+													<span className="text-sm text-gray-900 font-semibold">
+														${calculatePrice(tier.price[key].monthly, period.value).toFixed(2)}
+													</span>
+													<span className="text-sm text-gray-500">
+														{period.value === 'annually' ? '/yr' : '/mo'}
+													</span>
+												</div>
+											</li>
+										))}
+									</ul>
+								</p>
+								{tier.id === 'tier-enterprise' ? (
+									<RadioGroup value={selected} onChange={setSelected}>
+										<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+										<div className="space-y-4 mt-4">
+											{plans.map((plan) => (
+												<RadioGroup.Option
+													key={plan.name}
+													value={plan}
+													className={({ checked, active }) =>
+														classNames(
+															checked ? 'border-transparent' : 'border-gray-300',
+															active ? 'border-blue-600 ring-2 ring-blue-600' : '',
+															'relative block cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
+														)
+													}
+												>
+													{({ active, checked }) => (
+														<>
+															<span className="flex items-center w-full">
+																<span className="flex flex-col text-sm w-full">
+																	<RadioGroup.Label as="span" className="font-medium text-gray-900">
+																		{plan.name}
+																	</RadioGroup.Label>
+																	<RadioGroup.Description as="span" className="text-gray-500">
+																		<span className="block sm:inline">{plan.description}</span>
+																	</RadioGroup.Description>
+																	<RadioGroup.Description
+																		as="div"
+																		className="flex w-full justify-end"
+																	>
+																		<span className="text-sm text-gray-900 font-semibold">
+																			${calculatePrice(plan.price, period.value).toFixed(2)}
+																		</span>
+																		<span className="text-sm text-gray-500">
+																			{period.value === 'annually' ? '/yr' : '/mo'}
+																		</span>
+																	</RadioGroup.Description>
+																</span>
+															</span>
+
+															<span
+																className={classNames(
+																	active ? 'border' : 'border-2',
+																	checked ? 'border-blue-600' : 'border-transparent',
+																	'pointer-events-none absolute -inset-px rounded-lg'
+																)}
+																aria-hidden="true"
+															/>
+														</>
+													)}
+												</RadioGroup.Option>
+											))}
+										</div>
+									</RadioGroup>
+								) : null}
+							</div>
 						</div>
 					))}
 				</div>
 			</div>
+
+			<PricingFAQ />
 		</div>
 	);
 }
