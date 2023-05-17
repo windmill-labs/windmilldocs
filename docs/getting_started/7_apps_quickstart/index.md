@@ -85,17 +85,19 @@ The beauty of Windmill App editor is the integrations of scripts & workflows to 
 
 :::tip Add a script to a component
 
-The following video showcases how to call a script either from workspace/hub or add it directly inline.
+The following video showcases how to call a script either from workspace/hub or add it directly inline;
 <br/>
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/script_and_flows_components.mp4"
 />
+
+<br/>
+
+On Windmill you can also [use AI to autosuggest code for you](../../misc/11_code_autocompletion/index.md).
 
 :::
 

@@ -57,6 +57,21 @@ script there.
 
 ![Editor for Go](./editor_go.png)
 
+:::tip Auto-complete code with AI
+
+Note that you can have [AI suggest code on Windmill](../../../misc/11_code_autocompletion/index.md):
+
+<br/>
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/codeium_example.mp4"
+/>
+
+:::
+
 We picked `go` for this example, so Windmill provided some Go boilerplate. Let's
 take a look:
 
