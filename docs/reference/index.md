@@ -217,9 +217,20 @@ def main(x: my_resource_type):
 
 ### Job inputs and Script parameters
 
-[Jobs](#jobs) take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible. 
+[Jobs](#jobs) take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible.
 
 If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
+
+#### Request headers
+
+It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_headers`, separated with `,`. e.g: `/api/w/admins/jobs/run_wait_result/p/u/user/undisputed_script?include_header=X-Sign,foo`
+
+or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
+
+### Custom response code
+
+For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code.
+e.g: `{"windmill_status_code": 201}`
 
 ### SQL
 
