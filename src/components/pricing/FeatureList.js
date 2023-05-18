@@ -1,11 +1,12 @@
 import React from 'react';
 import { Circle } from 'lucide-react';
 
-function FeatureList({ features, level = 1, id }) {
+export default function FeatureList({ features, level = 1, id }) {
 	return (
 		<ul
 			className={
-				('mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10', level === 2 ? 'ml-6' : '')
+				(('mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10', level === 2 ? 'ml-6' : ''),
+				level === 1 ? 'h-80' : '')
 			}
 		>
 			{features.map((feature) => (
@@ -22,5 +23,3 @@ function FeatureList({ features, level = 1, id }) {
 		</ul>
 	);
 }
-
-export default FeatureList;

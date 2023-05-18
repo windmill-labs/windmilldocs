@@ -4,16 +4,7 @@ import React from 'react';
 
 import PricingFAQ from './pricing/PricingFAQ';
 import FeatureList from './pricing/FeatureList';
-
-const plans = [
-	{ name: 'Multi-tenant', description: 'Lorem ipsum', price: 0 },
-	{ name: 'Isolated workers and database ', description: 'Available in US/EU/Asia', price: 500 },
-	{
-		name: 'Dedicated cluster',
-		description: 'Dedicated entire kubernetes cluster. Available in US/EU/Asia',
-		price: 1000
-	}
-];
+import PriceCalculator from './pricing/PriceCalculator';
 
 const types = [
 	{ value: 'selfhost', label: 'Self-hosted' },
@@ -25,13 +16,6 @@ const periods = [
 	{ value: 'annually', label: 'Annually' }
 ];
 
-function calculatePrice(monthlyPrice, period) {
-	if (period === 'annually') {
-		return monthlyPrice * 10; // 20% discount for annual period
-	}
-	return monthlyPrice;
-}
-
 const pricing = {
 	selfhost: [
 		{
@@ -39,6 +23,7 @@ const pricing = {
 			id: 'tier-free-selfhost',
 			href: '#',
 			price: {},
+
 			description: 'Unlimited users & executions',
 			features: [
 				{ text: 'Google/Github/Microsoft/Gitlab SSO' },
@@ -56,12 +41,16 @@ const pricing = {
 					monthly: 50,
 					description:
 						'1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
-					default: 2
+					default: 2,
+					min: 2,
+					max: 100
 				},
 				seat: {
 					monthly: 20,
 					description: 'An author can create scripts and flows',
-					default: 1
+					default: 1,
+					min: 1,
+					max: 100
 				}
 			},
 			description: 'Dedicated support and infrastructure for your company.',
@@ -156,7 +145,9 @@ const pricing = {
 				seat: {
 					monthly: 10,
 					description: 'An author can create scripts and flows',
-					default: 1
+					default: 2,
+					min: 2,
+					max: 10
 				}
 			},
 			description: 'For small teams that want to automate their processes.',
@@ -201,12 +192,16 @@ const pricing = {
 					monthly: 200,
 					description:
 						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
-					default: 2
+					default: 2,
+					min: 2,
+					max: 100
 				},
 				seat: {
 					monthly: 40,
 					description: 'An author can create scripts and flows',
-					default: 1
+					default: 10,
+					min: 10,
+					max: 100
 				}
 			},
 			description: 'Dedicated support and infrastructure for your company.',
@@ -258,24 +253,19 @@ function classNames(...classes) {
 export default function Pricing() {
 	const [frequency, setFrequency] = useState(types[1]);
 	const [period, setPeriod] = useState(periods[0]);
-	const [selected, setSelected] = useState(plans[0]);
 
 	return (
-		<div className="bg-white py-12">
+		<div className="bg-white pb-12">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mx-auto max-w-4xl text-center">
-					<p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-						Pricing plans for teams of all sizes
-					</p>
+					<p className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Pricing</p>
 				</div>
-				<p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-600">
-					Choose an option that works best for your team.
-				</p>
-				<div className="mt-16 flex justify-center flex-row gap-2">
+
+				<div className="mt-12 flex justify-center flex-col gap-4 items-center">
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
@@ -285,8 +275,8 @@ export default function Pricing() {
 								className={({ checked }) =>
 									classNames(
 										checked ? 'bg-blue-600 text-white' : 'text-gray-500',
-										'cursor-pointer rounded-full px-2.5 py-1',
-										'transition-all'
+										'cursor-pointer rounded-full px-4 py-2',
+										'transition-all '
 									)
 								}
 							>
@@ -294,28 +284,30 @@ export default function Pricing() {
 							</RadioGroup.Option>
 						))}
 					</RadioGroup>
-					<RadioGroup
-						value={period}
-						onChange={setPeriod}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
-					>
-						<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
-						{periods.map((option) => (
-							<RadioGroup.Option
-								key={option.value}
-								value={option}
-								className={({ checked }) =>
-									classNames(
-										checked ? 'bg-sky-600 text-white' : 'text-gray-500',
-										'cursor-pointer rounded-full px-2.5 py-1',
-										'transition-all'
-									)
-								}
-							>
-								<span>{option.label}</span>
-							</RadioGroup.Option>
-						))}
-					</RadioGroup>
+					<div>
+						<RadioGroup
+							value={period}
+							onChange={setPeriod}
+							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
+						>
+							<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
+							{periods.map((option) => (
+								<RadioGroup.Option
+									key={option.value}
+									value={option}
+									className={({ checked }) =>
+										classNames(
+											checked ? 'bg-sky-600 text-white' : 'text-gray-500',
+											'cursor-pointer rounded-full px-2.5 py-1',
+											'transition-all'
+										)
+									}
+								>
+									<span>{option.label}</span>
+								</RadioGroup.Option>
+							))}
+						</RadioGroup>
+					</div>
 				</div>
 				<div
 					className={classNames(
@@ -328,7 +320,7 @@ export default function Pricing() {
 							key={tier.id}
 							className={classNames(
 								tier.mostPopular ? 'ring-2 ring-blue-600' : 'ring-1 ring-gray-200',
-								'rounded-3xl p-8 xl:p-10'
+								'rounded-xl p-6 xl:p-8'
 							)}
 						>
 							<div className="flex items-center justify-between gap-x-4">
@@ -336,7 +328,7 @@ export default function Pricing() {
 									id={tier.id}
 									className={classNames(
 										tier.mostPopular ? 'text-blue-600' : 'text-gray-900',
-										'text-lg font-semibold leading-8'
+										'text-2xl font-semibold leading-8'
 									)}
 								>
 									{tier.name}
@@ -357,9 +349,9 @@ export default function Pricing() {
 									aria-describedby={tier.id}
 									className={classNames(
 										tier.mostPopular
-											? 'bg-blue-600 text-white shadow-sm hover:bg-blue-500'
+											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-500 '
 											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
-										'mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
 								>
 									{tier.customMessage ? tier.customMessage : 'Contact us'}
@@ -368,89 +360,9 @@ export default function Pricing() {
 							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
-
-							<div className="mt-16 grow flex flex-col justify-start">
-								{Object.keys(tier.price).length > 0 ? (
-									<div className="text-md font-semibold leading-8">Pricing</div>
-								) : null}
-								<p className="mt-4 flex items-baseline gap-x-1">
-									<ul class="flex flex-col gap-2 w-full">
-										{Object.keys(tier.price).map((key) => (
-											<li key={key} className="flex flex-row justify-between w-full items-center">
-												<div>
-													<span className="text-sm text-gray-500">1 </span>
-													<span className="text-sm font-semibold tracking-tight text-gray-900 ">
-														{key}:
-													</span>
-												</div>
-												<div>
-													<span className="text-sm text-gray-900 font-semibold">
-														${calculatePrice(tier.price[key].monthly, period.value).toFixed(2)}
-													</span>
-													<span className="text-sm text-gray-500">
-														{period.value === 'annually' ? '/yr' : '/mo'}
-													</span>
-												</div>
-											</li>
-										))}
-									</ul>
-								</p>
-								{tier.id === 'tier-enterprise' ? (
-									<RadioGroup value={selected} onChange={setSelected}>
-										<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-										<div className="space-y-4 mt-4">
-											{plans.map((plan) => (
-												<RadioGroup.Option
-													key={plan.name}
-													value={plan}
-													className={({ checked, active }) =>
-														classNames(
-															checked ? 'border-transparent' : 'border-gray-300',
-															active ? 'border-blue-600 ring-2 ring-blue-600' : '',
-															'relative block cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
-														)
-													}
-												>
-													{({ active, checked }) => (
-														<>
-															<span className="flex items-center w-full">
-																<span className="flex flex-col text-sm w-full">
-																	<RadioGroup.Label as="span" className="font-medium text-gray-900">
-																		{plan.name}
-																	</RadioGroup.Label>
-																	<RadioGroup.Description as="span" className="text-gray-500">
-																		<span className="block sm:inline">{plan.description}</span>
-																	</RadioGroup.Description>
-																	<RadioGroup.Description
-																		as="div"
-																		className="flex w-full justify-end"
-																	>
-																		<span className="text-sm text-gray-900 font-semibold">
-																			${calculatePrice(plan.price, period.value).toFixed(2)}
-																		</span>
-																		<span className="text-sm text-gray-500">
-																			{period.value === 'annually' ? '/yr' : '/mo'}
-																		</span>
-																	</RadioGroup.Description>
-																</span>
-															</span>
-
-															<span
-																className={classNames(
-																	active ? 'border' : 'border-2',
-																	checked ? 'border-blue-600' : 'border-transparent',
-																	'pointer-events-none absolute -inset-px rounded-lg'
-																)}
-																aria-hidden="true"
-															/>
-														</>
-													)}
-												</RadioGroup.Option>
-											))}
-										</div>
-									</RadioGroup>
-								) : null}
-							</div>
+							{Object.keys(tier.price).length > 0 ? (
+								<PriceCalculator tier={tier} period={period} />
+							) : null}
 						</div>
 					))}
 				</div>
