@@ -34,10 +34,10 @@ wmill.set_variable("u/user/foo", value)
 TypeScript (Deno):
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/index.ts';
+import { getVariable, setVariable } from "https://deno.land/x/windmill@v1.101.1/mod.ts";
 
-wmill.getVariable('u/user/foo');
-wmill.setVariable('u/user/foo', value);
+getVariable('u/user/foo');
+setVariable('u/user/foo', value);
 ```
 
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.md)

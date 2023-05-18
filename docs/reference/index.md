@@ -607,7 +607,7 @@ wmill.set_variable("u/user/foo", value)
 TypeScript (Deno):
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/index.ts';
+import * as wmill from "https://deno.land/x/windmill@v1.101.1/mod.ts";
 
 wmill.getVariable('u/user/foo');
 wmill.setVariable('u/user/foo', value);
