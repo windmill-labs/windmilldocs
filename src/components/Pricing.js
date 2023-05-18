@@ -110,7 +110,7 @@ const pricing = {
 			id: 'tier-free',
 			href: '#',
 			price: {},
-			description: 'Discover the platform with no commitment',
+			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
 				{
 					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
@@ -384,12 +384,26 @@ export default function Pricing() {
 										{period.value === 'annually' ? '/yr' : '/mo'}
 									</span>
 								</p>
-							) : null}
+							) : (
+								<p className="mt-6 flex items-baseline gap-x-1 invisible">
+									<span className="text-sm font-semibold leading-6 text-gray-600">aod</span>
+									<span className="text-5xl font-bold tracking-tight text-gray-900">"asd"</span>
+									<span className="text-sm font-semibold leading-6 text-gray-600">"asd"</span>
+								</p>
+							)}
 
 							<p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
 
 							{index == 0 ? (
-								<p className="mt-6 mb-36 text-sm leading-6 text-gray-500">No payment required.</p>
+								<div
+									aria-describedby={tier.id}
+									className={classNames(
+										'text-gray-900 ring-1 ring-inset ring-gray-200 hover:ring-gray-300',
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
+									)}
+								>
+									No credit card required
+								</div>
 							) : (
 								<a
 									href={tier.href}
