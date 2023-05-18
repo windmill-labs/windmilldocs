@@ -4,9 +4,9 @@ import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
 
 const faqs = [
 	{
-		question: 'What is a seat?',
+		question: 'What is an operator?',
 		answer:
-			'A seat is a user that can login to the platform. A seat can be an author or an operator.'
+			'A operator is a user that can only execute script, flows and apps, but not create and edit them.'
 	},
 	{
 		question: 'What is a execution?',

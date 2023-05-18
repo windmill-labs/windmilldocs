@@ -1,13 +1,15 @@
 import React from 'react';
 import { Circle } from 'lucide-react';
+import classNames from 'classnames';
 
 export default function FeatureList({ features, level = 1, id }) {
+	console.log(level);
 	return (
 		<ul
-			className={
-				(('mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10', level === 2 ? 'ml-6' : ''),
-				level === 1 ? 'h-80' : '')
-			}
+			className={classNames(
+				('mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10', level === 2 ? '!ml-6' : ''),
+				level === 1 ? 'h-80' : ''
+			)}
 		>
 			{features.map((feature) => (
 				<React.Fragment key={level + id + JSON.stringify(feature.text)}>

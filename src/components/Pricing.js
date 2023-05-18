@@ -50,9 +50,10 @@ const pricing = {
 					description: 'An author can create scripts and flows',
 					default: 1,
 					min: 1,
-					max: 100
+					max: 1000
 				}
 			},
+			minPrice: 120,
 			description: 'Dedicated support and infrastructure for your company.',
 			features: [
 				{
@@ -91,9 +92,7 @@ const pricing = {
 						</span>
 					)
 				},
-				{
-					text: 'Global cache synchronization'
-				},
+
 				{
 					text: (
 						<span>
@@ -114,16 +113,6 @@ const pricing = {
 			description: 'Discover the platform with no commitment',
 			features: [
 				{
-					text: (
-						<span>
-							<b>1000</b> free global executions per month
-						</span>
-					)
-				},
-				{
-					text: <span>Community support on Discord</span>
-				},
-				{
 					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
 				},
 				{
@@ -132,6 +121,29 @@ const pricing = {
 							<b>Unlimited</b> variables/resources/scripts/apps/flows * (except abuse)
 						</span>
 					)
+				},
+				{
+					text: (
+						<span>
+							<b>1000</b> free executions per month
+						</span>
+					)
+				},
+				{
+					text: <span>Public apps</span>
+				},
+				{
+					text: <span>Groups, folders and granual permissions</span>
+				},
+				{
+					text: (
+						<span>
+							Deploy from <b>Github</b>
+						</span>
+					)
+				},
+				{
+					text: <span>Community support on Discord</span>
 				}
 			],
 
@@ -147,21 +159,37 @@ const pricing = {
 					description: 'An author can create scripts and flows',
 					default: 2,
 					min: 2,
-					max: 10
+					max: 100
 				}
 			},
+			minPrice: 20,
 			description: 'For small teams that want to automate their processes.',
 			features: [
 				{
-					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
+					text: <span>Everything in free</span>
 				},
+
 				{
 					text: (
 						<span>
-							<b>Unlimited</b> variables/resources/scripts/apps/flows
+							Audit logs <b>7 days </b>retention
 						</span>
 					)
 				},
+				{
+					text: <span>Each seat includes:</span>,
+					features: [
+						{ text: 'one user or two operators' },
+						{
+							text: (
+								<span>
+									<b>10k</b> executions per month
+								</span>
+							)
+						}
+					]
+				},
+
 				{
 					text: (
 						<span>
@@ -169,15 +197,6 @@ const pricing = {
 							assistance
 						</span>
 					)
-				},
-
-				{
-					text: (
-						<span>
-							Limited to <b>10</b> seats
-						</span>
-					),
-					features: [{ text: '10k executions per month per seat' }]
 				}
 			],
 			mostPopular: true,
@@ -189,7 +208,7 @@ const pricing = {
 			href: 'mailto:contact@windmill.dev',
 			price: {
 				worker: {
-					monthly: 200,
+					monthly: 100,
 					description:
 						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
@@ -199,15 +218,24 @@ const pricing = {
 				seat: {
 					monthly: 40,
 					description: 'An author can create scripts and flows',
-					default: 10,
-					min: 10,
-					max: 100
+					default: 2,
+					min: 2,
+					max: 1000
 				}
 			},
+			minPrice: 480,
 			description: 'Dedicated support and infrastructure for your company.',
 			features: [
 				{
-					text: <span>Everything in team</span>
+					text: <span>Everything in Team</span>
+				},
+
+				{
+					text: (
+						<span>
+							Each worker can run up to <b>~13M</b> jobs per month
+						</span>
+					)
 				},
 				{
 					text: (
@@ -226,13 +254,18 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							Audit logs <b>60 days </b>retention
 						</span>
 					)
 				},
 				{
-					text: 'Global cache synchronization'
+					text: (
+						<span>
+							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+						</span>
+					)
 				},
+
 				{
 					text: (
 						<span>
@@ -333,16 +366,30 @@ export default function Pricing() {
 								>
 									{tier.name}
 								</h3>
+
 								{period.value === 'annually' && Object.keys(tier.price).length > 0 ? (
 									<p className="rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
 										16% Discount
 									</p>
 								) : null}
 							</div>
+
+							{tier.minPrice !== undefined ? (
+								<p className="mt-6 flex items-baseline gap-x-1">
+									<span className="text-sm font-semibold leading-6 text-gray-600">from</span>
+									<span className="text-5xl font-bold tracking-tight text-gray-900">
+										${period.value === 'annually' ? tier.minPrice * 10 : tier.minPrice}
+									</span>
+									<span className="text-sm font-semibold leading-6 text-gray-600">
+										{period.value === 'annually' ? '/yr' : '/mo'}
+									</span>
+								</p>
+							) : null}
+
 							<p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
 
 							{index == 0 ? (
-								<p className="mt-6 text-sm leading-6 text-gray-500">No payment required.</p>
+								<p className="mt-6 mb-20 text-sm leading-6 text-gray-500">No payment required.</p>
 							) : (
 								<a
 									href={tier.href}

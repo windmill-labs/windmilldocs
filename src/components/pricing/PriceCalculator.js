@@ -5,12 +5,12 @@ import React from 'react';
 import Slider from './Slider';
 
 const plans = [
-	{ name: 'Multi-tenant', description: 'Lorem ipsum', price: 0 },
-	{ name: 'Isolated workers and database ', description: 'Available in US/EU/Asia', price: 500 },
+	{ name: 'Multi-tenant', description: 'Shared infrastructure', price: 200 },
+	{ name: 'Isolated workers and database ', description: 'Available in US/EU/Asia', price: 600 },
 	{
 		name: 'Dedicated cluster',
 		description: 'Dedicated entire kubernetes cluster. Available in US/EU/Asia',
-		price: 1000
+		price: 1200
 	}
 ];
 
@@ -31,7 +31,7 @@ export default function PriceCalculator({ period, tier }) {
 	const [workers, setWorkers] = useState(tier.price.worker ? tier.price.worker.default : 2);
 
 	function computeTotalPrice() {
-		let total = calculatePrice(selected.price, period.value);
+		let total = tier.id === 'tier-enterprise' ? calculatePrice(selected.price, period.value) : 0;
 
 		if (tier.price.seat) {
 			total += calculatePrice(tier.price.seat.monthly, period.value) * seats;
