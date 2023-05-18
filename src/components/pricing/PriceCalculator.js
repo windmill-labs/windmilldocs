@@ -27,8 +27,8 @@ function classNames(...classes) {
 
 export default function PriceCalculator({ period, tier }) {
 	const [selected, setSelected] = useState(plans[0]);
-	const [seats, setSeats] = useState(2);
-	const [workers, setWorkers] = useState(2);
+	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
+	const [workers, setWorkers] = useState(tier.price.worker ? tier.price.worker.default : 2);
 
 	function computeTotalPrice() {
 		let total = calculatePrice(selected.price, period.value);

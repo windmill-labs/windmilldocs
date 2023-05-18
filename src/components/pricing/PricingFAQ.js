@@ -4,16 +4,6 @@ import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
 
 const faqs = [
 	{
-		question: 'Operator vs Author',
-		answer:
-			'An author can write scripts/flows/apps/variables/resources. An operator can only run/view them.'
-	},
-	{
-		question: 'What is a worker?',
-		answer:
-			'A worker is a container that executes your scripts. It can be a docker container, a kubernetes pod or a fargate task. It can be hosted on your infrastructure or on ours.'
-	},
-	{
 		question: 'What is a seat?',
 		answer:
 			'A seat is a user that can login to the platform. A seat can be an author or an operator.'
