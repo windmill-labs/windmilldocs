@@ -157,12 +157,12 @@ const pricing = {
 				seat: {
 					monthly: 10,
 					description: 'An author can create scripts and flows',
-					default: 2,
-					min: 2,
+					default: 1,
+					min: 1,
 					max: 100
 				}
 			},
-			minPrice: 20,
+			minPrice: 10,
 			description: 'For small teams that want to automate their processes.',
 			features: [
 				{
@@ -218,12 +218,12 @@ const pricing = {
 				seat: {
 					monthly: 40,
 					description: 'An author can create scripts and flows',
-					default: 2,
-					min: 2,
+					default: 1,
+					min: 1,
 					max: 1000
 				}
 			},
-			minPrice: 480,
+			minPrice: 440,
 			description: 'Dedicated support and infrastructure for your company.',
 			features: [
 				{
@@ -330,7 +330,7 @@ export default function Pricing() {
 									value={option}
 									className={({ checked }) =>
 										classNames(
-											checked ? 'bg-sky-600 text-white' : 'text-gray-500',
+											checked ? 'bg-black text-white' : 'text-gray-500',
 											'cursor-pointer rounded-full px-2.5 py-1',
 											'transition-all'
 										)
@@ -389,7 +389,7 @@ export default function Pricing() {
 							<p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
 
 							{index == 0 ? (
-								<p className="mt-6 mb-20 text-sm leading-6 text-gray-500">No payment required.</p>
+								<p className="mt-6 mb-36 text-sm leading-6 text-gray-500">No payment required.</p>
 							) : (
 								<a
 									href={tier.href}
