@@ -9,7 +9,7 @@ const faqs = [
 			'A operator is a user that can only execute script, flows and apps, but not create and edit them.'
 	},
 	{
-		question: 'What is a execution?',
+		question: 'What is an execution?',
 		answer:
 			'The single credit-unit is called a "execution". An execution corresponds to a single job whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for. Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.'
 	}
