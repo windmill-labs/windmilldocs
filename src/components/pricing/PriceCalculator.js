@@ -8,8 +8,8 @@ const plans = [
 	{ name: 'Multi-tenant', description: 'Shared infrastructure', price: 200 },
 	{ name: 'Isolated workers and database ', description: 'Available in US/EU/Asia', price: 600 },
 	{
-		name: 'Dedicated cluster',
-		description: 'Dedicated entire kubernetes cluster. Available in US/EU/Asia',
+		name: 'Dedicated Kubernetes cluster',
+		description: 'Available in US/EU/Asia',
 		price: 1200
 	}
 ];
@@ -47,7 +47,7 @@ export default function PriceCalculator({ period, tier }) {
 	return (
 		<div className="mt-16 grow flex flex-col justify-start">
 			<div className="flex justify-between items-center">
-				<div className="text-md font-semibold leading-8">Price</div>
+				<h4>Price</h4>
 
 				<div>
 					<span className="text-2xl text-gray-900 font-semibold">${computeTotalPrice()}</span>
@@ -101,56 +101,115 @@ export default function PriceCalculator({ period, tier }) {
 				</ul>
 			</p>
 			{tier.id === 'tier-enterprise' ? (
-				<RadioGroup value={selected} onChange={setSelected}>
-					<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-					<div className="space-y-4 mt-4">
-						{plans.map((plan) => (
-							<RadioGroup.Option
-								key={plan.name}
-								value={plan}
-								className={({ checked, active }) =>
-									classNames(
-										checked ? 'border-transparent' : 'border-gray-300',
-										active ? 'border-blue-600 ring-2 ring-blue-600' : '',
-										'relative block cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
-									)
-								}
-							>
-								{({ active, checked }) => (
-									<>
-										<span className="flex items-center w-full">
-											<span className="flex flex-col text-sm w-full">
-												<RadioGroup.Label as="span" className="font-medium text-gray-900">
-													{plan.name}
-												</RadioGroup.Label>
-												<RadioGroup.Description as="span" className="text-gray-500">
-													<span className="block sm:inline">{plan.description}</span>
-												</RadioGroup.Description>
-												<RadioGroup.Description as="div" className="flex w-full justify-end">
-													<span className="text-sm text-gray-900 font-semibold">
-														${calculatePrice(plan.price, period.value).toFixed(2)}
-													</span>
-													<span className="text-sm text-gray-500">
-														{period.value === 'annually' ? '/yr' : '/mo'}
-													</span>
-												</RadioGroup.Description>
+				<div className="mt-8">
+					<RadioGroup value={selected} onChange={setSelected}>
+						<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+						<div className="space-y-4 mt-4">
+							{plans.map((plan) => (
+								<RadioGroup.Option
+									key={plan.name}
+									value={plan}
+									className={({ checked, active }) =>
+										classNames(
+											checked ? 'border-transparent' : 'border-gray-300',
+											active ? 'border-blue-600 ring-2 ring-blue-600' : '',
+											'relative block cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
+										)
+									}
+								>
+									{({ active, checked }) => (
+										<>
+											<span className="flex items-center w-full">
+												<span className="flex flex-col text-sm w-full">
+													<RadioGroup.Label as="span" className="font-medium text-gray-900">
+														{plan.name}
+													</RadioGroup.Label>
+													<RadioGroup.Description as="span" className="text-gray-500">
+														<span className="block sm:inline">{plan.description}</span>
+													</RadioGroup.Description>
+													<RadioGroup.Description as="div" className="flex w-full justify-end">
+														<span className="text-sm text-gray-900 font-semibold">
+															${calculatePrice(plan.price, period.value).toFixed(2)}
+														</span>
+														<span className="text-sm text-gray-500">
+															{period.value === 'annually' ? '/yr' : '/mo'}
+														</span>
+													</RadioGroup.Description>
+												</span>
 											</span>
-										</span>
 
-										<span
-											className={classNames(
-												active ? 'border' : 'border-2',
-												checked ? 'border-blue-600' : 'border-transparent',
-												'pointer-events-none absolute -inset-px rounded-lg'
-											)}
-											aria-hidden="true"
-										/>
-									</>
-								)}
-							</RadioGroup.Option>
-						))}
+											<span
+												className={classNames(
+													active ? 'border' : 'border-2',
+													checked ? 'border-blue-600' : 'border-transparent',
+													'pointer-events-none absolute -inset-px rounded-lg'
+												)}
+												aria-hidden="true"
+											/>
+										</>
+									)}
+								</RadioGroup.Option>
+							))}
+						</div>
+					</RadioGroup>
+				</div>
+			) : null}
+
+			{tier.id === 'tier-team' ? (
+				<div className="mt-8 flex flex-col gap-1">
+					<h5 className="font-semibold">Summary</h5>
+					<div className="mt-2 flex items-baseline gap-x-1">
+						<div className="text-sm text-gray-600 mt-1">
+							<span>{`${
+								seats * 10 * (period.value === 'annually' ? 12 : 1)
+							}k executions per `}</span>
+							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
+						</div>
 					</div>
-				</RadioGroup>
+					<div className="flex flex-row gap-1">
+						<span className="whitespace-nowrap text-sm">{seats} users</span>
+						<b className="text-sm">OR</b>
+						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+					</div>
+				</div>
+			) : null}
+
+			{tier.id === 'tier-enterprise' ? (
+				<div className="mt-8 flex flex-col gap-1">
+					<h5 className="font-semibold">Summary</h5>
+					<div className="mt-2 flex items-baseline gap-x-1">
+						<div className="text-sm text-gray-600 mt-1">
+							<span>{`${
+								workers * 13 * (period.value === 'annually' ? 12 : 1)
+							}M executions per `}</span>
+							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
+						</div>
+					</div>
+					<div className="flex flex-row gap-1">
+						<span className="whitespace-nowrap text-sm">{seats} users</span>
+						<b className="text-sm">OR</b>
+						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+					</div>
+				</div>
+			) : null}
+
+			{tier.id === 'tier-enterprise-selfhost' ? (
+				<div className="mt-8 flex flex-col gap-1">
+					<h5 className="font-semibold">Summary</h5>
+					<div className="mt-2 flex items-baseline gap-x-1">
+						<div className="text-sm text-gray-600 mt-1">
+							<span>{`${
+								workers * 13 * (period.value === 'annually' ? 12 : 1)
+							}M executions per `}</span>
+							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
+						</div>
+					</div>
+					<div className="flex flex-row gap-1">
+						<span className="whitespace-nowrap text-sm">{seats} users</span>
+						<b className="text-sm">OR</b>
+						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+					</div>
+				</div>
 			) : null}
 		</div>
 	);
