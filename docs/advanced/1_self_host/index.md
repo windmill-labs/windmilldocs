@@ -186,6 +186,16 @@ GRANT windmill_admin TO nonsuperuser;
 GRANT windmill_user TO nonsuperuser;
 ```
 
+**NOTE: Make sure the roles `windmill_admin` and `windmill_user` have access to the database and the schema:**
+
+You can ensure this by running the following commands as superuser while inside the database. Replace the schema
+name `public` with your schema, in case you use a different one:
+
+```sql
+GRANT USAGE ON SCHEMA public TO windmill_admin;
+GRANT USAGE ON SCHEMA public TO windmill_user;
+```
+
 ## Complete New Windmill Setup
 
 In the Admin Workspace execute the New User Setup App. This will import the default resources from WindmillHub and update the default user credentails
