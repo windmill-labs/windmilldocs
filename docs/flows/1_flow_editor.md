@@ -196,16 +196,15 @@ There are two special kind of scripts:
 
 These are essentially Typescript template to easily write queries to a database.
 
-### Importing an action script from the Hub
+### Triggering an action script from the Hub
 
-You can import an action script from the [Hub](https://hub.windmill.dev/).
+You can refer to and trigger an action script from the [Hub](https://hub.windmill.dev/). You also have the possibility to fork it (copy it as an inline script) directly to modify its behavior.
 
-### Importing an action script from the workspace
+### Triggering an action script from the workspace
 
-You can import an action script from the workspace.
+You can refer to and trigger an action script from the workspace. Similar to the previous section, you can copy the script to an inline flow script and modify it.
 
 ![Flow action](../assets/flows/flow_new_action.png)
-
 
 ## Action editor
 
