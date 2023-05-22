@@ -13,6 +13,7 @@ You will need
 
 Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example: `export PATH="/Users/yourusername/.deno/bin:$PATH"`
 
+**Your version of deno need to be recent (> 1.32) **: To update deno, run `deno upgrade`.
 
 ## Upgrade
 
