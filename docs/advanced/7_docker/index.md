@@ -15,7 +15,7 @@ On the docker-compose, it is enough to uncomment the volume mount of the windmil
 
 ### Helm charts
 
-In the charts value, set `windmill.exposeHostDocker` to `true`
+In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`
 
 ## Use
 
