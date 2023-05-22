@@ -227,6 +227,10 @@ It is possible for jobs to take request headers as arguments. To do so, either s
 
 or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
 
+#### Raw payload
+
+Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
+
 ### Custom response code
 
 For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code.
@@ -607,7 +611,7 @@ wmill.set_variable("u/user/foo", value)
 TypeScript (Deno):
 
 ```typescript
-import * as wmill from "https://deno.land/x/windmill@v1.101.1/mod.ts";
+import * as wmill from 'https://deno.land/x/windmill@v1.101.1/mod.ts';
 
 wmill.getVariable('u/user/foo');
 wmill.setVariable('u/user/foo', value);
