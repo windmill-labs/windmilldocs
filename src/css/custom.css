@@ -191,6 +191,7 @@ a {
 .section {
 	@apply mt-24;
 	@apply mb-12;
+	
 }
 
 .section-header {
