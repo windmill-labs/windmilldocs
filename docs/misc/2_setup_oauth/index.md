@@ -1,8 +1,9 @@
 # How to setup OAuth
 
-The oauth.json need to be mounted from your windmill server instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L41-L42) and have an oauth.json file in the same folder as the docker-compose.yml.
+The oauth.json need to be mounted from your windmill server instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/v1.103.0/docker-compose.yml#L38-L39) and have an oauth.json file in the same folder as the docker-compose.yml.
 
 The oauth.json has the following structure:
+
 ```json
 {
   "<integration>": {
@@ -13,8 +14,7 @@ The oauth.json has the following structure:
 }
 ```
 
-> `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json) 
-
+> `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json)
 
 ## Google login
 
@@ -34,11 +34,11 @@ First, you need to create a Google OAuth Client:
 
 ```json
 {
-  "google": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>",
-    "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
-  }
+	"google": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+	}
 }
 ```
 
@@ -52,7 +52,7 @@ Your app manifest shoud look like this, replacing `<YOUR INSTANCE URL>` in 2 pla
 display_information:
   name: Windmill
   description: windmill.dev slackbot and oauth integration
-  background_color: "#3b82f6"
+  background_color: '#3b82f6'
   long_description: The Windmill app allows to use command to run jobs inside Windmill as well as receiving message as the Windmill app. The windmill app pairs a slack workspace with a windmill workspace. It must be installed from within the settings of a windmill workspace.
 features:
   app_home:
@@ -87,7 +87,8 @@ settings:
   token_rotation_enabled: false
 ```
 
-1. 
+1.
+
 ```json
 {
   ...
@@ -101,10 +102,11 @@ settings:
 ## Google Sheet
 
 **Create GSheet OAuth keys**
+
 - Create a Google OAuth account by going to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
 - Click "Enable APIs and Services"
   - Search "Google Sheets API"
-  - Enable this API 
+  - Enable this API
 - Click "Create Credentials", then click "OAuth 2.0 Client IDs" in the drop-down menu.
 - Enter the following:
   - Application Type: Web Application
@@ -113,14 +115,16 @@ settings:
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 - Edit your `oauth.json` to look like:
+
 ```json
 {
-  "gsheets": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>",
-  }
+	"gsheets": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>"
+	}
 }
 ```
+
 The same steps apply to enable more APIs (**gmail**, **gdrive**, etc) on your Google Account to set up the resources in WindMill.
 
 ## Keycloak
