@@ -28,20 +28,20 @@ Also, you can give succintly a Name, a Summary and a Description to your flow. T
 
 Then, you will configure the **[Schedule](../../core_concepts/1_scheduling/index.md)**. Flows can be [triggered](../9_trigger_flows/index.md) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.md) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
 
-**[Shared Directory](../../flows/1_flow_editor.md#shared-directory)**:
+**[Shared Directory](../../flows/3_editor_components.md#shared-directory)**:
 
 Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
 For heavier ETLs and any output that is not suitable for json, you might want to use the `Shared Directory` to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-You can always go back to this menu by clicking on `Settings` on the top lef, or on the name of the flow on the [toolbar](../../flows/1_flow_editor.md#toolbar).
+You can always go back to this menu by clicking on `Settings` on the top lef, or on the name of the flow on the [toolbar](../../flows/3_editor_components.md#toolbar).
 
 ### Flow editor
 
 The proper flow editor is the side menu on the left. From there you can architecture your flow and take action at each step.
 ![Flow editor menu](./flow_editor_menu.png)
 
-There are four kinds of scripts: [Action](../../flows/1_flow_editor.md#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.md) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want.
+There are four kinds of scripts: [Action](../../flows/3_editor_components.md#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.md) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want.
 
 Each script can be called from Workspace or Hub, you can also decide to **write them inline**.
 
@@ -69,7 +69,7 @@ Note that you can have [AI suggest code on Windmill](../../misc/11_code_autocomp
 Flows on Windmill are generic and reusable, they therefore expose inputs. Input and outputs are piped together.
 
 Inputs are either:
-- **[Static](../../flows/1_flow_editor.md#static-inputs)**: you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
+- **[Static](../../flows/3_editor_components.md#static-inputs)**: you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
 - **Dynamically linked to others**: with JSON objects as result that allow to refer to the output of each step. You can refer to the result of each step using the id associated with the step.
 
 ![Static & Dynamic Inputs](./static_and_dynamic_inputs.png)

@@ -4,6 +4,12 @@ title: CLI Installation
 
 # Installation
 
+:::caution
+
+This page is currently WIP and is being updated.
+
+:::
+
 Simply install the wmill cli using:
 
 `deno install --unstable -A https://deno.land/x/wmill/main.ts`
