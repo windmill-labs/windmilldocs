@@ -3,11 +3,17 @@
 Scripts can be triggered in 6 ways.
 
 On-demand triggers:
-- [Auto-generated UIs](#auto-generated-uis)
-- [Customized UIs with the App Editor](#customized-uis-with-the-app-editor)
-- [Trigger Scripts from Flows](#trigger-scripts-from-flows) that have their [own ways of triggering](../9_trigger_flows/index.md)
-- [Trigger Scripts from CLI (Command Line Interface)](#trigger-scripts-from-cli-command-line-interface)
-- [Schedule the Execution of a Script](#schedule-the-execution-of-a-script)
+- [Triggering Scripts](#triggering-scripts)
+  - [On-demand triggers](#on-demand-triggers)
+    - [Auto-generated UIs](#auto-generated-uis)
+    - [Customized UIs with the App Editor](#customized-uis-with-the-app-editor)
+    - [Trigger Scripts from Flows](#trigger-scripts-from-flows)
+    - [Schedule the Execution of a Script](#schedule-the-execution-of-a-script)
+    - [Trigger Scripts from CLI (Command Line Interface)](#trigger-scripts-from-cli-command-line-interface)
+  - [Triggers from external events](#triggers-from-external-events)
+    - [Trigger Scripts from Webhooks](#trigger-scripts-from-webhooks)
+      - [Webhooks: Trigger Scripts from Slack](#webhooks-trigger-scripts-from-slack)
+      - [Webhooks: Trigger Scripts from Emails](#webhooks-trigger-scripts-from-emails)
 
 Triggers from external events:
 - [Trigger Scripts from Webhooks](#trigger-scripts-from-webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack) or [Emails](#webhooks-trigger-scripts-from-emails)
