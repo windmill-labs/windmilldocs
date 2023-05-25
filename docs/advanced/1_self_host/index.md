@@ -61,9 +61,10 @@ The default docker-compose file exposes a caddy reverse-proxy on port 80, config
 
 #### Traefik configuration
 
-Here is a template of a docker-compose to expose windmill to Traefik:
+<details>
+  <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Code below:</summary>
 
-```yaml
+  ```yaml
 version: '3.7'
 
 services:
@@ -141,6 +142,7 @@ networks:
     name: web
     external: true
 ```
+</details>
 
 ### Deployment
 
