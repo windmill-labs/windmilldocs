@@ -222,9 +222,9 @@ const sidebars = {
 					label: 'Guides',
 					link: {
 						type: 'doc',
-						id: 'misc/Guides/index'
+						id: 'misc/guides/index'
 					},
-					items: ['misc/Guides/AgGrid_Table/index']
+					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/setup_oauth/index',
 				'misc/note_of_intent/index',
