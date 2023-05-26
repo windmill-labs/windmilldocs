@@ -268,3 +268,8 @@ td:nth-of-type(2):first-child {
 th {
 	background-color: #f2f2f2; /* Add light gray background to table header */
 }
+
+
+.windmill-documentation-card {
+	@apply rounded-md p-6 border border-gray-200 shadow-sm hover:bg-blue-100 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline
+}

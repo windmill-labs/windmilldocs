@@ -48,7 +48,7 @@ A component can have runnables attached to it. Depending on the component type, 
 
 Two types of runnables can be configured to run on app start and app refresh:
 
-- **Background runnables**: Runnables that aren't attached to a component.
+- **Background runnables**: Runnables that are run in the background and aren't attached to a component.
 - **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
 
 ### Recompute on Any Input Change
@@ -57,13 +57,13 @@ Runnables can be configured to recompute whenever an input changes. This is usef
 
 Two types of runnables can be configured to recompute on any input change:
 
-- **Backend background runnables**: Runnables that aren't attached to a component and are executed on the backend.
+- **Backend background runnables**: Background runnable that are executed on the server.
 - **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
 
 Inputs of runnables that are either connected to an output or evaluated can trigger a recompute. These are displayed in the `Change on value` section.
 
 ### Manual Dependencies
 
-Frontend scripts don't have any inputs. Consequently, they could not be recomputed when an input changes. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
+Frontend scripts don't have any inputs. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
 
 Manual dependencies are found in the `Change on value` section and can be removed by clicking on the `x` button.

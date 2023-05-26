@@ -30,7 +30,7 @@ You can also select multiple components by clicking on the `Shift` key and click
     autoPlay
     loop
     controls
-    id="main-video"
+    id="app-component-selection"
     src="/videos/app-component-selection.mp4"
 />
 
@@ -43,7 +43,7 @@ Components can be positioned by dragging and dropping them on the canvas. You ca
     autoPlay
     loop
     controls
-    id="main-video"
+    id="component-moving"
     src="/videos/component-moving.mp4"
 />
 
@@ -58,7 +58,7 @@ Components can be resized by dragging the resize handler on the top-right corner
     autoPlay
     loop
     controls
-    id="main-video"
+    id="app-lock"
     src="/videos/app-lock.mp4"
 />
 
@@ -66,8 +66,8 @@ A locked component can't be moved or resized by another component. It can still 
 
 You can lock a component by clicking on the lock button on the top-right corner of the component.
 
-:::info
-Moving or moving a component will move all unlocked components on its way.
+:::tip
+Moving a component will move all unlocked components on its way.
 :::
 
 ### Expand a component
@@ -79,7 +79,7 @@ Components can be expanded by clicking on the expand button on the top-right cor
     autoPlay
     loop
     controls
-    id="main-video"
+    id="component-expand"
     src="/videos/component-expand.mp4"
 />
 
@@ -120,7 +120,7 @@ Edit text directly on the canvas. Either click on the `Pen` icon or double click
     autoPlay
     loop
     controls
-    id="main-video"
+    id="app-text-inline-editor"
     src="/videos/app-text-inline-editor.mp4"
 />
 
@@ -133,6 +133,6 @@ Debug a tab by clicking on the arrow down button on the top-right corner of the 
     autoPlay
     loop
     controls
-    id="main-video"
+    id="app-debug-tabs"
     src="/videos/app-debug-tabs.mp4"
 />
