@@ -33,7 +33,7 @@ In short, what you need to remember about apps:
 
 :::tip
 
-Follow our [detailed pages](../../apps/app_editor.md) on the App Editor for more information.
+Follow our [detailed pages](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
 
 :::
 
