@@ -139,7 +139,7 @@ src="/videos/supabase-auth/add-data-table.mp4"
 />
 <br/>
 
-At this point your skeleton app has every component we need to start working on the [scripts](/docs/getting_started/scripts_quickstart/typescript). Now is
+At this point your skeleton app has every component we need to start working on the [scripts](/docs/getting_started/scripts_quickstart). Now is
 a good time to save your progress. If you want to create an app for each approach (using
 **backend scripts** and **frontend scripts**), you can use this skeleton as a template for both
 from the Home page.

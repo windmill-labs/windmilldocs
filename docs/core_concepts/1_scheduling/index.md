@@ -108,7 +108,17 @@ Fill the inputs, toggle the `Schedule Enabled`, save and you're all set!
 
 ### Be notified every time a scheduled workflow has been executed (or failed)
 
-Add a simple step to your workflow to be informed on the execution of the scheduled flow.
+#### Schedule Error Handler
+
+From the schedule configuration, add a special script or flow to execute in case of error.
+
+![Schedule Error Handler](./14_schedule_error_handler.png)
+
+This can for example be a script noticing the error on [Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack) or [Discord](https://hub.windmill.dev/scripts/discord/1292/send-message-to-channel-using-webhook-discord).
+
+#### As a Flow Step
+
+For scheduled flows, add a simple step to be informed on the execution of the scheduled flow.
 
 In this example I chose to [receive an email](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail), it could have been on [Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack), [Discord](https://hub.windmill.dev/scripts/discord/1292/send-message-to-channel-using-webhook-discord) or anything your imagination and API calls can create.
 

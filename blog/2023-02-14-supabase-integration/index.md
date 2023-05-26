@@ -35,7 +35,7 @@ Windmill Scripts and Flows via `HTTP POST` requests.
 ## Create Windmill Script
 
 In order to be able to receive the events from Supabase we need to create a
-[Script](/docs/getting_started/scripts_quickstart/typescript) that will be triggered by the Supabase webhook. Let's create a simple one, that will just return the event payload.
+[Script](/docs/getting_started/scripts_quickstart) that will be triggered by the Supabase webhook. Let's create a simple one, that will just return the event payload.
 
 Navigate to the `Home page` and click "+Script" to create a new Script.
 Name it `supabase_hook`, add the summary "Supabase hook" and click "Next". Paste

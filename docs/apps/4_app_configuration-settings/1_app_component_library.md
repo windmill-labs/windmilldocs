@@ -861,7 +861,11 @@ Search can be configured in the following ways:
 ### AgGrid Table
 
 :::tip Guide
+<<<<<<< HEAD:docs/apps/4_app_component_library.md
+If you are new to Ag Grid, check out our [Introduction guide](../misc/9_guides/aggrid_table/index.md).
+=======
 If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_Guides/AgGrid_Table/index.md).
+>>>>>>> main:docs/apps/4_app_configuration-settings/1_app_component_library.md
 :::
 
 The AgGrid table component allows you to display an agnostic grid table.
