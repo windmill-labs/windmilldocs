@@ -28,7 +28,7 @@ Although Windmill provides **[auto-generated UIs to scripts and flows](../../cor
 In short, what you need to remember about apps:
 - They work on a **what-you-see-is-what-you-get basis**.
 - You can connect apps and components to **datasources**.
-- Components can be **empowered by Windmill [scripts](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript)**.
+- Components can be **empowered by Windmill [scripts](../../getting_started/0_scripts_quickstart/index.md)**.
 
 :::tip
 

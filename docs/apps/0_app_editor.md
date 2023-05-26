@@ -56,7 +56,7 @@ Windmill's App editor has the following major elements:
       <div class="text-lg font-semibold text-gray-900">Runnable Editor</div>
       <div class="text-sm text-gray-500">Create, edit or manage the scripts or flows linked to components (Runnable), and background runnables.</div>
     </a>
-    <a href="./8_app_styling.md" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+    <a href="./app_styling" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
       <div class="text-lg font-semibold text-gray-900">Styling</div>
       <div class="text-sm text-gray-500">Set a custom style on a component and app-level.</div>
     </a>

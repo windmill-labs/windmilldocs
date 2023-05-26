@@ -45,10 +45,9 @@ address:
 # .env
 DB_PASSWORD=supersecret
 WM_BASE_URL=http://windmill.example.com
-CADDY_REVERSE_PROXY=":80"
 ```
 
-Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The reverse proxy is configured at `CADDY_REVERSE_PROXY`. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
+Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You still need to configure a reverse proxy to hit windmill and windmill-lsp on the right ports. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
 
 ```
 :80 {
@@ -57,6 +56,8 @@ Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The rev
         reverse_proxy /* http://windmill_server:8000
 }
 ```
+
+The default docker-compose file exposes a caddy reverse-proxy on port 80, configured by the [caddyfile](https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile) curled above. Configure both the caddyfile and the docker-compose file to fit your needs. The documentation for caddy is available [here](https://caddyserver.com/docs/caddyfile).
 
 ### Deployment
 

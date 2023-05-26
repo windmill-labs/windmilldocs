@@ -60,6 +60,8 @@ approvals from all authorized people or only from one.
 
 ![Required approvals](../assets/flows/flow-number-of-approvals.png)
 
+Note that approval steps can be applied the same configurations as regular steps ([Retries](./14_retries.md), [Early stop/Break](./2_early_stop.md) or [Suspend](./15_sleep.md)).
+
 ## Example with Gmail
 
 ### Add Gmail Resource

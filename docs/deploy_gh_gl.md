@@ -24,12 +24,12 @@ secret "WMILL_TOKEN" to this environment.
 ![GH environment](./assets/deploy_gh_gl/gh-environment-light.png)
 
 Edit the workflows:
-- [.github/workflows/push-on-merge.yaml](./.github/workflows/push-on-merge.yaml) to push on merge to main, usually you'll
+- [.github/workflows/push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) to push on merge to main, usually you'll
 only need to fill out the `env` variables, then activate GitHub actions by
 navigating to the "Actions" tab in GitHub. You may want to run the action once
 manually to see that everything works.
 
-- [.github/workflows/pull-workspace.yaml](./.github/workflows/pull-workspace.yaml) to sync back any changes made in Windmill UI to this repo under the form of either a Pull Request or a commit to main directly.
+- [.github/workflows/pull-workspace.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/pull-workspace.yaml) to sync back any changes made in Windmill UI to this repo under the form of either a Pull Request or a commit to main directly.
 
 ![Configuration](./assets/deploy_gh_gl/configure-light.png)
 

@@ -5,6 +5,8 @@ slug: "/getting_started/scripts_quickstart/go"
 
 # Go Quickstart
 
+In this quick start guide, we will write our first script in Go.
+
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.md) as standalone, chained together to create [Flows][flows] or displayed with a personalized UI as [Apps](../../7_apps_quickstart/index.md).
 
 In Windmill, Scripts consist of three parts:

@@ -169,8 +169,9 @@ You can either create a new action script in:
 
 - [Python](/docs/getting_started/scripts_quickstart/python): Windmill provides a Python 3.11 environment.
 - [Typescript](/docs/getting_started/scripts_quickstart/typescript): Windmill uses Deno as the TypeScript runtime.
-- [Go](/docs/getting_started/scripts_quickstart/go)
-- [Bash](/docs/getting_started/scripts_quickstart/bash)
+- [Go](/docs/getting_started/scripts_quickstart/go).
+- [Bash](/docs/getting_started/scripts_quickstart/bash).
+- Any language [running any docker container](../advanced/7_docker/index.md) through Windmill's bash support.
 
 There are two special kind of scripts:
 

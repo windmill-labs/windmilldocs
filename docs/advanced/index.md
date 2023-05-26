@@ -16,4 +16,8 @@ Windmill's most advanced guides.
    <div class="text-lg font-semibold text-gray-900">Dependency Management & Imports</div>
     <div class="text-sm text-gray-500">Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files.</div>
   </a>
+  <a href="/docs/advanced/docker" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+   <div class="text-lg font-semibold text-gray-900">Run Docker Containers</div>
+    <div class="text-sm text-gray-500">Windmill support running any docker container through its bash support.</div>
+  </a>
 </div>

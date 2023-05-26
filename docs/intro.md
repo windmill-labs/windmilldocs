@@ -9,7 +9,7 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
    <a href="/docs/getting_started/how_to_use_windmill" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
-   <div class="text-lg font-semibold text-gray-900">How to Use Windmill</div>
+   <div class="text-lg font-semibold text-gray-900">Get Started with Windmill</div>
     <div class="text-sm text-gray-500">Get started in 30 seconds.</div>
   </a>
   <a href="/docs/misc/note_of_intent" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
@@ -26,7 +26,7 @@ However all features on Windmill are highly compatible and rely on scripts that 
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="/docs/getting_started/scripts_quickstart/typescript" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+  <a href="/docs/getting_started/scripts_quickstart" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
    <div class="text-lg font-semibold text-gray-900">Scripts Quickstart</div>
     <div class="text-sm text-gray-500">Scripts are the basic building blocks that can be written in various languages.</div>
   </a>
@@ -86,6 +86,10 @@ However all features on Windmill are highly compatible and rely on scripts that 
   <a href="/docs/deploy_gh_gl" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
    <div class="text-lg font-semibold text-gray-900">Deploy from GitHub/GitLab</div>
     <div class="text-sm text-gray-500">Use a GH/GL repo as source of truth for part or all of your Windmill workspace.</div>
+  </a>
+  <a href="/docs/advanced/docker" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+   <div class="text-lg font-semibold text-gray-900">Run Docker Containers</div>
+    <div class="text-sm text-gray-500">Windmill support running any docker container through its bash support.</div>
   </a>
 </div>
 

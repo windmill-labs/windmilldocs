@@ -45,7 +45,7 @@ which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](../3_resources_and_types/index.md#create-a-resource-type) to be automatically
 discriminated in the auto-generated form to be of the proper type (e.g a
 parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only going to
-offer a selection over the resources of type postgres in the auto-generated UI)
+offer a selection over the resources of type postgres in the auto-generated UI).
 
 There is also a concept of [state](../../reference/index.md#state-and-internal-state) to share values
 across script executions.

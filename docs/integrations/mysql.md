@@ -13,6 +13,11 @@ To integrate [MySQL](https://www.mysql.com/) to Windmill, you need to save the f
 | database | string  | Database name        |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 | password | string  | User's password      |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 
+## MySQL as a Script Language
+
+MySQL can be used as a script language using the [MySQL driver for Deno](https://deno.land/x/mysql@v2.11.0) in Typescript.
+
+Otherwise, [Python libraries](https://github.com/PyMySQL/PyMySQL) and [Deno](https://deno.com/manual@v1.28.3/node/how_to_with_npm/mysql2) are also suggesting mysql2 from npm.
 
 
 <br/><br/>

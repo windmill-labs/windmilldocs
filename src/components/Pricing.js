@@ -69,14 +69,12 @@ const pricing = {
 							Windmill Enterprise Edition <b>Plugins</b>
 						</span>
 					),
-					features: [{ text: 'Audit log exports' }, { text: 'Distributed dependency cache' }]
-				},
-				{
-					text: (
-						<span>
-							<b>SAML</b> support including groups synchronization
-						</span>
-					)
+					features: [
+						{ text: 'Audit logs' },
+						{ text: 'Distributed dependency cache backed by S3' },
+						{ text: 'SAML support including groups synchronization' },
+						{ text: 'Multiplayer on WebIDE' }
+					]
 				},
 				{
 					text: (
@@ -88,7 +86,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							<b>Priority Support 24/7 </b> with 1h response time and automation engineer assistance
 						</span>
 					)
 				},
