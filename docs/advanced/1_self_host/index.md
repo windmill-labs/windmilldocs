@@ -45,10 +45,9 @@ address:
 # .env
 DB_PASSWORD=supersecret
 WM_BASE_URL=http://windmill.example.com
-CADDY_REVERSE_PROXY=":80"
 ```
 
-Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The reverse proxy is configured at `CADDY_REVERSE_PROXY`. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
+Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You still need to configure a reverse proxy to hit windmill and windmill-lsp on the right ports. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
 
 ```
 :80 {
@@ -57,6 +56,93 @@ Setting the `WM_BASE_URL` configures Windmill to use it as its base url. The rev
         reverse_proxy /* http://windmill_server:8000
 }
 ```
+
+The default docker-compose file exposes a caddy reverse-proxy on port 80, configured by the [caddyfile](https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile) curled above. Configure both the caddyfile and the docker-compose file to fit your needs. The documentation for caddy is available [here](https://caddyserver.com/docs/caddyfile).
+
+#### Traefik configuration
+
+<details>
+  <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Code below:</summary>
+
+  ```yaml
+version: '3.7'
+
+services:
+  windmill_server:
+    image: ghcr.io/windmill-labs/windmill:main
+    deploy:
+      replicas: 1
+    restart: unless-stopped
+    expose:
+      - 8000
+    networks:
+      - pg_network
+      - web
+    environment:
+      DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
+      BASE_URL: ${WM_BASE_URL}
+      RUST_LOG: info
+      ## You can set the number of workers to > 0 and not need any separate worker service
+      NUM_WORKERS: 0
+      DISABLE_SERVER: false
+      METRICS_ADDR: false
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web'
+      - 'traefik.http.routers.windmill.tls=true'
+      - 'traefik.http.routers.windmill.service=windmill'
+      - 'traefik.http.routers.windmill.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/`)'
+      - 'traefik.http.routers.windmill.tls.certresolver=lets-encrypt'
+      - 'traefik.http.services.windmill.loadbalancer.server.port=8000'
+
+  windmill_worker:
+    image: ghcr.io/windmill-labs/windmill:main
+    deploy:
+      replicas: 3
+    restart: unless-stopped
+    networks:
+      - pg_network
+      - web
+    environment:
+      DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
+      BASE_URL: ${WM_BASE_URL}
+      BASE_INTERNAL_URL: http://windmill_server:8000
+      RUST_LOG: info
+      NUM_WORKERS: 1
+      DISABLE_SERVER: true
+      KEEP_JOB_DIR: false
+      DENO_PATH: /usr/bin/deno
+      PYTHON_PATH: /usr/local/bin/python3
+      METRICS_ADDR: false
+    volumes:
+      - worker_dependency_cache:/tmp/windmill/cache
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  lsp:
+    image: ghcr.io/windmill-labs/windmill-lsp:latest
+    restart: unless-stopped
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web'
+      - 'traefik.http.routers.windmill_lsp.tls=true'
+      - 'traefik.http.routers.windmill_lsp.service=windmill_lsp'
+      - 'traefik.http.routers.windmill_lsp.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/ws`)'
+      - 'traefik.http.routers.windmill_lsp.tls.certresolver=lets-encrypt'
+      - 'traefik.http.services.windmill_lsp.loadbalancer.server.port=3001'
+    expose:
+      - 3001
+
+volumes:
+  worker_dependency_cache:
+
+networks:
+  pg_network:
+    name: pg_network
+  web:
+    name: web
+    external: true
+```
+</details>
 
 ### Deployment
 

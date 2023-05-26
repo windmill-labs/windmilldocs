@@ -100,7 +100,6 @@ add the following:
 DB_PASSWORD=changeme
 #use your public base url here
 WM_BASE_URL=http://localhost
-CADDY_REVERSE_PROXY=":80"
 ```
 
 This is the PostgreSQL database password used by Windmill and the base URL of
