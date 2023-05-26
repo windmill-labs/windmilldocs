@@ -133,7 +133,7 @@ The container component has no configuration.
 
 Divider X is a horizontal line.
 
-![Divider X](../assets/apps/4_app_component_library/divider_x.png)
+![Divider X](../../assets/apps/4_app_component_library/divider_x.png)
 
 #### Divider X configuration
 
@@ -146,7 +146,7 @@ Divider X is a horizontal line.
 
 Divider Y is a vertical line.
 
-![Divider Y](../assets/apps/4_app_component_library/divider_y.png)
+![Divider Y](../../assets/apps/4_app_component_library/divider_y.png)
 
 #### Divider Y configuration
 
@@ -323,7 +323,7 @@ The runnable parameters are defined:
 - **Static**: the parameter is defined in the component configuration.
 - **Connected**: the parameter is connected to an output.
 
-![Button API](../assets/apps/4_app_component_library/button.png)
+![Button API](../../assets/apps/4_app_component_library/button.png)
 
 #### Button configuration
 
@@ -386,7 +386,7 @@ The runnable parameters are defined:
 
 Only user inputs are displayed in the form.
 
-![Form API](../assets/apps/4_app_component_library/form.png)
+![Form API](../../assets/apps/4_app_component_library/form.png)
 
 #### Form configuration
 
@@ -419,8 +419,8 @@ The runnable parameters are defined:
 
 Only user inputs are displayed in the form in the modal.
 
-![Form Modal Button](../assets/apps/4_app_component_library/form-modal-button.png)
-![Form Modal API](../assets/apps/4_app_component_library/form-modal.png)
+![Form Modal Button](../../assets/apps/4_app_component_library/form-modal-button.png)
+![Form Modal API](../../assets/apps/4_app_component_library/form-modal.png)
 
 #### Form Modal configuration
 
@@ -469,7 +469,7 @@ The download button component allows you to download a file.
 
 The text input component allows you to get a string from the user.
 
-![Text Input API](../assets/apps/4_app_component_library/text-input.png)
+![Text Input API](../../assets/apps/4_app_component_library/text-input.png)
 
 #### Text Input configuration
 
@@ -488,7 +488,7 @@ The text input component allows you to get a string from the user.
 
 The password input component allows you to get a password from the user.
 
-![Password Input API](../assets/apps/4_app_component_library/password-input.png)
+![Password Input API](../../assets/apps/4_app_component_library/password-input.png)
 
 #### Password Input configuration
 
@@ -506,7 +506,7 @@ The password input component allows you to get a password from the user.
 
 The email input component allows you to get an email from the user.
 
-![Email Input API](../assets/apps/4_app_component_library/email.png)
+![Email Input API](../../assets/apps/4_app_component_library/email.png)
 
 #### Email Input configuration
 
@@ -525,7 +525,7 @@ The email input component allows you to get an email from the user.
 
 The number input component allows you to get a number from the user.
 
-![Number Input API](../assets/apps/4_app_component_library/number-input.png)
+![Number Input API](../../assets/apps/4_app_component_library/number-input.png)
 
 #### Number Input configuration
 
@@ -544,7 +544,7 @@ The number input component allows you to get a number from the user.
 
 The currency input component allows you to get a written amount of money in a set currency from the user.
 
-![Currency Input API](../assets/apps/4_app_component_library/currency.png)
+![Currency Input API](../../assets/apps/4_app_component_library/currency.png)
 
 #### Currency Input configuration
 
@@ -565,7 +565,7 @@ The currency input component allows you to get a written amount of money in a se
 
 The slider component allows you to get a number from the user.
 
-![Slider API](../assets/apps/4_app_component_library/slider.png)
+![Slider API](../../assets/apps/4_app_component_library/slider.png)
 
 #### Slider configuration
 
@@ -584,7 +584,7 @@ The slider component allows you to get a number from the user.
 
 The slider component allows you to get a range of numbers from the user.
 
-![Range API](../assets/apps/4_app_component_library/range.png)
+![Range API](../../assets/apps/4_app_component_library/range.png)
 
 #### Range configuration
 
@@ -604,7 +604,7 @@ The slider component allows you to get a range of numbers from the user.
 
 The date input component allows you to get a date from the user.
 
-![Date Input API](../assets/apps/4_app_component_library/date-input.png)
+![Date Input API](../../assets/apps/4_app_component_library/date-input.png)
 
 #### Date Input configuration
 
@@ -624,7 +624,7 @@ The date input component allows you to get a date from the user.
 
 The file input allows users to drop files into the app.
 
-![File Input API](../assets/apps/4_app_component_library/file_input.png)
+![File Input API](../../assets/apps/4_app_component_library/file_input.png)
 
 #### File Input configuration
 
@@ -644,7 +644,7 @@ The file input allows users to drop files into the app.
 
 The toggle component allows you to get a boolean from the user.
 
-![Toggle API](../assets/apps/4_app_component_library/toggle.png)
+![Toggle API](../../assets/apps/4_app_component_library/toggle.png)
 
 #### Toggle configuration
 
@@ -663,7 +663,7 @@ The toggle component allows you to get a boolean from the user.
 
 The select component allows you to get a string from the user.
 
-![Select API](../assets/apps/4_app_component_library/select.png)
+![Select API](../../assets/apps/4_app_component_library/select.png)
 
 #### Select configuration
 
@@ -684,7 +684,7 @@ The select component allows you to get a string from the user.
 
 The multiselect component allows you to get multiple strings from the user.
 
-![Multiselect API](../assets/apps/4_app_component_library/multiselect.png)
+![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png)
 
 #### Multiselect configuration
 
@@ -705,7 +705,7 @@ The multiselect component allows you to get multiple strings from the user.
 
 The text component allows you to display text.
 
-![Text API](../assets/apps/4_app_component_library/text.png)
+![Text API](../../assets/apps/4_app_component_library/text.png)
 
 #### Text Input
 
@@ -743,7 +743,7 @@ You can directly edit the text by click the `Pen` icon on the app editor. You ca
 
 The Icon API allows you to display an icon chosen in a library of icons.
 
-![Icon](../assets/apps/4_app_component_library/icon.png)
+![Icon](../../assets/apps/4_app_component_library/icon.png)
 
 #### Icon configuration
 
@@ -758,7 +758,7 @@ The Icon API allows you to display an icon chosen in a library of icons.
 
 The Image component allows you to display a picture.
 
-![HTML](../assets/apps/4_app_component_library/image_api.png)
+![HTML](../../assets/apps/4_app_component_library/image_api.png)
 
 #### Image configuration
 
@@ -778,7 +778,7 @@ The Image component allows you to display a picture.
 
 The Map component allows you to display an interactive map.
 
-![map](../assets/apps/4_app_component_library/map.png)
+![map](../../assets/apps/4_app_component_library/map.png)
 
 #### Map configuration
 
@@ -801,7 +801,7 @@ The Map component allows you to display an interactive map.
 
 The HTML component allows you to display HTML content.
 
-![HTML](../assets/apps/4_app_component_library/html.png)
+![HTML](../../assets/apps/4_app_component_library/html.png)
 
 #### HTML Input
 
@@ -820,7 +820,7 @@ The HTML component allows you to display HTML content.
 
 The table component allows you to display a table.
 
-![Table API](../assets/apps/4_app_component_library/table.png)
+![Table API](../../assets/apps/4_app_component_library/table.png)
 
 #### Table Input
 
@@ -861,7 +861,11 @@ Search can be configured in the following ways:
 ### AgGrid Table
 
 :::tip Guide
+<<<<<<< HEAD:docs/apps/4_app_component_library.md
 If you are new to Ag Grid, check out our [Introduction guide](../misc/9_guides/aggrid_table/index.md).
+=======
+If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_Guides/AgGrid_Table/index.md).
+>>>>>>> main:docs/apps/4_app_configuration-settings/1_app_component_library.md
 :::
 
 The AgGrid table component allows you to display an agnostic grid table.
@@ -905,7 +909,7 @@ The AgGrid table component allows you to display an agnostic grid table.
 
 The Bar Chart component allows you to display a Bar Chart using the [Chart.js](https://www.chartjs.org/) library. It can also be used to display a Line Chart.
 
-![Bar/Line Chart API](../assets/apps/4_app_component_library/bar.png)
+![Bar/Line Chart API](../../assets/apps/4_app_component_library/bar.png)
 
 #### Bar/Line Chart Input
 
@@ -931,7 +935,7 @@ The Bar Chart component allows you to display a Bar Chart using the [Chart.js](h
 
 The Pie Chart component allows you to display a Pie Chart using the [Chart.js](https://www.chartjs.org/) library.
 
-![Pie Chart API](../assets/apps/4_app_component_library/pie.png)
+![Pie Chart API](../../assets/apps/4_app_component_library/pie.png)
 
 #### Pie Chart Input
 
@@ -957,7 +961,7 @@ The Pie Chart component allows you to display a Pie Chart using the [Chart.js](h
 
 The Vega Lite component allows you to display a Vega Lite chart.
 
-![Vega Lite API](../assets/apps/4_app_component_library/vega-lite.png)
+![Vega Lite API](../../assets/apps/4_app_component_library/vega-lite.png)
 
 #### Vega Lite Input
 
@@ -982,7 +986,7 @@ The Vega Lite component allows you to display a Vega Lite chart.
 
 The Plotly component allows you to display a Plotly chart.
 
-![Plotly API](../assets/apps/4_app_component_library/plotly.png)
+![Plotly API](../../assets/apps/4_app_component_library/plotly.png)
 
 #### Plotly Input
 
@@ -1000,7 +1004,7 @@ The Plotly component allows you to display a Plotly chart.
 
 The Scatter Chart component allows you to display a Scatter Chart using the [Chart.js](https://www.chartjs.org/) library.
 
-![Scatter Chart API](../assets/apps/4_app_component_library/scatter.png)
+![Scatter Chart API](../../assets/apps/4_app_component_library/scatter.png)
 
 #### Scatter Chart Input
 
@@ -1026,7 +1030,7 @@ The Scatter Chart component allows you to display a Scatter Chart using the [Cha
 
 The Timeseries component allows you to display a Timeseries using the [Chart.js](https://www.chartjs.org/) library.
 
-![Timeseries API](../assets/apps/4_app_component_library/timeseries.png)
+![Timeseries API](../../assets/apps/4_app_component_library/timeseries.png)
 
 #### Timeseries Input
 
@@ -1053,7 +1057,7 @@ The Timeseries component allows you to display a Timeseries using the [Chart.js]
 
 The PDF component allows you to display a PDF file.
 
-![PDF API](../assets/apps/4_app_component_library/pdf_api.png)
+![PDF API](../../assets/apps/4_app_component_library/pdf_api.png)
 
 #### PDF configuration
 

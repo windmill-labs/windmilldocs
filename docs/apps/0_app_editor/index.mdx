@@ -1,0 +1,157 @@
+import DocCard from '@site/src/components/DocCard';
+
+# App Editor
+
+The app editor is where you build an app with components, create interactions with runnables, and configure the app settings. It is composed of 5 main sections:
+
+1. [Toolbar](#toolbar)
+2. [Canvas](#canvas)
+3. [Outputs](#outputs)
+4. [Runnables panel](#runnables-panel)
+5. [Component Library and Settings](#component-library-and-settings)
+
+![App Editor](../../assets/apps/0_app_editor/plain-app-editor.png)
+
+## Toolbar
+
+In the topbar, you have several options to configure your app:
+
+- **Change App Summary**: Modify the summary of your app.
+- **Undo/Redo**: Perform undo or redo actions.
+- **Toggle Layout**: Switch between Mobile and Desktop layout.
+- **Toggle Width**: Switch between full and max width.
+- **Export as JSON**: Export your app as a JSON file.
+- **Debugging**: Open the debugging panel.
+- **Editor/Preview Mode**: Toggle between the Editor and Preview modes.
+- **Save as Draft**: Save your app as a draft.
+- **Deploy**: Deploy your app.
+
+![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png)
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2">
+	<DocCard
+		title="Toolbar guide"
+		description="Discover all the features of the toolbar."
+		href="/docs/apps/toolbar"
+	/>
+	<DocCard
+		title="Debugging"
+		description="Learn how to debug your app."
+		href="/docs/apps/debugging"
+	/>
+	<DocCard
+		title="Deployment"
+		description="Save as draft or deploy your app."
+		href="/docs/apps/deployment"
+	/>
+</div>
+
+## Canvas
+
+The canvas at the center of the editor is where you design and see the overall UI. Insert new components, move them around, resize them, or nest them in containers.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	loop
+	controls
+	id="main-video"
+	src="/videos/app-canvas-overview.mp4"
+/>
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2">
+	<DocCard
+		title="Canvas guide"
+		description="Move, resize, and nest components."
+		href="/docs/apps/canvas"
+	/>
+	<DocCard
+		title="Component Library"
+		description="Discover all the components available."
+		href="/docs/apps/app_configuration-settings/app_component_library"
+	/>
+</div>
+
+## Outputs
+
+On the left panel of the editor, you can see the list of outputs of the app. These outputs represent the state of the app and are categorized into four types:
+
+- **Context**: The context holds information such as the user email, username, workspace, query parameters, and more.
+- **State**: The state holds the app's current state, which can be manipulated by the frontend scripts.
+- **Component Outputs**: These outputs correspond to the outputs of the individual components.
+- **Background Runnables**: These outputs represent the outputs of the background runnables.
+
+![App Outputs](../../assets/apps/0_app_editor/app-outputs.png)
+
+You can perform the following actions with the outputs:
+
+- Search for an output
+- Edit the output's ID
+- Select a component to view its outputs
+- Connect an input to an output
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+	<DocCard
+		title="Context"
+		description="The context holds such information as the user email, username, the workspace, the query parameters, etc."
+		href="/docs/apps/outputs"
+	/>
+	<DocCard
+		title="State"
+		description="Learn how to interact with the app's state using frontend scripts."
+		href="/docs/apps/app-runnable-panel#state"
+	/>
+</div>
+
+## Runnables panel
+
+On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
+
+![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png)
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+	<DocCard
+		title="Runnable Guide"
+		description="Learn how to create and configure runnables."
+		href="/docs/apps/app-runnable-panel"
+	/>
+</div>
+
+## Component Library and Settings
+
+Finally, on the right panel of the editor, you can insert a new component, configure a component or edit the component styles.
+
+![App Runnables panel](../../assets/apps/0_app_editor/app-components-settings.png)
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		title="Component Library"
+		description="Discover all the components available in the library, and their configurations."
+		href="/docs/apps/app_configuration-settings/app_component_library"
+	/>
+	<DocCard
+		title="Runnable Triggers"
+		description="Learn how to trigger a runnable."
+		href="/docs/apps/app_configuration-settings/app_runnable_triggers"
+	/>
+	<DocCard
+		title="Component configuration"
+		description="Learn how to configure a component."
+		href="/docs/apps/app_configuration-settings/app_component_configuration"
+	/>
+	<DocCard
+		title="Styling"
+		description="Learn how to edit the component styles."
+		href="/docs/apps/app_configuration-settings/app_styling"
+	/>
+</div>
