@@ -6,10 +6,10 @@
 
 #cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 100px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 96px;
   gap: 8px;  
-  width: calc(100% - 20px);
+  width: 100%;
 }
 
 #cards:hover > .card::after {
@@ -25,6 +25,7 @@
   position: relative;
   grid-column-end: span 1;
   grid-row-end: span 3;
+  
 }
 
 .card:hover::before {
@@ -47,7 +48,7 @@
 .card::before {
   background: radial-gradient(
     800px circle at var(--mouse-x) var(--mouse-y), 
-    rgba(0, 0, 255, 0.06),
+    rgba(0, 0, 255, 0.04),
     transparent 40%
   );
   z-index: 3;
@@ -56,7 +57,7 @@
 .card::after {  
   background: radial-gradient(
     600px circle at var(--mouse-x) var(--mouse-y), 
-    rgba(0, 0, 255, 0.4),
+    rgba(0, 0, 255, 0.6),
     transparent 40%
   );
   z-index: 1;
@@ -92,6 +93,8 @@ i {
   height: 140px;
   justify-content: center;
   overflow: hidden;
+  height: 60%;
+
 }
 
 .card-image > i {
@@ -104,33 +107,11 @@ i {
   display: flex;
   flex-grow: 1;
   justify-content: flex-start;
-  padding: 0px 20px;
+  padding: 0px 8px;
+  height: 40%;
 }
 
-.card-info {
-  align-items: flex-start;
-  display: flex;
-  gap: 10px;
-}
 
-.card-info > i {  
-  font-size: 1em;
-  height: 20px;
-  line-height: 20px;
-}
-
-.card-info-title > h3 {
-  font-size: 1.1em;
-  line-height: 20px;
-}
-
-.card-info-title > h4 {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.85em;
-  margin-top: 8px;
-}
-
-/* -- ↓ ↓ ↓ some responsiveness ↓ ↓ ↓ -- */
 
 @media(max-width: 1000px) {
   body {

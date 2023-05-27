@@ -3,7 +3,6 @@ import LandingSection from './LandingSection';
 import { Code, LayoutDashboard, List, PlayCircle } from 'lucide-react';
 import { useTabs } from './tabs/useTabs';
 import { VolumeX } from 'lucide-react';
-import CardsContainer from './../../src/components/Cards';
 
 const tabs = [
 	{
@@ -84,8 +83,6 @@ export default function HeroExample() {
 
 	return (
 		<>
-			<CardsContainer />
-
 			<LandingSection bgClass="bg-white">
 				<div className="w-full gap-8 flex flex-col">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-slate-500 to-slate-800">

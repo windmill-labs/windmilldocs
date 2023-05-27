@@ -20,6 +20,7 @@ import FeatureCardTabs from './tabs/FeatureCardTabs';
 import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
 import SectionExamples from './SectionExamples';
 import { ExternalLink } from 'lucide-react';
+import CardsContainer from './../components/Cards';
 
 const newTabs = [
 	{
@@ -291,6 +292,8 @@ export default function ScriptSection() {
 					high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the
 					auto-generated UI and monitor them easily.
 				</span>
+
+				<CardsContainer />
 
 				<FeatureCardTabs tabs={newTabs} color="blue" />
 				<SectionExamples examples={examples} />
