@@ -125,8 +125,8 @@ return [
 	},
 	{
 		field: 'age',
-		cellEditorParams: function (params) {
-			return { values: [1, params.data.age, 100] };
+		cellEditorParams: { 
+			values: [1, 10, 100]
 		},
 		cellEditor: 'agSelectCellEditor',
 		editable: true,
