@@ -58,7 +58,6 @@ The passing of credentials works a bit differently in the two approaches, so fir
 "skeleton" app. Go to the <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a> Home page by click "App" in the top right corner.
 Let's add our first component:
 
-
 1. Click on "Tabs" in the right-hand panel to add it to the canvas.
 1. Select "invisibleOnView" for the _Tabs Kind_ setting (this will hide the tab row when the app is in
    _preview_ or _published_ mode).
@@ -571,7 +570,7 @@ navigated to the "Data" tab.
 		</tr>
 		<tr>
 			<td>Simple</td>
-			<td>Premade scripts can be imported from <a href="https://hub.windmill.dev" target="_blank">Windmill Hub</a></td>
+			<td>Premade scripts can be imported from <a href="https://hub.windmill.dev" >Windmill Hub</a></td>
 		</tr>
 		<tr>
 			<td style={{borderBottomWidth: '2px'}}></td>

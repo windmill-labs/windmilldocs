@@ -1,5 +1,5 @@
 ---
-title: "OpenFlow"
+title: 'OpenFlow'
 ---
 
 # OpenFlow Spec
@@ -33,17 +33,17 @@ OpenFlow is portable and its root object is defined as follows:
 
 ```typescript
 type OpenFlow = {
-  // an optional one-liner summary-line
-  summary?: string;
+	// an optional one-liner summary-line
+	summary?: string;
 
-  // optional description
-  description?: string;
+	// optional description
+	description?: string;
 
-  // the actual logic of the flow
-  value: FlowValue;
+	// the actual logic of the flow
+	value: FlowValue;
 
-  // the input spec of the flow as defined by a json schema
-  schema?: any;
+	// the input spec of the flow as defined by a json schema
+	schema?: any;
 };
 ```
 
@@ -55,16 +55,16 @@ where the logic of the Flow is actually defined.
 
 ```typescript
 type FlowValue = {
-  // a sequence of modules, some of which are containers
-  // for other modules, like a for-loop or a branch
-  modules: FlowModule[];
+	// a sequence of modules, some of which are containers
+	// for other modules, like a for-loop or a branch
+	modules: FlowModule[];
 
-  // the error handler to call in case of an unrecoverable error
-  failure_module?: FlowModule;
+	// the error handler to call in case of an unrecoverable error
+	failure_module?: FlowModule;
 
-  // force this flow to be executed entirely on the same worker
-  // and share a mounted folder to pass heavy data
-  same_worker: boolean;
+	// force this flow to be executed entirely on the same worker
+	// and share a mounted folder to pass heavy data
+	same_worker: boolean;
 };
 ```
 
@@ -96,7 +96,7 @@ type FlowModule = {
 
   // suspend the flow until it is resumed by receiving a certain number of events before a timeout
   suspend?: { required_events?: integer, timeout: integer };
-  
+
   // number of times to retry this module before passing it to the error handler
   retry?: Retry
 };
@@ -204,9 +204,9 @@ There's also the `stop_after_if` optional object:
 
 ```typescript
 type stop_after_if = {
-  expr: string;
-  skip_if_stopped: boolean;
-  suspend?: integer;
+	expr: string;
+	skip_if_stopped: boolean;
+	suspend?: integer;
 };
 ```
 
@@ -214,17 +214,19 @@ If present:
 
 - `stop_after_if.expr`: evaluate a JavaScript expression that takes the result
   as an input to decide if the Flow should stop there.
-  
+
   Useful to stop a Flow
   that is meant to watch for changes if there are no changes.
+
 - `stop_after_if.skip_if_stopped`: used to flag failed runs as skippable.
-  
+
   It is
   useful in the context of Flows being triggered very often to watch for changes
   as you might want to ignore the runs that have been skipped.
+
 - `suspend` _(optional)_: a non-negative integer that determines the number of
   events (resume messages) needed to progress to the next step in the Flow.
-  
+
   This
   is useful for inserting user inputs during the execution of a Flow, such as
   approving (resum) or disapproving (cancel) a Flow.

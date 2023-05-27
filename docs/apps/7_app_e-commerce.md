@@ -15,8 +15,8 @@ We will now use the Windmill app builder to build a simple E-commerce backoffice
 
 It showcases a variety of features that are available in the Windmill app builder, such as:
 
-- [Runnables](/docs/apps/app-runnable/): scripts or flows that are executed on demand.
-- [Components](/docs/apps/app_configuration-settings/app_component_library): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
+- [Runnables](/docs/apps/3_app-runnable-panel.mdx): scripts or flows that are executed on demand.
+- [Components](/docs/apps/4_app_configuration-settings/1_app_component_library.md): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
 
 :::tip
 
@@ -352,7 +352,7 @@ For instance, let's create a new table and use the following inline script to di
 return state.cart ? state.cart.map((id) => j.result.find((x) => x.id === id)) : [];
 ```
 
-The `add to cart` action needs to trigger a refresh of the table. We can do this by selecting the id of the table in the `Recompute others` configuration of the action. See [Recompute others](/docs/apps/app-runnable#recompute/) for more details.
+The `add to cart` action needs to trigger a refresh of the table. We can do this by selecting the id of the table in the `Recompute others` configuration of the action. See [Recompute others](/docs/apps/3_app-runnable-panel.mdx#recompute-others) for more details.
 
 We also need a action to remove a product from the cart. We can use the following frontend script to do this.
 

@@ -13,7 +13,7 @@ As a Postgres database service provider, Neon.tech follows the regular Postgres 
 
 <br/>
 
-1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" target="_blank">Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
+1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" >Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
 
 2. [Set up a project and add data](https://neon.tech/docs/tutorial/project-setup).
 
@@ -31,12 +31,12 @@ For example, for `psql postgres://daniel:<password>@ep-restless-rice.us-east-2.a
 
 ```json
 {
-    "host": "ep-restless-rice.us-east-2.aws.neon.tech",
-    "port": 5432,
-    "user": "daniel",
-    "dbname": "neondb",
-    "sslmode": "require",
-    "password": "<password>"
+	"host": "ep-restless-rice.us-east-2.aws.neon.tech",
+	"port": 5432,
+	"user": "daniel",
+	"dbname": "neondb",
+	"sslmode": "require",
+	"password": "<password>"
 }
 ```
 

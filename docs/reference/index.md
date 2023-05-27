@@ -84,11 +84,11 @@ error to have it be listed as a failed flow.
 
 ### Script hashes
 
-Versions of Scripts are uniquely defined by their hash. It is an immutable
-reference similar to a git commit SHA. See [Versioning](#versioning) for more
-details. Scripts also have a path and many versions share the same path. When a
-script is saved at a path, it creates a new hash which becomes the "HEAD" of the
-path, the previous "HEAD" is archived (but still deployed forever).
+Versions of Scripts are uniquely defined by their hashes. They are an immutable
+reference similar to a git commit SHA. See [Versioning](#versioning). Scripts also
+have a path and many versions share the same path. When a script is saved at a path,
+it creates a new hash which becomes the "HEAD" of the path, the previous "HEAD" is
+archived (but still deployed forever).
 
 When a script is saved, it is immediately deployed.
 
