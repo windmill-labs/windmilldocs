@@ -4,6 +4,12 @@ title: CLI Workspace Management
 
 # Workspace Management
 
+:::caution
+
+This page is currently WIP and is being updated.
+
+:::
+
 The wmill CLI is capable of handling working with many remotes & workspaces.
 Each combination of remote & workspace is registered with together with a name
 locally using `wmill workspace add`.

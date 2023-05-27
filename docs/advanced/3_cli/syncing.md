@@ -4,6 +4,12 @@ title: CLI Syncing
 
 # Syncing
 
+:::caution
+
+This page is currently WIP and is being updated.
+
+:::
+
 Syncronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 

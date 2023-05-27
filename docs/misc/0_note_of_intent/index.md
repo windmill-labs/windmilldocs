@@ -24,8 +24,7 @@ restricted forms.
 
 Windmill is different:
 
-- Windmill is an [open-source](https://github.com/windmill-labs/windmill) alternative to Retool, Airplane and n8n to **build all your internal tools (endpoints, workflows, UIs) through simple scripts** - in Typescript, Python, Go & Bash - and low code builders. Without sacrificing on one side visibility and intuitivity and on the other side,
-  control, reliability, performance, flexibility and scalability.
+- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, Bash) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Airplane and n8n.
 - It **empowers semi-technical users** to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
   environments, secrets managements, etc).
@@ -43,7 +42,7 @@ Windmill embeds:
   from a self-managed job queue, at scale, with any dependency, no overhead, and
   minimal cold start
 - a **parser that will infer the dependencies and arguments** from the code
-  itself and generate **lockfiles** and **input specs**
+  itself and generate lockfiles and input specs
   - the _lockfile_ allows the script being deployed to maintain exactly the same
     set of versioned dependencies forever
   - the in _input spec_ (which is actually a JSON schema) is used to generate a
@@ -55,14 +54,14 @@ Windmill embeds:
   [Flows](../../getting_started/6_flows_quickstart/index.md) by composing your
   custom scripts and generic scripts shared on
   [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
-  - **retries** with fixed and exponential backoff
-  - **error handling**
-  - **for loops** over list triggering one flow per item
-  - **branching** to one subflow given a predicate or all sub-flows
-  - be **suspended** with its state preserved without consuming any resources to
+  - [retries](../../flows/14_retries.md) with fixed and exponential backoff
+  - [error handling](../../core_concepts/10_error_handling_in_flows/index.md)
+  - [for loops](../../flows/12_flow_loops.md) over list triggering one flow per item
+  - [branching](../../flows/13_flow_branches.md) to one subflow given a predicate or all sub-flows
+  - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
     sleep for a pre-determined amount of time or waiting to be reactivated by an
     external webhook who may contain payloads
-  - **approval steps** leveraging being suspended and reactivated at some secret
+  - [approval steps](../../flows/11_flow_approval.md) leveraging being suspended and reactivated at some secret
     urls known only by the approvers
 - a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.md)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
@@ -82,26 +81,17 @@ Windmill embeds:
 - a **[CLI](../../advanced/3_cli/index.md)** and GitHub Actions for **GitHub** and local
   based developement and code management.
 
-On top of all these, you'll get a splendid [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
+On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.
 
 ### Use cases
 
 Examples of what can be built with Windmill include:
 
-- Turn your scripts into internal apps that you can easily share. It's common
-  for engineers to piece together scripts to automate repetitive tasks for a
-  non-technical user (sales, ops, customer support, customer success, etc).
-- ETL done entirely within Windmill.
-- Trigger ETL in other services and react to their status changes.
-- Template-based SQL queries with fine grain permissions and wait-for-approval
-  steps: create, ban, delete users, modify their licences, etc.
-- Automated triggers for events (new email, new message on Discord, a HackerNews
-  message matching a given pattern, a new row in a database, a Google Sheet,
-  etc.)
-- Onboarding automation that requires setting up multiple systems, including the
-  production site and third-party SaaS services.
-- Migration service to move data from and to CRMs and marketing systems.
+- **Scripts** that are deployed automatically into UIs, webhook endpoints and scheduled jobs.
+- **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching. ((Applicative workflows run critical services and need a production-grade infrastructure?))
+- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our Typescript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
+- **Powerful apps and dashboards** that are internal or external-facing, using either a low-code builder similar to Retool or full react views / svelte. In either case, those apps do a mix of frontend logic and calling the scripts and flows directly.
 
 You can find plenty of examples and inspirations on the
 [Hub](https://hub.windmill.dev) or on our [Blog](/blog).

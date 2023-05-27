@@ -1,8 +1,8 @@
 ---
-title: "Contributing"
+title: "Contributor Guide"
 ---
 
-# Contributor's guide
+# Contributor Guide
 
 ## Getting started
 

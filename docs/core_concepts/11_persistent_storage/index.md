@@ -83,7 +83,7 @@ In conclusion `setState` is a convenient way to persist json between multiple sc
 
 Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
-For heavier ETLs, you might want to use the [Shared Directory](../../flows/1_flow_editor.md#shared-directory) to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
+For heavier ETLs, you might want to use the [Shared Directory](../../flows/3_editor_components.md#shared-directory) to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
 Beware that the `./shared` folder is not preserved across [suspends](../../flows/11_flow_approval.md) and [sleeps](../../flows/15_sleep.md). The directory is temporary and active for the time of the execution.
 

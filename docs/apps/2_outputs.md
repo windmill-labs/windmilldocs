@@ -1,17 +1,21 @@
-# Outputs
+# Outputs guide
 
-On the left-hand side of the app editor, you can find the app outputs. They are three types of outputs:
+On the left-hand side of the app editor, you can find the app outputs. They are three kind of outputs:
 
 - Context and state
 - Component outputs
 - Background runnables outputs
 
+![App demo outputs](../assets/apps/2_app_outputs/app-demo-outputs.png)
+
 When a component or a background runnable is selected, the outputs of the component or the background runnable are displayed.
 You can manually open an output by clicking on the header of the output. Once manually opened, the output will stay open until you close it.
 
-You can search for an output by typing in the search bar. It searches in the output name and in the output object keys.
+You can search for an output by typing in the search bar. It searches in the output name and in the output object keys, recursively.
 
-### Context
+![App outputs](../assets/apps/2_app_outputs/app_outputs.png)
+
+### App context
 
 The app context contains the following outputs:
 
@@ -81,3 +85,16 @@ Here are the steps to connect an input to an output:
   - If you click on a component, the output will be pinned and stays open
 - You can now click on the output you want to connect to the input
 - The input is now connected to the output
+
+### Editing the id of a component
+
+You can edit the id of a component by clicking on the id. Component id can only contain letters and numbers.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/app-edit-id.mp4"
+/>

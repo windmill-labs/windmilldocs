@@ -30,7 +30,7 @@ You can execute queries on Supabase through the regular Postgres protocol.
 	- Click `Database`.
 	- Find your Connection Info and Connection String. Direct connections are on port 5432.
 
-4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the sslmode to "disable".
+4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the sslmode to "disable". More details on our [PostgreSQL Quickstart](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md).
 
 
 ## Through Supabase API

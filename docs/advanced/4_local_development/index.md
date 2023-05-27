@@ -1,8 +1,8 @@
 ---
-title: Developing Scripts Locally
+title: Local Development
 ---
 
-# Developing Scripts Locally
+# Local Development
 
 ## Deno
 

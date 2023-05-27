@@ -58,7 +58,7 @@ Your workspace is created!
 
 <br/>
 
-It's empty for now, but populate it by creating new [scripts](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript), [flows](https://docs.windmill.dev/docs/getting_started/flows_quickstart/) & [apps](https://docs.windmill.dev/docs/getting_started/apps_quickstart/), or even import them from [Hub](https://hub.windmill.dev/).
+It's empty for now, but populate it by creating new [scripts](../../getting_started/0_scripts_quickstart/index.md), [flows](../../getting_started/0_scripts_quickstart/index.md) & [apps](../../getting_started/7_apps_quickstart/index.md), or even import them from [Hub](https://hub.windmill.dev/).
 
 :::
 

@@ -1,12 +1,13 @@
 # Triggering Flows
 
-Flows can be triggered in 6 ways.
+Flows can be triggered in 7 ways.
 
 On-demand triggers:
-- [Auto-generated UIs](#auto-generated-uis)
+- [Auto-generated UIs](/docs/getting_started/trigger_flows#auto-generated-uis)
 - [Customized UIs with the App Editor](#customized-uis-with-the-app-editor)
 - [Schedule the Execution of a Flow](#schedule-the-execution-of-a-flow)
 - [Trigger Flows from CLI (Command Line Interface)](#trigger-flows-from-cli-command-line-interface)
+- [Trigger a Flow from another Flow](#trigger-a-flow-from-another-flow)
 
 Triggers from external events:
 - [Scheduling + Trigger Scripts](#scheduling--trigger-scripts)
@@ -101,6 +102,12 @@ The `wmill` cli allows you to interact with Windmill instances right from your t
 More details on our pages dedicated to [CLI](../../advanced/3_cli/index.md).
 
 :::
+
+### Trigger a Flow from another Flow
+
+Windmill supports inner flows. This allows you to call a flow from another workflow.
+
+![Inner Flows](./inner_flow.png)
 
 ## Triggers from External Events
 
