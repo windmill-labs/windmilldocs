@@ -88,15 +88,15 @@ All details on Apps can be found in the Apps section.
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-    <a href="/docs/apps/app_component_library" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+    <a href="/docs/apps/app_configuration-settings/app_component_library" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
       <div class="text-lg font-semibold text-gray-900">List of Components</div>
       <div class="text-sm text-gray-500">Use prebuilt interface elements to display data, and manipulate or interact with it based on user actions.</div>
     </a>
-    <a href="/docs/apps/app-runnable" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+    <a href="/docs/apps/app-runnable-panel" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
       <div class="text-lg font-semibold text-gray-900">Link your App to scripts and flows</div>
       <div class="text-sm text-gray-500">Run any script or flow for your UI.</div>
     </a>
-    <a href="/docs/apps/app_styling" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
+    <a href="/docs/apps/app_configuration-settings/app_styling" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" target="_blank">
       <div class="text-lg font-semibold text-gray-900">Styling</div>
       <div class="text-sm text-gray-500">Customize the styling of your App according to your own graphical standards.</div>
     </a>

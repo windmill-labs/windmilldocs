@@ -110,11 +110,11 @@ At any time, have a look at your app's **Inputs** associated with each component
 
 ### Tailor the look of your app
 
-At the **component level**, on the `Settings` tab, configure the [style](../../apps/8_app_styling.md) of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Settings` tab).
+At the **component level**, on the `Settings` tab, configure the [style](../../apps/4_app_configuration-settings/4_app_styling.md) of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Settings` tab).
 
 ![Cutomize components](./customize_component.png)
 
-At the **app level**, you can give a [harmonized style](../../apps/8_app_styling.md#global-styling) to your app with CSS. On the `CSS` tab, give details either in boxes or in JSON.
+At the **app level**, you can give a [harmonized style](../../apps/4_app_configuration-settings/4_app_styling.md#global-styling) to your app with CSS. On the `CSS` tab, give details either in boxes or in JSON.
 
 ![Customize CSS](./customize_css.png)
 
@@ -136,4 +136,4 @@ When you're done with the editing of your app, `Save` the current version to the
 
 Once it's saved, it's ready to use! You can also `Publish` it, or even `Publish to Hub` and export it in JSON or Hub compatible JSON from the `⋮` tab.
 
-Follow our [detailed pages](../../apps/0_app_editor.md) on the App Editor for more information.
+Follow our [detailed pages](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
