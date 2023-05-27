@@ -14,17 +14,15 @@ examples: _Zapier_ or _Make_
 
 ## Code-based workflow engines
 
-On the opposite side, you could choose to go on code-based solutions. They give a solid foundation for building your workflows and clean up your code.
-However, these solutions are less intuitive as they are **complex to set up and operate**. Also, they do not allow to share scripts easily or build UIs.
-
-Although these approaches are interesting, **these players do not seek to reduce the same problems as Windmill**.
+On the opposite side, you could choose to go on solely code-based solutions. They give a solid foundation for building your workflows and clean up your code.
+However, these solutions are less intuitive as they are **complex to set up and operate**. Also, they do not allow to share scripts easily or build UIs. Last, they all suffer from slow cold-start and poor latency whereas windmill is always blazing fast.
 
 examples: _Temporal_, _Airflow_, _Prefect_ & _Dagster_
 
 <details>
   <summary>More details</summary>
 
-Airflow and Temporal are the golden standards. They are very good, battle tested and scale well. They brought all the good abstractions for workflows and from a bird's eye perspective, we are all running DAGs of tasks, sorted in topological order, parallelized where possible  and run by a fleet of workers. 
+Airflow and Temporal are the golden standards. They are very good, battle tested and scale well. They brought all the good abstractions for workflows and from a bird's eye perspective, we are all running DAGs of tasks, sorted in topological order, parallelized where possible and run by a fleet of workers.
 
 <br/>
 
@@ -49,10 +47,9 @@ By comparison, in Windmill one would just write the canonical python or typescri
 
 <br/>
 
-> [1]: Windmill is not just a workflow engine, it is also a function as a service (FaaS) infrastructure where it can run arbitrary scripts in typescript/python/bash/go. Contrary to lambda or gcp cloud functions, we do not need the functions to be pre-packaged and deployed in advance AOT. For typescript, we rely on the deno runtime that leverage v8 isolates and the immutable caching capabilities of deno. For python, we have implemented our own dependency resolver that will override the python virtual path and create a unique virtual environment for that specific script that will respect the lockfile generated at time of saving the script/flow for reproducibility. Given that those are interpreted languages, we pay no performance penalty to interpret that code on demand. So the only limiting factor for task execution is that in the events that dependencies are not cached by the worker, they need to be installed at time of execution. With a limited number of workers, the likelihood of a cache miss is low as soon as one script/workflow is executed more than once.  With a large fleet of workers, cache miss increase and hence we have implemented a global caching mechanism that relies on syncing the cache through s3. It is only available in our enterprise edition. With it in place, we run tasks and workflows with 0 overhead versus running the same scripts on bare-metal. You can even leverage hardware acceleration without any additional configuration.
+> [1]: Windmill is not just a workflow engine, it is also a function as a service (FaaS) infrastructure where it can run arbitrary scripts in typescript/python/bash/go. Contrary to lambda or gcp cloud functions, we do not need the functions to be pre-packaged and deployed in advance AOT. For typescript, we rely on the deno runtime that leverage v8 isolates and the immutable caching capabilities of deno. For python, we have implemented our own dependency resolver that will override the python virtual path and create a unique virtual environment for that specific script that will respect the lockfile generated at time of saving the script/flow for reproducibility. Given that those are interpreted languages, we pay no performance penalty to interpret that code on demand. So the only limiting factor for task execution is that in the events that dependencies are not cached by the worker, they need to be installed at time of execution. With a limited number of workers, the likelihood of a cache miss is low as soon as one script/workflow is executed more than once. With a large fleet of workers, cache miss increase and hence we have implemented a global caching mechanism that relies on syncing the cache through s3. It is only available in our enterprise edition. With it in place, we run tasks and workflows with 0 overhead versus running the same scripts on bare-metal. You can even leverage hardware acceleration without any additional configuration.
 
 </details>
-
 
 ## Admin panels builders
 

@@ -16,6 +16,8 @@ The oauth.json has the following structure:
 
 > `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json)
 
+For environments that do not support mounting files or if not practical, you may also pass it base64 as env variable to the server: `OAUTH_JSON_AS_BASE64=$(base64 oauth.json | tr -d '\n')`
+
 ## Google login
 
 **Create Google OAuth keys**

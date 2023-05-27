@@ -2,7 +2,7 @@
 
 Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
-![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png "Connect a Supabase project with Windmill")
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
 
 :::info
 
@@ -21,17 +21,17 @@ You can execute queries on Supabase through the regular Postgres protocol.
     src="/videos/supabase_postgres_integration.mp4"
 />
 
-1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" target="_blank">Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
+1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
 
 2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
 
 3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
-	- Go to the `Settings` section.
-	- Click `Database`.
-	- Find your Connection Info and Connection String. Direct connections are on port 5432.
+
+   - Go to the `Settings` section.
+   - Click `Database`.
+   - Find your Connection Info and Connection String. Direct connections are on port 5432.
 
 4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the sslmode to "disable". More details on our [PostgreSQL Quickstart](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md).
-
 
 ## Through Supabase API
 
@@ -89,6 +89,7 @@ You can find more examples and premade Supabase scripts on [Windmill Hub](https:
 <br/>
 
 More tutorials on Supabase:
+
 - [How to Send Database Events From Supabase to Windmill](/blog/database-events-from-supabase-to-windmill)
 - [Create an E-commerce backoffice](../apps/7_app_e-commerce.md)
 - [Create an Issue Tracker App with Supabase in 15 Minutes](/blog/create-issue-tracker-in-15-minutes)

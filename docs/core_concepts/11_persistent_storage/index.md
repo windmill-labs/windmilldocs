@@ -26,7 +26,6 @@ There are 4 kinds of persistent storage in Windmill:
 
 4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
-
 ## You already have your own database
 
 Then we have nothing to say.
@@ -78,7 +77,6 @@ The states can be seen in the [Resources](../3_resources_and_types/index.md) sec
 
 In conclusion `setState` is a convenient way to persist json between multiple script executions.
 
-
 ### Shared Directory
 
 Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
@@ -111,14 +109,15 @@ For Postgres databases (best for structured data storage and retrieval, where yo
 
 [Supabase](https://supabase.com/) is an open-source alternative to Firebase, providing a backend-as-a-service platform that offers a suite of tools, including real-time subscriptions, authentication, storage, and a PostgreSQL-based database.
 
-1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" target="_blank">Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
+1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
 
 2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
 
 3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
-	- Go to the `Settings` section.
-	- Click `Database`.
-	- Find your Connection Info and Connection String. Direct connections are on port 5432.
+
+   - Go to the `Settings` section.
+   - Click `Database`.
+   - Find your Connection Info and Connection String. Direct connections are on port 5432.
 
 4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the `sslmode` to "disable".
 
@@ -140,6 +139,7 @@ You can find examples and premade Supabase scripts on [Windmill Hub](https://hub
 <br/>
 
 More tutorials on Supabase:
+
 - [How to Send Database Events From Supabase to Windmill](/blog/database-events-from-supabase-to-windmill)
 - [Create an E-commerce backoffice](../../apps/7_app_e-commerce.md)
 - [Create an Issue Tracker App with Supabase in 15 Minutes](/blog/create-issue-tracker-in-15-minutes)
@@ -152,7 +152,7 @@ More tutorials on Supabase:
 
 [Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.
 
-1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" target="_blank">Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
+1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" >Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
 
 2. [Set up a project and add data](https://neon.tech/docs/tutorial/project-setup).
 
@@ -179,19 +179,18 @@ For example, for `psql postgres://daniel:<password>@ep-restless-rice.us-east-2.a
 
 ```json
 {
-    "host": "ep-restless-rice.us-east-2.aws.neon.tech",
-    "port": 5432,
-    "user": "daniel",
-    "dbname": "neondb",
-    "sslmode": "require",
-    "password": "<password>"
+	"host": "ep-restless-rice.us-east-2.aws.neon.tech",
+	"port": 5432,
+	"user": "daniel",
+	"dbname": "neondb",
+	"sslmode": "require",
+	"password": "<password>"
 }
 ```
 
 Where the sslmode should be "require" and Neon uses the default PostgreSQL port, `5432`.
 
 :::
-
 
 ## Large Data Files: S3, R2, MinIO
 
@@ -226,7 +225,6 @@ You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windm
 
 :::
 
-
 ### Cloudflare R2
 
 [Cloudflare R2](https://www.cloudflare.com/products/r2/) is a cloud-based storage service that provides developers and businesses with a cost-effective and secure way to store and access their data.
@@ -236,7 +234,6 @@ You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windm
 2. [Create a bucket](https://developers.cloudflare.com/r2/get-started/) on R2.
 
 3. [Integrate it to Windmill](../../integrations/cloudlare-r2.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
-
 
 ### MinIO
 
@@ -268,7 +265,6 @@ You can find examples and premade MonggoDB scripts on [Windmill Hub](https://hub
 
 :::
 
-
 ### Redis
 
 [Redis](https://redis.io/) is an open-source, in-memory key-value store that can be used for caching, message brokering, and real-time analytics. It supports a variety of data structures such as strings, lists, sets, and hashes, providing flexibility for non-structured data storage and management. Redis is known for its high performance and low-latency data access, making it a suitable choice for applications requiring fast data retrieval and processing.
@@ -280,7 +276,6 @@ To use Redis with Windmill:
 2. [Create a database](https://developer.redis.com/create).
 
 3. [Integrate it to Windmill](../../integrations/redis.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
-
 
 ### Upstash
 
