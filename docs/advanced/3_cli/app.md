@@ -1,4 +1,4 @@
-# Managing apps with the CLI
+# Apps management
 
 ## Pushing an app
 

@@ -1,4 +1,4 @@
-# Managing scripts with the CLI
+# Scripts management
 
 ## Pushing a script
 
@@ -62,7 +62,7 @@ wmill script run <remote_path> [options]
 
 ### Options
 
-| Option         | Parameters | Description                                                                     |
-| -------------- | ---------- | ------------------------------------------------------------------------------- |
-| `-d, --data`   | `data`     | Inputs specified as a JSON string or a file using @<filename> or stdin using @- |
-| `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.        |
+| Option         | Parameters | Description                                                                   |
+| -------------- | ---------- | ----------------------------------------------------------------------------- |
+| `-d, --data`   | `data`     | Inputs specified as a JSON string or a file using @filename or stdin using @- |
+| `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.      |

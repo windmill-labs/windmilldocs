@@ -78,7 +78,7 @@ Windmill embeds:
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
-- a **[CLI](../../advanced/3_cli/index.md)** and GitHub Actions for **GitHub** and local
+- a **[CLI](../../advanced/3_cli/index.mdx)** and GitHub Actions for **GitHub** and local
   based developement and code management.
 
 On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support

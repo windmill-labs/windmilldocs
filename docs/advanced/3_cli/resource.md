@@ -1,4 +1,4 @@
-# Managing resources with the CLI
+# Resource management
 
 ## Pushing a resource
 

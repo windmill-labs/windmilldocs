@@ -1,4 +1,4 @@
-# Managing users with the CLI
+# Users management
 
 ## Adding a user
 
