@@ -1,5 +1,13 @@
 # Scripts management
 
+## Listing scripts
+
+The `wmill script` list command is used to list all scripts in the remote workspace.
+
+```bash
+wmill script
+```
+
 ## Pushing a script
 
 The wmill script push command is used to push a local script to the remote server, overriding any existing remote versions of the script. This command allows you to manage and synchronize your scripts across different environments.

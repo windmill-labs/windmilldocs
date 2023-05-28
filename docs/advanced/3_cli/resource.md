@@ -1,5 +1,13 @@
 # Resource management
 
+## Listing resources
+
+The `wmill resource` list command is used to list all resources in the remote workspace.
+
+```bash
+wmill resource
+```
+
 ## Pushing a resource
 
 The `wmill resource push` command is used to push a local resource, overriding any existing remote versions.

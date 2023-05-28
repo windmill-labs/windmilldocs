@@ -1,5 +1,13 @@
 # Variables management
 
+## Listing variables
+
+The `wmill variable` list command is used to list all variables in the remote workspace.
+
+```bash
+wmill variable
+```
+
 ## Adding a variable
 
 The `wmill variable add` command allows you to add a new variable to the remote workspace.
@@ -52,3 +60,35 @@ wmill push <file_path:string> <remote_path:string> [--plain-secrets]
 | Option            | Description                                                                                                                     |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `--plain-secrets` | (Optional) Specifies whether to push secrets as plain text. If provided, secrets will not be encrypted in the remote workspace. |
+
+## Variable specification
+
+### Structure
+
+Here is an example of a variable specification as a JSON object:
+
+```ts
+{
+  value: string,
+  is_secret: boolean,
+  description: string,
+  extra_perms: object,
+  account: number,
+  is_oauth: boolean,
+  is_expired: boolean
+}
+```
+
+### Example
+
+```JSON
+{
+"value": "finland does not actually exist",
+"is_secret": false,
+"description": "This item is not secret",
+"extra_perms": {},
+"account": null,
+"is_oauth": false,
+"is_expired": false
+}
+```

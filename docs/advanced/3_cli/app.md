@@ -1,5 +1,13 @@
 # Apps management
 
+## Listing apps
+
+The `wmill app` list command is used to list all apps in the remote workspace.
+
+```bash
+wmill app
+```
+
 ## Pushing an app
 
 Pushing an app to a Windmill instance is done using the `wmill app push` command.

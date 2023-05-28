@@ -1,5 +1,13 @@
 # Flows management
 
+## Listing flows
+
+The `wmill flow` list command is used to list all flows in the remote workspace.
+
+```bash
+wmill flow
+```
+
 ## Pushing a flow
 
 Pushing a flow to a Windmill instance is done using the `wmill flow push` command.
