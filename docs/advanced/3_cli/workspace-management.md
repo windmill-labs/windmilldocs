@@ -1,46 +1,113 @@
----
-title: CLI Workspace Management
----
-
 # Workspace Management
 
-:::caution
-
-This page is currently WIP and is being updated.
-
-:::
-
-The wmill CLI is capable of handling working with many remotes & workspaces.
-Each combination of remote & workspace is registered with together with a name
-locally using `wmill workspace add`.
+The CLI can be used to manage workspaces.
 
 ## List workspaces
 
-`wmill workspace` will print a table of all the locally known workspaces, the
-currently [selected workspace](#selected-workspace) is <ins>underlined</ins>.
+You can list all the workspaces you have access to using:
+
+```bash
+wmill workspace
+```
+
+The currently selected workspace will be <ins>underlined</ins>.
 
 ## Adding a workspace
 
-Either use the dialog using just `wmill workspace add`, or use
-`wmill workspace add <name> <workspace_id> <remote_url>` or even provide a token
-using `--token` to entirely skip the dialogue.
+The wmill CLI is capable of handling working with many remotes & workspaces.
+Each combination of remote & workspace is registered with together with a name
+locally using:
+
+```bash
+wmill workspace add [workspace_name] [workspace_id] [remote]
+```
 
 The new workspace will automatically be [switched](#switching-selection) to.
+
+### Arguments
+
+| Argument         | Description                     |
+| ---------------- | ------------------------------- |
+| `workspace_name` | The name of the workspace.      |
+| `workspace_id`   | The ID of the workspace.remote. |
+| `remote`         | The remote URL.                 |
+
+### Options
+
+| Option                    | parameter          | Description                                                                                                                                            |
+| ------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `-c`, `--create`          | None               | Create the workspace if it does not exist.                                                                                                             |
+| `--create-workspace-name` | `<workspace_name>` | Specify the workspace name. Ignored if `--create` is not specified or the workspace already exists. Defaults to the workspace ID.                      |
+| `--create-username`       | `<username>`       | Specify your own username in the newly created workspace. Ignored if `--create` is not specified or the workspace already exists. Defaults to "admin". |
+
+### Examples
+
+1. Prompts for the workspace name, ID, and remote URL.
+
+```bash
+wmill workspace add
+```
+
+2. Adds a workspace with the name "MyWorkspace", ID "workspace123", and remote URL "https://example.com/myworkspace".
+
+```bash
+wmill workspace add MyWorkspace workspace123 https://example.com/myworkspace
+```
+
+3. This command creates a workspace with the name "MyWorkspace2," using the provided username "john.doe."
+
+```bash
+wmill workspace add --create --create-workspace-name MyWorkspace2 --create-username john.doe
+```
+
+## Switch Workspaces
+
+The wmill workspace switch command allows you to switch to another workspace. It requires specifying the target workspace as a positional argument and performs the necessary operations to switch to that workspace. Here is the documentation for the wmill workspace switch command:
+
+```bash
+wmill workspace switch <workspace_name>
+```
+
+### Arguments
+
+| Argument         | Description                             |
+| ---------------- | --------------------------------------- |
+| `workspace_name` | The name of the workspace to switch to. |
+
+### Examples
+
+1. Switch to the workspace named "MyWorkspace".
+
+```bash
+ wmill workspace switch MyWorkspace
+```
 
 ## Selected Workspace
 
 The currently selected workspace will be used for all operations. This workspace
 is <ins>underlined</ins> in the [list of workspaces](#list-workspaces).
 
-### Switching Selection
-
-`wmill workspace switch <name>` can be used to switch the currently selected
-workspace.
-
 ## Removing a workspace
 
-`wmill remove <name>` can be used to delete a workspace from the list of
-workspaces.
+The `wmill workspace remove` command allows you to remove a workspace from the CLI.
+
+```bash
+wmill workspace remove <workspace_name>
+```
+
+### Arguments
+
+| Argument         | Description                          |
+| ---------------- | ------------------------------------ |
+| `workspace_name` | The name of the workspace to remove. |
+
+### Examples
+
+1. Remove the workspace named "MyWorkspace".
+
+```bash
+wmill workspace remove MyWorkspace
+```
 
 :::tip Get help
 
@@ -54,29 +121,10 @@ Example here just using `windmill -h`:
 
 :::
 
-## Running Flows & Scripts
+## Whoami
 
-Run a script or flow using `wmill flow/script run u/username/path/to/script` and
-pass any inputs using `--data` +  Inputs specified as a JSON string or a file using `@ <filename>` or stdin using @-.
+The wmill workspace whoami command allows you to display the currently active user and the active workspace.
 
-Curl-style syntax using `-d @-` for stdin or `-d @<filename>` is also supported.
-
-Flow Steps and Logs will be streamed during execution automatically.
-
-![CLI input example](./cli_inputs_example.png)
-
-## Pushing Resources, Scripts & More
-
-The CLI can push specifications to a windmill instance. See the
-[examples/](https://github.com/windmill-labs/windmill/tree/main/cli/examples) folder for formats.
-
-## Listing
-
-All commands support listing by just not providing a subcommand, ie
-`wmill script` will result in a list of scripts. Some allow additional options,
-learn about this by specifying `--help`.
-
-## User Management
-
-You can add & remove users via `wmill user add/remove`, and list them using
-`wmill user`.
+```bash
+wmill workspace whoami
+```
