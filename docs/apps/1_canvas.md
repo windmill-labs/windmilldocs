@@ -1,4 +1,4 @@
-# Canvas guide
+# Canvas Guide
 
 The app canvas is the main area of the app editor. It displays the app components and allows you to configure them.
 You can move and resize components and lock them to prevent them from being moved or resized by another component.
