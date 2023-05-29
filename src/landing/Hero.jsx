@@ -1,7 +1,6 @@
 import React from 'react';
 import LandingHeader from './LandingHeader';
-import GitHubButton from 'react-github-btn';
-import { VolumeX } from 'lucide-react';
+
 export default function Hero() {
 	return (
 		<div className="relative isolate overflow-hidden bg-white">
@@ -9,17 +8,7 @@ export default function Hero() {
 
 			<div className="mx-auto max-w-7xl px-6 pt-4 gap-y-8 pb-24 sm:pb-32 lg:flex lg:pt-10 lg:pb-36 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-					<div className="h-8">
-						<GitHubButton
-							alt="Stars"
-							href="https://github.com/windmill-labs/windmill"
-							data-icon="octicon-star"
-							data-show-count="true"
-							data-size="large"
-							aria-label="Star windmill-labs/windmill on GitHub"
-						/>
-					</div>
-					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-600">
 						Turn scripts into workflows and UIs in minutes
 					</h1>
 					<h2 className="mt-6 text-lg leading-8 text-gray-600 font-medium">
@@ -51,14 +40,6 @@ export default function Hero() {
 							Self-host yourself <span aria-hidden="true">→</span>
 						</a>
 					</div>
-
-					<a
-						href="https://docs.windmill.dev/docs/intro"
-						onClick={() => window.plausible('getting-started')}
-						className="text-xs ml-60 mt-6 leading-7 text-gray-600 text"
-					>
-						Read the docs
-					</a>
 
 					<div className="w-full text-left mt-16">
 						Backed by <img className="inline ml-2" src="ycombinator.svg"></img>
