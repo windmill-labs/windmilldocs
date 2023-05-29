@@ -1,4 +1,4 @@
-# Outputs guide
+# Outputs Guide
 
 On the left-hand side of the app editor, you can find the app outputs. They are three kind of outputs:
 

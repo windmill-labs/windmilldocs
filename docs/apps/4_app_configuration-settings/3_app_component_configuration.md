@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Component configuration
+# Component Configuration
 
 ## Inputs
 
