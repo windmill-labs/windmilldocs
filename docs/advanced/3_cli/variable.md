@@ -65,7 +65,7 @@ wmill push <file_path:string> <remote_path:string> [--plain-secrets]
 
 ### Structure
 
-Here is an example of a variable specification as a JSON object:
+Here is an example of a variable specification:
 
 ```ts
 {

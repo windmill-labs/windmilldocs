@@ -1,6 +1,6 @@
 # Sync
 
-Syncronizing folders & git repositories to a Windmill instance is made easy
+Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
 ## Example Repos
@@ -96,3 +96,30 @@ wmill sync push [options]
 | `wmill sync pull --raw` | Pulls remote changes without using state tracking. Overwrites local files with remote changes. |
 | `wmill sync push`       | Pushes local changes and applies them remotely.                                                |
 | `wmill sync push --raw` | Pushes local changes without using state tracking. Overwrites remote files with local changes. |
+
+## Erasing Remote Files Not Present Locally
+
+In some cases, you may want to ensure that the remote workspace reflects exactly what is present in your local directory, removing any files on the remote that are not present locally. The wmill sync push command provides an option called --skip-pull that allows you to achieve this.
+
+### How it Works
+
+When you use the --skip-pull option with the wmill sync push command, the CLI will push the local changes without performing a pull operation first. It assumes that you have manually performed the pull operation to update the local state.
+
+The command will upload all the local changes to the remote workspace and overwrite any existing remote files. If a file exists on the remote but is not present locally, it will be erased during the push operation.
+
+### Usage
+
+To erase anything on the remote that is not present locally, follow these steps:
+
+1. Make sure you are in the local directory where your files are located.
+2. Run the following command to push the local changes and overwrite the remote files:
+
+```bash
+wmill sync push --skip-pull
+```
+
+This command will upload all the local changes to the remote workspace without checking for any remote changes. Any files on the remote that are not present locally will be erased.
+
+Note: Be cautious when using the --skip-pull option, as it can lead to data loss if used incorrectly. Make sure you have a backup of any important files before using this option.
+
+Using wmill sync push --skip-pull, you can ensure that the remote workspace reflects exactly what is present in your local directory, removing any files on the remote that are not present locally.

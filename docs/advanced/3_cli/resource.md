@@ -23,7 +23,7 @@ wmill resource push <file_path> <remote_path>
 | `file_path`   | The path to the resource file to push.               |
 | `remote_path` | The remote path where the resource should be pushed. |
 
-### Resource file structure
+### Resource specification
 
 We support both JSON and YAML files. The structure of the file is as follows:
 
@@ -45,5 +45,7 @@ is_oauth: <is_oauth>
 
 - value (required): Represents the actual content or value of the resource.
 - description (optional): A string providing additional information or a description of the resource.
-- resource_type (required): TODO
+- resource_type (required): A resource type
 - is_oauth (optional, deprecated): This property is deprecated and should not be used.
+
+See the [resource types](./../../core_concepts/3_resources_and_types/index.md) section for a list of supported resource types.
