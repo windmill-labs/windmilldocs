@@ -18,6 +18,12 @@ you can find the one that suits you best.
 <br/>
 
 
+:::tip Handle multiple commands on your slackbot
+
+We cover in a [subsequent article](/blog/handler-slack-commands) how to manage multiple commands from your slackbot. Spoiler: it uses [branches](../flows/13_flow_branches.md) and a text parser.
+
+:::
+
 :::info
 
 This guide assumes that you already have a Slack account and a workspace where
@@ -88,11 +94,6 @@ the `/windmill` command in your Slack workspace to trigger the Script. Try it
 out with `/windmill foo` and you should get back `ROGER foo`. Go ahead and
 customize the Script to your needs.
 
-:::tip Handle multiple commands on your slackbot
-
-We cover in a [subsequent article](https://docs.windmill.dev/blog/handler-slack-commands) how to manage multiple commands from your slackbot. Spoiler: it uses [branches](https://www.windmill.dev/docs/flows/flow_branches) and a text parser.
-
-:::
 
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png)
 
@@ -181,7 +182,7 @@ You can find a more complete version of this Script on
 
 :::note What's next?
 
-We go deeper in a [further article](https://docs.windmill.dev/blog/handler-slack-commands), integrating multiple commands, resources and Slack approval steps.
+We go deeper in a [further article](/blog/handler-slack-commands), integrating multiple commands, resources and Slack approval steps.
 :::
 
 <!-- Links -->
