@@ -64,7 +64,7 @@ filled out by the Windmill runtime for you. The most important ones are
 `WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you Windmill instance,
 for example `https://app.windmill.dev`, note that you can never include a
 trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
-token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.md)
+token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.mdx)
 using `wmill user create-token`. And then `WM_WORKSPACE` corresponds to your workspace id.
 Below are some examples on how to do this in various environments.
 

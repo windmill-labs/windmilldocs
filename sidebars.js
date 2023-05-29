@@ -124,8 +124,15 @@ const sidebars = {
 					},
 					items: [
 						'advanced/cli/installation',
-						'advanced/cli/syncing',
-						'advanced/cli/workspace-management'
+						'advanced/cli/sync',
+						'advanced/cli/workspace-management',
+						'advanced/cli/user',
+						'advanced/cli/flow',
+						'advanced/cli/app',
+						'advanced/cli/resource',
+						'advanced/cli/variable',
+						'advanced/cli/folder',
+						'advanced/cli/script'
 					]
 				},
 				'advanced/local_development/index'

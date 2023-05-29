@@ -167,7 +167,7 @@ the left.
 
 ![Run hello world in TypeScript](./run_ts.png)
 
-You can also chose to [run your script from the CLI](../../../advanced/3_cli/index.md) with the pre-made Command-Line Interface call.
+You can also chose to [run your script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
 ## What's next?
 
