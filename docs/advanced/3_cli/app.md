@@ -29,3 +29,9 @@ wmill app push <file_path>
 ```bash
 wmill app push ./my_app.json
 ```
+
+## Remote path format
+
+```js
+<u|g|f>/<username|group|folder>/...
+```

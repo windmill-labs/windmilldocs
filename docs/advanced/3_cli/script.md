@@ -74,3 +74,9 @@ wmill script run <remote_path> [options]
 | -------------- | ---------- | ----------------------------------------------------------------------------- |
 | `-d, --data`   | `data`     | Inputs specified as a JSON string or a file using @filename or stdin using @- |
 | `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.      |
+
+## Remote path format
+
+```js
+<u|g|f>/<username|group|folder>/...
+```
