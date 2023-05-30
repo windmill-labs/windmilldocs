@@ -1,56 +1,63 @@
----
-title: CLI Installation
----
-
 # Installation
 
-:::caution
+To install the wmill CLI, follow these steps:
 
-This page is currently WIP and is being updated.
+1. Make sure you have deno installed. If not, you can install it by following the instructions [here](https://deno.com/manual@v1.34.0/getting_started/installation).
 
-:::
+Please note that your version of deno should be recent (greater than 1.32). If not, you can update deno by running deno upgrade.
 
-Simply install the wmill cli using:
+2. Install wmill CLI using the following command in your terminal:
 
-`deno install --unstable -A https://deno.land/x/wmill/main.ts`
+```bash
+deno install --unstable -A https://deno.land/x/wmill/main.ts
+```
 
-You will need
-[deno installed](https://deno.land/manual@v1.30.3/getting_started/installation).
+Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example:
 
-Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example: `export PATH="/Users/yourusername/.deno/bin:$PATH"`
+```bash
+export PATH="/Users/yourusername/.deno/bin:$PATH"
+```
 
-**Your version of deno need to be recent (> 1.32) **: To update deno, run `deno upgrade`.
+3. Verify that the installation was successful by running the following command:
 
-## Upgrade
+```bash
+wmill --version
+```
 
-Running `wmill upgrade` will upgrade your installation to the latest version.
+If the installation was successful, you should see the version of wmill that you just installed.
+
+## Upgrade wmill
+
+To upgrade your wmill installation to the latest version, run the following command:
+
+```bash
+wmill upgrade
+```
 
 ## Completion
 
-The CLI comes with completions out of the box via `wmill completions <shell>`.
-(Via [cliffy](https://cliffy.io/))
+The CLI comes with built-in completions for various shells. Use the following instructions to enable completions for your preferred shell.
 
 ### Bash
 
-To enable bash completions add the following line to your `~/.bashrc`:
+To enable bash completions, add the following line to your ~/.bashrc:
 
-```
+```bash
 source <(wmill completions bash)
-```
-
-### Fish
-
-To enable fish completions add the following line to your
-`~/.config/fish/config.fish`:
-
-```
-source (wmill completions fish | psub)
 ```
 
 ### Zsh
 
-To enable zsh completions add the following line to your `~/.zshrc`:
+To enable zsh completions, add the following line to your ~/.zshrc:
 
-```
+```bash
 source <(wmill completions zsh)
+```
+
+### Fish
+
+To enable fish completions, add the following line to your ~/.config/fish/config.fish:
+
+```bash
+source (wmill completions fish | psub)
 ```

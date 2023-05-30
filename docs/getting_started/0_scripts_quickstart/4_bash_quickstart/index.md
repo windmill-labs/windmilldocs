@@ -133,7 +133,7 @@ the left.
 
 ![Run hello world in Bash](./run_bash.png)
 
-You can also chose to [run your script from the CLI](../../../advanced/3_cli/index.md) with the pre-made Command-Line Interface call.
+You can also chose to [run your script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
 ## What's next?
 
