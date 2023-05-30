@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext, createContext, useState } from 'react';
 import Hero from '../landing/Hero';
 import ScriptSection from '../landing/ScriptSection';
 import FlowSection from '../landing/FlowSection';
@@ -10,9 +10,19 @@ import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
 
+import DevScriptSection from '../landing/DevScriptSection';
+
 import HeroExample from '../landing/HeroExample';
 
+const DeveloperModeContext = createContext();
+
+export function useDeveloperMode() {
+	return useContext(DeveloperModeContext);
+}
+
 function HomepageHeader() {
+	const [developerMode, setDeveloperMode] = useState(false);
+
 	useEffect(() => {
 		window.plausible =
 			window.plausible ||
@@ -22,22 +32,35 @@ function HomepageHeader() {
 	});
 
 	return (
-		<div>
-			<Hero />
-			<HeroExample />
-			<div className="divide-y ">
-				<ScriptSection />
-				<FlowSection />
-				<AppSection />
-			</div>
+		<DeveloperModeContext.Provider
+			value={{
+				developerMode,
+				setDeveloperMode
+			}}
+		>
+			<div>
+				<Hero />
+				<HeroExample />
+				{developerMode ? (
+					<div className="divide-y ">
+						<DevScriptSection />
+					</div>
+				) : (
+					<div className="divide-y ">
+						<ScriptSection />
+						<FlowSection />
+						<AppSection />
+					</div>
+				)}
 
-			<IntergrationList />
-			<EntrepriseFeatures />
-			<LandingSection bgClass="bg-white">
-				<CallToAction />
-			</LandingSection>
-			<Footer />
-		</div>
+				<IntergrationList />
+				<EntrepriseFeatures />
+				<LandingSection bgClass="bg-white">
+					<CallToAction />
+				</LandingSection>
+				<Footer />
+			</div>
+		</DeveloperModeContext.Provider>
 	);
 }
 
@@ -47,7 +70,10 @@ export default function Home() {
 			<Head>
 				<title>Windmill | Open source platform to build internal tools with scripts</title>
 				<meta name="title" content="Internal tools with scripts." />
-				<meta name="description" content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes" />
+				<meta
+					name="description"
+					content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
+				/>
 			</Head>
 			<HomepageHeader />
 		</main>
