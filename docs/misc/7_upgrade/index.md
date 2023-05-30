@@ -5,10 +5,12 @@ title: Upgrade
 # How to Upgrade Windmill
 
 Using Windmill is free, as we are committed to [open-source](https://github.com/windmill-labs/windmill). You can either:
+
 - **[self-host](https://docs.windmill.dev/docs/advanced/self_host/)** it to use Windmill without restrictions (AGPLv3 License)
 - use the **[cloud app](https://app.windmill.dev/user/login)**, building scripts, flows and apps for free.
 
 However, you might need to upgrade your plan (from free) to Team or Enterprise editions. Reasons for this could be:
+
 - Self hosted: Commercial licence, Audit Logs exports, Distributed dependency cache...
 - Cloud: More computations, authors & operators, Dedicated isolated workers and database, Dedicated entire kubernetes cluster...
 - Both: SAML, SLA and Priority support & design partners...
@@ -20,7 +22,6 @@ All details about plans are available on [Pricing][pricing] page.
 The exact billing of the subscription will then take into account number of users, among other things (computations, dedicated isolated workers and database, dedicated cluster etc).
 
 Plans based on a workspace basis allow you to easily manage authorisations among users and track executions in aggregate.
-
 
 ## Enterprise Edition
 
@@ -34,13 +35,11 @@ Upgrading to team edition is made **directly from your cloud workspace**.
 
 From [Windmill Cloud](https://app.windmill.dev/user/login), go to the workspace you want to update.
 
-
 :::tip Create a new workspace
 
 <br/>
 
 From Windmill Cloud, click on the workspace button (by default, named "Demo") and then `Create new workspace`.
-
 
 ![Create new workspace](./create_new_workspace.png)
 
@@ -78,10 +77,8 @@ Your **billing will be automatically set** depending on the number of users/oper
 
 We try to be as transparent as possible, if any question, feel free to reach out to contact@windmill.dev.
 
-
-
 <!-- Resources -->
 
-[demo]: https://cal.com/ruben-windmill/windmill-demo
+[demo]: https://www.windmill.dev/book-demo
 [pricing]: https://www.windmill.dev/pricing/
 [cloud]: https://app.windmill.dev/user/login

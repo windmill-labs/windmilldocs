@@ -124,7 +124,7 @@ export default function Example() {
 						className="header-discord-link"
 					></a>
 					<a
-						href="https://cal.com/ruben-windmill/windmill-demo"
+						href="https://www.windmill.dev/book-demo"
 						data-analytics='"schedule-demo"'
 						onClick={() => window.plausible('schedule-demo')}
 						className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
