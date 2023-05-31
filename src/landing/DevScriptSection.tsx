@@ -28,7 +28,7 @@ export default function DevScriptsSections() {
 						{
 							title: 'Polyglot',
 							subtitle: 'Write scripts in any language',
-
+							image: '/images/script-schedule.png',
 							Icon: Terminal,
 							gridArea: 'md:col-span-2 md:row-span-6'
 						},

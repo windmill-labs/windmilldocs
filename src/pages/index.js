@@ -12,6 +12,7 @@ import Head from '@docusaurus/Head';
 
 import DevScriptSection from '../landing/DevScriptSection';
 import DevFlowSection from '../landing/DevFlowSection';
+import DevAppSection from '../landing/DevAppSection';
 
 import HeroExample from '../landing/HeroExample';
 
@@ -43,10 +44,10 @@ function HomepageHeader() {
 				<Hero />
 				<HeroExample />
 				{developerMode ? (
-					<div className="divide-y ">
+					<div className="divide-y divide-black ">
 						<DevScriptSection />
 						<DevFlowSection />
-						<DevScriptSection />
+						<DevAppSection />
 					</div>
 				) : (
 					<div className="divide-y ">

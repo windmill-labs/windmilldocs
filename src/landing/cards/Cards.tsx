@@ -1,77 +1,110 @@
-import { Aperture, Activity, Smartphone, ArrowLeft, ArrowRight, Octagon } from 'lucide-react';
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import './CardStyles.css';
+import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-const cards = [
-	{
-		title: 'Apartments',
-		subtitle: 'Places to be apart. Wait, what?',
-		icon: <Aperture size={80} />
-	},
-	{
-		title: 'Unicorns',
-		subtitle: 'A single corn. Er, I mean horn.',
-		icon: <Activity size={80} />
-	},
-	{
-		title: 'Blender Phones',
-		subtitle: 'These absolutely deserve to exist.',
-		icon: <Smartphone size={80} />
-	},
-	{
-		title: 'Adios',
-		subtitle: 'See you...',
-		icon: <ArrowLeft size={80} />
-	},
-	{
-		title: 'I mean hello',
-		subtitle: '...over here.',
-		icon: <ArrowRight size={80} />
-	},
-	{
-		title: 'Otters',
-		subtitle: 'Look at me, imma cute lil fella.',
-		icon: <Octagon size={80} />
-	}
-];
+interface CardProps {
+	Icon: React.ComponentType;
+	title: string;
+	subtitle: string;
+	gridArea?: string;
+	image?: string;
+	imageSlider?: string[];
+	video?: string;
+	svg?: React.ReactNode;
+}
 
-const LandingPage = () => {
-	const handleMouseMove = (e, index) => {
-		const card = document.getElementById(`card-${index}`);
-		const rect = card.getBoundingClientRect();
-		const x = e.clientX - rect.left;
-		const y = e.clientY - rect.top;
-
-		card.style.setProperty('--mouse-x', `${x}px`);
-		card.style.setProperty('--mouse-y', `${y}px`);
-	};
+const Card: React.FC<CardProps> = ({
+	Icon,
+	title,
+	subtitle,
+	gridArea,
+	image,
+	imageSlider,
+	video,
+	svg
+}) => {
+	const cardStyle = gridArea ? gridArea : '';
 
 	return (
-		<div id="cards">
-			{cards.map((card, index) => (
-				<div
-					key={index}
-					id={`card-${index}`}
-					className="landing-page-card"
-					onMouseMove={(e) => handleMouseMove(e, index)}
-				>
-					<div className="card-content">
-						<div className="card-image">{card.icon}</div>
-						<div className="card-info-wrapper">
-							<div className="card-info">
-								{card.icon}
-								<div className="card-info-title">
-									<h3>{card.title}</h3>
-									<h4>{card.subtitle}</h4>
-								</div>
-							</div>
+		<div className={classNames('card shadow-none transition-all', gridArea)}>
+			<div className="card-content">
+				<div className="card-image fade-to-white">
+					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
+					{imageSlider && (
+						<div className="slider">
+							{imageSlider.map((imageUrl, index) => (
+								<img key={index} src={imageUrl} alt={`Slider Image ${index}`} />
+							))}
+						</div>
+					)}
+					{video && <video src={video} autoPlay loop controls />}
+					{svg && <div className="svg-container">{svg}</div>}
+				</div>
+				<div className="py-8 px-8">
+					<div className="flex flex-row gap-4">
+						<Icon />
+						<div className="text-white">
+							<div className="text-md font-bold mb-2">{title}</div>
+							<div className="text-sm">{subtitle}</div>
 						</div>
 					</div>
 				</div>
-			))}
+			</div>
 		</div>
 	);
 };
 
-export default LandingPage;
+interface CardsContainerProps {
+	r?: number;
+	g?: number;
+	b?: number;
+	cards: CardProps[];
+}
+
+const CardsContainer: React.FC<CardsContainerProps> = ({ r = 59, g = 130, b = 246, cards }) => {
+	return (
+		<div className="flex justify-center items-center h-full flex-col gap-2">
+			<div
+				id="cards"
+				className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-auto gap-8 w-full"
+				onMouseMove={(e) => {
+					const mouseMoveHandler = (e: MouseEvent) => {
+						// @ts-ignore
+						for (const card of document.getElementsByClassName('card')) {
+							card.style.setProperty('--accent-r', r);
+							card.style.setProperty('--accent-g', g);
+							card.style.setProperty('--accent-b', b);
+
+							const rect = card.getBoundingClientRect(),
+								x = e.clientX - rect.left,
+								y = e.clientY - rect.top;
+
+							card.style.setProperty('--mouse-x', `${x}px`);
+							card.style.setProperty('--mouse-y', `${y}px`);
+						}
+					};
+
+					// @ts-ignore
+					mouseMoveHandler(e);
+				}}
+			>
+				{cards.map((card, i) => (
+					<Card
+						key={i}
+						Icon={card.Icon}
+						title={card.title}
+						subtitle={card.subtitle}
+						gridArea={twMerge('col-span-1 row-span-3 md:col-span-1 md:row-span-3', card.gridArea)}
+						image={card.image}
+						imageSlider={card.imageSlider}
+						video={card.video}
+						svg={card.svg}
+					/>
+				))}
+			</div>
+		</div>
+	);
+};
+
+export default CardsContainer;

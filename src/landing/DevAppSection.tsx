@@ -8,7 +8,7 @@ export default function DevScriptsSections() {
 		<LandingSection bgClass="bg-gradient-to-br from-slate-800 to-black">
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-teal-200 to-teal-500">
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 to-orange-500">
 						Flow
 					</h1>
 					<h2 className="text-white text-2xl font-semibold">
@@ -24,9 +24,9 @@ export default function DevScriptsSections() {
 
 				<CardsContainer
 					key="flow-card"
-					r={13}
-					g={148}
-					b={136}
+					r={249}
+					g={115}
+					b={22}
 					cards={[
 						{
 							title: 'Polyglot',
