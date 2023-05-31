@@ -11,6 +11,7 @@ import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
 
 import DevScriptSection from '../landing/DevScriptSection';
+import DevFlowSection from '../landing/DevFlowSection';
 
 import HeroExample from '../landing/HeroExample';
 
@@ -21,7 +22,7 @@ export function useDeveloperMode() {
 }
 
 function HomepageHeader() {
-	const [developerMode, setDeveloperMode] = useState(false);
+	const [developerMode, setDeveloperMode] = useState(true);
 
 	useEffect(() => {
 		window.plausible =
@@ -43,6 +44,8 @@ function HomepageHeader() {
 				<HeroExample />
 				{developerMode ? (
 					<div className="divide-y ">
+						<DevScriptSection />
+						<DevFlowSection />
 						<DevScriptSection />
 					</div>
 				) : (

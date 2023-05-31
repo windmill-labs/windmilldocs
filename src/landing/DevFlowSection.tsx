@@ -8,22 +8,23 @@ export default function DevScriptsSections() {
 		<LandingSection bgClass="bg-gradient-to-br from-slate-800 to-black">
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-200 to-blue-400">
-						Scripts
+					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-emerald-200 to-emerald-400">
+						Flow
 					</h1>
 					<h2 className="text-white text-2xl font-semibold">
 						No overhead, scalable, self-hostable FaaS
 					</h2>
 				</div>
 
-				<span className="text-lg text-gray-600 max-w-3xl">
+				<span className="text-lg text-white max-w-3xl">
 					Run long-running heavy background jobs, script with complex dependencies, endpoints with
 					high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the
 					auto-generated UI and monitor them easily.
 				</span>
 
 				<CardsContainer
-					key="script-card"
+					key="flow-card"
+					color="#00FF00"
 					cards={[
 						{
 							title: 'Polyglot',
