@@ -36,11 +36,11 @@ First, you need to create a Google OAuth Client:
 
 ```json
 {
-    "google": {
-        "id": "<CLIENT_ID>",
-        "secret": "<CLIENT_SECRET>",
-        "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
-    }
+  "google": {
+    "id": "<CLIENT_ID>",
+    "secret": "<CLIENT_SECRET>",
+    "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+  }
 }
 ```
 
@@ -120,10 +120,10 @@ settings:
 
 ```json
 {
-    "gsheets": {
-        "id": "<CLIENT_ID>",
-        "secret": "<CLIENT_SECRET>"
-    }
+  "gsheets": {
+    "id": "<CLIENT_ID>",
+    "secret": "<CLIENT_SECRET>"
+  }
 }
 ```
 
@@ -135,15 +135,15 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
 
 ```
 {
-    "keycloak_<realm>": {
-        "id": "...",
-        "secret": "...",
-        "connect_config": {
-            "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
-            "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
-            "scopes": ["openid", "offline_access"]
-        }
+  "keycloak_<realm>": {
+    "id": "...",
+    "secret": "...",
+    "connect_config": {
+      "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
+      "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
+      "scopes": ["openid", "offline_access"]
     }
+  }
 }
 ```
 
@@ -154,24 +154,23 @@ you can provide whatever realm name you want here, if you know what you're doing
 used for the deployment.
 
 ```
-      {
-        "okta": {
-          "id": "<client credential from the client ID section of the okta service configuration>",
-          "secret": "<from the CLIENT SECRETS section of the okta service configuration>",
-          "login_config": {
-            "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
-            "token_url": "https://<your org>.okta.com/oauth2/v1/token",
-            "userinfo_url": "https://<your org>.okta.com/oauth2/v1/userinfo",
-            "scopes": ["openid", "profile", "email"]
-          },
-          "connect_config": {
-            "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
-            "token_url": "https://<your org>.okta.com/oauth2/v1/token",
-            "scopes": ["openid", "profile", "email"]
-          }
-        }
-      }
-
+{
+  "okta": {
+    "id": "<client credential from the client ID section of the okta service configuration>",
+    "secret": "<from the CLIENT SECRETS section of the okta service configuration>",
+    "login_config": {
+      "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
+      "token_url": "https://<your org>.okta.com/oauth2/v1/token",
+      "userinfo_url": "https://<your org>.okta.com/oauth2/v1/userinfo",
+      "scopes": ["openid", "profile", "email"]
+    },
+    "connect_config": {
+      "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
+      "token_url": "https://<your org>.okta.com/oauth2/v1/token",
+      "scopes": ["openid", "profile", "email"]
+    }
+  }
+}
 ```
 
 From your Admin page, setup windmill using the service flow
