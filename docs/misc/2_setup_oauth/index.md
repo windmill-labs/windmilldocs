@@ -36,11 +36,11 @@ First, you need to create a Google OAuth Client:
 
 ```json
 {
-  "google": {
-    "id": "<CLIENT_ID>",
-      "secret": "<CLIENT_SECRET>",
-      "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
-  }
+    "google": {
+        "id": "<CLIENT_ID>",
+        "secret": "<CLIENT_SECRET>",
+        "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+    }
 }
 ```
 
@@ -120,10 +120,10 @@ settings:
 
 ```json
 {
-  "gsheets": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>"
-  }
+    "gsheets": {
+        "id": "<CLIENT_ID>",
+        "secret": "<CLIENT_SECRET>"
+    }
 }
 ```
 
