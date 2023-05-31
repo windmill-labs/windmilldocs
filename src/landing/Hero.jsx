@@ -21,7 +21,7 @@ function Example() {
 	const { developerMode, setDeveloperMode } = useDeveloperMode();
 
 	return (
-		<div className="py-4 flex flex-row gap-2 items-center">
+		<div className="my-8 flex flex-row gap-2 items-center">
 			<span className="font-bold text-sm">For low-code user</span>
 
 			<Switch

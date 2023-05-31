@@ -43,7 +43,9 @@ const Card: React.FC<CardProps> = ({
 				</div>
 				<div className="py-8 px-8">
 					<div className="flex flex-row gap-4">
-						<Icon />
+						<div className="w-8 h-8">
+							<Icon className="text-white" />
+						</div>
 						<div className="text-white">
 							<div className="text-md font-bold mb-2">{title}</div>
 							<div className="text-sm">{subtitle}</div>
