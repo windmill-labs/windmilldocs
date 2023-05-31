@@ -36,11 +36,11 @@ First, you need to create a Google OAuth Client:
 
 ```json
 {
-	"google": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
-	}
+    "google": {
+        "id": "<CLIENT_ID>",
+        "secret": "<CLIENT_SECRET>",
+        "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+    }
 }
 ```
 
@@ -120,10 +120,10 @@ settings:
 
 ```json
 {
-	"gsheets": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>"
-	}
+    "gsheets": {
+        "id": "<CLIENT_ID>",
+        "secret": "<CLIENT_SECRET>"
+    }
 }
 ```
 
@@ -146,3 +146,48 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
     }
 }
 ```
+
+## Okta
+
+Setup your `oauth.json` (e.g. via the `oauthConfig` in the values.yaml when using helm), using `okta` as the realm name, though
+you can provide whatever realm name you want here, if you know what you're doing. This is configured as though helm is being
+used for the deployment.
+
+```
+      {
+        "okta": {
+          "id": "<client credential from the client ID section of the okta service configuration>",
+          "secret": "<from the CLIENT SECRETS section of the okta service configuration>",
+          "login_config": {
+            "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
+            "token_url": "https://<your org>.okta.com/oauth2/v1/token",
+            "userinfo_url": "https://<your org>.okta.com/oauth2/v1/userinfo",
+            "scopes": ["openid", "profile", "email"]
+          },
+          "connect_config": {
+            "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
+            "token_url": "https://<your org>.okta.com/oauth2/v1/token",
+            "scopes": ["openid", "profile", "email"]
+          }
+        }
+      }
+
+```
+
+From your Admin page, setup windmill using the service flow
+
+1. `Create a new app integration`
+  a. For "sign-in method" select "OIDC - Open ID Connect"
+  b. For "application type" select "Web Appliction"
+2. Select all of the following options for Grant type of "Client acting on behalf of a user"
+  - Authorization Code
+  - Refresh Token
+  - Implicit (hybrid)
+  - Allow ID Token with implicit grant type
+  - Allow Access Token with implicit grant type
+3. For Refresh Token, select "Rotate token after every use"
+4. Under "LOGIN", set the following:
+  - "Sign-in redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>/user/login_callback/okta/`
+  - "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
+  - "Login initiated by" `App Only`
+  - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
