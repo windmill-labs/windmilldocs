@@ -1,5 +1,5 @@
 ---
-slug:
+slug: knowledge-base-discord-bot
 title: Build a Powerful Discord Bot using Windmill, OpenAi, and Supabase for Product Documentation Assistance
 authors: [fatonramadani]
 tags:
