@@ -10,7 +10,6 @@ Also, you might want to reach out by **email** at contact@windmill.dev.
 
 For more in-depth discussions, we are always available for a **[demo]** or **[meeting](https://cal.com/ruben-windmill/30min)**.
 
-
 <!-- Resources -->
 
-[demo]: https://cal.com/ruben-windmill/windmill-demo
+[demo]: https://www.windmill.dev/book-demo
