@@ -51,7 +51,7 @@ The layout components are used to organize the components in the app canvas.
 
 ### Tabs
 
-- [Tabs](#tabs)
+- [Tabs](#tabs-2)
 - [Conditional Tabs](#conditional-tabs)
 
 ### Buttons
@@ -64,21 +64,21 @@ The layout components are used to organize the components in the app canvas.
 ### Inputs
 
 - [Text Input](#text-input)
-- [Password](#password)
+- [Password](#password-input)
 - [Email Input](#email-input)
-- [Number](#number)
-- [Currency](#currency)
+- [Number](#number-input)
+- [Currency](#currency-input)
 - [Slider](#slider)
 - [Range](#range)
-- [Date](#date)
+- [Date](#date-input)
 - [File Input](#file-input)
 - [Toggle](#toggle)
 - [Select](#select)
 - [MultiSelect](#multiselect)
+- [Form](#form-input)
 
 ### Display
 
-- [Form] (#form-input)
 - [Text](#text)
 - [Icon](#icon)
 - [Image](#image)
@@ -95,7 +95,7 @@ The layout components are used to organize the components in the app canvas.
 
 ### Table
 
-- [Table](#table)
+- [Table](#table-1)
 - [AgGrid Table](#aggrid-table)
 
 Below you will find details about each component.
