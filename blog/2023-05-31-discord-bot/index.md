@@ -18,37 +18,75 @@ tags:
 image: ./ai-bot.png
 ---
 
-## Technical Details
+![AI BOT](./ai-bot.png 'AI BOT')
+_**Midjourney prompt:** a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
 
-Building your own custom Knowledge Base Discord Bot is a great way to provide your users with a more personalized experience. In this tutorial, we will be using Windmill, OpenAI, and Supabase to build a Discord Bot that can answer questions about Windmill documentation.
+## Introduction
 
-It involves 1 flow and a few scripts:
+Windmill is a low-code platform that allows you to build powerful automation workflows. It is a great tool for building developer tools, automating your business processes, and building internal tools. Today, we will be using Windmill to build a Discord Bot that can answer questions about Windmill documentation.
 
-1. Create a scheduled flow that scrapes the Windmill documentation pre-processes the data and stores embeddings in Supabase using [pgvector](https://supabase.com/docs/guides/database/extensions/pgvector)
+## Create an application on Discord Developer Portal
 
-2. Create a script that will be triggered by a Discord command using the Interactions Endpoint URL.
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications) and create a new application.
+2. Give your application a name and click on the `Create` button.
+3. Go to the `Bot` tab and click on the `Add Bot` button.
 
-3. Create a script that will fired the script above that will generate the answer and send it back to the Discord channel.
+## Configure your Discord Bot command
 
-4. Create a script that actually create the answers using OpenAI and Supabase.
+To configure your Discord Bot command, you need to curl the command configuration to the Discord API.
 
-Basically, the entire stack will look like this:
+See the Discord API documentation for more information: https://discord.com/developers/docs/interactions/slash-commands#registering-a-command
 
-- Once a month, the scheduled flow will scrape the Windmill documentation and store the data in Supabase.
+## Create a scheduled flow that scrapes the Windmill documentation
 
-- The scheduled flow will also pre-process the data and store the embeddings in Supabase using pgvector.
+![Flow](./flow.png 'Create a scheduled flow that scrapes the Windmill documentation')
 
-- When a user asks a question in Discord, the Discord command will trigger a script that will fire another script that will generate the answer using OpenAI and Supabase
+It is composed in the following way:
 
-- The answer will be sent back to the Discord channel.
+- Scrape the Windmill documentation from GitHub using the Oktokit API.
 
-The URL will be in the following format:
+Then we use a for-loop to iterate over the results and run the following step for each result:
 
-## Scheduled flow
+1. Create the embeddings using OpenAI
+2. Store the embeddings in Supabase using pgvector
 
-![Audience Management Case Study](./flow.png 'Audience Management Case Study')
+### Schedule the flow
 
-First, let's scrap the Windmill documentation from GitHub. We will use the Oktokit API to get the data.
+We can schedule the flow to run every month.
+
+1. Go the Settings
+2. Click on the `Schedule` tab
+3. Edit the Cron expression to run every month: `0 0 1 * *`
+4. Enable the schedule
+
+#### Learn more about Windmill
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+
+  <a href="/docs/flows/flow_loops" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">For loops</div>
+   	<div className="text-sm text-gray-500">For loops documentation</div>
+  </a>
+	<a href="/docs/core_concepts/scheduling" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">Schedule</div>
+   	<div className="text-sm text-gray-500">Learn how you can schedule a flow</div>
+  </a>
+</div>
+
+### Scraping the Windmill documentation
+
+Using the Oktokit API, we can get the Windmill documentation from GitHub.
+
+Notice that the script take a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
+
+#### Learn more about Windmill resources
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">Resources</div>
+   	<div className="text-sm text-gray-500">Create and manager your resources</div>
+  </a>
+</div>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -140,9 +178,9 @@ export async function main(
 }
 ```
 
-We basically get the content of all `.md` and `.mdx` files in the Windmill documentation repository.
+### Create the embeddings
 
-Next, we will add a loop that for each file content, will create the embeddings and store them in Supabase using pgvector.
+Using the OpenAI API, we can create embeddings for each of the documents.
 
 ```typescript
 import type { Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -169,53 +207,98 @@ export async function main(
 }
 ```
 
-We will now store the embeddings in Supabase:
+Notice about leverages Deno to import the OpenAI API client.
+
+### Store the embeddings on Supabase
+
+Finally, we can store the embeddings in Supabase using the [pgvector](https://supabase.com/docs/guides/database/extensions/pgvector) extension.
 
 ```typescript
 import { Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
-import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
 
-export async function main(
-	auth: Resource<'supabase'>,
-	embedding: any,
-	document: string,
-	token?: {
-		access: string;
-		refresh: string;
-		expires_at?: number;
-	}
-) {
-	return await refreshAndRetryIfExpired(auth, token, async (client) => {
-		const query: any = await client.from('documents').insert({
-			content: document,
-			embedding
-		});
-
-		return query;
+export async function main(auth: Resource<'supabase'>, embedding: any, document: string) {
+	const query: any = await client.from('documents').insert({
+		content: document,
+		embedding
 	});
+
+	return query;
 }
 ```
 
-## Bot handle script
+## Create the Discord Interaction endpoint
+
+Every Windmill scripts or flows exposes a webhook endpoint that can be used to trigger the script or flow.
+
+We can create a new flow that will be triggered by the Discord Interaction endpoint.
+
+The flow input consists of the following parameters:
+
+- `x_signature_ed25519`: The `X-Signature-Ed25519` header from the Discord request
+- `x_signature_timestamp`: The `X-Signature-Timestamp` header from the Discord request
+- `raw_string`: The stringified interaction payload from the Discord request
+
+#### Learn more about Webhooks
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/docs/core_concepts/webhooks" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">Webhooks</div>
+   	<div className="text-sm text-gray-500">Interact with Flows using Webhooks</div>
+  </a>
+</div>
+
+### Building the URL for the Discord Interaction endpoint
+
+1. Go into the Webhooks section of the flow details page
+2. Copy the `Result/Sync` webhook URL
+3. Create a webhook-specific token
+
+Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
+
+We will need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request.
+
+The URL should look like this:
 
 ```
-{ROOT_URL}{SCRIPT_PATH}?include_header=X-Signature-Ed25519,X-Signature-Timestamp&raw=true&token={TOKEN}
+{Result/Sync URL}?include_header=X-Signature-Ed25519,X-Signature-Timestamp&raw=true&token={Webhook-specific token}
 ```
 
-- ROOT_URL: We need to use the sync webhook URL from Windmill.
-- SCRIPT_PATH: The path to the script that will be triggered by the Discord command.
-- TOKEN: The token that will be used to authenticate the request. We suggest you create a webhook-specific token for this purpose.
+Copy and paste this URL into the Discord Interaction endpoint.
+
+![Building the URL for the Discord Interaction endpoint](./discord-interactions-endpoint.png 'Building the URL for the Discord Interaction endpoint')
+
+### Verifying the Discord request and Defer
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
-import { InteractionResponseType, verifyKey } from 'npm:discord-interactions@3.4.0';
+import { REST } from 'npm:@discordjs/rest@1.7.1';
+import { API } from 'npm:@discordjs/core@0.6.0';
+import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
+import { JobService } from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
+
+import {
+	InteractionResponseType,
+	InteractionType,
+	verifyKey
+} from 'npm:discord-interactions@3.4.0';
+type DiscordInteraction = {
+	id: string;
+	token: string;
+	type: InteractionType;
+};
 
 export async function main(
 	x_signature_ed25519: string,
 	x_signature_timestamp: string,
-	raw_string: any
+	raw_string: string,
+	token: string,
+	discord_config: Resource<'c_discord_bot'>,
+	workspace: string,
+	discordAnswerFlowPath: string
 ) {
-	const discord_config = await wmill.getResource('YOUR_RESOURCE');
+	const rest = new REST({ version: '10' }).setToken(token);
+	const api = new API(rest);
+
+	const interaction: DiscordInteraction = JSON.parse(raw_string);
 
 	const isVerified = verifyKey(
 		raw_string,
@@ -225,65 +308,50 @@ export async function main(
 	);
 
 	if (!isVerified) {
-		return { windmill_status_code: 401 };
+		throw new Error('Bot token is not valid');
 	}
 
-	const interaction = JSON.parse(raw_string);
+	// If we get a PING, we need to respond with a PONG
+	const type = interaction.type as InteractionType;
+	if (type === InteractionType.PING) {
+		return { type: InteractionResponseType.PONG };
+	}
 
-	await wmill.JobService.runScriptByPath({
-		workspace: 'YOUR_WORKSPACE',
-		path: 'YOUR_PATH',
+	// https://discord.js.org/docs/packages/core/0.6.0/InteractionsAPI:Class#defer
+	await api.interactions.defer(interaction.id, interaction.token);
+
+	await JobService.runFlowByPath({
+		workspace,
+		path: discordAnswerFlowPath,
 		requestBody: {
 			interaction
 		}
 	});
-
-	return { type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE };
 }
 ```
 
-Including `X-Signature-Ed25519` and `X-Signature-Timestamp` in the request URL as query parameters will pass those headers to the script as arguments.
+After verifying the request, we can defer the request to Discord using the `api.interactions.defer` method.
+Now we can run the `discordAnswerFlowPath` flow that will generate the answer and send it back to Discord.
 
-Generating the answer might take some time, so we need to respond with `InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE` to let Discord know that we received the request and we are working on it. It will display a loading message in the channel.
+## Create the Discord Answer flow
 
-Just before we return the response, we need to run a script that will generate the answer and send it back to the Discord channel.
+![Create the Discord Answer flow](./answer-flow.png 'Create the Discord Answer flow')
 
-We can use the JobService to run a script by path. We need to pass the workspace and the path to the script. We also need to pass the interaction object as a request body.
+This flow will generate the answer and send it back to Discord. It is composed of the following steps:
 
-## Generate answer script
+1. Extract the question from the Discord request
+2. Create the answer using the question and the embeddings and OpenAI
+3. Send the answer back to Discord
+
+### Extract the question from the Discord request
 
 ```typescript
-import { main as createAnswer } from '/f/discordBot/createAnswer.ts';
-
 export async function main(interaction: any) {
-	const question = interaction?.data?.options?.[0]?.value;
-	const answer = await createAnswer(question);
-
-	const BOT_TOKEN = 'YOUR_BOT_TOKEN';
-	const root = 'https://discord.com/api/v10';
-
-	const url = `${root}/webhooks/${interaction.application_id}/${interaction.token}/messages/@original`;
-
-	await fetch(url, {
-		method: 'PATCH',
-		headers: {
-			Authorization: `Bot ${BOT_TOKEN}`,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			content: `## Question: ${question} ## Answer ${JSON.stringify(answer)}`
-		})
-	});
+	return interaction?.data?.options?.[0]?.value ?? 'No question asked';
 }
 ```
 
-Here we are importing the `createAnswer` script that will generate the answer using OpenAI and Supabase using plain import syntax. It justs works!
-
-Basically as soon as we get an answer, we need to send it back to the Discord channel. We can use the `PATCH` method to update the original message.
-
-You can find the Discord documentation [here](https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response).
-
-## Create answer script
+### Create the answer using the question and the embeddings and OpenAI
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
@@ -294,18 +362,17 @@ import { stripIndent } from 'https://esm.sh/common-tags@1.8.2';
 
 export async function main(
 	query: string,
+	supabaseAuth: wmill.Resource<'supabase'>,
+	openAiAuth: wmill.Resource<'openai'>,
 	token?: {
 		access: string;
 		refresh: string;
 		expires_at?: number;
 	}
 ) {
-	const auth = await wmill.getResource('YOUR_SUPABASE_AUTH_RESOURCE');
-	const openAiAuth = await wmill.getResource('YOUR_OPENAI_AUTH_RESOURCE');
-
 	let answer = '';
 
-	await refreshAndRetryIfExpired(auth, token, async (client) => {
+	await refreshAndRetryIfExpired(supabaseAuth, token, async (client) => {
 		// OpenAI recommends replacing newlines with spaces for best results
 		const input = query.replace(/\n/g, ' ');
 
@@ -343,12 +410,12 @@ export async function main(
 		}
 
 		const prompt = stripIndent`
-    You are a very enthusiastic Windmill representative who loves
-    to help people! Given the following sections from the Windmill
-    documentation, answer the question using only that information,
-    outputted in markdown format. If you are unsure and the answer
-    is not explicitly written in the documentation, say
-    "Sorry, I don't know how to help with that.
+		You're a super enthusiastic Windmill representative who absolutely 
+		loves helping people! Using the sections given from the Windmill 
+		documentation, answer the question using only that information, 
+		formatted in markdown. If you're not sure and the answer isn't 
+		explicitly mentioned in the documentation,
+		just say "Sorry, I don't know how to help with that."
 
     Context sections:
     ${contextText}
@@ -360,11 +427,12 @@ export async function main(
     Answer as markdown (including related code snippets if available):
   `;
 
+		// In production we should handle possible errors
 		const completionResponse = await openai.createCompletion({
 			model: 'text-davinci-003',
 			prompt,
-			max_tokens: 512,
-			temperature: 0
+			max_tokens: 512, // Choose the max allowed tokens in completion
+			temperature: 0 // Set to 0 for deterministic results
 		});
 
 		const {
@@ -379,8 +447,50 @@ export async function main(
 }
 ```
 
-This script is a bit more complex. We are using the `refreshAndRetryIfExpired` helper to refresh the Supabase token if it is expired. We are also using the `stripIndent` helper to format the prompt.
+### Send the answer back to Discord
 
-## Final thoughts
+```typescript
+import { REST } from 'npm:@discordjs/rest@1.7.1';
+import { API } from 'npm:@discordjs/core@0.6.0';
 
-This is just a simple example of what you can do with Windmill. You can use it to build any kind of Discord bot. You can also use it to build any kind of application that needs to interact with Discord.
+type DiscordInteraction = {
+	application_id: string;
+	token: string;
+};
+
+export async function main(
+	interaction: DiscordInteraction,
+	question: string,
+	answer: string,
+	token: string
+) {
+	const rest = new REST({
+		version: '10'
+	}).setToken(token);
+	const api = new API(rest);
+
+	await api.interactions.editReply(interaction.application_id, interaction.token, {
+		content: `## Question:\n ${question}\n ## Answer:\n ${JSON.stringify(answer)}`
+	});
+}
+```
+
+## Demo
+
+On Discord, you can now ask questions to the bot and get answers from the Windmill documentation.
+
+```
+/windmill-help question: How can I Run Docker Containers?
+```
+
+![Demo](./demo.png 'Demo')
+
+## Going further
+
+This tutorial is just a simple example of what you can do with Windmill. You can go further by:
+
+- Formatting the answer in a better way
+
+## Conclusion
+
+I hope you enjoyed this tutorial. If you have any questions, feel free to reach out to me on the [Windmill Discord](https://discord.com/invite/V7PM2YHsPB).
