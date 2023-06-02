@@ -23,21 +23,23 @@ _**Midjourney prompt:** a blog cover about a discord bot that answers questions 
 
 ## Introduction
 
-Windmill is a low-code platform that allows you to build powerful automation workflows. It is a great tool for building developer tools, automating your business processes, and building internal tools. Today, we will be using Windmill to build a Discord Bot that can answer questions about Windmill documentation.
+Windmill is a low-code platform that allows you to build powerful automation workflows. It is a great tool for building developer tools, automating business processes, and creating internal tools. In this tutorial, we will explore how to utilize Windmill to build a Discord Bot capable of answering questions about Windmill documentation.
 
 ## Create an application on Discord Developer Portal
 
-1. Go to [Discord Developer Portal](https://discord.com/developers/applications) and create a new application.
-2. Give your application a name and click on the `Create` button.
-3. Go to the `Bot` tab and click on the `Add Bot` button.
+To get started, go to the Discord Developer Portal and create a new application. Give your application a name and add a bot to it. This will provide you with the necessary credentials to interact with the Discord API.
 
 ## Configure your Discord Bot command
 
-To configure your Discord Bot command, you need to curl the command configuration to the Discord API.
+Once you have created your application and added a bot, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the Discord API documentation for detailed instructions on how to register a command for your bot.
 
 See the Discord API documentation for more information: https://discord.com/developers/docs/interactions/slash-commands#registering-a-command
 
 ## Create a scheduled flow that scrapes the Windmill documentation
+
+To provide accurate answers to user queries, we need to scrape the Windmill documentation and store it in a suitable format. We can accomplish this by creating a scheduled flow that periodically retrieves the documentation from the Windmill repository on GitHub, creates embeddings using OpenAI, and stores the embeddings in Supabase using pgvector.
+
+### Flow overview
 
 ![Flow](./flow.png 'Create a scheduled flow that scrapes the Windmill documentation')
 
@@ -529,7 +531,7 @@ export async function main(
 
 ## Demo
 
-On Discord, you can now ask questions to the bot and get answers from the Windmill documentation.
+Once the Discord Bot is set up and the necessary flows are created, you can test it out by asking questions in the Discord server where the bot is added.
 
 ```
 /windmill-help question: How can I Run Docker Containers?
@@ -545,4 +547,6 @@ This tutorial is just a simple example of what you can do with Windmill. You can
 
 ## Conclusion
 
-I hope you enjoyed this tutorial. If you have any questions, feel free to reach out to me on the [Windmill Discord](https://discord.com/invite/V7PM2YHsPB).
+Building a powerful Discord Bot that can assist users with product documentation using Windmill, OpenAI, and Supabase is a great way to automate support and provide a seamless user experience. By leveraging the capabilities of these tools, you can create a bot that understands user queries, retrieves relevant information from documentation, and delivers accurate answers in real-time. Feel free to explore the possibilities and customize the implementation to fit your specific requirements.
+
+If you have any questions or need further assistance, don't hesitate to reach out to the Windmill community on the [Windmill Discord Server](https://discord.com/invite/V7PM2YHsPB). Happy bot building!
