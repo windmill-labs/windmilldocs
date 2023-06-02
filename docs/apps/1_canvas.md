@@ -20,7 +20,7 @@ The header has the following elements:
 
 ### Component selection
 
-Components can be selected by clicking on them. The selected component will be highlighted with a indigo border.
+[Components](./4_app_configuration-settings/1_app_component_library.md) can be selected by clicking on them. The selected component will be highlighted with a indigo border.
 When hovering a component, a blue border will be displayed around the component.
 
 You can also select multiple components by clicking on the `Shift` key and clicking on the components you want to select.
@@ -28,7 +28,6 @@ You can also select multiple components by clicking on the `Shift` key and click
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="app-component-selection"
     src="/videos/app-component-selection.mp4"
@@ -41,7 +40,6 @@ Components can be positioned by dragging and dropping them on the canvas. You ca
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="component-moving"
     src="/videos/component-moving.mp4"
@@ -56,11 +54,12 @@ Components can be resized by dragging the resize handler on the top-right corner
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="app-lock"
     src="/videos/app-lock.mp4"
 />
+
+<br/>
 
 A locked component can't be moved or resized by another component. It can still be moved or resized by the user.
 
@@ -77,7 +76,6 @@ Components can be expanded by clicking on the expand button on the top-right cor
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="component-expand"
     src="/videos/component-expand.mp4"
@@ -118,7 +116,6 @@ Edit text directly on the canvas. Either click on the `Pen` icon or double click
 <video 
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="app-text-inline-editor"
     src="/videos/app-text-inline-editor.mp4"

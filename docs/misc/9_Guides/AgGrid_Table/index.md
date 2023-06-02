@@ -7,7 +7,7 @@ It assumes little to no knowledge about AgGrid.
 
 ## What is AgGrid Table.
 
-The AgGrid Table component (called AgGrid from here) is a small wrapper around a fantstic libary called [AgGrid](https://www.ag-grid.com/).
+The AgGrid Table component (called AgGrid from here) is a small wrapper around a fantastic libary called [AgGrid](https://www.ag-grid.com/).
 It provides you with a lot of advanced features. It comes in a free and a Enterprise (paid) version.
 All features below are part of the free version of AgGrid.
 

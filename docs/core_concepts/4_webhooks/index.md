@@ -74,12 +74,12 @@ When using the **asynchronous mode**, the webhook returns a `uuid` and you can p
 
 :::
 
-### API token
+### User token
 
 To interact with Windmill you always need to use `Bearer` token authentication.
 
 You can generate tokens for your own account in the
-**User Settings menu** on the app. Open it by
+**Account Settings menu** on the app. Open it by
 clicking your username on the side menu, then select "Account settings".
 
 Labels are only used to allow users to easily distinguish keys.
@@ -92,6 +92,14 @@ securely!
 :::
 
 ![Create new tokens](./tokens.png)
+
+### Webhook specific tokens
+
+Webhook specific tokens allow you to share without fear your tokens publicly since the token will only be able to trigger a specific script/flow and not impersonate you for any other operations.
+
+It also avoids the hassle of having to create an anonymous user and check their permissions. If you can run the script yourself, then the webhook specific token will still inherit your own permissions.
+
+![Webhooks specific tokens](./webhooks_tokens.gif)
 
 ## Triggering
 

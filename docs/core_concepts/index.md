@@ -48,6 +48,10 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
    <div class="text-lg font-semibold text-gray-900">Auto-Complete Code with AI</div>
     <div class="text-sm text-gray-500">Have AI suggest code on Windmill.</div>
   </a>
+  <a href="/docs/core_concepts/multiplayer" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">Multiplayer</div>
+    <div class="text-sm text-gray-500">Collaborate on scripts simultaneously.</div>
+  </a>
 </div>
 
 ## Flow-Specific Features
