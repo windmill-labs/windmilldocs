@@ -480,35 +480,6 @@ export async function main(question: string, answer: string, token: string) {
 
 	return message?.id;
 }
-import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
-import { REST } from 'npm:@discordjs/rest@1.7.1';
-import { API, ButtonStyle } from 'npm:@discordjs/core@0.6.0';
-import { ActionRowBuilder, ButtonBuilder } from 'npm:@discordjs/builders@1.6.3';
-
-export async function main(question: string, answer: string, token: string) {
-	const rest = new REST({ version: '10' }).setToken(token);
-	const api = new API(rest);
-	const { resume, cancel } = await wmill.getResumeUrls('Faton');
-
-	const confirmButton = new ButtonBuilder()
-		.setLabel('Confirm Message')
-		.setURL(resume)
-		.setStyle(ButtonStyle.Link);
-
-	const cancelButton = new ButtonBuilder()
-		.setLabel('Cancel')
-		.setURL(cancel)
-		.setStyle(ButtonStyle.Link);
-
-	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(cancelButton, confirmButton);
-
-	const message = await api.channels.createMessage('1113489439163961374', {
-		content: `## Question:\n${question}\n\n## Answer:\n${answer}}`,
-		components: [row.toJSON()]
-	});
-
-	return message?.id;
-}
 ```
 
 #### Learn more about the approval step
