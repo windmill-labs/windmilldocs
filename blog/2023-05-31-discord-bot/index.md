@@ -238,6 +238,14 @@ The flow input consists of the following parameters:
 - `x_signature_timestamp`: The `X-Signature-Timestamp` header from the Discord request
 - `raw_string`: The stringified interaction payload from the Discord request
 
+### Building the URL for the Discord Interaction endpoint
+
+1. Go into the Webhooks section of the flow details page
+2. Copy the `Result/Sync` webhook URL
+3. Create a webhook-specific token
+
+Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
+
 #### Learn more about Webhooks
 
 <div class="grid grid-cols-2 gap-2 mb-4">
@@ -246,14 +254,6 @@ The flow input consists of the following parameters:
    	<div className="text-sm text-gray-500">Interact with Flows using Webhooks</div>
   </a>
 </div>
-
-### Building the URL for the Discord Interaction endpoint
-
-1. Go into the Webhooks section of the flow details page
-2. Copy the `Result/Sync` webhook URL
-3. Create a webhook-specific token
-
-Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
 
 We will need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request.
 
