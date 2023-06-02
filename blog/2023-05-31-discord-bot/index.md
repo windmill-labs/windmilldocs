@@ -341,7 +341,8 @@ This flow will generate the answer and send it back to Discord. It is composed o
 
 1. Extract the question from the Discord request
 2. Create the answer using the question and the embeddings and OpenAI
-3. Send the answer back to Discord
+3. Create an approval step to validate the answer by a human
+4. If validated, send the answer back to Discord
 
 ### Extract the question from the Discord request
 
@@ -446,6 +447,86 @@ export async function main(
 	return answer.replaceAll('\n', '');
 }
 ```
+
+### Create the approval step to validate the answer by a human
+
+```typescript
+import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
+import { REST } from 'npm:@discordjs/rest@1.7.1';
+import { API, ButtonStyle } from 'npm:@discordjs/core@0.6.0';
+import { ActionRowBuilder, ButtonBuilder } from 'npm:@discordjs/builders@1.6.3';
+
+export async function main(question: string, answer: string, token: string) {
+	const rest = new REST({ version: '10' }).setToken(token);
+	const api = new API(rest);
+	const { resume, cancel } = await wmill.getResumeUrls('windmill-documentation-bot');
+
+	const confirmButton = new ButtonBuilder()
+		.setLabel('Confirm Message')
+		.setURL(resume)
+		.setStyle(ButtonStyle.Link);
+
+	const cancelButton = new ButtonBuilder()
+		.setLabel('Cancel')
+		.setURL(cancel)
+		.setStyle(ButtonStyle.Link);
+
+	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(cancelButton, confirmButton);
+
+	const message = await api.channels.createMessage('1113489439163961374', {
+		content: `## Question:\n${question}\n\n## Answer:\n${answer}}`,
+		components: [row.toJSON()]
+	});
+
+	return message?.id;
+}
+import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
+import { REST } from 'npm:@discordjs/rest@1.7.1';
+import { API, ButtonStyle } from 'npm:@discordjs/core@0.6.0';
+import { ActionRowBuilder, ButtonBuilder } from 'npm:@discordjs/builders@1.6.3';
+
+export async function main(question: string, answer: string, token: string) {
+	const rest = new REST({ version: '10' }).setToken(token);
+	const api = new API(rest);
+	const { resume, cancel } = await wmill.getResumeUrls('Faton');
+
+	const confirmButton = new ButtonBuilder()
+		.setLabel('Confirm Message')
+		.setURL(resume)
+		.setStyle(ButtonStyle.Link);
+
+	const cancelButton = new ButtonBuilder()
+		.setLabel('Cancel')
+		.setURL(cancel)
+		.setStyle(ButtonStyle.Link);
+
+	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(cancelButton, confirmButton);
+
+	const message = await api.channels.createMessage('1113489439163961374', {
+		content: `## Question:\n${question}\n\n## Answer:\n${answer}}`,
+		components: [row.toJSON()]
+	});
+
+	return message?.id;
+}
+```
+
+#### Learn more about the approval step
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/docs/flows/flow_approval" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">
+		Approval step
+		</div>
+   	<div className="text-sm text-gray-500">Flows can be suspended until resumed or cancelled event(s) are received.</div>
+  </a>
+</div>
+
+Back on discord, the user will receive a message with two buttons:
+
+![Create the approval step to validate the answer by a human](./approval.png 'Create the approval step to validate the answer by a human')
+
+If confirmed, the last step of the flow will be executed and the answer will be sent back to the user.
 
 ### Send the answer back to Discord
 
