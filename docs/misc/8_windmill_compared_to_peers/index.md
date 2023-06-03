@@ -53,7 +53,7 @@ By comparison, in Windmill one would just write the canonical python or typescri
 
 ## Admin panels builders
 
-Getting closer to Windmill. Those players have a blent on admin panels. Therefore they are strong on UIs and now-code features.
+Getting closer to Windmill. Those players have a blent on admin panels. Therefore they are strong on UIs and low-code features.
 They allow you to use code in the process. However we believe **they lack flexibility for building complex workflows**.
 
 Those are great tools and since they focus solely on the UI builder part, they have made it a great and mature product. On the other hand, Windmill UI builder integrates well with the workflow and script execution engine.
