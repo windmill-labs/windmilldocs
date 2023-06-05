@@ -44,7 +44,7 @@ function HomepageHeader() {
 				<Hero />
 				<HeroExample />
 				{developerMode ? (
-					<div className="divide-y divide-black ">
+					<div>
 						<DevScriptSection />
 						<DevFlowSection />
 						<DevAppSection />

@@ -6,7 +6,7 @@ import { FaReact, SiReact, SiSvelte, SiVuedotjs } from 'react-icons/all';
 
 export default function DevScriptsSections() {
 	return (
-		<LandingSection bgClass="bg-gradient-to-br from-slate-900 to-black">
+		<LandingSection bgClass="bg-gradient-to-b to-gray-900 from-black">
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 to-orange-500">

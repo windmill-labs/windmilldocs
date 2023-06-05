@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './CardStyles.css';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
+import CodeSvg from './svgs/CodeSvg';
 
 interface CardProps {
 	Icon: React.ComponentType;
@@ -27,9 +28,9 @@ const Card: React.FC<CardProps> = ({
 	const cardStyle = gridArea ? gridArea : '';
 
 	return (
-		<div className={classNames('card shadow-none transition-all', gridArea)}>
-			<div className="card-content">
-				<div className="card-image fade-to-white">
+		<div className={classNames('card shadow-none transition-all ', gridArea)}>
+			<div className="card-content  ">
+				<div className="card-image fade-to-white transform transition duration-500 hover:scale-110">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
 					{imageSlider && (
 						<div className="slider">
@@ -39,7 +40,7 @@ const Card: React.FC<CardProps> = ({
 						</div>
 					)}
 					{video && <video src={video} autoPlay loop controls />}
-					{svg && <div className="svg-container">{svg}</div>}
+					{svg && <div className="h-full w-full p-2 ">{svg}</div>}
 				</div>
 				<div className="py-8 px-8">
 					<div className="flex flex-row gap-4">
