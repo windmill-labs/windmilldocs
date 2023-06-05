@@ -2,16 +2,16 @@
 
 At https://github.com/windmill-labs/windmill-sync-example you'll find an example repo that demonstrate how to use a github repo as source of truth for part or all of your Windmill workspace.
 
-Users of this repo can commit changes to the main branches and have it deployed to their Windmill workspace thanks to a github action that will simply uses the [windmill cli's](https://github.com/windmill-labs/windmill/tree/main/cli) `wmill sync push` under the hood.
+Users of this repo can commit changes to the main branches and have it deployed to their Windmill workspace thanks to a github action that will simply use the [windmill CLI's](https://github.com/windmill-labs/windmill/tree/main/cli) `wmill sync push` under the hood.
 
-This repo is used for syncing with the example folder on the demo workspace
+This repo is used to sync with the example folder in the demo workspace
 
 ## Setup
 
 Write access to the workspace is required. This is done using an access token.
-To generate a new token log into your windmill instance
-(https://app.windmill.dev/ for cloud hosted instances) and navigate to the
-account settings, which contains a "Tokens" section, use the relevant button
+To generate a new token log into your Windmill instance
+(<a href="https://app.windmill.dev/" rel="nofollow">https://app.windmill.dev/</a> for cloud hosted instances) and navigate to the
+account settings, which contains a "[Tokens](./core_concepts/4_webhooks/index.md#api-token)" section, use the relevant button
 there to generate a new token. Note that you will only be able to copy this
 token once!
 

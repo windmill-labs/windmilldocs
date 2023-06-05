@@ -1,6 +1,6 @@
 # Apps Quickstart
 
-Welcome to the Apps Quickstart! This document will provide you with 95% of the knowledge on building apps, in a few minutes.
+Welcome to the Apps Quickstart! This document will provide you with 95% of the knowledge on building apps, in just a few minutes.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -21,7 +21,7 @@ Welcome to the Apps Quickstart! This document will provide you with 95% of the k
 Although Windmill provides **[auto-generated UIs to scripts and flows](../../core_concepts/6_auto_generated_uis/index.md)**, you can build your own internal applications designed to your needs. This is what the app editor is for.
 :::
 
-**Windmill applications are customized UIs to interact with datasources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
+**Windmill applications are customized UIs to interact with data sources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
 
 [Here](https://hub.windmill.dev/apps/3/crm) is an example of an app built with Windmill.
 
@@ -74,7 +74,7 @@ Check out all of our components at [this page](https://docs.windmill.dev/docs/ap
 
 ### Empower components with scripts
 
-The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](https://docs.windmill.dev/docs/apps/app-runnable)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and background runnables.
+The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](../../apps/3_app-runnable-panel.mdx)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and [background runnables](../../apps/3_app-runnable-panel.mdx#background-runnables).
 
 ![Runnable editor](./apps_runnables.png)
 
@@ -122,7 +122,7 @@ At the **app level**, you can give a [harmonized style](../../apps/4_app_configu
 
 While building you app, you can try each component clicking on refresh button.
 
-You can do a refresh all for the whole app with the refesh button on top of the canvas, or even schedule automatic refesh.
+You can do a refresh all for the whole app with the refresh button on top of the canvas, or even schedule automatic refesh.
 
 ![Refresh app](./refresh_app.png)
 
@@ -132,7 +132,7 @@ For possible bugs, there is a `Debug Runs` tab to review past runs with details 
 
 ### Then what?
 
-When you're done with the editing of your app, `Save` the current version to the relevant users/folders with a proper and explicit name.
+When you're done with the editing of your app, `Save` the current version to the relevant users or [folders](../../core_concepts/8_groups_and_folders/index.md#folders) with a proper and explicit name.
 
 Once it's saved, it's ready to use! You can also `Publish` it, or even `Publish to Hub` and export it in JSON or Hub compatible JSON from the `⋮` tab.
 

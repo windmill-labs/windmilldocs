@@ -26,7 +26,7 @@ In addition to the UI, sync and async webhooks are generated for each deployment
 
 [This](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail) is a simple example of a script built in TypeScript with Windmill.
 
-In this quick start guide, we'll create a Script that greets the operator running it.
+In this quick start guide, we'll create a script that greets the operator running it.
 
 From the **Home** page, click `+Script`. This will take you to the
 first step of script creation: Metadata.
@@ -106,16 +106,16 @@ echo "Hello world! Oh, it's you $name? Greetings"
 ```
 
 Look at the UI preview on the right: it was updated to match the input
-signature. Run a preview to verify everything works.
+signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 Now let's go to the last step: the "Customise" settings.
 
-## Customize settings
+## Customize Settings
 
 In this step, you can:
 
 - Give a **script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.md), [Approval](../../../flows/11_flow_approval.md) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.md).
-- Customize the Script **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex here clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you're some tech billionaire's kid.
+- Customize the script's **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
 ![Advanced settings for Bash](./customize_bash.png)
 
@@ -124,8 +124,8 @@ each script version is uniquely identified by a hash.
 
 ## Run!
 
-Now let's look at what users of this script will do. Click on the **[Deploy](../../../core_concepts/0_draft_and_deploy/index.md)** button
-to load this script. You'll see the user input form we defined earlier.
+Now let's look at what users of the script will do. Click on the **[Deploy](../../../core_concepts/0_draft_and_deploy/index.md)** button
+to load the script. You'll see the user input form we defined earlier.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs][app-runs] menu on
@@ -133,7 +133,7 @@ the left.
 
 ![Run hello world in Bash](./run_bash.png)
 
-You can also chose to [run your script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
 ## What's next?
 
