@@ -1,12 +1,14 @@
 # Persistent Storage
 
+Learn about the different types of persistent storage options available in Windmill and how to effectively store and manage data.
+
 Persistent storage refers to any method of storing data that remains intact and accessible even after a system is powered off, restarted, or experiences a crash.
 
 In the context of Windmill, the stakes are: **where to store the data manipulated by Windmill**? (ETL, data ingestion and preprocessing, data migration and sync etc.)
 
 :::info TLDR
 
-Within Windmill, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.md), [variables](../2_variables_and_secrets/index.md) etc.). For data, we suggest using storage service providers to be targeted from Windmill.
+When it comes to storing data manipulated by Windmil, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.md), [variables](../2_variables_and_secrets/index.md) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
 
 <br/>
 
@@ -18,37 +20,39 @@ This present document gives a list of trusted services to use alongside Windmill
 
 There are 4 kinds of persistent storage in Windmill:
 
-1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
+1. [Small amount of data within Windmill](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
+2. [Structured SQL databases](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
-3. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
+3. [Object storage](#large-data-files-s3-r2-minio) such as S3.
 
-4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
+4. [Key-value stores and NoSQL databases](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
 ## You already have your own database
 
-Then we have nothing to say.
+If you already have your own database provided by a supported integration, you can easily connect it to Windmill.
 
 If your service provider is already part of [our list of integrations](../../integrations/0_integrations_on_windmill.md), just add your database as a [resource](../../core_concepts/3_resources_and_types/index.md).
 
-Otherwise, create access to your service provider through a [new resource type](../../core_concepts/3_resources_and_types/index.md#create-a-resource-type) (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
+"If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.md#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
 
 ## Within Windmill: not recommended
 
-Windmill is not designed to store heavy data that goes beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
+Windmill is not designed to store heavy data that extends beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
 
 Instead, Windmill is very convenient to use alongside data storage providers to manipulate big amounts of data.
 
 There are however internal methods to persist data between executions of jobs.
 
-### Internal States
+### Internal States and Resources
 
-Within Windmill, you can use Internal States as a way to store a transient state - that can be represented as small JSON.
+Within Windmill, you can use Internal States and Resources as a way to store a transient state - that can be represented as small JSON.
+
+#### States
 
 [States](../3_resources_and_types/index.md#states) are actually resources (but excluded from the Workspace tab for clarity). They are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
 
-An internal state is just a state which is meant to persist across distinct executions of the same Script. This is what enables Flows to watch for changes in most event watching scenarios. The pattern is as follows:
+An internal state is just a state which is meant to persist across distinct executions of the same script. This is what enables Flows to watch for changes in most event watching scenarios. The pattern is as follows:
 
 - Retrieve the last internal state or, if undefined, assume it is the first
   execution.
@@ -66,40 +70,58 @@ An internal state is just a state which is meant to persist across distinct exec
 
 The convenience functions do this in TypeScript are:
 
-- `getState` which retrieves an object of any type (internally a simple
+- `getState()` which retrieves an object of any type (internally a simple
   Resource) at a path determined by `getStatePath`, which is unique to the user
   currently executing the Script, the Flow in which it is currently getting
   called in - if any - and the path of the Script
-- `setState` which sets the new state
+- `setState(value: any)` which sets the new state
+
+
+#### Resources
+
+States are a specific type of resource in Windmill where the type is `state` the path is automatically calculated for you based on the schedule path (if any) and the script path. In some cases, you want to set the path arbitrarily and/or use a different type than `state`. In this case, you can use the `setResource` and `getResource` functions. A same resource can be used across different scripts and flows.
+- `setResource(value: any, path?: string, initializeToTypeIfNotExist?: string)`: which sets a resource at a given path. This is
+  equivalent to `setState` but allows you to set an arbitrary path and chose a type other than state if wanted. [See api](https://deno.land/x/windmill/mod.ts?s=setResource)
+- `getResource(path: string)`: gets a resource at a given path. [See api](https://deno.land/x/windmill/mod.ts?s=getResource)
 
 The states can be seen in the [Resources](../3_resources_and_types/index.md) section with a
 [Resource Type](../3_resources_and_types/index.md#create-a-resource-type) of `state`.
 
-In conclusion `setState` is a convenient way to persist json between multiple script executions.
+:::tip
 
-### Shared Directory
+Variables are similar to resources but have no types, can be tagged as `secret` (in which case they are encrypted by the workspace key) and can only store strings. In some situations, you may prefer `setVariable`/`getVariable` to resources.
+:::
 
-Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
+In conclusion `setState` and `setResource` are convenient ways to persist json between multiple script executions.
 
-For heavier ETLs, you might want to use the [Shared Directory](../../flows/3_editor_components.md#shared-directory) to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
+## Shared Directory
 
-Beware that the `./shared` folder is not preserved across [suspends](../../flows/11_flow_approval.md) and [sleeps](../../flows/15_sleep.md). The directory is temporary and active for the time of the execution.
+For heavier ETL processes or sharing data between steps in a flow, Windmill provides a [Shared Directory](../../flows/3_editor_components.md#shared-directory) feature.
 
-To enable the shared directory, on the `Settings` menu, go to `Shared Directory` and toggle on `Shared Directory on './shared'`.
-
-![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png)
-
-To use the shared directory, just load outputs using `./shared/${path}` and call it for following steps.
+The Shared Directory allows steps within a flow to share data by storing it in a designated folder.
 
 :::caution
 
-Although we recommend using Shared Folders for persistent states within a flow, be aware that with Shared Folders, all the steps are executed on the same worker.
-
-<br/>
-
-Therefore, this method is strictly ephemeral to the flow.
+Although Shared Folders are recommended for persisting states within a flow, it's important to note that all steps are executed on the same worker and the data stored in the Shared Directory is strictly ephemeral to the flow execution.
 
 :::
+
+To enable the Shared Directory, follow these steps:
+
+1. Open the `Settings` menu in the Windmill interface.
+2. Go to the `Shared Directory` section.
+3. Toggle on the option for `Shared Directory on './shared'`.
+
+![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png)
+
+Once the Shared Directory is enabled, you can use it in your flow by referencing the `./shared` folder. This folder is shared among the steps in the flow, allowing you to store and access data between them.
+
+:::tip
+
+Keep in mind that the contents of the `./shared` folder are not preserved across [suspends](../../flows/11_flow_approval.md) and [sleeps](../../flows/15_sleep.md). The directory is temporary and active only during the execution of the flow.
+
+:::
+
 
 ## Structured Databases: Postgres (Supabase, Neon.tech)
 

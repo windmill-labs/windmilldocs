@@ -1,6 +1,6 @@
 # Draft and Deploy
 
-Edit, Draft and Deploy allow for the creation, testing, and refinement of scripts, flows, and apps in a controlled environment before they are deployed, providing a structured approach to development within your workspace.
+Learn how to draft, test, and deploy scripts, flows, and apps Windmill to ensure controlled development and refinement.
 
 Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by your browser in `local storage`, by the backend as a `draft`, and `deployed`.
 
@@ -14,19 +14,19 @@ Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by
 
 ## Local Edits
 
-All changes on a runnable (script, flow or app) are only saved locally on your browser until validated "Draft" or "Deploy". Until then, they are only visible locally.
+Changes made to a script, flow, or app are saved locally in your browser until they are validated as either a 'Draft' or 'Deployed' version.
 
 Local edits can be run and tested only from the editor (script, flow or app) with the `Test` button.
 
 ## Draft
 
-Local edits can be saved as Draft as a staging state. A draft is visible from members of the workspace and can be edited. There is only one draft per runnable. The draft inherits the permission of the item it is attached to or at the path they are in for drafts non deployed items.
+Local edits can be saved as a draft for staging purposes. A draft is visible from members of the workspace and can be edited. There is only one draft per runnable. The draft inherits the permission of the item it is attached to or at the path they are in for drafts non deployed items.
 
 Drafts can be run and tested only from the editor (script, flow or app) with the `Test` button.
 
 ## Deployed Version
 
-The deployed version is authoritative for a runnable. Once deployed, it is not only visible by workspace members but has its own [auto-generated UI](../6_auto_generated_uis/index.md), [webhooks](../4_webhooks/index.md), or can be called from flows and apps (for sripts and flows). It also means that local edits and drafts can be made in parallel of a Deployed version of a runnable but won't affect its behavior.
+The deployed version is the authoritative version of a runnable. Once deployed, it is not only visible by workspace members but has its own [auto-generated UI](../6_auto_generated_uis/index.md), [webhooks](../4_webhooks/index.md), or can be called from flows and apps (for sripts and flows). This also means that local edits and drafts can be made in parallel to a deployed version of a runnable without affecting its behavior.
 
 If you want to have several versions of the same runnable, just fork it with the `Fork`button on the drop down menu of `Deploy`.
 
@@ -36,7 +36,7 @@ If you want to have several versions of the same runnable, just fork it with the
 
 > <br/>
 
-> Scripts are special since every deployment of a script create an immutable hash that will never be overwritten. The path of a script is merely a redirection to the last deployed hash, but all hash lives permanently forever. This make sure that if you refer to a script by its hash, its behavior is guaranteed to stay the same even if a new hash get redeployed at the same path.
+> Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. TThe path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
 
 <br/>
 

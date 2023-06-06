@@ -1,11 +1,10 @@
 # Apps Quickstart
 
-Welcome to the Apps Quickstart! This document will provide you with 95% of the knowledge on building apps, in just a few minutes.
+Welcome to the Apps Quickstart! This page will provide you with the necessary knowledge to build your first applications in a matter of minutes.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/app_editor_fast.mp4"
@@ -13,27 +12,27 @@ Welcome to the Apps Quickstart! This document will provide you with 95% of the k
 
 <br/>
 
-> _Have more details on that app on our [e-commerce CRM app tutorial](../../apps/7_app_e-commerce.md)_.
+> _Have more details the app above on the [tutorial](../../apps/7_app_e-commerce.md) of our [e-commerce CRM app](https://hub.windmill.dev/apps/14/)_.
 
 <br/>
 
-:::info
-Although Windmill provides **[auto-generated UIs to scripts and flows](../../core_concepts/6_auto_generated_uis/index.md)**, you can build your own internal applications designed to your needs. This is what the app editor is for.
+:::info UIs in Windmill
+Although Windmill provides **[auto-generated UIs to scripts and flows](../../core_concepts/6_auto_generated_uis/index.md)**, you can build your own internal applications designed to your needs. Either with our integrated [app editor](../../apps/0_app_editor/index.mdx), or by [importing your own React/Vue/Svelte apps](../../react_vue_svelte_apps/index.md).
 :::
 
-**Windmill applications are customized UIs to interact with data sources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
+<br/>
 
-[Here](https://hub.windmill.dev/apps/3/crm) is an example of an app built with Windmill.
+**Windmill applications are customized UIs to interact with datasources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
 
 In short, what you need to remember about apps:
 
-- They work on a **what-you-see-is-what-you-get basis**.
-- You can connect apps and components to **datasources**.
-- Components can be **empowered by Windmill [scripts](../../getting_started/0_scripts_quickstart/index.md)**.
+- They work on a what-you-see-is-what-you-get basis.
+- You can connect apps and components to [datasources](../../integrations/0_integrations_on_windmill.md).
+- Components can be empowered by Windmill [scripts](../../getting_started/0_scripts_quickstart/index.md) and [flows](../6_flows_quickstart/index.md).
 
 :::tip
 
-Follow our [detailed pages](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
+Follow our [detailed section](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
 
 :::
 
@@ -41,11 +40,9 @@ To create your first app, you could pick one from our [Hub](https://hub.windmill
 
 From [Windmill](https://app.windmill.dev/user/login), click on `+ App`, and let's get started!
 
-### Toolbar
+### [Toolbar](../../apps/0_toolbar.mdx)
 
 Before jumping in, you should decide if you want to build a **Desktop** or a **Mobile** app. Just clik on the appropriated icon on top.
-
-While we are there, know that you can either go with **centered** content or rather display **full page width**.
 
 Switch from **Editor** to **Preview** mode to take a step back on what you're building.
 
@@ -59,81 +56,69 @@ If you have numerous components you might need to **Anchor** some of them to hav
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
     controls
     id="main-video"
-    src="/videos/component-moving.mp4"
+    src="/videos/component_dd.mp4"
 />
-
-<!-- This video is supposed to be sync with new main after Faton did his PR to fix it on the Canvas docs page -->
 
 <br/>
 
-Check out all of our components at [this page](https://docs.windmill.dev/docs/apps/app_component_library) or (better) directly from the app editor. Know that **we can quickly add components to the librairy**, just mention your suggestions on our [Discord](https://discord.com/invite/V7PM2YHsPB) channel.
+Check out all of our components at [this page](../../apps/4_app_configuration-settings/1_app_component_library.md) or (better) directly from the app editor. Know that **we can quickly add components to the library**, just [reach out to us](../../misc/6_getting_help/index.md).
 
 ### Empower components with scripts
 
-The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable](../../apps/3_app-runnable-panel.mdx)** editor. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and [background runnables](../../apps/3_app-runnable-panel.mdx#background-runnables).
+The beauty of Windmill App editor is the integrations of scripts & workflows to components. On the bottom of the app editor, you can find the **[Runnable editor](../../apps/3_app-runnable-panel.mdx)**. It allows you to create, edit or manage the scripts or flows linked to components (Runnables), and [background runnables](../../apps/3_app-runnable-panel.mdx#background-runnables).
+
+From a component, click on `Create an inline script` or `Select a script or flow` (from workspace or hub) and you're good!
 
 ![Runnable editor](./apps_runnables.png)
 
-:::tip Add a script to a component
 
-The following video showcases how to call a script either from workspace/hub or add it directly inline;
-<br/>
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    id="main-video"
-    src="/videos/script_and_flows_components.mp4"
-/>
-
-<br/>
-
-On Windmill you can also [use AI to autosuggest code for you](../../misc/11_code_autocompletion/index.md).
-
-:::
-
-The **[Ouputs](https://docs.windmill.dev/docs/apps/app_outputs)** of each component can be found on the left side menu. Each of them is associated with a component (see the component id).
+The **[Ouputs](../../apps/2_outputs.md)** of each component can be found on the left side menu. Each of them is associated with a component (see the component id).
 
 ![Apps outputs](./apps_ouputs.png)
 
 **Inputs can be connected to any output**: on a component click on `Connect` and associate inputs to outputs.
 
-![Connect inputs to outputs](./connect_inputs_outputs.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/connect_outputs.mp4"
+/>
 
-At any time, have a look at your app's **Inputs** associated with each component on the dedicated `App inputs` tab.
+<br/>
+
+At any time, have a look at your app's **Inputs** associated with each component on the dedicated `App inputs` tab found in the `⋮` menu of the toolbar.
 
 ![Apps inputs](./apps_inputs.png)
 
 ### Tailor the look of your app
 
-At the **component level**, on the `Settings` tab, configure the [style](../../apps/4_app_configuration-settings/4_app_styling.md) of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Settings` tab).
+At the **[component level](../../apps/4_app_configuration-settings/4_app_styling.md#component-level)**, on the `Settings` tab, configure the style of each component (color, size, label, etc.) either directly in the boxes or using Custom CSS (on the Component Settings - Styling tab).
 
 ![Cutomize components](./customize_component.png)
 
-At the **app level**, you can give a [harmonized style](../../apps/4_app_configuration-settings/4_app_styling.md#global-styling) to your app with CSS. On the `CSS` tab, give details either in boxes or in JSON.
+At the **[app level](../../apps/4_app_configuration-settings/4_app_styling.md#global-styling)**, you can give a harmonized style to your app with CSS. On the `Glbal Styling` tab, give details in boxes or in JSON, for the whole app and per class of component.
 
-![Customize CSS](./customize_css.png)
+![App styling](./customize_app.png)
 
 ### Time to test
 
-While building you app, you can try each component clicking on refresh button.
+While building your app, you can try each component clicking on refresh button.
 
-You can do a refresh all for the whole app with the refresh button on top of the canvas, or even schedule automatic refesh.
+You can do a refresh all for the whole app with the refesh button on top of the canvas, or even schedule automatic refesh.
 
 ![Refresh app](./refresh_app.png)
 
-For possible bugs, there is a `Debug Runs` tab to review past runs with details per component.
+For possible bugs, there is a `Debug Runs` tab to review past runs with details for each component.
 
 ![Debug runs](./debug_runs.png)
 
 ### Then what?
 
-When you're done with the editing of your app, `Save` the current version to the relevant users or [folders](../../core_concepts/8_groups_and_folders/index.md#folders) with a proper and explicit name.
+When you're done with the editing of your app, `Save` the current version to the relevant users/folders with a proper and explicit name.
 
 Once it's saved, it's ready to use! You can also `Publish` it, or even `Publish to Hub` and export it in JSON or Hub compatible JSON from the `⋮` tab.
 
-Follow our [detailed pages](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
+Follow our [detailed section](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
