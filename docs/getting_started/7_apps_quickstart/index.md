@@ -95,7 +95,7 @@ At any time, have a look at your app's **Inputs** associated with each component
 
 ### Tailor the look of your app
 
-At the **[component level](../../apps/4_app_configuration-settings/4_app_styling.md#component-level)**, on the `Settings` tab, configure the style of each component (color, size, label, etc.) either directly on boxes or in Custom CSS (on the `Component Settings` - `Styling` tab).
+At the **[component level](../../apps/4_app_configuration-settings/4_app_styling.md#component-level)**, on the `Settings` tab, configure the style of each component (color, size, label, etc.) either directly in the boxes or using Custom CSS (on the Component Settings - Styling tab).
 
 ![Cutomize components](./customize_component.png)
 
@@ -111,7 +111,7 @@ You can do a refresh all for the whole app with the refesh button on top of the 
 
 ![Refresh app](./refresh_app.png)
 
-For possible bugs, there is a `Debug Runs` tab to review past runs with details per component.
+For possible bugs, there is a `Debug Runs` tab to review past runs with details for each component.
 
 ![Debug runs](./debug_runs.png)
 

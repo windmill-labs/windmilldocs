@@ -1,6 +1,6 @@
 # Scheduling
 
-Windmill has the same set of features of cron, with an UI and control panels. It allows you to define Schedules for Scripts and Flows. Once a Schedule is defined, it will **automatically run the script at the set frequency**. Think of it as an easy-to-use CRON scheduler that you can share with other users.
+Windmill provides the same set of features as CRON, but with a user interface and control panels. It allows you to define Schedules for Scripts and Flows. Once a schedule is defined, **the script will automatically run at the set frequency**. Think of it as an easy-to-use scheduler similar to CRON that you can share with other users.
 
 A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON expression** that controls the execution frequency.
 
@@ -9,7 +9,6 @@ A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON expr
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/schedule-cron-menu.mp4"
@@ -42,19 +41,19 @@ Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_
 
 ## Configure Schedules for Each Task ([Script][scripts], [Workflows][flows])
 
-From your workspace, go to the dedidcated `Schedules` menu and pick `New Schedule`.
+From your workspace, navigate to the dedicated `Schedules` menu and select `New Schedule`.
 
 ![Schedules menu](./6-schedules-menu.png 'Schedules menu')
 
 1. Configure the **schedule frequency** using cron syntax or the simplified builder.
 
-2. Pick a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
+2. Select a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
 
-3. Fill the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flow].
+3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flow].
 
 ![Schedule a task](./12-schedule-a-task.png 'Schedule a task')
 
-Click on `Schedule` button and you're good! The schedule will be automatically 'Enabled'. Toggle that off if needed.
+Click the `Schedule` button and you're good to go! The schedule will be automatically 'Enabled'. Toggle it off if needed.
 
 ![Scheduled task](./13-scheduled-script.png 'Scheduled task')
 
@@ -74,12 +73,11 @@ If the Schedules menu allows you to control future executions of scripts and wor
 
 ## Configure Schedules from Flow Editor
 
-The same method can be done from the flow editor.
+The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.md).
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/schedule-cron.mp4"
@@ -99,7 +97,7 @@ and either schedule in [cron](https://crontab.guru) or in Basic mode that will a
 
 ![Basic or cron schedule](./3-basic-schedule.png 'Basic or cron schedule')
 
-Fill the inputs, toggle the `Schedule Enabled`, save and you're all set!
+Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set!
 
 ![Save and schedule](./4-inputs-toggle.png 'Save and schedule')
 
@@ -109,17 +107,17 @@ Fill the inputs, toggle the `Schedule Enabled`, save and you're all set!
 
 #### Schedule Error Handler
 
-From the schedule configuration, add a special script or flow to execute in case of error.
+From the schedule configuration, add a special script or flow to execute in case of an error.
 
 ![Schedule Error Handler](./14_schedule_error_handler.png)
 
-This can for example be a script noticing the error on [Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack) or [Discord](https://hub.windmill.dev/scripts/discord/1292/send-message-to-channel-using-webhook-discord).
+For example, this can be a script that sends an error notification to [Slack](https://hub.windmill.dev/scripts/slack/1284/) or [Discord](https://hub.windmill.dev/scripts/discord/1292/).
 
 #### As a Flow Step
 
-For scheduled flows, add a simple step to be informed on the execution of the scheduled flow.
+For scheduled flows, add a simple step to be notified about the execution of the scheduled flow.
 
-In this example I chose to [receive an email](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail), it could have been on [Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack), [Discord](https://hub.windmill.dev/scripts/discord/1292/send-message-to-channel-using-webhook-discord) or anything your imagination and API calls can create.
+In this example I chose to [receive an email](https://hub.windmill.dev/scripts/gmail/1291/), but you can use other notification methods like [Slack](https://hub.windmill.dev/scripts/slack/1284/), [Discord](https://hub.windmill.dev/scripts/discord/1292/) or any other other method your imagination and API calls can create.
 
 ![Add an email step](./7-add-email-step.png 'Add an email step')
 
@@ -147,7 +145,7 @@ If you want to handle failure and receive another message in that case, add an [
 
 ### Manage permissions from the workflow
 
-From the metadata menu, change the owner to a folder (group of people) to handle view and editing rights.
+From the metadata menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.md#folders) (group of people) to manage view and editing rights.
 
 ![Manage permissions](./5-manage-rights.png 'Manage permissions')
 
@@ -155,10 +153,10 @@ From the metadata menu, change the owner to a folder (group of people) to handle
 
 Voilà, all done! The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
 
-Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.md) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](https://docs.windmill.dev/blog/stantt-case-study) for their own scheduled jobs.
+Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.md) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
 
 <!-- Resources -->
 
 [flows]: ../../getting_started/6_flows_quickstart/index.md
-[scripts]: ../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md
+[scripts]: ../../getting_started/0_scripts_quickstart/index.md
 [apps]: ../../getting_started/7_apps_quickstart/index.md

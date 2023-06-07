@@ -1,10 +1,16 @@
 # Resources and Resource Types
 
-In Windmill, **[Resources](../../reference/index.md#resource)** represent
+In Windmill, Resources represent
 connections to third party systems. Resources are a good way to define a
 connection to a frequently used third party system such as a database. Think of
 Resources as a structured way to store configuration and credentials, and access
 them from scripts.
+
+:::tip Integrations in Windmill
+
+Check the list of pre-defined [integrations](../../integrations/0_integrations_on_windmill.md) in Windmill.
+
+:::
 
 Each Resource has a **Resource Type** (**RT** for short) - for example MySQL,
 MongoDB, Slack, etc. - that defines the schema that the resource of this type
@@ -49,8 +55,7 @@ a link, for example:
 
 ## Create a Resource Type
 
-Windmill comes preloaded with some common Resource Types (databases, apps, SMTP,
-etc. - see the list on [Windmill Hub](https://hub.windmill.dev/resources)). You
+Windmill comes preloaded with some common Resource Types, such as databases, apps, SMTP, etc. You can see the full list on [Windmill Hub](https://hub.windmill.dev/resources). You
 can also add custom Resource Types by clicking "Add a resource type" on the
 [Resources](https://app.windmill.dev/resources) page.
 
@@ -64,9 +69,9 @@ default, etc). You can also view the schema by toggling the "As JSON" option:
 
 ## States
 
-In Windmill, states are resources (but excluded from the Workspace tab for clarity). States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
+In Windmill, states are considered as resources, but they are excluded from the Workspace tab for clarity. States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
 
-They are displayed on the Resources menu, with a dedicated tab.
+They are displayed on the Resources menu, under a dedicated tab.
 
 ## Using Resources
 

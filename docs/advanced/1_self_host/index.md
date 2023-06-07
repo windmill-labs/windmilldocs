@@ -181,7 +181,7 @@ Database volume is persistent, so updating the database image is safe too.
 ## Helm Chart
 
 We also provide a convenient [Helm Chart](https://helm.sh/docs/topics/charts/)
-for Kubernetes based self-hosted set-up.
+for Kubernetes-based self-hosted set-up.
 
 Detailed instructions can be found in the [README][helm-readme] file in the
 [official repository][helm] of the chart.

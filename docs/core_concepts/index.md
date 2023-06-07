@@ -64,6 +64,14 @@ All details on Flows can be found in the Flows section.
       <div class="text-lg font-semibold text-gray-900">Triggering Flows</div>
       <div class="text-sm text-gray-500">Trigger flows on-demand, by schedule or on external events.</div>
     </a>
+    <a href="/docs/flows/flow_branches" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+      <div class="text-lg font-semibold text-gray-900">Branches</div>
+      <div class="text-sm text-gray-500">Split the execution of the flow based on a condition.</div>
+    </a>
+    <a href="/docs/flows/flow_loops" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+      <div class="text-lg font-semibold text-gray-900">For loops</div>
+      <div class="text-sm text-gray-500">Iterate a series of tasks.</div>
+    </a>
     <a href="/docs/core_concepts/error_handling_in_flows" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
       <div class="text-lg font-semibold text-gray-900">Error Handling in Flows</div>
       <div class="text-sm text-gray-500">Error Handling can be managed using Retries, Early Stop/Break and Error Handlers scripts.</div>
@@ -76,13 +84,9 @@ All details on Flows can be found in the Flows section.
       <div class="text-lg font-semibold text-gray-900">Approval Steps in Flows</div>
       <div class="text-sm text-gray-500">Suspend a flow until specific event(s) are received, such as approvals or cancellations.</div>
     </a>
-    <a href="/docs/flows/flow_branches" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Branches</div>
-      <div class="text-sm text-gray-500">Split the execution of the flow based on a condition.</div>
-    </a>
-    <a href="/docs/flows/flow_loops" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">For loops</div>
-      <div class="text-sm text-gray-500">Iterate a series of tasks.</div>
+    <a href="/docs/flows/cache" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+      <div class="text-lg font-semibold text-gray-900">Cache for Steps</div>
+      <div class="text-sm text-gray-500">Re-use a step's previous results.</div>
     </a>
 </div>
 
