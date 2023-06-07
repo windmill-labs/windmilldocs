@@ -1,10 +1,16 @@
 # Resources and Resource Types
 
-In Windmill, **[Resources](../../reference/index.md#resource)** represent
+In Windmill, Resources represent
 connections to third party systems. Resources are a good way to define a
 connection to a frequently used third party system such as a database. Think of
 Resources as a structured way to store configuration and credentials, and access
 them from scripts.
+
+:::tip Integrations in Windmill
+
+Check the list of pre-defined [integrations](../../integrations/0_integrations_on_windmill.md) in Windmill.
+
+:::
 
 Each Resource has a **Resource Type** (**RT** for short) - for example MySQL,
 MongoDB, Slack, etc. - that defines the schema that the resource of this type

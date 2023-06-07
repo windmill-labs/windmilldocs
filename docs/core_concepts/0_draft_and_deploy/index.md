@@ -1,6 +1,6 @@
 # Draft and Deploy
 
-Learn how to draft, test, and deploy scripts, flows, and apps Windmill to ensure controlled development and refinement.
+Draft, test, and deploy scripts, flows, and apps Windmill to iterate and save safely.
 
 Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by your browser in `local storage`, by the backend as a `draft`, and `deployed`.
 
@@ -28,7 +28,7 @@ Drafts can be run and tested only from the editor (script, flow or app) with the
 
 The deployed version is the authoritative version of a runnable. Once deployed, it is not only visible by workspace members but has its own [auto-generated UI](../6_auto_generated_uis/index.md), [webhooks](../4_webhooks/index.md), or can be called from flows and apps (for sripts and flows). This also means that local edits and drafts can be made in parallel to a deployed version of a runnable without affecting its behavior.
 
-If you want to have several versions of the same runnable, just fork it with the `Fork`button on the drop down menu of `Deploy`.
+If you want to have several versions of the same runnable, just fork it with the `Fork` button on the drop down menu of `Deploy`.
 
 ### Special case: Deployed versions of scripts
 
@@ -36,7 +36,7 @@ If you want to have several versions of the same runnable, just fork it with the
 
 > <br/>
 
-> Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. TThe path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
+> Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. The path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
 
 <br/>
 

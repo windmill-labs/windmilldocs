@@ -1,6 +1,6 @@
 # Groups and Folders
 
-Learn how to manage permissions and organize items using Groups and Folders in your workspace.
+Groups and Folders are ways to manage permissions and organize items in a workspace.
 
 ## Groups
 

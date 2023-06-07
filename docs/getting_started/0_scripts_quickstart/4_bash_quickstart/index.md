@@ -11,7 +11,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consists of 2 parts:
 
-- **Code**: Your bash script
+- **Code**: your bash script
 - **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../reference/index.md#json-schema) of its inputs (inferred from its signature)
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`

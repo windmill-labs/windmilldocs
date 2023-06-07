@@ -1,6 +1,6 @@
 # Worker Groups
 
-Learn how to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
+Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
 This feature is useful if you want to run some scripts on a GPU machine, or if you want to run some scripts on high-memory machine.
 

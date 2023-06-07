@@ -22,7 +22,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- **Code**: For python scripts, it must have at least a main function.
+- **Code**: for python scripts, it must have at least a main function.
 - **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../reference/index.md#json-schema) of its inputs (inferred from its signature)
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`

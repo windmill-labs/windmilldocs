@@ -9,7 +9,6 @@ A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON expr
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/schedule-cron-menu.mp4"
@@ -79,7 +78,6 @@ The same method can also be done from the [flow editor](../../getting_started/6_
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/schedule-cron.mp4"

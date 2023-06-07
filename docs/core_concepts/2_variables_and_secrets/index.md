@@ -43,7 +43,7 @@ setVariable('u/user/foo', value);
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.md)
 which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](../3_resources_and_types/index.md#create-a-resource-type) to be automatically
-discriminated in the auto-generated form to be of the proper type (e.g a
+discriminated in the auto-generated form to be of the proper type (e.g. a
 parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only going to
 offer a selection over the resources of type postgres in the auto-generated UI).
 

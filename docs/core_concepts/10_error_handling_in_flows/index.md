@@ -1,6 +1,6 @@
 # Error Handling in Flows
 
-Learn about the error handling features available in Windmill flows, including [retries](../../flows/14_retries.md), [error handlers](../../flows/7_flow_error_handler.md), and [early stop/break](../../flows/2_early_stop.md).
+There are three ways to handle errors in Windmill flows: [retries](../../flows/14_retries.md), [error handlers](../../flows/7_flow_error_handler.md), and [early stop/break](../../flows/2_early_stop.md).
 
 ## Retries
 

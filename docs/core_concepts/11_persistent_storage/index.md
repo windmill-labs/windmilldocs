@@ -1,10 +1,8 @@
 # Persistent Storage
 
-Learn about the different types of persistent storage options available in Windmill and how to effectively store and manage data.
-
 Persistent storage refers to any method of storing data that remains intact and accessible even after a system is powered off, restarted, or experiences a crash.
 
-In the context of Windmill, the stakes are: **where to store the data manipulated by Windmill**? (ETL, data ingestion and preprocessing, data migration and sync etc.)
+In the context of Windmill, the stakes are: **where to effectively store and manage the data manipulated by Windmill**? (ETL, data ingestion and preprocessing, data migration and sync etc.)
 
 :::info TLDR
 
@@ -20,13 +18,13 @@ This present document gives a list of trusted services to use alongside Windmill
 
 There are 4 kinds of persistent storage in Windmill:
 
-1. [Small amount of data within Windmill](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
+1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-2. [Structured SQL databases](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
+2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
-3. [Object storage](#large-data-files-s3-r2-minio) such as S3.
+3. [Object storag for large data](#large-data-files-s3-r2-minio) such as S3.
 
-4. [Key-value stores and NoSQL databases](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
+4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
 ## You already have your own database
 
@@ -94,7 +92,7 @@ Variables are similar to resources but have no types, can be tagged as `secret` 
 
 In conclusion `setState` and `setResource` are convenient ways to persist json between multiple script executions.
 
-## Shared Directory
+### Shared Directory
 
 For heavier ETL processes or sharing data between steps in a flow, Windmill provides a [Shared Directory](../../flows/3_editor_components.md#shared-directory) feature.
 
