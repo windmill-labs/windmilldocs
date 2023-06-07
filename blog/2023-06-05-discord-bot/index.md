@@ -1,6 +1,6 @@
 ---
 slug: knowledge-base-discord-bot
-title: Creating a Documentation Bot with Windmill, OpenAI, and Supabase
+title: Build your own Discord/Slack bot using Supabase and OpenAI's GPT to help support teams
 authors: [fatonramadani]
 tags:
   [
@@ -22,22 +22,36 @@ image: ./ai-bot.png
 ![AI BOT](./ai-bot.png 'AI BOT')
 _**Midjourney prompt:** a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
 
-## Replace a Sass
+## Replace a SaaS
 
-This blog series is about replacing a Sass with Windmill. Today, we will replace a Sass that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase.
+This blog series cheeky title is to emphasize that you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but specific to your needs solution on your own, and stop accumulating subscriptions.
+
+Today, we will create a bot that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase with an approval step.
+
+## Demo
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	loop
+	controls
+	src="/videos/demo-bot.mp4"
+/>
+
+To directly setup your own bot on Windmill (Self-hosted or cloud), you can skip the following sections and go directly to the [quick start](#quick-start) section.
 
 ## Supabase
 
-I choose to store my embeddings in Supabase. I've followed this tutorial to set up my Supabase database and table:
+We will use Supabase to store my embeddings, by taking inspiration from this tutorial:
 https://supabase.com/blog/openai-embeddings-postgres-vector.
 
 You'll need to follow this tutorial up to the point where you have created a table with the `pgvector` extension enabled, and you have created a the `match_documents` function.
 
-The only difference is that I store the link of the documentation page for each embedding, so I can give relevant links when answering.
+The only difference is that we will store the link of the documentation page for each embedding to also provide the sources.
 
-## Create a scheduled flow that scrapes the Windmill documentation
+## Create a scheduled flow that ingest your data and create embeddings
 
-To provide accurate answers to user queries, we need to scrape the Windmill documentation and store it in a suitable format. We can accomplish this by creating a scheduled flow that periodically retrieves the documentation from the Windmill repository on GitHub, creates embeddings using OpenAI, and stores the embeddings in Supabase using pgvector.
+We need to ingest a data source, here the Windmill documentation. We can accomplish this by creating a scheduled flow that periodically retrieves the documentation from the Windmill repository on GitHub, creates embeddings using OpenAI, and stores the embeddings in Supabase using pgvector.
 
 ### Flow overview
 
@@ -53,6 +67,8 @@ Then we use a for-loop to iterate over the results and run the following step fo
 
 1. Create the embeddings using OpenAI
 2. Store the embeddings in Supabase using pgvector
+
+Each iteration of the for-loop are indiviual jobs and can be run in parallel, retried and error handled independently.
 
 ### Schedule the flow
 
@@ -79,7 +95,11 @@ We can schedule the flow to run every month.
 
 ### Scraping the Windmill documentation
 
-I took a script on the [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/get-repo-content-github) and modified it to only extract content from markdown files. As we are using Docusaurus, we also need to transform the path of the file to get the correct URL.
+We could have written the script that fetches from Github, but since it's generic task, there is already a community contributed script that does exactly that on the Windmill Hub: [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/get-repo-content-github)
+
+Direclty from Windmill, we picked the script that fetches the content of a repository from Github and forked it.
+
+We modified it to only extract content from markdown files. As we are using Docusaurus, we also need to transform the path of the file to get the correct URL.
 
 <details><summary>Code: Extract content from Github</summary><p>
 
@@ -173,7 +193,7 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 
 </p></details>
 
-Notice that the script take a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
+Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
 
 <div class="grid grid-cols-2 gap-2 mb-4">
   <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
@@ -184,7 +204,7 @@ Notice that the script take a special parameter `gh_auth` which is a Windmill re
 
 ### Create the embeddings
 
-Using the OpenAI API, we can create embeddings for each of the documents. Fortunately for us, there is a script on the Windmill Hub that does exactly that: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/create-embedding-openai).
+Using the OpenAI API, we can create embeddings for each of the documents. Simirarly to the Github script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/create-embedding-openai).
 
 ### Store the embeddings on Supabase
 
@@ -209,8 +229,7 @@ export async function main(auth: Resource<'supabase'>, embedding: any, document:
 
 ## Slack or Discord
 
-I choose to build a Discord bot, but you can also build a Slack bot. The process is similar.
-I will mention the differences in the blog post when needed.
+Windmill uses Discord for its community, but you also built the same bot for Slack. For Slack, see the next section.
 
 ## Create an application on Discord Developer Portal
 
@@ -226,7 +245,7 @@ See the Discord API documentation for more information: https://discord.com/deve
 
 Every Windmill scripts or flows exposes a webhook endpoint that can be used to trigger it.
 
-We can create a new flow that will be triggered by the Discord Interaction endpoint.
+We can create a new flow that will be triggered as the Discord Interaction endpoint.
 
 The flow input consists of the following parameters:
 
@@ -244,7 +263,7 @@ Let's create the URL for the Discord Interaction endpoint.
 
 Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
 
-We will need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request.
+Discord mandates that we verify the request before responding to it, so we need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request. We also added the `raw` query parameter to get the raw stringified body.
 
 The URL should look like this:
 
@@ -327,7 +346,7 @@ export async function main(
 After verifying the request, we can defer the request to Discord using the `api.interactions.defer` method.
 Now we can run the `discordAnswerFlowPath` flow that will generate the answer and send it back to Discord.
 
-## Create the Slack endpoint
+## Slack
 
 For Slack, we will use the slack web client to send ephemeral messages to the user while the bot is thinking.
 We receive the following parameters from Slack:
@@ -383,7 +402,7 @@ This flow will generate the answer and send it back to Discord. It is composed o
 1. Extract the question from the Discord request
 2. Create the answer using the question and the embeddings and OpenAI
 3. Create an approval step to validate the answer by a human
-4. If validated, send the answer back to Discord
+4. If validated, send the answer publicly
 
 ### Extract the question from the Discord request
 
@@ -405,7 +424,7 @@ To create the answer, we will follow the following steps:
 
 1. Create the embeddings for the question
 2. Retrieve the documents from Supabase using the `match_documents` function.
-3. Using a prompt, ask OpenAI to generate the answer given the question and the documents
+3. Using a prompt, use GPT-4 or any other models to generate the answer given the question and the documents
 4. Return the answer
 
 The prompt is the following:
@@ -577,9 +596,6 @@ export async function main(
   </a>
 </div>
 
-If confirmed, the last step of the flow will be executed and the answer will be sent back to the user.
-Otherwise, we can reject message.
-
 ### Send the answer back to Discord
 
 Once approved, the flow will resume and the answer will be sent back to the user.
@@ -681,20 +697,10 @@ export async function main(
 
 Finally we can send the answer back to Slack using this script from the Hub: [Send a message to a channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack)
 
-## Demo
-
-Once the Discord Bot is set up and the necessary flows are created, you can test it out by asking questions in the Discord server where the bot is added.
-
-```
-/windmill-help question: What is the difference before draft and deployed ?
-```
-
-![Demo](./is_thinking.png 'Demo')
-
-![response](./response.png 'response')
-
 ## Conclusion
 
-Building a powerful Discord Bot that can assist users with product documentation using Windmill, OpenAI, and Supabase is a great way to automate support and provide a seamless user experience. By leveraging the capabilities of these tools, you can create a bot that understands user queries, retrieves relevant information from documentation, and delivers accurate answers in real-time. Feel free to explore the possibilities and customize the implementation to fit your specific requirements.
+Building a powerful Discord/Slack Bot that can assist users with product documentation using Windmill, OpenAI, and Supabase is a great way to automate support and provide a seamless user experience. By leveraging the capabilities of these tools, you can create a bot that understands user queries, retrieves relevant information from documentation, and delivers accurate answers in real-time. Feel free to explore the possibilities and customize the implementation to fit your specific requirements.
+
+This is an example that with the right tools, you can quickly build a solution thait is tailored to you needs and hence can be better than a fully-featured, but generic solution.
 
 If you have any questions or need further assistance, don't hesitate to reach out to the Windmill community on the [Windmill Discord Server](https://discord.com/invite/V7PM2YHsPB). Happy bot building!
