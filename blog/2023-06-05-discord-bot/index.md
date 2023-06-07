@@ -434,7 +434,6 @@ You are an AI assistant providing helpful advice. You are given the following ex
 If you can't find the answer in the context below, just say "Hmm, I'm not sure." Don't try to make up an answer.
 If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
 Please note that images, figures, or any visual content will not be included in the provided context, so you must not try to include them in an answer.
-The question might have errors, try your best to answer anyway.
 
 Context sections  :
 ${contextText}
@@ -452,6 +451,7 @@ import * as wmill from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
 import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
 import { Configuration, OpenAIApi } from 'npm:openai@3.2.1';
 import { stripIndent } from 'https://esm.sh/common-tags@1.8.2';
+import GPT3Tokenizer from 'https://esm.sh/gpt3-tokenizer@1.1.5';
 
 export async function main(
 	query: string,
@@ -461,7 +461,8 @@ export async function main(
 		access: string;
 		refresh: string;
 		expires_at?: number;
-	}
+	},
+	maxToken: number = 5000
 ) {
 	let answer = '';
 	const links: string[] = [];
@@ -489,47 +490,59 @@ export async function main(
 			match_count: 5 // Choose the number of matches
 		});
 
-		console.log({ documents });
+		const tokenizer = new GPT3Tokenizer({ type: 'gpt3' });
+		let tokenCount = 0;
 
 		let contextText = '';
 
 		for (let i = 0; i < documents.length; i++) {
 			const document = documents[i];
 			const content = document.content;
-			contextText += `${content.trim()}\n---\n`;
 
+			const encoded = tokenizer.encode(content);
+			tokenCount += encoded.text.length;
+
+			if (tokenCount > maxToken) {
+				contextText += `${content.trim().substring(0, maxToken)}\n---\n`;
+				links.push(document.link);
+				break;
+			}
+
+			contextText += `${content.trim()}\n---\n`;
 			links.push(document.link);
 		}
 
 		const prompt = stripIndent`
 		You are an AI assistant providing helpful advice. You are given the following extracted parts of a long document and a question. Provide a conversational answer based on the context provided.
-    If you can't find the answer in the context below, just say "Hmm, I'm not sure." Don't try to make up an answer.
-    If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
+    If you can't find the answer in the context below, just say "Sorry, I don't know" Don't try to make up an answer.
     Please note that images, figures, or any visual content will not be included in the provided context, so you must not try to include them in an answer.
-    The question might errors, try your best to answer anyway.
     
-    Context sections  :
+    We will provide both the context and the question at the end.
+    Answer as markdown (including related code snippets if available).
+
+    Context:
     ${contextText}
     Question: """
     ${query}
     """
-    Answer as markdown (including related code snippets if available):
   `;
 
-		// In production we should handle possible errors
-		const completionResponse = await openai.createChatCompletion({
-			model: 'gpt-4',
-			messages: [{ role: 'user', content: prompt }],
-			max_tokens: 512, // Choose the max allowed tokens in completion
-			temperature: 0 // Set to 0 for deterministic results
-		});
+		try {
+			const completionResponse = await openai.createChatCompletion({
+				model: 'gpt-4',
+				messages: [{ role: 'user', content: prompt }],
+				max_tokens: 512, // Choose the max allowed tokens in completion
+				temperature: 0 // Set to 0 for deterministic results
+			});
+			const {
+				id,
+				choices: [{ message }]
+			} = completionResponse.data;
 
-		const {
-			id,
-			choices: [{ message }]
-		} = completionResponse.data;
-
-		answer = message?.content ?? '';
+			answer = message?.content ?? '';
+		} catch (e) {
+			console.log(e);
+		}
 	});
 
 	return { answer, links };
@@ -699,8 +712,6 @@ Finally we can send the answer back to Slack using this script from the Hub: [Se
 
 ## Conclusion
 
-Building a powerful Discord/Slack Bot that can assist users with product documentation using Windmill, OpenAI, and Supabase is a great way to automate support and provide a seamless user experience. By leveraging the capabilities of these tools, you can create a bot that understands user queries, retrieves relevant information from documentation, and delivers accurate answers in real-time. Feel free to explore the possibilities and customize the implementation to fit your specific requirements.
-
-This is an example that with the right tools, you can quickly build a solution thait is tailored to you needs and hence can be better than a fully-featured, but generic solution.
+This is an example that with the right tools, you can quickly build a solution thait is tailored to your needs and hence can be better than a fully-featured, but generic solution.
 
 If you have any questions or need further assistance, don't hesitate to reach out to the Windmill community on the [Windmill Discord Server](https://discord.com/invite/V7PM2YHsPB). Happy bot building!
