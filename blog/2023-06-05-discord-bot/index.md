@@ -24,7 +24,7 @@ _**Midjourney prompt:** a blog cover about a discord bot that answers questions 
 
 ## Replace a SaaS
 
-This blog series cheeky title is to emphasize that you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but specific to your needs solution on your own, and stop accumulating subscriptions.
+This blog series cheeky title is to emphasize that you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but tailored to your needs solution on your own, and stop accumulating subscriptions.
 
 Today, we will create a bot that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase with an approval step.
 
@@ -38,7 +38,7 @@ Today, we will create a bot that answers questions about technical documentation
 	src="/videos/demo-bot.mp4"
 />
 
-To directly setup your own bot on Windmill (Self-hosted or cloud), you can skip the following sections and go directly to the [quick start](#quick-start) section.
+To directly setup your own bot on Windmill (Self-hosted or cloud), you can skip the following sections and go directly to the [How to setup it yourself](#how-to-setup-it-yourself) section.
 
 ## Supabase
 
@@ -715,3 +715,23 @@ Finally we can send the answer back to Slack using this script from the Hub: [Se
 This is an example that with the right tools, you can quickly build a solution thait is tailored to your needs and hence can be better than a fully-featured, but generic solution.
 
 If you have any questions or need further assistance, don't hesitate to reach out to the Windmill community on the [Windmill Discord Server](https://discord.com/invite/V7PM2YHsPB). Happy bot building!
+
+## How to setup it yourself
+
+### Summary
+
+1. Create a Discord bot
+2. Create the Supabase database
+3. Fork the `Extract and embed documentation for semantic search` flow from the Hub and configure it with your credentials
+4. Run it once to generate the embeddings, and configure it to run on a schedule
+5. Fork the `Verify the Discord Request, Defer and trigger a flow` flow from the Hub and configure it with your credentials
+6. Get the webhook URL to trigger the flow, configure it and copy it to the Discord Interactions configuration
+7. Fork the `Generate answer from embeddings with intermediate approval step` flow from the Hub and configure it with your credentials
+
+### Links
+
+- [Extract and embed documentation for semantic search](https://hub.windmill.dev/flows/45/extract-and-embed-documentation-for-semantic-search)
+
+- [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
+
+- [Create the Discord Answer flow](https://hub.windmill.dev/flows/46/generate-answer-from-embeddings-with-intermediate-approval-step).
