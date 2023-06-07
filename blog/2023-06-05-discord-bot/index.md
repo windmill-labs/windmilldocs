@@ -24,7 +24,7 @@ _**Midjourney prompt:** a blog cover about a discord bot that answers questions 
 
 ## Replace a Sass
 
-This blog series is about replacing a Sass with Windmill. In this blog, we will replace a Sass that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase.
+This blog series is about replacing a Sass with Windmill. Today, we will replace a Sass that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase.
 
 ## Supabase
 
@@ -34,21 +34,6 @@ https://supabase.com/blog/openai-embeddings-postgres-vector.
 You'll need to follow this tutorial up to the point where you have created a table with the `pgvector` extension enabled, and you have created a the `match_documents` function.
 
 The only difference is that I store the link of the documentation page for each embedding, so I can give relevant links when answering.
-
-## Slack or Discord
-
-I choose to build a Discord bot, but you can also build a Slack bot. The process is similar.
-I will mention the differences in the blog post when needed.
-
-## Create an application on Discord Developer Portal
-
-To get started, go to the Discord Developer Portal and create a new application. Give your application a name and add a bot to it. This will provide you with the necessary credentials to interact with the Discord API.
-
-## Configure your Discord Bot command
-
-Once you have created your application and added a bot, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the Discord API documentation for detailed instructions on how to register a command for your bot.
-
-See the Discord API documentation for more information: https://discord.com/developers/docs/interactions/slash-commands#registering-a-command
 
 ## Create a scheduled flow that scrapes the Windmill documentation
 
@@ -221,6 +206,21 @@ export async function main(auth: Resource<'supabase'>, embedding: any, document:
 ```
 
 </p></details>
+
+## Slack or Discord
+
+I choose to build a Discord bot, but you can also build a Slack bot. The process is similar.
+I will mention the differences in the blog post when needed.
+
+## Create an application on Discord Developer Portal
+
+To get started, go to the Discord Developer Portal and create a new application. Give your application a name and add a bot to it. This will provide you with the necessary credentials to interact with the Discord API.
+
+## Configure your Discord Bot command
+
+Once you have created your application and added a bot, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the Discord API documentation for detailed instructions on how to register a command for your bot.
+
+See the Discord API documentation for more information: https://discord.com/developers/docs/interactions/slash-commands#registering-a-command
 
 ## Create the Discord Interaction endpoint
 
