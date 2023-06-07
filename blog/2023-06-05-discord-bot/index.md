@@ -1,6 +1,6 @@
 ---
 slug: knowledge-base-discord-bot
-title: Build a Product Documentation Assistance Bot using Windmill, OpenAi, and Supabase
+title: Creating a Documentation Bot with Windmill, OpenAI, and Supabase
 authors: [fatonramadani]
 tags:
   [
