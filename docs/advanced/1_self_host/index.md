@@ -207,7 +207,7 @@ Detailed instructions in the official [repository][helm].
 ### Enterprise deployment with Helm
 
 The Enterprise edition of Windmill uses different base images and supports
-additional features. One important feature is better caching for depencies in a
+additional features. One important feature is better caching for dependencies in a
 super cache supported by S3.
 
 You need:

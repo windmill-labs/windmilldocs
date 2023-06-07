@@ -323,6 +323,12 @@ async function main(...) {
 }
 ```
 
+### Custom Environment Variables
+
+In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts. This feature is useful when a script needs an environment variable prior to the main function executing itself. For instance, some libraries in Go do some setup in the 'init' function that depends on environment variables.
+
+To add a custom environment variable to a script in Windmill, you should follow this format: `<KEY>=<VALUE>`. Where `<KEY>` is the name of the environment variable and `<VALUE>` is the corresponding value of the environment variable.
+
 ## Flows
 
 A **[Flow](../getting_started/6_flows_quickstart/index.md)** is a core concept. It is a JSON serializable value in the

@@ -53,7 +53,7 @@ By comparison, in Windmill one would just write the canonical python or typescri
 
 ## Admin panels builders
 
-Getting closer to Windmill. Those players have a blent on admin panels. Therefore they are strong on UIs and now-code features.
+Getting closer to Windmill. Those players have a blent on admin panels. Therefore they are strong on UIs and low-code features.
 They allow you to use code in the process. However we believe **they lack flexibility for building complex workflows**.
 
 Those are great tools and since they focus solely on the UI builder part, they have made it a great and mature product. On the other hand, Windmill UI builder integrates well with the workflow and script execution engine.
@@ -84,13 +84,15 @@ and the aim to solve main issues (scalability, technicity for advanced use cases
 
 We believe Windmill is different because:
 
-- it allows building internal tools through code much faster, without sacrificing on one side **intuitivity** and visibility, and on the other side,
+- it allows building internal tools through code much faster, without sacrificing on one side intuitivity and **visibility**, and on the other side,
   **control**, reliability, performance, flexibility and scalability
 - it **empowers semi-technical users** to access and edit that code without being overwhelmed by the usual barriers to entry
   (git, IDE, local environments, secrets managements, etc.)
 - it is compatible with **senior/staff software engineers** high standards for production-grade yet flexible yet customizable with code.
 
-**We ourselves have our own limitations**. We believe we can do better in terms of product education and having prettier UIs, all the rest is ready for scale.
+Have a look at our [core concepts](../../core_concepts/index.md) to see what makes us different.
+
+We ourselves have our own limitations. We believe we can do better in terms of product education and having a prettier UI. All the rest is ready for scale.
 
 Please note that this comparison is made with at least **two biases**: 1. we want to convince you of the power of our product and 2. we are never safe from hiding things from ourselves about the strengths of competitors.
 
