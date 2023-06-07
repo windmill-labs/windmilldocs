@@ -1,10 +1,11 @@
 ---
 slug: knowledge-base-discord-bot
-title: Build a Powerful Discord Bot using Windmill, OpenAi, and Supabase for Product Documentation Assistance
+title: Build a Product Documentation Assistance Bot using Windmill, OpenAi, and Supabase
 authors: [fatonramadani]
 tags:
   [
     'Discord bot',
+		'Slack bot',
     'Product documentation',
     'Windmill',
     'OpenAI',
@@ -21,9 +22,23 @@ image: ./ai-bot.png
 ![AI BOT](./ai-bot.png 'AI BOT')
 _**Midjourney prompt:** a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
 
-## Introduction
+## Replace a Sass
 
-Windmill is a low-code platform that allows you to build powerful automation workflows. It is a great tool for building developer tools, automating business processes, and creating internal tools. In this tutorial, we will explore how to utilize Windmill to build a Discord Bot capable of answering questions about Windmill documentation.
+This blog series is about replacing a Sass with Windmill. In this blog, we will replace a Sass that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase.
+
+## Supabase
+
+I choose to store my embeddings in Supabase. I've followed this tutorial to set up my Supabase database and table:
+https://supabase.com/blog/openai-embeddings-postgres-vector.
+
+You'll need to follow this tutorial up to the point where you have created a table with the `pgvector` extension enabled, and you have created a the `match_documents` function.
+
+The only difference is that I store the link of the documentation page for each embedding, so I can give relevant links when answering.
+
+## Slack or Discord
+
+I choose to build a Discord bot, but you can also build a Slack bot. The process is similar.
+I will mention the differences in the blog post when needed.
 
 ## Create an application on Discord Developer Portal
 
@@ -40,6 +55,8 @@ See the Discord API documentation for more information: https://discord.com/deve
 To provide accurate answers to user queries, we need to scrape the Windmill documentation and store it in a suitable format. We can accomplish this by creating a scheduled flow that periodically retrieves the documentation from the Windmill repository on GitHub, creates embeddings using OpenAI, and stores the embeddings in Supabase using pgvector.
 
 ### Flow overview
+
+The flow is available on the Windmill Hub: https://hub.windmill.dev/flows/45/extract-and-embed-documentation-for-semantic-search
 
 ![Flow](./flow.png 'Create a scheduled flow that scrapes the Windmill documentation')
 
@@ -77,36 +94,16 @@ We can schedule the flow to run every month.
 
 ### Scraping the Windmill documentation
 
-Using the Oktokit API, we can get the Windmill documentation from GitHub.
+I took a script on the [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/get-repo-content-github) and modified it to only extract content from markdown files. As we are using Docusaurus, we also need to transform the path of the file to get the correct URL.
 
-Notice that the script take a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
-
-#### Learn more about Windmill resources
-
-<div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">Resources</div>
-   	<div className="text-sm text-gray-500">Create and manager your resources</div>
-  </a>
-</div>
+<details><summary>Code: Extract content from Github</summary><p>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
 import { Octokit } from 'https://cdn.skypack.dev/@octokit/rest';
 
-/**
- * @param owner The account owner of the repository. The name is not case sensitive.
- *
- * @param repo The name of the repository. The name is not case sensitive.
- *
- * @param path The path to the file or directory.
- * If omitted, the contents of the repository's root directory will be returned.
- *
- * @param ref The name of the commit/branch/tag. Defaults to the default branch of the repository.
- *
- * @param result_format The kind of data to be returned. This controls how the result is structured.
- * Learn more at https://docs.github.com/en/rest/repos/contents#get-repository-content
- */
+type FileContent = { content: string; link: string };
+
 export async function main(
 	gh_auth: wmill.Resource<'github'>,
 	owner: string,
@@ -114,7 +111,7 @@ export async function main(
 	path?: string,
 	ref?: string,
 	result_format: 'github_object' | 'json' = 'github_object'
-): Promise<string[]> {
+): Promise<FileContent[]> {
 	const octokit = new Octokit({ auth: gh_auth.token });
 
 	const response = await octokit.request(
@@ -131,7 +128,7 @@ export async function main(
 
 	const entries = response.data.entries;
 
-	const fileContents: string[] = [];
+	const fileContents: FileContent[] = [];
 
 	for (const entry of entries) {
 		if (entry.type === 'file') {
@@ -139,6 +136,8 @@ export async function main(
 			const isMDX = entry.name.endsWith('.mdx');
 
 			if (isMarkdown || isMDX) {
+				const link = getDocusaurusPathFromGithub(entry.path);
+
 				const contentResponse = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
 					owner,
 					repo,
@@ -151,23 +150,10 @@ export async function main(
 
 				const content = contentResponse.data as string;
 
-				if (isMarkdown) {
-					// Process markdown content
-					fileContents.push(content);
-				} else if (isMDX) {
-					// Process MDX content
-					// Convert MDX to markdown and add it to fileContents
-					const mdxToMarkdown = await octokit.request('POST /markdown', {
-						text: content,
-						mode: 'markdown',
-						headers: {
-							'X-GitHub-Api-Version': '2022-11-28',
-							Accept: 'application/vnd.github.v3+json'
-						}
-					});
-
-					fileContents.push(mdxToMarkdown.data);
-				}
+				fileContents.push({
+					content,
+					link
+				});
 			}
 		} else if (entry.type === 'dir') {
 			// Recursively process directories
@@ -178,42 +164,48 @@ export async function main(
 
 	return fileContents;
 }
-```
 
-### Create the embeddings
+function getDocusaurusPathFromGithub(githubUrl: string): string {
+	const match = githubUrl.match(/docs\/(.+\.(md|mdx))/);
+	if (match) {
+		let filePath = match[1];
+		filePath = filePath.replace(/\.(md|mdx)$/, '');
 
-Using the OpenAI API, we can create embeddings for each of the documents.
+		// Split the path into segments
+		let pathSegments = filePath.split('/');
 
-```typescript
-import type { Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
-import { Configuration, OpenAIApi } from 'npm:openai@3.1.0';
+		// Remove numbers and underscores from the beginning of each segment
+		pathSegments = pathSegments.map((segment) => segment.replace(/^[0-9]*_/, ''));
 
-export async function main(
-	auth: Resource<'openai'>,
-	prompt: string,
-	model: string = 'text-embedding-ada-002'
-) {
-	const configuration = new Configuration({
-		apiKey: auth.api_key,
-		organization: auth.organization_id
-	});
-	const openai = new OpenAIApi(configuration);
+		// Reconstruct the path
+		filePath = pathSegments.join('/');
 
-	const response = await openai.createEmbedding({
-		model,
-		input: prompt
-	});
-
-	const [{ embedding }] = response.data.data;
-	return embedding;
+		return 'https://docs.windmill.dev/docs/' + filePath;
+	}
+	return githubUrl;
 }
 ```
 
-Notice about leverages Deno to import the OpenAI API client.
+</p></details>
+
+Notice that the script take a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">Resources</div>
+   	<div className="text-sm text-gray-500">Create and manager your resources</div>
+  </a>
+</div>
+
+### Create the embeddings
+
+Using the OpenAI API, we can create embeddings for each of the documents. Fortunately for us, there is a script on the Windmill Hub that does exactly that: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/create-embedding-openai).
 
 ### Store the embeddings on Supabase
 
 Finally, we can store the embeddings in Supabase using the [pgvector](https://supabase.com/docs/guides/database/extensions/pgvector) extension.
+
+<details><summary>Code: Store the embeddings on Supabase</summary><p>
 
 ```typescript
 import { Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -228,9 +220,11 @@ export async function main(auth: Resource<'supabase'>, embedding: any, document:
 }
 ```
 
+</p></details>
+
 ## Create the Discord Interaction endpoint
 
-Every Windmill scripts or flows exposes a webhook endpoint that can be used to trigger the script or flow.
+Every Windmill scripts or flows exposes a webhook endpoint that can be used to trigger it.
 
 We can create a new flow that will be triggered by the Discord Interaction endpoint.
 
@@ -242,20 +236,13 @@ The flow input consists of the following parameters:
 
 ### Building the URL for the Discord Interaction endpoint
 
+Let's create the URL for the Discord Interaction endpoint.
+
 1. Go into the Webhooks section of the flow details page
 2. Copy the `Result/Sync` webhook URL
 3. Create a webhook-specific token
 
 Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
-
-#### Learn more about Webhooks
-
-<div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="/docs/core_concepts/webhooks" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">Webhooks</div>
-   	<div className="text-sm text-gray-500">Interact with Flows using Webhooks</div>
-  </a>
-</div>
 
 We will need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request.
 
@@ -271,10 +258,14 @@ Copy and paste this URL into the Discord Interaction endpoint.
 
 ### Verifying the Discord request and Defer
 
+A template is available on the Windmill Hub: [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
+
+<details><summary>Code: Verify the Discord Request and Defer</summary><p>
+
 ```typescript
 import { REST } from 'npm:@discordjs/rest@1.7.1';
 import { API } from 'npm:@discordjs/core@0.6.0';
-import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
+import { type Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
 import { JobService } from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
 
 import {
@@ -299,7 +290,6 @@ export async function main(
 ) {
 	const rest = new REST({ version: '10' }).setToken(token);
 	const api = new API(rest);
-
 	const interaction: DiscordInteraction = JSON.parse(raw_string);
 
 	const isVerified = verifyKey(
@@ -332,10 +322,59 @@ export async function main(
 }
 ```
 
+</p></details>
+
 After verifying the request, we can defer the request to Discord using the `api.interactions.defer` method.
 Now we can run the `discordAnswerFlowPath` flow that will generate the answer and send it back to Discord.
 
+## Create the Slack endpoint
+
+For Slack, we will use the slack web client to send ephemeral messages to the user while the bot is thinking.
+We receive the following parameters from Slack:
+
+- `text`: The text of the message
+- `channel_id`: The channel ID
+- `user_id`: The user ID
+
+<details><summary>Code: Create the Slack endpoint</summary><p>
+
+```typescript
+import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
+import { JobService } from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
+import { WebClient } from 'https://deno.land/x/slack_web_api@1.0.3/mod.ts';
+
+export async function main(
+	text: string,
+	slack: Resource<'slack'>,
+	channel_id: string,
+	user_id: string,
+	workspace: string,
+	path: string
+) {
+	const client = new WebClient(slack.token);
+
+	await client.chat.postEphemeral({
+		text: 'Bot is thinking...',
+		channel: channel_id,
+		user: user_id
+	});
+
+	await JobService.runFlowByPath({
+		workspace,
+		path,
+		requestBody: {
+			text,
+			channel_id
+		}
+	});
+}
+```
+
+</p></details>
+
 ## Create the Discord Answer flow
+
+A template is available on the Windmill Hub: [Create the Discord Answer flow](https://hub.windmill.dev/flows/46/generate-answer-from-embeddings-with-intermediate-approval-step).
 
 ![Create the Discord Answer flow](./answer-flow.png 'Create the Discord Answer flow')
 
@@ -348,19 +387,51 @@ This flow will generate the answer and send it back to Discord. It is composed o
 
 ### Extract the question from the Discord request
 
+Let's extract the question from the Discord request.
+
+<details><summary>Code: Extract the question from the Discord request</summary><p>
+
 ```typescript
 export async function main(interaction: any) {
 	return interaction?.data?.options?.[0]?.value ?? 'No question asked';
 }
 ```
 
+</p></details>
+
 ### Create the answer using the question and the embeddings and OpenAI
+
+To create the answer, we will follow the following steps:
+
+1. Create the embeddings for the question
+2. Retrieve the documents from Supabase using the `match_documents` function.
+3. Using a prompt, ask OpenAI to generate the answer given the question and the documents
+4. Return the answer
+
+The prompt is the following:
+
+```
+You are an AI assistant providing helpful advice. You are given the following extracted parts of a long document and a question. Provide a conversational answer based on the context provided.
+If you can't find the answer in the context below, just say "Hmm, I'm not sure." Don't try to make up an answer.
+If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
+Please note that images, figures, or any visual content will not be included in the provided context, so you must not try to include them in an answer.
+The question might have errors, try your best to answer anyway.
+
+Context sections  :
+${contextText}
+Question: """
+${query}
+"""
+Answer as markdown (including related code snippets if available):
+```
+
+<details><summary>Code: Create the answer using the question and the embeddings and OpenAI</summary><p>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
 
 import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
-import { Configuration, OpenAIApi } from 'npm:openai@3.1.0';
+import { Configuration, OpenAIApi } from 'npm:openai@3.2.1';
 import { stripIndent } from 'https://esm.sh/common-tags@1.8.2';
 
 export async function main(
@@ -374,6 +445,7 @@ export async function main(
 	}
 ) {
 	let answer = '';
+	const links: string[] = [];
 
 	await refreshAndRetryIfExpired(supabaseAuth, token, async (client) => {
 		// OpenAI recommends replacing newlines with spaces for best results
@@ -392,97 +464,107 @@ export async function main(
 		});
 
 		const [{ embedding }] = embeddingResponse.data.data;
-
-		// Fetching whole documents for this simple example.
-		//
-		// Ideally for context injection, documents are chunked into
-		// smaller sections at earlier pre-processing/embedding step.
 		const { data: documents } = await client.rpc('match_documents', {
 			query_embedding: embedding,
-			match_threshold: 0.78, // Choose an appropriate threshold for your data
-			match_count: 10 // Choose the number of matches
+			match_threshold: 0.5, // Choose an appropriate threshold for your data
+			match_count: 5 // Choose the number of matches
 		});
+
+		console.log({ documents });
 
 		let contextText = '';
 
-		// Concat matched documents
 		for (let i = 0; i < documents.length; i++) {
 			const document = documents[i];
 			const content = document.content;
 			contextText += `${content.trim()}\n---\n`;
+
+			links.push(document.link);
 		}
 
 		const prompt = stripIndent`
-		You're a super enthusiastic Windmill representative who absolutely 
-		loves helping people! Using the sections given from the Windmill 
-		documentation, answer the question using only that information, 
-		formatted in markdown. If you're not sure and the answer isn't 
-		explicitly mentioned in the documentation,
-		just say "Sorry, I don't know how to help with that."
-
-    Context sections:
+		You are an AI assistant providing helpful advice. You are given the following extracted parts of a long document and a question. Provide a conversational answer based on the context provided.
+    If you can't find the answer in the context below, just say "Hmm, I'm not sure." Don't try to make up an answer.
+    If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
+    Please note that images, figures, or any visual content will not be included in the provided context, so you must not try to include them in an answer.
+    The question might errors, try your best to answer anyway.
+    
+    Context sections  :
     ${contextText}
-
     Question: """
     ${query}
     """
-
     Answer as markdown (including related code snippets if available):
   `;
 
 		// In production we should handle possible errors
-		const completionResponse = await openai.createCompletion({
-			model: 'text-davinci-003',
-			prompt,
+		const completionResponse = await openai.createChatCompletion({
+			model: 'gpt-4',
+			messages: [{ role: 'user', content: prompt }],
 			max_tokens: 512, // Choose the max allowed tokens in completion
 			temperature: 0 // Set to 0 for deterministic results
 		});
 
 		const {
 			id,
-			choices: [{ text }]
+			choices: [{ message }]
 		} = completionResponse.data;
 
-		answer = text;
+		answer = message?.content ?? '';
 	});
 
-	return answer.replaceAll('\n', '');
+	return { answer, links };
 }
 ```
 
+</p></details>
+
 ### Create the approval step to validate the answer by a human
+
+We can leverage the approval step to validate the answer by a human. Basically, the flow is suspended until we either approve or reject the answer.
+Windmill exposes 3 endpoints:
+
+- An URL to approve the answer
+- An URL to reject the answer
+- An URL of the approval page
+
+We can use Discord buttons to approve or reject the answer.
+
+<details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
 import { REST } from 'npm:@discordjs/rest@1.7.1';
-import { API, ButtonStyle } from 'npm:@discordjs/core@0.6.0';
+import { API, ButtonStyle, MessageFlags } from 'npm:@discordjs/core@0.6.0';
 import { ActionRowBuilder, ButtonBuilder } from 'npm:@discordjs/builders@1.6.3';
 
-export async function main(question: string, answer: string, token: string) {
+export async function main(
+	question: string,
+	answer: string,
+	links: string[],
+	token: string,
+	interaction: any
+) {
 	const rest = new REST({ version: '10' }).setToken(token);
 	const api = new API(rest);
-	const { resume, cancel } = await wmill.getResumeUrls('windmill-documentation-bot');
+	const { resume, cancel } = await wmill.getResumeUrls('Faton');
 
 	const confirmButton = new ButtonBuilder()
 		.setLabel('Confirm Message')
 		.setURL(resume)
 		.setStyle(ButtonStyle.Link);
 
-	const cancelButton = new ButtonBuilder()
-		.setLabel('Cancel')
-		.setURL(cancel)
-		.setStyle(ButtonStyle.Link);
+	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(confirmButton);
 
-	const row = new ActionRowBuilder<ButtonBuilder>().addComponents(cancelButton, confirmButton);
-
-	const message = await api.channels.createMessage('1113489439163961374', {
-		content: `## Question:\n${question}\n\n## Answer:\n${answer}}`,
-		components: [row.toJSON()]
+	await api.interactions.editReply(interaction.application_id, interaction.token, {
+		content: `## ${question}\n\n${answer}\n## Sources:\n${links.map((l) => `${l}\n`).join('')}`,
+		components: [row.toJSON()],
+		flags: MessageFlags.Ephemeral
 	});
-
-	return message?.id;
 }
 ```
+
+</p></details>
 
 #### Learn more about the approval step
 
@@ -495,13 +577,14 @@ export async function main(question: string, answer: string, token: string) {
   </a>
 </div>
 
-Back on discord, the user will receive a message with two buttons:
-
-![Create the approval step to validate the answer by a human](./approval.png 'Create the approval step to validate the answer by a human')
-
 If confirmed, the last step of the flow will be executed and the answer will be sent back to the user.
+Otherwise, we can reject message.
 
 ### Send the answer back to Discord
+
+Once approved, the flow will resume and the answer will be sent back to the user.
+
+<details><summary>Code: Send the answer back to Discord</summary><p>
 
 ```typescript
 import { REST } from 'npm:@discordjs/rest@1.7.1';
@@ -516,6 +599,7 @@ export async function main(
 	interaction: DiscordInteraction,
 	question: string,
 	answer: string,
+	links: string[],
 	token: string
 ) {
 	const rest = new REST({
@@ -523,27 +607,91 @@ export async function main(
 	}).setToken(token);
 	const api = new API(rest);
 
-	await api.interactions.editReply(interaction.application_id, interaction.token, {
-		content: `## Question:\n ${question}\n ## Answer:\n ${JSON.stringify(answer)}`
+	await api.interactions.followUp(interaction.application_id, interaction.token, {
+		content: `## ${question}\n\n${answer}\n## Sources:\n${links.map((l) => `${l}\n`).join('')}`
 	});
 }
 ```
+
+</p></details>
+
+## Create the Slack Answer flow
+
+The Slack Answer flow is similar to the Discord Answer flow. The only difference is that we use Slack buttons instead of Discord buttons.
+
+<details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
+
+```typescript
+import { getResumeEndpoints, Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
+import { WebClient } from 'https://deno.land/x/slack_web_api@1.0.3/mod.ts';
+
+export async function main(
+	slack: Resource<'slack'>,
+	channel: string,
+	text = 'A flow is requesting an approval to be resumed'
+) {
+	const web = new WebClient(slack.token);
+
+	const { cancel, resume } = await getResumeEndpoints(`channel-${channel}`);
+	await web.chat.postMessage({
+		channel,
+		text: '',
+		blocks: [
+			{
+				type: 'section',
+				text: {
+					type: 'mrkdwn',
+					text: text
+				}
+			},
+			{
+				type: 'divider'
+			},
+			{
+				type: 'actions',
+				elements: [
+					{
+						type: 'button',
+						style: 'danger',
+						text: {
+							type: 'plain_text',
+							text: 'Cancel',
+							emoji: true
+						},
+						url: cancel
+					},
+					{
+						type: 'button',
+						style: 'primary',
+						text: {
+							type: 'plain_text',
+							text: 'Approve',
+							emoji: true
+						},
+						url: resume
+					}
+				]
+			}
+		]
+	});
+}
+```
+
+</p></details>
+
+Finally we can send the answer back to Slack using this script from the Hub: [Send a message to a channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack)
 
 ## Demo
 
 Once the Discord Bot is set up and the necessary flows are created, you can test it out by asking questions in the Discord server where the bot is added.
 
 ```
-/windmill-help question: How can I Run Docker Containers?
+/windmill-help question: What is the difference before draft and deployed ?
 ```
 
-![Demo](./demo.png 'Demo')
+![Demo](./is_thinking.png 'Demo')
 
-## Going further
-
-This tutorial is just a simple example of what you can do with Windmill. You can go further by:
-
-- Formatting the answer in a better way
+![response](./response.png 'response')
 
 ## Conclusion
 
