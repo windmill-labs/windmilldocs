@@ -223,10 +223,10 @@ Using the [OpenAI API](https://platform.openai.com/docs/api-reference), we can c
 Finally, we can store the embeddings in Supabase using the [pgvector](https://supabase.com/docs/guides/database/extensions/pgvector) extension.
 
 ![Supabase documentation](./supabase_docu.png)
+
 > All embeddings are stored in a single Supabase table.
 
 <br/>
-
 
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
@@ -617,16 +617,6 @@ export async function main(
 ```
 
 </p></details>
-
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full"
-	autoPlay
-	controls
-	src="/videos/approval_step_discord_bot.mp4"
-/>
-
-> An approval step is used by Windmill team to validate bot answers given to our users.
 
 #### Learn more about approval steps
 
