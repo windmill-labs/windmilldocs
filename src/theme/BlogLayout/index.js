@@ -13,19 +13,19 @@ export default function BlogLayout(props) {
 	return (
 		<Layout {...layoutProps}>
 			{!isBlogPostPageList && (
-				<div className="bg-white w-full">
+				<div className="w-full">
 					<div className="">
-						<div className="relative isolate overflow-hidden bg-gray-900 p-16 shadow-2xl sm:px-16">
-							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-200 to-blue-500">
+						<div className="relative isolate overflow-hidden py-16">
+							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900">
 								Blog
 							</h1>
-							<p className="mt-4 text-lg leading-8 text-gray-300 container">
+							<p className="mt-4 text-lg leading-8 text-gray-600 container">
 								Discover the latest news, updates, and articles from the team and community
 							</p>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 1024 1024"
-								className="absolute top-0 right-0 -z-10 h-[64rem] w-[64rem] "
+								className="absolute -top-80 left-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 -translate-y-1/2"
 								aria-hidden="true"
 							>
 								<circle

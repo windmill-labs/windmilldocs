@@ -13,7 +13,7 @@ export default function BlogPostItemContainer({ children, className }) {
 	return (
 		<article
 			className={clsx(className, {
-				'border p-2 rounded-2xl shadow-md hover:border-blue-200  transition-all !mb-4':
+				'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 bg-white':
 					!isBlogPostPage
 			})}
 			itemProp="blogPost"
@@ -22,7 +22,7 @@ export default function BlogPostItemContainer({ children, className }) {
 		>
 			{image && <meta itemProp="image" content={(withBaseUrl(image), { absolute: true })} />}
 			{!isBlogPostPage ? (
-				<Link itemProp="url" to={metadata.permalink} className="!no-underline ">
+				<Link itemProp="url" to={metadata.permalink} className="!no-underline">
 					<img src={image} className="h-64 w-full rounded-2xl object-cover" />
 
 					<div className="p-4 flex flex-col h-64 overflow-auto">
