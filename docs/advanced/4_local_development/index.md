@@ -4,6 +4,41 @@ title: Local Development
 
 # Local Development
 
+## Getting Started
+
+To get started with local development and use `git` to version your scripts.
+
+- Install the [Windmill Cli](../3_cli/installation.md)
+- Create a new working directory for your repository
+
+```bash
+mkdir myworkspace
+cd myworkspace
+```
+- Initialise your git repo 
+
+```bash
+git init .
+```
+- Next [add your workspace](../3_cli/workspace-management.md#adding-a-workspace) to the current directory. 
+
+```bash
+wmill workspace add myworkspace [workspace_id] [remote]
+```
+
+- Now sync your workspace and pull your code from the remote workspace
+
+```bash
+wmill sync pull
+```
+
+- You should see all your scripts, flows, apps inside the folder. 
+
+- You can now edit the files directly as shown below.
+
+- Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [github action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example) 
+
+
 ## Deno
 
 Windmill deno scripts can be run like normal deno scripts. To add testing or
