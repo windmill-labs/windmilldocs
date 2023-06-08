@@ -3,7 +3,7 @@ slug: audience-management-case-study
 title: Handle Complex and Branchy Workflows - Audience Management Case Study
 authors: [saidhasyim]
 tags: [case study, testimonial, audience management, branches, workflows]
-image: ./0-header.jpg
+image: ./windmill-books.png
 ---
 
 This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author of productivity books.
@@ -12,18 +12,15 @@ This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author 
 
 > "Within a few weeks of usage, Windmill replaced all my previous workflows and automation tools, consolidating my flows into a single, efficient platform."
 
-
 <br/>
 
-![Audience Management Case Study](./0-header.jpg "Audience Management Case Study")
-
+![Audience Management Case Study](./0-header.jpg 'Audience Management Case Study')
 
 ## What before Windmill?
 
 As an independent author, I am always on the lookout for ways to optimize my workflows and simplify processes to focus on my core job: writing content. The key challenges are around managing subscriptions, purchases and keeping my internal databases up to date.
 
 Before transitioning to Windmill, I had been using Meta API (code-based automation), followed by Amazon Lambda to help me manage my workflows.
-
 
 ## How did Windmill help?
 
@@ -37,20 +34,20 @@ In particular, I use Windmill for:
 
 This workflow handles a multi-code redemption process, allowing users to choose between redeeming one or two codes which will determine the result of the redemption.
 
-![Process Purchase Redemption](./process_purchase_redemption.jpg "Process Purchase Redemption")
+![Process Purchase Redemption](./process_purchase_redemption.jpg 'Process Purchase Redemption')
 
 #### Prepare data to scrape ...
 
-![Prepare data to scrape](./prepare_data_to_scrape.jpg "Prepare data to scrape")
-
+![Prepare data to scrape](./prepare_data_to_scrape.jpg 'Prepare data to scrape')
 
 #### ... and process scraped data
 
-![Process Scraped Data](./process_scraped_data.png "Process Scraped Data")
+![Process Scraped Data](./process_scraped_data.png 'Process Scraped Data')
 
 The goal here is not to detail these workflows as I made them unique to my own stakes. As you can see, **Windmill can handle even the most intricate branchy flows seamlessly**. To build them, I used [Hub scripts](https://hub.windmill.dev/), my few skills in programming (I am not a developer) and Windmill's attentive support.
 
 I also use Windmill for:
+
 - updating my CRM with customer information
 - monitoring book reviews
 - segmenting blog subscriptions
