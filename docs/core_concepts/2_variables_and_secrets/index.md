@@ -43,7 +43,7 @@ setVariable('u/user/foo', value);
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.md)
 which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](../3_resources_and_types/index.md#create-a-resource-type) to be automatically
-discriminated in the auto-generated form to be of the proper type (e.g a
+discriminated in the auto-generated form to be of the proper type (e.g. a
 parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only going to
 offer a selection over the resources of type postgres in the auto-generated UI).
 
@@ -103,8 +103,7 @@ Windmill, variable ownership is defined by the **path** - see
 Variables also have a **name**, generated from the path, and names are used to
 access variables from scripts.
 
-A variable can be made **secret**. In this case, the value of it will not be
-visible outside of a script.
+A variable can be made **secret**. In this case, its value will not be visible outside of a script.
 
 <!-- - see [secrets security note](#secrets-security-note). -->
 
@@ -118,12 +117,13 @@ Reserved variables are passed to the job as environment variables. For example, 
 
 ### User-defined variables
 
-There are 2 main ways variables are used withing scripts:
+There are 2 main ways variables are used within scripts:
 
-1. passing variables as parameters to scripts
-   Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow it to access the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+1. Passing variables as parameters to scripts.
+   
+   Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
-2. fetching them from within a script by using the wmill client in the respective language
+2. Fetching them from within a script by using the wmill client in the respective language.
 
 #### Fetching a variable in Typescript
 

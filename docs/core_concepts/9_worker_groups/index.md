@@ -1,10 +1,12 @@
 # Worker Groups
 
-Windmill allows you to run your scripts and flows on different machines with different specs. This is useful if you want to run some scripts on a GPU machine, or if you want to run some scripts on a machine with a lot of memory.
+Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
-Individual scripts saved on a workspace and inline scripts of a flow can be assigned a custom worker group. By default, they are assigned the worker group that correspond to their languages.
+This feature is useful if you want to run some scripts on a GPU machine, or if you want to run some scripts on high-memory machine.
 
-Workers can be assigned to different worker groups at the same time. The default worker groups a worker is part of are:
+Individual scripts saved on a workspace and inline scripts of a flow can be assigned a custom worker group. By default, they are assigned the worker group corresponding to their respective programming languages.
+
+Workers can belong to multiple worker groups simultaneously. The default worker groups a worker is part of are:
 
 - `dependency`: Where dependency jobs are run.
 - `deno`: The default worker group for deno scripts.
@@ -16,17 +18,17 @@ Workers can be assigned to different worker groups at the same time. The default
 
 If you assign custom worker groups to all your workers, make sure that they cover all worker groups above, otherwise those jobs will never be executed.
 
-You can customize the worker group of a worker by passing as env variable:
+You can customize the worker group of a worker by setting the WORKER_TAGS environment variable.
 
 ```
 WORKER_TAGS=deno,light
 ```
 
-The default WORKER_TAGS of workers is `deno,python3,bash,go,flow,hub,dependency`.
+By default, the `WORKER_TAGS` of workers include `deno, python3, bash, go, flow, hub, dependency`.
 
 The configuration above will make the workers accept only deno jobs and jobs with the `light` tag.
 
-To make custom tags selectable from the UI, you need to pass the following env variable to the windmill server:
+To make custom tags selectable from the UI, you need to pass the following env variable to the Windmill server:
 
 ```
 CUSTOM_TAGS=light

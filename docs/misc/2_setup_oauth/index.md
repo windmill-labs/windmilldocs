@@ -29,7 +29,7 @@ First, you need to create a Google OAuth Client:
 - Enter the following:
   - Application Type: Web Application
   - Name: Windmill
-  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/login_callback/google
+  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/user/login_callback/google
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 - Edit your `oauth.json` to look like:

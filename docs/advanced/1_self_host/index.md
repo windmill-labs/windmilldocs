@@ -181,7 +181,7 @@ Database volume is persistent, so updating the database image is safe too.
 ## Helm Chart
 
 We also provide a convenient [Helm Chart](https://helm.sh/docs/topics/charts/)
-for Kubernetes based self-hosted set-up.
+for Kubernetes-based self-hosted set-up.
 
 Detailed instructions can be found in the [README][helm-readme] file in the
 [official repository][helm] of the chart.
@@ -207,7 +207,7 @@ Detailed instructions in the official [repository][helm].
 ### Enterprise deployment with Helm
 
 The Enterprise edition of Windmill uses different base images and supports
-additional features. One important feature is better caching for depencies in a
+additional features. One important feature is better caching for dependencies in a
 super cache supported by S3.
 
 You need:

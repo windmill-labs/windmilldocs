@@ -1,10 +1,10 @@
 # Error Handling in Flows
 
-Error in flows can be handled with three features.
+There are three ways to handle errors in Windmill flows: [retries](../../flows/14_retries.md), [error handlers](../../flows/7_flow_error_handler.md), and [early stop/break](../../flows/2_early_stop.md).
 
 ## Retries
 
-Steps within a flow can be re-tried in case of error for a given number of attempts and frequency.
+Steps within a flow can be retried a specified number of times and at a defined frequency in case of an error.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -17,16 +17,20 @@ Steps within a flow can be re-tried in case of error for a given number of attem
 
 <br/>
 
+> Example of a flow step giving error if random number = 0 and re-trying 5 times
+
+<br/>
+
 
 :::info
 
-More details on our pages dedicated to [Retries](../../flows/14_retries.md).
+For more details on retries, please refer to our dedicated [Retries documentation](../../flows/14_retries.md).
 
 :::
 
 ## Error Handler
 
-The Error Handler is a special flow step that is executed when an error occurs in a flow.
+The Error Handler is a special flow step that is executed when an error occurs within a flow.
 
 If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
 
@@ -43,13 +47,13 @@ If defined, the error handler will take as input, the result of the step that er
 
 :::info
 
-More details on our pages dedicated to [Error Handlers](../../flows/7_flow_error_handler.md).
+For more details on error handlers, please refer to our dedicated [Error Handlers documentation](../../flows/7_flow_error_handler.md).
 
 :::
 
 ## Early Stop / Break
 
-If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
+The Early Stop/Break feature allows you to define a predicate expression that determines whether the flow should stop early at the end of a step.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -64,6 +68,6 @@ If defined, at the end of the step, the predicate expression will be evaluated t
 
 :::info
 
-More details on our pages dedicated to [Early Stop / Break](../../flows/2_early_stop.md).
+For more details on early stop/break, please refer to our dedicated [Early Stop / Break documentation](../../flows/2_early_stop.md).
 
 :::

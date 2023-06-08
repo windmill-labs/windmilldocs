@@ -28,7 +28,7 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 
 Windmill is a feature-rich platform that allows you to build endpoints, cron jobs, workflows & UIs. Each of these features can be used standalone.
 
-However the 3 core layers of Windmill, namely Scripts, Flows and Apps are complementary. Scripts are the smallest "unit" of abstraction and workflows and UIs rely on them.
+However the 3 core layers of Windmill, namely Scripts, Flows and Apps are complementary. Scripts are the smallest "unit" of abstraction: workflows and UIs all rely on them.
 
 <div class="text-xl mb-2 font-semibold">Quickstarts</div>
 <div class="grid grid-cols-2 gap-2 mb-4">
@@ -94,7 +94,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
   </a>
   <a href="/docs/advanced/docker" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Run Docker Containers</div>
-    <div class="text-sm text-gray-500">Windmill support running any docker container through its bash support.</div>
+    <div class="text-sm text-gray-500">Windmill supports running any docker container through its bash integration.</div>
   </a>
 </div>
 
@@ -104,7 +104,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 <div class="grid grid-cols-2 gap-2 mb-4">
   <a href="/docs/misc/benchmarks" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Benchmarks</div>
-    <div class="text-sm text-gray-500">Windmill has about same the performance as AWS Lambda for heavier workloads, slower on cold starts for medium compute.</div>
+    <div class="text-sm text-gray-500">Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute.</div>
   </a>
     <a href="/docs/misc/windmill_compared_to_peers" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Windmill Compared to Peers</div>

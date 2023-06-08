@@ -18,11 +18,11 @@ In this quick start guide, we will write our first script in TypeScript. Windmil
 
 <br/>
 
-Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.md) as standalone, chained together to create [Flows][flows] or displayed with a personalized UI as [Apps](../../7_apps_quickstart/index.md).
+Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.md) as standalone, chained together to create [Flows][flows] or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.md).
 
-Scripts consists of 2 parts:
+Scripts consist of 2 parts:
 
-- **Code**: For typescript scripts, it must have at least a main function.
+- **Code**: for typescript scripts, it must have at least a main function.
 - **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../reference/index.md#json-schema) of its inputs (inferred from its signature)
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
@@ -35,7 +35,7 @@ In addition to the UI, sync and async webhooks are generated for each deployment
 
 [This](https://hub.windmill.dev/scripts/gmail/1291/-send-email-gmail) is a simple example of a script built in TypeScript with Windmill.
 
-In this quick start guide, we'll create a Script that greets the operator running it.
+In this quick start guide, we'll create a script that greets the operator running it.
 
 From the **Home** page, click `+Script`. This will take you to the
 first step of script creation: Metadata.
@@ -50,13 +50,13 @@ first step of script creation: Metadata.
 - **Summary** (optional) is a short, human-readable summary of the Script. It
   will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
   default.
-- **Language** the language of the script. Windmill supports TypeScript, Python,
+- **Language** of the script. Windmill supports TypeScript, Python,
   Go, Bash and SQL. Let's pick TypeScript!
 - **Description**: this is where you can give instructions
   to users on how to run your Script. It supports markdown!
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.md)**, if you want to run some scripts on a GPU machine.
 
-Now click on the code editor on the left side, and let's build our Hello World!
+Now click on the code editor on the left side, and let's build our "Hello World"!
 
 ## Code
 
@@ -115,12 +115,12 @@ entrypoint. There are a few important things to note about the `main`.
 
 Also take a look at the [import](../../../advanced/6_imports/index.md) statement lines that are commented out. You can
 use NPM imports directly in Windmill. The last import line imports the Windmill
-client, that is needed for example to access
+client, that is needed for example, to access
 [variables](../../../core_concepts/2_variables_and_secrets/index.md) or
 [resources](../../../core_concepts/3_resources_and_types/index.md). We won't go
 into that here.
 
-Back to our Hello World. We can clear up unused import statements, change the
+Back to our "Hello World". We can clear up unused import statements, change the
 main to take in the user's name. Let's also return the `name`, maybe we can use
 this later if we use this Script within a Flow and need to pass it on.
 
@@ -132,7 +132,7 @@ export async function main(name: string) {
 ```
 
 Look at the UI preview on the right: it was updated to match the input
-signature. Run a preview to verify everything works.
+signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 You can change how the UI behaves by changing the main signature. For example,
 if you add a default for the `name` argument, the UI won't consider this field
@@ -144,12 +144,12 @@ main(name: string = "you")
 
 Now let's go to the last step: the "Customise" settings.
 
-## Customize settings
+## Customize Settings
 
 In this step, you can:
 
 - Give a **script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.md), [Approval](../../../flows/11_flow_approval.md) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.md).
-- Customize the Script **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex here clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you're some tech billionaire's kid.
+- Customize the script's **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
 ![Advanced settings for TypeScript](./customize_ts.png)
 
@@ -158,8 +158,8 @@ each script version is uniquely identified by a hash.
 
 ## Run!
 
-Now let's look at what users of this script will do. Click on the **[Deploy](../../../core_concepts/0_draft_and_deploy/index.md)** button
-to load this script. You'll see the user input form we defined earlier.
+Now let's look at what users of the script will do. Click on the **[Deploy](../../../core_concepts/0_draft_and_deploy/index.md)** button
+to load the script. You'll see the user input form we defined earlier.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs][app-runs] menu on
@@ -167,7 +167,7 @@ the left.
 
 ![Run hello world in TypeScript](./run_ts.png)
 
-You can also chose to [run your script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
 ## What's next?
 

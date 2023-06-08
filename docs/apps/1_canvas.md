@@ -133,3 +133,54 @@ Debug a tab by clicking on the arrow down button on the top-right corner of the 
     id="app-debug-tabs"
     src="/videos/app-debug-tabs.mp4"
 />
+
+## Copy-Pasting Components Across Apps
+
+Windmill allows you to copy and paste components across different apps. This feature provides a way to create a library of predefined complex components, which can then be shared and reused across various applications.
+
+### How it Works
+
+The process of copying and pasting components is straightforward:
+
+1. Open the application containing the component you wish to copy.
+2. Select the component on the Canvas.
+3. Use the standard copy shortcut (`Ctrl+C` on PC or `Cmd+C` on Mac).
+4. Navigate to the other application where you wish to paste the component.
+5. Click on the Canvas in the location where you wish to paste the component.
+6. Use the standard paste shortcut (`Ctrl+V` on PC or `Cmd+V` on Mac).
+
+The component, with all its predefined configurations and styles, will appear on the Canvas of the second application.
+
+### Use Cases
+
+#### Shared Component Repository (Modules)
+
+Create a dedicated application to serve as a repository for shared components. This repository can then be used as a source for components, which can be copied and pasted into other applications.
+
+Increase efficiency in application development by reusing complex components. Rather than creating and configuring components from scratch for each new application, you can simply copy and paste existing ones.
+
+![Shared Components](../assets/apps/6_app_settings/shared_components.gif)
+
+#### Style Consistency
+
+Maintain consistency in style across multiple applications by creating styled components once and then copying and pasting them into various applications.
+
+![Style Consistency](../assets/apps/6_app_settings/style_consistency.gif)
+
+### Learn More
+
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/docs/apps/app_configuration-settings/app_component_library" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">Component Library</div>
+    <div class="text-sm text-gray-500">Discover all the components available in the library, and their configurations.</div>
+  </a>
+  <a href="/docs/apps/app_configuration-settings/app_styling" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">Styling</div>
+    <div class="text-sm text-gray-500">Learn how to edit the component styles.</div>
+  </a>
+  <a href="/docs/apps/app_configuration-settings/app_component_configuration" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">Component Configuration</div>
+    <div class="text-sm text-gray-500">Learn how to configure a component.</div>
+  </a>
+</div>
