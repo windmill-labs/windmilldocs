@@ -19,6 +19,10 @@ tags:
 image: ./ai-bot.png
 ---
 
+Empower your support team with a bot that answers questions about technical documentation using Windmill, OpenAI, and Supabase.
+
+<!--truncate-->
+
 ![AI BOT](./ai-bot.png 'AI BOT')
 _**Midjourney prompt:** a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
 

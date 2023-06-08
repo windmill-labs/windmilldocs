@@ -89,10 +89,8 @@ h1 {
 	@apply text-3xl font-bold;
 }
 
-/**
- * Making sure blog article header styles are overwritten
- */
-h1[itemprop='headline'] {
+
+h1 {
 	@apply !text-3xl !font-bold;
 }
 
