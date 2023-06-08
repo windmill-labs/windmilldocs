@@ -20,13 +20,13 @@ image: ./ai-bot.png
 ---
 
 ![AI BOT](./ai-bot.png 'AI BOT')
-_**Midjourney prompt:** a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
+_**Midjourney prompt**: a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
 
 ## Replace a SaaS
 
-This blog series cheeky title is to emphasize that you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but tailored to your needs solution on your own, and stop accumulating subscriptions.
+"Replace a SaaS" is a cheeky title for a blog series. We believe you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but tailored to your needs solution on your own, and stop accumulating subscriptions.
 
-Today, we will create a bot that answers questions about technical documentation with a bot that uses Windmill, OpenAI, and Supabase with an approval step.
+Today, we will create a bot that answers questions about technical documentation leveraging Windmill, OpenAI, and Supabase, with an [approval step](/docs/flows/flow_approval).
 
 ## Demo
 
@@ -38,41 +38,47 @@ Today, we will create a bot that answers questions about technical documentation
 	src="/videos/demo-bot.mp4"
 />
 
+<br/>
+
 To directly setup your own bot on Windmill (Self-hosted or cloud), you can skip the following sections and go directly to the [How to setup it yourself](#how-to-setup-it-yourself) section.
 
 ## Supabase
 
-We will use Supabase to store my embeddings, by taking inspiration from this tutorial:
-https://supabase.com/blog/openai-embeddings-postgres-vector.
+We will use [Supabase](https://supabase.com/) to store my embeddings, by taking inspiration from [this tutorial](https://supabase.com/blog/openai-embeddings-postgres-vector).
 
-You'll need to follow this tutorial up to the point where you have created a table with the `pgvector` extension enabled, and you have created a the `match_documents` function.
+You'll need to follow this tutorial up to the point where you have created a table with the `pgvector` [extension](https://supabase.com/docs/guides/database/extensions/pgvector) enabled, and you have created a the `match_documents` function.
 
 The only difference is that we will store the link of the documentation page for each embedding to also provide the sources.
 
-## Create a scheduled flow that ingest your data and create embeddings
+## Create a scheduled flow that ingests your data and creates embeddings
 
-We need to ingest a data source, here the Windmill documentation. We can accomplish this by creating a scheduled flow that periodically retrieves the documentation from the Windmill repository on GitHub, creates embeddings using OpenAI, and stores the embeddings in Supabase using pgvector.
+We need to ingest a data source, here the [Windmill documentation](/docs/intro). We can accomplish this by creating a [scheduled](/docs/core_concepts/scheduling) flow that periodically retrieves the documentation from the [Windmill repository](https://github.com/windmill-labs/windmilldocs) on GitHub, creates embeddings using [OpenAI](https://platform.openai.com/overview), and stores the embeddings in Supabase using [pgvector](https://github.com/pgvector/pgvector).
 
 ### Flow overview
 
-The flow is available on the Windmill Hub: https://hub.windmill.dev/flows/45/extract-and-embed-documentation-for-semantic-search
+The flow is available on [Windmill Hub](https://hub.windmill.dev/flows/45/).
+
+:::info Workflows
+
+A [workflow](/docs/flows/flow_editor) is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](/docs/getting_started/scripts_quickstart) in the case of Windmill.
+:::
 
 ![Flow](./flow.png 'Create a scheduled flow that scrapes the Windmill documentation')
 
-It is composed in the following way:
+This flow is composed in the following way:
 
-- Scrape the Windmill documentation from GitHub using the Oktokit API.
+- Scrape the Windmill documentation from GitHub using the [Oktokit](https://github.com/octokit/octokit.js/) API.
 
-Then we use a for-loop to iterate over the results and run the following step for each result:
+Then we use a [for-loop](/docs/flows/flow_loops) to iterate over the results and run the following step for each result:
 
 1. Create the embeddings using OpenAI
 2. Store the embeddings in Supabase using pgvector
 
-Each iteration of the for-loop are indiviual jobs and can be run in parallel, retried and error handled independently.
+Each iteration of the for-loop are indiviual jobs and can be run [in parallel](/docs/flows/flow_branches#branch-all), [retried](/docs/flows/retries) and [error handled](/docs/flows/flow_error_handler) independently.
 
 ### Schedule the flow
 
-We can schedule the flow to run every month.
+We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
 
 1. Go the Settings
 2. Click on the `Schedule` tab
@@ -93,15 +99,17 @@ We can schedule the flow to run every month.
   </a>
 </div>
 
+From Windmill, pick `+ Flow`, and either import JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
+
 ### Scraping the Windmill documentation
 
-We could have written the script that fetches from Github, but since it's generic task, there is already a community contributed script that does exactly that on the Windmill Hub: [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/get-repo-content-github)
+We could have written the script that fetches from Github, but since it's generic task, there is already a community-contributed script that does exactly that on the [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/).
 
 Direclty from Windmill, we picked the script that fetches the content of a repository from Github and forked it.
 
-We modified it to only extract content from markdown files. As we are using Docusaurus, we also need to transform the path of the file to get the correct URL.
+We modified it to only extract content from markdown files. As we are using [Docusaurus](https://docusaurus.io/docs), we also need to transform the path of the file to get the correct URL.
 
-<details><summary>Code: Extract content from Github</summary><p>
+<details><summary>Code: Extract content from Github (TypeScript)</summary><p>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -204,11 +212,17 @@ Notice that the script takes a special parameter `gh_auth` which is a Windmill r
 
 ### Create the embeddings
 
-Using the OpenAI API, we can create embeddings for each of the documents. Simirarly to the Github script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/create-embedding-openai).
+Using the [OpenAI API](https://platform.openai.com/docs/api-reference), we can create embeddings for each of the documents. Simirarly to the Github script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/create-embedding-openai).
 
 ### Store the embeddings on Supabase
 
 Finally, we can store the embeddings in Supabase using the [pgvector](https://supabase.com/docs/guides/database/extensions/pgvector) extension.
+
+![Supabase documentation](./supabase_docu.png)
+> All embeddings are stored in a single Supabase table.
+
+<br/>
+
 
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
@@ -227,23 +241,25 @@ export async function main(auth: Resource<'supabase'>, embedding: any, document:
 
 </p></details>
 
+![Gif preview](./flow_md.gif)
+
+> This is what our Flow looks like now.
+
 ## Slack or Discord
 
-Windmill uses Discord for its community, but you also built the same bot for Slack. For Slack, see the next section.
+Windmill uses [Discord](https://discord.com/invite/V7PM2YHsPB) for its community, but you could also build the same bot for [Slack](https://slack.com/). For Slack, see the next section.
 
 ## Create an application on Discord Developer Portal
 
-To get started, go to the Discord Developer Portal and create a new application. Give your application a name and add a bot to it. This will provide you with the necessary credentials to interact with the Discord API.
+To get started, go to the [Discord Developer Portal](https://discord.com/developers/applications) and create a new application. Give your application a name and add a bot to it. This will provide you with the necessary credentials to interact with the Discord API.
 
 ## Configure your Discord Bot command
 
-Once you have created your application and added a bot, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the Discord API documentation for detailed instructions on how to register a command for your bot.
-
-See the Discord API documentation for more information: https://discord.com/developers/docs/interactions/slash-commands#registering-a-command
+Once you have created your application and added a bot, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the [Discord API documentation](https://discord.com/developers/docs/interactions/slash-commands#registering-a-command) for detailed instructions on how to register a command for your bot.
 
 ## Create the Discord Interaction endpoint
 
-Every Windmill scripts or flows exposes a webhook endpoint that can be used to trigger it.
+Every Windmill script or flow exposes a [webhook endpoint](/docs/core_concepts/webhooks) that can be used to trigger it.
 
 We can create a new flow that will be triggered as the Discord Interaction endpoint.
 
@@ -257,9 +273,9 @@ The flow input consists of the following parameters:
 
 Let's create the URL for the Discord Interaction endpoint.
 
-1. Go into the Webhooks section of the flow details page
+1. Go into the Webhooks section of the flow's `Detail` page
 2. Copy the `Result/Sync` webhook URL
-3. Create a webhook-specific token
+3. Create a [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens)
 
 Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
 
@@ -348,7 +364,7 @@ Now we can run the `discordAnswerFlowPath` flow that will generate the answer an
 
 ## Slack
 
-For Slack, we will use the slack web client to send ephemeral messages to the user while the bot is thinking.
+For Slack, we will use the Slack web client to send ephemeral messages to the user while the bot is thinking.
 We receive the following parameters from Slack:
 
 - `text`: The text of the message
@@ -418,7 +434,7 @@ export async function main(interaction: any) {
 
 </p></details>
 
-### Create the answer using the question and the embeddings and OpenAI
+### Create the answer using the question, the embeddings and OpenAI
 
 To create the answer, we will follow the following steps:
 
@@ -553,7 +569,7 @@ export async function main(
 
 ### Create the approval step to validate the answer by a human
 
-We can leverage the approval step to validate the answer by a human. Basically, the flow is suspended until we either approve or reject the answer.
+We can leverage an [approval step](/docs/flows/flow_approval) to validate the answer by a human. Basically, the flow is suspended until we either approve or reject the answer.
 Windmill exposes 3 endpoints:
 
 - An URL to approve the answer
@@ -598,7 +614,17 @@ export async function main(
 
 </p></details>
 
-#### Learn more about the approval step
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	controls
+	src="/videos/approval_step_discord_bot.mp4"
+/>
+
+> An approval step is used by Windmill team to validate bot answers given to our users.
+
+#### Learn more about approval steps
 
 <div class="grid grid-cols-2 gap-2 mb-4">
   <a href="/docs/flows/flow_approval" className="windmill-documentation-card" target="_blank">
@@ -730,7 +756,7 @@ If you have any questions or need further assistance, don't hesitate to reach ou
 
 ### Links
 
-- [Extract and embed documentation for semantic search](https://hub.windmill.dev/flows/45/extract-and-embed-documentation-for-semantic-search)
+- [Extract and embed documentation for semantic search](https://hub.windmill.dev/flows/45/extract-and-embed-documentation-for-semantic-search).
 
 - [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
 
