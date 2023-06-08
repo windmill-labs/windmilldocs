@@ -42,7 +42,7 @@ The metadata tab allows you to configure the flow name, summary, and description
 Permissions can be configured in two ways:
 
 - by User: select a user
-- by Folder: select a folder
+- by Folder: select a [folder](../core_concepts/8_groups_and_folders/index.md#folders)
 
 ![Flow Metadata](../assets/flows/flow_settings_metadata.png)
 

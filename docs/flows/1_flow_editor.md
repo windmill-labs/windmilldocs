@@ -41,25 +41,29 @@ The Flow Editor has the following features which are the subject of specific pag
       <div class="text-lg font-semibold text-gray-900">Error Handler</div>
       <div class="text-sm text-gray-500">Configure a script to handle errors.</div>
     </a>
+    <a href="/docs/flows/flow_trigger" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+      <div class="text-lg font-semibold text-gray-900">Trigger Scripts</div>
+      <div class="text-sm text-gray-500">Trigger flows upon a given event with a dedicated trigger script.</div>
+    </a>
     <a href="/docs/flows/retries" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
       <div class="text-lg font-semibold text-gray-900">Retries</div>
       <div class="text-sm text-gray-500">Re-try a step in case of error.</div>
     </a>
-    <a href="/docs/flows/flow_trigger" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Trigger Scripts</div>
-      <div class="text-sm text-gray-500">Trigger flows upon a given event with a dedicated trigger script.</div>
+    <a href="/docs/flows/cache" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+      <div class="text-lg font-semibold text-gray-900">Cache for Steps</div>
+      <div class="text-sm text-gray-500">Re-use a step's previous results.</div>
     </a>
     <a href="/docs/flows/sleep" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
       <div class="text-lg font-semibold text-gray-900">Early Stop / Break</div>
       <div class="text-sm text-gray-500">Suspend executions within a flow for a specified time.</div>
     </a> 
-    <a href="/docs/flows/early_stop" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Sleep / Delays in Flows</div>
-      <div class="text-sm text-gray-500">Stop early a flow based on a step's result.</div>
-    </a> 
     <a href="/docs/flows/flow_approval" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
       <div class="text-lg font-semibold text-gray-900">Approval Steps in Flows</div>
       <div class="text-sm text-gray-500">Suspend a flow until specific event(s) are received, such as approvals or cancellations.</div>
+    </a>
+    <a href="/docs/flows/early_stop" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+      <div class="text-lg font-semibold text-gray-900">Sleep / Delays in Flows</div>
+      <div class="text-sm text-gray-500">Stop early a flow based on a step's result.</div>
     </a>
 </div>
 

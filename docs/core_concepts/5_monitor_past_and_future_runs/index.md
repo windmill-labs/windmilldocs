@@ -13,23 +13,31 @@ Each workspace has a dedicated Runs menu that allows you to visualise all past a
 
 ## Aggregated View
 
-From the Runs menu, you have a time series where you can choose the time slot you want to monitor. The green (resp. red) dots being the tasks that succeeded (resp. failed). You can play with the level of details by picking "All", "Runs", "Previews" or "Dependecies".
+The Runs menu in each workspace provides a time series view where you can monitor different time slots. The green (respectively, red) dots being the tasks that succeeded (respectively, failed). You can adjust the level of details by picking "All", "Runs", "Previews" or "Dependencies".
 
 ![Time series](./1-runs-menu.png "Time series")
 
+> All past and future runs of the workspace are visible from the menu
+
 ## Details per Run
 
-Each run on the menu is clickable. The run page allows you to visualize the state of the run, the inputs, reasons of success/failure etc.
+Clicking on each run in the menu opens a run page where you can view the run's state, inputs, and success/failure reasons.
 
 View of a past run:
 
 ![Details per run](./2-detail-per-run.png "Details per run")
 
-You can also have a view on runs that are [scheduled](../1_scheduling/index.md) from the run menu, with a view on arguments used and next trigger.
+> Check the details of each runs
+
+<br/>
+
+You can also view [scheduled](../1_scheduling/index.md) runs from the run menu, which provides information on the arguments used and the next trigger.
 
 View of a scheduled run:
 
 ![Schedule run](./3-scheduled-run.png)
+
+> Although scheduled scripts and flows are visible on their dedicated tab, the run menu helps you see the next scheduled one
 
 ## Filters
 
@@ -37,11 +45,13 @@ There are multiple ways to filter the Runs menu:
 - by Datetime
 - Success / Failure
 - Skipped / Not skipped
-- Runs / Previews / Dependencies / Alls
+- Runs / Previews / Dependencies / All
 - by [Path](../../reference/index.md#path)
 - by Arguments
 - by Result
 
-Example of a few filters being used:
+Example of filters in use:
 
 ![Filters](./4-filters.png "Filters")
+
+> Here were filtered successful runs which returned `{"message": "Created record in table"}`

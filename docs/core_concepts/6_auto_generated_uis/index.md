@@ -1,6 +1,6 @@
 # Auto-Generated UIs
 
-Windmill automatically generates UIs for scripts and flows from their parameters.
+Windmill automatically generates user interfaces (UIs) for scripts and flows based on their parameters.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -19,17 +19,21 @@ If you're looking for a way to have customized UIs and interactions for your scr
 
 :::
 
-By reading the main function parameters, Windmill generates the input specification of the script in the [JSON Schema](https://json-schema.org/) format. Windmill then renders the UI for the Script or Flow from that specification.
+By analyzing the parameters of the main function, Windmill generates an input specification for the script or flow in the [JSON Schema](https://json-schema.org/) format. Windmill then renders the UI for the Script or Flow from that specification.
 
-You do not need to deal with the JSON Schema directly associated with the Script or Flow directly. It is the result of the analysis of the script parameters of the main function and the UI customisation that you can optionaly do.
+You don't need to directly interact with the JSON Schema associated with the Script or Flow. It is the result of the analysis of the script parameters of the main function and the optional UI customization.
 
-In the UI customisation interface, you may **refine all the information** that were not possible to infer directly from the parameters such as restricting a string to an enum, or precising that a list contains only numbers. You can also add helpful descriptions to each field.
+In the UI customization interface, you can refine information that couldn't be inferred directly from the parameters, such as specifying string enums or restricting lists to numbers. You can also add helpful descriptions to each field.
 
 ![Customize inputs](./customize_inputs.png)
 
+> The inputs' positions and properties can be customized
+
+<br/>
+
 :::tip
 
-This feature can be used directly in the [script](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) & [flow](../../getting_started/6_flows_quickstart/index.md) editors for testing your code.
+This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.md) & [flow](../../getting_started/6_flows_quickstart/index.md) editors to test your code.
 
 <br/>
 

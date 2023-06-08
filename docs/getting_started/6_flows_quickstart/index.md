@@ -1,6 +1,6 @@
 # Flows Quickstart
 
-The present document will introduce you to flows and how to build your first one.
+The present document will introduce you to Flows and how to build your first one.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -17,7 +17,7 @@ The present document will introduce you to flows and how to build your first one
 
 <br/>
 
-It is important to have in mind that **in Windmill scripts are at the basis of flows and apps**. To sum up roughly, workflows are state machines represented as DAG to compose scripts together. Learn more in the [Script Quickstart](../0_scripts_quickstart/index.md) in the previous section. You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
+It is important to have in mind that **in Windmill Scripts are at the basis of Flows and Apps**. To sum up roughly, workflows are state machines represented as DAG to compose scripts together. Learn more in the [Script Quickstart](../0_scripts_quickstart/index.md) in the previous section. You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
 
 Those workflows can run for-loops, branches (parralellizable) suspend themselves until a timeout or receiving events such as webhooks or approvals. They can be scheduled very frequently and check for new external items to process (what we call "Trigger" script).
 
@@ -53,9 +53,9 @@ On another tab, you can configure a **[Schedule](../../core_concepts/1_schedulin
 
 Last tab of the settings menu is the **[Shared Directory](../../flows/3_editor_components.md#shared-directory)**.
 
-Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
+By default, flows on Windmill are based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
-For heavier ETLs and any output that is not suitable for json, you might want to use the `Shared Directory` to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
+For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
 Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.md).
 
@@ -69,7 +69,7 @@ The proper flow editor is the side menu on the left. From there you can architec
 
 ![Flow editor menu](./flow_editor_menu.png)
 
-There are four kinds of scripts: [Action](../../flows/3_editor_components.md#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.md) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action being the default script type.
+There are four kinds of scripts: [Action](../../flows/3_editor_components.md#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.md) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action is the default script type.
 
 Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), you can also decide to **write them inline**.
 

@@ -83,11 +83,12 @@ const sidebars = {
 				'flows/flow_branches',
 				'flows/flow_loops',
 				'flows/flow_error_handler',
-				'flows/retries',
 				'flows/flow_trigger',
+				'flows/retries',
+				'flows/cache',
 				'flows/early_stop',
+				'flows/flow_approval',
 				'flows/sleep',
-				'flows/flow_approval'
 			],
 			collapsed: true
 		},
