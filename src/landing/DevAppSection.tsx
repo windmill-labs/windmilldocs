@@ -1,12 +1,40 @@
 import React from 'react';
 import LandingSection from './LandingSection';
 import CardsContainer from './cards/Cards';
-import { Terminal } from 'lucide-react';
-import { FaReact, SiReact, SiSvelte, SiVuedotjs } from 'react-icons/all';
+import { FaCode, FaJs } from 'react-icons/all';
+import FrameworkSvg from './cards/svgs/FrameworkSvg';
+import AppEditorSvg from './cards/svgs/AppEditorSvg';
 
 export default function DevScriptsSections() {
 	return (
-		<LandingSection bgClass="bg-gradient-to-b to-gray-900 from-black">
+		<LandingSection bgClass="bg-gray-900 relative isolate overflow-hidden">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 1024 1024"
+				className="absolute top-1/2 left-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2"
+				aria-hidden="true"
+			>
+				<circle
+					cx={512}
+					cy={512}
+					r={512}
+					fill="url(#76f2de34-8214-40b8-bfb5-42171f5dc07b)"
+					fillOpacity="0.7"
+				/>
+				<defs>
+					<radialGradient
+						id="76f2de34-8214-40b8-bfb5-42171f5dc07b"
+						cx={0}
+						cy={0}
+						r={1}
+						gradientUnits="userSpaceOnUse"
+						gradientTransform="translate(512 512) rotate(90) scale(512)"
+					>
+						<stop stopColor="#431407" />
+						<stop offset={1} stopColor="#431407" stopOpacity={0} />
+					</radialGradient>
+				</defs>
+			</svg>
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-200 to-orange-500">
@@ -26,25 +54,19 @@ export default function DevScriptsSections() {
 					b={22}
 					cards={[
 						{
-							title: 'React Template',
-							subtitle: 'Write scripts in any language',
+							title: 'Support for React, Vue, Svelte and vanilla JS',
+							subtitle: 'Build them with Vite locally and deploy them on Windmill',
 
-							Icon: SiReact,
-							gridArea: 'md:col-span-2 md:row-span-6'
+							Icon: FaJs,
+							gridArea: 'md:col-span-2 md:row-span-6',
+							svg: <FrameworkSvg />
 						},
 						{
-							title: 'Svelte Template',
-							subtitle: 'Write scripts in any language',
-
-							Icon: SiSvelte,
-							gridArea: 'md:col-span-2 md:row-span-3'
-						},
-						{
-							title: 'Vue Template',
-							subtitle: 'Write scripts in any language',
-
-							Icon: SiVuedotjs,
-							gridArea: 'md:col-span-2 md:row-span-3'
+							title: 'Inline scripts',
+							subtitle: 'Wrote your low-code app logic in Python, TypeScript, Go or Bash.',
+							Icon: FaCode,
+							gridArea: 'md:col-span-2 md:row-span-6',
+							svg: <AppEditorSvg />
 						}
 					]}
 				/>
