@@ -3,7 +3,7 @@ slug: automatically-populate-crm
 title: Automatically Populate CRM from Simple Emails with OpenAI and Windmill Worfklows
 authors: [henricourdent]
 tags: [tutorial, automation, CRM, email, OpenAI, workflow]
-image: ./0-header.jpg
+image: ./windmill-crm.png
 ---
 
 Getting leads emails from trials or newsletters signups is great. But it takes forever to get contact details manually. With a simple automated workflow, you can finally fill those details at scale.
@@ -23,6 +23,7 @@ Getting leads emails from trials or newsletters signups is great. But it takes f
 :::info Disclaimers
 
 This workflow is super powerful and easy to implement, however there are a few things to know:
+
 - We do not claim a 100% success rate on every email: getting information from emails like john3@gmail.com will always be difficult.
 - This workflow is great as an automation, for marginal cases it is outperformed by great detectives.
 - For a step, the present workflow crawls Google results. In some cases it can be against [Google's Terms of Service](https://policies.google.com/terms).
@@ -53,12 +54,12 @@ Here is what happens when you execute the flow for a single email:
 
 And the graphical view of the flow:
 
-![CRM Automated - Graph](./crm_automated_graph.png "CRM Automated - Graph")
-
+![CRM Automated - Graph](./crm_automated_graph.png 'CRM Automated - Graph')
 
 ### 1. Making the relevant Google search
 
 The first milestone is to make the appropriate Google search given only the email, with two objectives:
+
 - give relevant details
 - get rid of useless information
 
@@ -69,52 +70,52 @@ I quickly faced an issue: **all emails are not structured the same way**. Most a
 <details>
   <summary>Here is my script (in Typescript) for the parser and common emails eraser (step a). Code below:</summary>
 
-  ```js
-  export async function main(email: string) {
-    let [name, domain] = email.split("@");
-    let name_space = name.charAt(0) + " " + name.slice(1);
-    name = name.replace(/[0-9]/g, " ");
-    name_space = name_space.replace(/[0-9]/g, " ");
-    const nameWithoutDots = name.replace(/\./g, " ");
-    const commonDomains = [
-        "gmail.com",
-        "yahoo.com",
-        "outlook.com",
-        "hotmail.com",
-        "aol.com",
-        "icloud.com",
-        "mail.ru",
-        "yandex.ru",
-        "live.com",
-        "zoho.com",
-        "protonmail.com",
-        "gmx.com",
-        "fastmail.com",
-        "comcast.net",
-        "verizon.net",
-        "163.com",
-        "qq.com",
-        "sina.com",
-        "naver.com",
-        "t-online.de",
-    ];
+```js
+export async function main(email: string) {
+	let [name, domain] = email.split('@');
+	let name_space = name.charAt(0) + ' ' + name.slice(1);
+	name = name.replace(/[0-9]/g, ' ');
+	name_space = name_space.replace(/[0-9]/g, ' ');
+	const nameWithoutDots = name.replace(/\./g, ' ');
+	const commonDomains = [
+		'gmail.com',
+		'yahoo.com',
+		'outlook.com',
+		'hotmail.com',
+		'aol.com',
+		'icloud.com',
+		'mail.ru',
+		'yandex.ru',
+		'live.com',
+		'zoho.com',
+		'protonmail.com',
+		'gmx.com',
+		'fastmail.com',
+		'comcast.net',
+		'verizon.net',
+		'163.com',
+		'qq.com',
+		'sina.com',
+		'naver.com',
+		't-online.de'
+	];
 
-    const isCommonDomain = commonDomains.includes(domain);
+	const isCommonDomain = commonDomains.includes(domain);
 
-    if (isCommonDomain) {
-        return { name_space, name: nameWithoutDots, domain: "" };
-    } else {
-        return { name_space, name: nameWithoutDots, domain };
-    }
+	if (isCommonDomain) {
+		return { name_space, name: nameWithoutDots, domain: '' };
+	} else {
+		return { name_space, name: nameWithoutDots, domain };
+	}
 }
 ```
-</details>
 
+</details>
 
 <details>
   <summary>The one for Google search (python, step c). Code below:</summary>
 
-  ```python
+```python
 from bs4 import BeautifulSoup
 import requests
 from lxml.html import html5parser
@@ -122,34 +123,35 @@ import html5lib
 
 
 def main(name: str, domain: str, name_space: str):
-    def search(query):
-        url = "https://www.google.com/search?q={}".format(query)
-        r = requests.get(url)
-        data = r.text
-        soup = BeautifulSoup(data, "lxml")
-        titles = soup.find_all("h3")
-        res = []
-        for title in titles[:2]:
-            h = html5parser.fromstring(str(title)).getchildren()[0].text
-            res.append(h)
-        return res
+  def search(query):
+      url = "https://www.google.com/search?q={}".format(query)
+      r = requests.get(url)
+      data = r.text
+      soup = BeautifulSoup(data, "lxml")
+      titles = soup.find_all("h3")
+      res = []
+      for title in titles[:2]:
+          h = html5parser.fromstring(str(title)).getchildren()[0].text
+          res.append(h)
+      return res
 
-    infos = [name, domain]
-    query = "+".join(map(lambda x: x.replace(" ", "+"), infos))
-    try:
-        res1 = search(query)
-    except:
-        res1 = []
+  infos = [name, domain]
+  query = "+".join(map(lambda x: x.replace(" ", "+"), infos))
+  try:
+      res1 = search(query)
+  except:
+      res1 = []
 
-    infos = [name_space, domain]
-    query = "+".join(map(lambda x: x.replace(" ", "+"), infos))
-    try:
-        res2 = search(query)
-    except:
-        res2 = []
+  infos = [name_space, domain]
+  query = "+".join(map(lambda x: x.replace(" ", "+"), infos))
+  try:
+      res2 = search(query)
+  except:
+      res2 = []
 
-    return res1, res2
+  return res1, res2
 ```
+
 </details>
 
 At last, since I made two different searches, I used a simple script to remove duplicates and empty values (not to make a further OpenAI prompt for nothing).
@@ -157,25 +159,26 @@ At last, since I made two different searches, I used a simple script to remove d
 <details>
   <summary>The script I used for removing duplicates and empty values (step ak). Code below:</summary>
 
-  ```js
-  // import * as wmill from "https://deno.land/x/windmill@v1.83.1/mod.ts"
+```js
+// import * as wmill from "https://deno.land/x/windmill@v1.83.1/mod.ts"
 
 export async function main(r1?: string, r2?: string, r3?: string, r4?: string) {
-  // Assign empty strings to undefined inputs
-  const inputs = [r1, r2, r3, r4].map((input) => input ?? "");
-  
-  const results = inputs.filter((result, index, array) => {
-    // Remove empty values
-    if (result.trim() === "") {
-      return false;
-    }
-    // Remove duplicates
-    return array.indexOf(result) === index;
-  });
-  
-  return results;
+	// Assign empty strings to undefined inputs
+	const inputs = [r1, r2, r3, r4].map((input) => input ?? '');
+
+	const results = inputs.filter((result, index, array) => {
+		// Remove empty values
+		if (result.trim() === '') {
+			return false;
+		}
+		// Remove duplicates
+		return array.indexOf(result) === index;
+	});
+
+	return results;
 }
 ```
+
 </details>
 
 As a reminder, all the scripts I made and that are not on the [hub](https://hub.windmill.dev/) were created with the help of Chat GPT and a bit of logic.
@@ -186,45 +189,59 @@ This whole step was made because my beloved OpenAI was not able to qualify searc
 
 First, I used a [for loop](/docs/flows/flow_loops) to iterate over the list of search results.
 
-This this where we use an [OpenAI completion](https://hub.windmill.dev/scripts/openai/1452/create-completion-openai) for the first time. The parameters chosen are: model = text-davinci-003, max_toxens = 300, n = 1, prompt = 
+This this where we use an [OpenAI completion](https://hub.windmill.dev/scripts/openai/1452/create-completion-openai) for the first time. The parameters chosen are: model = text-davinci-003, max_toxens = 300, n = 1, prompt =
+
 > "Here is a tagline of a business profile: " + flow_input.iter.value + ". If it somehow matches the email " + flow_input.email + ", just say 'Match', otherwise say 'Doesn't match'"
 
 <br/>
 
 Based on its response, we'll go through a [branch](/docs/flows/flow_branches):
+
 - if 'Match', the search result will have professional websites mentions killed (LinkedIn, Indeed etc., in order not to overwhelm OpenAI with information) and then return result
 - if 'Doesn't', the search result will return empty value
 
 <details>
   <summary>Killing professional websites mentions (step ad). Code below:</summary>
 
-  ```js
-  // import * as wmill from "https://deno.land/x/windmill@v1.82.0/mod.ts"
+```js
+// import * as wmill from "https://deno.land/x/windmill@v1.82.0/mod.ts"
 
-const websites = ["Indeed", "Glassdoor", "AngelList", "Hired", "Monster", "CareerBuilder", "SimplyHired", "Dice", "Upwork", "BEAMSTART"];
+const websites = [
+	'Indeed',
+	'Glassdoor',
+	'AngelList',
+	'Hired',
+	'Monster',
+	'CareerBuilder',
+	'SimplyHired',
+	'Dice',
+	'Upwork',
+	'BEAMSTART'
+];
 
 export async function main(search_result: string) {
-    for (let website of websites) {
-        if (search_result.includes(website)) {
-        search_result = search_result.replace(website, "");
-        }
-    }
-    return search_result;
+	for (let website of websites) {
+		if (search_result.includes(website)) {
+			search_result = search_result.replace(website, '');
+		}
+	}
+	return search_result;
 }
 ```
+
 </details>
 
 <details>
   <summary>Returning a result (default typescript on Windmill, steps ag & ah). Code below:</summary>
 
-  ```js
+```js
 // import * as wmill from "https://deno.land/x/windmill@v1.82.0/mod.ts"
 
 export async function main(x: string) {
-    return x
+	return x;
 }
-
 ```
+
 </details>
 
 We use this latest function to give the branch (af) and the loop (ac) the result of the qualified iteration. In step ag we return result of previous step (ad). In ah, since the result is not relevant we return an empty value.
@@ -246,24 +263,26 @@ Once the completion is made, I'll use a simple parser to create variables.
 <details>
   <summary>Parsing OpenAI completion into variables (step y), script written with ... OpenAI. Code below:</summary>
 
-  ```js
-  export async function main(completion: string) {
-    const regex = /1. First Name: (.+)\n2. Last Name: (.+)\n3. Profession: (.+)\n4. Company: (.+)\n5. What the Company Does: (.+)/;
-    const matches = completion.match(regex);
-    if (!matches) {
-        throw new Error("Invalid completion string");
-    }
+```js
+export async function main(completion: string) {
+	const regex =
+		/1. First Name: (.+)\n2. Last Name: (.+)\n3. Profession: (.+)\n4. Company: (.+)\n5. What the Company Does: (.+)/;
+	const matches = completion.match(regex);
+	if (!matches) {
+		throw new Error('Invalid completion string');
+	}
 
-    const [, value1, value2, value3, value4, value5] = matches;
-    const first_name = value1.trim();
-    const last_name = value2.trim();
-    const profession = value3.trim();
-    const company = value4.trim();
-    const what_company_does = value5.trim();
+	const [, value1, value2, value3, value4, value5] = matches;
+	const first_name = value1.trim();
+	const last_name = value2.trim();
+	const profession = value3.trim();
+	const company = value4.trim();
+	const what_company_does = value5.trim();
 
-    return { first_name, last_name, profession, company, what_company_does };
+	return { first_name, last_name, profession, company, what_company_does };
 }
 ```
+
 </details>
 
 Now we have all the details about our contact, it's time to tell the world (or at least our CRM). For the sake of the example, we used Airtable with a simple [API call](https://hub.windmill.dev/scripts/airtable/302/create-single-record-airtable). In that specific case we forked this template and made minor changes to use our pre-set variables.
@@ -271,29 +290,39 @@ Now we have all the details about our contact, it's time to tell the world (or a
 <details>
   <summary>Creating and Airtable record (step v, but also ≈ z and an in case of error). Code below:</summary>
 
-  ```js
-import * as wmill from "https://deno.land/x/windmill@v1.70.1/mod.ts";
-import { Airtable } from "https://deno.land/x/airtable/mod.ts";
+```js
+import * as wmill from 'https://deno.land/x/windmill@v1.70.1/mod.ts';
+import { Airtable } from 'https://deno.land/x/airtable/mod.ts';
 
-export async function main(at_con: wmill.Resource<"airtable">, at_table: wmill.Resource<"airtable_table">, first_name: string, last_name: string, email: string, company: string, role: string, what_company_does: string, automatic: boolean = true) {
+export async function main(
+	at_con: wmill.Resource<'airtable'>,
+	at_table: wmill.Resource<'airtable_table'>,
+	first_name: string,
+	last_name: string,
+	email: string,
+	company: string,
+	role: string,
+	what_company_does: string,
+	automatic: boolean = true
+) {
+	const airtable = new Airtable({ ...at_con, ...at_table });
 
-    const airtable = new Airtable({...at_con, ...at_table});
-    
-    const new_record = {
-        "First name": first_name,
-        "Last name": last_name,
-        "Email": email,
-        "Company": company,
-        "Role": role,
-        "What company does": what_company_does,
-        "Generated automatically": automatic
-    };
+	const new_record = {
+		'First name': first_name,
+		'Last name': last_name,
+		Email: email,
+		Company: company,
+		Role: role,
+		'What company does': what_company_does,
+		'Generated automatically': automatic
+	};
 
-    const createOne = await airtable.create(new_record);
+	const createOne = await airtable.create(new_record);
 
-    return { message: "Created record in table"}
+	return { message: 'Created record in table' };
 }
 ```
+
 </details>
 
 ### 4. Handling errors
@@ -313,6 +342,7 @@ You can even **link it it to your internal database** of signups, where the flow
 With the present tutorial, I showed you how I built a workflow that automatically fills a CRM with details from just an email entry.
 
 There is **a lot of room for customization**:
+
 - Email formats: maybe your users have other email structures. Change the mail parser and the Google search.
 - Prompts: maybe you want to tailor OpenAI's decisions on your use case. Change the prompt and tell it what kind of users you expect, the risks it can take etc.
 - Resources: chances are high that your CRM is not Airtable. Use other scripts ([Hubspot](https://hub.windmill.dev/integrations/hubspot), [Gsheet](https://hub.windmill.dev/integrations/gsheets), update data on [Supabase etc.](https://hub.windmill.dev/integrations/supabase)). [Create a resource type](/docs/core_concepts/resources_and_types#create-a-resource-type). Or [ask us what you need](https://docs.windmill.dev/docs/misc/getting_help).
@@ -326,7 +356,6 @@ On our side, we'll show you in a further article how to introduce a human-in-the
 On your side, see the [details][wm-hub-flow] of the flow and fork it to [use it on Windmill](/docs/getting_started/how_to_use_windmill).
 
 :::
-
 
 <!-- Links -->
 

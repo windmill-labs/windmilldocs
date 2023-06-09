@@ -28,8 +28,8 @@ The new workspace will automatically be [switched](#switching-selection) to.
 
 | Argument         | Description                     |
 | ---------------- | ------------------------------- |
-| `workspace_name` | The name of the workspace.      |
-| `workspace_id`   | The ID of the workspace.remote. |
+| `workspace_name` | The name of the workspace. Note: This is a name used to refer this workspace locally on your machine. It can be same or different from your remote instance     |
+| `workspace_id`   | The ID of the workspace.remote. The workspace ID is displayed in the switch workspace menu. |
 | `remote`         | The remote URL.                 |
 
 ### Options
