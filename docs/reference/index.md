@@ -783,26 +783,22 @@ everything - using their path. The paths are globally unique within the category
 of entities they represent. In short, a Resource and a Schedule for example can
 have the same path, without conflict.
 
-A path looks like `<owner-kind>/<owner-name>/<resource-name>`:
-
-- **ownership path prefix** (`<owner-kind>/<owner-name>`) is the part which is
-  itself made of 2 sub-parts. There are only 2 owners kinds: [groups](#groups)
-  and [users](#users). For paths, the owner kind for group is shortened to `g`
-  and for user it is shortened to `u`. The owner name corresponds to the name of
-  the group or the username of the user.
-- **resource-name** is the name of the resource itself
+A path is either inside a user space `u/<user>/<path>` or inside a folder `f/<folder>/<path>`.
 
 Examples:
 
-- A private Script `u/alice/hello_world`
-- A Script available to the users of the `all` group (so all users)
-  `g/all/hello_world`
+- A private Script: `u/alice/hello_world`
+- A Script available to the users having access to the folder: `f/sales/hello_world`
 
 ## Owner
 
-An owner is the user or group identified in a [path](#path) through the
-"ownership path prefix" (`u/<user>` or `g/<group>`). An owner always has write
-[permission](#permissions-and-acl) over the entity.
+An owner is the user or the admins of the folder identified in a [path](#path) through the
+"ownership path prefix" (`u/<user>` or `f/<folder>`). An owner always has write
+[permission](#permissions-and-acl) over the entity and can in addition delete it, move it and manage its permissions. Writers can only update the resource and reader can only read it.
+
+## Folders
+
+Folders have also readers, writers and admins. They are inspired by unix folders. Items under a folder inherit the permissions of the folder. Items can still extends those permissions through their own granular ACL. Hence, readers of a folder can read everything inside the folder, writers can write everything inside the folder and admins can write and change the permissions of everything inside the folder and the permissions of the folders itself. Admins of a folder are consider to be owners of the folder and everything below it
 
 ## [Groups](../core_concepts/8_groups_and_folders/index.md)
 
@@ -811,13 +807,10 @@ Groups have a name and a set of members. They are inspired by unix groups:
 - Members are always users
 - Users can be members of multiple groups
 
-Groups can own entities: the ownership path prefix of those entities are of the
-form `g/<group>` and can be granted or shared read or write
-[permissions](#permissions-and-acl) to entities.
 
 Members of a group have permissions to act on behalf of the group. Groups
 themselves are permissioned such that only admin and users with write permission
-on the group name can add or remove users from a group. Being a member of a
+on the group can add or remove users from a group. Being a member of a
 group does not grant write permission on the group itself.
 
 ### The 'all' Group
