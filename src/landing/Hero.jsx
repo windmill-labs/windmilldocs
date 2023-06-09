@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import LandingHeader from './LandingHeader';
-import { Switch } from '@headlessui/react';
-import { useDeveloperMode } from '../pages';
 
 function useGithubStars() {
 	const [stars, setStars] = useState(0);
@@ -17,30 +15,6 @@ function useGithubStars() {
 	return stars;
 }
 
-function Example() {
-	const { developerMode, setDeveloperMode } = useDeveloperMode();
-
-	return (
-		<div className="my-8 flex flex-row gap-2 items-center">
-			<span className="font-bold text-sm">For low-code user</span>
-
-			<Switch
-				checked={developerMode}
-				onChange={setDeveloperMode}
-				className={`${developerMode ? 'bg-black' : 'bg-blue-500'}
-          relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-			>
-				<span
-					aria-hidden="true"
-					className={`${developerMode ? 'translate-x-9' : 'translate-x-0'}
-            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-				/>
-			</Switch>
-			<span className="font-bold text-sm">For developers</span>
-		</div>
-	);
-}
-
 export default function Hero() {
 	const stars = useGithubStars();
 
@@ -50,7 +24,6 @@ export default function Hero() {
 
 			<div className="mx-auto max-w-7xl px-6 pt-4 gap-y-8 pb-24 sm:pb-32 lg:flex lg:pt-10 lg:pb-36 lg:px-8 mt-4">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-					<Example />
 					<div className="text-sm font-semibold flex flex-row text-gray-700">
 						⭐️ {stars} - <span class="hidden md:block mx-1">Help others discover Windmill.</span>{' '}
 						Star us on
