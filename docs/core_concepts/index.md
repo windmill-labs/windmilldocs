@@ -56,7 +56,7 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 
 ## Flow-Specific Features
 
-All details on Flows can be found in the Flows section.
+All details on Flows can be found in the [Flows section](../flows/1_flow_editor.md).
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
@@ -92,7 +92,7 @@ All details on Flows can be found in the Flows section.
 
 ## App-Specific Features
 
-All details on Apps can be found in the Apps section.
+All details on Apps can be found in the [Apps section](../apps/0_app_editor/index.mdx).
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
