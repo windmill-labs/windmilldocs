@@ -62,7 +62,7 @@ Actions - or Common Scripts - are the basic building blocks for the flows.
 #### [Trigger Scripts](../flows/10_flow_trigger.md)
 
 These are used as the first step in Flows, most commonly with an internal
-[state](#state-and-internal-state) and a schedule to watch for changes on an
+[state](#states) and a schedule to watch for changes on a
 external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
@@ -395,7 +395,7 @@ It is not very different than any other Script, except its purposes and that it
 needs to return a list because the next step will be a [forloop](../flows/12_flow_loops.md) over all items
 of the list in an embedded flow. Furthermore, it will very likely make use of
 the convenience helper functions around
-[internal states](#state-and-internal-state).
+[states](#states).
 
 ### [Retries](../flows/14_retries.md)
 
@@ -413,20 +413,20 @@ The retries are tried when a step errors, until there are no retry attempts
 left, in which case the Flow either passes the error to the
 [error handler](#error-handlers) if any, or fail the Flow itself.
 
-### State and Internal State
+### States
 
-An internal state is just a state which is meant to persist across distinct
+A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct
 executions of the same Script. This is what enables Flows to watch for changes
 in most event watching scenarios. The pattern is as follows:
 
-- Retrieve the last internal state or, if undefined, assume it is the first
+- Retrieve the last state or, if undefined, assume it is the first
   execution.
 - Retrieve the current state in the external system you are watching, e.g. the
   list of users having starred your repo or the maximum ID of posts on Hacker
   News.
 - Calculate the difference between the current state and the last internal
   state. This difference is what you will want to act upon.
-- Set the new internal state as the current state so that you do not process the
+- Set the new state so that you do not process the
   elements you just processed.
 - Return the differences calculated previously so that you can process them in
   the next steps. You will likely want to [forloop](../flows/12_flow_loops.md) over the items and trigger
@@ -435,10 +435,7 @@ in most event watching scenarios. The pattern is as follows:
 
 The convenience functions do this in TypeScript are:
 
-- `getState` which retrieves an object of any type (internally a simple
-  Resource) at a path determined by `getStatePath`, which is unique to the user
-  currently executing the Script, the Flow in which it is currently getting
-  called in - if any - and the path of the Script
+- `getState` which retrieves a JSON object stored as a resource of type `state` at a path determined by `getStatePath`, which is unique the trigger (username or schedule path), the embedding flow's path (if any), and the step's or script's path.
 - `setState` which sets the new state
 
 The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.md) section with a

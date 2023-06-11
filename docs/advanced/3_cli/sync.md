@@ -44,7 +44,7 @@ remote and locally stay in sync.
 
 ### Pulling
 
-Pulling with `wmill sync pull` will first update the internal state, and then
+Pulling with `wmill sync pull` will first update the internal sync state, and then
 generate a diff between your local files and this state, only updating the
 actually modified files. Possible conflicts will warn the user.
 
