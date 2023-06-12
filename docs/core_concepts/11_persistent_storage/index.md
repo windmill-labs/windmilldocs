@@ -22,7 +22,7 @@ There are 4 kinds of persistent storage in Windmill:
 
 2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
-3. [Object storag for large data](#large-data-files-s3-r2-minio) such as S3.
+3. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
 
 4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
