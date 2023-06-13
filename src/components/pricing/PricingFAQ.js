@@ -11,7 +11,7 @@ const faqs = [
 	{
 		question: 'What is an execution?',
 		answer:
-			'The single credit-unit is called a "execution". An execution corresponds to a single job whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for. Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.'
+			'The single credit-unit is called a "execution". An execution corresponds to a single job whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for. The number of executions of a flow corresponds to the sum of the executions of each step as seconds, considered as one script execution of that same time (time in sleep or doing state transition are not accounted). For apps, a backend script execution is considered as a script execution. As apps frontend scripts execute on browsers, they are not taken into account. Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.'
 	}
 ];
 
