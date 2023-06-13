@@ -49,7 +49,7 @@ From your workspace, navigate to the dedicated `Schedules` menu and select `New 
 
 2. Select a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
 
-3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flow].
+3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flows].
 
 ![Schedule a task](./12-schedule-a-task.png 'Schedule a task')
 
@@ -63,7 +63,7 @@ The previous configuration can be replicated multiple times for the same workflo
 
 :::
 
-If the Schedules menu allows you to control future executions of scripts and workflows, you can check all past and future runs from the `Runs` tab ...
+If the Schedules menu allows you to control future executions of scripts and workflows, you can check all past and future runs clicking on `Runs`. This will lead you to the [Runs menu](../../core_concepts/5_monitor_past_and_future_runs/index.md), with a filtered view on your runnable.
 
 ![Runs menu](./10-runs-menu.png 'Runs menu')
 

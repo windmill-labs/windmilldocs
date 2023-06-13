@@ -53,17 +53,22 @@ The layout components are used to organize the components in the app canvas.
 
 - [Tabs](#tabs-2)
 - [Conditional Tabs](#conditional-tabs)
+- [Sidebar Tabs](#sidebar-tabs)
+- [Invisible Tabs](#invisible-tabs)
 
 ### Buttons
 
 - [Button](#button)
-- [Modal Form](#form-)
-- [Form](#form)
+- [Submit](#submit-form)
+- [Modal Form](#modal-form)
 - [Download Button](#download-button)
 
 ### Inputs
 
+- [Form](#form-input)
 - [Text Input](#text-input)
+- [Textarea](#textarea)
+- [Rich Text Editor](#rich-text-editor)
 - [Password](#password-input)
 - [Email Input](#email-input)
 - [Number](#number-input)
@@ -74,8 +79,15 @@ The layout components are used to organize the components in the app canvas.
 - [File Input](#file-input)
 - [Toggle](#toggle)
 - [Select](#select)
+- [Resource Select](#resource-select)
 - [MultiSelect](#multiselect)
-- [Form](#form-input)
+- [Select Tab](#select-tab)
+- [Select Step](#select-step)
+
+### Tables
+
+- [Table](#table)
+- [AgGrid Table](#aggrid-table)
 
 ### Display
 
@@ -84,19 +96,20 @@ The layout components are used to organize the components in the app canvas.
 - [Image](#image)
 - [Map](#map)
 - [HTML](#html)
+- [PDF](#pdf)
+- [Rich Result](#rich-result)
+- [Log](#log-display)
+- [Flow Status](#flow-status)
+
+### Charts
+
 - [Bar/Line Chart](#barline-chart)
 - [Pie Chart](#pie-chart)
 - [Vega Lite](#vega-lite)
 - [Plotly](#plotly)
 - [Scatter Chart](#scatter-chart)
 - [Timeseries](#timeseries)
-- [PDF](#pdf)
-- [Rich Result](#rich-result)
-
-### Table
-
-- [Table](#table-1)
-- [AgGrid Table](#aggrid-table)
+- [ChartJs](#chartjs)
 
 Below you will find details about each component.
 
@@ -255,6 +268,35 @@ The modal is container called by a button. Once you click on the button, a modal
 | buttonFillContainer |                  boolean                  |    false    |    false    |    false    | Whether the button should fill the container. |
 | buttonDisabled      |                  boolean                  |    false    |    false    |    false    | Whether the button should be disabled.        |
 
+### Stepper
+
+The stepper component helps you lay out multi-step apps, with an optional validation function to validate a step.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="modal-layout"
+    src="/videos/stepper.mp4"
+    alt="stepper"
+/>
+
+<br/>
+
+If no validation function is defined, the stepper will behave a tabs component where the user can switch between tabs (with `Previous` and `Next` buttons, or directly on the step).
+
+A validation function can be set and won't allow users to go to the next step while the runnable returns an error.
+
+#### Outputs
+
+| Name                   |   Type    | Description                         |
+| ---------------------- | :-------: | ----------------------------------- |
+| currentStepIndex             | number | Number of the step / tab.          |
+| result  |   any   | The result of the runnable.      |
+| loading | boolean | The loading state of the button. |
+
+
 ## Tabs
 
 ### Tabs
@@ -312,6 +354,18 @@ Conditional tabs are tabs that are displayed only if a condition is met. The con
 | ---------------------- | :-------: | ----------------------------------- |
 | conditions             | boolean[] | The conditions evalutation          |
 | selectedConditionIndex |  number   | The index of the selected condition |
+
+### Sidebar Tabs
+
+The Sidebar Tabs component is basically a [Tabs component](#tabs-2) whose `Tabs Kind` is "Sidebar".
+
+![Sidebar Tabs](../../assets/apps/4_app_component_library/sidebar_tabs.gif)
+
+### Invisible Tabs
+
+The Invisible Tabs component is basically a [Tabs component](#tabs-2) whose `Tabs Kind` is "Invisible", meaning the tabs labels are not visible by the user.
+
+![Inisible Tabs](../../assets/apps/4_app_component_library/invisible_tabs.gif)
 
 ## Buttons
 
@@ -375,7 +429,7 @@ The button component has a special parameter called `On Success`. This parameter
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
 
-### Form
+### Submit Form
 
 The form component allows you to create a form. It has a submit button that triggers a runnable when clicked.
 The runnable parameters are defined:
@@ -407,7 +461,7 @@ The form component has a special parameter called `On Success`. See the button c
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
 
-### Form Modal
+### Modal Form
 
 The form modal component allows you to create a form. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
 
@@ -465,6 +519,32 @@ The download button component allows you to download a file.
 
 ## Inputs
 
+### Form Input
+
+The form input component allows you to create a form and get answers from the user.
+
+![Form Input API](../../assets/apps/4_app_component_library/form_input.png)
+
+#### Form Input configuration
+
+| Name          |  Type  | Connectable | Templatable | Default | Description                          |
+| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------ |
+| Display Type   | boolean |    false    |    false    | false | This will display the type and/or the format on the field next to the label.          |
+| Large Gap  | boolean |    false    |    false    | false | This will add a large gap between the field elements. |
+
+Each argument can be configured (name, description, type, default value, advanced parameters).
+
+![Form Input Arguments](../../assets/apps/4_app_component_library/form_input_argument.png)
+
+#### Outputs
+
+| Name   |  Type  | Description           |
+| ------ | :----: | --------------------- |
+| properties | string | Type, description and default of each argument. |
+| loading | boolean | The loading state of the text component. |
+| valid | boolean |  |
+| values | same as each argument | Value of each answer by the user. |
+
 ### Text Input
 
 The text input component allows you to get a string from the user.
@@ -483,6 +563,44 @@ The text input component allows you to get a string from the user.
 | Name   |  Type  | Description           |
 | ------ | :----: | --------------------- |
 | Result | string | The text input value. |
+
+### Textarea
+
+The textarea component allows you to get a string from the user, with an expandable text area.
+
+![Textarea API](../../assets/apps/4_app_component_library/textarea.gif)
+
+#### Textarea configuration
+
+| Name          |  Type  | Connectable | Templatable | Default | Description                          |
+| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------ |
+| Placeholder   | string |    false    |    false    | Type... | The text input placeholder.          |
+| Default value | string |    true     |    false    |         | The default value of the text input. |
+
+#### Outputs
+
+| Name   |  Type  | Description           |
+| ------ | :----: | --------------------- |
+| Result | string | The text input value. |
+
+### Rich Text Editor
+
+The Rich Text Editor component allows to have to user enter text with a layout, on top of files or videos.
+
+![Rich Text Editor API](../../assets/apps/4_app_component_library/rich_text.gif)
+
+#### Rich Text Editor configuration
+
+| Name          |  Type  | Connectable | Templatable | Default | Description                          |
+| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------ |
+| Placeholder   | string |    false    |    false    | Type... | The text input placeholder.          |
+| Default value | string |    true     |    false    |         | The default value of the text input. |
+
+#### Outputs
+
+| Name   |  Type  | Description           |
+| ------ | :----: | --------------------- |
+| Result | string | The Rich Text Editor input value, in HTML-like syntax within the Quill delta format. |
 
 ### Password Input
 
@@ -680,6 +798,28 @@ The select component allows you to get a string from the user.
 | ------ | :----: | ------------------ |
 | result | string | The selected item. |
 
+### Resource Select
+
+The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.md) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.md).
+
+![Resource Select](../../assets/apps/4_app_component_library/resource_select.png)
+
+#### Resource Select configuration
+
+| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
+| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
+| Items Name       | string |    true     |    false    | "bar" | The name of each suggested resource.  |
+| Items       | [resource](../../core_concepts/3_resources_and_types/index.md) |    true     |    false    |  | The Windmill resource.  |
+| Placeholder   | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false     |    false    |  | The variable that will be displayed by default.  |
+| Full Width       | boolean |    false     |    false    | true | Set the width of the options popup to 100% of the select width.  |
+
+#### Outputs
+
+| Name   |  Type  | Description         |
+| ------ | :----: | ------------------- |
+| result | string | The selected resource (in `$res:` format). |
+
+
 ### Multiselect
 
 The multiselect component allows you to get multiple strings from the user.
@@ -698,6 +838,136 @@ The multiselect component allows you to get multiple strings from the user.
 | Name   |  Type  | Description         |
 | ------ | :----: | ------------------- |
 | result | string | The selected items. |
+
+
+### Select Tab
+
+The Select Tab is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
+
+![Select Tab](../../assets/apps/4_app_component_library/tab_select.png)
+
+#### Select Tab configuration
+
+| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
+| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
+| Items       | string |    true     |    false    | "Foo" ; "Bar" | The select tabs items (label and value, in JSON).                           |
+| Default Value | string |    true     |    false    |   | The default value of the tabs labels and value. |
+
+#### Outputs
+
+| Name   |  Type  | Description         |
+| ------ | :----: | ------------------- |
+| result | string | The selected tab. |
+
+
+### Select Step
+
+The Select Step is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
+
+![Select Step](../../assets/apps/4_app_component_library/step_select.png)
+
+#### Select Step configuration
+
+| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
+| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
+| Items       | string |    true     |    false    | "Foo" ; "Bar" | The select step items (label and value, in JSON).                           |
+| Default Value | string |    true     |    false    |   | The default value of the step labels and value. |
+
+#### Outputs
+
+| Name   |  Type  | Description         |
+| ------ | :----: | ------------------- |
+| result | string | The selected step. |
+
+## Tables
+
+### Table
+
+The table component allows you to display a table.
+
+![Table API](../../assets/apps/4_app_component_library/table.png)
+
+#### Table Input
+
+|      Type       | Connectable | Templatable | Default | Description     |
+| :-------------: | :---------: | :---------: | :-----: | --------------- |
+| `Array<Object>` |    true     |    false    |         | The table data. |
+
+:::info
+The columns are automatically generated from all the keys of the objects in the array.
+:::
+
+#### Table configuration
+
+| Name   |                   Type                    | Connectable | Templatable |  Default   | Description                           |
+| ------ | :---------------------------------------: | :---------: | :---------: | :--------: | ------------------------------------- |
+| search | 'Disabled', 'By Runnable', 'By component' |    false    |    false    | 'Disabled' | The search query to filter the table. |
+
+Search can be configured in the following ways:
+
+- **Disabled**: The search is disabled.
+- **By Runnable**: The search is done in the backend.
+- **By component**: The search is done in the frontend.
+
+#### Table actions
+
+`Table` can define actions that will be displayed in each row of the table. An action is a `Button` component that cannot be moved.
+
+#### Outputs
+
+| Name             |  Type   | Description                              |
+| ---------------- | :-----: | ---------------------------------------- |
+| result           | Object  | The table data.                          |
+| loading          | boolean | The loading state of the table component |
+| selectedRow      | Object  | The selected row                         |
+| selectedRowIndex | number  | The selected row index                   |
+| search           | string  | The search query                         |
+
+### AgGrid Table
+
+:::tip Guide
+If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_Guides/AgGrid_Table/index.md).
+:::
+
+The AgGrid table component allows you to display an agnostic grid table.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/aggrid_table.mp4"
+    alt="aggrid table"
+/>
+<br/>
+
+#### AgGird Table Input
+
+|      Type       | Connectable | Templatable | Default | Description     |
+| :-------------: | :---------: | :---------: | :-----: | --------------- |
+| `Array<Object>` |    true     |    false    |         | The table data. |
+
+#### AgGrid Table configuration
+
+| Name         |  Type   | Connectable | Templatable |    Default    | Description                                  |
+| ------------ | :-----: | :---------: | :---------: | :-----------: | -------------------------------------------- |
+| Column Defs  | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.  |
+| Flex         | boolean  |    false     |    false    | true | Allows you to distribute available space among multiple elements to control their relative sizes and positions.  |
+| All Editable | boolean |    false    |    false    |     false     | Whether you want all columns to be editable. |
+| Multiple Selectable | boolean |    false    |    false    |     false     | Make multiple rows selectable at once. |
+| Row Multiselect With Click | boolean |    false    |    false    |     true     | If multiple selectable, allow multiselect with click. |
+| Pagination   | boolean |    false    |    false    |     false     | Whether you want pages on your table.        |
+
+#### Outputs
+
+| Name             |  Type   | Description                                     |
+| ---------------- | :-----: | ----------------------------------------------- |
+| result           | Object  | The AgGrid table data.                          |
+| loading          | boolean | The loading state of the AgGrid table component |
+| selectedRow      | Object  | The selected row                                |
+| selectedRowIndex | number  | The selected row index                          |
+
 
 ## Display
 
@@ -816,90 +1086,84 @@ The HTML component allows you to display HTML content.
 | result  | string  | The HTML.                                |
 | loading | boolean | The loading state of the HTML component. |
 
-### Table
+### PDF
 
-The table component allows you to display a table.
+The PDF component allows you to display a PDF file.
 
-![Table API](../../assets/apps/4_app_component_library/table.png)
+![PDF API](../../assets/apps/4_app_component_library/pdf_api.png)
 
-#### Table Input
+#### PDF configuration
 
-|      Type       | Connectable | Templatable | Default | Description     |
-| :-------------: | :---------: | :---------: | :-----: | --------------- |
-| `Array<Object>` |    true     |    false    |         | The table data. |
-
-:::info
-The columns are automatically generated from all the keys of the objects in the array.
-:::
-
-#### Table configuration
-
-| Name   |                   Type                    | Connectable | Templatable |  Default   | Description                           |
-| ------ | :---------------------------------------: | :---------: | :---------: | :--------: | ------------------------------------- |
-| search | 'Disabled', 'By Runnable', 'By component' |    false    |    false    | 'Disabled' | The search query to filter the table. |
-
-Search can be configured in the following ways:
-
-- **Disabled**: The search is disabled.
-- **By Runnable**: The search is done in the backend.
-- **By component**: The search is done in the frontend.
-
-#### Table actions
-
-`Table` can define actions that will be displayed in each row of the table. An action is a `Button` component that cannot be moved.
+| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
+| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
+| Source | boolean |   true    |    true     | /dummy.pdf | The PDF file.             |
+| Zoom   | number  |   true    |    true     |    100     | The zoom on the PDF view. |
 
 #### Outputs
 
-| Name             |  Type   | Description                              |
-| ---------------- | :-----: | ---------------------------------------- |
-| result           | Object  | The table data.                          |
-| loading          | boolean | The loading state of the table component |
-| selectedRow      | Object  | The selected row                         |
-| selectedRowIndex | number  | The selected row index                   |
-| search           | string  | The search query                         |
+| Name    |  Type   | Description                             |
+| ------- | :-----: | --------------------------------------- |
+| loading | boolean | The loading state of the PDF component. |
 
-### AgGrid Table
+### Rich Result
 
-:::tip Guide
-If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_Guides/AgGrid_Table/index.md).
-:::
+The Rich Result component allows you to display the result of a Runnable. It tries to display the result in a human-readable way.
 
-The AgGrid table component allows you to display an agnostic grid table.
+![Rich Result](../../assets/apps/4_app_component_library/rich_result.png)
 
-<video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/aggrid_table.mp4"
-    alt="aggrid table"
-/>
-<br/>
+#### Rich Result configuration
 
-#### AgGird Table Input
-
-|      Type       | Connectable | Templatable | Default | Description     |
-| :-------------: | :---------: | :---------: | :-----: | --------------- |
-| `Array<Object>` |    true     |    false    |         | The table data. |
-
-#### AgGrid Table configuration
-
-| Name         |  Type   | Connectable | Templatable |    Default    | Description                                  |
-| ------------ | :-----: | :---------: | :---------: | :-----------: | -------------------------------------------- |
-| Column Defs  | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.  |
-| All Editable | boolean |    false    |    false    |     false     | Whether you want all columns to be editable. |
-| Pagination   | boolean |    false    |    false    |     false     | Whether you want pages on your table.        |
-| Page size    | number  |    false    |    false    |      10       | The maximum number of rows on each page.     |
+| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
+| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
+| Data Source |  |   true    |         | {"foo": 42} | The data source to display results.  |
 
 #### Outputs
 
-| Name             |  Type   | Description                                     |
-| ---------------- | :-----: | ----------------------------------------------- |
-| result           | Object  | The AgGrid table data.                          |
-| loading          | boolean | The loading state of the AgGrid table component |
-| selectedRow      | Object  | The selected row                                |
-| selectedRowIndex | number  | The selected row index                          |
+| Name    |  Type   | Description                             |
+| ------- | :-----: | --------------------------------------- |
+| result |  | The result of the runnable. |
+| loading | boolean | The loading state of the component. |
+
+### Log Display
+
+The Log Display component allows you to display the log of a Runnable.
+
+![Log Display](../../assets/apps/4_app_component_library/log_display.png)
+
+#### Log Display configuration
+
+| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
+| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
+| Data Source |  |   true    |         | | The data source to display logs.  |
+
+#### Outputs
+
+| Name    |  Type   | Description                             |
+| ------- | :-----: | --------------------------------------- |
+| result |  | The result of the runnable. |
+| loading | boolean | The loading state of the component. |
+
+### Flow Status
+
+The Flow Status component allows you to display the status of a flow.
+
+![Flow Status](../../assets/apps/4_app_component_library/flow_status.png)
+
+#### Flow Status configuration
+
+| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
+| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
+| Data Source |  |   true    |         | | The flow to display status.  |
+
+#### Outputs
+
+| Name    |  Type   | Description                             |
+| ------- | :-----: | --------------------------------------- |
+| result |  | The result of the runnable. |
+| loading | boolean | The loading state of the component. |
+
+
+## Charts
 
 ### Bar/Line Chart
 
@@ -1049,25 +1313,37 @@ The Timeseries component allows you to display a Timeseries using the [Chart.js]
 | result  | Object  | The timeseries data.                           |
 | loading | boolean | The loading state of the timeseries component. |
 
-### PDF
+### ChartJs
 
-The PDF component allows you to display a PDF file.
+The ChartJs component allows you to display a ChartJs using the [Chart.js](https://www.chartjs.org/) library.
 
-![PDF API](../../assets/apps/4_app_component_library/pdf_api.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/chartjs.mp4"
+    alt="horizontal split panes"
+/>
+<br/>
 
-#### PDF configuration
+#### ChartJs Input
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Source | boolean |   string    |    true     | /dummy.pdf | The PDF file.             |
-| Zoom   | number  |   string    |    true     |    100     | The zoom on the PDF view. |
+|      Type       | Connectable | Templatable | Default | Description          |
+| :-------------: | :---------: | :---------: | :-----: | -------------------- |
+| Data source |    true     |    false    |      {"label":["Pie"]...}   | The Json source of the displayed data. |
+
+
+#### ChartJs configuration
+
+|      Type       | Connectable | Templatable | Default | Description          |
+| :-------------: | :---------: | :---------: | :-----: | -------------------- |
+| Type |    false     |    false    |     Pie  | The type of the chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
+| Options |    true     |    false    |   none   | ChartJs [options](https://www.chartjs.org/docs/latest/general/options.html) object. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| loading | boolean | The loading state of the PDF component. |
-
-### Rich Result
-
-The Result component allows you to display the result of a Runnable. It tries to display the result in a human-readable way.
+| Name    |  Type   | Description                                    |
+| ------- | :-----: | ---------------------------------------------- |
+| result  | Object  | The ChartJs data.                           |
