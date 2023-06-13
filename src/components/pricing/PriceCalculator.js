@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import React from 'react';
-
+import classNames from 'classnames';
 import Slider from './Slider';
 
 const plans = [
@@ -19,10 +19,6 @@ function calculatePrice(monthlyPrice, period) {
 		return monthlyPrice * 10;
 	}
 	return monthlyPrice;
-}
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
 }
 
 export default function PriceCalculator({ period, tier }) {

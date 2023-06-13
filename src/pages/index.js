@@ -9,12 +9,8 @@ import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
-
-import DevScriptSection from '../landing/DevScriptSection';
-import DevFlowSection from '../landing/DevFlowSection';
-import DevAppSection from '../landing/DevAppSection';
-
 import HeroExample from '../landing/HeroExample';
+import LandingHeader from '../landing/LandingHeader';
 
 const DeveloperModeContext = createContext();
 
@@ -23,7 +19,7 @@ export function useDeveloperMode() {
 }
 
 function HomepageHeader() {
-	const [developerMode, setDeveloperMode] = useState(true);
+	const [developerMode, setDeveloperMode] = useState(false);
 
 	useEffect(() => {
 		window.plausible =
@@ -40,30 +36,19 @@ function HomepageHeader() {
 				setDeveloperMode
 			}}
 		>
-			<div>
-				<Hero />
-				<HeroExample />
-				{developerMode ? (
-					<div>
-						<DevScriptSection />
-						<DevFlowSection />
-						<DevAppSection />
-					</div>
-				) : (
-					<div className="divide-y ">
-						<ScriptSection />
-						<FlowSection />
-						<AppSection />
-					</div>
-				)}
+			<LandingHeader />
+			<Hero />
+			<HeroExample />
+			<ScriptSection />
+			<FlowSection />
 
-				<IntergrationList />
-				<EntrepriseFeatures />
-				<LandingSection bgClass="bg-white">
-					<CallToAction />
-				</LandingSection>
-				<Footer />
-			</div>
+			<AppSection />
+			<IntergrationList />
+			<EntrepriseFeatures />
+			<LandingSection bgClass="bg-white">
+				<CallToAction />
+			</LandingSection>
+			<Footer />
 		</DeveloperModeContext.Provider>
 	);
 }

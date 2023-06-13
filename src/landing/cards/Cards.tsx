@@ -30,7 +30,7 @@ const Card: React.FC<CardProps> = ({
 	return (
 		<div className={classNames('card shadow-none transition-all ', gridArea)}>
 			<div className="card-content  ">
-				<div className="card-image fade-to-white transform transition duration-500 hover:scale-110">
+				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
 					{imageSlider && (
 						<div className="slider">
@@ -42,10 +42,10 @@ const Card: React.FC<CardProps> = ({
 					{video && <video src={video} autoPlay loop controls />}
 					{svg && <div className="h-full w-full p-2 ">{svg}</div>}
 				</div>
-				<div className="py-8 px-8">
+				<div className="bg-black grow pt-4 pb-8  rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">
-						<div className="w-8 h-8 text-white">
-							<Icon />
+						<div className=" text-white">
+							<Icon className="w-6 h-6" />
 						</div>
 						<div className="text-white">
 							<div className="text-md font-bold mb-2">{title}</div>

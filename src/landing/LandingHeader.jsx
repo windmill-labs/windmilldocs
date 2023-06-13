@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-
+import classNames from 'classnames';
 const resources = [
 	{
 		name: 'Team',
@@ -22,20 +22,21 @@ const resources = [
 	}
 ];
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
-
-export default function Example() {
+export default function LandingHeader() {
 	return (
-		<Popover className="relative bg-white z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8 ">
-			<div className="flex items-center justify-between md:justify-start md:space-x-10 pb-4 border-b border-gray-100">
-				<div className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1">
-					<a href="/">
-						<img className="h-8" src="/img/windmill.svg" alt="Windmill Labs" />
-					</a>
-					<div className="font-semibold text-lg text-blue-500">Windmill</div>
-				</div>
+		<Popover className="relative bg-white bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+			<div className="flex items-center justify-between md:justify-start md:space-x-10">
+				<a
+					href="/"
+					className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
+				>
+					<img
+						className="h-8 group-hover:animate-spin ease-in duration-[10s]"
+						src="/img/windmill.svg"
+						alt="Windmill Labs"
+					/>
+					<div className="font-semibold text-xl text-blue-500  subpixel-antialiased ">Windmill</div>
+				</a>
 				<div className="-my-2 -mr-2 md:hidden">
 					<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 						<span className="sr-only">Open menu</span>

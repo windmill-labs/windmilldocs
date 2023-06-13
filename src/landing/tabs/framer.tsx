@@ -13,7 +13,7 @@ type Props = {
 	selectedTabIndex: number;
 	tabs: Tab[];
 	setSelectedTab: (input: [number, number]) => void;
-	color: 'blue' | 'green' | 'orange' | 'slate';
+	color: 'blue' | 'teal' | 'orange' | 'slate';
 };
 
 const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props): JSX.Element => {
@@ -21,21 +21,21 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 
 	const bgByColor = {
 		blue: 'bg-blue-100 text-blue-800',
-		green: 'bg-teal-100 text-teal-800',
+		teal: 'bg-teal-100 text-teal-800',
 		orange: 'bg-orange-100 text-orange-800',
 		slate: 'bg-slate-200 text-slate-800'
 	};
 
 	const bgLowByColor = {
 		blue: 'bg-blue-100',
-		green: 'bg-teal-100',
+		teal: 'bg-teal-100',
 		orange: 'bg-orange-100',
 		slate: 'bg-slate-100'
 	};
 
 	const bgHighByColor = {
 		blue: 'bg-blue-200',
-		green: 'bg-teal-200',
+		teal: 'bg-teal-200',
 		orange: 'bg-orange-200',
 		slate: 'bg-slate-200'
 	};

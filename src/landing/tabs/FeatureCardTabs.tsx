@@ -3,10 +3,7 @@ import { Framer } from './framer';
 import TabContent from './TabContent';
 import { Tab, useTabs } from './useTabs';
 
-export default function FeatureCardTabs({
-	tabs,
-	color = 'blue' as 'blue' | 'green' | 'orange'
-}) {
+export default function FeatureCardTabs({ tabs, color = 'blue' as 'blue' | 'teal' | 'orange' }) {
 	const [hookProps] = useState({
 		tabs: tabs,
 		initialTabId: tabs[0].id
@@ -16,12 +13,12 @@ export default function FeatureCardTabs({
 
 	const selectFocusColors = {
 		blue: 'focus:border-blue-500 focus:ring-blue-500',
-		green: 'focus:border-teal-500 focus:ring-teal-500',
+		teal: 'focus:border-teal-500 focus:ring-teal-500',
 		orange: 'focus:border-orange-500 focus:ring-orange-500'
 	};
 
 	return (
-		<div className=''>
+		<div className="">
 			<div className="sm:hidden ">
 				<label htmlFor="tabs" className="sr-only">
 					Select a tab
@@ -32,7 +29,6 @@ export default function FeatureCardTabs({
 					className={`block w-full rounded-md border-gray-300 mb-4 ${selectFocusColors[color]}`}
 					defaultValue={'Company'}
 					onChange={(e) => {
-
 						const tabIndex = tabs.findIndex((tab) => tab.label === e.target.value);
 
 						framer.tabProps.setSelectedTab([tabIndex, 1]);
@@ -42,9 +38,7 @@ export default function FeatureCardTabs({
 						<option key={tab.label}>{tab.label}</option>
 					))}
 				</select>
-				<Framer.Content
-					{...framer.contentProps}
-				>
+				<Framer.Content {...framer.contentProps}>
 					<TabContent data={data} color={color} />
 				</Framer.Content>
 			</div>

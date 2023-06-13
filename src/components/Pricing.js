@@ -5,6 +5,7 @@ import React from 'react';
 import PricingFAQ from './pricing/PricingFAQ';
 import FeatureList from './pricing/FeatureList';
 import PriceCalculator from './pricing/PriceCalculator';
+import classNames from 'classnames';
 
 const types = [
 	{ value: 'selfhost', label: 'Self-hosted' },
@@ -276,10 +277,6 @@ const pricing = {
 		}
 	]
 };
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
 
 export default function Pricing() {
 	const [frequency, setFrequency] = useState(types[1]);

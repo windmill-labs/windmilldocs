@@ -41,6 +41,7 @@
 }
 
 .card::before,
+
 .card::after {
   border-radius: inherit;
 
@@ -73,7 +74,7 @@
 }
 
 .card > .card-content {
-  background-color: black;
+  background-color: #111827;
   border-radius: inherit;
   display: flex;
   flex-direction: column;

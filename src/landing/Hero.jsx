@@ -1,46 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import LandingHeader from './LandingHeader';
-
-function useGithubStars() {
-	const [stars, setStars] = useState(0);
-
-	useEffect(() => {
-		fetch('https://api.github.com/repos/windmill-labs/windmill')
-			.then((res) => res.json())
-			.then((data) => {
-				setStars(data.stargazers_count);
-			});
-	}, []);
-
-	return stars;
-}
+import React from 'react';
+import SectionBlur from './SectionBlur';
+import GithubStarCount from './GithubStarCount';
 
 export default function Hero() {
-	const stars = useGithubStars();
-
 	return (
-		<div className="relative isolate overflow-hidden bg-white">
-			<LandingHeader />
+		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl">
+			<SectionBlur color="#bfdbfe" position="top-0 left-0 -translate-y-1/2 -translate-x-3/4" />
+			<SectionBlur
+				position="bottom-0 right-0 translate-y-64 translate-x-1/2 h-[32rem] w-[128rem]"
+				color="#bfdbfe"
+			/>
 
-			<div className="mx-auto max-w-7xl px-6 pt-4 gap-y-8 pb-24 sm:pb-32 lg:flex lg:pt-10 lg:pb-36 lg:px-8 mt-4">
+			<div className="grid gap-4 mx-auto max-w-7xl px-6 gap-y-8 lg:flex lg:px-8 py-16">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-					<div className="text-sm font-semibold flex flex-row text-gray-700">
-						⭐️ {stars} - <span class="hidden md:block mx-1">Help others discover Windmill.</span>{' '}
-						Star us on
-						<a
-							href="https://github.com/windmill-labs/windmill"
-							className="pl-1 text-blue-500 underline hover:text-blue-700"
-						>
-							Github
-						</a>
-						.
-					</div>
-					<h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl text-black">
+					<GithubStarCount />
+
+					<h1 className="mt-4 !text-4xl tracking-tight sm:!text-6xl text-gray-900">
 						Turn scripts into workflows and UIs in minutes
 					</h1>
 					<h2 className="mt-6 text-lg leading-8 text-gray-600 font-medium">
 						Easily create internal apps and invincible workflows with code only where it matters.
-						<br />
 						Self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
 						<br />
 						<a className="underline" href="https://github.com/windmill-labs/windmill">
@@ -54,7 +33,7 @@ export default function Hero() {
 							href="https://app.windmill.dev/user/login"
 							onClick={() => window.plausible('try-cloud')}
 							data-analytics='"try-cloud"'
-							className="rounded-md bg-blue-600 px-4 py-2 text-base font-semibold leading-7 text-white hover:bg-blue-800 hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 !no-underline"
+							className="rounded-md transition-all bg-blue-500 px-4 py-2 text-base font-semibold leading-7 text-white hover:bg-blue-800 hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 !no-underline"
 						>
 							Try Windmill Cloud
 						</a>
@@ -73,7 +52,7 @@ export default function Hero() {
 					</div>
 				</div>
 				<div className="mx-auto mt-16 sm:mt-8">
-					<div className="flex-none">
+					<div className="flex-none !rounded-2xl overflow-hidden">
 						<img
 							src="/homescreen.svg"
 							alt="Windmill infrastructure"
