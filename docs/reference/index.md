@@ -62,7 +62,7 @@ Actions - or Common Scripts - are the basic building blocks for the flows.
 #### [Trigger Scripts](../flows/10_flow_trigger.md)
 
 These are used as the first step in Flows, most commonly with an internal
-[state](#state-and-internal-state) and a schedule to watch for changes on an
+[state](#states) and a schedule to watch for changes on a
 external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
@@ -395,7 +395,7 @@ It is not very different than any other Script, except its purposes and that it
 needs to return a list because the next step will be a [forloop](../flows/12_flow_loops.md) over all items
 of the list in an embedded flow. Furthermore, it will very likely make use of
 the convenience helper functions around
-[internal states](#state-and-internal-state).
+[states](#states).
 
 ### [Retries](../flows/14_retries.md)
 
@@ -413,20 +413,20 @@ The retries are tried when a step errors, until there are no retry attempts
 left, in which case the Flow either passes the error to the
 [error handler](#error-handlers) if any, or fail the Flow itself.
 
-### State and Internal State
+### States
 
-An internal state is just a state which is meant to persist across distinct
+A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct
 executions of the same Script. This is what enables Flows to watch for changes
 in most event watching scenarios. The pattern is as follows:
 
-- Retrieve the last internal state or, if undefined, assume it is the first
+- Retrieve the last state or, if undefined, assume it is the first
   execution.
 - Retrieve the current state in the external system you are watching, e.g. the
   list of users having starred your repo or the maximum ID of posts on Hacker
   News.
 - Calculate the difference between the current state and the last internal
   state. This difference is what you will want to act upon.
-- Set the new internal state as the current state so that you do not process the
+- Set the new state so that you do not process the
   elements you just processed.
 - Return the differences calculated previously so that you can process them in
   the next steps. You will likely want to [forloop](../flows/12_flow_loops.md) over the items and trigger
@@ -435,10 +435,7 @@ in most event watching scenarios. The pattern is as follows:
 
 The convenience functions do this in TypeScript are:
 
-- `getState` which retrieves an object of any type (internally a simple
-  Resource) at a path determined by `getStatePath`, which is unique to the user
-  currently executing the Script, the Flow in which it is currently getting
-  called in - if any - and the path of the Script
+- `getState` which retrieves a JSON object stored as a resource of type `state` at a path determined by `getStatePath`, which is unique the trigger (username or schedule path), the embedding flow's path (if any), and the step's or script's path.
 - `setState` which sets the new state
 
 The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.md) section with a
@@ -783,26 +780,22 @@ everything - using their path. The paths are globally unique within the category
 of entities they represent. In short, a Resource and a Schedule for example can
 have the same path, without conflict.
 
-A path looks like `<owner-kind>/<owner-name>/<resource-name>`:
-
-- **ownership path prefix** (`<owner-kind>/<owner-name>`) is the part which is
-  itself made of 2 sub-parts. There are only 2 owners kinds: [groups](#groups)
-  and [users](#users). For paths, the owner kind for group is shortened to `g`
-  and for user it is shortened to `u`. The owner name corresponds to the name of
-  the group or the username of the user.
-- **resource-name** is the name of the resource itself
+A path is either inside a user space `u/<user>/<path>` or inside a folder `f/<folder>/<path>`.
 
 Examples:
 
-- A private Script `u/alice/hello_world`
-- A Script available to the users of the `all` group (so all users)
-  `g/all/hello_world`
+- A private Script: `u/alice/hello_world`
+- A Script available to the users having access to the folder: `f/sales/hello_world`
 
 ## Owner
 
-An owner is the user or group identified in a [path](#path) through the
-"ownership path prefix" (`u/<user>` or `g/<group>`). An owner always has write
-[permission](#permissions-and-acl) over the entity.
+An owner is the user or the admins of the folder identified in a [path](#path) through the
+"ownership path prefix" (`u/<user>` or `f/<folder>`). An owner always has write
+[permission](#permissions-and-acl) over the entity and can in addition delete it, move it and manage its permissions. Writers can only update the resource and reader can only read it.
+
+## Folders
+
+Folders have also readers, writers and admins. They are inspired by unix folders. Items under a folder inherit the permissions of the folder. Items can still extends those permissions through their own granular ACL. Hence, readers of a folder can read everything inside the folder, writers can write everything inside the folder and admins can write and change the permissions of everything inside the folder and the permissions of the folders itself. Admins of a folder are consider to be owners of the folder and everything below it
 
 ## [Groups](../core_concepts/8_groups_and_folders/index.md)
 
@@ -811,13 +804,10 @@ Groups have a name and a set of members. They are inspired by unix groups:
 - Members are always users
 - Users can be members of multiple groups
 
-Groups can own entities: the ownership path prefix of those entities are of the
-form `g/<group>` and can be granted or shared read or write
-[permissions](#permissions-and-acl) to entities.
 
 Members of a group have permissions to act on behalf of the group. Groups
 themselves are permissioned such that only admin and users with write permission
-on the group name can add or remove users from a group. Being a member of a
+on the group can add or remove users from a group. Being a member of a
 group does not grant write permission on the group itself.
 
 ### The 'all' Group

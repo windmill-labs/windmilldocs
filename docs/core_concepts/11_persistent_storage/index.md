@@ -22,7 +22,7 @@ There are 4 kinds of persistent storage in Windmill:
 
 2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
-3. [Object storag for large data](#large-data-files-s3-r2-minio) such as S3.
+3. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
 
 4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
@@ -42,24 +42,24 @@ Instead, Windmill is very convenient to use alongside data storage providers to 
 
 There are however internal methods to persist data between executions of jobs.
 
-### Internal States and Resources
+### States and Resources
 
-Within Windmill, you can use Internal States and Resources as a way to store a transient state - that can be represented as small JSON.
+Within Windmill, you can use States and Resources as a way to store a transient state - that can be represented as small JSON.
 
 #### States
 
 [States](../3_resources_and_types/index.md#states) are actually resources (but excluded from the Workspace tab for clarity). They are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
 
-An internal state is just a state which is meant to persist across distinct executions of the same script. This is what enables Flows to watch for changes in most event watching scenarios. The pattern is as follows:
+A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script. This is what enables Flows to watch for changes in most event watching scenarios. The pattern is as follows:
 
-- Retrieve the last internal state or, if undefined, assume it is the first
+- Retrieve the last state or, if undefined, assume it is the first
   execution.
 - Retrieve the current state in the external system you are watching, e.g. the
   list of users having starred your repo or the maximum ID of posts on Hacker
   News.
 - Calculate the difference between the current state and the last internal
   state. This difference is what you will want to act upon.
-- Set the new internal state as the current state so that you do not process the
+- Set the new state as the current state so that you do not process the
   elements you just processed.
 - Return the differences calculated previously so that you can process them in
   the next steps. You will likely want to [forloop](../../flows/12_flow_loops.md) over the items and trigger

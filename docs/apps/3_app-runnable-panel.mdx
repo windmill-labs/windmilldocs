@@ -200,7 +200,11 @@ getAgGrid(id: string)
 
 ### setValue
 
-Use the `setValue` function to set the value of a component. We support the following components:
+The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
+
+Note that it's a bad idea to mix dynamic default value and setValue together.
+
+`setValue` supports the following components:
 
 - [Display](./4_app_configuration-settings/1_app_component_library.md#display)
 - [Date Input](./4_app_configuration-settings/1_app_component_library.md#date-input)
