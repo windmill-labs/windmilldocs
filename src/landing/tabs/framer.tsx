@@ -61,7 +61,7 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 					<motion.button
 						key={i}
 						className={classNames(
-							'relative rounded-md font-semibold flex items-center px-4 z-20 bg-transparent cursor-pointer select-none transition-colors',
+							'relative rounded-md font-semibold flex items-center px-4 z-20 cursor-pointer select-none transition-colors',
 
 							selectedTabIndex === i ? bgByColor[color] : 'text-gray-500 hover:text-gray-700',
 							'px-3 py-2 font-medium text-lg rounded-md flex flex-row gap-2'
@@ -164,9 +164,7 @@ const Content = ({
 					exit: (direction) => ({
 						opacity: 0,
 						x: direction > 0 ? -256 : 256,
-						scale: 1,
-						position: 'absolute',
-						top: 48
+						scale: 1
 					})
 				}}
 				transition={{ duration: 0.25 }}

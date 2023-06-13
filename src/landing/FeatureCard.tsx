@@ -4,37 +4,37 @@ import React from 'react';
 export default function FeatureCard({ description, title, Icon, selected, color = 'blue', index }) {
 	const hovers = {
 		blue: 'hover:border-blue-500',
-		green: 'hover:border-teal-500',
+		teal: 'hover:border-teal-500',
 		orange: 'hover:border-orange-500'
 	};
 
 	const borders = {
 		blue: 'border-blue-300',
-		green: 'border-teal-300',
+		teal: 'border-teal-300',
 		orange: 'border-orange-300'
 	};
 
 	const iconColor = {
 		blue: 'text-blue-200',
-		green: 'text-teal-200',
+		teal: 'text-teal-200',
 		orange: 'text-orange-200'
 	};
 
 	const fromTo = {
 		blue: 'from-blue-600 to-blue-800',
-		green: 'from-teal-600 to-teal-800',
+		teal: 'from-teal-600 to-teal-800',
 		orange: 'from-orange-600 to-orange-800'
 	};
 
 	const shadow = {
 		blue: 'card-shadow-blue',
-		green: 'card-shadow-green',
+		teal: 'card-shadow-teal',
 		orange: 'card-shadow-orange'
 	};
 
 	const outlineColor = {
 		blue: 'outline-blue-500',
-		green: 'outline-teal-500',
+		teal: 'outline-teal-500',
 		orange: 'outline-orange-500'
 	};
 

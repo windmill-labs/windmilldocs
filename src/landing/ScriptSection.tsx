@@ -20,7 +20,7 @@ import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
 import WindmillGithubSync from './cards/svgs/WindmillGithubSync';
 import CodeSvg from './cards/svgs/CodeSvg';
 import Dependencies from './cards/svgs/Dependencies';
-import IDES from './cards/svgs/IDES';
+import LockSvg from './cards/svgs/LockSvg';
 import TerminalSvg from './cards/svgs/TerminalSvg';
 import Section from './Section';
 
@@ -28,38 +28,43 @@ const cards = [
 	{
 		title: 'Local Development',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI.',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available.',
 		Icon: Terminal,
 		gridArea: 'md:col-span-2 md:row-span-6',
-		svg: <CodeSvg />
+		svg: <CodeSvg />,
+		href: '/docs/advanced/local_development'
 	},
 	{
-		title: 'Deploy from Github',
-		subtitle: 'Deploy scripts from Github',
+		title: 'Deploy from Github/Gitlab',
+		subtitle: 'Deploy scripts from Github or Gitlab',
 		Icon: Github,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />
+		svg: <WindmillGithubSync />,
+		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'CLI',
 		subtitle: 'Trigger, sync and monitor scripts from CLI',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <TerminalSvg />
+		svg: <TerminalSvg />,
+		href: '/docs/advanced/cli'
 	},
 	{
 		title: 'Dependencies',
 		subtitle: 'Windmill automatically resolves the dependencies',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <Dependencies />
+		svg: <Dependencies />,
+		href: '/docs/advanced/imports'
 	},
 	{
 		title: 'Immutable scripts',
 		subtitle: 'Every deployed script has a unique and permanent hash.',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <IDES />
+		svg: <LockSvg />,
+		href: '/docs/reference#script-hashes'
 	}
 ];
 
@@ -150,20 +155,7 @@ const tabs = [
 				imageSrc: '/images/web-ide.png',
 				altText: 'Web IDE'
 			},
-			{
-				title: 'Sync locally',
-				description:
-					'Use the CLI to sync local folders with Windmill. Scripts are executable locally.',
-				icon: Folder,
-				imageSrc: '/images/setup.gif'
-			},
-			{
-				title: 'Deploy from Github',
-				description: 'Deploy scripts from Github on merge to main',
-				icon: Github,
-				imageSrc: '/images/setup.gif',
-				altText: 'Github Sync'
-			},
+
 			{
 				title: 'Versioning',
 				description: 'Scripts are always versioned.',
@@ -327,6 +319,8 @@ export default function ScriptSection() {
 			}
 			color="blue"
 			key="script-card"
+			examples={examples}
+			kind="script"
 		/>
 	);
 }

@@ -6,8 +6,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 import CardsContainer from '../landing/cards/Cards';
 import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
 import classNames from 'classnames';
+import SectionExamples from './SectionExamples';
 
-export default function Section({ cards, tabs, title, caption, description, color, key }) {
+export default function Section({
+	cards,
+	tabs,
+	title,
+	caption,
+	description,
+	color,
+	key,
+	examples,
+	kind
+}) {
 	const { developerMode } = useDeveloperMode();
 	const colorGradient = {
 		dark: {
@@ -80,6 +91,7 @@ export default function Section({ cards, tabs, title, caption, description, colo
 							transition={{ duration: 0.2 }}
 						>
 							<FeatureCardTabs tabs={tabs} color={color} />
+							<SectionExamples examples={examples} kind={kind} />
 						</motion.div>
 					)}
 				</AnimatePresence>

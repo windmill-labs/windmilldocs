@@ -11,14 +11,15 @@ import {
 	Code2,
 	FastForward,
 	RotateCcw,
-	Webhook
+	Webhook,
+	CheckCircle2
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import CodeSvg from './cards/svgs/CodeSvg';
 import FastSvg from './cards/svgs/FastSvg';
 
 import RetriesSvg from './cards/svgs/RetriesSvg';
-import BugSvg from './cards/svgs/BugSvg';
+import CheckSvg from './cards/svgs/CheckSvg';
 import TriggersSvg from './cards/svgs/TriggersSvg';
 import Section from './Section';
 
@@ -208,21 +209,24 @@ const cards = [
 			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
 		Icon: Code2,
 		gridArea: 'md:col-span-2 md:row-span-6',
-		svg: <CodeSvg />
+		svg: <CodeSvg />,
+		href: '/docs/advanced/local_development'
 	},
 	{
 		title: 'Blazing Fast',
 		subtitle: "The fastest workflow engine (it's in Rust)",
 		Icon: FastForward,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <FastSvg />
+		svg: <FastSvg />,
+		href: '/docs/misc/benchmarks'
 	},
 	{
 		title: 'Retries and errors',
 		subtitle: 'Retry failed steps, or handle errors',
 		Icon: RotateCcw,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <RetriesSvg />
+		svg: <RetriesSvg />,
+		href: '/docs/flows/retries'
 	},
 
 	{
@@ -230,15 +234,17 @@ const cards = [
 		subtitle: 'Trigger flows from a webhook or schedule',
 		Icon: Webhook,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <TriggersSvg />
+		svg: <TriggersSvg />,
+		href: '/docs/flows/flow_trigger'
 	},
 
 	{
-		title: 'Approval',
-		subtitle: 'Handle errors in your flow',
-		Icon: Bug,
+		title: 'Suspend and resume',
+		subtitle: 'Supend a flow is',
+		Icon: CheckCircle2,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <BugSvg />
+		svg: <CheckSvg />,
+		href: '/docs/flows/flow_approval'
 	}
 ];
 
@@ -338,6 +344,8 @@ export default function FlowSection() {
 			}
 			color="teal"
 			key="flow-card"
+			examples={examples}
+			kind="flow"
 		/>
 	);
 }

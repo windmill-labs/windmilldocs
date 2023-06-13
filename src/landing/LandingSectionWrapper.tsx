@@ -1,5 +1,4 @@
 import React from 'react';
-import SectionBlur from './SectionBlur';
 import { useDeveloperMode } from '../pages';
 
 type LandingSectionWrapperProps = {
@@ -72,7 +71,7 @@ export default function LandingSectionWrapper({
 					}}
 				/>
 				<div
-					className={`left-[calc(50%+3rem)] translate-x-3/4 rotate-180 -translate-y-3/4 aspect-[1155/678] w-[36.125rem]  bg-gradient-to-tr ${colorsByMode[mode][color].second} opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]`}
+					className={`left-[calc(50%+3rem)] translate-x-3/4 rotate-180 -translate-y-3/4 aspect-[1155/678] w-[36.125rem]  bg-gradient-to-tr ${colorsByMode[mode][color].second} opacity-10 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]`}
 					style={{
 						clipPath:
 							'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)'

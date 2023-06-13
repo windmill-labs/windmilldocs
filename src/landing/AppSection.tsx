@@ -1,5 +1,4 @@
 import React from 'react';
-import LandingSection from './LandingSection';
 import {
 	BarChart,
 	Code,
@@ -10,10 +9,11 @@ import {
 	PieChart,
 	Puzzle
 } from 'lucide-react';
+import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
 import FrameworkSvg from './cards/svgs/FrameworkSvg';
-import AppEditorSvg from './cards/svgs/AppEditorSvg';
+import LanguageSvg from './cards/svgs/LanguageSvg';
 import { FaCode, FaJs } from 'react-icons/fa';
 
 const tabs = [
@@ -165,29 +165,37 @@ const cards = [
 
 		Icon: FaJs,
 		gridArea: 'md:col-span-2 md:row-span-5',
-		svg: <FrameworkSvg />
+		svg: <FrameworkSvg />,
+		href: '/docs/react_vue_svelte_apps/react'
 	},
 	{
 		title: 'Inline scripts',
 		subtitle: 'Wrote your low-code app logic in Python, TypeScript, Go or Bash.',
 		Icon: FaCode,
 		gridArea: 'md:col-span-2 md:row-span-5',
-		svg: <AppEditorSvg />
+		svg: <LanguageSvg />,
+		href: '/docs/apps/app-runnable-panel#inline-scripts'
 	}
 ];
 
 export default function AppSection() {
+	const { developerMode, setDeveloperMode } = useDeveloperMode();
+
 	return (
 		<Section
 			title="Apps"
-			caption="Easy to use WYSIWYG app editor"
+			caption={developerMode ? 'Build your apps with code ' : 'Easy to use WYSIWYG app editor'}
 			cards={cards}
 			tabs={tabs}
 			description={
-				'Build your own UI. Simply drag and drop components, connect your data and deploy your app in minutes.'
+				developerMode
+					? 'Either build your app locally with Vite and your favorite frontend framework or use our drag-and-drop editor and use any Typescript, Python, Go or Bash.'
+					: 'Build your own UI. Simply drag and drop components, connect your data and deploy your app in minutes.'
 			}
 			color="orange"
 			key="app-card"
+			examples={examples}
+			kind="app"
 		/>
 	);
 }

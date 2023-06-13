@@ -1,37 +1,10 @@
 import React from 'react';
 
-type SectionBlueProps = {
-	color?: string;
-	position?: string;
-};
-
-export default function SectionBlur({
-	color = '#bfdbfe',
-	position = 'top-0 left-0 -translate-y-96 -translate-x-96'
-}: SectionBlueProps) {
-	const uuid = Math.random().toString(36).substring(7);
-
+export default function SectionBlur() {
 	return (
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			viewBox="0 0 1024 1024"
-			className={`absolute -z-10 h-[64rem] w-[64rem] ${position}`}
-			aria-hidden="true"
-		>
-			<circle cx={512} cy={512} r={512} fill={`url(#${uuid})`} fillOpacity="0.7" />
-			<defs>
-				<radialGradient
-					id={uuid}
-					cx={0}
-					cy={0}
-					r={1}
-					gradientUnits="userSpaceOnUse"
-					gradientTransform="translate(512 512) rotate(90) scale(512)"
-				>
-					<stop stopColor={color} />
-					<stop offset={1} stopColor={color} stopOpacity={0} />
-				</radialGradient>
-			</defs>
-		</svg>
+		<div className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 -z-10 transform-gpu">
+			<div className="blur-[106px] h-56 bg-gradient-to-br from-blue-300 to-blue-200" />
+			<div className="blur-[106px] h-32 bg-gradient-to-r from-blue-200 to-blue-100" />
+		</div>
 	);
 }

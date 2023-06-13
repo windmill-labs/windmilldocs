@@ -23,7 +23,33 @@ export default function BlogLayout(props) {
 							<p className="mt-4 text-lg leading-8 text-gray-600 container">
 								Discover the latest news, updates, and articles from the team and community
 							</p>
-							<SectionBlur />
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 1024 1024"
+								className="absolute -top-80 left-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 -translate-y-1/2"
+								aria-hidden="true"
+							>
+								<circle
+									cx={512}
+									cy={512}
+									r={512}
+									fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
+									fillOpacity="0.7"
+								/>
+								<defs>
+									<radialGradient
+										id="827591b1-ce8c-4110-b064-7cb85a0b1217"
+										cx={0}
+										cy={0}
+										r={1}
+										gradientUnits="userSpaceOnUse"
+										gradientTransform="translate(512 512) rotate(90) scale(512)"
+									>
+										<stop stopColor="#3b82f6" />
+										<stop offset={1} stopColor="#3b82f6" stopOpacity={0} />
+									</radialGradient>
+								</defs>
+							</svg>
 						</div>
 					</div>
 				</div>

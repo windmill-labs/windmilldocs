@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './CardStyles.css';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
-import CodeSvg from './svgs/CodeSvg';
 
 interface CardProps {
 	Icon: React.ComponentType;
@@ -13,6 +12,7 @@ interface CardProps {
 	imageSlider?: string[];
 	video?: string;
 	svg?: React.ReactNode;
+	href?: string;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -23,12 +23,13 @@ const Card: React.FC<CardProps> = ({
 	image,
 	imageSlider,
 	video,
-	svg
+	svg,
+	href
 }) => {
 	const cardStyle = gridArea ? gridArea : '';
 
 	return (
-		<div className={classNames('card shadow-none transition-all ', gridArea)}>
+		<a className={classNames('card shadow-none transition-all ', gridArea)} href={href}>
 			<div className="card-content  ">
 				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
@@ -45,6 +46,7 @@ const Card: React.FC<CardProps> = ({
 				<div className="bg-black grow pt-4 pb-8  rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">
 						<div className=" text-white">
+							{/* @ts-ignore */}
 							<Icon className="w-6 h-6" />
 						</div>
 						<div className="text-white">
@@ -54,7 +56,7 @@ const Card: React.FC<CardProps> = ({
 					</div>
 				</div>
 			</div>
-		</div>
+		</a>
 	);
 };
 
@@ -103,6 +105,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({ r = 59, g = 130, b = 24
 						imageSlider={card.imageSlider}
 						video={card.video}
 						svg={card.svg}
+						href={card.href}
 					/>
 				))}
 			</div>

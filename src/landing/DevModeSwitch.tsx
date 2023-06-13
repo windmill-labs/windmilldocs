@@ -25,26 +25,19 @@ export default function DevModeSwitch({ color = 'blue' }) {
 			<Switch
 				checked={developerMode}
 				onChange={() => {
-					const element = document.getElementById(id);
-					const y1 = element.getBoundingClientRect().top + window.scrollY;
-
 					setDeveloperMode(!developerMode);
+
 					setTimeout(() => {
-						const element = document.getElementById(id);
+						const el = document.getElementById(id);
+						const offset = 64;
 
-						// get y position of element
-						const y2 = element.getBoundingClientRect().top + window.scrollY;
-
-						// if y1 and y2 are not the same, scroll to y1
-						if (y1 !== y2) {
-							window.scrollTo({
-								top: y1,
-								behavior: 'smooth'
-							});
-						}
+						window.scrollBy({
+							top: el.getBoundingClientRect().top - offset,
+							behavior: 'smooth'
+						});
 					});
 				}}
-				className={`${developerMode ? switchColor[color] : switchColorLight[color]}
+				className={`${developerMode ? switchColor[color] : 'bg-gray-200'}
           relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
 			>
 				<span
@@ -56,7 +49,7 @@ export default function DevModeSwitch({ color = 'blue' }) {
 			<span
 				className={classNames('font-bold text-xl', developerMode ? 'text-white' : 'text-gray-900')}
 			>
-				Devs
+				Developer ?
 			</span>
 		</div>
 	);

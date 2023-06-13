@@ -5,11 +5,33 @@ import GithubStarCount from './GithubStarCount';
 export default function Hero() {
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl">
-			<SectionBlur color="#bfdbfe" position="top-0 left-0 -translate-y-1/2 -translate-x-3/4" />
-			<SectionBlur
-				position="bottom-0 right-0 translate-y-64 translate-x-1/2 h-[32rem] w-[128rem]"
-				color="#bfdbfe"
-			/>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				viewBox="0 0 1024 1024"
+				className="absolute -top-[256px] left-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 -translate-y-1/2"
+				aria-hidden="true"
+			>
+				<circle
+					cx={512}
+					cy={512}
+					r={512}
+					fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
+					fillOpacity="0.7"
+				/>
+				<defs>
+					<radialGradient
+						id="827591b1-ce8c-4110-b064-7cb85a0b1217"
+						cx={0}
+						cy={0}
+						r={1}
+						gradientUnits="userSpaceOnUse"
+						gradientTransform="translate(512 512) rotate(90) scale(512)"
+					>
+						<stop stopColor="#dbeafe" />
+						<stop offset={1} stopColor="#dbeafe" stopOpacity={0} />
+					</radialGradient>
+				</defs>
+			</svg>
 
 			<div className="grid gap-4 mx-auto max-w-7xl px-6 gap-y-8 lg:flex lg:px-8 py-16">
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
