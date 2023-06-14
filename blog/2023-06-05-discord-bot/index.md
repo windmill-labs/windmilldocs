@@ -54,6 +54,34 @@ You'll need to follow this tutorial up to the point where you have created a tab
 
 The only difference is that we will store the link of the documentation page for each embedding to also provide the sources.
 
+Make sure to modify the `match_documents` function to include the `link` column:
+
+```sql
+create or replace function match_documents (
+  query_embedding vector(1536),
+  match_threshold float,
+  match_count int
+)
+returns table (
+  id bigint,
+  content text,
+  link text,
+  similarity float
+)
+language sql stable
+as $$
+  select
+    documents.id,
+    documents.content,
+    link varchar,
+    1 - (documents.embedding <=> query_embedding) as similarity
+  from documents
+  where 1 - (documents.embedding <=> query_embedding) > match_threshold
+  order by similarity desc
+  limit match_count;
+$$;
+```
+
 ## Create a scheduled flow that ingests your data and creates embeddings
 
 We need to ingest a data source, here the [Windmill documentation](/docs/intro). We can accomplish this by creating a [scheduled](/docs/core_concepts/scheduling) flow that periodically retrieves the documentation from the [Windmill repository](https://github.com/windmill-labs/windmilldocs) on GitHub, creates embeddings using [OpenAI](https://platform.openai.com/overview), and stores the embeddings in Supabase using [pgvector](https://github.com/pgvector/pgvector).
@@ -251,7 +279,7 @@ export async function main(auth: Resource<'supabase'>, embedding: any, document:
 
 ## Slack or Discord
 
-Windmill uses [Discord](https://discord.com/invite/V7PM2YHsPB) for its community, but you could also build the same bot for [Slack](https://slack.com/). For Slack, see the next section.
+Windmill uses [Discord](https://discord.com/invite/V7PM2YHsPB) for its community, but you can also build the same bot for [Slack](https://slack.com/). For Slack, see the next section.
 
 ## Create an application on Discord Developer Portal
 
