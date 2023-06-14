@@ -16,6 +16,25 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 ## Docker
 
+:::tip Prerequisites
+
+Before proceeding, install [Docker Desktop](https://docs.docker.com/get-docker/).
+
+:::
+
+<video 
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="app-text-inline-editor"
+    src="/videos/self_host.mp4"
+/>
+
+<br/>
+
+> _Self-host Windmill in less than a minute._
+
+<br/>
+
 Using Docker and Caddy, Windmill can be deployed using two files,
 ([`docker-compose.yml`][windmill-docker-compose] and
 [`Caddyfile`][windmill-caddyfile]) and in a single command.
@@ -23,6 +42,8 @@ Using Docker and Caddy, Windmill can be deployed using two files,
 [Caddy][caddy] takes care of managing the TLS certificate and the reverse proxy,
 Postgres of storage, Windmill-LSP provides editor intellisense. All managed by
 one [`docker-compose.yml`][windmill-docker-compose] file.
+
+Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `start docker`, Linux: `sudo systemctl start docker`) and type the following commands:
 
 ```
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
@@ -32,7 +53,37 @@ curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
 docker compose up -d --pull always
 ```
 
-### Configuration
+Go to [http://localhost](http://localhost) et voilà!
+
+The default super-admin user is: admin@windmill.dev / `changeme`.
+
+From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday) and add new users.
+
+![Add new users](./adding_new_user.gif "Add new users")
+
+> _Add new users to your workspace._
+
+<br/>
+
+What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.md) are shared with all workspaces.
+
+<video 
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="app-text-inline-editor"
+    src="/videos/new_workspace.mp4"
+    alt="New workspace"
+/>
+
+<br/>
+
+> _Create a new workspace with Resource Types from admin workspace._
+
+<br/>
+
+For more advanced setups, see below.
+
+### Configuring Domain and Reverse Proxy
 
 Let's assume you wish to deploy Windmill to the `windmill.example.com` domain.
 This information only needs to be propagated to the `docker-compose.yml` file,
@@ -102,7 +153,7 @@ services:
     restart: unless-stopped
     networks:
       - pg_network
-      - web
+      - web$$
     environment:
       DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
       BASE_URL: ${WM_BASE_URL}
@@ -176,6 +227,16 @@ docker compose pull windmill
 ```
 
 Database volume is persistent, so updating the database image is safe too.
+
+### Cleanup your Instance
+
+To cleanup your Windmill instance, run:
+```
+docker compose volumes down
+docker volume rm -f windmill_db_data
+```
+
+and then `docker compose up`.
 
 ## Helm Chart
 
