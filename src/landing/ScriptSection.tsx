@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Code,
 	FormInput,
@@ -28,7 +28,7 @@ const cards = [
 	{
 		title: 'Local Development',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available.',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
 		Icon: Terminal,
 		gridArea: 'md:col-span-2 md:row-span-6',
 		svg: <CodeSvg />,
@@ -51,8 +51,8 @@ const cards = [
 		href: '/docs/advanced/cli'
 	},
 	{
-		title: 'Dependencies',
-		subtitle: 'Windmill automatically resolves the dependencies',
+		title: 'Lockfile',
+		subtitle: 'A lockfile is generated to ensure reproducibility',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		svg: <Dependencies />,
@@ -308,6 +308,12 @@ const examples = [
 ];
 
 export default function ScriptSection() {
+	const t0 = performance.now();
+	useEffect(() => {
+		const t1 = performance.now();
+		console.log(`⏱️  ScriptSection.tsx took ${t1 - t0} milliseconds
+	to render`);
+	}, []);
 	return (
 		<Section
 			title="Scripts"
