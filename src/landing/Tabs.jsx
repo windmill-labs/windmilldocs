@@ -1,6 +1,7 @@
 import React from 'react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { BoltIcon } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
 
 const tabs = [
 	{ name: 'Trigger', icon: BoltIcon },
@@ -8,10 +9,6 @@ const tabs = [
 	{ name: 'Branches', icon: GitBranch },
 	{ name: 'Loops', icon: Repeat }
 ];
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
 
 export default function Tabs() {
 	const [selectedTabIndex, setSelectedTabIndex] = React.useState(0);

@@ -3,6 +3,7 @@ import LandingSection from './LandingSection';
 import { Code, LayoutDashboard, List, PlayCircle } from 'lucide-react';
 import { useTabs } from './tabs/useTabs';
 import { VolumeX } from 'lucide-react';
+
 const tabs = [
 	{
 		label: 'Scripts',
@@ -30,46 +31,6 @@ export default function HeroExample() {
 		initialTabId: tabs[0].id
 	});
 	const framer = useTabs(hookProps);
-
-	/*
-	useEffect(() => {
-		const video = document.getElementById('main-video') as HTMLVideoElement;
-
-		if (framer.selectedTab.id === 'scripts') {
-			video.currentTime = 0;
-		}
-		if (framer.selectedTab.id === 'flows') {
-			video.currentTime = 37;
-		}
-		if (framer.selectedTab.id === 'apps') {
-			video.currentTime = 71;
-		}
-	}, [framer.selectedTab]);
-
-	// add event listener to video to update tab when video progresses
-	useEffect(() => {
-		const video = document.getElementById('main-video') as HTMLVideoElement;
-		video.addEventListener('timeupdate', () => {
-			if (video.currentTime < 0) {
-				framer.tabProps.setSelectedTab([0, 1]);
-			}
-			if (video.currentTime > 37 && video.currentTime < 71) {
-				framer.tabProps.setSelectedTab([1, 1]);
-			}
-			if (video.currentTime > 71) {
-				framer.tabProps.setSelectedTab([2, 1]);
-			}
-		});
-		return () => {
-			video.removeEventListener('timeupdate', () => {});
-		};
-	}, []);
-
-					<Framer.Tabs {...framer.tabProps} color="slate" />
-
-
-	*/
-
 	const [played, setPlayed] = useState(false);
 
 	// When played toggles to true, start the video

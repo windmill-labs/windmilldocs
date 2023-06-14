@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
+import SectionBlur from '../../landing/SectionBlur';
 //import Footer from './../../landing/Footer';
 
 export default function BlogLayout(props) {
@@ -15,7 +16,7 @@ export default function BlogLayout(props) {
 			{!isBlogPostPageList && (
 				<div className="w-full">
 					<div className="">
-						<div className="relative isolate overflow-hidden py-16">
+						<div className="relative pt-16 pb-8">
 							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900">
 								Blog
 							</h1>
@@ -53,7 +54,7 @@ export default function BlogLayout(props) {
 					</div>
 				</div>
 			)}
-			<div className="container margin-vert--lg">
+			<div className="container margin-vert--lg bg-transparent">
 				<div className="row">
 					<BlogSidebar sidebar={sidebar} />
 					<main

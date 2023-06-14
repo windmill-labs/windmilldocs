@@ -6,38 +6,38 @@ import { Tab } from './useTabs';
 const transition = {
 	type: 'tween',
 	ease: 'easeOut',
-	duration: 0.15
+	duration: 0.25
 };
 
 type Props = {
 	selectedTabIndex: number;
 	tabs: Tab[];
 	setSelectedTab: (input: [number, number]) => void;
-	color: 'blue' | 'green' | 'orange' | 'slate';
+	color: 'blue' | 'teal' | 'orange' | 'slate';
 };
 
 const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props): JSX.Element => {
 	const [buttonRefs, setButtonRefs] = useState<Array<HTMLButtonElement | null>>([]);
 
 	const bgByColor = {
-		blue: 'bg-blue-100 text-blue-800',
-		green: 'bg-teal-100 text-teal-800',
-		orange: 'bg-orange-100 text-orange-800',
+		blue: 'bg-blue-200 text-blue-800',
+		teal: 'bg-teal-200 text-teal-800',
+		orange: 'bg-orange-200 text-orange-800',
 		slate: 'bg-slate-200 text-slate-800'
 	};
 
 	const bgLowByColor = {
 		blue: 'bg-blue-100',
-		green: 'bg-teal-100',
+		teal: 'bg-teal-100',
 		orange: 'bg-orange-100',
 		slate: 'bg-slate-100'
 	};
 
 	const bgHighByColor = {
-		blue: 'bg-blue-200',
-		green: 'bg-teal-200',
-		orange: 'bg-orange-200',
-		slate: 'bg-slate-200'
+		blue: 'bg-blue-100',
+		teal: 'bg-teal-100',
+		orange: 'bg-orange-100',
+		slate: 'bg-slate-100'
 	};
 
 	useEffect(() => {
@@ -53,7 +53,7 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 	return (
 		<nav
 			ref={navRef}
-			className="flex relative z-0 mt-4 py-2 gap-4"
+			className="flex relative z-0 mt-4 py-2 gap-4 h-16"
 			onPointerLeave={(e) => setHoveredTabIndex(null)}
 		>
 			{tabs.map((item, i) => {
@@ -61,7 +61,7 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 					<motion.button
 						key={i}
 						className={classNames(
-							'relative rounded-md font-semibold flex items-center px-4 z-20 bg-transparent cursor-pointer select-none transition-colors',
+							'relative rounded-md font-semibold flex items-center px-4 z-20 cursor-pointer select-none transition-colors',
 
 							selectedTabIndex === i ? bgByColor[color] : 'text-gray-500 hover:text-gray-700',
 							'px-3 py-2 font-medium text-lg rounded-md flex flex-row gap-2'
@@ -141,32 +141,37 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 
 const Content = ({
 	children,
-	className,
 	selectedTabIndex,
-	direction
+	direction,
+	width
 }: {
 	direction: number;
 	selectedTabIndex: number;
 	children: ReactNode;
 	className?: string;
+	width?: string;
 }): JSX.Element => {
 	return (
-		<AnimatePresence mode="sync" custom={direction}>
+		<AnimatePresence custom={direction}>
 			<motion.div
+				className="flex flex-row w-full overflow-visible"
 				key={selectedTabIndex}
 				variants={{
 					enter: (direction) => ({
 						opacity: 0,
-						x: direction > 0 ? 256 : -256,
-						scale: 1
+						x: direction > 0 ? 32 : -32,
+						width
 					}),
-					center: { opacity: 1, x: 0, scale: 1 },
+					center: {
+						opacity: 1,
+						x: 0,
+						width
+					},
 					exit: (direction) => ({
 						opacity: 0,
-						x: direction > 0 ? -256 : 256,
-						scale: 1,
+						x: direction > 0 ? -32 : 32,
 						position: 'absolute',
-						top: 48
+						width
 					})
 				}}
 				transition={{ duration: 0.25 }}
@@ -174,7 +179,6 @@ const Content = ({
 				animate={'center'}
 				exit={'exit'}
 				custom={direction}
-				className={className}
 			>
 				{children}
 			</motion.div>

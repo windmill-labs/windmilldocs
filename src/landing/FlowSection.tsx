@@ -1,18 +1,27 @@
 import React from 'react';
-import LandingSection from '../landing/LandingSection';
-import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
+
 import {
-	ExternalLink,
 	List,
 	Bug,
 	Play,
 	CalendarClock,
 	FormInput,
 	WebhookIcon,
-	Terminal
+	Terminal,
+	Code2,
+	FastForward,
+	RotateCcw,
+	Webhook,
+	CheckCircle2
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
-import SectionExamples from './SectionExamples';
+import CodeSvg from './cards/svgs/CodeSvg';
+import FastSvg from './cards/svgs/FastSvg';
+
+import RetriesSvg from './cards/svgs/RetriesSvg';
+import CheckSvg from './cards/svgs/CheckSvg';
+import TriggersSvg from './cards/svgs/TriggersSvg';
+import Section from './Section';
 
 const tabs = [
 	{
@@ -40,7 +49,7 @@ const tabs = [
 				video: {
 					videoSrc: '/videos/flow-branch.mp4',
 					altText: 'Branching logic',
-					videoLength: '28',
+					videoLength: '28'
 				}
 			},
 			{
@@ -161,7 +170,7 @@ const tabs = [
 				video: {
 					videoSrc: '/videos/flow-schedule.mp4',
 					videoLength: '15',
-					altText: 'Schedules',
+					altText: 'Schedules'
 				}
 			},
 
@@ -190,6 +199,52 @@ const tabs = [
 				altText: 'Execute from the CLI'
 			}
 		]
+	}
+];
+
+const cards = [
+	{
+		title: 'Local Development',
+		subtitle:
+			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
+		Icon: Code2,
+		gridArea: 'md:col-span-2 md:row-span-6',
+		svg: <CodeSvg />,
+		href: '/docs/advanced/local_development'
+	},
+	{
+		title: 'Blazing Fast',
+		subtitle: "The fastest workflow engine (it's in Rust)",
+		Icon: FastForward,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <FastSvg />,
+		href: '/docs/misc/benchmarks'
+	},
+	{
+		title: 'Retries and errors',
+		subtitle: 'Retry failed steps, or handle errors',
+		Icon: RotateCcw,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <RetriesSvg />,
+		href: '/docs/flows/retries'
+	},
+
+	{
+		title: 'Triggers',
+		subtitle: 'Trigger flows from a webhook or schedule',
+		Icon: Webhook,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <TriggersSvg />,
+		href: '/docs/flows/flow_trigger'
+	},
+
+	{
+		title: 'Suspend and resume',
+		subtitle: 'Supend a flow is',
+		Icon: CheckCircle2,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <CheckSvg />,
+		href: '/docs/flows/flow_approval'
 	}
 ];
 
@@ -250,7 +305,7 @@ const examples = [
 		name: <span>Populate Contact Details from Simple Email</span>,
 		description: (
 			<>
-				From a signup’s email, parse the email and make a Google search. Use {' '}
+				From a signup’s email, parse the email and make a Google search. Use{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/openai"
 					target="_blank"
@@ -279,49 +334,19 @@ const examples = [
 
 export default function FlowSection() {
 	return (
-		<LandingSection bgClass="bg-gradient-to-br from-white to-teal-50">
-			<div className="flex flex-col gap-4 justify-center w-full" id="flow-section">
-				<div className="flex flex-col gap-2">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-teal-400 to-teal-800">
-						Flows
-					</h1>
-					<h2 className="text-gray-600 text-2xl font-semibold">
-						Workflow engine on-par with Airflow/Temporal
-					</h2>
-				</div>
-
-				<span className="text-lg text-gray-600 max-w-3xl">
-					Build complex Flows from atomic scripts, either from your workspace or the{' '}
-					<a href="https://hub.windmill.dev">Hub</a>.
-				</span>
-
-				<FeatureCardTabs tabs={tabs} color="green" />
-				<SectionExamples examples={examples} />
-
-				<div className="flex gap-4">
-					<a
-						href="https://hub.windmill.dev/flows"
-						type="button"
-						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-teal-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-white"
-					>
-						Explore more flows on the Hub
-						<ExternalLink className="ml-2 h-5" />
-					</a>
-
-					<a
-						type="button"
-						href="https://app.windmill.dev/flows/add?nodraft=true"
-						target="_blank"
-						onClick={() => window.plausible('try-cloud')}
-						data-analytics='"try-cloud"'
-						className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 !no-underline hover:text-teal-600"
-					>
-						Try building flows
-						<ExternalLink className="ml-2 h-5" />
-					</a>
-				</div>
-			</div>
-		</LandingSection>
+		<Section
+			title="Flows"
+			caption="Workflow engine on-par with Airflow/Temporal"
+			cards={cards}
+			tabs={tabs}
+			description={
+				'Run long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the auto-generated UI and monitor them easily.'
+			}
+			color="teal"
+			key="flow-card"
+			examples={examples}
+			kind="flow"
+		/>
 	);
 }
+//examples={examples}

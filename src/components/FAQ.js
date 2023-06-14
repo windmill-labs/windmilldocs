@@ -40,10 +40,6 @@ const faqs = [
 	}
 ];
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
-
 export default function FAQ() {
 	return (
 		<div className="max-w-7xl mx-auto px-4 sm:py-16 sm:px-6 lg:px-8">

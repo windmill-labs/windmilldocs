@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-
+import classNames from 'classnames';
 const resources = [
 	{
 		name: 'Team',
@@ -22,20 +22,21 @@ const resources = [
 	}
 ];
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ');
-}
-
-export default function Example() {
+export default function LandingHeader() {
 	return (
-		<Popover className="relative bg-white z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+		<Popover className="relative bg-white bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 			<div className="flex items-center justify-between md:justify-start md:space-x-10">
-				<div className="flex justify-start lg:w-0 lg:flex-1">
-					<a href="/">
-						<span className="sr-only">Windmill</span>
-						<img className="h-11" src="/img/windmill.svg" alt="Windmill Labs" />
-					</a>
-				</div>
+				<a
+					href="/"
+					className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
+				>
+					<img
+						className="h-8 group-hover:animate-spin ease-in duration-[10s]"
+						src="/img/windmill.svg"
+						alt="Windmill Labs"
+					/>
+					<div className="font-semibold text-xl text-blue-500  subpixel-antialiased ">Windmill</div>
+				</a>
 				<div className="-my-2 -mr-2 md:hidden">
 					<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 						<span className="sr-only">Open menu</span>
@@ -43,25 +44,29 @@ export default function Example() {
 					</Popover.Button>
 				</div>
 				<Popover.Group as="nav" className="hidden space-x-10 md:flex">
-					<a href="/pricing" className="text-base font-medium text-gray-500 hover:text-gray-900">
-						Pricing
-					</a>
 					<a
 						href="https://docs.windmill.dev/docs/intro"
 						onClick={() => window.plausible('read-docs')}
-						className="text-base font-medium text-gray-500 hover:text-gray-900"
+						className="font-medium text-gray-500 hover:text-gray-900 !no-underline "
 					>
 						Documentation
 					</a>
 					<a
+						href="/pricing"
+						className="font-medium text-gray-500 hover:text-gray-900 !no-underline "
+					>
+						Pricing
+					</a>
+
+					<a
 						href="https://hub.windmill.dev"
-						className="text-base font-medium text-gray-500 hover:text-gray-900"
+						className="font-medium text-gray-500 hover:text-gray-900 !no-underline "
 					>
 						Hub
 					</a>
 					<a
 						href="https://app.windmill.dev/openapi.html"
-						className="text-base font-medium text-gray-500 hover:text-gray-900"
+						className="font-medium text-gray-500 hover:text-gray-900 !no-underline "
 					>
 						OpenAPI
 					</a>
@@ -121,8 +126,8 @@ export default function Example() {
 						href="https://discord.com/invite/V7PM2YHsPB"
 						data-analytics='"discord"'
 						onClick={() => window.plausible('discord')}
-						className="header-discord-link"
-					></a>
+						className="header-discord-link "
+					/>
 					<a
 						href="https://www.windmill.dev/book-demo"
 						data-analytics='"schedule-demo"'
@@ -131,6 +136,7 @@ export default function Example() {
 					>
 						Book a demo
 					</a>
+
 					<a
 						href="https://app.windmill.dev/user/login"
 						onClick={() => window.plausible('try-cloud')}
@@ -201,7 +207,7 @@ export default function Example() {
 									href="https://cal.com/ruben-windmill/windmill-demo"
 									data-analytics='"schedule-demo"'
 									onClick={() => window.plausible('schedule-demo')}
-									className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 mb-4"
+									className=" underline flex w-full items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 mb-4"
 								>
 									Book a demo
 								</a>

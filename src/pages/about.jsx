@@ -15,18 +15,6 @@ const people = [
 		linkedinUrl: 'https://www.linkedin.com/in/faton-ramadani-4b65ab191/'
 	},
 	{
-		name: 'Ádám Kovács',
-		role: 'Frontend Engineer',
-		imageUrl: '/team/adam-kovacs.jpg',
-		linkedinUrl: 'https://www.linkedin.com/in/adam-kov/'
-	},
-	{
-		name: 'Kai Jellinghaus',
-		role: 'Software engineer',
-		imageUrl: '/team/kai-jellinghaus.jpg',
-		linkedinUrl: 'https://www.linkedin.com/in/kai-jellinghaus/'
-	},
-	{
 		name: 'Henri Courdent',
 		role: 'Chief of Staff',
 		imageUrl: '/team/henri-courdent.jpg',
@@ -37,6 +25,7 @@ const people = [
 import LandingSection from '../landing/LandingSection';
 import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
+import SectionBlur from '../landing/SectionBlur';
 
 export default function About() {
 	return (
@@ -44,7 +33,10 @@ export default function About() {
 			<Head>
 				<title>Team | Windmill</title>
 				<meta name="title" content="Windmill Team." />
-				<meta name="description" content="We are a team commited to open source, with a strong will to improve internal tools for everyone." />
+				<meta
+					name="description"
+					content="We are a team commited to open source, with a strong will to improve internal tools for everyone."
+				/>
 			</Head>
 			<LandingHeader />
 			<LandingSection bgClass="bg-white">
@@ -72,7 +64,7 @@ export default function About() {
 									<div className="space-y-2">
 										<div className="space-y-1 text-lg font-medium leading-6">
 											<h3>{person.name}</h3>
-											<p className="text-indigo-600">{person.role}</p>
+											<p className="text-blue-600">{person.role}</p>
 										</div>
 										<ul role="list" className="flex justify-center space-x-5">
 											<li>

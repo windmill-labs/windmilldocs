@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext, createContext, useState } from 'react';
 import Hero from '../landing/Hero';
 import ScriptSection from '../landing/ScriptSection';
 import FlowSection from '../landing/FlowSection';
@@ -9,10 +9,18 @@ import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
-
 import HeroExample from '../landing/HeroExample';
+import LandingHeader from '../landing/LandingHeader';
+
+const DeveloperModeContext = createContext();
+
+export function useDeveloperMode() {
+	return useContext(DeveloperModeContext);
+}
 
 function HomepageHeader() {
+	const [developerMode, setDeveloperMode] = useState(false);
+
 	useEffect(() => {
 		window.plausible =
 			window.plausible ||
@@ -22,14 +30,18 @@ function HomepageHeader() {
 	});
 
 	return (
-		<div>
+		<DeveloperModeContext.Provider
+			value={{
+				developerMode,
+				setDeveloperMode
+			}}
+		>
+			<LandingHeader />
 			<Hero />
 			<HeroExample />
-			<div className="divide-y ">
-				<ScriptSection />
-				<FlowSection />
-				<AppSection />
-			</div>
+			<ScriptSection />
+			<FlowSection />
+			<AppSection />
 
 			<IntergrationList />
 			<EntrepriseFeatures />
@@ -37,7 +49,7 @@ function HomepageHeader() {
 				<CallToAction />
 			</LandingSection>
 			<Footer />
-		</div>
+		</DeveloperModeContext.Provider>
 	);
 }
 
@@ -47,7 +59,10 @@ export default function Home() {
 			<Head>
 				<title>Windmill | Open source platform to build internal tools with scripts</title>
 				<meta name="title" content="Internal tools with scripts." />
-				<meta name="description" content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes" />
+				<meta
+					name="description"
+					content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
+				/>
 			</Head>
 			<HomepageHeader />
 		</main>

@@ -1,5 +1,4 @@
 import React from 'react';
-import LandingSection from './LandingSection';
 import {
 	BarChart,
 	Code,
@@ -10,9 +9,12 @@ import {
 	PieChart,
 	Puzzle
 } from 'lucide-react';
-import { ExternalLink } from 'lucide-react';
-import FeatureCardTabs from './tabs/FeatureCardTabs';
-import SectionExamples from './SectionExamples';
+import { useDeveloperMode } from '../pages';
+
+import Section from './Section';
+import FrameworkSvg from './cards/svgs/FrameworkSvg';
+import LanguageSvg from './cards/svgs/LanguageSvg';
+import { FaCode, FaJs } from 'react-icons/fa';
 
 const tabs = [
 	{
@@ -101,7 +103,7 @@ const examples = [
 		name: <span>E-Commerce Back-Office</span>,
 		description: (
 			<>
-				Build a comprehensive CRM to monitor your products, customers and orders data hosted on {' '}
+				Build a comprehensive CRM to monitor your products, customers and orders data hosted on{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/supabase"
 					target="_blank"
@@ -156,53 +158,44 @@ const examples = [
 	}
 ];
 
+const cards = [
+	{
+		title: 'Support for React, Vue, Svelte and vanilla JS',
+		subtitle: 'Build them with Vite locally and deploy them on Windmill',
+
+		Icon: FaJs,
+		gridArea: 'md:col-span-2 md:row-span-5',
+		svg: <FrameworkSvg />,
+		href: '/docs/react_vue_svelte_apps/react'
+	},
+	{
+		title: 'Inline scripts',
+		subtitle: 'Wrote your low-code app logic in Python, TypeScript, Go or Bash.',
+		Icon: FaCode,
+		gridArea: 'md:col-span-2 md:row-span-5',
+		svg: <LanguageSvg />,
+		href: '/docs/apps/app-runnable-panel#inline-scripts'
+	}
+];
+
 export default function AppSection() {
+	const { developerMode, setDeveloperMode } = useDeveloperMode();
+
 	return (
-		<LandingSection bgClass="bg-gradient-to-br from-white to-orange-50">
-			<div className="flex flex-col w-full gap-4 justify-center" id="app-section">
-				<div className="flex flex-col gap-2 justify-center">
-					<div className="flex-row gap-4 flex items-center">
-						<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-orange-600">
-							Apps
-						</h1>
-					</div>
-					<h2 className="text-gray-600 text-2xl font-semibold max-w-3xl">
-						Easy to use WYSIWYG app editor
-					</h2>
-				</div>
-
-				<span className="text-lg text-gray-600 max-w-3xl">
-					Build your own UI. Simply drag and drop components, connect your data and deploy your app
-					in minutes.
-				</span>
-
-				<FeatureCardTabs tabs={tabs} color="orange" />
-				<SectionExamples examples={examples} />
-
-				<div className="flex gap-4">
-					<a
-						type="button"
-						href="https://hub.windmill.dev/apps"
-						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-orange-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-white"
-					>
-						Explore more apps on the Hub
-						<ExternalLink className="ml-2 h-5" />
-					</a>
-
-					<a
-						type="button"
-						href="https://app.windmill.dev/apps/add?nodraft=true"
-						target="_blank"
-						onClick={() => window.plausible('try-cloud')}
-						data-analytics='"try-cloud"'
-						className="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 !no-underline hover:text-orange-600"
-					>
-						Try building apps
-						<ExternalLink className="ml-2 h-5" />
-					</a>
-				</div>
-			</div>
-		</LandingSection>
+		<Section
+			title="Apps"
+			caption={developerMode ? 'Build your apps with code ' : 'Easy to use WYSIWYG app editor'}
+			cards={cards}
+			tabs={tabs}
+			description={
+				developerMode
+					? 'Either build your app locally with Vite and your favorite frontend framework or use our drag-and-drop editor and use any Typescript, Python, Go or Bash.'
+					: 'Build your own UI. Simply drag and drop components, connect your data and deploy your app in minutes.'
+			}
+			color="orange"
+			key="app-card"
+			examples={examples}
+			kind="app"
+		/>
 	);
 }

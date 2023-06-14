@@ -1,5 +1,4 @@
-import React from 'react';
-import LandingSection from './LandingSection';
+import React, { useEffect } from 'react';
 import {
 	Code,
 	FormInput,
@@ -16,12 +15,60 @@ import {
 	FileLock2,
 	Folder
 } from 'lucide-react';
-import FeatureCardTabs from './tabs/FeatureCardTabs';
 import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
-import SectionExamples from './SectionExamples';
-import { ExternalLink } from 'lucide-react';
 
-const newTabs = [
+import WindmillGithubSync from './cards/svgs/WindmillGithubSync';
+import CodeSvg from './cards/svgs/CodeSvg';
+import Dependencies from './cards/svgs/Dependencies';
+import LockSvg from './cards/svgs/LockSvg';
+import TerminalSvg from './cards/svgs/TerminalSvg';
+import Section from './Section';
+
+const cards = [
+	{
+		title: 'Local Development',
+		subtitle:
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
+		Icon: Terminal,
+		gridArea: 'md:col-span-2 md:row-span-6',
+		svg: <CodeSvg />,
+		href: '/docs/advanced/local_development'
+	},
+	{
+		title: 'Deploy from Github/Gitlab',
+		subtitle: 'Deploy scripts from Github or Gitlab',
+		Icon: Github,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <WindmillGithubSync />,
+		href: '/docs/deploy_gh_gl'
+	},
+	{
+		title: 'CLI',
+		subtitle: 'Trigger, sync and monitor scripts from CLI',
+		Icon: Terminal,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <TerminalSvg />,
+		href: '/docs/advanced/cli'
+	},
+	{
+		title: 'Lockfile',
+		subtitle: 'A lockfile is generated to ensure reproducibility',
+		Icon: Terminal,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <Dependencies />,
+		href: '/docs/advanced/imports'
+	},
+	{
+		title: 'Immutable scripts',
+		subtitle: 'Every deployed script has a unique and permanent hash.',
+		Icon: Terminal,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <LockSvg />,
+		href: '/docs/reference#script-hashes'
+	}
+];
+
+const tabs = [
 	{
 		label: 'Polyglot',
 		icon: Code,
@@ -108,20 +155,7 @@ const newTabs = [
 				imageSrc: '/images/web-ide.png',
 				altText: 'Web IDE'
 			},
-			{
-				title: 'Sync locally',
-				description:
-					'Use the CLI to sync local folders with Windmill. Scripts are executable locally.',
-				icon: Folder,
-				imageSrc: '/images/setup.gif'
-			},
-			{
-				title: 'Deploy from Github',
-				description: 'Deploy scripts from Github on merge to main',
-				icon: Github,
-				imageSrc: '/images/setup.gif',
-				altText: 'Github Sync'
-			},
+
 			{
 				title: 'Versioning',
 				description: 'Scripts are always versioned.',
@@ -274,50 +308,25 @@ const examples = [
 ];
 
 export default function ScriptSection() {
+	const t0 = performance.now();
+	useEffect(() => {
+		const t1 = performance.now();
+		console.log(`⏱️  ScriptSection.tsx took ${t1 - t0} milliseconds
+	to render`);
+	}, []);
 	return (
-		<LandingSection bgClass="bg-gradient-to-br from-white to-blue-50">
-			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
-				<div className="flex flex-col gap-2">
-					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
-						Scripts
-					</h1>
-					<h2 className="text-gray-600 text-2xl font-semibold">
-						No overhead, scalable, self-hostable FaaS
-					</h2>
-				</div>
-
-				<span className="text-lg text-gray-600 max-w-3xl">
-					Run long-running heavy background jobs, script with complex dependencies, endpoints with
-					high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the
-					auto-generated UI and monitor them easily.
-				</span>
-
-				<FeatureCardTabs tabs={newTabs} color="blue" />
-				<SectionExamples examples={examples} />
-				<div className="flex gap-4">
-					<a
-						type="button"
-						href="https://hub.windmill.dev/"
-						target="_blank"
-						className="inline-flex items-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-white"
-					>
-						Explore more scripts on the Hub
-						<ExternalLink className="ml-2 h-5" />
-					</a>
-
-					<a
-						type="button"
-						href="https://app.windmill.dev/scripts/add"
-						target="_blank"
-						onClick={() => window.plausible('try-cloud')}
-						data-analytics='"try-cloud"'
-						className="inline-flex items-center rounded-md  px-4 py-2 text-sm font-medium text-gray-600  hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 !no-underline hover:text-blue-600"
-					>
-						Try building scripts
-						<ExternalLink className="ml-2 h-5" />
-					</a>
-				</div>
-			</div>
-		</LandingSection>
+		<Section
+			title="Scripts"
+			caption="No overhead, scalable, self-hostable FaaS"
+			cards={cards}
+			tabs={tabs}
+			description={
+				'Run long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the auto-generated UI and monitor them easily.'
+			}
+			color="blue"
+			key="script-card"
+			examples={examples}
+			kind="script"
+		/>
 	);
 }

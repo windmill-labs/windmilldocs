@@ -1,6 +1,8 @@
 import React from 'react';
 import LandingSection from './LandingSection';
 import { ExternalLink } from 'lucide-react';
+import { useDeveloperMode } from '../pages';
+import classNames from 'classnames';
 
 const integrations = [
 	{ name: 'Airtable', src: 'third_party_logos/airtable.svg' },
@@ -38,13 +40,16 @@ const integrations = [
 ];
 
 export default function IntergrationList() {
+	const { developerMode, setDeveloperMode } = useDeveloperMode();
+
 	return (
 		<LandingSection bgClass="bg-white">
 			<div className="w-full gap-8 flex flex-col">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
 					Integrations
 				</h1>
-				<span className="text-lg text-gray-600 max-w-3xl">
+
+				<span className={classNames('text-lg max-w-3xl', 'text-gray-600')}>
 					We have a growing list of integrations with third party services available on the Hub.
 					Connect your apps and services to automate your workflows.
 				</span>
@@ -52,7 +57,10 @@ export default function IntergrationList() {
 					{integrations.map((item) => (
 						<a
 							key={item.name}
-							className="bg-gray-50  col-span-1 flex justify-center rounded-xl border p-4 cursor-pointer hover:bg-gray-100"
+							className={classNames(
+								'col-span-1 flex justify-center rounded-xl border p-4 cursor-pointer transition-all',
+								'bg-gray-50 hover:bg-gray-100'
+							)}
 							href={`https://hub.windmill.dev/integrations/${item.name
 								.toLowerCase()
 								.replace(/\s/g, '')}`}
