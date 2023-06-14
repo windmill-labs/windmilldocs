@@ -2,7 +2,6 @@ import React from 'react';
 import { useDeveloperMode } from '../pages';
 import LandingSectionWrapper from './LandingSectionWrapper';
 import DevModeSwitch from './DevModeSwitch';
-import { AnimatePresence, motion } from 'framer-motion';
 import CardsContainer from '../landing/cards/Cards';
 import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
 import classNames from 'classnames';
@@ -15,7 +14,6 @@ export default function Section({
 	caption,
 	description,
 	color,
-	key,
 	examples,
 	kind
 }) {
@@ -47,7 +45,7 @@ export default function Section({
 	return (
 		<LandingSectionWrapper className={`${colors.bg}`} color={color}>
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 ">
 					<div className="flex justify-between items-center w-full">
 						<h1
 							className={classNames(
@@ -62,39 +60,20 @@ export default function Section({
 					<h2 className={`${colors.text} text-2xl font-semibold`}>{caption}</h2>
 				</div>
 
-				<span className={`text-lg ${colors.text} max-w-3xl`}>{description}</span>
-				<AnimatePresence>
-					{developerMode ? (
-						<motion.div
-							initial={{ opacity: 0 }}
-							animate={{
-								opacity: [0, 1]
-							}}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.2 }}
-							key={key}
-						>
-							<CardsContainer
-								cards={cards}
-								r={accentColor[color][0]}
-								g={accentColor[color][1]}
-								b={accentColor[color][2]}
-							/>
-						</motion.div>
-					) : (
-						<motion.div
-							initial={{ opacity: 0 }}
-							animate={{
-								opacity: [0, 1]
-							}}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.2 }}
-						>
-							<FeatureCardTabs tabs={tabs} color={color} />
-							<SectionExamples examples={examples} kind={kind} />
-						</motion.div>
-					)}
-				</AnimatePresence>
+				<span className={`text-lg ${colors.text} max-w-3xl mb-8`}>{description}</span>
+				{developerMode ? (
+					<CardsContainer
+						cards={cards}
+						r={accentColor[color][0]}
+						g={accentColor[color][1]}
+						b={accentColor[color][2]}
+					/>
+				) : (
+					<>
+						<FeatureCardTabs tabs={tabs} color={color} />
+						<SectionExamples examples={examples} kind={kind} />
+					</>
+				)}
 			</div>
 		</LandingSectionWrapper>
 	);

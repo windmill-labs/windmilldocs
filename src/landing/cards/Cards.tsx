@@ -72,7 +72,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({ r = 59, g = 130, b = 24
 		<div className="flex justify-center items-center h-full flex-col gap-2">
 			<div
 				id="cards"
-				className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-auto gap-8 w-full"
+				className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-auto gap-16 w-full"
 				onMouseMove={(e) => {
 					const mouseMoveHandler = (e: MouseEvent) => {
 						// @ts-ignore

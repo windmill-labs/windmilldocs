@@ -58,7 +58,7 @@ export default function LandingSectionWrapper({
 	};
 
 	return (
-		<div className={`w-full h-full relative overflow-hidden isolate ${className} py-16`}>
+		<div className={`w-full h-full relative overflow-hidden isolate ${className} py-32`}>
 			<div
 				className="absolute inset-0 -z-10 transform-gpu overflow-hidden blur-3xl isolate"
 				aria-hidden="true"

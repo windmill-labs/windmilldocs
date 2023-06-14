@@ -41,8 +41,8 @@ function HomepageHeader() {
 			<HeroExample />
 			<ScriptSection />
 			<FlowSection />
-
 			<AppSection />
+
 			<IntergrationList />
 			<EntrepriseFeatures />
 			<LandingSection bgClass="bg-white">

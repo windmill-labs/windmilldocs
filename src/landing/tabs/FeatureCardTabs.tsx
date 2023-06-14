@@ -1,7 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Framer } from './framer';
 import TabContent from './TabContent';
 import { Tab, useTabs } from './useTabs';
+
+export const useContainerDimensions = (myRef) => {
+	const [dimensions, setDimensions] = useState({ width: 0 });
+
+	useEffect(() => {
+		const getDimensions = () => ({
+			width: myRef.current.offsetWidth
+		});
+
+		const handleResize = () => {
+			setDimensions(getDimensions());
+		};
+
+		if (myRef.current) {
+			setDimensions(getDimensions());
+		}
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, [myRef]);
+
+	return dimensions;
+};
 
 export default function FeatureCardTabs({ tabs, color = 'blue' as 'blue' | 'teal' | 'orange' }) {
 	const [hookProps] = useState({
@@ -17,9 +43,12 @@ export default function FeatureCardTabs({ tabs, color = 'blue' as 'blue' | 'teal
 		orange: 'focus:border-orange-500 focus:ring-orange-500'
 	};
 
+	const componentRef = useRef();
+	const { width } = useContainerDimensions(componentRef);
+
 	return (
-		<div className="">
-			<div className="sm:hidden ">
+		<>
+			<div className="sm:hidden">
 				<label htmlFor="tabs" className="sr-only">
 					Select a tab
 				</label>
@@ -38,20 +67,25 @@ export default function FeatureCardTabs({ tabs, color = 'blue' as 'blue' | 'teal
 						<option key={tab.label}>{tab.label}</option>
 					))}
 				</select>
-				<Framer.Content {...framer.contentProps}>
+				<Framer.Content {...framer.contentProps} width="100%">
 					<TabContent data={data} color={color} />
 				</Framer.Content>
 			</div>
 			<div className="hidden sm:block">
-				<div className="w-full flex flex-col items-center justify-center">
-					<div className="max-w-7xl w-full gap-8 flex flex-col">
+				<div className="w-full flex flex-col items-center justify-center" ref={componentRef}>
+					<div className="max-w-7xl w-full gap-8 mb-8">
 						<Framer.Tabs {...framer.tabProps} color={color} />
-						<Framer.Content {...framer.contentProps} className="relative">
-							<TabContent data={data} color={color} />
-						</Framer.Content>
+					</div>
+
+					<div className="max-w-7xl flex flex-row">
+						{width > 0 && (
+							<Framer.Content {...framer.contentProps} width={`${width}px`}>
+								<TabContent data={data} color={color} />
+							</Framer.Content>
+						)}
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }

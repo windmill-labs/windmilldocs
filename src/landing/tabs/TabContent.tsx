@@ -42,8 +42,7 @@ export default function TabContent({ data, color }) {
 					className="border-2 rounded-xl object-cover w-full h-full"
 					src={data[selectedIndex].imageSrc}
 					style={{ maxHeight: data[selectedIndex].height }}
-
-					/>
+				/>
 			);
 		} else if (data[selectedIndex].svg) {
 			return (
