@@ -4,11 +4,8 @@ title: Self Host
 
 # Self Host Windmill
 
-[Windmill's GitHub repository][windmill-gh] contains all the necessary files to
-run Windmill locally, or to self-host it.
-
-We encourage Docker-based deployments, and provide a `docker-compose` file to
-help you get started.
+For small setup, use docker and docker compose on a single instance.
+For larger and production use-cases, use our [helm chart](#helm-chart) to deploy on kubernetes.
 
 The default credentials are admin@windmill.dev / changeme. From there you can easily setup another account as part of the setup step.
 
@@ -16,11 +13,7 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 ## Docker
 
-:::tip Prerequisites
-
-Before proceeding, install [Docker](https://docs.docker.com/get-docker/).
-
-:::
+### Setup Windmill on localhost
 
 <video 
     className="border-2 rounded-xl object-cover w-full h-full"
