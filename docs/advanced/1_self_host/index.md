@@ -4,17 +4,29 @@ title: Self Host
 
 # Self Host Windmill
 
-[Windmill's GitHub repository][windmill-gh] contains all the necessary files to
-run Windmill locally, or to self-host it.
-
-We encourage Docker-based deployments, and provide a `docker-compose` file to
-help you get started.
+For small setup, use docker and docker compose on a single instance.
+For larger and production use-cases, use our [helm chart](#helm-chart) to deploy on kubernetes.
 
 The default credentials are admin@windmill.dev / changeme. From there you can easily setup another account as part of the setup step.
 
 **Even if you setup oauth, login as admin@windmill.dev / changeme to setup the instance and give yourself admin privileges.**
 
 ## Docker
+
+### Setup Windmill on localhost
+
+<video 
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="app-text-inline-editor"
+    src="/videos/self_host.mp4"
+/>
+
+<br/>
+
+> _Self-host Windmill in less than a minute._
+
+<br/>
 
 Using Docker and Caddy, Windmill can be deployed using two files,
 ([`docker-compose.yml`][windmill-docker-compose] and
@@ -24,6 +36,8 @@ Using Docker and Caddy, Windmill can be deployed using two files,
 Postgres of storage, Windmill-LSP provides editor intellisense. All managed by
 one [`docker-compose.yml`][windmill-docker-compose] file.
 
+Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `start docker`, Linux: `sudo systemctl start docker`) and type the following commands:
+
 ```
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
@@ -32,7 +46,27 @@ curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
 docker compose up -d --pull always
 ```
 
-### Configuration
+Go to [http://localhost](http://localhost) et voilà!
+
+The default super-admin user is: admin@windmill.dev / `changeme`.
+
+From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
+
+We recommend setting up [SSO with OAuth](../misc/2_setup_oauth/index.md) if you can to avoid manually adding users. If not possible, you can add new users manually:
+
+![Add new users](./adding_new_user.gif "Add new users")
+
+> _Add new users to your workspace._
+
+<br/>
+
+What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.md) are shared with all workspaces.
+
+<br/>
+
+For more advanced setups, see below.
+
+### Configuring Domain and Reverse Proxy
 
 Let's assume you wish to deploy Windmill to the `windmill.example.com` domain.
 This information only needs to be propagated to the `docker-compose.yml` file,
@@ -176,6 +210,17 @@ docker compose pull windmill
 ```
 
 Database volume is persistent, so updating the database image is safe too.
+
+### Reset your instance
+
+Windmill stores all of its state in PostgreSQL and it is enough to reset the database to reset the instance.
+Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. run:
+```
+docker compose volumes down
+docker volume rm -f windmill_db_data
+```
+
+and then `docker compose up`.
 
 ## Helm Chart
 
