@@ -228,9 +228,10 @@ docker compose pull windmill
 
 Database volume is persistent, so updating the database image is safe too.
 
-### Cleanup your Instance
+### Reset your instance
 
-To cleanup your Windmill instance, run:
+Windmill stores all of its state in PostgreSQL and it is enough to reset the database to reset the instance.
+Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. run:
 ```
 docker compose volumes down
 docker volume rm -f windmill_db_data
