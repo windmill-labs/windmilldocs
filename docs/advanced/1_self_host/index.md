@@ -50,7 +50,7 @@ Go to [http://localhost](http://localhost) et voilà!
 
 The default super-admin user is: admin@windmill.dev / `changeme`.
 
-From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday) and add new users.
+From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
 
 ![Add new users](./adding_new_user.gif "Add new users")
 
