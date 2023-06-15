@@ -60,7 +60,7 @@ We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if y
 
 <br/>
 
-When creating a workspace, you have the option to invite everyone automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
+When creating a workspace, you have the option to invite automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
 
 <video 
     className="border-2 rounded-xl object-cover w-full h-full"
