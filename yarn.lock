@@ -1916,16 +1916,6 @@
     hey-listen "^1.0.8"
     tslib "^2.3.1"
 
-"@node-rs/jieba-linux-x64-gnu@1.6.2":
-  version "1.6.2"
-  resolved "https://registry.npmjs.org/@node-rs/jieba-linux-x64-gnu/-/jieba-linux-x64-gnu-1.6.2.tgz"
-  integrity sha512-jcbrneEACIhZkVs3VOwhDWn7X8q18kfUugF3hhxW9ZzymuEMTUvcBFRWR18hk/WoHA5/MbcStr3ufteI+Wy5aw==
-
-"@node-rs/jieba-linux-x64-musl@1.6.2":
-  version "1.6.2"
-  resolved "https://registry.npmjs.org/@node-rs/jieba-linux-x64-musl/-/jieba-linux-x64-musl-1.6.2.tgz"
-  integrity sha512-DbvAGsU+LNIiC7cK7uHsbM6ptwb0MMe4DSfYYhxJgt7GqDeWoDEd/fIGFO6GAgBLzFUpjAQgP6PBhCl55X2Avg==
-
 "@node-rs/jieba@^1.6.0":
   version "1.6.2"
   resolved "https://registry.npmjs.org/@node-rs/jieba/-/jieba-1.6.2.tgz"
