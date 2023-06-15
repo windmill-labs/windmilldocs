@@ -52,9 +52,9 @@ The default super-admin user is: admin@windmill.dev / `changeme`.
 
 From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
 
-We recommend setting up [SSO with OAuth](../misc/2_setup_oauth/index.md) if you can to avoid manually adding users. If not possible, you can add new users manually:
+We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if you can to avoid manually adding users. If not possible, you can add new users manually:
 
-![Add new users](./adding_new_user.gif "Add new users")
+![Add new users](./adding_new_user.gif 'Add new users')
 
 > _Add new users to your workspace._
 
@@ -98,83 +98,84 @@ The default docker-compose file exposes a caddy reverse-proxy on port 80, config
 <details>
   <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Code below:</summary>
 
-  ```yaml
+```yaml
 version: '3.7'
 
 services:
-  windmill_server:
-    image: ghcr.io/windmill-labs/windmill:main
-    deploy:
-      replicas: 1
-    restart: unless-stopped
-    expose:
-      - 8000
-    networks:
-      - pg_network
-      - web
-    environment:
-      DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-      BASE_URL: ${WM_BASE_URL}
-      RUST_LOG: info
-      ## You can set the number of workers to > 0 and not need any separate worker service
-      NUM_WORKERS: 0
-      DISABLE_SERVER: false
-      METRICS_ADDR: false
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.docker.network=web'
-      - 'traefik.http.routers.windmill.tls=true'
-      - 'traefik.http.routers.windmill.service=windmill'
-      - 'traefik.http.routers.windmill.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/`)'
-      - 'traefik.http.routers.windmill.tls.certresolver=lets-encrypt'
-      - 'traefik.http.services.windmill.loadbalancer.server.port=8000'
+windmill_server:
+  image: ghcr.io/windmill-labs/windmill:main
+  deploy:
+    replicas: 1
+  restart: unless-stopped
+  expose:
+    - 8000
+  networks:
+    - pg_network
+    - web
+  environment:
+    DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
+    BASE_URL: ${WM_BASE_URL}
+    RUST_LOG: info
+    ## You can set the number of workers to > 0 and not need any separate worker service
+    NUM_WORKERS: 0
+    DISABLE_SERVER: false
+    METRICS_ADDR: false
+  labels:
+    - 'traefik.enable=true'
+    - 'traefik.docker.network=web'
+    - 'traefik.http.routers.windmill.tls=true'
+    - 'traefik.http.routers.windmill.service=windmill'
+    - 'traefik.http.routers.windmill.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/`)'
+    - 'traefik.http.routers.windmill.tls.certresolver=lets-encrypt'
+    - 'traefik.http.services.windmill.loadbalancer.server.port=8000'
 
-  windmill_worker:
-    image: ghcr.io/windmill-labs/windmill:main
-    deploy:
-      replicas: 3
-    restart: unless-stopped
-    networks:
-      - pg_network
-      - web
-    environment:
-      DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-      BASE_URL: ${WM_BASE_URL}
-      RUST_LOG: info
-      NUM_WORKERS: 1
-      DISABLE_SERVER: true
-      KEEP_JOB_DIR: false
-      DENO_PATH: /usr/bin/deno
-      PYTHON_PATH: /usr/local/bin/python3
-      METRICS_ADDR: false
-    volumes:
-      - worker_dependency_cache:/tmp/windmill/cache
-      - /var/run/docker.sock:/var/run/docker.sock
+windmill_worker:
+  image: ghcr.io/windmill-labs/windmill:main
+  deploy:
+    replicas: 3
+  restart: unless-stopped
+  networks:
+    - pg_network
+    - web
+  environment:
+    DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
+    BASE_URL: ${WM_BASE_URL}
+    RUST_LOG: info
+    NUM_WORKERS: 1
+    DISABLE_SERVER: true
+    KEEP_JOB_DIR: false
+    DENO_PATH: /usr/bin/deno
+    PYTHON_PATH: /usr/local/bin/python3
+    METRICS_ADDR: false
+  volumes:
+    - worker_dependency_cache:/tmp/windmill/cache
+    - /var/run/docker.sock:/var/run/docker.sock
 
-  lsp:
-    image: ghcr.io/windmill-labs/windmill-lsp:latest
-    restart: unless-stopped
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.docker.network=web'
-      - 'traefik.http.routers.windmill_lsp.tls=true'
-      - 'traefik.http.routers.windmill_lsp.service=windmill_lsp'
-      - 'traefik.http.routers.windmill_lsp.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/ws`)'
-      - 'traefik.http.routers.windmill_lsp.tls.certresolver=lets-encrypt'
-      - 'traefik.http.services.windmill_lsp.loadbalancer.server.port=3001'
-    expose:
-      - 3001
+lsp:
+  image: ghcr.io/windmill-labs/windmill-lsp:latest
+  restart: unless-stopped
+  labels:
+    - 'traefik.enable=true'
+    - 'traefik.docker.network=web'
+    - 'traefik.http.routers.windmill_lsp.tls=true'
+    - 'traefik.http.routers.windmill_lsp.service=windmill_lsp'
+    - 'traefik.http.routers.windmill_lsp.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/ws`)'
+    - 'traefik.http.routers.windmill_lsp.tls.certresolver=lets-encrypt'
+    - 'traefik.http.services.windmill_lsp.loadbalancer.server.port=3001'
+  expose:
+    - 3001
 
 volumes:
-  worker_dependency_cache:
+worker_dependency_cache:
 
 networks:
-  pg_network:
-    name: pg_network
-  web:
-    name: web
-    external: true
+pg_network:
+  name: pg_network
+web:
+  name: web
+  external: true
 ```
+
 </details>
 
 ### Deployment
@@ -215,6 +216,7 @@ Database volume is persistent, so updating the database image is safe too.
 
 Windmill stores all of its state in PostgreSQL and it is enough to reset the database to reset the instance.
 Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. run:
+
 ```
 docker compose volumes down
 docker volume rm -f windmill_db_data
