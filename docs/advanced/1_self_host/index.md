@@ -52,6 +52,8 @@ The default super-admin user is: admin@windmill.dev / `changeme`.
 
 From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
 
+We recommend setting up [SSO with OAuth](../misc/2_setup_oauth/index.md) if you can to avoid manually adding users. If not possible, you can add new users manually:
+
 ![Add new users](./adding_new_user.gif "Add new users")
 
 > _Add new users to your workspace._
@@ -59,18 +61,6 @@ From there, you can follow the setup app to replace the superadmin account and s
 <br/>
 
 What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.md) are shared with all workspaces.
-
-<video 
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    id="app-text-inline-editor"
-    src="/videos/new_workspace.mp4"
-    alt="New workspace"
-/>
-
-<br/>
-
-> _Create a new workspace with Resource Types from admin workspace._
 
 <br/>
 
