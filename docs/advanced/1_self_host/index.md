@@ -56,11 +56,32 @@ We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if y
 
 ![Add new users](./adding_new_user.gif 'Add new users')
 
-> _Add new users to your workspace._
+> _Add new users to your instance._
 
 <br/>
 
+When creating a workspace, you have the option to invite everyone automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
+
+<video 
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="app-text-inline-editor"
+    src="/videos/new_workspace.mp4"
+/>
+
+<br/>
+
+> _Create a new workspace._
+
+<br/>
+
+### Admins Workspace
+
 What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.md) are shared with all workspaces.
+
+If you skipped the instance setup or need to sync resource types, you can go to the admins workspace and run the _Synchronize Hub Resource types with instance_ script, or [schedule](../../core_concepts/1_scheduling/index.md) it.
+
+![Sync resource types](./sync_resource_types.gif 'Sync resource types with Hub')
 
 <br/>
 
