@@ -18,7 +18,7 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 :::tip Prerequisites
 
-Before proceeding, install [Docker Desktop](https://docs.docker.com/get-docker/).
+Before proceeding, install [Docker](https://docs.docker.com/get-docker/).
 
 :::
 
