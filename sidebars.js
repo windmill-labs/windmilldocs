@@ -88,7 +88,7 @@ const sidebars = {
 				'flows/cache',
 				'flows/early_stop',
 				'flows/flow_approval',
-				'flows/sleep',
+				'flows/sleep'
 			],
 			collapsed: true
 		},
@@ -115,12 +115,12 @@ const sidebars = {
 						'apps/app_configuration-settings/app_component_library',
 						'apps/app_configuration-settings/app_runnable_triggers',
 						'apps/app_configuration-settings/app_component_configuration',
-						'apps/app_configuration-settings/app_styling',
+						'apps/app_configuration-settings/app_styling'
 					]
 				},
 				'apps/app_debugging',
 				'apps/app_deployment',
-				'apps/app_e-commerce',
+				'apps/app_e-commerce'
 			],
 
 			collapsed: true
@@ -163,7 +163,8 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
-				'advanced/local_development/index'
+				'advanced/local_development/index',
+				'cli_local_dev/vscode-extension/index'
 			],
 			collapsed: true
 		},
