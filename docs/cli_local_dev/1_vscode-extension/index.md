@@ -72,4 +72,3 @@ You can create a user token in the Windmill app. Follow the instructions in the 
 3. Switch Workspaces: Use the Windmill: Switch Windmill Workspace command to switch between your Windmill workspaces.
 
 4. Add Workspaces: If you work with multiple projects, use the Windmill: Add a Windmill Workspace command to add a new workspace.
-   n
