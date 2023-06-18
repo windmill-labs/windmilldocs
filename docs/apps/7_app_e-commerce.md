@@ -125,11 +125,15 @@ One powerful feature of Windmill is the ability to connect an output of one comp
 Now we need to add a button that will save the changes to the product. For the sake of demonstration, we will write our own script to update the product.
 
 ```ts
-import { Resource } from 'https://deno.land/x/windmill@v1.70.1/mod.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+type Supabase = {
+	supabaseUrl: string;
+	supabaseKey: string;
+};
+
 export async function main(
-	auth: Resource<'supabase'>,
+	auth: Supabase,
 	id: string,
 	title: string,
 	description: string,
@@ -388,10 +392,14 @@ It also needs to refresh the table. We can do this by selecting the id of the ta
 The `Checkout` button needs to create the order. We can use the following frontend script to do this.
 
 ```ts
-import { Resource } from 'https://deno.land/x/windmill@v1.70.1/mod.ts';
 import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
-export async function main(auth: Resource<'supabase'>, customerId: string, productIds: string[]) {
+type Supabase = {
+	supabaseUrl: string;
+	supabaseKey: string;
+};
+
+export async function main(auth: Supabase, customerId: string, productIds: string[]) {
 	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
 
 	productIds = productIds.filter(Boolean);

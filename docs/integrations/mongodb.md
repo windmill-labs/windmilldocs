@@ -61,21 +61,20 @@ Integration MongoDB through the [mongodb resource type](https://hub.windmill.dev
 <details>
   <summary>Parameters below:</summary>
 
-  | Property       | Type    | Description                                | Default      | Required | Where to Find                          | Additional Details                                   |
-|----------------|---------|--------------------------------------------|--------------|----------|----------------------------------------|-------------------------------------------------------|
-| db             | string  | Database name                              |              | true     | MongoDB Atlas Dashboard                 | Name of the database you want to connect to           |
-| tls            | boolean | Use TLS for connections                    | true         | false    | Your own preference                    | Set to true for secure connections                    |
-| servers        | array   | Array of server objects                    |              | true     | MongoDB Atlas Dashboard                 | Each server object should contain `host` and `port`  |
-| host (nested)  | string  | Server address                             |              | true     | MongoDB Atlas Dashboard                 | Hostname of the MongoDB instance                      |
-| port (nested)  | integer | Port number                                | 27017        | false    | MongoDB Atlas Dashboard                 | Default MongoDB port is `27017`                       |
-| credential     | object  | Authentication information                 |              | true     | MongoDB Atlas Dashboard                 | Contains `username`, `password`, `db`, `mechanism`    |
-| username (nested) | string  | Database username                          |              | true     | MongoDB Atlas Dashboard                 | Your database user's username                         |
-| password (nested) | string  | Database password                          |              | true     | MongoDB Atlas Dashboard                 | Your database user's password                         |
-| db (nested)    | string  | Authentication database                    |              | true     | MongoDB Atlas Dashboard                 | The database used for authentication                  |
-| mechanism (nested) | string  | Authentication mechanism                   | SCRAM-SHA-1  | false    | Your own preference                    | Default authentication mechanism is `"SCRAM-SHA-1"`  |
+| Property           | Type    | Description                | Default     | Required | Where to Find           | Additional Details                                  |
+| ------------------ | ------- | -------------------------- | ----------- | -------- | ----------------------- | --------------------------------------------------- |
+| db                 | string  | Database name              |             | true     | MongoDB Atlas Dashboard | Name of the database you want to connect to         |
+| tls                | boolean | Use TLS for connections    | true        | false    | Your own preference     | Set to true for secure connections                  |
+| servers            | array   | Array of server objects    |             | true     | MongoDB Atlas Dashboard | Each server object should contain `host` and `port` |
+| host (nested)      | string  | Server address             |             | true     | MongoDB Atlas Dashboard | Hostname of the MongoDB instance                    |
+| port (nested)      | integer | Port number                | 27017       | false    | MongoDB Atlas Dashboard | Default MongoDB port is `27017`                     |
+| credential         | object  | Authentication information |             | true     | MongoDB Atlas Dashboard | Contains `username`, `password`, `db`, `mechanism`  |
+| username (nested)  | string  | Database username          |             | true     | MongoDB Atlas Dashboard | Your database user's username                       |
+| password (nested)  | string  | Database password          |             | true     | MongoDB Atlas Dashboard | Your database user's password                       |
+| db (nested)        | string  | Authentication database    |             | true     | MongoDB Atlas Dashboard | The database used for authentication                |
+| mechanism (nested) | string  | Authentication mechanism   | SCRAM-SHA-1 | false    | Your own preference     | Default authentication mechanism is `"SCRAM-SHA-1"` |
+
 </details>
-
-
 
 ## Create Script
 
@@ -97,11 +96,15 @@ MongoDB Dataset" for example and click "Next".
 Paste in the following code into the editor:
 
 ```typescript
-import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 import { MongoClient } from 'https://deno.land/x/atlas_sdk@v1.0.3/mod.ts';
 
+type MongodbRest = {
+	endpoint: string;
+	api_key: string;
+};
+
 export async function main(
-	auth: Resource<'mongodb_rest'>,
+	auth: MongodbRest,
 	data_source: string,
 	database: string,
 	collection: string,
@@ -142,11 +145,15 @@ ObjectID first. Replace your code with the following to make it able to query by
 ID:
 
 ```typescript
-import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 import { MongoClient, ObjectId } from 'https://deno.land/x/atlas_sdk@v1.0.3/mod.ts';
 
+type MongodbRest = {
+	endpoint: string;
+	api_key: string;
+};
+
 export async function main(
-	auth: Resource<'mongodb_rest'>,
+	auth: MongodbRest,
 	data_source: string,
 	database: string,
 	collection: string,

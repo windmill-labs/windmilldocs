@@ -28,14 +28,14 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="1.1466733"
-     inkscape:cx="470.0554"
-     inkscape:cy="375.8699"
-     inkscape:window-width="2560"
-     inkscape:window-height="1440"
+     inkscape:cx="324.41673"
+     inkscape:cy="376.30596"
+     inkscape:window-width="1920"
+     inkscape:window-height="1200"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="html1" />
+     inkscape:current-layer="svg3771" />
   <defs
      id="defs3775">
     <mask
@@ -2942,26 +2942,10 @@
        x="0"
        y="280"
        xml:space="preserve"
-       id="text247079"><tspan
-   fill="#a89028"
-   id="tspan247061">  </tspan>db<tspan
-   fill="#666666"
-   id="tspan247063">:</tspan><tspan
-   fill="#a89028"
-   id="tspan247065"> </tspan><tspan
-   fill="#2838b0"
-   font-style="italic"
-   id="tspan247067">wmill.Resource</tspan><tspan
-   fill="#666666"
-   id="tspan247069">&lt;</tspan><tspan
-   fill="#b83838"
-   id="tspan247071">&quot;postgresql&quot;</tspan><tspan
-   fill="#666666"
-   id="tspan247073">&gt;</tspan><tspan
-   fill="#888888"
-   id="tspan247075">,</tspan><tspan
-   fill="#a89028"
-   id="tspan247077" /></text>
+       id="text247079"
+       style="-inkscape-font-specification:'monospace, Normal';font-family:monospace;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
+         sodipodi:role="line"
+         id="tspan2782">  db: Postgresql,</tspan></text>
     <text
        x="0"
        y="299"

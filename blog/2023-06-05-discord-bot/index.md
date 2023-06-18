@@ -144,13 +144,15 @@ We modified it to only extract content from markdown files. As we are using [Doc
 <details><summary>Code: Extract content from Github (TypeScript)</summary><p>
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
 import { Octokit } from 'https://cdn.skypack.dev/@octokit/rest';
 
 type FileContent = { content: string; link: string };
 
+type Github = {
+	token: string;
+}
 export async function main(
-	gh_auth: wmill.Resource<'github'>,
+	gh_auth: Github
 	owner: string,
 	repo: string,
 	path?: string,
@@ -259,9 +261,13 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
 ```typescript
-import { Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
 
-export async function main(auth: Resource<'supabase'>, embedding: any, document: string) {
+type Supabase = {
+	supabaseUrl: string;
+	supabaseKey: string;
+};
+
+export async function main(auth: Supabase, embedding: any, document: string) {
 	const query: any = await client.from('documents').insert({
 		content: document,
 		embedding
@@ -340,6 +346,7 @@ import {
 	InteractionType,
 	verifyKey
 } from 'npm:discord-interactions@3.4.0';
+
 type DiscordInteraction = {
 	id: string;
 	token: string;

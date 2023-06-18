@@ -201,10 +201,14 @@ This can be achieved by Background runnables.
 4. Paste in the following code:
 
    ```tsx
-   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-   export async function main(auth: Resource<"supabase">) {
+   type Supabase = {
+     supabaseUrl: string;
+     supabaseKey: string;
+   };
+
+   export async function main(auth: Supabase) {
      const client = createClient(auth.supabaseUrl, auth.supabaseKey);
      const result = await client.from("issues").select();
      return result.data;
@@ -520,11 +524,15 @@ user and sends them to the database.
    `Create Issue` and paste in the following code:
 
    ```tsx
-   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+   
+   type Supabase = {
+     supabaseUrl: string;
+     supabaseKey: string;
+   };
 
    export async function main(
-     auth: Resource<"supabase">,
+     auth: Supabase,
      summary: string,
      description: string,
      created_by: string,
@@ -572,10 +580,14 @@ the form of buttons. Select the `Table` component and follow the steps:
    `Delete Issue` and paste in the following code:
 
    ```tsx
-   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-   export async function main(auth: Resource<"supabase">, id: string) {
+   type Supabase = {
+     supabaseUrl: string;
+     supabaseKey: string;
+   };
+
+   export async function main(auth: Supabase, id: string) {
      const client = createClient(auth.supabaseUrl, auth.supabaseKey);
      return await client.from("issues").delete().filter("id", "eq", id);
    }

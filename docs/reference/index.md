@@ -188,13 +188,14 @@ In Deno:
 However in Deno there also some special types that are specific to Windmill.
 They are as follows:
 
-| Windmill                          | JSON Schema                                  |
-| --------------------------------- | -------------------------------------------- |
-| `wmill.Base64`                    | `string`, encodingFormat: `base64`           |
-| `wmill.Email`                     | `string`, format: `email`                    |
-| `wmill.Sql`                       | `string`, format: `sql`                      |
-| `wmill.Resource<'resource_type'>` | `object`, format: `resource-{resource_type}` |
+| Windmill         | JSON Schema                                  |
+| ---------------- | -------------------------------------------- |
+| `wmill.Base64`   | `string`, encodingFormat: `base64`           |
+| `wmill.Email`    | `string`, format: `email`                    |
+| `wmill.Sql`      | `string`, format: `sql`                      |
+| `<ResourceType>` | `object`, format: `resource-{resource_type}` |
 
+The `<ResourceType>` is any type that has a matching resource_type in the workspace. Note that the CamelCase of the type is converted to the snake_case.
 `Base64` and `Email` are actually a type alias for `string`, and `Resource` is a
 type alias for an `object`. They are purely type hints for the Windmill parser.
 
@@ -203,7 +204,7 @@ a monaco editor with SQL support.
 
 :::info
 
-The equivalent of the type `wmill.Resource<'my_resource_type'>` in Python is the
+The equivalent of the type `Postgresql` in Python is the
 following:
 
 ```python
@@ -624,8 +625,8 @@ Note that there is a similar API for getting and setting [Resources](#resource)
 which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](#resource-type) to be automatically
 discriminated in the auto-generated form to be of the proper type (e.g a
-parameter in TypeScript of type `pg: wmill.Resource<'postgres'>` is only going to
-offer a selection over the resources of type postgres in the auto-generated UI)
+parameter in TypeScript of type `pg: Postgresql` is only going to
+offer a selection over the resources of type postgresql in the auto-generated UI)
 
 There is also a concept of [state](#state-and-internal-state) to share values
 across script executions.
@@ -803,7 +804,6 @@ Groups have a name and a set of members. They are inspired by unix groups:
 
 - Members are always users
 - Users can be members of multiple groups
-
 
 Members of a group have permissions to act on behalf of the group. Groups
 themselves are permissioned such that only admin and users with write permission

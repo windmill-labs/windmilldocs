@@ -17,7 +17,6 @@ you can find the one that suits you best.
 
 <br/>
 
-
 :::tip Handle multiple commands on your slackbot
 
 We cover in a [subsequent article](/blog/handler-slack-commands) how to manage multiple commands from your slackbot. Spoiler: it uses [branches](../flows/13_flow_branches.md) and a text parser.
@@ -94,7 +93,6 @@ the `/windmill` command in your Slack workspace to trigger the Script. Try it
 out with `/windmill foo` and you should get back `ROGER foo`. Go ahead and
 customize the Script to your needs.
 
-
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png)
 
 :::info
@@ -162,10 +160,13 @@ and click "Next". Paste the following code in the editor and click "Test" - you
 should see the list of users and bots in your Slack workspace.
 
 ```typescript
-import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
 import { SlackAPI } from 'https://deno.land/x/deno_slack_api@1.6.0/mod.ts';
 
-export async function main(auth: Resource<'slack'>) {
+type Slack = {
+	token: string;
+};
+
+export async function main(auth: Slack) {
 	const client = SlackAPI(auth.token);
 	return await client.users.list();
 }

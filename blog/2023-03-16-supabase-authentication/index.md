@@ -217,9 +217,9 @@ Select the login button and click "Select a script or flow". Open the "Hub Scrip
 the Supabase script named "Authenticate with email and password". All you have to do now is provide
 the arguments for the script.
 
-The `auth` argument has a special type called `Resource`. [Resources][resource-doc] take
+The `auth` argument is a special type that is a `Resource`. [Resources][resource-doc] take
 integrations and bundle the most important data required by those integraions. The
-`Resource<'supabase'>` type contains the URL and the public API key of your Supabase project. Read
+`Supabase` type contains the URL and the public API key of your Supabase project. Read
 the [Supabase credentials](#supabase-credentials) section to see how to obtain them.
 
 :::tip
@@ -288,10 +288,14 @@ Create a new background runnable:
 
 ```typescript
 // Background runnable: Load data
-import { Resource } from 'https://deno.land/x/windmill@v1.76.0/mod.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
-export async function main(auth: Resource<'supabase'>, access_token: string) {
+type Supabase = {
+	supabaseUrl: string;
+	supabaseKey: string;
+};
+
+export async function main(auth: Supabase, access_token: string) {
 	if (!access_token) {
 		return [];
 	}

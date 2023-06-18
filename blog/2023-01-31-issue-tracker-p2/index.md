@@ -19,7 +19,7 @@ find it [here](../2023-01-25-issue-tracker/index.md).
 
 :::
 
-![Create an Issue Tracker App with Supabase and Windmill](./0-header.png "Integrate Supabase with Windmill in an issue tracker application")
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png 'Integrate Supabase with Windmill in an issue tracker application')
 
 :::tip
 
@@ -57,6 +57,7 @@ Let's start with adding titles for the update form:
    different ID for it, you need to change it accordingly.
 
    :::
+
 1. Enter `color: #6e6e6e;` in the Extra Style argument.
 
 ![Update issue form title](./1-wm-update-form-title.png)
@@ -69,6 +70,7 @@ Next, we need to add a `Select` component for the `status` property:
 1. Align it vertically on the bottom.
 1. Insert below a `Select` component.
 1. Enter these 3 items in the Configuration:
+
    ```tsx
    { "label": "PENDING" }
    ```
@@ -80,6 +82,7 @@ Next, we need to add a `Select` component for the `status` property:
    ```tsx
    { "label": "FINISHED" }
    ```
+
 1. Set the Item Key argument to `label`.
 
 ![Status field of the update issue form](./2-wm-form-status.png)
@@ -112,28 +115,30 @@ Finally, we need to add a `Button` component to submit the form:
    `Update Issue` and paste in the following code:
 
    ```ts
-   import { Resource } from "https://deno.land/x/windmill@v1.89.0/mod.ts";
-   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-   export async function main(
-     auth: Resource<"supabase">,
-     issue: any,
-     status?: string,
-     severity?: string,
-   ) {
-     if (!(issue && (status || severity))) {
-       return "Make sure that an issue is selected in the table";
-     }
-     const client = createClient(auth.supabaseUrl, auth.supabaseKey);
-     await client.from("issues")
-       .update({
-         ...issue,
-         status: status || issue.status,
-         severity: severity || issue.severity,
-       }).filter("id", "eq", issue.id);
-     return "";
+   type Supabase = {
+   	supabaseUrl: string;
+   	supabaseKey: string;
+   };
+
+   export async function main(auth: Supabase, issue: any, status?: string, severity?: string) {
+   	if (!(issue && (status || severity))) {
+   		return 'Make sure that an issue is selected in the table';
+   	}
+   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	await client
+   		.from('issues')
+   		.update({
+   			...issue,
+   			status: status || issue.status,
+   			severity: severity || issue.severity
+   		})
+   		.filter('id', 'eq', issue.id);
+   	return '';
    }
    ```
+
 1. Select your Supabase resource for the `auth` argument of the script in the
    `Settings` pane on the right.
 1. Select the `selectedRow` property of the `Table` component for the `issue`
@@ -166,6 +171,7 @@ number input:
    If you have a different ID for it, you need to change it accordingly.
 
    :::
+
 1. Select `Subtitle` as the style.
 1. Align it vertically on the bottom.
 
@@ -179,28 +185,27 @@ Lastly, add the actual chart component to display the data:
    `Last Issues Chart Data` and paste in the following code:
 
    ```ts
-   export async function main(
-     issues: { created_at: string }[],
-     days: number = 30,
-   ) {
-     if (!issues?.length) {
-       return { data: [], labels: [] };
-     }
-     const dates = [...Array(days)].map((_, i) => {
-       const d = new Date();
-       d.setDate(d.getDate() - i);
-       return d.toISOString().split("T")[0];
-     }).reverse();
-     const issueNumbers = dates.map((date) => {
-       return issues.filter(({ created_at }) => created_at.startsWith(date))
-         .length;
-     });
-     return {
-       data: issueNumbers,
-       labels: dates,
-     };
+   export async function main(issues: { created_at: string }[], days: number = 30) {
+   	if (!issues?.length) {
+   		return { data: [], labels: [] };
+   	}
+   	const dates = [...Array(days)]
+   		.map((_, i) => {
+   			const d = new Date();
+   			d.setDate(d.getDate() - i);
+   			return d.toISOString().split('T')[0];
+   		})
+   		.reverse();
+   	const issueNumbers = dates.map((date) => {
+   		return issues.filter(({ created_at }) => created_at.startsWith(date)).length;
+   	});
+   	return {
+   		data: issueNumbers,
+   		labels: dates
+   	};
    }
    ```
+
 1. Select the `result` property of the `Load Issues` background runnable for the
    `issues` argument.
 1. Select the `result` property of the recently created `Number` component for

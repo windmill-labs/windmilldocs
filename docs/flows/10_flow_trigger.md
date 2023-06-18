@@ -31,6 +31,7 @@ activating the schedule as seen in the image below.
 ![Schedule Scripts](../getting_started/9_trigger_flows/schedule-flow.png)
 
 Examples of trigger scripts include:
+
 - [Trigger everytime a new item text on HackerNews match at least one mention](https://hub.windmill.dev/scripts/hackernews/1301/trigger-everytime-a-new-item-text-on-hackernews-match-at-least-one-mention-hackernews)
 - [Notify of new Github repo stars](https://hub.windmill.dev/scripts/github/1208/notify-of-new-github-repo-stars-github)
 - [Check new uploaded files on Google Drive](https://hub.windmill.dev/scripts/gdrive/1457/get-new-files-gdrive)
@@ -45,34 +46,35 @@ updated in each run.
 <details>
   <summary>Code below:</summary>
 
-  ```ts
-import {
-  getState,
-  type Resource,
-  setState,
-} from "https://deno.land/x/windmill/mod.ts";
-import { MongoClient, ObjectId } from "https://deno.land/x/atlas_sdk/mod.ts";
+```ts
+import { getState, type Resource, setState } from 'https://deno.land/x/windmill/mod.ts';
+import { MongoClient, ObjectId } from 'https://deno.land/x/atlas_sdk/mod.ts';
+
+type MongodbRest = {
+	endpoint: string;
+	api_key: string;
+};
 
 export async function main(
-  auth: Resource<"mongodb_rest">,
-  data_source: string,
-  database: string,
-  collection: string,
+	auth: MongodbRest,
+	data_source: string,
+	database: string,
+	collection: string
 ) {
-  const client = new MongoClient({
-    endpoint: auth.endpoint,
-    dataSource: data_source,
-    auth: { apiKey: auth.api_key },
-  });
-  const documents = client.database(database).collection(collection);
-  const lastCheck = await getState() || 0;
-  await setState(Date.now() / 1000);
-  const id = ObjectId.createFromTime(lastCheck);
-  return await documents.find({ "_id": { "$gt": id } });
+	const client = new MongoClient({
+		endpoint: auth.endpoint,
+		dataSource: data_source,
+		auth: { apiKey: auth.api_key }
+	});
+	const documents = client.database(database).collection(collection);
+	const lastCheck = (await getState()) || 0;
+	await setState(Date.now() / 1000);
+	const id = ObjectId.createFromTime(lastCheck);
+	return await documents.find({ _id: { $gt: id } });
 }
 ```
-</details>
 
+</details>
 
 :::tip
 

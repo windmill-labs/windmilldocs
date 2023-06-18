@@ -23,14 +23,14 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="1.2723681"
-     inkscape:cx="58.159268"
-     inkscape:cy="341.88219"
-     inkscape:window-width="2560"
-     inkscape:window-height="1440"
+     inkscape:cx="-73.092056"
+     inkscape:cy="342.27516"
+     inkscape:window-width="1920"
+     inkscape:window-height="1200"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg437325" />
+     inkscape:current-layer="g437323" />
   <rect
      style="fill:#ffffff"
      id="rect437331"
@@ -70,23 +70,8 @@
    fill="#a89028"
    id="tspan437105" /></text>
     <text
-       x="0"
-       y="52"
-       xml:space="preserve"
-       id="text437119"><tspan
-   fill="#a89028"
-   id="tspan437109">  </tspan><tspan
-   fill="#2838b0"
-   id="tspan437111">type</tspan><tspan
-   fill="#a89028"
-   id="tspan437113"> </tspan>Resource<tspan
-   fill="#888888"
-   id="tspan437115">,</tspan><tspan
-   fill="#a89028"
-   id="tspan437117" /></text>
-    <text
-       x="0"
-       y="71"
+       x="-0.77979594"
+       y="50.95863"
        xml:space="preserve"
        id="text437137"><tspan
          fill="#a89028"
@@ -113,17 +98,15 @@
          fill="#a89028"
          id="tspan437139" /></text>
     <text
-       x="0"
-       y="109"
+       x="-0.44208905"
+       y="94.724205"
        xml:space="preserve"
-       id="text437149"><tspan
-         fill="#a89028"
-         id="tspan437143" /><tspan
-         fill="#888888"
-         font-style="italic"
-         id="tspan437145">//PG parameterized statement. No SQL injection is possible.</tspan><tspan
-         fill="#a89028"
-         id="tspan437147" /></text>
+       id="text437149"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
+         sodipodi:role="line"
+         id="tspan335"
+         x="-0.44208905"
+         y="94.724205">type Postgresql = object</tspan></text>
     <text
        x="0"
        y="128"
@@ -152,34 +135,10 @@
        x="0"
        y="147"
        xml:space="preserve"
-       id="text437197"><tspan
-   fill="#a89028"
-   id="tspan437171">  </tspan>db<tspan
-   fill="#666666"
-   id="tspan437173">:</tspan><tspan
-   fill="#a89028"
-   id="tspan437175"> </tspan><tspan
-   fill="#2838b0"
-   font-style="italic"
-   id="tspan437177">Resource</tspan><tspan
-   fill="#666666"
-   id="tspan437179">&lt;</tspan><tspan
-   fill="#b83838"
-   id="tspan437181">&quot;postgresql&quot;</tspan><tspan
-   fill="#666666"
-   id="tspan437183">&gt;</tspan><tspan
-   fill="#a89028"
-   id="tspan437185"> </tspan><tspan
-   fill="#666666"
-   id="tspan437187">=</tspan><tspan
-   fill="#a89028"
-   id="tspan437189"> </tspan><tspan
-   fill="#b83838"
-   id="tspan437191">&quot;$res:g/all/demodb&quot;</tspan><tspan
-   fill="#888888"
-   id="tspan437193">,</tspan><tspan
-   fill="#a89028"
-   id="tspan437195" /></text>
+       id="text437197"
+       style="-inkscape-font-specification:'monospace, Normal';font-family:monospace;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"><tspan
+         sodipodi:role="line"
+         id="tspan333">  db: Postgresql,</tspan></text>
     <text
        x="0"
        y="166"

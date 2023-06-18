@@ -1,6 +1,6 @@
 ---
-title: "SQL"
-slug: "/getting_started/scripts_quickstart/sql"
+title: 'SQL'
+slug: '/getting_started/scripts_quickstart/sql'
 ---
 
 # SQL Quickstart
@@ -21,6 +21,7 @@ We are strongly considering adding PostgresSQL as a fully supported language in 
 :::
 
 There are two recommended ways to send SQL queries in Windmill scripts:
+
 1. Configure scripts with a dedicated prepared statement for each query type (recommended for security reasons).
 2. Configure a single script that accepts raw queries, which is simpler but less secure.
 
@@ -74,28 +75,27 @@ As given by the template, there are two ways to execute queries from Windmill.
 The first option is to go with a prepared statement:
 
 ```typescript
-import {
-  pgSql,
-  type Resource,
-} from "https://deno.land/x/windmill@v1.103.0/mod.ts";
+import { pgSql } from 'https://deno.land/x/windmill@v1.103.0/mod.ts';
+
+type Postgresql = {
+	host: string;
+	port: number;
+	user: string;
+	dbname: string;
+	sslmode: string;
+	password: string;
+};
 
 //PG parameterized statement. No SQL injection is possible.
-export async function main(
-  db: Resource<"postgresql"> = "$res:f/examples/demodb",
-  key: number,
-  value: string,
-) {
-  const query = await pgSql(
-    db,
-  )`INSERT INTO demo VALUES (${key}, ${value}) RETURNING *`;
-  return query.rows;
-
+export async function main(db: Postgresql, key: number, value: string) {
+	const query = await pgSql(db)`INSERT INTO demo VALUES (${key}, ${value}) RETURNING *`;
+	return query.rows;
+}
 ```
 
 This way, malicious or clumsy users could only use the table credentials for limited commands, here `INSERT INTO demo VALUES (${key}, ${value}) RETURNING *`.
 
 At the workspace level, you could have scripts for each tolerated command (and for example simplify their use within a [flow](../../6_flows_quickstart/index.md) with [branches](../../../flows/13_flow_branches.md)).
-
 
 :::info
 
@@ -116,19 +116,26 @@ inserted values returned in the bottom right corner.
 A more convenient but less secure option is to accept raw queries as input:
 
 ```typescript
-import { pgClient, type Resource, type Sql } from "https://deno.land/x/windmill@v1.88.1/mod.ts";
+import { pgClient, type Sql } from 'https://deno.land/x/windmill@v1.88.1/mod.ts';
 
-export async function main(
-  db: Resource<"postgresql">,
-  query: Sql = "SELECT * FROM demo;",
-) {
-  if(!query) {
-    throw Error('Query must not be empty.')
-  }
-  const { rows } = await pgClient(db).queryObject(query);
-  return rows;
+type Postgresql = {
+	host: string;
+	port: number;
+	user: string;
+	dbname: string;
+	sslmode: string;
+	password: string;
+};
+
+export async function main(db: Postgresql, query: Sql = 'SELECT * FROM demo;') {
+	if (!query) {
+		throw Error('Query must not be empty.');
+	}
+	const { rows } = await pgClient(db).queryObject(query);
+	return rows;
 }
 ```
+
 This will allow you to execute all commands from one script. But that's also the vulnerability of it as it opens the door to harmful commands.
 
 :::tip

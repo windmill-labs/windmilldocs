@@ -81,12 +81,19 @@ resource of the `posgtgresql` Resource Type we would create a
 [Script](../../reference/index.md#scripts):
 
 ```typescript
-import { Resource } from "https://deno.land/x/windmill/mod.ts";
+type Postgresql = object;
+// OR one can fully type it
+type Postgresql = {
+	host: string;
+	port: number;
+	user: string;
+	dbname: string;
+	sslmode: string;
+	password: string;
+};
 
-export async function main(
-  postgres: Resource<"postgresql">,
-) {
-  // Use Resource...
+export async function main(postgres: Postgresql) {
+	// Use Resource...
 }
 ```
 
@@ -96,7 +103,6 @@ postgresql = dict
 def main(postgres: postgresql):
     # Use Resource...
 ```
-
 
 And then select the Resource in the arguments section on the right:
 

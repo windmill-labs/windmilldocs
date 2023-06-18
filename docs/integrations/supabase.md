@@ -75,9 +75,12 @@ You can reference the type of a Supabase resource in a script the following way:
 // To get the latest supported resource types,
 // check for the latest version of the Windmill Deno
 // package at https://deno.land/x/windmill/mod.ts
-import { Resource } from 'https://deno.land/x/windmill@v1.89.0/mod.ts';
+type Supabase = {
+	supabaseUrl: string;
+	supabaseKey: string;
+};
 
-export async function main(auth: Resource<'supabase'>) {
+export async function main(auth: Supabase) {
 	// Function contents
 }
 ```

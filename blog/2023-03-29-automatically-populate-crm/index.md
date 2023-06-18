@@ -291,12 +291,14 @@ Now we have all the details about our contact, it's time to tell the world (or a
   <summary>Creating and Airtable record (step v, but also ≈ z and an in case of error). Code below:</summary>
 
 ```js
-import * as wmill from 'https://deno.land/x/windmill@v1.70.1/mod.ts';
 import { Airtable } from 'https://deno.land/x/airtable/mod.ts';
 
+type Airtable = object
+type AirtableTable = object
+
 export async function main(
-	at_con: wmill.Resource<'airtable'>,
-	at_table: wmill.Resource<'airtable_table'>,
+	at_con: Airtable,
+	at_table: AirtableTable,
 	first_name: string,
 	last_name: string,
 	email: string,
