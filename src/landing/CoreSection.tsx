@@ -8,28 +8,28 @@ import { BoltIcon } from '@heroicons/react/20/solid';
 
 const cards = [
 	{
-		title: 'Super Snappy App',
-		subtitle: 'Experience the ultimate speed in app creation',
-		Icon: BoltIcon,
-		gridArea: 'md:col-span-1 md:row-span-3'
-	},
-	{
 		title: 'Instant Preview/Execution',
-		subtitle: 'Preview your scripts, flows and apps instantly',
+		subtitle: 'Live logs and job starting in 20ms',
 		Icon: Play,
 		gridArea: 'md:col-span-1 md:row-span-3'
 	},
 	{
 		title: 'Fastest Workflow Engine',
-		subtitle: 'Streamline your workflows with unmatchable speed',
+		subtitle: 'Only 20ms latency between steps',
 		Icon: Gauge,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/misc/benchmarks'
 	},
 	{
 		title: 'Scale to Any Cluster Size',
-		subtitle: 'Scale your infrastructure to any size',
+		subtitle: 'From Raspberry Pi to large Kubernetes clusters',
 		Icon: Server,
+		gridArea: 'md:col-span-1 md:row-span-3'
+	},
+	{
+		title: 'Super Snappy Apps',
+		subtitle: 'Build complex apps that load instantly',
+		Icon: BoltIcon,
 		gridArea: 'md:col-span-1 md:row-span-3'
 	}
 ];

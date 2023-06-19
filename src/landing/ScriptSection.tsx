@@ -17,6 +17,7 @@ import {
 	Gitlab
 } from 'lucide-react';
 import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode } from 'react-icons/si/index';
+import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
 
@@ -298,10 +299,16 @@ const examples = [
 ];
 
 export default function ScriptSection() {
+	const { developerMode } = useDeveloperMode();
+
 	return (
 		<Section
 			title="Scripts"
-			caption="No overhead, scalable, self-hostable FaaS"
+			caption={
+				!developerMode
+					? 'Code to production in minutes'
+					: 'No overhead, scalable, self-hostable FaaS'
+			}
 			cards={cards}
 			tabs={tabs}
 			description={

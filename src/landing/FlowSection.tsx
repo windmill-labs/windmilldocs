@@ -351,9 +351,7 @@ export default function FlowSection() {
 			}
 			cards={cards}
 			tabs={tabs}
-			description={
-				'Run long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the auto-generated UI and monitor them easily.'
-			}
+			description={'Build complex Flows from atomic scripts, either from your workspace or the Hub'}
 			color="teal"
 			key="flow-card"
 			examples={examples}
