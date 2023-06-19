@@ -199,7 +199,7 @@ export default function AppSection() {
 			caption={
 				developerMode
 					? 'Build your apps with code '
-					: 'Build super fast and powerful apps using DND'
+					: 'Build super fast and powerful apps using DnD'
 			}
 			cards={cards}
 			tabs={tabs}
