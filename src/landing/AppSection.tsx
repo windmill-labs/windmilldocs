@@ -14,7 +14,7 @@ import { useDeveloperMode } from '../pages';
 import Section from './Section';
 import FrameworkSvg from './cards/svgs/FrameworkSvg';
 import LanguageSvg from './cards/svgs/LanguageSvg';
-import { FaCode, FaJs } from 'react-icons/fa';
+import { FaBolt, FaCode, FaJs } from 'react-icons/fa';
 
 const tabs = [
 	{
@@ -55,6 +55,18 @@ const tabs = [
 				video: {
 					videoSrc: '/videos/app-scripts.mp4',
 					altText: 'Run any script and flow',
+					videoLength: '16'
+				}
+			},
+			{
+				title: 'Build super performant apps',
+				description:
+					'Our reactive engine ensures your app is always super performant, even when running complex apps.',
+				icon: FaBolt,
+				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
+				video: {
+					videoSrc: '/videos/app-performance.mp4',
+					altText: 'Build super performant apps',
 					videoLength: '16'
 				}
 			}
@@ -184,7 +196,11 @@ export default function AppSection() {
 	return (
 		<Section
 			title="Apps"
-			caption={developerMode ? 'Build your apps with code ' : 'Easy to use WYSIWYG app editor'}
+			caption={
+				developerMode
+					? 'Build your apps with code '
+					: 'Build super fast and powerful apps using DND'
+			}
 			cards={cards}
 			tabs={tabs}
 			description={

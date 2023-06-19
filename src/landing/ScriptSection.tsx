@@ -9,11 +9,9 @@ import {
 	Play,
 	Terminal,
 	CalendarClock,
-	History,
 	FormInputIcon,
 	FileCode,
-	FileLock2,
-	Folder
+	FileLock2
 } from 'lucide-react';
 import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
 
@@ -26,7 +24,7 @@ import Section from './Section';
 
 const cards = [
 	{
-		title: 'Local Development',
+		title: 'VSCode extension or any IDEs',
 		subtitle:
 			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
 		Icon: Terminal,
@@ -59,12 +57,20 @@ const cards = [
 		href: '/docs/advanced/imports'
 	},
 	{
-		title: 'Immutable scripts',
+		title: 'Immutable script versions',
 		subtitle: 'Every deployed script has a unique and permanent hash.',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		svg: <LockSvg />,
 		href: '/docs/reference#script-hashes'
+	},
+	{
+		title: 'Instant preview and execution',
+		subtitle: 'Preview and execute scripts instantly from the editor',
+		Icon: Play,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		svg: <Dependencies />,
+		href: '/docs/advanced/local_development'
 	}
 ];
 
@@ -144,7 +150,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Web IDE/Local',
+		label: 'Web IDE',
 		icon: FileCode,
 		id: 'web-ide-github-sync',
 		data: [
@@ -154,20 +160,11 @@ const tabs = [
 				icon: FileCode,
 				imageSrc: '/images/web-ide.png',
 				altText: 'Web IDE'
-			},
-
-			{
-				title: 'Versioning',
-				description: 'Scripts are always versioned.',
-				caption: 'Explore previous versions of your scripts.',
-				icon: History,
-				imageSrc: '/images/versions.png',
-				altText: 'Version'
 			}
 		]
 	},
 	{
-		label: 'Secrets & State',
+		label: 'Secrets & Permissions',
 		icon: Key,
 		id: 'secrets-permissions',
 		data: [
@@ -308,12 +305,6 @@ const examples = [
 ];
 
 export default function ScriptSection() {
-	const t0 = performance.now();
-	useEffect(() => {
-		const t1 = performance.now();
-		console.log(`⏱️  ScriptSection.tsx took ${t1 - t0} milliseconds
-	to render`);
-	}, []);
 	return (
 		<Section
 			title="Scripts"

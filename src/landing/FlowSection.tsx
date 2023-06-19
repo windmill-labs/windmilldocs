@@ -22,6 +22,7 @@ import RetriesSvg from './cards/svgs/RetriesSvg';
 import CheckSvg from './cards/svgs/CheckSvg';
 import TriggersSvg from './cards/svgs/TriggersSvg';
 import Section from './Section';
+import { useDeveloperMode } from '../pages';
 
 const tabs = [
 	{
@@ -105,7 +106,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Retries',
+		label: 'Retries & Cache',
 		icon: Repeat,
 		id: 'retries',
 		data: [
@@ -113,6 +114,18 @@ const tabs = [
 				title: 'Customize number of retries for each individual step',
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
+				icon: Repeat,
+				caption: 'Easily retry failed steps',
+				video: {
+					videoSrc: '/videos/flow-retries.mp4',
+					videoLength: '15',
+					altText: 'Customize number of retries'
+				}
+			},
+			{
+				title: 'Cache results of steps',
+				description:
+					'Cache results of steps to avoid re-running steps that have already been executed.',
 				icon: Repeat,
 				caption: 'Easily retry failed steps',
 				video: {
@@ -204,7 +217,7 @@ const tabs = [
 
 const cards = [
 	{
-		title: 'Local Development',
+		title: 'VSCode extension or any IDEs to edit any step of a flow',
 		subtitle:
 			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
 		Icon: Code2,
@@ -333,10 +346,16 @@ const examples = [
 ];
 
 export default function FlowSection() {
+	const { developerMode } = useDeveloperMode();
+
 	return (
 		<Section
 			title="Flows"
-			caption="Workflow engine on-par with Airflow/Temporal"
+			caption={
+				developerMode
+					? 'Workflow engine on-par with Airflow/Temporal'
+					: 'Build complex flows without complexity'
+			}
 			cards={cards}
 			tabs={tabs}
 			description={
@@ -349,4 +368,3 @@ export default function FlowSection() {
 		/>
 	);
 }
-//examples={examples}

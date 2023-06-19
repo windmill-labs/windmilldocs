@@ -26,11 +26,9 @@ const Card: React.FC<CardProps> = ({
 	svg,
 	href
 }) => {
-	const cardStyle = gridArea ? gridArea : '';
-
 	return (
-		<a className={classNames('card shadow-none transition-all ', gridArea)} href={href}>
-			<div className="card-content  ">
+		<a className={classNames('card shadow-none transition-all  ', gridArea)} href={href}>
+			<div className="card-content">
 				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
 					{imageSlider && (
@@ -43,13 +41,13 @@ const Card: React.FC<CardProps> = ({
 					{video && <video src={video} autoPlay loop controls />}
 					{svg && <div className="h-full w-full p-2 ">{svg}</div>}
 				</div>
-				<div className="bg-black grow pt-4 pb-8  rounded-b-2xl px-8 overflow-hidden">
+				<div className="card-footer  grow pt-4 pb-8 rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">
-						<div className=" text-white">
+						<div className=" ">
 							{/* @ts-ignore */}
 							<Icon className="w-6 h-6" />
 						</div>
-						<div className="text-white">
+						<div className="">
 							<div className="text-md font-bold mb-2">{title}</div>
 							<div className="text-sm">{subtitle}</div>
 						</div>
@@ -65,11 +63,18 @@ interface CardsContainerProps {
 	g?: number;
 	b?: number;
 	cards: CardProps[];
+	mode?: 'dark' | 'light';
 }
 
-const CardsContainer: React.FC<CardsContainerProps> = ({ r = 59, g = 130, b = 246, cards }) => {
+const CardsContainer: React.FC<CardsContainerProps> = ({
+	r = 59,
+	g = 130,
+	b = 246,
+	cards,
+	mode = 'dark'
+}) => {
 	return (
-		<div className="flex justify-center items-center h-full flex-col gap-2">
+		<div className={`flex justify-center items-center h-full flex-col gap-2 ${mode}`}>
 			<div
 				id="cards"
 				className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-auto gap-16 w-full"
