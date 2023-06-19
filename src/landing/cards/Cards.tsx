@@ -14,6 +14,7 @@ interface CardProps {
 	video?: string;
 	svg?: React.ReactNode;
 	href?: string;
+	icons?: React.ComponentType[];
 }
 
 const Card: React.FC<CardProps> = ({
@@ -25,7 +26,8 @@ const Card: React.FC<CardProps> = ({
 	imageSlider,
 	video,
 	svg,
-	href
+	href,
+	icons
 }) => {
 	return (
 		<a className={classNames('card shadow-none transition-all', gridArea)} href={href}>
@@ -43,10 +45,19 @@ const Card: React.FC<CardProps> = ({
 					{svg && <div className="h-full w-full p-2 ">{svg}</div>}
 					{Icon && !svg && (
 						<div className="h-full w-full flex items-center justify-center">
-							<div className="h-40 w-40 border rounded-full flex items-center justify-center bg-gray-50/50 border-gray-100 dark:bg-gray-800/50 dark:border-gray-900">
-								<div className="h-32 w-32 border rounded-full bg-gray-100/50 border-gray-100 dark:bg-gray-700/50 dark:border-gray-800 flex items-center justify-center">
+							<div className="h-40 min-w-40 px-4 w-auto border rounded-full flex items-center justify-center bg-gray-50/50 border-gray-100 dark:bg-gray-800/50 dark:border-gray-900">
+								<div className="h-32 min-w-32 px-4  w-auto border rounded-full bg-gray-100/50 border-gray-100 dark:bg-gray-700/50 dark:border-gray-800 flex items-center justify-center gap-2">
 									{/* @ts-ignore */}
 									<Icon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
+
+									{icons?.map((ExtraIcon, index) => {
+										return (
+											<>
+												{/* @ts-ignore */}
+												<ExtraIcon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
+											</>
+										);
+									})}
 								</div>
 							</div>
 						</div>
@@ -122,6 +133,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({
 						video={card.video}
 						svg={card.svg}
 						href={card.href}
+						icons={card.icons}
 					/>
 				))}
 			</div>

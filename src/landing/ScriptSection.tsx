@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
 	Code,
 	FormInput,
@@ -13,15 +13,19 @@ import {
 	FileCode,
 	FileLock2,
 	Lock,
-	Box
+	Box,
+	Gitlab
 } from 'lucide-react';
-import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode } from 'react-icons/si/index';
+import {
+	SiGnubash,
+	SiGo,
+	SiPython,
+	SiDeno,
+	SiVisualstudiocode,
+	SiJetbrains,
+	SiVim
+} from 'react-icons/si/index';
 
-import WindmillGithubSync from './cards/svgs/WindmillGithubSync';
-import CodeSvg from './cards/svgs/CodeSvg';
-import Dependencies from './cards/svgs/Dependencies';
-import LockSvg from './cards/svgs/LockSvg';
-import TerminalSvg from './cards/svgs/TerminalSvg';
 import Section from './Section';
 
 const cards = [
@@ -38,7 +42,8 @@ const cards = [
 		subtitle: 'Deploy scripts from Github or Gitlab',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/deploy_gh_gl'
+		href: '/docs/deploy_gh_gl',
+		icons: [Gitlab]
 	},
 	{
 		title: 'CLI',

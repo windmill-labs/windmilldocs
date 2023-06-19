@@ -12,9 +12,17 @@ import {
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
-import FrameworkSvg from './cards/svgs/FrameworkSvg';
-import LanguageSvg from './cards/svgs/LanguageSvg';
-import { FaBolt, FaCode, FaJs } from 'react-icons/fa';
+
+import { FaBolt, FaCode, FaJs, FaReact } from 'react-icons/fa';
+import {
+	SiGo,
+	SiPostgresql,
+	SiPython,
+	SiSvelte,
+	SiTypescript,
+	SiVuedotjs,
+	SiPerl
+} from 'react-icons/si';
 
 const tabs = [
 	{
@@ -175,17 +183,17 @@ const cards = [
 		title: 'Support for React, Vue, Svelte and vanilla JS',
 		subtitle: 'Build them with Vite locally and deploy them on Windmill',
 
-		Icon: FaJs,
-		gridArea: 'md:col-span-2 md:row-span-5',
-		svg: <FrameworkSvg />,
-		href: '/docs/react_vue_svelte_apps/react'
+		Icon: FaReact,
+		gridArea: 'md:col-span-2 md:row-span-4',
+		href: '/docs/react_vue_svelte_apps/react',
+		icons: [SiSvelte, SiVuedotjs]
 	},
 	{
 		title: 'Inline scripts',
 		subtitle: 'Wrote your low-code app logic in Python, TypeScript, Go or Bash.',
-		Icon: FaCode,
-		gridArea: 'md:col-span-2 md:row-span-5',
-		svg: <LanguageSvg />,
+		Icon: SiTypescript,
+		gridArea: 'md:col-span-2 md:row-span-4',
+		icons: [SiPython, SiGo, SiPostgresql],
 		href: '/docs/apps/app-runnable-panel#inline-scripts'
 	}
 ];

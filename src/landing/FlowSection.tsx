@@ -12,7 +12,8 @@ import {
 	FastForward,
 	RotateCcw,
 	Webhook,
-	CheckCircle2
+	CheckCircle2,
+	Calendar
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import CodeSvg from './cards/svgs/CodeSvg';
@@ -23,6 +24,8 @@ import CheckSvg from './cards/svgs/CheckSvg';
 import TriggersSvg from './cards/svgs/TriggersSvg';
 import Section from './Section';
 import { useDeveloperMode } from '../pages';
+import { SiVisualstudiocode } from 'react-icons/si';
+import { BoltIcon } from '@heroicons/react/20/solid';
 
 const tabs = [
 	{
@@ -220,15 +223,14 @@ const cards = [
 		title: 'VSCode extension or any IDEs to edit any step of a flow',
 		subtitle:
 			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
-		Icon: Code2,
-		gridArea: 'md:col-span-2 md:row-span-6',
-		svg: <CodeSvg />,
+		Icon: SiVisualstudiocode,
+		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/local_development'
 	},
 	{
 		title: 'Blazing Fast',
 		subtitle: "The fastest workflow engine (it's in Rust)",
-		Icon: FastForward,
+		Icon: BoltIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/misc/benchmarks'
 	},
@@ -244,15 +246,17 @@ const cards = [
 		title: 'Triggers',
 		subtitle: 'Trigger flows from a webhook or schedule',
 		Icon: Webhook,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/flows/flow_trigger'
+		gridArea: 'md:col-span-2 md:row-span-3',
+		href: '/docs/flows/flow_trigger',
+		icons: [Calendar, Terminal]
 	},
 
 	{
 		title: 'Suspend and resume',
-		subtitle: 'Supend a flow is',
+		subtitle:
+			'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
 		Icon: CheckCircle2,
-		gridArea: 'md:col-span-1 md:row-span-3',
+		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/flows/flow_approval'
 	}
 ];
