@@ -12,6 +12,14 @@ Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by
     src="/videos/draft_and_deploy.mp4"
 />
 
+<br/>
+
+:::tip Deploy to Staging or Prod
+
+If you are looking for ways to iterate collaboratively in Windmill, you might be interested by [Deploy to Staging or Prod](../12_staging_prod/index.md) that allows deploy scripts, flows, variables and resources to another workspace, typically staging or prod workspaces.
+
+:::
+
 ## Local Edits
 
 Changes made to a script, flow, or app are saved locally in your browser until they are validated as either a 'Draft' or 'Deployed' version.
