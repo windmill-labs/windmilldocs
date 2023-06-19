@@ -16,7 +16,7 @@ Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by
 
 :::tip Deploy to Staging or Prod
 
-If you are looking for ways to iterate collaboratively in Windmill, you might be interested by [Deploy to Staging or Prod](../12_staging_prod/index.md) that allows deploy scripts, flows, variables and resources to another workspace, typically staging or prod workspaces.
+If you are looking for complete isolation between staging and prod, you might be interested by [Deploy to Staging or Prod](../12_staging_prod/index.md) that allows deploying scripts, flows, variables and resources to another workspace, typically staging or prod workspaces.
 
 :::
 

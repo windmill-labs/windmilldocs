@@ -1,6 +1,6 @@
 # Deploy to Staging or Prod
 
-From a workspace in Windmill, users with admin rights can deploy a script/flow/resource/variable and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Enterprise Edition](../../misc/7_upgrade/index.md#enterprise-edition) only.
+From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Enterprise Edition](../../misc/7_upgrade/index.md#enterprise-edition) only.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
@@ -13,13 +13,13 @@ From a workspace in Windmill, users with admin rights can deploy a script/flow/r
 
 :::tip Draft and Deploy
 
-If you are looking for ways to iterate collaboratively in Windmill, you might be interested by [Draft and Deploy](../0_draft_and_deploy/index.md) that allows to save scripts and flow as: local storage, draft or deployed.
+You might be interested by [Draft and Deploy](../0_draft_and_deploy/index.md) that allows a more lightweight way to staging and prod, which might be sufficient in some cases.
 
 :::
 
 ## How it works
 
-In the `Workspace` menu, go to the "Dev/Staging/Prod" tab and pick a workspace for "Workspace to link to".
+For users with admin rights on the source workspace, in the `Workspace` menu, go to the "Dev/Staging/Prod" tab and pick a workspace for "Workspace to link to".
 
 ![Link to a workspace](./workspace_to_link_to.png "Link to a workspace")
 
@@ -28,6 +28,8 @@ This workspace to link to can for example be:
 - a Prod workspace where you can deploy scripts and flows when ready.
 
 Then, from the workspace, on the `⋮` menu of each [deployed](../0_draft_and_deploy/index.md#deployed-version) script or flow, pick "Deploy to staging/prod". This can be done also from the [Resources](../3_resources_and_types/index.md) and [Variables](../2_variables_and_secrets/index.md) menus or directly from a script or flow `Details` page.
+
+This can be done by users with both View rights on the deployed-from workspace and edit rights on the deployed-to workspace.
 
 You can deploy one by one flows, scripts (including each script within flow), variables and resources. Or toggle more than one and "Deploy all".
 
