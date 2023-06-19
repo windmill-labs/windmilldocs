@@ -2,6 +2,7 @@ import React from 'react';
 import './CardStyles.css';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
+import { Terminal } from 'lucide-react';
 
 interface CardProps {
 	Icon: React.ComponentType;
@@ -27,7 +28,7 @@ const Card: React.FC<CardProps> = ({
 	href
 }) => {
 	return (
-		<a className={classNames('card shadow-none transition-all  ', gridArea)} href={href}>
+		<a className={classNames('card shadow-none transition-all', gridArea)} href={href}>
 			<div className="card-content">
 				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
@@ -40,6 +41,16 @@ const Card: React.FC<CardProps> = ({
 					)}
 					{video && <video src={video} autoPlay loop controls />}
 					{svg && <div className="h-full w-full p-2 ">{svg}</div>}
+					{Icon && !svg && (
+						<div className="h-full w-full flex items-center justify-center">
+							<div className="h-40 w-40 border rounded-full flex items-center justify-center bg-gray-50/50 border-gray-100 dark:bg-gray-800/50 dark:border-gray-900">
+								<div className="h-32 w-32 border rounded-full bg-gray-100/50 border-gray-100 dark:bg-gray-700/50 dark:border-gray-800 flex items-center justify-center">
+									{/* @ts-ignore */}
+									<Icon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
 				<div className="card-footer  grow pt-4 pb-8 rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">

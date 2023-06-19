@@ -2,68 +2,63 @@ import React from 'react';
 import LandingSectionWrapper from './LandingSectionWrapper';
 import CardsContainer from '../landing/cards/Cards';
 import classNames from 'classnames';
-import { Github } from 'lucide-react';
+import { Apple, Code, Gauge, Play, Server } from 'lucide-react';
 
-import WindmillGithubSync from './cards/svgs/WindmillGithubSync';
+import { BoltIcon } from '@heroicons/react/20/solid';
+import { FaJsSquare } from 'react-icons/fa';
+
 const cards = [
 	{
 		title: 'Super Snappy App',
 		subtitle: 'Experience the ultimate speed in app creation',
-		Icon: Github,
+		Icon: Apple,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'Instant Preview/Execution',
 		subtitle: 'Witness your changes in real-time',
-		Icon: Github,
+		Icon: Play,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'Fastest Workflow Engine',
 		subtitle: 'Streamline your work with unmatchable speed',
-		Icon: Github,
+		Icon: Gauge,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'Blazingly Fast',
 		subtitle: 'Our service ensures peak performance at all times',
-		Icon: Github,
+		Icon: BoltIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'Languages',
 		subtitle: 'Support for a multitude of languages',
-		Icon: Github,
+		Icon: FaJsSquare,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'Code, But Zero Boilerplate',
 		subtitle: 'Enjoy seamless coding without the clutter',
-		Icon: Github,
+		Icon: Code,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	},
 	{
 		title: 'Scale to Any Cluster Size',
 		subtitle: 'Effortlessly manage your project of any size',
-		Icon: Github,
+		Icon: Server,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
 		href: '/docs/deploy_gh_gl'
 	}
 ];
-export default function CoreSection({ title, caption, description, color }) {
+export default function CoreSection({ color }) {
 	const colors = {
 		bg: 'bg-white',
 		text: 'text-gray-600'
@@ -71,7 +66,7 @@ export default function CoreSection({ title, caption, description, color }) {
 
 	return (
 		<LandingSectionWrapper className={`${colors.bg}`} color={color}>
-			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
+			<div className="flex flex-col w-full gap-4 justify-center" id="script-section light">
 				<div className="flex flex-col gap-2 ">
 					<div className="flex justify-between items-center w-full">
 						<h1

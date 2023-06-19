@@ -230,7 +230,6 @@ const cards = [
 		subtitle: "The fastest workflow engine (it's in Rust)",
 		Icon: FastForward,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <FastSvg />,
 		href: '/docs/misc/benchmarks'
 	},
 	{
@@ -238,7 +237,6 @@ const cards = [
 		subtitle: 'Retry failed steps, or handle errors',
 		Icon: RotateCcw,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <RetriesSvg />,
 		href: '/docs/flows/retries'
 	},
 
@@ -247,7 +245,6 @@ const cards = [
 		subtitle: 'Trigger flows from a webhook or schedule',
 		Icon: Webhook,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <TriggersSvg />,
 		href: '/docs/flows/flow_trigger'
 	},
 
@@ -256,7 +253,6 @@ const cards = [
 		subtitle: 'Supend a flow is',
 		Icon: CheckCircle2,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <CheckSvg />,
 		href: '/docs/flows/flow_approval'
 	}
 ];
