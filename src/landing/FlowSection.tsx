@@ -8,20 +8,13 @@ import {
 	FormInput,
 	WebhookIcon,
 	Terminal,
-	Code2,
-	FastForward,
 	RotateCcw,
 	Webhook,
 	CheckCircle2,
 	Calendar
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
-import CodeSvg from './cards/svgs/CodeSvg';
-import FastSvg from './cards/svgs/FastSvg';
 
-import RetriesSvg from './cards/svgs/RetriesSvg';
-import CheckSvg from './cards/svgs/CheckSvg';
-import TriggersSvg from './cards/svgs/TriggersSvg';
 import Section from './Section';
 import { useDeveloperMode } from '../pages';
 import { SiVisualstudiocode } from 'react-icons/si';

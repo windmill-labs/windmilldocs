@@ -16,15 +16,7 @@ import {
 	Box,
 	Gitlab
 } from 'lucide-react';
-import {
-	SiGnubash,
-	SiGo,
-	SiPython,
-	SiDeno,
-	SiVisualstudiocode,
-	SiJetbrains,
-	SiVim
-} from 'react-icons/si/index';
+import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode } from 'react-icons/si/index';
 
 import Section from './Section';
 

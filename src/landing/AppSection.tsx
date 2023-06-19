@@ -13,16 +13,8 @@ import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
 
-import { FaBolt, FaCode, FaJs, FaReact } from 'react-icons/fa';
-import {
-	SiGo,
-	SiPostgresql,
-	SiPython,
-	SiSvelte,
-	SiTypescript,
-	SiVuedotjs,
-	SiPerl
-} from 'react-icons/si';
+import { FaBolt, FaReact } from 'react-icons/fa';
+import { SiGo, SiPostgresql, SiPython, SiSvelte, SiTypescript, SiVuedotjs } from 'react-icons/si';
 
 const tabs = [
 	{

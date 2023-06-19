@@ -2,39 +2,35 @@ import React from 'react';
 import LandingSectionWrapper from './LandingSectionWrapper';
 import CardsContainer from '../landing/cards/Cards';
 import classNames from 'classnames';
-import { Apple, Code, Gauge, Play, Server } from 'lucide-react';
+import { Gauge, Play, Server } from 'lucide-react';
 
 import { BoltIcon } from '@heroicons/react/20/solid';
-import { FaJsSquare } from 'react-icons/fa';
 
 const cards = [
 	{
 		title: 'Super Snappy App',
 		subtitle: 'Experience the ultimate speed in app creation',
 		Icon: BoltIcon,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/deploy_gh_gl'
+		gridArea: 'md:col-span-1 md:row-span-3'
 	},
 	{
 		title: 'Instant Preview/Execution',
 		subtitle: 'Preview your scripts, flows and apps instantly',
 		Icon: Play,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/deploy_gh_gl'
+		gridArea: 'md:col-span-1 md:row-span-3'
 	},
 	{
 		title: 'Fastest Workflow Engine',
 		subtitle: 'Streamline your workflows with unmatchable speed',
 		Icon: Gauge,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/deploy_gh_gl'
+		href: '/docs/misc/benchmarks'
 	},
 	{
 		title: 'Scale to Any Cluster Size',
 		subtitle: 'Scale your infrastructure to any size',
 		Icon: Server,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/deploy_gh_gl'
+		gridArea: 'md:col-span-1 md:row-span-3'
 	}
 ];
 export default function CoreSection({ color }) {
