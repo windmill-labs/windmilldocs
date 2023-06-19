@@ -13,7 +13,7 @@ From a workspace in Windmill, you can deploy a script/flow/resource/variable and
 
 :::tip Draft and Deploy
 
-You might be interested by [Draft and Deploy](../0_draft_and_deploy/index.md) that allows a more lightweight way to staging and prod, which might be sufficient in some cases.
+You might be interested by [Draft and Deploy](../0_draft_and_deploy/index.md) that allows a more lightweight way to to implement a staging and prod workflow, which might be sufficient in some cases.
 
 :::
 
