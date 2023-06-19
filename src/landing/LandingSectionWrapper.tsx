@@ -24,7 +24,6 @@ export default function LandingSectionWrapper({
 	const { developerMode } = useDeveloperMode();
 
 	const mode = developerMode ? 'dark' : 'light';
-	const uuid = generateUUID();
 
 	const colorsByMode = {
 		dark: {

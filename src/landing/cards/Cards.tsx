@@ -2,6 +2,7 @@ import React from 'react';
 import './CardStyles.css';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
+import { Terminal } from 'lucide-react';
 
 interface CardProps {
 	Icon: React.ComponentType;
@@ -13,6 +14,7 @@ interface CardProps {
 	video?: string;
 	svg?: React.ReactNode;
 	href?: string;
+	icons?: React.ComponentType[];
 }
 
 const Card: React.FC<CardProps> = ({
@@ -24,13 +26,12 @@ const Card: React.FC<CardProps> = ({
 	imageSlider,
 	video,
 	svg,
-	href
+	href,
+	icons
 }) => {
-	const cardStyle = gridArea ? gridArea : '';
-
 	return (
-		<a className={classNames('card shadow-none transition-all ', gridArea)} href={href}>
-			<div className="card-content  ">
+		<a className={classNames('card shadow-none transition-all', gridArea)} href={href}>
+			<div className="card-content">
 				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
 					{imageSlider && (
@@ -42,14 +43,33 @@ const Card: React.FC<CardProps> = ({
 					)}
 					{video && <video src={video} autoPlay loop controls />}
 					{svg && <div className="h-full w-full p-2 ">{svg}</div>}
+					{Icon && !svg && (
+						<div className="h-full w-full flex items-center justify-center">
+							<div className="h-40 min-w-40 px-4 w-auto border rounded-full flex items-center justify-center bg-gray-50/50 border-gray-100 dark:bg-gray-800/50 dark:border-gray-900">
+								<div className="h-32 min-w-32 px-4  w-auto border rounded-full bg-gray-100/50 border-gray-100 dark:bg-gray-700/50 dark:border-gray-800 flex items-center justify-center gap-2">
+									{/* @ts-ignore */}
+									<Icon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
+
+									{icons?.map((ExtraIcon, index) => {
+										return (
+											<>
+												{/* @ts-ignore */}
+												<ExtraIcon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
+											</>
+										);
+									})}
+								</div>
+							</div>
+						</div>
+					)}
 				</div>
-				<div className="bg-black grow pt-4 pb-8  rounded-b-2xl px-8 overflow-hidden">
+				<div className="card-footer  grow pt-4 pb-8 rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">
-						<div className=" text-white">
+						<div className=" ">
 							{/* @ts-ignore */}
 							<Icon className="w-6 h-6" />
 						</div>
-						<div className="text-white">
+						<div className="">
 							<div className="text-md font-bold mb-2">{title}</div>
 							<div className="text-sm">{subtitle}</div>
 						</div>
@@ -65,11 +85,18 @@ interface CardsContainerProps {
 	g?: number;
 	b?: number;
 	cards: CardProps[];
+	mode?: 'dark' | 'light';
 }
 
-const CardsContainer: React.FC<CardsContainerProps> = ({ r = 59, g = 130, b = 246, cards }) => {
+const CardsContainer: React.FC<CardsContainerProps> = ({
+	r = 59,
+	g = 130,
+	b = 246,
+	cards,
+	mode = 'dark'
+}) => {
 	return (
-		<div className="flex justify-center items-center h-full flex-col gap-2">
+		<div className={`flex justify-center items-center h-full flex-col gap-2 ${mode}`}>
 			<div
 				id="cards"
 				className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-auto gap-16 w-full"
@@ -106,6 +133,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({ r = 59, g = 130, b = 24
 						video={card.video}
 						svg={card.svg}
 						href={card.href}
+						icons={card.icons}
 					/>
 				))}
 			</div>

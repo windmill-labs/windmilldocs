@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
 	Code,
 	FormInput,
@@ -9,62 +9,61 @@ import {
 	Play,
 	Terminal,
 	CalendarClock,
-	History,
 	FormInputIcon,
 	FileCode,
 	FileLock2,
-	Folder
+	Lock,
+	Box,
+	Gitlab
 } from 'lucide-react';
-import { SiGnubash, SiGo, SiPython, SiDeno } from 'react-icons/si/index';
+import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode } from 'react-icons/si/index';
 
-import WindmillGithubSync from './cards/svgs/WindmillGithubSync';
-import CodeSvg from './cards/svgs/CodeSvg';
-import Dependencies from './cards/svgs/Dependencies';
-import LockSvg from './cards/svgs/LockSvg';
-import TerminalSvg from './cards/svgs/TerminalSvg';
 import Section from './Section';
 
 const cards = [
 	{
-		title: 'Local Development',
+		title: 'VSCode extension or any IDEs',
 		subtitle:
 			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
-		Icon: Terminal,
-		gridArea: 'md:col-span-2 md:row-span-6',
-		svg: <CodeSvg />,
+		Icon: SiVisualstudiocode,
+		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/local_development'
 	},
 	{
 		title: 'Deploy from Github/Gitlab',
 		subtitle: 'Deploy scripts from Github or Gitlab',
 		Icon: Github,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <WindmillGithubSync />,
-		href: '/docs/deploy_gh_gl'
+		gridArea: 'md:col-span-2 md:row-span-3',
+		href: '/docs/deploy_gh_gl',
+		icons: [Gitlab]
 	},
 	{
 		title: 'CLI',
 		subtitle: 'Trigger, sync and monitor scripts from CLI',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <TerminalSvg />,
 		href: '/docs/advanced/cli'
 	},
 	{
 		title: 'Lockfile',
 		subtitle: 'A lockfile is generated to ensure reproducibility',
-		Icon: Terminal,
+		Icon: Box,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <Dependencies />,
 		href: '/docs/advanced/imports'
 	},
 	{
-		title: 'Immutable scripts',
+		title: 'Immutable script versions',
 		subtitle: 'Every deployed script has a unique and permanent hash.',
-		Icon: Terminal,
+		Icon: Lock,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		svg: <LockSvg />,
 		href: '/docs/reference#script-hashes'
+	},
+	{
+		title: 'Instant preview and execution',
+		subtitle: 'Preview and execute scripts instantly from the editor',
+		Icon: Play,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		href: '/docs/advanced/local_development'
 	}
 ];
 
@@ -144,7 +143,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Web IDE/Local',
+		label: 'Web IDE',
 		icon: FileCode,
 		id: 'web-ide-github-sync',
 		data: [
@@ -154,20 +153,11 @@ const tabs = [
 				icon: FileCode,
 				imageSrc: '/images/web-ide.png',
 				altText: 'Web IDE'
-			},
-
-			{
-				title: 'Versioning',
-				description: 'Scripts are always versioned.',
-				caption: 'Explore previous versions of your scripts.',
-				icon: History,
-				imageSrc: '/images/versions.png',
-				altText: 'Version'
 			}
 		]
 	},
 	{
-		label: 'Secrets & State',
+		label: 'Secrets & Permissions',
 		icon: Key,
 		id: 'secrets-permissions',
 		data: [
@@ -308,12 +298,6 @@ const examples = [
 ];
 
 export default function ScriptSection() {
-	const t0 = performance.now();
-	useEffect(() => {
-		const t1 = performance.now();
-		console.log(`⏱️  ScriptSection.tsx took ${t1 - t0} milliseconds
-	to render`);
-	}, []);
 	return (
 		<Section
 			title="Scripts"

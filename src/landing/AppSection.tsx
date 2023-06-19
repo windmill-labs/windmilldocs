@@ -12,9 +12,9 @@ import {
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
-import FrameworkSvg from './cards/svgs/FrameworkSvg';
-import LanguageSvg from './cards/svgs/LanguageSvg';
-import { FaCode, FaJs } from 'react-icons/fa';
+
+import { FaBolt, FaReact } from 'react-icons/fa';
+import { SiGo, SiPostgresql, SiPython, SiSvelte, SiTypescript, SiVuedotjs } from 'react-icons/si';
 
 const tabs = [
 	{
@@ -55,6 +55,18 @@ const tabs = [
 				video: {
 					videoSrc: '/videos/app-scripts.mp4',
 					altText: 'Run any script and flow',
+					videoLength: '16'
+				}
+			},
+			{
+				title: 'Build super performant apps',
+				description:
+					'Our reactive engine ensures your app is always super performant, even when running complex apps.',
+				icon: FaBolt,
+				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
+				video: {
+					videoSrc: '/videos/app-performance.mp4',
+					altText: 'Build super performant apps',
 					videoLength: '16'
 				}
 			}
@@ -163,17 +175,17 @@ const cards = [
 		title: 'Support for React, Vue, Svelte and vanilla JS',
 		subtitle: 'Build them with Vite locally and deploy them on Windmill',
 
-		Icon: FaJs,
-		gridArea: 'md:col-span-2 md:row-span-5',
-		svg: <FrameworkSvg />,
-		href: '/docs/react_vue_svelte_apps/react'
+		Icon: FaReact,
+		gridArea: 'md:col-span-2 md:row-span-4',
+		href: '/docs/react_vue_svelte_apps/react',
+		icons: [SiSvelte, SiVuedotjs]
 	},
 	{
 		title: 'Inline scripts',
 		subtitle: 'Wrote your low-code app logic in Python, TypeScript, Go or Bash.',
-		Icon: FaCode,
-		gridArea: 'md:col-span-2 md:row-span-5',
-		svg: <LanguageSvg />,
+		Icon: SiTypescript,
+		gridArea: 'md:col-span-2 md:row-span-4',
+		icons: [SiPython, SiGo, SiPostgresql],
 		href: '/docs/apps/app-runnable-panel#inline-scripts'
 	}
 ];
@@ -184,7 +196,11 @@ export default function AppSection() {
 	return (
 		<Section
 			title="Apps"
-			caption={developerMode ? 'Build your apps with code ' : 'Easy to use WYSIWYG app editor'}
+			caption={
+				developerMode
+					? 'Build your apps with code '
+					: 'Build super fast and powerful apps using DND'
+			}
 			cards={cards}
 			tabs={tabs}
 			description={
