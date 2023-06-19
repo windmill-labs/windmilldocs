@@ -20,7 +20,7 @@ export function useDeveloperMode() {
 }
 
 function HomepageHeader() {
-	const [developerMode, setDeveloperMode] = useState(true);
+	const [developerMode, setDeveloperMode] = useState(false);
 
 	useEffect(() => {
 		window.plausible =
