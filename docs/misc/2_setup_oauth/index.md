@@ -1,6 +1,6 @@
 # How to setup OAuth
 
-The oauth.json need to be mounted from your windmill server instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/v1.103.0/docker-compose.yml#L38-L39) and have an oauth.json file in the same folder as the docker-compose.yml.
+The oauth.json need to be mounted from your windmill server and worker instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L42-L43), and those [2 other lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L65-L66) and have an oauth.json file in the same folder as the docker-compose.yml.
 
 The oauth.json has the following structure:
 
@@ -36,11 +36,11 @@ First, you need to create a Google OAuth Client:
 
 ```json
 {
-  "google": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>",
-    "allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
-  }
+	"google": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+	}
 }
 ```
 
@@ -120,10 +120,10 @@ settings:
 
 ```json
 {
-  "gsheets": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>"
-  }
+	"gsheets": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>"
+	}
 }
 ```
 
@@ -176,17 +176,20 @@ used for the deployment.
 From your Admin page, setup windmill using the service flow
 
 1. `Create a new app integration`
-  a. For "sign-in method" select "OIDC - Open ID Connect"
-  b. For "application type" select "Web Appliction"
+   a. For "sign-in method" select "OIDC - Open ID Connect"
+   b. For "application type" select "Web Appliction"
 2. Select all of the following options for Grant type of "Client acting on behalf of a user"
-  - Authorization Code
-  - Refresh Token
-  - Implicit (hybrid)
-  - Allow ID Token with implicit grant type
-  - Allow Access Token with implicit grant type
+
+- Authorization Code
+- Refresh Token
+- Implicit (hybrid)
+- Allow ID Token with implicit grant type
+- Allow Access Token with implicit grant type
+
 3. For Refresh Token, select "Rotate token after every use"
 4. Under "LOGIN", set the following:
-  - "Sign-in redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>/user/login_callback/okta/`
-  - "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
-  - "Login initiated by" `App Only`
-  - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
+
+- "Sign-in redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>/user/login_callback/okta/`
+- "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
+- "Login initiated by" `App Only`
+- "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
