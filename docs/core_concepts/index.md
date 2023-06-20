@@ -12,6 +12,10 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
    <div class="text-lg font-semibold text-gray-900">Draft and Deploy</div>
     <div class="text-sm text-gray-500">Develop and cooperate in a structured way.</div>
   </a>
+  <a href="/docs/core_concepts/draft_and_deploy" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">Deploy to Staging or Prod</div>
+    <div class="text-sm text-gray-500">Deploy items to another staging/prod workspace.</div>
+  </a>
   <a href="/docs/core_concepts/scheduling" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Scheduling</div>
     <div class="text-sm text-gray-500">Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies.</div>

@@ -56,6 +56,7 @@ const sidebars = {
 			items: [
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/draft_and_deploy/index',
+				'core_concepts/staging_prod/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
 				'core_concepts/monitor_past_and_future_runs/index',
