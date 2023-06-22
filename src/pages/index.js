@@ -23,6 +23,7 @@ function HomepageHeader() {
 	const [developerMode, setDeveloperMode] = useState(false);
 
 	useEffect(() => {
+		document.documentElement.setAttribute('data-theme', 'light');
 		window.plausible =
 			window.plausible ||
 			function () {

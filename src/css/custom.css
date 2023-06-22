@@ -133,6 +133,14 @@ div.markdown ul > li {
 	margin-left: 20px !important;
 }
 
+ul.breadcrumbs {
+	@apply flex flex-row
+}
+
+li.breadcrumbs {
+	@apply flex items-center
+}
+
 div.markdown ol > li {
 	list-style-type: decimal !important;
 	margin-left: 20px !important;

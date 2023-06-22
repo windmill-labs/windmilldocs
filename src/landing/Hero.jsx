@@ -1,5 +1,4 @@
 import React from 'react';
-import SectionBlur from './SectionBlur';
 import GithubStarCount from './GithubStarCount';
 
 export default function Hero() {
