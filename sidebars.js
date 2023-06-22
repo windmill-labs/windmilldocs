@@ -51,6 +51,7 @@ const sidebars = {
 
 			items: [
 				'core_concepts/auto_generated_uis/index',
+				'advanced/imports/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
@@ -68,14 +69,13 @@ const sidebars = {
 						'flows/sleep',
 						'flows/flow_approval'
 					]
-				},
-				'advanced/imports/index'
+				}
 			],
 			collapsed: false
 		},
 		{
 			type: 'category',
-			label: 'Editors',
+			label: 'Editors Manual',
 			items: [
 				{
 					type: 'category',
@@ -172,18 +172,13 @@ const sidebars = {
 						'react_vue_svelte_apps/vue',
 						'react_vue_svelte_apps/svelte'
 					]
-				}
-			]
-		},
-		{
-			type: 'category',
-			label: 'Advanced',
-			items: [
+				},
 				'advanced/self_host/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/docker/index'
 			]
 		},
+
 		{
 			type: 'category',
 			label: 'Entreprise Features',
