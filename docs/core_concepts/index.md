@@ -8,6 +8,14 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
    <div class="text-lg font-semibold text-gray-900">Auto-generated UIs</div>
     <div class="text-sm text-gray-500">Auto-Generated UIs create user interfaces for scripts and flows based on their parameters.</div>
   </a>
+  <a href="/docs/core_concepts/json_schema_and_parsing" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">JSON Schema and Parsing</div>
+    <div class="text-sm text-gray-500">JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types.</div>
+  </a>
+  <a href="/docs/advanced/imports" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
+   <div class="text-lg font-semibold text-gray-900">Dependency Management & Imports</div>
+    <div class="text-sm text-gray-500">Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files.</div>
+  </a>
   <a href="/docs/core_concepts/draft_and_deploy" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Draft and Deploy</div>
     <div class="text-sm text-gray-500">Develop and cooperate in a structured way.</div>

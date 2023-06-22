@@ -6,17 +6,33 @@ You can choose to self-host Windmill on your own infra.
 
 Run it at scale on kubernetes using our [helm charts](https://github.com/windmill-labs/windmill-helm-charts) or use a docker-compose for smaller setups.
 
-More details on the **[Self Host Windmil tutorial](https://www.windmill.dev/docs/advanced/self_host/)**.
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="/docs/advanced/self_host/" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
+    <div class="text-lg font-semibold text-gray-900">Self Host Windmill tutorial</div>
+    <div class="text-sm text-gray-500">Self host Windmill in 2 minutes.</div>
+  </a>
+</div>
+
 
 ### Use Windmill Cloud
 
-Windmill provides a **[Cloud App](https://app.windmill.dev/user/login)**.
+Windmill provides a <a href="https://app.windmill.dev/" rel="nofollow">Cloud App</a>.
 
 You can sign-up using your GitHub, GitLab, Google, Microsoft Single Sign-On. No Credit Cards required and we will spare your inbox.
 
-Any user will be provided with 1,000 monthly executions from our [Free Plan](https://www.windmill.dev/pricing/) and added to the Demo workspace. From there, users can create workspaces for free and create scripts, workflows and UIs.
+Any user will be provided with 1,000 monthly executions from our [Free Plan](/pricing) and added to the Demo workspace. From there, users can create workspaces for free and create scripts, workflows and UIs.
 
-And if you feel like it, [upgrade](https://docs.windmill.dev/docs/misc/upgrade/) for unlimited executions.
+And if you feel like it, [upgrade](../../misc/7_upgrade/index.md) for unlimited executions.
+
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-2 mb-4">
+  <a href="https://app.windmill.dev/" rel="nofollow" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
+    <div class="text-lg font-semibold text-gray-900">Windmill Cloud</div>
+    <div class="text-sm text-gray-500">Use Windmill's Cloud App (no credit card required).</div>
+  </a>
+</div>
+
 
 ## Where to Start?
 

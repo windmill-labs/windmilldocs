@@ -49,3 +49,18 @@ If you want to have several versions of the same runnable, just fork it with the
 <br/>
 
 ![Recap Draft and Deploy](./recap_draft_and_deploy.png)
+
+## Diff Viewer
+
+A diff viewer is available when loading scripts from autosave or draft.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/diff_viewer.mp4"
+/>
+
+<br/>
+
+> Changes can then be reversed to previous version.

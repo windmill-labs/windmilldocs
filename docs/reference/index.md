@@ -25,7 +25,7 @@ specification and the code content. Python and Go Scripts also have an
 auto-genreated lockfile that ensure that executions of the same Script always
 use the exact same set of versioned dependencies. The code must always have a
 main function, which is its entrypoint when executed as an individual serverless
-endpoint or a [Flow](#flows) module:
+endpoint or a [Flow](../flows/1_flow_editor.md) module:
 
 - TypeScript:
 
@@ -152,7 +152,7 @@ our example `your_name` and `your_nickname`. There is a lot you can do with
 ### Script parameters to JSON Schema
 
 There is a one to one correspondence between a parameter of the main function
-and a field of `properties` in the JSON Schema. The name of the argument become
+and a field of `properties` in the JSON Schema. The name of the argument becomes
 the name of the property, and most of the primitive types in Python and
 TypeScript have a corresponding primitive type in JSON and by extension JSON
 Schema.
@@ -183,6 +183,7 @@ In Deno:
 | `bigint`   | `int`       |
 | `number`   | `number`    |
 | `string[]` | `string[]`  |
+| `("foo" \| "bar")[]` | `enum[]`  |
 | ...        | ...         |
 
 However in Deno there also some special types that are specific to Windmill.
@@ -332,115 +333,11 @@ To add a custom environment variable to a script in Windmill, you should follow 
 
 ## Flows
 
-A **[Flow](../getting_started/6_flows_quickstart/index.md)** is a core concept. It is a JSON serializable value in the
+A [Flow](../getting_started/6_flows_quickstart/index.md) is a core concept. It is a JSON serializable value in the
 [OpenFlow](../openflow/index.md) format that consists of an input spec (similar
-to Scripts), and a linear sequence of steps, also referred to as modules. Each
-step consists of either:
+to Scripts), and a linear sequence of steps, also referred to as modules.
 
-- Reference to a Script from the [Hub](https://hub.windmill.dev/)
-- Reference to a Script in your [workspace](#workspace)
-- Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.md), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md) or [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md)
-- [Trigger Scripts](../flows/10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of
-  a scheduled Flow, that watch for external events and early exit the Flow if
-  there is no new events
-- [for loop](../flows/12_flow_loops.md) that iterates over elements and triggers the execution of an
-  embedded flow for each element. The list is calculated dynamically as an
-  [input transform](#input-transform).
-- [Branch](../flows/13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order)
-- [Branches to all](../flows/13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array
-- [Approval/Suspend steps](../flows/11_flow_approval.md) which suspend the flow at no cost until it is resumed
-  by getting an approval/resume signal - [more details here](#approval-scripts)
-- Inner flows
-
-With the mechanism of [input transforms](#input-transform), the input of any
-step can be the output of any previous step, hence every Flow is actually a
-[Directed Acyclic Graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph)
-rather than simple sequences. You can refer to the result of any step using its
-ID.
-
-### Input Transform
-
-Every step has an input transform that maps from:
-
-- The Flow input
-- Any step's result, not only the previous step's result
-- Resource/Variable
-
-to the different parameters of this specific step.
-
-It does that using a JavaScript expression that operates in a more restricted
-setting. That JavaScript is using a restricted subset of the standard library
-and a few more functions which are the following:
-
-- `flow_input`: The dict/object containing the different parameters of the Flow
-  itself
-- `results.{id}`: The result of the step with given ID
-- `resource(path)`: The Resource at path
-- `variable(path)`: The Variable at path
-
-Using JavaScript in this manner, for every parameter, is extremely flexible and
-allows Windmill to be extremely generic in the kind of modules it runs.
-
-For each field, one has the option to write the JavaScript directly or to use
-the quick connect button if the field map one to one with a field of the
-`flow_input`, a field of the `previous_result` or of any steps.
-
-### Trigger Scripts
-
-A [Trigger Script](../flows/10_flow_trigger.md) is a Script whose purpose is to be used as
-the first step of a Flow. In combination with a [Schedule](../core_concepts/1_scheduling/index.md), Flows can react to
-external changes and continue triggering the rest of the flow with the changes
-being listened to as new elements.
-
-It is not very different than any other Script, except its purposes and that it
-needs to return a list because the next step will be a [forloop](../flows/12_flow_loops.md) over all items
-of the list in an embedded flow. Furthermore, it will very likely make use of
-the convenience helper functions around
-[states](#states).
-
-### [Retries](../flows/14_retries.md)
-
-Every step of a Flow can be configured with two types of retries: "regular
-intervals" and "exponential back-off". They can be applied independently, or
-jointly.
-
-Both strategies are based on the number of retries and the time interval to be
-applied between them.
-
-Strategies can also be combined, in which case, the linear strategy (regular
-intervals) will be applied first, followed by the exponential back-off strategy.
-
-The retries are tried when a step errors, until there are no retry attempts
-left, in which case the Flow either passes the error to the
-[error handler](#error-handlers) if any, or fail the Flow itself.
-
-### States
-
-A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct
-executions of the same Script. This is what enables Flows to watch for changes
-in most event watching scenarios. The pattern is as follows:
-
-- Retrieve the last state or, if undefined, assume it is the first
-  execution.
-- Retrieve the current state in the external system you are watching, e.g. the
-  list of users having starred your repo or the maximum ID of posts on Hacker
-  News.
-- Calculate the difference between the current state and the last internal
-  state. This difference is what you will want to act upon.
-- Set the new state so that you do not process the
-  elements you just processed.
-- Return the differences calculated previously so that you can process them in
-  the next steps. You will likely want to [forloop](../flows/12_flow_loops.md) over the items and trigger
-  one Flow per item. This is exactly the pattern used when your Flow is in the
-  mode of "Watching changes regularly".
-
-The convenience functions do this in TypeScript are:
-
-- `getState` which retrieves a JSON object stored as a resource of type `state` at a path determined by `getStatePath`, which is unique the trigger (username or schedule path), the embedding flow's path (if any), and the step's or script's path.
-- `setState` which sets the new state
-
-The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.md) section with a
-[Resource Type](../core_concepts/3_resources_and_types/index.md#create-a-resource-type) of `state`.
+For more details, please refer to the [flows section](../flows/1_flow_editor.md) or the [flows quickstart](../getting_started/6_flows_quickstart/index.md).
 
 ## Windmill Hub
 
