@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Flow Editor
 
 Windmill's Flow Editor allows you to build flows with a low-code builder.
@@ -7,74 +9,95 @@ Windmill's Flow Editor allows you to build flows with a low-code builder.
 A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) in the case of Windmill.
 :::
 
-<div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-    <a href="/docs/getting_started/flows_quickstart" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Flows Quickstart</div>
-      <div class="text-sm text-gray-500">4-minute presentation of our Flow editor.</div>
-    </a>
-    <a href="/docs/cli_local_dev" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">CLI and Local Development</div>
-      <div class="text-sm text-gray-500">Create scripts and flows without low-code builders.</div>
-    </a>
+	<DocCard
+		color="teal"
+		title="Flows Quickstart"
+		description="4-minute presentation of our Flow editor."
+		href="/docs/getting_started/flows_quickstart"
+	/>
+	<DocCard
+		color="teal"
+		title="CLI and Local Development"
+		description="Create scripts and flows without low-code builders."
+		href="/docs/cli_local_dev"
+	/>
 </div>
 
-<br/>
+<br />
 
 The Flow Editor has the following features which are the subject of specific pages:
 
-<div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-    <a href="/docs/getting_started/trigger_flows" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Triggering Flows</div>
-      <div class="text-sm text-gray-500">Trigger flows on-demand, by schedule or on external events.</div>
-    </a>
-    <a href="/docs/flows/flow_branches" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Branches</div>
-      <div class="text-sm text-gray-500">Split the execution of the flow based on a condition.</div>
-    </a>
-    <a href="/docs/flows/flow_loops" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">For loops</div>
-      <div class="text-sm text-gray-500">Iterate a series of tasks.</div>
-    </a>
-    <a href="/docs/flows/flow_error_handler" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Error Handler</div>
-      <div class="text-sm text-gray-500">Configure a script to handle errors.</div>
-    </a>
-    <a href="/docs/flows/flow_trigger" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Trigger Scripts</div>
-      <div class="text-sm text-gray-500">Trigger flows upon a given event with a dedicated trigger script.</div>
-    </a>
-    <a href="/docs/flows/retries" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Retries</div>
-      <div class="text-sm text-gray-500">Re-try a step in case of error.</div>
-    </a>
-    <a href="/docs/flows/cache" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Cache for Steps</div>
-      <div class="text-sm text-gray-500">Re-use a step's previous results.</div>
-    </a>
-    <a href="/docs/flows/sleep" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Early Stop / Break</div>
-      <div class="text-sm text-gray-500">Suspend executions within a flow for a specified time.</div>
-    </a> 
-    <a href="/docs/flows/flow_approval" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Approval Steps in Flows</div>
-      <div class="text-sm text-gray-500">Suspend a flow until specific event(s) are received, such as approvals or cancellations.</div>
-    </a>
-    <a href="/docs/flows/early_stop" class="rounded-md p-6 border border-gray-200 hover:border-teal-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-      <div class="text-lg font-semibold text-gray-900">Sleep / Delays in Flows</div>
-      <div class="text-sm text-gray-500">Stop early a flow based on a step's result.</div>
-    </a>
+	<DocCard
+		color="teal"
+		title="Triggering Flows"
+		description="Trigger flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/trigger_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="Branches"
+		description="Split the execution of the flow based on a condition."
+		href="/docs/flows/flow_branches"
+	/>
+	<DocCard
+		color="teal"
+		title="For loops"
+		description="Iterate a series of tasks."
+		href="/docs/flows/flow_loops"
+	/>
+	<DocCard
+		color="teal"
+		title="Error Handler"
+		description="Configure a script to handle errors."
+		href="/docs/flows/flow_error_handler"
+	/>
+	<DocCard
+		color="teal"
+		title="Trigger Scripts"
+		description="Trigger flows upon a given event with a dedicated trigger script."
+		href="/docs/flows/flow_trigger"
+	/>
+	<DocCard
+		color="teal"
+		title="Retries"
+		description="Re-try a step in case of error."
+		href="/docs/flows/retries"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
+	/>
+	<DocCard
+		color="teal"
+		title="Early Stop / Break"
+		description="Suspend executions within a flow for a specified time."
+		href="/docs/flows/sleep"
+	/>
+	<DocCard
+		color="teal"
+		title="Approval Steps in Flows"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+	<DocCard
+		color="teal"
+		title="Sleep / Delays in Flows"
+		description="Stop early a flow based on a step's result."
+		href="/docs/flows/early_stop"
+	/>
 </div>
 
-<br/>
+<br />
 
 ![Example of a flow](../assets/flows/flow_example.png)
 
 > _Example of a [flow](https://hub.windmill.dev/flows/38/automatically-populate-crm-contact-details-from-simple-email) in Windmill._
 
-<br/>
-
+<br />
 
 The Flow Builder has the following major components we will detail in a [dedicated page](3_editor_components.md):
 
@@ -89,7 +112,7 @@ The Flow Builder has the following major components we will detail in a [dedicat
 
 ### Architecture
 
- In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.md) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.md)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
+In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.md) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
 - Reference to a Script from the [Hub](https://hub.windmill.dev/).
 - Reference to a Script in your [workspace](../reference/index.md#workspace).

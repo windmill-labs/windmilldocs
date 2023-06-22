@@ -1,7 +1,7 @@
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
-	darkMode: 'class',
+	darkMode: ['class', '[data-theme="dark"]'],
 	content: ['./src/**/*.{html,js,jsx,tsx}'],
 	extend: {
 		height: {

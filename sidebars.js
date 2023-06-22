@@ -15,15 +15,15 @@
 const sidebars = {
 	// By default, Docusaurus generates a sidebar from the docs folder structure
 	tutorialSidebar: [
-		'intro',
 		{
 			type: 'category',
 			label: 'Getting Started',
-			link: {
-				type: 'doc',
-				id: 'getting_started/how_to_use_windmill/index'
-			},
 			items: [
+				'intro',
+				{
+					type: 'doc',
+					id: 'getting_started/how_to_use_windmill/index'
+				},
 				{
 					type: 'category',
 					label: 'Scripts Quickstart',
@@ -43,22 +43,17 @@ const sidebars = {
 				'getting_started/apps_quickstart/index',
 				'getting_started/trigger_scripts/index',
 				'getting_started/trigger_flows/index'
-			],
-			collapsed: false
+			]
 		},
 		{
 			type: 'category',
 			label: 'Core Concepts',
-			link: {
-				type: 'doc',
-				id: 'core_concepts/index'
-			},
+
 			items: [
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'advanced/imports/index',
 				'core_concepts/draft_and_deploy/index',
-				'core_concepts/staging_prod/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
 				'core_concepts/monitor_past_and_future_runs/index',
@@ -67,84 +62,81 @@ const sidebars = {
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/persistent_storage/index',
-				'core_concepts/multiplayer/index',
-				'core_concepts/error_handling_in_flows/index',
-				'flows/sleep',
-				'flows/flow_approval'
-			],
-			collapsed: true
-		},
-		{
-			type: 'category',
-			label: 'Flow Editor',
-			link: {
-				type: 'doc',
-				id: 'flows/flow_editor'
-			},
-			items: [
-				'flows/editor_components',
-				'flows/flow_branches',
-				'flows/flow_loops',
-				'flows/flow_error_handler',
-				'flows/flow_trigger',
-				'flows/retries',
-				'flows/cache',
-				'flows/early_stop',
-				'flows/flow_approval',
-				'flows/sleep'
-			],
-			collapsed: true
-		},
-		{
-			type: 'category',
-			label: 'App Editor',
-			link: {
-				type: 'doc',
-				id: 'apps/app_editor/index'
-			},
-			items: [
-				'apps/toolbar',
-				'apps/canvas',
-				'apps/outputs',
-				'apps/app-runnable-panel',
 				{
 					type: 'category',
-					label: 'Component Library & Configuration',
+					label: 'Flows concepts',
+					items: [
+						'core_concepts/error_handling_in_flows/index',
+						'flows/sleep',
+						'flows/flow_approval'
+					]
+				}
+			],
+			collapsed: false
+		},
+		{
+			type: 'category',
+			label: 'Editors Manual',
+			items: [
+				{
+					type: 'category',
+					label: 'Flow Editor',
 					link: {
 						type: 'doc',
-						id: 'apps/app_configuration-settings/index'
+						id: 'flows/flow_editor'
 					},
 					items: [
-						'apps/app_configuration-settings/app_component_library',
-						'apps/app_configuration-settings/app_runnable_triggers',
-						'apps/app_configuration-settings/app_component_configuration',
-						'apps/app_configuration-settings/app_styling'
-					]
+						'flows/editor_components',
+						'flows/flow_branches',
+						'flows/flow_loops',
+						'flows/flow_error_handler',
+						'flows/flow_trigger',
+						'flows/retries',
+						'flows/cache',
+						'flows/early_stop',
+						'flows/flow_approval',
+						'flows/sleep'
+					],
+					collapsed: true
 				},
-				'apps/app_debugging',
-				'apps/app_deployment',
-				'apps/app_e-commerce'
-			],
+				{
+					type: 'category',
+					label: 'App Editor',
+					link: {
+						type: 'doc',
+						id: 'apps/app_editor/index'
+					},
+					items: [
+						'apps/toolbar',
+						'apps/canvas',
+						'apps/outputs',
+						'apps/app-runnable-panel',
+						{
+							type: 'category',
+							label: 'Component Library & Configuration',
+							link: {
+								type: 'doc',
+								id: 'apps/app_configuration-settings/index'
+							},
+							items: [
+								'apps/app_configuration-settings/app_component_library',
+								'apps/app_configuration-settings/app_runnable_triggers',
+								'apps/app_configuration-settings/app_component_configuration',
+								'apps/app_configuration-settings/app_styling'
+							]
+						},
+						'apps/app_debugging',
+						'apps/app_deployment',
+						'apps/app_e-commerce'
+					],
 
-			collapsed: true
+					collapsed: true
+				}
+			]
 		},
 		{
 			type: 'category',
-			label: 'React/Vue/Svelte Apps',
-			link: {
-				type: 'doc',
-				id: 'react_vue_svelte_apps/index'
-			},
-			items: ['react_vue_svelte_apps/react'],
-			collapsed: true
-		},
-		{
-			type: 'category',
-			label: 'CLI and Local Dev',
-			link: {
-				type: 'doc',
-				id: 'cli_local_dev/index'
-			},
+			label: 'Developer',
 			items: [
 				{
 					type: 'category',
@@ -167,88 +159,94 @@ const sidebars = {
 					]
 				},
 				'advanced/local_development/index',
-				'cli_local_dev/vscode-extension/index'
-			],
-			collapsed: true
-		},
-		'deploy_gh_gl',
-		{
-			type: 'category',
-			label: 'Integrations',
-			link: {
-				type: 'doc',
-				id: 'integrations/integrations_on_windmill'
-			},
-			items: [
-				'integrations/airtable',
-				'integrations/appwrite',
-				'integrations/aws',
-				'integrations/aws-s3',
-				'integrations/clickhouse',
-				'integrations/cloudlare-r2',
-				'integrations/datadog',
-				'integrations/discord',
-				'integrations/faunadb',
-				'integrations/funkwhale',
-				'integrations/gcal',
-				'integrations/gcp',
-				'integrations/gdrive',
-				'integrations/github',
-				'integrations/gitlab',
-				'integrations/gmail',
-				'integrations/gsheets',
-				'integrations/hubspot',
-				'integrations/linkding',
-				'integrations/linkedin',
-				'integrations/mailchimp',
-				'integrations/mailchimp_mandrill',
-				'integrations/mastodon',
-				'integrations/matrix',
-				'integrations/mongodb',
-				'integrations/mysql',
-				'integrations/neon',
-				'integrations/openai',
-				'integrations/postgresql',
-				'integrations/redis',
-				'integrations/rss',
-				'integrations/s3',
-				'integrations/sendgrid',
-				'integrations/slack',
-				'integrations/smtp',
-				'integrations/square',
-				'integrations/stripe',
-				'integrations/supabase',
-				'integrations/surrealdb',
-				'integrations/telegram',
-				'integrations/toggl',
-				'integrations/upstash'
-			],
-			collapsed: true
-		},
-		{
-			type: 'category',
-			label: 'Advanced',
-			link: {
-				type: 'doc',
-				id: 'advanced/index'
-			},
-			items: [
+				'cli_local_dev/vscode-extension/index',
+				'deploy_gh_gl',
+				{
+					type: 'category',
+					label: 'React/Vue/Svelte Apps',
+					link: {
+						type: 'doc',
+						id: 'react_vue_svelte_apps/index'
+					},
+					items: [
+						'react_vue_svelte_apps/react',
+						'react_vue_svelte_apps/vue',
+						'react_vue_svelte_apps/svelte'
+					]
+				},
 				'advanced/self_host/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/docker/index'
-			],
-			collapsed: true
+			]
 		},
-		'openflow/index',
-		'reference/index',
+
 		{
 			type: 'category',
-			label: 'Miscellaneous',
-			link: {
-				type: 'doc',
-				id: 'misc/index'
-			},
+			label: 'Entreprise Features',
+			items: ['core_concepts/multiplayer/index', 'core_concepts/staging_prod/index']
+		},
+		{
+			type: 'category',
+			label: 'Integrations',
 			items: [
+				'integrations/integrations_on_windmill',
+				{
+					type: 'category',
+					label: 'List of integrations',
+					items: [
+						'integrations/airtable',
+						'integrations/appwrite',
+						'integrations/aws',
+						'integrations/aws-s3',
+						'integrations/clickhouse',
+						'integrations/cloudlare-r2',
+						'integrations/datadog',
+						'integrations/discord',
+						'integrations/faunadb',
+						'integrations/funkwhale',
+						'integrations/gcal',
+						'integrations/gcp',
+						'integrations/gdrive',
+						'integrations/github',
+						'integrations/gitlab',
+						'integrations/gmail',
+						'integrations/gsheets',
+						'integrations/hubspot',
+						'integrations/linkding',
+						'integrations/linkedin',
+						'integrations/mailchimp',
+						'integrations/mailchimp_mandrill',
+						'integrations/mastodon',
+						'integrations/matrix',
+						'integrations/mongodb',
+						'integrations/mysql',
+						'integrations/neon',
+						'integrations/openai',
+						'integrations/postgresql',
+						'integrations/redis',
+						'integrations/rss',
+						'integrations/s3',
+						'integrations/sendgrid',
+						'integrations/slack',
+						'integrations/smtp',
+						'integrations/square',
+						'integrations/stripe',
+						'integrations/supabase',
+						'integrations/surrealdb',
+						'integrations/telegram',
+						'integrations/toggl',
+						'integrations/upstash'
+					],
+					collapsed: true
+				}
+			]
+		},
+		{
+			type: 'category',
+			label: 'Misceallaneous',
+			items: [
+				'openflow/index',
+				'reference/index',
 				'misc/architecture/index',
 				'misc/code_autocompletion/index',
 				'misc/benchmarks/index',
@@ -269,8 +267,7 @@ const sidebars = {
 				'misc/share_on_hub/index',
 				'misc/upgrade/index',
 				'misc/windmill_compared_to_peers/index'
-			],
-			collapsed: true
+			]
 		}
 	]
 };

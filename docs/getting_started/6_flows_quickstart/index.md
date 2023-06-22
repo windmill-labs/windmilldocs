@@ -17,7 +17,7 @@ The present document will introduce you to Flows and how to build your first one
 
 <br/>
 
-It is important to have in mind that **in Windmill Scripts are at the basis of Flows and Apps**. To sum up roughly, workflows are state machines represented as DAG to compose scripts together. Learn more in the [Script Quickstart](../0_scripts_quickstart/index.md) in the previous section. You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
+It is important to have in mind that **in Windmill Scripts are at the basis of Flows and Apps**. To sum up roughly, workflows are state machines represented as DAG to compose scripts together. Learn more in the [Script Quickstart](../0_scripts_quickstart/index.mdx) in the previous section. You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
 
 Those workflows can run for-loops, branches (parralellizable) suspend themselves until a timeout or receiving events such as webhooks or approvals. They can be scheduled very frequently and check for new external items to process (what we call "Trigger" script).
 
@@ -29,7 +29,7 @@ From [Windmill](../00_how_to_use_windmill/index.md), click on `+ Flow`, and let'
 
 :::tip
 
-Follow our [detailed section](../../flows/1_flow_editor.md) on the Flow Editor for more information.
+Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.
 
 :::
 
@@ -183,4 +183,4 @@ You don't have to explore all flows editor possibilities at once. At each step, 
 
 When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.md) your flow, schedule it, share it, or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
 
-Follow our [detailed section](../../flows/1_flow_editor.md) on the Flow Editor for more information.
+Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.

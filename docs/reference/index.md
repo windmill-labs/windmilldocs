@@ -25,7 +25,7 @@ specification and the code content. Python and Go Scripts also have an
 auto-genreated lockfile that ensure that executions of the same Script always
 use the exact same set of versioned dependencies. The code must always have a
 main function, which is its entrypoint when executed as an individual serverless
-endpoint or a [Flow](../flows/1_flow_editor.md) module:
+endpoint or a [Flow](../flows/1_flow_editor.mdx) module:
 
 - TypeScript:
 
@@ -175,16 +175,16 @@ In Python:
 
 In Deno:
 
-| Deno       | JSON Schema |
-| ---------- | ----------- |
-| `string`   | `string`    |
-| `object`   | `object`    |
-| `boolean`  | `boolean`   |
-| `bigint`   | `int`       |
-| `number`   | `number`    |
-| `string[]` | `string[]`  |
-| `("foo" \| "bar")[]` | `enum[]`  |
-| ...        | ...         |
+| Deno                 | JSON Schema |
+| -------------------- | ----------- |
+| `string`             | `string`    |
+| `object`             | `object`    |
+| `boolean`            | `boolean`   |
+| `bigint`             | `int`       |
+| `number`             | `number`    |
+| `string[]`           | `string[]`  |
+| `("foo" \| "bar")[]` | `enum[]`    |
+| ...                  | ...         |
 
 However in Deno there also some special types that are specific to Windmill.
 They are as follows:
@@ -337,7 +337,7 @@ A [Flow](../getting_started/6_flows_quickstart/index.md) is a core concept. It i
 [OpenFlow](../openflow/index.md) format that consists of an input spec (similar
 to Scripts), and a linear sequence of steps, also referred to as modules.
 
-For more details, please refer to the [flows section](../flows/1_flow_editor.md) or the [flows quickstart](../getting_started/6_flows_quickstart/index.md).
+For more details, please refer to the [flows section](../flows/1_flow_editor.mdx) or the [flows quickstart](../getting_started/6_flows_quickstart/index.md).
 
 ## Windmill Hub
 

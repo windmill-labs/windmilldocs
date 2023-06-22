@@ -49,8 +49,7 @@ Your workspace is created!
 
 <br/>
 
-It's empty for now, but populate it by creating new [scripts](../../getting_started/0_scripts_quickstart/index.md), [flows](../../getting_started/0_scripts_quickstart/index.md) & [apps](../../getting_started/7_apps_quickstart/index.md), or even import them from [Hub](https://hub.windmill.dev/).
-
+It's empty for now, but populate it by creating new [scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.md) & [apps](../../getting_started/7_apps_quickstart/index.md), or even import them from [Hub](https://hub.windmill.dev/).
 
 </details>
 
@@ -74,11 +73,9 @@ We try to be as transparent as possible, if any question, feel free to reach out
 
 You can find plan details and a simulation on the [Pricing page][pricing].
 
-
 ### Cloud
 
 To upgrade your workspace to the Enterprise Edition, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting][demo]. Once you contact us, we will provide you with a secure Stripe link for payment. After completing the payment, your workspace and, if applicable, the cluster will be upgraded.
-
 
 As an Enterprise user, you will gain access to a dedicated platform where you can view detailed usage information and access invoices at <a href="https://windmill.dev/billing" rel="nofollow">https://windmill.dev/billing</a>.
 

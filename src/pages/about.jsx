@@ -25,7 +25,6 @@ const people = [
 import LandingSection from '../landing/LandingSection';
 import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
-import SectionBlur from '../landing/SectionBlur';
 
 export default function About() {
 	return (
