@@ -9,7 +9,7 @@ For larger and production use-cases, use our [helm chart](#helm-chart) to deploy
 
 The default credentials are admin@windmill.dev / changeme. From there you can easily setup another account as part of the setup step.
 
-**Even if you setup oauth, login as admin@windmill.dev / changeme to setup the instance and give yourself admin privileges.**
+**Even if you setup oauth, login as** admin@windmill.dev **/ changeme to setup the instance and give yourself admin privileges.**
 
 ## Docker
 

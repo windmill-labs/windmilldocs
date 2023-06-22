@@ -151,7 +151,7 @@ After you're done, click on "[Deploy](../../../core_concepts/0_draft_and_deploy/
 
 [hub-resources]: https://hub.windmill.dev/resources
 [hub-examples]: https://hub.windmill.dev/integrations/postgresql
-[docs-resources]: /docs/reference#resource
+[docs-resources]: /docs/core_concepts/resources_and_types
 [docs-path]: /docs/reference#path
 [docs-flows]: /docs/getting_started/flows_quickstart
 [docs-apps]: /docs/getting_started/apps_quickstart
