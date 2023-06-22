@@ -22,8 +22,10 @@ export function useDeveloperMode() {
 function HomepageHeader() {
 	const [developerMode, setDeveloperMode] = useState(false);
 
+	// Force light theme on landing page
+	document.documentElement.setAttribute('data-theme', 'light');
+
 	useEffect(() => {
-		document.documentElement.setAttribute('data-theme', 'light');
 		window.plausible =
 			window.plausible ||
 			function () {
