@@ -129,8 +129,8 @@ const config = {
 				darkTheme: darkCodeTheme
 			},
 			colorMode: {
-				defaultMode: 'light',
-				disableSwitch: true,
+				defaultMode: 'dark',
+				disableSwitch: false,
 				respectPrefersColorScheme: false
 			},
 			algolia: {
