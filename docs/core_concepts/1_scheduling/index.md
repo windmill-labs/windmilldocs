@@ -158,5 +158,5 @@ Not only can you build scheduled jobs [from Windmill](../../getting_started/00_h
 <!-- Resources -->
 
 [flows]: ../../getting_started/6_flows_quickstart/index.md
-[scripts]: ../../getting_started/0_scripts_quickstart/index.md
+[scripts]: ../../getting_started/0_scripts_quickstart/index.mdx
 [apps]: ../../getting_started/7_apps_quickstart/index.md

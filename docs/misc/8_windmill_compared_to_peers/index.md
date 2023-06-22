@@ -90,7 +90,7 @@ We believe Windmill is different because:
   (git, IDE, local environments, secrets managements, etc.)
 - it is compatible with **senior/staff software engineers** high standards for production-grade yet flexible yet customizable with code.
 
-Have a look at our [core concepts](../../core_concepts/index.md) to see what makes us different.
+Have a look at our [core concepts](../../core_concepts/index.mdx) to see what makes us different.
 
 We ourselves have our own limitations. We believe we can do better in terms of product education and having a prettier UI. All the rest is ready for scale.
 

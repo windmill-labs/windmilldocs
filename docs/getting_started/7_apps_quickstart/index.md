@@ -28,7 +28,7 @@ In short, what you need to remember about apps:
 
 - They work on a what-you-see-is-what-you-get basis.
 - You can connect apps and components to [datasources](../../integrations/0_integrations_on_windmill.md).
-- Components can be empowered by Windmill [scripts](../../getting_started/0_scripts_quickstart/index.md) and [flows](../6_flows_quickstart/index.md).
+- Components can be empowered by Windmill [scripts](../../getting_started/0_scripts_quickstart/index.mdx) and [flows](../6_flows_quickstart/index.md).
 
 :::tip
 
@@ -72,7 +72,6 @@ The beauty of Windmill App editor is the integrations of scripts & workflows to 
 From a component, click on `Create an inline script` or `Select a script or flow` (from workspace or hub) and you're good!
 
 ![Runnable editor](./apps_runnables.png)
-
 
 The **[Ouputs](../../apps/2_outputs.md)** of each component can be found on the left side menu. Each of them is associated with a component (see the component id).
 

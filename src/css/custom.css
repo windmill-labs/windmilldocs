@@ -137,7 +137,7 @@ ul.breadcrumbs {
 	@apply flex flex-row
 }
 
-li.breadcrumbs {
+li.breadcrumbs__item {
 	@apply flex items-center
 }
 
