@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Canvas Guide
 
 The app canvas is the main area of the app editor. It displays the app components and allows you to configure them.
@@ -26,11 +28,11 @@ When hovering a component, a blue border will be displayed around the component.
 You can also select multiple components by clicking on the `Shift` key and clicking on the components you want to select.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    controls
-    id="app-component-selection"
-    src="/videos/app-component-selection.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	controls
+	id="app-component-selection"
+	src="/videos/app-component-selection.mp4"
 />
 
 ### Positioning
@@ -38,11 +40,11 @@ You can also select multiple components by clicking on the `Shift` key and click
 Components can be positioned by dragging and dropping them on the canvas. You can also move components by clicking on the move handler on the top-right corner of the component.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    controls
-    id="component-moving"
-    src="/videos/component-moving.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	controls
+	id="component-moving"
+	src="/videos/component-moving.mp4"
 />
 
 ### Resizing
@@ -52,14 +54,14 @@ Components can be resized by dragging the resize handler on the top-right corner
 ### Lock the position of a component
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    controls
-    id="app-lock"
-    src="/videos/app-lock.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	controls
+	id="app-lock"
+	src="/videos/app-lock.mp4"
 />
 
-<br/>
+<br />
 
 A locked component can't be moved or resized by another component. It can still be moved or resized by the user.
 
@@ -74,11 +76,11 @@ Moving a component will move all unlocked components on its way.
 Components can be expanded by clicking on the expand button on the top-right corner of the component. It will try to expand the component to take as much width as possible and at most 12 columns of height, taking into account the other components on the canvas.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    controls
-    id="component-expand"
-    src="/videos/component-expand.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	controls
+	id="component-expand"
+	src="/videos/component-expand.mp4"
 />
 
 ### Nesting components
@@ -113,25 +115,25 @@ Some components have special actions:
 
 Edit text directly on the canvas. Either click on the `Pen` icon or double click on the text.
 
-<video 
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    controls
-    id="app-text-inline-editor"
-    src="/videos/app-text-inline-editor.mp4"
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	controls
+	id="app-text-inline-editor"
+	src="/videos/app-text-inline-editor.mp4"
 />
 
 #### Conditional and invisible tabs components
 
 Debug a tab by clicking on the arrow down button on the top-right corner of the component.
 
-<video 
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="app-debug-tabs"
-    src="/videos/app-debug-tabs.mp4"
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	autoPlay
+	loop
+	controls
+	id="app-debug-tabs"
+	src="/videos/app-debug-tabs.mp4"
 />
 
 ## Copy-Pasting Components Across Apps
@@ -169,18 +171,23 @@ Maintain consistency in style across multiple applications by creating styled co
 
 ### Learn More
 
-<div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="/docs/apps/app_configuration-settings/app_component_library" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">Component Library</div>
-    <div class="text-sm text-gray-500">Discover all the components available in the library, and their configurations.</div>
-  </a>
-  <a href="/docs/apps/app_configuration-settings/app_styling" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">Styling</div>
-    <div class="text-sm text-gray-500">Learn how to edit the component styles.</div>
-  </a>
-  <a href="/docs/apps/app_configuration-settings/app_component_configuration" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">Component Configuration</div>
-    <div class="text-sm text-gray-500">Learn how to configure a component.</div>
-  </a>
+	<DocCard
+		color="orange"
+		title="Component Library"
+		description="Discover all the components available in the library, and their configurations."
+		href="/docs/apps/app_configuration-settings/app_component_library"
+	/>
+	<DocCard
+		color="orange"
+		title="Styling"
+		description="Learn how to edit the component styles."
+		href="/docs/apps/app_configuration-settings/app_styling"
+	/>
+	<DocCard
+		color="orange"
+		title="Component Configuration"
+		description="Learn how to configure a component."
+		href="/docs/apps/app_configuration-settings/app_component_configuration"
+	/>
 </div>

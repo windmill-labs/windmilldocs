@@ -268,6 +268,7 @@ td {
 	text-align: left; /* Left align table cells */
 	padding: 8px; /* Add padding to table cells */
 	border: 1px solid #ddd; /* Add border to table cells */
+	@apply dark:text-gray-200
 }
 
 td:nth-of-type(2):first-child {
@@ -275,7 +276,7 @@ td:nth-of-type(2):first-child {
 }
 
 th {
-	background-color: #f2f2f2; /* Add light gray background to table header */
+	@apply bg-gray-200 dark:bg-neutral-800 dark:text-gray-200
 }
 
 

@@ -27,7 +27,7 @@ However, as with any powerful tool, using cron comes with its own set of challen
 
 :::info A bit of Context: How Windmill Works
 
-[Windmill](../../intro.md) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash).
+[Windmill](../../intro.mdx) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash).
 
 <br/>
 

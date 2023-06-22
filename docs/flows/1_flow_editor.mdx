@@ -1,0 +1,109 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Flow Editor
+
+Windmill's Flow Editor allows you to build flows with a low-code builder.
+
+:::info Workflows
+
+A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) in the case of Windmill.
+:::
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+	<DocCard
+		color="teal"
+		title="Flows Quickstart"
+		description="4-minute presentation of our Flow editor."
+		href="/docs/getting_started/flows_quickstart"
+	/>
+	<DocCard
+		color="teal"
+		title="CLI and Local Development"
+		description="Create scripts and flows without low-code builders."
+		href="/docs/cli_local_dev"
+	/>
+</div>
+
+<br />
+
+The Flow Editor has the following features which are the subject of specific pages:
+
+<div class="grid grid-cols-2 gap-2 mb-4">
+	<DocCard
+		color="teal"
+		title="Triggering Flows"
+		description="Trigger flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/trigger_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="Branches"
+		description="Split the execution of the flow based on a condition."
+		href="/docs/flows/flow_branches"
+	/>
+	<DocCard
+		color="teal"
+		title="For loops"
+		description="Iterate a series of tasks."
+		href="/docs/flows/flow_loops"
+	/>
+	<DocCard
+		color="teal"
+		title="Error Handler"
+		description="Configure a script to handle errors."
+		href="/docs/flows/flow_error_handler"
+	/>
+	<DocCard
+		color="teal"
+		title="Trigger Scripts"
+		description="Trigger flows upon a given event with a dedicated trigger script."
+		href="/docs/flows/flow_trigger"
+	/>
+	<DocCard
+		color="teal"
+		title="Retries"
+		description="Re-try a step in case of error."
+		href="/docs/flows/retries"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
+	/>
+	<DocCard
+		color="teal"
+		title="Early Stop / Break"
+		description="Suspend executions within a flow for a specified time."
+		href="/docs/flows/sleep"
+	/>
+	<DocCard
+		color="teal"
+		title="Approval Steps in Flows"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+	<DocCard
+		color="teal"
+		title="Sleep / Delays in Flows"
+		description="Stop early a flow based on a step's result."
+		href="/docs/flows/early_stop"
+	/>
+</div>
+
+<br />
+
+![Example of a flow](../assets/flows/flow_example.png)
+
+> _Example of a [flow](https://hub.windmill.dev/flows/38/automatically-populate-crm-contact-details-from-simple-email) in Windmill._
+
+<br />
+
+The Flow Builder has the following major components we will detail in a [dedicated page](3_editor_components.md):
+
+- [Toolbar](./3_editor_components.md#toolbar): the toolbar allows you to export the flow, configure the flow settings, and test the flow.
+- [Settings](./3_editor_components.md#settings): configure the flow settings.
+- [Static Inputs](./3_editor_components.md#static-inputs): view all flow static inputs.
+- [Flow Inputs](./3_editor_components.md#flow-inputs): view all flow inputs.
+- [Action](./3_editor_components.md#flow-actions): steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
+- [Action editor](./3_editor_components.md#action-editor): configure the action.
