@@ -7,7 +7,6 @@ purposes as well.
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     autoPlay
-    loop
     controls
     id="main-video"
     src="/videos/flow-approval.mp4"
@@ -15,13 +14,13 @@ purposes as well.
 
 <br/>
 
-:::info
+:::info Suspending a flow in Windmill
 
-If you look for ways to pause a workflow, you might be interested in:
-- **[Early stop/Break](./2_early_stop.md)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
-- **[Sleep](./15_sleep.md)**: if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
-- **[Retry](./14_retries.md)** a step a step until it comes successful.
-- **[Schedule the trigger](../core_concepts/1_scheduling/index.md)** of a script or flow.
+Other ways to pause a workflow include:
+- [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
+- [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one).
+- [Retry](./14_retries.md) a step a step until it comes successful.
+- [Schedule the trigger](../core_concepts/1_scheduling/index.md) of a script or flow.
 
 :::
 
@@ -38,105 +37,144 @@ For the moment we receive the approval steps in the form of an HTTP request. For
 
 :::tip
 
-You can also find ready-to-use [Approval Scripts](https://hub.windmill.dev/approvals)
+You can find ready-to-use [Approval Scripts](https://hub.windmill.dev/approvals)
 on Windmill Hub:
-- [Suspend/resume a Flow by sending approval URL via email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail).
-- [Ask channel for approval](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack).
+- [Suspend/resume a Flow by sending approval URL via email (gmail)](https://hub.windmill.dev/scripts/gmail/1397/).
+- [Ask channel for approval (Slack)](https://hub.windmill.dev/scripts/slack/1503/).
 
 :::
 
 
-## Add Approval Script
-
-![Adding approval step](../assets/flows/approval-step.png)
+## Add and Approval Script
 
 You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
 external communication channel (like e-mail, SMS or chat message).
 
-Important thing to remember is that **the number of required approvals can be
-customized**. This allows some flexibility for cases where you either require
+![Adding approval step](../assets/flows/approval-step.png "Adding approval step")
+
+> When adding a step to a flow, pick `Approval`.
+
+<br/>
+
+**The number of required approvals can be
+customized**. This allows flexibility and security for cases where you either require
 approvals from all authorized people or only from one.
 
-![Required approvals](../assets/flows/flow-number-of-approvals.png)
+![Required approvals](../assets/flows/flow-number-of-approvals.png "Required approvals")
 
 Note that approval steps can be applied the same configurations as regular steps ([Retries](./14_retries.md), [Early stop/Break](./2_early_stop.md) or [Suspend](./15_sleep.md)).
 
-## Example with Gmail
+## Add a form to the approval page
 
-### Add Gmail Resource
+You can add an arbitrary schema form to be provided and displayed on the approval page. Users opening the approval page would then be offered to fill arguments you can use in the flow.
 
-Lets start with adding a Gmail Resource. On the
-[Resources](../core_concepts/3_resources_and_types/index.md) page, click "Add a
-resource/API", select the `gmail` OAuth API and click "Sign in with Google".
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/form_approval_page.mp4"
+/>
 
-:::info
+<br/>
 
-As Google is an OAuth provider, you will be redirected to select your Google
-account. To make the Approval Script work, you need to sign in and allow
-Windmill to send e-mails on your behalf.
+In the `Advanced` menu of a step, go to the "Suspend/Approval" tab and enable the `Add a form to the approval page` button.
+
+Add properties and define their Name, Description, Type, Default Value and Advanced settings.
+
+![Approval text box](../assets/flows/add_argument.png)
+
+That will the be displayed on the approval page.
+
+![Approval text box](../assets/flows/page_arguments.png)
+
+This is a way to introduce human-in-the-loop workflows and condition branches on approval steps inputs.
+
+## Tutorial: A Slack Approval Step Conditioning Flow Branches
+
+The answer to the arguments of an approval page can be used as an input to condition branches in human-in-the-loop workflows.
+
+Here is a basic example we will detail below.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/example_approval_branches.mp4"
+/>
+
+<br/>
+
+This flow:
+1. Receives a refund request form a user.
+2. Asks on Slack via an approval step what action to take.
+3. The answer is a condition to [branches](./13_flow_branches.md) that lead either a refund, a refusal or a deeper investigation.
+
+:::tip Fork and try the flow
+
+An [automated trigger version](#automated-trigger-version) of this flow is available on [Windmill Hub](https://hub.windmill.dev/flows/49/).
 
 :::
 
-![Connect the Gmail API](../assets/flows/connect-api.png)
+For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.md#auto-generated-uis). Two input were used: "User email" and "Order number", both strings.
 
-![Save the Gmail Resource](../assets/flows/save-resource.png)
+![Flow inputs](../assets/flows/tuto_approval_input.png)
 
-### Reusing Script from Windmill Hub
+Then, we picked an approval step on the Hub to [Ask channel for approval on Slack](https://hub.windmill.dev/scripts/slack/1503/). With inputs:
+- `slack`: your [Slack resource](../integrations/slack.md).
+- `channel`: Slack channel to publish message, as string.
+- `text`: `Refund request by _${flow_input["User email"]}_ on order ${flow_input["Order number"]}.`.
 
-Let's create a Flow as described in the
-[getting started](../getting_started/6_flows_quickstart/index.md) section.
-Our first step will be an **Approval Script** from
-[Windmill Hub](https://hub.windmill.dev), so click the `+` sign in the left pane
-and select "Approval (Script)".
+![Slack inputs](../assets/flows/tuto_approval_slack.png)
 
-![Add Approval step](../assets/flows/approval-step.png)
+In the `Advanced` settings of the step, for "Suspend/Approval". We added the following properties to the form.
 
-Once the step is added, you'll be presented with some pre-made Scripts from the
-Hub. Select the one named "Suspend/resume a flow by sending approval URL via
-email (gmail)".
+![Form settings](../assets/flows/tuto_approval_form.png)
 
-![Reuse Gmail script from Hub](../assets/flows/gmail-hub-script.png)
+![Form settings 2](../assets/flows/tuto_approval_form_2.png)
 
-Make sure to fill required fields: for `gmail_auth`, select your newly added
-Gmail resource and define email addresses in the `approver_emails` input.
+This will lead to the following approval page:
 
-![Enter Script arguments](../assets/flows/script-arguments.png)
+![Approval page](../assets/flows/tuto_approval_page.png)
 
-### Run the Flow
+This approval page will generate two keys you can use for further steps: `resume["Action"]` and `resume["Message"]`. `resume` is the resume payload.
 
-The Flow is now ready for testing, let's click "Test flow" in the top-right
-corner.
+Those are the keys you can use as predicate expressions for your [branches](./13_flow_branches.md).
 
-![Running the Flow](../assets/flows/running.png)
+![Branches predicate expressions](../assets/flows/tuto_approval_branches.png "Branches predicate expressions")
 
-You can notice that after the first step, the Flow is suspended and is waiting
-for approval. An e-mail should have been sent to the email addresses you
-specified. It contains a link to a webpage that looks like the following:
+> With [Branch one](./13_flow_branches.md#branch-one), the first branch whose predicate expression is `true` will execute.
 
-![Waiting for approval](../assets/flows/approval.png)
+<br/>
 
-Let's approve and resume the Flow and see that it has successfully ran the
-second step as well.
+The content of each branch is of little importance for this tutorial as it depends each operations and tech stack. For the example we used two Hub scripts: [Send Email](https://hub.windmill.dev/scripts/gmail/1291/) with [Gmail](../integrations/gmail.md) and [Send Message to Channel](https://hub.windmill.dev/scripts/slack/1284/) with [Slack](../integrations/slack.md).
 
-![Finished flow](../assets/flows/finished-flow.png)
+<details>
+  <summary>Example of arguments used for Gmail and Slack scripts:</summary>
 
-## Condition branches on approval steps inputs
+![Gmail inputs](../assets/flows/tuto_approval_gmail.png)
 
-In the default URL approval steps there is a text box where users can enter a string. This input can be the condition of further [branches](./13_flow_branches.md) or scripts.
+<br/>
 
-![Approval text box](../assets/flows/approval-textbox.png)
+![Slack inputs](../assets/flows/tuto_approval_slack2.png)
 
-Currently, you need to create an intermediary step that should return '`resume`: "The resume payload"'
+</details>
 
-![Use an intermediary step](../assets/flows/intermediary-step.png)
+### Automated Trigger Version
 
-Once executed, this step will return an output called `message` with the actual message as a string. Use it as a condition expression for your branch one.
+You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_mandrill.md) to trigger this flow manually by an email reception.
 
-![Message output](../assets/flows/message-condition.png)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    id="main-video"
+    src="/videos/automated_refund.mp4"
+/>
 
-You're ready to execute the flow! Let the user enter the message + approve and you're good to execute the branch based on it!.
+<br/>
 
-![Approval message](../assets/flows/approval-message.png)
+:::tip Find it on Windmill Hub
 
-![The branch is executed](../assets/flows/branch-executed.png)
+This flow can be found and forked on [Windmill Hub](https://hub.windmill.dev/flows/49/).
+
+:::
