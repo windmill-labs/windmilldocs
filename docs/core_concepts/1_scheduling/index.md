@@ -27,7 +27,7 @@ However, as with any powerful tool, using cron comes with its own set of challen
 
 :::info A bit of Context: How Windmill Works
 
-[Windmill](../../intro.md) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash).
+[Windmill](../../intro.mdx) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash).
 
 <br/>
 
@@ -158,5 +158,5 @@ Not only can you build scheduled jobs [from Windmill](../../getting_started/00_h
 <!-- Resources -->
 
 [flows]: ../../getting_started/6_flows_quickstart/index.md
-[scripts]: ../../getting_started/0_scripts_quickstart/index.md
+[scripts]: ../../getting_started/0_scripts_quickstart/index.mdx
 [apps]: ../../getting_started/7_apps_quickstart/index.md

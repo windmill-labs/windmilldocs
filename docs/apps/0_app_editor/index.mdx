@@ -4,19 +4,22 @@ import DocCard from '@site/src/components/DocCard';
 
 The app editor is where you build an app with components, create interactions with runnables, and configure the app settings.
 
-<div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="/docs/getting_started/apps_quickstart" class="rounded-md p-6 border border-gray-200 hover:border-orange-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">Apps Quickstart</div>
-    <div class="text-sm text-gray-500">Learn how to build your first app in a matter of minutes.</div>
-  </a>
-  <a href="/docs/react_vue_svelte_apps" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">React/Vue/Svelte Apps</div>
-    <div class="text-sm text-gray-500">Users can import their own React/Vue/Svelte Apps in addition to using Windmill's built-in App editor.</div>
-  </a>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
+	<DocCard
+		color="orange"
+		title="React/Vue/Svelte Apps"
+		description="Users can import their own React/Vue/Svelte Apps in addition to using Windmill's built-in App editor."
+		href="/docs/react_vue_svelte_apps"
+	/>
 </div>
 
-<br/>
+<br />
 
 The app editor is composed of 5 main sections:
 
@@ -48,19 +51,22 @@ In the topbar, you have several options to configure your app:
 
 <div class="grid grid-cols-2 gap-2">
 	<DocCard
+		color="orange"
 		title="Toolbar guide"
 		description="Discover all the features of the toolbar."
 		href="/docs/apps/toolbar"
 	/>
 	<DocCard
+		color="orange"
 		title="Debugging"
 		description="Learn how to debug your app."
-		href="/docs/apps/debugging"
+		href="/docs/apps/app_debugging"
 	/>
 	<DocCard
+		color="orange"
 		title="Deployment"
 		description="Save as draft or deploy your app."
-		href="/docs/apps/deployment"
+		href="/docs/apps/app_deployment"
 	/>
 </div>
 
@@ -81,11 +87,13 @@ The canvas at the center of the editor is where you design and see the overall U
 
 <div class="grid grid-cols-2 gap-2">
 	<DocCard
+		color="orange"
 		title="Canvas guide"
 		description="Move, resize, and nest components."
 		href="/docs/apps/canvas"
 	/>
 	<DocCard
+		color="orange"
 		title="Component Library"
 		description="Discover all the components available."
 		href="/docs/apps/app_configuration-settings/app_component_library"
@@ -114,11 +122,13 @@ You can perform the following actions with the outputs:
 
 <div class="grid grid-cols-2 gap-2 mb-4">
 	<DocCard
+		color="orange"
 		title="Context"
 		description="The context holds such information as the user email, username, the workspace, the query parameters, etc."
 		href="/docs/apps/outputs"
 	/>
 	<DocCard
+		color="orange"
 		title="State"
 		description="Learn how to interact with the app's state using frontend scripts."
 		href="/docs/apps/app-runnable-panel#state"
@@ -135,6 +145,7 @@ On the bottom panel of the editor, you can see the list of runnables of the app.
 
 <div class="grid grid-cols-2 gap-2 mb-4">
 	<DocCard
+		color="orange"
 		title="Runnable Guide"
 		description="Learn how to create and configure runnables."
 		href="/docs/apps/app-runnable-panel"
@@ -151,21 +162,25 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 
 <div class="grid grid-cols-2 gap-2 my-4">
 	<DocCard
+		color="orange"
 		title="Component Library"
 		description="Discover all the components available in the library, and their configurations."
 		href="/docs/apps/app_configuration-settings/app_component_library"
 	/>
 	<DocCard
+		color="orange"
 		title="Runnable Triggers"
 		description="Learn how to trigger a runnable."
 		href="/docs/apps/app_configuration-settings/app_runnable_triggers"
 	/>
 	<DocCard
+		color="orange"
 		title="Component Configuration"
 		description="Learn how to configure a component."
 		href="/docs/apps/app_configuration-settings/app_component_configuration"
 	/>
 	<DocCard
+		color="orange"
 		title="Styling"
 		description="Learn how to edit the component styles."
 		href="/docs/apps/app_configuration-settings/app_styling"

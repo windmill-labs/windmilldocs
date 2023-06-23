@@ -19,7 +19,7 @@ To customize UIs and interactions for your scripts and flows, explore Windmill's
 
 :::
 
-By analyzing the parameters of the main function, Windmill generates an input specification for the script or flow in the [JSON Schema](https://json-schema.org/) format. Windmill then renders the UI for the Script or Flow from that specification.
+By analyzing the parameters of the main function, Windmill generates an input specification for the script or flow in the [JSON Schema](../13_json_schema_and_parsing/index.md) format. Windmill then renders the UI for the Script or Flow from that specification.
 
 You don't need to directly interact with the JSON Schema associated with the Script or Flow. It is the result of the analysis of the script parameters of the main function and the optional UI customization.
 
@@ -33,7 +33,7 @@ In the UI customization interface, you can refine information that couldn't be i
 
 :::tip
 
-This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.md) & [flow](../../getting_started/6_flows_quickstart/index.md) editors to test your code.
+This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.mdx) & [flow](../../getting_started/6_flows_quickstart/index.md) editors to test your code.
 
 <br/>
 
