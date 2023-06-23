@@ -5,7 +5,7 @@ export default function LandingSection({
 	bgClass = 'landing-section-gradient-background'
 }) {
 	return (
-		<div className={`w-full h-full ${bgClass} py-16 `}>
+		<div className={`w-full h-full py-16 bg-white dark:bg-gray-900 ${bgClass}  `}>
 			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full">
 				{children}
 			</div>

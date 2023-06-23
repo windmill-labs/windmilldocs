@@ -2,13 +2,13 @@ import React from 'react';
 
 export default function CallToAction() {
 	return (
-		<div className="bg-white w-full">
+		<div className="bg-white w-full dark:bg-gray-900">
 			<div className="">
-				<div className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
-					<h2 className="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-white">
+				<div className="relative isolate overflow-hidden bg-gray-900 dark:bg-white px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+					<h2 className="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-white dark:text-gray-900">
 						Build endpoints, workflows & ETLs, UIs with code only where it matters
 					</h2>
-					<p className="mx-auto mt-6 max-w-4xl text-lg leading-8 text-gray-300">
+					<p className="mx-auto mt-6 max-w-4xl text-lg leading-8 text-gray-300 dark:text-gray-600">
 						Get started building your internal tool in under 10 minutes
 					</p>
 					<div className="mt-10 flex items-center justify-center gap-x-6">
@@ -24,7 +24,7 @@ export default function CallToAction() {
 							href="https://cal.com/ruben-windmill/windmill-demo"
 							data-analytics='"schedule-demo"'
 							onClick={() => window.plausible('schedule-demo')}
-							className="text-base font-semibold leading-7 text-white !no-underline"
+							className="text-base font-semibold leading-7 text-white !no-underline dark:text-gray-900"
 						>
 							Schedule a demo <span aria-hidden="true">→</span>
 						</a>

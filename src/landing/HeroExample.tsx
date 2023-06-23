@@ -30,7 +30,6 @@ export default function HeroExample() {
 		tabs: tabs,
 		initialTabId: tabs[0].id
 	});
-	const framer = useTabs(hookProps);
 	const [played, setPlayed] = useState(false);
 
 	// When played toggles to true, start the video
@@ -42,7 +41,7 @@ export default function HeroExample() {
 	}, [played]);
 
 	return (
-		<LandingSection bgClass="bg-white">
+		<LandingSection bgClass="bg-white dark:bg-gray-900">
 			<div className="w-full gap-8 flex flex-col">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-slate-500 to-slate-800">
 					Give your scripts Superpowers

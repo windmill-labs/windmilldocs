@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Get Started with Windmill
 
 ### Self-Host Windmill
@@ -6,14 +8,13 @@ You can choose to self-host Windmill on your own infra.
 
 Run it at scale on kubernetes using our [helm charts](https://github.com/windmill-labs/windmill-helm-charts) or use a docker-compose for smaller setups.
 
-<div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="/docs/advanced/self_host/" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
-    <div class="text-lg font-semibold text-gray-900">Self Host Windmill tutorial</div>
-    <div class="text-sm text-gray-500">Self host Windmill in 2 minutes.</div>
-  </a>
+	<DocCard
+		title="Self Host Windmill tutorial"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+	/>
 </div>
-
 
 ### Use Windmill Cloud
 
@@ -25,14 +26,13 @@ Any user will be provided with 1,000 monthly executions from our [Free Plan](/pr
 
 And if you feel like it, [upgrade](../../misc/7_upgrade/index.md) for unlimited executions.
 
-<div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-2 mb-4">
-  <a href="https://app.windmill.dev/" rel="nofollow" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline">
-    <div class="text-lg font-semibold text-gray-900">Windmill Cloud</div>
-    <div class="text-sm text-gray-500">Use Windmill's Cloud App (no credit card required).</div>
-  </a>
+	<DocCard
+		title="Windmill Cloud"
+		description="Use Windmill's Cloud App (no credit card required)."
+		href="https://app.windmill.dev/"
+	/>
 </div>
-
 
 ## Where to Start?
 
