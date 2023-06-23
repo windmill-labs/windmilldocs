@@ -93,6 +93,7 @@ const sidebars = {
 						'flows/flow_trigger',
 						'flows/retries',
 						'flows/cache',
+						'flows/step_mocking',
 						'flows/early_stop',
 						'flows/flow_approval',
 						'flows/sleep'

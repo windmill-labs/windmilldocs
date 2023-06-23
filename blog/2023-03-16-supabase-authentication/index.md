@@ -147,8 +147,7 @@ from the Home page.
 
 ## Configuring Supabase
 
-You might be interested in setting up a new table in your project to test things out. If so, run
-the following SQL script to create a simple table named `my_table`:
+To set up a new table in your project for testing purposes, execute the provided SQL script to create a basic table named `my_table`.
 
 ```sql
 CREATE TABLE my_table(

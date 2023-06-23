@@ -18,8 +18,8 @@ start creating your custom application with setting up a database.
 
 :::info
 
-This article is part of a series. If you are looking for the second part, you
-can find it [here](../2023-01-31-issue-tracker-p2/index.md).
+This article is part of a series. You
+can find the second part [here](../2023-01-31-issue-tracker-p2/index.md).
 
 :::
 
