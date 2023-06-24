@@ -4,10 +4,10 @@ To integrate [Fauna](https://fauna.com/) to Windmill, you need to save the follo
 
 ![Add Fauna Resource](../assets/integrations/add-fauna.png)
 
-| Property | Type    | Description                                                                                         | Default | Required | Where to Find                                              |
-|----------|---------|-----------------------------------------------------------------------------------------------------|---------|----------|------------------------------------------------------------|
-| region   | string  | Region of your database (us, eu, classic). [More info](https://docs.fauna.com/fauna/current/learn/understanding/region_groups) |         | true     | FaunaDB Dashboard > Database Settings                      |
-| secret   | string  | FaunaDB secret key for authentication                                                               |         | true     | FaunaDB Dashboard > Security > Manage API Keys > New Key   |
+| Property | Type   | Description                                                                                                                    | Default | Required | Where to Find                                            |
+| -------- | ------ | ------------------------------------------------------------------------------------------------------------------------------ | ------- | -------- | -------------------------------------------------------- |
+| region   | string | Region of your database (us, eu, classic). [More info](https://docs.fauna.com/fauna/current/learn/understanding/region_groups) |         | true     | FaunaDB Dashboard > Database Settings                    |
+| secret   | string | FaunaDB secret key for authentication                                                                                          |         | true     | FaunaDB Dashboard > Security > Manage API Keys > New Key |
 
 <br/><br/>
 
@@ -15,6 +15,6 @@ To integrate [Fauna](https://fauna.com/) to Windmill, you need to save the follo
 
 Find some pre-set interactions with Fauna on the [Hub](https://hub.windmill.dev/integrations/faunadb).
 
-Feel free to create your own Fauna scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own Fauna scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

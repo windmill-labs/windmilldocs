@@ -191,7 +191,7 @@ const cards = [
 ];
 
 export default function AppSection() {
-	const { developerMode, setDeveloperMode } = useDeveloperMode();
+	const { developerMode } = useDeveloperMode();
 
 	return (
 		<Section

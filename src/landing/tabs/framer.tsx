@@ -20,24 +20,24 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 	const [buttonRefs, setButtonRefs] = useState<Array<HTMLButtonElement | null>>([]);
 
 	const bgByColor = {
-		blue: 'bg-blue-200 text-blue-800',
-		teal: 'bg-teal-200 text-teal-800',
-		orange: 'bg-orange-200 text-orange-800',
-		slate: 'bg-slate-200 text-slate-800'
+		blue: 'bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-white',
+		teal: 'bg-teal-200 text-teal-800 dark:bg-teal-800 dark:text-white',
+		orange: 'bg-orange-200 text-orange-800 dark:bg-orange-800 dark:text-white',
+		slate: 'bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white'
 	};
 
 	const bgLowByColor = {
-		blue: 'bg-blue-100',
-		teal: 'bg-teal-100',
-		orange: 'bg-orange-100',
-		slate: 'bg-slate-100'
+		blue: 'bg-blue-100 dark:bg-blue-900/50',
+		teal: 'bg-teal-100 dark:bg-teal-900',
+		orange: 'bg-orange-100 dark:bg-orange-900',
+		slate: 'bg-slate-100 dark:bg-slate-900'
 	};
 
 	const bgHighByColor = {
-		blue: 'bg-blue-100',
-		teal: 'bg-teal-100',
-		orange: 'bg-orange-100',
-		slate: 'bg-slate-100'
+		blue: 'bg-blue-100 dark:bg-blue-900/50',
+		teal: 'bg-teal-100 dark:bg-teal-800',
+		orange: 'bg-orange-100 dark:bg-orange-800',
+		slate: 'bg-slate-100 dark:bg-slate-800'
 	};
 
 	useEffect(() => {
@@ -63,7 +63,9 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 						className={classNames(
 							'relative rounded-md font-semibold flex items-center px-4 z-20 cursor-pointer select-none transition-colors',
 
-							selectedTabIndex === i ? bgByColor[color] : 'text-gray-500 hover:text-gray-700',
+							selectedTabIndex === i
+								? bgByColor[color]
+								: 'text-gray-500 hover:text-gray-700 dark:text-white',
 							'px-3 py-2 font-medium text-lg rounded-md flex flex-row gap-2'
 						)}
 						ref={(el) => (buttonRefs[i] = el)}

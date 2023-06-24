@@ -283,8 +283,8 @@ export default function Pricing() {
 	const [period, setPeriod] = useState(periods[0]);
 
 	return (
-		<div className="bg-white pb-12">
-			<div className="mx-auto max-w-7xl px-6 lg:px-8">
+		<div className="pb-12">
+			<div className="mx-auto max-w-7xl">
 				<div className="mx-auto max-w-4xl text-center">
 					<p className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Pricing</p>
 				</div>
@@ -293,7 +293,7 @@ export default function Pricing() {
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200"
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
@@ -316,7 +316,7 @@ export default function Pricing() {
 						<RadioGroup
 							value={period}
 							onChange={setPeriod}
-							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200"
+							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
 						>
 							<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
 							{periods.map((option) => (
@@ -325,7 +325,9 @@ export default function Pricing() {
 									value={option}
 									className={({ checked }) =>
 										classNames(
-											checked ? 'bg-black text-white' : 'text-gray-500',
+											checked
+												? 'bg-black dark:bg-gray-200 dark:text-gray-900 text-white'
+												: 'text-gray-500',
 											'cursor-pointer rounded-full px-2.5 py-1',
 											'transition-all'
 										)
@@ -347,7 +349,9 @@ export default function Pricing() {
 						<div
 							key={tier.id}
 							className={classNames(
-								tier.mostPopular ? 'ring-2 ring-blue-600' : 'ring-1 ring-gray-200',
+								tier.mostPopular
+									? 'ring-2 ring-blue-600'
+									: 'ring-1 ring-gray-200 dark:ring-gray-600',
 								'rounded-xl p-6 xl:p-8'
 							)}
 						>
@@ -355,7 +359,7 @@ export default function Pricing() {
 								<h3
 									id={tier.id}
 									className={classNames(
-										tier.mostPopular ? 'text-blue-600' : 'text-gray-900',
+										tier.mostPopular ? 'text-blue-600' : 'text-gray-900 ',
 										'text-2xl font-semibold leading-8'
 									)}
 								>
@@ -372,7 +376,7 @@ export default function Pricing() {
 							{tier.minPrice !== undefined ? (
 								<p className="mt-6 flex items-baseline gap-x-1">
 									<span className="text-sm font-semibold leading-6 text-gray-600">from</span>
-									<span className="text-5xl font-bold tracking-tight text-gray-900">
+									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
 										${period.value === 'annually' ? tier.minPrice * 10 : tier.minPrice}
 									</span>
 									<span className="text-sm font-semibold leading-6 text-gray-600">
@@ -381,9 +385,9 @@ export default function Pricing() {
 								</p>
 							) : (
 								<p className="mt-6 flex items-baseline gap-x-1 invisible">
-									<span className="text-sm font-semibold leading-6 text-gray-600">aod</span>
-									<span className="text-5xl font-bold tracking-tight text-gray-900">"asd"</span>
-									<span className="text-sm font-semibold leading-6 text-gray-600">"asd"</span>
+									<span className="text-sm font-semibold leading-6 text-gray-600">Lorem</span>
+									<span className="text-5xl font-bold tracking-tight text-gray-900">Lorem</span>
+									<span className="text-sm font-semibold leading-6 text-gray-600">Lorem</span>
 								</p>
 							)}
 
@@ -393,7 +397,7 @@ export default function Pricing() {
 								<div
 									aria-describedby={tier.id}
 									className={classNames(
-										'text-gray-900 ring-1 ring-inset ring-gray-200 hover:ring-gray-300',
+										'text-gray-900 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:text-white',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
 									)}
 								>

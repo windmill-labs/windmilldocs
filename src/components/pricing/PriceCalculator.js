@@ -46,7 +46,9 @@ export default function PriceCalculator({ period, tier }) {
 				<h4>Price</h4>
 
 				<div>
-					<span className="text-2xl text-gray-900 font-semibold">${computeTotalPrice()}</span>
+					<span className="text-2xl text-gray-900 font-semibold dark:text-white">
+						${computeTotalPrice()}
+					</span>
 					<span className="text-md text-gray-500">
 						{period.value === 'annually' ? '/yr' : '/mo'}
 					</span>
@@ -68,7 +70,7 @@ export default function PriceCalculator({ period, tier }) {
 									</span>
 								</div>
 								<div>
-									<span className="text-sm text-gray-900 font-semibold">
+									<span className="text-sm text-gray-900 font-semibold dark:text-white">
 										${calculatePrice(tier.price[key].monthly, period.value).toFixed(2)}
 									</span>
 									<span className="text-sm text-gray-500">
@@ -109,7 +111,7 @@ export default function PriceCalculator({ period, tier }) {
 										classNames(
 											checked ? 'border-transparent' : 'border-gray-300',
 											active ? 'border-blue-600 ring-2 ring-blue-600' : '',
-											'relative block cursor-pointer rounded-lg border bg-white p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
+											'relative block cursor-pointer rounded-lg border bg-white dark:bg-gray-900  p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
 										)
 									}
 								>
@@ -117,17 +119,23 @@ export default function PriceCalculator({ period, tier }) {
 										<>
 											<span className="flex items-center w-full">
 												<span className="flex flex-col text-sm w-full">
-													<RadioGroup.Label as="span" className="font-medium text-gray-900">
+													<RadioGroup.Label
+														as="span"
+														className="font-medium text-gray-900 dark:text-white"
+													>
 														{plan.name}
 													</RadioGroup.Label>
-													<RadioGroup.Description as="span" className="text-gray-500">
+													<RadioGroup.Description
+														as="span"
+														className="text-gray-500 dark:text-gray-300"
+													>
 														<span className="block sm:inline">{plan.description}</span>
 													</RadioGroup.Description>
 													<RadioGroup.Description as="div" className="flex w-full justify-end">
-														<span className="text-sm text-gray-900 font-semibold">
+														<span className="text-sm text-gray-900 font-semibold dark:text-white">
 															${calculatePrice(plan.price, period.value).toFixed(2)}
 														</span>
-														<span className="text-sm text-gray-500">
+														<span className="text-sm text-gray-500 dark:text-gray-300">
 															{period.value === 'annually' ? '/yr' : '/mo'}
 														</span>
 													</RadioGroup.Description>
@@ -163,7 +171,9 @@ export default function PriceCalculator({ period, tier }) {
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
-						<span className="whitespace-nowrap text-sm">{seats} users</span>
+						<span className="whitespace-nowrap text-sm">
+							{seats} {seats > 1 ? 'users' : 'user'}
+						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
@@ -182,7 +192,9 @@ export default function PriceCalculator({ period, tier }) {
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
-						<span className="whitespace-nowrap text-sm">{seats} users</span>
+						<span className="whitespace-nowrap text-sm">
+							{seats} {seats > 1 ? 'users' : 'user'}
+						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
@@ -201,7 +213,9 @@ export default function PriceCalculator({ period, tier }) {
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
-						<span className="whitespace-nowrap text-sm">{seats} users</span>
+						<span className="whitespace-nowrap text-sm">
+							{seats} {seats > 1 ? 'users' : 'user'}
+						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>

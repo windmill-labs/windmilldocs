@@ -25,7 +25,7 @@ Those workflows can run for-loops, branches (parralellizable) suspend themselves
 
 To create your first workflow, you could also pick one from our [Hub](https://hub.windmill.dev/flows) and fork it. Here, we're going to build our own flow from scratch, step by step.
 
-From [Windmill](../00_how_to_use_windmill/index.md), click on `+ Flow`, and let's get started!
+From [Windmill](../00_how_to_use_windmill/index.mdx), click on `+ Flow`, and let's get started!
 
 :::tip
 

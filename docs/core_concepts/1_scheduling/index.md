@@ -153,7 +153,7 @@ From the metadata menu, change the owner to a [folder](../../core_concepts/8_gro
 
 Voilà, all done! The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
 
-Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.md) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
+Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.mdx) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
 
 <!-- Resources -->
 

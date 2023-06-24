@@ -12,8 +12,9 @@ import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
-
 const DeveloperModeContext = createContext();
+import { useColorMode } from '@docusaurus/theme-common';
+import LayoutProvider from '@theme/Layout/Provider';
 
 export function useDeveloperMode() {
 	return useContext(DeveloperModeContext);
@@ -33,14 +34,17 @@ function HomepageHeader() {
 	return (
 		<DeveloperModeContext.Provider
 			value={{
-				developerMode,
-				setDeveloperMode
+				developerMode: developerMode,
+				setDeveloperMode: setDeveloperMode
 			}}
 		>
 			<LandingHeader />
 			<Hero />
 			<HeroExample />
 
+			<ScriptSection />
+			<FlowSection />
+			<AppSection />
 			<CoreSection
 				title="Scripts"
 				caption="No overhead, scalable, self-hostable FaaS"
@@ -52,13 +56,10 @@ function HomepageHeader() {
 				key="script-card"
 				kind="script"
 			/>
-			<ScriptSection />
-			<FlowSection />
-			<AppSection />
 
 			<IntergrationList />
 			<EntrepriseFeatures />
-			<LandingSection bgClass="bg-white">
+			<LandingSection bgClass="bg-white dark:bg-gray-900 py-0">
 				<CallToAction />
 			</LandingSection>
 			<Footer />
@@ -68,16 +69,18 @@ function HomepageHeader() {
 
 export default function Home() {
 	return (
-		<main>
-			<Head>
-				<title>Windmill | Open source platform to build internal tools with scripts</title>
-				<meta name="title" content="Internal tools with scripts." />
-				<meta
-					name="description"
-					content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
-				/>
-			</Head>
-			<HomepageHeader />
-		</main>
+		<LayoutProvider>
+			<main>
+				<Head>
+					<title>Windmill | Open source platform to build internal tools with scripts</title>
+					<meta name="title" content="Internal tools with scripts." />
+					<meta
+						name="description"
+						content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
+					/>
+				</Head>
+				<HomepageHeader />
+			</main>
+		</LayoutProvider>
 	);
 }

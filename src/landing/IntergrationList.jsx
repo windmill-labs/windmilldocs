@@ -43,13 +43,13 @@ export default function IntergrationList() {
 	const { developerMode, setDeveloperMode } = useDeveloperMode();
 
 	return (
-		<LandingSection bgClass="bg-white">
+		<LandingSection bgClass="bg-white dark:bg-gray-900">
 			<div className="w-full gap-8 flex flex-col">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
 					Integrations
 				</h1>
 
-				<span className={classNames('text-lg max-w-3xl', 'text-gray-600')}>
+				<span className={classNames('text-lg max-w-3xl', 'text-gray-600 dark:text-gray-200')}>
 					We have a growing list of integrations with third party services available on the Hub.
 					Connect your apps and services to automate your workflows.
 				</span>

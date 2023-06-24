@@ -3,7 +3,7 @@ import LandingSectionWrapper from './LandingSectionWrapper';
 import CardsContainer from '../landing/cards/Cards';
 import classNames from 'classnames';
 import { Gauge, Play, Server } from 'lucide-react';
-
+import { useColorMode } from '@docusaurus/theme-common';
 import { BoltIcon } from '@heroicons/react/20/solid';
 
 const cards = [
@@ -34,14 +34,11 @@ const cards = [
 	}
 ];
 export default function CoreSection({ color }) {
-	const colors = {
-		bg: 'bg-white',
-		text: 'text-gray-600'
-	};
+	const { colorMode } = useColorMode();
 
 	return (
-		<LandingSectionWrapper className={`${colors.bg}`} color={color}>
-			<div className="flex flex-col w-full gap-4 justify-center" id="script-section light">
+		<LandingSectionWrapper color={color}>
+			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2 ">
 					<div className="flex justify-between items-center w-full">
 						<h1
@@ -55,7 +52,7 @@ export default function CoreSection({ color }) {
 					</div>
 				</div>
 
-				<CardsContainer cards={cards} mode="light" />
+				<CardsContainer cards={cards} mode={colorMode === 'dark' ? 'dark' : 'light'} />
 			</div>
 		</LandingSectionWrapper>
 	);

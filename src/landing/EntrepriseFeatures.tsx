@@ -44,19 +44,22 @@ const features = [
 
 export default function EnterpriseFeatures() {
 	return (
-		<LandingSection bgClass="white">
+		<LandingSection bgClass="white dark:bg-gray-900">
 			<div className="w-full gap-8 flex flex-col">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-black">
 					Enterprise-ready platform
 				</h1>
-				<span className="text-lg text-gray-600 max-w-3xl">
+				<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
 					Deploy faster, build invincible and reliable workflows in an enterprise-grade platform.
 				</span>
 				<div className="mx-auto w-full">
-					<dl className="grid grid-cols-1 lg:grid-cols-3 border">
+					<dl className="grid grid-cols-1 lg:grid-cols-3 border dark:border-gray-800">
 						{features.map((feature) => (
-							<div key={feature.name} className="flex flex-col border p-8 hover:bg-gray-50">
-								<dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+							<div
+								key={feature.name}
+								className="flex flex-col border p-8 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800"
+							>
+								<dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
 									<feature.icon className="h-5 w-5 flex-none text-blue-600" aria-hidden="true" />
 									{feature.name}
 								</dt>

@@ -19,9 +19,25 @@
 	}
 }
 
+
+
+html[data-theme='dark'] {
+  --ifm-navbar-background-color: #111827;
+	--ifm-background-color:#111827
+}
+
+.navbar {
+	@apply border-b dark:border-gray-800 ;
+}
+
+
+:root {
+	--ifm-navbar-background-color: white;
+	--ifm-background-color:white;
+}
+
 nav {
 	font-family: var(--ifm-font-family-base);
-
 }
 
 footer {
@@ -91,24 +107,31 @@ p {
 	@apply dark:text-gray-100
 }
 
-
 h1 {
 	@apply !text-3xl !font-bold dark:text-gray-100
 }
 
+.markdown h1 {
+	@apply !text-4xl !font-semibold dark:text-white mt-12 mb-4 border-b pb-4 border-neutral-100 dark:border-neutral-800;
+}
+
 h2 {
-	@apply text-2xl;
-	@apply font-bold dark:text-gray-100;
-	
+	@apply text-2xl font-bold dark:text-gray-100;	
 }
 
 h3 {
-	@apply text-xl;
-	@apply font-bold;
-	@apply dark:text-gray-100
+	@apply text-xl font-bold dark:text-gray-100;
 }
 
+.markdown h2 {
+	@apply text-xl font-semibold dark:text-white !mt-12;
+}
 
+.markdown h3 {
+	@apply text-xl;
+	@apply font-semibold;
+	@apply dark:text-gray-100
+}
 
 h4 {
 	@apply text-lg;
@@ -126,6 +149,10 @@ li {
 #__docusaurus.img {
 	@apply border-2;
 	@apply rounded-xl;
+}
+
+.markdown {
+	@apply max-w-4xl mx-auto
 }
 
 div.markdown ul > li {
@@ -288,8 +315,18 @@ td:nth-of-type(2):first-child {
 }
 
 th {
-	@apply bg-gray-200 dark:bg-neutral-800 dark:text-gray-200
+	@apply bg-gray-200 dark:bg-neutral-700 dark:text-gray-200
 }
 
 
+.theme-doc-breadcrumbs {
+	@apply max-w-4xl mx-auto pt-4;
+}
 
+.table-of-contents {
+	@apply mt-24
+}
+
+.pagination-nav {
+	@apply max-w-4xl mx-auto;
+}

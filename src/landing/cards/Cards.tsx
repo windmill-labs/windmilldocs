@@ -15,6 +15,7 @@ interface CardProps {
 	svg?: React.ReactNode;
 	href?: string;
 	icons?: React.ComponentType[];
+	mode?: 'light' | 'dark';
 }
 
 const Card: React.FC<CardProps> = ({
@@ -27,7 +28,8 @@ const Card: React.FC<CardProps> = ({
 	video,
 	svg,
 	href,
-	icons
+	icons,
+	mode = 'light'
 }) => {
 	return (
 		<a className={classNames('card shadow-none transition-all', gridArea)} href={href}>
@@ -37,7 +39,7 @@ const Card: React.FC<CardProps> = ({
 					{imageSlider && (
 						<div className="slider">
 							{imageSlider.map((imageUrl, index) => (
-								<img key={index} src={imageUrl} alt={`Slider Image ${index}`} />
+								<img key={index + title} src={imageUrl} alt={`Slider Image ${index}`} />
 							))}
 						</div>
 					)}
@@ -47,15 +49,20 @@ const Card: React.FC<CardProps> = ({
 						<div className="h-full w-full flex items-center justify-center">
 							<div className="h-40 min-w-40 px-4 w-auto border rounded-full flex items-center justify-center bg-gray-50/50 border-gray-100 dark:bg-gray-800/50 dark:border-gray-900">
 								<div className="h-32 min-w-32 px-4  w-auto border rounded-full bg-gray-100/50 border-gray-100 dark:bg-gray-700/50 dark:border-gray-800 flex items-center justify-center gap-2">
-									{/* @ts-ignore */}
-									<Icon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
+									<Icon
+										className={twMerge(
+											'h-24 w-24 border rounded-full overflow-visible p-4 ',
+											mode === 'dark' && 'text-white bg-gray-600/50 border-gray-700',
+											mode === 'light' && 'text-gray-500 bg-gray-200/50 border-gray-200'
+										)}
+									/>
 
 									{icons?.map((ExtraIcon, index) => {
 										return (
-											<>
+											<React.Fragment key={index}>
 												{/* @ts-ignore */}
 												<ExtraIcon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
-											</>
+											</React.Fragment>
 										);
 									})}
 								</div>
@@ -65,7 +72,7 @@ const Card: React.FC<CardProps> = ({
 				</div>
 				<div className="card-footer  grow pt-4 pb-8 rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">
-						<div className=" ">
+						<div className="">
 							{/* @ts-ignore */}
 							<Icon className="w-6 h-6" />
 						</div>
@@ -123,7 +130,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({
 			>
 				{cards.map((card, i) => (
 					<Card
-						key={i}
+						key={i + card.title + card.subtitle}
 						Icon={card.Icon}
 						title={card.title}
 						subtitle={card.subtitle}
@@ -134,6 +141,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({
 						svg={card.svg}
 						href={card.href}
 						icons={card.icons}
+						mode={mode}
 					/>
 				))}
 			</div>

@@ -30,7 +30,7 @@ export default function TabContent({ data, color }) {
 		if (data[selectedIndex].video) {
 			return (
 				<video
-					className="border-2 rounded-xl object-cover w-full h-full"
+					className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 					autoPlay
 					loop
 					src={data[selectedIndex].video?.videoSrc}
@@ -39,7 +39,7 @@ export default function TabContent({ data, color }) {
 		} else if (data[selectedIndex].imageSrc) {
 			return (
 				<img
-					className="border-2 rounded-xl object-cover w-full h-full"
+					className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 					src={data[selectedIndex].imageSrc}
 					style={{ maxHeight: data[selectedIndex].height }}
 				/>
@@ -47,7 +47,7 @@ export default function TabContent({ data, color }) {
 		} else if (data[selectedIndex].svg) {
 			return (
 				<img
-					className="border-2 p-2 bg-white rounded-xl object-cover w-full mx-auto h-full"
+					className="border-2 p-2 bg-white rounded-xl object-cover w-full mx-auto h-full dark:border-gray-800"
 					src={data[selectedIndex].svg}
 					style={{ maxHeight: data[selectedIndex].height }}
 				/>
@@ -89,7 +89,7 @@ export default function TabContent({ data, color }) {
 								<div className="border-2 rounded-xl object-cover w-full h-full">Loading</div>
 							)}
 
-							<span className="text-gray-500 text-center w-full text-sm">
+							<span className="text-gray-500 text-center w-full text-sm dark:text-gray-300">
 								{data[selectedIndex].caption}
 							</span>
 						</div>
