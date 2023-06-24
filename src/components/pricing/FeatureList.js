@@ -3,7 +3,6 @@ import { Circle } from 'lucide-react';
 import classNames from 'classnames';
 
 export default function FeatureList({ features, level = 1, id }) {
-	console.log(level);
 	return (
 		<ul
 			className={classNames(

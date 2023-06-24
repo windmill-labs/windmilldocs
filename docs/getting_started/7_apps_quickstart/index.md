@@ -50,7 +50,7 @@ Switch from **Editor** to **Preview** mode to take a step back on what you're bu
 
 ### Components
 
-The App editor works on a drag-and-drop basis. From the right-side menu, click on a component to **create** it on the [canvas](/docs/apps/app_canvas/), **move** it maintaining a click on it and **delete** it clicking on `Delete component` at the bottom of the `Settings` tab. You can resize your components by dragging the **resize** handler on the bottom-right corner.
+The App editor works on a drag-and-drop basis. From the right-side menu, click on a component to **create** it on the [canvas](../../apps/1_canvas.mdx), **move** it maintaining a click on it and **delete** it clicking on `Delete component` at the bottom of the `Settings` tab. You can resize your components by dragging the **resize** handler on the bottom-right corner.
 
 If you have numerous components you might need to **Anchor** some of them to have them unmovable by other components.
 
