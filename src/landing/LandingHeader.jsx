@@ -37,11 +37,7 @@ export default function LandingHeader() {
 						href="/"
 						className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
 					>
-						<img
-							className="h-8 group-hover:animate-spin ease-in duration-[10s]"
-							src="/img/windmill.svg"
-							alt="Windmill Labs"
-						/>
+						<img className="h-8" src="/img/windmill.svg" alt="Windmill Labs" />
 						<div className="font-semibold text-xl text-blue-500 dark:text-white subpixel-antialiased ">
 							Windmill
 						</div>
