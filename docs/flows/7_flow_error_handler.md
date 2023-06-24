@@ -19,9 +19,9 @@ Steps are retried until they succeed, or until the maximum number of retries def
 
 You can write error handler scripts in:
 
-- [Python](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/python/)
-- [Typescript](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/typescript/)
-- [Go](https://docs.windmill.dev/docs/getting_started/scripts_quickstart/go/)
+- [Python](/docs/getting_started/scripts_quickstart/python/)
+- [Typescript](/docs/getting_started/scripts_quickstart/typescript/)
+- [Go](/docs/getting_started/scripts_quickstart/go/)
 
 On the Hub, two examples of error handlers are provided:
 

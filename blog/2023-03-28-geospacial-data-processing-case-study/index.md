@@ -12,7 +12,7 @@ This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Mana
 
 <br/>
 
-![Sourcepole Windmill use case](./0-header.png "Sourcepole Windmill testimonial")
+![Sourcepole Windmill use case](./0-header.png 'Sourcepole Windmill testimonial')
 
 ## What before Windmill?
 
@@ -27,6 +27,7 @@ Windmill facilitates the creation of robust workflows by enabling seamless seque
 We tried other solutions and found the configuration of parameters between steps was difficult, making it painful to create simple worflows.
 
 In particular, we use Windmill for:
+
 - **[Scheduled](/docs/core_concepts/scheduling) ETL** of files from public repositories to PostgreSQL.
 - Its **UIs** where users can simply upload their own data to publish it as a file ready for downloading.
 - We are starting to have **workspaces dedicated to each customer** where they can use our workflows straightforwardly.
@@ -37,13 +38,13 @@ In particular, we use Windmill for:
 
 A workflow made by Sourcepole being executed:
 
-![Workflow being executed](./sourcepole_execution.png "Workflow being executed")
+![Workflow being executed](./sourcepole_execution.png 'Workflow being executed')
 
 <br/>
 
 The associated results:
 
-![Workflow results](./sourcepole_results.png "Workflow results")
+![Workflow results](./sourcepole_results.png 'Workflow results')
 
 :::
 
@@ -51,4 +52,4 @@ You can have more details on our use of worflow engines for geospatial data proc
 
 ## How to use Windmill?
 
-You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>**.
+You can **[self-host](/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>**.

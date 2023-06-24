@@ -23,7 +23,7 @@ can find the second part [here](../2023-01-31-issue-tracker-p2/index.md).
 
 :::
 
-![Create an Issue Tracker App with Supabase and Windmill](./0-header.png "Integrate Supabase with Windmill in an issue tracker application")
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png 'Integrate Supabase with Windmill in an issue tracker application')
 
 :::tip
 
@@ -95,7 +95,7 @@ in the following code, which will add 8 people to the `users` table.
 ```sql
 -- Insert users
 INSERT INTO users(name, roles)
-VALUES 
+VALUES
   ('Theresa Hurley', '{MANAGER}'),
   ('Taliyah Gardner', '{MANAGER}'),
   ('Ezekiel Ortega', '{MANAGER}'),
@@ -121,7 +121,7 @@ use of the data in that table.
 ```sql
 -- Insert issues
 INSERT INTO issues(created_by, summary, description, severity, assigned_to)
-VALUES 
+VALUES
   (
     (SELECT id FROM users ORDER BY RANDOM() LIMIT 1),
     'Update call-to-action button color',
@@ -166,7 +166,7 @@ VALUES
 
 You can create resources that will allow you to reuse secrets like passwords and
 tokens without exposing them. To create your Supabase resource, check out the
-[How to Integrate Supabase with Windmill](https://docs.windmill.dev/docs/integrations/supabase)
+[How to Integrate Supabase with Windmill](/docs/integrations/supabase)
 tutorial - it takes only 2 minutes.
 
 After you added your resource, navigate to the `Home`
@@ -201,17 +201,17 @@ This can be achieved by Background runnables.
 4. Paste in the following code:
 
    ```tsx
-   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-     supabaseUrl: string;
-     supabaseKey: string;
+   	supabaseUrl: string;
+   	supabaseKey: string;
    };
 
    export async function main(auth: Supabase) {
-     const client = createClient(auth.supabaseUrl, auth.supabaseKey);
-     const result = await client.from("issues").select();
-     return result.data;
+   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const result = await client.from('issues').select();
+   	return result.data;
    }
    ```
 
@@ -248,18 +248,19 @@ it:
 
    ```tsx
    export async function main(issues: any[]) {
-     return issues?.map((issue) => {
-       return {
-         id: issue.id,
-         status: issue.status,
-         severity: issue.severity,
-         created_at: issue.created_at,
-         summary: issue.summary,
-         description: issue.description,
-       };
-     });
+   	return issues?.map((issue) => {
+   		return {
+   			id: issue.id,
+   			status: issue.status,
+   			severity: issue.severity,
+   			created_at: issue.created_at,
+   			summary: issue.summary,
+   			description: issue.description
+   		};
+   	});
    }
    ```
+
    :::info
 
    The script is needed so the table will display only the relevant properties
@@ -322,23 +323,23 @@ you'll still be able to move them manually.
 
    ```tsx
    export async function main(issues: any[]) {
-     if (!issues) {
-       return {
-         labels: [],
-         data: [],
-       };
-     }
-     const values: Record<string, number> = {};
-     issues.forEach(({ status }) => {
-       if (!values[status]) {
-         values[status] = 0;
-       }
-       values[status]++;
-     });
-     return {
-       labels: Object.keys(values),
-       data: Object.values(values),
-     };
+   	if (!issues) {
+   		return {
+   			labels: [],
+   			data: []
+   		};
+   	}
+   	const values: Record<string, number> = {};
+   	issues.forEach(({ status }) => {
+   		if (!values[status]) {
+   			values[status] = 0;
+   		}
+   		values[status]++;
+   	});
+   	return {
+   		labels: Object.keys(values),
+   		data: Object.values(values)
+   	};
    }
    ```
 
@@ -367,23 +368,23 @@ the following code:
 
 ```tsx
 export async function main(issues: any[]) {
-  if (!issues) {
-    return {
-      labels: [],
-      data: [],
-    };
-  }
-  const values: Record<string, number> = {};
-  issues.forEach(({ severity }) => {
-    if (!values[severity]) {
-      values[severity] = 0;
-    }
-    values[severity]++;
-  });
-  return {
-    labels: Object.keys(values),
-    data: Object.values(values),
-  };
+	if (!issues) {
+		return {
+			labels: [],
+			data: []
+		};
+	}
+	const values: Record<string, number> = {};
+	issues.forEach(({ severity }) => {
+		if (!values[severity]) {
+			values[severity] = 0;
+		}
+		values[severity]++;
+	});
+	return {
+		labels: Object.keys(values),
+		data: Object.values(values)
+	};
 }
 ```
 
@@ -421,8 +422,8 @@ create a `Background` script first to convert the `users` list. Add a new
 
 ```tsx
 export async function main(users: undefined | any[]) {
-  if (!Array.isArray(users)) return [];
-  return users.map(({ id, name }) => ({ value: id, label: name }));
+	if (!Array.isArray(users)) return [];
+	return users.map(({ id, name }) => ({ value: id, label: name }));
 }
 ```
 
@@ -520,35 +521,36 @@ user and sends them to the database.
 
    This will result in reloading the issues every time a new one is added and
    therefore it will be added to the table as well.
+
 5. Click `Create an inline script`, select `Deno` as language, name it
    `Create Issue` and paste in the following code:
 
    ```tsx
-   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-   
+   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
    type Supabase = {
-     supabaseUrl: string;
-     supabaseKey: string;
+   	supabaseUrl: string;
+   	supabaseKey: string;
    };
 
    export async function main(
-     auth: Supabase,
-     summary: string,
-     description: string,
-     created_by: string,
-     assigned_to: string,
-     status: string,
-     severity: string,
+   	auth: Supabase,
+   	summary: string,
+   	description: string,
+   	created_by: string,
+   	assigned_to: string,
+   	status: string,
+   	severity: string
    ) {
-     const client = createClient(auth.supabaseUrl, auth.supabaseKey);
-     return await client.from("issues").insert({
-       summary,
-       description,
-       status,
-       severity,
-       created_by,
-       assigned_to,
-     });
+   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	return await client.from('issues').insert({
+   		summary,
+   		description,
+   		status,
+   		severity,
+   		created_by,
+   		assigned_to
+   	});
    }
    ```
 
@@ -576,20 +578,21 @@ the form of buttons. Select the `Table` component and follow the steps:
 
    Because of this, the `issues` data will be reloaded from the database every
    time an issue is deleted.
+
 6. Click `Create an inline script`, select `Deno` as language, name it
    `Delete Issue` and paste in the following code:
 
    ```tsx
-   import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-     supabaseUrl: string;
-     supabaseKey: string;
+   	supabaseUrl: string;
+   	supabaseKey: string;
    };
 
    export async function main(auth: Supabase, id: string) {
-     const client = createClient(auth.supabaseUrl, auth.supabaseKey);
-     return await client.from("issues").delete().filter("id", "eq", id);
+   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	return await client.from('issues').delete().filter('id', 'eq', id);
    }
    ```
 

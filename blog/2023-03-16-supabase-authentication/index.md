@@ -604,6 +604,6 @@ navigated to the "Data" tab.
 [js-template-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
 [supabase-auth-fe-example]: https://hub.windmill.dev/apps/9/supabase-authentication-example---frontend-scripts-version
 [supabase-auth-be-example]: https://hub.windmill.dev/apps/11/supabase-authentication-example---backend-scripts-version
-[resource-doc]: https://docs.windmill.dev/docs/core_concepts/resources_and_types
+[resource-doc]: /docs/core_concepts/resources_and_types
 [hub-supabase-auth]: https://hub.windmill.dev/scripts/supabase/1540/authenticate-with-email-and-password-supabase
 [hub-supabase-fetch]: https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase

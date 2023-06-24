@@ -80,4 +80,4 @@ At last, I want to talk about its team and founder, Ruben. In a few weeks of usi
 
 ## How to use Windmill?
 
-You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>**.
+You can **[self-host](/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">cloud app</a>**.

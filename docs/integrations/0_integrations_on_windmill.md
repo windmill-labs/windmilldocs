@@ -4,7 +4,7 @@ Integrations are key on Windmill as they allow databases (internal & external) a
 
 Using Windmill, integrations are referred to as [resources and resource types](../core_concepts/3_resources_and_types/index.md). Each Resource has a Resource Type (RT for short) - for example MySQL, MongoDB, Slack, etc. - that defines the schema that the resource needs to implement.
 
-We already have pre-set integrations (or resource types), the list is available on our [Hub](https://hub.windmill.dev/resources), [using Windmill](https://docs.windmill.dev/docs/getting_started/how_to_use_windmill) (most up-to-date version), and at the end of this article.
+We already have pre-set integrations (or resource types), the list is available on our [Hub](https://hub.windmill.dev/resources), [using Windmill](/docs/getting_started/how_to_use_windmill) (most up-to-date version), and at the end of this article.
 
 ## You feel one integration is missing?
 
@@ -12,7 +12,7 @@ We already have pre-set integrations (or resource types), the list is available 
 
 You can **[create a resource type](../core_concepts/3_resources_and_types/index.md#create-a-resource-type)**. Use the "Add Property" button to add a field to the resource type. You can specify constraints for the field (a type, making it mandatory, specifying a default, etc). You can also view the schema by toggling the "As JSON" option.
 
-Once you're comfortable with the new integration, we would be super grateful if you could **[share it on hub](https://docs.windmill.dev/docs/misc/share_on_hub)**.
+Once you're comfortable with the new integration, we would be super grateful if you could **[share it on hub](/docs/misc/share_on_hub)**.
 
 ### Ask for one
 

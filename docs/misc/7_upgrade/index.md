@@ -6,7 +6,7 @@ title: Upgrade
 
 Using Windmill is free, as we are committed to [open-source](https://github.com/windmill-labs/windmill). You can either:
 
-- **[Self-host](https://docs.windmill.dev/docs/advanced/self_host/)** it to use Windmill without restrictions (AGPLv3 License).
+- **[Self-host](/docs/advanced/self_host/)** it to use Windmill without restrictions (AGPLv3 License).
 - Use the **<a href="https://app.windmill.dev/" rel="nofollow">Cloud App</a>**, building scripts, flows and apps for free.
 
 However, you might need to upgrade your plan (from free) to Team or Enterprise editions. Reasons for this could be:

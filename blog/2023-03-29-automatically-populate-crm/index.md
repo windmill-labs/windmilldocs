@@ -293,8 +293,8 @@ Now we have all the details about our contact, it's time to tell the world (or a
 ```js
 import { Airtable } from 'https://deno.land/x/airtable/mod.ts';
 
-type Airtable = object
-type AirtableTable = object
+type Airtable = object;
+type AirtableTable = object;
 
 export async function main(
 	at_con: Airtable,
@@ -347,7 +347,7 @@ There is **a lot of room for customization**:
 
 - Email formats: maybe your users have other email structures. Change the mail parser and the Google search.
 - Prompts: maybe you want to tailor OpenAI's decisions on your use case. Change the prompt and tell it what kind of users you expect, the risks it can take etc.
-- Resources: chances are high that your CRM is not Airtable. Use other scripts ([Hubspot](https://hub.windmill.dev/integrations/hubspot), [Gsheet](https://hub.windmill.dev/integrations/gsheets), update data on [Supabase etc.](https://hub.windmill.dev/integrations/supabase)). [Create a resource type](/docs/core_concepts/resources_and_types#create-a-resource-type). Or [ask us what you need](https://docs.windmill.dev/docs/misc/getting_help).
+- Resources: chances are high that your CRM is not Airtable. Use other scripts ([Hubspot](https://hub.windmill.dev/integrations/hubspot), [Gsheet](https://hub.windmill.dev/integrations/gsheets), update data on [Supabase etc.](https://hub.windmill.dev/integrations/supabase)). [Create a resource type](/docs/core_concepts/resources_and_types#create-a-resource-type). Or [ask us what you need](/docs/misc/getting_help).
 
 :::tip What's next?
 
