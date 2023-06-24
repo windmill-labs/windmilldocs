@@ -40,10 +40,10 @@ export default function SectionExamples({ examples, kind }) {
 								href={example.href}
 								target="_blank"
 							>
-								<div className="flex flex-auto flex-col text-base leading-7 text-gray-600 gap-2">
-									<p className="text-md font-bold">{example.name}</p>
-									<p className="flex-auto text-sm">{example.description}</p>
-									<p className="text-xs text-right">See example -{'>'}</p>
+								<div className="flex flex-auto flex-col text-base leading-7  gap-2">
+									<p className="text-md font-bold !text-gray-600">{example.name}</p>
+									<p className="flex-auto text-sm !text-gray-600">{example.description}</p>
+									<p className="text-xs text-right !text-gray-600">See example -{'>'}</p>
 								</div>
 							</a>
 						))}

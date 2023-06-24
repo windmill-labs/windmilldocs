@@ -33,12 +33,12 @@ export default function BlogLayout(props) {
 									cx={512}
 									cy={512}
 									r={512}
-									fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
+									fill="url(#827591b1-ce8c-4110-b064-7cb85a0b121745)"
 									fillOpacity="0.7"
 								/>
 								<defs>
 									<radialGradient
-										id="827591b1-ce8c-4110-b064-7cb85a0b1217"
+										id="827591b1-ce8c-4110-b064-7cb85a0b121745"
 										cx={0}
 										cy={0}
 										r={1}

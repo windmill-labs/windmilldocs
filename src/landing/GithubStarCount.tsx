@@ -1,16 +1,16 @@
 import React from 'react';
 import GitHubButton from 'react-github-btn';
-import { useDeveloperMode } from '../pages';
+import { useColorMode } from '@docusaurus/theme-common';
 
 export default function GithubStarCount() {
-	const { developerMode } = useDeveloperMode();
+	const { colorMode } = useColorMode();
 	return (
 		<GitHubButton
 			href="https://github.com/windmill-labs/windmill"
 			data-size="large"
 			data-show-count="true"
 			aria-label="Star buttons/github-buttons on GitHub"
-			data-color-scheme={developerMode ? 'dark' : 'light'}
+			data-color-scheme={colorMode == 'dark' ? 'dark' : 'light'}
 		>
 			Stars
 		</GitHubButton>

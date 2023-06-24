@@ -21,7 +21,7 @@ export function useDeveloperMode() {
 }
 
 function HomepageHeader() {
-	const { setLightTheme, setDarkTheme, colorMode } = useColorMode();
+	const [developerMode, setDeveloperMode] = useState(false);
 
 	useEffect(() => {
 		window.plausible =
@@ -34,14 +34,8 @@ function HomepageHeader() {
 	return (
 		<DeveloperModeContext.Provider
 			value={{
-				developerMode: colorMode === 'dark',
-				setDeveloperMode: () => {
-					if (colorMode === 'dark') {
-						setLightTheme();
-					} else {
-						setDarkTheme();
-					}
-				}
+				developerMode: developerMode,
+				setDeveloperMode: setDeveloperMode
 			}}
 		>
 			<LandingHeader />

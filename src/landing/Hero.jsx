@@ -1,9 +1,9 @@
 import React from 'react';
 import GithubStarCount from './GithubStarCount';
-import { useDeveloperMode } from '../pages';
+import { useColorMode } from '@docusaurus/theme-common';
 
 export default function Hero() {
-	const { developerMode } = useDeveloperMode();
+	const { colorMode } = useColorMode();
 
 	return (
 		<div className="dark:bg-gray-900 w-full">
@@ -18,20 +18,24 @@ export default function Hero() {
 						cx={512}
 						cy={512}
 						r={512}
-						fill="url(#827591b1-ce8c-4110-b064-7cb85a0b1217)"
+						fill="url(#827591b1-ce8c-4110-b064-7cb85a0b12172)"
 						fillOpacity="0.7"
 					/>
 					<defs>
 						<radialGradient
-							id="827591b1-ce8c-4110-b064-7cb85a0b1217"
+							id="827591b1-ce8c-4110-b064-7cb85a0b12172"
 							cx={0}
 							cy={0}
 							r={1}
 							gradientUnits="userSpaceOnUse"
 							gradientTransform="translate(512 512) rotate(90) scale(512)"
 						>
-							<stop stopColor={developerMode ? '#3b82f6' : '#dbeafe'} />
-							<stop offset={1} stopColor={developerMode ? '#3b82f6' : '#dbeafe'} stopOpacity={0} />
+							<stop stopColor={colorMode === 'dark' ? '#3b82f6' : '#dbeafe'} />
+							<stop
+								offset={1}
+								stopColor={colorMode === 'dark' ? '#3b82f6' : '#dbeafe'}
+								stopOpacity={0}
+							/>
 						</radialGradient>
 					</defs>
 				</svg>

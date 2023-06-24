@@ -25,14 +25,14 @@ export default function Section({
 			orange: 'from-orange-200 to-orange-400'
 		},
 		light: {
-			blue: 'from-blue-500 to-blue-700',
-			teal: 'from-teal-500 to-teal-700',
-			orange: 'from-orange-500 to-orange-700'
+			blue: '!from-blue-500 !to-blue-700',
+			teal: '!from-teal-500 !to-teal-700',
+			orange: '!from-orange-500 !to-orange-700'
 		}
 	};
 	const colors = {
 		bg: developerMode ? 'bg-gray-900' : 'bg-white',
-		text: developerMode ? 'text-white' : 'text-gray-600',
+		text: developerMode ? 'text-white' : '!text-gray-600',
 		gradient: developerMode ? colorGradient.dark[color] : colorGradient.light[color]
 	};
 
@@ -49,7 +49,7 @@ export default function Section({
 					<div className="flex justify-between items-center w-full">
 						<h1
 							className={classNames(
-								'font-bold text-transparent bg-clip-text bg-gradient-to-br ',
+								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br ',
 								colors.gradient
 							)}
 						>
@@ -61,6 +61,7 @@ export default function Section({
 				</div>
 
 				<span className={`text-lg ${colors.text} max-w-3xl mb-8`}>{description}</span>
+
 				{developerMode ? (
 					<CardsContainer
 						cards={cards}

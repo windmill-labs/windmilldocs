@@ -42,7 +42,7 @@ export default function LandingHeader() {
 						</div>
 					</a>
 					<div className="-my-2 -mr-2 md:hidden">
-						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 							<span className="sr-only">Open menu</span>
 							<Bars3Icon className="h-6 w-6" aria-hidden="true" />
 						</Popover.Button>
@@ -53,7 +53,7 @@ export default function LandingHeader() {
 							onClick={() => window.plausible('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>
-							Documentation
+							Docs
 						</a>
 						<a
 							href="/pricing"
@@ -172,7 +172,7 @@ export default function LandingHeader() {
 										<img className="h-8" src="img/windmill.svg" alt="Windmill Labs" />
 									</div>
 									<div className="-mr-2">
-										<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+										<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white  p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 											<span className="sr-only">Close menu</span>
 											<XMarkIcon className="h-6 w-6" aria-hidden="true" />
 										</Popover.Button>
@@ -193,7 +193,7 @@ export default function LandingHeader() {
 										onClick={() => window.plausible('read-docs')}
 										className="text-base font-medium text-gray-900 hover:text-gray-700"
 									>
-										Documentation
+										Docs
 									</a>
 
 									{resources.map((resource) => (
