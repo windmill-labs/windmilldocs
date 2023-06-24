@@ -64,7 +64,7 @@ const config = {
 				logo: {
 					alt: 'Windmill logo',
 					src: 'img/windmill.svg',
-					href: 'https://www.windmill.dev'
+					href: '/'
 				},
 				items: [
 					{
