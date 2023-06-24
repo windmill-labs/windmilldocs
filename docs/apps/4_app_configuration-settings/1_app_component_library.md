@@ -32,7 +32,7 @@ Click on a component in the component library to insert it in the app canvas. It
 
 Windmill provides a set of components that can be used to build apps.
 
-The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](https://docs.windmill.dev/docs/misc/getting_help/).
+The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](/docs/misc/getting_help/).
 
 Even though the list of components is never as up to date as on [Windmill Cloud](https://app.windmill.dev/user/login), here is the list of the available components:
 
@@ -290,12 +290,11 @@ A validation function can be set and won't allow users to go to the next step wh
 
 #### Outputs
 
-| Name                   |   Type    | Description                         |
-| ---------------------- | :-------: | ----------------------------------- |
-| currentStepIndex             | number | Number of the step / tab.          |
-| result  |   any   | The result of the runnable.      |
-| loading | boolean | The loading state of the button. |
-
+| Name             |  Type   | Description                      |
+| ---------------- | :-----: | -------------------------------- |
+| currentStepIndex | number  | Number of the step / tab.        |
+| result           |   any   | The result of the runnable.      |
+| loading          | boolean | The loading state of the button. |
 
 ## Tabs
 
@@ -527,10 +526,10 @@ The form input component allows you to create a form and get answers from the us
 
 #### Form Input configuration
 
-| Name          |  Type  | Connectable | Templatable | Default | Description                          |
-| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------ |
-| Display Type   | boolean |    false    |    false    | false | This will display the type and/or the format on the field next to the label.          |
-| Large Gap  | boolean |    false    |    false    | false | This will add a large gap between the field elements. |
+| Name         |  Type   | Connectable | Templatable | Default | Description                                                                  |
+| ------------ | :-----: | :---------: | :---------: | :-----: | ---------------------------------------------------------------------------- |
+| Display Type | boolean |    false    |    false    |  false  | This will display the type and/or the format on the field next to the label. |
+| Large Gap    | boolean |    false    |    false    |  false  | This will add a large gap between the field elements.                        |
 
 Each argument can be configured (name, description, type, default value, advanced parameters).
 
@@ -538,12 +537,12 @@ Each argument can be configured (name, description, type, default value, advance
 
 #### Outputs
 
-| Name   |  Type  | Description           |
-| ------ | :----: | --------------------- |
-| properties | string | Type, description and default of each argument. |
-| loading | boolean | The loading state of the text component. |
-| valid | boolean |  |
-| values | same as each argument | Value of each answer by the user. |
+| Name       |         Type          | Description                                     |
+| ---------- | :-------------------: | ----------------------------------------------- |
+| properties |        string         | Type, description and default of each argument. |
+| loading    |        boolean        | The loading state of the text component.        |
+| valid      |        boolean        |                                                 |
+| values     | same as each argument | Value of each answer by the user.               |
 
 ### Text Input
 
@@ -598,8 +597,8 @@ The Rich Text Editor component allows to have to user enter text with a layout, 
 
 #### Outputs
 
-| Name   |  Type  | Description           |
-| ------ | :----: | --------------------- |
+| Name   |  Type  | Description                                                                          |
+| ------ | :----: | ------------------------------------------------------------------------------------ |
 | Result | string | The Rich Text Editor input value, in HTML-like syntax within the Quill delta format. |
 
 ### Password Input
@@ -806,19 +805,18 @@ The Resource Select component allows you to have users pick [resources](../../co
 
 #### Resource Select configuration
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| Items Name       | string |    true     |    false    | "bar" | The name of each suggested resource.  |
-| Items       | [resource](../../core_concepts/3_resources_and_types/index.md) |    true     |    false    |  | The Windmill resource.  |
-| Placeholder   | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false     |    false    |  | The variable that will be displayed by default.  |
-| Full Width       | boolean |    false     |    false    | true | Set the width of the options popup to 100% of the select width.  |
+| Name        |                               Type                               | Connectable | Templatable | Default | Description                                                     |
+| ----------- | :--------------------------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
+| Items Name  |                              string                              |    true     |    false    |  "bar"  | The name of each suggested resource.                            |
+| Items       |  [resource](../../core_concepts/3_resources_and_types/index.md)  |    true     |    false    |         | The Windmill resource.                                          |
+| Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false    |    false    |         | The variable that will be displayed by default.                 |
+| Full Width  |                             boolean                              |    false    |    false    |  true   | Set the width of the options popup to 100% of the select width. |
 
 #### Outputs
 
-| Name   |  Type  | Description         |
-| ------ | :----: | ------------------- |
+| Name   |  Type  | Description                                |
+| ------ | :----: | ------------------------------------------ |
 | result | string | The selected resource (in `$res:` format). |
-
 
 ### Multiselect
 
@@ -839,7 +837,6 @@ The multiselect component allows you to get multiple strings from the user.
 | ------ | :----: | ------------------- |
 | result | string | The selected items. |
 
-
 ### Select Tab
 
 The Select Tab is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
@@ -848,17 +845,16 @@ The Select Tab is standalone tab component that behaves like a select component.
 
 #### Select Tab configuration
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| Items       | string |    true     |    false    | "Foo" ; "Bar" | The select tabs items (label and value, in JSON).                           |
-| Default Value | string |    true     |    false    |   | The default value of the tabs labels and value. |
+| Name          |  Type  | Connectable | Templatable |    Default    | Description                                       |
+| ------------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------------- |
+| Items         | string |    true     |    false    | "Foo" ; "Bar" | The select tabs items (label and value, in JSON). |
+| Default Value | string |    true     |    false    |               | The default value of the tabs labels and value.   |
 
 #### Outputs
 
-| Name   |  Type  | Description         |
-| ------ | :----: | ------------------- |
+| Name   |  Type  | Description       |
+| ------ | :----: | ----------------- |
 | result | string | The selected tab. |
-
 
 ### Select Step
 
@@ -868,15 +864,15 @@ The Select Step is standalone tab component that behaves like a select component
 
 #### Select Step configuration
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| Items       | string |    true     |    false    | "Foo" ; "Bar" | The select step items (label and value, in JSON).                           |
-| Default Value | string |    true     |    false    |   | The default value of the step labels and value. |
+| Name          |  Type  | Connectable | Templatable |    Default    | Description                                       |
+| ------------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------------- |
+| Items         | string |    true     |    false    | "Foo" ; "Bar" | The select step items (label and value, in JSON). |
+| Default Value | string |    true     |    false    |               | The default value of the step labels and value.   |
 
 #### Outputs
 
-| Name   |  Type  | Description         |
-| ------ | :----: | ------------------- |
+| Name   |  Type  | Description        |
+| ------ | :----: | ------------------ |
 | result | string | The selected step. |
 
 ## Tables
@@ -950,14 +946,14 @@ The AgGrid table component allows you to display an agnostic grid table.
 
 #### AgGrid Table configuration
 
-| Name         |  Type   | Connectable | Templatable |    Default    | Description                                  |
-| ------------ | :-----: | :---------: | :---------: | :-----------: | -------------------------------------------- |
-| Column Defs  | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.  |
-| Flex         | boolean  |    false     |    false    | true | Allows you to distribute available space among multiple elements to control their relative sizes and positions.  |
-| All Editable | boolean |    false    |    false    |     false     | Whether you want all columns to be editable. |
-| Multiple Selectable | boolean |    false    |    false    |     false     | Make multiple rows selectable at once. |
-| Row Multiselect With Click | boolean |    false    |    false    |     true     | If multiple selectable, allow multiselect with click. |
-| Pagination   | boolean |    false    |    false    |     false     | Whether you want pages on your table.        |
+| Name                       |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
+| -------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
+| Column Defs                | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
+| Flex                       | boolean |    false    |    false    |     true      | Allows you to distribute available space among multiple elements to control their relative sizes and positions. |
+| All Editable               | boolean |    false    |    false    |     false     | Whether you want all columns to be editable.                                                                    |
+| Multiple Selectable        | boolean |    false    |    false    |     false     | Make multiple rows selectable at once.                                                                          |
+| Row Multiselect With Click | boolean |    false    |    false    |     true      | If multiple selectable, allow multiselect with click.                                                           |
+| Pagination                 | boolean |    false    |    false    |     false     | Whether you want pages on your table.                                                                           |
 
 #### Outputs
 
@@ -967,7 +963,6 @@ The AgGrid table component allows you to display an agnostic grid table.
 | loading          | boolean | The loading state of the AgGrid table component |
 | selectedRow      | Object  | The selected row                                |
 | selectedRowIndex | number  | The selected row index                          |
-
 
 ## Display
 
@@ -1096,8 +1091,8 @@ The PDF component allows you to display a PDF file.
 
 | Name   |  Type   | Connectable | Templatable |  Default   | Description               |
 | ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Source | boolean |   true    |    true     | /dummy.pdf | The PDF file.             |
-| Zoom   | number  |   true    |    true     |    100     | The zoom on the PDF view. |
+| Source | boolean |    true     |    true     | /dummy.pdf | The PDF file.             |
+| Zoom   | number  |    true     |    true     |    100     | The zoom on the PDF view. |
 
 #### Outputs
 
@@ -1113,15 +1108,15 @@ The Rich Result component allows you to display the result of a Runnable. It tri
 
 #### Rich Result configuration
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Data Source |  |   true    |         | {"foo": 42} | The data source to display results.  |
+| Name        | Type | Connectable | Templatable |   Default   | Description                         |
+| ----------- | :--: | :---------: | :---------: | :---------: | ----------------------------------- |
+| Data Source |      |    true     |             | {"foo": 42} | The data source to display results. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| result |  | The result of the runnable. |
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |         | The result of the runnable.         |
 | loading | boolean | The loading state of the component. |
 
 ### Log Display
@@ -1132,15 +1127,15 @@ The Log Display component allows you to display the log of a Runnable.
 
 #### Log Display configuration
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Data Source |  |   true    |         | | The data source to display logs.  |
+| Name        | Type | Connectable | Templatable | Default | Description                      |
+| ----------- | :--: | :---------: | :---------: | :-----: | -------------------------------- |
+| Data Source |      |    true     |             |         | The data source to display logs. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| result |  | The result of the runnable. |
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |         | The result of the runnable.         |
 | loading | boolean | The loading state of the component. |
 
 ### Flow Status
@@ -1151,17 +1146,16 @@ The Flow Status component allows you to display the status of a flow.
 
 #### Flow Status configuration
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Data Source |  |   true    |         | | The flow to display status.  |
+| Name        | Type | Connectable | Templatable | Default | Description                 |
+| ----------- | :--: | :---------: | :---------: | :-----: | --------------------------- |
+| Data Source |      |    true     |             |         | The flow to display status. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| result |  | The result of the runnable. |
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |         | The result of the runnable.         |
 | loading | boolean | The loading state of the component. |
-
 
 ## Charts
 
@@ -1330,20 +1324,19 @@ The ChartJs component allows you to display a ChartJs using the [Chart.js](https
 
 #### ChartJs Input
 
-|      Type       | Connectable | Templatable | Default | Description          |
-| :-------------: | :---------: | :---------: | :-----: | -------------------- |
-| Data source |    true     |    false    |      {"label":["Pie"]...}   | The Json source of the displayed data. |
-
+|    Type     | Connectable | Templatable |       Default        | Description                            |
+| :---------: | :---------: | :---------: | :------------------: | -------------------------------------- |
+| Data source |    true     |    false    | {"label":["Pie"]...} | The Json source of the displayed data. |
 
 #### ChartJs configuration
 
-|      Type       | Connectable | Templatable | Default | Description          |
-| :-------------: | :---------: | :---------: | :-----: | -------------------- |
-| Type |    false     |    false    |     Pie  | The type of the chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
-| Options |    true     |    false    |   none   | ChartJs [options](https://www.chartjs.org/docs/latest/general/options.html) object. |
+|  Type   | Connectable | Templatable | Default | Description                                                                          |
+| :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------------------ |
+|  Type   |    false    |    false    |   Pie   | The type of the chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
+| Options |    true     |    false    |  none   | ChartJs [options](https://www.chartjs.org/docs/latest/general/options.html) object.  |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
-| result  | Object  | The ChartJs data.                           |
+| Name   |  Type  | Description       |
+| ------ | :----: | ----------------- |
+| result | Object | The ChartJs data. |

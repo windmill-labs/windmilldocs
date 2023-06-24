@@ -151,7 +151,7 @@ const pricing = {
 		{
 			name: 'Team',
 			id: 'tier-team',
-			href: 'https://docs.windmill.dev/docs/misc/upgrade#team-edition',
+			href: '/docs/misc/upgrade#team-edition',
 			price: {
 				seat: {
 					monthly: 10,
