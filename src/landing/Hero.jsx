@@ -30,8 +30,8 @@ export default function Hero() {
 							gradientUnits="userSpaceOnUse"
 							gradientTransform="translate(512 512) rotate(90) scale(512)"
 						>
-							<stop stopColor={developerMode ? '#93c5fd' : '#dbeafe'} />
-							<stop offset={1} stopColor={developerMode ? '#93c5fd' : '#dbeafe'} stopOpacity={0} />
+							<stop stopColor={developerMode ? '#3b82f6' : '#dbeafe'} />
+							<stop offset={1} stopColor={developerMode ? '#3b82f6' : '#dbeafe'} stopOpacity={0} />
 						</radialGradient>
 					</defs>
 				</svg>
@@ -77,13 +77,14 @@ export default function Hero() {
 						</div>
 					</div>
 					<div className="mx-auto mt-16 sm:mt-8">
-						<div className="flex-none !rounded-2xl overflow-hidden bg-white dark:bg-gray-50">
+						<div className="flex-none !rounded-2xl overflow-hidden bg-white dark:bg-gray-50/5">
 							<img
 								src="/homescreen.svg"
 								alt="Windmill infrastructure"
 								className="w-full"
 								width="1825"
 								height="1920"
+								loading="lazy"
 							/>
 						</div>
 					</div>

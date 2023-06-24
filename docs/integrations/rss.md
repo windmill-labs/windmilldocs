@@ -1,14 +1,12 @@
 # RSS Integration
 
-
 To integrate [RSS](https://rss.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
 
 ![Add RSS Resource](../assets/integrations/add-rss.png)
 
-| Property | Type   | Description | Default | Required | Where to Find                             |
-|----------|--------|-------------|---------|----------|-------------------------------------------|
-| url      | string | Feed URL    |         | true     | Provided by the RSS feed source website  |
-
+| Property | Type   | Description | Default | Required | Where to Find                           |
+| -------- | ------ | ----------- | ------- | -------- | --------------------------------------- |
+| url      | string | Feed URL    |         | true     | Provided by the RSS feed source website |
 
 <br/><br/>
 
@@ -16,6 +14,6 @@ To integrate [RSS](https://rss.com/) to Windmill, you need to save the following
 
 Find some pre-set interactions with RSS on the [Hub](https://hub.windmill.dev/integrations/RSS).
 
-Feel free to create your own RSS scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own RSS scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

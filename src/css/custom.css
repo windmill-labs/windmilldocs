@@ -19,6 +19,23 @@
 	}
 }
 
+
+
+html[data-theme='dark'] {
+  --ifm-navbar-background-color: #111827;
+	--ifm-background-color:#111827
+}
+
+.navbar {
+	@apply border-b dark:border-gray-800 ;
+}
+
+
+:root {
+	--ifm-navbar-background-color: white;
+	--ifm-background-color:white;
+}
+
 nav {
 	font-family: var(--ifm-font-family-base);
 }
@@ -95,7 +112,7 @@ h1 {
 }
 
 .markdown h1 {
-	@apply !text-4xl !font-normal dark:text-gray-100 mt-12 mb-4 border-b pb-4 border-neutral-100 dark:border-neutral-800;
+	@apply !text-4xl !font-semibold dark:text-white mt-12 mb-4 border-b pb-4 border-neutral-100 dark:border-neutral-800;
 }
 
 h2 {
@@ -107,7 +124,7 @@ h3 {
 }
 
 .markdown h2 {
-	@apply text-xl font-semibold dark:text-gray-100 !mt-12;
+	@apply text-xl font-semibold dark:text-white !mt-12;
 }
 
 .markdown h3 {

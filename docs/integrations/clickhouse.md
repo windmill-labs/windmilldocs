@@ -4,11 +4,11 @@ To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save
 
 ![Add Clickhouse Resource](../assets/integrations/add-clickhouse.png)
 
-| Property  | Type    | Description                        | Default | Required | Where to Find                                                                                  |
-|-----------|---------|------------------------------------|---------|----------|----------------------------------------------------------------------------------------------|
-| host      | string  | Hostname or IP of ClickHouse server|         | true     | Provided by your hosting provider or found in the ClickHouse config file (`config.xml`)      |
-| username  | string  | Username for ClickHouse connection |         | false    | Found in the ClickHouse users config file (`users.xml`) or provided by your hosting provider |
-| password  | string  | Password for ClickHouse connection |         | false    | Found in the ClickHouse users config file (`users.xml`) or provided by your hosting provider |
+| Property | Type   | Description                         | Default | Required | Where to Find                                                                                |
+| -------- | ------ | ----------------------------------- | ------- | -------- | -------------------------------------------------------------------------------------------- |
+| host     | string | Hostname or IP of ClickHouse server |         | true     | Provided by your hosting provider or found in the ClickHouse config file (`config.xml`)      |
+| username | string | Username for ClickHouse connection  |         | false    | Found in the ClickHouse users config file (`users.xml`) or provided by your hosting provider |
+| password | string | Password for ClickHouse connection  |         | false    | Found in the ClickHouse users config file (`users.xml`) or provided by your hosting provider |
 
 <br/><br/>
 
@@ -16,6 +16,6 @@ To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save
 
 Find some pre-set interactions with Clickhouse on the [Hub](https://hub.windmill.dev/integrations/clickhouse).
 
-Feel free to create your own Clickhouse scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own Clickhouse scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

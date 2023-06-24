@@ -4,11 +4,11 @@ To integrate [Datadog](https://www.datadoghq.com/) to Windmill, you need to save
 
 ![Add Datadog Resource](../assets/integrations/add-datadog.png)
 
-| Property | Type    | Description                             | Default | Required | Where to Find                                                                                     |
-|----------|---------|-----------------------------------------|---------|----------|---------------------------------------------------------------------------------------------------|
-| apiKey   | string  | Datadog API key for authentication      |         | true     | Datadog Dashboard > Integrations > APIs > API Keys                                               |
-| appKey   | string  | Datadog APP key for specific access     |         | false    | Datadog Dashboard > Integrations > APIs > Application Keys                                       |
-| apiBase  | string  | Base URL for the Datadog API            |         | false    | Datadog API documentation (default: `https://api.datadoghq.com` or region-specific API base URL) |
+| Property | Type   | Description                         | Default | Required | Where to Find                                                                                    |
+| -------- | ------ | ----------------------------------- | ------- | -------- | ------------------------------------------------------------------------------------------------ |
+| apiKey   | string | Datadog API key for authentication  |         | true     | Datadog Dashboard > Integrations > APIs > API Keys                                               |
+| appKey   | string | Datadog APP key for specific access |         | false    | Datadog Dashboard > Integrations > APIs > Application Keys                                       |
+| apiBase  | string | Base URL for the Datadog API        |         | false    | Datadog API documentation (default: `https://api.datadoghq.com` or region-specific API base URL) |
 
 <br/><br/>
 
@@ -16,6 +16,6 @@ To integrate [Datadog](https://www.datadoghq.com/) to Windmill, you need to save
 
 Find some pre-set interactions with Datadog on the [Hub](https://hub.windmill.dev/integrations/datadog).
 
-Feel free to create your own Datadog scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own Datadog scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

@@ -37,7 +37,7 @@ const Card: React.FC<CardProps> = ({
 					{imageSlider && (
 						<div className="slider">
 							{imageSlider.map((imageUrl, index) => (
-								<img key={index} src={imageUrl} alt={`Slider Image ${index}`} />
+								<img key={index + title} src={imageUrl} alt={`Slider Image ${index}`} />
 							))}
 						</div>
 					)}
@@ -52,10 +52,10 @@ const Card: React.FC<CardProps> = ({
 
 									{icons?.map((ExtraIcon, index) => {
 										return (
-											<>
+											<React.Fragment key={index}>
 												{/* @ts-ignore */}
 												<ExtraIcon className="h-24 w-24 border rounded-full overflow-visible p-4 bg-gray-200/50 text-gray-500 dark:text-white dark:bg-gray-600/50 dark:border-gray-700" />
-											</>
+											</React.Fragment>
 										);
 									})}
 								</div>
@@ -123,7 +123,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({
 			>
 				{cards.map((card, i) => (
 					<Card
-						key={i}
+						key={i + card.title + card.subtitle}
 						Icon={card.Icon}
 						title={card.title}
 						subtitle={card.subtitle}

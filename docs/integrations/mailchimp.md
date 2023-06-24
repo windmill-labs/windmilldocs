@@ -10,12 +10,10 @@ To integrate [Mailchimp](https://mailchimp.com/) to Windmill, you need to save t
 
 ![Add Mailchimp Resource](../assets/integrations/add-mailchimp.png)
 
-| Property | Type    | Description                                        | Default | Required | Where to Find                                                 |
-|----------|---------|----------------------------------------------------|---------|----------|---------------------------------------------------------------|
-| api_key  | string  | Mailchimp API key                                  |         | false    | Mailchimp > Account > Extras > API keys > Create A Key        |
-| server   | string  | The data center for your Mailchimp account (e.g., us12) |         | false    | Found in your API key (e.g., "us12" in "123abc-us12")         |
-
-
+| Property | Type   | Description                                             | Default | Required | Where to Find                                          |
+| -------- | ------ | ------------------------------------------------------- | ------- | -------- | ------------------------------------------------------ |
+| api_key  | string | Mailchimp API key                                       |         | false    | Mailchimp > Account > Extras > API keys > Create A Key |
+| server   | string | The data center for your Mailchimp account (e.g., us12) |         | false    | Found in your API key (e.g., "us12" in "123abc-us12")  |
 
 <br/><br/>
 
@@ -23,6 +21,6 @@ To integrate [Mailchimp](https://mailchimp.com/) to Windmill, you need to save t
 
 Find some pre-set interactions with Mailchimp on the [Hub](https://hub.windmill.dev/integrations/mailchimp).
 
-Feel free to create your own Mailchimp scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own Mailchimp scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

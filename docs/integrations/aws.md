@@ -4,11 +4,11 @@ To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the fo
 
 ![Add AWS Resource](../assets/integrations/add-aws.png)
 
-| Property            | Type    | Description                        | Default | Required | Where to Find                                                                 |
-|---------------------|---------|------------------------------------|---------|----------|-------------------------------------------------------------------------------|
-| awsAccessKeyId      | string  | AWS Access Key ID for your account |         | true     | AWS Management Console > IAM > Users > [Your User] > Security Credentials     |
-| awsSecretAccessKey  | string  | AWS Secret Access Key for account  |         | true     | AWS Management Console > IAM > Users > [Your User] > Security Credentials     |
-| region              | string  | AWS Region for your resources      |         | false    | AWS Management Console > Top Right Corner (e.g., "N. Virginia")               |
+| Property           | Type   | Description                        | Default | Required | Where to Find                                                             |
+| ------------------ | ------ | ---------------------------------- | ------- | -------- | ------------------------------------------------------------------------- |
+| awsAccessKeyId     | string | AWS Access Key ID for your account |         | true     | AWS Management Console > IAM > Users > [Your User] > Security Credentials |
+| awsSecretAccessKey | string | AWS Secret Access Key for account  |         | true     | AWS Management Console > IAM > Users > [Your User] > Security Credentials |
+| region             | string | AWS Region for your resources      |         | false    | AWS Management Console > Top Right Corner (e.g., "N. Virginia")           |
 
 <br/><br/>
 
@@ -16,6 +16,6 @@ To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the fo
 
 Find some pre-set interactions with AWS on the [Hub](https://hub.windmill.dev/integrations/aws_ecr).
 
-Feel free to create your own AWS scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own AWS scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

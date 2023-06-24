@@ -4,10 +4,9 @@ To integrate [Stripe](https://stripe.com/) to Windmill, you need to save the fol
 
 ![Add Stripe Resource](../assets/integrations/add-stripe.png)
 
-| Property | Type   | Description           | Required | Where to find                                                       |
-| -------- | ------ | --------------------- | -------- | ------------------------------------------------------------------- |
-| token    | string | API token             | true     | Stripe Dashboard -> Developers -> API keys -> Secret key            |
-
+| Property | Type   | Description | Required | Where to find                                            |
+| -------- | ------ | ----------- | -------- | -------------------------------------------------------- |
+| token    | string | API token   | true     | Stripe Dashboard -> Developers -> API keys -> Secret key |
 
 <br/><br/>
 
@@ -15,6 +14,6 @@ To integrate [Stripe](https://stripe.com/) to Windmill, you need to save the fol
 
 Find some pre-set interactions with Stripe on the [Hub](https://hub.windmill.dev/integrations/stripe).
 
-Feel free to create your own Stripe scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.md).
+Feel free to create your own Stripe scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

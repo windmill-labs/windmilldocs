@@ -51,7 +51,7 @@ export default function Footer() {
 									<li key={item.name}>
 										<a
 											href={item.href}
-											className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400"
 										>
 											{item.name}
 										</a>
@@ -66,7 +66,7 @@ export default function Footer() {
 									<li key={item.name}>
 										<a
 											href={item.href}
-											className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400"
 										>
 											{item.name}
 										</a>
@@ -81,7 +81,7 @@ export default function Footer() {
 									<li key={item.name}>
 										<a
 											href={item.href}
-											className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400"
 										>
 											{item.name}
 										</a>

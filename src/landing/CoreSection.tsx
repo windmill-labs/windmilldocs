@@ -39,7 +39,7 @@ export default function CoreSection({ color }) {
 		text: 'text-gray-600'
 	};
 
-	const { isDarkTheme } = useColorMode();
+	const { colorMode } = useColorMode();
 
 	return (
 		<LandingSectionWrapper className={`${colors.bg}`} color={color}>
@@ -57,7 +57,7 @@ export default function CoreSection({ color }) {
 					</div>
 				</div>
 
-				<CardsContainer cards={cards} mode={isDarkTheme ? 'dark' : 'light'} />
+				<CardsContainer cards={cards} mode={colorMode === 'dark' ? 'dark' : 'light'} />
 			</div>
 		</LandingSectionWrapper>
 	);
