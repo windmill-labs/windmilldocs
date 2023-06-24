@@ -3,15 +3,15 @@ import React from 'react';
 
 export default function FeatureCard({ description, title, Icon, selected, color = 'blue', index }) {
 	const hovers = {
-		blue: 'hover:border-blue-500',
+		blue: 'hover:border-blue-500 ',
 		teal: 'hover:border-teal-500',
 		orange: 'hover:border-orange-500'
 	};
 
 	const borders = {
-		blue: 'border-blue-300',
-		teal: 'border-teal-300',
-		orange: 'border-orange-300'
+		blue: 'border-blue-300 dark:border-blue-900',
+		teal: 'border-teal-300 dark:border-teal-900',
+		orange: 'border-orange-300 dark:border-orange-900'
 	};
 
 	const iconColor = {
@@ -21,15 +21,9 @@ export default function FeatureCard({ description, title, Icon, selected, color 
 	};
 
 	const fromTo = {
-		blue: 'from-blue-600 to-blue-800',
-		teal: 'from-teal-600 to-teal-800',
-		orange: 'from-orange-600 to-orange-800'
-	};
-
-	const shadow = {
-		blue: 'card-shadow-blue',
-		teal: 'card-shadow-teal',
-		orange: 'card-shadow-orange'
+		blue: 'from-blue-600 to-blue-800 dark:from-blue-200 dark:to-blue-400',
+		teal: 'from-teal-600 to-teal-800 dark:from-teal-200 dark:to-teal-400',
+		orange: 'from-orange-600 to-orange-800 dark:from-orange-200 dark:to-orange-400'
 	};
 
 	const outlineColor = {
@@ -42,7 +36,7 @@ export default function FeatureCard({ description, title, Icon, selected, color 
 		<div>
 			<div
 				className={classNames(
-					`w-full border rounded-md ${borders[color]} ${hovers[color]} px-6 py-4 gap-2 flex flex-col bg-white relative text-left`,
+					`w-full border rounded-md ${borders[color]} ${hovers[color]} px-6 py-4 gap-2 flex flex-col  relative text-left`,
 					selected ? `outline outline-2 outline-offset-4 ${outlineColor[color]}` : 'outline-none'
 				)}
 			>
@@ -52,7 +46,9 @@ export default function FeatureCard({ description, title, Icon, selected, color 
 				>
 					{title}
 				</span>
-				{description && <span className="text-gray-500 text-sm">{description}</span>}
+				{description && (
+					<span className="text-gray-500 text-sm dark:text-white">{description}</span>
+				)}
 			</div>
 		</div>
 	);

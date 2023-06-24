@@ -3,6 +3,9 @@ import { Popover, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
+import { useColorMode } from '@docusaurus/theme-common';
+import { MoonIcon, SunIcon } from 'lucide-react';
+import { SiDiscord } from 'react-icons/si';
 
 const resources = [
 	{
@@ -24,6 +27,8 @@ const resources = [
 ];
 
 export default function LandingHeader() {
+	const { colorMode, setColorMode } = useColorMode();
+
 	return (
 		<div className="w-full bg-white dark:bg-gray-900 ">
 			<Popover className="relative bg-white dark:bg-gray-900 bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
@@ -126,12 +131,30 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8">
+						{colorMode === 'light' ? (
+							<button
+								className="text-gray-500 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-2 "
+								onClick={() => setColorMode('dark')}
+							>
+								<SunIcon className="h-5 w-5" aria-hidden="true" />
+							</button>
+						) : (
+							<button
+								className="text-gray-500 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-2 "
+								onClick={() => setColorMode('light')}
+							>
+								<MoonIcon className="h-5 w-5" aria-hidden="true" />
+							</button>
+						)}
+
 						<a
 							href="https://discord.com/invite/V7PM2YHsPB"
 							data-analytics='"discord"'
 							onClick={() => window.plausible('discord')}
-							className="header-discord-link "
-						/>
+							className=" rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+						>
+							<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
+						</a>
 						<a
 							href="https://www.windmill.dev/book-demo"
 							data-analytics='"schedule-demo"'

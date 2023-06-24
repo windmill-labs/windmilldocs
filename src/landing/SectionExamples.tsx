@@ -24,16 +24,16 @@ export default function SectionExamples({ examples, kind }) {
 	return (
 		<>
 			<div className="mx-auto w-full mb-4 mt-20 transition-all flex gap-2 flex-col">
-				<span className="tracking-tight leading-tight text-left font-semibold text-gray-600 text-xl">
+				<span className="tracking-tight leading-tight text-left font-semibold text-gray-600 text-xl dark:text-white">
 					Examples
 				</span>
-				<div className="bg-white border rounded-lg divide-y shadow-sm">
-					<div className="grid grid-cols-1 lg:grid-cols-3 divide-x-0 divide-y lg:divide-x lg:divide-y-0">
+				<div className="border rounded-lg divide-y shadow-sm dark:border-gray-800">
+					<div className="grid grid-cols-1 lg:grid-cols-3 divide-x-0 divide-y lg:divide-x lg:divide-y-0 dark:divide-gray-800">
 						{examples.map((example, index) => (
 							<a
 								key={example.name}
 								className={classNames(
-									'flex flex-col p-6 hover:bg-gray-50  cursor-pointer !no-underline overflow-hidden ',
+									'flex flex-col p-6 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer !no-underline overflow-hidden ',
 									index === 0 ? 'rounded-l-lg' : '',
 									index === examples.length - 1 ? 'rounded-r-lg' : ''
 								)}
@@ -41,9 +41,15 @@ export default function SectionExamples({ examples, kind }) {
 								target="_blank"
 							>
 								<div className="flex flex-auto flex-col text-base leading-7  gap-2">
-									<p className="text-md font-bold !text-gray-600">{example.name}</p>
-									<p className="flex-auto text-sm !text-gray-600">{example.description}</p>
-									<p className="text-xs text-right !text-gray-600">See example -{'>'}</p>
+									<p className="text-md font-bold text-gray-600 dark:text-gray-200">
+										{example.name}
+									</p>
+									<p className="flex-auto text-sm text-gray-600 dark:text-gray-200">
+										{example.description}
+									</p>
+									<p className="text-xs text-right text-gray-600 dark:text-gray-200">
+										See example -{'>'}
+									</p>
 								</div>
 							</a>
 						))}
@@ -70,7 +76,7 @@ export default function SectionExamples({ examples, kind }) {
 					target="_blank"
 					onClick={() => window.plausible('try-cloud')}
 					data-analytics='"try-cloud"'
-					className="transition-all  inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 hover:bg-orange-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 !no-underline hover:text-orange-600"
+					className="transition-all dark:text-white inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 focus:outline-none focus:ring-2  focus:ring-offset-2 !no-underline "
 				>
 					{`Try building ${kind}s`}
 					<ExternalLink className="ml-2 h-4" />

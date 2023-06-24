@@ -293,7 +293,7 @@ export default function Pricing() {
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
@@ -316,7 +316,7 @@ export default function Pricing() {
 						<RadioGroup
 							value={period}
 							onChange={setPeriod}
-							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
 						>
 							<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
 							{periods.map((option) => (
@@ -349,7 +349,9 @@ export default function Pricing() {
 						<div
 							key={tier.id}
 							className={classNames(
-								tier.mostPopular ? 'ring-2 ring-blue-600' : 'ring-1 ring-gray-200',
+								tier.mostPopular
+									? 'ring-2 ring-blue-600'
+									: 'ring-1 ring-gray-200 dark:ring-gray-600',
 								'rounded-xl p-6 xl:p-8'
 							)}
 						>
@@ -395,7 +397,7 @@ export default function Pricing() {
 								<div
 									aria-describedby={tier.id}
 									className={classNames(
-										'text-gray-900 ring-1 ring-inset ring-gray-200 hover:ring-gray-300 dark:text-white',
+										'text-gray-900 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:text-white',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
 									)}
 								>

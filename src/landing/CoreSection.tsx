@@ -34,15 +34,10 @@ const cards = [
 	}
 ];
 export default function CoreSection({ color }) {
-	const colors = {
-		bg: 'bg-white dark:bg-gray-900',
-		text: 'text-gray-600'
-	};
-
 	const { colorMode } = useColorMode();
 
 	return (
-		<LandingSectionWrapper className={`${colors.bg}`} color={color}>
+		<LandingSectionWrapper color={color}>
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2 ">
 					<div className="flex justify-between items-center w-full">

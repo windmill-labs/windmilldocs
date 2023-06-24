@@ -6,6 +6,7 @@ import CardsContainer from '../landing/cards/Cards';
 import FeatureCardTabs from '../landing/tabs/FeatureCardTabs';
 import classNames from 'classnames';
 import SectionExamples from './SectionExamples';
+import { useColorMode } from '@docusaurus/theme-common';
 
 export default function Section({
 	cards,
@@ -18,6 +19,8 @@ export default function Section({
 	kind
 }) {
 	const { developerMode } = useDeveloperMode();
+	const { colorMode } = useColorMode();
+
 	const colorGradient = {
 		dark: {
 			blue: 'from-blue-200 to-blue-400',
@@ -31,9 +34,9 @@ export default function Section({
 		}
 	};
 	const colors = {
-		bg: developerMode ? 'bg-gray-900' : 'bg-white',
-		text: developerMode ? 'text-white' : '!text-gray-600',
-		gradient: developerMode ? colorGradient.dark[color] : colorGradient.light[color]
+		bg: colorMode == 'dark' ? 'bg-gray-900' : 'bg-white',
+		text: colorMode == 'dark' ? 'text-white' : '!text-gray-600',
+		gradient: colorMode == 'dark' ? colorGradient.dark[color] : colorGradient.light[color]
 	};
 
 	const accentColor = {
@@ -68,6 +71,7 @@ export default function Section({
 						r={accentColor[color][0]}
 						g={accentColor[color][1]}
 						b={accentColor[color][2]}
+						mode={colorMode}
 					/>
 				) : (
 					<>
