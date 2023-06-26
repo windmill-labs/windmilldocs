@@ -41,6 +41,7 @@ Even though the list of components is never as up to date as on [Windmill Cloud]
 The layout components are used to organize the components in the app canvas.
 
 - [Container](#container)
+- [List](#list)
 - [Divider X](#divider-x)
 - [Dvider Y](#divider-y)
 - [Drawer](#drawer)
@@ -130,7 +131,7 @@ Containers allow you to host other components in a box. Moving a container means
 />
 <br/>
 
-To add a component to a container, you can either click on `Insert` while you selected the container, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
+To add a component to a container, you can either click on `Insert` while you selected the container,or your can move an existing component by copy/pasting it.
 
 #### Container configuration
 
@@ -141,6 +142,73 @@ The container component has no configuration.
 | Name             |  Type  | Description                     |
 | ---------------- | :----: | ------------------------------- |
 | selectedTabIndex | number | The number of the selected tab. |
+
+### List
+
+The List component enables duplication of cards or rows with consistent structure, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/list_component.mp4"
+    alt="list component"
+/>
+<br/>
+
+To add a component to a list, you can either click on `Insert` while you selected the container, or your can move an existing component by copy/pasting it.
+
+Editing or moving a component will apply changes to all cards or rows.
+
+![Editing a list card](../../assets/apps/4_app_component_library/editing_list.gif "Editing a list card")
+
+To customize the settings of components within each time, you can use `iter.index` and `iter.value`.
+- `iter.index` will retrieve the index number of each card (0, 1, 2 etc.).
+
+![iter.index](../../assets/apps/4_app_component_library/iter.index.png)
+
+- `iter.value.key` will retrieve the value of each key defined in the `items` section.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/iter.value.mp4"
+    alt="iter.value"
+/>
+<br/>
+
+List components also support having [inputs](#inputs) set inside them. Retrieve the values of each in the `inputs` field of the List component in the [outputs](../2_outputs.md) menu.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/list_inputs.mp4"
+    alt="List inputs"
+/>
+<br/>
+
+#### List configuration
+
+| Name          |  Type   | Connectable | Templatable | Default | Description                     |
+| ------------- | :-----: | :---------: | :---------: | :-----: | ------------------------------- |
+| items         |  array  |    true     |    false    |    3 items     | The list items.               |
+| item keys      | string  |    true     |    false    |   `"foo": 1` ...   | The keys of each card. |
+| Width        | string |    false    |    false    |  false  | Wether items should be "Card" of "Full Row".     |
+| Min Width Px | number |    true     |    true    |    300     | The minimum width in pixels. |
+| Height Px | number |    true     |    true    |    280     | The height in pixels. |
+
+#### Outputs
+
+| Name             |  Type   | Description                      |
+| ---------------- | :-----: | -------------------------------- |
+| result           |   any   | The result of the list component.   |
+| loading          | boolean | The loading state of the component. |
+| inputs          | any | The [inputs](#inputs) of the component. |
 
 ### Divider X
 
@@ -183,7 +251,7 @@ The drawer is container called by a button. Once you click on the button, a side
 />
 <br/>
 
-To add a component to a container, you can either click on `Insert` while you selected the opened drawer, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
+To add a component to a container, you can either click on `Insert` while you selected the opened drawer, or your can move an existing component by copy/pasting it.
 
 #### Drawer configuration
 
@@ -212,7 +280,7 @@ Container split in x number of panes vertically.
 />
 <br/>
 
-To add a component to a vertical split pane, you can either click on `Insert` while you selected the vertical split pane, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
+To add a component to a vertical split pane, you can either click on `Insert` while you selected the vertical split pane, or your can move an existing component by copy/pasting it.
 
 #### Vertical Split Panes configuration
 
@@ -235,7 +303,7 @@ Container split in x number of panes horizontally.
 />
 <br/>
 
-To add a component to a horizontal split pane, you can either click on `Insert` while you selected the horizontal split pane, or your can move an existing component by selecting it and from `Settings` go to `Move to other grid`.
+To add a component to a horizontal split pane, you can either click on `Insert` while you selected the horizontal split pane, or your can move an existing component by copy/pasting it.
 
 #### Horizontal Split Panes configuration
 
