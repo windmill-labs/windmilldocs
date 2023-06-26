@@ -87,7 +87,7 @@ h1 {
 }
 
 .markdown h1 {
-	@apply !text-4xl !font-semibold mt-12 mb-4 border-b pb-4 border-neutral-100 dark:border-neutral-800 leading-5 tracking-tight;
+	@apply !text-4xl !font-semibold mt-12 mb-4 border-b pb-4 border-gray-100 dark:border-gray-800 leading-5 tracking-tight;
 }
 
 h2 {
@@ -290,7 +290,7 @@ td:nth-of-type(2):first-child {
 }
 
 th {
-	@apply bg-gray-200 dark:bg-neutral-700 dark:text-gray-200
+	@apply bg-gray-200 dark:bg-gray-800 dark:text-gray-200
 }
 
 .theme-doc-breadcrumbs {

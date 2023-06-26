@@ -44,7 +44,7 @@ export default function CoreSection({ color }) {
 						<h1
 							className={classNames(
 								'font-bold text-transparent bg-clip-text bg-gradient-to-br ',
-								'from-slate-500 to-slate-700 dark:from-neutral-100 dark:to-neutral-500'
+								'from-slate-500 to-slate-700 dark:from-slate-100 dark:to-slate-500'
 							)}
 						>
 							Really fast
