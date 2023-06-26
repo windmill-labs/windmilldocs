@@ -8,15 +8,13 @@ image: ./0-header.png
 
 This is a testimonial written by [Jeffrey Knorr](https://www.linkedin.com/in/jeffreyknorr), Director of Technology at [Stantt](https://stantt.com/).
 
-
 <!--truncate-->
-
 
 > “Windmill helped us get visibility into our backend batch processing, leveraging the same custom Python scripts with their complex dependencies and requirements used before.”
 
 <br/>
 
-![Stantt Windmill use case](./0-header.png "Stantt Windmill testimonial")
+![Stantt Windmill use case](./0-header.png 'Stantt Windmill testimonial')
 
 ## What before Windmill?
 
@@ -34,8 +32,9 @@ Our usage of Windmill is quite simple, but it is powerful and **mission critical
 
 ## How to use Windmill?
 
-You can **[self-host](https://docs.windmill.dev/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
+You can **[self-host](/docs/advanced/self_host/#deployment)** it using a docker compose up, our go with the **[cloud app](https://app.windmill.dev/user/login)**.
 
 <!-- Links -->
+
 [jrk-linkedin]: https://www.linkedin.com/in/jeffreyknorr
 [stantt]: https://stantt.com/

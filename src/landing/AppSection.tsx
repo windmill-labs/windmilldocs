@@ -128,7 +128,7 @@ const examples = [
 				.
 			</>
 		),
-		href: 'https://docs.windmill.dev/docs/apps/app_e-commerce'
+		href: '/docs/apps/app_e-commerce'
 	},
 	{
 		name: <span>MongoDB Admin</span>,

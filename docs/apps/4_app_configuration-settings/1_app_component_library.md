@@ -32,7 +32,7 @@ Click on a component in the component library to insert it in the app canvas. It
 
 Windmill provides a set of components that can be used to build apps.
 
-The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](https://docs.windmill.dev/docs/misc/getting_help/).
+The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](/docs/misc/getting_help/).
 
 Even though the list of components is never as up to date as on [Windmill Cloud](https://app.windmill.dev/user/login), here is the list of the available components:
 

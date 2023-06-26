@@ -2,7 +2,7 @@
 
 :::info Using emails to trigger scripts & flows
 
-If you're looking for a way to trigger scripts and flows by emails using Mailchimp, check the [Mailchimp Mandrill Integration](./mailchimp_mandrill.md).
+To trigger scripts and flows by emails using Mailchimp, refer to the [Mailchimp Mandrill Integration](./mailchimp_mandrill.md) for seamless integration.
 
 :::
 

@@ -227,7 +227,7 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 		// Reconstruct the path
 		filePath = pathSegments.join('/');
 
-		return 'https://docs.windmill.dev/docs/' + filePath;
+		return '/docs/' + filePath;
 	}
 	return githubUrl;
 }
@@ -261,7 +261,6 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
 ```typescript
-
 type Supabase = {
 	supabaseUrl: string;
 	supabaseKey: string;

@@ -13,9 +13,9 @@ Windmill automatically generates user interfaces (UIs) for scripts and flows bas
 
 <br/>
 
-:::info
+:::info Windmill App Editor
 
-If you're looking for a way to have customized UIs and interactions for your scripts and flows, look at Windmill's **[App editor](../../getting_started/7_apps_quickstart/index.md)**.
+To customize UIs and interactions for your scripts and flows, explore Windmill's **[App editor](../../getting_started/7_apps_quickstart/index.md)**, providing a comprehensive solution.
 
 :::
 

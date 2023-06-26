@@ -193,4 +193,4 @@ We go deeper in a [further article](/blog/handler-slack-commands), integrating m
 [wm-home]: https://app.windmill.dev
 [hub-slack]: https://hub.windmill.dev/integrations/slack
 [hub-script]: https://hub.windmill.dev/scripts/slack/649/list-users-slack
-[docs-resource]: https://docs.windmill.dev/docs/core_concepts/resources_and_types
+[docs-resource]: /docs/core_concepts/resources_and_types

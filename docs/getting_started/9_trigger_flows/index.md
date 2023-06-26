@@ -141,7 +141,7 @@ Each script and flow have their own webhooks on Windmill ...
 
 <br/>
 
-... which you can trigger from service providers, like Github [here](https://docs.windmill.dev/blog/issue-triage-bot-flow):
+... which you can trigger from service providers, like Github [here](/blog/issue-triage-bot-flow):
 
 <br/>
 

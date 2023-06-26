@@ -61,7 +61,7 @@ The extension provides the following settings:
 
 ![demo](./wm-settings.png)
 
-You can create a user token in the Windmill app. Follow the instructions in the [Windmill docs](https://docs.windmill.dev/docs/core_concepts/webhooks#user-token).
+You can create a user token in the Windmill app. Follow the instructions in the [Windmill docs](/docs/core_concepts/webhooks#user-token).
 
 ## Usage
 

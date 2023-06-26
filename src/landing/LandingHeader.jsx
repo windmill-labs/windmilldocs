@@ -4,7 +4,6 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import { useColorMode } from '@docusaurus/theme-common';
-import { MoonIcon, SunIcon } from 'lucide-react';
 import { SiDiscord } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
@@ -218,7 +217,7 @@ export default function LandingHeader() {
 									</a>
 
 									<a
-										href="https://docs.windmill.dev/docs/intro"
+										href="/docs/intro"
 										onClick={() => window.plausible('read-docs')}
 										className="text-base font-medium text-gray-900 hover:text-gray-700"
 									>

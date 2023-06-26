@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
 	title: 'Windmill',
-	url: 'https://docs.windmill.dev',
+	url: 'https://www.windmill.dev',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
@@ -64,7 +64,7 @@ const config = {
 				logo: {
 					alt: 'Windmill logo',
 					src: 'img/windmill.svg',
-					href: 'https://www.windmill.dev'
+					href: '/'
 				},
 				items: [
 					{

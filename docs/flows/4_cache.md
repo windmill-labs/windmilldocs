@@ -25,3 +25,9 @@ In the above example, the result of step `a` will be cached for 86400 seconds (1
 Caching is a powerful tool that can optimize your workflows in Windmill. By caching the results of steps, you can eliminate unnecessary computation and accelerate your workflows.
 
 However, it's essential to use caching judiciously: while it can greatly enhance efficiency, overusing the cache or using it for unsuitable steps can result in outdated results or unwarranted memory usage. Always consider the nature of your step and the data it processes when deciding whether to enable caching.
+
+:::tip Step Mocking
+
+[Step mocking](./5_step_mocking.md) allows faster iteration. When a step is mocked, it will immediately return the mocked value without performing any computation.
+
+:::

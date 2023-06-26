@@ -371,7 +371,7 @@ target URL follows this format (those are templates URL):
 - Script by path:
   <a href="https://example.com" rel="nofollow">https://app.windmill.dev/api/w/$WORKSPACE_ID/jobs/run/p/$SCRIPT_PATH</a>
 
-Find more information on the [Webhooks section](https://docs.windmill.dev/docs/core_concepts/webhooks/).
+Find more information on the [Webhooks section](/docs/core_concepts/webhooks/).
 
 ### Synchronous endpoint for Scripts
 
