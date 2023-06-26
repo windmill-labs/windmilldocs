@@ -3,7 +3,7 @@
 The Multiplayer feature allows you to collaborate with team members on scripts simultaneously.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"

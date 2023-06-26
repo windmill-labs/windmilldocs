@@ -3,7 +3,7 @@
 Windmill automatically generates user interfaces (UIs) for scripts and flows based on their parameters.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -38,7 +38,7 @@ This feature can be directly used in the [script](../../getting_started/0_script
 <br/>
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     loop
     controls
     id="main-video"

@@ -13,7 +13,7 @@ export default function BlogPostItemContainer({ children, className }) {
 	return (
 		<article
 			className={clsx(className, {
-				'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 bg-white dark:bg-gray-900 dark:border-gray-700 dark:hover:border-blue-800':
+				'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 dark:border-gray-700 dark:hover:border-blue-800':
 					!isBlogPostPage
 			})}
 			itemProp="blogPost"

@@ -1,7 +1,7 @@
 # Gmail Integration
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls

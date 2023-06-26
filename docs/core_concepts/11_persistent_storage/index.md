@@ -74,10 +74,10 @@ The convenience functions do this in TypeScript are:
   called in - if any - and the path of the Script
 - `setState(value: any)` which sets the new state
 
-
 #### Resources
 
 States are a specific type of resource in Windmill where the type is `state` the path is automatically calculated for you based on the schedule path (if any) and the script path. In some cases, you want to set the path arbitrarily and/or use a different type than `state`. In this case, you can use the `setResource` and `getResource` functions. A same resource can be used across different scripts and flows.
+
 - `setResource(value: any, path?: string, initializeToTypeIfNotExist?: string)`: which sets a resource at a given path. This is
   equivalent to `setState` but allows you to set an arbitrary path and chose a type other than state if wanted. [See api](https://deno.land/x/windmill/mod.ts?s=setResource)
 - `getResource(path: string)`: gets a resource at a given path. [See api](https://deno.land/x/windmill/mod.ts?s=getResource)
@@ -120,7 +120,6 @@ Keep in mind that the contents of the `./shared` folder are not preserved across
 
 :::
 
-
 ## Structured Databases: Postgres (Supabase, Neon.tech)
 
 For Postgres databases (best for structured data storage and retrieval, where you can define schema and relationships between entities), we recommend using Supabase or Neon.tech.
@@ -142,7 +141,7 @@ For Postgres databases (best for structured data storage and retrieval, where yo
 4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the `sslmode` to "disable".
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/supabase_postgres_integration.mp4"
@@ -181,7 +180,7 @@ More tutorials on Supabase:
 4. From Windmill, add your Neon.tech connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/neon_integration.mp4"
@@ -223,7 +222,7 @@ Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore 
 [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) is a scalable and durable object storage service offered by Amazon Web Services (AWS), designed to provide developers and businesses with an effective way to store and retrieve any amount of data from anywhere on the web.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/s3_objects_in_bucket.mp4"

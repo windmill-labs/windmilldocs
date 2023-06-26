@@ -8,7 +8,7 @@ slug: '/getting_started/scripts_quickstart/typescript'
 In this quick start guide, we will write our first script in TypeScript. Windmill uses [Deno](https://deno.land/) as the TypeScript runtime.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -75,7 +75,7 @@ Note that you can have [AI suggest code on Windmill](../../../misc/11_code_autoc
 <br/>
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/codeium_example.mp4"

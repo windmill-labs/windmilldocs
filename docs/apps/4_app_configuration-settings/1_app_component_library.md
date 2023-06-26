@@ -120,7 +120,7 @@ Below you will find details about each component.
 Containers allow you to host other components in a box. Moving a container means moving all the components inside.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -173,7 +173,7 @@ Divider Y is a vertical line.
 The drawer is container called by a button. Once you click on the button, a side tab will appear on which you can display other components.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -202,7 +202,7 @@ To add a component to a container, you can either click on `Insert` while you se
 Container split in x number of panes vertically.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -225,7 +225,7 @@ To add a component to a vertical split pane, you can either click on `Insert` wh
 Container split in x number of panes horizontally.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -248,7 +248,7 @@ To add a component to a horizontal split pane, you can either click on `Insert` 
 The modal is container called by a button. Once you click on the button, a modal will appear on which you can display other components.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -273,7 +273,7 @@ The modal is container called by a button. Once you click on the button, a modal
 The stepper component helps you lay out multi-step apps, with an optional validation function to validate a step.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -290,12 +290,11 @@ A validation function can be set and won't allow users to go to the next step wh
 
 #### Outputs
 
-| Name                   |   Type    | Description                         |
-| ---------------------- | :-------: | ----------------------------------- |
-| currentStepIndex             | number | Number of the step / tab.          |
-| result  |   any   | The result of the runnable.      |
-| loading | boolean | The loading state of the button. |
-
+| Name             |  Type   | Description                      |
+| ---------------- | :-----: | -------------------------------- |
+| currentStepIndex | number  | Number of the step / tab.        |
+| result           |   any   | The result of the runnable.      |
+| loading          | boolean | The loading state of the button. |
 
 ## Tabs
 
@@ -309,7 +308,7 @@ Tabs have three display modes:
 - `Invisible on view`: The tabs are not displayed when the app is viewed. They are only displayed in the app editor. This is useful to make multi-page apps, where each page is a tab.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -332,7 +331,7 @@ To add a component to a tabs component, you can either click on `Insert` while y
 Conditional tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -527,10 +526,10 @@ The form input component allows you to create a form and get answers from the us
 
 #### Form Input configuration
 
-| Name          |  Type  | Connectable | Templatable | Default | Description                          |
-| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------------ |
-| Display Type   | boolean |    false    |    false    | false | This will display the type and/or the format on the field next to the label.          |
-| Large Gap  | boolean |    false    |    false    | false | This will add a large gap between the field elements. |
+| Name         |  Type   | Connectable | Templatable | Default | Description                                                                  |
+| ------------ | :-----: | :---------: | :---------: | :-----: | ---------------------------------------------------------------------------- |
+| Display Type | boolean |    false    |    false    |  false  | This will display the type and/or the format on the field next to the label. |
+| Large Gap    | boolean |    false    |    false    |  false  | This will add a large gap between the field elements.                        |
 
 Each argument can be configured (name, description, type, default value, advanced parameters).
 
@@ -538,12 +537,12 @@ Each argument can be configured (name, description, type, default value, advance
 
 #### Outputs
 
-| Name   |  Type  | Description           |
-| ------ | :----: | --------------------- |
-| properties | string | Type, description and default of each argument. |
-| loading | boolean | The loading state of the text component. |
-| valid | boolean |  |
-| values | same as each argument | Value of each answer by the user. |
+| Name       |         Type          | Description                                     |
+| ---------- | :-------------------: | ----------------------------------------------- |
+| properties |        string         | Type, description and default of each argument. |
+| loading    |        boolean        | The loading state of the text component.        |
+| valid      |        boolean        |                                                 |
+| values     | same as each argument | Value of each answer by the user.               |
 
 ### Text Input
 
@@ -598,8 +597,8 @@ The Rich Text Editor component allows to have to user enter text with a layout, 
 
 #### Outputs
 
-| Name   |  Type  | Description           |
-| ------ | :----: | --------------------- |
+| Name   |  Type  | Description                                                                          |
+| ------ | :----: | ------------------------------------------------------------------------------------ |
 | Result | string | The Rich Text Editor input value, in HTML-like syntax within the Quill delta format. |
 
 ### Password Input
@@ -806,19 +805,18 @@ The Resource Select component allows you to have users pick [resources](../../co
 
 #### Resource Select configuration
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| Items Name       | string |    true     |    false    | "bar" | The name of each suggested resource.  |
-| Items       | [resource](../../core_concepts/3_resources_and_types/index.md) |    true     |    false    |  | The Windmill resource.  |
-| Placeholder   | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false     |    false    |  | The variable that will be displayed by default.  |
-| Full Width       | boolean |    false     |    false    | true | Set the width of the options popup to 100% of the select width.  |
+| Name        |                               Type                               | Connectable | Templatable | Default | Description                                                     |
+| ----------- | :--------------------------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
+| Items Name  |                              string                              |    true     |    false    |  "bar"  | The name of each suggested resource.                            |
+| Items       |  [resource](../../core_concepts/3_resources_and_types/index.md)  |    true     |    false    |         | The Windmill resource.                                          |
+| Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false    |    false    |         | The variable that will be displayed by default.                 |
+| Full Width  |                             boolean                              |    false    |    false    |  true   | Set the width of the options popup to 100% of the select width. |
 
 #### Outputs
 
-| Name   |  Type  | Description         |
-| ------ | :----: | ------------------- |
+| Name   |  Type  | Description                                |
+| ------ | :----: | ------------------------------------------ |
 | result | string | The selected resource (in `$res:` format). |
-
 
 ### Multiselect
 
@@ -839,7 +837,6 @@ The multiselect component allows you to get multiple strings from the user.
 | ------ | :----: | ------------------- |
 | result | string | The selected items. |
 
-
 ### Select Tab
 
 The Select Tab is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
@@ -848,17 +845,16 @@ The Select Tab is standalone tab component that behaves like a select component.
 
 #### Select Tab configuration
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| Items       | string |    true     |    false    | "Foo" ; "Bar" | The select tabs items (label and value, in JSON).                           |
-| Default Value | string |    true     |    false    |   | The default value of the tabs labels and value. |
+| Name          |  Type  | Connectable | Templatable |    Default    | Description                                       |
+| ------------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------------- |
+| Items         | string |    true     |    false    | "Foo" ; "Bar" | The select tabs items (label and value, in JSON). |
+| Default Value | string |    true     |    false    |               | The default value of the tabs labels and value.   |
 
 #### Outputs
 
-| Name   |  Type  | Description         |
-| ------ | :----: | ------------------- |
+| Name   |  Type  | Description       |
+| ------ | :----: | ----------------- |
 | result | string | The selected tab. |
-
 
 ### Select Step
 
@@ -868,15 +864,15 @@ The Select Step is standalone tab component that behaves like a select component
 
 #### Select Step configuration
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| Items       | string |    true     |    false    | "Foo" ; "Bar" | The select step items (label and value, in JSON).                           |
-| Default Value | string |    true     |    false    |   | The default value of the step labels and value. |
+| Name          |  Type  | Connectable | Templatable |    Default    | Description                                       |
+| ------------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------------- |
+| Items         | string |    true     |    false    | "Foo" ; "Bar" | The select step items (label and value, in JSON). |
+| Default Value | string |    true     |    false    |               | The default value of the step labels and value.   |
 
 #### Outputs
 
-| Name   |  Type  | Description         |
-| ------ | :----: | ------------------- |
+| Name   |  Type  | Description        |
+| ------ | :----: | ------------------ |
 | result | string | The selected step. |
 
 ## Tables
@@ -932,7 +928,7 @@ If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_Guide
 The AgGrid table component allows you to display an agnostic grid table.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -950,14 +946,14 @@ The AgGrid table component allows you to display an agnostic grid table.
 
 #### AgGrid Table configuration
 
-| Name         |  Type   | Connectable | Templatable |    Default    | Description                                  |
-| ------------ | :-----: | :---------: | :---------: | :-----------: | -------------------------------------------- |
-| Column Defs  | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.  |
-| Flex         | boolean  |    false     |    false    | true | Allows you to distribute available space among multiple elements to control their relative sizes and positions.  |
-| All Editable | boolean |    false    |    false    |     false     | Whether you want all columns to be editable. |
-| Multiple Selectable | boolean |    false    |    false    |     false     | Make multiple rows selectable at once. |
-| Row Multiselect With Click | boolean |    false    |    false    |     true     | If multiple selectable, allow multiselect with click. |
-| Pagination   | boolean |    false    |    false    |     false     | Whether you want pages on your table.        |
+| Name                       |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
+| -------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
+| Column Defs                | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
+| Flex                       | boolean |    false    |    false    |     true      | Allows you to distribute available space among multiple elements to control their relative sizes and positions. |
+| All Editable               | boolean |    false    |    false    |     false     | Whether you want all columns to be editable.                                                                    |
+| Multiple Selectable        | boolean |    false    |    false    |     false     | Make multiple rows selectable at once.                                                                          |
+| Row Multiselect With Click | boolean |    false    |    false    |     true      | If multiple selectable, allow multiselect with click.                                                           |
+| Pagination                 | boolean |    false    |    false    |     false     | Whether you want pages on your table.                                                                           |
 
 #### Outputs
 
@@ -967,7 +963,6 @@ The AgGrid table component allows you to display an agnostic grid table.
 | loading          | boolean | The loading state of the AgGrid table component |
 | selectedRow      | Object  | The selected row                                |
 | selectedRowIndex | number  | The selected row index                          |
-
 
 ## Display
 
@@ -1002,7 +997,7 @@ The text component allows you to display text.
 You can directly edit the text by click the `Pen` icon on the app editor. You can also double click on the text to edit it.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -1096,8 +1091,8 @@ The PDF component allows you to display a PDF file.
 
 | Name   |  Type   | Connectable | Templatable |  Default   | Description               |
 | ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Source | boolean |   true    |    true     | /dummy.pdf | The PDF file.             |
-| Zoom   | number  |   true    |    true     |    100     | The zoom on the PDF view. |
+| Source | boolean |    true     |    true     | /dummy.pdf | The PDF file.             |
+| Zoom   | number  |    true     |    true     |    100     | The zoom on the PDF view. |
 
 #### Outputs
 
@@ -1113,15 +1108,15 @@ The Rich Result component allows you to display the result of a Runnable. It tri
 
 #### Rich Result configuration
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Data Source |  |   true    |         | {"foo": 42} | The data source to display results.  |
+| Name        | Type | Connectable | Templatable |   Default   | Description                         |
+| ----------- | :--: | :---------: | :---------: | :---------: | ----------------------------------- |
+| Data Source |      |    true     |             | {"foo": 42} | The data source to display results. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| result |  | The result of the runnable. |
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |         | The result of the runnable.         |
 | loading | boolean | The loading state of the component. |
 
 ### Log Display
@@ -1132,15 +1127,15 @@ The Log Display component allows you to display the log of a Runnable.
 
 #### Log Display configuration
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Data Source |  |   true    |         | | The data source to display logs.  |
+| Name        | Type | Connectable | Templatable | Default | Description                      |
+| ----------- | :--: | :---------: | :---------: | :-----: | -------------------------------- |
+| Data Source |      |    true     |             |         | The data source to display logs. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| result |  | The result of the runnable. |
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |         | The result of the runnable.         |
 | loading | boolean | The loading state of the component. |
 
 ### Flow Status
@@ -1151,17 +1146,16 @@ The Flow Status component allows you to display the status of a flow.
 
 #### Flow Status configuration
 
-| Name   |  Type   | Connectable | Templatable |  Default   | Description               |
-| ------ | :-----: | :---------: | :---------: | :--------: | ------------------------- |
-| Data Source |  |   true    |         | | The flow to display status.  |
+| Name        | Type | Connectable | Templatable | Default | Description                 |
+| ----------- | :--: | :---------: | :---------: | :-----: | --------------------------- |
+| Data Source |      |    true     |             |         | The flow to display status. |
 
 #### Outputs
 
-| Name    |  Type   | Description                             |
-| ------- | :-----: | --------------------------------------- |
-| result |  | The result of the runnable. |
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |         | The result of the runnable.         |
 | loading | boolean | The loading state of the component. |
-
 
 ## Charts
 
@@ -1318,7 +1312,7 @@ The Timeseries component allows you to display a Timeseries using the [Chart.js]
 The ChartJs component allows you to display a ChartJs using the [Chart.js](https://www.chartjs.org/) library.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -1330,20 +1324,19 @@ The ChartJs component allows you to display a ChartJs using the [Chart.js](https
 
 #### ChartJs Input
 
-|      Type       | Connectable | Templatable | Default | Description          |
-| :-------------: | :---------: | :---------: | :-----: | -------------------- |
-| Data source |    true     |    false    |      {"label":["Pie"]...}   | The Json source of the displayed data. |
-
+|    Type     | Connectable | Templatable |       Default        | Description                            |
+| :---------: | :---------: | :---------: | :------------------: | -------------------------------------- |
+| Data source |    true     |    false    | {"label":["Pie"]...} | The Json source of the displayed data. |
 
 #### ChartJs configuration
 
-|      Type       | Connectable | Templatable | Default | Description          |
-| :-------------: | :---------: | :---------: | :-----: | -------------------- |
-| Type |    false     |    false    |     Pie  | The type of the chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
-| Options |    true     |    false    |   none   | ChartJs [options](https://www.chartjs.org/docs/latest/general/options.html) object. |
+|  Type   | Connectable | Templatable | Default | Description                                                                          |
+| :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------------------ |
+|  Type   |    false    |    false    |   Pie   | The type of the chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
+| Options |    true     |    false    |  none   | ChartJs [options](https://www.chartjs.org/docs/latest/general/options.html) object.  |
 
 #### Outputs
 
-| Name    |  Type   | Description                                    |
-| ------- | :-----: | ---------------------------------------------- |
-| result  | Object  | The ChartJs data.                           |
+| Name   |  Type  | Description       |
+| ------ | :----: | ----------------- |
+| result | Object | The ChartJs data. |

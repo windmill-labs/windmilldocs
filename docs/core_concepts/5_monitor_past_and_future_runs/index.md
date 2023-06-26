@@ -3,7 +3,7 @@
 Each workspace has a dedicated Runs menu that allows you to visualise all past and future runs.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -15,7 +15,7 @@ Each workspace has a dedicated Runs menu that allows you to visualise all past a
 
 The Runs menu in each workspace provides a time series view where you can monitor different time slots. The green (respectively, red) dots being the tasks that succeeded (respectively, failed). You can adjust the level of details by picking "All", "Runs", "Previews" or "Dependencies".
 
-![Time series](./1-runs-menu.png "Time series")
+![Time series](./1-runs-menu.png 'Time series')
 
 > All past and future runs of the workspace are visible from the menu
 
@@ -25,7 +25,7 @@ Clicking on each run in the menu opens a run page where you can view the run's s
 
 View of a past run:
 
-![Details per run](./2-detail-per-run.png "Details per run")
+![Details per run](./2-detail-per-run.png 'Details per run')
 
 > Check the details of each runs
 
@@ -42,6 +42,7 @@ View of a scheduled run:
 ## Filters
 
 There are multiple ways to filter the Runs menu:
+
 - by Datetime
 - Success / Failure
 - Skipped / Not skipped
@@ -52,6 +53,6 @@ There are multiple ways to filter the Runs menu:
 
 Example of filters in use:
 
-![Filters](./4-filters.png "Filters")
+![Filters](./4-filters.png 'Filters')
 
 > Here were filtered successful runs which returned `{"message": "Created record in table"}`

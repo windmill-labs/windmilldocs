@@ -5,7 +5,7 @@ Draft, test, and deploy scripts, flows, and apps Windmill to iterate and save sa
 Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by your browser in `local storage`, by the backend as a `draft`, and `deployed`.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -55,7 +55,7 @@ If you want to have several versions of the same runnable, just fork it with the
 A diff viewer is available when loading scripts from autosave or draft.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/diff_viewer.mp4"

@@ -5,7 +5,7 @@ feature is most useful to implement approval steps but can be used for other
 purposes as well.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -18,6 +18,7 @@ purposes as well.
 :::info
 
 If you look for ways to pause a workflow, you might be interested in:
+
 - **[Early stop/Break](./2_early_stop.md)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
 - **[Sleep](./15_sleep.md)**: if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
 - **[Retry](./14_retries.md)** a step a step until it comes successful.
@@ -31,6 +32,7 @@ those secret urls. Use `wmill.getResumeUrls()` in Typescript or
 `wmill.get_resume_urls()` in Python from the wmill client to generate those URLs.
 
 An event can be:
+
 - a **cancel**
 - a **pre-set number of approval** that is met
 
@@ -40,11 +42,11 @@ For the moment we receive the approval steps in the form of an HTTP request. For
 
 You can also find ready-to-use [Approval Scripts](https://hub.windmill.dev/approvals)
 on Windmill Hub:
+
 - [Suspend/resume a Flow by sending approval URL via email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail).
 - [Ask channel for approval](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack).
 
 :::
-
 
 ## Add Approval Script
 

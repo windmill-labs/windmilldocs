@@ -37,7 +37,7 @@ export default function PriceCalculator({ period, tier }) {
 			total += calculatePrice(tier.price.worker.monthly, period.value) * workers;
 		}
 
-		return total.toFixed(2);
+		return total;
 	}
 
 	return (
@@ -71,7 +71,7 @@ export default function PriceCalculator({ period, tier }) {
 								</div>
 								<div>
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
-										${calculatePrice(tier.price[key].monthly, period.value).toFixed(2)}
+										${calculatePrice(tier.price[key].monthly, period.value)}
 									</span>
 									<span className="text-sm text-gray-500">
 										{period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
@@ -111,7 +111,7 @@ export default function PriceCalculator({ period, tier }) {
 										classNames(
 											checked ? 'border-transparent' : 'border-gray-300',
 											active ? 'border-blue-600 ring-2 ring-blue-600' : '',
-											'relative block cursor-pointer rounded-lg border bg-white dark:bg-gray-900  p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
+											'relative block cursor-pointer rounded-lg border p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
 										)
 									}
 								>
@@ -133,7 +133,7 @@ export default function PriceCalculator({ period, tier }) {
 													</RadioGroup.Description>
 													<RadioGroup.Description as="div" className="flex w-full justify-end">
 														<span className="text-sm text-gray-900 font-semibold dark:text-white">
-															${calculatePrice(plan.price, period.value).toFixed(2)}
+															${calculatePrice(plan.price, period.value)}
 														</span>
 														<span className="text-sm text-gray-500 dark:text-gray-300">
 															{period.value === 'annually' ? '/yr' : '/mo'}

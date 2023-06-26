@@ -6,7 +6,7 @@ Slack API directly from Windmill. In this guide, we'll cover both approaches, so
 you can find the one that suits you best.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -39,12 +39,11 @@ should go to
 select the "Slack Command" tab. On there, click "Connect to Slack".
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/adding_slack_resource.mp4"
+className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+autoPlay
+loop
+controls
+src="/videos/adding_slack_resource.mp4"
 />
 
 <br/>

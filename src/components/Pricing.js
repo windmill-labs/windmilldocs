@@ -283,7 +283,7 @@ export default function Pricing() {
 	const [period, setPeriod] = useState(periods[0]);
 
 	return (
-		<div className="pb-12">
+		<div>
 			<div className="mx-auto max-w-7xl">
 				<div className="mx-auto max-w-4xl text-center">
 					<p className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Pricing</p>
@@ -293,7 +293,8 @@ export default function Pricing() {
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md
+						 font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (

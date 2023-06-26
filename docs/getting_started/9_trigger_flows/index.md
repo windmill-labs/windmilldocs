@@ -24,7 +24,7 @@ Windmill automatically generates user interfaces (UIs) for scripts and flows bas
 By analyzing the main function parameters, it creates an input specification in the JSON Schema format, which is then used to render the UI. Users do not need to interact with the JSON Schema directly, as Windmill simplifies the process and allows for optional UI customization.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     loop
     controls
     id="main-video"
@@ -36,7 +36,7 @@ By analyzing the main function parameters, it creates an input specification in 
 This feature is also usable directly in the script editor to **test a flow in the making**:
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     loop
     controls
     id="main-video"
@@ -56,7 +56,7 @@ More details on our page dedicated to [Auto-generated UIs](../../core_concepts/6
 Windmill provides a WYSIWYG app editor. It allows you to build your own UI with drag-and-drop components and to connect your data to scripts and flows in minutes.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     loop
     controls
     id="main-video"
@@ -78,7 +78,7 @@ Windmill allows you to schedule scripts using a user-friendly interface and cont
 You can create schedules by specifying a script or flow, its arguments, and a CRON expression to control the execution frequency, ensuring that your tasks run automatically at the desired intervals.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     loop
     controls
     id="main-video"
@@ -160,7 +160,7 @@ More details on our page dedicated to [Webhooks](../../core_concepts/4_webhooks/
 One use case of webhooks is [building a Slackbot with Windmill](/blog/handler-slack-commands).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/generated_email.mp4"
@@ -176,7 +176,7 @@ Windmill uses Slack to trigger scripts and flows by establishing Slackbots and c
 One use case of webhooks is [triggering scripts via inbound emails using Mailchimp](../../integrations/mailchimp_mandrill.md).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/trigger_mandrill.mp4"

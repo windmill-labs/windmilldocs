@@ -1,7 +1,6 @@
 import React from 'react';
 import LandingSection from './LandingSection';
 import { ExternalLink } from 'lucide-react';
-import { useDeveloperMode } from '../pages';
 import classNames from 'classnames';
 
 const integrations = [
@@ -40,8 +39,6 @@ const integrations = [
 ];
 
 export default function IntergrationList() {
-	const { developerMode, setDeveloperMode } = useDeveloperMode();
-
 	return (
 		<LandingSection bgClass="bg-white dark:bg-gray-900">
 			<div className="w-full gap-8 flex flex-col">

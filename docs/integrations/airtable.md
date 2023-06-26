@@ -5,12 +5,11 @@ There are two resources associated with [Airtable](https://www.airtable.com/). B
 ## Airtable Account
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/adding_airtable_resource.mp4"
+ className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+  autoPlay
+  loop
+  controls
+  src="/videos/adding_airtable_resource.mp4"
 />
 <br/>
 
@@ -23,7 +22,7 @@ You'll need to land on Airtable's [Developer hub](https://airtable.com/create/to
 ## Airtable Table
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls

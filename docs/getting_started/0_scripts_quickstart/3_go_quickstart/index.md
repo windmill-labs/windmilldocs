@@ -63,7 +63,7 @@ Note that you can have [AI suggest code on Windmill](../../../misc/11_code_autoc
 <br/>
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/codeium_example.mp4"

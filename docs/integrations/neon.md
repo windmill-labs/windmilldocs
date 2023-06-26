@@ -5,7 +5,7 @@
 As a Postgres database service provider, Neon.tech follows the regular Postgres protocol and therefore can be integrated as any [PostgreSQL resource](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/neon_integration.mp4"

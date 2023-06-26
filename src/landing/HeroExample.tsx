@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import LandingSection from './LandingSection';
 import { Code, LayoutDashboard, List, PlayCircle } from 'lucide-react';
-import { useTabs } from './tabs/useTabs';
 import { VolumeX } from 'lucide-react';
 
 const tabs = [
@@ -75,7 +74,7 @@ export default function HeroExample() {
 					)}
 
 					<video
-						className="border-2 rounded-xl object-cover w-full h-full"
+						className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 						controls={played}
 						id="main-video"
 						src="/videos/main.mp4"

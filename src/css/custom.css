@@ -23,7 +23,9 @@
 
 html[data-theme='dark'] {
   --ifm-navbar-background-color: #111827;
-	--ifm-background-color:#111827
+	--ifm-background-color:#111827;
+	--ifm-font-color-base: #e5e7eb !important;
+	
 }
 
 .navbar {
@@ -34,11 +36,14 @@ html[data-theme='dark'] {
 :root {
 	--ifm-navbar-background-color: white;
 	--ifm-background-color:white;
+	--doc-sidebar-width: 320px !important;
+	--ifm-font-color-base: #1f2937 !important;
 }
 
 nav {
 	font-family: var(--ifm-font-family-base);
 }
+
 
 footer {
 	font-family: var(--ifm-font-family-base);
@@ -50,7 +55,7 @@ li {
 
 body {
 	font-family: var(--ifm-font-family-base);
-	@apply dark:text-gray-100
+	@apply dark:!text-gray-200
 }
 
 :root {
