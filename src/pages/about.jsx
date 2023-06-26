@@ -69,7 +69,7 @@ export default function About() {
 											<div className="space-y-2">
 												<div className="space-y-1 text-lg font-medium leading-6">
 													<h3>{person.name}</h3>
-													<p className="text-blue-600">{person.role}</p>
+													<p className="text-blue-200 text-sm">{person.role}</p>
 												</div>
 												<ul role="list" className="flex justify-center space-x-5">
 													<li>

@@ -124,7 +124,7 @@ export default function DocSidebarItemCategory({
 				})}
 			>
 				{level === 1 ? (
-					<div className="px-3 uppercase font-bold text-sm hover text-gray-500 dark:text-gray-400 flex h-8 items-center">
+					<div className="px-3 uppercase font-bold text-sm hover text-gray-500 dark:text-gray-100 flex h-8 items-center">
 						{label}
 					</div>
 				) : (

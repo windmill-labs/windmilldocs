@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { Code } from 'lucide-react';
 import React from 'react';
 
 export default function DocCard({ title, description, href, Icon = undefined, color = 'blue' }) {
@@ -12,15 +11,15 @@ export default function DocCard({ title, description, href, Icon = undefined, co
 
 	const iconColors = {
 		blue: 'bg-blue-200 text-blue-800 dark:bg-blue-500 dark:text-blue-100',
-		teal: 'bg-teal-200 text-teal-800 dark:bg-teal-500 dark:text-teal-100',
-		orange: 'bg-orange-200 text-orange-800 dark:bg-orange-500 dark:text-orange-100'
+		teal: 'bg-teal-200 text-teal-800 dark:bg-teal-600 dark:text-teal-100',
+		orange: 'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-orange-100'
 	};
 
 	return (
 		<a
 			href={href}
 			className={classNames(
-				'rounded-md p-8 border border-gray-200 dark:border-gray-700 shadow-sm transition-all cursor-pointer flex flex-col gap-2 !no-underline overflow-hidden',
+				'rounded-md p-8 border border-gray-100 dark:border-gray-900 shadow-sm transition-all cursor-pointer flex flex-col gap-2 !no-underline overflow-hidden',
 				colors[color]
 			)}
 			target="_blank"

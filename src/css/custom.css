@@ -19,45 +19,29 @@
 	}
 }
 
-html[data-theme='dark'] {
-  --ifm-navbar-background-color: #111827;
-	--ifm-background-color:hsl(221, 39%, 11%); 
-	--ifm-background-color:#111827;
-	--ifm-font-color-base: white !important;
+:root {
+	--ifm-navbar-background-color: white;
+	--ifm-background-color:white;
+	--ifm-font-family-base: 'Inter', 'Inter';
+	--doc-sidebar-width: 256px !important;
+	--ifm-color-primary: rgb(59, 130, 246);
+	--ifm-color-primary-dark: rgb(37, 102, 206);
+	--ifm-color-primary-darker: rgb(23, 70, 146);
+	--ifm-color-primary-darkest: rgb(6, 52, 126);
+	--ifm-color-primary-light: rgb(77, 48, 207);
+	--ifm-color-primary-lighter: rgb(132, 152, 241);
+	--ifm-color-primary-lightest: rgb(169, 175, 211);
+	--ifm-code-font-size: 95%;
+}
+
+:root[data-theme='dark'] {
+  --ifm-navbar-background-color: #1e232e;
+	--ifm-background-color:#1e232e;
 }
 
 .navbar {
 	@apply border-b dark:border-gray-800;
 }
-
-
-:root {
-	--ifm-navbar-background-color: white;
-	--ifm-background-color:white;
-	--doc-sidebar-width: 320px !important;
-	--ifm-font-family-base: 'Inter', 'Inter';
-	--ifm-font-color-base: #1f2937 !important;
-
-}
-
-nav {
-	font-family: var(--ifm-font-family-base);
-}
-
-
-footer {
-	font-family: var(--ifm-font-family-base);
-}
-
-li {
-	font-family: var(--ifm-font-family-base);
-}
-
-body {
-	font-family: var(--ifm-font-family-base);
-	@apply dark:!text-gray-200
-}
-
 
 .markdown {
 	font-size: 16px;
@@ -319,4 +303,8 @@ th {
 
 .pagination-nav {
 	@apply max-w-4xl mx-auto;
+}
+
+.table-of-contents__link {
+	@apply text-gray-700 dark:text-gray-200;
 }
