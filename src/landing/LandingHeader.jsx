@@ -6,6 +6,8 @@ import classNames from 'classnames';
 import { useColorMode } from '@docusaurus/theme-common';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import { SiDiscord } from 'react-icons/si';
+import { motion } from 'framer-motion';
+import ThemeToggleButton from './ThemeToggleButton';
 
 const resources = [
 	{
@@ -26,8 +28,22 @@ const resources = [
 	}
 ];
 
+const variants = {
+	initialRotate: { rotate: 0, transition: { duration: 1, ease: 'backInOut' } },
+	infiniteSpin: {
+		rotate: 360,
+		transition: {
+			duration: 1,
+			repeat: Infinity,
+			ease: 'easeInOut'
+		}
+	}
+};
+
 export default function LandingHeader() {
 	const { colorMode, setColorMode } = useColorMode();
+
+	const [hoverLogo, setHoverLogo] = React.useState(false);
 
 	return (
 		<div className="w-full bg-white dark:bg-gray-900 ">
@@ -36,11 +52,16 @@ export default function LandingHeader() {
 					<a
 						href="/"
 						className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
+						onMouseEnter={() => setHoverLogo(true)}
+						onMouseLeave={() => setHoverLogo(false)}
 					>
-						<img
-							className="h-8 group-hover:animate-spin ease-in duration-[10s]"
+						<motion.img
+							className="h-8"
 							src="/img/windmill.svg"
 							alt="Windmill Labs"
+							variants={variants}
+							animate={hoverLogo ? 'infiniteSpin' : 'initialRotate'}
+							id="monkeyFace"
 						/>
 						<div className="font-semibold text-xl text-blue-500 dark:text-white subpixel-antialiased ">
 							Windmill
@@ -130,22 +151,8 @@ export default function LandingHeader() {
 						</Popover>
 					</Popover.Group>
 
-					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8">
-						{colorMode === 'light' ? (
-							<button
-								className="text-gray-500 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-2 "
-								onClick={() => setColorMode('dark')}
-							>
-								<SunIcon className="h-5 w-5" aria-hidden="true" />
-							</button>
-						) : (
-							<button
-								className="text-gray-500 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-2 "
-								onClick={() => setColorMode('light')}
-							>
-								<MoonIcon className="h-5 w-5" aria-hidden="true" />
-							</button>
-						)}
+					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
+						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a
 							href="https://discord.com/invite/V7PM2YHsPB"
