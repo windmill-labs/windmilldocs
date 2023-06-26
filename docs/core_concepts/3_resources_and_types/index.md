@@ -6,16 +6,20 @@ connection to a frequently used third party system such as a database. Think of
 Resources as a structured way to store configuration and credentials, and access
 them from scripts.
 
-:::tip Integrations in Windmill
-
-Check the list of pre-defined [integrations](../../integrations/0_integrations_on_windmill.md) in Windmill.
-
-:::
-
 Each Resource has a **Resource Type** (**RT** for short) - for example MySQL,
 MongoDB, Slack, etc. - that defines the schema that the resource of this type
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
+
+:::tip Available pre-made integrations
+
+Check our [list of integrations](../../integrations/0_integrations_on_windmill.md) (or, pre-made resource types).
+
+<br/>
+
+If one is missing, this very page details how to [create your own](#create-a-resource-type).
+
+:::
 
 ## Create a Resource
 

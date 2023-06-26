@@ -17,7 +17,7 @@ const people = [
 	},
 	{
 		name: 'Henri Courdent',
-		role: 'Chief of Staff',
+		role: 'Founding Ops Staff',
 		imageUrl: '/team/henri-courdent.jpg',
 		linkedinUrl: 'https://www.linkedin.com/in/henri-courdent/'
 	}
