@@ -3,7 +3,7 @@
 The present document will introduce you to Flows and how to build your first one.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -84,7 +84,7 @@ Note that you can have [AI suggest code on Windmill](../../misc/11_code_autocomp
 <br/>
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/codeium_example.mp4"
@@ -133,7 +133,7 @@ At each step you can add **[Approval Scripts](../../flows/11_flow_approval.md)**
 Request approvals can be sent by email, Slack, anything. Then you can **automatically resume workflows with secret webhooks** after the approval steps.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"

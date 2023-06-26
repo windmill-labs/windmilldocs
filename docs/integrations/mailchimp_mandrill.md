@@ -3,7 +3,7 @@
 Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.md) or [flows](../getting_started/9_trigger_flows/index.md) by e-mail.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -65,13 +65,14 @@ Maybe you want to deal with the specific elements of the email. It is likely the
 <details>
   <summary>Parses payload to Json. Code below:</summary>
 
-  ```js
+```js
 export async function main(x) {
-return JSON.parse(x)
+	return JSON.parse(x);
 }
 ```
 
 With "x" = our only input `flow_input.mandrill_events`.
+
 </details>
 
 ### Extract information from directly routed e-mails
@@ -107,35 +108,35 @@ Indeed, Mailchimp already parses the e-mail's details but does it as a single e-
 
 So we recommend you to add the following step an connecting "input_email" to `results.c[0].msg.text`, c being the JSON parser step:
 
-
 <details>
   <summary>Example of a simple parser to get info from the forwarded email. Code below:</summary>
 
-  ```python
+```python
 import re
 
 def main(input_email):
-    from_pattern = re.compile(r'From: .+ <(.+)>')
-    subject_pattern = re.compile(r'Subject: (.+)')
-    date_pattern = re.compile(r'Date: (.+)')
-    to_pattern = re.compile(r'To: <(.+)>')
-    content_pattern = re.compile(r'\n\n(.*)\n', re.DOTALL)
+  from_pattern = re.compile(r'From: .+ <(.+)>')
+  subject_pattern = re.compile(r'Subject: (.+)')
+  date_pattern = re.compile(r'Date: (.+)')
+  to_pattern = re.compile(r'To: <(.+)>')
+  content_pattern = re.compile(r'\n\n(.*)\n', re.DOTALL)
 
-    from_field = re.search(from_pattern, input_email)
-    date_field = re.search(date_pattern, input_email)
-    subject_field = re.search(subject_pattern, input_email)
-    to_field = re.search(to_pattern, input_email)
-    content_field = re.search(content_pattern, input_email)
+  from_field = re.search(from_pattern, input_email)
+  date_field = re.search(date_pattern, input_email)
+  subject_field = re.search(subject_pattern, input_email)
+  to_field = re.search(to_pattern, input_email)
+  content_field = re.search(content_pattern, input_email)
 
-    return {
-        'from': from_field.group(1) if from_field else None,
-        'date': date_field.group(1) if date_field else None,
-        'subject': subject_field.group(1) if subject_field else None,
-        'to': to_field.group(1) if to_field else None,
-        'content': content_field.group(1).strip() if content_field else None
-    }
+  return {
+      'from': from_field.group(1) if from_field else None,
+      'date': date_field.group(1) if date_field else None,
+      'subject': subject_field.group(1) if subject_field else None,
+      'to': to_field.group(1) if to_field else None,
+      'content': content_field.group(1).strip() if content_field else None
+  }
 
 ```
+
 </details>
 
 ![Get details from email](../assets/integrations/mailchimp_forward_inputs.png)
@@ -159,22 +160,23 @@ For example, have a script that reads the subject of the e-mail and returns a va
 <details>
   <summary>Example of a script that returns true if the mail Topic contains given value. Code below:</summary>
 
-  ```js
-export async function main(input: string, substring: string = "Fwd"): Promise<Output> {
-  const containsSubstring = input.includes(substring);
-  return { containsSubstring };
+```js
+export async function main(input: string, substring: string = 'Fwd'): Promise<Output> {
+	const containsSubstring = input.includes(substring);
+	return { containsSubstring };
 }
 
 interface Output {
-  containsSubstring: boolean;
+	containsSubstring: boolean;
 }
 ```
+
 </details>
 
-Here is what it does when "input" = `results.c[0].msg.headers.Subject` (c being the JSON.parse script)  and string = "Fwd":
+Here is what it does when "input" = `results.c[0].msg.headers.Subject` (c being the JSON.parse script) and string = "Fwd":
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/branch_fwd_direct.mp4"
@@ -184,12 +186,12 @@ Here is what it does when "input" = `results.c[0].msg.headers.Subject` (c being 
 
 In this flow, when "Fwd" is not found, it considers it was not a forwarded e-mail and the default branch executes. Of course this can be customized to your needs.
 
-
 ## How to go further?
 
 The present example is a very simple use case: when an email is transfered to a given address, it triggers a flow that reports the main details of the mail to Slack.
 
 However, you could go with much more complex workflows:
+
 - Play with branches [branches](../flows/13_flow_branches.md) and have this flow report on different media depending of the content of the e-mail.
 - The email could be dealt with to automatically update a CRM (e.g. [Hubspot](https://hub.windmill.dev/integrations/hubspot), [Salesforce](https://hub.windmill.dev/integrations/salesforce), [Airtable](https://hub.windmill.dev/integrations/airtable)).
 - Use the parsed details to [branch the execution of your flow](../flows/13_flow_branches.md) on a condition.

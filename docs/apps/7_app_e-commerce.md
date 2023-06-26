@@ -3,7 +3,7 @@
 We will now use the Windmill app builder to build a simple E-commerce backoffice app. It is a simple CRM app that allows you to manage your products, customers and orders of a e-commerce store.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -66,7 +66,7 @@ We will structure the app as follows:
 We will split the product view into two parts, with the [vertical split](/docs/apps/app_configuration-settings/app_component_library#vertical-split-panes). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -110,7 +110,7 @@ return result.data?.map((product) => {
 Now we can add the form to the right side of the split. We will use Text and inputs components to create the form.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -148,7 +148,7 @@ export async function main(
 
 The final result should look like this:
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -170,7 +170,7 @@ The list of orders is pretty much the same as the list of products. We will use 
 but we will use a different transformer to remove the fields that we don't need.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -220,7 +220,7 @@ export async function main(selectedOrderIndex: number, orders: any[], products: 
 In this example, we assume that the quantity of each product is 1. We can improve this by adding a new field to the orders table, and storing the quantity of each product in the order.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -251,7 +251,7 @@ export async function main(orders) {
 ```
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -305,7 +305,7 @@ export async function main(addresses: string[], apiKey: string) {
 We can now connect the output of the previous script to the Map component as the `Map markers` configuration.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls

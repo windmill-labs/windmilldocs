@@ -68,11 +68,10 @@ A background runnable is a script or flow that runs in the background and can be
 Inputs can be connected to any outputs. When connecting, you can click on the output to connect the input to the output. Note that you can select nested outputs, objects and arrays.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-connections.mp4"
 />
 
@@ -91,7 +90,7 @@ Here are the steps to connect an input to an output:
 You can edit the id of a component by clicking on the id. Component id can only contain letters and numbers.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls

@@ -15,13 +15,12 @@ Building a Slack commands handler requires a little bit of Windmill mastering, b
 Also, know that non-technical users can totally build such tools. I'm myself not a developer.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/generated_email.mp4"
-    alt="container component"
+  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+  autoPlay
+  loop
+  controls
+  src="/videos/generated_email.mp4"
+  alt="container component"
 />
 
 <br/>
@@ -43,7 +42,7 @@ Long story short, the first article explained how to connect Slack with Windmill
 
 [Workflows](/docs/getting_started/flows_quickstart) on Windmill are based on scripts. Workflows are the architecture that allows you to chain scripts with branches, loops etc. while connecting scripts' inputs to previous ouputs.
 
-![Windmill Workflows](./1-windmill-workflows.png "Windmill workflows")
+![Windmill Workflows](./1-windmill-workflows.png 'Windmill workflows')
 
 As we will use only one master workflow to handle all Slack commands, branches will be key: one branch for one Slack command. Let's get started.
 
@@ -51,17 +50,18 @@ As we will use only one master workflow to handle all Slack commands, branches w
 
 Just like the [slack integration tutorial](/docs/integrations/slack), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
 
-![Create Flow Handler](./2-create-flow-handler.png "Create a flow to handle Slack Commands")
+![Create Flow Handler](./2-create-flow-handler.png 'Create a flow to handle Slack Commands')
 
 You will get to [this](https://hub.windmill.dev/flows/28/example-handler-for-slack-bot-commands) workflow to handle Slack commands. When linked to the `/windmill` command from the Windmill workspace settings, it will react to it on Slack.
 
 Before going deeper, let's take a look at this first workflow because its logic will be of use.
 
-![First Handler Workflow](./8-example-first-handler.png "By default commands handler workflow")
+![First Handler Workflow](./8-example-first-handler.png 'By default commands handler workflow')
 
 ### Inputs
 
 There are two workflow inputs that are passed to your flow everytime a command is emitted after you have setup the Slack command integration in Windmill:
+
 - **response_url**: this is the url to be used by your flow to respond to the caller using the slack client. It will be automatically completed by the command once you've connected Slack to the Windmill workspace.
 - **text**: the text following the `/windmill` command and written on Slack. The following step will make sense of it.
 
@@ -69,19 +69,18 @@ There are two workflow inputs that are passed to your flow everytime a command i
 
 This script is used to dissect the text of the command. In the default example, it creates two variables: "command" and "input". You'll see later that we can play with it and create even more parameters.
 
-
 ```js
 export async function main(text_input: string): Output {
-  const tokenized: string[] = text_input?.split(' ') || [];
-  const command = tokenized[0] || 'help';
-  const input = tokenized.slice(1,).join(' ');
+	const tokenized: string[] = text_input?.split(' ') || [];
+	const command = tokenized[0] || 'help';
+	const input = tokenized.slice(1).join(' ');
 
-  return { command, input };
+	return { command, input };
 }
 
 interface Output {
-  command: string;
-  input: string;
+	command: string;
+	input: string;
 }
 ```
 
@@ -95,18 +94,18 @@ At last there is a default branch that will execute if issue or no condition ful
 
 ```js
 export async function main(response_url: string) {
-  await fetch(response_url, {
-    method: 'POST',
-    body: JSON.stringify({ text: getHelp() }),
-  });
+	await fetch(response_url, {
+		method: 'POST',
+		body: JSON.stringify({ text: getHelp() })
+	});
 }
 
 function getHelp() {
-  const help = `Supported commands
+	const help = `Supported commands
   help - prints this command
   echo - prints input
   `;
-  return help;
+	return help;
 }
 ```
 
@@ -118,7 +117,7 @@ The goal of the current section is to give you more hints on the potentiality of
 
 <!--(but maybe our users have more ideas) + link to Atelier post, when published-->
 
-![Slack commands hander, 2nd example](./3-commands-handler-n2.png "Second example of a Slack commands handler")
+![Slack commands hander, 2nd example](./3-commands-handler-n2.png 'Second example of a Slack commands handler')
 
 ### Fine-tuning the parser to manage longer commands
 
@@ -126,27 +125,27 @@ The default parser of the first example has the advantage of being simple as it 
 
 ```js
 export async function main(text_input: string): Output {
-  let tokenized: string[] = [];
-  if (text_input) {
-    let start = 0;
-    let inString = false;
-    for (let i = 0; i < text_input.length; i++) {
-      if (text_input[i] === '"') {
-        inString = !inString;
-      }
-      if (text_input[i] === ' ' && !inString) {
-        tokenized.push(text_input.slice(start, i).replace(/"/g, ''));
-        start = i + 1;
-      }
-    }
-    tokenized.push(text_input.slice(start).replace(/"/g, ''));
-  }
-  const command = tokenized[0] || 'help';
-  const input = tokenized[1];
-  const parameters1 = tokenized[2];
-  const parameters2 = tokenized[3];
+	let tokenized: string[] = [];
+	if (text_input) {
+		let start = 0;
+		let inString = false;
+		for (let i = 0; i < text_input.length; i++) {
+			if (text_input[i] === '"') {
+				inString = !inString;
+			}
+			if (text_input[i] === ' ' && !inString) {
+				tokenized.push(text_input.slice(start, i).replace(/"/g, ''));
+				start = i + 1;
+			}
+		}
+		tokenized.push(text_input.slice(start).replace(/"/g, ''));
+	}
+	const command = tokenized[0] || 'help';
+	const input = tokenized[1];
+	const parameters1 = tokenized[2];
+	const parameters2 = tokenized[3];
 
-  return { command, input, parameters1, parameters2 };
+	return { command, input, parameters1, parameters2 };
 }
 ```
 
@@ -164,13 +163,12 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
 ### Interacting with resources
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/command_event.mp4"
-    alt="container component"
+  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+  autoPlay
+  loop
+  controls
+  src="/videos/command_event.mp4"
+  alt="container component"
 />
 
 <br/>
@@ -207,16 +205,13 @@ Once your resources are added, you can choose to pre-load them (as the gcal auth
 
 ![Parameters flows](./7-parameters.png)
 
-
 ### Human in the loop with approval steps
 
-
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/generated_email.mp4"
     alt="container component"
 />
@@ -224,6 +219,7 @@ Once your resources are added, you can choose to pre-load them (as the gcal auth
 <br/>
 
 The example above chains simple scripts to make them into a powerful Slackbot:
+
 - first, it uses [Open AI](https://hub.windmill.dev/scripts/openai/1452/create-completion-openai) to create a completion
 - then, it [sends a message to the channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack) where we connected text to the previous completion
 - we introduced an [approval step](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack) to stop or go with the flow

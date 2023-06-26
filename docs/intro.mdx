@@ -1,4 +1,5 @@
 import DocCard from '@site/src/components/DocCard';
+import { Book, Pen } from 'lucide-react';
 
 # Introduction
 
@@ -14,16 +15,18 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 
 ## Learn about Windmill
 
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Get Started with Windmill"
 		description="Get started in 30 seconds."
 		href="/docs/getting_started/how_to_use_windmill"
+		Icon={Book}
 	/>
 	<DocCard
 		title="Note of Intent"
 		description="Windmill bridges the gap between no-code/low-code services and traditional programming."
 		href="/docs/misc/note_of_intent"
+		Icon={Pen}
 	/>
 </div>
 
@@ -33,7 +36,7 @@ Windmill is a feature-rich platform that allows you to build endpoints, cron job
 
 However the 3 core layers of Windmill, namely Scripts, Flows and Apps are complementary. Scripts are the smallest "unit" of abstraction: workflows and UIs all rely on them.
 
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Scripts"
 		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash or launch docker containers."
@@ -56,7 +59,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 ## Learn more about Windmill
 
 <div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Core Concepts"
 		description="The essential principles and features that underpin the platform's capabilities."
@@ -92,7 +95,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 ## Windmill for Developers
 
 <div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Command-Line Interface"
 		description="Interact with Windmill instances right from your terminal."
@@ -118,7 +121,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 ## Comparisons
 
 <div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
 		description="Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute."

@@ -121,7 +121,7 @@ Below you will find details about each component.
 Containers allow you to host other components in a box. Moving a container means moving all the components inside.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -148,7 +148,7 @@ The container component has no configuration.
 The List component enables duplication of cards or rows with consistent structure, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -161,9 +161,10 @@ To add a component to a list, you can either click on `Insert` while you selecte
 
 Editing or moving a component will apply changes to all cards or rows.
 
-![Editing a list card](../../assets/apps/4_app_component_library/editing_list.gif "Editing a list card")
+![Editing a list card](../../assets/apps/4_app_component_library/editing_list.gif 'Editing a list card')
 
 To customize the settings of components within each time, you can use `iter.index` and `iter.value`.
+
 - `iter.index` will retrieve the index number of each card (0, 1, 2 etc.).
 
 ![iter.index](../../assets/apps/4_app_component_library/iter.index.png)
@@ -171,7 +172,7 @@ To customize the settings of components within each time, you can use `iter.inde
 - `iter.value.key` will retrieve the value of each key defined in the `items` section.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -183,7 +184,7 @@ To customize the settings of components within each time, you can use `iter.inde
 List components also support having [inputs](#inputs) set inside them. Retrieve the values of each in the `inputs` field of the List component in the [outputs](../2_outputs.md) menu.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -194,21 +195,21 @@ List components also support having [inputs](#inputs) set inside them. Retrieve 
 
 #### List configuration
 
-| Name          |  Type   | Connectable | Templatable | Default | Description                     |
-| ------------- | :-----: | :---------: | :---------: | :-----: | ------------------------------- |
-| items         |  array  |    true     |    false    |    3 items     | The list items.               |
-| item keys      | string  |    true     |    false    |   `"foo": 1` ...   | The keys of each card. |
-| Width        | string |    false    |    false    |  false  | Wether items should be "Card" of "Full Row".     |
-| Min Width Px | number |    true     |    true    |    300     | The minimum width in pixels. |
-| Height Px | number |    true     |    true    |    280     | The height in pixels. |
+| Name         |  Type  | Connectable | Templatable |    Default     | Description                                  |
+| ------------ | :----: | :---------: | :---------: | :------------: | -------------------------------------------- |
+| items        | array  |    true     |    false    |    3 items     | The list items.                              |
+| item keys    | string |    true     |    false    | `"foo": 1` ... | The keys of each card.                       |
+| Width        | string |    false    |    false    |     false      | Wether items should be "Card" of "Full Row". |
+| Min Width Px | number |    true     |    true     |      300       | The minimum width in pixels.                 |
+| Height Px    | number |    true     |    true     |      280       | The height in pixels.                        |
 
 #### Outputs
 
-| Name             |  Type   | Description                      |
-| ---------------- | :-----: | -------------------------------- |
-| result           |   any   | The result of the list component.   |
-| loading          | boolean | The loading state of the component. |
-| inputs          | any | The [inputs](#inputs) of the component. |
+| Name    |  Type   | Description                             |
+| ------- | :-----: | --------------------------------------- |
+| result  |   any   | The result of the list component.       |
+| loading | boolean | The loading state of the component.     |
+| inputs  |   any   | The [inputs](#inputs) of the component. |
 
 ### Divider X
 
@@ -241,7 +242,7 @@ Divider Y is a vertical line.
 The drawer is container called by a button. Once you click on the button, a side tab will appear on which you can display other components.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -270,7 +271,7 @@ To add a component to a container, you can either click on `Insert` while you se
 Container split in x number of panes vertically.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -293,7 +294,7 @@ To add a component to a vertical split pane, you can either click on `Insert` wh
 Container split in x number of panes horizontally.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -316,7 +317,7 @@ To add a component to a horizontal split pane, you can either click on `Insert` 
 The modal is container called by a button. Once you click on the button, a modal will appear on which you can display other components.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -341,7 +342,7 @@ The modal is container called by a button. Once you click on the button, a modal
 The stepper component helps you lay out multi-step apps, with an optional validation function to validate a step.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -376,7 +377,7 @@ Tabs have three display modes:
 - `Invisible on view`: The tabs are not displayed when the app is viewed. They are only displayed in the app editor. This is useful to make multi-page apps, where each page is a tab.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -399,7 +400,7 @@ To add a component to a tabs component, you can either click on `Insert` while y
 Conditional tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -996,7 +997,7 @@ If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_Guide
 The AgGrid table component allows you to display an agnostic grid table.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -1065,7 +1066,7 @@ The text component allows you to display text.
 You can directly edit the text by click the `Pen` icon on the app editor. You can also double click on the text to edit it.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -1380,7 +1381,7 @@ The Timeseries component allows you to display a Timeseries using the [Chart.js]
 The ChartJs component allows you to display a ChartJs using the [Chart.js](https://www.chartjs.org/) library.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls

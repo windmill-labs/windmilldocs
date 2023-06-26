@@ -5,7 +5,7 @@ feature is most useful to implement approval steps but can be used for other
 purposes as well.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -17,6 +17,7 @@ purposes as well.
 :::info Suspending a flow in Windmill
 
 Other ways to pause a workflow include:
+
 - [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early.
 - [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one).
 - [Retry](./14_retries.md) a step a step until it comes successful.
@@ -30,6 +31,7 @@ those secret urls. Use `wmill.getResumeUrls()` in Typescript or
 `wmill.get_resume_urls()` in Python from the wmill client to generate those URLs.
 
 An event can be:
+
 - a **cancel**
 - a **pre-set number of approval** that is met
 
@@ -39,19 +41,31 @@ For the moment we receive the approval steps in the form of an HTTP request. For
 
 You can find ready-to-use [Approval Scripts](https://hub.windmill.dev/approvals)
 on Windmill Hub:
+<<<<<<< HEAD
+
+- [Suspend/resume a Flow by sending approval URL via email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail).
+- [Ask channel for approval](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack).
+
+:::
+
+## Add Approval Script
+
+# ![Adding approval step](../assets/flows/approval-step.png)
+
 - [Suspend/resume a Flow by sending approval URL via email (gmail)](https://hub.windmill.dev/scripts/gmail/1397/).
 - [Ask channel for approval (Slack)](https://hub.windmill.dev/scripts/slack/1503/).
 
 :::
 
-
 ## Add and Approval Script
+
+> > > > > > > main
 
 You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
 external communication channel (like e-mail, SMS or chat message).
 
-![Adding approval step](../assets/flows/approval-step.png "Adding approval step")
+![Adding approval step](../assets/flows/approval-step.png 'Adding approval step')
 
 > When adding a step to a flow, pick `Approval`.
 
@@ -61,7 +75,7 @@ external communication channel (like e-mail, SMS or chat message).
 customized**. This allows flexibility and security for cases where you either require
 approvals from all authorized people or only from one.
 
-![Required approvals](../assets/flows/flow-number-of-approvals.png "Required approvals")
+![Required approvals](../assets/flows/flow-number-of-approvals.png 'Required approvals')
 
 Note that approval steps can be applied the same configurations as regular steps ([Retries](./14_retries.md), [Early stop/Break](./2_early_stop.md) or [Suspend](./15_sleep.md)).
 
@@ -106,6 +120,7 @@ Here is a basic example we will detail below.
 <br/>
 
 This flow:
+
 1. Receives a refund request form a user.
 2. Asks on Slack via an approval step what action to take.
 3. The answer is a condition to [branches](./13_flow_branches.md) that lead either a refund, a refusal or a deeper investigation.
@@ -121,6 +136,7 @@ For the sake of the example, we made this flow simple with a [manual trigger](..
 ![Flow inputs](../assets/flows/tuto_approval_input.png)
 
 Then, we picked an approval step on the Hub to [Ask channel for approval on Slack](https://hub.windmill.dev/scripts/slack/1503/). With inputs:
+
 - `slack`: your [Slack resource](../integrations/slack.md).
 - `channel`: Slack channel to publish message, as string.
 - `text`: `Refund request by _${flow_input["User email"]}_ on order ${flow_input["Order number"]}.`.
@@ -141,7 +157,7 @@ This approval page will generate two keys you can use for further steps: `resume
 
 Those are the keys you can use as predicate expressions for your [branches](./13_flow_branches.md).
 
-![Branches predicate expressions](../assets/flows/tuto_approval_branches.png "Branches predicate expressions")
+![Branches predicate expressions](../assets/flows/tuto_approval_branches.png 'Branches predicate expressions')
 
 > With [Branch one](./13_flow_branches.md#branch-one), the first branch whose predicate expression is `true` will execute.
 
@@ -175,6 +191,11 @@ You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_man
 
 :::tip Find it on Windmill Hub
 
+<<<<<<< HEAD
+![The branch is executed](../assets/flows/branch-executed.png)
+=======
 This flow can be found and forked on [Windmill Hub](https://hub.windmill.dev/flows/49/).
 
 :::
+
+> > > > > > > main

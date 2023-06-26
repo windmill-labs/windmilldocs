@@ -286,14 +286,14 @@ export default function Pricing() {
 		<div className="pb-12">
 			<div className="mx-auto max-w-7xl">
 				<div className="mx-auto max-w-4xl text-center">
-					<p className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Pricing</p>
+					<p className="text-4xl font-bold tracking-tight sm:text-5xl">Pricing</p>
 				</div>
 
 				<div className="mt-12 flex justify-center flex-col gap-4 items-center">
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
@@ -302,7 +302,7 @@ export default function Pricing() {
 								value={option}
 								className={({ checked }) =>
 									classNames(
-										checked ? 'bg-blue-600 text-white' : 'text-gray-500',
+										checked ? 'bg-blue-600 text-white' : '',
 										'cursor-pointer rounded-full px-4 py-2',
 										'transition-all '
 									)
@@ -316,7 +316,7 @@ export default function Pricing() {
 						<RadioGroup
 							value={period}
 							onChange={setPeriod}
-							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 dark:ring-gray-700"
+							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
 						>
 							<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
 							{periods.map((option) => (
@@ -326,7 +326,7 @@ export default function Pricing() {
 									className={({ checked }) =>
 										classNames(
 											checked
-												? 'bg-black dark:bg-gray-200 dark:text-gray-900 text-white'
+												? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
 												: 'text-gray-500',
 											'cursor-pointer rounded-full px-2.5 py-1',
 											'transition-all'
@@ -359,7 +359,7 @@ export default function Pricing() {
 								<h3
 									id={tier.id}
 									className={classNames(
-										tier.mostPopular ? 'text-blue-600' : 'text-gray-900 ',
+										tier.mostPopular ? 'text-blue-600' : '',
 										'text-2xl font-semibold leading-8'
 									)}
 								>
@@ -391,7 +391,9 @@ export default function Pricing() {
 								</p>
 							)}
 
-							<p className="mt-4 text-sm leading-6 text-gray-600">{tier.description}</p>
+							<p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-400">
+								{tier.description}
+							</p>
 
 							{index == 0 ? (
 								<div

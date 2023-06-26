@@ -7,7 +7,7 @@ A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON expr
 <!--truncate-->
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -76,7 +76,7 @@ If the Schedules menu allows you to control future executions of scripts and wor
 The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.md).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"

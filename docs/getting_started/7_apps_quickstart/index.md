@@ -3,7 +3,7 @@
 Welcome to the Apps Quickstart! This page will provide you with the necessary knowledge to build your first applications in a matter of minutes.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -55,7 +55,7 @@ The App editor works on a drag-and-drop basis. From the right-side menu, click o
 If you have numerous components you might need to **Anchor** some of them to have them unmovable by other components.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/component_dd.mp4"
@@ -80,7 +80,7 @@ The **[Ouputs](../../apps/2_outputs.md)** of each component can be found on the 
 **Inputs can be connected to any output**: on a component click on `Connect` and associate inputs to outputs.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/connect_outputs.mp4"

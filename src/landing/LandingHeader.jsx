@@ -4,8 +4,9 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import { useColorMode } from '@docusaurus/theme-common';
-import { MoonIcon, SunIcon } from 'lucide-react';
 import { SiDiscord } from 'react-icons/si';
+import { motion } from 'framer-motion';
+import ThemeToggleButton from './ThemeToggleButton';
 
 const resources = [
 	{
@@ -26,18 +27,41 @@ const resources = [
 	}
 ];
 
+const variants = {
+	initialRotate: { rotate: 0, transition: { duration: 1, ease: 'backInOut' } },
+	infiniteSpin: {
+		rotate: 360,
+		transition: {
+			duration: 1,
+			repeat: Infinity,
+			ease: 'easeInOut'
+		}
+	}
+};
+
 export default function LandingHeader() {
 	const { colorMode, setColorMode } = useColorMode();
 
+	const [hoverLogo, setHoverLogo] = React.useState(false);
+
 	return (
-		<div className="w-full bg-white dark:bg-gray-900 ">
-			<Popover className="relative bg-white dark:bg-gray-900 bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
+		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 shadow-sm">
+			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<a
 						href="/"
 						className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
+						onMouseEnter={() => setHoverLogo(true)}
+						onMouseLeave={() => setHoverLogo(false)}
 					>
-						<img className="h-8" src="/img/windmill.svg" alt="Windmill Labs" />
+						<motion.img
+							className="h-8"
+							src="/img/windmill.svg"
+							alt="Windmill Labs"
+							variants={variants}
+							animate={hoverLogo ? 'infiniteSpin' : 'initialRotate'}
+							id="monkeyFace"
+						/>
 						<div className="font-semibold text-xl text-blue-500 dark:text-white subpixel-antialiased ">
 							Windmill
 						</div>
@@ -50,7 +74,7 @@ export default function LandingHeader() {
 					</div>
 					<Popover.Group as="nav" className="hidden space-x-10 md:flex">
 						<a
-							href="/docs/intro"
+							href="https://docs.windmill.dev/docs/intro"
 							onClick={() => window.plausible('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>
@@ -113,8 +137,12 @@ export default function LandingHeader() {
 															href={resource.href}
 															className="-m-3 block rounded-md p-3 hover:bg-gray-100 dark:hover:bg-gray-700 !no-underline"
 														>
-															<p className="text-base font-medium text-gray-900">{resource.name}</p>
-															<p className="mt-1 text-sm text-gray-500">{resource.description}</p>
+															<p className="font-medium text-gray-900 dark:text-gray-100">
+																{resource.name}
+															</p>
+															<p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+																{resource.description}
+															</p>
 														</a>
 													))}
 												</div>
@@ -126,22 +154,8 @@ export default function LandingHeader() {
 						</Popover>
 					</Popover.Group>
 
-					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8">
-						{colorMode === 'light' ? (
-							<button
-								className="text-gray-500 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-2 "
-								onClick={() => setColorMode('dark')}
-							>
-								<SunIcon className="h-5 w-5" aria-hidden="true" />
-							</button>
-						) : (
-							<button
-								className="text-gray-500 hover:text-gray-900 dark:text-gray-200 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 p-2 "
-								onClick={() => setColorMode('light')}
-							>
-								<MoonIcon className="h-5 w-5" aria-hidden="true" />
-							</button>
-						)}
+					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
+						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a
 							href="https://discord.com/invite/V7PM2YHsPB"
@@ -170,7 +184,6 @@ export default function LandingHeader() {
 						</a>
 					</div>
 				</div>
-
 				<Transition
 					as={Fragment}
 					enter="duration-200 ease-out"

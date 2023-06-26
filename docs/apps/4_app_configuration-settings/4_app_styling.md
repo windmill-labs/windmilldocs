@@ -23,7 +23,7 @@ Please note that these different style classes can be combined.
 You can configure manually your own classes with our Rich Editor.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -41,7 +41,7 @@ For complex apps, you may not want to repeat the styling configuration on each c
 On the right-side menu, pick `Global styling` and go on a component to define pre-set styling in CSS or Tailwind.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"
@@ -59,7 +59,7 @@ Just click on `Copy style to global CSS`.
 <br/>
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
     id="main-video"

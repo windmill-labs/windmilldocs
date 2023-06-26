@@ -7,7 +7,7 @@ There are three ways to handle errors in Windmill flows: [retries](../../flows/1
 Steps within a flow can be retried a specified number of times and at a defined frequency in case of an error.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -34,7 +34,7 @@ The Error Handler is a special flow step that is executed when an error occurs w
 If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
@@ -55,7 +55,7 @@ For more details on error handlers, please refer to our dedicated [Error Handler
 The Early Stop/Break feature allows you to define a predicate expression that determines whether the flow should stop early at the end of a step.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls

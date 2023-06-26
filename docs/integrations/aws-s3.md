@@ -1,7 +1,7 @@
 # Amazon S3 Integration
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     id="main-video"
     src="/videos/s3_objects_in_bucket.mp4"

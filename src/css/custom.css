@@ -19,26 +19,31 @@
 	}
 }
 
-
-
 html[data-theme='dark'] {
   --ifm-navbar-background-color: #111827;
-	--ifm-background-color:#111827
+	--ifm-background-color:hsl(221, 39%, 11%); 
+	--ifm-background-color:#111827;
+	--ifm-font-color-base: white !important;
 }
 
 .navbar {
-	@apply border-b dark:border-gray-800 ;
+	@apply border-b dark:border-gray-800;
 }
 
 
 :root {
 	--ifm-navbar-background-color: white;
 	--ifm-background-color:white;
+	--doc-sidebar-width: 320px !important;
+	--ifm-font-family-base: 'Inter', 'Inter';
+	--ifm-font-color-base: #1f2937 !important;
+
 }
 
 nav {
 	font-family: var(--ifm-font-family-base);
 }
+
 
 footer {
 	font-family: var(--ifm-font-family-base);
@@ -50,23 +55,11 @@ li {
 
 body {
 	font-family: var(--ifm-font-family-base);
-	@apply dark:text-gray-100
+	@apply dark:!text-gray-200
 }
 
-:root {
-	--ifm-font-family-base: 'Inter', 'Arial';
-	--ifm-color-primary: rgb(59, 130, 246);
-	--ifm-color-primary-dark: rgb(37, 102, 206);
-	--ifm-color-primary-darker: rgb(23, 70, 146);
-	--ifm-color-primary-darkest: rgb(6, 52, 126);
-	--ifm-color-primary-light: rgb(77, 48, 207);
-	--ifm-color-primary-lighter: rgb(132, 152, 241);
-	--ifm-color-primary-lightest: rgb(169, 175, 211);
-	--ifm-code-font-size: 95%;
-}
 
 .markdown {
-	color: rgb(71, 70, 69);
 	font-size: 16px;
 	line-height: 24px;
 }
@@ -103,28 +96,26 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 	margin: 1rem 0;
 }
 
-p {
-	@apply dark:text-gray-100
-}
+
 
 h1 {
-	@apply !text-3xl !font-bold dark:text-gray-100
+	@apply !text-3xl !font-bold;
 }
 
 .markdown h1 {
-	@apply !text-4xl !font-semibold dark:text-white mt-12 mb-4 border-b pb-4 border-neutral-100 dark:border-neutral-800;
+	@apply !text-4xl !font-semibold mt-12 mb-4 border-b pb-4 border-neutral-100 dark:border-neutral-800 leading-5 tracking-tight;
 }
 
 h2 {
-	@apply text-2xl font-bold dark:text-gray-100;	
+	@apply text-2xl font-bold leading-4 tracking-tight;	
 }
 
 h3 {
-	@apply text-xl font-bold dark:text-gray-100;
+	@apply text-xl font-bold;
 }
 
 .markdown h2 {
-	@apply text-xl font-semibold dark:text-white !mt-12;
+	@apply text-xl font-semibold !mt-12;
 }
 
 .markdown h3 {
@@ -317,7 +308,6 @@ td:nth-of-type(2):first-child {
 th {
 	@apply bg-gray-200 dark:bg-neutral-700 dark:text-gray-200
 }
-
 
 .theme-doc-breadcrumbs {
 	@apply max-w-4xl mx-auto pt-4;

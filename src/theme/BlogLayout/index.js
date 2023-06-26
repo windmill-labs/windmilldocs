@@ -14,13 +14,13 @@ export default function BlogLayout(props) {
 	return (
 		<Layout {...layoutProps}>
 			{!isBlogPostPageList && (
-				<div className="w-full">
+				<div className="max-w-7xl w-full mx-auto">
 					<div className="">
 						<div className="relative pt-16 pb-8">
-							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900">
+							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900 dark:from-blue-300 dark:to-blue-500">
 								Blog
 							</h1>
-							<p className="mt-4 text-lg leading-8 text-gray-600 container">
+							<p className="mt-4 text-lg leading-8 container">
 								Discover the latest news, updates, and articles from the team and community
 							</p>
 							<svg
@@ -54,11 +54,11 @@ export default function BlogLayout(props) {
 					</div>
 				</div>
 			)}
-			<div className="container margin-vert--lg bg-transparent">
+			<div className="container max-w-7xl w-full mx-auto margin-vert--lg bg-transparent">
 				<div className="row">
 					<BlogSidebar sidebar={sidebar} />
 					<main
-						className={clsx('col', {
+						className={clsx('col mt-12', {
 							'col--7': hasSidebar,
 							'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
 							'max-w-4xl mx-auto': !hasSidebar && isBlogPostPageList
@@ -68,7 +68,7 @@ export default function BlogLayout(props) {
 					>
 						{children}
 					</main>
-					{toc && <div className="col col--2">{toc}</div>}
+					{toc && <div className="col col--3">{toc}</div>}
 				</div>
 			</div>
 		</Layout>

@@ -15,9 +15,8 @@ This tutorial assumes that you already have a <a href='https://app.windmill.dev/
 You can execute queries on Supabase through the regular Postgres protocol.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/supabase_postgres_integration.mp4"
 />
 

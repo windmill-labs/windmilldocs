@@ -119,7 +119,7 @@ We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
 
 #### Learn more about Windmill
 
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
 
   <a href="/docs/flows/flow_loops" className="windmill-documentation-card" target="_blank">
     <div className="text-lg font-semibold text-gray-900">For loops</div>
@@ -237,7 +237,7 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 
 Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
 
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
   <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
     <div className="text-lg font-semibold text-gray-900">Resources</div>
    	<div className="text-sm text-gray-500">Create and manager your resources</div>
@@ -654,7 +654,7 @@ export async function main(
 
 #### Learn more about approval steps
 
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
   <a href="/docs/flows/flow_approval" className="windmill-documentation-card" target="_blank">
     <div className="text-lg font-semibold text-gray-900">
 		Approval step

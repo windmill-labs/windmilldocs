@@ -3,7 +3,7 @@
 Get to know more Windmill.
 
 <div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-2 mb-4">
+<div class="grid grid-cols-2 gap-6 mb-4">
   <a href="/docs/misc/architecture" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Architecture</div>
     <div class="text-sm text-gray-500">Schematic architecture of Windmill.</div>

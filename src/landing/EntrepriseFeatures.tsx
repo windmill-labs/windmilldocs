@@ -46,7 +46,7 @@ export default function EnterpriseFeatures() {
 	return (
 		<LandingSection bgClass="white dark:bg-gray-900">
 			<div className="w-full gap-8 flex flex-col">
-				<h1 className="tracking-tight leading-tight text-left font-bold text-black">
+				<h1 className="tracking-tight leading-tight text-left font-bold">
 					Enterprise-ready platform
 				</h1>
 				<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
@@ -63,7 +63,7 @@ export default function EnterpriseFeatures() {
 									<feature.icon className="h-5 w-5 flex-none text-blue-600" aria-hidden="true" />
 									{feature.name}
 								</dt>
-								<dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+								<dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
 									<p className="flex-auto">{feature.description}</p>
 									{feature.href && (
 										<p className="mt-6">

@@ -11,12 +11,11 @@ Getting leads emails from trials or newsletters signups is great. But it takes f
 <!--truncate-->
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/automating-contact-info.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	controls
+	src="/videos/automating-contact-info.mp4"
 />
 <br/>
 
@@ -42,11 +41,10 @@ Before jumping in, know that **this workflow was made by a non-technical user**.
 Here is what happens when you execute the flow for a single email:
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/crm-automation-execution.mp4"
 />
 

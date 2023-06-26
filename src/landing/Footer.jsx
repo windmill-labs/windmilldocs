@@ -35,7 +35,7 @@ const navigation = {
 
 export default function Footer() {
 	return (
-		<footer className="bg-white dark:bg-gray-900" aria-labelledby="footer-heading">
+		<footer aria-labelledby="footer-heading">
 			<h2 id="footer-heading" className="sr-only">
 				Footer
 			</h2>
@@ -94,7 +94,7 @@ export default function Footer() {
 					<div className="space-y-8 text-left mx-auto">
 						<div className="flex items-center">
 							<img className="h-16 mr-3" src="/img/windmill.svg" alt="Windmill Labs" />
-							<p className="text-sm leading-6 text-gray-600">
+							<p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
 								Made with passion in <br />
 								San Francisco and Paris.
 							</p>
