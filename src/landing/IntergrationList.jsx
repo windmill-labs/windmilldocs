@@ -63,7 +63,7 @@ export default function IntergrationList() {
 								.replace(/\s/g, '')}`}
 							target="_blank"
 						>
-							<img src={item.src} alt={item.name} className="w-auto h-8" />
+							<img src={item.src} alt={item.name} className="w-auto h-8" loading="lazy" />
 						</a>
 					))}
 				</div>

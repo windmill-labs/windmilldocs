@@ -39,11 +39,11 @@ export default function BlogPostItemContainer({ children, className }) {
 							<span>{Math.ceil(metadata.readingTime)} min read</span>
 						</div>
 
-						<h2 className="text-lg leading-6 font-semibold mt-4 mb-2 text-gray-900 ">
+						<h2 className="text-lg leading-6 font-semibold mt-4 mb-2 text-gray-900 dark:text-white">
 							{metadata.title}
 						</h2>
 
-						<p className="text-gray-600 text-sm h-max">
+						<p className="text-gray-600 text-sm h-max dark:text-gray-400">
 							{metadata.description ?? frontMatter.description}
 						</p>
 					</div>

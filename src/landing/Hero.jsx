@@ -1,8 +1,11 @@
 import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
+import { useColorMode } from '@docusaurus/theme-common';
 
 export default function Hero() {
+	const { colorMode } = useColorMode();
+
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
@@ -11,10 +14,10 @@ export default function Hero() {
 				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
 					<GithubStarCount />
 
-					<h1 className="mt-4 !text-4xl tracking-tight sm:!text-6xl text-gray-900">
+					<h1 className="mt-4 !text-4xl tracking-tight sm:!text-6xl">
 						Turn scripts into workflows and UIs in minutes
 					</h1>
-					<h2 className="mt-6 text-lg leading-8 text-gray-600 font-medium">
+					<h2 className="mt-6 text-lg leading-8  font-medium">
 						Easily create internal apps and invincible workflows with code only where it matters.
 						Self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
 						<br />
@@ -37,7 +40,7 @@ export default function Hero() {
 						<a
 							href="https://docs.windmill.dev/docs/advanced/self_host/"
 							onClick={() => window.plausible('self-host')}
-							className="text-base font-semibold leading-7 text-gray-900 text !no-underline"
+							className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200 text !no-underline"
 						>
 							Self-host yourself <span aria-hidden="true">→</span>
 						</a>
@@ -50,7 +53,7 @@ export default function Hero() {
 				<div className="mx-auto mt-16 sm:mt-8">
 					<div className="flex-none !rounded-2xl overflow-hidden bg-white dark:bg-gray-50/5">
 						<img
-							src="/homescreen.svg"
+							src={colorMode === 'dark' ? '/homescreen-dark.svg' : '/homescreen.svg'}
 							alt="Windmill infrastructure"
 							className="w-full"
 							width="1825"

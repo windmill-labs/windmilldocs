@@ -27,10 +27,10 @@ export default function RadialBlur() {
 					gradientUnits="userSpaceOnUse"
 					gradientTransform="translate(512 512) rotate(90) scale(512)"
 				>
-					<stop stopColor={colorMode === 'dark' ? '#3b82f6' : '#60a5fa'} />
+					<stop stopColor={colorMode === 'dark' ? '#3b82f6' : '#bfdbfe'} />
 					<stop
 						offset={1}
-						stopColor={colorMode === 'dark' ? '#3b82f6' : '#60a5fa'}
+						stopColor={colorMode === 'dark' ? '#3b82f6' : '#bfdbfe'}
 						stopOpacity={0}
 					/>
 				</radialGradient>

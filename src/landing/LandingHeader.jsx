@@ -137,8 +137,12 @@ export default function LandingHeader() {
 															href={resource.href}
 															className="-m-3 block rounded-md p-3 hover:bg-gray-100 dark:hover:bg-gray-700 !no-underline"
 														>
-															<p className="text-base font-medium text-gray-900">{resource.name}</p>
-															<p className="mt-1 text-sm text-gray-500">{resource.description}</p>
+															<p className="font-medium text-gray-900 dark:text-gray-100">
+																{resource.name}
+															</p>
+															<p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+																{resource.description}
+															</p>
 														</a>
 													))}
 												</div>
