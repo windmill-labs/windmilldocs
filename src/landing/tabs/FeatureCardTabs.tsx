@@ -55,7 +55,7 @@ export default function FeatureCardTabs({ tabs, color = 'blue' as 'blue' | 'teal
 				<select
 					id="tabs"
 					name="tabs"
-					className={`block w-full rounded-md border-gray-300 mb-4 ${selectFocusColors[color]}`}
+					className={`block w-full rounded-md border-gray-300 dark:bg-gray-900 dark:text-white mb-4 ${selectFocusColors[color]}`}
 					defaultValue={'Company'}
 					onChange={(e) => {
 						const tabIndex = tabs.findIndex((tab) => tab.label === e.target.value);

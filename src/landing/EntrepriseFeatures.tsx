@@ -63,7 +63,7 @@ export default function EnterpriseFeatures() {
 									<feature.icon className="h-5 w-5 flex-none text-blue-600" aria-hidden="true" />
 									{feature.name}
 								</dt>
-								<dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-400">
+								<dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-200">
 									<p className="flex-auto">{feature.description}</p>
 									{feature.href && (
 										<p className="mt-6">

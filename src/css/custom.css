@@ -32,11 +32,15 @@
 	--ifm-color-primary-lighter: rgb(132, 152, 241);
 	--ifm-color-primary-lightest: rgb(169, 175, 211);
 	--ifm-code-font-size: 95%;
+	--ifm-menu-color-active: rgb(59, 130, 246);
 }
 
 :root[data-theme='dark'] {
   --ifm-navbar-background-color: #1e232e;
 	--ifm-background-color:#1e232e;
+	--ifm-menu-color-active: #93c5fd;
+	--ifm-color-primary: #93c5fd;
+
 }
 
 .navbar {
@@ -83,39 +87,39 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 
 h1 {
-	@apply !text-3xl !font-bold;
+	@apply !text-3xl !font-bold dark:text-white;
 }
 
 .markdown h1 {
-	@apply !text-4xl !font-semibold mt-12 mb-4 border-b pb-4 border-gray-100 dark:border-gray-800 leading-5 tracking-tight;
+	@apply !text-4xl !font-semibold mt-12 mb-4  dark:text-white border-b pb-4 border-gray-100 dark:border-gray-800 leading-5 tracking-tight;
 }
 
 h2 {
-	@apply text-2xl font-bold leading-4 tracking-tight;	
+	@apply text-2xl font-bold leading-4 tracking-tight dark:text-white;	
 }
 
 h3 {
-	@apply text-xl font-bold;
+	@apply text-xl font-bold dark:text-white;
 }
 
 .markdown h2 {
-	@apply text-xl font-semibold !mt-12;
+	@apply text-xl font-semibold !mt-12 dark:text-white;
 }
 
 .markdown h3 {
 	@apply text-xl;
 	@apply font-semibold;
-	@apply dark:text-gray-100
+	@apply dark:text-white
 }
 
 h4 {
 	@apply text-lg;
 	@apply font-semibold;
-	@apply dark:text-gray-100
+	@apply dark:text-white
 }
 
 li {
-	@apply dark:text-gray-100
+	@apply dark:text-white
 }
 
 /**
@@ -229,14 +233,6 @@ a {
 	@apply subpixel-antialiased mb-4 text-3xl font-bold tracking-tight leading-none text-gray-900 md:text-4xl lg:text-5xl;
 }
 
-.subsection-title {
-	@apply text-3xl tracking-tight text-gray-600 font-extrabold;
-}
-
-.section-text {
-	@apply mt-8 text-lg text-gray-500 
-}
-
 .box {
 	@apply border border-gray-600 rounded-lg shadow-md p-4 mx-2;
 }
@@ -306,5 +302,13 @@ th {
 }
 
 .table-of-contents__link {
-	@apply text-gray-700 dark:text-gray-200;
+	@apply text-gray-700 dark:text-white;
+}
+
+.table-of-contents__link--active {
+	@apply text-blue-900 dark:text-blue-400;
+}
+
+article a {
+	@apply text-blue-500 dark:!text-blue-400;
 }

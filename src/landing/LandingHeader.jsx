@@ -67,7 +67,7 @@ export default function LandingHeader() {
 						</div>
 					</a>
 					<div className="-my-2 -mr-2 md:hidden">
-						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 							<span className="sr-only">Open menu</span>
 							<Bars3Icon className="h-6 w-6" aria-hidden="true" />
 						</Popover.Button>
@@ -195,16 +195,16 @@ export default function LandingHeader() {
 				>
 					<Popover.Panel
 						focus
-						className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
+						className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden "
 					>
-						<div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+						<div className="divide-y-2 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
 							<div className="px-5 pt-5 pb-6">
 								<div className="flex items-center justify-between">
 									<div>
 										<img className="h-8" src="img/windmill.svg" alt="Windmill Labs" />
 									</div>
 									<div className="-mr-2">
-										<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white  p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+										<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 											<span className="sr-only">Close menu</span>
 											<XMarkIcon className="h-6 w-6" aria-hidden="true" />
 										</Popover.Button>
@@ -215,7 +215,7 @@ export default function LandingHeader() {
 								<div className="grid grid-cols-2 gap-4">
 									<a
 										href="/pricing"
-										className="text-base font-medium text-gray-900 hover:text-gray-700"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Pricing
 									</a>
@@ -223,7 +223,7 @@ export default function LandingHeader() {
 									<a
 										href="/docs/intro"
 										onClick={() => window.plausible('read-docs')}
-										className="text-base font-medium text-gray-900 hover:text-gray-700"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 									>
 										Docs
 									</a>
@@ -232,7 +232,7 @@ export default function LandingHeader() {
 										<a
 											key={resource.name}
 											href={resource.href}
-											className="text-base font-medium text-gray-900 hover:text-gray-700"
+											className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
 										>
 											{resource.name}
 										</a>
@@ -243,13 +243,13 @@ export default function LandingHeader() {
 										href="https://cal.com/ruben-windmill/windmill-demo"
 										data-analytics='"schedule-demo"'
 										onClick={() => window.plausible('schedule-demo')}
-										className=" underline flex w-full items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 mb-4"
+										className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"
 									>
 										Book a demo
 									</a>
 									<a
 										href="https://app.windmill.dev"
-										className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+										className="!no-underline flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
 									>
 										Windmill Cloud
 									</a>
