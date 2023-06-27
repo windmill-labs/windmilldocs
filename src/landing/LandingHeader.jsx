@@ -29,11 +29,11 @@ const resources = [
 
 const variants = {
 	initialRotate: { rotate: 0, transition: { duration: 1, ease: 'backInOut' } },
-	infiniteSpin: {
-		rotate: 360,
+	spin: {
+		rotate: 120,
 		transition: {
 			duration: 1,
-			repeat: Infinity,
+			repeat: 0,
 			ease: 'easeInOut'
 		}
 	}
@@ -59,7 +59,7 @@ export default function LandingHeader() {
 							src="/img/windmill.svg"
 							alt="Windmill Labs"
 							variants={variants}
-							animate={hoverLogo ? 'infiniteSpin' : 'initialRotate'}
+							animate={hoverLogo ? 'spin' : 'initialRotate'}
 							id="monkeyFace"
 						/>
 						<div className="font-semibold text-xl text-blue-500 dark:text-white subpixel-antialiased ">
