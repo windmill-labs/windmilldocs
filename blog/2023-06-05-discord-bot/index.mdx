@@ -155,9 +155,10 @@ type FileContent = { content: string; link: string };
 
 type Github = {
 	token: string;
-}
+};
+
 export async function main(
-	gh_auth: Github
+	gh_auth: Github,
 	owner: string,
 	repo: string,
 	path?: string,
@@ -267,18 +268,33 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
 ```typescript
+import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
+
 type Supabase = {
 	supabaseUrl: string;
 	supabaseKey: string;
 };
 
-export async function main(auth: Supabase, embedding: any, document: string) {
-	const query: any = await client.from('documents').insert({
-		content: document,
-		embedding
-	});
+export async function main(
+	auth: Supabase,
+	embedding: any,
+	document: string,
+	link: string,
+	token?: {
+		access: string;
+		refresh: string;
+		expires_at?: number;
+	}
+) {
+	return await refreshAndRetryIfExpired(auth, token, async (client) => {
+		const query: any = await client.from('documents').insert({
+			content: document,
+			embedding,
+			link
+		});
 
-	return query;
+		return query;
+	});
 }
 ```
 
