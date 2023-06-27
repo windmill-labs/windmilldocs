@@ -131,7 +131,7 @@ const config = {
 			colorMode: {
 				defaultMode: 'dark',
 				disableSwitch: false,
-				respectPrefersColorScheme: false
+				respectPrefersColorScheme: true
 			},
 			algolia: {
 				// The application ID provided by Algolia

@@ -375,7 +375,7 @@ export default function Pricing() {
 
 							{tier.minPrice !== undefined ? (
 								<p className="mt-6 flex items-baseline gap-x-1">
-									<span className="text-sm font-semibold leading-6 text-gray-600">from</span>
+									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
 										${period.value === 'annually' ? tier.minPrice * 10 : tier.minPrice}
 									</span>
@@ -391,7 +391,7 @@ export default function Pricing() {
 								</p>
 							)}
 
-							<p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-400">
+							<p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
 								{tier.description}
 							</p>
 

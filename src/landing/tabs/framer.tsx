@@ -20,10 +20,10 @@ const Tabs = ({ tabs, selectedTabIndex, setSelectedTab, color = 'blue' }: Props)
 	const [buttonRefs, setButtonRefs] = useState<Array<HTMLButtonElement | null>>([]);
 
 	const bgByColor = {
-		blue: 'bg-blue-200 text-blue-800 dark:bg-blue-900 dark:text-white',
+		blue: 'bg-blue-200 text-blue-800 dark:bg-blue-600 dark:text-white',
 		teal: 'bg-teal-200 text-teal-800 dark:bg-teal-800 dark:text-white',
-		orange: 'bg-orange-200 text-orange-800 dark:bg-orange-800 dark:text-white',
-		slate: 'bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-white'
+		orange: 'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-white',
+		slate: 'bg-slate-200 text-slate-800 dark:bg-slate-600 dark:text-white'
 	};
 
 	const bgLowByColor = {

@@ -1,4 +1,12 @@
 import DocCard from '@site/src/components/DocCard';
+import {
+	SiGnubash,
+	SiGo,
+	SiPython,
+	SiTypescript,
+	SiPostgresql,
+	SiDocker
+} from 'react-icons/si/index';
 
 # Scripts Quickstart
 
@@ -9,30 +17,36 @@ Windmill supports scripts in Python, TypeScript, Go, Bash and Sql.
 		title="Typescript"
 		description="Write your first Windmill script in Typescript."
 		href="/docs/getting_started/scripts_quickstart/typescript"
+		Icon={SiTypescript}
 	/>
 	<DocCard
 		title="Python"
 		description="Write your first Windmill script in Python."
 		href="/docs/getting_started/scripts_quickstart/python"
+		Icon={SiPython}
 	/>
 	<DocCard
 		title="Go"
 		description="Write your first Windmill script in Go."
 		href="/docs/getting_started/scripts_quickstart/go"
+		Icon={SiGo}
 	/>
 	<DocCard
 		title="Bash"
 		description="Write your first Windmill script in Bash."
 		href="/docs/getting_started/scripts_quickstart/bash"
+		Icon={SiGnubash}
 	/>
 	<DocCard
 		title="SQL"
 		description="Write your first Windmill script in SQL."
 		href="/docs/getting_started/scripts_quickstart/sql"
+		Icon={SiPostgresql}
 	/>
 	<DocCard
 		title="Run Docker Containers"
 		description="In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script."
 		href="/docs/advanced/docker"
+		Icon={SiDocker}
 	/>
 </div>

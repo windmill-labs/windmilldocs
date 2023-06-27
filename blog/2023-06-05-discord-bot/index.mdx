@@ -19,12 +19,20 @@ tags:
 image: ./ai-bot.png
 ---
 
+import DocCard from '@site/src/components/DocCard';
+
 Empower your support team with a bot that answers questions about technical documentation using Windmill, OpenAI, and Supabase.
 
 <!--truncate-->
 
 ![AI BOT](./ai-bot.png 'AI BOT')
-_**Midjourney prompt**: a blog cover about a discord bot that answers questions about technical documentations, surrended by books --aspect 3:2_
+
+<sup>
+	<i>
+		Midjourney prompt: a blog cover about a discord bot that answers questions about technical
+		documentations, surrended by books --aspect 3:2
+	</i>
+</sup>
 
 ## Replace a SaaS
 
@@ -35,14 +43,14 @@ Today, we will create a bot that answers questions about technical documentation
 ## Demo
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	controls
 	src="/videos/demo-bot.mp4"
 />
 
-<br/>
+<br />
 
 To directly setup your own bot on Windmill (Self-hosted or cloud), you can skip the following sections and go directly to the [How to setup it yourself](#how-to-setup-it-yourself) section.
 
@@ -120,15 +128,12 @@ We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
 #### Learn more about Windmill
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-
-  <a href="/docs/flows/flow_loops" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">For loops</div>
-   	<div className="text-sm text-gray-500">For loops documentation</div>
-  </a>
-	<a href="/docs/core_concepts/scheduling" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">Schedule</div>
-   	<div className="text-sm text-gray-500">Learn how you can schedule a flow</div>
-  </a>
+	<DocCard title="For loops" description="For loops documentation" href="/docs/flows/flow_loops" />
+	<DocCard
+		title="Scheduling"
+		description="Scheduling documentation"
+		href="/docs/core_concepts/scheduling"
+	/>
 </div>
 
 From Windmill, pick `+ Flow`, and either import JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
@@ -238,10 +243,11 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">Resources</div>
-   	<div className="text-sm text-gray-500">Create and manager your resources</div>
-  </a>
+	<DocCard
+		title="Resources"
+		description="Create and manager your resources"
+		href="/docs/core_concepts/resources_and_types"
+	/>
 </div>
 
 ### Create the embeddings
@@ -256,7 +262,7 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 
 > All embeddings are stored in a single Supabase table.
 
-<br/>
+<br />
 
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
@@ -655,12 +661,11 @@ export async function main(
 #### Learn more about approval steps
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <a href="/docs/flows/flow_approval" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">
-		Approval step
-		</div>
-   	<div className="text-sm text-gray-500">Flows can be suspended until resumed or cancelled event(s) are received.</div>
-  </a>
+	<DocCard
+		title="Approval step"
+		description="Flows can be suspended until resumed or cancelled event(s) are received"
+		href="/docs/flows/flow_approval"
+	/>
 </div>
 
 ### Send the answer back to Discord
