@@ -847,14 +847,7 @@ If you have any questions or need further assistance, don't hesitate to reach ou
 
 ### Video Tutorial
 
-<video
-  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
-  controls
-  src="/videos/discord_bot_tutorial.mp4"
-  alt="container component"
-/>
-
+<iframe width="560" height="315" src="https://www.youtube.com/embed/VXj7xaWOAxo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ### Links
 
