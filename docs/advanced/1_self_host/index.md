@@ -60,6 +60,15 @@ We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if y
 
 <br/>
 
+If not using OAuth SSO, we recommend setting up SMTP to send invites and email to manually added users. The relevant environment variables are:
+
+```
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USERNAME=smtp_username
+SMTP_PASSWORD=smtp_password
+```
+
 When creating a workspace, you have the option to invite automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
 
 <video 
