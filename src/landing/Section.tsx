@@ -34,7 +34,6 @@ export default function Section({
 		}
 	};
 	const colors = {
-		bg: colorMode == 'dark' ? 'bg-gray-900' : 'bg-white',
 		text: colorMode == 'dark' ? 'text-white' : '!text-gray-600',
 		gradient: colorMode == 'dark' ? colorGradient.dark[color] : colorGradient.light[color]
 	};
@@ -46,7 +45,7 @@ export default function Section({
 	};
 
 	return (
-		<LandingSectionWrapper className={`${colors.bg}`} color={color}>
+		<LandingSectionWrapper className={''} color={color}>
 			<div className="flex flex-col w-full gap-4 justify-center" id="script-section">
 				<div className="flex flex-col gap-2 ">
 					<div className="flex justify-between items-center w-full">

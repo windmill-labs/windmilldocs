@@ -51,7 +51,7 @@ export default function Hero() {
 					</div>
 				</div>
 				<div className="mx-auto mt-16 sm:mt-8">
-					<div className="flex-none !rounded-2xl overflow-hidden bg-white dark:bg-gray-50/5">
+					<div className="flex-none !rounded-2xl overflow-hidden dark:bg-[#2e344033]">
 						<img
 							src={colorMode === 'dark' ? '/homescreen-dark.svg' : '/homescreen.svg'}
 							alt="Windmill infrastructure"

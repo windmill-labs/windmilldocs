@@ -40,7 +40,7 @@ const integrations = [
 
 export default function IntergrationList() {
 	return (
-		<LandingSection bgClass="bg-white dark:bg-gray-900">
+		<LandingSection bgClass="">
 			<div className="w-full gap-8 flex flex-col">
 				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
 					Integrations
