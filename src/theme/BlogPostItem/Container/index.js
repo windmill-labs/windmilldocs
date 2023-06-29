@@ -13,7 +13,7 @@ export default function BlogPostItemContainer({ children, className }) {
 	return (
 		<article
 			className={clsx(className, {
-				'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 dark:border-gray-700 dark:hover:border-blue-800':
+				'border p-2 rounded-2xl shadow-md hover:border-blue-400 hover:shadow-lg transition-all !mb-4 dark:border-gray-700 dark:hover:border-blue-400':
 					!isBlogPostPage
 			})}
 			itemProp="blogPost"
@@ -47,7 +47,7 @@ export default function BlogPostItemContainer({ children, className }) {
 							{metadata.description ?? frontMatter.description}
 						</p>
 					</div>
-					<div className="flex flex-row gap-2 text-blue-500 font-semibold items-center p-4">
+					<div className="flex flex-row gap-2 text-blue-400 font-semibold items-center p-4">
 						Read more
 						<ArrowRight size={16} className="opacity-50" />
 					</div>

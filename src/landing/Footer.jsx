@@ -45,13 +45,15 @@ export default function Footer() {
 
 					<div className="mx-auto grid grid-cols-3 gap-20">
 						<div className="">
-							<h3 className="text-sm font-semibold leading-6 text-gray-900">Support</h3>
+							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+								Support
+							</h3>
 							<ul role="list" className="mt-6 space-y-4">
 								{navigation.support.map((item) => (
 									<li key={item.name}>
 										<a
 											href={item.href}
-											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400"
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-200"
 										>
 											{item.name}
 										</a>
@@ -60,13 +62,15 @@ export default function Footer() {
 							</ul>
 						</div>
 						<div>
-							<h3 className="text-sm font-semibold leading-6 text-gray-900">Company</h3>
+							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+								Company
+							</h3>
 							<ul role="list" className="mt-6 space-y-4">
 								{navigation.company.map((item) => (
 									<li key={item.name}>
 										<a
 											href={item.href}
-											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400"
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-200"
 										>
 											{item.name}
 										</a>
@@ -75,13 +79,15 @@ export default function Footer() {
 							</ul>
 						</div>
 						<div className="">
-							<h3 className="text-sm font-semibold leading-6 text-gray-900">Legal</h3>
+							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+								Legal
+							</h3>
 							<ul role="list" className="mt-6 space-y-4">
 								{navigation.legal.map((item) => (
 									<li key={item.name}>
 										<a
 											href={item.href}
-											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-400"
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-200"
 										>
 											{item.name}
 										</a>

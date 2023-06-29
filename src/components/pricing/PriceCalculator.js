@@ -73,7 +73,7 @@ export default function PriceCalculator({ period, tier }) {
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
 										${calculatePrice(tier.price[key].monthly, period.value)}
 									</span>
-									<span className="text-sm text-gray-500">
+									<span className="text-sm text-gray-400">
 										{period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
 									</span>
 								</div>

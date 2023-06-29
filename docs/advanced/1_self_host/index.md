@@ -60,6 +60,16 @@ We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if y
 
 <br/>
 
+If not using OAuth SSO, we recommend setting up SMTP to send invites and email to manually added users. The relevant environment variables are:
+
+```
+SMTP_FROM=windmill@domain.com
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=email@domain.com
+SMTP_PASSWORD=app_password
+```
+
 When creating a workspace, you have the option to invite automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
 
 <video 
@@ -153,6 +163,7 @@ windmill_server:
 windmill_worker:
   image: ghcr.io/windmill-labs/windmill:main
   deploy:
+    # Rules of thumb, use 1 replica per vCPU. Make sure your postgres can handle 5*worker_replicas + 50*server_replicas max connections.
     replicas: 3
   restart: unless-stopped
   networks:

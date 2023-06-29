@@ -30,6 +30,25 @@ module.exports = {
 			]
 		}
 	},
+	theme: {
+		extend: {
+			colors: {
+				gray: {
+					50: '#f3f6f8',
+					100: '#e0e7ed',
+					200: '#c5d0dc',
+					300: '#9dafc3',
+					400: '#6e87a2',
+					500: '#536c87',
+					600: '#475973',
+					700: '#3e4c60',
+					800: '#394251',
+					900: '#2e3440',
+					950: '#1e232e'
+				}
+			}
+		}
+	},
 	plugins: [
 		require('@tailwindcss/forms'),
 		plugin(({ addBase }) => {
