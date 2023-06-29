@@ -6,7 +6,7 @@ Note that in both the webeditor and with the CLI, your scripts do not necessaril
 
 It works extremely well in combination with [Developing scripts locally](../4_local_development/index.md) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
 
-### Python relative imports for sharing common logic
+## Python relative imports for sharing common logic
 
 It is possible to import directly from other Python scripts. One can simply
 follow the path layout. For instance,
@@ -50,7 +50,7 @@ dependency management will not work.
 The folder layout is identical with the one that works with the CLI for syncing
 scripts locally and on Windmill. See [Developing scripts locally](../4_local_development/index.md)
 
-### Deno relative imports for sharing common logic
+## Deno relative imports for sharing common logic
 
 Similarly to Python, it is possible to import directly from other TypeScript
 Scripts. One can simply follow the path layout. For instance,
@@ -73,3 +73,11 @@ import { main as foo, util } from '../my_script_path.ts';
 ```
 
 Note that path in windmill can have as many depth as needed, so you can have paths like this `f/folder/subfolder/my_script_path.ts` and relative imports will work at any level. Hence, it will work exactly the same as on local.
+
+## Bash logic sharing
+
+You can reuse bash scripts by fetching them "raw" and source them. The url is as follows:
+
+```
+curl -H "Authorization: Bearer <Token>" <INSTANCE>/api/w/<workspace>/scripts/raw/p/<path>.sh
+```
