@@ -28,7 +28,7 @@ _**Midjourney prompt**: a blog cover about a discord bot that answers questions 
 
 ## Replace a SaaS
 
-"Replace a SaaS" is a cheeky title for a blog series. We believe you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but tailored to your needs solution on your own, and stop accumulating subscriptions.
+"Replace a SaaS" is a cheeky title for a blog series. We believe you don't always need a dedicated SaaS to solve a problem. You can often build your own minimal but tailored-to-your-needs solution on your own, and stop accumulating subscriptions.
 
 Today, we will create a bot that answers questions about technical documentation leveraging Windmill, OpenAI, and Supabase, with an [approval step](/docs/flows/flow_approval).
 
@@ -36,25 +36,44 @@ Today, we will create a bot that answers questions about technical documentation
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full"
-	autoPlay
-	loop
 	controls
 	src="/videos/demo-bot.mp4"
+	alt="demo ai bot documentation"
 />
 
 <br/>
 
-To directly setup your own bot on Windmill (Self-hosted or cloud), you can skip the following sections and go directly to the [How to setup it yourself](#how-to-setup-it-yourself) section.
+To directly setup your own bot on Windmill (Self-hosted or cloud) or rather watch a video tutorial of the actual set-up, you can skip the following sections and go directly to the [How to setup it yourself](#how-to-setup-it-yourself) section.
 
 ## Supabase
 
-We will use [Supabase](https://supabase.com/) to store my embeddings, by taking inspiration from [this tutorial](https://supabase.com/blog/openai-embeddings-postgres-vector).
+We will use [Supabase](https://supabase.com/) to store the embeddings, by taking inspiration from the [Storing OpenAI embeddings in Postgres with pgvector](https://supabase.com/blog/openai-embeddings-postgres-vector) tutorial.
 
-You'll need to follow this tutorial up to the point where you have created a table with the `pgvector` [extension](https://supabase.com/docs/guides/database/extensions/pgvector) enabled, and you have created a the `match_documents` function.
+:::info Summary of the Supabase article
 
-The only difference is that we will store the link of the documentation page for each embedding to also provide the sources.
+The [pgvector extension](https://supabase.com/docs/guides/database/extensions/pgvector) in PostgreSQL enables the storage and querying of vector embeddings. Embeddings are representations of text or other information that capture relatedness or meaning. With pgvector, you can store embeddings in a PostgreSQL database and perform similarity searches using vector math operations. This opens up possibilities for powerful applications like semantic search and recommendation systems on large amounts of data.
+:::
 
-Make sure to modify the `match_documents` function to include the `link` column:
+You'll need to follow the logic of the tutorial up to the point where you have created a table with the `pgvector` [extension](https://supabase.com/docs/guides/database/extensions/pgvector) enabled, and you have created the `match_documents` function.
+
+The only difference is that we will store the link of the documentation page for each embedding to also provide the sources, meaning we'll add a `link` column. Here the 3 commands to run:
+
+1. does not change:
+```sql
+   create extension vector;
+```
+
+2.
+```sql
+CREATE TABLE documents (
+  id bigserial PRIMARY KEY,
+  content text,
+  link text,
+  embedding vector(1536)
+);
+```
+
+3.
 
 ```sql
 create or replace function match_documents (
@@ -88,8 +107,6 @@ We need to ingest a data source, here the [Windmill documentation](/docs/intro).
 
 ### Flow overview
 
-The flow is available on [Windmill Hub](https://hub.windmill.dev/flows/45/).
-
 :::info Workflows
 
 A [workflow](/docs/flows/flow_editor) is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](/docs/getting_started/scripts_quickstart) in the case of Windmill.
@@ -97,39 +114,20 @@ A [workflow](/docs/flows/flow_editor) is a series of connected tasks, events, or
 
 ![Flow](./flow.png 'Create a scheduled flow that scrapes the Windmill documentation')
 
-This flow is composed in the following way:
+> _This flow is available on [Windmill Hub](https://hub.windmill.dev/flows/45/)_.
 
-- Scrape the Windmill documentation from GitHub using the [Oktokit](https://github.com/octokit/octokit.js/) API.
+<br/>
+
+The flow is composed in the following way (each step's logic and code will be detailed further):
+
+- [Scrape the Windmill documentation](#scraping-the-windmill-documentation) from GitHub using the [Oktokit](https://github.com/octokit/octokit.js/) API.
 
 Then we use a [for-loop](/docs/flows/flow_loops) to iterate over the results and run the following step for each result:
 
-1. Create the embeddings using OpenAI
-2. Store the embeddings in Supabase using pgvector
+1. [Create the embeddings](#create-the-embeddings) using OpenAI
+2. [Store the embeddings](#store-the-embeddings-on-supabase) in Supabase using pgvector
 
 Each iteration of the for-loop are indiviual jobs and can be run [in parallel](/docs/flows/flow_branches#branch-all), [retried](/docs/flows/retries) and [error handled](/docs/flows/flow_error_handler) independently.
-
-### Schedule the flow
-
-We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
-
-1. Go the Settings
-2. Click on the `Schedule` tab
-3. Edit the Cron expression to run every month: `0 0 1 * *`
-4. Enable the schedule
-
-#### Learn more about Windmill
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-
-  <a href="/docs/flows/flow_loops" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">For loops</div>
-   	<div className="text-sm text-gray-500">For loops documentation</div>
-  </a>
-	<a href="/docs/core_concepts/scheduling" className="windmill-documentation-card" target="_blank">
-    <div className="text-lg font-semibold text-gray-900">Schedule</div>
-   	<div className="text-sm text-gray-500">Learn how you can schedule a flow</div>
-  </a>
-</div>
 
 From Windmill, pick `+ Flow`, and either import JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
 
@@ -235,7 +233,7 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 
 </p></details>
 
-Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the GitHub token.
+Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the [GitHub token](/docs/integrations/github).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
   <a href="/docs/core_concepts/resources_and_types" className="windmill-documentation-card" target="_blank">
@@ -246,7 +244,9 @@ Notice that the script takes a special parameter `gh_auth` which is a Windmill r
 
 ### Create the embeddings
 
-Using the [OpenAI API](https://platform.openai.com/docs/api-reference), we can create embeddings for each of the documents. Simirarly to the Github script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/create-embedding-openai).
+Using the [OpenAI API](https://platform.openai.com/docs/api-reference), we can create embeddings for each of the documents. Simirarly to the Github script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/).
+
+This script requires setting up an [OpenAI integration](/docs/integrations/openai).
 
 ### Store the embeddings on Supabase
 
@@ -257,6 +257,8 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 > All embeddings are stored in a single Supabase table.
 
 <br/>
+
+Supabase is easily [integrated to Windmill](/docs/integrations/supabase#through-supabase-api).
 
 <details><summary>Code: Store the embeddings on Supabase</summary><p>
 
@@ -282,181 +284,73 @@ export async function main(auth: Supabase, embedding: any, document: string) {
 
 > This is what our Flow looks like now.
 
+### Schedule the flow
+
+We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
+
+1. Go the Settings
+2. Click on the `Schedule` tab
+3. Edit the Cron expression to run every month: `0 0 1 * *`
+4. Enable the schedule
+
+#### Learn more about Windmill features
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+
+  <a href="/docs/flows/flow_loops" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">For loops</div>
+   	<div className="text-sm text-gray-500">For loops documentation</div>
+  </a>
+	<a href="/docs/core_concepts/scheduling" className="windmill-documentation-card" target="_blank">
+    <div className="text-lg font-semibold text-gray-900">Schedule</div>
+   	<div className="text-sm text-gray-500">Learn how you can schedule a flow</div>
+  </a>
+</div>
+
 ## Slack or Discord
 
-Windmill uses [Discord](https://discord.com/invite/V7PM2YHsPB) for its community, but you can also build the same bot for [Slack](https://slack.com/). For Slack, see the next section.
+Windmill uses [Discord](https://discord.com/invite/V7PM2YHsPB) for its community, but you can also build the same bot for [Slack](https://slack.com/). For Slack, see:
+- [Create the Slack Answer flow](#create-the-slack-answer-flow)
+- [Create the Slack Interaction endpoint](#create-the-slack-interaction-endpoint)
 
 ## Create an application on Discord Developer Portal
 
-To get started, go to the [Discord Developer Portal](https://discord.com/developers/applications) and create a new application. Give your application a name and add a bot to it. This will provide you with the necessary credentials to interact with the Discord API.
+To get started, go to the [Discord Developer Portal](https://discord.com/developers/applications) and create a new application. Give your application a name and add a bot to it (there is not need to set specific Bot Permissions for this use case). This will provide you with the necessary credentials to interact with the Discord API.
+
+From the `Bot` menu, you can `Reset token` and get a token to use in the [approval step](#create-the-approval-step-to-validate-the-answer-by-a-human).
+
+## Add the bot to your server
+
+- Go to the [Discord Developer Portal](https://discord.com/developers/applications).
+- Pick your application.
+- Choose `OAuth2` menu, then `URL Generator`.
+- Enable `bot` and `Send Messages`.
+- Copy the "Generated URL", paste it to your browser and pick the server to add it to.
+
+![Add bot to server](discord_add_bot.png)
+
+![Add bot to server](discord_add_bot_2.png)
+
+Then from `Server Settings` - `Integrations` - `Bots and Apps` you can check if your command was successfully added.
 
 ## Configure your Discord Bot command
 
-Once you have created your application and added a bot, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the [Discord API documentation](https://discord.com/developers/docs/interactions/slash-commands#registering-a-command) for detailed instructions on how to register a command for your bot.
+Once you have created your application and added the bot to your server, you can configure your Discord Bot command. This involves sending a command configuration to the Discord API. Refer to the [Discord API documentation](https://discord.com/developers/docs/interactions/slash-commands#registering-a-command) for detailed instructions on how to register a command for your bot.
 
-## Create the Discord Interaction endpoint
-
-Every Windmill script or flow exposes a [webhook endpoint](/docs/core_concepts/webhooks) that can be used to trigger it.
-
-We can create a new flow that will be triggered as the Discord Interaction endpoint.
-
-The flow input consists of the following parameters:
-
-- `x_signature_ed25519`: The `X-Signature-Ed25519` header from the Discord request
-- `x_signature_timestamp`: The `X-Signature-Timestamp` header from the Discord request
-- `raw_string`: The stringified interaction payload from the Discord request
-
-### Building the URL for the Discord Interaction endpoint
-
-Let's create the URL for the Discord Interaction endpoint.
-
-1. Go into the Webhooks section of the flow's `Detail` page
-2. Copy the `Result/Sync` webhook URL
-3. Create a [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens)
-
-Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
-
-Discord mandates that we verify the request before responding to it, so we need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request. We also added the `raw` query parameter to get the raw stringified body.
-
-The URL should look like this:
-
-```
-{Result/Sync URL}?include_header=X-Signature-Ed25519,X-Signature-Timestamp&raw=true&token={Webhook-specific token}
-```
-
-Copy and paste this URL into the Discord Interaction endpoint.
-
-![Building the URL for the Discord Interaction endpoint](./discord-interactions-endpoint.png 'Building the URL for the Discord Interaction endpoint')
-
-### Verifying the Discord request and Defer
-
-A template is available on the Windmill Hub: [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
-
-<details><summary>Code: Verify the Discord Request and Defer</summary><p>
-
-```typescript
-import { REST } from 'npm:@discordjs/rest@1.7.1';
-import { API } from 'npm:@discordjs/core@0.6.0';
-import { type Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
-import { JobService } from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
-
-import {
-	InteractionResponseType,
-	InteractionType,
-	verifyKey
-} from 'npm:discord-interactions@3.4.0';
-
-type DiscordInteraction = {
-	id: string;
-	token: string;
-	type: InteractionType;
-};
-
-export async function main(
-	x_signature_ed25519: string,
-	x_signature_timestamp: string,
-	raw_string: string,
-	token: string,
-	discord_config: Resource<'c_discord_bot'>,
-	workspace: string,
-	discordAnswerFlowPath: string
-) {
-	const rest = new REST({ version: '10' }).setToken(token);
-	const api = new API(rest);
-	const interaction: DiscordInteraction = JSON.parse(raw_string);
-
-	const isVerified = verifyKey(
-		raw_string,
-		x_signature_ed25519,
-		x_signature_timestamp,
-		discord_config.public_key
-	);
-
-	if (!isVerified) {
-		throw new Error('Bot token is not valid');
-	}
-
-	// If we get a PING, we need to respond with a PONG
-	const type = interaction.type as InteractionType;
-	if (type === InteractionType.PING) {
-		return { type: InteractionResponseType.PONG };
-	}
-
-	// https://discord.js.org/docs/packages/core/0.6.0/InteractionsAPI:Class#defer
-	await api.interactions.defer(interaction.id, interaction.token);
-
-	await JobService.runFlowByPath({
-		workspace,
-		path: discordAnswerFlowPath,
-		requestBody: {
-			interaction
-		}
-	});
-}
-```
-
-</p></details>
-
-After verifying the request, we can defer the request to Discord using the `api.interactions.defer` method.
-Now we can run the `discordAnswerFlowPath` flow that will generate the answer and send it back to Discord.
-
-## Slack
-
-For Slack, we will use the Slack web client to send ephemeral messages to the user while the bot is thinking.
-We receive the following parameters from Slack:
-
-- `text`: The text of the message
-- `channel_id`: The channel ID
-- `user_id`: The user ID
-
-<details><summary>Code: Create the Slack endpoint</summary><p>
-
-```typescript
-import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
-import { JobService } from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
-import { WebClient } from 'https://deno.land/x/slack_web_api@1.0.3/mod.ts';
-
-export async function main(
-	text: string,
-	slack: Resource<'slack'>,
-	channel_id: string,
-	user_id: string,
-	workspace: string,
-	path: string
-) {
-	const client = new WebClient(slack.token);
-
-	await client.chat.postEphemeral({
-		text: 'Bot is thinking...',
-		channel: channel_id,
-		user: user_id
-	});
-
-	await JobService.runFlowByPath({
-		workspace,
-		path,
-		requestBody: {
-			text,
-			channel_id
-		}
-	});
-}
-```
-
-</p></details>
+You can also add the command executing [this script](https://hub.windmill.dev/scripts/discord/1603/).
 
 ## Create the Discord Answer flow
 
-A template is available on the Windmill Hub: [Create the Discord Answer flow](https://hub.windmill.dev/flows/46/generate-answer-from-embeddings-with-intermediate-approval-step).
+A template is available on the Windmill Hub: [Generate answer from embeddings with intermediate approval step](https://hub.windmill.dev/flows/46/).
 
 ![Create the Discord Answer flow](./answer-flow.png 'Create the Discord Answer flow')
 
 This flow will generate the answer and send it back to Discord. It is composed of the following steps:
 
-1. Extract the question from the Discord request
-2. Create the answer using the question and the embeddings and OpenAI
-3. Create an approval step to validate the answer by a human
-4. If validated, send the answer publicly
+1. [Extract the question](#extract-the-question-from-the-discord-request) from the Discord request.
+2. [Create the answer](#create-the-answer-using-the-question-the-embeddings-and-openai) using the question and the embeddings and OpenAI.
+3. [Create an approval step](#create-the-approval-step-to-validate-the-answer-by-a-human) to validate the answer by a human.
+4. If validated, [send the answer publicly](#send-the-answer-back-to-discord).
 
 ### Extract the question from the Discord request
 
@@ -476,10 +370,10 @@ export async function main(interaction: any) {
 
 To create the answer, we will follow the following steps:
 
-1. Create the embeddings for the question
+1. Create the embeddings for the question.
 2. Retrieve the documents from Supabase using the `match_documents` function.
-3. Using a prompt, use GPT-4 or any other models to generate the answer given the question and the documents
-4. Return the answer
+3. Using a prompt, use GPT-4 or any other models to generate the answer given the question and the documents.
+4. Return the answer.
 
 The prompt is the following:
 
@@ -602,6 +496,8 @@ export async function main(
 	return { answer, links };
 }
 ```
+Depending on your OpenAI plan, you might need to change `model: 'gpt-4',` to `model: "gpt-3.5-turbo",`.
+
 
 </p></details>
 
@@ -610,11 +506,13 @@ export async function main(
 We can leverage an [approval step](/docs/flows/flow_approval) to validate the answer by a human. Basically, the flow is suspended until we either approve or reject the answer.
 Windmill exposes 3 endpoints:
 
-- An URL to approve the answer
-- An URL to reject the answer
-- An URL of the approval page
+- an URL to approve the answer
+- an URL to reject the answer
+- an URL of the approval page.
 
 We can use Discord buttons to approve or reject the answer.
+
+The `token` input is the token of your Discord bot. We see that in the [Create an application on Discord Developer Portal](#create-an-application-on-discord-developer-portal) section.
 
 <details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
 
@@ -762,7 +660,172 @@ export async function main(
 
 </p></details>
 
-Finally we can send the answer back to Slack using this script from the Hub: [Send a message to a channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack)
+Finally we can send the answer back to Slack using this script from the Hub: [Send a message to a channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack).
+
+## Create the Discord Interaction endpoint
+
+Every Windmill script or flow exposes a [webhook endpoint](/docs/core_concepts/webhooks) that can be used to trigger it.
+
+We can create a new flow that will be triggered as the Discord Interaction endpoint.
+
+Discord will give as flow inputs the following parameters:
+
+- `x_signature_ed25519`: the `X-Signature-Ed25519` header from the Discord request.
+- `x_signature_timestamp`: the `X-Signature-Timestamp` header from the Discord request.
+- `raw_string`: the stringified interaction payload from the Discord request.
+
+### Verifying the Discord request and Defer
+
+A template is available on the Windmill Hub: [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
+
+<details><summary>Code: Verify the Discord Request and Defer (script part of the flow)</summary><p>
+
+```typescript
+import { REST } from "npm:@discordjs/rest@1.7.1";
+import { API, MessageFlags } from "npm:@discordjs/core@0.6.0";
+import {
+  JobService,
+  type Resource,
+} from "https://deno.land/x/windmill@v1.108.0/mod.ts";
+
+import {
+  InteractionResponseType,
+  InteractionType,
+  verifyKey,
+} from "npm:discord-interactions@3.4.0";
+
+type DiscordInteraction = {
+  id: string;
+  token: string;
+  type: InteractionType;
+};
+
+export async function main(
+  x_signature_ed25519: string,
+  x_signature_timestamp: string,
+  raw_string: string,
+  token: string,
+  discord_config: Resource<"discord_bot_configuration">,
+  workspace: string,
+  path: string,
+) {
+  const rest = new REST({ version: "10" }).setToken(token);
+  const api = new API(rest);
+  const interaction: DiscordInteraction = JSON.parse(raw_string);
+
+  // We'll need the http request body as a string and the two headers to verify the request signature
+  // https://discord.com/developers/docs/interactions/receiving-and-responding#security-and-authorization
+  const isVerified = verifyKey(
+    raw_string,
+    x_signature_ed25519,
+    x_signature_timestamp,
+    discord_config.public_key,
+  );
+
+  if (!isVerified) {
+    throw new Error("The request signature is not valid");
+  }
+
+  // If we get a PING, we need to respond with a PONG
+  const type = interaction.type as InteractionType;
+  if (type === InteractionType.PING) {
+    return { type: InteractionResponseType.PONG };
+  }
+
+  await JobService.runFlowByPath({
+    workspace,
+    path,
+    requestBody: {
+      interaction,
+    },
+  });
+
+  await api.interactions.defer(interaction.id, interaction.token, {
+    flags: MessageFlags.Ephemeral,
+  });
+}
+```
+</p></details>
+
+With the following inputs:
+- `path`: the [path](/docs/reference#path) of the [Discord answer flow](#create-the-discord-answer-flow).
+- `workspace`: the Windmill [workspace](/docs/reference#workspace) of the Discord answer flow.
+- `token`: your [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens).
+- `discord_config`:
+
+After verifying the request, we can defer the request to Discord using the `api.interactions.defer` method.
+Now we can run the `discordAnswerFlowPath` flow that will generate the answer and send it back to Discord.
+
+### Building the URL for the Discord Interaction endpoint
+
+Let's create the URL for the Discord Interaction endpoint.
+
+1. Go into the Webhooks section of the "[Verify the Discord Request, Defer and trigger a flow](#verifying-the-discord-request-and-defer)" flow's `Detail` page.
+2. Copy the `Result/Sync` webhook URL.
+3. Create a [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens).
+
+![Add webhook token](./add_token.png "Add webhook token")
+
+Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
+
+Discord mandates that we verify the request before responding to it, so we need to include the `X-Signature-Ed25519` and `X-Signature-Timestamp` headers in the request to verfiy the Discord request. We also added the `raw` query parameter to get the raw stringified body.
+
+The URL should look like this:
+
+```
+{Result/Sync URL}?include_header=X-Signature-Ed25519,X-Signature-Timestamp&raw=true&token={Webhook-specific token}
+```
+
+Copy and paste this URL into the Discord Interaction endpoint.
+
+![Building the URL for the Discord Interaction endpoint](./discord-interactions-endpoint.png 'Building the URL for the Discord Interaction endpoint')
+
+
+## Create the Slack Interaction endpoint
+
+For Slack, we will use the Slack web client to send ephemeral messages to the user while the bot is thinking.
+We receive the following parameters from Slack:
+
+- `text`: The text of the message
+- `channel_id`: The channel ID
+- `user_id`: The user ID
+
+<details><summary>Code: Create the Slack endpoint</summary><p>
+
+```typescript
+import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
+import { JobService } from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
+import { WebClient } from 'https://deno.land/x/slack_web_api@1.0.3/mod.ts';
+
+export async function main(
+	text: string,
+	slack: Resource<'slack'>,
+	channel_id: string,
+	user_id: string,
+	workspace: string,
+	path: string
+) {
+	const client = new WebClient(slack.token);
+
+	await client.chat.postEphemeral({
+		text: 'Bot is thinking...',
+		channel: channel_id,
+		user: user_id
+	});
+
+	await JobService.runFlowByPath({
+		workspace,
+		path,
+		requestBody: {
+			text,
+			channel_id
+		}
+	});
+}
+```
+
+</p></details>
+
 
 ## Conclusion
 
@@ -774,18 +837,33 @@ If you have any questions or need further assistance, don't hesitate to reach ou
 
 ### Summary
 
-1. Create a Discord bot
-2. Create the Supabase database
-3. Fork the `Extract and embed documentation for semantic search` flow from the Hub and configure it with your credentials
-4. Run it once to generate the embeddings, and configure it to run on a schedule
-5. Fork the `Verify the Discord Request, Defer and trigger a flow` flow from the Hub and configure it with your credentials
-6. Get the webhook URL to trigger the flow, configure it and copy it to the Discord Interactions configuration
-7. Fork the `Generate answer from embeddings with intermediate approval step` flow from the Hub and configure it with your credentials
+1. Create the Supabase database.
+2. Fork the `Extract and embed documentation for semantic search` flow from the Hub and configure it with your credentials.
+3. Run it once to generate the embeddings, and configure it to run on a schedule.
+4. Create a Discord bot.
+5. Fork the `Generate answer from embeddings with intermediate approval step` flow from the Hub and configure it with your credentials.
+6. Fork the `Verify the Discord Request, Defer and trigger a flow` flow from the Hub and configure it with your credentials.
+7. Get the webhook URL to trigger the flow, configure it and copy it to the Discord Interactions configuration.
+
+### Video Tutorial
+
+<video
+  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+  autoPlay
+  controls
+  src="/videos/discord_bot_tutorial.mp4"
+  alt="container component"
+/>
+
 
 ### Links
 
+- Supabase's [Storing OpenAI embeddings in Postgres with pgvector](https://supabase.com/blog/openai-embeddings-postgres-vector) tutorial.
+
+- [Discord Developer Portal](https://discord.com/developers/applications).
+
 - [Extract and embed documentation for semantic search](https://hub.windmill.dev/flows/45/extract-and-embed-documentation-for-semantic-search).
 
-- [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
-
 - [Create the Discord Answer flow](https://hub.windmill.dev/flows/46/generate-answer-from-embeddings-with-intermediate-approval-step).
+
+- [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
