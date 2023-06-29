@@ -141,28 +141,7 @@ Then we use a [for-loop](/docs/flows/flow_loops) to iterate over the results and
 
 Each iteration of the for-loop are indiviual jobs and can be run [in parallel](/docs/flows/flow_branches#branch-all), [retried](/docs/flows/retries) and [error handled](/docs/flows/flow_error_handler) independently.
 
-### Schedule the flow
-
-We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
-
-1. Go the Settings
-2. Click on the `Schedule` tab
-3. Edit the Cron expression to run every month: `0 0 1 * *`
-4. Enable the schedule
-
-#### Learn more about Windmill
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard title="For loops" description="For loops documentation" href="/docs/flows/flow_loops" />
-	<DocCard
-		title="Scheduling"
-		description="Scheduling documentation"
-		href="/docs/core_concepts/scheduling"
-	/>
-</div>
-
-> > > > > > > main:blog/2023-06-05-discord-bot/index.mdx
-> > > > > > > From Windmill, pick `+ Flow`, and either import JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
+From Windmill, pick `+ Flow`, and either import JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
 
 ### Scraping the Windmill documentation
 
