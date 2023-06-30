@@ -52,6 +52,8 @@ The default super-admin user is: admin@windmill.dev / `changeme`.
 
 From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
 
+### Authentication and user management
+
 We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if you can to avoid manually adding users. If not possible, you can add new users manually:
 
 ![Add new users](./adding_new_user.gif 'Add new users')
@@ -111,6 +113,12 @@ address:
 DB_PASSWORD=supersecret
 WM_BASE_URL=http://windmill.example.com
 ```
+
+:::info
+
+The .env file should only be used to configure those 2 variables of the docker-compose.yml itself. The rest of the configuration should be done in the docker-compose.yml file. The [README](https://github.com/windmill-labs/windmill#environment-variables) contains all the variables you can pass to the workers or servers to fully customize windmill to your needs.
+
+:::
 
 Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You still need to configure a reverse proxy to hit windmill and windmill-lsp on the right ports. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
 
