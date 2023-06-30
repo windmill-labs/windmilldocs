@@ -258,7 +258,7 @@ Windmill stores all of its state in PostgreSQL and it is enough to reset the dat
 Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. run:
 
 ```
-docker compose volumes down
+docker-compose down --volumes
 docker volume rm -f windmill_db_data
 ```
 
