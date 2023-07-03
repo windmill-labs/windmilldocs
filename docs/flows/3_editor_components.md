@@ -1,4 +1,4 @@
-# Flow Components
+# Flow Editor Components
 
 The Flow Builder has the following major components we will detail below:
 
