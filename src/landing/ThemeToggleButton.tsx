@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import React from 'react';
 

@@ -2,6 +2,15 @@ import React from 'react';
 import LandingSection from './LandingSection';
 import { ExternalLink } from 'lucide-react';
 import classNames from 'classnames';
+import {
+	SiGithub,
+	SiLinkedin,
+	SiMatrix,
+	SiMysql,
+	SiOpenai,
+	SiTelegram,
+	SiToggl
+} from 'react-icons/si/index';
 
 const integrations = [
 	{ name: 'Airtable', src: 'third_party_logos/airtable.svg' },
@@ -10,32 +19,32 @@ const integrations = [
 	{ name: 'Gdrive', src: 'third_party_logos/gdrive.svg' },
 	{ name: 'Gmail', src: 'third_party_logos/gmail.svg' },
 	{ name: 'Mastodon', src: 'third_party_logos/mastodon.svg' },
-	{ name: 'MySQL', src: 'third_party_logos/mysql.svg' },
+	{ name: 'MySQL', src: 'third_party_logos/mysql.svg', Icon: SiMysql },
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'Slack', src: 'third_party_logos/slack.svg' },
 	{ name: 'Appwrite', src: 'third_party_logos/appwrite.svg' },
 	{ name: 'Datadog', src: 'third_party_logos/datadog.svg' },
 	{ name: 'Funkwhale', src: 'third_party_logos/funkwhale.svg' },
-	{ name: 'GitHub', src: 'third_party_logos/github.svg' },
+	{ name: 'GitHub', src: 'third_party_logos/github.svg', Icon: SiGithub },
 	{ name: 'Gsheets', src: 'third_party_logos/gsheets.svg' },
 	{ name: 'HubSpot', src: 'third_party_logos/hubspot.svg' },
 	{ name: 'Mailchimp', src: 'third_party_logos/mailchimp.svg' },
-	{ name: 'OpenAI', src: 'third_party_logos/openai.svg' },
+	{ name: 'OpenAI', src: 'third_party_logos/openai.svg', Icon: SiOpenai },
 	{ name: 'Sendgrid', src: 'third_party_logos/sendgrid.svg' },
 	{ name: 'Supabase', src: 'third_party_logos/supabase.svg' },
 	{ name: 'AWS', src: 'third_party_logos/aws.svg' },
 	{ name: 'Discord', src: 'third_party_logos/discord.svg' },
 	{ name: 'Gcal', src: 'third_party_logos/gcal.svg' },
 	{ name: 'GitLab', src: 'third_party_logos/gitlab.svg' },
-	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg' },
-	{ name: 'Matrix', src: 'third_party_logos/matrix.svg' },
+	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg', Icon: SiLinkedin },
+	{ name: 'Matrix', src: 'third_party_logos/matrix.svg', Icon: SiMatrix },
 	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
 	{ name: 'S3', src: 'third_party_logos/s3.svg' },
 	{ name: 'Stripe', src: 'third_party_logos/stripe.svg' },
 	{ name: 'MongoDB', src: 'third_party_logos/mongodb.svg' },
 	{ name: 'SurrealDB', src: 'third_party_logos/surrealdb.svg' },
-	{ name: 'Telegram', src: 'third_party_logos/telegram.svg' },
-	{ name: 'Toggl', src: 'third_party_logos/toggl.svg' }
+	{ name: 'Telegram', src: 'third_party_logos/telegram.svg', Icon: SiTelegram },
+	{ name: 'Toggl', src: 'third_party_logos/toggl.svg', Icon: SiToggl }
 ];
 
 export default function IntergrationList() {
@@ -50,20 +59,24 @@ export default function IntergrationList() {
 					We have a growing list of integrations with third party services available on the Hub.
 					Connect your apps and services to automate your workflows.
 				</span>
-				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-8 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-12 gap-4">
 					{integrations.map((item) => (
 						<a
 							key={item.name}
 							className={classNames(
-								'col-span-1 flex justify-center rounded-xl border p-4 cursor-pointer transition-all',
-								'bg-gray-50 hover:bg-gray-100'
+								'col-span-1 flex justify-center rounded-xl border dark:border-gray-800 cursor-pointer transition-all',
+								' hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
 							)}
 							href={`https://hub.windmill.dev/integrations/${item.name
 								.toLowerCase()
 								.replace(/\s/g, '')}`}
 							target="_blank"
 						>
-							<img src={item.src} alt={item.name} className="w-auto h-8" loading="lazy" />
+							{item.Icon ? (
+								<item.Icon className="w-10 h-full text-gray-900 dark:text-white" />
+							) : (
+								<img src={item.src} alt={item.name} className="w-auto h-8 m-4" loading="lazy" />
+							)}
 						</a>
 					))}
 				</div>
