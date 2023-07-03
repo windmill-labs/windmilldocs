@@ -277,6 +277,24 @@ list, it will display the result as a table. If the result is a dict/object
 where every value is an array, it will also be displayed as a table, with the
 key as the column name.
 
+#### Example
+
+```ts
+import { encode } from "https://deno.land/std@0.82.0/encoding/base64.ts";
+
+export async function main() {
+  const url = 'https://source.unsplash.com/featured/300x201'
+  const resp = await fetch(url)
+  const buff = await resp.arrayBuffer()
+  const data = encode(buff)
+  return {
+    png: data
+  }
+}
+```
+
+![](./rich_display_render_example.png)
+
 ### Versioning
 
 Scripts, when created, can have a parent script identified by its **hash**.
