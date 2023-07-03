@@ -89,6 +89,23 @@ This flow can be found on the Demo workspace.
 
 Another example is to be found from the [Hub](https://hub.windmill.dev/flows/32/same-worker-example-of-using-the-'.%2Fshared'-folder).
 
+## Test flow
+
+Test your current version of the flow with the `Test flow` button. This will opens a menu with an [auto-generated UI](../core_concepts/6_auto_generated_uis/index.md) of your current configuration.
+
+You can also test up to a certain step by clicking on an action (x) and then on `Test up to x`.
+
+At last, you can directly [test a step](#test-this-step).
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/test_flow.mp4"
+/>
+
+
 ## Static inputs
 
 This menu centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly. It is especially useful when forking a flow to get an overview of all the variables to parametrize that are not exposed directly as flow inputs.

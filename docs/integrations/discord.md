@@ -16,7 +16,12 @@ To integrate [Discord](https://discord.com/) to Windmill, you need to save the f
 | ----------- | ------ | ----------------------- | ------- | -------- | ------------------------------------------------------------------------------------------- |
 | webhook_url | string | The Discord webhook URL |         | true     | Discord Server > Server Settings > Integrations > Webhooks > Create Webhook or Edit Webhook |
 
-<br/><br/>
+<br/>
+
+Windmill also defined a [resource type](https://hub.windmill.dev/resource_types/104/discord_bot_configuration) for Discord bots. An example is given by our [Documentation Discord bot using Supabase and OpenAI's GPT to help support teams](/blog/knowledge-base-discord-bot) tutorial.
+
+
+<br/>
 
 :::tip
 

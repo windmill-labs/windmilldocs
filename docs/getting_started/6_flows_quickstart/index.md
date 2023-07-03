@@ -181,6 +181,16 @@ There are several ways to [trigger a flow with Windmill](../9_trigger_flows/inde
 
 You don't have to explore all flows editor possibilities at once. At each step, **test what you're building** to keep control on your wonder. You can also test up to a certain step by clicking on an action (x) and then on `Test up to x`.
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/test_flow.mp4"
+/>
+
+<br/>
+
 When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.md) your flow, schedule it, share it, or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
 
 Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.
