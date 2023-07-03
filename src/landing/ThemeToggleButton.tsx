@@ -5,8 +5,6 @@ export default function ThemeToggleButton({ colorMode, setColorMode }) {
 	const isLightMode = colorMode === 'light';
 	const Icon = isLightMode ? SunIcon : MoonIcon;
 
-	console.log('colorMode', colorMode);
-
 	return (
 		<button
 			className={
