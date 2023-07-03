@@ -19,6 +19,11 @@
 	}
 }
 
+body * {
+	@apply transition-colors duration-200;
+}
+
+
 :root {
 	--ifm-navbar-background-color: white;
 	--ifm-background-color:white;

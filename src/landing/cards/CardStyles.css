@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 100px; 
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(229, 231, 235, 1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(243,	246, 248, 1) 100%);
 
 }
 
@@ -95,12 +95,12 @@
 }
 
 .dark .card >  .card-content {
-  background-color: #111827;
+  background-color: #1e232ecc;
 }
 
 .card-footer {
-  background-color: #e5e7eb;
-  color: #374151;
+  background-color: #f3f6f8;
+  color: #394251;
 }
 
 .dark .card-footer {

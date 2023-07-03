@@ -59,7 +59,7 @@ export default function PriceCalculator({ period, tier }) {
 				<ul class="flex flex-col gap-2 w-full">
 					{Object.keys(tier.price).map((key) => (
 						<li key={key} className="flex flex-col ">
-							<div class="flex justify-between w-full items-center">
+							<div className="flex justify-between w-full items-center">
 								<div>
 									<span className="text-sm text-gray-500">
 										{key === 'worker' ? workers : seats}

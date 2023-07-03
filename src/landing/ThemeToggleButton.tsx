@@ -1,10 +1,11 @@
-import classNames from 'classnames';
 import { MoonIcon, SunIcon } from 'lucide-react';
 import React from 'react';
 
 export default function ThemeToggleButton({ colorMode, setColorMode }) {
 	const isLightMode = colorMode === 'light';
 	const Icon = isLightMode ? SunIcon : MoonIcon;
+
+	console.log('colorMode', colorMode);
 
 	return (
 		<button
