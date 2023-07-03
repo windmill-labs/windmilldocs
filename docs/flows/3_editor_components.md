@@ -291,6 +291,15 @@ Clicking on a field will set the mode to "Append". Clicking on the "Connect" but
 The test this step section allows to test the step on its own. You can set the input and run the script.
 The result and logs are displyed on the left-hand side.
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/test_flow.mp4"
+/>
+
+
 #### Advanced
 
 The advanced section allows to configure the following:
