@@ -20,7 +20,7 @@ export default function PricingPage() {
 						content="Windmill is free to use. Price of paying offer depends of Self-hosted vs. Cloud, and of features between Team and Enterprise offers. "
 					/>
 				</Head>
-				<LandingSection bgClass="">
+				<LandingSection bgClass="relative">
 					<>
 						<RadialBlur />
 						<div className="pt-32">
