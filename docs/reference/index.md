@@ -424,7 +424,7 @@ output and metadata in the dedicated details page of the job.
 
 ### Job kinds
 
-There are 5 main kinds of jobs, that each have a dedicated tab in the [runs page](../core_concepts/5_monitor_past_and_future_runs/index.md):
+There are 5 main kinds of jobs, that each have a dedicated tab in the [runs page](../core_concepts/5_monitor_past_and_future_runs/index.mdx):
 
 - **Script Jobs**: Run a script as defined by the hash of the script (that
   uniquely and immutably defines a specific version of a script), its input
@@ -754,4 +754,4 @@ everything.
 
 ## Audit Log
 
-Details available on the [Audit Logs](../core_concepts/14_audit_logs/index.md) page.
+Details available on the [Audit Logs](../core_concepts/14_audit_logs/index.mdx) page.

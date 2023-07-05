@@ -63,7 +63,7 @@ The previous configuration can be replicated multiple times for the same workflo
 
 :::
 
-If the Schedules menu allows you to control future executions of scripts and workflows, you can check all past and future runs clicking on `Runs`. This will lead you to the [Runs menu](../../core_concepts/5_monitor_past_and_future_runs/index.md), with a filtered view on your runnable.
+If the Schedules menu allows you to control future executions of scripts and workflows, you can check all past and future runs clicking on `Runs`. This will lead you to the [Runs menu](../../core_concepts/5_monitor_past_and_future_runs/index.mdx), with a filtered view on your runnable.
 
 ![Runs menu](./10-runs-menu.png 'Runs menu')
 

@@ -50,7 +50,7 @@ The bed icon will show the sleep step is activated.
 
 ## Keep control of slept steps
 
-The [Runs menu](../core_concepts/5_monitor_past_and_future_runs/index.md) provides a dashboard to monitor all past, current and future runs. While a flow is executed and paused, you can see in a single view:
+The [Runs menu](../core_concepts/5_monitor_past_and_future_runs/index.mdx) provides a dashboard to monitor all past, current and future runs. While a flow is executed and paused, you can see in a single view:
 
 - the current state of the flow
 - the steps that were already executed

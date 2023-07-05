@@ -25,4 +25,4 @@ If stop early is run within a forloop, it will just break the for-loop and have 
 
 - Write the condition you want to stop on, based on the step's results.
 
-- Optionally, toggle on "Label flow as "skipped" if stopped". Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.md) page.
+- Optionally, toggle on "Label flow as "skipped" if stopped". Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
