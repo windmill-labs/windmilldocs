@@ -53,7 +53,9 @@ const sidebars = {
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'advanced/imports/index',
-				'core_concepts/draft_and_deploy/index',
+				'core_concepts/roles_and_permissions/index',
+				'core_concepts/authentification/index',
+				'core_concepts/collaboration/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
 				'core_concepts/monitor_past_and_future_runs/index',
@@ -183,8 +185,8 @@ const sidebars = {
 
 		{
 			type: 'category',
-			label: 'Entreprise Features',
-			items: ['core_concepts/multiplayer/index', 'core_concepts/staging_prod/index']
+			label: 'Enterprise Features',
+			items: ['core_concepts/audit_logs/index', 'core_concepts/staging_prod/index', 'core_concepts/multiplayer/index']
 		},
 		{
 			type: 'category',
@@ -253,6 +255,7 @@ const sidebars = {
 				'misc/benchmarks/index',
 				'misc/changelog/index',
 				'misc/contributing/index',
+				'core_concepts/draft_and_deploy/index',
 				'misc/getting_help/index',
 				{
 					type: 'category',

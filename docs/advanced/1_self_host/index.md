@@ -9,7 +9,7 @@ For larger and production use-cases, use our [helm chart](#helm-chart) to deploy
 
 The default credentials are admin@windmill.dev / changeme. From there you can easily setup another account as part of the setup step.
 
-**Even if you setup oauth, login as** admin@windmill.dev **/ changeme to setup the instance and give yourself admin privileges.**
+**Even if you setup oauth, login as** admin@windmill.dev **/ changeme to setup the instance and give yourself admin privileges**.
 
 ## Docker
 
@@ -54,7 +54,7 @@ From there, you can follow the setup app to replace the superadmin account and s
 
 ### Authentication and user management
 
-We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if you can to avoid manually adding users. If not possible, you can add new users manually:
+We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if you want to avoid adding users manually. If not possible, you can add new users manually:
 
 ![Add new users](./adding_new_user.gif 'Add new users')
 

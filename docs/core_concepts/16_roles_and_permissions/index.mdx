@@ -1,0 +1,69 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Roles and Permissions
+
+Windmill provides a roles and permissions system that allows you to control access and manage permissions within your instance and workspaces. Different roles have different levels of access to scripts, flows, apps, and other entities in Windmill.
+
+## Roles in Windmill
+
+1. **Superadmin**: The superadmin role has the highest level of access and can manage the entire Windmill instance, including all its workspaces and invites. Superadmins have full control over the configuration and settings of the Windmill instance.
+
+2. **Admin**: Admins have the ability to manage a specific Windmill workspace and invites within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
+
+3. **Author**: Authors can execute and view scripts, flows, and apps within a workspace. They also have the privilege of creating new scripts, flows, and apps. Authors have read and write access to the entities they create or have been [granted access to by others](../8_groups_and_folders/index.md).
+
+4. **Operator**: Operators have limited access within a workspace. They can only execute and view scripts, flows, and apps that they have visibility on, and only those that are within their allowed path or [folders](../8_groups_and_folders/index.md). Operators do not have the ability to create or modify entities.
+
+5. **Anonymous app viewers**: Anonymous app viewers are individuals who can access and view Windmill apps by knowing the [secret URL](../../apps/0_toolbar.mdx#deploy) that allows app viewing. They do not have any editing or execution privileges.
+
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Groups and Folders"
+		description="Groups classify users with shared permissions, while folders group items and assign role-based access control."
+		href="/docs/core_concepts/groups_and_folders"
+	/>
+    <DocCard
+        color="orange"
+		title="Publish Publicly (App Editor)"
+		description="The app can be accessed by anyone who knows the secret URL."
+		href="/docs/apps/toolbar#deploy"
+	/>
+</div>
+
+## Permissions and Access Control
+
+Windmill includes fine-grained ACL (Access Control List) by default for all kinds of entites with a path:
+
+- [groups](../8_groups_and_folders/index.md#groups)
+- [folders](../8_groups_and_folders/index.md#folders)
+- [scripts](../../getting_started/0_scripts_quickstart/index.mdx)
+- [resources](../3_resources_and_types/index.md)
+- [variables](../2_variables_and_secrets/index.md)
+- [schedules](../1_scheduling/index.md)
+- [jobs](../reference#jobs)
+
+Each entity's ACL defines its owner and specifies the read and write permissions. By default, only the owner of an entity has read and write access to it. Entities can be explicitly shared with other groups and users in either read-only or read and write mode through [folders](../8_groups_and_folders/index.md). Write mode implicitly includes read permission. However, it's important to exercise caution when granting write access, as it allows users to delete, rename, and modify the sharing of the entity.
+
+Admins of a workspace have elevated privileges and can read and write over everything within the workspace, disregarding ACLs.
+
+![Add Folder to Resource](./add_folder.png)
+
+> For example here a new SQL Resource is being given access to a folder `data_team`...
+
+<br/>
+
+![Add Users to Folder](./add_users.png)
+
+> ... folder that can give Admin, Writer or Viewer accesses to users or [groups](../8_groups_and_folders/index.md#groups).
+
+<br/>
+
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Groups and Folders"
+		description="Groups classify users with shared permissions, while folders group items and assign role-based access control."
+		href="/docs/core_concepts/groups_and_folders"
+	/>
+</div>

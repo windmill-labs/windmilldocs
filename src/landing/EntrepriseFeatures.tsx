@@ -19,7 +19,7 @@ const features = [
 	{
 		name: 'Audit Logs',
 		description: 'See all past executions, and find the root cause of mishaps quickly.',
-		href: '/docs/reference#audit-log',
+		href: '/docs/core_concepts/audit_logs',
 		icon: Eye
 	},
 	{

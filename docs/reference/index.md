@@ -465,7 +465,7 @@ model consistent, predictable and safe. `permissioned_as` is distinct from the
 same. It represents the level of permissions this job will execute with. As a
 direct consequence, the variables (including secrets) that are accessible to the
 scripts are only those whom the user or group has visibility on, given his
-[permissions](#permissions-and-acl).
+[permissions](#permissions-and-access-control-list-acl).
 
 Similarly for the [Contextual Variable](../core_concepts/2_variables_and_secrets/index.md#contextual-variables) `WM_TOKEN` which
 contains an ephemeral token (ephemeral to the script execution), which has the
@@ -707,15 +707,15 @@ Examples:
 
 An owner is the user or the admins of the folder identified in a [path](#path) through the
 "ownership path prefix" (`u/<user>` or `f/<folder>`). An owner always has write
-[permission](#permissions-and-acl) over the entity and can in addition delete it, move it and manage its permissions. Writers can only update the resource and reader can only read it.
+[permission](#permissions-and-access-control-list-acl) over the entity and can in addition delete it, move it and manage its permissions. Writers can only update the resource and reader can only read it.
 
 ## Folders
 
 Folders have also readers, writers and admins. They are inspired by unix folders. Items under a folder inherit the permissions of the folder. Items can still extends those permissions through their own granular ACL. Hence, readers of a folder can read everything inside the folder, writers can write everything inside the folder and admins can write and change the permissions of everything inside the folder and the permissions of the folders itself. Admins of a folder are consider to be owners of the folder and everything below it
 
-## [Groups](../core_concepts/8_groups_and_folders/index.md)
+## Groups
 
-Groups have a name and a set of members. They are inspired by unix groups:
+[Groups](../core_concepts/8_groups_and_folders/index.md) have a name and a set of members. They are inspired by unix groups:
 
 - Members are always users
 - Users can be members of multiple groups
@@ -730,16 +730,17 @@ group does not grant write permission on the group itself.
 The `all` group is a special group that automatically contains all users of a
 [workspace](#workspace).
 
-## Permissions and ACL
+## Permissions and Access Control List (ACL)
 
 Windmill includes fine-grained ACL by default for all kinds of entites with a
 path:
 
-- [groups](#groups)
-- [scripts](#scripts)
-- [resources](#resource)
-- [variables](#variables)
-- [schedules](#schedule)
+- [groups](../core_concepts/8_groups_and_folders/index.md#groups)
+- [folders](../core_concepts/8_groups_and_folders/index.md#folders)
+- [scripts](../getting_started/0_scripts_quickstart/index.mdx)
+- [resources](../core_concepts/3_resources_and_types/index.md)
+- [variables](../core_concepts/2_variables_and_secrets/index.md)
+- [schedules](../core_concepts/1_scheduling/index.md)
 - [jobs](#jobs)
 
 Every entity is writable by their [owner](#owner) and readable by none others
@@ -753,11 +754,4 @@ everything.
 
 ## Audit Log
 
-Every operation, and actions that have side-effects (so every action except
-getting or listing entities) have a log attached to them, which contains the
-user at the origin of the operation and some metadata specific to the kind of
-operation. Every kind of audit log has a hierarchical operation name attached to
-it. Admins of a workspace can see the audit logs of every user of a
-[workspace](#workspace). General users can only see their own audit logs. Audit
-logs have different retention policy depending on the [plan](/pricing) of your
-team.
+Details available on the [Audit Logs](../core_concepts/14_audit_logs/index.md) page.

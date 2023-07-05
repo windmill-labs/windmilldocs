@@ -1,6 +1,8 @@
-# How to setup OAuth
+# Setup OAuth and SSO
 
-The oauth.json need to be mounted from your windmill server and worker instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L42-L43), and those [2 other lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L65-L66) and have an oauth.json file in the same folder as the docker-compose.yml.
+Windmill supports Single Sign-On for Microsoft, Google, GitHub, GitLab, Okta, and domain restriction.
+
+The oauth.json need to be mounted from your Windmill server and worker instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L42-L43), and those [2 other lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L65-L66) and have an oauth.json file in the same folder as the docker-compose.yml.
 
 The oauth.json has the following structure:
 
@@ -16,35 +18,13 @@ The oauth.json has the following structure:
 
 > `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json)
 
+<br/>
+
 For environments that do not support mounting files or if not practical, you may also pass it base64 as env variable to the server: `OAUTH_JSON_AS_BASE64=$(base64 oauth.json | tr -d '\n')`
 
-## Google login
+## OAuth Resources
 
-**Create Google OAuth keys**
-
-First, you need to create a Google OAuth Client:
-
-- Go to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
-- Click "Create Credentials", then click "OAuth Client ID" in the drop-down menu.
-- Enter the following:
-  - Application Type: Web Application
-  - Name: Windmill
-  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/user/login_callback/google
-- Click Create.
-- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
-- Edit your `oauth.json` to look like:
-
-```json
-{
-	"google": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
-	}
-}
-```
-
-## Slack
+### Slack
 
 1. Create a new slack app at <https://api.slack.com/apps?new_app=1>
 
@@ -101,7 +81,7 @@ settings:
 }
 ```
 
-## Google Sheet
+### Google Sheet
 
 **Create GSheet OAuth keys**
 
@@ -129,7 +109,35 @@ settings:
 
 The same steps apply to enable more APIs (**gmail**, **gdrive**, etc) on your Google Account to set up the resources in WindMill.
 
-## Keycloak
+## OAuth SSO
+
+### Google login
+
+**Create Google OAuth keys**
+
+First, you need to create a Google OAuth Client:
+
+- Go to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
+- Click "Create Credentials", then click "OAuth Client ID" in the drop-down menu.
+- Enter the following:
+  - Application Type: Web Application
+  - Name: Windmill
+  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/user/login_callback/google
+- Click Create.
+- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
+- Edit your `oauth.json` to look like:
+
+```json
+{
+	"google": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+	}
+}
+```
+
+### Keycloak
 
 Setup your realm in Keycload then add the following to your `oauth.json`:
 
@@ -147,7 +155,7 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
 }
 ```
 
-## Okta
+### Okta
 
 Setup your `oauth.json` (e.g. via the `oauthConfig` in the values.yaml when using helm), using `okta` as the realm name, though
 you can provide whatever realm name you want here, if you know what you're doing. This is configured as though helm is being
@@ -193,3 +201,15 @@ From your Admin page, setup windmill using the service flow
 - "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
 - "Login initiated by" `App Only`
 - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
+
+### Microsoft
+
+Microsoft's Single Sign-On integration is supported by Windmill. Detailed steps for setting up Microsoft as an OAuth SSO provider will be provided in the upcoming documentation.
+
+### GitHub
+
+GitHub's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitHub as an OAuth SSO provider will be provided in the upcoming documentation.
+
+### GitLab
+
+GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation.

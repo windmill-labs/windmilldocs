@@ -20,14 +20,19 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
     	href="/docs/advanced/imports"
     />
+	<DocCard
+    	title="Roles and Permissions"
+    	description="Control access and manage permissions within your instance and workspaces."
+    	href="/docs/core_concepts/roles_and_permissions"
+    />
+	<DocCard
+    	title="Authentification"
+    	description="Windmill provides flexible authentication options to ensure secure access to the platform."
+    	href="/docs/core_concepts/authentification"
+    />
     <DocCard
     	title="Draft and Deploy"
     	description="Develop and cooperate in a structured way."
-    	href="/docs/core_concepts/draft_and_deploy"
-    />
-    <DocCard
-    	title="Deploy to Staging or Prod"
-    	description="Deploy items to another staging/prod workspace."
     	href="/docs/core_concepts/draft_and_deploy"
     />
     <DocCard
@@ -75,17 +80,100 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	description="Have AI suggest code on Windmill."
     	href="/docs/misc/code_autocompletion"
     />
+</div>
+
+## Enterprise Features
+
+<div class="grid grid-cols-2 gap-6 mb-4">
     <DocCard
+    	title="Audit Logs"
+    	description="Windmill provides audit logs for every operation and action that has side-effects."
+    	href="/docs/core_concepts/audit_logs"
+    />
+	<DocCard
+    	title="Deploy to Staging or Prod"
+    	description="Deploy items to another staging/prod workspace."
+    	href="/docs/core_concepts/draft_and_deploy"
+    />
+	<DocCard
     	title="Multiplayer"
     	description="Collaborate on scripts simultaneously."
     	href="/docs/core_concepts/multiplayer"
     />
-
 </div>
 
 ## Flow-Specific Features
 
 All details on Flows can be found in the [Flows section](../flows/1_flow_editor.mdx).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Triggering Flows"
+		description="Trigger flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/trigger_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="Branches"
+		description="Split the execution of the flow based on a condition."
+		href="/docs/flows/flow_branches"
+	/>
+	<DocCard
+		color="teal"
+		title="For loops"
+		description="Iterate a series of tasks."
+		href="/docs/flows/flow_loops"
+	/>
+	<DocCard
+		color="teal"
+		title="Error Handler"
+		description="Configure a script to handle errors."
+		href="/docs/flows/flow_error_handler"
+	/>
+	<DocCard
+		color="teal"
+		title="Trigger Scripts"
+		description="Trigger flows upon a given event with a dedicated trigger script."
+		href="/docs/flows/flow_trigger"
+	/>
+	<DocCard
+		color="teal"
+		title="Retries"
+		description="Re-try a step in case of error."
+		href="/docs/flows/retries"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
+	/>
+	<DocCard
+		color="teal"
+		title="Step Mocking"
+		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
+		href="/docs/flows/step_mocking"
+	/>
+	<DocCard
+		color="teal"
+		title="Early Stop / Break"
+		description="Suspend executions within a flow for a specified time."
+		href="/docs/flows/sleep"
+	/>
+	<DocCard
+		color="teal"
+		title="Approval Steps in Flows"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+	<DocCard
+		color="teal"
+		title="Sleep / Delays in Flows"
+		description="Stop early a flow based on a step's result."
+		href="/docs/flows/early_stop"
+	/>
+</div>
 
 <div class="grid grid-cols-2 gap-6 mb-4"></div>
 
@@ -98,23 +186,23 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		title="List of Components"
 		description="Use prebuilt interface elements to display data, and manipulate or interact with it based on user actions."
 		href="/docs/apps/app_configuration-settings/app_component_library"
-		target="_blank"
+		color="orange"
 	/>
 	<DocCard
 		title="Link your App to scripts and flows"
 		description="Run any script or flow for your UI."
 		href="/docs/apps/app-runnable-panel"
-		target="_blank"
+		color="orange"
 	/>
 	<DocCard
 		title="Styling"
 		description="Customize the styling of your App according to your own graphical standards."
 		href="/docs/apps/app_configuration-settings/app_styling"
-		target="_blank"
+		color="orange"
 	/>
 	<DocCard
 		title="Example: E-commerce CRM app"
 		description="Tutorial on how to build a CRM with Windmill."
-		href="/docs/apps/app_e-commerce"
+		color="orange"
 	/>
 </div>
