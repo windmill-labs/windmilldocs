@@ -16,11 +16,11 @@ Windmill provides flexible authentication options to ensure secure access to the
 
 Windmill supports authentication [through SSO](../../misc/2_setup_oauth/index.md) for users with email addresses from a restricted domain. This allows organizations to control access to Windmill based on their domain policy. Users with email addresses from the authorized domain can authenticate seamlessly using their SSO credentials.
 
-To enable restricted domain authentication, an administrator can configure the authorized domain in Windmill's settings. Once configured, users with email addresses from the authorized domain will be able to log in using their SSO provider.
+To enable restricted domain authentication, an administrator can configure the authorized domain in the OAuth configuration by setting 'allowed_domains' to the desired domains (e.g: 'windmill.dev' to accept only Google/Microsoft logins with a xxx@windmill.dev address). Once configured, users with email addresses from the authorized domain will be able to log in using their SSO provider.
 
 ## Manually Add Users to a Windmill Instance
 
-As a superadmin of the workspace, you have the ability to manually add users to the Windmill instance. This is useful for inviting users who do not have SSO credentials or for providing access to individuals outside the restricted domain.
+As a superadmin of the instance, you have the ability to manually add users to the Windmill instance. This is useful for inviting users who do not have SSO credentials or for providing access to individuals outside the restricted domain.
 
 To manually add users:
 1. Log in to the Windmill instance as a superadmin.
@@ -40,7 +40,9 @@ By default, users are not invited to any workspace, unless auto-invite has been 
 
 ## Adding Users to a Workspace
 
-Once added to an instance, users can create their own workspace (on cloud, those ones are not considered as Premium as plans work at the workspace-level). However, by default they will not be invited to any workspace.
+Once added to an instance, users can create their own workspace. However, by default they will not be invited to any workspace.
+
+Windmill can be configured to remove the ability for non-[superadmins](../16_roles_and_permissions/index.mdx) to create workspace using the: CREATE_WORKSPACE_REQUIRE_SUPERADMIN env variable.
 
 ### Manually
 

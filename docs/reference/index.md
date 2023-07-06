@@ -108,7 +108,7 @@ directly from the parameters such as restricting a string to an enum, or
 precising that a list contains only numbers. You can also add helpful
 descriptions to each field.
 
-### JSON Schema
+### [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.md)
 
 Below is a simplified spec of JSON Schema. See
 [here for its full spec](https://json-schema.org/). Windmill is compatible with
@@ -688,7 +688,7 @@ and orgs can safely co-locate without risk of leakage.
 Any user can create his own workspace. When a user creates a workspace, he is an
 admin of such workspace and he can invite others to join his workspace.
 
-## Path
+## [Path](../core_concepts/16_roles_and_permissions/index.mdx#path)
 
 Windmill uniquely identifies [Scripts](#scripts), [Variables](#variables),
 [Resources](#resource), [Schedules](#schedule) - and in general almost
@@ -709,13 +709,13 @@ An owner is the user or the admins of the folder identified in a [path](#path) t
 "ownership path prefix" (`u/<user>` or `f/<folder>`). An owner always has write
 [permission](#permissions-and-access-control-list-acl) over the entity and can in addition delete it, move it and manage its permissions. Writers can only update the resource and reader can only read it.
 
-## Folders
+## [Folders](../core_concepts/8_groups_and_folders/index.md#folders)
 
 Folders have also readers, writers and admins. They are inspired by unix folders. Items under a folder inherit the permissions of the folder. Items can still extends those permissions through their own granular ACL. Hence, readers of a folder can read everything inside the folder, writers can write everything inside the folder and admins can write and change the permissions of everything inside the folder and the permissions of the folders itself. Admins of a folder are consider to be owners of the folder and everything below it
 
-## Groups
+## [Groups](../core_concepts/8_groups_and_folders/index.md#groups)
 
-[Groups](../core_concepts/8_groups_and_folders/index.md) have a name and a set of members. They are inspired by unix groups:
+Groups have a name and a set of members. They are inspired by unix groups:
 
 - Members are always users
 - Users can be members of multiple groups
