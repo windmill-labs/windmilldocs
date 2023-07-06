@@ -68,7 +68,7 @@ Windmill embeds:
   Python, Go, Bash and SQL or trigger the Scripts and Flows of the workspace
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
-  [RBAC permissions](../../reference/index.md#permissions-and-acl),
+  [RBAC permissions](../../reference/index.md#permissions-and-access-control-list-acl),
   [OAuth handling](../2_setup_oauth/index.md) for fetching and
   refreshing credentials
 - **[webhooks](../../core_concepts/4_webhooks/index.md)** for every scripts and flows to

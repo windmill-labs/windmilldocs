@@ -156,7 +156,7 @@ encountered issues), by checking the [Runs page][runs] on the app.
 
 <!-- Resources -->
 
-[runs]: ../5_monitor_past_and_future_runs/index.md
+[runs]: ../5_monitor_past_and_future_runs/index.mdx
 [user-settings]: https://app.windmill.dev/#user-settings
 [script]: https://hub.windmill.dev/scripts/windmill/1325/trigger-windmill-webhook-with-native-fetch-api-windmill
 [OWASP ref.1]: https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#sensitive-information-in-http-requests
