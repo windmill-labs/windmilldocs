@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Apps Quickstart
 
 Welcome to the Apps Quickstart! This page will provide you with the necessary knowledge to build your first applications in a matter of minutes.
@@ -16,11 +18,27 @@ Welcome to the Apps Quickstart! This page will provide you with the necessary kn
 
 <br/>
 
-:::info UIs in Windmill
 Although Windmill provides **[auto-generated UIs to scripts and flows](../../core_concepts/6_auto_generated_uis/index.md)**, you can build your own internal applications designed to your needs. Either with our integrated [app editor](../../apps/0_app_editor/index.mdx), or by [importing your own React/Vue/Svelte apps](../../react_vue_svelte_apps/index.md).
-:::
 
-<br/>
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Auto-generated UIs"
+		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
+		href="/docs/core_concepts/auto_generated_uis"
+        color="orange"
+	/>
+	<DocCard
+		title="App Editor"
+		description="Detailed section on Windmill's App Editor"
+		href="/docs/apps/app_editor"
+		color="orange"
+	/>
+	<DocCard
+		title="Example: E-commerce CRM app"
+		description="Tutorial on how to build a CRM with Windmill."
+		color="orange"
+	/>
+</div>
 
 **Windmill applications are customized UIs to interact with datasources** (web, internal, data providers, etc). They are a great way to have non-technical users interact with custom-made workflows.
 
@@ -40,13 +58,22 @@ To create your first app, you could pick one from our [Hub](https://hub.windmill
 
 From [Windmill](https://app.windmill.dev/user/login), click on `+ App`, and let's get started!
 
-### [Toolbar](../../apps/0_toolbar.mdx)
+### Toolbar
 
 Before jumping in, you should decide if you want to build a **Desktop** or a **Mobile** app. Just clik on the appropriated icon on top.
 
 Switch from **Editor** to **Preview** mode to take a step back on what you're building.
 
 ![Toolbar](./toolbar.png)
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Toolbar"
+		description="The app toolbar is located at the top of the app editor. It enables you to adjust app settings, toggle between desktop/mobile preview, and debug runs."
+		href="/docs/apps/toolbar"
+        color="orange"
+	/>
+</div>
 
 ### Components
 
@@ -64,6 +91,15 @@ If you have numerous components you might need to **Anchor** some of them to hav
 <br/>
 
 Check out all of our components at [this page](../../apps/4_app_configuration-settings/1_app_component_library.md) or (better) directly from the app editor. Know that **we can quickly add components to the library**, just [reach out to us](../../misc/6_getting_help/index.md).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Component Library"
+		description="List of all available components."
+		href="/docs/apps/app_configuration-settings/app_component_library"
+        color="orange"
+	/>
+</div>
 
 ### Empower components with scripts
 
@@ -92,6 +128,21 @@ At any time, have a look at your app's **Inputs** associated with each component
 
 ![Apps inputs](./apps_inputs.png)
 
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Runnable Guide"
+		description="Run Scripts and Flows from your Apps."
+		href="/docs/apps/app-runnable-panel"
+        color="orange"
+	/>
+    <DocCard
+		title="Outputs Guide"
+		description="Manage the outputs of your components."
+		href="/docs/apps/outputs"
+        color="orange"
+	/>
+</div>
+
 ### Tailor the look of your app
 
 At the **[component level](../../apps/4_app_configuration-settings/4_app_styling.md#component-level)**, on the `Settings` tab, configure the style of each component (color, size, label, etc.) either directly in the boxes or using Custom CSS (on the Component Settings - Styling tab).
@@ -101,6 +152,15 @@ At the **[component level](../../apps/4_app_configuration-settings/4_app_styling
 At the **[app level](../../apps/4_app_configuration-settings/4_app_styling.md#global-styling)**, you can give a harmonized style to your app with CSS. On the `Glbal Styling` tab, give details in boxes or in JSON, for the whole app and per class of component.
 
 ![App styling](./customize_app.png)
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Styling"
+		description="Customize the styling of your App according to your own graphical standards."
+		href="/docs/apps/app_configuration-settings/app_styling"
+		color="orange"
+	/>
+</div>
 
 ### Time to test
 
@@ -114,6 +174,15 @@ For possible bugs, there is a `Debug Runs` tab to review past runs with details 
 
 ![Debug runs](./debug_runs.png)
 
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Debugging"
+		description="Manage bugs of your App."
+		href="/docs/apps/app_debugging"
+		color="orange"
+	/>
+</div>
+
 ### Then what?
 
 When you're done with the editing of your app, `Save` the current version to the relevant users/folders with a proper and explicit name.
@@ -121,3 +190,23 @@ When you're done with the editing of your app, `Save` the current version to the
 Once it's saved, it's ready to use! You can also `Publish` it, or even `Publish to Hub` and export it in JSON or Hub compatible JSON from the `⋮` tab.
 
 Follow our [detailed section](../../apps/0_app_editor/index.mdx) on the App Editor for more information.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+        <DocCard
+        title="Draft and Deploy"
+        description="Learn how to draft and deploy apps."
+        href="/docs/core_concepts/draft_and_deploy"
+        color="orange"
+    />
+    <DocCard
+		title="App Editor"
+		description="Detailed section on Windmill's App Editor"
+		href="/docs/apps/app_editor"
+		color="orange"
+	/>
+	<DocCard
+		title="Example: E-commerce CRM app"
+		description="Tutorial on how to build a CRM with Windmill."
+		color="orange"
+	/>
+</div>
