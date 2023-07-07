@@ -186,7 +186,7 @@ const sidebars = {
 		{
 			type: 'category',
 			label: 'Enterprise Features',
-			items: ['core_concepts/audit_logs/index', 'core_concepts/staging_prod/index', 'core_concepts/multiplayer/index']
+			items: ['misc/plans_details/index', 'misc/support_and_sla/index', 'core_concepts/audit_logs/index', 'core_concepts/staging_prod/index', 'core_concepts/multiplayer/index']
 		},
 		{
 			type: 'category',
@@ -266,10 +266,9 @@ const sidebars = {
 					},
 					items: ['misc/Guides/AgGrid_Table/index']
 				},
-				'misc/setup_oauth/index',
 				'misc/note_of_intent/index',
+				'misc/setup_oauth/index',
 				'misc/share_on_hub/index',
-				'misc/upgrade/index',
 				'misc/windmill_compared_to_peers/index'
 			]
 		}

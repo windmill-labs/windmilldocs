@@ -12,7 +12,7 @@ It provides you with a lot of advanced features. It comes in a free and a Enterp
 All features below are part of the free version of AgGrid.
 
 :::tip Enterprise
-If you need the enterprise version of AgGrid, please [contact us](../../6_getting_help/index.md).
+If you need the enterprise version of AgGrid, please [contact us](../../6_getting_help/index.mdx).
 :::
 
 ## AgGrid vs Table component

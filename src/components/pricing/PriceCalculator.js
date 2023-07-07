@@ -5,52 +5,55 @@ import classNames from 'classnames';
 import Slider from './Slider';
 
 const plans = [
-	{ name: 'Multi-tenant', description: 'Shared infrastructure', price: 200 },
-	{ name: 'Isolated workers and database ', description: 'Available in US/EU/Asia', price: 600 },
-	{
-		name: 'Dedicated Kubernetes cluster',
-		description: 'Available in US/EU/Asia',
-		price: 1200
-	}
+  { name: 'Multi-tenant', description: 'Shared infrastructure', price: 200 },
+  { name: 'Isolated workers and database', description: 'Available in US/EU/Asia', price: 600 },
+  { name: 'Dedicated Kubernetes cluster', description: 'Available in US/EU/Asia', price: 1200 },
 ];
 
 function calculatePrice(monthlyPrice, period) {
-	if (period === 'annually') {
-		return monthlyPrice * 10;
-	}
-	return monthlyPrice;
+  if (period === 'annually') {
+    return monthlyPrice * 10;
+  }
+  return monthlyPrice;
 }
 
+const priceFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
+
 export default function PriceCalculator({ period, tier }) {
-	const [selected, setSelected] = useState(plans[0]);
-	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
-	const [workers, setWorkers] = useState(tier.price.worker ? tier.price.worker.default : 2);
+  const [selected, setSelected] = useState(plans[0]);
+  const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
+  const [workers, setWorkers] = useState(tier.price.worker ? tier.price.worker.default : 2);
 
-	function computeTotalPrice() {
-		let total = tier.id === 'tier-enterprise' ? calculatePrice(selected.price, period.value) : 0;
+  function computeTotalPrice() {
+    let total = tier.id === 'tier-enterprise' ? calculatePrice(selected.price, period.value) : 0;
 
-		if (tier.price.seat) {
-			total += calculatePrice(tier.price.seat.monthly, period.value) * seats;
-		}
+    if (tier.price.seat) {
+      total += calculatePrice(tier.price.seat.monthly, period.value) * seats;
+    }
 
-		if (tier.price.worker) {
-			total += calculatePrice(tier.price.worker.monthly, period.value) * workers;
-		}
+    if (tier.price.worker) {
+      total += calculatePrice(tier.price.worker.monthly, period.value) * workers;
+    }
 
-		return total;
-	}
+    return total;
+  }
 
-	return (
-		<div className="mt-16 grow flex flex-col justify-start">
-			<div className="flex justify-between items-center">
-				<h4>Price</h4>
+  return (
+    <div className="mt-16 grow flex flex-col justify-start">
+      <div className="flex justify-between items-center">
+        <h4>Price</h4>
 
-				<div>
-					<span className="text-2xl text-gray-900 font-semibold dark:text-white">
-						${computeTotalPrice()}
-					</span>
-					<span className="text-md text-gray-500">
-						{period.value === 'annually' ? '/yr' : '/mo'}
+        <div>
+          <span className="text-2xl text-gray-900 font-semibold dark:text-white">
+            {priceFormatter.format(computeTotalPrice())}
+          </span>
+          <span className="text-md text-gray-500">
+            {period.value === 'annually' ? '/yr' : '/mo'}
 					</span>
 				</div>
 			</div>
