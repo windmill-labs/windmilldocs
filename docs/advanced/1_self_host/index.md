@@ -42,6 +42,8 @@ Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `sta
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/oauth.json -o oauth.json
+
 
 docker compose up -d --pull always
 ```
@@ -51,6 +53,25 @@ Go to [http://localhost](http://localhost) et voilà!
 The default super-admin user is: admin@windmill.dev / `changeme`.
 
 From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
+
+### Use an external database
+
+For more production use-cases, we recommend using the helm-chart but the docker-compose on a big instance is sufficient for many use-cases.
+
+To setup an external database, you need to set DATABASE_URL in the .env file to point your external database. You should also set the number of db replicas to 0.
+
+#### RDS
+
+On RDS, you will need to set the initial role manually. You can do so by running the following command:
+
+```bash
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql -o init-db-as-superuser.sql
+psql <DATABASE_URL> -f init-db-as-superuser.sql
+```
+
+### Set number of replicas accordingly in docker-compose
+
+In the docker-compose, set the number of windmill_worker and windmill_worker_native replicas to your needs
 
 ### Authentication and user management
 
@@ -345,11 +366,12 @@ As a superuser, create the windmill_user and windmill_admin roles with the
 proper privileges, using:
 
 ```bash
+curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql -o init-db-as-superuser.sql
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
 
 where `init-db-as-superuser.sql` is
-[this file](https://github.com/windmill-labs/windmill/blob/main/init-db-as-superuser.sql).
+[this file](https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql).
 
 Then finally, run the following commands:
 
