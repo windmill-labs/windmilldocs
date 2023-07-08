@@ -134,26 +134,20 @@ For more advanced setups, see below.
 
 ### Configuring Domain and Reverse Proxy
 
-Let's assume you wish to deploy Windmill to the `windmill.example.com` domain.
-This information only needs to be propagated to the `docker-compose.yml` file,
-using the `WM_BASE_URL` environment variable.
-
-Create/edit the `.env` file at the root of the project and set your desired
-address:
+To deploy Windmill to the `windmill.example.com` , edit the `.env` file that is used by the docker-compose file and that you have curled previously.
 
 ```bash
 # .env
-DB_PASSWORD=supersecret
 WM_BASE_URL=http://windmill.example.com
 ```
 
 :::info
 
-The .env file should only be used to configure those 2 variables of the docker-compose.yml itself. The rest of the configuration should be done in the docker-compose.yml file. The [README](https://github.com/windmill-labs/windmill#environment-variables) contains all the variables you can pass to the workers or servers to fully customize windmill to your needs.
+Many configuration can be done in the docker-compose.yml file. The [README](https://github.com/windmill-labs/windmill#environment-variables) contains all the variables you can pass to the workers or servers to fully customize windmill to your needs. The .env only contains the most crucial ones.
 
 :::
 
-Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You still need to configure a reverse proxy to hit windmill and windmill-lsp on the right ports. You can use any reverse proxy as long as they behave mostly like the following caddy configuration:
+Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You still need to configure a reverse proxy to hit windmill and windmill-lsp on the right ports. You can use any reverse proxy as long as they behave mostly like the default provided following caddy configuration:
 
 ```
 :80 {
@@ -163,7 +157,11 @@ Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You sti
 }
 ```
 
-The default docker-compose file exposes a caddy reverse-proxy on port 80, configured by the [caddyfile](https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile) curled above. Configure both the caddyfile and the docker-compose file to fit your needs. The documentation for caddy is available [here](https://caddyserver.com/docs/caddyfile).
+The default docker-compose file exposes the caddy reverse-proxy on port 80 above, configured by the [caddyfile](https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile) curled above. Configure both the caddyfile and the docker-compose file to fit your needs. The documentation for caddy is available [here](https://caddyserver.com/docs/caddyfile).
+
+#### Use provided Caddy to serve https
+
+For simplicity, we recommend using an external reverse proxy such as Cloudfront or Cloudflare and point to your instance on the port you have chosen (by default, :80). However, you can also set `BASE_URL` in the docker-compose to your domain instead of `:80` and expose the `:443 ports`. See the caddy section in the docker-compose.
 
 #### Traefik configuration
 
