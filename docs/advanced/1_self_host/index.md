@@ -73,6 +73,18 @@ psql <DATABASE_URL> -f init-db-as-superuser.sql
 
 In the docker-compose, set the number of windmill_worker and windmill_worker_native replicas to your needs
 
+### Enterprise Edition
+
+To use the enterprise edition, you need to set the following environment variables in the .env file:
+
+```
+WM_LICENSE_KEY=your_license_key
+```
+
+You can then set the number of replicas of the multiplayer container to 1 in the docker-compose.
+
+You will be provided a license key when you purchase the enterprise edition. Contact us at ee@windmill.dev to get a trial license key. Pricing is at [https://windmill.dev/pricing](https://windmill.dev/pricing). You will benefit from support, SLA and all the additional features of the enterprise edition.
+
 ### Authentication and user management
 
 We recommend setting up [SSO with OAuth](../../misc/2_setup_oauth/index.md) if you want to avoid adding users manually. If not possible, you can add new users manually:
