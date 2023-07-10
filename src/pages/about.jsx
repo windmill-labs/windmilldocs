@@ -15,7 +15,7 @@ const people = [
 	},
 	{
 		name: 'Faton Ramadani',
-		role: 'Founding engineer',
+		role: 'Founding Engineer',
 		imageUrl: '/team/faton-ramadani.jpg',
 		linkedinUrl: 'https://www.linkedin.com/in/faton-ramadani-4b65ab191/'
 	},
@@ -24,6 +24,13 @@ const people = [
 		role: 'Founding Ops Staff',
 		imageUrl: '/team/henri-courdent.jpg',
 		linkedinUrl: 'https://www.linkedin.com/in/henri-courdent/'
+	}
+	,
+	{
+		name: 'Hugo Casademont',
+		role: 'LLM Research Engineer',
+		imageUrl: '/team/hugo-casademont.jpg',
+		linkedinUrl: 'https://www.linkedin.com/in/hugo-casademont/'
 	}
 ];
 

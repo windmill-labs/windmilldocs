@@ -132,7 +132,7 @@ const pricing = {
 					text: <span>Public apps</span>
 				},
 				{
-					text: <span>Groups, folders and granual permissions</span>
+					text: <span>Groups, folders and granulars permissions</span>
 				},
 				{
 					text: (
@@ -151,7 +151,7 @@ const pricing = {
 		{
 			name: 'Team',
 			id: 'tier-team',
-			href: '/docs/misc/upgrade#team-edition',
+			href: '/docs/misc/plans_details#upgrading-to-team-edition',
 			price: {
 				seat: {
 					monthly: 10,

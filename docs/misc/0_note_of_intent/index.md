@@ -63,7 +63,7 @@ Windmill embeds:
     external webhook who may contain payloads
   - [approval steps](../../flows/11_flow_approval.md) leveraging being suspended and reactivated at some secret
     urls known only by the approvers
-- a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.md)** to build
+- a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.mdx)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
   Python, Go, Bash and SQL or trigger the Scripts and Flows of the workspace
 - an **enterprise-grade platform** with tight permissioning, secret management,

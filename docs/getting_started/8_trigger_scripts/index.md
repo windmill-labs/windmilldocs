@@ -69,7 +69,7 @@ Windmill provides a WYSIWYG app editor. It allows you to build your own UI with 
 
 :::info
 
-More details on our page dedicated to [Windmill App Editor](../../getting_started/7_apps_quickstart/index.md).
+More details on our page dedicated to [Windmill App Editor](../../getting_started/7_apps_quickstart/index.mdx).
 
 :::
 
