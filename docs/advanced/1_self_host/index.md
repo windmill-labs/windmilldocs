@@ -75,7 +75,7 @@ In the docker-compose, set the number of windmill_worker and windmill_worker_nat
 
 ### Enterprise Edition
 
-To use the enterprise edition, you need to set the following environment variables in the .env file:
+To use the [enterprise edition](../../misc/7_plans_details/index.mdx), you need to set the following environment variables in the .env file:
 
 ```
 WM_LICENSE_KEY=your_license_key

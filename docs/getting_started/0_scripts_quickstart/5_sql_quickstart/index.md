@@ -16,7 +16,7 @@ Windmill SQL scripts are actually Typescript using a [Deno import](https://deno.
 
 <br/>
 
-We are strongly considering adding PostgresSQL as a fully supported language in the future, please [reach out to us](../../../misc/6_getting_help/index.md) if that would be a need on your side.
+We are strongly considering adding PostgresSQL as a fully supported language in the future, please [reach out to us](../../../misc/6_getting_help/index.mdx) if that would be a need on your side.
 
 :::
 

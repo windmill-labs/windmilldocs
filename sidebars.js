@@ -141,6 +141,7 @@ const sidebars = {
 			type: 'category',
 			label: 'Developer',
 			items: [
+				'advanced/self_host/index',
 				{
 					type: 'category',
 					label: 'Command Line Interface (wmill)',
@@ -161,10 +162,9 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
-				'advanced/local_development/index',
-				'cli_local_dev/vscode-extension/index',
 				'deploy_gh_gl',
-				{
+				'advanced/local_development/index',
+				'advanced/preinstall_binaries/index',{
 					type: 'category',
 					label: 'React/Vue/Svelte Apps',
 					link: {
@@ -177,9 +177,10 @@ const sidebars = {
 						'react_vue_svelte_apps/svelte'
 					]
 				},
-				'advanced/self_host/index',
+				'advanced/docker/index',
 				'advanced/sharing_common_logic/index',
-				'advanced/docker/index'
+				'cli_local_dev/vscode-extension/index'
+
 			]
 		},
 

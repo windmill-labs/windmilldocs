@@ -16,7 +16,7 @@ Once you're comfortable with the new integration, we would be super grateful if 
 
 ### Ask for one
 
-Just **[reach out to us](../misc/6_getting_help/index.md)**, we'll be happy to listen to your needs and add your request to the list of integrations.
+Just **[reach out to us](../misc/6_getting_help/index.mdx)**, we'll be happy to listen to your needs and add your request to the list of integrations.
 
 ## List of integations
 

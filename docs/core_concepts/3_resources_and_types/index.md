@@ -79,10 +79,12 @@ They are displayed on the Resources menu, under a dedicated tab.
 
 ## Using Resources
 
-Provided you have the right permissions, you can access resources from scripts, flows and apps
+Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps
 using the Windmill client. For example, to access the `u/user/my_postgresql`
 resource of the `posgtgresql` Resource Type we would create a
-[Script](../../reference/index.md#scripts):
+script.
+
+Typescript:
 
 ```typescript
 type Postgresql = object;
@@ -101,6 +103,8 @@ export async function main(postgres: Postgresql) {
 }
 ```
 
+Python:
+
 ```python
 postgresql = dict
 
@@ -110,11 +114,11 @@ def main(postgres: postgresql):
 
 And then select the Resource in the arguments section on the right:
 
+![Select resource](./select_resource.png)
+
 :::tip
 
-You can also edit the Resource or even create a new one right **from the Script
-editor**.
+You can also edit the Resource or even create a new one right from the Script
+editor.
 
 :::
-
-![Select resource](./select_resource.png)
