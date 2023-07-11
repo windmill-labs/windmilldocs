@@ -1,3 +1,12 @@
 # Preinstall Binaries
 
-Tbd
+Workers can have binaries preinstalled so that they can use them in subprocesses or in bash directly. npm, aws-cli, kubectl and helm are part of the standard images. To include more binaries, simply extend the base image of Windmill.
+
+```
+FROM ghcr.io/windmill-labs/windmill:main
+# or FROM ghcr.io/windmill-labs/windmill-ee:main for extending ee
+
+RUN apt-get update && apt install ....
+
+CMD ["windmill"]
+```
