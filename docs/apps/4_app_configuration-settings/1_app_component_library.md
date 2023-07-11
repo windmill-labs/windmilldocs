@@ -125,7 +125,6 @@ Containers allow you to host other components in a box. Moving a container means
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/container.mp4"
     alt="container component"
 />
@@ -151,7 +150,6 @@ The List component enables duplication of cards or rows with consistent structur
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/list_component.mp4"
     alt="list component"
 />
@@ -175,7 +173,6 @@ To customize the settings of components within each time, you can use `iter.inde
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/iter.value.mp4"
     alt="iter.value"
 />
@@ -187,7 +184,6 @@ List components also support having [inputs](#inputs) set inside them. Retrieve 
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/list_inputs.mp4"
     alt="List inputs"
 />
@@ -246,7 +242,6 @@ The drawer is container called by a button. Once you click on the button, a side
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/drawer.mp4"
     alt="drawer component"
 />
@@ -275,7 +270,6 @@ Container split in x number of panes vertically.
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/vertical_split.mp4"
     alt="vertical split panes"
 />
@@ -298,7 +292,6 @@ Container split in x number of panes horizontally.
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/horizontal_split.mp4"
     alt="horizontal split panes"
 />
@@ -381,7 +374,6 @@ Tabs have three display modes:
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/tabs.mp4"
     alt="tabs component"
 />
@@ -571,11 +563,31 @@ The form modal component has a special parameter called `On Success`. See the bu
 
 The download button component allows you to download a file.
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/download_button.mp4"
+    alt="Download Button"
+/>
+
+<br/>
+
+The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data):
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/download_base64.mp4"
+    alt="Download Button Base64"
+/>
+
 #### Download Button configuration
 
 | Name           |                Type                 | Connectable | Templatable |  Default  | Description                                   |
 | -------------- | :---------------------------------: | :---------: | :---------: | :-------: | --------------------------------------------- |
-| source         |           string or File            |    true     |    false    |           | The source of the file to download.           |
+| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data)).           |
 | filename       |               string                |    true     |    false    |           | The name of the file to download.             |
 | label          |               string                |    true     |    false    | Press me  | The button label.                             |
 | color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                             |
@@ -812,6 +824,10 @@ The file input allows users to drop files into the app.
 
 ![File Input API](../../assets/apps/4_app_component_library/file_input.png)
 
+Files uploaded are converted and returned as a data URL scheme with a [Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data).
+
+![File Input Base64](../../assets/apps/4_app_component_library/file_input_base64.png)
+
 #### File Input configuration
 
 | Name                |  Type   | Connectable | Templatable |                   Default                   | Description                                                    |
@@ -1001,7 +1017,6 @@ The AgGrid table component allows you to display an agnostic grid table.
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/aggrid_table.mp4"
     alt="aggrid table"
 />
@@ -1385,7 +1400,6 @@ The ChartJs component allows you to display a ChartJs using the [Chart.js](https
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/chartjs.mp4"
     alt="horizontal split panes"
 />

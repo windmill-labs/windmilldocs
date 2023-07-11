@@ -84,12 +84,12 @@ They are as follows:
 
 | Windmill         | JSON Schema                                  |
 | ---------------- | -------------------------------------------- |
-| `wmill.Base64`   | `string`, encodingFormat: `base64`           |
+| `wmill.Base64`   | `string`, encoding$$Format: `base64`         |
 | `wmill.Email`    | `string`, format: `email`                    |
 | `wmill.Sql`      | `string`, format: `sql`                      |
 | `<ResourceType>` | `object`, format: `resource-{resource_type}` |
 
-The `<ResourceType>` is any type that has a matching resource_type in the workspace. Note that the CamelCase of the type is converted to the snake_case.
+The `<ResourceType>` is any type that has a matching resource_type in the workspace (more details [here](../3_resources_and_types/index.md#using-resources)). Note that the CamelCase of the type is converted to the snake_case.
 `Base64` and `Email` are actually a type alias for `string`, and `Resource` is a
 type alias for an `object`. They are purely type hints for the Windmill parser.
 

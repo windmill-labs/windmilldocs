@@ -124,7 +124,7 @@ The Flow Builder has the following major components we will detail in a [dedicat
 In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.md) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
 - Reference to a Script from the [Hub](https://hub.windmill.dev/).
-- Reference to a Script in your [workspace](../reference/index.md#workspace).
+- Reference to a Script in your [workspace](../reference/index.mdx#workspace).
 - Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.md), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md) or [non-supported languages](../advanced/7_docker/index.md).
 - [Trigger Scripts](./10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
 - [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).

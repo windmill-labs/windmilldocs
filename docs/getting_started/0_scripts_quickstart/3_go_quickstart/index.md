@@ -11,7 +11,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 Scripts consist of 2 parts:
 
 - **Code**: for go scripts, it must have at least a main function.
-- **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../reference/index.md#json-schema) of its inputs (inferred from its signature)
+- **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature)
 
 When stored in a code repository, these two parts are stored separately at `<path>.ts` and `<path>.script.yaml`
 
@@ -33,7 +33,7 @@ first step of script creation: Metadata.
 ## Metadata
 
 - **Path** is the Script's unique identifier that consist of the
-  [script's owner](../../../reference/index.md#owner), and the script's name.
+  [script's owner](../../../reference/index.mdx#owner), and the script's name.
   The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.md#folders)).
 - **Summary** (optional) is a short, human-readable summary of the Script. It
   will be displayed as a title across Windmill. If omitted, the UI will use the `path` by

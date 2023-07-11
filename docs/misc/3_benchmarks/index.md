@@ -18,7 +18,7 @@ If you think we are wrong or the benchmark wasn't fair, please let us know.
 ### Windmill
 
 Comparable very simple scripts. Windmill exposes a
-[sync script execution endpoint](../../reference/index.md#synchronous-endpoint-for-scripts)
+[sync script execution endpoint](../../reference/index.mdx#synchronous-endpoint-for-scripts)
 similar to Lambda and we created a token to go through authorization (which we
 didn't for AWS Lambda since it was a public endpoint so admittedly it's not
 completely fair, Windmill is doing auth too).

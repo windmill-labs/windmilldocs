@@ -51,8 +51,8 @@ into **every workspace of every instance of Windmill**.
 
 ## Resource Types
 
-[Resource Types](../../reference/index.md#resource-type) are simply
-[JSON Schemas](../../reference/index.md#json-schema) which create a **Type** to
+[Resource Types](../../core_concepts/3_resources_and_types/index.md) are simply
+[JSON Schemas](../../core_concepts/13_json_schema_and_parsing/index.md) which create a **Type** to
 Resources by constraining the properties or fields that the Resource can have.
 In addition, they serve two main purposes on Windmill:
 
