@@ -47,7 +47,7 @@ discriminated in the auto-generated form to be of the proper type (e.g. a
 parameter in TypeScript of type `pg: Postgresql` is only going to
 offer a selection over the resources of type postgresql in the auto-generated UI).
 
-There is also a concept of [state](../../reference/index.md#state-and-internal-state) to share values
+There is also a concept of [state](../../reference/index.mdx#state-and-internal-state) to share values
 across script executions.
 
 ## Contextual variables
@@ -96,7 +96,7 @@ are kept safe in three different ways:
 
 You can define variables from the **Variables** page. Like all objects in
 Windmill, variable ownership is defined by the **path** - see
-[ownership path prefix](../../reference/index.md#owner).
+[ownership path prefix](../../reference/index.mdx#owner).
 
 Variables also have a **name**, generated from the path, and names are used to
 access variables from scripts.
