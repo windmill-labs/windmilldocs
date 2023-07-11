@@ -44,10 +44,6 @@ Get to know more Windmill.
    <div class="text-lg font-semibold text-gray-900">Share on Windmill Hub</div>
     <div class="text-sm text-gray-500">Windmill Hub is the community website of Windmill.</div>
   </a>
-  <a href="/docs/misc/upgrade" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">Upgrade</div>
-    <div class="text-sm text-gray-500">Upgrade your Windmill instance for perfomance and support.</div>
-  </a>
   <a href="/docs/misc/windmill_compared_to_peers" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Windmill Compared to Peers</div>
     <div class="text-sm text-gray-500">Our subjective impression on other players you might come across.</div>
