@@ -48,13 +48,13 @@ The new workspace will automatically be [switched](#switching-selection) to.
 wmill workspace add
 ```
 
-2. Adds a workspace with the name "MyWorkspace", ID "workspace123", and remote URL "https://example.com/myworkspace".
+2. Adds a workspace with the name "MyWorkspace", ID "workspace123", and remote URL "<a href="https://example.com/myworkspace" rel="nofollow">https://example.com/myworkspace</a>".
 
 ```bash
 wmill workspace add MyWorkspace workspace123 https://example.com/myworkspace
 ```
 
-3. This command creates a workspace with the name "MyWorkspace2," using the provided username "john.doe."
+1. This command creates a workspace with the name "MyWorkspace2," using the provided username "john.doe."
 
 ```bash
 wmill workspace add --create --create-workspace-name MyWorkspace2 --create-username john.doe
