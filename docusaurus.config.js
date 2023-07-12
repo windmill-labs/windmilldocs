@@ -31,10 +31,9 @@ const config = {
 			'@docusaurus/plugin-client-redirects',
 			{
 				redirects: [
-					// /docs/oldDoc -> /docs/newDoc
 					{
-						to: '/docs/',
-						from: '/docs/intro'
+						to: '/docs/intro',
+						from: '/docs/'
 					}
 				]
 			}
