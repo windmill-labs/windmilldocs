@@ -26,7 +26,19 @@ const config = {
 					return postcssOptions;
 				}
 			};
-		}
+		},
+		[
+			'@docusaurus/plugin-client-redirects',
+			{
+				redirects: [
+					// /docs/oldDoc -> /docs/newDoc
+					{
+						to: '/docs/',
+						from: '/docs/intro'
+					}
+				]
+			}
+		]
 	],
 	presets: [
 		[
