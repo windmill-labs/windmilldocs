@@ -38,7 +38,7 @@ export default function Hero() {
 						</a>
 
 						<a
-							href="https://docs.windmill.dev/docs/advanced/self_host/"
+							href="https://www.windmill.dev/docs/advanced/self_host"
 							onClick={() => window.plausible('self-host')}
 							className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200 text !no-underline"
 						>

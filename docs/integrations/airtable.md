@@ -13,7 +13,7 @@ There are two resources associated with [Airtable](https://www.airtable.com/). B
 />
 <br/>
 
-You'll need to land on Airtable's [Developer hub](https://airtable.com/create/tokens) from where click on "API key" and paste it on Windmill.
+You'll need to land on Airtable's <a href="https://airtable.com/create/tokens" rel="nofollow">Developer hub</a> from where click on "API key" and paste it on Windmill.
 
 | Property | Type   | Description      | Default           | Required | Where to find                             |
 | -------- | ------ | ---------------- | ----------------- | -------- | ----------------------------------------- |
