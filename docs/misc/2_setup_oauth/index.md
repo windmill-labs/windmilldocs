@@ -155,18 +155,6 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
 }
 ```
 
-### Microsoft
-
-```json
-{
-	"microsoft": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["windmill.dev"]
-	}
-}
-```
-
 ### Jumpcloud
 
 SSO -> Custom OIDC
@@ -244,12 +232,51 @@ From your Admin page, setup windmill using the service flow
 
 ### Microsoft
 
-Microsoft's Single Sign-On integration is supported by Windmill. Detailed steps for setting up Microsoft as an OAuth SSO provider will be provided in the upcoming documentation.
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/microsoft
+Login: https://<YOUR_INSTANCE>/user/login
+
+Microsoft's Single Sign-On integration is supported by Windmill. Detailed steps for setting up Microsoft as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+```json
+{
+	"microsoft": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
 
 ### GitHub
 
-GitHub's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitHub as an OAuth SSO provider will be provided in the upcoming documentation.
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/github
+Login: https://<YOUR_INSTANCE>/user/login
+
+GitHub's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitHub as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+```json
+{
+	"github": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
 
 ### GitLab
 
-GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation.
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/gitlab
+Login: https://<YOUR_INSTANCE>/user/login
+
+GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+```json
+{
+	"gitlab": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
