@@ -132,7 +132,7 @@ First, you need to create a Google OAuth Client:
 	"google": {
 		"id": "<CLIENT_ID>",
 		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+		"allowed_domains": ["youremaildomain.dev"]
 	}
 }
 ```
@@ -154,6 +154,46 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
   }
 }
 ```
+
+### Microsoft
+
+```json
+{
+	"microsoft": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["windmill.dev"]
+	}
+}
+```
+
+### Jumpcloud
+
+SSO -> Custom OIDC
+
+Name: Windmill
+
+Go to SSO tab:
+
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/jumpcloud
+Login: https://<YOUR_INSTANCE>/user/login
+
+Client Authentication Type: Client Secret Basic
+Attribute Mapping, Standard Scopes: Check Email
+
+Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud" to your oauth.json:
+
+```json
+{
+	"jumpcloud": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
+
+![Jumpcloud](./jumpcloud.png)
 
 ### Okta
 
