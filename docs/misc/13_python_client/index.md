@@ -1,12 +1,18 @@
----
-title: Python Client
----
+# Python Client API
+
+This page provides documentation and usage details for the Windmill Python client library.
 
 ## Classes
 
 <div className='api'>
 
 ### Client <a name="wmill.client.Client"/>
+
+<br/>
+
+The `Client` class is the main entry point for interacting with the Windmill API.
+
+<br/>
 
 <div className='api__body'>
 
@@ -58,7 +64,7 @@ def <span className="ident">get_job_status</span>(self, job_id: str) ‑> <a t
 
 <div className='api__description'>
 
-<p>Returns the status of a queued or completed job</p>
+<p>Returns the status of a queued or completed job.</p>
 
 </div>
 </div>
@@ -94,7 +100,7 @@ def <span className="ident">get_result</span>(self, job_id: str) ‑> Dict[str
 
 <div className='api__description'>
 
-<p>Returns the result of a completed job</p>
+<p>Returns the result of a completed job.</p>
 
 </div>
 </div>
@@ -112,7 +118,7 @@ def <span className="ident">get_version</span>(self) ‑> str
 
 <div className='api__description'>
 
-<p>Returns the current version of the backend</p>
+<p>Returns the current version of the backend.</p>
 
 </div>
 </div>
@@ -130,7 +136,7 @@ def <span className="ident">run_script_async</span>(self, hash: str, args: Dic
 
 <div className='api__description'>
 
-<p>Launch the run of a script and return immediately its job id</p>
+<p>Launch the run of a script and return immediately its job id.</p>
 
 </div>
 </div>
@@ -148,7 +154,7 @@ def <span className="ident">run_script_sync</span>(self, hash: str, args: Dict
 
 <div className='api__description'>
 
-<p>Run a script, wait for it to complete and return the result of the launched script</p>
+<p>Run a script, wait for it to complete and return the result of the launched script.</p>
 
 </div>
 </div>
@@ -164,6 +170,12 @@ def <span className="ident">run_script_sync</span>(self, hash: str, args: Dict
 <div className='api'>
 
 ### JobStatus <a name="wmill.client.JobStatus"/>
+
+<br/>
+
+The `JobStatus` class is an enumeration that represents the different states of a job in Windmill.
+
+<br/>
 
 <div className='api__body'>
 

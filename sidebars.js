@@ -280,6 +280,7 @@ const sidebars = {
 					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
+				'misc/python_client/index',
 				'misc/setup_oauth/index',
 				'misc/share_on_hub/index',
 				'misc/windmill_compared_to_peers/index'

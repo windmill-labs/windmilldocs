@@ -132,7 +132,7 @@ First, you need to create a Google OAuth Client:
 	"google": {
 		"id": "<CLIENT_ID>",
 		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["windmill.dev"] //restrict a client OAuth login to some domains
+		"allowed_domains": ["youremaildomain.dev"]
 	}
 }
 ```
@@ -154,6 +154,34 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
   }
 }
 ```
+
+### Jumpcloud
+
+SSO -> Custom OIDC
+
+Name: Windmill
+
+Go to SSO tab:
+
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/jumpcloud
+Login: https://<YOUR_INSTANCE>/user/login
+
+Client Authentication Type: Client Secret Basic
+Attribute Mapping, Standard Scopes: Check Email
+
+Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud" to your oauth.json:
+
+```json
+{
+	"jumpcloud": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
+
+![Jumpcloud](./jumpcloud.png)
 
 ### Okta
 
@@ -204,12 +232,51 @@ From your Admin page, setup windmill using the service flow
 
 ### Microsoft
 
-Microsoft's Single Sign-On integration is supported by Windmill. Detailed steps for setting up Microsoft as an OAuth SSO provider will be provided in the upcoming documentation.
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/microsoft
+Login: https://<YOUR_INSTANCE>/user/login
+
+Microsoft's Single Sign-On integration is supported by Windmill. Detailed steps for setting up Microsoft as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+```json
+{
+	"microsoft": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
 
 ### GitHub
 
-GitHub's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitHub as an OAuth SSO provider will be provided in the upcoming documentation.
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/github
+Login: https://<YOUR_INSTANCE>/user/login
+
+GitHub's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitHub as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+```json
+{
+	"github": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
 
 ### GitLab
 
-GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation.
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/gitlab
+Login: https://<YOUR_INSTANCE>/user/login
+
+GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+```json
+{
+	"gitlab": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>",
+		"allowed_domains": ["youremaildomain.dev"]
+	}
+}
+```
