@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Variables and Secrets
 
 When writing scripts, you may want to reuse variables, or safely pass secrets to
@@ -40,9 +42,9 @@ getVariable('u/user/foo');
 setVariable('u/user/foo', value);
 ```
 
-Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.md)
+Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.mdx)
 which are simply Variables that can contain any JSON values, not just a string
-and that are labeled with a [Resource Type](../3_resources_and_types/index.md#create-a-resource-type) to be automatically
+and that are labeled with a [Resource Type](../3_resources_and_types/index.mdx#create-a-resource-type) to be automatically
 discriminated in the auto-generated form to be of the proper type (e.g. a
 parameter in TypeScript of type `pg: Postgresql` is only going to
 offer a selection over the resources of type postgresql in the auto-generated UI).
@@ -103,11 +105,17 @@ access variables from scripts.
 
 A variable can be made **secret**. In this case, its value will not be visible outside of a script.
 
-<!-- - see [secrets security note](#secrets-security-note). -->
-
 ![Add variable](./add_variable.png)
 
 ## Accessing a variable from a script
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+     <DocCard
+    	title="Add Resources and Variables to Code Editor"
+    	description="You can add directly access Variables and Resources from the Code Editor."
+    	href="/docs/code_editor/add_variables_resources"
+    />
+</div>
 
 ### Contextual variables
 
@@ -115,33 +123,39 @@ Reserved variables are passed to the job as environment variables. For example, 
 
 ### User-defined variables
 
-There are 2 main ways variables are used within scripts:
+There aThere are 2 main ways variables are used within scripts:
 
-1. Passing variables as parameters to scripts.
+### Passing variables as parameters to scripts
 
-   Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
-2. Fetching them from within a script by using the wmill client in the respective language.
+![Select Variable](./select_variable.png)
 
-#### Fetching a variable in Typescript
+### Fetching them from within a script by using the wmill client in the respective language
+
+By clicking on `+ Variable`, you'll get to pick a variable from your workspace and be able to fetch it from within the script.
+
+![Fetch Variable](./fetch_variable.png)
+
+Typescript:
 
 ```typescript
 wmill.getVariable('u/user/foo');
 ```
 
-### Fetching a variable in Python
+Python:
 
 ```python
 wmill.get_variable("u/user/foo")
 ```
 
-### Fetching a variable in Go
+Go:
 
 ```go
 wmill.GetVariable("u/user/foo")
 ```
 
-### Fetching a variable in Bash
+Bash:
 
 ```bash
 curl -s -H "Authorization: Bearer $WM_TOKEN" \

@@ -141,7 +141,7 @@ Every step has an input transform that maps from:
 
 - the Flow input
 - any step's result, not only the previous step's result
-- [Resource](../core_concepts/3_resources_and_types/index.md)/[Variable](../core_concepts/2_variables_and_secrets/index.md).
+- [Resource](../core_concepts/3_resources_and_types/index.mdx)/[Variable](../core_concepts/2_variables_and_secrets/index.mdx).
 
 to the different parameters of this specific step.
 
@@ -187,5 +187,5 @@ The convenience functions do this in TypeScript are:
 - `getState` which retrieves a JSON object stored as a resource of type `state` at a path determined by `getStatePath`, which is unique the trigger (username or schedule path), the embedding flow's path (if any), and the step's or script's path.
 - `setState` which sets the new state
 
-The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.md) section with a
-[Resource Type](../core_concepts/3_resources_and_types/index.md#create-a-resource-type) of `state`.
+The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.mdx) section with a
+[Resource Type](../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) of `state`.

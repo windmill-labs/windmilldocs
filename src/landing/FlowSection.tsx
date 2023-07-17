@@ -351,7 +351,7 @@ export default function FlowSection() {
 			}
 			cards={cards}
 			tabs={tabs}
-			description={'Build complex Flows from atomic scripts, either from your workspace or the Hub'}
+			description={'Build complex Flows from atomic scripts, either from your workspace or the Hub.'}
 			color="teal"
 			key="flow-card"
 			examples={examples}

@@ -82,6 +82,18 @@ const sidebars = {
 			items: [
 				{
 					type: 'category',
+					label: 'Script Editor',
+					link: {
+						type: 'doc',
+						id: 'code_editor/index'
+					},
+					items: [
+						'code_editor/add_variables_resources',
+					],
+					collapsed: true
+				},
+				{
+					type: 'category',
 					label: 'Flow Editor',
 					link: {
 						type: 'doc',
@@ -263,9 +275,9 @@ const sidebars = {
 					label: 'Guides',
 					link: {
 						type: 'doc',
-						id: 'misc/Guides/index'
+						id: 'misc/guides/index'
 					},
-					items: ['misc/Guides/AgGrid_Table/index']
+					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
 				'misc/setup_oauth/index',
