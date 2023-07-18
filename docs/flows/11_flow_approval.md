@@ -41,10 +41,6 @@ For the moment we receive the approval steps in the form of an HTTP request. For
 
 You can find ready-to-use [Approval Scripts](https://hub.windmill.dev/approvals)
 on Windmill Hub:
-<<<<<<< HEAD
-
-- [Suspend/resume a Flow by sending approval URL via email](https://hub.windmill.dev/scripts/gmail/1397/suspend%2Fresume-a-flow-by-sending-approval-url-via-email-gmail).
-- [Ask channel for approval](https://hub.windmill.dev/scripts/slack/1503/ask-channel-for-approval-slack).
 
 :::
 
@@ -54,12 +50,6 @@ on Windmill Hub:
 
 - [Suspend/resume a Flow by sending approval URL via email (gmail)](https://hub.windmill.dev/scripts/gmail/1397/).
 - [Ask channel for approval (Slack)](https://hub.windmill.dev/scripts/slack/1503/).
-
-:::
-
-## Add and Approval Script
-
-> > > > > > > main
 
 You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
@@ -191,11 +181,8 @@ You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_man
 
 :::tip Find it on Windmill Hub
 
-<<<<<<< HEAD
 ![The branch is executed](../assets/flows/branch-executed.png)
-=======
+
 This flow can be found and forked on [Windmill Hub](https://hub.windmill.dev/flows/49/).
 
 :::
-
-> > > > > > > main
