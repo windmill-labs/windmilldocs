@@ -164,7 +164,8 @@ const sidebars = {
 				},
 				'deploy_gh_gl',
 				'advanced/local_development/index',
-				'advanced/preinstall_binaries/index',{
+				'advanced/preinstall_binaries/index',
+				{
 					type: 'category',
 					label: 'React/Vue/Svelte Apps',
 					link: {
@@ -180,14 +181,20 @@ const sidebars = {
 				'advanced/docker/index',
 				'advanced/sharing_common_logic/index',
 				'cli_local_dev/vscode-extension/index'
-
 			]
 		},
 
 		{
 			type: 'category',
 			label: 'Enterprise Features',
-			items: ['misc/plans_details/index', 'misc/support_and_sla/index', 'core_concepts/audit_logs/index', 'core_concepts/staging_prod/index', 'core_concepts/multiplayer/index']
+			items: [
+				'misc/plans_details/index',
+				'misc/support_and_sla/index',
+				'core_concepts/audit_logs/index',
+				'core_concepts/staging_prod/index',
+				'core_concepts/multiplayer/index',
+				'misc/saml_and_scim/index'
+			]
 		},
 		{
 			type: 'category',
