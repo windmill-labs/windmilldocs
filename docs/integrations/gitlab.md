@@ -1,6 +1,6 @@
 # Gitlab Integration
 
-To integrate [Gitlab](https://about.gitlab.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Gitlab](https://about.gitlab.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Gitlab Resource](../assets/integrations/add-gitlab.png)
 

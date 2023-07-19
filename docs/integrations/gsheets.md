@@ -11,7 +11,7 @@
 
 <br/>
 
-To integrate [Google Sheets](https://www.google.com/sheets/about/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Google Sheets](https://www.google.com/sheets/about/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 | Property | Type   | Description                             | Default | Required | Where to Find         |
 | -------- | ------ | --------------------------------------- | ------- | -------- | --------------------- |

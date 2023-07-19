@@ -8,10 +8,6 @@ Get to know more Windmill.
    <div class="text-lg font-semibold text-gray-900">Architecture</div>
     <div class="text-sm text-gray-500">Schematic architecture of Windmill.</div>
   </a>
-  <a href="/docs/misc/code_autocompletion" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
-   <div class="text-lg font-semibold text-gray-900">Auto-Complete Code with AI</div>
-    <div class="text-sm text-gray-500">Have AI suggest code on Windmill.</div>
-  </a>
   <a href="/docs/misc/benchmarks" class="rounded-md p-6 border border-gray-200 hover:border-blue-500 transition-all cursor-pointer flex flex-col gap-2 !no-underline" >
    <div class="text-lg font-semibold text-gray-900">Benchmarks</div>
     <div class="text-sm text-gray-500">Windmill has about same the performance as AWS Lambda for heavier workloads, slower on cold starts for medium compute.</div>

@@ -61,8 +61,12 @@ const sidebars = {
 				'core_concepts/monitor_past_and_future_runs/index',
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
+				'core_concepts/jobs/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
+				'core_concepts/draft_and_deploy/index',
+				'core_concepts/files_binary_data/index',
+				'core_concepts/rich_display_rendering/index',
 				'core_concepts/persistent_storage/index',
 				{
 					type: 'category',
@@ -82,13 +86,39 @@ const sidebars = {
 			items: [
 				{
 					type: 'category',
-					label: 'Script Editor',
+					label: 'Code Editor',
 					link: {
 						type: 'doc',
 						id: 'code_editor/index'
 					},
 					items: [
 						'code_editor/add_variables_resources',
+						'code_editor/assistants',
+						'code_editor/python_client',
+						'code_editor/ts_deno_client',
+						'code_editor/parameter_inference',
+						'code_editor/custom_environment_variables',
+						'code_editor/custom_response_code',
+						'code_editor/ai_generation',
+					],
+					collapsed: true
+				},
+				{
+					type: 'category',
+					label: 'Script Editor',
+					link: {
+						type: 'doc',
+						id: 'script_editor/index'
+					},
+					items: [
+						'script_editor/metadata',
+						'script_editor/script_kinds',
+						'script_editor/customize_arguments',
+						'script_editor/versioning',
+						'script_editor/worker_group_tag',
+						'script_editor/concurrency_limit',
+						'script_editor/multiplayer',
+						'script_editor/vs_code_scripts',
 					],
 					collapsed: true
 				},
@@ -106,6 +136,7 @@ const sidebars = {
 						'flows/flow_error_handler',
 						'flows/flow_trigger',
 						'flows/retries',
+						'flows/concurrency_limit',
 						'flows/cache',
 						'flows/step_mocking',
 						'flows/early_stop',
@@ -190,6 +221,7 @@ const sidebars = {
 					]
 				},
 				'advanced/docker/index',
+				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'cli_local_dev/vscode-extension/index'
 
@@ -262,13 +294,10 @@ const sidebars = {
 			label: 'Misceallaneous',
 			items: [
 				'openflow/index',
-				'reference/index',
 				'misc/architecture/index',
-				'misc/code_autocompletion/index',
 				'misc/benchmarks/index',
 				'misc/changelog/index',
 				'misc/contributing/index',
-				'core_concepts/draft_and_deploy/index',
 				'misc/getting_help/index',
 				{
 					type: 'category',
@@ -280,8 +309,6 @@ const sidebars = {
 					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
-				'misc/python_client/index',
-				'misc/setup_oauth/index',
 				'misc/share_on_hub/index',
 				'misc/windmill_compared_to_peers/index'
 			]

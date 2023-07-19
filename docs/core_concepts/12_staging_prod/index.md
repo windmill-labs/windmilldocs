@@ -13,7 +13,7 @@ From a workspace in Windmill, you can deploy a script/flow/resource/variable and
 
 :::tip Draft and Deploy
 
-The [Draft and Deploy](../0_draft_and_deploy/index.md) is another feature that offers a lightweight solution for implementing a staging and production workflow, suitable for various scenarios.
+The [Draft and Deploy](../0_draft_and_deploy/index.mdx) is another feature that offers a lightweight solution for implementing a staging and production workflow, suitable for various scenarios.
 
 :::
 
@@ -28,7 +28,7 @@ This workspace to link to can for example be:
 - a Staging workspace to test scrips and flows
 - a Prod workspace where you can deploy scripts and flows when ready.
 
-Then, from the workspace, on the `⋮` menu of each [deployed](../0_draft_and_deploy/index.md#deployed-version) script or flow, pick "Deploy to staging/prod". This can be done also from the [Resources](../3_resources_and_types/index.md) and [Variables](../2_variables_and_secrets/index.md) menus or directly from a script or flow `Details` page.
+Then, from the workspace, on the `⋮` menu of each [deployed](../0_draft_and_deploy/index.mdx#deployed-version) script or flow, pick "Deploy to staging/prod". This can be done also from the [Resources](../3_resources_and_types/index.mdx) and [Variables](../2_variables_and_secrets/index.mdx) menus or directly from a script or flow `Details` page.
 
 This can be done by users with both View rights on the deployed-from workspace and edit rights on the deployed-to workspace.
 

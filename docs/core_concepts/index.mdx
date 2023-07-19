@@ -10,10 +10,10 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/core_concepts/auto_generated_uis"
 	/>
-		<DocCard
-			title="JSON Schema and Parsing"
-			description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
-			href="/docs/core_concepts/json_schema_and_parsing"
+	<DocCard
+		title="JSON Schema and Parsing"
+		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
+		href="/docs/core_concepts/json_schema_and_parsing"
     />
     <DocCard
     	title="Dependency Management & Imports"
@@ -76,9 +76,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	href="/docs/core_concepts/persistent_storage"
     />
     <DocCard
-    	title="Auto-Complete Code with AI"
-    	description="Have AI suggest code on Windmill."
-    	href="/docs/misc/code_autocompletion"
+    	title="AI Generation"
+    	description="Have AI complete code on Windmill."
+    	href="/docs/code_editor/ai_generation"
     />
 </div>
 
@@ -100,6 +100,53 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	description="Collaborate on scripts simultaneously."
     	href="/docs/core_concepts/multiplayer"
     />
+	<DocCard
+    	title="Support & SLA"
+    	description="Our SLAs are designed to provide timely assistance and address any issues."
+    	href="/docs/misc/support_and_sla"
+    />
+</div>
+
+## Script-Specific Features
+
+All details on Scripts can be found in the [Script section](../script_editor/index.mdx).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+		title="Script Kinds"
+		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
+		href="/docs/script_editor/script_kinds"
+	/>
+    <DocCard
+		title="Customize Arguments"
+		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		href="/docs/script_editor/customize_arguments"
+    />
+    <DocCard
+		title="Versioning"
+		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
+		href="/docs/script_editor/versioning"
+	/>
+    <DocCard
+		title="Worker Group Tag"
+		description="Scripts can be assigned custom worker groups for efficient execution on different machines with varying specifications."
+		href="/docs/script_editor/worker_group_tag"
+	/>
+	<DocCard
+		title="Concurrency Limit"
+		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
+		href="/docs/script_editor/concurrency_limit"
+    />
+    <DocCard
+		title="Multiplayer"
+		description="The Multiplayer feature allows you to collaborate with team members on scripts simultaneously."
+		href="/docs/script_editor/multiplayer"
+	/>
+    <DocCard
+		title="Write Scripts on VSCode"
+		description="The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode."
+		href="/docs/script_editor/vs_code_scripts"
+	/>
 </div>
 
 ## Flow-Specific Features
@@ -142,6 +189,12 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 		title="Retries"
 		description="Re-try a step in case of error."
 		href="/docs/flows/retries"
+	/>
+	<DocCard
+		color="teal"
+		title="Concurrency Limits"
+		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
+		href="/docs/flows/concurrency_limit"
 	/>
 	<DocCard
 		color="teal"

@@ -1,6 +1,6 @@
 # AWS Integration
 
-To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add AWS Resource](../assets/integrations/add-aws.png)
 

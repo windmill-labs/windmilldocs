@@ -194,7 +194,7 @@ standalone.
 [hub-resources]: https://hub.windmill.dev/resources
 [hub-mongo]: https://hub.windmill.dev/integrations/mongodb
 [docs-resources]: /docs/core_concepts/resources_and_types
-[docs-path]: /docs/reference#path
+[docs-path]: /docs/core_concepts/roles_and_permissions#path
 [docs-flows]: /docs/getting_started/flows_quickstart
 [docs-apps]: /docs/getting_started/apps_quickstart
 [mongodb-atlas]: https://www.mongodb.com/atlas/database

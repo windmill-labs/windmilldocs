@@ -7,7 +7,7 @@ Windmill's Flow Editor allows you to build flows with a low-code builder.
 
 :::info Workflows
 
-A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) in the case of Windmill.
+A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) in the case of Windmill.
 :::
 
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -70,6 +70,12 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
+		title="Concurrency Limits"
+		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
+		href="/docs/flows/concurrency_limit"
+	/>
+	<DocCard
+		color="teal"
 		title="Cache for Steps"
 		description="Re-use a step's previous results."
 		href="/docs/flows/cache"
@@ -108,14 +114,14 @@ The Flow Editor has the following features which are the subject of specific pag
 
 <br />
 
-The Flow Builder has the following major components we will detail in a [dedicated page](3_editor_components.md):
+The Flow Builder has the following major components we will detail in a [dedicated page](3_editor_components.mdx):
 
-- [Toolbar](./3_editor_components.md#toolbar): the toolbar allows you to export the flow, configure the flow settings, and test the flow.
-- [Settings](./3_editor_components.md#settings): configure the flow settings.
-- [Static Inputs](./3_editor_components.md#static-inputs): view all flow static inputs.
-- [Flow Inputs](./3_editor_components.md#flow-inputs): view all flow inputs.
-- [Action](./3_editor_components.md#flow-actions): steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
-- [Action editor](./3_editor_components.md#action-editor): configure the action.
+- [Toolbar](./3_editor_components.mdx#toolbar): the toolbar allows you to export the flow, configure the flow settings, and test the flow.
+- [Settings](./3_editor_components.mdx#settings): configure the flow settings.
+- [Static Inputs](./3_editor_components.mdx#static-inputs): view all flow static inputs.
+- [Flow Inputs](./3_editor_components.mdx#flow-inputs): view all flow inputs.
+- [Action](./3_editor_components.mdx#flow-actions): steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
+- [Action editor](./3_editor_components.mdx#action-editor): configure the action.
 
 ## How flows work
 
@@ -124,8 +130,8 @@ The Flow Builder has the following major components we will detail in a [dedicat
 In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.md) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
 - Reference to a Script from the [Hub](https://hub.windmill.dev/).
-- Reference to a Script in your [workspace](../reference/index.mdx#workspace).
-- Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.md), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.md), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md) or [non-supported languages](../advanced/7_docker/index.md).
+- Reference to a Script in your [workspace](../core_concepts/16_roles_and_permissions/index.mdx#workspace).
+- Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.md).
 - [Trigger Scripts](./10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
 - [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).
 - [Branch](./13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order).

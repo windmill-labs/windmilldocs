@@ -1,4 +1,20 @@
-# Worker Groups
+# Workers and Worker Groups
+
+## Workers
+
+Workers are autonomous processes that run one script at a time using the full
+machines resources available to them.
+
+Workers pull [jobs](../20_jobs/index.md) from the queue of jobs in the order of their
+`scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
+a job, it atomically sets its state to "running", runs it, streams its logs then
+once it is complete, saves it back in the database as a "complete job". The
+final result and logs are stored forever.
+
+The number of workers can be horizontally scaled up or down depending on needs
+without any overhead.
+
+## Assign custom worker groups
 
 Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
@@ -34,7 +50,7 @@ To make custom tags selectable from the UI, you need to pass the following env v
 CUSTOM_TAGS=light
 ```
 
-## How to assign a custom worker group to a script
+## How to assign a custom worker group
 
 For scripts saved on the script editor, select the corresponding worker group tag in the metadata section.
 
