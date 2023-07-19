@@ -1,4 +1,4 @@
-# Deploy from GitHub / GitLab
+# Version control from GitHub / GitLab
 
 At https://github.com/windmill-labs/windmill-sync-example you'll find an example repo that demonstrate how to use a github repo as source of truth for part or all of your Windmill workspace.
 
@@ -24,10 +24,11 @@ secret "WMILL_TOKEN" to this environment.
 ![GH environment](./assets/deploy_gh_gl/gh-environment-light.png)
 
 Edit the workflows:
+
 - [.github/workflows/push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) to push on merge to main, usually you'll
-only need to fill out the `env` variables, then activate GitHub actions by
-navigating to the "Actions" tab in GitHub. You may want to run the action once
-manually to see that everything works.
+  only need to fill out the `env` variables, then activate GitHub actions by
+  navigating to the "Actions" tab in GitHub. You may want to run the action once
+  manually to see that everything works.
 
 - [.github/workflows/pull-workspace.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/pull-workspace.yaml) to sync back any changes made in Windmill UI to this repo under the form of either a Pull Request or a commit to main directly.
 

@@ -31,7 +31,7 @@ const cards = [
 		href: '/docs/advanced/local_development'
 	},
 	{
-		title: 'Deploy from Github/Gitlab',
+		title: 'Version control from Github/Gitlab',
 		subtitle: 'Deploy scripts from Github or Gitlab',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
