@@ -1,6 +1,8 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Error Handling in Flows
 
-There are three ways to handle errors in Windmill flows: [retries](../../flows/14_retries.md), [error handlers](../../flows/7_flow_error_handler.md), and [early stop/break](../../flows/2_early_stop.md).
+There are three ways to handle errors in Windmill flows: [retries](./14_retries.md), [error handlers](./7_flow_error_handler.md), and [early stop/break](./2_early_stop.md).
 
 ## Retries
 
@@ -21,11 +23,15 @@ Steps within a flow can be retried a specified number of times and at a defined 
 
 <br/>
 
-:::info
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Retries"
+		description="Re-try a step in case of error."
+		href="/docs/flows/retries"
+	/>
+</div>
 
-For more details on retries, please refer to our dedicated [Retries documentation](../../flows/14_retries.md).
-
-:::
 
 ## Error Handler
 
@@ -44,11 +50,14 @@ If defined, the error handler will take as input, the result of the step that er
 
 <br/>
 
-:::info
-
-For more details on error handlers, please refer to our dedicated [Error Handlers documentation](../../flows/7_flow_error_handler.md).
-
-:::
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Error Handler"
+		description="Configure a script to handle errors."
+		href="/docs/flows/flow_error_handler"
+	/>
+</div>
 
 ## Early Stop / Break
 
@@ -65,8 +74,24 @@ The Early Stop/Break feature allows you to define a predicate expression that de
 
 <br/>
 
-:::info
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Early Stop / Break"
+		description="Suspend executions within a flow for a specified time."
+		href="/docs/flows/sleep"
+	/>
+</div>
 
-For more details on early stop/break, please refer to our dedicated [Early Stop / Break documentation](../../flows/2_early_stop.md).
+## Error Handling in Windmill
 
-:::
+For more details on Error Handling in Windmill, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	color="teal"
+        title="Collaboration in Windmill"
+    	description="Collaboration in Windmill is simplified through various features and workflows."
+    	href="/docs/core_concepts/collaboration"
+    />
+</div>
