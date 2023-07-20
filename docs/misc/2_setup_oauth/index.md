@@ -150,6 +150,12 @@ Setup your realm in Keycload then add the following to your `oauth.json`:
       "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
       "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
       "scopes": ["openid", "offline_access"]
+    },
+    "login_config": {
+      "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
+      "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
+      "userinfo_url":  "https://.../realms/<realm>/protocol/openid-connect/userinfo",
+      "scopes": ["openid", "offline_access"]
     }
   }
 }
