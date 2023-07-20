@@ -62,7 +62,7 @@ scripts are only those whom the user or group has visibility on, given his
 Similarly for the [Contextual Variable](../2_variables_and_secrets/index.mdx#contextual-variables) `WM_TOKEN` which
 contains an ephemeral token (ephemeral to the script execution), which has the
 same privilege and permissions as the owner in `permissioned_as`. The
-[Python client](../../code_editor/python_client.mdx) inside the script implicitly uses that same
+[Python client](../../advanced/2_clients/python_client.md) inside the script implicitly uses that same
 token to be granted privilege to do Windmill operations (like running other
 scripts or getting resources), meaning that the same script ran by 2 different
 users, will run differently and may be unauthorized to do partially or all
