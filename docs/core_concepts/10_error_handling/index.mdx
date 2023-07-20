@@ -132,9 +132,7 @@ The following args will be passed to the error handler:
 - is_flow: Whether the error comes from a flow.
 - workspace_id: The workspace id of the failed script or flow.
 
-The Error handler will be executed by the automatically created group g/error_handler. If your error handler requires variables or resources, you need to add them to the group.
-
-This Superadmin Error handler is defined by an environment variable: `GLOBAL_ERROR_HANDLER_PATH_IN_ADMINS_WORKSPACE`.
+This Superadmin Error handler is defined by setting the path to the script to be executed as an env variable to all servers using: `GLOBAL_ERROR_HANDLER_PATH_IN_ADMINS_WORKSPACE`.
 
 Here is a template for your Superadmin workspace error handler:
 
