@@ -120,9 +120,7 @@ export async function main(
 
 You can define a script to be executed automatically in case of error in your instance.
 
-From the superadmin workspace's settings, pick the "Error Handler" tab and pick a script.
-
-![Workspace Error Handler](./workspace_error_handler.png)
+This Superadmin Error handler is defined by setting the path to the script to be executed as an env variable to all servers using: `GLOBAL_ERROR_HANDLER_PATH_IN_ADMINS_WORKSPACE`.
 
 The following args will be passed to the error handler:
 - path: The path of the script or flow that errored.
@@ -132,9 +130,7 @@ The following args will be passed to the error handler:
 - is_flow: Whether the error comes from a flow.
 - workspace_id: The workspace id of the failed script or flow.
 
-This Superadmin Error handler is defined by setting the path to the script to be executed as an env variable to all servers using: `GLOBAL_ERROR_HANDLER_PATH_IN_ADMINS_WORKSPACE`.
-
-Here is a template for your Superadmin workspace error handler:
+Here is a template for your workspace error handler:
 
 ```ts
 // Global / workspace error handler template
