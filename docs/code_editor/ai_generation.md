@@ -1,3 +1,7 @@
+---
+canonical_url: /docs/core_concepts/ai_generation
+---
+
 # AI Generation
 
 Windmill provides ways to have AI help you in your coding experience.

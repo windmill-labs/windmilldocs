@@ -46,11 +46,6 @@ on Windmill Hub:
 
 ## Add Approval Script
 
-# ![Adding approval step](../assets/flows/approval-step.png)
-
-- [Suspend/resume a Flow by sending approval URL via email (gmail)](https://hub.windmill.dev/scripts/gmail/1397/).
-- [Ask channel for approval (Slack)](https://hub.windmill.dev/scripts/slack/1503/).
-
 You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
 external communication channel (like e-mail, SMS or chat message).

@@ -55,28 +55,22 @@ const sidebars = {
 				'advanced/imports/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
+				'core_concepts/error_handling/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/scheduling/index',
-				'core_concepts/webhooks/index',
 				'core_concepts/monitor_past_and_future_runs/index',
+				'core_concepts/webhooks/index',
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
-				'core_concepts/jobs/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
+				'core_concepts/jobs/index',
+				'core_concepts/concurrency_limits/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/persistent_storage/index',
-				{
-					type: 'category',
-					label: 'Flows concepts',
-					items: [
-						'core_concepts/error_handling_in_flows/index',
-						'flows/sleep',
-						'flows/flow_approval'
-					]
-				}
+				'core_concepts/ai_generation/index',
 			],
 			collapsed: false
 		},
@@ -95,8 +89,6 @@ const sidebars = {
 						'code_editor/parameter_inference',
 						'code_editor/add_variables_resources',
 						'code_editor/assistants',
-						'code_editor/python_client',
-						'code_editor/ts_deno_client',
 						'code_editor/ai_generation',
 					],
 					collapsed: true
@@ -131,6 +123,7 @@ const sidebars = {
 					},
 					items: [
 						'flows/editor_components',
+						'flows/error_handling',
 						'flows/flow_branches',
 						'flows/flow_loops',
 						'flows/flow_error_handler',
@@ -224,6 +217,8 @@ const sidebars = {
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
+				'advanced/clients/python_client',
+				'advanced/clients/ts_deno_client',
 				'cli_local_dev/vscode-extension/index'
 			]
 		},
