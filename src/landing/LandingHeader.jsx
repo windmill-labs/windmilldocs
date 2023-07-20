@@ -74,7 +74,7 @@ export default function LandingHeader() {
 					</div>
 					<Popover.Group as="nav" className="hidden space-x-10 md:flex">
 						<a
-							href="https://www.windmill.dev/docs/intro"
+							href="/docs/intro"
 							onClick={() => window.plausible('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>

@@ -14,4 +14,4 @@ The Concurrency Limit operates globally and across flow runs. It involves two ke
 
 Concurrency limit can be set for each step of a flow in the `Advanced` menu, on tab "Concurrency".
 
-When jobs reach the concurrency limit, they are automatically queued for execution within the specified time window. This ensures that the execution of queued jobs is distributed evenly and optimizes resource allocation.
+When jobs reach the concurrency limit, they are automatically queued for execution at the next available optimal slot given the time window.

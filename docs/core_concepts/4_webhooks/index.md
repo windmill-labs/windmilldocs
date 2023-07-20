@@ -163,6 +163,22 @@ encountered issues), by checking the [Runs menu][runs] on the app.
 
 ![Runs page](./runs.png)
 
+## Request headers
+
+It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_headers`, separated with `,`. e.g: `/api/w/admins/jobs/run_wait_result/p/u/user/undisputed_script?include_header=X-Sign,foo`
+
+or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
+
+## Raw payload
+
+Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
+
+## Custom Response Code
+
+For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code.
+
+e.g: `{"windmill_status_code": 201}`
+
 <!-- Resources -->
 
 [runs]: ../5_monitor_past_and_future_runs/index.mdx

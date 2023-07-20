@@ -92,13 +92,11 @@ const sidebars = {
 						id: 'code_editor/index'
 					},
 					items: [
+						'code_editor/parameter_inference',
 						'code_editor/add_variables_resources',
 						'code_editor/assistants',
 						'code_editor/python_client',
 						'code_editor/ts_deno_client',
-						'code_editor/parameter_inference',
-						'code_editor/custom_environment_variables',
-						'code_editor/custom_response_code',
 						'code_editor/ai_generation',
 					],
 					collapsed: true
@@ -117,6 +115,8 @@ const sidebars = {
 						'script_editor/versioning',
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
+						'script_editor/custom_environment_variables',
+						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
 						'script_editor/vs_code_scripts',
 					],
