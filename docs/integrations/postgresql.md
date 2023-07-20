@@ -4,4 +4,4 @@
 
 Windmill provides a framework to support PostgreSQL databsases.
 
-Please refer to the [PostreSQL Getting Started section](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md).
+Please refer to the [PostreSQL Getting Started section](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).

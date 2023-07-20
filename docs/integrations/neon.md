@@ -2,7 +2,7 @@
 
 [Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.
 
-As a Postgres database service provider, Neon.tech follows the regular Postgres protocol and therefore can be integrated as any [PostgreSQL resource](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md).
+As a Postgres database service provider, Neon.tech follows the regular Postgres protocol and therefore can be integrated as any [PostgreSQL resource](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"

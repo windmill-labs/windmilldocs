@@ -31,7 +31,7 @@ However, as with any powerful tool, using cron comes with its own set of challen
 
 <br/>
 
-Managing scripts, flows and apps on Windmill works at the [workspace](../../reference/index.mdx#workspace)-level. Admins invite authors and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
+Managing scripts, flows and apps on Windmill works at the [workspace](../16_roles_and_permissions/index.mdx#workspace)-level. Admins invite authors and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
 
 <br/>
 

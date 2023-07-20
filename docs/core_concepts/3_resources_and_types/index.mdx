@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Resources and Resource Types
 
 In Windmill, Resources represent
@@ -30,7 +32,7 @@ resource/API".
 ![Add a resource](./add_resource.png)
 
 Just like most objects in Windmill, Resources have a path that define their
-permissions - see [ownership path prefix](../../reference/index.mdx#owner).
+permissions - see [ownership path prefix](../16_roles_and_permissions/index.mdx).
 
 Each **Resource** has a **Resource Type**, that defines what fields that
 resource contains. Select one from the list and check the schema to see what
@@ -39,7 +41,7 @@ fields are present.
 ![Add resource example](./add_resource_postgresql.png)
 
 Resources commonly need to access secrets or re-use
-[Variables](../2_variables_and_secrets/index.md), for example passwords or API
+[Variables](../2_variables_and_secrets/index.mdx), for example passwords or API
 tokens. To insert a Variable into a Resource, use **Insert variable** (the `$`
 sign button) and select a Variable. The name of a Variable will look like
 `$VAR:<NAME_OF_VAR>`. When resources are called from a Script, the Variable
@@ -79,10 +81,19 @@ They are displayed on the Resources menu, under a dedicated tab.
 
 ## Using Resources
 
-Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps
-using the Windmill client. For example, to access the `u/user/my_postgresql`
-resource of the `posgtgresql` Resource Type we would create a
-script.
+<div class="grid grid-cols-2 gap-6 mb-4">
+     <DocCard
+    	title="Add Resources and Variables to Code Editor"
+    	description="You can add directly access Variables and Resources from the Code Editor."
+    	href="/docs/code_editor/add_variables_resources"
+    />
+</div>
+
+There are 2 main ways resources are used within scripts:
+
+### Passing resources as parameters to scripts (prefered)
+
+Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps using the Windmill client. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script.
 
 Typescript:
 
@@ -118,7 +129,39 @@ And then select the Resource in the arguments section on the right:
 
 :::tip
 
-You can also edit the Resource or even create a new one right from the Script
+You can also edit the Resource or even create a new one right from the Code
 editor.
 
 :::
+
+### Fetching them from within a script by using the wmill client in the respective language
+
+By clicking on `+ Resource`, you'll get to pick a resource from your workspace and be able to fetch it from within the script.
+
+Typescript:
+
+```typescript
+wmill.getResource('u/user/foo');
+```
+
+Python:
+
+```python
+wmill.get_resource("u/user/foo")
+```
+
+Go:
+
+```go
+wmill.GetResource("u/user/foo")
+```
+
+Bash:
+
+```bash
+curl -s -H "Authorization: Bearer $WM_TOKEN" \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/resources/get/u/user/foo" \
+    | jq -r .value
+```
+
+![Fectch resource](./fetch_resource.png)

@@ -14,7 +14,7 @@ Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional
 
 :::info TLDR
 
-The present tutorial explains how to use Mailchimp to trigger Windmill [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) and [flows](../getting_started/6_flows_quickstart/index.md) through sending parsed inbound emails to Windmill via [webhooks](../core_concepts/4_webhooks/index.md).
+The present tutorial explains how to use Mailchimp to trigger Windmill [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [flows](../getting_started/6_flows_quickstart/index.md) through sending parsed inbound emails to Windmill via [webhooks](../core_concepts/4_webhooks/index.md).
 
 :::
 
@@ -40,7 +40,7 @@ The flow we used for the example is available on [Windmill Hub](https://hub.wind
 
 Here are the steps to follow:
 
-1. Create a [script](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) or [flow](../getting_started/6_flows_quickstart/index.md) in Windmill. Make sure it has an input designed to receive the parsed results (for example a string called "mandrill_events").
+1. Create a [script](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or [flow](../getting_started/6_flows_quickstart/index.md) in Windmill. Make sure it has an input designed to receive the parsed results (for example a string called "mandrill_events").
 
 2. [Sign up to Mailchimp](https://mailchimp.com/signup/) (we used the free trial at first).
 

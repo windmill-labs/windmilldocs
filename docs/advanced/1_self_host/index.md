@@ -122,7 +122,7 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 ### Admins Workspace
 
-What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.md) are shared with all workspaces.
+What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.mdx) are shared with all workspaces.
 
 If you skipped the instance setup or need to sync resource types, you can go to the admins workspace and run the _Synchronize Hub Resource types with instance_ script, or [schedule](../../core_concepts/1_scheduling/index.md) it.
 

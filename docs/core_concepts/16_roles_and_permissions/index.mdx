@@ -10,6 +10,25 @@ Everybody having access to a Windmill instance is considered a User.
 
 Users are uniquely identified globally by their email. They also have a unique username with respect to each workspace they are member of.
 
+## Workspace
+
+Every nameable or pathable entity in Windmill has a workspace attached to it.
+This includes:
+
+- users
+- groups
+- scripts
+- resources
+- variables
+- schedules
+- jobs
+
+Windmill's entire database is partitioned by workspaces such that users, teams
+and orgs can safely co-locate without risk of leakage.
+
+Any user can create their own workspace. When a user creates a workspace, the user is an
+admin of such workspace and he can invite others to join his workspace.
+
 ## Roles in Windmill
 
 Users can be given different levels of permissions:
@@ -17,8 +36,8 @@ Users can be given different levels of permissions:
 1. **Superadmin**: The superadmin role has the highest level of access and can manage the entire Windmill instance. Only superadmins can access the dedicated 'admins' workspace. Also by default, superadmins have access to all workspaces as admins of those workspaces. When an admin does an action as a user of a workspace he is not a member of and as such as no username in, their email is used in lieu of the username. Windmill can be configured to remove the ability for non-superadmins to create workspace using the: CREATE_WORKSPACE_REQUIRE_SUPERADMIN env variable.
 
 2. **Admin**:
-	- At the [workspace](../../reference/index.mdx#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
-	- At the [folder](../8_groups_and_folders/index.md#folders) level, an admin of a folder has read, write and archive access to all the elements inside the folders ([scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.md), [apps](../../getting_started/7_apps_quickstart/index.mdx), [resources](../3_resources_and_types/index.md), [schedules](../1_scheduling/index.md)) and can manage the permissions as well as add new admins.
+	- At the [workspace](#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
+	- At the [folder](../8_groups_and_folders/index.md#folders) level, an admin of a folder has read, write and archive access to all the elements inside the folders ([scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.md), [apps](../../getting_started/7_apps_quickstart/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.md)) and can manage the permissions as well as add new admins.
 
 3. **Author**: Authors can execute and view scripts, flows, and apps within a workspace. Authors see the full interface of Windmill and contrary to the Operators, they have the ability to create and edit scripts, flows and apps. Authors have read and write access to the entities they create or have been [granted access to by others](../8_groups_and_folders/index.md).
 
@@ -48,10 +67,10 @@ Windmill implements a fine-grained Access Control List (ACL) by default, allowin
 - [groups](../8_groups_and_folders/index.md#groups)
 - [folders](../8_groups_and_folders/index.md#folders)
 - [scripts](../../getting_started/0_scripts_quickstart/index.mdx)
-- [resources](../3_resources_and_types/index.md)
-- [variables](../2_variables_and_secrets/index.md)
+- [resources](../3_resources_and_types/index.mdx)
+- [variables](../2_variables_and_secrets/index.mdx)
 - [schedules](../1_scheduling/index.md)
-- [jobs](../reference#jobs)
+- [jobs](../20_jobs/index.md)
 
 There are 3 possible roles for each item:
 - **Admin** (Owner): has read, write and archive access. Admins of an item can't delete it unless they are admins of the workspace.
@@ -64,7 +83,7 @@ The ACLs are defined by the path of the item.
 
 ### Path
 
-Windmill uniquely identifies [scripts](../../getting_started/0_scripts_quickstart/index.mdx), [variables](../2_variables_and_secrets/index.md), [resources](../3_resources_and_types/index.md), [schedules](../1_scheduling/index.md) - and in general almost everything - using their path. The paths are globally unique within the category of entities they represent. In short, a Resource and a Schedule for example can have the same path, without conflict.
+Windmill uniquely identifies [scripts](../../getting_started/0_scripts_quickstart/index.mdx), [variables](../2_variables_and_secrets/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.md) - and in general almost everything - using their path. The paths are globally unique within the category of entities they represent. In short, a Resource and a Schedule for example can have the same path, without conflict.
 
 Each entity's ACL defines its owner and specifies the read and write permissions. By default, only the owner of an entity has read and write access to it. Entities can be explicitly shared with other [groups](../8_groups_and_folders/index.md#groups) and users in either read-only or read and write mode through [folders](../8_groups_and_folders/index.md#folders). Write mode implicitly includes read permission.
 

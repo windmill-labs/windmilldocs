@@ -573,7 +573,7 @@ The download button component allows you to download a file.
 
 <br/>
 
-The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data):
+The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx):
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -587,7 +587,7 @@ The data source of the Download button must be a data URL scheme with a [Base64 
 
 | Name           |                Type                 | Connectable | Templatable |  Default  | Description                                   |
 | -------------- | :---------------------------------: | :---------: | :---------: | :-------: | --------------------------------------------- |
-| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data)).           |
+| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx).           |
 | filename       |               string                |    true     |    false    |           | The name of the file to download.             |
 | label          |               string                |    true     |    false    | Press me  | The button label.                             |
 | color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                             |
@@ -824,7 +824,7 @@ The file input allows users to drop files into the app.
 
 ![File Input API](../../assets/apps/4_app_component_library/file_input.png)
 
-Files uploaded are converted and returned as a data URL scheme with a [Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data).
+Files uploaded are converted and returned as a data URL scheme with a [Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx).
 
 ![File Input Base64](../../assets/apps/4_app_component_library/file_input_base64.png)
 
@@ -884,7 +884,7 @@ The select component allows you to get a string from the user.
 
 ### Resource Select
 
-The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.md) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.md).
+The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.md).
 
 ![Resource Select](../../assets/apps/4_app_component_library/resource_select.png)
 
@@ -893,8 +893,8 @@ The Resource Select component allows you to have users pick [resources](../../co
 | Name        |                               Type                               | Connectable | Templatable | Default | Description                                                     |
 | ----------- | :--------------------------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
 | Items Name  |                              string                              |    true     |    false    |  "bar"  | The name of each suggested resource.                            |
-| Items       |  [resource](../../core_concepts/3_resources_and_types/index.md)  |    true     |    false    |         | The Windmill resource.                                          |
-| Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false    |    false    |         | The variable that will be displayed by default.                 |
+| Items       |  [resource](../../core_concepts/3_resources_and_types/index.mdx)  |    true     |    false    |         | The Windmill resource.                                          |
+| Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.mdx) |    false    |    false    |         | The variable that will be displayed by default.                 |
 | Full Width  |                             boolean                              |    false    |    false    |  true   | Set the width of the options popup to 100% of the select width. |
 
 #### Outputs

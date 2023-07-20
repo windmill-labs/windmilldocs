@@ -1,6 +1,6 @@
 # Clickhouse Integration
 
-To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Clickhouse Resource](../assets/integrations/add-clickhouse.png)
 

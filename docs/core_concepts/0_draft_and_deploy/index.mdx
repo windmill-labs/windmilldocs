@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Draft and Deploy
 
 Draft, test, and deploy scripts, flows, and apps Windmill to iterate and save safely.
@@ -38,17 +40,19 @@ The deployed version is the authoritative version of a runnable. Once deployed, 
 
 If you want to have several versions of the same runnable, just fork it with the `Fork` button on the drop down menu of `Deploy`.
 
-### Special case: Deployed versions of scripts
+## Special case: Deployed versions of scripts
 
-> Apps and Flows only have one deployed version at a given path and doing a new deployment overwrite the previous one.
+Apps and Flows only have one deployed version at a given path and doing a new deployment overwrite the previous one.
 
-> <br/>
+Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. The path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
 
-> Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. The path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
-
-<br/>
-
-![Recap Draft and Deploy](./recap_draft_and_deploy.png)
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+    	title="Versioning"
+    	description="Scripts, when deployed, can have a parent script identified by its hash."
+    	href="/docs/script_editor/versioning"
+    />
+</div>
 
 ## Diff Viewer
 
@@ -64,3 +68,7 @@ A diff viewer is available when loading scripts from autosave or draft.
 <br/>
 
 > Changes can then be reversed to previous version.
+
+## Recap
+
+![Recap Draft and Deploy](./recap_draft_and_deploy.png)

@@ -34,11 +34,11 @@ Windmill is different:
 Windmill embeds:
 
 - a **super fast runtime** to run code in
-  [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md),
-  [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.md),
-  [Go](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.md),
-  [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.md) and
-  even [SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md)
+  [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx),
+  [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx),
+  [Go](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx),
+  [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) and
+  even [SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx)
   from a self-managed job queue, at scale, with any dependency, no overhead, and
   minimal cold start
 - a **parser that will infer the dependencies and arguments** from the code

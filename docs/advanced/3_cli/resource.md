@@ -48,4 +48,4 @@ is_oauth: <is_oauth>
 - resource_type (required): A resource type
 - is_oauth (optional, deprecated): This property is deprecated and should not be used.
 
-See the [resource types](./../../core_concepts/3_resources_and_types/index.md) section for a list of supported resource types.
+See the [resource types](./../../core_concepts/3_resources_and_types/index.mdx) section for a list of supported resource types.

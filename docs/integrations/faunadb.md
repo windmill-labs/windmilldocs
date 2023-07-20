@@ -1,6 +1,6 @@
 # FaunaDB Integration
 
-To integrate [Fauna](https://fauna.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Fauna](https://fauna.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Fauna Resource](../assets/integrations/add-fauna.png)
 

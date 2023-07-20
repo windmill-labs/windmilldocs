@@ -1,6 +1,6 @@
 # Matrix Integration
 
-To integrate [Matrix](https://matrix.org/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Matrix](https://matrix.org/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Matrix Resource](../assets/integrations/add-matrix.png)
 

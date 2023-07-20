@@ -16,7 +16,7 @@ Triggers from external events:
 
 :::info Scripts in Windmill
 
-[Scripts](../0_scripts_quickstart/1_typescript_quickstart/index.md) are sequences of instructions that automates tasks or performs specific operations. In Windmill, they are hosted on workspaces.
+[Scripts](../0_scripts_quickstart/1_typescript_quickstart/index.mdx) are sequences of instructions that automates tasks or performs specific operations. In Windmill, they are hosted on workspaces.
 
 :::
 
