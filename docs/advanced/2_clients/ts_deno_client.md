@@ -9,7 +9,7 @@ To use the TypeScript (Deno) client, you need to have Deno installed on your sys
 Once Deno is installed, you can import the `windmill` module directly from the Deno third-party module registry.
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/index.ts'
+import * as wmill from 'https://deno.land/x/windmill/mod.ts'
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ import * as wmill from 'https://deno.land/x/windmill/index.ts'
 The TypeScript (Deno) client provides several functions that you can use to interact with the Windmill platform. Here's an example of how to use the client to get a resource from Windmill:
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/index.ts'
+import * as wmill from 'https://deno.land/x/windmill/mod.ts'
 
 async function main(...) {
   let x = await wmill.getResource('u/user/name')
