@@ -1,6 +1,6 @@
 # PostgreSQL Integration
 
-![Integration between PostgreSQL and Windmill](../assets/integrations/psql-0-header.png 'Connect a PostgreSQL instance with Windmill')
+![Integration between PostgreSQL and Windmill](../assets/integrations/psql-0-header.png.webp 'Connect a PostgreSQL instance with Windmill')
 
 Windmill provides a framework to support PostgreSQL databsases.
 

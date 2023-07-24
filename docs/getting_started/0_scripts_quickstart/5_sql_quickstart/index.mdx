@@ -27,7 +27,7 @@ You can find a list of all the officially supported Resource Types on
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `PostgreSQL` or `MySQL` type.
 
-![Select Resource Type](../../../assets/integrations/psql-1-resources.png)
+![Select Resource Type](../../../assets/integrations/psql-1-resources.png.webp)
 
 Fill out the form with the information of your PostgreSQL/MySQL instance.
 
@@ -38,7 +38,7 @@ every user. It is available under the path `f/examples/demodb`.
 
 :::
 
-![Paste in Resource Values](../../../assets/integrations/psql-2-postgres-rt.png)
+![Paste in Resource Values](../../../assets/integrations/psql-2-postgres-rt.png.webp)
 
 ## Create Script
 
@@ -46,7 +46,7 @@ Next, let's create a script that will use the newly created Resource. Head on to
 the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page and click on the "+Script" button. Name the Script, give it a summary, "Query a PostgreSQL Database" for
 example and select your prefered language, "PostgreSQL" or "MySQL".
 
-![Script creation first step](../../../assets/integrations/psql-3-script-creation.png)
+![Script creation first step](../../../assets/integrations/psql-3-script-creation.png.webp)
 
 You can also give more details to your script, in the [metadata section](../../../script_editor/metadata.mdx), you can also get back to that later at any point.
 
@@ -64,7 +64,7 @@ INSERT INTO demo VALUES ($1::TEXT, $2::INT) RETURNING *
 
 You can then write your prepared statement.
 
-![Postgresql statement](./postgresql_statement.png)
+![Postgresql statement](./postgresql_statement.png.webp)
 
 ### MySQL
 
@@ -80,7 +80,7 @@ INSERT INTO demo VALUES (?, ?)
 
 You can then write your prepared statement.
 
-![Mysql statement](./mysql_statement.png)
+![Mysql statement](./mysql_statement.png.webp)
 
 ### Raw Queries
 
@@ -111,7 +111,7 @@ export async function main(db: Postgresql, query: Sql = 'SELECT * FROM demo;') {
 
 This will allow you to execute all commands from one script. But that's also the vulnerability of it as it opens the door to harmful commands. To make it more secure, do not take the query directly as input but its parameters and then sanitize it properly so SQL injections are mitigated unless you are in a trusted environment.
 
-![Raw Query](./raw_query.png)
+![Raw Query](./raw_query.png.webp)
 
 :::tip
 
@@ -132,11 +132,11 @@ Feel free to customize your script's metadata ([path](../../../core_concepts/16_
 		description="Each script has metadata associated with it, enabling it to be defined and configured in depth."
 		href="/docs/script_editor/metadata"
 	/>
-    <DocCard
+	<DocCard
 		title="Customize Arguments"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
 		href="/docs/script_editor/customize_arguments"
-    />
+	/>
 </div>
 
 <!-- Links -->

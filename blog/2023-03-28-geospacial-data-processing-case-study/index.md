@@ -12,7 +12,7 @@ This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Mana
 
 <br/>
 
-![Sourcepole Windmill use case](./0-header.png 'Sourcepole Windmill testimonial')
+![Sourcepole Windmill use case](./0-header.png.webp 'Sourcepole Windmill testimonial')
 
 ## What before Windmill?
 
@@ -38,13 +38,13 @@ In particular, we use Windmill for:
 
 A workflow made by Sourcepole being executed:
 
-![Workflow being executed](./sourcepole_execution.png 'Workflow being executed')
+![Workflow being executed](./sourcepole_execution.png.webp 'Workflow being executed')
 
 <br/>
 
 The associated results:
 
-![Workflow results](./sourcepole_results.png 'Workflow results')
+![Workflow results](./sourcepole_results.png.webp 'Workflow results')
 
 :::
 

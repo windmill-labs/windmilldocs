@@ -21,7 +21,7 @@ The [Draft and Deploy](../0_draft_and_deploy/index.mdx) is another feature that 
 
 For users with admin rights on the source workspace, in the `Workspace` menu, go to the "Dev/Staging/Prod" tab and pick a workspace for "Workspace to link to".
 
-![Link to a workspace](./workspace_to_link_to.png 'Link to a workspace')
+![Link to a workspace](./workspace_to_link_to.png.webp 'Link to a workspace')
 
 This workspace to link to can for example be:
 
@@ -34,7 +34,7 @@ This can be done by users with both View rights on the deployed-from workspace a
 
 You can deploy one by one flows, scripts (including each script within flow), variables and resources. Or toggle more than one and "Deploy all".
 
-![Deploy to staging/prod](./deploy_to_staging_prod.png 'Deploy to staging/prod')
+![Deploy to staging/prod](./deploy_to_staging_prod.png.webp 'Deploy to staging/prod')
 
 Items are called:
 
@@ -42,7 +42,7 @@ Items are called:
 - "New" if the item will be created with the deployment.
 - "diff" if the item was already deployed previously. This opens a difference viewer tab where you can see differences with the previous version.
 
-![Diff menu](./diff_menu.png 'Diff menu')
+![Diff menu](./diff_menu.png.webp 'Diff menu')
 
 ## Shareable page
 
@@ -50,12 +50,12 @@ A static page is created for each potential deployment to Staging/Prod.
 
 This can be useful for non-admin (for example, operators) to share a page to properly-permissioned users to have them review or do the deployment.
 
-![Shareable link](./shareable_link.png 'Shareable link')
+![Shareable link](./shareable_link.png.webp 'Shareable link')
 
 > Even users who are not admin can see the "Deploy to staging/prod", from where they can get the link of the shareable page.
 
 <br/>
 
-![Shareable page](./shareable_page.png 'Shareable page')
+![Shareable page](./shareable_page.png.webp 'Shareable page')
 
 > This page then allows users with the right permissions to deploy the given items.

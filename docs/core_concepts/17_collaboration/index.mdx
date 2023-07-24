@@ -9,40 +9,40 @@ Collaboration in Windmill is simplified through various features and workflows.
 Windmill offers a draft system for scripts, flows, and apps, allowing multiple iterations and collaboration before deploying. Drafts are available to anyone with write access to the underlying item. It provides a simple way to iterate on items with multiple collaborators.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/draft_and_deploy.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/draft_and_deploy.mp4"
 />
 
-<br/>
+<br />
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Draft and Deploy"
-    	description="Develop and cooperate in a structured way."
-    	href="/docs/core_concepts/draft_and_deploy"
-    />
+		title="Draft and Deploy"
+		description="Develop and cooperate in a structured way."
+		href="/docs/core_concepts/draft_and_deploy"
+	/>
 </div>
 
 ## Granular Permissions
 
 Windmill employs a granular permission system along with folder and group permissions. Users can be assigned to groups, and folders can be granted read/write access to groups or individual users. This system enables fine-grained control over who can access and modify specific items. Items can also be selectively shared with specific groups or users.
 
-<br/>
+<br />
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Roles and Permissions"
-    	description="Control access and manage permissions within your instance and workspaces."
-    	href="/docs/core_concepts/roles_and_permissions"
-    />
-    <DocCard
-    	title="Groups and Folders"
-    	description="Groups and Folders enable efficient permission management by grouping users with similar access levels."
-    	href="/docs/core_concepts/groups_and_folders"
-    />
+		title="Roles and Permissions"
+		description="Control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
+	<DocCard
+		title="Groups and Folders"
+		description="Groups and Folders enable efficient permission management by grouping users with similar access levels."
+		href="/docs/core_concepts/groups_and_folders"
+	/>
 </div>
 
 ## Dev/Staging/Prod Workspaces
@@ -50,20 +50,20 @@ Windmill employs a granular permission system along with folder and group permis
 Workspaces in Windmill enable a dev/staging/prod workflow directly from the web interface. You can create separate workspaces for different stages of development, such as development, staging, and production. This allows for easy deployment of changes from one workspace to another. Workspaces provide logical isolation and enable a structured approach to managing different environments.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/staging_prod.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/staging_prod.mp4"
 />
 
-<br/>
+<br />
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Deploy to Staging or Prod"
-    	description="Deploy items to another staging/prod workspace."
-    	href="/docs/core_concepts/staging_prod"
-    />
+		title="Deploy to Staging or Prod"
+		description="Deploy items to another staging/prod workspace."
+		href="/docs/core_concepts/staging_prod"
+	/>
 </div>
 
 :::info Enterprise Feature
@@ -77,20 +77,20 @@ This feature is [enterprise edition](../../misc/7_plans_details/index.mdx) only.
 Multiplayer editing is available for script editing in the enterprise edition of Windmill. It allows simultaneous collaboration and displays a presence bar to avoid conflicts. Windmill is actively working on adding multiplayer editing for flow and app editors as well. This feature enhances real-time collaboration among team members.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/multiplayer.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/multiplayer.mp4"
 />
 
-<br/>
+<br />
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Multiplayer"
-    	description="Collaborate on scripts simultaneously."
-    	href="/docs/core_concepts/multiplayer"
-    />
+		title="Multiplayer"
+		description="Collaborate on scripts simultaneously."
+		href="/docs/core_concepts/multiplayer"
+	/>
 </div>
 
 :::info Enterprise Feature
@@ -113,18 +113,18 @@ You can use this to:
 
 3. Implement a dev/staging/prod workflow where changes are automatically pulled from one workspace and transformed into a pull request. And only once the pull request is approved are the changes deployed to the target workspace. This enable full GitOps style of deployments while still allowing users to use the web UI to edit scripts/flows/apps/.
 
-![Demo VS Code](../../cli_local_dev/1_vscode-extension/main.png)
+![Demo VS Code](../../cli_local_dev/1_vscode-extension/main.png.webp)
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Command Line Interface (wmill)"
-    	description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
-    	href="/docs/advanced/cli"
-    />
+		title="Command Line Interface (wmill)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
 	<DocCard
-    	title="VSCode Extension"
-    	description="The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode."
-    	href="/docs/cli_local_dev/vscode-extension"
-    />
+		title="VSCode Extension"
+		description="The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
 </div>

@@ -19,7 +19,7 @@ find it [here](../2023-01-25-issue-tracker/index.md).
 
 :::
 
-![Create an Issue Tracker App with Supabase and Windmill](./0-header.png 'Integrate Supabase with Windmill in an issue tracker application')
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png.webp 'Integrate Supabase with Windmill in an issue tracker application')
 
 :::tip
 
@@ -60,7 +60,7 @@ Let's start with adding titles for the update form:
 
 1. Enter `color: #6e6e6e;` in the Extra Style argument.
 
-![Update issue form title](./1-wm-update-form-title.png)
+![Update issue form title](./1-wm-update-form-title.png.webp)
 
 Next, we need to add a `Select` component for the `status` property:
 
@@ -85,7 +85,7 @@ Next, we need to add a `Select` component for the `status` property:
 
 1. Set the Item Key argument to `label`.
 
-![Status field of the update issue form](./2-wm-form-status.png)
+![Status field of the update issue form](./2-wm-form-status.png.webp)
 
 Repeat the previous steps for the `severity` property as well but with the
 following items:
@@ -102,7 +102,7 @@ following items:
 { "label": "HIGH" }
 ```
 
-![Severity field of the update issue form](./3-wm-form-severity.png)
+![Severity field of the update issue form](./3-wm-form-severity.png.webp)
 
 Finally, we need to add a `Button` component to submit the form:
 
@@ -146,7 +146,7 @@ Finally, we need to add a `Button` component to submit the form:
 1. Select the `result` property of the corresponding `Select` component for the
    `status` and `severity` argument.
 
-![Update issue form submit button](./4-wm-form-submit.png)
+![Update issue form submit button](./4-wm-form-submit.png.webp)
 
 ## More charts
 
@@ -175,7 +175,7 @@ number input:
 1. Select `Subtitle` as the style.
 1. Align it vertically on the bottom.
 
-![Title of number of issues created in the past days chart](./5-wm-past-issues-title.png)
+![Title of number of issues created in the past days chart](./5-wm-past-issues-title.png.webp)
 
 Lastly, add the actual chart component to display the data:
 
@@ -222,4 +222,4 @@ to 690px. The views are saved separately, so moving the components around in one
 of them will not affect the other. Let's switch to the `mobile` view and place
 the components to resemble the following layout.
 
-![Mobile layout of the issue tracker app](./7-wm-issue-tracker-mobile.png)
+![Mobile layout of the issue tracker app](./7-wm-issue-tracker-mobile.png.webp)

@@ -143,7 +143,7 @@ a good time to save your progress. If you want to create an app for each approac
 **backend scripts** and **frontend scripts**), you can use this skeleton as a template for both
 from the Home page.
 
-![App skeleton template](./use-app-template.png 'Use skeleton app as template')
+![App skeleton template](./use-app-template.png.webp 'Use skeleton app as template')
 
 ## Configuring Supabase
 
@@ -193,7 +193,7 @@ Find more help on our [Supabase Integration](/docs/integrations/supabase) tutori
 
 :::
 
-![Supabase project settings](./1-sb-settings.png 'Supabase project settings')
+![Supabase project settings](./1-sb-settings.png.webp 'Supabase project settings')
 
 ## Option 1: Using backend scripts
 

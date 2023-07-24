@@ -23,7 +23,7 @@ can find the second part [here](../2023-01-31-issue-tracker-p2/index.md).
 
 :::
 
-![Create an Issue Tracker App with Supabase and Windmill](./0-header.png 'Integrate Supabase with Windmill in an issue tracker application')
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png.webp 'Integrate Supabase with Windmill in an issue tracker application')
 
 :::tip
 
@@ -46,7 +46,7 @@ Projects page. Name it `issue-tracker`, enter a password (we recommend using the
 “Generate” button) and select the region closest to your users. You can leave
 the pricing plan at free and click “Create new project”.
 
-![Supabase new project creation](./1-supabase-project.png)
+![Supabase new project creation](./1-supabase-project.png.webp)
 
 After your project is provisioned (it usually takes just a few minutes),
 navigate to the SQL Editor page, click “New query” in to top-left corner and
@@ -86,7 +86,7 @@ CREATE TABLE issues(
 ALTER TABLE issues ENABLE ROW LEVEL SECURITY;
 ```
 
-![Supabase users table creation](./2-supabase-tables.png)
+![Supabase users table creation](./2-supabase-tables.png.webp)
 
 Now that the tables are ready to receive data, let's populate them by running
 two more SQL queries. Click "New query" again in the top-left corner and paste
@@ -106,7 +106,7 @@ VALUES
   ('Caitlin Lucas', '{DEVELOPER}');
 ```
 
-![Supabase insert users](./4-supabase-users-insert.png)
+![Supabase insert users](./4-supabase-users-insert.png.webp)
 
 After populating the `users` table, click "New query" once more and run the next
 one, which will insert 4 mock issues to the `issues` table.
@@ -160,7 +160,7 @@ VALUES
   );
 ```
 
-![Supabase insert issues](./5-supabase-issues-insert.png)
+![Supabase insert issues](./5-supabase-issues-insert.png.webp)
 
 ## Windmill setup
 
@@ -175,7 +175,7 @@ summary on the left side of the header, let’s use `Issue Tracker`. Click "Save
 on the other end of the top row, name your app `issue-tracker` and click "Create
 app".
 
-![Windmill base application](./6-wm-app-setup.png)
+![Windmill base application](./6-wm-app-setup.png.webp)
 
 ## Create the app
 
@@ -187,7 +187,7 @@ Insert a `Text` component and configure it as the followings:
 2. Select `Title` as the style.
 3. Make the component take up the full width of the editor.
 
-![App title component](./7-wm-title.png)
+![App title component](./7-wm-title.png.webp)
 
 ### Grab the data
 
@@ -219,7 +219,7 @@ This can be achieved by Background runnables.
    will receive. Select the Supabase resource you added in the `Windmill setup`
    step for the `auth` input.
 
-![Load issues in the background](./8-wm-bg-issues.png)
+![Load issues in the background](./8-wm-bg-issues.png.webp)
 
 Create one more background runnable the same way as last time, but for the users
 now - name it `Load Users`. The code should be the same, except that the client
@@ -233,7 +233,7 @@ make it work.
 
 :::
 
-![Load users in the background](./9-wm-bg-users.png)
+![Load users in the background](./9-wm-bg-users.png.webp)
 
 ### Display the issues
 
@@ -241,7 +241,7 @@ Now we have the data ready and loaded, so let's insert a `Table` and configure
 it:
 
 1. Select `Compute` as the input type and click `Create an inline script`.
-   ![Add table component](./10-wm-table.png)
+   ![Add table component](./10-wm-table.png.webp)
 2. Choose `Deno` as language.
 3. Name it `Shape Data`
 4. Paste in the following code:
@@ -268,14 +268,14 @@ it:
 
    :::
 
-   ![Shaping table data](./11-wm-table-script.png)
+   ![Shaping table data](./11-wm-table-script.png.webp)
 
 5. On the right pane under the `Settings` tab, select `Connect` as input type of
    the `issues` input. Now you can select the `result` field of the
    `Load Issues` background runnable you just created. To do this, locate the
    `Background` element on the left pane that has _4 items_ in the result
    property and click on `result`.
-   ![Connecting scripts](./12-wm-connect-result.png)
+   ![Connecting scripts](./12-wm-connect-result.png.webp)
 
    :::info
 
@@ -284,7 +284,7 @@ it:
 6. Finally, to enable searching in the data, select the table component, scroll
    down to `Configuration` in the `Settings` tab of the right pane and select
    `By Component` for the `Search` input.
-   ![Finished table displaying the issues](./13-wm-finished-table.png)
+   ![Finished table displaying the issues](./13-wm-finished-table.png.webp)
 
 :::tip
 
@@ -315,7 +315,7 @@ you'll still be able to move them manually.
 
 1. Insert a `Pie Chart`.
 2. Select `Compute` as the input type in the right pane.
-   ![Compute chart input](./14-wm-status-chart.png)
+   ![Compute chart input](./14-wm-status-chart.png.webp)
 3. Click `Create an inline script`.
 4. Choose `Deno` as the language.
 5. Name the script `Get Status Chart Data`.
@@ -356,7 +356,7 @@ you'll still be able to move them manually.
 7. Configure the `issues` input of the script on the right pane to be `Connect`
    type and then select the `result` value of the `background` runnable that is
    responsible for the querying of the issues.
-   ![Connected chart input](./15-wm-connect-chart.png)
+   ![Connected chart input](./15-wm-connect-chart.png.webp)
 
 **Add a chart for the severity levels**
 
@@ -391,7 +391,7 @@ export async function main(issues: any[]) {
 Finally, connect the result value of the background runnable to the `issues`
 argument of the script, just like in the last step of the other chart.
 
-![Severity chart](./16-wm-severity-chart.png)
+![Severity chart](./16-wm-severity-chart.png.webp)
 
 ### Creating issues
 
@@ -412,7 +412,7 @@ handled by `Select` components.
    vertically on the bottom.
 2. Insert a `Text input` component under the label text.
 
-![Form text inputs](./17-wm-text-form.png)
+![Form text inputs](./17-wm-text-form.png.webp)
 
 #### Created By and Assigned To fields
 
@@ -440,7 +440,7 @@ components. The TypeScript type looks like this:
 
 :::
 
-![Shape the users list](./18-wm-bg-shape-users.png)
+![Shape the users list](./18-wm-bg-shape-users.png.webp)
 
 Now insert the components that will use the newly created `users` list.
 
@@ -450,7 +450,7 @@ Now insert the components that will use the newly created `users` list.
 3. Connect the `items` configuration inputs to the result of the recently added
    `Get User Selection List` background runnable.
 
-![User selection components](./19-wm-user-select.png)
+![User selection components](./19-wm-user-select.png.webp)
 
 :::caution
 
@@ -480,7 +480,7 @@ the next steps.
 
 4. Set the `Item Key` argument to `label`
 
-![Status form field](./20-wm-form-status.png)
+![Status form field](./20-wm-form-status.png.webp)
 
 #### Severity field
 
@@ -503,7 +503,7 @@ the next steps.
 
 4. Set the `Item Key` argument to `label`
 
-![Severity form field](./21-wm-form-severity.png)
+![Severity form field](./21-wm-form-severity.png.webp)
 
 #### Submit button
 
@@ -559,7 +559,7 @@ user and sends them to the database.
 7. Connect all the other arguments with the `result` value of their
    corresponding inputs.
 
-![Full create issue form](./22-full-form.png)
+![Full create issue form](./22-full-form.png.webp)
 
 ### Deleting issues
 
@@ -606,7 +606,7 @@ the form of buttons. Select the `Table` component and follow the steps:
    This will result in the `id` argument being filled by the value of the `id`
    column from the row that the action button was clicked in.
 
-![Table component with action buttons](./23-wm-table-action.png)
+![Table component with action buttons](./23-wm-table-action.png.webp)
 
 ## Next steps
 

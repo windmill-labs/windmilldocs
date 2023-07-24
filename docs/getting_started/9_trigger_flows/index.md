@@ -109,7 +109,7 @@ More details on our pages dedicated to [CLI](../../advanced/3_cli/index.mdx).
 
 Windmill supports inner flows. This allows you to call a flow from another workflow.
 
-![Inner Flows](./inner_flow.png)
+![Inner Flows](./inner_flow.png.webp)
 
 ## Triggers from External Events
 
@@ -137,7 +137,7 @@ Each script and flow have their own webhooks on Windmill ...
 
 <br/>
 
-![Find Windmill webhook](../../../blog/2023-02-06-flow-triage-bot/tutorial-find-webhook.png)
+![Find Windmill webhook](../../../blog/2023-02-06-flow-triage-bot/tutorial-find-webhook.png.webp)
 
 <br/>
 
@@ -145,7 +145,7 @@ Each script and flow have their own webhooks on Windmill ...
 
 <br/>
 
-![Trigger Windmill from Gitub](../../../blog/2023-02-06-flow-triage-bot/tutorial-add-webhook.png)
+![Trigger Windmill from Gitub](../../../blog/2023-02-06-flow-triage-bot/tutorial-add-webhook.png.webp)
 
 :::
 

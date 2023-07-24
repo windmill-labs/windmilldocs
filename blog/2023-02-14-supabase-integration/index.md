@@ -18,7 +18,7 @@ rights. Some experience with [Windmill](/docs/intro) helps, but not required.
 
 :::
 
-![Integration between Supabase and Windmill](./0-header.png "Connect Supabase with Windmill")
+![Integration between Supabase and Windmill](./0-header.png.webp 'Connect Supabase with Windmill')
 
 :::tip
 
@@ -43,19 +43,19 @@ the following code in the editor and click "Save":
 
 ```typescript
 export async function main(
-  table: string,
-  schema: string,
-  type: string,
-  record: Record<string, any>,
-  old_record: Record<string, any>,
+	table: string,
+	schema: string,
+	type: string,
+	record: Record<string, any>,
+	old_record: Record<string, any>
 ) {
-  return {
-    table,
-    schema,
-    type,
-    record,
-    old_record,
-  };
+	return {
+		table,
+		schema,
+		type,
+		record,
+		old_record
+	};
 }
 ```
 
@@ -70,14 +70,14 @@ When the Script is saved, you'll be navigated to the detail page for it. Scroll
 down to the "Webhooks" section and click "Create token" - you'll need it to
 authenticate requests coming from Supabase.
 
-![Script webhooks](./1-wm-hook.png)
+![Script webhooks](./1-wm-hook.png.webp)
 
 In the open drawer, click "Create token" once more, enter the label
 `supabase-token` and add an expiration date that makes sense for you. Finally,
 click "New token" and copy the generated token - make sure you **don't lose
 it**.
 
-![Create token](./2-wm-token.png)
+![Create token](./2-wm-token.png.webp)
 
 After you got your token, save the `Path` endpoint of the webhook for the Script
 as well. You'll need both to configure the Supabase webhook in the next step.
@@ -94,13 +94,13 @@ Please treat it accordingly.
 Go to your Supabase project and select "Database" from the left menu, then click
 the "Webhooks" submenu. Click "Enable Hooks", then click "Create Webhook".
 
-![Enable database webhooks](./3-enable-db-hook.png)
+![Enable database webhooks](./3-enable-db-hook.png.webp)
 
 Name the webhook `windmill-hook`, select the table you want to emit the events
 from, subscribe to `INSERT`, `UPDATE` and `DELETE` events and select the
 `HTTP Request` hook type and scroll down for further configuration.
 
-![Create webhook](./4-create-db-hook.png)
+![Create webhook](./4-create-db-hook.png.webp)
 
 Make sure to select the `POST` HTTP Request method, paste the Script webhook URL
 and then add the `Authorization` header with a value like `Bearer <YOUR_TOKEN>`.
@@ -112,7 +112,7 @@ Notice the `Bearer` keyword and the space before the actual token.
 
 :::
 
-![Configure webhook](./5-configure-db-hook.png)
+![Configure webhook](./5-configure-db-hook.png.webp)
 
 **Congratulations!** Your database events will be propagated from Supabase to
 Windmill now.
@@ -131,18 +131,18 @@ with**.
 
 :::
 
-![SQL insert](./6-insert-query.png)
+![SQL insert](./6-insert-query.png.webp)
 
 The `INSERT` event should be propagated to Windmill and trigger the Script. You
 can check it on the [Runs](/docs/core_concepts/monitor_past_and_future_runs) page in Windmill. If the Script was indeed
 triggered, you should see a result like this:
 
-![Run result](./7-run-result.png)
+![Run result](./7-run-result.png.webp)
 
 To see more details about the run, click on the name of it and you'll see the
 payload passed to the Script:
 
-![Script run details](./8-run-details.png)
+![Script run details](./8-run-details.png.webp)
 
 Now you know what kind of information is transmitted from Supabase, so feel free
 to check how the payload values change on the `UPDATE` and `DELETE` events or

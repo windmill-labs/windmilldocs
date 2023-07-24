@@ -54,10 +54,10 @@ CUSTOM_TAGS=light
 
 For scripts saved on the script editor, select the corresponding worker group tag in the metadata section.
 
-![Worker group tag](./select_script_builder.png)
+![Worker group tag](./select_script_builder.png.webp)
 
 For scripts inlined in the flow editor, select it in the module header:
 
-![Worker group tag](./select_flow.png)
+![Worker group tag](./select_flow.png.webp)
 
 If no worker group is assigned to a script, it will be assigned the default worker group for its language.

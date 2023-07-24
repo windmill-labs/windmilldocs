@@ -139,7 +139,7 @@ Each script (and flow) has its own webhooks on Windmill ...
 
 <br/>
 
-![Find Windmill webhook](../../../blog/2023-02-06-flow-triage-bot/tutorial-find-webhook.png)
+![Find Windmill webhook](../../../blog/2023-02-06-flow-triage-bot/tutorial-find-webhook.png.webp)
 
 <br/>
 
@@ -147,7 +147,7 @@ Each script (and flow) has its own webhooks on Windmill ...
 
 <br/>
 
-![Trigger Windmill from Gitub](../../../blog/2023-02-06-flow-triage-bot/tutorial-add-webhook.png)
+![Trigger Windmill from Gitub](../../../blog/2023-02-06-flow-triage-bot/tutorial-add-webhook.png.webp)
 
 :::
 

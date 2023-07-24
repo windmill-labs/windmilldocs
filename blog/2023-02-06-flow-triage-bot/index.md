@@ -112,7 +112,7 @@ The script requires the `g/all/gh_token` to be set. To do so, click the
 drawer. Variables can be labeled as Secrets, in which case they can only be read
 from scripts.
 
-![Add a variable](./tutorial-add-variable.png)
+![Add a variable](./tutorial-add-variable.png.webp)
 
 ### A Script that gets the webhook and triages issues
 
@@ -134,7 +134,7 @@ var keyWordToLabel = map[string]string{
 Start by creating a script, called **triage_issues**. Go to the script's page,
 and scroll to the bottom:
 
-![Find the Windmill webhook URL](./tutorial-find-webhook.png)
+![Find the Windmill webhook URL](./tutorial-find-webhook.png.webp)
 
 Posting to this Windmill [webhook](/docs/core_concepts/webhooks) URL will
 trigger a script run. Hit create a token, and save that token somewhere. We'll
@@ -143,7 +143,7 @@ URL as well. Let's setup GitHub to post there when an issue is created. Head to
 the GitHub repo you want to add the triage bot to. Go to the **Settings** then
 **webhooks**. Hit **add webhook**.
 
-![Add a variable](./tutorial-add-webhook.png)
+![Add a variable](./tutorial-add-webhook.png.webp)
 
 - Paste the Windmill webhook URL into the **Payload URL** field, and append
   `?token=<INSERT WINDMILL TOKEN HERE>`, substituting the Windmill token you
@@ -210,11 +210,11 @@ Create a [Flow](/docs/getting_started/flows_quickstart) and save it as is. Go to
 **webhook URL**. Replace that in the GitHub webhook settings page, so that new
 GitHub issues triggers the Flow and not the script.
 
-![Flow webhook](./tutorial-add-webhook.png)
+![Flow webhook](./tutorial-add-webhook.png.webp)
 
 Now Edit the flow. Start with **Flow Input**:
 
-![Flow input](./tutorial-flow-input.png)
+![Flow input](./tutorial-flow-input.png.webp)
 
 This is where we define what inputs the script accepts. Click the **Capture from
 a request to seed inputs**. This will auto-populate the inputs from a previous
@@ -231,7 +231,7 @@ Each step in a flow needs to be connected to the next one. For this first step,
 we need to connect the inputs of the Flow to the Script. You can do that in the
 **Step input type**. For each Script argument, pick the relevant Flow input.
 
-![Connect](./tutorial-connect.png)
+![Connect](./tutorial-connect.png.webp)
 
 Let's add our last step. If the first step finds labels to apply, we want to
 call our labelling Script. If there's no label to apply, we should just exit.
@@ -240,17 +240,17 @@ Windmill primitive that allow to represent conditions.
 
 Pick branches and switch to one.
 
-![branches and switch to one](./tutorial-branch.png).
+![branches and switch to one](./tutorial-branch.png.webp).
 
 We'll do two things. First, defined the condition for the branch to run. You can
 do that by clicking on the branch, and setting a ** branch predicate**.
 
-![branches predicate](./tutorial-branch-predicate.png)
+![branches predicate](./tutorial-branch-predicate.png.webp)
 
 Second, we'll select what script to run in our branch. Pick our `label_issues`
 script.
 
-![branches predicate](./tutorial-branch-add-step.png)
+![branches predicate](./tutorial-branch-add-step.png.webp)
 
 We're nearly done! We just need to connect the input of the branch to the
 previous step. We already know how to do that, so we won't go into details here.

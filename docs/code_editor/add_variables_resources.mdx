@@ -5,16 +5,16 @@ import DocCard from '@site/src/components/DocCard';
 You can add directly access Variables and Resources from the Code Editor.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-     <DocCard
-    	title="Resources and Resource Types"
-    	description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
-    	href="/docs/core_concepts/resources_and_types"
-    />
 	<DocCard
-    	title="Variables and Secrets"
-    	description="Variables and Secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
-    	href="/docs/core_concepts/variables_and_secrets"
-    />
+		title="Resources and Resource Types"
+		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		href="/docs/core_concepts/resources_and_types"
+	/>
+	<DocCard
+		title="Variables and Secrets"
+		description="Variables and Secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
+		href="/docs/core_concepts/variables_and_secrets"
+	/>
 </div>
 
 ## Resources
@@ -55,7 +55,7 @@ def main(postgres: postgresql):
 
 And then select the Resource in the arguments section on the right:
 
-![Select resource](../core_concepts/3_resources_and_types/select_resource.png)
+![Select resource](../core_concepts/3_resources_and_types/select_resource.png.webp)
 
 :::tip
 
@@ -94,7 +94,7 @@ curl -s -H "Authorization: Bearer $WM_TOKEN" \
     | jq -r .value
 ```
 
-![Fectch resource](../core_concepts/3_resources_and_types/fetch_resource.png)
+![Fectch resource](../core_concepts/3_resources_and_types/fetch_resource.png.webp)
 
 ## Contextual variables
 
@@ -106,7 +106,7 @@ See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel
 
 You can use them in a Script by clicking on "+Context Var":
 
-![Contextual variable](../core_concepts/2_variables_and_secrets/context_variables.png)
+![Contextual variable](../core_concepts/2_variables_and_secrets/context_variables.png.webp)
 
 Reserved variables are passed to the job as environment variables. For example, the ephemeral token is passed as `WM_TOKEN`.
 

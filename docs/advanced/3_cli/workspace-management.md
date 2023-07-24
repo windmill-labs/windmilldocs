@@ -26,11 +26,11 @@ The new workspace will automatically be [switched](#switching-selection) to.
 
 ### Arguments
 
-| Argument         | Description                     |
-| ---------------- | ------------------------------- |
-| `workspace_name` | The name of the workspace. Note: This is a name used to refer this workspace locally on your machine. It can be same or different from your remote instance     |
-| `workspace_id`   | The ID of the workspace.remote. The workspace ID is displayed in the switch workspace menu. |
-| `remote`         | The remote URL.                 |
+| Argument         | Description                                                                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `workspace_name` | The name of the workspace. Note: This is a name used to refer this workspace locally on your machine. It can be same or different from your remote instance |
+| `workspace_id`   | The ID of the workspace.remote. The workspace ID is displayed in the switch workspace menu.                                                                 |
+| `remote`         | The remote URL.                                                                                                                                             |
 
 ### Options
 
@@ -117,7 +117,7 @@ Example here just using `windmill -h`:
 
 <br/>
 
-![CLI help](./cli_help.png)
+![CLI help](./cli_help.png.webp)
 
 :::
 
