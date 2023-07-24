@@ -14,7 +14,7 @@ This is a testimonial written by [Jeffrey Knorr](https://www.linkedin.com/in/jef
 
 <br/>
 
-![Stantt Windmill use case](./0-header.png 'Stantt Windmill testimonial')
+![Stantt Windmill use case](./0-header.png.webp 'Stantt Windmill testimonial')
 
 ## What before Windmill?
 

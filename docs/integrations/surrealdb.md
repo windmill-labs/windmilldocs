@@ -2,7 +2,7 @@
 
 To integrate [SurrealDB](https://surrealdb.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add SurrealDB Resource](../assets/integrations/add-surrealdb.png)
+![Add SurrealDB Resource](../assets/integrations/add-surrealdb.png.webp)
 
 | Property  | Type   | Description                              | Required | Where to find                                      |
 | --------- | ------ | ---------------------------------------- | -------- | -------------------------------------------------- |

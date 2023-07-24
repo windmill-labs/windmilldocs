@@ -31,7 +31,7 @@ From there, define a maximum number of attempts and a given delay.
 
 Although the delay is set in seconds, inputs can be given in minutes, hours or days.
 
-![Constant Retries](../assets/flows/constant_retries.png)
+![Constant Retries](../assets/flows/constant_retries.png.webp)
 
 ## Exponential backoff enabled
 
@@ -49,7 +49,7 @@ For example, for:
 
 Here are the delays between each attempts:
 
-![Exponential Delays](../assets/flows/exponential_delay.png)
+![Exponential Delays](../assets/flows/exponential_delay.png.webp)
 
 |   # | Delay                        | Formula  |
 | --: | :--------------------------- | :------- |

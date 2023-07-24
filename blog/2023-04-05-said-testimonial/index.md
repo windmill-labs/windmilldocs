@@ -14,7 +14,7 @@ This is a testimonial written by [Said Hasyim](https://saidhasyim.com/), Author 
 
 <br/>
 
-![Audience Management Case Study](./0-header.jpg 'Audience Management Case Study')
+![Audience Management Case Study](./0-header.jpg.webp 'Audience Management Case Study')
 
 ## What before Windmill?
 
@@ -34,15 +34,15 @@ In particular, I use Windmill for:
 
 This workflow handles a multi-code redemption process, allowing users to choose between redeeming one or two codes which will determine the result of the redemption.
 
-![Process Purchase Redemption](./process_purchase_redemption.jpg 'Process Purchase Redemption')
+![Process Purchase Redemption](./process_purchase_redemption.jpg.webp 'Process Purchase Redemption')
 
 #### Prepare data to scrape ...
 
-![Prepare data to scrape](./prepare_data_to_scrape.jpg 'Prepare data to scrape')
+![Prepare data to scrape](./prepare_data_to_scrape.jpg.webp 'Prepare data to scrape')
 
 #### ... and process scraped data
 
-![Process Scraped Data](./process_scraped_data.png 'Process Scraped Data')
+![Process Scraped Data](./process_scraped_data.png.webp 'Process Scraped Data')
 
 The goal here is not to detail these workflows as I made them unique to my own stakes. As you can see, **Windmill can handle even the most intricate branchy flows seamlessly**. To build them, I used [Hub scripts](https://hub.windmill.dev/), my few skills in programming (I am not a developer) and Windmill's attentive support.
 

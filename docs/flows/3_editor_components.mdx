@@ -11,15 +11,15 @@ The Flow Builder has the following major components we will detail below:
 - [Action](#flow-actions): steps are the building blocks of a flow. They are the actions that will be executed when the flow is run.
 - [Action editor](#action-editor): configure the action.
 
-<br/>
+<br />
 
-![Example of a flow](../assets/flows/flow_example.png)
+![Example of a flow](../assets/flows/flow_example.png.webp)
 
 > _Example of a [flow](https://hub.windmill.dev/flows/38/automatically-populate-crm-contact-details-from-simple-email) in Windmill._
 
 ## Toolbar
 
-![Flow Toolbar](../assets/flows/flow_toolbar.png)
+![Flow Toolbar](../assets/flows/flow_toolbar.png.webp)
 
 The toolbar allows you to export the flow, configure the flow settings, and test the flow.
 Here are the different options available in the toolbar:
@@ -46,7 +46,7 @@ Permissions can be configured in two ways:
 - by User: select a user
 - by Folder: select a [folder](../core_concepts/8_groups_and_folders/index.md#folders)
 
-![Flow Metadata](../assets/flows/flow_settings_metadata.png)
+![Flow Metadata](../assets/flows/flow_settings_metadata.png.webp)
 
 ### Schedule
 
@@ -54,7 +54,7 @@ Flows can be [triggered](../getting_started/9_trigger_flows/index.md) by any [sc
 
 A CRON expression is used to define the schedule. Schedules can also be disabled.
 
-![Flow Schedule](../assets/flows/flow_settings_schedule.png)
+![Flow Schedule](../assets/flows/flow_settings_schedule.png.webp)
 
 :::tip
 
@@ -72,18 +72,19 @@ Beware that the `./shared` folder is not preserved across [suspends](./11_flow_a
 
 To enable the shared directory, on the `Settings` menu, go to `Shared Directory` and toggle on `Shared Directory on './shared'`.
 
-![Flow Shared Directory](../assets/flows/flow_settings_shared_directory.png)
+![Flow Shared Directory](../assets/flows/flow_settings_shared_directory.png.webp)
 
 To use the shared directory, just load outputs using `./shared/${path}` and call it for following steps.
 
 :::tip Example from the Demo workspace _Same worker example of using the './shared' folder_
 
 Loading output
-![Flow Shared Folder 1](../assets/flows/flow_shared_folder_1.png)
-<br/>
+![Flow Shared Folder 1](../assets/flows/flow_shared_folder_1.png.webp)
+
+<br />
 
 Calling as input
-![Flow Shared Folder 1](../assets/flows/flow_shared_folder_2.png)
+![Flow Shared Folder 1](../assets/flows/flow_shared_folder_2.png.webp)
 
 This flow can be found on the Demo workspace.
 
@@ -100,13 +101,12 @@ You can also test up to a certain step by clicking on an action (x) and then on 
 At last, you can directly [test a step](#test-this-step).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/test_flow.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/test_flow.mp4"
 />
-
 
 ## Static inputs
 
@@ -137,13 +137,13 @@ Some arguments' types can be given advanced settings that will affect the inputs
 Here is an example on how to define a list as an enum of strings using the `Customize` menu.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="customize_arguments_flow.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+	src="customize_arguments_flow.mp4"
 />
 
-<br/>
+<br />
 
 Below is the list of all available advanced settings for each argument type:
 
@@ -153,7 +153,7 @@ Below is the list of all available advanced settings for each argument type:
 | Number  | No advanced configuration for this type.                                                                                                  |
 | String  | - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql &#124; Pattern (Regex)                             |
 | Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource Types](../core_concepts/3_resources_and_types/index.mdx).                                                                |
+| Object  | Advanced settings are [Resource Types](../core_concepts/3_resources_and_types/index.mdx).                                                 |
 | Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
 | Any     | No advanced configuration for this type.                                                                                                  |
 
@@ -167,7 +167,7 @@ Below is the list of all available advanced settings for each argument type:
 		title="JSON Schema and Parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
 		href="/docs/core_concepts/json_schema_and_parsing"
-    />
+	/>
 </div>
 
 ### Using a Request
@@ -230,7 +230,7 @@ You can refer to and trigger an action script from the [Hub](https://hub.windmil
 
 You can refer to and trigger an action script from the workspace. Similar to the previous section, you can copy the script to an inline flow script and modify it.
 
-![Flow action](../assets/flows/flow_new_action.png)
+![Flow action](../assets/flows/flow_new_action.png.webp)
 
 ## Action editor
 
@@ -247,7 +247,7 @@ The script editor in split in three parts:
 
 ### Header
 
-![Action editor header](../assets/flows/flow_action_editor_header.png)
+![Action editor header](../assets/flows/flow_action_editor_header.png.webp)
 
 The header is composed of:
 
@@ -278,7 +278,7 @@ The step configuration is composed of three parts:
 
 #### Step input
 
-![Step input](../assets/flows/flow_step_input.png)
+![Step input](../assets/flows/flow_step_input.png.webp)
 
 Inputs of a script can be defined in the step configuration. They can be configured in three ways:
 
@@ -313,7 +313,7 @@ Clicking on a field will set the mode to "Append". Clicking on the "Connect" but
 
 #### Test this step
 
-![Test this step](../assets/flows/flow_test_this_step.png)
+![Test this step](../assets/flows/flow_test_this_step.png.webp)
 
 The test this step section allows to test the step on its own. You can set the input and run the script.
 The result and logs are displyed on the left-hand side.
@@ -326,22 +326,22 @@ The advanced section allows to configure the following:
 
 Configure the number of [retries](./14_retries.md) and the delay between each retry.
 
-![Retries](../assets/flows/flow_retries.png)
+![Retries](../assets/flows/flow_retries.png.webp)
 
 ##### Early stop/Break
 
 If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should [stop early](./2_early_stop.md). Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
 
-![Early stop](../assets/flows/flow_early_stop.png)
+![Early stop](../assets/flows/flow_early_stop.png.webp)
 
 ##### Suspend
 
 If defined, at the end of the step, the flow will be [suspended](./11_flow_approval.md) until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
 
-![Suspend](../assets/flows/flow_suspend.png)
+![Suspend](../assets/flows/flow_suspend.png.webp)
 
 ##### Sleep
 
 If defined, at the end of the step, the flow will [sleep](./15_sleep.md) for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
 
-![Sleep](../assets/flows/flow_sleep.png)
+![Sleep](../assets/flows/flow_sleep.png.webp)

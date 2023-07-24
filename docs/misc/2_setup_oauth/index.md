@@ -187,7 +187,7 @@ Add the proper groups then click save. You should see your Client ID and Client 
 }
 ```
 
-![Jumpcloud](./jumpcloud.png)
+![Jumpcloud](./jumpcloud.png.webp)
 
 ### Okta
 

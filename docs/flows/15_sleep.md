@@ -46,7 +46,7 @@ Within a [flow](../getting_started/6_flows_quickstart/index.md), pick the step *
 
 The bed icon will show the sleep step is activated.
 
-![Sleep activation](../assets/flows/sleep_toggle.png)
+![Sleep activation](../assets/flows/sleep_toggle.png.webp)
 
 ## Keep control of slept steps
 
@@ -56,4 +56,4 @@ The [Runs menu](../core_concepts/5_monitor_past_and_future_runs/index.mdx) provi
 - the steps that were already executed
 - the incoming ones
 
-![Sleep step from runs menu](../assets/flows/sleep_run_menu.png)
+![Sleep step from runs menu](../assets/flows/sleep_run_menu.png.webp)

@@ -25,7 +25,7 @@ You don't need to directly interact with the JSON Schema associated with the Scr
 
 In the UI customization interface, you can refine information that couldn't be inferred directly from the parameters, such as specifying string enums or restricting lists to numbers. You can also add helpful descriptions to each field.
 
-![Customize inputs](./customize_inputs.png)
+![Customize inputs](./customize_inputs.png.webp)
 
 > The inputs' positions and properties can be customized
 

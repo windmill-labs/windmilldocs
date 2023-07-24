@@ -2,7 +2,7 @@
 
 To integrate [Appwrite](https://appwrite.io/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Appwrite Resource](../assets/integrations/add-apprite.png)
+![Add Appwrite Resource](../assets/integrations/add-apprite.png.webp)
 
 | Property    | Type    | Description                                                   | Default  | Required | Where to find                                           |
 | ----------- | ------- | ------------------------------------------------------------- | -------- | -------- | ------------------------------------------------------- |

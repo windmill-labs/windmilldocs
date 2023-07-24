@@ -6,14 +6,14 @@ On the left-hand side of the app editor, you can find the app outputs. They are 
 - Component outputs
 - Background runnables outputs
 
-![App demo outputs](../assets/apps/2_app_outputs/app-demo-outputs.png)
+![App demo outputs](../assets/apps/2_app_outputs/app-demo-outputs.png.webp)
 
 When a component or a background runnable is selected, the outputs of the component or the background runnable are displayed.
 You can manually open an output by clicking on the header of the output. Once manually opened, the output will stay open until you close it.
 
 You can search for an output by typing in the search bar. It searches in the output name and in the output object keys, recursively.
 
-![App outputs](../assets/apps/2_app_outputs/app_outputs.png)
+![App outputs](../assets/apps/2_app_outputs/app_outputs.png.webp)
 
 ### App context
 
@@ -32,7 +32,7 @@ The app state is a client-side store that can be used to store data. The app sta
 
 Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded by clicking on the `{...}` button. Next to the button, you can see the number of outputs.
 
-![App outputs](../assets/apps/2_app_outputs/app-output-collapsed.png)
+![App outputs](../assets/apps/2_app_outputs/app-output-collapsed.png.webp)
 
 For example, the [Table component](./4_app_configuration-settings/1_app_component_library.md#table-1) has the following outputs:
 
@@ -42,7 +42,7 @@ For example, the [Table component](./4_app_configuration-settings/1_app_componen
 - search: the search value of the table
 - selectedRowIndex: the selected row index
 
-![App outputs](../assets/apps/2_app_outputs/app_outputs.png)
+![App outputs](../assets/apps/2_app_outputs/app_outputs.png.webp)
 
 The outputs are used to quickly visualize the current state of the app.
 
@@ -57,7 +57,7 @@ Some components are "containers" and can contain other components. They are 4 ty
 
 The components contained in a container have their outputs displayed in the container outputs.
 
-![App outputs](../assets/apps/2_app_outputs/app-output-container.png)
+![App outputs](../assets/apps/2_app_outputs/app-output-container.png.webp)
 
 ### Background runnables outputs
 

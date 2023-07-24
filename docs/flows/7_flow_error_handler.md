@@ -34,6 +34,6 @@ For instance, when building a workflow to [automatically populate a CRM details 
 
 <br/>
 
-![Error Handler Example](../assets/flows/error_handler_example.png)
+![Error Handler Example](../assets/flows/error_handler_example.png.webp)
 
 :::

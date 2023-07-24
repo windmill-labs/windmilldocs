@@ -1,7 +1,14 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default function DocCard({ title, description, href, Icon = undefined, color = 'blue' }) {
+export default function DocCard({
+	title,
+	description,
+	href,
+	Icon = undefined,
+	color = 'blue',
+	target = undefined
+}) {
 	const colors = {
 		blue: 'hover:bg-blue-100 hover:dark:bg-blue-900/50 hover:border-blue-500 dark:hover:border-blue-600 ',
 		teal: 'hover:bg-teal-100 hover:dark:bg-teal-900/50 hover:border-teal-500 dark:hover:border-teal-600 ',
@@ -22,7 +29,7 @@ export default function DocCard({ title, description, href, Icon = undefined, co
 				'rounded-md p-8 border border-gray-100 dark:border-gray-800 shadow-sm transition-all cursor-pointer flex flex-col gap-2 !no-underline overflow-hidden',
 				colors[color]
 			)}
-			target="_blank"
+			target={target}
 		>
 			<div className="flex flex-row gap-4 items-center">
 				{Icon !== undefined && (

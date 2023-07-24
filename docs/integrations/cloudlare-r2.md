@@ -4,7 +4,7 @@
 
 To integrate Cloudflare to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![S3 resource type](../assets/integrations/add-s3.png)
+![S3 resource type](../assets/integrations/add-s3.png.webp)
 
 Here is [the information](https://developers.cloudflare.com/r2/api/s3/api/) on where to find the required details:
 

@@ -24,7 +24,7 @@ The present tutorial explains how to use Mailchimp to trigger Windmill [scripts]
 
 Combined with a token created in Windmill, these webhooks can be interacted with using standard web technologies, making them compatible with a broad range of external systems and services, including Mailchimp Mandrill for email-triggered executions.
 
-![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png)
+![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png.webp)
 
 > Each script or flow has webhook endpoints. Bearer token must be passed as either an Authorization: Bearer &lt;TOKEN&gt; header, or as a token query parameter: https://&lt;instance&gt;/&lt;route&gt;?token=&lt;TOKEN&gt;
 
@@ -96,7 +96,7 @@ Thus, you can use the Mailchimp address effectively and have most emails be pars
 
 Then you just have to pick the details you want by "connecting inputs" of the JSON.parse step.
 
-![Get details from email](../assets/integrations/mailchimp_email_inputs.png)
+![Get details from email](../assets/integrations/mailchimp_email_inputs.png.webp)
 
 > _On the bottom right corner, relevant details from the email to be picked as inputs for further steps_
 
@@ -139,7 +139,7 @@ def main(input_email):
 
 </details>
 
-![Get details from email](../assets/integrations/mailchimp_forward_inputs.png)
+![Get details from email](../assets/integrations/mailchimp_forward_inputs.png.webp)
 
 > _On the bottom right corner, relevant details parsed from the forwarded email to be picked as inputs for further steps_
 

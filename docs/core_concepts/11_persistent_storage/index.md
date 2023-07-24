@@ -110,7 +110,7 @@ To enable the Shared Directory, follow these steps:
 2. Go to the `Shared Directory` section.
 3. Toggle on the option for `Shared Directory on './shared'`.
 
-![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png)
+![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png.webp)
 
 Once the Shared Directory is enabled, you can use it in your flow by referencing the `./shared` folder. This folder is shared among the steps in the flow, allowing you to store and access data between them.
 

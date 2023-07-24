@@ -62,7 +62,7 @@ See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel
 
 You can use them in a Script by clicking on "+Context Var":
 
-![Contextual variable](./context_variables.png)
+![Contextual variable](./context_variables.png.webp)
 
 | Name                 | Value                                                                                                               |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -105,16 +105,16 @@ access variables from scripts.
 
 A variable can be made **secret**. In this case, its value will not be visible outside of a script.
 
-![Add variable](./add_variable.png)
+![Add variable](./add_variable.png.webp)
 
 ## Accessing a variable from a script
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-     <DocCard
-    	title="Add Resources and Variables to Code Editor"
-    	description="You can add directly access Variables and Resources from the Code Editor."
-    	href="/docs/code_editor/add_variables_resources"
-    />
+	<DocCard
+		title="Add Resources and Variables to Code Editor"
+		description="You can add directly access Variables and Resources from the Code Editor."
+		href="/docs/code_editor/add_variables_resources"
+	/>
 </div>
 
 ### Contextual variables
@@ -129,13 +129,13 @@ There aThere are 2 main ways variables are used within scripts:
 
 Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
-![Select Variable](./select_variable.png)
+![Select Variable](./select_variable.png.webp)
 
 ### Fetching them from within a script by using the wmill client in the respective language
 
 By clicking on `+ Variable`, you'll get to pick a variable from your workspace and be able to fetch it from within the script.
 
-![Fetch Variable](./fetch_variable.png)
+![Fetch Variable](./fetch_variable.png.webp)
 
 Typescript:
 

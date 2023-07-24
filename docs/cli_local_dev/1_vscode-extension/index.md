@@ -2,7 +2,7 @@
 
 The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode. This feature lets you preview your work without leaving your code editor.
 
-![demo](./main.png)
+![demo](./main.png.webp)
 
 ## Installation
 
@@ -10,7 +10,7 @@ The Windmill VSCode extension allows you to run your scripts and preview the out
 2. Search for "Windmill" and select the Windmill extension by Windmill Labs.
 3. Click on the Install button.
 
-![demo](./wm-install.png)
+![demo](./wm-install.png.webp)
 
 You can also follow this link to the extension page on the VSCode marketplace: [Install it](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill)
 
@@ -59,7 +59,7 @@ The extension provides the following settings:
 | `windmill.additionalWorkspaces` | The list of additional remotes to use. This allows you to set up multiple workspaces for different projects. |
 | `windmill.currentWorkspace`     | The workspace name currently used (if multiple). main or empty is the default one.                           |
 
-![demo](./wm-settings.png)
+![demo](./wm-settings.png.webp)
 
 You can create a user token in the Windmill app. Follow the instructions in the [Windmill docs](/docs/core_concepts/webhooks#user-token).
 

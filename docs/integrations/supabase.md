@@ -2,7 +2,7 @@
 
 Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
-![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png.webp 'Connect a Supabase project with Windmill')
 
 :::info
 
@@ -41,7 +41,7 @@ key and the URL of your endpoint from Supabase. To get these, select your
 project, navigate to the `Project Settings` page and select `API` from the menu.
 You'll find the URL and 2 keys here.
 
-![API settings](../assets/integrations/sb-1-1-settings.png)
+![API settings](../assets/integrations/sb-1-1-settings.png.webp)
 
 As the description says, the access level of the `public` key will be controlled
 by the policies you add and the `secret` key will bypass all of them. You can
@@ -56,15 +56,15 @@ want an integration to be supported by Windmill directly, please submit a new
 `resource type` on [Windmill Hub](https://hub.windmill.dev/resources).
 
 **Navigate to the [Resources](https://app.windmill.dev/resources) page**
-![Resources page](../assets/integrations/sb-2-1-resources.png)
+![Resources page](../assets/integrations/sb-2-1-resources.png.webp)
 
-**Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png)
+**Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png.webp)
 
 **Search for `Supabase` and select the resource type**
-![Resource selector](../assets/integrations/sb-2-3-search.png)
+![Resource selector](../assets/integrations/sb-2-3-search.png.webp)
 
 **Enter the API key and the URL from Supabase and click "Save"**
-![Resource selector](../assets/integrations/sb-2-4-resource.png)
+![Resource selector](../assets/integrations/sb-2-4-resource.png.webp)
 
 ### Use the resource
 
