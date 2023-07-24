@@ -10,26 +10,25 @@ const people = [
 	{
 		name: 'Ruben Fiszel',
 		role: 'CEO & Founder',
-		imageUrl: '/team/ruben-fiszel.jpg',
+		imageUrl: '/team/ruben-fiszel.jpg.webp',
 		linkedinUrl: 'https://www.linkedin.com/in/rubenfiszel/'
 	},
 	{
 		name: 'Faton Ramadani',
 		role: 'Founding Engineer',
-		imageUrl: '/team/faton-ramadani.jpg',
+		imageUrl: '/team/faton-ramadani.jpg.webp',
 		linkedinUrl: 'https://www.linkedin.com/in/faton-ramadani-4b65ab191/'
 	},
 	{
 		name: 'Henri Courdent',
 		role: 'Founding Ops Staff',
-		imageUrl: '/team/henri-courdent.jpg',
+		imageUrl: '/team/henri-courdent.jpg.webp',
 		linkedinUrl: 'https://www.linkedin.com/in/henri-courdent/'
-	}
-	,
+	},
 	{
 		name: 'Hugo Casademont',
 		role: 'LLM Research Engineer',
-		imageUrl: '/team/hugo-casademont.jpg',
+		imageUrl: '/team/hugo-casademont.jpg.webp',
 		linkedinUrl: 'https://www.linkedin.com/in/hugo-casademont/'
 	}
 ];
