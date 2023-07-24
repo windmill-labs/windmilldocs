@@ -22,7 +22,6 @@ export default function DocCard({ title, description, href, Icon = undefined, co
 				'rounded-md p-8 border border-gray-100 dark:border-gray-800 shadow-sm transition-all cursor-pointer flex flex-col gap-2 !no-underline overflow-hidden',
 				colors[color]
 			)}
-			target="_blank"
 		>
 			<div className="flex flex-row gap-4 items-center">
 				{Icon !== undefined && (
