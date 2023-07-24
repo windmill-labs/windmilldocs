@@ -25,3 +25,7 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 For the Bearer Token, use the value of `enterprise.scimToken` in the helm charts which corresponds to the SCIM_TOKEN env variable for the server container.
 
 ![Okta SCIM](okta-scim.png)
+
+Once setup, the groups page should contain a new section:
+
+![New section SCIM](okta-scim-groups.png)
