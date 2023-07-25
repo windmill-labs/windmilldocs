@@ -61,3 +61,7 @@ For scripts inlined in the flow editor, select it in the module header:
 ![Worker group tag](./select_flow.png.webp)
 
 If no worker group is assigned to a script, it will be assigned the default worker group for its language.
+
+You can assign a worker group to an entire flow in the flow's settings:
+
+![Flow's Worker Group](flow_wg.png)
