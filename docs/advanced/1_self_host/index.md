@@ -286,7 +286,7 @@ Database volume is persistent, so updating the database image is safe too.
 ### Reset your instance
 
 Windmill stores all of its state in PostgreSQL and it is enough to reset the database to reset the instance.
-Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. run:
+Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. Run:
 
 ```
 docker-compose down --volumes

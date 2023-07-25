@@ -232,7 +232,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Each worker can run up to <b>~13M</b> jobs per month
+							Each worker can run up to <b>~26M</b> jobs per month
 						</span>
 					)
 				},
