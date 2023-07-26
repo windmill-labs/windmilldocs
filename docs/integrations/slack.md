@@ -12,7 +12,7 @@ you can find the one that suits you best.
     controls
     id="main-video"
     src="/videos/generated_email.mp4"
-    alt="container component"
+    alt="Slack Windmill"
 />
 
 <br/>
@@ -103,7 +103,7 @@ on Windmill. The runs will be permissioned through the `g/slack` global group.
 
 :::
 
-:::danger
+:::note
 
 You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.md#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
 
@@ -129,8 +129,7 @@ One simplier way to handle permissions is to host resources and variables on a [
 
 ## Action on Slack from Windmill
 
-The second way to integrate Slack and Windmill is to allow interaction with
-Slack from Windmill. In other words, our goal here is to allow Windmill Scripts
+The second way to make Slack and Windmill interact is through scripts triggered from Windmill to the Slack API. In other words, our goal here is to allow Windmill Scripts
 acting on Slack on your behalf.
 
 Lets navigate to the [Resources][wm-resource] page and click "Add a
@@ -148,41 +147,56 @@ Select the `slack` Resource Type from the "OAuth APIs" list and by clicking
 "Connect", you will be redirected to Slack just like in the
 [previous section](#action-on-windmill-from-slack). Click "Allow" to let
 Windmill access your Slack workspace. Once that's done, you will be redirected
-back to Windmill, where you can name your Slack Resource. Let's leave the
-default name `my_slack` and click "Save" in the top right corner.
+back to Windmill, where you can name your Slack Resource and Save it.
 
-![Save resource](../assets/integrations/slack-8-slack-resource.png.webp)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/slack_through_windmill.mp4"
+    alt="Connect Slack to Windmill"
+/>
 
-Let's head to the [Home page][wm-home] and click "+Script" to create a new
-Script. Give it the name `list_slack_users`, add the summary "List Slack users"
-and click "Next". Paste the following code in the editor and click "Test" - you
-should see the list of users and bots in your Slack workspace.
+<br/>
 
-```typescript
-import { SlackAPI } from 'https://deno.land/x/deno_slack_api@1.6.0/mod.ts';
+:::tip Have Slack connected on your browser
 
-type Slack = {
-	token: string;
-};
-
-export async function main(auth: Slack) {
-	const client = SlackAPI(auth.token);
-	return await client.users.list();
-}
-```
-
-![Test script](../assets/integrations/slack-9-script-result.png.webp)
-
-:::tip
-
-You can find a more complete version of this Script on
-[Windmill Hub][hub-script].
+This step will work seamlessly if you have Slack connected to your browser.
 
 :::
 
-:::note What's next?
+Your connection is made! Now you can trigger the Slack API from Windmill.
+
+For example, try [this script](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack) to send a message to a channel.
+
+```typescript
+import { WebClient } from "https://deno.land/x/slack_web_api@1.0.0/mod.ts";
+type Slack = {
+  token: string
+}
+
+export async function main(
+  text: string,
+  channel: string,
+  slack: Slack
+) {
+  const web = new WebClient(slack.token);
+
+  await web.chat.postMessage({
+    channel,
+    text,
+  });
+}
+```
+
+![Test script](../assets/integrations/slack-9-script-result.png)
+
+:::info What's next?
 
 We go deeper in a [further article](/blog/handler-slack-commands), integrating multiple commands, resources and Slack approval steps.
+
+<br/>
+
+Also, explore more Slack scripts, flows and apps on [Windmill Hub](https://hub.windmill.dev/integrations/slack).
 :::
 
 <!-- Links -->
