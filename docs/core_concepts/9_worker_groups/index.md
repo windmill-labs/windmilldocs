@@ -37,18 +37,26 @@ If you assign custom worker groups to all your workers, make sure that they cove
 You can customize the worker group of a worker by setting the WORKER_TAGS environment variable.
 
 ```
-WORKER_TAGS=deno,light
+WORKER_TAGS=deno,light,gpu
 ```
 
 By default, the `WORKER_TAGS` of workers include `deno, python3, bash, go, flow, hub, dependency`.
 
 The configuration above will make the workers accept only deno jobs and jobs with the `light` tag.
 
-To make custom tags selectable from the UI, you need to pass the following env variable to the Windmill server:
+To make custom tags available from the UI and be authorized to be used, you need to pass the following env variable to the Windmill server:
 
 ```
-CUSTOM_TAGS=light
+CUSTOM_TAGS=light,gpu
 ```
+
+You can restrict some tags to specific workspace using the following syntax:
+
+```
+CUSTOM_TAGS=light,gpu(workspace+workspace2)
+```
+
+Only workspace and workspace2 will be able to use the `gpu` tags.
 
 ## How to assign a custom worker group
 
