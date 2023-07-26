@@ -1,10 +1,12 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Airplane Alternative for Internal Tools
+# Open Source Alternative to Airplane for Internal Tools
 
 Airplane is great for building internal tools. Windmill does it too, but makes it easier to deploy and maintain them at scale.
 
 Although being a tool similar to Airplane, Windmill adopts radically different approaches.
+
+![Windmill Airplane](../assets/compared_to/windmill_airplane.png "Windmill Airplane")
 
 ## Open Source
 
@@ -18,7 +20,7 @@ to meet the community's needs.
 At last, Windmill provides and integrates to its platform a [public community Hub](https://hub.windmill.dev/)
 where users share useful and proven scripts, flows, and apps.
 
-![Windmill Github](./windmill_gh.png "Windmill Github")
+![Windmill Github](../assets/compared_to/windmill_gh.png "Windmill Github")
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -38,10 +40,9 @@ where users share useful and proven scripts, flows, and apps.
 	/>
 </div>
 
-:::note Airplane
+:::info Airplane
 Airplane is a proprietary software and closed source.
 :::
-
 
 ## Performance at scale & cold start
 
@@ -57,7 +58,8 @@ the fastest execution runtime for scripts (10ms cold start).
 Thus Airplane cannot run to the scale of millions of tasks because of this design choice
 and require a much costlier and heavier infrastructure than windmill.
 Windmill can run 26M tasks a month on a single worker costing 5$. Airplane does not provide figures on its average runtime and performance.
-Also, we have a [transparent API](https://app.windmill.dev/openapi.html#/), on which you could imagine launching 1m simulateously by API.
+
+Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/), on which you could imagine launching 1m simulateously by API.
 
 This inability to scale, inefficient architecture and high cold-start is the most common reasons for users to migrate from Airplane to Windmill.
 
@@ -66,21 +68,16 @@ we provide a benchmarking tool. This tool allows you to benchmark the execution 
 providing insights into the performance metrics.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
-	<DocCard
-    	title="OpenAPI"
-    	description="Interact with Windmill."
-    	href="https://app.windmill.dev/openapi.html"
-    />
 	<DocCard
 		title="Benchmarks"
 		description="This folder includes a small deno/ts utility to benchmark execution of jobs & flows."
 		href="https://github.com/windmill-labs/windmill/tree/main/benchmarks"
 	/>
+	<DocCard
+    	title="OpenAPI"
+    	description="Interact with Windmill."
+    	href="https://app.windmill.dev/openapi.html"
+    />
 </div>
 
 ## Building and Deploying
@@ -89,9 +86,8 @@ Windmill's strength lies in its ability to run scripts without having to deal wi
 This is achieved by automatically parsing the imports and resolving the dependencies.
 Therefore, all dependencies can be handled from within the script.
 
-At any point, you can test what you are building directly from the editors.
-
 Deployments in Windmill can be done from the web UI in a matter of seconds, or from Windmill's CLI.
+Before deployment and at any point, you can test what you are building directly from the editors.
 
 The videos below show how to:
 - build
@@ -105,6 +101,10 @@ the same script on Windmill vs Airplane (all loading times are at 100% speed).
     controls
     src="/videos/cowsay_deploy_windmill.mp4"
 />
+
+<br/>
+
+> On Windmill, write and test your script from the editor. Deploy it with web UI and it's ready for running & sharing.
 
 <br/>
 
@@ -127,7 +127,7 @@ For Airplane, it implies:
 
 Windmill embedds a web IDE and low-code builders to create endpoints, flows and apps.
 
-:::note Scripts in Airplane
+:::info Scripts in Airplane
 Building scripts in Airplane involves transitioning
 from the web UI to a separate code editor and eventually employing the terminal.
 :::
@@ -142,10 +142,23 @@ Windmill has a Script Editor with an integrated [Monaco Editor](../code_editor/i
 	/>
 </div>
 
-:::note Flows in Airplane
+:::info Flows in Airplane
 The workflow engine of Airplane is [built upon Temporal](https://docs.airplane.dev/tasks/workflows#workflow-runtime-overview
 ), which is incredibly complex.
 This complexity results in a lack of efficiency and intuitiveness.
+
+<br/>
+
+Airplane also embeds an equivalent feature called [Runbooks](https://docs.airplane.dev/runbooks/getting-started) that allows to compose multiple tasks together.
+Airplanes's Runbooks are a good fit for small series of succint simple tasks executing one after each other.
+
+<br/>
+
+Runbooks will hardly support complexity as the Airplane does not provide a graphical view, or built-in ways to create
+conditional branches or loops.
+At last, editing and deployment will be cumbersome since the low-code builders are highly limited
+and do not allow dynamically choosing the inputs & outputs of each step, or editing and writing scripts
+directly from the flow builder.
 :::
 
 Windmill's Flow Editor allows you to compose steps together to build workflows and ETLs,
@@ -159,7 +172,7 @@ represented as DAGs. As the flow editor has a dedicated web UI and relies on scr
 	/>
 </div>
 
-:::note Apps in Airplane
+:::info Apps in Airplane
 Building apps in Airplane implies going 100% through code using React, with [limited available components](https://docs.airplane.dev/views/components).
 :::
 
@@ -205,4 +218,4 @@ Anyone can create an integration with just a few clicks.
 
 ## Everything else
 
-For everyting else, it's comparable: you can [develop locally](../cli_local_dev/index.md), [use VSCode](../cli_local_dev/1_vscode-extension/index.md), generate [webhooks](../core_concepts/4_webhooks/index.md), etc.
+For everyting else, it's comparable: you can [develop locally and source control](../core_concepts/17_collaboration/index.mdx#git-integration), [use VSCode](../cli_local_dev/1_vscode-extension/index.md), generate [webhooks](../core_concepts/4_webhooks/index.md), etc.
