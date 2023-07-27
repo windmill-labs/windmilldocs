@@ -122,7 +122,7 @@ For the sake of the example, we made this flow simple with a [manual trigger](..
 
 Then, we picked an approval step on the Hub to [Ask channel for approval on Slack](https://hub.windmill.dev/scripts/slack/1503/). With inputs:
 
-- `slack`: your [Slack resource](../integrations/slack.md).
+- `slack`: your [Slack resource](../integrations/slack.mdx).
 - `channel`: Slack channel to publish message, as string.
 - `text`: `Refund request by _${flow_input["User email"]}_ on order ${flow_input["Order number"]}.`.
 
@@ -148,7 +148,7 @@ Those are the keys you can use as predicate expressions for your [branches](./13
 
 <br/>
 
-The content of each branch is of little importance for this tutorial as it depends each operations and tech stack. For the example we used two Hub scripts: [Send Email](https://hub.windmill.dev/scripts/gmail/1291/) with [Gmail](../integrations/gmail.md) and [Send Message to Channel](https://hub.windmill.dev/scripts/slack/1284/) with [Slack](../integrations/slack.md).
+The content of each branch is of little importance for this tutorial as it depends each operations and tech stack. For the example we used two Hub scripts: [Send Email](https://hub.windmill.dev/scripts/gmail/1291/) with [Gmail](../integrations/gmail.md) and [Send Message to Channel](https://hub.windmill.dev/scripts/slack/1284/) with [Slack](../integrations/slack.mdx).
 
 <details>
   <summary>Example of arguments used for Gmail and Slack scripts:</summary>
