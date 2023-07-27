@@ -30,7 +30,7 @@ There are 4 kinds of persistent storage in Windmill:
 
 If you already have your own database provided by a supported integration, you can easily connect it to Windmill.
 
-If your service provider is already part of [our list of integrations](../../integrations/0_integrations_on_windmill.md), just add your database as a [resource](../../core_concepts/3_resources_and_types/index.mdx).
+If your service provider is already part of [our list of integrations](../../integrations/0_integrations_on_windmill.mdx), just add your database as a [resource](../../core_concepts/3_resources_and_types/index.mdx).
 
 "If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
 
