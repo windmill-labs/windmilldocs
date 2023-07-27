@@ -42,10 +42,7 @@ from .common_logic import foo
 from ..folder.common_logic import foo
 ```
 
-Beware that you can only import scripts that you have view rights on on at time of execution.
-Furthermore, if you make any imports in the common logic, you will need to add
-the same imports in the Script that is being imported, otherwise the automatic
-dependency management will not work.
+Beware that you can only import scripts that you have view rights on at time of execution.
 
 The folder layout is identical with the one that works with the CLI for syncing
 scripts locally and on Windmill. See [Developing scripts locally](../4_local_development/index.md)
