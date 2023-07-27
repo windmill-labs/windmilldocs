@@ -884,7 +884,7 @@ The select component allows you to get a string from the user.
 
 ### Resource Select
 
-The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.md).
+The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.mdx).
 
 ![Resource Select](../../assets/apps/4_app_component_library/resource_select.png.webp)
 

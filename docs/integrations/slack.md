@@ -38,6 +38,12 @@ should go to
 [workspace settings page](https://app.windmill.dev/workspace_settings) and
 select the "Slack Command" tab. On there, click "Connect to Slack".
 
+:::note Self-hosted
+
+The Slack integration is done through OAuth. On [self-hosted instances](../advanced/1_self_host/index.md), integrating an OAuth API will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.md).
+
+:::
+
 <video
 className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 autoPlay
@@ -144,10 +150,15 @@ You can read more about Resources in the documentation [here][docs-resource].
 ![Create Slack resource](../assets/integrations/slack-7-resources.png.webp)
 
 Select the `slack` Resource Type from the "OAuth APIs" list and by clicking
-"Connect", you will be redirected to Slack just like in the
-[previous section](#action-on-windmill-from-slack). Click "Allow" to let
+"Connect", you will be redirected to the Slack accounted associated with your browser. Click "Allow" to let
 Windmill access your Slack workspace. Once that's done, you will be redirected
 back to Windmill, where you can name your Slack Resource and Save it.
+
+:::note
+
+On [self-hosted instances](../advanced/1_self_host/index.md), integrating an OAuth API will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.md).
+
+:::
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -157,12 +168,6 @@ back to Windmill, where you can name your Slack Resource and Save it.
 />
 
 <br/>
-
-:::tip Have Slack connected on your browser
-
-This step will work seamlessly if you have Slack connected to your browser.
-
-:::
 
 Your connection is made! Now you can trigger the Slack API from Windmill.
 
