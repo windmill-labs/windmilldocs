@@ -14,6 +14,8 @@ final result and logs are stored forever.
 The number of workers can be horizontally scaled up or down depending on needs
 without any overhead.
 
+Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms.
+
 ## Assign custom worker groups
 
 Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.

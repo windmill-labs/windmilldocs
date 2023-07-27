@@ -198,7 +198,7 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
-				'deploy_gh_gl',
+				'advanced/deploy_gh_gl/index',
 				'advanced/local_development/index',
 				'advanced/preinstall_binaries/index',
 				{
@@ -293,6 +293,14 @@ const sidebars = {
 		},
 		{
 			type: 'category',
+			label: 'Windmill Compared to',
+			items: [
+				'compared_to/index',
+				'compared_to/airplane',
+			]
+		},
+		{
+			type: 'category',
 			label: 'Misceallaneous',
 			items: [
 				'openflow/index',
@@ -312,7 +320,6 @@ const sidebars = {
 				},
 				'misc/note_of_intent/index',
 				'misc/share_on_hub/index',
-				'misc/windmill_compared_to_peers/index'
 			]
 		}
 	]

@@ -35,7 +35,7 @@ const cards = [
 		subtitle: 'Deploy scripts from Github or Gitlab',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/deploy_gh_gl',
+		href: '/docs/advanced/deploy_gh_gl',
 		icons: [Gitlab]
 	},
 	{
