@@ -1,9 +1,10 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Slack Integration
 
 Learn how to integrate Slack with Windmill. There are two ways to build
 interactions between the two: run code on Windmill by a Slack command or use the
-Slack API directly from Windmill. In this guide, we'll cover both approaches, so
-you can find the one that suits you best.
+Slack API directly from Windmill. In this guide, we'll cover both approaches.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -17,19 +18,6 @@ you can find the one that suits you best.
 
 <br/>
 
-:::tip Handle multiple commands on your slackbot
-
-We cover in a [subsequent article](/blog/handler-slack-commands) how to manage multiple commands from your slackbot. Spoiler: it uses [branches](../flows/13_flow_branches.md) and a text parser.
-
-:::
-
-:::info
-
-This guide assumes that you already have a Slack account and a workspace where
-you have admin rights. For **self-hosted instances**, you will need to [setup oauth](../misc/2_setup_oauth/index.md) first.
-
-:::
-
 ## Action on Windmill from Slack
 
 The goal here is to be able to invoke a Windmill Script from Slack, by using
@@ -38,7 +26,7 @@ should go to
 [workspace settings page](https://app.windmill.dev/workspace_settings) and
 select the "Slack Command" tab. On there, click "Connect to Slack".
 
-:::note Self-hosted
+:::info Self-hosted
 
 The Slack integration is done through OAuth. On [self-hosted instances](../advanced/1_self_host/index.md), integrating an OAuth API will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.md).
 
@@ -46,8 +34,6 @@ The Slack integration is done through OAuth. On [self-hosted instances](../advan
 
 <video
 className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-autoPlay
-loop
 controls
 src="/videos/adding_slack_resource.mp4"
 />
@@ -56,14 +42,14 @@ src="/videos/adding_slack_resource.mp4"
 
 Slack will ask you to allow Windmill to access your workspace. Click "Allow".
 
-:::info
+:::note
 
 At the time of writing, Slack cautiones that Windmill is not an approved app. We
 are working on getting the app approved but you can safely ignore it for now.
 
 :::
 
-![Allow Slack access](../assets/integrations/slack-2-allow-access.png.webp)
+![Allow Slack access](../assets/integrations/slack-2-allow-access.png)
 
 ### Using commands on Slack
 
@@ -71,27 +57,27 @@ Once you allow access, you will be redirected to the Slack settings in Windmill.
 We'll create a command handler Script first, so let's click "Create a script to
 handle slack command".
 
-![Connected settings](../assets/integrations/slack-3-connected.png.webp)
-
-You will be navigated to the Script editor. Give your script the name
-`slack_command_handler`, a short summary of "Slack command handler", leave the
-language as `TypeScript` and click "Next". Paste the following code into the
-editor and click "Save":
+You will be navigated to the Script editor. Give your script a name
+(e.g. `slack_command_handler`), a short summary (e.g. "Slack command handler"). You'll get to [this](https://hub.windmill.dev/scripts/slack/1405/example-of-responding-to-a-slack-command-slack) template:
 
 ```typescript
-export async function main(response_url: string, text: string) {
-	await fetch(response_url, {
-		method: 'POST',
-		body: JSON.stringify({ text: `ROGER ${text}` })
-	});
-}
+export async function main(
+  response_url: string,
+  text: string,
+) {
+  const x = await fetch(response_url, {
+    method: 'POST',
+    body: JSON.stringify({ text: `ROGER ${text}` }),
+  });
+  const username = await Deno.env.get('WM_USERNAME')
+  console.log(`user = ${username}`)
 ```
 
-After the Script is saved, navigate back to the
+After the Script is deployed, navigate back to the
 [Slack settings][wm-slack-settings], choose the "Script" option for adding a
 command handler and select your newly created Script.
 
-![Choose handler Script](../assets/integrations/slack-4-set-handler.png.webp)
+![Connected settings](../assets/integrations/slack-3-connected.png)
 
 Congratulations! You've just created a Slack command handler. Now you can use
 the `/windmill` command in your Slack workspace to trigger the Script. Try it
@@ -100,18 +86,10 @@ customize the Script to your needs.
 
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png.webp)
 
-:::info
+You won't be able to have Slack interact with your [resources](../core_concepts/3_resources_and_types/index.mdx) and [variables](../core_concepts/2_variables_and_secrets/index.mdx) before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.md#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill. Tutorial below.
 
-You can see who ran the `/windmill` command by going to the [Runs page][wm-runs]
-on Windmill. The runs will be permissioned through the `g/slack` global group.
-
-![Run info](../assets/integrations/slack-6-run-info.png.webp)
-
-:::
-
-:::note
-
-You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.md#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
+<details>
+  <summary>How to let Slack use your resources and variables:</summary>
 
 To give the permission, go to "Resources" (and "Variables") menu, click on `Share`, `Group` and pick `slack`.
 
@@ -131,7 +109,48 @@ One simplier way to handle permissions is to host resources and variables on a [
 
 ![Share folder to group](../assets/integrations/slack-12-folder_to_group.png.webp)
 
-:::
+
+</details>
+
+### Monitor who ran the command
+
+You can see who ran the `/windmill` command by going to the [Runs page][wm-runs]
+on Windmill. The runs will be permissioned through the `g/slack` global group.
+
+![Run info](../assets/integrations/slack-6-run-info.png)
+
+You can also monitor and permission it from within the script leveraging the [contextual variable](../core_concepts/2_variables_and_secrets/index.mdx#contextual-variables) `WM_USERNAME` that will get the value of the Slack user.
+
+For example our script:
+
+```ts
+export async function main(
+  response_url: string,
+  text: string,
+) {
+  const x = await fetch(response_url, {
+    method: 'POST',
+    body: JSON.stringify({ text: `ROGER ${text}` }),
+  });
+  // This part:
+  const username = await Deno.env.get('WM_USERNAME')
+  console.log(`user = ${username}`)
+}
+```
+
+will console.log `user = username`, username being the Slack username.
+
+### Handle multiple commands
+
+We cover in a [subsequent article](/blog/handler-slack-commands) how to manage multiple commands from your slackbot using [branches](../flows/13_flow_branches.md) and a text parser.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Tutotial - Handler of multiple Slack commands"
+		description="Create a flow with a parser & branches that will handle multiple Slack commands."
+		href="/blog/handler-slack-commands#control-the-slackbot-by-getting-username"
+	/>
+</div>
 
 ## Action on Slack from Windmill
 

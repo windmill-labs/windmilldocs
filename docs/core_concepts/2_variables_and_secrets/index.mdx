@@ -54,8 +54,7 @@ across script executions.
 
 ## Contextual variables
 
-Contextual Variables are variables whose values are contextual to the Script
-execution. They are are automatically set by Windmill. This is how the Deno and Python clients get their implicit
+Contextual Variables are environment variables automatically set by Windmill. This is how the Deno and Python clients get their implicit
 credentials to interact with the platform.
 
 See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel="nofollow">Variable page</a> for the list of reserved variables and what they are used for.
@@ -117,21 +116,27 @@ A variable can be made **secret**. In this case, its value will not be visible o
 	/>
 </div>
 
-### Contextual variables
+### Accessing Contextual Variables from a script
+
+See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel="nofollow">Variable page</a> for the list of reserved variables and what they are used for.
+
+You can use them in a Script by clicking on "+Context Var":
+
+![Contextual variable](../2_variables_and_secrets/context_variables.png.webp)
 
 Reserved variables are passed to the job as environment variables. For example, the ephemeral token is passed as `WM_TOKEN`.
 
-### User-defined variables
+### Accessing User-defined Variables from a script
 
-There aThere are 2 main ways variables are used within scripts:
+There are 2 main ways variables are used within scripts:
 
-### Passing variables as parameters to scripts
+#### Passing variables as parameters to scripts
 
 Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
 ![Select Variable](./select_variable.png.webp)
 
-### Fetching them from within a script by using the wmill client in the respective language
+#### Fetching them from within a script by using the wmill client in the respective language
 
 By clicking on `+ Variable`, you'll get to pick a variable from your workspace and be able to fetch it from within the script.
 
