@@ -2,7 +2,7 @@
 
 To integrate [Linkding](https://github.com/sissbruecker/linkding) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Linkding Resource](../assets/integrations/add-linkding.png)
+![Add Linkding Resource](../assets/integrations/add-linkding.png.webp)
 
 | Property | Type   | Description                     | Default | Required | Where to Find                                 |
 | -------- | ------ | ------------------------------- | ------- | -------- | --------------------------------------------- |

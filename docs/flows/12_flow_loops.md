@@ -9,4 +9,4 @@ There are three configuration options:
 - **Skip failure**: if set to `true`, the loop will continue to the next item even if the current item failed.
 - **Run in parallel**: if set to `true`, all iterations will be run in parallel.
 
-![For loop step](../assets/flows/flow_for_loop.png)
+![For loop step](../assets/flows/flow_for_loop.png.webp)

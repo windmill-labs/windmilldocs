@@ -42,7 +42,7 @@ Long story short, the first article explained how to connect Slack with Windmill
 
 [Workflows](/docs/getting_started/flows_quickstart) on Windmill are based on scripts. Workflows are the architecture that allows you to chain scripts with branches, loops etc. while connecting scripts' inputs to previous ouputs.
 
-![Windmill Workflows](./1-windmill-workflows.png 'Windmill workflows')
+![Windmill Workflows](./1-windmill-workflows.png.webp 'Windmill workflows')
 
 As we will use only one master workflow to handle all Slack commands, branches will be key: one branch for one Slack command. Let's get started.
 
@@ -50,13 +50,13 @@ As we will use only one master workflow to handle all Slack commands, branches w
 
 Just like the [slack integration tutorial](/docs/integrations/slack), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
 
-![Create Flow Handler](./2-create-flow-handler.png 'Create a flow to handle Slack Commands')
+![Create Flow Handler](./2-create-flow-handler.png.webp 'Create a flow to handle Slack Commands')
 
 You will get to [this](https://hub.windmill.dev/flows/28/example-handler-for-slack-bot-commands) workflow to handle Slack commands. When linked to the `/windmill` command from the Windmill workspace settings, it will react to it on Slack.
 
 Before going deeper, let's take a look at this first workflow because its logic will be of use.
 
-![First Handler Workflow](./8-example-first-handler.png 'By default commands handler workflow')
+![First Handler Workflow](./8-example-first-handler.png.webp 'By default commands handler workflow')
 
 ### Inputs
 
@@ -117,7 +117,7 @@ The goal of the current section is to give you more hints on the potentiality of
 
 <!--(but maybe our users have more ideas) + link to Atelier post, when published-->
 
-![Slack commands hander, 2nd example](./3-commands-handler-n2.png 'Second example of a Slack commands handler')
+![Slack commands hander, 2nd example](./3-commands-handler-n2.png.webp 'Second example of a Slack commands handler')
 
 ### Fine-tuning the parser to manage longer commands
 
@@ -185,7 +185,7 @@ To give the permission, go to "Resources" (and "Variables") menu, click on `Shar
 
 <br/>
 
-![Share to slack group](./4-slack_group.png)
+![Share to slack group](./4-slack_group.png.webp)
 
 <br/>
 
@@ -193,17 +193,17 @@ One simplier way to handle permissions is to host resources and variables on a [
 
 <br/>
 
-![Share variable to folder](./5-variable_to_folder.png)
+![Share variable to folder](./5-variable_to_folder.png.webp)
 
 <br/>
 
-![Share folder to group](./6-folder_to_group.png)
+![Share folder to group](./6-folder_to_group.png.webp)
 
 :::
 
 Once your resources are added, you can choose to pre-load them (as the gcal auth here) or connect them with previous outputs if you want to make them variable depending on the query inputs.
 
-![Parameters flows](./7-parameters.png)
+![Parameters flows](./7-parameters.png.webp)
 
 ### Human in the loop with approval steps
 

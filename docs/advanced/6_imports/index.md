@@ -44,6 +44,11 @@ the versions. This ensures that the same version of a Python script is always
 executed with the same versions of its dependencies. It also avoids the hassle
 of having to maintain a separate requirements file.
 
+We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
+You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py/src/lib.rs#L177)
+
+## Pinning dependencies
+
 If the imports are not properly analyzed, there exists an escape hatch to
 override the inferred imports. One needs to head the Script with the following comment:
 
@@ -58,8 +63,18 @@ def main(...):
   ...
 ```
 
-We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
-You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py/src/lib.rs#L177)
+To combine both the inference of windmill and being able to pin dependencies, use `extra_requirements`:
+
+```python
+#extra_requirements:
+#dependency==0.4
+
+import pandas
+import dependency
+
+def main(...):
+  ...
+```
 
 ### Private PyPi repository
 

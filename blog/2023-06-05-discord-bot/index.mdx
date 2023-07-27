@@ -25,7 +25,7 @@ Empower your support team with a bot that answers questions about technical docu
 
 <!--truncate-->
 
-![AI BOT](./ai-bot.png 'AI BOT')
+![AI BOT](./ai-bot.png.webp 'AI BOT')
 
 <sup>
 	<i>
@@ -124,7 +124,7 @@ We need to ingest a data source, here the [Windmill documentation](/docs/intro).
 A [workflow](/docs/flows/flow_editor) is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](/docs/getting_started/scripts_quickstart) in the case of Windmill.
 :::
 
-![Flow](./flow.png 'Create a scheduled flow that scrapes the Windmill documentation')
+![Flow](./flow.png.webp 'Create a scheduled flow that scrapes the Windmill documentation')
 
 > _This flow is available on [Windmill Hub](https://hub.windmill.dev/flows/45/)_.
 
@@ -266,7 +266,7 @@ This script requires setting up an [OpenAI integration](/docs/integrations/opena
 
 Finally, we can store the embeddings in Supabase using the [pgvector](https://supabase.com/docs/guides/database/extensions/pgvector) extension.
 
-![Supabase documentation](./supabase_docu.png)
+![Supabase documentation](./supabase_docu.png.webp)
 
 > All embeddings are stored in a single Supabase table.
 
@@ -354,9 +354,9 @@ From the `Bot` menu, you can `Reset token` and get a token to use in the [approv
 - Enable `bot` and `Send Messages`.
 - Copy the "Generated URL", paste it to your browser and pick the server to add it to.
 
-![Add bot to server](discord_add_bot.png)
+![Add bot to server](discord_add_bot.png.webp)
 
-![Add bot to server](discord_add_bot_2.png)
+![Add bot to server](discord_add_bot_2.png.webp)
 
 Then from `Server Settings` - `Integrations` - `Bots and Apps` you can check if your command was successfully added.
 
@@ -370,7 +370,7 @@ You can also add the command executing [this script](https://hub.windmill.dev/sc
 
 A template is available on the Windmill Hub: [Generate answer from embeddings with intermediate approval step](https://hub.windmill.dev/flows/46/).
 
-![Create the Discord Answer flow](./answer-flow.png 'Create the Discord Answer flow')
+![Create the Discord Answer flow](./answer-flow.png.webp 'Create the Discord Answer flow')
 
 This flow will generate the answer and send it back to Discord. It is composed of the following steps:
 
@@ -789,7 +789,7 @@ Let's create the URL for the Discord Interaction endpoint.
 2. Copy the `Result/Sync` webhook URL.
 3. Create a [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens).
 
-![Add webhook token](./add_token.png 'Add webhook token')
+![Add webhook token](./add_token.png.webp 'Add webhook token')
 
 Windmill supports a special query parameter `?include_header=<header1>,<header2>` that can be used to pipe headers from the request to the script or flow parameters.
 
@@ -803,7 +803,7 @@ The URL should look like this:
 
 Copy and paste this URL into the Discord Interaction endpoint.
 
-![Building the URL for the Discord Interaction endpoint](./discord-interactions-endpoint.png 'Building the URL for the Discord Interaction endpoint')
+![Building the URL for the Discord Interaction endpoint](./discord-interactions-endpoint.png.webp 'Building the URL for the Discord Interaction endpoint')
 
 ## Create the Slack Interaction endpoint
 
@@ -870,7 +870,15 @@ If you have any questions or need further assistance, don't hesitate to reach ou
 
 ### Video Tutorial
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/VXj7xaWOAxo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/VXj7xaWOAxo"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen
+></iframe>
 
 ### Links
 

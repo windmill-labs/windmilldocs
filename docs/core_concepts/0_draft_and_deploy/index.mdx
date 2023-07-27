@@ -7,14 +7,14 @@ Draft, test, and deploy scripts, flows, and apps Windmill to iterate and save sa
 Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by your browser in `local storage`, by the backend as a `draft`, and `deployed`.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/draft_and_deploy.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/draft_and_deploy.mp4"
 />
 
-<br/>
+<br />
 
 :::tip Deploy to Staging or Prod
 
@@ -47,11 +47,11 @@ Apps and Flows only have one deployed version at a given path and doing a new de
 Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. The path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Versioning"
-    	description="Scripts, when deployed, can have a parent script identified by its hash."
-    	href="/docs/script_editor/versioning"
-    />
+	<DocCard
+		title="Versioning"
+		description="Scripts, when deployed, can have a parent script identified by its hash."
+		href="/docs/script_editor/versioning"
+	/>
 </div>
 
 ## Diff Viewer
@@ -59,16 +59,16 @@ Scripts are special because each deployment of a script creates an immutable has
 A diff viewer is available when loading scripts from autosave or draft.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="/videos/diff_viewer.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+	src="/videos/diff_viewer.mp4"
 />
 
-<br/>
+<br />
 
 > Changes can then be reversed to previous version.
 
 ## Recap
 
-![Recap Draft and Deploy](./recap_draft_and_deploy.png)
+![Recap Draft and Deploy](./recap_draft_and_deploy.png.webp)

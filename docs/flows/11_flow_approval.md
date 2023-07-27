@@ -50,7 +50,7 @@ You can think of a scenario where only specific people can resume or cancel a
 Flow. To achieve this they would need to receive a personalized URL via some
 external communication channel (like e-mail, SMS or chat message).
 
-![Adding approval step](../assets/flows/approval-step.png 'Adding approval step')
+![Adding approval step](../assets/flows/approval-step.png.webp 'Adding approval step')
 
 > When adding a step to a flow, pick `Approval`.
 
@@ -60,7 +60,7 @@ external communication channel (like e-mail, SMS or chat message).
 customized**. This allows flexibility and security for cases where you either require
 approvals from all authorized people or only from one.
 
-![Required approvals](../assets/flows/flow-number-of-approvals.png 'Required approvals')
+![Required approvals](../assets/flows/flow-number-of-approvals.png.webp 'Required approvals')
 
 Note that approval steps can be applied the same configurations as regular steps ([Retries](./14_retries.md), [Early stop/Break](./2_early_stop.md) or [Suspend](./15_sleep.md)).
 
@@ -81,11 +81,11 @@ In the `Advanced` menu of a step, go to the "Suspend/Approval" tab and enable th
 
 Add properties and define their Name, Description, Type, Default Value and Advanced settings.
 
-![Approval text box](../assets/flows/add_argument.png)
+![Approval text box](../assets/flows/add_argument.png.webp)
 
 That will the be displayed on the approval page.
 
-![Approval text box](../assets/flows/page_arguments.png)
+![Approval text box](../assets/flows/page_arguments.png.webp)
 
 This is a way to introduce human-in-the-loop workflows and condition branches on approval steps inputs.
 
@@ -118,7 +118,7 @@ An [automated trigger version](#automated-trigger-version) of this flow is avail
 
 For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.md#auto-generated-uis). Two input were used: "User email" and "Order number", both strings.
 
-![Flow inputs](../assets/flows/tuto_approval_input.png)
+![Flow inputs](../assets/flows/tuto_approval_input.png.webp)
 
 Then, we picked an approval step on the Hub to [Ask channel for approval on Slack](https://hub.windmill.dev/scripts/slack/1503/). With inputs:
 
@@ -126,23 +126,23 @@ Then, we picked an approval step on the Hub to [Ask channel for approval on Slac
 - `channel`: Slack channel to publish message, as string.
 - `text`: `Refund request by _${flow_input["User email"]}_ on order ${flow_input["Order number"]}.`.
 
-![Slack inputs](../assets/flows/tuto_approval_slack.png)
+![Slack inputs](../assets/flows/tuto_approval_slack.png.webp)
 
 In the `Advanced` settings of the step, for "Suspend/Approval". We added the following properties to the form.
 
-![Form settings](../assets/flows/tuto_approval_form.png)
+![Form settings](../assets/flows/tuto_approval_form.png.webp)
 
-![Form settings 2](../assets/flows/tuto_approval_form_2.png)
+![Form settings 2](../assets/flows/tuto_approval_form_2.png.webp)
 
 This will lead to the following approval page:
 
-![Approval page](../assets/flows/tuto_approval_page.png)
+![Approval page](../assets/flows/tuto_approval_page.png.webp)
 
 This approval page will generate two keys you can use for further steps: `resume["Action"]` and `resume["Message"]`. `resume` is the resume payload.
 
 Those are the keys you can use as predicate expressions for your [branches](./13_flow_branches.md).
 
-![Branches predicate expressions](../assets/flows/tuto_approval_branches.png 'Branches predicate expressions')
+![Branches predicate expressions](../assets/flows/tuto_approval_branches.png.webp 'Branches predicate expressions')
 
 > With [Branch one](./13_flow_branches.md#branch-one), the first branch whose predicate expression is `true` will execute.
 
@@ -153,11 +153,11 @@ The content of each branch is of little importance for this tutorial as it depen
 <details>
   <summary>Example of arguments used for Gmail and Slack scripts:</summary>
 
-![Gmail inputs](../assets/flows/tuto_approval_gmail.png)
+![Gmail inputs](../assets/flows/tuto_approval_gmail.png.webp)
 
 <br/>
 
-![Slack inputs](../assets/flows/tuto_approval_slack2.png)
+![Slack inputs](../assets/flows/tuto_approval_slack2.png.webp)
 
 </details>
 
@@ -176,7 +176,7 @@ You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_man
 
 :::tip Find it on Windmill Hub
 
-![The branch is executed](../assets/flows/branch-executed.png)
+![The branch is executed](../assets/flows/branch-executed.png.webp)
 
 This flow can be found and forked on [Windmill Hub](https://hub.windmill.dev/flows/49/).
 

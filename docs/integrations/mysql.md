@@ -2,7 +2,7 @@
 
 To integrate [MySQL](https://www.mysql.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add MySQL Resource](../assets/integrations/add-matrix.png)
+![Add MySQL Resource](../assets/integrations/add-matrix.png.webp)
 
 | Property | Type   | Description     | Default | Required | Where to Find                                                                          |
 | -------- | ------ | --------------- | ------- | -------- | -------------------------------------------------------------------------------------- |

@@ -28,7 +28,7 @@ what's not**.
 **Flows can be scheduled through the Flow UI** using a CRON expression and then
 activating the schedule as seen in the image below.
 
-![Schedule Scripts](../getting_started/9_trigger_flows/schedule-flow.png)
+![Schedule Scripts](../getting_started/9_trigger_flows/schedule-flow.png.webp)
 
 Examples of trigger scripts include:
 

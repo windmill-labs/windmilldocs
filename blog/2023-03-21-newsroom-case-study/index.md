@@ -3,7 +3,7 @@ slug: newsroom-case-study
 title: Trigger Workflows from Slack - Newsroom Case Study
 authors: [atelier]
 tags: [case study, testimonial, slack commands, non-technical users, monitoring, scheduling]
-image: ./0-header.jpg
+image: ./0-header.jpg.webp
 ---
 
 This is a testimonial written by Wei Chih, Independent Journalist for a newsroom in Singapore.
@@ -14,7 +14,7 @@ This is a testimonial written by Wei Chih, Independent Journalist for a newsroom
 
 <br/>
 
-![Newsroom Case Study](./0-header.jpg 'Newsroom Case Study')
+![Newsroom Case Study](./0-header.jpg.webp 'Newsroom Case Study')
 
 ## What before Windmill?
 

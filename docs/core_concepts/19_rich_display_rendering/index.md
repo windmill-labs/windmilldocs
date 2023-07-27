@@ -13,8 +13,8 @@ If the result is an object/dict with a single key (except for `approval`, which 
 | table-row | Render the value as a row in a table                        | `return { 'table-row': [ 'foo', 'bar' ]}`                                                                            |
 | html      | Render the value as HTML                                    | `return { 'html': '<div>...</div>' }`                                                                                |
 | png       | Render the value as a PNG image                             | `return { 'png': { 'content': encode(image), 'filename': 'image.png' } }`                                            |
-| file      | Render an option to download the file                       | `return { 'file': { 'content': encode(file), 'filename': 'data.txt' } }`                                              |
-| jpeg      | Render the value as a JPEG image                            | `return { 'jpeg': { 'content': encode(image), 'filename': 'image.jpg' } }`                                           |
+| file      | Render an option to download the file                       | `return { 'file': { 'content': encode(file), 'filename': 'data.txt' } }`                                             |
+| jpeg      | Render the value as a JPEG image                            | `return { 'jpeg': { 'content': encode(image), 'filename': 'image.jpg.webp' } }`                                      |
 | gif       | Render the value as a GIF image                             | `return { 'gif': { 'content': encode(image), 'filename': 'animation.gif' } }`                                        |
 | error     | Render the value as an error message                        | `return { 'error': { 'name': '418', 'message': "I'm a teapot" }}`                                                    |
 | approval  | Render an approval and buttons to Resume or Cancel the step | `return { 'resume': 'https://example.com', 'cancel': 'https://example.com', 'approvalPage': 'https://example.com' }` |
@@ -25,17 +25,18 @@ If the result is an object/dict with a single key (except for `approval`, which 
 For example:
 
 ```ts
-import { encode } from "https://deno.land/std@0.82.0/encoding/base64.ts";
+import { encode } from 'https://deno.land/std@0.82.0/encoding/base64.ts';
 
 export async function main() {
-  const url = 'https://source.unsplash.com/featured/300x201';
-  const resp = await fetch(url);
-  const buff = await resp.arrayBuffer();
-  const data = encode(buff);
-  return {
-    png: {
-      content: data,
-      filename: 'image.png'
-    }
-  };
+	const url = 'https://source.unsplash.com/featured/300x201';
+	const resp = await fetch(url);
+	const buff = await resp.arrayBuffer();
+	const data = encode(buff);
+	return {
+		png: {
+			content: data,
+			filename: 'image.png'
+		}
+	};
 }
+```

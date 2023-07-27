@@ -6,7 +6,7 @@ canonical_url: /docs/core_concepts/concurrency_limits
 
 The Concurrency Limits feature allows you to define concurrency limits for scripts and inline scripts within flows. Its primary goal is to prevent exceeding the API Limit of the targeted API, eliminating the need for complex workarounds using worker groups.
 
-![Concurrency Limit](../assets/code_editor/concurrency_limit_flow.png)
+![Concurrency Limit](../assets/code_editor/concurrency_limit_flow.png.webp)
 
 ## How it Works
 
