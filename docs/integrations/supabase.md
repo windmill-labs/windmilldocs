@@ -17,20 +17,15 @@ You can execute queries on Supabase through the regular Postgres protocol.
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    src="/videos/supabase_postgres_integration.mp4"
+    src="/videos/supabase_wizard.mp4"
 />
 
 1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
 
 2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
 
-3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
-
-   - Go to the `Settings` section.
-   - Click `Database`.
-   - Find your Connection Info and Connection String. Direct connections are on port 5432.
-
-4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the sslmode to "disable". More details on our [PostgreSQL Quickstart](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).
+3. From Windmill, on the [Resources](../core_concepts/3_resources_and_types/index.mdx) menu click on "Add a resource". Pick "postgresql" and "Add a Supabase DB". This will lead you to a Supabase page where
+you need to pick your organization. Then on Windmill pick a database, fill with database password and that's it.
 
 ## Through Supabase API
 

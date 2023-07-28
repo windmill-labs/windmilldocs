@@ -40,11 +40,33 @@ The flow settings are divided into four tabs:
 
 ### Metadata
 
-The metadata tab allows you to configure the flow name, summary, and description.
-Permissions can be configured in two ways:
+Each flow has metadata associated with it, enabling it to be defined and configured in depth.
 
-- by User: select a user
-- by Folder: select a [folder](../core_concepts/8_groups_and_folders/index.md#folders)
+#### Summary
+
+Summary (optional) is a short, human-readable summary of the Script. It will be displayed as a title across Windmill. If omitted, the UI will use the `path` by default.
+
+#### Path
+
+**Path** is the Flow's unique identifier that consist of the [flow's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
+The owner can be either a user, or a group of users ([folder](../core_concepts/8_groups_and_folders/index.md#folders)).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Roles and Permissions"
+    	description="Control access and manage permissions within your instance and workspaces."
+    	href="/docs/core_concepts/roles_and_permissions"
+    />
+    <DocCard
+    	title="Groups and Folders"
+    	description="Groups and Folders enable efficient permission management by grouping users with similar access levels."
+    	href="/docs/core_concepts/groups_and_folders"
+    />
+</div>
+
+#### Description
+
+This is where you can give instructions to users on how to run your Flow. It supports markdown.
 
 ![Flow Metadata](../assets/flows/flow_settings_metadata.png.webp)
 
@@ -61,6 +83,15 @@ A CRON expression is used to define the schedule. Schedules can also be disabled
 Have more details on all the ways to trigger flows [here](../getting_started/9_trigger_flows/index.md).
 
 :::
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+  <DocCard
+  		color="teal"
+    	title="Scheduling"
+    	description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+    	href="/docs/core_concepts/scheduling"
+    />
+</div>
 
 ### Shared Directory
 
@@ -91,6 +122,15 @@ This flow can be found on the Demo workspace.
 :::
 
 Another example is to be found from the [Hub](https://hub.windmill.dev/flows/32/same-worker-example-of-using-the-'.%2Fshared'-folder).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+		color="teal"
+		title="Persistent Storage"
+    	description="Ensure that your data is safely stored and easily accessible whenever required."
+    	href="/docs/core_concepts/persistent_storage"
+    />
+</div>
 
 ## Test flow
 
@@ -253,20 +293,29 @@ The header is composed of:
 
 - **Summary**: edit the summary of the script.
 - **Shortcuts**: shortcut to advanced configuration.
-  1. **[Retries](./14_retries.md)**: configure the number of retries and the delay between each retry.
-  2. **[Early stop/Break](./2_early_stop.md)**: if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
-  3. **[Suspend](./11_flow_approval.md)**: if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
-  4. **[Sleep](./15_sleep.md)**: if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
+  1. [Retries](./14_retries.md): configure the number of retries and the delay between each retry.
+  2. [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
+  3. [Suspend](./11_flow_approval.md): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
+  4. [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
 
 ### Script editor
 
-- Context var: add a context variable to the script
-- Var: add an input variable to the script
-- Resource: add a resource to the script
-- Reset: reset the script to its initial state
-- Assistant: reload the LSP assistant
-- Format: format the script. Can be triggerd on save (CTRL+S)
-- Script: view hub or workspace script code
+- Context var: add a context variable to the script.
+- Var: add an input variable to the script.
+- Resource: add a resource to the script.
+- Reset: reset the script to its initial state.
+- Assistant: reload the LSP assistant.
+- Format: format the script. Can be triggerd on save (CTRL+S).
+- Script: view hub or workspace script code.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+		color="teal"
+		title="Script Editor"
+    	description="In Windmill, Scripts are the basis of all major features."
+    	href="/docs/script_editor"
+    />
+</div>
 
 ### Step configuration/Test this step
 
@@ -322,25 +371,25 @@ The result and logs are displyed on the left-hand side.
 
 The advanced section allows to configure the following:
 
-##### Retries
+**Retries**
 
 Configure the number of [retries](./14_retries.md) and the delay between each retry.
 
 ![Retries](../assets/flows/flow_retries.png.webp)
 
-##### Early stop/Break
+**Early stop/Break**
 
 If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should [stop early](./2_early_stop.md). Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
 
 ![Early stop](../assets/flows/flow_early_stop.png.webp)
 
-##### Suspend
+**Suspend**
 
 If defined, at the end of the step, the flow will be [suspended](./11_flow_approval.md) until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
 
 ![Suspend](../assets/flows/flow_suspend.png.webp)
 
-##### Sleep
+**Sleep**
 
 If defined, at the end of the step, the flow will [sleep](./15_sleep.md) for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
 

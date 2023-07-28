@@ -37,7 +37,7 @@ And many more use cases.
 
 ## How to do it
 
-Within a [flow](../getting_started/6_flows_quickstart/index.md), pick the step **after which** you want to suspend:
+Within a [flow](../getting_started/6_flows_quickstart/index.mdx), pick the step **after which** you want to suspend:
 
 - go to `Advanced`
 - click on `Sleep`
