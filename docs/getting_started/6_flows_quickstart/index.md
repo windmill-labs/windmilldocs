@@ -176,6 +176,6 @@ You don't have to explore all flows editor possibilities at once. At each step, 
 
 <br/>
 
-When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, share it, or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
+When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, [create and app from it](../../core_concepts/6_auto_generated_uis/index.md#automatically-generated-apps), or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
 
 Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.

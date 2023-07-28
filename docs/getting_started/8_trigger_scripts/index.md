@@ -73,6 +73,14 @@ More details on our page dedicated to [Windmill App Editor](../../getting_starte
 
 :::
 
+You can also [automatically generate](../../core_concepts/6_auto_generated_uis/index.md#automatically-generated-apps) a dedicated app to execute your script.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/cowsay_app.mp4"
+/>
+
 ### Trigger Scripts from Flows
 
 Flows are basically sequences of scripts that execute one after another or [in parallel](../../flows/13_flow_branches.md#branch-all).
