@@ -73,7 +73,7 @@ If the Schedules menu allows you to control future executions of scripts and wor
 
 ## Configure Schedules from Flow Editor
 
-The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.md).
+The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.mdx).
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -157,6 +157,6 @@ Not only can you build scheduled jobs [from Windmill](../../getting_started/00_h
 
 <!-- Resources -->
 
-[flows]: ../../getting_started/6_flows_quickstart/index.md
+[flows]: ../../getting_started/6_flows_quickstart/index.mdx
 [scripts]: ../../getting_started/0_scripts_quickstart/index.mdx
 [apps]: ../../getting_started/7_apps_quickstart/index.mdx

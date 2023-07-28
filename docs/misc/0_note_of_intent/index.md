@@ -51,7 +51,7 @@ Windmill embeds:
 - a powerful **web IDE** to write Scripts with autocompletion and syntax
   checking
 - a **low-code builder and workflow engine** to build and run complex
-  [Flows](../../getting_started/6_flows_quickstart/index.md) by composing your
+  [Flows](../../getting_started/6_flows_quickstart/index.mdx) by composing your
   custom scripts and generic scripts shared on
   [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
   - [retries](../../flows/14_retries.md) with fixed and exponential backoff
