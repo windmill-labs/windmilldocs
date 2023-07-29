@@ -2,6 +2,12 @@
 
 Windmill provides ways to have AI help you in your coding experience.
 
+:::info OpenAI Integration
+
+If you're interested leveraging OpenAI from your scripts, flows and apps, check [OpenAI Integration](../../integrations/openai.md).
+
+:::
+
 ## Code Generation
 
 Generate Windmill-specific code from simple text.
