@@ -122,6 +122,7 @@ const sidebars = {
 						id: 'flows/flow_editor'
 					},
 					items: [
+						'flows/architecture',
 						'flows/editor_components',
 						'flows/error_handling',
 						'flows/flow_branches',

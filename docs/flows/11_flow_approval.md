@@ -71,7 +71,6 @@ You can add an arbitrary schema form to be provided and displayed on the approva
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     controls
-    id="main-video"
     src="/videos/form_approval_page.mp4"
 />
 
@@ -98,7 +97,6 @@ Here is a basic example we will detail below.
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     controls
-    id="main-video"
     src="/videos/example_approval_branches.mp4"
 />
 
@@ -116,7 +114,7 @@ An [automated trigger version](#automated-trigger-version) of this flow is avail
 
 :::
 
-For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.md#auto-generated-uis). Two input were used: "User email" and "Order number", both strings.
+For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.mdx#auto-generated-uis). Two input were used: "User email" and "Order number", both strings.
 
 ![Flow inputs](../assets/flows/tuto_approval_input.png.webp)
 
@@ -168,7 +166,6 @@ You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_man
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     controls
-    id="main-video"
     src="/videos/automated_refund.mp4"
 />
 

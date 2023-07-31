@@ -123,7 +123,6 @@ The JSON Schema of a script's arguments can be modified in the "Customize Inputs
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/schema_flows.mp4"
 />
 
@@ -136,7 +135,6 @@ Resource types in Windmill are associated with JSON Schemas. A resource type def
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/schema_rt.mp4"
 />
 
@@ -149,7 +147,6 @@ Here is an example on how to define a python list as an enum of strings using th
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/advanced_parameters_enum.mp4"
 />
 

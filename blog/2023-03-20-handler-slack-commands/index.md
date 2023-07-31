@@ -18,7 +18,6 @@ Know that non-technical users can totally build such tools. I'm myself not a dev
   loop
   controls
   src="/videos/generated_email.mp4"
-  alt="container component"
 />
 
 <br/>
@@ -206,7 +205,6 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
   loop
   controls
   src="/videos/command_event.mp4"
-  alt="container component"
 />
 
 <br/>
@@ -251,7 +249,6 @@ Once your resources are added, you can choose to pre-load them (as the gcal auth
     loop
     controls
     src="/videos/generated_email.mp4"
-    alt="container component"
 />
 
 <br/>

@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # CLI and Local Development
 
-While Windmill provides low-code builders to create [Scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Flows](../getting_started/6_flows_quickstart/index.md) and [Apps](../getting_started/7_apps_quickstart/index.mdx), you could choose to interact with Windmill in different ways.
+While Windmill provides low-code builders to create [Scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Flows](../getting_started/6_flows_quickstart/index.mdx) and [Apps](../getting_started/7_apps_quickstart/index.mdx), you could choose to interact with Windmill in different ways.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
   <DocCard

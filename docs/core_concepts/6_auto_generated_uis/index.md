@@ -34,7 +34,7 @@ In the UI customization interface, you can refine information that couldn't be i
 
 :::tip Test code
 
-This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.mdx) & [flow](../../getting_started/6_flows_quickstart/index.md) editors to test your code.
+This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.mdx) & [flow](../../getting_started/6_flows_quickstart/index.mdx) editors to test your code.
 
 <br/>
 

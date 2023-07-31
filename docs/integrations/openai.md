@@ -11,6 +11,12 @@
 
 <br/>
 
+:::info AI-based programming
+
+If you're interested in AI-based programming check [AI Generation](../code_editor/ai_generation.md).
+
+:::
+
 To integrate [OpenAI](https://openai.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 | Property        | Type   | Description                                                                                                   | Default | Required | Where to Find                                                         |
