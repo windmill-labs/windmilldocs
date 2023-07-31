@@ -35,7 +35,7 @@ Managing scripts, flows and apps on Windmill works at the [workspace](../16_role
 
 <br/>
 
-Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.md) in Windmill** (among [webhooks](../4_webhooks/index.md), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
+Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill** (among [webhooks](../4_webhooks/index.md), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
 
 :::
 
@@ -79,7 +79,6 @@ The same method can also be done from the [flow editor](../../getting_started/6_
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/schedule-cron.mp4"
 />
 

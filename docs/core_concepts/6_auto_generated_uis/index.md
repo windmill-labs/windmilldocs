@@ -41,7 +41,6 @@ This feature can be directly used in the [script](../../getting_started/0_script
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     loop
     controls
-    id="main-video"
     src="/videos/ui_from_script_editor.mp4"
 />
 

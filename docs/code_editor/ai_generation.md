@@ -34,7 +34,7 @@ Code generation on Windmill from OpenAI only works on GPT-4 so far.
 
 :::
 
-Then from a code editor (Script, Flow, Apps), click on `AI Gen` and write with a prompt what the script should do.
+Then from a code editor (Script, Flow, Apps), click on `AI Gen` and write with a prompt what the script should do. The script will use Windmill's main requirements and features (exposing a main function, importing libraries, using resource types, declaring required parameters with types, leveraging database schema).
 
 ![Prompt](../assets/code_editor/ai_gen.png "Prompt")
 

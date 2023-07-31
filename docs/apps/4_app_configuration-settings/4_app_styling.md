@@ -26,7 +26,6 @@ You can configure manually your own classes with our Rich Editor.
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/rich_editor.mp4"
 />
 
@@ -44,7 +43,6 @@ On the right-side menu, pick `Global styling` and go on a component to define pr
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/global_styling.mp4"
 />
 
@@ -62,7 +60,6 @@ Just click on `Copy style to global CSS`.
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/copy_style_global_css.mp4"
 />
 
