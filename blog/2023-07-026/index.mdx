@@ -1,6 +1,6 @@
 ---
 slug: windmill-ai
-title: Building an AI Assistant with GPT-4
+title: Add an AI Code Copilot to your product using GPT-4
 authors: [hugocasa]
 tags:
   [
@@ -14,38 +14,61 @@ tags:
 image: ./media/cover.png
 ---
 
-In recent weeks, we've been working on an AI-powered assistant for Windmill.
-This feature allows users to create scripts from scratch or make code adjustments with ease using simple prompts.
-If any errors occur in your script, the AI can help fix them while providing explanations for its solutions.
-Moreover, the AI is well-versed in Windmill's specific concepts, such as resources and parameters, making it very helpful.
+In recent weeks, we've been working on an AI Code Copilot for Windmill.
+Users can now easily generate whole scripts or make code adjustments using prompts.
+They can also ask the AI to fix their errors by the click of a button.
 
-We are very excited about this feature and we couldn't wait to share with you the process behind its creation.
-Our goal is to inspire others to develop their own AI-powered tools for their products.
-Thanks to OpenAI, implementing this feature is fairly straightforward.
+Here's a quick demo of what we've built.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800 mb-4"
+	autoPlay
+	loop
+	controls
+	src="/videos/ai_demo.mp4"
+	alt="AI demo"
+/>
 
 :::tip
-If you want to try it out, enable the feature as instructed in the [documentation](https://docs.windmill.dev).
+If you want to try it out, enable the feature as instructed in the [documentation](https://www.windmill.dev/docs/core_concepts/ai_generation).
 You will need an API key from OpenAI with access to the GPT-4 model.
 :::
 
-## GPT-4 and OpenAI API
+Now that we are an AI startup (jk), we wanted to share with you the process behind this feature so that you can build your own AI-powered tools for your product using GPT-4.
+
+This post will go over the following topics:
+
+- [Why GPT-4](#why-gpt-4)
+- [Generating code from instructions](#generating-code-from-instructions)
+- [Code editing and bug fixing](#code-editing-and-bug-fixing)
+- [Prompt tracking](#prompt-tracking)
+
+## Why GPT-4
 
 This feature is powered by the GPT-4 model from OpenAI, their latest language model known for achieving unprecedented performance.
 Its capabilities extend not only to generating text but also to coding tasks, making it highly suitable for our use case.
-The GPT-4 model excels at following instructions and supports larger context, accommodating up to 32K tokens.
+GPT-4 also excels at following instructions and supports larger context, accommodating up to 32K tokens.
 
-To interact with the GPT-4 model, we utilize the OpenAI Node API v4 library, currently in beta.
+We chose this model over others because of its superior performance and its ease of use.
+However, we are looking forward to experimenting with other models in the future, especially OSS ones such as StarCoder and Llama-2.
+The technics we have used here should be applicable to those as well.
+
+To interact with GPT-4, we utilize the OpenAI Node API v4 library, currently in beta.
 You can explore all our code on GitHub [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/codeGen/lib.ts).
 Additionally, we have implemented a backend service in Rust to proxy the user's request and add the OpenAI API key without revealing it in the frontend.
 You can find the relevant code [here](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-api/src/openai.rs).
 
-## Prompting for code generation
+## Generating code from instructions
 
-We engage with GPT-4 through OpenAI's chat completion API, enabling us to transmit messages – user or system-related – and receive responses from the model accordingly.
-System messages are utilized to convey general instructions to the model, guiding it on how to respond appropriately. On the other hand, user messages are employed to provide specific instructions from the user.
+Most of the work for building the copilot went into designing the prompts.
+For code generation, we take instructions from the user and pass them along contextual information and global instructions to GPT-4.
+The OpenAI API exposes a completion endpoint that takes a prompt in the form of user and system messages.
+System messages convey general instructions to the model while user messages provide specific instructions and expect an answer.
 
-In our system message, we specifically instruct it to generate code and present the output in a code block.
-Below is our system prompt:
+### Prompt templates
+
+In the system message for code generation, we instruct it to generate code and present the output in a code block.
+You can find our template below. We utilize the same system message for all the different languages supported by Windmill.
 
 ````
 You write code as queried by the user. Only output code. Wrap the code like that:
@@ -57,10 +80,9 @@ You write code as queried by the user. Only output code. Wrap the code like that
 Put explanations directly in the code as comments.
 ````
 
-To extract and display the code exclusively, we employ regular expressions on the response data.
-We utilize the same system message for all the different languages supported by Windmill.
+To extract and display exclusively the code, we apply the following regular expression on the response: ` /```[a-zA-z]+\n([\s\S]*?)\n```/ `.
 
-The user messages play a dual role, encompassing both the user-provided instructions and contextual information. This context includes details like the programming language and desired structure, among other specifics.
+In the user message, we also include contextual information in addition to the user-provided instructions. This context includes details like the programming language and desired structure, among other specifics.
 
 Below is the initial segment of the user message template for Python:
 
@@ -71,17 +93,41 @@ Write a function in python called "main". The function should {description}. Spe
 The {description} placeholder gets replaced by the user's instructions.
 To ensure compatibility with Windmill's execution process, we explicitly state that the provided code should contain a function called "main."
 Additionally, we request GPT-4 to specify parameters alongside their corresponding data types.
-This information allows Windmill to parse the parameters accurately and present them in the script execution form.
+This information allows Windmill to parse the parameters and present them in the script execution form.
 
-## Handling resource types
+### Handling resource types
 
 Windmill incorporates resource types, which serve as blueprints defining the structure of resources that can be utilized as parameters in scripts.
 For instance, a resource type may represent connection credentials to a Github account.
-Our objective is to empower the AI to generate code that leverages these resource types effectively.
-For instance, if the user requests a script that returns the number of stars of a Github repository, the AI should be capable of generating code that seamlessly utilizes the specified resource.
+We use standard Python and TypeScript syntax to define these resource types which are then passed as inputs to the main function as you can see below:
 
-To achieve this, we include the resource types within the user message, providing clear instructions on how to employ them.
-Below is the updated template with sample resource types:
+```python
+class github(TypedDict):
+    token: str
+
+def main(github: github):
+    ...
+    token = github['token']
+    ...
+```
+
+```typescript
+type Github = {
+  token: string;
+};
+
+async function main(github: Github) {
+  ...
+  const token = github.token;
+  ...
+}
+```
+
+Our objective is to enable the AI to generate code that leverages these resource types.
+For instance, if the user requests a script that returns the number of stars of a Github repository, the AI should be capable of generating code that uses the required resource.
+
+To achieve this, we include all the resource types within the user message, providing clear instructions on how to employ them.
+Below is the updated template for Python with sample resource types:
 
 ```
 Write a function in python called "main". The function should {description}. Specify the parameter types. Do not call the main function.
@@ -100,13 +146,13 @@ class ...
 Only use the ones you need. If the TypedDict name conflicts with the imported object, rename the imported object NOT THE TYPE.
 ```
 
-Based on our observations, we made some additional enhancements to the user message template.
+Based on our observations, we made some additional instructions to the user message template which you can find on the last line.
 Specifically, we encountered instances where GPT-4 would include numerous resource types in the generated code, even if they were not required.
-To mitigate this, we've included supplementary instructions to guide the AI in using only the necessary resource types in the code.
-Furthermore, GPT-4 occasionally introduced renaming conflicts when importing libraries with the same name as the resource type.
-To prevent such conflicts, we've added further instructions on how to handle naming conventions appropriately.
+To mitigate this, we insist on only using the necessary resource types.
+Furthermore, GPT-4 occasionally introduced naming conflicts when importing libraries with the same name as the resource type.
+To prevent that, we've specified that it should rename the imported object instead of the type, as the latter is required for Windmill to parse the parameters.
 
-Watch our AI generate a Python script to retrieve the number of stars for a GitHub repository in this demo video:
+Watch our AI generate a Python script to retrieve the number of stars for a GitHub repository:
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -120,25 +166,40 @@ Watch our AI generate a Python script to retrieve the number of stars for a GitH
 	<i>Generation time has been reduced to enhance the viewing experience</i>
 </sup>
 
+Regarding UI, we've incorporated a single "AI Gen" button within the existing script builder interface.
+As you can see in the demo video, clicking this button opens a popover with a text input, where users can conveniently enter their instructions.
+To showcase changes effectively, we utilize [Moncao's diff editor](https://microsoft.github.io/monaco-editor/playground.html?source=v0.39.0#example-creating-the-diffeditor-hello-diff-world), which allows users to review and accept or reject modifications seamlessly.
+This is specifically useful for code editing and fixing which we will discuss later.
+
+### Handling multiple languages
+
 Windmill offers support for a wide range of languages, with some languages like TypeScript and Go sharing similar prompting styles as python.
 However, languages like SQL and Bash necessitated distinct instructions.
 For those, we provided explicit explanations on how to declare parameters and incorporate them into queries to ensure accurate code generation.
 
-Below is the template for Postgres SQL:
+Here's how we define parameters in PostgreSQL scripts:
+
+```sql
+-- $1 firstName = John
+-- $2 lastName = Doe
+insert into users (first_name, last_name) values ($1, $2);
+```
+
+Below is the corresponding prompt template:
 
 ```
 Write SQL code for PostgreSQL that should {description}. Arguments can be obtained directly in the statement with `$1::{type}`, `$2::{type}`, etc...
 Name the parameters by adding comments before the command like that: `-- $1 name1` or `-- $2 name = default` (one per row, do not include the type)
 ```
 
-You can find the templates for all languages and runtimes [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/codeGen/prompts/gen.yaml).
+You can find the code generation templates for all languages and runtimes [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/codeGen/prompts/gen.yaml).
 
-## Database schemas
+### Handling database schemas
 
-Taking database scripts to the next level, we aimed to equip the AI with the ability to generate code utilizing the database schema intelligently.
-For instance, when you inquire about the most sold product each month on an ecommerce website, the AI should be able to formulate a query with the appropriate tables and columns automatically.
+Taking database scripts to the next level, we've given the AI the ability to generate code based on the database schema.
+Basically, based on instructions, the AI automatically formulates an SQL query with the appropriate tables and columns.
 To achieve this, we integrate schema querying from the selected database, and we include it as part of the user message, along with clear instructions on how to utilize it.
-Below is the updated template, accompanied by an example schema:
+Below is the updated template, accompanied by part of the schema from a Windmill instance database:
 
 ```
 Write SQL code for PostgreSQL that should {description}. Arguments can be obtained directly in the statement with `$1::{type}`, `$2::{type}`, etc...
@@ -146,32 +207,22 @@ Name the parameters by adding comments before the command like that: `-- $1 name
 Here's the database schema, each column is in the format [name, type, required, default?]:
 {
   "public": {
-    "users": [
-      ["id", "integer", true],
-      ["name", "text", true],
-      ["email", "text", true],
-      ["created_at", "timestamp", true, "now()"],
-      ["updated_at", "timestamp", true, "now()"]
+    "usr": [
+      ["username", "varchar", true],
+      ["email", "varchar", true],
+      ...
     ],
-    "products": [
-      ["id", "integer", true],
-      ["name", "text", true],
-      ["price", "integer", true],
-      ["created_at", "timestamp", true, "now()"],
-      ["updated_at", "timestamp", true, "now()"]
+    "completed_job": [
+      ["id", "uuid", true],
+      ["created_by", "varchar", true],
+      ...
     ],
-    "orders": [
-      ["id", "integer", true],
-      ["user_id", "integer", true],
-      ["product_id", "integer", true],
-      ["created_at", "timestamp", true, "now()"],
-      ["updated_at", "timestamp", true, "now()"]
-    ]
+    ...
   }
 }
 ```
 
-Watch our AI generate a SQL script to retrieve the email of the user who executed the most jobs on a Windmill instance in this demo video:
+Watch our AI generate a SQL script to retrieve the email of the user who executed the most jobs on a Windmill instance:
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -188,10 +239,10 @@ Watch our AI generate a SQL script to retrieve the email of the user who execute
 
 ## Code editing and bug fixing
 
-In addition to its capabilities in text generation prompts, we were keen on harnessing GPT-4's potential for code editing and bug fixing.
+In addition to its capabilities for code generation, we wanted to leverage GPT-4 for code editing and bug fixing.
 
-The process for code editing is quite similar, with the exception that we include the selected code lines as part of the user message.
-We continue to utilize the same system message to guide the AI effectively.
+The process for code editing is quite similar to code generation, with the exception that we include the selected code lines as part of the user message.
+We continue to utilize the same system message to guide the AI effectively but we use a different user message:
 
 ````
 Here's my python3 code:
@@ -204,6 +255,8 @@ You have access to the following resource types, if you need them, you have to d
 Only use the ones you need. If the TypedDict name conflicts with the imported object, rename the imported object NOT THE TYPE.
 My instructions: {description}
 ````
+
+We integrated this feature into the script builder by simply changing the "AI Gen" button to "AI Edit" button when code is selected.
 
 For bug fixing, we pass the complete code and the error message, but no user instructions.
 
@@ -232,29 +285,41 @@ explanation: "Here's the explanation"
 Also put the explanations in the code as comments.
 ````
 
-## UI
-
-To ensure a user-friendly experience with our AI assistant, we incorporated a straightforward "AI Gen" button within the existing script builder interface.
-Clicking this button opens a popover with a text input, where users can conveniently enter their instructions.
-If users have selected code prior to clicking the button, we pass it as part of the message, enabling code editing prompts for further convenience.
-
-For code fixing, we introduced a dedicated "AI Fix" button placed next to the error message, making it easily accessible.
-
-![AI Fix button](./media/ai_fix.png)
-
+For ease of use, we introduced a dedicated "AI Fix" button placed next to the error message, making it easily accessible.
 Additionally, we included an "Explain" button that, upon hovering, displays an explanation of the fix for better understanding.
 
-![AI Explain](./media/ai_fix_explain.png)
+Watch our AI fix a bug in a Python script:
 
-To showcase changes effectively, we utilize [Moncao's diff editor](https://microsoft.github.io/monaco-editor/playground.html?source=v0.39.0#example-creating-the-diffeditor-hello-diff-world), which allows users to review and accept or reject modifications seamlessly.
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	controls
+	src="/videos/ai_fix_demo.mp4"
+	alt="AI fix demo"
+/>
+
+<sup>
+	<i>Generation time has been reduced to enhance the viewing experience</i>
+</sup>
+
+## Prompt tracking
+
+In order to keep track of changes and performance, we implemented a tracking system for prompts.
+We store them in yaml files, which makes it easy to read and edit them.
+We create separate files per generation type (code, edit, fix) but include all languages and runtimes in each file for comparison.
+You can find all the templates [here](https://github.com/windmill-labs/windmill/tree/main/frontend/src/lib/components/codeGen/prompts).
+
+Moreover, everytime we make a change to the prompts, we regenerate answers of sample questions and store them in a yaml file as well, making it easy to read and compare in pull requests.
+The sample questions and answers can be found [here](https://github.com/windmill-labs/windmill/tree/main/llm).
 
 ## Next steps
 
-Thank you for taking the time to explore how we built our AI assistant.
-We hope you found it enlightening and now have a clearer vision on how to build your own AI assistant for your product using GPT-4.
+Thank you for taking the time to explore how we built our AI code copilot.
+We hope you found it insightful and now have a clear idea on how to build your own AI copilot for your product using GPT-4.
 If you have any questions or ideas you'd like to discuss, please don't hesitate to reach out to us.
 
 At Windmill, we are delighted with the positive outcomes thus far.
 As part of our commitment to continuous improvement, we will keep refining the prompts to enhance their performance.
 Additionally, we're excited to explore new possibilities for implementing GPT-4 within Windmill, such as incorporating it into the flow and app builders.
-Your feedback is of great value to us, and we welcome any suggestions or thoughts on how to further enhance our assistant.
+Your feedback is of great value to us, and we welcome any suggestions or thoughts on how to further enhance our AI copilot.
