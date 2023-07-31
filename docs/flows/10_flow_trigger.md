@@ -5,7 +5,7 @@ By default, adding a trigger will set the schedule to 15 minutes.
 
 :::info
 
-Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md) and [Triggering flows](../getting_started/9_trigger_flows/index.md).
+Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md) and [Triggering flows](../getting_started/9_trigger_flows/index.mdx).
 
 :::
 

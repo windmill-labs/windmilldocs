@@ -143,7 +143,6 @@ For Postgres databases (best for structured data storage and retrieval, where yo
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/supabase_postgres_integration.mp4"
 />
 
@@ -182,7 +181,6 @@ More tutorials on Supabase:
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/neon_integration.mp4"
 />
 
@@ -224,7 +222,6 @@ Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/s3_objects_in_bucket.mp4"
 />
 

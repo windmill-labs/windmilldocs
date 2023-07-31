@@ -1,6 +1,6 @@
 # Mailchimp Mandrill Integration
 
-Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.md) or [flows](../getting_started/9_trigger_flows/index.md) by e-mail.
+Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.mdx) or [flows](../getting_started/9_trigger_flows/index.mdx) by e-mail.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -178,7 +178,6 @@ Here is what it does when "input" = `results.c[0].msg.headers.Subject` (c being 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/branch_fwd_direct.mp4"
 />
 

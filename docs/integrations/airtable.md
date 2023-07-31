@@ -26,7 +26,6 @@ You'll need to land on Airtable's <a href="https://airtable.com/create/tokens" r
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/adding_airtable_table.mp4"
 />
 <br/>
