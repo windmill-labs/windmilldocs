@@ -296,7 +296,7 @@ const sidebars = {
 			type: 'category',
 			label: 'Windmill Compared to',
 			items: [
-				'compared_to/index',
+				'compared_to/peers',
 				'compared_to/airplane',
 			]
 		},

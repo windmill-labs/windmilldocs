@@ -1,0 +1,61 @@
+# Windmill and Supabase partner for smooth integration between databases and internal tools
+
+<!-- Give an author ? RF, HC ? Nobody makes it more neutral -->
+<!-- Have a midjourney picture, just for the mignature in the blog section: todo Faton -->
+
+Windmill is proud to announce a partnership with [Supabase](https://supabase.com/) to easily integrate databases to interact with scripts, flows, and apps. Although we support multiple database providers, Supabase is by far the most recommended one due to its performance and security capabilities.
+
+<!-- Video to be updated with examples in script but also flow and app -->
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/supabase_wizard.mp4"
+/>
+
+## Windmill for internal tools
+
+Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go & Bash, or any docker image) and low code builders. It embeds all-in-one:
+
+- an **execution runtime** to execute functions at scale with low-latency and no overhead on a fleet of workers
+- an **orchestrator** to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
+- an **app builder** to build application and data-intensive dashboards built with low-code or JS frameworks such a React.
+
+Examples of what can be built with Windmill include:
+
+- **Scripts** that are deployed automatically into UIs, webhook endpoints and scheduled jobs.
+- **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching.
+- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our Typescript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
+- **Powerful apps and dashboards** that are internal or external-facing, using either a low-code builder similar to Retool or full react views / svelte. In either case, those apps do a mix of frontend logic and calling the scripts and flows directly.
+
+There exists already quite a few [internal tool builders](/docs/compared_to/peers), with all their differences. Windmill focus on executing real code, extremely fast, reliably at scale, best/fastest workflow engine and best frontend builder.
+
+## Supabase for secure and scalable databases
+
+As it has been comprehended, Windmill is very versatile and already does a lot to build internal tools.
+
+That's a lot but it's not sufficient. Internal tools need storage, database are great storage. However, [Windmill is not designed to store heavy data](/docs/core_concepts/persistent_storage) that extends beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
+
+To give a smooth experience, instead of reinventing the wheel with a subpar experience, we decide to partner with the best database provider as a service, [Supabase](https://supabase.com/).
+
+We believe Supabase is the perfect match for Windmill:
+
+- Supabase is [open source](https://github.com/supabase/supabase), we are ourselves hard-believers (transparency, no lock in).
+- You can query it with SQL, a proven and powerful query language [supported by Windmill](/docs/getting_started/scripts_quickstart/sql).
+- It has a long track record of being used at scale.
+- It’s the database of choice for transactional workloads, which is a great fit for scripts, flows or apps that require near-instant responses to queries.
+
+## Supabase made it extremely easy to build incremental services
+
+<!-- RF to review -->
+
+The connection is made possible through [Supabase's OAuth integration](https://supabase.com/docs/guides/platform/oauth-apps/authorize-an-oauth-app).
+
+It feature helps you implement **Sign-in with Supabase** for your app, granting it full access to the [Management API](https://supabase.com/docs/reference/api/introduction) on behalf of users. Here's how it works:
+
+1. Redirect users to Supabase's authorization URL with necessary query parameters.
+2. After user consent, Supabase redirects back to your app with an authorization code.
+3. Exchange the code for access and refresh tokens by calling `POST https://api.supabase.com/v1/oauth/token`.
+4. Use the access token to access the Management API on behalf of the user.
+
+Ensure you handle token refresh and consider user access revocation for proper functionality. For more details, refer to [Supabase's authentication section](https://supabase.com/docs/reference/api/introduction#authentication).
