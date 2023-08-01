@@ -3,7 +3,9 @@
 <!-- Give an author ? RF, HC ? Nobody makes it more neutral -->
 <!-- Have a midjourney picture, just for the mignature in the blog section: todo Faton -->
 
-Windmill is proud to announce a partnership with [Supabase](https://supabase.com/) to easily integrate databases to interact with scripts, flows, and apps. Although we support multiple database providers, Supabase is by far the most recommended one due to its performance and security capabilities.
+Windmill is proud to announce a partnership with [Supabase](https://supabase.com/) to easily integrate databases to interact with scripts, flows, and apps.
+<!--truncate-->
+Although we support multiple database providers, Supabase is by far the most recommended one due to its performance and security capabilities.
 
 <!-- Video to be updated with examples in script but also flow and app -->
 
@@ -12,6 +14,10 @@ Windmill is proud to announce a partnership with [Supabase](https://supabase.com
     controls
     src="/videos/supabase_wizard.mp4"
 />
+
+<br/>
+
+This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/launch-week). Today the team is launching their new Integrations Marketplace offering and asked us to exclusively preview this experience that allows you to connect your Supabase account with just a few clicks!
 
 ## Windmill for internal tools
 
@@ -45,17 +51,12 @@ We believe Supabase is the perfect match for Windmill:
 - It has a long track record of being used at scale.
 - It’s the database of choice for transactional workloads, which is a great fit for scripts, flows or apps that require near-instant responses to queries.
 
-## Supabase made it extremely easy to build incremental services
+## Supabase makes it easy to build incremental services
 
 <!-- RF to review -->
 
 The connection is made possible through [Supabase's OAuth integration](https://supabase.com/docs/guides/platform/oauth-apps/authorize-an-oauth-app).
 
-It feature helps you implement **Sign-in with Supabase** for your app, granting it full access to the [Management API](https://supabase.com/docs/reference/api/introduction) on behalf of users. Here's how it works:
+It feature helps you implement **Sign-in with Supabase** for your app, granting it full access to the [Management API](https://supabase.com/docs/reference/api/introduction) on behalf of users.
 
-1. Redirect users to Supabase's authorization URL with necessary query parameters.
-2. After user consent, Supabase redirects back to your app with an authorization code.
-3. Exchange the code for access and refresh tokens by calling `POST https://api.supabase.com/v1/oauth/token`.
-4. Use the access token to access the Management API on behalf of the user.
-
-Ensure you handle token refresh and consider user access revocation for proper functionality. For more details, refer to [Supabase's authentication section](https://supabase.com/docs/reference/api/introduction#authentication).
+Concretely for us, it opens the door for endless possibilities for our joint users. You could manually create databases from Supabase's table editor, add values from Windmill, check them on Supabase ... or the other way around. If storage is specific to Supabase and processing large quantities of data is Windmill's strength, for database editing, Windmill and Supabase Table Editor are highly complementary and not exclusive.
