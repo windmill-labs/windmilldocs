@@ -8,12 +8,12 @@ tags:
     'App Editor',
     'Enterprise Plan',
   ]
-image: ./t4_use_case.png
+image: ./t4_thumbnail.png
 ---
 
 # Windmill for customer-facing Amin Panels - Tera Capital Case Study
 
-> "In general, as clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured, things do not break or are fixed within 2 hours."
+> "In general, as clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured and things do not break."
 
 <br/>
 
@@ -50,7 +50,7 @@ Today, 6 team members are directly using Windmill. Most of our Windmill's users 
 
 While we initially came to Windmill for its [App Editor](/docs/apps/app_editor), we ended up using [scripts](/docs/script_editor) and [flows](/docs/flows/flow_editor) to make our apps deeper and more complex.
 
-In general, as clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured, and things do not break or are fixed within 2 hours.
+In general, as clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured and things do not break.
 
 The enterprise services are very helpful. We have a dedicated Discord channel with the Windmill team, who responds very quickly, solves problems within 2 hours, and prioritizes our feature requests. This allows us to focus on our core job and assist our clients.
 
