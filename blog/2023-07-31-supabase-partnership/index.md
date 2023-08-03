@@ -1,21 +1,23 @@
-# Windmill and Supabase partner for smooth integration between databases and internal tools
+---
+authors: [henricourdent]
+tags:
+  [
+    'Supabase',
+    'Partnership',
+    'Database',
+  ]
+image: ./sb_thumbnail.png
+---
 
-<!-- Give an author ? RF, HC ? Nobody makes it more neutral -->
-<!-- Have a midjourney picture, just for the mignature in the blog section: todo Faton -->
+# Windmill and Supabase partner for smooth integration between databases and internal tools
 
 Windmill is proud to announce a partnership with [Supabase](https://supabase.com/) to easily integrate databases to interact with scripts, flows, and apps.
 <!--truncate-->
 Although we support multiple database providers, Supabase is by far the most recommended one due to its performance and security capabilities.
 
-<!-- Video to be updated with examples in script but also flow and app -->
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/supabase_wizard.mp4"
-/>
-
 <br/>
+
+![Supabase Windmill](../../blog/2023-02-14-supabase-integration/0-header.png)
 
 This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/launch-week). Today the team is launching their new Integrations Marketplace offering and asked us to exclusively preview this experience that allows you to connect your Supabase account with just a few clicks!
 
@@ -53,10 +55,14 @@ We believe Supabase is the perfect match for Windmill:
 
 ## Supabase makes it easy to build incremental services
 
-<!-- RF to review -->
-
 The connection is made possible through [Supabase's OAuth integration](https://supabase.com/docs/guides/platform/oauth-apps/authorize-an-oauth-app).
 
-It feature helps you implement **Sign-in with Supabase** for your app, granting it full access to the [Management API](https://supabase.com/docs/reference/api/introduction) on behalf of users.
+It feature helps you implement Sign-in with Supabase for your app, granting it full access to the [Management API](https://supabase.com/docs/reference/api/introduction) on behalf of users.
 
 Concretely for us, it opens the door for endless possibilities for our joint users. You could manually create databases from Supabase's table editor, add values from Windmill, check them on Supabase ... or the other way around. If storage is specific to Supabase and processing large quantities of data is Windmill's strength, for database editing, Windmill and Supabase Table Editor are highly complementary and not exclusive.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/supabase_wizard.mp4"
+/>
