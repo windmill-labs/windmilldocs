@@ -16,8 +16,8 @@ image: ./media/cover.png
 
 In recent weeks, we've been working on an AI Code Copilot for Windmill.
 Users can now easily generate whole scripts or make code adjustments using prompts.
-They can also ask the AI to fix their errors by the click of a button.
-The Copilot is not only available in the script builder, but also directly in the app and flow editors.
+They can also fix their errors automatically by the click of a button.
+The Copilot is available in the script builder as well as in the app and flow editors.
 
 Here's a quick demo of what we've built:
 
@@ -36,9 +36,9 @@ If you want to try it out, enable the feature as instructed in the [documentatio
 You will need an API key from OpenAI with access to the GPT-4 model.
 :::
 
-We're now sharing how you too can become an AI assisted startup<sup>TM</sup> in a few steps using GPT-4, some prompt engineering and a bit of UX work.
+In this blog post, we're sharing how you too can become an AI assisted startup<sup>TM</sup> in a few steps using GPT-4, some prompt engineering and a bit of UX work.
 
-This post will go over the following topics:
+We will go over the following topics:
 
 - [Why GPT-4](#why-gpt-4)
 - [Generating code from instructions](#generating-code-from-instructions)
@@ -52,9 +52,15 @@ So it was only logical to add an AI code copilot to help users create, edit and 
 
 ## Why GPT-4
 
-This feature is powered by the GPT-4 model from OpenAI, their latest language model known for achieving unprecedented performance.
-Its capabilities extend not only to generating text but also to coding tasks, making it highly suitable for our use case.
+This feature is powered by GPT-4 from OpenAI, their latest language model.
+It's really good at generating code in addition to text, making it highly suitable for our use case.
 GPT-4 also excels at following instructions and supports larger context, accommodating up to 32K tokens.
+
+:::info
+Tokens represent pieces of words.
+As a rule of thumb, one token is approximately equivalent to 4 characters.
+Learn more [here](https://help.openai.com/en/articles/4936856-what-are-tokens-and-how-to-count-them).
+:::
 
 We chose this model over others because of its superior performance and its ease of use.
 However, we are looking forward to experimenting with other models in the future, especially OSS ones such as StarCoder and Llama-2.
@@ -68,9 +74,9 @@ You can find the relevant code [here](https://github.com/windmill-labs/windmill/
 ## Generating code from instructions
 
 Most of the work for building the copilot went into designing the prompts.
-For code generation, we take instructions from the user and pass them along contextual information and global instructions to GPT-4.
 The OpenAI API exposes a completion endpoint that takes a prompt in the form of user and system messages.
-System messages convey general instructions to the model while user messages provide specific instructions and expect an answer.
+We pass as user message the user's instructions along with some contextual information, and we use the system message to convey global instructions.
+
 The endpoint also takes a few generation parameters.
 We keep the default values except for temperature, which we set to 0.5 to reduce the risk of hallucinations and failure to follow instructions.
 
@@ -81,8 +87,8 @@ A higher temperature value (e.g., 1.5) leads to more diverse and creative text, 
 
 ### Prompt templates
 
-In the system message for code generation, we instruct it to generate code and present the output in a code block.
-You can find our template below. We use the same system message for all the different languages supported by Windmill.
+Below is our system message template for code generation where we specifiy that it should output code with comments and wrap it in a code block.
+We use the same system message for all the different languages supported by Windmill.
 
 ````
 You write code as queried by the user. Only output code. Wrap the code like that:
@@ -95,9 +101,9 @@ Put explanations directly in the code as comments.
 ````
 
 To extract and display exclusively the code, we apply the following regular expression on the response: ` /```[a-zA-z]+\n([\s\S]*?)\n```/ `.
-If you do not speak fluently regex, this expression looks for three back ticks followed by a language name, then captures everything until the next three back ticks.
+If you do not speak fluently regex, this expression looks for three back ticks followed by a language name (any sequence of letters followed by a newline), then captures everything until the next three back ticks.
 
-Below is the initial segment of the user message template for Python:
+For the user message, we use the following template (here for Python):
 
 ```
 Write a function in python called "main". The function should {description}.
@@ -105,7 +111,7 @@ Specify the parameter types. Do not call the main function.
 ```
 
 The {description} placeholder gets replaced by the user's instructions.
-We also simply instruct the model to fit Windmill's execution model: a main function with typed parameters which it use to infer the script's inputs.
+In addition, we simply instruct the model to fit Windmill's execution model: a main function with typed parameters which it use to infer the script's inputs.
 
 ### Handling resource types
 
@@ -116,7 +122,7 @@ Learn more about resources and resource types in the [documentation](https://www
 :::
 
 For instance, a resource type may represent connection credentials to an AWS account.
-We use standard Python and TypeScript syntax to define these resource types which are then passed as inputs to the main function as you can see below:
+We use standard Python and TypeScript syntax to define these resource types which are then passed as inputs to the main function:
 
 ```python
 class aws(TypedDict):
@@ -149,7 +155,7 @@ async function main(credentials: aws) {
 ```
 
 Our objective is to enable the AI to generate code that leverages these resource types.
-For instance, if the user requests a script that returns the list of their EC2 instances, the AI should be capable of generating code that uses the appropriate resource type.
+For instance, if the user requests a script that returns the list of their AWS EC2 instances, the AI should be capable of generating code that uses the appropriate resource type.
 
 To achieve this, we include all the resource types within the user message, providing clear instructions on how to employ them.
 Below is the updated template for Python with sample resource types:
@@ -180,10 +186,9 @@ rename the imported object NOT THE TYPE.
 ```
 
 Based on our observations, we added some instructions at the end of the user message template.
-Specifically, GPT-4 would sometimes include numerous resource types in the generated code, even if they were not required.
-To mitigate this, we insist on only using the necessary resource types.
-Furthermore, GPT-4 occasionally introduced naming conflicts when importing libraries with the same name as the resource type.
-To prevent that, we've specified that it should rename the imported object instead of the type, as the latter is required for Windmill to parse the parameters.
+Indeed, GPT-4 would sometimes include numerous resource types in the generated code, even if they were not required.
+Moreover, GPT-4 occasionally introduced naming conflicts when importing libraries with the same name as the resource type.
+We therefore specify that it should rename the imported object instead of the type, as the latter is required for Windmill to parse the parameters.
 
 Watch our Copilot generate a Python script to retrieve the list of my EC2 instances:
 
@@ -236,9 +241,9 @@ You can find the code generation templates for all languages and runtimes [here]
 ### Handling database schemas
 
 Taking database scripts to the next level, we've given the AI the ability to generate code based on the database schema.
-Basically, based on instructions, the AI automatically formulates an SQL query with the appropriate tables and columns.
-To achieve this, we query the schema of the selected database, and we include it as part of the user message, along with clear instructions on how to use it.
-Below is the updated template, accompanied by part of the schema from a Windmill instance database:
+Based on the user's instructions, the AI automatically formulates an SQL query with the appropriate tables and columns.
+To achieve this, we query the schema of the selected database, and we include it as part of the user message.
+Below is the updated template, accompanied by part of the schema from a Windmill instance database as an example:
 
 ```
 Write SQL code for PostgreSQL that should {description}.
@@ -264,7 +269,7 @@ Here's the database schema, each column is in the format [name, type, required, 
 }
 ```
 
-Watch our Copilot generate a SQL script to retrieve the email of the user who executed the most jobs on a Windmill instance:
+Watch our Copilot generate a SQL script to retrieve from a Windmill instance's database the user who executed the most jobs:
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -285,7 +290,7 @@ Watch our Copilot generate a SQL script to retrieve the email of the user who ex
 In addition to its capabilities for code generation, we wanted to leverage GPT-4 for code editing and bug fixing.
 
 The process for code editing is quite similar to code generation, with the exception that we include the selected code lines as part of the user message.
-We continue to use the same system message to guide the AI effectively but we use a different user message:
+We continue to use the same system message to guide the AI but we use a different user message:
 
 ````
 Here's my python3 code:
@@ -308,18 +313,20 @@ We integrated this feature into the script builder by simply changing the "AI Ge
 
 Watch our Copilot add comments and remove print statements from a Python script:
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	loop
-	controls
-	src="/videos/ai_edit_demo.mp4"
-	alt="AI edit demo"
-	muted
-/>
-<sup>
-	<i>Loading time has been reduced to enhance the viewing experience</i>
-</sup>
+<div className="mb-4">
+	<video
+		className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+		autoPlay
+		loop
+		controls
+		src="/videos/ai_edit_demo.mp4"
+		alt="AI edit demo"
+		muted
+	/>
+	<sup>
+		<i>Loading time has been reduced to enhance the viewing experience</i>
+	</sup>
+</div>
 
 For bug fixing, we pass the complete code and the error message, but no user instructions.
 
@@ -340,8 +347,8 @@ I get the following error: {error}
 Fix my code.
 ````
 
-Moreover, we rely on a distinct system message, as we also wanted an explanation of the error.
-We explicitly instruct GPT-4 to include an explanation in a specific format which we then extract using regular expressions.
+Moreover, we rely on a distinct system message, as we wanted an explanation of the error and the fix.
+We instruct GPT-4 to include an explanation in a specific format which we then extract using a regular expression.
 
 ````
 You fix the code shared by the user. Only output code. Wrap the code like that:
@@ -376,14 +383,14 @@ Watch our Copilot fix a bug in a Python script:
 
 You can find all of our prompts templates [here](https://github.com/windmill-labs/windmill/tree/main/frontend/src/lib/components/codeGen/prompts).
 We store them in yaml files, making it easy to read and edit.
-In order to evaluate the performance of the prompts, we generate answers to sample questions for each prompt.
+In order to evaluate the evolution of our Copilot's performance, each time we modify the prompts we (re)generate answers to sample questions.
 The samples can be found [here](https://github.com/windmill-labs/windmill/tree/main/llm).
 
 :::info A small note about tokens and costs
 Whether it is for code generation, editing, or bug fixing, we only send one request to the OpenAI endpoint.
 The number of tokens spent vary depending on the number of resource types available and on the length of the code passed in the user message.
 But on average, queries contain about 1000 prompt tokens and 500 completion tokens.
-That amounts to ~$0.09 per request at the time of writing.
+That amounts to approximately $0.09 per request at the time of writing.
 :::
 
 ## Conclusion
@@ -394,5 +401,5 @@ If you have any questions or ideas you'd like to discuss, please don't hesitate 
 
 At Windmill, we are very happy with the positive outcomes thus far.
 We will keep refining the prompts as we go to enhance the Copilot's performance.
-Additionally, we look forward to implementing GPT-4 in other area of Windmill, such as in the flow and app builders.
+In addition, we are looking forward to implementing GPT-4 in other areas of Windmill, for example to create complete workflows and application components.
 Your feedback is of great value to us, and we welcome any suggestions or thoughts on how to further improve our AI copilot.
