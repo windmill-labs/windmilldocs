@@ -1,6 +1,17 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Groups and Folders
 
-Groups and Folders are ways to manage permissions and organize items in a workspace.
+Groups and Folders are ways to manage permissions and organize items in a workspace. They are the privileged method to handle permissions in Windmill.
+
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Roles and Permissions"
+		description="Windmill provides a roles and permissions system that allows you to control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
+</div>
 
 ## Groups
 
@@ -18,7 +29,6 @@ Similar to users, groups can be assigned one of three permission levels for a sp
 Folders allow you to group various **items**, such as scripts, flows, resources, and schedules, together and assign Role-based access control permissions to groups and individual users.
 
 ![Folders](./3-folders.png "Folders")
-
 
 ## Groups and Folders together
 
