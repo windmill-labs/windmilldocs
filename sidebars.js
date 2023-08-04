@@ -297,7 +297,16 @@ const sidebars = {
 			label: 'Windmill Compared to',
 			items: [
 				'compared_to/peers',
-				'compared_to/airplane',
+				{
+					type: 'doc',
+					id: 'compared_to/airplane',
+					label: 'Airplane'
+				  },
+        {
+        type: 'doc',
+        id: 'compared_to/retool',
+        label: 'Retool'
+        },
 			]
 		},
 		{
