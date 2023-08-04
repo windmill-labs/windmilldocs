@@ -20,7 +20,7 @@
 	"dependencies": {
 		"@docusaurus/core": "^2.4.1",
 		"@docusaurus/plugin-client-redirects": "^2.4.1",
-		"@docusaurus/preset-classic": "^2.4.0",
+		"@docusaurus/preset-classic": "^2.4.1",
 		"@easyops-cn/docusaurus-search-local": "^0.23.2",
 		"@headlessui/react": "^1.7.7",
 		"@heroicons/react": "^2.0.14",
