@@ -100,7 +100,7 @@ You write code as queried by the user. Only output code. Wrap the code like that
 Put explanations directly in the code as comments.
 ````
 
-To extract and display exclusively the code, we apply the following regular expression on the response: ` /```[a-zA-z]+\n([\s\S]*?)\n```/ `.
+To extract and display exclusively the code, we apply the following regular expression on the response: ` /```[a-zA-Z]+\n([\s\S]*?)\n```/ `.
 If you do not speak fluently regex, this expression looks for three back ticks followed by a language name (any sequence of letters followed by a newline), then captures everything until the next three back ticks.
 
 For the user message, we use the following template (here for Python):
