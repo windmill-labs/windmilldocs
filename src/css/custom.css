@@ -112,13 +112,13 @@ h3 {
 }
 
 .markdown h3 {
-	@apply text-xl;
+	@apply text-lg;
 	@apply font-semibold;
 	@apply dark:text-white
 }
 
 h4 {
-	@apply text-lg;
+	@apply text-base;
 	@apply font-semibold;
 	@apply dark:text-white
 }
