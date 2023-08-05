@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function SectionExamples({ examples, kind }) {
 	const hubUrlByKind = {
-		script: 'https://hub.windmill.dev/scripts',
+		script: 'https://hub.windmill.dev/',
 		flow: 'https://hub.windmill.dev/flows',
 		app: 'https://hub.windmill.dev/apps'
 	};
