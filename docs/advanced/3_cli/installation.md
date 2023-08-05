@@ -18,7 +18,23 @@ Your terminal might also ask you to update your PATH environment variable to inc
 export PATH="/Users/yourusername/.deno/bin:$PATH"
 ```
 
-3. Verify that the installation was successful by running the following command:
+:::tip
+
+In an enterprise setting with custom certificates, you can edit the wmill binary to ignore CA issues:
+
+```
+sed -i 's/deno run/deno run --unsafely-ignore-certificate-errors/' ~/.deno/bin/wmill
+```
+
+Also, to punch through some networking layers like Cloudflare Tunnel, you might need some custom headers. You just need to use the HEADERS env variable:
+
+```
+export HEADERS=header_key:header_value,header_key2:header_value2
+```
+
+:::
+
+1. Verify that the installation was successful by running the following command:
 
 ```bash
 wmill --version
