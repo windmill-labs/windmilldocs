@@ -296,17 +296,17 @@ const sidebars = {
 			type: 'category',
 			label: 'Windmill Compared to',
 			items: [
-				'compared_to/index',
+				'compared_to/peers',
 				{
 					type: 'doc',
 					id: 'compared_to/airplane',
 					label: 'Airplane'
 				  },
-				{
-				type: 'doc',
-				id: 'compared_to/retool',
-				label: 'Retool'
-				},
+        {
+        type: 'doc',
+        id: 'compared_to/retool',
+        label: 'Retool'
+        },
 			]
 		},
 		{
