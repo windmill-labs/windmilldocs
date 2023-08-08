@@ -32,15 +32,14 @@ const Card: React.FC<CardProps> = ({
 	icons,
 	mode = 'light',
 	newTab = false
-
 }) => {
 	return (
-		<a 
-			className={classNames('card shadow-none transition-all', gridArea)} 
+		<a
+			className={classNames('card shadow-none transition-all', gridArea)}
 			href={href}
-			target={newTab ? "_blank" : "_self"}
-			rel={newTab ? "noopener noreferrer" : ""}
-    		>
+			target={newTab ? '_blank' : '_self'}
+			rel={newTab ? 'noopener noreferrer' : ''}
+		>
 			<div className="card-content">
 				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
@@ -150,6 +149,7 @@ const CardsContainer: React.FC<CardsContainerProps> = ({
 						href={card.href}
 						icons={card.icons}
 						mode={mode}
+						newTab={card.newTab}
 					/>
 				))}
 			</div>
