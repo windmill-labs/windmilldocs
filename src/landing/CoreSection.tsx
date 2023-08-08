@@ -18,19 +18,24 @@ const cards = [
 		subtitle: 'Only 20ms latency between steps',
 		Icon: Gauge,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/misc/benchmarks'
+		href: '/docs/misc/benchmarks',
+		newTab: true
 	},
 	{
 		title: 'Scale to Any Cluster Size',
 		subtitle: 'From Raspberry Pi to large Kubernetes clusters',
 		Icon: Server,
-		gridArea: 'md:col-span-1 md:row-span-3'
+		gridArea: 'md:col-span-1 md:row-span-3',
+		href: 'https://github.com/windmill-labs/windmill-helm-charts',
+		newTab: true
 	},
 	{
 		title: 'Super Snappy Apps',
 		subtitle: 'Build complex apps that load instantly',
 		Icon: BoltIcon,
-		gridArea: 'md:col-span-1 md:row-span-3'
+		gridArea: 'md:col-span-1 md:row-span-3',
+		href: '/docs/getting_started/apps_quickstart',
+		newTab: true
 	}
 ];
 export default function CoreSection({ color }) {

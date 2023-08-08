@@ -6,7 +6,7 @@ tags:
     'Partnership',
     'Database',
   ]
-image: ./sb_thumbnail.png
+image: ./0-header.png
 ---
 
 # Windmill and Supabase partner for smooth integration between databases and internal tools
@@ -17,7 +17,7 @@ Although we support multiple database providers, Supabase is by far the most rec
 
 <br/>
 
-![Supabase Windmill](../../blog/2023-02-14-supabase-integration/0-header.png)
+![Supabase Windmill](./0-header.png)
 
 This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/launch-week). Today the team is launching their new Integrations Marketplace offering and asked us to exclusively preview this experience that allows you to connect your Supabase account with just a few clicks!
 
@@ -40,9 +40,9 @@ There exists already quite a few [internal tool builders](/docs/compared_to/peer
 
 ## Supabase for secure and scalable databases
 
-As it has been comprehended, Windmill is very versatile and already does a lot to build internal tools.
+As seen, Windmill is very versatile and already does a lot to build internal tools.
 
-That's a lot but it's not sufficient. Internal tools need storage, database are great storage. However, [Windmill is not designed to store heavy data](/docs/core_concepts/persistent_storage) that extends beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
+That's a lot but it's not sufficient. Internal tools need storage, database are great storage. You can use resources, variables and states directly in Windmill to store data. If self-hosted, since it works on top of Postgres, you could reuse the same Postgres database that Windmill runs on. However for Cloud Apps, [Windmill is not designed to store heavy data](/docs/core_concepts/persistent_storage) that extends beyond the execution of a script or flow. Indeed, for each computation the worker executing is not the same as the previous computation, so the data would have to be retrieved from another location.
 
 To give a smooth experience, instead of reinventing the wheel with a subpar experience, we decide to partner with the best database provider as a service, [Supabase](https://supabase.com/).
 

@@ -4,6 +4,31 @@ import DocCard from '@site/src/components/DocCard';
 
 There are three ways to handle errors in Windmill flows: [retries](./14_retries.md), [error handlers](./7_flow_error_handler.md), and [early stop/break](./2_early_stop.md).
 
+## Error Handler
+
+The Error Handler is a special flow step that is executed when an error occurs within a flow.
+
+If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    loop
+    controls
+    src="/videos/error_handler.mp4"
+/>
+
+<br/>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Error Handler"
+		description="Configure a script to handle errors."
+		href="/docs/flows/flow_error_handler"
+	/>
+</div>
+
 ## Retries
 
 Steps within a flow can be retried a specified number of times and at a defined frequency in case of an error.
@@ -28,32 +53,6 @@ Steps within a flow can be retried a specified number of times and at a defined 
 		title="Retries"
 		description="Re-try a step in case of error."
 		href="/docs/flows/retries"
-	/>
-</div>
-
-
-## Error Handler
-
-The Error Handler is a special flow step that is executed when an error occurs within a flow.
-
-If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
-    controls
-    src="/videos/error_handler.mp4"
-/>
-
-<br/>
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		color="teal"
-		title="Error Handler"
-		description="Configure a script to handle errors."
-		href="/docs/flows/flow_error_handler"
 	/>
 </div>
 
