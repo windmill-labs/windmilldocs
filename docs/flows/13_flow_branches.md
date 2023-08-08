@@ -1,5 +1,18 @@
 # Branches
 
+Branches allow to split the execution of the flow based on a condition.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/flow-branch.mp4"
+/>
+
+<br/>
+
 There are two types of branches:
 
 - **Branch one**: the branch will be executed if its condition is true, otherwise the default branch will be executed.

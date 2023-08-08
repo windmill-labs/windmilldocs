@@ -30,11 +30,11 @@ const tabs = [
 				title: 'Sequence',
 				description: 'Build complex Flows from atomic scripts.',
 				icon: List,
-				caption: 'Write scripts in Typescript, Python, Go and Bash or use scripts from the hub',
+				caption: <div>Sequence scripts from your workspace, the <a href="https://hub.windmill.dev/" target="_blank">Hub</a> or <a href="/docs/code_editor" target="_blank">write them</a> directly.</div>,
 				video: {
 					videoSrc: '/videos/flow-sequence.mp4',
 					altText: 'Build flows from scripts',
-					videoLength: '28'
+					videoLength: '49'
 				}
 			},
 
@@ -42,22 +42,23 @@ const tabs = [
 				title: 'Branching',
 				description: 'Built-in branching logic to create complex workflows.',
 				icon: GitBranch,
-				caption: 'Built-in branching logic to create complex workflows',
+				caption: <div>Built-in <a href="/docs/flows/flow_branches" target="_blank">branching logic</a> to create complex workflows.</div>,
+
 				video: {
 					videoSrc: '/videos/flow-branch.mp4',
 					altText: 'Branching logic',
-					videoLength: '28'
+					videoLength: '39'
 				}
 			},
 			{
 				title: 'For Loops',
 				description: 'Create for loops to iterate over a list of items.',
 				icon: Repeat,
-				caption: 'Create for loops to iterate over a list of items',
+				caption: <div>Create <a href="/docs/flows/flow_loops" target="_blank">for loops</a> to iterate over a list of items.</div>,
 				video: {
 					videoSrc: '/videos/flow-loop.mp4',
 					altText: 'Flows for loops',
-					videoLength: '28'
+					videoLength: '18'
 				}
 			},
 			{
@@ -65,10 +66,12 @@ const tabs = [
 				description:
 					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
 				icon: Bug,
-				caption:
-					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
-				imageSrc: '/images/error-handler.png',
-				imageAlt: 'Error Handler icon'
+				caption: <div>Easily <a href="/docs/flows/error_handling" target="_blank">recover from errors</a>  and continue your flow or log the error on Slack, Discord, etc.</div>,
+				video: {
+					videoSrc: '/videos/error_handler.mp4',
+					altText: 'Branching logic',
+					videoLength: '33'
+				}
 			}
 		]
 	},
@@ -82,12 +85,11 @@ const tabs = [
 				description:
 					'Send request for approval by email, slack, anything and get a dedicate approval page',
 				icon: Verified,
-				caption:
-					'Send request for approval by email, slack, anything and get a dedicate approval page',
+				caption: <div>Send <a href="/docs/flows/flow_approval" target="_blank">request for approval</a> by email, slack, anything and get a dedicate approval page.</div>,
 				video: {
 					videoSrc: '/videos/flow-approval.mp4',
 					altText: 'Flows Approval Step',
-					videoLength: '47'
+					videoLength: '64'
 				}
 			},
 			{
@@ -95,8 +97,8 @@ const tabs = [
 				description:
 					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
 				icon: Verified,
-				caption: 'Resume Workflows with secret webhooks',
-				imageSrc: '/images/resume-workflow.png',
+				caption: 'Resume Workflows with secret webhooks.',
+				imageSrc: '/images/page_arguments.png.webp',
 				altText: 'Resume with webhooks'
 			}
 		]
@@ -111,21 +113,21 @@ const tabs = [
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
 				icon: Repeat,
-				caption: 'Easily retry failed steps',
+				caption: <div>Easily <a href="/docs/flows/retries" target="_blank">retry</a> failed steps.</div>,
 				video: {
-					videoSrc: '/videos/flow-retries.mp4',
-					videoLength: '15',
-					altText: 'Customize number of retries'
+					videoSrc: '/videos/retries_example.mp4',
+					videoLength: '29',
+					altText: 'Customize number of retries.'
 				}
 			},
 			{
 				title: 'Cache results of steps',
 				description:
-					'Cache results of steps to avoid re-running steps that have already been executed.',
+					'Cache the results of a step for a given time.',
 				icon: Repeat,
-				caption: 'Easily retry failed steps',
+				caption: <div><a href="/docs/flows/cache" target="_blank">Cache the results of a step</a> for a given time.</div>,
 				video: {
-					videoSrc: '/videos/flow-retries.mp4',
+					videoSrc: '/videos/cache_for_steps.mp4',
 					videoLength: '15',
 					altText: 'Customize number of retries'
 				}
@@ -174,39 +176,38 @@ const tabs = [
 				description:
 					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
 				icon: CalendarClock,
-				caption:
-					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
-				video: {
-					videoSrc: '/videos/flow-schedule.mp4',
-					videoLength: '15',
-					altText: 'Schedules'
-				}
+				caption: <div>Windmill allows you to define <a href="/docs/core_concepts/scheduling" target="_blank">schedules</a> for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.</div>,
+				imageSrc: '/images/script-schedule.png',
+
 			},
 
 			{
 				title: 'UI',
 				description: 'You can directly trigger a script using the autogenerated UI.',
 				icon: FormInput,
-				caption: 'You can directly trigger a script using the autogenerated UI.',
+				caption: <div>You can directly trigger a flow using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a>.</div>,
 				video: {
-					videoSrc: '/videos/flow-ui.mp4',
+					videoSrc: '/videos/auto_g_ui_flow.mp4',
 					altText: 'Trigger with autogenerated UI',
 					videoLength: '14'
 				}
 			},
 			{
 				title: 'Webhooks',
+				description: 'You can trigger a flow using a webhook.',
 				icon: WebhookIcon,
-				caption: '',
-				imageSrc: ''
+				caption: <div>Every flow has a sync and async <a href="/docs/core_concepts/webhooks" target="_blank">webhook</a>.</div>,
+				imageSrc: '/images/flow-webhook.png',
+				altText: 'Webhooks'
 			},
 			{
 				title: 'CLI',
+				description: 'Execute a flow using the CLI.',
 				icon: Terminal,
-				caption: 'Execute a flow from the CLI',
+				caption: <div>Execute a flow using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
 				imageSrc: '/images/setup.gif',
-				altText: 'Execute from the CLI'
-			}
+				altText: 'Execute using CLI'
+			},
 		]
 	}
 ];

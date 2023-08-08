@@ -1,6 +1,14 @@
 # Cache for Steps
 
-In Windmill, you can enhance the efficiency of your workflows by utilizing the "Cache" feature. This feature allows you to cache the results of a step for a specified number of seconds, thereby reducing the need for redundant computations when re-running the same step with identical input.
+Cache for steps allows you to cache the results of a step for a specified number of seconds, thereby reducing the need for redundant computations when re-running the same step with identical input.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/cache_for_steps.mp4"
+/>
 
 ## How It Works
 

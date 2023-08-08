@@ -16,6 +16,7 @@ interface CardProps {
 	href?: string;
 	icons?: React.ComponentType[];
 	mode?: 'light' | 'dark';
+	newTab?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -29,10 +30,17 @@ const Card: React.FC<CardProps> = ({
 	svg,
 	href,
 	icons,
-	mode = 'light'
+	mode = 'light',
+	newTab = false
+
 }) => {
 	return (
-		<a className={classNames('card shadow-none transition-all', gridArea)} href={href}>
+		<a 
+			className={classNames('card shadow-none transition-all', gridArea)} 
+			href={href}
+			target={newTab ? "_blank" : "_self"}
+			rel={newTab ? "noopener noreferrer" : ""}
+    		>
 			<div className="card-content">
 				<div className="card-image fade-to-white">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
