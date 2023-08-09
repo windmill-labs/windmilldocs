@@ -136,7 +136,8 @@ const sidebars = {
 						'flows/step_mocking',
 						'flows/early_stop',
 						'flows/flow_approval',
-						'flows/sleep'
+						'flows/sleep',
+						'flows/custom_timeout'
 					],
 					collapsed: true
 				},

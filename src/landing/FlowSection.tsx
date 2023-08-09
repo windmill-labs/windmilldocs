@@ -241,7 +241,7 @@ const cards = [
 		subtitle: 'Trigger flows from a webhook or schedule',
 		Icon: Webhook,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/flows/flow_trigger',
+		href: '/docs/getting_started/trigger_flows',
 		icons: [Calendar, Terminal]
 	},
 

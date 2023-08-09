@@ -64,7 +64,7 @@ const cards = [
 		subtitle: 'Preview and execute scripts instantly from the editor',
 		Icon: Play,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/core_concepts/instant_preview'
 	}
 ];
 
