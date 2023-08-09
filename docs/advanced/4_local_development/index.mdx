@@ -1,8 +1,11 @@
 ---
 title: Local Development
 ---
+import DocCard from '@site/src/components/DocCard';
 
 # Local Development
+
+Although Windmill has an IDE, you can also develop & deploy locally.
 
 ## Getting Started
 
@@ -105,7 +108,7 @@ Below are some examples on how to do this in various environments.
 
 ### State
 
-to use the `getState` and `setState` functions, you will have to set `WM_STATE_PATH`. We recommend using your script path name as the state path, for example:
+To use the `getState` and `setState` functions, you will have to set `WM_STATE_PATH`. We recommend using your script path name as the state path, for example:
 
 ```ts
 let fullUrl = import.meta.url;
@@ -136,7 +139,7 @@ then simply run the relevant command for your language.
 
 The easiest way to do this is using a launch.json. See how to create one for
 [python](https://code.visualstudio.com/docs/python/debugging) and
-[deno](https://deno.land/manual@v1.9.2/getting_started/debugging_your_code#vscode)
+[deno](https://deno.land/manual@v1.9.2/getting_started/debugging_your_code#vscode).
 
 Then add environment files using the "env" section in your configuration.
 
@@ -174,6 +177,15 @@ For example, for deno:
 ```
 
 The same `env` & `envFile` options are also supported by python.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="VSCode Extension"
+		description="You can also use VS Code with the extension to run scripts & flows on the remote."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
 
 ### JetBrains IDEs
 

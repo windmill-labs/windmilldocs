@@ -53,6 +53,7 @@ const sidebars = {
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'advanced/imports/index',
+				'core_concepts/instant_preview/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
