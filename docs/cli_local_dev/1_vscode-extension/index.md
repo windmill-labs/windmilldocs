@@ -12,7 +12,7 @@ The Windmill VSCode extension allows you to run your scripts and preview the out
 
 ![demo](./wm-install.png.webp)
 
-You can also follow this link to the extension page on the VSCode marketplace: [Install it](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill)
+You can also follow this link to the extension page on the VSCode marketplace: [Install it](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
 
 ## Quick Start
 
