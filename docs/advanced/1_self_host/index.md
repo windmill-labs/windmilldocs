@@ -11,6 +11,20 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 **Even if you setup oauth, login as** admin@windmill.dev **/ changeme to setup the instance and give yourself admin privileges**.
 
+## Cloud provider-specific guides
+
+### AWS, GCP, Azure
+
+We recommend using the [helm chart](#helm-chart) to deploy on kubernetes. But for smaller simplified setup, simply use the docker-compose (see below) on a single large instance and use a high number of replicas for the worker service. The rule of thumb is 1 worker per 1vCPU and 1/2GB of RAM. All of those services hava managed reverse proxy (ELB, GCLB, ALB) and managed database (RDS, Cloud SQL, Aurora, Postgres on Azure). We recommend disabling the db in the docker-compose and using an external database. Windmill is compatible with AWS Aurora, GCP Cloud SQL and Neon serverless database. Once the .env is setup accordingly to point to your managed database, simply use a load balancer to point to your instance on the port you have chosen to expose in the caddy section of the docker-compose (by default 80). That's it for a minimal setup. Read about [Worker groups](../../core_concepts/9_worker_groups/index.md) to configure more finely your workers on more nodes and with different resources. Once done, be sure to setup [SSO login](../../misc/2_setup_oauth/index.md) with Azure AD , Google Workspace or Github if relevant.
+
+### Fly.io
+
+[Community contributed guide](https://dev.to/singee/deploy-windmill-on-flyio-3ii3)
+
+### Hetzner, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...
+
+Windmill work with those providers using the docker containers and specific guides are in progress.
+
 ## Docker
 
 ### Setup Windmill on localhost
@@ -60,14 +74,16 @@ For more production use-cases, we recommend using the helm-chart but the docker-
 
 To setup an external database, you need to set DATABASE_URL in the .env file to point your external database. You should also set the number of db replicas to 0.
 
-#### RDS
+:::tip
 
-On RDS, you will need to set the initial role manually. You can do so by running the following command:
+In some exotic setups, you will need to set the initial role manually. You can do so by running the following command:
 
 ```bash
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql -o init-db-as-superuser.sql
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
+
+:::
 
 ### Set number of replicas accordingly in docker-compose
 
