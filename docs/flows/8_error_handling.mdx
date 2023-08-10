@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Error Handling in Flows
 
-There are three ways to handle errors in Windmill flows: [retries](./14_retries.md), [error handlers](./7_flow_error_handler.md), and [early stop/break](./2_early_stop.md).
+There are four ways to handle errors in Windmill flows: [retries](./14_retries.md), [error handlers](./7_flow_error_handler.md), and [early stop/break](./2_early_stop.md).
 
 ## Error Handler
 
@@ -12,8 +12,6 @@ If defined, the error handler will take as input, the result of the step that er
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
     controls
     src="/videos/error_handler.mp4"
 />
@@ -35,8 +33,6 @@ Steps within a flow can be retried a specified number of times and at a defined 
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
     controls
     src="/videos/retries_example.mp4"
 />
@@ -62,8 +58,6 @@ The Early Stop/Break feature allows you to define a predicate expression that de
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
     controls
     src="/videos/early_stop.mp4"
 />
@@ -77,6 +71,25 @@ The Early Stop/Break feature allows you to define a predicate expression that de
 		description="Suspend executions within a flow for a specified time."
 		href="/docs/flows/sleep"
 	/>
+</div>
+
+## Custom Timeout for Step
+
+For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+	src="/videos/custom_timeout.mp4"
+/>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	color="teal"
+        title="Custom Timeout for Step"
+    	description="For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted."
+    	href="/docs/flows/custom_timeout"
+    />
 </div>
 
 ## Error Handling in Windmill

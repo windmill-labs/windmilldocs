@@ -11,7 +11,9 @@ const cards = [
 		title: 'Instant Preview/Execution',
 		subtitle: 'Live logs and job starting in 20ms',
 		Icon: Play,
-		gridArea: 'md:col-span-1 md:row-span-3'
+		gridArea: 'md:col-span-1 md:row-span-3',
+		href: '/docs/core_concepts/instant_preview',
+		newTab: true
 	},
 	{
 		title: 'Fastest Workflow Engine',

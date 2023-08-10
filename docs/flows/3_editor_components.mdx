@@ -23,12 +23,14 @@ The Flow Builder has the following major components we will detail below:
 
 The toolbar allows you to export the flow, configure the flow settings, and test the flow.
 Here are the different options available in the toolbar:
-
-- **Export JSON**: export the flow as a JSON file.
-- **Edit name**: shortcut to edit the flow name.
-- **Edit summary**: shortcut to edit the flow summary.
-- **Test flow**: open the flow test slider.
-- **Save**: save the flow.
+- **Summary**: shortcut to edit the flow summary.
+- **Previous/Next**: undo actions.
+- **[Path](../core_concepts/16_roles_and_permissions/index.mdx#path)**: define the permissions of the flow.
+- **JSON**: export the flow as a JSON file.
+- **Test flow**: open the flow [test](../core_concepts/23_instant_preview/index.mdx) slider.
+- **Test up to**: open the flow [test](../core_concepts/23_instant_preview/index.mdx) slider.
+- **Draft**: save the flow as [draft](../core_concepts/0_draft_and_deploy/index.mdx).
+- **Draft**: [deploy](../core_concepts/0_draft_and_deploy/index.mdx) the flow.
 
 ## Settings
 
@@ -37,6 +39,7 @@ The flow settings are divided into four tabs:
 - [Metadata](#metadata)
 - [Schedule](#schedule)
 - [Shared Directory](#shared-directory)
+- [Worker Group](#worker-group-tag)
 
 ### Metadata
 
@@ -56,11 +59,13 @@ The owner can be either a user, or a group of users ([folder](../core_concepts/8
     	title="Roles and Permissions"
     	description="Control access and manage permissions within your instance and workspaces."
     	href="/docs/core_concepts/roles_and_permissions"
+		color="teal"
     />
     <DocCard
     	title="Groups and Folders"
     	description="Groups and Folders enable efficient permission management by grouping users with similar access levels."
     	href="/docs/core_concepts/groups_and_folders"
+		color="teal"
     />
 </div>
 
@@ -132,6 +137,21 @@ Another example is to be found from the [Hub](https://hub.windmill.dev/flows/32/
     />
 </div>
 
+### Worker Group Tag
+
+Flows can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.md) for efficient execution on different machines with varying specifications.
+
+![Worker group tag](../core_concepts/9_worker_groups/select_script_builder.png.webp)
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+		color="teal"
+	/>
+</div>
+
 ## Test flow
 
 Test your current version of the flow with the `Test flow` button. This will opens a menu with an [auto-generated UI](../core_concepts/6_auto_generated_uis/index.md) of your current configuration.
@@ -141,11 +161,21 @@ You can also test up to a certain step by clicking on an action (x) and then on 
 At last, you can directly [test a step](#test-this-step).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	controls
-	src="/videos/test_flow.mp4"
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/flow_test_flow.mp4"
 />
+
+<br/>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Instant Preview & Testing"
+    	description="Windmill allows users to test what they are building directly from the editor, even before deployment."
+    	href="/docs/core_concepts/instant_preview"
+		color="teal"
+    />
+</div>
 
 ## Static inputs
 
@@ -200,11 +230,13 @@ Below is the list of all available advanced settings for each argument type:
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/core_concepts/auto_generated_uis"
+		color="teal"
 	/>
 	<DocCard
 		title="JSON Schema and Parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
 		href="/docs/core_concepts/json_schema_and_parsing"
+		color="teal"
 	/>
 </div>
 
@@ -253,10 +285,15 @@ You can either create a new action script in:
 - [Bash](/docs/getting_started/scripts_quickstart/bash).
 - Any language [running any docker container](../advanced/7_docker/index.md) through Windmill's bash support.
 
-There are two special kind of scripts:
+There are special kinds of scripts:
 
 - [Postgres](/docs/getting_started/scripts_quickstart/sql)
 - [MySQL](/docs/getting_started/scripts_quickstart/sql)
+- GraphQL
+- Rest
+- BigQuery
+- Snowflake
+- Powershell
 
 These are essentially Typescript template to easily write queries to a database.
 
@@ -292,9 +329,12 @@ The header is composed of:
 - **Summary**: edit the summary of the script.
 - **Shortcuts**: shortcut to advanced configuration.
   1. [Retries](./14_retries.md): configure the number of retries and the delay between each retry.
-  2. [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
-  3. [Suspend](./11_flow_approval.md): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
-  4. [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
+  2. [Concurrency limit](./6_concurrency_limit.md): set concurrency limits to prevent exceeding the API Limit of the targeted API.
+  3. [Cache](./4_cache.md): cache the results of a step for a specified time.
+  4. [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
+  5. [Suspend](./11_flow_approval.md): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
+  6. [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
+  7. [Mock](./5_step_mocking.md): when a step is mocked, it will immediately return the mocked value without performing any computation.
 
 ### Script editor
 
@@ -365,30 +405,72 @@ Clicking on a field will set the mode to "Append". Clicking on the "Connect" but
 The test this step section allows to test the step on its own. You can set the input and run the script.
 The result and logs are displyed on the left-hand side.
 
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Instant Preview & Testing"
+    	description="Windmill allows users to test what they are building directly from the editor, even before deployment."
+    	href="/docs/core_concepts/instant_preview"
+		color="teal"
+    />
+</div>
+
 #### Advanced
 
 The advanced section allows to configure the following:
 
-**Retries**
-
-Configure the number of [retries](./14_retries.md) and the delay between each retry.
-
-![Retries](../assets/flows/flow_retries.png.webp)
-
-**Early stop/Break**
-
-If defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should [stop early](./2_early_stop.md). Skipped flows are just a label useful to not see them in the [runs](../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
-
-![Early stop](../assets/flows/flow_early_stop.png.webp)
-
-**Suspend**
-
-If defined, at the end of the step, the flow will be [suspended](./11_flow_approval.md) until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
-
-![Suspend](../assets/flows/flow_suspend.png.webp)
-
-**Sleep**
-
-If defined, at the end of the step, the flow will [sleep](./15_sleep.md) for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
-
-![Sleep](../assets/flows/flow_sleep.png.webp)
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Retries"
+		description="Re-try a step in case of error."
+		href="/docs/flows/retries"
+	/>
+		<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
+	/>
+	<DocCard
+		color="teal"
+		title="Concurrency Limits"
+		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
+		href="/docs/flows/concurrency_limit"
+	/>
+	<DocCard
+		color="teal"
+		title="Early Stop / Break"
+		description="Suspend executions within a flow for a specified time."
+		href="/docs/flows/sleep"
+	/>
+	<DocCard
+		color="teal"
+		title="Approval Steps in Flows"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+	<DocCard
+		color="teal"
+		title="Sleep / Delays in Flows"
+		description="Stop early a flow based on a step's result."
+		href="/docs/flows/early_stop"
+	/>
+	<DocCard
+		color="teal"
+		title="Step Mocking"
+		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
+		href="/docs/flows/step_mocking"
+	/>
+	<DocCard
+		color="teal"
+		title="Shared Directory"
+		description="The Shared Directory allows steps within a flow to share data by storing it in a designated folder"
+		href="/docs/core_concepts/persistent_storage#shared-directory"
+	/>
+	<DocCard
+		color="teal"
+		title="Custom Timeout for Step"
+		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
+		href="/docs/flows/early_stop"
+	/>
+</div>

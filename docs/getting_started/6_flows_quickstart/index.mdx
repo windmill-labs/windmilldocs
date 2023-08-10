@@ -38,7 +38,7 @@ Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor 
 
 ### Metadata
 
-The first thing you'll see is the **[Metadata](../../flows/3_editor_components.mdx#metadata)** menu. From there, you can set the [permissions](../../core_concepts/16_roles_and_permissions/index.mdx) of the workflow: User (by default, you), and Folder (referring to read and/or write groups).
+The first thing you'll see is the [Metadata](../../flows/3_editor_components.mdx#metadata) menu. From there, you can set the [permissions](../../core_concepts/16_roles_and_permissions/index.mdx) of the workflow: User (by default, you), and Folder (referring to read and/or write groups).
 
 Also, you can give succintly a Name, a Summary and a Description to your flow. Those are supposed to be explicit, we recommend you to give context and make them as self-explainatory as possible.
 
@@ -46,7 +46,7 @@ Also, you can give succintly a Name, a Summary and a Description to your flow. T
 
 ### Schedule
 
-On another tab, you can configure a **[Schedule](../../core_concepts/1_scheduling/index.md)** to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.md) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
+On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.md)* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.md) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
 
 ![Flows schedule](./flows_schedule.png.webp)
 
@@ -61,7 +61,7 @@ On another tab, you can configure a **[Schedule](../../core_concepts/1_schedulin
 
 ### Shared Directory
 
-Last tab of the settings menu is the **[Shared Directory](../../flows/3_editor_components.mdx#shared-directory)**.
+Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.md#shared-directory).
 
 By default, flows on Windmill are based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
@@ -101,8 +101,8 @@ Flows on Windmill are generic and reusable, they therefore expose inputs. Input 
 
 Inputs are either:
 
-- **[Static](../../flows/3_editor_components.mdx#static-inputs)**: you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
-- **Dynamically linked to others**: with [JSON objects](../../core_concepts/13_json_schema_and_parsing/index.md) as result that allow to refer to the output of any step.
+- [Static](../../flows/3_editor_components.mdx#static-inputs): you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
+- [Dynamically linked to others](../../flows/16_architecture.md): with [JSON objects](../../core_concepts/13_json_schema_and_parsing/index.md) as result that allow to refer to the output of any step.
   You can refer to the result of any step:
   - using the id associated with the step
   - clicking on the plug logo that will let you pick flow inputs or previous steps' results (after testing flow or step)
@@ -136,7 +136,7 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 
 ### For loops
 
-**[For loops](../../flows/12_flow_loops.md)** are a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
+[For loops](../../flows/12_flow_loops.md) are a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
 
 ![Flows for loops](./for_loops.png.webp)
 
@@ -151,7 +151,7 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 
 ### Branching
 
-**[Branches](../../flows/13_flow_branches.md)** allow you to build branching logic to create and manage complex workflows based on conditions. There are two of them:
+[Branches](../../flows/13_flow_branches.md) allow you to build branching logic to create and manage complex workflows based on conditions. There are two of them:
 
 - [Branch one](../../flows/13_flow_branches.md#branch-one): allows you to execute a branch if a condition is true.
 - [Branch all](../../flows/13_flow_branches.md#branch-all): allows you to execute all the branches in parallel, as if each branch is a flow.
@@ -169,7 +169,7 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 
 ### Retries
 
-At each step, Windmill allows you to **[customize the number of retries](../../flows/14_retries.md)** by going on the `Advanced` tabs of the individual script. If defined, upon error this step will be retried with a delay and a maximum number of attempts.
+At each step, Windmill allows you to [customize the number of retries](../../flows/14_retries.md) by going on the `Advanced` tabs of the individual script. If defined, upon error this step will be retried with a delay and a maximum number of attempts.
 
 ![Flows retries](./flows_retries.png.webp)
 
@@ -184,7 +184,7 @@ At each step, Windmill allows you to **[customize the number of retries](../../f
 
 ### Suspend/Approval Step
 
-At each step you can add **[Approval Scripts](../../flows/11_flow_approval.md)** to manage security and control over your flows.
+At each step you can add [Approval Scripts](../../flows/11_flow_approval.md) to manage security and control over your flows.
 
 Request approvals can be sent by email, Slack, anything. Then you can **automatically resume workflows with secret webhooks** after the approval steps.
 
