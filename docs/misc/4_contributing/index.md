@@ -1,5 +1,5 @@
 ---
-title: "Contributor Guide"
+title: 'Contributor Guide'
 ---
 
 # Contributor Guide
@@ -54,3 +54,19 @@ The format is as follows:
 
 Where `extra_params` is an escape hatch to deal with OAuth provider that need
 some extra fields to be passed along to the authorization URL.
+
+You can iterate without requiring a dev setup. The item accepts an extra optional field: `connect_config` or `login_config` of type OAuthConfig:
+
+```
+interface OAuthConfig {
+    auth_url: string,
+    token_url: string,
+    userinfo_url?: string,
+    scopes?: string[],
+    extra_params?: Record<string, string>,
+    extra_params_callback?: Record<string, string>,
+    req_body_auth?: bool
+}
+```
+
+`connect_config` is used for resources, and `login_config` for SSO.

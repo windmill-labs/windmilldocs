@@ -286,3 +286,23 @@ GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for
 	}
 }
 ```
+
+### Custom OAuth
+
+You can add a completely custom oauth without requiring a dev setup. The item accepts an extra optional field: `connect_config` or `login_config` of type OAuthConfig:
+
+```
+interface OAuthConfig {
+    auth_url: string,
+    token_url: string,
+    userinfo_url?: string,
+    scopes?: string[],
+    extra_params?: Record<string, string>,
+    extra_params_callback?: Record<string, string>,
+    req_body_auth?: bool
+}
+```
+
+`connect_config` is used for resources, and `login_config` for SSO.
+
+Once you have validated your custom item, we would be greateful if you could open a PR. See [Contributor's guide](../4_contributing/index.md) for more details.
