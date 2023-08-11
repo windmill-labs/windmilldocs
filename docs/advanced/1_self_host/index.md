@@ -11,6 +11,20 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 **Even if you setup oauth, login as** admin@windmill.dev **/ changeme to setup the instance and give yourself admin privileges**.
 
+Windmill itself just require 3 parts:
+
+- A Postgres database, which contains the entire state of windmill, including the job queue.
+- The windmill container run in server mode (and replicated for HA). It serves both the frontend and the API. It needs to connect to the database and is what is exposed publicly to serve the frontend. It does not need to communicate to the workers directly.
+- The windmill container run in worker mode (and replicated to handle more job throughput). It needs to connect to the database and does not communicate to the servers.
+
+There are 3 optional parts:
+
+- windmill lsp to provide intellisense on the monaco web editor
+- windmill multiplayer (EE only) to provide real time collaboration
+- A reverse proxy (caddy in our docker compose) to the windmill server, lsp and multiplayer in order to expose a single port to the outside world.
+
+The docker-compose below use the 6 parts and we recommend doing TLS termination outside of the provided caddy.
+
 ## Cloud provider-specific guides
 
 ### AWS, GCP, Azure
