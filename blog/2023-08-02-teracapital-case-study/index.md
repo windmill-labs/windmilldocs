@@ -17,21 +17,19 @@ image: ./t4_thumbnail.png
 
 <br/>
 
-This is a testimonial written by [José Governo](https://www.linkedin.com/in/jose-governo/), Responsible for Data Study and Software Engineering at [Tera Capital](https://www.teracapital.com.br/).
+This is a testimonial written by [José Governo](https://www.linkedin.com/in/jose-governo/), Responsible for Quantitative Strategies & Data Engineering at [Tera Capital](https://www.teracapital.com.br/).
 
 ![Tera Capital Case Study](./t4_use_case.png "Tera Capital Case Study")
 
 ## What before Windmill?
 
-[Tera Capital](https://www.teracapital.com.br/) is a Multi Family Office that offers exclusive asset management and estate planning services.
+[Tera Capital](https://www.teracapital.com.br/) is a Multi Family Office that offers exclusive asset management services.
 
-In the management team, everyone has a specialization in finance, but we lack technical background since I am the first and only member of the team who knows how to code.
+In the management team, everyone has a specialization in finance, but we lack technical background, although data analysis was one of their main activities.
 
-To create automations and dashboards for our investment tems and clients, either the team was wasting time creating them themselves, or they would ask me to do it for them, creating a bottleneck.
+To create automation and dashboards for our investments, the team was wasting time creating everything themselves using Excel and VBA.
 
-Therefore, we had three options: either everyone had to become more efficient (not possible overnight), or we had to hire more people (costly), or we had to find a solution so that everyone could focus on their own work.
-
-From a data suite based on manual Excel files, we decided to start over from scratch.
+With my addition to the team we decided to start over from scratch, but I needed a solution that would enable everyone to keep creating their work without a proficiency in coding.
 
 ## Why Windmill over Retool?
 
@@ -40,7 +38,7 @@ To begin with, we migrated all our data to [Supabase](https://supabase.com/), wh
 Next, we started creating dashboards on this data using <a href="https://retool.com/" rel="nofollow">Retool</a>. However, after a thorough analysis, we decided to switch from Retool to Windmill because:
 - Retool is JavaScript-only and does not support Python.
 - Retool is limiting in terms of UI capabilities.
-- Windmill was much more responsive and quickly installed the components we needed, including critical cold installs such as Bloomberg Open Data.
+- Windmill was much more responsive and quickly installed the components we needed, including critical tools like OpenBB.
 
 Within two weeks, everything was set to go with Windmill. Although self-hosting was possible, we opted for the [Cloud Enterprise Edition](/pricing) to avoid maintenance concerns, have our issues addressed within hours, and have our feature requests prioritized.
 
@@ -61,4 +59,4 @@ Among our apps in Windmill, one of the most critical ones is a custom interface 
 Before Windmill, our clients used to receive a monthly PDF with data that was difficult to keep up to date. Now, we have improved our client-facing service without having to subscribe to countless Saas subscriptions.
 
 ![T4 Client App](./t4_client_app.png "Client-facing app")
-> Here is an anonymized version of our client-facing dasboard.
+> Here is an anonymized version of our client-facing dashboard.
