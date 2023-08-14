@@ -5,6 +5,9 @@ on:
     paths:
       - 'src/**'
       - 'docs/**'
+  push:
+    branches:
+      - main
   merge_group:
 
 jobs:
