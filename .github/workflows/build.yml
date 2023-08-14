@@ -16,5 +16,5 @@ jobs:
         with:
           node-version: 18
       - name: 'npm check'
-        timeout-minutes: 2
+        timeout-minutes: 5
         run: npm ci --legacy-peer-deps && npm run build
