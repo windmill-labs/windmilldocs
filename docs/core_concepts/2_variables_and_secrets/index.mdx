@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Variables and Secrets
 
@@ -24,16 +26,8 @@ Secret Variables.
 Inside the Scripts, one would use the Windmill client to interact with the
 user-defined Variables.
 
-Python:
-
-```python
-import wmill
-
-wmill.get_variable("u/user/foo")
-wmill.set_variable("u/user/foo", value)
-```
-
-TypeScript (Deno):
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
 import { getVariable, setVariable } from 'https://deno.land/x/windmill@v1.101.1/mod.ts';
@@ -41,6 +35,20 @@ import { getVariable, setVariable } from 'https://deno.land/x/windmill@v1.101.1/
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
 ```
+
+</TabItem>
+<TabItem value="py" label="Python" attributes={{className: "text-xs p-4 !mt-0"}}>
+
+```py
+import wmill
+
+wmill.get_variable("u/user/foo")
+wmill.set_variable("u/user/foo", value)
+```
+
+</TabItem>
+
+</Tabs>
 
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.mdx)
 which are simply Variables that can contain any JSON values, not just a string
