@@ -16,7 +16,7 @@ On a step, go to the `Advanced` menu and pick the "Mock" tab.
 
 "Enable step mocking" and customize the Mocked Return value.
 
-![Step mocking](../assets/flows/step_mocking.png)
+![Step mocking](../assets/flows/step_mocking.png.webp)
 
 :::tip Cache for steps
 

@@ -5,7 +5,7 @@ By default, adding a trigger will set the schedule to 15 minutes.
 
 :::info
 
-Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md) and [Triggering flows](../getting_started/9_trigger_flows/index.md).
+Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md) and [Triggering flows](../getting_started/9_trigger_flows/index.mdx).
 
 :::
 
@@ -28,7 +28,7 @@ what's not**.
 **Flows can be scheduled through the Flow UI** using a CRON expression and then
 activating the schedule as seen in the image below.
 
-![Schedule Scripts](../getting_started/9_trigger_flows/schedule-flow.png)
+![Schedule Scripts](../getting_started/9_trigger_flows/schedule-flow.png.webp)
 
 Examples of trigger scripts include:
 
@@ -40,7 +40,7 @@ The following TypeScript code is an example of the first module of a Flow that
 checks for new documents in a MongoDB collection on a regular schedule. In this
 case we query documents that were created after a specific time, expressed with
 a timestamp. The timestamp is stored with the help of Windmill's built-in
-[state functions](../reference/index.mdx#state-and-internal-state) and is
+[state functions](../core_concepts/3_resources_and_types/index.mdx#state) and is
 updated in each run.
 
 <details>

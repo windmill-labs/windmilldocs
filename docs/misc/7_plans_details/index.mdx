@@ -34,6 +34,8 @@ Designed for small teams automating processes.
 
 `seats = max(users, executions / 10k)`. Meaning if you have 4 users and 60k executions, you pay 60$ = 40$ + 20$.
 
+See [Upgrading to Team Edition](#upgrading-to-team-edition).
+
 ### Enterprise Plan
 
 Dedicated support and infrastructure for advanced capabilities.
@@ -47,7 +49,9 @@ Dedicated support and infrastructure for advanced capabilities.
 - Multi-tenant Shared infrastructure: $200/month.
 - Isolated workers and database (Available in US/EU/Asia): $600/month.
 - Dedicated Kubernetes cluster (Available in US/EU/Asia): $1200/month.
-- Each worker can run up to ~13M jobs per month.
+- Each worker can run up to ~26M jobs per month.
+
+See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
     <DocCard
@@ -90,6 +94,31 @@ Designed for companies requiring dedicated support and advanced infrastructure.
 - Each worker: $50/month.
 - Each seat: $20/month.
 
+See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+    	title="Support & SLA"
+    	description="Our SLAs are designed to provide timely assistance and address any issues."
+    	href="/docs/misc/support_and_sla"
+    />
+    <DocCard
+    	title="Audit Logs"
+    	description="Windmill provides audit logs for every operation and action that has side-effects."
+    	href="/docs/core_concepts/audit_logs"
+    />
+	<DocCard
+    	title="Deploy to Staging or Prod"
+    	description="Deploy items to another staging/prod workspace."
+    	href="/docs/core_concepts/staging_prod"
+    />
+	<DocCard
+    	title="Multiplayer"
+    	description="Collaborate on scripts simultaneously."
+    	href="/docs/core_concepts/multiplayer"
+    />
+</div>
+
 ## White Labeling Windmill
 
 Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand. We do prodive a library to embed the entire Windmill app or specific components, such as the flow builder, into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
@@ -110,20 +139,22 @@ Team plans work at the workspace-level.
 
 ### Upgrading to Enterprise Edition
 
-- For upgrading your instance to the Enterprise Edition, whether on Cloud or Self-hosted, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
+**Cloud**
+
+- For upgrading your instance to the Enterprise Edition, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
 - Once you contact us, we will provide you with a secure payment link.
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
+- After completing the payment, your workspace and, if applicable, the cluster will be upgraded to the Enterprise Edition, offering dedicated support and advanced features.
 
-**Cloud**: After completing the payment, your workspace and, if applicable, the cluster will be upgraded to the Enterprise Edition, offering dedicated support and advanced features.
+**Self-host**
 
-**Self-host**: Upon subscribing, you will receive a license key that is valid for one year. To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing). At the end of the subscription period, you will receive another license key valid for one year. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT).
+- To upgrade, with a one-month free trial, use the link, or reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
+- Upon subscribing, you will receive a license key that is valid for one year. To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing). At the end of the subscription period, you will receive another license key valid for one year. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
 
 :::tip Using the License Key
 To utilize the license key, switch from the windmill image to the windmill-ee image in both the server and workers. Pass the license key as the `LICENSE_KEY` environment variable.
 :::
-
-For any further inquiries or assistance regarding the Enterprise Edition upgrade process, please don't hesitate to contact us.
-
 
 ## Frequently Asked Questions (FAQ)
 
@@ -133,4 +164,4 @@ For any further inquiries or assistance regarding the Enterprise Edition upgrade
 - **What is your Security level on APIs?** Windmill is SOC 2 Type I compliant, and we prioritize addressing vulnerabilities promptly.
 - **Could the application keep running if Windmill as a company is shut down?** Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection.
 
-For any further inquiries or assistance regarding the pricing plans and subscriptions, please don't hesitate to contact us.
+For any further inquiries or assistance regarding the Enterprise Edition upgrade process, please [contact us](../6_getting_help/index.mdx).

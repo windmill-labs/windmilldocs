@@ -11,13 +11,9 @@
 
 <br/>
 
-To integrate [Gmail](https://mail.google.com/mail/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+The [Gmail](https://mail.google.com/mail/) integration is done through OAuth. You just need to sign in from your Google account on your browser. The access will be automatically saved to the workspace as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-| Property | Type   | Description                             | Default | Required | Where to Find         |
-| -------- | ------ | --------------------------------------- | ------- | -------- | --------------------- |
-| token    | string | The OAuth token, refreshed if necessary |         | true     | Sign in from Windmill |
-
-<br/><br/>
+On [self-hosted instances](../advanced/1_self_host/index.md), integrating an OAuth API will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.md).
 
 :::tip
 

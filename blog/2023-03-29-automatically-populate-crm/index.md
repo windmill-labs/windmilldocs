@@ -52,7 +52,7 @@ Here is what happens when you execute the flow for a single email:
 
 And the graphical view of the flow:
 
-![CRM Automated - Graph](./crm_automated_graph.png 'CRM Automated - Graph')
+![CRM Automated - Graph](./crm_automated_graph.png.webp 'CRM Automated - Graph')
 
 ### 1. Making the relevant Google search
 

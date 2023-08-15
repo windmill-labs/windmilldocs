@@ -10,9 +10,7 @@ Slackbots are great tools to save time and reduce the need for manual input. The
 
 <!--truncate-->
 
-Building a Slack commands handler requires a little bit of Windmill mastering, but it's also a perfect way to get familiar with Windmill, as some key features are used (scripts, worfklows, branches, approval steps).
-
-Also, know that non-technical users can totally build such tools. I'm myself not a developer.
+Know that non-technical users can totally build such tools. I'm myself not a developer.
 
 <video
   className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -20,7 +18,6 @@ Also, know that non-technical users can totally build such tools. I'm myself not
   loop
   controls
   src="/videos/generated_email.mp4"
-  alt="container component"
 />
 
 <br/>
@@ -31,18 +28,15 @@ You will be able to build a Slackbot from which you can create events on your ca
 
 :::
 
-<!--If self-hosted-->
-<!--If self-hosted/-->
-
 <br/>
 
 We've seen in a [previous article](/docs/integrations/slack) how to connect Slack with Windmill and have briefly explored how to build a first slackbot for a single command (using a script).
 
 Long story short, the first article explained how to connect Slack with Windmill and to create a `/windmill` command on Slack linked to a script hosted on Windmill. Handling several commands on your Slackbot uses just the same logic, but we'll use one single Windmill workflow instead of a script.
 
-[Workflows](/docs/getting_started/flows_quickstart) on Windmill are based on scripts. Workflows are the architecture that allows you to chain scripts with branches, loops etc. while connecting scripts' inputs to previous ouputs.
+[Workflows](/docs/flows/flow_editor) on Windmill are based on scripts. Workflows are the architecture that allows you to chain scripts with branches, loops etc. while connecting scripts' inputs to previous ouputs.
 
-![Windmill Workflows](./1-windmill-workflows.png 'Windmill workflows')
+![Windmill Workflows](./1-windmill-workflows.png.webp 'Windmill workflows')
 
 As we will use only one master workflow to handle all Slack commands, branches will be key: one branch for one Slack command. Let's get started.
 
@@ -50,13 +44,13 @@ As we will use only one master workflow to handle all Slack commands, branches w
 
 Just like the [slack integration tutorial](/docs/integrations/slack), it all starts from your workspace settings. Once you connected Slack to your Windmill account, you will be offered to connect a script or flow to the `/windmill` Slack command. This time, pick "Create a flow to handle Slack commands".
 
-![Create Flow Handler](./2-create-flow-handler.png 'Create a flow to handle Slack Commands')
+![Create Flow Handler](./2-create-flow-handler.png.webp 'Create a flow to handle Slack Commands')
 
 You will get to [this](https://hub.windmill.dev/flows/28/example-handler-for-slack-bot-commands) workflow to handle Slack commands. When linked to the `/windmill` command from the Windmill workspace settings, it will react to it on Slack.
 
 Before going deeper, let's take a look at this first workflow because its logic will be of use.
 
-![First Handler Workflow](./8-example-first-handler.png 'By default commands handler workflow')
+![First Handler Workflow](./8-example-first-handler.png.webp 'By default commands handler workflow')
 
 ### Inputs
 
@@ -117,11 +111,54 @@ The goal of the current section is to give you more hints on the potentiality of
 
 <!--(but maybe our users have more ideas) + link to Atelier post, when published-->
 
-![Slack commands hander, 2nd example](./3-commands-handler-n2.png 'Second example of a Slack commands handler')
+![Slack commands hander, 2nd example](./3-commands-handler-n2.png.webp 'Second example of a Slack commands handler')
+
+### Control the Slackbot by getting username
+
+You can get the username of the Slack user that triggered the workflow, leveraging the [contextual variable](/docs/core_concepts/variables_and_secrets#contextual-variables) `WM_USERNAME`.
+
+To the first step of your script, click on "+Context Var" and pick `WM_USERNAME`. The variable will take the value of the Slack username.
+
+![Add Context Var](./add_context_var.png "Add context variable")
+
+For example, our parser:
+
+```js
+export async function main(text_input: string): Output {
+  const username = await Deno.env.get('WM_USERNAME')
+  const tokenized: string[] = text_input?.split(' ') || [];
+  const command = tokenized[0] || 'help';
+  const input = tokenized.slice(1,).join(' ');
+
+  return { username,command, input };
+}
+
+interface Output {
+  
+  username: string;
+  command: string;
+  input: string;
+}
+```
+
+with the command `/windmill help me` triggered by Slack user "henri.courdent" will return:
+
+```js
+{
+    "input": "me",
+    "command": "help",
+    "username": "henri.courdent"
+}
+```
+Such piece of information can be used to [monitor runs](/docs/core_concepts/monitor_past_and_future_runs) of the flow, or [condition its execution](#branches) depending on the user.
+
+Also, in any case you can check from the runs [runs menu](/docs/core_concepts/monitor_past_and_future_runs), the username of the Slack account that triggered the workflow.
+
+![Flow Slack Username](./flow_slack_username.png "Flow Slack Username")
 
 ### Fine-tuning the parser to manage longer commands
 
-The default parser of the first example has the advantage of being simple as it parses word by word. Since we want to give more comprehensive parameters (sentences etc.), I chose to manage the parameters following the command separated with `" "` instead of spaces, as shown with the following code (generated with Open AI, remember I'm not a developer):
+The default parser of the first example has the advantage of being simple as it parses word by word. Since we want to give more comprehensive parameters (sentences etc.), I chose to manage the parameters following the command separated with `" "` instead of spaces, as shown with the following code:
 
 ```js
 export async function main(text_input: string): Output {
@@ -168,7 +205,6 @@ With the following parser, if from Slack I write `/windmill coolcommand "the 1st
   loop
   controls
   src="/videos/command_event.mp4"
-  alt="container component"
 />
 
 <br/>
@@ -179,13 +215,13 @@ One specificity of triggering resources from Slack is that **you have to let Win
 
 You won't be able to have Slack interact with your resources and variables before adding them to the `slack` [group](/docs/core_concepts/groups_and_folders) that was automatically created by Windmill after you set up your Slack workspace on Windmill.
 
-:::tip Allow resources to be triggered from Slack
-
+<details>
+  <summary>Allow resources to be triggered from Slack:</summary>
 To give the permission, go to "Resources" (and "Variables") menu, click on `Share`, `Group` and pick `slack`.
 
 <br/>
 
-![Share to slack group](./4-slack_group.png)
+![Share to slack group](./4-slack_group.png.webp)
 
 <br/>
 
@@ -193,17 +229,17 @@ One simplier way to handle permissions is to host resources and variables on a [
 
 <br/>
 
-![Share variable to folder](./5-variable_to_folder.png)
+![Share variable to folder](./5-variable_to_folder.png.webp)
 
 <br/>
 
-![Share folder to group](./6-folder_to_group.png)
+![Share folder to group](./6-folder_to_group.png.webp)
 
-:::
+</details>
 
 Once your resources are added, you can choose to pre-load them (as the gcal auth here) or connect them with previous outputs if you want to make them variable depending on the query inputs.
 
-![Parameters flows](./7-parameters.png)
+![Parameters flows](./7-parameters.png.webp)
 
 ### Human in the loop with approval steps
 
@@ -213,7 +249,6 @@ Once your resources are added, you can choose to pre-load them (as the gcal auth
     loop
     controls
     src="/videos/generated_email.mp4"
-    alt="container component"
 />
 
 <br/>

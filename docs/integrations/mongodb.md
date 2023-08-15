@@ -16,7 +16,7 @@ You can find more information about setting up MongoDB Atlas
 
 :::
 
-![Integration between MongoDB and Windmill](../assets/integrations/0-header.png 'Connect a MongoDB Atlas project with Windmill')
+![Integration between MongoDB and Windmill](../assets/integrations/0-header.png.webp 'Connect a MongoDB Atlas project with Windmill')
 
 ## Create Resource
 
@@ -35,7 +35,7 @@ You can find a list of all the officially supported Resource Types on
 Head to the [Resources][wm-app-resources] page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `mongodb_rest` type.
 
-![Select Resource Type](../assets/integrations/1-resources.png)
+![Select Resource Type](../assets/integrations/1-resources.png.webp)
 
 :::caution
 
@@ -52,7 +52,7 @@ To enable access to your database, follow the instructions in
 [this article][mongo-api] and paste your **API key** and **endpoint** in
 Windmill. When it's done, click "Save".
 
-![Paste in Resource Values](../assets/integrations/2-mongo-rt.png)
+![Paste in Resource Values](../assets/integrations/2-mongo-rt.png.webp)
 
 ### Using Custom Configuration
 
@@ -91,7 +91,7 @@ Windmill uses Deno as the TypeScript runtime.
 Name the Script `my_mongodb_script`, give it a summary, "Query the Example
 MongoDB Dataset" for example and click "Next".
 
-![Script creation first step](../assets/integrations/3-script-creation.png)
+![Script creation first step](../assets/integrations/3-script-creation.png.webp)
 
 Paste in the following code into the editor:
 
@@ -136,7 +136,7 @@ After filling the inputs, try running the Script by clicking "Test" or pressing
 `Ctrl` + `Enter`. You should see exactly one restaurant returned in the bottom
 right corner.
 
-![Run the Script](../assets/integrations/4-script-test.png)
+![Run the Script](../assets/integrations/4-script-test.png.webp)
 
 If you tried querying by the `_id` field, you might have noticed that it didn't
 return anything. That's because it is stored as an ObjectID, which is a special
@@ -194,7 +194,7 @@ standalone.
 [hub-resources]: https://hub.windmill.dev/resources
 [hub-mongo]: https://hub.windmill.dev/integrations/mongodb
 [docs-resources]: /docs/core_concepts/resources_and_types
-[docs-path]: /docs/reference#path
+[docs-path]: /docs/core_concepts/roles_and_permissions#path
 [docs-flows]: /docs/getting_started/flows_quickstart
 [docs-apps]: /docs/getting_started/apps_quickstart
 [mongodb-atlas]: https://www.mongodb.com/atlas/database

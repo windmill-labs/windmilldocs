@@ -26,18 +26,21 @@ const features = [
 		name: 'RBAC',
 		description:
 			'Define visibility, edit rights and executability for your scripts, resources, schedules, etc, using groups, folders and user-level granular permissioning.',
+		href: '/docs/core_concepts/roles_and_permissions',
 		icon: Key
 	},
 	{
 		name: 'Scalable',
 		description:
 			'Our workers are horizontally scalable, we scale from 0 to infinity to power all your internal services.',
+		href: '/docs/core_concepts/worker_groups',
 		icon: ServerStackIcon
 	},
 	{
 		name: 'Air-gapped',
 		description:
 			'It only require a connection to the internet if you use Hub scripts, otherwise it’s air-gapped and autonomous.',
+		href: '/docs/advanced/self_host',
 		icon: Landmark
 	}
 ];

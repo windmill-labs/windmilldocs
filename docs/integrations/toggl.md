@@ -1,8 +1,8 @@
 # Toggl Integration
 
-To integrate [Toggl](https://toggl.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Toggl](https://toggl.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Toggl Resource](../assets/integrations/add-toggl.png)
+![Add Toggl Resource](../assets/integrations/add-toggl.png.webp)
 
 | Property | Type   | Description | Required | Where to find                                                |
 | -------- | ------ | ----------- | -------- | ------------------------------------------------------------ |

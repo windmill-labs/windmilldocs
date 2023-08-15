@@ -1,8 +1,8 @@
 # Stripe Integration
 
-To integrate [Stripe](https://stripe.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [Stripe](https://stripe.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Stripe Resource](../assets/integrations/add-stripe.png)
+![Add Stripe Resource](../assets/integrations/add-stripe.png.webp)
 
 | Property | Type   | Description | Required | Where to find                                            |
 | -------- | ------ | ----------- | -------- | -------------------------------------------------------- |

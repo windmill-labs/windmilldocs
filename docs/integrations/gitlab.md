@@ -1,15 +1,10 @@
-# Gitlab Integration
+# GitLab Integration
 
-To integrate [Gitlab](https://about.gitlab.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+The [GitLab](https://about.gitlab.com/) integration is done through OAuth. You just need to sign in from your GitLab account on your browser. The access will be automatically saved to the workspace as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Gitlab Resource](../assets/integrations/add-gitlab.png)
+On [self-hosted instances](../advanced/1_self_host/index.md), integrating an OAuth API will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.md).
 
-| Property | Type   | Description                      | Default            | Required | Where to Find                                                                   |
-| -------- | ------ | -------------------------------- | ------------------ | -------- | ------------------------------------------------------------------------------- |
-| baseUrl  | string | Base URL of your GitLab instance | https://gitlab.com | false    | Provided by your GitLab hosting provider or GitLab instance URL for self-hosted |
-| token    | string | GitLab personal access token     |                    | true     | Sign in from Windmill                                                           |
-
-<br/><br/>
+![Add Gitlab Resource](../assets/integrations/add-gitlab.png.webp)
 
 :::tip
 

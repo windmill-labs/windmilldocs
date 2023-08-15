@@ -74,7 +74,7 @@ export default function LandingHeader() {
 					</div>
 					<Popover.Group as="nav" className="hidden space-x-10 md:flex">
 						<a
-							href="https://www.windmill.dev/docs/intro"
+							href="/docs/intro"
 							onClick={() => window.plausible('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>
@@ -179,6 +179,7 @@ export default function LandingHeader() {
 							onClick={() => window.plausible('try-cloud')}
 							data-analytics='"try-cloud"'
 							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
+							rel="nofollow"
 						>
 							Windmill Cloud
 						</a>
@@ -250,6 +251,7 @@ export default function LandingHeader() {
 									<a
 										href="https://app.windmill.dev"
 										className="!no-underline flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+										rel="nofollow"
 									>
 										Windmill Cloud
 									</a>

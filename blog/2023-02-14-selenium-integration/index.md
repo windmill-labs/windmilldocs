@@ -20,7 +20,7 @@ request a dedicated instance at contact@windmill.dev
 
 :::
 
-![Integrattion between Selenium and Windmill](./0-header.png 'Connect Selenium with Windmill')
+![Integrattion between Selenium and Windmill](./0-header.png.webp 'Connect Selenium with Windmill')
 
 ## Prerequisite
 
@@ -402,13 +402,13 @@ def main():
 
 It should return this:
 
-![Windmill script with selenoid](./1-windmill_script_selenoid_screenshot.png)
+![Windmill script with selenoid](./1-windmill_script_selenoid_screenshot.png.webp)
 
 Go to `localhost:8080` (selenoid-ui) to see your script in action!
 
-![Selenoid UI home-screen](./2-selenoid_ui_screenshot.png)
+![Selenoid UI home-screen](./2-selenoid_ui_screenshot.png.webp)
 
-![Selenoid UI broser](./3-seleniud_ui_vnc_screenshot.png)
+![Selenoid UI broser](./3-seleniud_ui_vnc_screenshot.png.webp)
 
 To run multiple scripts at once you will have to give a unique port to each
 script. In the first step we opened the ports between `9920 - 9930` you can

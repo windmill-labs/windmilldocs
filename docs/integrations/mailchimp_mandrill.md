@@ -1,6 +1,6 @@
 # Mailchimp Mandrill Integration
 
-Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.md) or [flows](../getting_started/9_trigger_flows/index.md) by e-mail.
+Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.mdx) or [flows](../getting_started/9_trigger_flows/index.mdx) by e-mail.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -14,7 +14,7 @@ Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional
 
 :::info TLDR
 
-The present tutorial explains how to use Mailchimp to trigger Windmill [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) and [flows](../getting_started/6_flows_quickstart/index.md) through sending parsed inbound emails to Windmill via [webhooks](../core_concepts/4_webhooks/index.md).
+The present tutorial explains how to use Mailchimp to trigger Windmill [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [flows](../getting_started/6_flows_quickstart/index.mdx) through sending parsed inbound emails to Windmill via [webhooks](../core_concepts/4_webhooks/index.md).
 
 :::
 
@@ -24,7 +24,7 @@ The present tutorial explains how to use Mailchimp to trigger Windmill [scripts]
 
 Combined with a token created in Windmill, these webhooks can be interacted with using standard web technologies, making them compatible with a broad range of external systems and services, including Mailchimp Mandrill for email-triggered executions.
 
-![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png)
+![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png.webp)
 
 > Each script or flow has webhook endpoints. Bearer token must be passed as either an Authorization: Bearer &lt;TOKEN&gt; header, or as a token query parameter: https://&lt;instance&gt;/&lt;route&gt;?token=&lt;TOKEN&gt;
 
@@ -40,7 +40,7 @@ The flow we used for the example is available on [Windmill Hub](https://hub.wind
 
 Here are the steps to follow:
 
-1. Create a [script](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md) or [flow](../getting_started/6_flows_quickstart/index.md) in Windmill. Make sure it has an input designed to receive the parsed results (for example a string called "mandrill_events").
+1. Create a [script](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or [flow](../getting_started/6_flows_quickstart/index.mdx) in Windmill. Make sure it has an input designed to receive the parsed results (for example a string called "mandrill_events").
 
 2. [Sign up to Mailchimp](https://mailchimp.com/signup/) (we used the free trial at first).
 
@@ -83,7 +83,7 @@ If your routing rules are set to capture emails that are directly addressed to c
 - The parsed results are sent as an array, of which Windmill treats each element as a potential output & input.
 
 :::info Mailbox Routing
-In email systems, routing rules are not strictly tied to a single email address. Instead, they're flexible mechanisms that govern how an email server handles incoming messages based on various criteria.
+In email systems, routing rules are not strictly tied to a single email address. Instead, they are flexible mechanisms that govern how an email server handles incoming messages based on various criteria.
 
 <br/>
 
@@ -96,7 +96,7 @@ Thus, you can use the Mailchimp address effectively and have most emails be pars
 
 Then you just have to pick the details you want by "connecting inputs" of the JSON.parse step.
 
-![Get details from email](../assets/integrations/mailchimp_email_inputs.png)
+![Get details from email](../assets/integrations/mailchimp_email_inputs.png.webp)
 
 > _On the bottom right corner, relevant details from the email to be picked as inputs for further steps_
 
@@ -139,7 +139,7 @@ def main(input_email):
 
 </details>
 
-![Get details from email](../assets/integrations/mailchimp_forward_inputs.png)
+![Get details from email](../assets/integrations/mailchimp_forward_inputs.png.webp)
 
 > _On the bottom right corner, relevant details parsed from the forwarded email to be picked as inputs for further steps_
 
@@ -178,7 +178,6 @@ Here is what it does when "input" = `results.c[0].msg.headers.Subject` (c being 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/branch_fwd_direct.mp4"
 />
 

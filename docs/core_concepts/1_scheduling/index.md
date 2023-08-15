@@ -31,11 +31,11 @@ However, as with any powerful tool, using cron comes with its own set of challen
 
 <br/>
 
-Managing scripts, flows and apps on Windmill works at the [workspace](../../reference/index.mdx#workspace)-level. Admins invite authors and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
+Managing scripts, flows and apps on Windmill works at the [workspace](../16_roles_and_permissions/index.mdx#workspace)-level. Admins invite authors and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
 
 <br/>
 
-Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.md) in Windmill** (among [webhooks](../4_webhooks/index.md), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
+Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill** (among [webhooks](../4_webhooks/index.md), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
 
 :::
 
@@ -43,7 +43,7 @@ Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_
 
 From your workspace, navigate to the dedicated `Schedules` menu and select `New Schedule`.
 
-![Schedules menu](./6-schedules-menu.png 'Schedules menu')
+![Schedules menu](./6-schedules-menu.png.webp 'Schedules menu')
 
 1. Configure the **schedule frequency** using cron syntax or the simplified builder.
 
@@ -51,11 +51,11 @@ From your workspace, navigate to the dedicated `Schedules` menu and select `New 
 
 3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flows].
 
-![Schedule a task](./12-schedule-a-task.png 'Schedule a task')
+![Schedule a task](./12-schedule-a-task.png.webp 'Schedule a task')
 
 Click the `Schedule` button and you're good to go! The schedule will be automatically 'Enabled'. Toggle it off if needed.
 
-![Scheduled task](./13-scheduled-script.png 'Scheduled task')
+![Scheduled task](./13-scheduled-script.png.webp 'Scheduled task')
 
 :::tip Handle Several Schedules for the Same Workflow
 
@@ -65,21 +65,20 @@ The previous configuration can be replicated multiple times for the same workflo
 
 If the Schedules menu allows you to control future executions of scripts and workflows, you can check all past and future runs clicking on `Runs`. This will lead you to the [Runs menu](../../core_concepts/5_monitor_past_and_future_runs/index.mdx), with a filtered view on your runnable.
 
-![Runs menu](./10-runs-menu.png 'Runs menu')
+![Runs menu](./10-runs-menu.png.webp 'Runs menu')
 
 ... where you can get details on each run:
 
-![Run details](./11-run-details.png 'Run details')
+![Run details](./11-run-details.png.webp 'Run details')
 
 ## Configure Schedules from Flow Editor
 
-The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.md).
+The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.mdx).
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/schedule-cron.mp4"
 />
 
@@ -87,19 +86,19 @@ The same method can also be done from the [flow editor](../../getting_started/6_
 
 From your workspace, pick the workflow you want to schedule.
 
-![Go to workflow](./1-from-workspace.png 'Go to workflow')
+![Go to workflow](./1-from-workspace.png.webp 'Go to workflow')
 
 Go to the `Schedule` menu ...
 
-![Pick Schedule menu](./2-schedule-menu.png 'Pick Schedule menu')
+![Pick Schedule menu](./2-schedule-menu.png.webp 'Pick Schedule menu')
 
 and either schedule in [cron](https://crontab.guru) or in Basic mode that will automatically be translated in cron. Once it's done, you can see in next picture that the cron expression is now visible on the toolbar.
 
-![Basic or cron schedule](./3-basic-schedule.png 'Basic or cron schedule')
+![Basic or cron schedule](./3-basic-schedule.png.webp 'Basic or cron schedule')
 
 Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set!
 
-![Save and schedule](./4-inputs-toggle.png 'Save and schedule')
+![Save and schedule](./4-inputs-toggle.png.webp 'Save and schedule')
 
 ## Control Permissions and Errors
 
@@ -109,7 +108,7 @@ Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set
 
 From the schedule configuration, add a special script or flow to execute in case of an error.
 
-![Schedule Error Handler](./14_schedule_error_handler.png)
+![Schedule Error Handler](./14_schedule_error_handler.png.webp)
 
 For example, this can be a script that sends an error notification to [Slack](https://hub.windmill.dev/scripts/slack/1284/) or [Discord](https://hub.windmill.dev/scripts/discord/1292/).
 
@@ -119,19 +118,19 @@ For scheduled flows, add a simple step to be notified about the execution of the
 
 In this example I chose to [receive an email](https://hub.windmill.dev/scripts/gmail/1291/), but you can use other notification methods like [Slack](https://hub.windmill.dev/scripts/slack/1284/), [Discord](https://hub.windmill.dev/scripts/discord/1292/) or any other other method your imagination and API calls can create.
 
-![Add an email step](./7-add-email-step.png 'Add an email step')
+![Add an email step](./7-add-email-step.png.webp 'Add an email step')
 
 <br/>
 
 Configure the email.
 
-![Configure email](./8-configure-email.png 'Configure email')
+![Configure email](./8-configure-email.png.webp 'Configure email')
 
 <br/>
 
 And watch your mailbox.
 
-![Receive the email](./9-receive-email.png 'Receive the email')
+![Receive the email](./9-receive-email.png.webp 'Receive the email')
 
 <br/>
 
@@ -145,9 +144,9 @@ If you want to handle failure and receive another message in that case, add an [
 
 ### Manage permissions from the workflow
 
-From the metadata menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.md#folders) (group of people) to manage view and editing rights.
+From the metadata menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.mdx#folders) (group of people) to manage view and editing rights.
 
-![Manage permissions](./5-manage-rights.png 'Manage permissions')
+![Manage permissions](./5-manage-rights.png.webp 'Manage permissions')
 
 <br/>
 
@@ -157,6 +156,6 @@ Not only can you build scheduled jobs [from Windmill](../../getting_started/00_h
 
 <!-- Resources -->
 
-[flows]: ../../getting_started/6_flows_quickstart/index.md
+[flows]: ../../getting_started/6_flows_quickstart/index.mdx
 [scripts]: ../../getting_started/0_scripts_quickstart/index.mdx
 [apps]: ../../getting_started/7_apps_quickstart/index.mdx

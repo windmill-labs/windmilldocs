@@ -8,13 +8,13 @@ Styling on the app editor can be managed at the component and app-level.
 
 Some components have pre-set options for styling. They can be configured from the `Components settings` tab in the `Configuration` section.
 
-![Pre-set colors](../../assets/apps/8_app_styling/pre_set_colors.png)
+![Pre-set colors](../../assets/apps/8_app_styling/pre_set_colors.png.webp)
 
 ### Styling Menu
 
 Components come with a styling menu. From there, pick styles either from [CSS](https://www.w3schools.com/html/html_css.asp) or [Tailwind classes](https://tailwind.build/classes).
 
-![Styling menu](../../assets/apps/8_app_styling/styling_menu.png)
+![Styling menu](../../assets/apps/8_app_styling/styling_menu.png.webp)
 
 Please note that these different style classes can be combined.
 
@@ -26,7 +26,6 @@ You can configure manually your own classes with our Rich Editor.
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/rich_editor.mp4"
 />
 
@@ -44,7 +43,6 @@ On the right-side menu, pick `Global styling` and go on a component to define pr
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/global_styling.mp4"
 />
 
@@ -62,7 +60,6 @@ Just click on `Copy style to global CSS`.
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    id="main-video"
     src="/videos/copy_style_global_css.mp4"
 />
 

@@ -6,7 +6,7 @@ In the context of Windmill, the stakes are: **where to effectively store and man
 
 :::info TLDR
 
-When it comes to storing data manipulated by Windmil, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.md), [variables](../2_variables_and_secrets/index.md) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
+When it comes to storing data manipulated by Windmil, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
 
 <br/>
 
@@ -30,9 +30,9 @@ There are 4 kinds of persistent storage in Windmill:
 
 If you already have your own database provided by a supported integration, you can easily connect it to Windmill.
 
-If your service provider is already part of [our list of integrations](../../integrations/0_integrations_on_windmill.md), just add your database as a [resource](../../core_concepts/3_resources_and_types/index.md).
+If your service provider is already part of [our list of integrations](../../integrations/0_integrations_on_windmill.mdx), just add your database as a [resource](../../core_concepts/3_resources_and_types/index.mdx).
 
-"If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.md#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
+"If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
 
 ## Within Windmill: not recommended
 
@@ -48,7 +48,7 @@ Within Windmill, you can use States and Resources as a way to store a transient 
 
 #### States
 
-[States](../3_resources_and_types/index.md#states) are actually resources (but excluded from the Workspace tab for clarity). They are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
+[States](../3_resources_and_types/index.mdx#states) are actually resources (but excluded from the Workspace tab for clarity). They are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
 
 A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script. This is what enables Flows to watch for changes in most event watching scenarios. The pattern is as follows:
 
@@ -82,8 +82,8 @@ States are a specific type of resource in Windmill where the type is `state` the
   equivalent to `setState` but allows you to set an arbitrary path and chose a type other than state if wanted. [See api](https://deno.land/x/windmill/mod.ts?s=setResource)
 - `getResource(path: string)`: gets a resource at a given path. [See api](https://deno.land/x/windmill/mod.ts?s=getResource)
 
-The states can be seen in the [Resources](../3_resources_and_types/index.md) section with a
-[Resource Type](../3_resources_and_types/index.md#create-a-resource-type) of `state`.
+The states can be seen in the [Resources](../3_resources_and_types/index.mdx) section with a
+[Resource Type](../3_resources_and_types/index.mdx#create-a-resource-type) of `state`.
 
 :::tip
 
@@ -94,7 +94,7 @@ In conclusion `setState` and `setResource` are convenient ways to persist json b
 
 ### Shared Directory
 
-For heavier ETL processes or sharing data between steps in a flow, Windmill provides a [Shared Directory](../../flows/3_editor_components.md#shared-directory) feature.
+For heavier ETL processes or sharing data between steps in a flow, Windmill provides a [Shared Directory](../../flows/3_editor_components.mdx#shared-directory) feature.
 
 The Shared Directory allows steps within a flow to share data by storing it in a designated folder.
 
@@ -110,7 +110,7 @@ To enable the Shared Directory, follow these steps:
 2. Go to the `Shared Directory` section.
 3. Toggle on the option for `Shared Directory on './shared'`.
 
-![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png)
+![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png.webp)
 
 Once the Shared Directory is enabled, you can use it in your flow by referencing the `./shared` folder. This folder is shared among the steps in the flow, allowing you to store and access data between them.
 
@@ -143,7 +143,6 @@ For Postgres databases (best for structured data storage and retrieval, where yo
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/supabase_postgres_integration.mp4"
 />
 
@@ -182,7 +181,6 @@ More tutorials on Supabase:
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/neon_integration.mp4"
 />
 
@@ -224,7 +222,6 @@ Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/s3_objects_in_bucket.mp4"
 />
 

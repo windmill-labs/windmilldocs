@@ -2,6 +2,17 @@
 
 For loops is a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/flow-loop.mp4"
+/>
+
+<br/>
+
 Clicking on the `For loop` step on the mini-map, it will open the `For loop` step editor.
 There are three configuration options:
 
@@ -9,4 +20,4 @@ There are three configuration options:
 - **Skip failure**: if set to `true`, the loop will continue to the next item even if the current item failed.
 - **Run in parallel**: if set to `true`, all iterations will be run in parallel.
 
-![For loop step](../assets/flows/flow_for_loop.png)
+![For loop step](../assets/flows/flow_for_loop.png.webp)

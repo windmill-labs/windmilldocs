@@ -34,11 +34,11 @@ Windmill is different:
 Windmill embeds:
 
 - a **super fast runtime** to run code in
-  [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.md),
-  [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.md),
-  [Go](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.md),
-  [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.md) and
-  even [SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md)
+  [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx),
+  [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx),
+  [Go](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx),
+  [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) and
+  even [SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx)
   from a self-managed job queue, at scale, with any dependency, no overhead, and
   minimal cold start
 - a **parser that will infer the dependencies and arguments** from the code
@@ -51,11 +51,11 @@ Windmill embeds:
 - a powerful **web IDE** to write Scripts with autocompletion and syntax
   checking
 - a **low-code builder and workflow engine** to build and run complex
-  [Flows](../../getting_started/6_flows_quickstart/index.md) by composing your
+  [Flows](../../getting_started/6_flows_quickstart/index.mdx) by composing your
   custom scripts and generic scripts shared on
   [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
   - [retries](../../flows/14_retries.md) with fixed and exponential backoff
-  - [error handling](../../core_concepts/10_error_handling_in_flows/index.md)
+  - [error handling](../../flows/8_error_handling.mdx)
   - [for loops](../../flows/12_flow_loops.md) over list triggering one flow per item
   - [branching](../../flows/13_flow_branches.md) to one subflow given a predicate or all sub-flows
   - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
@@ -89,7 +89,7 @@ team to attend you in your journey.
 Examples of what can be built with Windmill include:
 
 - **Scripts** that are deployed automatically into UIs, webhook endpoints and scheduled jobs.
-- **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching. ((Applicative workflows run critical services and need a production-grade infrastructure?))
+- **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching.
 - **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our Typescript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
 - **Powerful apps and dashboards** that are internal or external-facing, using either a low-code builder similar to Retool or full react views / svelte. In either case, those apps do a mix of frontend logic and calling the scripts and flows directly.
 
@@ -127,7 +127,7 @@ with:
   scalability** and have **no open APIs**.
 
 You will find more details on our view over our space and competitors in the
-[Windmill compared to its peers](../8_windmill_compared_to_peers/index.md) page.
+[Windmill compared to its peers](../../compared_to/peers.mdx) page.
 
 :::info About
 **[Windmill](https://www.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](../../advanced/1_self_host/index.md)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.

@@ -41,7 +41,7 @@ Where the `properties` field contains a dictionary of arguments, and `required` 
 The property names need to match the arguments declared by the main function, in our example `your_name` and `your_nickname`. There is a lot you can do with [arguments, types, and validation](#json-schema), but to keep it short:
 
 - Arguments can specify a type `integer`, `number`, `string`, `boolean`, `object`, `array` or `any`. The user's input will be validated against that type.
-- One can further constraint the type by having the string following a RegEx or pattern, or the object to be of a specific [Resource Type](../../core_concepts/3_resources_and_types/index.md).
+- One can further constraint the type by having the string following a RegEx or pattern, or the object to be of a specific [Resource Type](../../core_concepts/3_resources_and_types/index.mdx).
 - Arguments can be made mandatory by adding them to the `required` list. In that case, the generated UI will check that user input provides required arguments.
 - Each argument can have a description and default fields, that will appear in the generated UI.
 - Some types have advanced settings.
@@ -89,7 +89,7 @@ They are as follows:
 | `wmill.Sql`      | `string`, format: `sql`                      |
 | `<ResourceType>` | `object`, format: `resource-{resource_type}` |
 
-The `<ResourceType>` is any type that has a matching resource_type in the workspace (more details [here](../3_resources_and_types/index.md#using-resources)). Note that the CamelCase of the type is converted to the snake_case.
+The `<ResourceType>` is any type that has a matching resource_type in the workspace (more details [here](../3_resources_and_types/index.mdx#using-resources)). Note that the CamelCase of the type is converted to the snake_case.
 `Base64` and `Email` are actually a type alias for `string`, and `Resource` is a
 type alias for an `object`. They are purely type hints for the Windmill parser.
 
@@ -123,7 +123,6 @@ The JSON Schema of a script's arguments can be modified in the "Customize Inputs
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/schema_flows.mp4"
 />
 
@@ -136,7 +135,6 @@ Resource types in Windmill are associated with JSON Schemas. A resource type def
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/schema_rt.mp4"
 />
 
@@ -149,7 +147,6 @@ Here is an example on how to define a python list as an enum of strings using th
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    id="main-video"
     src="/videos/advanced_parameters_enum.mp4"
 />
 
@@ -163,6 +160,6 @@ Below is the list of all available advanced settings for each argument type:
 | Number  | No advanced configuration for this type.                                                                                                  |
 | String  | - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql &#124; Pattern (Regex)                             |
 | Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource Types](../3_resources_and_types/index.md).                                                                |
+| Object  | Advanced settings are [Resource Types](../3_resources_and_types/index.mdx).                                                                |
 | Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
 | Any     | No advanced configuration for this type.                                                                                                  |

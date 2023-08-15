@@ -42,7 +42,7 @@ export default function DevModeSwitch({ color = 'blue' }) {
 				/>
 			</Switch>
 			<span className={classNames('font-bold text-xl text-gray-900 dark:text-white')}>
-				Developer ?
+				Developer?
 			</span>
 		</div>
 	);

@@ -25,7 +25,7 @@ Most of our componente need a data source to work. The data source can be a stat
 
 ### Static data source
 
-![Static data source](../../assets/apps/inputs/static-data-source.png)
+![Static data source](../../assets/apps/inputs/static-data-source.png.webp)
 
 Depending of the type of the data source, the input will be different. For example, if the type of the data source is `string`, the input will be a text input.
 
@@ -43,8 +43,8 @@ Depending of the type of the data source, the input will be different. For examp
 
 The data source can be connected to any outputs.
 
-![Disconnected data source](../../assets/apps/inputs/disconnected-data-source.png)
-![Connected data source](../../assets/apps/inputs/connected-data-source.png)
+![Disconnected data source](../../assets/apps/inputs/disconnected-data-source.png.webp)
+![Connected data source](../../assets/apps/inputs/connected-data-source.png.webp)
 
 #### Learn more
 
@@ -60,8 +60,8 @@ The data source can be connected to any outputs.
 
 We can also use the result of a runnable as a data source.
 
-![Runnable data source](../../assets/apps/inputs/undefined-runnable-data-source.png)
-![Runnable data source](../../assets/apps/inputs/defined-runnable-data-source.png)
+![Runnable data source](../../assets/apps/inputs/undefined-runnable-data-source.png.webp)
+![Runnable data source](../../assets/apps/inputs/defined-runnable-data-source.png.webp)
 
 #### Learn more
 
@@ -95,15 +95,15 @@ export async function main(mode: 'editor' | 'preview', name: string) {
 
 The type of the input will be `select` with the values `editor` and `preview`, and the type of the input `name` will be `string`.
 
-![Runnable inputs](../../assets/apps/inputs/static-runnable-input.png)
-![Runnable inputs](../../assets/apps/inputs/connected-runnable-input.png)
-![Runnable inputs](../../assets/apps/inputs/eval-runnable-input.png)
+![Runnable inputs](../../assets/apps/inputs/static-runnable-input.png.webp)
+![Runnable inputs](../../assets/apps/inputs/connected-runnable-input.png.webp)
+![Runnable inputs](../../assets/apps/inputs/eval-runnable-input.png.webp)
 
 ## Component configuration
 
 Each component has a configuration section. This section contains all the configuration of the component.
 
-![Component configuration](../../assets/apps/inputs/component-configuration.png)
+![Component configuration](../../assets/apps/inputs/component-configuration.png.webp)
 
 #### Learn more
 

@@ -4,7 +4,7 @@ It is common to want to share common logic between your scripts. This can be don
 
 Note that in both the webeditor and with the CLI, your scripts do not necessarily need to have a main function. If they don't, they are asummed to be shared logic and not runnable scripts.
 
-It works extremely well in combination with [Developing scripts locally](../4_local_development/index.md) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
+It works extremely well in combination with [Developing scripts locally](../4_local_development/index.mdx) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
 
 ## Python relative imports for sharing common logic
 
@@ -42,13 +42,10 @@ from .common_logic import foo
 from ..folder.common_logic import foo
 ```
 
-Beware that you can only import scripts that you have view rights on on at time of execution.
-Furthermore, if you make any imports in the common logic, you will need to add
-the same imports in the Script that is being imported, otherwise the automatic
-dependency management will not work.
+Beware that you can only import scripts that you have view rights on at time of execution.
 
 The folder layout is identical with the one that works with the CLI for syncing
-scripts locally and on Windmill. See [Developing scripts locally](../4_local_development/index.md)
+scripts locally and on Windmill. See [Developing scripts locally](../4_local_development/index.mdx)
 
 ## Deno relative imports for sharing common logic
 

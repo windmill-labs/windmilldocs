@@ -70,7 +70,6 @@ We will split the product view into two parts, with the [vertical split](/docs/a
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step1.mp4"
 />
 
@@ -114,7 +113,6 @@ Now we can add the form to the right side of the split. We will use Text and inp
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step2.mp4"
 />
 
@@ -152,7 +150,6 @@ The final result should look like this:
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step3.mp4"
 />
 
@@ -174,7 +171,6 @@ but we will use a different transformer to remove the fields that we don't need.
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step4.mp4"
 />
 
@@ -224,7 +220,6 @@ In this example, we assume that the quantity of each product is 1. We can improv
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step5.mp4"
 />
 
@@ -255,7 +250,6 @@ export async function main(orders) {
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step6.mp4"
 />
 
@@ -309,7 +303,6 @@ We can now connect the output of the previous script to the Map component as the
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-builder-ecomm-step7.mp4"
 />
 

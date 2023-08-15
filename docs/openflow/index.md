@@ -73,7 +73,7 @@ be triggered to handle a failure at any point of the Flow. Think `try/catch` in
 terms of programming languages. See an example of modules represented in a graph
 below - this visualisation is built-in on the Windmill Flow editor.
 
-![Flow Modules](./modules_graph.png)
+![Flow Modules](./modules_graph.png.webp)
 
 ### FlowModule
 
@@ -196,7 +196,7 @@ directly**, so you could imagine composing your email body or SQL query using
 string interpolation and populating it with previous results. The Windmill
 Editor makes it very easy to do so, using the properties picker:
 
-![Prop picker](./prop_picker.png)
+![Prop picker](./prop_picker.png.webp)
 
 ### Conditional stop after
 

@@ -1,0 +1,151 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Add Resources and Variables to Code
+
+You can add directly access Variables and Resources from the Code Editor.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Resources and Resource Types"
+		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		href="/docs/core_concepts/resources_and_types"
+	/>
+	<DocCard
+		title="Variables and Secrets"
+		description="Variables and Secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
+		href="/docs/core_concepts/variables_and_secrets"
+	/>
+</div>
+
+## Resources
+
+There are 2 main ways resources are used within scripts:
+
+### Passing resources as parameters to scripts (prefered)
+
+Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps using the Windmill client. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script.
+
+Typescript:
+
+```typescript
+type Postgresql = object;
+// OR one can fully type it
+type Postgresql = {
+	host: string;
+	port: number;
+	user: string;
+	dbname: string;
+	sslmode: string;
+	password: string;
+};
+
+export async function main(postgres: Postgresql) {
+	// Use Resource...
+}
+```
+
+Python:
+
+```python
+postgresql = dict
+
+def main(postgres: postgresql):
+    # Use Resource...
+```
+
+And then select the Resource in the arguments section on the right:
+
+![Select resource](../core_concepts/3_resources_and_types/select_resource.png.webp)
+
+:::tip
+
+You can also edit the Resource or even create a new one right from the Code
+editor.
+
+:::
+
+### Fetching them from within a script by using the wmill client in the respective language
+
+By clicking on `+ Resource`, you'll get to pick a resource from your workspace and be able to fetch it from within the script.
+
+Typescript:
+
+```typescript
+wmill.getResource('u/user/foo');
+```
+
+Python:
+
+```python
+wmill.get_resource("u/user/foo")
+```
+
+Go:
+
+```go
+wmill.GetResource("u/user/foo")
+```
+
+Bash:
+
+```bash
+curl -s -H "Authorization: Bearer $WM_TOKEN" \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/resources/get/u/user/foo" \
+    | jq -r .value
+```
+
+![Fectch resource](../core_concepts/3_resources_and_types/fetch_resource.png.webp)
+
+## Contextual variables
+
+Contextual Variables are variables whose values are contextual to the Script
+execution. They are automatically set by Windmill. This is how the Deno and Python clients get their implicit
+credentials to interact with the platform.
+
+See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel="nofollow">Variable page</a> for the list of reserved variables and what they are used for.
+
+You can use them in a Script by clicking on "+Context Var":
+
+![Contextual variable](../core_concepts/2_variables_and_secrets/context_variables.png.webp)
+
+Reserved variables are passed to the job as environment variables. For example, the ephemeral token is passed as `WM_TOKEN`.
+
+## User-defined variables
+
+There are 2 main ways variables are used within scripts:
+
+### Passing variables as parameters to scripts
+
+Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+
+### Fetching them from within a script by using the wmill client in the respective language
+
+By clicking on `+ Variable`, you'll get to pick a variable from your workspace and be able to fetch it from within the script.
+
+Typescript:
+
+```typescript
+wmill.getVariable('u/user/foo');
+```
+
+Python:
+
+```python
+wmill.get_variable("u/user/foo")
+```
+
+Go:
+
+```go
+wmill.GetVariable("u/user/foo")
+```
+
+Bash:
+
+```bash
+curl -s -H "Authorization: Bearer $WM_TOKEN" \
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/variables/get/u/user/foo" \
+    | jq -r .value
+```
+
+The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.

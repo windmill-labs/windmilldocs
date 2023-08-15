@@ -1,8 +1,8 @@
 # SMTP Integration
 
-To integrate SMTP to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate SMTP to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add SMTP Resource](../assets/integrations/add-smtp.png)
+![Add SMTP Resource](../assets/integrations/add-smtp.png.webp)
 
 | Property | Type   | Description            | Required | Where to find                                           |
 | -------- | ------ | ---------------------- | -------- | ------------------------------------------------------- |

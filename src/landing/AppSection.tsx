@@ -27,8 +27,7 @@ const tabs = [
 				description:
 					'Build complex apps from atomic components. Automatically trigger apps and flows from webhooks, a schedule, watching for events, or slack.',
 				icon: Hand,
-				caption:
-					'Simply drag and drop components, connect your data and deploy your app in minutes.',
+				caption: <div>Simply <a href="/docs/getting_started/apps_quickstart" target="_blank">drag and drop components</a>, connect your data and deploy your app in minutes.</div>,
 				video: {
 					videoSrc: '/videos/dnd.mp4',
 					altText: 'Drag and drop',
@@ -37,9 +36,9 @@ const tabs = [
 			},
 			{
 				title: 'Building blocks',
-				description: 'Quickly start building complex apps using our 40 built-in components.',
+				description: 'Quickly start building complex apps using our 50 built-in components.',
 				icon: Puzzle,
-				caption: 'Quickly start building complex apps using our 40 built-in components.',
+				caption: <div>Quickly start building complex apps using our <a href="/docs/apps/app_configuration-settings/app_component_library" target="_blank">50 built-in components</a>.</div>,
 				video: {
 					videoSrc: '/videos/components.mp4',
 					altText: 'Building blocks',
@@ -51,7 +50,7 @@ const tabs = [
 				description:
 					'Run any script or flow from the app editor. In Python, Go, Bash or Typescript.',
 				icon: Code2,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
+				caption: <div>Windmill supports Typescript, Python, Go, Bash and SQL <a href="/docs/getting_started/scripts_quickstart" target="_blank">scripts</a>.</div>,
 				video: {
 					videoSrc: '/videos/app-scripts.mp4',
 					altText: 'Run any script and flow',
@@ -63,11 +62,11 @@ const tabs = [
 				description:
 					'Our reactive engine ensures your app is always super performant, even when running complex apps.',
 				icon: FaBolt,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
+				caption: <div>Example of an <a href="/docs/apps/app_e-commerce" target="_blank">E-commerce CRM app</a>.</div>,
 				video: {
 					videoSrc: '/videos/app-performance.mp4',
 					altText: 'Build super performant apps',
-					videoLength: '16'
+					videoLength: '35'
 				}
 			}
 		]
@@ -81,11 +80,11 @@ const tabs = [
 				title: 'Build complex admin panel with table, action',
 				description: 'Build complex apps from atomic components.',
 				icon: FormInput,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
+				caption: <div>Example of an <a href="/docs/apps/app_e-commerce" target="_blank">E-commerce CRM app</a>.</div>,
 				video: {
-					videoSrc: '/videos/admin-crm.mp4',
-					altText: 'Admin crm',
-					videoLength: '21'
+					videoSrc: '/videos/app-performance.mp4',
+					altText: 'Build super performant apps',
+					videoLength: '35'
 				}
 			}
 		]
@@ -99,7 +98,7 @@ const tabs = [
 				title: 'Build BI dashboards with charts',
 				description: 'Build complex apps from atomic components.',
 				icon: BarChart,
-				caption: 'Windmill supports Typescript, Python, Go and Bash scripts.',
+				caption: <div>Windmill embeds several <a href="/docs/apps/app_configuration-settings/app_component_library#charts" target="_blank">charts components</a> with unlimited customization possibilities.</div>,
 				video: {
 					videoSrc: '/videos/bi-charts.mp4',
 					altText: 'BI charts',

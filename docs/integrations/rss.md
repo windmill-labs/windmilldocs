@@ -1,8 +1,8 @@
 # RSS Integration
 
-To integrate [RSS](https://rss.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.md).
+To integrate [RSS](https://rss.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add RSS Resource](../assets/integrations/add-rss.png)
+![Add RSS Resource](../assets/integrations/add-rss.png.webp)
 
 | Property | Type   | Description | Default | Required | Where to Find                           |
 | -------- | ------ | ----------- | ------- | -------- | --------------------------------------- |

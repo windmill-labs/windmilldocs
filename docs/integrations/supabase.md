@@ -1,8 +1,8 @@
 # Supabase Integration
 
-Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
+Learn how to connect to your [Supabase](https://supabase.com/) project from Windmill Scripts, Flows and Apps.
 
-![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png 'Connect a Supabase project with Windmill')
+![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png.webp 'Connect a Supabase project with Windmill')
 
 :::info
 
@@ -17,20 +17,15 @@ You can execute queries on Supabase through the regular Postgres protocol.
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
-    src="/videos/supabase_postgres_integration.mp4"
+    src="/videos/supabase_wizard.mp4"
 />
 
 1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
 
 2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
 
-3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
-
-   - Go to the `Settings` section.
-   - Click `Database`.
-   - Find your Connection Info and Connection String. Direct connections are on port 5432.
-
-4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/6/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the sslmode to "disable". More details on our [PostgreSQL Quickstart](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.md).
+3. From Windmill, on the [Resources](../core_concepts/3_resources_and_types/index.mdx) menu click on "Add a resource". Pick "postgresql" and "Add a Supabase DB". This will lead you to a Supabase page where
+you need to pick your organization. Then on Windmill pick a database, fill with database password and that's it.
 
 ## Through Supabase API
 
@@ -41,7 +36,7 @@ key and the URL of your endpoint from Supabase. To get these, select your
 project, navigate to the `Project Settings` page and select `API` from the menu.
 You'll find the URL and 2 keys here.
 
-![API settings](../assets/integrations/sb-1-1-settings.png)
+![API settings](../assets/integrations/sb-1-1-settings.png.webp)
 
 As the description says, the access level of the `public` key will be controlled
 by the policies you add and the `secret` key will bypass all of them. You can
@@ -56,15 +51,15 @@ want an integration to be supported by Windmill directly, please submit a new
 `resource type` on [Windmill Hub](https://hub.windmill.dev/resources).
 
 **Navigate to the [Resources](https://app.windmill.dev/resources) page**
-![Resources page](../assets/integrations/sb-2-1-resources.png)
+![Resources page](../assets/integrations/sb-2-1-resources.png.webp)
 
-**Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png)
+**Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png.webp)
 
 **Search for `Supabase` and select the resource type**
-![Resource selector](../assets/integrations/sb-2-3-search.png)
+![Resource selector](../assets/integrations/sb-2-3-search.png.webp)
 
 **Enter the API key and the URL from Supabase and click "Save"**
-![Resource selector](../assets/integrations/sb-2-4-resource.png)
+![Resource selector](../assets/integrations/sb-2-4-resource.png.webp)
 
 ### Use the resource
 

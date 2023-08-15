@@ -165,7 +165,7 @@ To customize the settings of components within each time, you can use `iter.inde
 
 - `iter.index` will retrieve the index number of each card (0, 1, 2 etc.).
 
-![iter.index](../../assets/apps/4_app_component_library/iter.index.png)
+![iter.index](../../assets/apps/4_app_component_library/iter.index.png.webp)
 
 - `iter.value.key` will retrieve the value of each key defined in the `items` section.
 
@@ -211,7 +211,7 @@ List components also support having [inputs](#inputs) set inside them. Retrieve 
 
 Divider X is a horizontal line.
 
-![Divider X](../../assets/apps/4_app_component_library/divider_x.png)
+![Divider X](../../assets/apps/4_app_component_library/divider_x.png.webp)
 
 #### Divider X configuration
 
@@ -224,7 +224,7 @@ Divider X is a horizontal line.
 
 Divider Y is a vertical line.
 
-![Divider Y](../../assets/apps/4_app_component_library/divider_y.png)
+![Divider Y](../../assets/apps/4_app_component_library/divider_y.png.webp)
 
 #### Divider Y configuration
 
@@ -437,7 +437,7 @@ The runnable parameters are defined:
 - **Static**: the parameter is defined in the component configuration.
 - **Connected**: the parameter is connected to an output.
 
-![Button API](../../assets/apps/4_app_component_library/button.png)
+![Button API](../../assets/apps/4_app_component_library/button.png.webp)
 
 #### Button configuration
 
@@ -500,7 +500,7 @@ The runnable parameters are defined:
 
 Only user inputs are displayed in the form.
 
-![Form API](../../assets/apps/4_app_component_library/form.png)
+![Form API](../../assets/apps/4_app_component_library/form.png.webp)
 
 #### Form configuration
 
@@ -533,8 +533,8 @@ The runnable parameters are defined:
 
 Only user inputs are displayed in the form in the modal.
 
-![Form Modal Button](../../assets/apps/4_app_component_library/form-modal-button.png)
-![Form Modal API](../../assets/apps/4_app_component_library/form-modal.png)
+![Form Modal Button](../../assets/apps/4_app_component_library/form-modal-button.png.webp)
+![Form Modal API](../../assets/apps/4_app_component_library/form-modal.png.webp)
 
 #### Form Modal configuration
 
@@ -573,7 +573,7 @@ The download button component allows you to download a file.
 
 <br/>
 
-The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data):
+The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx):
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -585,17 +585,17 @@ The data source of the Download button must be a data URL scheme with a [Base64 
 
 #### Download Button configuration
 
-| Name           |                Type                 | Connectable | Templatable |  Default  | Description                                   |
-| -------------- | :---------------------------------: | :---------: | :---------: | :-------: | --------------------------------------------- |
-| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data)).           |
-| filename       |               string                |    true     |    false    |           | The name of the file to download.             |
-| label          |               string                |    true     |    false    | Press me  | The button label.                             |
-| color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                             |
-| size           |         xs, sm, md , lg, xl         |    false    |    false    |    sm     | The button size.                              |
-| Fill container |               boolean               |    false    |    false    |   false   | Whether the button should fill the container. |
-| disabled       |               boolean               |    false    |    false    |   false   | Whether the button should be disabled.        |
-| Before Icon    |               string                |    false    |    false    | Undefined | The icon to display before the label.         |
-| After Icon     |               string                |    false    |    false    | Undefined | The icon to display after the label.          |
+| Name           |                Type                 | Connectable | Templatable |  Default  | Description                                                                                                      |
+| -------------- | :---------------------------------: | :---------: | :---------: | :-------: | ---------------------------------------------------------------------------------------------------------------- |
+| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx). |
+| filename       |               string                |    true     |    false    |           | The name of the file to download.                                                                                |
+| label          |               string                |    true     |    false    | Press me  | The button label.                                                                                                |
+| color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                                                                                                |
+| size           |         xs, sm, md , lg, xl         |    false    |    false    |    sm     | The button size.                                                                                                 |
+| Fill container |               boolean               |    false    |    false    |   false   | Whether the button should fill the container.                                                                    |
+| disabled       |               boolean               |    false    |    false    |   false   | Whether the button should be disabled.                                                                           |
+| Before Icon    |               string                |    false    |    false    | Undefined | The icon to display before the label.                                                                            |
+| After Icon     |               string                |    false    |    false    | Undefined | The icon to display after the label.                                                                             |
 
 ## Inputs
 
@@ -603,7 +603,7 @@ The data source of the Download button must be a data URL scheme with a [Base64 
 
 The form input component allows you to create a form and get answers from the user.
 
-![Form Input API](../../assets/apps/4_app_component_library/form_input.png)
+![Form Input API](../../assets/apps/4_app_component_library/form_input.png.webp)
 
 #### Form Input configuration
 
@@ -614,7 +614,7 @@ The form input component allows you to create a form and get answers from the us
 
 Each argument can be configured (name, description, type, default value, advanced parameters).
 
-![Form Input Arguments](../../assets/apps/4_app_component_library/form_input_argument.png)
+![Form Input Arguments](../../assets/apps/4_app_component_library/form_input_argument.png.webp)
 
 #### Outputs
 
@@ -629,7 +629,7 @@ Each argument can be configured (name, description, type, default value, advance
 
 The text input component allows you to get a string from the user.
 
-![Text Input API](../../assets/apps/4_app_component_library/text-input.png)
+![Text Input API](../../assets/apps/4_app_component_library/text-input.png.webp)
 
 #### Text Input configuration
 
@@ -686,7 +686,7 @@ The Rich Text Editor component allows to have to user enter text with a layout, 
 
 The password input component allows you to get a password from the user.
 
-![Password Input API](../../assets/apps/4_app_component_library/password-input.png)
+![Password Input API](../../assets/apps/4_app_component_library/password-input.png.webp)
 
 #### Password Input configuration
 
@@ -704,7 +704,7 @@ The password input component allows you to get a password from the user.
 
 The email input component allows you to get an email from the user.
 
-![Email Input API](../../assets/apps/4_app_component_library/email.png)
+![Email Input API](../../assets/apps/4_app_component_library/email.png.webp)
 
 #### Email Input configuration
 
@@ -723,7 +723,7 @@ The email input component allows you to get an email from the user.
 
 The number input component allows you to get a number from the user.
 
-![Number Input API](../../assets/apps/4_app_component_library/number-input.png)
+![Number Input API](../../assets/apps/4_app_component_library/number-input.png.webp)
 
 #### Number Input configuration
 
@@ -742,7 +742,7 @@ The number input component allows you to get a number from the user.
 
 The currency input component allows you to get a written amount of money in a set currency from the user.
 
-![Currency Input API](../../assets/apps/4_app_component_library/currency.png)
+![Currency Input API](../../assets/apps/4_app_component_library/currency.png.webp)
 
 #### Currency Input configuration
 
@@ -763,7 +763,7 @@ The currency input component allows you to get a written amount of money in a se
 
 The slider component allows you to get a number from the user.
 
-![Slider API](../../assets/apps/4_app_component_library/slider.png)
+![Slider API](../../assets/apps/4_app_component_library/slider.png.webp)
 
 #### Slider configuration
 
@@ -782,7 +782,7 @@ The slider component allows you to get a number from the user.
 
 The slider component allows you to get a range of numbers from the user.
 
-![Range API](../../assets/apps/4_app_component_library/range.png)
+![Range API](../../assets/apps/4_app_component_library/range.png.webp)
 
 #### Range configuration
 
@@ -802,7 +802,7 @@ The slider component allows you to get a range of numbers from the user.
 
 The date input component allows you to get a date from the user.
 
-![Date Input API](../../assets/apps/4_app_component_library/date-input.png)
+![Date Input API](../../assets/apps/4_app_component_library/date-input.png.webp)
 
 #### Date Input configuration
 
@@ -822,11 +822,11 @@ The date input component allows you to get a date from the user.
 
 The file input allows users to drop files into the app.
 
-![File Input API](../../assets/apps/4_app_component_library/file_input.png)
+![File Input API](../../assets/apps/4_app_component_library/file_input.png.webp)
 
-Files uploaded are converted and returned as a data URL scheme with a [Base64 encoded string](../../reference/index.mdx#handling-files-and-binary-data).
+Files uploaded are converted and returned as a data URL scheme with a [Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx).
 
-![File Input Base64](../../assets/apps/4_app_component_library/file_input_base64.png)
+![File Input Base64](../../assets/apps/4_app_component_library/file_input_base64.png.webp)
 
 #### File Input configuration
 
@@ -846,7 +846,7 @@ Files uploaded are converted and returned as a data URL scheme with a [Base64 en
 
 The toggle component allows you to get a boolean from the user.
 
-![Toggle API](../../assets/apps/4_app_component_library/toggle.png)
+![Toggle API](../../assets/apps/4_app_component_library/toggle.png.webp)
 
 #### Toggle configuration
 
@@ -865,7 +865,7 @@ The toggle component allows you to get a boolean from the user.
 
 The select component allows you to get a string from the user.
 
-![Select API](../../assets/apps/4_app_component_library/select.png)
+![Select API](../../assets/apps/4_app_component_library/select.png.webp)
 
 #### Select configuration
 
@@ -884,18 +884,18 @@ The select component allows you to get a string from the user.
 
 ### Resource Select
 
-The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.md) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.md).
+The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmil workspace to interact with [intergrations](../../integrations/0_integrations_on_windmill.mdx).
 
-![Resource Select](../../assets/apps/4_app_component_library/resource_select.png)
+![Resource Select](../../assets/apps/4_app_component_library/resource_select.png.webp)
 
 #### Resource Select configuration
 
-| Name        |                               Type                               | Connectable | Templatable | Default | Description                                                     |
-| ----------- | :--------------------------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
-| Items Name  |                              string                              |    true     |    false    |  "bar"  | The name of each suggested resource.                            |
-| Items       |  [resource](../../core_concepts/3_resources_and_types/index.md)  |    true     |    false    |         | The Windmill resource.                                          |
-| Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.md) |    false    |    false    |         | The variable that will be displayed by default.                 |
-| Full Width  |                             boolean                              |    false    |    false    |  true   | Set the width of the options popup to 100% of the select width. |
+| Name        |                               Type                                | Connectable | Templatable | Default | Description                                                     |
+| ----------- | :---------------------------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
+| Items Name  |                              string                               |    true     |    false    |  "bar"  | The name of each suggested resource.                            |
+| Items       |  [resource](../../core_concepts/3_resources_and_types/index.mdx)  |    true     |    false    |         | The Windmill resource.                                          |
+| Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.mdx) |    false    |    false    |         | The variable that will be displayed by default.                 |
+| Full Width  |                              boolean                              |    false    |    false    |  true   | Set the width of the options popup to 100% of the select width. |
 
 #### Outputs
 
@@ -907,7 +907,7 @@ The Resource Select component allows you to have users pick [resources](../../co
 
 The multiselect component allows you to get multiple strings from the user.
 
-![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png)
+![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png.webp)
 
 #### Multiselect configuration
 
@@ -926,7 +926,7 @@ The multiselect component allows you to get multiple strings from the user.
 
 The Select Tab is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
 
-![Select Tab](../../assets/apps/4_app_component_library/tab_select.png)
+![Select Tab](../../assets/apps/4_app_component_library/tab_select.png.webp)
 
 #### Select Tab configuration
 
@@ -945,7 +945,7 @@ The Select Tab is standalone tab component that behaves like a select component.
 
 The Select Step is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
 
-![Select Step](../../assets/apps/4_app_component_library/step_select.png)
+![Select Step](../../assets/apps/4_app_component_library/step_select.png.webp)
 
 #### Select Step configuration
 
@@ -966,7 +966,7 @@ The Select Step is standalone tab component that behaves like a select component
 
 The table component allows you to display a table.
 
-![Table API](../../assets/apps/4_app_component_library/table.png)
+![Table API](../../assets/apps/4_app_component_library/table.png.webp)
 
 #### Table Input
 
@@ -1054,7 +1054,7 @@ The AgGrid table component allows you to display an agnostic grid table.
 
 The text component allows you to display text.
 
-![Text API](../../assets/apps/4_app_component_library/text.png)
+![Text API](../../assets/apps/4_app_component_library/text.png.webp)
 
 #### Text Input
 
@@ -1092,7 +1092,7 @@ You can directly edit the text by click the `Pen` icon on the app editor. You ca
 
 The Icon API allows you to display an icon chosen in a library of icons.
 
-![Icon](../../assets/apps/4_app_component_library/icon.png)
+![Icon](../../assets/apps/4_app_component_library/icon.png.webp)
 
 #### Icon configuration
 
@@ -1107,7 +1107,7 @@ The Icon API allows you to display an icon chosen in a library of icons.
 
 The Image component allows you to display a picture.
 
-![HTML](../../assets/apps/4_app_component_library/image_api.png)
+![HTML](../../assets/apps/4_app_component_library/image_api.png.webp)
 
 #### Image configuration
 
@@ -1127,7 +1127,7 @@ The Image component allows you to display a picture.
 
 The Map component allows you to display an interactive map.
 
-![map](../../assets/apps/4_app_component_library/map.png)
+![map](../../assets/apps/4_app_component_library/map.png.webp)
 
 #### Map configuration
 
@@ -1150,7 +1150,7 @@ The Map component allows you to display an interactive map.
 
 The HTML component allows you to display HTML content.
 
-![HTML](../../assets/apps/4_app_component_library/html.png)
+![HTML](../../assets/apps/4_app_component_library/html.png.webp)
 
 #### HTML Input
 
@@ -1169,7 +1169,7 @@ The HTML component allows you to display HTML content.
 
 The PDF component allows you to display a PDF file.
 
-![PDF API](../../assets/apps/4_app_component_library/pdf_api.png)
+![PDF API](../../assets/apps/4_app_component_library/pdf_api.png.webp)
 
 #### PDF configuration
 
@@ -1188,7 +1188,7 @@ The PDF component allows you to display a PDF file.
 
 The Rich Result component allows you to display the result of a Runnable. It tries to display the result in a human-readable way.
 
-![Rich Result](../../assets/apps/4_app_component_library/rich_result.png)
+![Rich Result](../../assets/apps/4_app_component_library/rich_result.png.webp)
 
 #### Rich Result configuration
 
@@ -1207,7 +1207,7 @@ The Rich Result component allows you to display the result of a Runnable. It tri
 
 The Log Display component allows you to display the log of a Runnable.
 
-![Log Display](../../assets/apps/4_app_component_library/log_display.png)
+![Log Display](../../assets/apps/4_app_component_library/log_display.png.webp)
 
 #### Log Display configuration
 
@@ -1226,7 +1226,7 @@ The Log Display component allows you to display the log of a Runnable.
 
 The Flow Status component allows you to display the status of a flow.
 
-![Flow Status](../../assets/apps/4_app_component_library/flow_status.png)
+![Flow Status](../../assets/apps/4_app_component_library/flow_status.png.webp)
 
 #### Flow Status configuration
 
@@ -1247,7 +1247,7 @@ The Flow Status component allows you to display the status of a flow.
 
 The Bar Chart component allows you to display a Bar Chart using the [Chart.js](https://www.chartjs.org/) library. It can also be used to display a Line Chart.
 
-![Bar/Line Chart API](../../assets/apps/4_app_component_library/bar.png)
+![Bar/Line Chart API](../../assets/apps/4_app_component_library/bar.png.webp)
 
 #### Bar/Line Chart Input
 
@@ -1273,7 +1273,7 @@ The Bar Chart component allows you to display a Bar Chart using the [Chart.js](h
 
 The Pie Chart component allows you to display a Pie Chart using the [Chart.js](https://www.chartjs.org/) library.
 
-![Pie Chart API](../../assets/apps/4_app_component_library/pie.png)
+![Pie Chart API](../../assets/apps/4_app_component_library/pie.png.webp)
 
 #### Pie Chart Input
 
@@ -1299,7 +1299,7 @@ The Pie Chart component allows you to display a Pie Chart using the [Chart.js](h
 
 The Vega Lite component allows you to display a Vega Lite chart.
 
-![Vega Lite API](../../assets/apps/4_app_component_library/vega-lite.png)
+![Vega Lite API](../../assets/apps/4_app_component_library/vega-lite.png.webp)
 
 #### Vega Lite Input
 
@@ -1324,7 +1324,7 @@ The Vega Lite component allows you to display a Vega Lite chart.
 
 The Plotly component allows you to display a Plotly chart.
 
-![Plotly API](../../assets/apps/4_app_component_library/plotly.png)
+![Plotly API](../../assets/apps/4_app_component_library/plotly.png.webp)
 
 #### Plotly Input
 
@@ -1342,7 +1342,7 @@ The Plotly component allows you to display a Plotly chart.
 
 The Scatter Chart component allows you to display a Scatter Chart using the [Chart.js](https://www.chartjs.org/) library.
 
-![Scatter Chart API](../../assets/apps/4_app_component_library/scatter.png)
+![Scatter Chart API](../../assets/apps/4_app_component_library/scatter.png.webp)
 
 #### Scatter Chart Input
 
@@ -1368,7 +1368,7 @@ The Scatter Chart component allows you to display a Scatter Chart using the [Cha
 
 The Timeseries component allows you to display a Timeseries using the [Chart.js](https://www.chartjs.org/) library.
 
-![Timeseries API](../../assets/apps/4_app_component_library/timeseries.png)
+![Timeseries API](../../assets/apps/4_app_component_library/timeseries.png.webp)
 
 #### Timeseries Input
 

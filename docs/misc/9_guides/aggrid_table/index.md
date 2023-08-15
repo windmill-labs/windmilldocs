@@ -4,7 +4,7 @@ This is a basic introduction on how to use
 [AgGrid Table](https://www.ag-grid.com/) together with Windmill. It assumes
 little to no knowledge about AgGrid.
 
-![AgGrid Overview](../../../../static/img/guide/aggrid_overview.png)
+![AgGrid Overview](../../../../static/img/guide/aggrid_overview.png.webp)
 
 ## What is AgGrid Table.
 
@@ -44,7 +44,7 @@ AgGrid needs two inputs, rowdata and column definitions. By default AgGrid does
 not show the rowdata. You need to specify the properties of each column. This is
 done in the Configuration on the right side.
 
-![Column definitions](./../../../../static/img/guide/aggrid-column-definition-menu.png)
+![Column definitions](./../../../../static/img/guide/aggrid-column-definition-menu.png.webp)
 
 You can staticly set the properties of each column and many properties are
 available. Let's walk trough the one you may be most likley to use:
@@ -75,7 +75,7 @@ more advanced stuff, where the gui is more in the way then helping.
 The Windmill way wil be to first create a background runnable and then
 connecting it with the col def.
 
-![Column definitions](./../../../../static/img/guide/coldef-connect.png)
+![Column definitions](./../../../../static/img/guide/coldef-connect.png.webp)
 
 Here you can provide your own column definition that is more then a JSON but
 also includes classes and functions.
@@ -163,7 +163,7 @@ and connect it to the column definition.
 If you want to act on changes in the select dropdown, you may use the components
 states `newChanges`, or `selectedRow`.
 
-![Aggrid component state](./../../../../static/img/guide/aggrid-state.png)
+![Aggrid component state](./../../../../static/img/guide/aggrid-state.png.webp)
 
 ### Create a button (custom component)
 
