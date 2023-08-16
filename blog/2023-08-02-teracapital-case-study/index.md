@@ -9,6 +9,7 @@ tags:
     'Enterprise Plan',
   ]
 image: ./t4_use_case.png
+slug: teracapital-case-study
 ---
 
 # Windmill for customer-facing Amin Panels - Tera Capital Case Study
