@@ -36,10 +36,11 @@ Since we had our own use cases, we needed a flexible solution to create our inte
 At first, I turned to Windmill for workflows, as a replacement for Zapier. Windmill made significant improvements in our automations. I then discovered the [app builder](/docs/apps/app_editor), which is the opportunity for our operational teams to interact autonomously with our numerous integrations ([Stripe](https://hub.windmill.dev/integrations/stripe), [HubSpot](https://hub.windmill.dev/integrations/hubspot)).
 
 Examples of what we have built with Windmill include:
-- Billing: We integrated Stripe into an app, replacing Stripe Billing for use cases it is not able to support.
-- Customer success: as our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmil for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub).
+- **Billing**: We integrated Stripe into an app, replacing Stripe Billing for use cases it is not able to support.
+- **Customer success**: As our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmil for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub).
+- **Confidentiality**: Dashboard/Graphs for internal data that have Personal Identifiable Information in them that we do not want to send to a third party (this could not be done without self-hosting).
   
-Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.
+Currently, we use 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.
 
 ## Planning to expand Windmill to more use cases and to less technical users
 
