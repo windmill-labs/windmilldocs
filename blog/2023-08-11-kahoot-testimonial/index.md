@@ -50,4 +50,4 @@ While I manage the back-office for now, we aim to involve more team members (les
 
 ## Use case: App for ...
 
-/Example of app/
+/Example of app, Sindre to send Video/
