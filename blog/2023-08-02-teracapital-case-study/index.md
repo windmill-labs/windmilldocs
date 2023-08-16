@@ -8,12 +8,12 @@ tags:
     'App Editor',
     'Enterprise Plan',
   ]
-image: ./t4_thumbnail.png
+image: ./t4_use_case.png
 ---
 
 # Windmill for customer-facing Amin Panels - Tera Capital Case Study
 
-> "In general, as clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured and things do not break."
+> "As clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured and things do not break."
 
 <br/>
 
@@ -58,5 +58,13 @@ Among our apps in Windmill, one of the most critical ones is a custom interface 
 
 Before Windmill, our clients used to receive a monthly PDF with data that was difficult to keep up to date. Now, we have improved our client-facing service without having to subscribe to countless Saas subscriptions.
 
-![T4 Client App](./t4_client_app.png "Client-facing app")
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="main-video"
+    src="/videos/tc_app_charts.mp4"
+/>
+
+<br/>
+
 > Here is an anonymized version of our client-facing dashboard.

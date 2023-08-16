@@ -94,6 +94,5 @@ You can edit the id of a component by clicking on the id. Component id can only 
     autoPlay
     loop
     controls
-    id="main-video"
     src="/videos/app-edit-id.mp4"
 />
