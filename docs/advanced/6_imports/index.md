@@ -14,14 +14,30 @@ To import other scripts from your workpace, see [Sharing common logic](../5_shar
 
 ## Imports in Typescript
 
-The dependencies and their versions are contained in the
-script and hence there is no need for any additional steps. The resolution is done by [deno](https://deno.com/runtime).
+We have 2 options for runtimes for TypeScript:
+- [Deno](#deno)
+- [Bun](#bun) (compatible 1:1 with Node.js)
+
+### Deno
+
+The dependencies and their versions are contained in the script and hence there is no need for any additional steps. The resolution is done by [deno](https://deno.com/runtime).
 
 e.g:
 
-```
+```ts
 import { toWords } from "npm:number-to-words@1"
 import * as wmill from "https://deno.land/x/windmill@v1.84.1/mod.ts"
+```
+
+### Bun
+
+The dependencies and their versions are contained in the script and hence there is no need for any additional steps. The TypeScript runtime is Bun, which is 100% compatible with Node.js without any code modifications.
+
+e.g:
+
+```ts
+import { toWords } from "number-to-words@1"
+import { getVariable } from "windmill-client@1.147.3"
 ```
 
 ### Private npm registry

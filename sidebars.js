@@ -221,7 +221,8 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_deno_client',
+				'advanced/clients/ts_client',
+				
 				'cli_local_dev/vscode-extension/index'
 			]
 		},

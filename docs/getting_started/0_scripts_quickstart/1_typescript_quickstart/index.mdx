@@ -7,7 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # TypeScript Quickstart
 
-In this quick start guide, we will write our first script in TypeScript. Windmill uses [Deno](https://deno.land/) as the TypeScript runtime.
+In this quick start guide, we will write our first script in TypeScript. Windmill uses [Deno](#deno) and [Bun](#bun) as the TypeScript runtime.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -38,7 +38,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 Scripts consist of 2 parts:
 
 - **Code**: for typescript scripts, it must have at least a main function.
-- **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature)
+- **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -135,6 +135,14 @@ first step of script creation: Metadata.
 Now click on the code editor on the left side, and let's build our "Hello World"!
 
 ## Code
+
+### Deno
+
+[Deno](https://deno.land/)
+
+### Bun
+
+[Bun](https://bun.sh/)
 
 **Windmill gives you an online editor** to work on your Scripts. The left-side is
 the editor itself. The right-side lets you preview the UI that Windmill will

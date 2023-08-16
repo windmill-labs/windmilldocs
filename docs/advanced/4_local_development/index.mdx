@@ -2,6 +2,8 @@
 title: Local Development
 ---
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Local Development
 
@@ -42,9 +44,9 @@ wmill sync pull
 - Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [github action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example) 
 
 
-## Deno
+## Deno / Bun
 
-Windmill deno scripts can be run like normal deno scripts. To add testing or
+Windmill [Deno](https://deno.land/) & [Bun](https://bun.sh/) scripts can be run like normal scripts. To add testing or
 debugging code, add this snippet to your file:
 
 ```ts
@@ -54,7 +56,7 @@ if (import.meta.main) {
 ```
 
 You can then use your script like normal (for example,
-`deno run -A --watch my_script.ts`), and even write tests inside.
+`deno run -A --watch my_script.ts` / `bun run --watch my_script.ts`), and even write tests inside.
 
 If you'd like to tweak the client settings more directly, use:
 
@@ -64,17 +66,32 @@ wmill.setClient(<TOKEN>, <API BASE URL>)
 
 On import, the wmill client does the following:
 
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
 ```ts
 setClient(
 	Deno.env.get('WM_TOKEN') ?? 'no_token',
-	Deno.env.get('BASE_INTERNAL_URL') ?? Deno.env.get('BASE_URL') ?? 'http://localhost:8000'
+	Deno.env.get('BASE_INTERNAL_URL') ?? 'http://localhost:8000'
 );
 ```
 
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+setClient(
+	Bun.env.get('WM_TOKEN') ?? 'no_token',
+	Bun.env.get('BASE_INTERNAL_URL') ?? 'http://localhost:8000'
+);
+```
+
+</TabItem>
+</Tabs>
+
 which is why we recommend setting those environment variables in the sections below.
 
-For more information on deno development in general,
-[see the official docs](https://deno.land/manual@v1.30.3/getting_started).
+For more information on Deno & Bun development in general, see their official doc: [Deno](https://deno.land/manual@v1.36.1/getting_started), [Bun](https://bun.sh/docs).
 
 ## Python
 
@@ -110,12 +127,28 @@ Below are some examples on how to do this in various environments.
 
 To use the `getState` and `setState` functions, you will have to set `WM_STATE_PATH`. We recommend using your script path name as the state path, for example:
 
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
 ```ts
 let fullUrl = import.meta.url;
 let pathS = fullUrl.substring(8, fullUrl.length - 3).split('/');
 const path = pathS.slice(pathS.length - 3, pathS.length).join('/');
 Deno.env.set('WM_STATE_PATH', path);
 ```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+let fullUrl = import.meta.url;
+let pathS = fullUrl.substring(8, fullUrl.length - 3).split('/');
+const path = pathS.slice(pathS.length - 3, pathS.length).join('/');
+Bun.env.set('WM_STATE_PATH', path);
+```
+
+</TabItem>
+</Tabs>
 
 ### Terminal
 
@@ -152,7 +185,10 @@ To easily manage your secrets it may be easier to use a .env file, and add it to
 
 :::
 
-For example, for deno:
+For example, for TypeScript:
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```json
 {
@@ -175,6 +211,35 @@ For example, for deno:
   ]
 }
 ```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Bun",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["run", "${file}"],
+      "env" {
+        "BASE_INTERNAL_URL": "https://app.windmill.dev",
+        "WM_TOKEN": "ThisIsAToken",
+        "WM_WORKSPACE": "workspace_id"
+      },
+      "envFile": ".env"
+    }
+  ]
+}
+```
+
+</TabItem>
+</Tabs>
+
 
 The same `env` & `envFile` options are also supported by python.
 
