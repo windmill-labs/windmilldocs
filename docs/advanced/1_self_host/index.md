@@ -292,6 +292,12 @@ docker compose up
 That's it! Head over to your domain and you should be greeted with the login
 screen.
 
+In practice, you want to run the docker containers in the background so they don't shut down when you disconnect. Do this with the `--detach` or `-d` parameter as follows:
+
+```bash
+docker compose up -d
+```
+
 :::tip
 
 Default e-mail is `admin@windmill.dev` and the password is `changeme`.
@@ -313,6 +319,12 @@ docker compose pull windmill
 ```
 
 Database volume is persistent, so updating the database image is safe too.
+
+:::tip
+
+It is sufficient to run `docker compose up -d` again if your docker is already running detached, since it will pull the latest `:main` version and restart the containers.
+
+:::
 
 ### Reset your instance
 
