@@ -14,7 +14,7 @@ To import other scripts from your workpace, see [Sharing common logic](../5_shar
 
 ## Imports in Typescript
 
-We have 2 options for runtimes for TypeScript:
+There are two options for runtimes in TypeScript:
 - [Deno](#deno)
 - [Bun](#bun) (compatible 1:1 with Node.js)
 
