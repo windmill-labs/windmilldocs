@@ -12,7 +12,6 @@ In this quick start guide, we will write our first script in Python. Windmill pr
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	autoPlay
-	loop
 	controls
 	id="main-video"
 	src="/videos/python_quickstart.mp4"
@@ -40,6 +39,8 @@ Scripts consist of 2 parts:
 - **Code**: for python scripts, it must have at least a main function.
 - **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature)
 
+When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
+
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
@@ -53,8 +54,6 @@ Scripts consist of 2 parts:
 	/>
 </div>
 
-When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
-
 Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -62,16 +61,6 @@ Scripts are immutable and there is an hash for each deployment of a given script
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
 		href="/docs/script_editor/versioning"
-	/>
-</div>
-
-There is no need to specify additionally the requirements/dependencies, they are inferred automatically by running an heuristics on the imports. A lockfile will be generated at deployment time so that dependencies' versions never change.
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
-		href="/docs/advanced/imports"
 	/>
 </div>
 
@@ -104,12 +93,14 @@ In addition to the UI, sync and async webhooks are generated for each deployment
 
 In this quick start guide, we'll create a script that greets the operator running it.
 
-From the **Home** page, click `+Script`. This will take you to the
+From the Home page, click `+Script`. This will take you to the
 first step of script creation: Metadata.
 
 ![New script](./create_script_python.png.webp)
 
 ## Metadata
+
+Each script has metadata associated with it, enabling it to be defined and configured in depth.
 
 - **Path** is the Script's unique identifier that consist of the
   [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
@@ -117,8 +108,7 @@ first step of script creation: Metadata.
 - **Summary** (optional) is a short, human-readable summary of the Script. It
   will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
   default.
-- **Language** of the script. Windmill supports TypeScript, Python,
-  Go, Bash and SQL. Let's pick Python!
+- **Language** of the script.
 - **Description**: this is where you can give instructions
   to users on how to run your Script. It supports markdown!
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)**: it allows you to define concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
@@ -164,27 +154,30 @@ boilerplate. Let's take a look:
 import os
 import wmill
 
-# You can import any package from PyPI
+# You can import any PyPi package. 
+# See here for more info: https://www.windmill.dev/docs/advanced/imports#python
 
+# you can use typed resources by doing a type alias to dict
+#postgresql = dict
 
-def main(no_default: str,
-         name = "Nicolas Bourbaki",
-         age = 42,
-         obj: dict = {"even": "dicts"},
-         l: list = ["or", "lists!"],
-         file_: bytes = bytes(0)):
-    """A main function is required for the script to be able to accept arguments.
-    Types are recommended."""
+def main(
+    no_default: str,
+    #db: postgresql,
+    name="Nicolas Bourbaki",
+    age=42,
+    obj: dict = {"even": "dicts"},
+    l: list = ["or", "lists!"],
+    file_: bytes = bytes(0),
+):
+
     print(f"Hello World and a warm welcome especially to {name}")
     print("and its acolytes..", age, obj, l, len(file_))
-    # retrieve variables, including secrets by querying the windmill platform.
-    # secret fetching is audited by windmill.
 
+    # retrieve variables, resources, states using the wmill client
     try:
-      secret = wmill.get_variable("f/examples/secret")
+        secret = wmill.get_variable("f/examples/secret")
     except:
-      secret = "No secret yet at f/examples/secret !"
-
+        secret = "No secret yet at f/examples/secret !"
     print(f"The variable at `f/examples/secret`: {secret}")
 
     # Get last state of this script execution by the same trigger/user
@@ -193,9 +186,10 @@ def main(no_default: str,
     new_state["foo"] += 1
     wmill.set_state(new_state)
 
-    # fetch reserved variables as environment variables
+    # fetch context variables
     user = os.environ.get("WM_USERNAME")
-    # the return value is then parsed and can be retrieved by other scripts conveniently
+
+    # return value is converted to JSON
     return {"splitted": name.split(), "user": user, "state": new_state}
 ```
 
@@ -208,11 +202,30 @@ entrypoint. There are a few important things to note about the `main`.
   inputs. While not mandatory, they are highly recommended. You can customize
   the UI in later steps (but not change the input type!).
 
-The last import line imports the Windmill
-client, which is needed for example to access
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="JSON Schema and Parsing"
+		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
+		href="/docs/core_concepts/json_schema_and_parsing"
+	/>
+</div>
+
+The last import line imports the Windmill client, which is needed for example to access
 [variables](../../../core_concepts/2_variables_and_secrets/index.mdx) or
-[resources](../../../core_concepts/3_resources_and_types/index.mdx). We won't go
-into that here.
+[resources](../../../core_concepts/3_resources_and_types/index.mdx).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependency Management & Imports"
+		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
+		href="/docs/advanced/imports"
+	/>
+	<DocCard
+		title="Python Client"
+		description="The Python client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your script jobs."
+		href="/docs/advanced/clients/python_client"
+	/>
+</div>
 
 Back to our Hello World. We can clean up unused import statements, change the
 main to take in the user's name. Let's also return the `name`, maybe we can use
@@ -224,8 +237,18 @@ def main(name: str):
   return name
 ```
 
+## Instant Preview & Testing
+
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/auto_g_ui_landing.mp4"
+/>
+
+<br/>
 
 You can change how the UI behaves by changing the main signature. For example,
 if you add a default for the `name` argument, the UI won't consider this field
@@ -234,6 +257,14 @@ as required anymore.
 ```py
 main(name: str = "you")
 ```
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instant Preview & Testing"
+		description="On top of its integrated editors, Windmill allows users to test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
+</div>
 
 Now let's go to the last step: the "Customise" settings.
 
@@ -274,6 +305,14 @@ the left.
 ![Run hello world in Python](./run_python.png.webp)
 
 You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Triggering Scripts"
+		description="Trigger flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/trigger_scripts"
+	/>
+</div>
 
 ## What's next?
 
