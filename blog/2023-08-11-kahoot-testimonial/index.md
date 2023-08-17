@@ -15,7 +15,7 @@ tags:
 image: ./wm_kahoot.png
 ---
 
-This is a testimonial written by [Sindre Svendby](https://github.com/pka), Software Engineer at [Kahoot](https://kahoot.com/).
+This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvendby), Software Engineer at [Kahoot](https://kahoot.com/).
 
 <!--truncate-->
 
@@ -25,20 +25,20 @@ This is a testimonial written by [Sindre Svendby](https://github.com/pka), Softw
 
 I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot](https://kahoot.com/). While the brand Kahoot traditionnaly focuses on B2C, we target Enterprise clients.
 
-I started using Windmill at the beginning of the year. It is now used through internal tools managed by several of our departments. We are progressively expanding its adoption to more departments to better address their needs for internal tooling.
+I began working with Windmill at the start of the year. It currently supports internal tools used by multiple departments. We are gradually extending its use to additional departments to better meet their requirements for internal tooling.
 
 ## Choosing Windmill for Flexibility
 
-My team was limited technically by the tech stack we used. Some tools as [Stripe Billing](https://stripe.com/en-fr/billing) are most useful if you proceed exactly as they want users to act. Others, as <a href="https://zapier.com/" rel="nofollow">Zapier</a> are easy to master but they are designed for marketing teams and will get frustrating to customize use cases and to have the code in git / version control systems.
+My team faced technical limitations due to the constraints of our existing tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale worflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in git / version control systems.
 
 Since we had our own use cases, we needed a flexible solution to create our internal tools.
 
-At first, I turned to Windmill for workflows, as a replacement for Zapier. Windmill made significant improvements in our automations. I then discovered the [app builder](/docs/apps/app_editor), which is the opportunity for our operational teams to interact autonomously with our numerous integrations ([Stripe](https://hub.windmill.dev/integrations/stripe), [HubSpot](https://hub.windmill.dev/integrations/hubspot)).
+At first, I turned to Windmill for workflows, as an alternative to Zapier. Windmill made significant improvements in our automation processes. I then discovered the [app builder](/docs/apps/app_editor), which gave us the opportunity to take a lot of our one-off scripts and cli tools that developers run and to fast create a decent UI for our staff to interact with, freeing up time for developers.
 
 Examples of what we have built with Windmill include:
 - **Billing**: We integrated Stripe into an app, replacing Stripe Billing for use cases it is not able to support.
-- **Customer success**: As our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmil for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub).
-- **Confidentiality**: Dashboard/Graphs for internal data that have Personal Identifiable Information in them that we do not want to send to a third party (this could not be done without self-hosting).
+- **Customer success**: As our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmill for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub) and [made an app](#use-case-app-for-translating-zendesk-helpdesk-using-openai) out of it.
+- **Confidentiality**: Dashboard/Graphs for internal data that have Personal Identifiable Information in them that we do not want to send to a third party, hence the importance of being able to [self-host Windmill](/docs/advanced/self_host).
   
 Currently, we use 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.
 
@@ -46,8 +46,16 @@ Currently, we use 9 apps, 20 flows, and 63 scripts in our daily operations. They
 
 Looking ahead, our plan is to extend Windmill to more use cases.
 
-While I manage the back-office for now, we aim to involve more team members (less technical ones) to build customized internal tools autonomously.
+While I manage the back-office for now, our goal is to engage less-technical team members in building workflows independently. This will be facilitated by leveraging ChatGPT and [Windmill's Code Generation](/docs/core_concepts/ai_generation), coupled with Windmill's rapid [code testing capabilities](/docs/core_concepts/instant_preview), which significantly shortens the feedback loop.
 
-## Use case: App for ...
+## Use case: App for translating Zendesk Helpdesk using OpenAI
 
-/Example of app, Sindre to send Video/
+Bellow you will find an internal app that is used by our CS team to translate fetch articles with OpenAI and insert them into Zendesk with the new language.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+  alt="App for translating Zendesk Helpdesk"
+	src="/videos/sindre_app.mp4"
+/>
