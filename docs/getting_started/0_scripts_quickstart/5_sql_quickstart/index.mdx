@@ -1,21 +1,21 @@
 ---
-title: 'SQL'
+title: 'SQL (PostgreSQL, MySQL, BigQuery, Snowflake) Quickstart'
 slug: '/getting_started/scripts_quickstart/sql'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# SQL Quickstart
+# SQL (PostgreSQL, MySQL, BigQuery, Snowflake)
 
 We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
-Windmill supports PostgreSQL and MySQL. In any case, it requires creating a dedicated resource.
+Windmill supports PostgreSQL, MySQL, BigQuery and Snowflake. In any case, it requires creating a dedicated resource.
 
 ## Create Resource
 
 Windmill provides integration with many different apps and services with the use
 of [Resources][docs-resources]. Each Resource has a **Resources Type**, which
-controls the shape of it. To be able to connect to a Postgres instance ([Supabase](../../../integrations/supabase.md), [Neon.tech](../../../integrations/neon.md)), we'll need to define a Resource with the `PostgreSQL` or `MySQL` Resource Type first.
+controls the shape of it.
 
 :::tip
 
@@ -24,8 +24,12 @@ You can find a list of all the officially supported Resource Types on
 
 :::
 
+### PostgreSQL
+
+To be able to connect to a Postgres instance ([Supabase](../../../integrations/supabase.md), [Neon.tech](../../../integrations/neon.md)), we'll need to define a Resource with the `PostgreSQL` Resource Type first.
+
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
-"Add a resource/API" in the top right corner and select the `PostgreSQL` or `MySQL` type.
+"Add a resource/API" in the top right corner and select the `PostgreSQL` type.
 
 ![Select Resource Type](../../../assets/integrations/psql-1-resources.png.webp)
 
@@ -54,6 +58,19 @@ Windmill provides a wizard to easily add a [Supabase](../../../integrations/supa
 
 When creating a new PostgreSQL resource, just "Add a Supabase DB". This will lead you to a Supabase page where
 you need to pick your organization. Then on Windmill pick a database, fill with database password and that's it.
+
+### MySQL
+
+To be able to connect to a MySQL instance, we'll need to define a Resource with the `MySQL` Resource Type first.
+
+Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
+"Add a resource/API" in the top right corner and select the `MySQL` type.
+
+![Select Resource Type](./select_mysql.png)
+
+Fill out the form with the information of your PostgreSQL/MySQL instance and "Test connection" if needed.
+
+![Paste in Resource Values](./fill_mysql.png)
 
 ## Create Script
 
