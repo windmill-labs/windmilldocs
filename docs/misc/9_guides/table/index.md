@@ -13,6 +13,13 @@ table.
 
 See bottom of documents for the current Limitations.
 
+### Examples
+:::info  
+
+[Table Showcase](https://hub.windmill.dev/apps/19/table-component-showcase) - See the hub for a app that showcases all Table options as working code
+See below to copy/paste fast. Hopefully you then have the best from both world. Easy copy/paste, and working code you can look at
+:::
+
 ## Table data (Data Source)
 
 As in almost all the fields in the app, you can have either `static`,
@@ -29,7 +36,7 @@ script from your workspace or create a inline script.
 
 :::tip
 
-you can not edit a result of a script, so if you want to later change the data
+You can not edit a result of a script, so if you want to later change the data
 based on another component the reccomendation is to store that data as a state.
 :::
 
@@ -43,7 +50,7 @@ You will find example of using `row.value` and `row.index`
 
 ### Initial State
 
-:::warning
+:::info
 
 The inital state is from
 https://tanstack.com/table/v8/docs/api/core/table#initialstate but not all
@@ -110,7 +117,24 @@ In the `Inital State` field in the table config add:
     ]
   }
 }
+
+
 ```
+
+### columnSizing
+
+In the `Inital State` field in the table config add:
+
+```tsx
+{
+  "columnSizing": {
+    "id": 10,
+    "name": 750,
+    "age": 150
+  }
+}
+```
+Leave out the fields you do not need, you are only spes the desire behavior, it's still tanstack logic that do the final calulations.
 
 ## Search
 
@@ -121,9 +145,7 @@ search for you based on the data in the component
 here need to have to use a script as the datasource and connect the tables
 "search" key to the input of the script.
 
-See the example
-
-## Using the table togheter with other component
+Please see the [Examples](#examples) for working code.
 
 ### Limits
 
@@ -131,12 +153,10 @@ See the example
 
 ## Not supported features
 
-- set a fixed width
-- let user adjust witdh
-- grouping
-- sorting
-- rename headers
-- let a user sort by clicking the header names
+- Resizeable by the user 
+- Grouping
+- sorting (But can be done by a transformer, but not the user)
+- rename headers (But can be done by a transformer, see below)
 
 :::info Transformer
 
@@ -149,3 +169,6 @@ for more information.
 
 If some of these features is importent we recommend to use the
 [AgGrid Component](../aggrid_table/index.md)
+
+
+

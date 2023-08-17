@@ -22,10 +22,12 @@ In Windmill there are 2 table components: one simply called
 [Table](../../../apps/4_app_configuration-settings/1_app_component_library.md#table)
 and AgGrid.
 
-The Table component is for basic usecases. It takes an array of objects as
+The Table component is for most usecases. It takes an array of objects as
 input, and uses the key of the object as the header of the table. It also
 provides you with one or more action buttons to trigger an action for the row or
-create a dropdown button based on the row data.
+create a dropdown button based on the row data. 
+
+But if you want the user to be able to sort the table, edit a value inplace, adjust width and more you want to reach for AgGrid.
 
 # hide columns
 
