@@ -1,21 +1,26 @@
 ---
-title: 'SQL (PostgreSQL, MySQL, BigQuery, Snowflake) Quickstart'
+title: 'Quickstart PostgreSQL / MySQL / BigQuery / Snowflake'
 slug: '/getting_started/scripts_quickstart/sql'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# SQL (PostgreSQL, MySQL, BigQuery, Snowflake)
+# Quickstart PostgreSQL / MySQL / BigQuery / Snowflake
 
-We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
+In this quick start guide, we will write our first script in SQL. We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
-Windmill supports PostgreSQL, MySQL, BigQuery and Snowflake. In any case, it requires creating a dedicated resource.
+![Windmill & PostgreSQL, MySQL, BigQuery and Snowflake](./sqls.png)
+
+Windmill supports [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [BigQuery](https://cloud.google.com/bigquery) and [Snowflake](https://www.snowflake.com/). In any case, it requires creating a dedicated resource.
 
 ## Create Resource
 
-Windmill provides integration with many different apps and services with the use
-of [Resources][docs-resources]. Each Resource has a **Resources Type**, which
-controls the shape of it.
+Windmill provides integrations with many different apps and services with the use
+of [Resources][docs-resources]. Resources are rich objects in JSON that allow to store configuration and credentials.
+
+Each Resource has a _Resource Type_ ([PostgreSQL](https://hub.windmill.dev/resource_types/6/postgresql), [MySQL](https://hub.windmill.dev/resource_types/111/mysql), [BigQuery](https://hub.windmill.dev/resource_types/108/bigquery), [Snowflake](https://hub.windmill.dev/resource_types/107/snowflake))
+that defines the schema that the resource of this type needs to implement. Schemas implement the
+[JSON Schema specification](https://json-schema.org/).
 
 :::tip
 
@@ -26,25 +31,25 @@ You can find a list of all the officially supported Resource Types on
 
 ### PostgreSQL
 
-To be able to connect to a Postgres instance ([Supabase](../../../integrations/supabase.md), [Neon.tech](../../../integrations/neon.md)), we'll need to define a Resource with the `PostgreSQL` Resource Type first.
+To be able to connect to a [PostgreSQL](https://www.postgresql.org/) instance ([Supabase](../../../integrations/supabase.md), [Neon.tech](../../../integrations/neon.md), etc.), we'll need to define a Resource with the `PostgreSQL` Resource Type first.
 
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `PostgreSQL` type.
 
-![Select Resource Type](../../../assets/integrations/psql-1-resources.png.webp)
+![Select PostgreSQL Resource Type](../../../assets/integrations/psql-1-resources.png.webp)
 
-Fill out the form with the information of your PostgreSQL/MySQL instance and "Test connection" if needed.
+Fill out the form with the information of your PostgreSQL instance and "Test connection" if needed.
 
 ![Paste in Resource Values](../../../assets/integrations/psql-2-postgres-rt.png.webp)
 
 :::tip
 
 For testing purposes, you can use the sample PostgreSQL Resource provided to
-every user. It is available under the path `f/examples/demodb`.
+every user. It is available under the path `f/examples/demo_windmillshowcases`.
 
 :::
 
-### Add a Supabase DB
+### PostgreSQL: Add a Supabase DB
 
 Windmill provides a wizard to easily add a [Supabase](../../../integrations/supabase.md) database through PostgreSQL.
 
@@ -61,24 +66,155 @@ you need to pick your organization. Then on Windmill pick a database, fill with 
 
 ### MySQL
 
-To be able to connect to a MySQL instance, we'll need to define a Resource with the `MySQL` Resource Type first.
+To be able to connect to a [MySQL](https://www.mysql.com/) instance, we'll need to define a Resource with the `MySQL` Resource Type first.
 
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `MySQL` type.
 
-![Select Resource Type](./select_mysql.png)
+![Select MySQL Resource Type](./select_mysql.png)
 
-Fill out the form with the information of your PostgreSQL/MySQL instance and "Test connection" if needed.
+Fill out the form with the information of your MySQL instance and "Test connection" if needed.
 
 ![Paste in Resource Values](./fill_mysql.png)
 
+| Property | Type   | Description     | Default | Required | Where to Find                                                                          |
+| -------- | ------ | --------------- | ------- | -------- | -------------------------------------------------------------------------------------- |
+| host     | string | Instance host   |         | false    | Your hosting provider's control panel or in your server's MySQL configuration file     |
+| port     | number | Instance port   | 3306    | false    | Your hosting provider's control panel or in your server's MySQL configuration file     |
+| user     | string | Username        |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
+| database | string | Database name   |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
+| password | string | User's password |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
+
+
+### BigQuery
+
+To be able to connect to a [BigQuery](https://cloud.google.com/bigquery) instance, we'll need to define a Resource with the `BigQuery` Resource Type first.
+
+Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
+"Add a resource/API" in the top right corner and select the `BigQuery` type.
+
+![Select BigQuery Resource Type](./select_bigquery.png)
+
+| Property                     | Type   | Description                                     | Required |
+| ---------------------------- | ------ | ----------------------------------------------- | -------- |
+| auth_provider_x509_cert_url  | string | Auth provider X.509 certificate URL.            | false    |
+| client_x509_cert_url         | string | Client X.509 certificate URL.                   | false    |
+| private_key_id               | string | ID of the private key used for authentication.  | false    |
+| client_email                 | string | Email associated with the service account.      | false    |
+| private_key                  | string | Private key used for authentication.            | false    |
+| project_id                   | string | Google Cloud project ID.                       | true     |
+| token_uri                    | string | OAuth 2.0 token URI.                            | false    |
+| client_id                    | string | Client ID used for OAuth 2.0 authentication.   | false    |
+| auth_uri                     | string | OAuth 2.0 authorization URI.                   | false    |
+| type                         | string | Type of the authentication method.             | false    |
+
+Here's a step-by-step guide on where to find each detail.
+
+1. **Service Account Creation**:
+
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Select the appropriate project from the top menu.
+   - In the left navigation pane, go to "IAM & Admin" > "Service accounts".
+   - Click on the "+ CREATE SERVICE ACCOUNT" button.
+   - Provide a name and optional description for the service account.
+   - Click "Create".
+
+2. **Assign Roles**:
+
+   - After creating the service account, you'll be prompted to grant roles to it. Select "BigQuery" roles such as "BigQuery Admin" or "BigQuery Data Editor" based on your needs.
+   - Click "Continue" and "Done" to create the service account.
+
+3. **Generate Key**:
+
+   - In the "Service accounts" section, find the newly created service account in the list.
+   - Click on the three dots on the right and select "Manage keys", then "Add Key".
+   - Choose the key type as "JSON" and click "Create".
+
+4. **Properties Details**:
+
+   Once you've generated the key, the downloaded JSON file will contain all the required properties.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/add_bigquery.mp4"
+/>
+
+<br/>You can directly "Test connection" if needed.
+
+### Snowflake
+
+To be able to connect to a [Snowflake](https://www.snowflake.com/) instance, we'll need to define a Resource with the `Snowflake` Resource Type first.
+
+Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
+"Add a resource/API" in the top right corner and select the `Snowflake` type.
+
+![Select Snowflake Resource Type](./select_snowflake.png)
+
+| Property            | Type   | Description                                                                                              | Required |
+| ------------------- | ------ | -------------------------------------------------------------------------------------------------------- | -------- |
+| account_identifier  | string | Snowflake account identifier in the format `<orgname>-<account_name>`.                                 | true     |
+| private_key         | string | Private key used for authentication.                                                                    | true     |
+| public_key          | string | Public key used for authentication.                                                                     | true     |
+| warehouse           | string | Snowflake warehouse to be used for queries.                                                             | false    |
+| username            | string | Username for Snowflake login.                                                                           | true     |
+| database            | string | Name of the Snowflake database to connect to.                                                          | true     |
+| schema              | string | Schema within the Snowflake database.                                                                   | false    |
+| role                | string | Role to be assumed upon connection.                                                                     | false    |
+
+Here's a step-by-step guide on where to find each detail.
+
+1. **Account Identifier**:
+
+   The account identifier typically follows the format: `<orgname>-<account_name>`. You can find it in the Snowflake web interface:
+   
+   - Log in to your Snowflake account.
+   - The account identifier can often be found in the URL or at the top of the Snowflake interface after you log in (in the format `https://app.snowflake.com/orgname/account_name/`).
+
+   [Snowflake Documentation on Account Identifier](https://docs.snowflake.com/en/user-guide/admin-account-identifier)
+
+2. **Username**:
+
+   The username is the Snowflake user you will use to connect to the database. You will need to create a user if you don't have one:
+   
+   - In the Snowflake web interface, go to the "ACCOUNT" tab.
+   - Select "Users" from the left navigation pane.
+   - Click the "+ CREATE USER" button to create a new user with a username and password.
+
+3. **Public Key and Private Key**:
+
+   To create the public and private keys, you will need to generate them using a tool like OpenSSL:
+
+   - Open a terminal window.
+   - Use OpenSSL to generate a public and private key pair. The exact commands may vary based on your operating system.
+   - For example, to generate a public key: `openssl rsa -pubout -in private_key.pem -out public_key.pem`
+
+   Once you have the keys, you can copy the content and paste them into the respective fields in your configuration.
+
+   [Snowflake Documentation on Key Pair Authentication & Key Pair Rotation](https://docs.snowflake.com/en/user-guide/key-pair-auth)
+
+4. **Warehouse, Schema, Database, and Role**:
+
+   These parameters are specific to your Snowflake environment and will depend on how your Snowflake instance is configured:
+
+   - `warehouse`: The name of the Snowflake warehouse you want to connect to.
+   - `schema`: The name of the Snowflake schema you want to use.
+   - `database`: The name of the Snowflake database you want to connect to.
+   - `role`: The role you want to use for authentication.
+
+   You can find these details in the Snowflake web interface:
+   
+   - Log in to your Snowflake account.
+   - You can find the names of warehouses, schemas, databases, and roles in the interface or by running SQL queries.
+
+You can directly "Test connection" if needed.
+
 ## Create Script
 
-Next, let's create a script that will use the newly created Resource. Head on to
-the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page and click on the "+Script" button. Name the Script, give it a summary, "Query a PostgreSQL Database" for
-example and select your prefered language, "PostgreSQL" or "MySQL".
+Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
+click on the "+Script" button. Name the Script, give it a summary, and select your prefered language, "PostgreSQL", "MySQL", "BigQuery", "Snowflake".
 
-![Script creation first step](../../../assets/integrations/psql-3-script-creation.png.webp)
+![Script creation first step](../../../assets/integrations/sql_new_script.png)
 
 You can also give more details to your script, in the [metadata section](../../../script_editor/metadata.mdx), you can also get back to that later at any point.
 
@@ -96,7 +232,12 @@ INSERT INTO demo VALUES ($1::TEXT, $2::INT) RETURNING *
 
 You can then write your prepared statement.
 
-![Postgresql statement](./postgresql_statement.png.webp)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="main-video"
+    src="/videos/test_postgres.mp4"
+/>
 
 ### MySQL
 
@@ -112,7 +253,44 @@ INSERT INTO demo VALUES (?, ?)
 
 You can then write your prepared statement.
 
-![Mysql statement](./mysql_statement.png.webp)
+![Mysql statement](./mysql_statement.png)
+
+### BigQuery
+
+Arguments need to be passed in the given format:
+
+```sql
+-- @name1 (string) = default arg
+-- @name2 (integer)
+-- @name3 (string[])
+INSERT INTO `demodb.demo` VALUES (@name1, @name2, @name3)
+```
+
+"name1", "name2", "name3" being the names of the arguments, "default arg" the optional default value and `string`, `integer` and `string[]` the types.
+
+You can then write your prepared statement.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/test_bigquery.mp4"
+/>
+
+### Snowflake
+
+Arguments need to be passed in the given format:
+
+```sql
+-- ? name1 (varchar) = default arg
+-- ? name2 (int)
+INSERT INTO demo VALUES (?, ?)
+```
+
+"name1", "name2" being the names of the arguments, "default arg" the optional default value and `varchar` & `int` the types.
+
+You can then write your prepared statement.
+
+![Snowflake statement](./snowflake_statement.png)
 
 ### Raw Queries
 
@@ -143,7 +321,13 @@ export async function main(db: Postgresql, query: Sql = 'SELECT * FROM demo;') {
 
 This will allow you to execute all commands from one script. But that's also the vulnerability of it as it opens the door to harmful commands. To make it more secure, do not take the query directly as input but its parameters and then sanitize it properly so SQL injections are mitigated unless you are in a trusted environment.
 
-![Raw Query](./raw_query.png.webp)
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/raw_query.mp4"
+/>
+
+<br/>
 
 :::tip
 

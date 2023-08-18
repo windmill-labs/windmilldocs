@@ -144,6 +144,7 @@ const sidebars = {
 					},
 					items: [
 						'flows/architecture',
+						'openflow/index',
 						'flows/editor_components',
 						'flows/error_handling',
 						'flows/flow_branches',
@@ -281,27 +282,32 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/aws',
-							label: 'Aws'
+							label: 'AWS'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/aws-s3',
-							label: 'Aws-s3'
+							label: 'AWS S3'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/s3',
+							label: 'S3 APIs'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/bigquery',
-							label: 'Bigquery'
+							label: 'BigQuery'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/clickhouse',
-							label: 'Clickhouse'
+							label: 'ClickHouse'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/cloudlare-r2',
-							label: 'Cloudlare-r2'
+							label: 'Cloudlare R2'
 						},
 						{
 							type: 'doc',
@@ -316,7 +322,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/faunadb',
-							label: 'Faunadb'
+							label: 'FaunaDB'
 						},
 						{
 							type: 'doc',
@@ -326,27 +332,17 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/gcal',
-							label: 'Gcal'
+							label: 'Google Calendar'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/gcp',
-							label: 'Gcp'
+							label: 'Google Cloud Platform'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/gdrive',
-							label: 'Gdrive'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/github',
-							label: 'Github'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gitlab',
-							label: 'Gitlab'
+							label: 'Google Drive'
 						},
 						{
 							type: 'doc',
@@ -356,12 +352,22 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/gsheets',
-							label: 'Gsheets'
+							label: 'Google Sheets'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/github',
+							label: 'GitHub'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gitlab',
+							label: 'GitLab'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/hubspot',
-							label: 'Hubspot'
+							label: 'HubSpot'
 						},
 						{
 							type: 'doc',
@@ -371,7 +377,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/linkedin',
-							label: 'Linkedin'
+							label: 'LinkedIn'
 						},
 						{
 							type: 'doc',
@@ -396,27 +402,27 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/mongodb',
-							label: 'Mongodb'
+							label: 'MongoDB'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/mysql',
-							label: 'Mysql'
+							label: 'MySQL'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/neon',
-							label: 'Neon'
+							label: 'Neon.tech'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/openai',
-							label: 'Openai'
+							label: 'OpenAI'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/postgresql',
-							label: 'Postgresql'
+							label: 'PostgreSQL'
 						},
 						{
 							type: 'doc',
@@ -426,17 +432,12 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/rss',
-							label: 'Rss'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/s3',
-							label: 'S3 APIs'
+							label: 'RSS'
 						},
 						{
 							type: 'doc',
 							id: 'integrations/sendgrid',
-							label: 'Sendgrid'
+							label: 'SendGrid'
 						},
 						{
 							type: 'doc',
@@ -446,7 +447,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/smtp',
-							label: 'Smtp'
+							label: 'SMTP'
 						},
 						{
 							type: 'doc',
@@ -471,7 +472,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/surrealdb',
-							label: 'Surrealdb'
+							label: 'SurrealDB'
 						},
 						{
 							type: 'doc',
@@ -514,7 +515,6 @@ const sidebars = {
 			type: 'category',
 			label: 'Misceallaneous',
 			items: [
-				'openflow/index',
 				'misc/architecture/index',
 				'misc/benchmarks/index',
 				'misc/changelog/index',

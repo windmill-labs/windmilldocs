@@ -1,6 +1,6 @@
 # Upstash Integration
 
-Upstash follows the same connection method as MongoDB, providing the database name, TLS settings, server information, and credentials for authentication.
+Upstash follows the same connection method as [MongoDB](./mongodb.md), providing the database name, TLS settings, server information, and credentials for authentication.
 
 ![Add Mongodb](../assets/integrations/add_mongodb.png.webp)
 
