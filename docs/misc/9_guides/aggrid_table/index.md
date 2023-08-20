@@ -31,16 +31,12 @@ create a dropdown button based on the row data.
 
 But if you want the user to be able to sort the table, edit a value inplace, adjust width and more you want to reach for AgGrid.
 
-# hide columns
-
-But if you want the user to be able to sort the table, edit a value, adjust
-width and more you want to reach for AgGrid.
-
-:::info Transformer\
+:::info Transformer
 If you want to do basic sorting, or edit the column header name from the script
 you can also use a Transformer script. See the
 [documentation](../../../apps/4_app_configuration-settings/2_app_runnable_triggers.md#transformer)
-for more information. :::
+for more information. 
+:::
 
 ## Column Definition
 
