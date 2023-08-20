@@ -13,8 +13,10 @@ fantastic libary called [AgGrid](https://www.ag-grid.com/). It provides you with
 a lot of advanced features. It comes in a free and a Enterprise (paid) version.
 All features below are part of the free version of AgGrid.
 
-:::tip Enterprise If you need the enterprise version of AgGrid, please
-[contact us](../../6_getting_help/index.mdx). :::
+:::tip Enterprise 
+If you need the enterprise version of AgGrid, please
+[contact us](../../6_getting_help/index.mdx). 
+:::
 
 ## AgGrid vs Table component
 
