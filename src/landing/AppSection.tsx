@@ -48,7 +48,7 @@ const tabs = [
 			{
 				title: 'Run any script and flow',
 				description:
-					'Run any script or flow from the app editor. In Python, Go, Bash or Typescript.',
+					'Run any script or flow from the app editor. In Python, Go, Bash, SQL or Typescript.',
 				icon: Code2,
 				caption: <div>Windmill supports Typescript, Python, Go, Bash and SQL <a href="/docs/getting_started/scripts_quickstart" target="_blank">scripts</a>.</div>,
 				video: {
@@ -204,7 +204,7 @@ export default function AppSection() {
 			tabs={tabs}
 			description={
 				developerMode
-					? 'Either build your app locally with Vite and your favorite frontend framework or use our drag-and-drop editor and use any Typescript, Python, Go or Bash.'
+					? 'Either build your app locally with Vite and your favorite frontend framework or use our drag-and-drop editor and use any Typescript, Python, Go, Bash or SQL.'
 					: 'Build your own UI. Simply drag and drop components, connect your data and deploy your app in minutes.'
 			}
 			color="orange"

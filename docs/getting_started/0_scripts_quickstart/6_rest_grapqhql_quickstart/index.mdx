@@ -1,25 +1,25 @@
 ---
-title: Go Quickstart
-slug: '/getting_started/scripts_quickstart/go'
+title: Rest / GraphQL Quickstart
+slug: '/getting_started/scripts_quickstart/rest_graphql'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# Go Quickstart
+# Rest / GraphQL Quickstart
 
-In this quick start guide, we will write our first script in Go.
+In this quick start guide, we will write our first script in [Rest](https://restfulapi.net/) & [GraphQL](https://graphql.org/).
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	id="main-video"
-	src="/videos/typescript_quickstart.mp4"
+	src="/videos/rest_example_intro.mp4"
 />
 
 <br />
 
-Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows][flows] or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
+Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](/docs/flows/flow_editor) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -36,7 +36,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- **Code**: for Go scripts, it must have at least a main function.
+- **Code**: for typescript scripts, it must have at least a main function.
 - **Metadata**: metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature).
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`.
@@ -89,39 +89,19 @@ In addition to the UI, sync and async [webhooks](../../..//core_concepts/4_webho
 	/>
 </div>
 
-Below is a simple example of a script built in Go with Windmill:
+Below is a simple example of a script built in Rest with Windmill:
 
-```go
-package inner
-
-import (
-	"net/http"
-)
-
-func main(url string) (bool, error) {
-	resp, err := http.Get(url) // send a GET request to the provided URL
-	if err != nil {
-		return false, err // if there is an error, return false and the error
-	}
-	defer resp.Body.Close() // make sure to close the response body when the function returns
-
-	// if the status code is between 200 and 299, the page exists
-	if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
-		return true, nil
-	}
-
-	// if the status code is not between 200 and 299, the page does not exist
-	return false, nil
+```ts
+export async function main() {
+  const res = await fetch("https://api.supabase.com/v1/organizations", {
+    headers: {
+      "Authorization": `Bearer <your_supabase_token>`,
+      "Content-Type": "application/json"
+    },
+  });
+  return res.json();
 }
-
 ```
-
-In this quick start guide, we'll create a script that greets the operator running it.
-
-From the Home page, click `+Script`. This will take you to the
-first step of script creation: Metadata.
-
-![New script](./create_script_go.png)
 
 ## Metadata
 
@@ -151,13 +131,13 @@ Now click on the code editor on the left side.
 
 ## Code
 
-**Windmill gives you an online editor** to work on your Scripts. The left-side is
-the editor itself. The right-side lets you **preview the UI** that Windmill will
+Windmill gives you an online editor to work on your Scripts. The left-side is
+the editor itself. The right-side lets you preview the UI that Windmill will
 generate from the Script's signature - this will be visible to the users of the
 Script. You can easily preview that UI, provide input values, and test your
 script there.
 
-![Editor for python](./editor_go.png)
+![Editor for GraphQL](./editor_graphql.png "Code Editor GrapQL")
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -172,90 +152,47 @@ script there.
 	/>
 </div>
 
-As we picked `Go` for this example, Windmill provided some Go
-boilerplate. Let's take a look:
+### Rest
 
-```go
-package inner
+As we picked `Rest` for this example, Windmill provided some boilerplate. Let's take a look:
 
-import (
-	"fmt"
-	"rsc.io/quote"
-	// wmill "github.com/windmill-labs/windmill-go-client"
-)
+```ts
+// Fetch-only script, no imports allowed but benefits from a dedicated highly efficient runtime
 
-// the main must return (interface{}, error)
-
-func main(x string, nested struct {
-	Foo string `json:"foo"`
-}) (interface{}, error) {
-	fmt.Println("Hello, World")
-	fmt.Println(nested.Foo)
-	fmt.Println(quote.Opt())
-	// v, _ := wmill.GetVariable("f/examples/secret")
-	return x, nil
+export async function main(example_input: number = 3) {
+  // "3" is the default value of example_input, it can be overriden with code or using the UI
+  const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${example_input}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.json();
 }
 ```
 
-In Windmill, scripts need to have a `main` function that will be the script's
-entrypoint. There are a few important things to note about the `main`.
+Fetch scripts are in fact [TypeScript](../1_typescript_quickstart/index.mdx) fetches. They support all the normal signatures of normal TypeScript but only [stdlib](https://en.wikibooks.org/wiki/C_Programming/stdlib.h) javascript and the fetch operations.
+[Imports](../../../advanced/6_imports/index.md) are not allowed.
 
-- The main arguments are used for generating 1. the input spec of the Script, and 2.
-  the frontend that you see when running the Script as a standalone app.
-- Type annotations are used to generate the UI form, and help pre-validate
-  inputs. While not mandatory, they are highly recommended. You can customize
-  the UI in later steps (but not change the input type!).
-- In Go, the main function must return (interface{}, error).
+Fetches can also be done through a regular TypeScript in Windmill, but opting for dedicated Rest scripts
+benefits from a highly efficient runtime.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="JSON Schema and Parsing"
-		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
-		href="/docs/core_concepts/json_schema_and_parsing"
-	/>
-</div>
+Replace the jsonplaceholder URL with the API endpoint of your choice and customize the headers object according to your fetch requirements.
 
-The last import line imports the Windmill client, which is needed for example to access
-[variables](../../../core_concepts/2_variables_and_secrets/index.mdx) or
-[resources](../../../core_concepts/3_resources_and_types/index.mdx).
+REST scripts benefit from the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.md) capabilities of any Windmill script.
+The arguments of the `main` function are used for generating 1. the input spec of the Script,
+and 2. the frontend that you see when running the Script as a standalone app.
+Type annotations are used to generate the UI form, and help pre-validate
+inputs. While not mandatory, they are highly recommended. You can customize the UI in later steps (but not change the input type!).
 
-In Go, the dependencies and their versions are contained in the script and hence there is no need for any additional steps.
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
-		href="/docs/advanced/imports"
-	/>
-</div>
-
-Back to our Hello World. We can clean up unused import statements, change the
-main to take in the user's name. Let's also return the `name`, maybe we can use
-this later if we use this Script within a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) and need to pass its result on.
-
-```go
-package inner
-
-import (
-	"fmt"
-)
-
-func main(name string) (string, error) {
-	return fmt.Sprintf("Hello %s", name), nil
-}
-
-```
-
-## Instant Preview & Testing
-
-Look at the UI preview on the right: it was updated to match the input
-signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
+This is also a way to have users fill [resources](../../../core_concepts/3_resources_and_types/index.mdx) or [variables](../../../core_concepts/2_variables_and_secrets/index.mdx) through the auto-generated UI. The UI is available in the script editor to [test your code](../../../core_concepts/23_instant_preview/index.mdx):
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/auto_g_ui_landing.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/rest_supabase.mp4"
 />
+
+<br/>
+
+> In the example above, a custom resource is declared as a parameter of the main function. It will be asked by the user through the auto-generated UI and used directly in the script (here for the bearer token).
 
 <br/>
 
@@ -267,16 +204,87 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 	/>
 </div>
 
-Now let's go to the last step: the "Customise" settings.
+### GraphQL
+
+As we picked `GraphQL` for this example, Windmill provided some boilerplate. Let's take a look:
+
+```ts
+query($name1: String, $name2: Int, $name3: [String]) {
+	demo(example_name_1: $name1, example_name_2: $name2, example_name_3: $name3) {
+		example_name_1,
+		example_name_2,
+		example_name_3
+	}
+}
+```
+
+The query itself is similar to any GraphQL query.
+
+To trigger each GraphQL script, an input named 'api' will be required. This is a [GraphQL resource](https://hub.windmill.dev/resource_types/112/graphql) defined by the JSON schema:
+```js
+{
+    "type": "object",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "required": [
+        "base_url"
+    ],
+    "properties": {
+        "base_url": {
+            "type": "string",
+            "format": "uri",
+            "default": "",
+            "description": ""
+        },
+        "bearer_token": {
+            "type": "string",
+            "default": "",
+            "description": ""
+        },
+        "custom_headers": {
+            "type": "object",
+            "description": "",
+            "properties": {},
+            "required": []
+        }
+    }
+}
+```
+
+[Resources](../../../core_concepts/3_resources_and_types/index.mdx) are rich objects in JSON that allow to store configuration and credentials. They can be saved, named, and shared within Windmill to control and streamline the execution of GraphQL scripts.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Resources and Resource Types"
+		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		href="/docs/core_concepts/resources_and_types"
+	/>
+</div>
+
+The arguments of the query will be used for generating 1. the input spec of the Script,
+and 2. the frontend that you see when running the Script with an [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.md).
+Type annotations are used to generate the UI form, and help pre-validate
+inputs. While not mandatory, they are highly recommended. You can customize the UI in later steps (but not change the input type).
+
+The UI is available in the script editor to [test your code](../../../core_concepts/23_instant_preview/index.mdx):
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/graphql_example.mp4"
+/>
+
+<br/>
+
+> In the example above, a [GraphQL resource](https://hub.windmill.dev/resource_types/112/graphql) is used with details on base URL and bearer token. Also was used the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.md) to fill the argument `login`.
 
 ## Customize Settings
 
-In this step, you can:
+In the "Customize settings" menu, you can:
 
 - Give a **script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.md), [Approval](../../../flows/11_flow_approval.md) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
 - Customize the script's **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Python](./customize_go.png)
+![Advanced settings for TypeScript](./customize_graphql.png)
 
 We're done! Save your script. Note that Scripts are versioned in Windmill, and
 each script version is uniquely identified by a hash.
@@ -300,10 +308,10 @@ Now let's look at what users of the script will do. Click on the [Deploy](../../
 to load the script. You'll see the user input form we defined earlier.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
-your logs. All script runs are also available in the [Runs][app-runs] menu on
+your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run hello world in Python](./run_go.png)
+![Run hello world in GraphQL](./run_graphql.png)
 
 You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
@@ -320,18 +328,8 @@ You can also chose to [run the script from the CLI](../../../advanced/3_cli/inde
 This script is a minimal working example, but there's a few more steps we need
 in a real-world use case:
 
-- Pass
-  [variables and secrets](../../../core_concepts/2_variables_and_secrets/index.mdx)
-  to a script.
-- Connect to [resources](../../../core_concepts/3_resources_and_types/index.mdx).
 - [Trigger that script](../../8_trigger_scripts/index.mdx) in many ways.
-- Compose scripts in [Flows][flows] or [Apps](../../7_apps_quickstart/index.mdx).
-- You can [share your scripts](../../../misc/1_share_on_hub/index.md) with the community on [Windmill Hub][wm-hub]. Once
+- Compose scripts in [Flows](../../6_flows_quickstart/index.mdx) or [Apps](../../../apps/0_app_editor/index.mdx).
+- You can [share your scripts](../../../misc/1_share_on_hub/index.md) with the community on [Windmill Hub](https://hub.windmill.dev/). Once
   submitted, they will be verified by moderators before becoming available to
   everyone right within Windmill.
-
-<!-- Resources -->
-
-[flows]: ../../../getting_started/6_flows_quickstart/index.mdx
-[app-runs]: ../../../core_concepts/5_monitor_past_and_future_runs/index.mdx
-[wm-hub]: https://hub.windmill.dev

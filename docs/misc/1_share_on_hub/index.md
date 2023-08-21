@@ -16,7 +16,7 @@ Below you will find guides on how to contribute to the Hub, thank you for being 
 
 ## Scripts
 
-Currently [Windmill Hub][wm-hub] supports TypeScript(Deno), Python, Go and Bash
+Currently [Windmill Hub][wm-hub] supports TypeScript(Deno), Python, Go, Bash, SQL
 scripts. You can add Common, Error Handler, Approval and Trigger Scripts by
 going to the <a rel="nofollow" href="https://hub.windmill.dev/scripts/add">New Script</a> page. The
 **Summary** will be the title of the Script, **Integration** should have the name of

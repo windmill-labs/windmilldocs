@@ -57,6 +57,11 @@ const sidebars = {
 							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
 							label: 'PgSQL / MySQL / BigQuery / Snowflake'
 						  },
+						  {
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
+							label: 'Rest / GraphQL'
+						  },
 					]
 				},
 				'getting_started/flows_quickstart/index',

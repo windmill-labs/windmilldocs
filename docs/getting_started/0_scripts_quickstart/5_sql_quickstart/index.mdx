@@ -5,7 +5,7 @@ slug: '/getting_started/scripts_quickstart/sql'
 
 import DocCard from '@site/src/components/DocCard';
 
-# Quickstart PostgreSQL / MySQL / BigQuery / Snowflake
+# PostgreSQL / MySQL / BigQuery / Snowflake
 
 In this quick start guide, we will write our first script in SQL. We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
@@ -21,6 +21,15 @@ of [Resources][docs-resources]. Resources are rich objects in JSON that allow to
 Each Resource has a _Resource Type_ ([PostgreSQL](https://hub.windmill.dev/resource_types/6/postgresql), [MySQL](https://hub.windmill.dev/resource_types/111/mysql), [BigQuery](https://hub.windmill.dev/resource_types/108/bigquery), [Snowflake](https://hub.windmill.dev/resource_types/107/snowflake))
 that defines the schema that the resource of this type needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Resources and Resource Types"
+		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		href="/docs/core_concepts/resources_and_types"
+	/>
+</div>
+
 
 :::tip
 
