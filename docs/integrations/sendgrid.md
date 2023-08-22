@@ -1,8 +1,8 @@
-# Sendgrid Integration
+# SendGrid Integration
 
-To integrate [Sendgrid](https://sendgrid.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate [SendGrid](https://sendgrid.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Sendgrid Resource](../assets/integrations/add-sendgrid.png.webp)
+![Add SendGrid Resource](../assets/integrations/add-sendgrid.png.webp)
 
 | Property | Type   | Description | Required | Where to find                                                                      |
 | -------- | ------ | ----------- | -------- | ---------------------------------------------------------------------------------- |
@@ -12,8 +12,8 @@ To integrate [Sendgrid](https://sendgrid.com/) to Windmill, you need to save the
 
 :::tip
 
-Find some pre-set interactions with Sendgrid on the [Hub](https://hub.windmill.dev/integrations/sendgrid).
+Find some pre-set interactions with SendGrid on the [Hub](https://hub.windmill.dev/integrations/sendgrid).
 
-Feel free to create your own Sendgrid scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+Feel free to create your own SendGrid scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

@@ -1,8 +1,8 @@
-# Clickhouse Integration
+# ClickHouse Integration
 
-To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate [ClickHouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Clickhouse Resource](../assets/integrations/add-clickhouse.png.webp)
+![Add ClickHouse Resource](../assets/integrations/add-clickhouse.png.webp)
 
 | Property | Type   | Description                         | Default | Required | Where to Find                                                                                |
 | -------- | ------ | ----------------------------------- | ------- | -------- | -------------------------------------------------------------------------------------------- |
@@ -14,8 +14,8 @@ To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save
 
 :::tip
 
-Find some pre-set interactions with Clickhouse on the [Hub](https://hub.windmill.dev/integrations/clickhouse).
+Find some pre-set interactions with ClickHouse on the [Hub](https://hub.windmill.dev/integrations/clickhouse).
 
-Feel free to create your own Clickhouse scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+Feel free to create your own ClickHouse scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

@@ -57,6 +57,7 @@ export default function IntergrationList() {
 
 				<span className={classNames('text-lg max-w-3xl', 'text-gray-600 dark:text-gray-200')}>
 					We have a growing list of integrations with third party services available on the Hub.
+					<br/>
 					Connect your apps and services to automate your workflows.
 				</span>
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-12 gap-4">

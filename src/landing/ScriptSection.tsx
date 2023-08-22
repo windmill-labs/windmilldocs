@@ -16,7 +16,7 @@ import {
 	Box,
 	Gitlab
 } from 'lucide-react';
-import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode } from 'react-icons/si/index';
+import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode, SiGraphql } from 'react-icons/si/index';
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
@@ -105,12 +105,19 @@ const tabs = [
 				altText: 'Write scripts in Bash'
 			},
 			{
-				title: 'PostgreSQL / MySQL',
+				title: 'Rest / GraphQL',
+				icon: SiGraphql,
+				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/rest_graphql" target="_blank">Rest / GraphQL</a>.</div>,
+				imageSrc: '/images/graphql-code.png',
+				altText: 'Write scripts in Rest & GraphQL'
+			},
+			{
+				title: 'PostgreSQL / MySQL / BigQuery / Snowflake',
 				icon: Database,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL / MySQL</a>.</div>,
+				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL / MySQL / BigQuery / Snowflake</a>.</div>,
 				imageSrc: '/images/sql-code.png',
-				altText: 'Write scripts in PostgreSQL / MySQL'
-			}
+				altText: 'Write scripts in PostgreSQL / MySQL / BigQuery / Snowflake'
+			},
 		]
 	},
 	{
@@ -149,7 +156,7 @@ const tabs = [
 		data: [
 			{
 				title: 'Web IDE',
-				description: 'LSP support for Typescript, Python, Go and Bash scripts.',
+				description: 'LSP support for Typescript, Python, Go, Bash and SQL scripts.',
 				icon: FileCode,
 				imageSrc: '/images/code_editor_script.png',
 				altText: 'Web IDE',
