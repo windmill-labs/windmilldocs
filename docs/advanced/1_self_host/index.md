@@ -323,6 +323,7 @@ Database volume is persistent, so updating the database image is safe too.
 :::tip
 
 It is sufficient to run `docker compose up -d` again if your docker is already running detached, since it will pull the latest `:main` version and restart the containers.
+NOTE: The previous images are not removed automatically, you should also run `docker builder prune` to clear old versions.
 
 :::
 
