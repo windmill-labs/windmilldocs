@@ -249,7 +249,7 @@ You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windm
 
 2. [Create a bucket](https://developers.cloudflare.com/r2/get-started/) on R2.
 
-3. [Integrate it to Windmill](../../integrations/cloudlare-r2.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
+3. [Integrate it to Windmill](../../integrations/cloudflare-r2.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
 
 ### MinIO
 

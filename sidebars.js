@@ -72,36 +72,6 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Core Concepts',
-
-			items: [
-				'core_concepts/auto_generated_uis/index',
-				'core_concepts/json_schema_and_parsing/index',
-				'advanced/imports/index',
-				'core_concepts/instant_preview/index',
-				'core_concepts/roles_and_permissions/index',
-				'core_concepts/authentification/index',
-				'core_concepts/error_handling/index',
-				'core_concepts/collaboration/index',
-				'core_concepts/scheduling/index',
-				'core_concepts/monitor_past_and_future_runs/index',
-				'core_concepts/webhooks/index',
-				'core_concepts/variables_and_secrets/index',
-				'core_concepts/resources_and_types/index',
-				'core_concepts/groups_and_folders/index',
-				'core_concepts/worker_groups/index',
-				'core_concepts/jobs/index',
-				'core_concepts/concurrency_limits/index',
-				'core_concepts/draft_and_deploy/index',
-				'core_concepts/files_binary_data/index',
-				'core_concepts/rich_display_rendering/index',
-				'core_concepts/persistent_storage/index',
-				'core_concepts/ai_generation/index',
-			],
-			collapsed: false
-		},
-		{
-			type: 'category',
 			label: 'Editors Manual',
 			items: [
 				{
@@ -204,6 +174,36 @@ const sidebars = {
 		},
 		{
 			type: 'category',
+			label: 'Core Concepts',
+
+			items: [
+				'core_concepts/auto_generated_uis/index',
+				'core_concepts/json_schema_and_parsing/index',
+				'advanced/imports/index',
+				'core_concepts/instant_preview/index',
+				'core_concepts/roles_and_permissions/index',
+				'core_concepts/authentification/index',
+				'core_concepts/error_handling/index',
+				'core_concepts/collaboration/index',
+				'core_concepts/scheduling/index',
+				'core_concepts/monitor_past_and_future_runs/index',
+				'core_concepts/webhooks/index',
+				'core_concepts/variables_and_secrets/index',
+				'core_concepts/resources_and_types/index',
+				'core_concepts/groups_and_folders/index',
+				'core_concepts/worker_groups/index',
+				'core_concepts/jobs/index',
+				'core_concepts/concurrency_limits/index',
+				'core_concepts/draft_and_deploy/index',
+				'core_concepts/files_binary_data/index',
+				'core_concepts/rich_display_rendering/index',
+				'core_concepts/persistent_storage/index',
+				'core_concepts/ai_generation/index',
+			],
+			collapsed: false
+		},
+		{
+			type: 'category',
 			label: 'Developer',
 			items: [
 				'advanced/self_host/index',
@@ -272,7 +272,7 @@ const sidebars = {
 				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
-					label: 'List of integrations',
+					label: 'List of Integrations',
 					items: [
 						{
 							type: 'doc',
@@ -311,8 +311,8 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'integrations/cloudlare-r2',
-							label: 'Cloudlare R2'
+							id: 'integrations/cloudflare-r2',
+							label: 'Cloudflare R2'
 						},
 						{
 							type: 'doc',
@@ -418,6 +418,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/neon',
 							label: 'Neon.tech'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/nextcloud',
+							label: 'Nextcloud'
 						},
 						{
 							type: 'doc',
