@@ -1,10 +1,12 @@
-# Version control from GitHub / GitLab
+# GitHub / GitLab for Version Control
 
-At https://github.com/windmill-labs/windmill-sync-example you'll find an example repo that demonstrate how to use a github repo as source of truth for part or all of your Windmill workspace.
+Learn how to integrate GitHub / GitLab repositories with your Windmill workspace for effective version control.
 
-Users of this repo can commit changes to the main branches and have it deployed to their Windmill workspace thanks to a github action that will simply use the [windmill CLI's](https://github.com/windmill-labs/windmill/tree/main/cli) `wmill sync push` under the hood.
+Check out the [windmill-sync-example repository](https://github.com/windmill-labs/windmill-sync-example) as an illustrative guide on utilizing GitHub / GitLab repositories as the version control source for your Windmill workspace.
 
-This repo is used to sync with the example folder in the demo workspace
+Users of this repo can commit changes to the main branches and have it deployed to their Windmill workspace thanks to a GitHub / GitLab action that will simply use the [Windmill CLI's](https://github.com/windmill-labs/windmill/tree/main/cli) `wmill sync push` under the hood.
+
+This repo is used to sync with the example folder in the demo workspace.
 
 ## Setup
 
