@@ -1,9 +1,7 @@
 # Workers and Worker Groups
 
-## Workers
-
 Workers are autonomous processes that run one script at a time using the full
-machines resources available to them.
+machines resources available to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md).
 
 Workers pull [jobs](../20_jobs/index.md) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
