@@ -30,9 +30,31 @@ Code generation on Windmill from OpenAI only works on GPT-4 so far.
 
 :::
 
-Then from a code editor (Script, Flow, Apps), click on `AI Gen` and write with a prompt what the script should do. The script will use Windmill's main requirements and features (exposing a main function, importing libraries, using resource types, declaring required parameters with types, leveraging database schema).
+Then from a [code editor](../../code_editor/index.mdx) (Script, Flow, Apps), click on `AI Gen` and write with a prompt what the script should do. The script will use Windmill's main requirements and features (exposing a main function, importing libraries, using resource types, declaring required parameters with types, leveraging database schema).
 
 ![Prompt](../../assets/code_editor/ai_gen.png "Prompt")
+
+### Code Edition
+
+When in the [code editor](../../code_editor/index.mdx), select the code section you want to edit and the "AI Gen" button will turn into "AI Edit", letting you enter instructions for the AI Assistant.
+
+You will then be offered to accept or decline the suggested code.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/ai_edit.mp4"
+/>
+
+### Code Fixing
+
+Upon error when executing code, you will be offered to "AI Fix" it. The assistant will automatically read the code, explain what went wrong, and suggest a way to fix it.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/ai_fix.mp4"
+/>
 
 ## Code Auto-Completion with Codium
 
