@@ -76,21 +76,6 @@ const sidebars = {
 			items: [
 				{
 					type: 'category',
-					label: 'Code Editor',
-					link: {
-						type: 'doc',
-						id: 'code_editor/index'
-					},
-					items: [
-						'code_editor/parameter_inference',
-						'code_editor/add_variables_resources',
-						'code_editor/assistants',
-						'code_editor/ai_generation',
-					],
-					collapsed: true
-				},
-				{
-					type: 'category',
 					label: 'Script Editor',
 					link: {
 						type: 'doc',
@@ -169,7 +154,22 @@ const sidebars = {
 					],
 
 					collapsed: true
-				}
+				},
+				{
+					type: 'category',
+					label: 'Code Editor',
+					link: {
+						type: 'doc',
+						id: 'code_editor/index'
+					},
+					items: [
+						'code_editor/parameter_inference',
+						'code_editor/add_variables_resources',
+						'code_editor/assistants',
+						'code_editor/ai_generation',
+					],
+					collapsed: true
+				},
 			]
 		},
 		{

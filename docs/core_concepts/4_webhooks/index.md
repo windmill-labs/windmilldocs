@@ -103,7 +103,7 @@ securely!
 
 ## Webhook specific tokens
 
-Webhook specific tokens allow you to share without fear your tokens publicly since the token will only be able to trigger a specific script/flow and not impersonate you for any other operations.
+Webhook specific tokens allow sharing tokens  publicly without fear since the token will only be able to trigger a specific script/flow and not impersonate you for any other operations.
 
 It also avoids the hassle of having to create an anonymous user and check their permissions. If you can run the script yourself, then the webhook specific token will still inherit your own permissions.
 

@@ -98,10 +98,10 @@ Each script has metadata associated with it, enabling it to be defined and confi
   will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
   default.
 - **Language** of the script.
-- **Description**: this is where you can give instructions
-  to users on how to run your Script. It supports markdown!
-- **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)**: it allows you to define concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
-- **[Worker group tag](../../../core_concepts/9_worker_groups/index.md)**, if you want to run some scripts on a GPU machine.
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.md)
+  to users on how to run your Script. It supports markdown.
+- **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
+- **[Worker group tag](../../../core_concepts/9_worker_groups/index.md)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -115,11 +115,10 @@ Now click on the code editor on the left side.
 
 ## Code
 
-Windmill gives you an online editor to work on your Scripts. The left-side is
-the editor itself. The right-side lets you [preview the UI](../../../core_concepts/6_auto_generated_uis/index.md) that Windmill will
+Windmill provides an online editor to work on your Scripts. The left-side is
+the editor itself. The right-side [previews the UI](../../../core_concepts/6_auto_generated_uis/index.md) that Windmill will
 generate from the Script's signature - this will be visible to the users of the
-Script. You can easily preview that UI, provide input values, and test your
-script there.
+Script. You can easily preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
 ![Editor for Bash](./editor_bash.png)
 
