@@ -1,6 +1,6 @@
 ---
 slug: kahoot-case-study
-title: Windmill for Internal Admin Panels - Kahoot Case Study
+title: Windmill for Internal Admin Panels - Kahoot! Case Study
 authors: [sindresvendby]
 tags:
   [
@@ -10,26 +10,26 @@ tags:
     'Internal apps',
     'Apps',
     'Automations',
-    'Kahoot',
+    'Kahoot!',
   ]
 image: ./wm_kahoot.png
 ---
 
-This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvendby), Software Engineer at [Kahoot](https://kahoot.com/).
+This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvendby), Software Engineer at [Kahoot!](https://kahoot.com/).
 
 <!--truncate-->
 
 <br/>
 
-![Windmill Kahoot](./wm_kahoot.png)
+![Windmill Kahoot!](./wm_kahoot.png)
 
-I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot](https://kahoot.com/). While the brand Kahoot traditionnaly focuses on B2C, we target Enterprise clients.
+I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot!](https://kahoot.com/). While the brand Kahoot! traditionnaly focuses on B2C, we target Enterprise clients.
 
 I began working with Windmill at the start of the year. It currently supports internal tools used by multiple departments. We are gradually extending its use to additional departments to better meet their requirements for internal tooling.
 
 ## Choosing Windmill for Flexibility
 
-My team faced technical limitations due to the constraints of our existing tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale worflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in git / version control systems.
+Our team faced some challenges such as constrains on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale worflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in git / version control systems.
 
 Since we had our own use cases, we needed a flexible solution to create our internal tools.
 
@@ -38,13 +38,13 @@ At first, I turned to Windmill for workflows, as an alternative to Zapier. Windm
 Examples of what we have built with Windmill include:
 - **Billing**: We integrated Stripe into an app, replacing Stripe Billing for use cases it is not able to support.
 - **Customer success**: As our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmill for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub) and [made an app](#use-case-app-for-translating-zendesk-helpdesk-using-openai) out of it.
-- **Confidentiality**: Dashboard/Graphs for internal data that have Personal Identifiable Information in them that we do not want to send to a third party, hence the importance of being able to [self-host Windmill](/docs/advanced/self_host).
+<!-- Sindre to add a third use case -->
   
 Currently, we use 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.
 
-## Planning to expand Windmill to more use cases and to less technical users
+## What's next?
 
-Looking ahead, our plan is to extend Windmill to more use cases.
+Looking ahead, our plan is to expand Windmill to more use cases.
 
 While I manage the back-office for now, our goal is to engage less-technical team members in building workflows independently. This will be facilitated by leveraging ChatGPT and [Windmill's Code Generation](/docs/core_concepts/ai_generation), coupled with Windmill's rapid [code testing capabilities](/docs/core_concepts/instant_preview), which significantly shortens the feedback loop.
 
