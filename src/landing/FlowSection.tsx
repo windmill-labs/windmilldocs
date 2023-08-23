@@ -10,7 +10,15 @@ import {
 	Terminal,
 	RotateCcw,
 	Webhook,
+	OctagonIcon,
 	CheckCircle2,
+	ServerCrashIcon,
+	TimerOffIcon,
+	ToyBrickIcon,
+	Database,
+	InfinityIcon,
+	Voicemail,
+	BedIcon,
 	Calendar
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
@@ -61,18 +69,6 @@ const tabs = [
 					videoLength: '18'
 				}
 			},
-			{
-				title: 'Error Handler',
-				description:
-					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
-				icon: Bug,
-				caption: <div>Easily <a href="/docs/flows/error_handling" target="_blank">recover from errors</a>  and continue your flow or log the error on Slack, Discord, etc.</div>,
-				video: {
-					videoSrc: '/videos/error_handler.mp4',
-					altText: 'Branching logic',
-					videoLength: '33'
-				}
-			}
 		]
 	},
 	{
@@ -100,72 +96,122 @@ const tabs = [
 				caption: 'Resume Workflows with secret webhooks.',
 				imageSrc: '/images/page_arguments.png.webp',
 				altText: 'Resume with webhooks'
+			},
+			{
+				title: 'Sleeps / Delays',
+				description:
+					'Executions within a flow can be suspended for a given time.',
+				icon: BedIcon,
+				caption: <div>Executions within a flow can be <a href="/docs/flows/sleep" target="_blank">suspended</a> for a given time.</div>,
+				video: {
+					videoSrc: '/videos/sleep_step.mp4',
+					altText: 'Sleep / Delay',
+				}
 			}
 		]
 	},
 	{
-		label: 'Retries & Cache',
-		icon: Repeat,
-		id: 'retries',
+		label: 'Error Handling',
+		icon: ServerCrashIcon,
+		id: 'error-handling',
 		data: [
 			{
-				title: 'Customize number of retries for each individual step',
+				title: 'Error Handler',
+				description:
+					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
+				icon: Bug,
+				caption: <div>Easily <a href="/docs/flows/error_handling" target="_blank">recover from errors</a>  and continue your flow or log the error on Slack, Discord, etc.</div>,
+				video: {
+					videoSrc: '/videos/error_handler.mp4',
+					altText: 'Branching logic',
+				}
+			},
+			{
+				title: 'Retry',
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
 				icon: Repeat,
 				caption: <div>Easily <a href="/docs/flows/retries" target="_blank">retry</a> failed steps.</div>,
 				video: {
 					videoSrc: '/videos/retries_example.mp4',
-					videoLength: '29',
 					altText: 'Customize number of retries.'
+				}
+			},
+			{
+				title: 'Early Stop / Break',
+				description:
+					'Define a predicate expression that determines whether the flow should stop early at the end of a step.',
+				icon: OctagonIcon,
+				caption: <div>Define a predicate expression that determines whether the flow should <a href="/docs/flows/early_stop" target="_blank">stop early</a> at the end of a step.</div>,
+				video: {
+					videoSrc: '/videos/early_stop.mp4',
+					altText: 'Early Stop / Break.'
+				}
+			},
+			{
+				title: 'Custom Timeout for Step',
+				description:
+					'For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted.',
+				icon: TimerOffIcon,
+				caption: <div>For each step can be defined a <a href="/docs/flows/custom_timeout" target="_blank">timeout</a>. If the execution takes longer than the time limit, the execution of the step will be interrupted.</div>,
+				video: {
+					videoSrc: '/videos/custom_timeout.mp4',
+					altText: 'Custom Timeout for Step'
+				}
+			},
+		]
+	},
+	{
+		label: 'Integrations',
+		icon: ToyBrickIcon,
+		id: 'retries',
+		data: [
+			{
+				title: 'Connect third-party services',
+				description:
+					'Connect data providers & external APIs together.',
+				icon: ToyBrickIcon,
+				caption: <div>Connect data providers & <a href="/docs/integrations/integrations_on_windmill" target="_blank">external APIs</a> together.</div>,
+				video: {
+					videoSrc: '/videos/flow_integrations.mp4',
+					videoLength: '29',
+					altText: 'Connect third-party services.'
 				}
 			},
 			{
 				title: 'Cache results of steps',
 				description:
-					'Cache the results of a step for a given time.',
-				icon: Repeat,
+					'Cache the results of a step for a given time to limit useless calls to external APIs.',
+				icon: Database,
 				caption: <div><a href="/docs/flows/cache" target="_blank">Cache the results of a step</a> for a given time.</div>,
 				video: {
 					videoSrc: '/videos/cache_for_steps.mp4',
 					videoLength: '15',
-					altText: 'Customize number of retries'
+					altText: 'Cache results of steps'
 				}
-			}
-		]
-	},
-	/*
-	{
-		label: 'Hub scripts',
-		icon: Globe,
-		id: 'hub-scripts',
-		data: [
+			},
 			{
-				title: 'Short video of usig a script from the hub',
+				title: 'Step Mocking',
 				description:
-					'Automatically retry failed steps. Customize the number of retries for each individual step.',
-				icon: Code,
-				caption: '',
-				imageSrc: ''
-			}
-		]
-	},
-	{
-		label: 'ETL/Data processing',
-		icon: Database,
-		id: 'etl-data-processing',
-		data: [
+					'When a step is mocked, it will immediately return the mocked value without performing any computation.',
+				icon: Voicemail,
+				caption: <div>When a step is <a href="/docs/flows/step_mocking" target="_blank">mocked</a>, it will immediately return the mocked value without performing any computation.</div>,
+				video: {
+					videoSrc: '/videos/step_mocking.mp4',
+					videoLength: '15',
+					altText: 'Step Mocking'
+				}
+			},
 			{
-				title: 'Shared folder between folders to write and read heavy data',
+				title: 'Concurrency Limits',
 				description:
-					'Automatically retry failed steps. Customize the number of retries for each individual step.',
-				icon: Database,
-				caption: '',
-				imageSrc: ''
-			}
+					'Define concurrency limits for inline scripts to prevent exceeding the API Limit of the targeted API.',
+				icon: InfinityIcon,
+				caption: <div>Define <a href="/docs/flows/concurrency_limit" target="_blank">concurrency limits</a> for inline scripts to prevent exceeding the API Limit of the targeted API.</div>,
+				imageSrc: '/images/concurrency_limit_flow.png',
+			},
 		]
 	},
-	*/
 	{
 		label: 'Multiple Triggers',
 		icon: Play,
@@ -183,9 +229,9 @@ const tabs = [
 
 			{
 				title: 'UI',
-				description: 'You can directly trigger a script using the autogenerated UI.',
+				description: 'You can directly trigger a flow using the autogenerated UI or Windmill Apps.',
 				icon: FormInput,
-				caption: <div>You can directly trigger a flow using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a>.</div>,
+				caption: <div>You can directly trigger a flow using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a> or <a href="/docs/getting_started/apps_quickstart" target="_blank">Windmill Apps</a>.</div>,
 				video: {
 					videoSrc: '/videos/auto_g_ui_flow.mp4',
 					altText: 'Trigger with autogenerated UI',
