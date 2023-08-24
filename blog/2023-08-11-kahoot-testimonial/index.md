@@ -29,14 +29,14 @@ I began working with Windmill at the start of the year. It currently supports in
 
 ## Choosing Windmill for Flexibility
 
-Our team faced some challenges such as constrains on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale worflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in git / version control systems.
+Our team faced some challenges such as constrains on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale worflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in [git / version control](/docs/advanced/deploy_gh_gl) systems.
 
 Since we had our own use cases, we needed a flexible solution to create our internal tools.
 
 At first, I turned to Windmill for workflows, as an alternative to Zapier. Windmill made significant improvements in our automation processes. I then discovered the [app builder](/docs/apps/app_editor), which gave us the opportunity to take a lot of our one-off scripts and cli tools that developers run and to fast create a decent UI for our staff to interact with, freeing up time for developers.
 
 Examples of what we have built with Windmill include:
-- **Billing**: We integrated Stripe into an app, replacing Stripe Billing for use cases it is not able to support.
+- **Billing**: We integrated [Stripe](https://hub.windmill.dev/integrations/stripe) into an app, replacing Stripe Billing for use cases it is not able to support.
 - **Customer success**: As our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmill for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub) and [made an app](#use-case-app-for-translating-zendesk-helpdesk-using-openai) out of it.
 <!-- Sindre to add a third use case -->
   
@@ -50,7 +50,7 @@ While I manage the back-office for now, our goal is to engage less-technical tea
 
 ## Use case: App for translating Zendesk Helpdesk using OpenAI
 
-Bellow you will find an internal app that is used by our CS team to translate fetch articles with OpenAI and insert them into Zendesk with the new language.
+Bellow you will find an internal app that is used by our CS team to translate fetch articles with [OpenAI](/docs/integrations/openai) and insert them into Zendesk with the new language.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
