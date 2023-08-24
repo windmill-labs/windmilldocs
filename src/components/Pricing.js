@@ -87,7 +87,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 1h response time and automation engineer assistance
+							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
