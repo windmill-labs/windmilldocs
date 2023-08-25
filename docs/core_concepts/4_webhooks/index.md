@@ -165,7 +165,7 @@ encountered issues), by checking the [Runs menu][runs] on the app.
 
 ## Request headers
 
-It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_headers`, separated with `,`. e.g: `/api/w/admins/jobs/run_wait_result/p/u/user/undisputed_script?include_header=X-Sign,foo`
+It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_header`, separated with `,`. e.g: `/api/w/admins/jobs/run_wait_result/p/u/user/undisputed_script?include_header=X-Sign,foo`
 
 or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
 
