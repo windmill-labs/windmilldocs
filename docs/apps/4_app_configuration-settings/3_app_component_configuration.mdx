@@ -36,15 +36,15 @@ Depending of the type of the data source, the input will be different. For examp
 		title="Component Library"
 		description="Find out the type of the data source of a component in the component library."
 		href="/docs/apps/app_configuration-settings/app_component_library"
+		color="orange"
 	/>
 </div>
 
 ### Connected data source
 
-The data source can be connected to any outputs.
+The data source can be [connected to any outputs](../2_outputs.md#connecting-inputs).
 
-![Disconnected data source](../../assets/apps/inputs/disconnected-data-source.png.webp)
-![Connected data source](../../assets/apps/inputs/connected-data-source.png.webp)
+![Static data source](../../assets/apps/0_app_editor/connect_component.png)
 
 #### Learn more
 
@@ -52,7 +52,8 @@ The data source can be connected to any outputs.
 	<DocCard
 		title="How to connect inputs to outputs"
 		description="Learn how to connect inputs to outputs."
-		href="/docs/apps/app_configuration-settings/app_component_library"
+		href="/docs/apps/outputs#connecting-inputs"
+		color="orange"
 	/>
 </div>
 
@@ -60,8 +61,7 @@ The data source can be connected to any outputs.
 
 We can also use the result of a runnable as a data source.
 
-![Runnable data source](../../assets/apps/inputs/undefined-runnable-data-source.png.webp)
-![Runnable data source](../../assets/apps/inputs/defined-runnable-data-source.png.webp)
+![Runnable data source](../../assets/apps/inputs/defined-runnable-data-source.png)
 
 #### Learn more
 
@@ -70,6 +70,7 @@ We can also use the result of a runnable as a data source.
 		title="Runnable triggers"
 		description="Learn how to configure the triggers of the runnable."
 		href="/docs/apps/app_configuration-settings/app_runnable_triggers"
+		color="orange"
 	/>
 </div>
 
@@ -95,15 +96,13 @@ export async function main(mode: 'editor' | 'preview', name: string) {
 
 The type of the input will be `select` with the values `editor` and `preview`, and the type of the input `name` will be `string`.
 
-![Runnable inputs](../../assets/apps/inputs/static-runnable-input.png.webp)
-![Runnable inputs](../../assets/apps/inputs/connected-runnable-input.png.webp)
-![Runnable inputs](../../assets/apps/inputs/eval-runnable-input.png.webp)
+![Component configuration](../../assets/apps/inputs/runnable_inputs.png)
 
 ## Component configuration
 
 Each component has a configuration section. This section contains all the configuration of the component.
 
-![Component configuration](../../assets/apps/inputs/component-configuration.png.webp)
+![Component configuration](../../assets/apps/inputs/component-configuration.png)
 
 #### Learn more
 
@@ -112,5 +111,6 @@ Each component has a configuration section. This section contains all the config
 		title="Component Library"
 		description="Find out the configuration of each component in the component library."
 		href="/docs/apps/app_configuration-settings/app_component_library"
+		color="orange"
 	/>
 </div>

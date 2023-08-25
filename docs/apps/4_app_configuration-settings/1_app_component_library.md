@@ -6,7 +6,7 @@ The app components library is located on the right-hand side of the app editor. 
 
 Components can be configured in two ways:
 
-- **Inputs**: inputs can be connected to an output or computed using a runnable.
+- **Inputs**: inputs can be [connected to an output](../2_outputs.md#connecting-inputs) or computed using a runnable.
 
   - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
     <br/>
