@@ -48,13 +48,11 @@ On the right-side menu, pick `Global styling` and go on a component to define pr
 
 <br/>
 
-:::tip Configure manually and replicate pre-set styling
+### Configure manually and replicate pre-set styling
 
 Styling on a component level can be replicated to all the components of the same class from the Rich Editor.
 
 Just click on `Copy style to global CSS`.
-
-<br/>
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -62,5 +60,3 @@ Just click on `Copy style to global CSS`.
     controls
     src="/videos/copy_style_global_css.mp4"
 />
-
-:::
