@@ -68,7 +68,7 @@ export default function Example() {
 					</h1>
 					<p className="mt-2 text-3xl font-bold tracking-tight  sm:text-4xl"></p>
 					<h2 className={`text-gray-900 dark:text-gray-200 text-2xl font-semibold`}>
-						We have worked with thousands of amazing people
+						We have worked with amazing people
 					</h2>
 				</div>
 				<div className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
