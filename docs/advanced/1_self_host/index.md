@@ -71,8 +71,7 @@ Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `sta
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
-curl https://raw.githubusercontent.com/windmill-labs/windmill/main/oauth.json -o oauth.json
-
+echo '{}' > oauth.json
 
 docker compose up -d
 ```
