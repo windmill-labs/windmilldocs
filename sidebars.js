@@ -26,7 +26,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Scripts Quickstart',
+					label: 'Scripts Quickstarts',
 					link: {
 						type: 'doc',
 						id: 'getting_started/scripts_quickstart/index'
