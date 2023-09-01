@@ -241,7 +241,7 @@ export default function LandingHeader() {
 								</div>
 								<div className="mt-6">
 									<a
-										href="https://cal.com/ruben-windmill/windmill-demo"
+										href="https://www.windmill.dev/book-demo"
 										data-analytics='"schedule-demo"'
 										onClick={() => window.plausible('schedule-demo')}
 										className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"
