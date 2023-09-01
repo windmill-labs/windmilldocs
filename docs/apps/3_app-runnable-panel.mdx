@@ -51,24 +51,24 @@ Background runnables are scripts that are executed in the background. They are n
 Evals are used to [connect data sources](./2_outputs.md#connecting-inputs) to other components or parameters.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
-    controls
-    src="/videos/app-connections.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	controls
+	src="/videos/app-connections.mp4"
 />
-<br/>
+<br />
 
 Windmill parses your eval and frontend scripts using the swc parser compiled to wasm to extract any references to outputs.
-It allows Windmill to suggest dependencies for frontend scripts. 
+It allows Windmill to suggest dependencies for frontend scripts.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/eval_1.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/eval_1.mp4"
 />
 
-<br/>
+<br />
 
 Evals are only evaluated on changes to the outputs that have been identified.
 
@@ -183,6 +183,48 @@ The index of the tab to set.
 
 ```js
 setTab('a', '1');
+```
+
+### openModal
+
+Use the `openModal` function to open a modal.
+
+#### Syntax
+
+```js
+openModal(id: string)
+```
+
+#### Parameters
+
+`id` string
+The id of the modal component to open.
+
+#### Example
+
+```js
+openModal('a');
+```
+
+### closeModal
+
+Use the `closeModal` function to close a modal.
+
+#### Syntax
+
+```js
+closeModal(id: string)
+```
+
+#### Parameters
+
+`id` string
+The id of the modal component to close.
+
+#### Example
+
+```js
+closeModal('a');
 ```
 
 ### recompute
