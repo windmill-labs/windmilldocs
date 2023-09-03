@@ -103,7 +103,7 @@ securely!
 
 ## Webhook specific tokens
 
-Webhook specific tokens allow sharing tokens  publicly without fear since the token will only be able to trigger a specific script/flow and not impersonate you for any other operations.
+Webhook specific tokens allow sharing tokens publicly without fear since the token will only be able to trigger a specific script/flow and not impersonate you for any other operations.
 
 It also avoids the hassle of having to create an anonymous user and check their permissions. If you can run the script yourself, then the webhook specific token will still inherit your own permissions.
 
@@ -169,7 +169,22 @@ It is possible for jobs to take request headers as arguments. To do so, either s
 
 or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
 
-## Raw payload
+## Non Object payload / body
+
+If the payload is not an object, it will be wrapped in an object with the key `body` and the value will be the payload/body itself. e.g:
+
+```
+[1,2,3] => {"body": [1,2,3]}
+```
+
+and your script can process it as:
+
+```python
+def main(body: List[int]):
+    print(body)
+```
+
+## Raw payload / body
 
 Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
 
