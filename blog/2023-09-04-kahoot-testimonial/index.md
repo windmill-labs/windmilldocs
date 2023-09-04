@@ -33,7 +33,7 @@ Our team faced some challenges such as constrains on the tech stack. Some tools,
 
 Since we had our own use cases, we needed a flexible solution to create our internal tools.
 
-At first, I turned to Windmill for workflows, as an alternative to Zapier. Windmill made significant improvements in our automation processes. I then discovered the Windmill [app builder](/docs/apps/app_editor). This tool allowed us to transform many of our one-off scripts and CLI tools into user-friendly applications. With these new interfaces, our staff could easily interact with the tools, which significantly reduced the workload for our developers.
+At first, I turned to Windmill for workflows, as an alternative to Zapier. Windmill made significant improvements in our automation processes. I then discovered the Windmill [app builder](/docs/apps/app_editor). This tool allowed us to transform many of our one-off scripts/flows and CLI tools into user-friendly applications. With these new interfaces, our staff could easily interact with the tools, which significantly reduced the workload for our developers.
 
 Examples of what we have built with Windmill include:
 - **Billing**: We integrated [Stripe](https://hub.windmill.dev/integrations/stripe) into an app, replacing Stripe Billing for use cases it is not able to support.
