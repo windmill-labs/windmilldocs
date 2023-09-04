@@ -7,23 +7,23 @@ Some arguments' types can be given advanced settings that will affect the inputs
 Here is an example on how to define a python list as an enum of strings using the `Customize` menu.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="/videos/advanced_parameters_enum.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+	src="/videos/advanced_parameters_enum.mp4"
 />
 
-<br/>
+<br />
 
 Below is the list of all available advanced settings for each argument type:
 
 | Type    | Advanced Configuration                                                                                                                    |
 | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | Integer | No advanced configuration for this type.                                                                                                  |
-| Number  | No advanced configuration for this type.                                                                                                  |
-| String  | - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql &#124; Pattern (Regex)                             |
+| Number  | Min and Max.                                                                                                                              |
+| String  | - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                  |
 | Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource Types](../core_concepts/3_resources_and_types/index.mdx).                                                                |
+| Object  | Advanced settings are [Resource Types](../core_concepts/3_resources_and_types/index.mdx).                                                 |
 | Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
 | Any     | No advanced configuration for this type.                                                                                                  |
 
@@ -37,5 +37,5 @@ Below is the list of all available advanced settings for each argument type:
 		title="JSON Schema and Parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
 		href="/docs/core_concepts/json_schema_and_parsing"
-    />
+	/>
 </div>
