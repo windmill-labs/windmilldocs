@@ -57,12 +57,15 @@ Among our apps in Windmill, one of the most critical ones is a custom interface 
 
 Before Windmill, our clients used to receive a monthly PDF with data that was difficult to keep up to date. Now, we have improved our client-facing service without having to subscribe to countless Saas subscriptions.
 
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="/videos/tc_app_charts.mp4"
-/>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/watch?v=NsAhQZi2FTg"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen
+></iframe>
 
 <br/>
 
