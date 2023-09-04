@@ -26,11 +26,9 @@ This is a testimonial written by [José Governo](https://www.linkedin.com/in/jos
 
 [Tera Capital](https://www.teracapital.com.br/) is a Multi Family Office that offers exclusive asset management services.
 
-In the management team, everyone has a specialization in finance, but we lack technical background, although data analysis was one of their main activities.
+Our team used to create everything using Excel and VBA which is what the financial industry is most accustomed with, everyone worked on common problem without collaborating, usually we repeatedly built analysis and formulations, and things didn’t hold together for long. From time to time the sheets broke and we needed to look into it again.
 
-To create automation and dashboards for our investments, the team was wasting time creating everything themselves using Excel and VBA.
-
-With my addition to the team we decided to start over from scratch, but I needed a solution that would enable everyone to keep creating their work without a proficiency in coding.
+So, we decided to start over from scratch and since there were not many people on our team who can code, we needed a solution that would enable everyone to do their work from a high level abstraction.
 
 ## Why Windmill over Retool?
 
