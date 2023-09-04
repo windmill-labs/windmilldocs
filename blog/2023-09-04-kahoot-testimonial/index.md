@@ -23,17 +23,17 @@ This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvend
 
 ![Windmill Kahoot!](./wm_kahoot.png)
 
-I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot!](https://kahoot.com/). While the brand Kahoot! traditionnaly focuses on B2C, we target Enterprise clients.
+I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot!](https://kahoot.com/). While the brand Kahoot! traditionally focuses on B2C, we target Enterprise clients.
 
 I began working with Windmill at the start of the year. It currently supports internal tools used by multiple departments. We are gradually extending its use to additional departments to better meet their requirements for internal tooling.
 
 ## Choosing Windmill for Flexibility
 
-Our team faced some challenges such as constrains on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale worflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in [git / version control](/docs/advanced/deploy_gh_gl) systems.
+Our team faced some challenges such as constrains on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations and not truly enjoying a comfortable solution. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale workflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in [git / version control](/docs/advanced/deploy_gh_gl) systems.
 
 Since we had our own use cases, we needed a flexible solution to create our internal tools.
 
-At first, I turned to Windmill for workflows, as an alternative to Zapier. Windmill made significant improvements in our automation processes. I then discovered the [app builder](/docs/apps/app_editor), which gave us the opportunity to take a lot of our one-off scripts and cli tools that developers run and to fast create a decent UI for our staff to interact with, freeing up time for developers.
+At first, I turned to Windmill for workflows, as an alternative to Zapier. Windmill made significant improvements in our automation processes. I then discovered the Windmill [app builder](/docs/apps/app_editor). This tool allowed us to transform many of our one-off scripts and CLI tools into user-friendly applications. With these new interfaces, our staff could easily interact with the tools, which significantly reduced the workload for our developers.
 
 Examples of what we have built with Windmill include:
 - **Billing**: We integrated [Stripe](https://hub.windmill.dev/integrations/stripe) into an app, replacing Stripe Billing for use cases it is not able to support.
