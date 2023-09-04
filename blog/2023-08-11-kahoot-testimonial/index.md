@@ -37,8 +37,8 @@ At first, I turned to Windmill for workflows, as an alternative to Zapier. Windm
 
 Examples of what we have built with Windmill include:
 - **Billing**: We integrated [Stripe](https://hub.windmill.dev/integrations/stripe) into an app, replacing Stripe Billing for use cases it is not able to support.
+- **Synchronisation with backend**: We make sure that third-party systems like Stripe and [Hubspot](https://hub.windmill.dev/integrations/hubspot) have the correct information compared to our main system. If everything is right, it updates automatically. If there is a difference, CS/Finance teams get an alert to look into inconsistencies.
 - **Customer success**: As our CS team used [Zendesk](https://www.zendesk.com/), we leveraged Windmill for translating, fetching, and insering articles into Zendesk using [OpenAI](https://hub.windmill.dev/integrations/openai) for new languages ([I shared this flow](https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings) on WindmillHub) and [made an app](#use-case-app-for-translating-zendesk-helpdesk-using-openai) out of it.
-<!-- Sindre to add a third use case -->
   
 Currently, we use 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.
 
