@@ -15,6 +15,7 @@ tags:
 image: ./wm_kahoot.png
 ---
 
+
 This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvendby), Software Engineer at [Kahoot!](https://kahoot.com/).
 
 <!--truncate-->
