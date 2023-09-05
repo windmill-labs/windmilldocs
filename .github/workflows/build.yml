@@ -1,0 +1,23 @@
+name: check docs build
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    paths:
+      - 'src/**'
+      - 'docs/**'
+  push:
+    branches:
+      - main
+  merge_group:
+
+jobs:
+  npm_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: 'npm check'
+        timeout-minutes: 5
+        run: npm ci --legacy-peer-deps && npm run build

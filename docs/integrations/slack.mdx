@@ -7,21 +7,25 @@ interactions between the two: run code on Windmill by a Slack command or use the
 Slack API directly from Windmill. In this guide, we'll cover both approaches.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
-    controls
-    id="main-video"
-    src="/videos/generated_email.mp4"
-    alt="Slack Windmill"
+className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+controls
+src="/videos/slack_handler.mp4"
 />
-
-<br/>
 
 ## Action on Windmill from Slack
 
 The goal here is to be able to invoke a Windmill Script from Slack, by using
-`/windmill` command. First, you need to be a **workspace admin**. Then you
+`/windmill` command.
+
+<video
+className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+controls
+src="/videos/slack_script.mp4"
+/>
+
+<br/>
+
+First, you need to be a **workspace admin**. Then you
 should go to
 [workspace settings page](https://app.windmill.dev/workspace_settings) and
 select the "Slack Command" tab. On there, click "Connect to Slack".
@@ -32,6 +36,8 @@ The Slack integration is done through OAuth. On [self-hosted instances](../advan
 
 :::
 
+Slack will ask you to allow Windmill to access your workspace. Click "Allow".
+
 <video
 className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 controls
@@ -40,16 +46,12 @@ src="/videos/adding_slack_resource.mp4"
 
 <br/>
 
-Slack will ask you to allow Windmill to access your workspace. Click "Allow".
-
 :::note
 
 At the time of writing, Slack cautiones that Windmill is not an approved app. We
 are working on getting the app approved but you can safely ignore it for now.
 
 :::
-
-![Allow Slack access](../assets/integrations/slack-2-allow-access.png)
 
 ### Using commands on Slack
 
@@ -86,7 +88,7 @@ customize the Script to your needs.
 
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png.webp)
 
-You won't be able to have Slack interact with your [resources](../core_concepts/3_resources_and_types/index.mdx) and [variables](../core_concepts/2_variables_and_secrets/index.mdx) before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.md#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill. Tutorial below.
+You won't be able to have Slack interact with your [resources](../core_concepts/3_resources_and_types/index.mdx) and [variables](../core_concepts/2_variables_and_secrets/index.mdx) before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.mdx#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill. Tutorial below.
 
 <details>
   <summary>How to let Slack use your resources and variables:</summary>
@@ -99,7 +101,7 @@ To give the permission, go to "Resources" (and "Variables") menu, click on `Shar
 
 <br/>
 
-One simplier way to handle permissions is to host resources and variables on a [folder](../core_concepts/8_groups_and_folders/index.md#folders) that is part of the [group](../core_concepts/8_groups_and_folders/index.md#groups) `slack`.
+One simplier way to handle permissions is to host resources and variables on a [folder](../core_concepts/8_groups_and_folders/index.mdx#folders) that is part of the [group](../core_concepts/8_groups_and_folders/index.mdx#groups) `slack`.
 
 <br/>
 
@@ -111,6 +113,27 @@ One simplier way to handle permissions is to host resources and variables on a [
 
 
 </details>
+
+### Handle multiple commands
+
+We cover in a [subsequent article](/blog/handler-slack-commands) how to manage multiple commands & human-in-the-loop steps from your slackbot using [branches](../flows/13_flow_branches.md), a text parser and [approval steps](../flows/11_flow_approval.md).
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/generated_email.mp4"
+    alt="Slack Windmill"
+/>
+
+<br/>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Tutotial - Handler of multiple Slack commands"
+		description="Create a flow with a parser & branches that will handle multiple Slack commands."
+		href="/blog/handler-slack-commands#control-the-slackbot-by-getting-username"
+	/>
+</div>
 
 ### Monitor who ran the command
 
@@ -139,18 +162,6 @@ export async function main(
 ```
 
 will console.log `user = username`, username being the Slack username.
-
-### Handle multiple commands
-
-We cover in a [subsequent article](/blog/handler-slack-commands) how to manage multiple commands from your slackbot using [branches](../flows/13_flow_branches.md) and a text parser.
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Tutotial - Handler of multiple Slack commands"
-		description="Create a flow with a parser & branches that will handle multiple Slack commands."
-		href="/blog/handler-slack-commands#control-the-slackbot-by-getting-username"
-	/>
-</div>
 
 ## Action on Slack from Windmill
 
@@ -214,12 +225,21 @@ export async function main(
 
 ![Test script](../assets/integrations/slack-9-script-result.png)
 
-:::info What's next?
+### Have messages published on Windmill's behalf
 
-We go deeper in a [further article](/blog/handler-slack-commands), integrating multiple commands, resources and Slack approval steps.
+Using the resource created above, Slack will behave on your behalf (under your name).
+
+To have messages published on Windmill's behalf, use the Slack resource created in the [Action on Windmill from Slack](#action-on-windmill-from-slack) section.
+
+<video
+className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+controls
+src="/videos/slack_bots.mp4"
+/>
 
 <br/>
 
+:::info What's next?
 Also, explore more Slack scripts, flows and apps on [Windmill Hub](https://hub.windmill.dev/integrations/slack).
 :::
 

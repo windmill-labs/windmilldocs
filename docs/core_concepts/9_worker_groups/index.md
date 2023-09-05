@@ -1,9 +1,7 @@
 # Workers and Worker Groups
 
-## Workers
-
 Workers are autonomous processes that run one script at a time using the full
-machines resources available to them.
+machines resources available to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md).
 
 Workers pull [jobs](../20_jobs/index.md) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
@@ -75,3 +73,17 @@ If no worker group is assigned to a script, it will be assigned the default work
 You can assign a worker group to an entire flow in the flow's settings:
 
 ![Flow's Worker Group](flow_wg.png)
+
+## Dynamic tag
+
+If a workspace tag contains the substring `$workspace`, it will be replaced by the workspace id corresponding to the job. This is especially useful to have the same script deployed to different workspace and have them run on different workers.
+
+In the following setup:
+
+```
+CUSTOM_TAGS=normal-$workspace
+```
+
+the workspaces, `dev`, `staging`, `prod` and the worker groups: `normal-dev`, `normal-staging`, `normal-prod`. The same script wih the tag `normal-$workspace` will run on the corresponding worker group depending on the workspace it is deployed to. This enable to share the same control plane but use workers with different network restrictions for tighter security.
+
+See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.

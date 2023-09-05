@@ -2,26 +2,37 @@ import DocCard from '@site/src/components/DocCard';
 
 # Resources and Resource Types
 
-In Windmill, Resources represent
-connections to third party systems. Resources are a good way to define a
-connection to a frequently used third party system such as a database. Think of
-Resources as a structured way to store configuration and credentials, and access
-them from scripts.
+Resources are rich objects in JSON that allow to store configuration and credentials.
 
-Each Resource has a **Resource Type** (**RT** for short) - for example MySQL,
-MongoDB, Slack, etc. - that defines the schema that the resource of this type
+In Windmill, Resources represent connections to third party systems. Resources are a good way to define a
+connection to a frequently used third party system such as a database. Think of
+Resources as a structured way to store configuration and credentials, and access them from scripts.
+
+Each Resource has a **Resource Type** (**RT** for short) - for example [MySQL](https://hub.windmill.dev/resource_types/111/mysql),
+[MongoDB](https://hub.windmill.dev/resource_types/22/mongodb), [OpenAI](https://hub.windmill.dev/resource_types/61/openai), etc. - that defines the schema that the resource of this type
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
 
-:::tip Available pre-made integrations
+:::tip
 
-Check our [list of integrations](../../integrations/0_integrations_on_windmill.mdx) (or, pre-made resource types).
-
-<br />
-
-If one is missing, this very page details how to [create your own](#create-a-resource-type).
+Check our [list of integrations](../../integrations/0_integrations_on_windmill.mdx) (or, pre-made resource types). If one is missing, this very page details how to [create your own](#create-a-resource-type).
 
 :::
+
+<div class="text-xl mb-2 font-semibold"></div>
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="List of integrations"
+		description="Windmill provides a framework to easily add integrations."
+		href="/docs/integrations/integrations_on_windmill"
+	/>
+	<DocCard
+		title="JSON Schema"
+		description="JSON Schema is a declarative language that allows you to annotate and validate JSON documents."
+		href="https://json-schema.org/"
+		target="_blank"
+	/>
+</div>
 
 ## Create a Resource
 

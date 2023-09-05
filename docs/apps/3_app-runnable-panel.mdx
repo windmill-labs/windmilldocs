@@ -1,5 +1,7 @@
 # Runnable Guide
 
+Windmill Apps can be powered by code, with scripts linked to components, background runnables that are not linked to a component but run in the background, frontend scripts that can be used to manipulate the client app state, and evals.
+
 ## Overview
 
 On the bottom of the app editor, you can find the runnable editor. It allows you to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
@@ -15,36 +17,23 @@ When a runnable is selected, the runnable editor is displayed. It is composed of
 
 - **Header**: The header of the runnable editor. It contains:
 
-  - An editable name
+  - An editable name.
   - The status of the runnable can either be valid, invalid depending on the LSP response.
-  - A delete button
+  - A delete button.
   - A format button: Formats the code of the runnable. It's also triggered when you save the runnable.
   - A run button: Runs the runnable.
 
 - **Runnable editor**: The code editor of the runnable.
 
-:::tip Auto-complete code with AI
-
-Note that you can have [AI suggest code on Windmill](../code_editor/ai_generation.md):
-
-<br />
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/codeium_example.mp4"
-/>
-
-:::
-
 ## Types of runnables
 
-There are 4 types of runnables:
+There are 5 types of runnables:
 
-- Inline scripts: Scripts that are defined on the app editor, linked to a component.
-- Workspace/Hub: Runnables (scripts; flows) linked to a component, but defined in the workspace or the Hub.
-- Background runnables: Runnables that are not linked to a component, but run in the background.
-- Frontend scripts: Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
+- **Inline scripts**: Scripts that are defined on the app editor, linked to a component.
+- **Workspace/Hub**: Runnables (scripts; flows) linked to a component, but defined in the workspace or the Hub.
+- **Background runnables**: Runnables that are not linked to a component, but run in the background.
+- **Frontend scripts**: Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
+- **Evals**: Evals are used to connect data sources to other components or parameters. They are only evaluated on changes to the outputs that have been identified.
 
 They provide interactivity to your app.
 
@@ -56,6 +45,36 @@ They can be either attached to a component or detached.
 ## Background runnables
 
 Background runnables are scripts that are executed in the background. They are not attached to any component.
+
+## Evals
+
+Evals are used to [connect data sources](./2_outputs.md#connecting-inputs) to other components or parameters.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	controls
+	src="/videos/app-connections.mp4"
+/>
+<br />
+
+Windmill parses your eval and frontend scripts using the swc parser compiled to wasm to extract any references to outputs.
+It allows Windmill to suggest dependencies for frontend scripts.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/eval_1.mp4"
+/>
+
+<br />
+
+Evals are only evaluated on changes to the outputs that have been identified.
+
+Clicking on the dedicated link, evals can be "transformed to a frontend script".
+
+![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png)
 
 ## Creating a runnable
 
@@ -164,6 +183,48 @@ The index of the tab to set.
 
 ```js
 setTab('a', '1');
+```
+
+### openModal
+
+Use the `openModal` function to open a modal.
+
+#### Syntax
+
+```js
+openModal(id: string)
+```
+
+#### Parameters
+
+`id` string
+The id of the modal component to open.
+
+#### Example
+
+```js
+openModal('a');
+```
+
+### closeModal
+
+Use the `closeModal` function to close a modal.
+
+#### Syntax
+
+```js
+closeModal(id: string)
+```
+
+#### Parameters
+
+`id` string
+The id of the modal component to close.
+
+#### Example
+
+```js
+closeModal('a');
 ```
 
 ### recompute

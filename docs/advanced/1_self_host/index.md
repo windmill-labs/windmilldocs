@@ -11,6 +11,42 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 **Even if you setup oauth, login as** admin@windmill.dev **/ changeme to setup the instance and give yourself admin privileges**.
 
+Windmill itself just require 3 parts:
+
+- A Postgres database, which contains the entire state of windmill, including the job queue.
+- The windmill container run in server mode (and replicated for HA). It serves both the frontend and the API. It needs to connect to the database and is what is exposed publicly to serve the frontend. It does not need to communicate to the workers directly.
+- The windmill container run in worker mode (and replicated to handle more job throughput). It needs to connect to the database and does not communicate to the servers.
+
+There are 3 optional parts:
+
+- windmill lsp to provide intellisense on the monaco web editor
+- windmill multiplayer (EE only) to provide real time collaboration
+- A reverse proxy (caddy in our docker compose) to the windmill server, lsp and multiplayer in order to expose a single port to the outside world.
+
+The docker-compose below use the 6 parts and we recommend doing TLS termination outside of the provided caddy.
+
+## Cloud provider-specific guides
+
+### AWS, GCP, Azure
+
+We recommend using the [helm chart](#helm-chart) to deploy on managed kubernetes. But for simplified setup, simply use the docker-compose (see [below](#docker)) on a single large instance and use a high number of replicas for the worker service. The rule of thumb is 1 worker per 1vCPU and 1/2GB of RAM. Cloud providers have managed load balancer services (ELB, GCLB, ALB) and managed database (RDS, Cloud SQL, Aurora, Postgres on Azure). We recommend disabling the db service in the docker-compose and using an external database by setting according the `DATABASE_URL` in the `.env` file. Windmill is compatible with AWS Aurora, GCP Cloud SQL and Neon serverless database.
+
+Use the managed load balancer to point to your instance on the port you have chosen to expose in the caddy section of the docker-compose (by default 80). We recommend doing TLS termination and associating your domain on your managed load balancer. Once the domain name is chosen, set BASE_URL accordingly in `.env`. That is it for a minimal setup. Read about [Worker groups](../../core_concepts/9_worker_groups/index.md) to configure more finely your workers on more nodes and with different resources. Once done, be sure to setup [SSO login](../../misc/2_setup_oauth/index.md) with Azure AD, Google Workspace or Github if relevant.
+
+:::tip AWS ECS
+
+To be able to use the AWS APIs within windmill on ECS containers, just whitelist the following env variables:
+`WHITELIST_ENVS = "AWS_EXECUTION_ENV,AWS_CONTAINER_CREDENTIALS_RELATIVE_URI,AWS_DEFAULT_REGION,AWS_REGION"`
+:::
+
+### Fly.io
+
+[Community contributed guide](https://dev.to/singee/deploy-windmill-on-flyio-3ii3)
+
+### Hetzner, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...
+
+Windmill work with those providers using the docker containers and specific guides are in progress.
+
 ## Docker
 
 ### Setup Windmill on localhost
@@ -28,13 +64,12 @@ The default credentials are admin@windmill.dev / changeme. From there you can ea
 
 <br/>
 
-Using Docker and Caddy, Windmill can be deployed using two files,
-([`docker-compose.yml`][windmill-docker-compose] and
-[`Caddyfile`][windmill-caddyfile]) and in a single command.
+Using Docker and Caddy, Windmill can be deployed using 4 files,
+([`docker-compose.yml`][windmill-docker-compose],
+[`Caddyfile`][windmill-caddyfile]), an .env and an empty oauth.json in a single command.
 
-[Caddy][caddy] takes care of managing the TLS certificate and the reverse proxy,
-Postgres of storage, Windmill-LSP provides editor intellisense. All managed by
-one [`docker-compose.yml`][windmill-docker-compose] file.
+[Caddy][caddy] is the reverse proxy that will redirect traffic to both windmill (port 8000) and the lsp (the monaco assistant) service (port 3001) and multiplayer service (port 3002).
+Postgres holds the entire state of windmill, the rest is fully stateless, Windmill-LSP provides editor intellisense.
 
 Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `start docker`, Linux: `sudo systemctl start docker`) and type the following commands:
 
@@ -42,32 +77,33 @@ Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `sta
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
-curl https://raw.githubusercontent.com/windmill-labs/windmill/main/oauth.json -o oauth.json
+echo '{}' > oauth.json
 
-
-docker compose up -d --pull always
+docker compose up -d
 ```
 
 Go to [http://localhost](http://localhost) et voilà!
 
-The default super-admin user is: admin@windmill.dev / `changeme`.
+The default super-admin user is: **admin@windmill.dev** / `changeme`.
 
 From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
 
 ### Use an external database
 
-For more production use-cases, we recommend using the helm-chart but the docker-compose on a big instance is sufficient for many use-cases.
+For more production use-cases, we recommend using the helm-chart. However, the docker-compose on a big instance is sufficient for many use-cases.
 
 To setup an external database, you need to set DATABASE_URL in the .env file to point your external database. You should also set the number of db replicas to 0.
 
-#### RDS
+:::tip
 
-On RDS, you will need to set the initial role manually. You can do so by running the following command:
+In some exotic setups, you will need to set the initial role manually. You can do so by running the following command:
 
 ```bash
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql -o init-db-as-superuser.sql
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
+
+:::
 
 ### Set number of replicas accordingly in docker-compose
 
@@ -261,6 +297,12 @@ docker compose up
 That's it! Head over to your domain and you should be greeted with the login
 screen.
 
+In practice, you want to run the docker containers in the background so they don't shut down when you disconnect. Do this with the `--detach` or `-d` parameter as follows:
+
+```bash
+docker compose up -d
+```
+
 :::tip
 
 Default e-mail is `admin@windmill.dev` and the password is `changeme`.
@@ -282,6 +324,13 @@ docker compose pull windmill
 ```
 
 Database volume is persistent, so updating the database image is safe too.
+
+:::tip
+
+It is sufficient to run `docker compose up -d` again if your docker is already running detached, since it will pull the latest `:main` version and restart the containers.
+NOTE: The previous images are not removed automatically, you should also run `docker builder prune` to clear old versions.
+
+:::
 
 ### Reset your instance
 

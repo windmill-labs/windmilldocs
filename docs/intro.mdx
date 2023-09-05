@@ -3,11 +3,11 @@ import { Book, Pen } from 'lucide-react';
 
 # Introduction
 
-Windmill is an **<a href="https://github.com/windmill-labs/windmill" >open-source</a>**, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to **build all your internal tools (endpoints, workflows, UIs) through the combination of code** (in Typescript, Python, Go & Bash, or any docker image) and low code builders. It embeds all-in-one:
+Windmill is an **<a href="https://github.com/windmill-labs/windmill" >open-source</a>**, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to **build all your internal tools (endpoints, workflows, UIs) through the combination of code** (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
 
-- an **execution runtime** to execute functions at scale with low-latency and no overhead on a fleet of workers
-- an **orchestrator** to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
-- an **app builder** to build application and data-intensive dashboards built with low-code or JS frameworks such a React.
+- an [execution runtime](./getting_started/0_scripts_quickstart/index.mdx) to execute functions at scale with low-latency and no overhead on a fleet of workers
+- an [orchestrator](./getting_started/6_flows_quickstart/index.mdx) to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
+- an [app builder](./getting_started/7_apps_quickstart/index.mdx) to build application and data-intensive dashboards built with low-code or JS frameworks such a React.
 
 Windmill can be used solely from its UI through its [webIDE](./getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), and low-code builders but it is also possible to keep using your editor and deploy from a [git repo](./advanced/9_deploy_gh_gl/index.md) using a [CLI](./cli_local_dev/index.md).
 
@@ -39,7 +39,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Scripts"
-		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash or launch docker containers."
+		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash, SQL or launch docker containers."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 	<DocCard
@@ -130,6 +130,6 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 	<DocCard
 		title="Windmill Compared to Peers"
 		description="Our subjective impression on other players you might come across."
-		href="/docs/misc/windmill_compared_to_peers"
+		href="/docs/compared_to/peers"
 	/>
 </div>

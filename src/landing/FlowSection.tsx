@@ -10,7 +10,15 @@ import {
 	Terminal,
 	RotateCcw,
 	Webhook,
+	OctagonIcon,
 	CheckCircle2,
+	ServerCrashIcon,
+	TimerOffIcon,
+	ToyBrickIcon,
+	Database,
+	InfinityIcon,
+	Voicemail,
+	BedIcon,
 	Calendar
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
@@ -30,11 +38,11 @@ const tabs = [
 				title: 'Sequence',
 				description: 'Build complex Flows from atomic scripts.',
 				icon: List,
-				caption: 'Write scripts in Typescript, Python, Go and Bash or use scripts from the hub',
+				caption: <div>Sequence scripts from your workspace, the <a href="https://hub.windmill.dev/" target="_blank">Hub</a> or <a href="/docs/code_editor" target="_blank">write them</a> directly.</div>,
 				video: {
 					videoSrc: '/videos/flow-sequence.mp4',
 					altText: 'Build flows from scripts',
-					videoLength: '28'
+					videoLength: '49'
 				}
 			},
 
@@ -42,34 +50,25 @@ const tabs = [
 				title: 'Branching',
 				description: 'Built-in branching logic to create complex workflows.',
 				icon: GitBranch,
-				caption: 'Built-in branching logic to create complex workflows',
+				caption: <div>Built-in <a href="/docs/flows/flow_branches" target="_blank">branching logic</a> to create complex workflows.</div>,
+
 				video: {
 					videoSrc: '/videos/flow-branch.mp4',
 					altText: 'Branching logic',
-					videoLength: '28'
+					videoLength: '39'
 				}
 			},
 			{
 				title: 'For Loops',
 				description: 'Create for loops to iterate over a list of items.',
 				icon: Repeat,
-				caption: 'Create for loops to iterate over a list of items',
+				caption: <div>Create <a href="/docs/flows/flow_loops" target="_blank">for loops</a> to iterate over a list of items.</div>,
 				video: {
 					videoSrc: '/videos/flow-loop.mp4',
 					altText: 'Flows for loops',
-					videoLength: '28'
+					videoLength: '18'
 				}
 			},
-			{
-				title: 'Error Handler',
-				description:
-					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
-				icon: Bug,
-				caption:
-					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
-				imageSrc: '/images/error-handler.png',
-				imageAlt: 'Error Handler icon'
-			}
 		]
 	},
 	{
@@ -82,12 +81,11 @@ const tabs = [
 				description:
 					'Send request for approval by email, slack, anything and get a dedicate approval page',
 				icon: Verified,
-				caption:
-					'Send request for approval by email, slack, anything and get a dedicate approval page',
+				caption: <div>Send <a href="/docs/flows/flow_approval" target="_blank">request for approval</a> by email, slack, anything and get a dedicate approval page.</div>,
 				video: {
 					videoSrc: '/videos/flow-approval.mp4',
 					altText: 'Flows Approval Step',
-					videoLength: '47'
+					videoLength: '64'
 				}
 			},
 			{
@@ -95,75 +93,125 @@ const tabs = [
 				description:
 					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
 				icon: Verified,
-				caption: 'Resume Workflows with secret webhooks',
-				imageSrc: '/images/resume-workflow.png',
+				caption: 'Resume Workflows with secret webhooks.',
+				imageSrc: '/images/page_arguments.png.webp',
 				altText: 'Resume with webhooks'
+			},
+			{
+				title: 'Sleeps / Delays',
+				description:
+					'Executions within a flow can be suspended for a given time.',
+				icon: BedIcon,
+				caption: <div>Executions within a flow can be <a href="/docs/flows/sleep" target="_blank">suspended</a> for a given time.</div>,
+				video: {
+					videoSrc: '/videos/sleep_step.mp4',
+					altText: 'Sleep / Delay',
+				}
 			}
 		]
 	},
 	{
-		label: 'Retries & Cache',
-		icon: Repeat,
-		id: 'retries',
+		label: 'Error Handling',
+		icon: ServerCrashIcon,
+		id: 'error-handling',
 		data: [
 			{
-				title: 'Customize number of retries for each individual step',
+				title: 'Error Handler',
+				description:
+					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
+				icon: Bug,
+				caption: <div>Easily <a href="/docs/flows/error_handling" target="_blank">recover from errors</a>  and continue your flow or log the error on Slack, Discord, etc.</div>,
+				video: {
+					videoSrc: '/videos/error_handler.mp4',
+					altText: 'Branching logic',
+				}
+			},
+			{
+				title: 'Retry',
 				description:
 					'Automatically retry failed steps. Customize the number of retries for each individual step.',
 				icon: Repeat,
-				caption: 'Easily retry failed steps',
+				caption: <div>Easily <a href="/docs/flows/retries" target="_blank">retry</a> failed steps.</div>,
 				video: {
-					videoSrc: '/videos/flow-retries.mp4',
-					videoLength: '15',
-					altText: 'Customize number of retries'
+					videoSrc: '/videos/retries_example.mp4',
+					altText: 'Customize number of retries.'
+				}
+			},
+			{
+				title: 'Early Stop / Break',
+				description:
+					'Define a predicate expression that determines whether the flow should stop early at the end of a step.',
+				icon: OctagonIcon,
+				caption: <div>Define a predicate expression that determines whether the flow should <a href="/docs/flows/early_stop" target="_blank">stop early</a> at the end of a step.</div>,
+				video: {
+					videoSrc: '/videos/early_stop.mp4',
+					altText: 'Early Stop / Break.'
+				}
+			},
+			{
+				title: 'Custom Timeout for Step',
+				description:
+					'For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted.',
+				icon: TimerOffIcon,
+				caption: <div>For each step can be defined a <a href="/docs/flows/custom_timeout" target="_blank">timeout</a>. If the execution takes longer than the time limit, the execution of the step will be interrupted.</div>,
+				video: {
+					videoSrc: '/videos/custom_timeout.mp4',
+					altText: 'Custom Timeout for Step'
+				}
+			},
+		]
+	},
+	{
+		label: 'Integrations',
+		icon: ToyBrickIcon,
+		id: 'retries',
+		data: [
+			{
+				title: 'Connect third-party services',
+				description:
+					'Connect data providers & external APIs together.',
+				icon: ToyBrickIcon,
+				caption: <div>Connect data providers & <a href="/docs/integrations/integrations_on_windmill" target="_blank">external APIs</a> together.</div>,
+				video: {
+					videoSrc: '/videos/flow_integrations.mp4',
+					videoLength: '29',
+					altText: 'Connect third-party services.'
 				}
 			},
 			{
 				title: 'Cache results of steps',
 				description:
-					'Cache results of steps to avoid re-running steps that have already been executed.',
-				icon: Repeat,
-				caption: 'Easily retry failed steps',
-				video: {
-					videoSrc: '/videos/flow-retries.mp4',
-					videoLength: '15',
-					altText: 'Customize number of retries'
-				}
-			}
-		]
-	},
-	/*
-	{
-		label: 'Hub scripts',
-		icon: Globe,
-		id: 'hub-scripts',
-		data: [
-			{
-				title: 'Short video of usig a script from the hub',
-				description:
-					'Automatically retry failed steps. Customize the number of retries for each individual step.',
-				icon: Code,
-				caption: '',
-				imageSrc: ''
-			}
-		]
-	},
-	{
-		label: 'ETL/Data processing',
-		icon: Database,
-		id: 'etl-data-processing',
-		data: [
-			{
-				title: 'Shared folder between folders to write and read heavy data',
-				description:
-					'Automatically retry failed steps. Customize the number of retries for each individual step.',
+					'Cache the results of a step for a given time to limit useless calls to external APIs.',
 				icon: Database,
-				caption: '',
-				imageSrc: ''
-			}
+				caption: <div><a href="/docs/flows/cache" target="_blank">Cache the results of a step</a> for a given time.</div>,
+				video: {
+					videoSrc: '/videos/cache_for_steps.mp4',
+					videoLength: '15',
+					altText: 'Cache results of steps'
+				}
+			},
+			{
+				title: 'Step Mocking',
+				description:
+					'When a step is mocked, it will immediately return the mocked value without performing any computation.',
+				icon: Voicemail,
+				caption: <div>When a step is <a href="/docs/flows/step_mocking" target="_blank">mocked</a>, it will immediately return the mocked value without performing any computation.</div>,
+				video: {
+					videoSrc: '/videos/step_mocking.mp4',
+					videoLength: '15',
+					altText: 'Step Mocking'
+				}
+			},
+			{
+				title: 'Concurrency Limits',
+				description:
+					'Define concurrency limits for inline scripts to prevent exceeding the API Limit of the targeted API.',
+				icon: InfinityIcon,
+				caption: <div>Define <a href="/docs/flows/concurrency_limit" target="_blank">concurrency limits</a> for inline scripts to prevent exceeding the API Limit of the targeted API.</div>,
+				imageSrc: '/images/concurrency_limit_flow.png',
+			},
 		]
 	},
-	*/
 	{
 		label: 'Multiple Triggers',
 		icon: Play,
@@ -174,39 +222,38 @@ const tabs = [
 				description:
 					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
 				icon: CalendarClock,
-				caption:
-					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
-				video: {
-					videoSrc: '/videos/flow-schedule.mp4',
-					videoLength: '15',
-					altText: 'Schedules'
-				}
+				caption: <div>Windmill allows you to define <a href="/docs/core_concepts/scheduling" target="_blank">schedules</a> for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.</div>,
+				imageSrc: '/images/script-schedule.png',
+
 			},
 
 			{
 				title: 'UI',
-				description: 'You can directly trigger a script using the autogenerated UI.',
+				description: 'You can directly trigger a flow using the autogenerated UI or Windmill Apps.',
 				icon: FormInput,
-				caption: 'You can directly trigger a script using the autogenerated UI.',
+				caption: <div>You can directly trigger a flow using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a> or <a href="/docs/getting_started/apps_quickstart" target="_blank">Windmill Apps</a>.</div>,
 				video: {
-					videoSrc: '/videos/flow-ui.mp4',
+					videoSrc: '/videos/auto_g_ui_flow.mp4',
 					altText: 'Trigger with autogenerated UI',
 					videoLength: '14'
 				}
 			},
 			{
 				title: 'Webhooks',
+				description: 'You can trigger a flow using a webhook.',
 				icon: WebhookIcon,
-				caption: '',
-				imageSrc: ''
+				caption: <div>Every flow has a sync and async <a href="/docs/core_concepts/webhooks" target="_blank">webhook</a>.</div>,
+				imageSrc: '/images/flow-webhook.png',
+				altText: 'Webhooks'
 			},
 			{
 				title: 'CLI',
+				description: 'Execute a flow using the CLI.',
 				icon: Terminal,
-				caption: 'Execute a flow from the CLI',
+				caption: <div>Execute a flow using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
 				imageSrc: '/images/setup.gif',
-				altText: 'Execute from the CLI'
-			}
+				altText: 'Execute using CLI'
+			},
 		]
 	}
 ];
@@ -240,7 +287,7 @@ const cards = [
 		subtitle: 'Trigger flows from a webhook or schedule',
 		Icon: Webhook,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/flows/flow_trigger',
+		href: '/docs/getting_started/trigger_flows',
 		icons: [Calendar, Terminal]
 	},
 

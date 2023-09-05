@@ -5,6 +5,7 @@ import {
 	SiPython,
 	SiTypescript,
 	SiPostgresql,
+	SiGraphql,
 	SiDocker
 } from 'react-icons/si/index';
 
@@ -26,22 +27,28 @@ Windmill supports scripts in Python, TypeScript, Go, Bash and Sql.
 		Icon={SiPython}
 	/>
 	<DocCard
+		title="Bash / Powershell"
+		description="Write your first Windmill script in Bash / Powershell."
+		href="/docs/getting_started/scripts_quickstart/bash"
+		Icon={SiGnubash}
+	/>
+	<DocCard
 		title="Go"
 		description="Write your first Windmill script in Go."
 		href="/docs/getting_started/scripts_quickstart/go"
 		Icon={SiGo}
 	/>
 	<DocCard
-		title="Bash"
-		description="Write your first Windmill script in Bash."
-		href="/docs/getting_started/scripts_quickstart/bash"
-		Icon={SiGnubash}
-	/>
-	<DocCard
-		title="SQL"
-		description="Write your first Windmill script in SQL."
+		title="PostgreSQL / MySQL / BigQuery / Snowflake"
+		description="Write your first Windmill script in PostgreSQL, MySQL, BigQuery or Snowflake SQL."
 		href="/docs/getting_started/scripts_quickstart/sql"
 		Icon={SiPostgresql}
+	/>
+	<DocCard
+		title="Rest / GraphQL"
+		description="Write your first Windmill script in Rest / GraphQL."
+		href="/docs/getting_started/scripts_quickstart/rest_graphql"
+		Icon={SiGraphql}
 	/>
 	<DocCard
 		title="Run Docker Containers"

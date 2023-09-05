@@ -1,4 +1,4 @@
-# Mongodb Integration
+# MongoDB Integration
 
 This guide aims to show you how to create a connection from your Windmill
 instance to an external MongoDB Atlas database, then use it to make queries.

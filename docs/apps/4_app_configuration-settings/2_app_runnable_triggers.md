@@ -60,7 +60,7 @@ Two types of runnables can be configured to recompute on any input change:
 - **Backend background runnables**: Background runnable that are executed on the server.
 - **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
 
-Inputs of runnables that are either connected to an output or evaluated can trigger a recompute. These are displayed in the `Change on value` section.
+Inputs of runnables that are either connected to an output or [evaluated](../3_app-runnable-panel.mdx#evals) can trigger a recompute. These are displayed in the `Change on value` section.
 
 ### Manual Dependencies
 

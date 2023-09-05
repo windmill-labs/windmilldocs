@@ -179,6 +179,7 @@ export default function LandingHeader() {
 							onClick={() => window.plausible('try-cloud')}
 							data-analytics='"try-cloud"'
 							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
+							rel="nofollow"
 						>
 							Windmill Cloud
 						</a>
@@ -240,7 +241,7 @@ export default function LandingHeader() {
 								</div>
 								<div className="mt-6">
 									<a
-										href="https://cal.com/ruben-windmill/windmill-demo"
+										href="https://www.windmill.dev/book-demo"
 										data-analytics='"schedule-demo"'
 										onClick={() => window.plausible('schedule-demo')}
 										className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"
@@ -250,6 +251,7 @@ export default function LandingHeader() {
 									<a
 										href="https://app.windmill.dev"
 										className="!no-underline flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+										rel="nofollow"
 									>
 										Windmill Cloud
 									</a>

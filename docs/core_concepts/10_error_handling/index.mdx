@@ -37,7 +37,7 @@ async function fetchData(): Promise<string> {
 
 ![Try Catch](./try_catch.png.webp)
 
-## Flows' error handlers
+## Flows' Error Handlers
 
 The Error Handler is a special flow step that is executed when an error occurs within a flow.
 
@@ -59,13 +59,18 @@ If defined, the error handler will take as input, the result of the step that er
 	/>
 </div>
 
-## Schedules' error handlers
+## Schedules' Error Handlers
 
 Add a special script or flow to execute in case of an error in your scheduled script or flow.
 
-![Schedule Error Handler](../1_scheduling/14_schedule_error_handler.png.webp)
+You can pick the Slack pre-set schedule error handler or define your own.
 
-For example, this can be a script that sends an error notification to [Slack](https://hub.windmill.dev/scripts/slack/1284/) or [Discord](https://hub.windmill.dev/scripts/discord/1292/).
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schedule_error_handler.mp4"
+/>
+<br/>
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -75,7 +80,7 @@ For example, this can be a script that sends an error notification to [Slack](ht
 	/>
 </div>
 
-## Workspace error handler
+## Workspace Error Handler
 
 You can define a script to be executed automatically in case of error in the workspace.
 
@@ -116,7 +121,7 @@ export async function main(
 }
 ```
 
-## Instance error handler
+## Instance Error Handler
 
 You can define a script to be executed automatically in case of error in your instance.
 
@@ -155,12 +160,12 @@ export async function main(
 
 ## Special Case: Error Handling in Flows
 
-For more information on Error handlin in flows, see:
+For more information on Error handling in flows, see:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Error Handling in Flows"
-		description="There are three ways to handle errors in Windmill flows."
+		description="There are four ways to handle errors in Windmill flows."
 		href="/docs/flows/error_handling"
 	/>
 </div>

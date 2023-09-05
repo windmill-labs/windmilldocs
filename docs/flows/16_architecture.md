@@ -2,19 +2,30 @@
 
 In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.md) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
-- Reference to a Script from the [Hub](https://hub.windmill.dev/).
-- Reference to a Script in your [workspace](../core_concepts/16_roles_and_permissions/index.mdx#workspace).
-- Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.md).
-- [Trigger Scripts](./10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
-- [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).
-- [Branch](./13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order).
-- [Branches to all](./13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array.
-- [Approval/Suspend steps](./11_flow_approval.md) which suspend the flow at no cost until it is resumed by getting an approval/resume signal.
-- Inner flows.
+1. Reference to a Script from the [Hub](https://hub.windmill.dev/).
+2. Reference to a Script in your [workspace](../core_concepts/16_roles_and_permissions/index.mdx#workspace).
+3. Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.md).
+4. [Trigger Scripts](./10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
+5. [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).
+6. [Branch](./13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order).
+7. [Branches to all](./13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array.
+8. [Approval/Suspend steps](./11_flow_approval.md) which suspend the flow at no cost until it is resumed by getting an approval/resume signal.
+9. Inner flows.
+
+![Flow architecture](../assets/flows/flow_architecture.png "Flow architecture")
 
 ## Input Transform
 
 With the mechanism of input transforms, the input of any step can be the output of any previous step, hence every Flow is actually a [Directed Acyclic Graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) rather than simple sequences. You can refer to the result of any step using its ID.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="main-video"
+    src="/videos/flow-sequence.mp4"
+/>
+
+<br/>
 
 Every step has an input transform that maps from:
 

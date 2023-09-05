@@ -83,7 +83,7 @@ If your routing rules are set to capture emails that are directly addressed to c
 - The parsed results are sent as an array, of which Windmill treats each element as a potential output & input.
 
 :::info Mailbox Routing
-In email systems, routing rules are not strictly tied to a single email address. Instead, they're flexible mechanisms that govern how an email server handles incoming messages based on various criteria.
+In email systems, routing rules are not strictly tied to a single email address. Instead, they are flexible mechanisms that govern how an email server handles incoming messages based on various criteria.
 
 <br/>
 

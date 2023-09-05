@@ -87,7 +87,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 1h response time and automation engineer assistance
+							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -394,6 +394,20 @@ export default function Pricing() {
 							<p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
 								{tier.description}
 							</p>
+
+							{index === 1 && frequency.value === 'selfhost' && (
+								<a
+									href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
+									className={classNames(
+										tier.mostPopular
+											? 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300'
+											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+									)}
+								>
+									Get a month free
+								</a>
+							)}
 
 							{index == 0 ? (
 								<div

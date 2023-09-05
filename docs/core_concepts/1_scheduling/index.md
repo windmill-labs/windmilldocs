@@ -1,8 +1,8 @@
 # Scheduling
 
-Windmill provides the same set of features as CRON, but with a user interface and control panels. It allows you to define Schedules for Scripts and Flows. Once a schedule is defined, **the script will automatically run at the set frequency**. Think of it as an easy-to-use scheduler similar to CRON that you can share with other users.
+Windmill provides the same set of features as CRON, but with a user interface and control panels. It allows you to define Schedules for Scripts and Flows. Once a schedule is defined, the script will automatically run at the set frequency. Think of it as an easy-to-use scheduler similar to CRON that you can share with other users.
 
-A Schedule consists of a **Script or Flow**, its **arguments** and a **CRON expression** that controls the execution frequency.
+A Schedule consists of a **Script or Flow**, its **arguments**, a **CRON expression** that controls the execution frequency and an **Error Handler** to deal with failed scheduled executions.
 
 <!--truncate-->
 
@@ -23,11 +23,11 @@ However, as with any powerful tool, using cron comes with its own set of challen
 - **Runs History**: to maintain a record of script runs and log outputs through cron, you must manually incorporate that logic.
 - **Error Handling**: in the event of a failed run, self-crafted logic is required for notifications (Slack, emails).
 - **Manual Runs**: executing a cron job manually, outside of its schedule, proves difficult and can lead to inconsistencies due to potential environment differences.
-- **No UI**: navigating cron jobs is challenging without a centralized hub, particularly for larger engineering teams. This comes with induced issues: 1. **Handling permissions** among users and editors and 2. **Server downtime**: when the server hosting the job experiences downtime, monitoring and alterting is problematic.
+- **No UI**: navigating cron jobs is challenging without a centralized hub, particularly for larger engineering teams. This comes with induced issues: 1. **Handling permissions and Errors** among users and editors and 2. **Server downtime**: when the server hosting the job experiences downtime, monitoring and alterting is problematic.
 
 :::info A bit of Context: How Windmill Works
 
-[Windmill](../../intro.mdx) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash).
+[Windmill](../../intro.mdx) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash, SQL).
 
 <br/>
 
@@ -50,6 +50,10 @@ From your workspace, navigate to the dedicated `Schedules` menu and select `New 
 2. Select a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
 
 3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flows].
+
+4. Optional: Add an **Error Handler**
+
+5. Optional: Add a **Recovery Handler**
 
 ![Schedule a task](./12-schedule-a-task.png.webp 'Schedule a task')
 
@@ -102,17 +106,31 @@ Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set
 
 ## Control Permissions and Errors
 
-### Be notified every time a scheduled workflow has been executed (or failed)
-
-#### Schedule Error Handler
+### Schedule Error Handler
 
 From the schedule configuration, add a special script or flow to execute in case of an error.
 
-![Schedule Error Handler](./14_schedule_error_handler.png.webp)
+![Schedule Error Handler](./14_schedule_error_handler.png)
 
 For example, this can be a script that sends an error notification to [Slack](https://hub.windmill.dev/scripts/slack/1284/) or [Discord](https://hub.windmill.dev/scripts/discord/1292/).
 
-#### As a Flow Step
+You can pick the Slack pre-set schedule error handler.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schedule_error_handler.mp4"
+/>
+
+### Schedule Recovery Handler
+
+From the schedule configuration, add a special script or flow to execute in case of of recovery from Error.
+
+You can pick the Slack pre-set schedule recovery handler.
+
+![Schedule Recovery Handler](./15_schedule_recovery_handler.png)
+
+### Be notified every time a scheduled workflow has been executed
 
 For scheduled flows, add a simple step to be notified about the execution of the scheduled flow.
 
@@ -144,15 +162,15 @@ If you want to handle failure and receive another message in that case, add an [
 
 ### Manage permissions from the workflow
 
-From the metadata menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.md#folders) (group of people) to manage view and editing rights.
+From the metadata menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.mdx#folders) (group of people) to manage view and editing rights.
 
 ![Manage permissions](./5-manage-rights.png.webp 'Manage permissions')
 
 <br/>
 
-Voilà, all done! The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
+The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
 
-Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.mdx) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go or Bash - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
+Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.mdx) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go, Bash or SQL - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
 
 <!-- Resources -->
 

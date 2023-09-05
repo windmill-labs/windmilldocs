@@ -25,6 +25,18 @@ A workflow is a series of connected tasks, events, or processes that occur autom
 		href="/docs/cli_local_dev"
 		Icon={TerminalSquare}
 	/>
+	<DocCard
+		color="teal"
+		title="Architecture and Data Exchange"
+		description="A workflow is a JSON serializable value in the OpenFlow format."
+		href="/docs/flows/architecture"
+	/>
+	<DocCard
+		color="teal"
+		title="OpenFlow Spec"
+		description="OpenFlow is an open standard for defining Flows."
+		href="/docs/openflow"
+	/>
 </div>
 
 <br />
@@ -32,12 +44,6 @@ A workflow is a series of connected tasks, events, or processes that occur autom
 The Flow Editor has the following features which are the subject of specific pages:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		color="teal"
-		title="Architecture and Data Exchange"
-		description="A workflow is a JSON serializable value in the OpenFlow format."
-		href="/docs/flows/architecture"
-	/>
 	<DocCard
 		color="teal"
 		title="Triggering Flows"
@@ -53,7 +59,7 @@ The Flow Editor has the following features which are the subject of specific pag
 	<DocCard
 		color="teal"
 		title="Error Handling in Flows"
-		description="There are three ways to handle errors in Windmill flows."
+		description="There are four ways to handle errors in Windmill flows."
 		href="/docs/flows/error_handling"
 	/>
 	<DocCard
@@ -120,6 +126,12 @@ The Flow Editor has the following features which are the subject of specific pag
 		color="teal"
 		title="Sleep / Delays in Flows"
 		description="Stop early a flow based on a step's result."
+		href="/docs/flows/early_stop"
+	/>
+	<DocCard
+		color="teal"
+		title="Custom Timeout for Step"
+		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
 		href="/docs/flows/early_stop"
 	/>
 </div>
