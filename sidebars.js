@@ -26,42 +26,43 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Scripts Quickstart',
+					label: 'Scripts Quickstarts',
 					link: {
 						type: 'doc',
 						id: 'getting_started/scripts_quickstart/index'
 					},
+					collapsed: false,
 					items: [
 						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/typescript_quickstart/index',
 							label: 'TypeScript'
-						  },
-						  {
+						},
+						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/python_quickstart/index',
 							label: 'Python'
-						  },
+						},
 						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/bash_quickstart/index',
 							label: 'Bash / PowerShell'
-						  },
+						},
 						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/go_quickstart/index',
 							label: 'Go'
-						  },
-						  {
+						},
+						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
 							label: 'PgSQL / MySQL / BigQuery / Snowflake'
-						  },
-						  {
+						},
+						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
 							label: 'Rest / GraphQL'
-						  },
+						}
 					]
 				},
 				'getting_started/flows_quickstart/index',
@@ -91,7 +92,7 @@ const sidebars = {
 						'script_editor/custom_environment_variables',
 						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
-						'script_editor/vs_code_scripts',
+						'script_editor/vs_code_scripts'
 					],
 					collapsed: true
 				},
@@ -166,10 +167,10 @@ const sidebars = {
 						'code_editor/parameter_inference',
 						'code_editor/add_variables_resources',
 						'code_editor/assistants',
-						'code_editor/ai_generation',
+						'code_editor/ai_generation'
 					],
 					collapsed: true
-				},
+				}
 			]
 		},
 		{
@@ -177,6 +178,11 @@ const sidebars = {
 			label: 'Core Concepts',
 
 			items: [
+				{
+					type: 'doc',
+					id: 'core_concepts/index',
+					label: 'List of Core Concepts'
+				},
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
@@ -193,12 +199,13 @@ const sidebars = {
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/concurrency_limits/index',
+				'core_concepts/caching/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/persistent_storage/index',
-				'core_concepts/ai_generation/index',
+				'core_concepts/ai_generation/index'
 			],
 			collapsed: false
 		},
@@ -248,7 +255,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
 				'advanced/clients/ts_client',
-				
+
 				'cli_local_dev/vscode-extension/index'
 			]
 		},
@@ -498,7 +505,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/upstash',
 							label: 'Upstash'
-						},
+						}
 					],
 					collapsed: true
 				}
@@ -513,12 +520,12 @@ const sidebars = {
 					type: 'doc',
 					id: 'compared_to/airplane',
 					label: 'Airplane'
-				  },
-        {
-        type: 'doc',
-        id: 'compared_to/retool',
-        label: 'Retool'
-        },
+				},
+				{
+					type: 'doc',
+					id: 'compared_to/retool',
+					label: 'Retool'
+				}
 			]
 		},
 		{
@@ -540,7 +547,7 @@ const sidebars = {
 					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
-				'misc/share_on_hub/index',
+				'misc/share_on_hub/index'
 			]
 		}
 	]

@@ -33,6 +33,12 @@ We recommend using the [helm chart](#helm-chart) to deploy on managed kubernetes
 
 Use the managed load balancer to point to your instance on the port you have chosen to expose in the caddy section of the docker-compose (by default 80). We recommend doing TLS termination and associating your domain on your managed load balancer. Once the domain name is chosen, set BASE_URL accordingly in `.env`. That is it for a minimal setup. Read about [Worker groups](../../core_concepts/9_worker_groups/index.md) to configure more finely your workers on more nodes and with different resources. Once done, be sure to setup [SSO login](../../misc/2_setup_oauth/index.md) with Azure AD, Google Workspace or Github if relevant.
 
+:::tip AWS ECS
+
+To be able to use the AWS APIs within windmill on ECS containers, just whitelist the following env variables:
+`WHITELIST_ENVS = "AWS_EXECUTION_ENV,AWS_CONTAINER_CREDENTIALS_RELATIVE_URI,AWS_DEFAULT_REGION,AWS_REGION"`
+:::
+
 ### Fly.io
 
 [Community contributed guide](https://dev.to/singee/deploy-windmill-on-flyio-3ii3)
@@ -71,8 +77,7 @@ Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `sta
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
-curl https://raw.githubusercontent.com/windmill-labs/windmill/main/oauth.json -o oauth.json
-
+echo '{}' > oauth.json
 
 docker compose up -d
 ```

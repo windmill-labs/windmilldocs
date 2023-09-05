@@ -22,7 +22,7 @@ export default function CallToAction() {
 							Get started for free
 						</a>
 						<a
-							href="https://cal.com/ruben-windmill/windmill-demo"
+							href="https://www.windmill.dev/book-demo"
 							data-analytics='"schedule-demo"'
 							onClick={() => window.plausible('schedule-demo')}
 							className="text-base font-semibold leading-7 text-white !no-underline dark:text-gray-900"
