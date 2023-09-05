@@ -59,6 +59,8 @@ Among our apps in Windmill, one of the most critical ones is a custom interface 
 
 Before Windmill, our clients used to receive a monthly PDF with data that was difficult to keep up to date. Now, we have improved our client-facing service without having to subscribe to countless Saas subscriptions.
 
+Here is an anonymized version of our client-facing dashboard:
+
 <iframe
 	width="560"
 	height="315"
@@ -68,7 +70,3 @@ Before Windmill, our clients used to receive a monthly PDF with data that was di
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowfullscreen="true"
 ></iframe>
-
-<br/>
-
-> Here is an anonymized version of our client-facing dashboard.
