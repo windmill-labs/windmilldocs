@@ -1,6 +1,5 @@
 ---
 slug: kahoot-case-study
-title: Windmill for Internal Admin Panels - Kahoot! Case Study
 authors: [sindresvendby]
 tags:
   [
@@ -15,10 +14,15 @@ tags:
 image: ./wm_kahoot.png
 ---
 
+# Windmill for Internal Admin Panels - Kahoot! Case Study
 
-This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvendby), Software Engineer at [Kahoot!](https://kahoot.com/).
+> "Currently, we use 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs."
 
 <!--truncate-->
+
+<br/>
+
+This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvendby), Software Engineer at [Kahoot!](https://kahoot.com/).
 
 <br/>
 
@@ -53,10 +57,12 @@ While I manage the back-office for now, our goal is to engage less-technical tea
 
 Bellow you will find an internal app that is used by our CS team to translate fetch articles with [OpenAI](/docs/integrations/openai) and insert them into Zendesk with the new language.
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	id="main-video"
-  alt="App for translating Zendesk Helpdesk"
-	src="/videos/sindre_app.mp4"
-/>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/DvCgpeHYd4Q"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen="true"
+></iframe>

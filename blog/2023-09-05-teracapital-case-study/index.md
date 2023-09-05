@@ -3,7 +3,7 @@ authors: [zegoverno]
 tags:
   [
     'Case study',
-		'Testimonial',
+	'Testimonial',
     'Admin Panel',
     'App Editor',
     'Enterprise Plan',
@@ -12,9 +12,11 @@ image: ./t4_use_case.png
 slug: teracapital-case-study
 ---
 
-# Windmill for customer-facing Admin Panels - Tera Capital Case Study
+# Windmill for Customer-Facing Apps - Tera Capital Case Study
 
 > "As clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured and things do not break."
+
+<!--truncate-->
 
 <br/>
 
