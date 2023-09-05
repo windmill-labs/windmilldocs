@@ -15,7 +15,6 @@ import LandingHeader from '../landing/LandingHeader';
 const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
 
-import LogoClouds from '../landing/LogoClouds';
 import TestimonialsSection from '../landing/TestimonialsSection';
 
 export function useDeveloperMode() {
@@ -42,7 +41,6 @@ function HomepageHeader() {
 		>
 			<LandingHeader />
 			<Hero />
-			<LogoClouds />
 
 			<HeroExample />
 
@@ -60,11 +58,9 @@ function HomepageHeader() {
 				key="script-card"
 				kind="script"
 			/>
-
-			<TestimonialsSection />
-
 			<IntergrationList />
 			<EntrepriseFeatures />
+			<TestimonialsSection />
 			<LandingSection bgClass="py-0">
 				<CallToAction />
 			</LandingSection>
