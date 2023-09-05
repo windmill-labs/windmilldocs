@@ -213,7 +213,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Multiple Triggers',
+		label: 'Schedules & Triggers',
 		icon: Play,
 		id: 'schedules-webhooks-ui-cli',
 		data: [
