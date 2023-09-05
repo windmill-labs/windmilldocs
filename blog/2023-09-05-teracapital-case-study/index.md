@@ -39,7 +39,7 @@ To begin with, we migrated all our data to [Supabase](https://supabase.com/), wh
 Next, we started creating dashboards on this data using <a href="https://retool.com/" rel="nofollow">Retool</a>. However, after a thorough analysis, we decided to switch from Retool to Windmill because:
 - Retool is JavaScript-only and does not support Python.
 - Retool is limiting in terms of UI capabilities.
-- Windmill was much more responsive and quickly installed the components we needed, including critical tools like OpenBB.
+- Windmill was much more responsive and quickly installed the components we needed, including critical tools like [OpenBB](https://openbb.co/).
 
 Within two weeks, everything was set to go with Windmill. Although self-hosting was possible, we opted for the [Cloud Enterprise Edition](/pricing) to avoid maintenance concerns, have our issues addressed within hours, and have our feature requests prioritized.
 
@@ -53,7 +53,7 @@ In general, as clients, we are very satisfied with Windmill. We align with Windm
 
 The enterprise services are very helpful. We have a dedicated Discord channel with the Windmill team, who responds very quickly, solves problems within 2 hours, and prioritizes our feature requests. This allows us to focus on our core job and assist our clients.
 
-## Focus on a client-facing app
+## Focus on a client-facing admin panel
 
 Among our apps in Windmill, one of the most critical ones is a custom interface for our clients. They simply need to log in any time to https://www.teracapital.com.br/app using Supabase's authentication system to access a personalized, real-time and interactive dashboard of their investments.
 
