@@ -64,7 +64,7 @@ Before Windmill, our clients used to receive a monthly PDF with data that was di
 	title="YouTube video player"
 	frameborder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowfullscreen
+	allowfullscreen="true"
 ></iframe>
 
 <br/>
