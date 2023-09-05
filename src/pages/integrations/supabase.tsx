@@ -29,7 +29,7 @@ export default function Supabase() {
 			{
 				title: 'View your data',
 				link: 'https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase',
-				description: "View your Supabase data in Retool's table component.",
+				description: "View your Supabase data in Windmill's table component.",
 				icon: Book
 			},
 			{
@@ -42,31 +42,31 @@ export default function Supabase() {
 			{
 				title: 'View your data',
 				link: 'https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase',
-				description: "View your Supabase data in Retool's table component.",
+				description: "View your Supabase data in Windmill's table component.",
 				icon: Book
 			},
 			{
 				title: 'View your data',
 				link: 'https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase',
-				description: "View your Supabase data in Retool's table component.",
+				description: "View your Supabase data in Windmill's table component.",
 				icon: Book
 			},
 			{
 				title: 'View your data',
 				link: 'https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase',
-				description: "View your Supabase data in Retool's table component.",
+				description: "View your Supabase data in Windmill's table component.",
 				icon: Book
 			},
 			{
 				title: 'View your data',
 				link: 'https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase',
-				description: "View your Supabase data in Retool's table component.",
+				description: "View your Supabase data in Windmill's table component.",
 				icon: Book
 			},
 			{
 				title: 'View your data',
 				link: 'https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase',
-				description: "View your Supabase data in Retool's table component.",
+				description: "View your Supabase data in Windmill's table component.",
 				icon: Book
 			}
 		]
