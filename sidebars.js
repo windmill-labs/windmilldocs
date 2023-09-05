@@ -26,17 +26,43 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Scripts Quickstart',
+					label: 'Scripts Quickstarts',
 					link: {
 						type: 'doc',
 						id: 'getting_started/scripts_quickstart/index'
 					},
+					collapsed: false,
 					items: [
-						'getting_started/scripts_quickstart/typescript_quickstart/index',
-						'getting_started/scripts_quickstart/python_quickstart/index',
-						'getting_started/scripts_quickstart/go_quickstart/index',
-						'getting_started/scripts_quickstart/bash_quickstart/index',
-						'getting_started/scripts_quickstart/sql_quickstart/index'
+						{
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/typescript_quickstart/index',
+							label: 'TypeScript'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/python_quickstart/index',
+							label: 'Python'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/bash_quickstart/index',
+							label: 'Bash / PowerShell'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/go_quickstart/index',
+							label: 'Go'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
+							label: 'PgSQL / MySQL / BigQuery / Snowflake'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
+							label: 'Rest / GraphQL'
+						}
 					]
 				},
 				'getting_started/flows_quickstart/index',
@@ -49,21 +75,6 @@ const sidebars = {
 			type: 'category',
 			label: 'Editors Manual',
 			items: [
-				{
-					type: 'category',
-					label: 'Code Editor',
-					link: {
-						type: 'doc',
-						id: 'code_editor/index'
-					},
-					items: [
-						'code_editor/parameter_inference',
-						'code_editor/add_variables_resources',
-						'code_editor/assistants',
-						'code_editor/ai_generation',
-					],
-					collapsed: true
-				},
 				{
 					type: 'category',
 					label: 'Script Editor',
@@ -81,7 +92,7 @@ const sidebars = {
 						'script_editor/custom_environment_variables',
 						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
-						'script_editor/vs_code_scripts',
+						'script_editor/vs_code_scripts'
 					],
 					collapsed: true
 				},
@@ -94,6 +105,7 @@ const sidebars = {
 					},
 					items: [
 						'flows/architecture',
+						'openflow/index',
 						'flows/editor_components',
 						'flows/error_handling',
 						'flows/flow_branches',
@@ -106,7 +118,8 @@ const sidebars = {
 						'flows/step_mocking',
 						'flows/early_stop',
 						'flows/flow_approval',
-						'flows/sleep'
+						'flows/sleep',
+						'flows/custom_timeout'
 					],
 					collapsed: true
 				},
@@ -142,6 +155,21 @@ const sidebars = {
 					],
 
 					collapsed: true
+				},
+				{
+					type: 'category',
+					label: 'Code Editor',
+					link: {
+						type: 'doc',
+						id: 'code_editor/index'
+					},
+					items: [
+						'code_editor/parameter_inference',
+						'code_editor/add_variables_resources',
+						'code_editor/assistants',
+						'code_editor/ai_generation'
+					],
+					collapsed: true
 				}
 			]
 		},
@@ -152,25 +180,26 @@ const sidebars = {
 			items: [
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
+				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
 				'core_concepts/collaboration/index',
-				'core_concepts/scheduling/index',
 				'core_concepts/monitor_past_and_future_runs/index',
+				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
-				'core_concepts/jobs/index',
 				'core_concepts/concurrency_limits/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
+				'core_concepts/jobs/index',
 				'core_concepts/persistent_storage/index',
-				'core_concepts/ai_generation/index',
+				'core_concepts/ai_generation/index'
 			],
 			collapsed: false
 		},
@@ -219,7 +248,8 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_deno_client',
+				'advanced/clients/ts_client',
+
 				'cli_local_dev/vscode-extension/index'
 			]
 		},
@@ -243,50 +273,233 @@ const sidebars = {
 				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
-					label: 'List of integrations',
+					label: 'List of Integrations',
 					items: [
-						'integrations/airtable',
-						'integrations/appwrite',
-						'integrations/aws',
-						'integrations/aws-s3',
-						'integrations/clickhouse',
-						'integrations/cloudlare-r2',
-						'integrations/datadog',
-						'integrations/discord',
-						'integrations/faunadb',
-						'integrations/funkwhale',
-						'integrations/gcal',
-						'integrations/gcp',
-						'integrations/gdrive',
-						'integrations/github',
-						'integrations/gitlab',
-						'integrations/gmail',
-						'integrations/gsheets',
-						'integrations/hubspot',
-						'integrations/linkding',
-						'integrations/linkedin',
-						'integrations/mailchimp',
-						'integrations/mailchimp_mandrill',
-						'integrations/mastodon',
-						'integrations/matrix',
-						'integrations/mongodb',
-						'integrations/mysql',
-						'integrations/neon',
-						'integrations/openai',
-						'integrations/postgresql',
-						'integrations/redis',
-						'integrations/rss',
-						'integrations/s3',
-						'integrations/sendgrid',
-						'integrations/slack',
-						'integrations/smtp',
-						'integrations/square',
-						'integrations/stripe',
-						'integrations/supabase',
-						'integrations/surrealdb',
-						'integrations/telegram',
-						'integrations/toggl',
-						'integrations/upstash'
+						{
+							type: 'doc',
+							id: 'integrations/airtable',
+							label: 'Airtable'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/appwrite',
+							label: 'Appwrite'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/aws',
+							label: 'AWS'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/aws-s3',
+							label: 'AWS S3'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/s3',
+							label: 'S3 APIs'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/bigquery',
+							label: 'BigQuery'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/clickhouse',
+							label: 'ClickHouse'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/cloudflare-r2',
+							label: 'Cloudflare R2'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/datadog',
+							label: 'Datadog'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/discord',
+							label: 'Discord'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/faunadb',
+							label: 'FaunaDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/funkwhale',
+							label: 'Funkwhale'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gcal',
+							label: 'Google Calendar'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gcp',
+							label: 'Google Cloud Platform'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gdrive',
+							label: 'Google Drive'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gmail',
+							label: 'Gmail'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gsheets',
+							label: 'Google Sheets'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/github',
+							label: 'GitHub'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gitlab',
+							label: 'GitLab'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/hubspot',
+							label: 'HubSpot'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/linkding',
+							label: 'Linkding'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/linkedin',
+							label: 'LinkedIn'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mailchimp',
+							label: 'Mailchimp'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mailchimp_mandrill',
+							label: 'Mailchimp Mandrill'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mastodon',
+							label: 'Mastodon'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/matrix',
+							label: 'Matrix'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mongodb',
+							label: 'MongoDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mysql',
+							label: 'MySQL'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/neon',
+							label: 'Neon.tech'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/nextcloud',
+							label: 'Nextcloud'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/openai',
+							label: 'OpenAI'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/postgresql',
+							label: 'PostgreSQL'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/redis',
+							label: 'Redis'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/rss',
+							label: 'RSS'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/sendgrid',
+							label: 'SendGrid'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/slack',
+							label: 'Slack'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/smtp',
+							label: 'SMTP'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/snowflake',
+							label: 'Snowflake'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/square',
+							label: 'Square'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/stripe',
+							label: 'Stripe'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/supabase',
+							label: 'Supabase'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/surrealdb',
+							label: 'SurrealDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/telegram',
+							label: 'Telegram'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/toggl',
+							label: 'Toggl'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/upstash',
+							label: 'Upstash'
+						}
 					],
 					collapsed: true
 				}
@@ -296,24 +509,23 @@ const sidebars = {
 			type: 'category',
 			label: 'Windmill Compared to',
 			items: [
-				'compared_to/index',
+				'compared_to/peers',
 				{
 					type: 'doc',
 					id: 'compared_to/airplane',
 					label: 'Airplane'
-				  },
-				{
-				type: 'doc',
-				id: 'compared_to/retool',
-				label: 'Retool'
 				},
+				{
+					type: 'doc',
+					id: 'compared_to/retool',
+					label: 'Retool'
+				}
 			]
 		},
 		{
 			type: 'category',
 			label: 'Misceallaneous',
 			items: [
-				'openflow/index',
 				'misc/architecture/index',
 				'misc/benchmarks/index',
 				'misc/changelog/index',
@@ -329,7 +541,7 @@ const sidebars = {
 					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
-				'misc/share_on_hub/index',
+				'misc/share_on_hub/index'
 			]
 		}
 	]
