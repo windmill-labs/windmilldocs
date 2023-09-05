@@ -18,7 +18,7 @@ slug: teracapital-case-study
 
 <br/>
 
-This is a testimonial written by [José Governo](https://www.linkedin.com/in/jose-governo/), Responsible for Quantitative Strategies & Data Engineering at [Tera Capital](https://www.teracapital.com.br/).
+This is a testimonial written by [José Governo](https://www.linkedin.com/in/jose-governo/), Responsible for Quantitative Strategies and Data Engineering at [Tera Capital](https://www.teracapital.com.br/).
 
 ![Tera Capital Case Study](./t4_use_case.png "Tera Capital Case Study")
 
