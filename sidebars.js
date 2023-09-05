@@ -178,6 +178,11 @@ const sidebars = {
 			label: 'Core Concepts',
 
 			items: [
+				{
+					type: 'doc',
+					id: 'core_concepts/index',
+					label: 'List of Core Concepts'
+				},
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
@@ -194,6 +199,7 @@ const sidebars = {
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/concurrency_limits/index',
+				'core_concepts/caching/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',

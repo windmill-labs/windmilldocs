@@ -138,9 +138,7 @@ The container component has no configuration.
 
 #### Outputs
 
-| Name             |  Type  | Description                     |
-| ---------------- | :----: | ------------------------------- |
-| selectedTabIndex | number | The number of the selected tab. |
+The container component has no output.
 
 ### List
 
@@ -191,13 +189,16 @@ List components also support having [inputs](#inputs) set inside them. Retrieve 
 
 #### List configuration
 
-| Name         |  Type  | Connectable | Templatable |    Default     | Description                                  |
-| ------------ | :----: | :---------: | :---------: | :------------: | -------------------------------------------- |
-| items        | array  |    true     |    false    |    3 items     | The list items.                              |
-| item keys    | string |    true     |    false    | `"foo": 1` ... | The keys of each card.                       |
-| Width        | string |    false    |    false    |     false      | Wether items should be "Card" of "Full Row". |
-| Min Width Px | number |    true     |    true     |      300       | The minimum width in pixels.                 |
-| Height Px    | number |    true     |    true     |      280       | The height in pixels.                        |
+| Name         |  Type  | Connectable | Templatable |        Default        | Description                                                                                                                                                                                                                                                                                                       |
+| ------------ | :----: | :---------: | :---------: | :-------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| items        | array  |    true     |    false    |        3 items        | The list items.                                                                                                                                                                                                                                                                                                   |
+| item keys    | string |    true     |    false    |    `"foo": 1` ...     | The keys of each card.                                                                                                                                                                                                                                                                                            |
+| Width        | string |    false    |    false    |        "Card"         | Whether items should be "Card" of "Full Row".                                                                                                                                                                                                                                                                     |
+| Min Width Px | number |    true     |    true     |          300          | The minimum width in pixels. Only applies when "Width" is set to Card                                                                                                                                                                                                                                             |
+| Height Px    | number |    true     |    true     |          280          | The height in pixels.                                                                                                                                                                                                                                                                                             |
+| Pagination   | string |    false    |    false    | "Managed by runnable" | Pagination can be managed using two methods: By the component: Based on a specified page size, the component divides the array into several pages. By the runnable: The component shows all items, leaving the task of pagination to the runnable. The current page number is available in the component outputs. |
+| Page count   | number |    false    |    false    |           1           | The number of pages. Only applies when pagination is managed by the runnable.                                                                                                                                                                                                                                     |
+| Page size    | number |    false    |    false    |           3           | The number of items per page. Only applies when pagination is managed by component.                                                                                                                                                                                                                               |
 
 #### Outputs
 
@@ -206,6 +207,7 @@ List components also support having [inputs](#inputs) set inside them. Retrieve 
 | result  |   any   | The result of the list component.       |
 | loading | boolean | The loading state of the component.     |
 | inputs  |   any   | The [inputs](#inputs) of the component. |
+| page    | number  | The current page number.                |
 
 ### Divider X
 
@@ -352,11 +354,12 @@ A validation function can be set and won't allow users to go to the next step wh
 
 #### Outputs
 
-| Name             |  Type   | Description                      |
-| ---------------- | :-----: | -------------------------------- |
-| currentStepIndex | number  | Number of the step / tab.        |
-| result           |   any   | The result of the runnable.      |
-| loading          | boolean | The loading state of the button. |
+| Name             |            Type            | Description                            |
+| ---------------- | :------------------------: | -------------------------------------- | --- |
+| currentStepIndex |           number           | Number of the step / tab.              |
+| result           |            any             | The result of the runnable.            |
+| loading          |          boolean           | The loading state of the button.       |
+| lastAction       | string: "previous", "next" | The last action performed by the user. | F   |
 
 ## Tabs
 

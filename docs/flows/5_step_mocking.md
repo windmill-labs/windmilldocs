@@ -20,6 +20,6 @@ On a step, go to the `Advanced` menu and pick the "Mock" tab.
 
 :::tip Cache for steps
 
-The [cache for steps feature](./4_cache.md) allows you to cache the results of a step for a specified number of seconds, thereby reducing the need for redundant computations when re-running the same step with identical input.
+The [cache for steps feature](./4_cache.mdx) allows you to cache the results of a step for a specified number of seconds, thereby reducing the need for redundant computations when re-running the same step with identical input.
 
 :::
