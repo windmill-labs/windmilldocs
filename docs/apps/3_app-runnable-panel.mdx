@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Runnable Guide
 
 Windmill Apps can be powered by code, with scripts linked to components, background runnables that are not linked to a component but run in the background, frontend scripts that can be used to manipulate the client app state, and evals.
@@ -292,6 +294,35 @@ Other component can trigger a component to recompute. For example, a button can 
 ## Recompute others
 
 Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
+
+## Cache app inline scripts
+
+Caching an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    src="/videos/caching_app.mp4"
+/>
+
+<br/>
+
+You can enable caching for an app inline script directly its editor settings. Here's how you can do it:
+
+1. **Settings**: From the Code Editor, go to the top bar and pick the `Cache` tab.
+   
+2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
+
+In the above example, the result of step the script will be cached for 5 minutes. If `Inline Script 0` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Caching in Windmill"
+		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
+		href="/docs/core_concepts/caching"
+	/>
+</div>
 
 ## Policy
 
