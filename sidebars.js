@@ -269,7 +269,8 @@ const sidebars = {
 				'core_concepts/audit_logs/index',
 				'core_concepts/staging_prod/index',
 				'core_concepts/multiplayer/index',
-				'misc/saml_and_scim/index'
+				'misc/saml_and_scim/index',
+				'misc/css_editor/index'
 			]
 		},
 		{
