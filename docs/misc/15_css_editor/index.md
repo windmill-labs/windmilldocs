@@ -1,8 +1,8 @@
 # CSS Editor
 
-## Introduction
+The Global CSS Editor is designed to give styling and theming across your entire app. This functionality offers a centralized location for defining, managing, and applying CSS rules. It's useful for ensuring consistent styling and for creating reusable themes.
 
-The Global CSS Editor is an Enterprise Edition feature designed to streamline the process of styling and theming across your entire app. This functionality offers a centralized location for defining, managing, and applying CSS rules. It's particularly useful for ensuring consistent styling and for creating reusable themes.
+The Global CSS Editor is a feature exclusive to [Enterprise Edition](../7_plans_details/index.mdx). However, users on the Community Edition can still access and experiment with this tool directly in the editor for evaluation purposes, although these changes will not be reflected in the app preview.
 
 <video
   className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -32,7 +32,6 @@ In addition to the core features of the Global CSS Editor, the Helper Block is d
 
 <video
   className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
   controls
   src="/videos/css-helper-box.mp4"
 />
@@ -41,17 +40,13 @@ In addition to the core features of the Global CSS Editor, the Helper Block is d
 
 1. Search for Components: Use the search bar to quickly find the component you are interested in styling.
 2. View Class Identifiers and Variables: Once you select a component, a list of its specific classes and modifiable CSS variables will be displayed.
-3. Insert to Code: Next to each class and variable, there is an "Insert" button. Clicking this will automatically insert the relevant item into your code editor, streamlining the styling process.
+3. Insert to Code: Next to each class and variable, there is an "Insert" button. Clicking this will automatically insert the relevant item into the code editor.
 
-## Enterprise Edition
+![Use helper](./use_helper.png "Use helper")
 
-The Global CSS Editor is a powerful feature exclusive to our Enterprise Edition. However, users on the Community Edition can still access and experiment with this tool directly in the editor for evaluation purposes. It's important to note that while you can create and manage styles in the Community Edition, these styles will not be reflected in the app preview.
-
-## Migrating Component-Level Styles to Global CSS (Enterprise Edition Only)
+## Migrating Component-Level Styles to Global CSS
 
 In the Enterprise Edition of the Global CSS Editor, you can migrate component-level styles to the global level, streamlining the process of achieving consistent design across your application. This feature allows for two types of component-level styles to be migrated:
-
-## Migration Process
 
 1. Navigate to the component whose styles you wish to migrate. Select the option to 'Move to CSS editor', which will open a modal window.
 
@@ -63,7 +58,6 @@ In the Enterprise Edition of the Global CSS Editor, you can migrate component-le
 
 <video
   className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
   controls
   src="/videos/css-migration.mp4"
 />

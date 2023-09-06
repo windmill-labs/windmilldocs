@@ -105,7 +105,7 @@ const pricing = {
 	],
 	cloud: [
 		{
-			name: 'Free',
+			name: 'Community',
 			id: 'tier-free',
 			href: '#',
 			price: {},
