@@ -317,3 +317,19 @@ th {
 article a {
 	@apply text-blue-500 dark:!text-blue-400;
 }
+
+div.pt-8 a:hover .twitter-name {
+    color: #1DA1F2;
+}
+
+div.pt-8 a:hover .hn-name {
+    color: #ff4000;
+}
+
+div.pt-8 a:hover .discord-name {
+    color: #7289da;
+}
+
+div.pt-8 a:hover .wm-name {
+    color: #2196F3;
+}
