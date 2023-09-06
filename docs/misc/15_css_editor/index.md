@@ -13,7 +13,7 @@ The Global CSS Editor is a feature exclusive to [Enterprise Edition](../7_plans_
 
 ## Class Identifiers
 
-For a more granular control, specific classes have been added to each component. These class identifiers make it easier to target and globally style individual components across your app. Here is a list of some of the specific classes available:
+For a more granular control, specific classes have been added to each component. These class identifiers make it easier to target and globally style individual components across your app. Here are examples of classes, and are listed in the [Helper Block](#class-identifiers-helpers) as well:
 
 - `wm-container`
 - `wm-list`
@@ -42,7 +42,7 @@ In addition to the core features of the Global CSS Editor, the Helper Block is d
 2. View Class Identifiers and Variables: Once you select a component, a list of its specific classes and modifiable CSS variables will be displayed.
 3. Insert to Code: Next to each class and variable, there is an "Insert" button. Clicking this will automatically insert the relevant item into the code editor.
 
-![Use helper](./use_helper.png "Use helper")
+![Use helper](./use_helper.png 'Use helper')
 
 ## Migrating Component-Level Styles to Global CSS
 
