@@ -15,7 +15,7 @@ const testimonials = [
 			</span>
 		),
 		author: {
-			handle: 'X',
+			handle: 'x',
 			name: '@fr3fou on X',
 			date: 'June 19th 2023',
 			backlink: 'https://x.com/fr3fou/status/1670866672448569361'
@@ -53,7 +53,7 @@ const testimonials = [
 			</span>
 		),
 		author: {
-			handle: 'X',
+			handle: 'x',
 			backlink: 'https://x.com/muskirac/status/1689325443420131328',
 			name: '@muskirac on X',
 			date: 'August 9th 2023'
@@ -187,9 +187,12 @@ export default function Example() {
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
-					<div className="columns-1 sm:columns-2 md:columns-3 gap-4">
+					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
 						{testimonials.map((testimonial) => (
-							<div key={testimonial.author.handle} className="sm:inline-block sm:w-full mb-4">
+							<div
+								key={testimonial.author.handle}
+								className="sm:inline-block sm:w-full mb-4 testimonials"
+							>
 								<a
 									href={testimonial.author.backlink}
 									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-8 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
