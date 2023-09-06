@@ -43,7 +43,7 @@ export default function Footer() {
 				<div className="flex flex-row-reverse flex-wrap justify-between gap-8 lg:gap-20">
 					<div></div>
 
-					<div className="mx-auto grid grid-cols-3 gap-20">
+					<div className="mx-auto grid grid-cols-4 gap-20">
 						<div className="">
 							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
 								Support
