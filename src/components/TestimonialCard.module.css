@@ -1,0 +1,24 @@
+.testimonialCard {
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-size: 16px;
+  color: #333;
+  transition: background-color 0.3s ease;
+}
+
+.testimonialCard:hover {
+  background-color: #eee;
+}
+
+.testimonialCard:hover .author {
+  color: #007bff;
+}
+
+.author {
+  color: #333;
+  transition: color 0.3s ease;
+}
