@@ -92,7 +92,7 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 
 
 h1 {
-	@apply !text-3xl !font-bold dark:text-white;
+	@apply !text-3xl !font-bold text-gray-900 dark:text-white;
 }
 
 .markdown h1 {
@@ -100,7 +100,7 @@ h1 {
 }
 
 h2 {
-	@apply text-2xl font-bold leading-4 tracking-tight dark:text-white;	
+	@apply text-2xl font-bold leading-4 text-gray-900 tracking-tight dark:text-white;	
 }
 
 h3 {

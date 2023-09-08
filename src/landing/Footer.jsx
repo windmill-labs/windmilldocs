@@ -30,6 +30,11 @@ const navigation = {
 				</svg>
 			)
 		}
+	],
+	solutions: [
+		{ name: 'Supabase', href: '/solutions/supabase' },
+		{ name: 'Hubspot', href: '/solutions/hubspot' },
+		{ name: 'Airtable', href: '/solutions/airtable' },
 	]
 };
 
@@ -50,6 +55,23 @@ export default function Footer() {
 							</h3>
 							<ul role="list" className="mt-6 space-y-4">
 								{navigation.support.map((item) => (
+									<li key={item.name}>
+										<a
+											href={item.href}
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-200"
+										>
+											{item.name}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+						<div className="">
+							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+								Solutions
+							</h3>
+							<ul role="list" className="mt-6 space-y-4">
+								{navigation.solutions.map((item) => (
 									<li key={item.name}>
 										<a
 											href={item.href}
