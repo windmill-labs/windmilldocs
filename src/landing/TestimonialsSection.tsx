@@ -183,7 +183,7 @@ export default function Example() {
 					</h1>
 					<p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl"></p>
 					<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
-						We are proud to be recommended by our users.
+						Entreprise software that developers love
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
