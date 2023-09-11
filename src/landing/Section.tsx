@@ -51,7 +51,7 @@ export default function Section({
 					<div className="flex justify-between items-center w-full">
 						<h1
 							className={classNames(
-								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br ',
+								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br leading-8',
 								colors.gradient
 							)}
 						>
