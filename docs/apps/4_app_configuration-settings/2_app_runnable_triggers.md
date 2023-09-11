@@ -1,5 +1,7 @@
 # Runnable Triggers
 
+Runnables can be triggered by components from Windmill apps.
+
 The settings panel on the right is composed of two sections:
 
 - Runnable configuration
