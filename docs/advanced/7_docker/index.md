@@ -19,9 +19,9 @@ In the charts values of our [helm charts](https://github.com/windmill-labs/windm
 
 ### Remote Docker Daemon
 
-If you use k8s with containerd in your env, you can create a Docker daemon in the pod. Using the official image `docker:stable-dind` is easy to resolve.
+One possibility to use the docker daemon wiht k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
 
-Just a template, you should make it adapt to your env.
+Here an example of a dind template to be adapted:
 
 ```yaml
 apiVersion: v1
