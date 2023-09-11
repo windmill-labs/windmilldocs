@@ -17,6 +17,29 @@ On the docker-compose, it is enough to uncomment the volume mount of the windmil
 
 In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`
 
+### Remote Docker Daemon
+
+If you use k8s with containerd in your env, you can create a Docker daemon in the pod. Using the official image `docker:stable-dind` is easy to resolve.
+
+Just a template, you should make it adapt to your env.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dind
+spec:
+  containers:
+  - name: dind
+    image: 'docker:stable-dind'
+    command:
+    - dockerd
+    - --host=tcp://0.0.0.0:8000
+    securityContext:
+      privileged: true
+```
+
+
 ## Use
 
 The default code is as follows:
@@ -56,3 +79,34 @@ As a flow step:
 ![flow step 1](./as_flow.png.webp)
 
 ![flow step 2](./as_flow2.png.webp)
+
+## Use with Remote Docker Daemon
+
+```bash
+#!/bin/bash
+
+set -ex
+
+# The Remote Docker Daemon Address -> 100.64.2.97:8000
+# In the example, 100.64.2.97 is my pod address.
+
+DOCKER="docker -H 100.64.2.97:8000"
+$DOCKER run --rm alpine /bin/echo "Hello $msg"
+```
+
+output
+
+```log
++ DOCKER='docker -H 100.64.2.97:8000'
++ docker -H 100.64.2.97:8000 run --rm alpine /bin/echo 'Hello '
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+7264a8db6415: Pulling fs layer
+7264a8db6415: Verifying Checksum
+7264a8db6415: Download complete
+7264a8db6415: Pull complete
+Digest: sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
+Status: Downloaded newer image for alpine:latest
+Hello 
++ exit 0
+```
