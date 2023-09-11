@@ -1,6 +1,6 @@
 # SAML & SCIM
 
-Step-by-step guide to integrating Okta for SAML authentication and SCIM provisioning to ensure secure user management.
+This guide provides guidance on configuring Okta for both SAML (Security Assertion Markup Language) and SCIM (System for Cross-domain Identity Management).
 
 ## SAML
 

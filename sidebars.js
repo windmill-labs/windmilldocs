@@ -267,10 +267,11 @@ const sidebars = {
 				'misc/plans_details/index',
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
+				'core_concepts/dedicated_workers/index',
 				'core_concepts/staging_prod/index',
+				'misc/css_editor/index',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
-				'core_concepts/dedicated_workers/index'
 			]
 		},
 		{
