@@ -270,6 +270,7 @@ const sidebars = {
 				'core_concepts/staging_prod/index',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
+				'misc/css_editor/index',
 				'core_concepts/dedicated_workers/index'
 			]
 		},
