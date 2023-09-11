@@ -1,5 +1,7 @@
 # SAML & SCIM
 
+Step-by-step guide to integrating Okta for SAML authentication and SCIM provisioning to ensure secure user management.
+
 ## SAML
 
 ### Okta

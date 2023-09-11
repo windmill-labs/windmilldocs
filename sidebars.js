@@ -187,6 +187,7 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/ai_generation/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
@@ -205,7 +206,6 @@ const sidebars = {
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/persistent_storage/index',
-				'core_concepts/ai_generation/index'
 			],
 			collapsed: false
 		},
