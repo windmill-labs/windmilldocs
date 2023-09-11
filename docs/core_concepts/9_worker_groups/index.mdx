@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Workers and Worker Groups
 
 Workers are autonomous processes that run one script at a time using the full
@@ -87,3 +89,18 @@ CUSTOM_TAGS=normal-$workspace
 the workspaces, `dev`, `staging`, `prod` and the worker groups: `normal-dev`, `normal-staging`, `normal-prod`. The same script wih the tag `normal-$workspace` will run on the corresponding worker group depending on the workspace it is deployed to. This enable to share the same control plane but use workers with different network restrictions for tighter security.
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
+
+## Dedicated Workers / Native Performance
+
+Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
+They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
+
+Dedicated Workers / Native Performance is an [Enterprise & Team Edition](../../misc/7_plans_details/index.mdx) feature.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+    	title="Dedicated Workers / Native Performance"
+    	description="Dedicated Workers are workers that are dedicated to a particular script."
+    	href="/docs/core_concepts/dedicated_workers"
+    />
+</div>

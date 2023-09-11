@@ -187,6 +187,7 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/ai_generation/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
@@ -205,7 +206,6 @@ const sidebars = {
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/persistent_storage/index',
-				'core_concepts/ai_generation/index'
 			],
 			collapsed: false
 		},
@@ -267,11 +267,11 @@ const sidebars = {
 				'misc/plans_details/index',
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
+				'core_concepts/dedicated_workers/index',
 				'core_concepts/staging_prod/index',
+				'misc/css_editor/index',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
-				'misc/css_editor/index',
-				'core_concepts/dedicated_workers/index'
 			]
 		},
 		{

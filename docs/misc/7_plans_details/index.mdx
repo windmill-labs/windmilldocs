@@ -25,11 +25,12 @@ No commitment or credit card required.
 
 Designed for small teams automating processes.
 - Includes all Community edition features.
-- [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 7-day retention period.
-- [Global CSS](../15_css_editor/index.md).
-- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
-- [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Priority Support](../12_support_and_sla/index.mdx) 24/7 with a 48-hour response time and automation engineer assistance.
+- [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 7-day retention period.
+- [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
+- [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
+- [Global CSS on App Editor](../15_css_editor/index.md).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
 - Each seat: $10/month.
 - Each seat includes one user or two operators.
 - Up to 10k executions per month.
@@ -40,13 +41,14 @@ See [Upgrading to Team Edition](#upgrading-to-team-edition).
 
 ### Enterprise Plan
 
-Dedicated support and infrastructure for advanced capabilities.
+Dedicated support, guidance and infrastructure for advanced capabilities.
+- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
-- SAML support.
-- [Global CSS](../15_css_editor/index.md).
-- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
-- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time,
+- [Global CSS on App Editor](../15_css_editor/index.md).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- SAML support.
 - Opportunity to become a design partner for influencing the Windmill roadmap.
 - Each worker: $100/month.
 - Each seat: $40/month.
@@ -91,13 +93,16 @@ See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 ### Enterprise Edition
 
 Designed for companies requiring dedicated support and advanced infrastructure.
+- Commercial license.
+- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
-- [Global CSS](../15_css_editor/index.md).
-- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
-- Commercial license, [distributed dependency cache](../../advanced/6_imports/index.md), SAML support, [multiplayer on WebIDE](../../core_concepts/7_multiplayer/index.md), [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
+- [Global CSS on App Editor](../15_css_editor/index.md).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- SAML support.
 - Shared Global Dependency Cache plugin to allow multiple workers to share a centralized cache.
-- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time,
+- Opportunity to become a design partner for influencing the Windmill roadmap.
 - Each worker: $50/month.
 - Each seat: $20/month.
 
@@ -146,22 +151,25 @@ Team plans work at the workspace-level.
 
 ### Upgrading to Enterprise Edition
 
-**Cloud**
+#### Cloud
 
 - For upgrading your instance to the Enterprise Edition, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
 - Once you contact us, we will provide you with a secure payment link.
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
 - After completing the payment, your workspace and, if applicable, the cluster will be upgraded to the Enterprise Edition, offering dedicated support and advanced features.
 
-**Self-host**
+#### Self-host
 
-- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT).
-- To upgrade, with a one-month free trial, use the link, or reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
-- Upon subscribing, you will receive a license key that is valid for one year. To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing). At the end of the subscription period, you will receive another license key valid for one year. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
+- You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
+- Upon subscribing, we will get back to you with a license key that is valid for a month (duration of trial). You can also contact us immediately if preferred. At the end of the subscription period (or trial), you will receive another license key valid for a year.
+- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
+- Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+- (*By end of 2023*: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
 
-:::tip Using the License Key
-To utilize the license key, switch from the windmill image to the windmill-ee image in both the server and workers. Pass the license key as the `LICENSE_KEY` environment variable.
-:::
+#### Using the License Key (Self-Host)
+
+To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. Pass the license key as the `LICENSE_KEY` environment variable.
 
 ## Frequently Asked Questions (FAQ)
 
