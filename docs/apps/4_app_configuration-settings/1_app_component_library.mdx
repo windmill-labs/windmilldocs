@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Component Library
 
 The app components library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
@@ -123,7 +125,6 @@ Containers allow you to host other components in a box. Moving a container means
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/container.mp4"
     alt="container component"
@@ -134,7 +135,29 @@ To add a component to a container, you can either click on `Insert` while you se
 
 #### Container configuration
 
-The container component has no configuration.
+A container can be turned into a group of components by enabling "Container is a component group".
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    id="main-video"
+    src="/videos/group_of_components.mp4"
+/>
+
+<br/>
+
+More details on Group of Components:
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		title="Group of Components"
+		description="Components can be grouped within containers."
+		href="/docs/apps/app_configuration-settings/components_groups"
+		color="orange"
+	/>
+</div>
+
 
 #### Outputs
 
@@ -242,7 +265,6 @@ The drawer is container called by a button. Once you click on the button, a side
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/drawer.mp4"
     alt="drawer component"
@@ -270,7 +292,6 @@ Container split in x number of panes vertically.
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/vertical_split.mp4"
     alt="vertical split panes"
@@ -292,7 +313,6 @@ Container split in x number of panes horizontally.
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/horizontal_split.mp4"
     alt="horizontal split panes"
@@ -314,7 +334,6 @@ The modal is container called by a button. Once you click on the button, a modal
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     id="modal-layout"
     src="/videos/modal-layout.mp4"
@@ -339,7 +358,6 @@ The stepper component helps you lay out multi-step apps, with an optional valida
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     id="modal-layout"
     src="/videos/stepper.mp4"
@@ -375,7 +393,6 @@ Tabs have three display modes:
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/tabs.mp4"
     alt="tabs component"
@@ -397,7 +414,6 @@ Conditional tabs are tabs that are displayed only if a condition is met. The con
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     id="conditional-tabs-video"
     src="/videos/conditional-tabs.mp4"
@@ -1018,7 +1034,6 @@ The AgGrid table component allows you to display an agnostic grid table.
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/aggrid_table.mp4"
     alt="aggrid table"
@@ -1086,7 +1101,6 @@ You can directly edit the text by click the `Pen` icon on the app editor. You ca
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/text_editor.mp4"
 />
@@ -1401,10 +1415,9 @@ The ChartJs component allows you to display a ChartJs using the [Chart.js](https
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
-    loop
     controls
     src="/videos/chartjs.mp4"
-    alt="horizontal split panes"
+    alt="ChartJS"
 />
 <br/>
 

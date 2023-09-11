@@ -146,9 +146,11 @@ const sidebars = {
 								'apps/app_configuration-settings/app_component_library',
 								'apps/app_configuration-settings/app_runnable_triggers',
 								'apps/app_configuration-settings/app_component_configuration',
-								'apps/app_configuration-settings/app_styling'
+								'apps/app_configuration-settings/components_groups',
+								'apps/app_configuration-settings/component_template',
 							]
 						},
+						'apps/app_configuration-settings/app_styling',
 						'apps/app_debugging',
 						'apps/app_deployment',
 						'apps/app_e-commerce'

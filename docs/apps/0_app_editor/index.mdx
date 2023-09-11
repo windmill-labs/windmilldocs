@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # App Editor
 
-The app editor is where you build an app with components, create interactions with runnables, and configure the app settings.
+The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -33,17 +33,7 @@ The app editor is composed of 5 main sections:
 
 ## Toolbar
 
-In the topbar, you have several options to configure your app:
-
-- **Change App Summary**: Modify the summary of your app.
-- **Undo/Redo**: Perform undo or redo actions.
-- **Toggle Layout**: Switch between Mobile and Desktop layout.
-- **Toggle Width**: Switch between full and max width.
-- **Export as JSON**: Export your app as a JSON or [Hub](https://hub.windmill.dev/) compatible file.
-- **Debugging**: Open the debugging panel.
-- **Editor/Preview Mode**: Toggle between the Editor and Preview modes.
-- **Save as Draft**: Save your app as a [draft](../../core_concepts/0_draft_and_deploy/index.mdx#draft).
-- **Deploy**: [Deploy](../../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) your app.
+The topbar helps you in your app editing.
 
 ![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png.webp)
 
@@ -55,18 +45,6 @@ In the topbar, you have several options to configure your app:
 		title="Toolbar guide"
 		description="Discover all the features of the toolbar."
 		href="/docs/apps/toolbar"
-	/>
-	<DocCard
-		color="orange"
-		title="Debugging"
-		description="Learn how to debug your app."
-		href="/docs/apps/app_debugging"
-	/>
-	<DocCard
-		color="orange"
-		title="Deployment"
-		description="Save as draft or deploy your app."
-		href="/docs/apps/app_deployment"
 	/>
 </div>
 
@@ -108,7 +86,7 @@ On the left panel of the editor, you can see the list of outputs of the app. The
 - **Component Outputs**: These outputs correspond to the outputs of the individual components.
 - **Background Runnables**: These outputs represent the outputs of the background runnables.
 
-![App Outputs](../../assets/apps/0_app_editor/app-outputs.png.webp)
+![App Outputs](../../assets/apps/0_app_editor/app-outputs.png)
 
 You can perform the following actions with the outputs:
 
@@ -138,7 +116,7 @@ You can perform the following actions with the outputs:
 
 On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png.webp)
+![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png)
 
 #### Learn more
 
@@ -155,7 +133,9 @@ On the bottom panel of the editor, you can see the list of runnables of the app.
 
 Finally, on the right panel of the editor, you can insert a new component, configure a component or edit the component styles.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-components-settings.png.webp)
+![App Components Library](../../assets/apps/0_app_editor/app_components_add.png "App Components Library")
+
+![App Components Configuration](../../assets/apps/0_app_editor/app_components_configuration.png "App Components Configuration")
 
 #### Learn more
 
@@ -173,10 +153,10 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 		href="/docs/apps/app_configuration-settings/app_runnable_triggers"
 	/>
 	<DocCard
+		title="Group of Components"
+		description="Components can be grouped within containers."
+		href="/docs/apps/app_configuration-settings/components_groups"
 		color="orange"
-		title="Component Configuration"
-		description="Learn how to configure a component."
-		href="/docs/apps/app_configuration-settings/app_component_configuration"
 	/>
 	<DocCard
 		color="orange"
