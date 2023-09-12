@@ -61,13 +61,13 @@ On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/
 
 ### Shared Directory
 
-Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.md#shared-directory).
+Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.mdx#shared-directory).
 
 By default, flows on Windmill are based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
 For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.md).
+Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
 
 ![Flows shared directory](./flows_shared_directory.png.webp)
 
@@ -102,7 +102,7 @@ Flows on Windmill are generic and reusable, they therefore expose inputs. Input 
 Inputs are either:
 
 - [Static](../../flows/3_editor_components.mdx#static-inputs): you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
-- [Dynamically linked to others](../../flows/16_architecture.md): with [JSON objects](../../core_concepts/13_json_schema_and_parsing/index.md) as result that allow to refer to the output of any step.
+- [Dynamically linked to others](../../flows/16_architecture.mdx): with [JSON objects](../../core_concepts/13_json_schema_and_parsing/index.md) as result that allow to refer to the output of any step.
   You can refer to the result of any step:
   - using the id associated with the step
   - clicking on the plug logo that will let you pick flow inputs or previous steps' results (after testing flow or step)
@@ -124,7 +124,7 @@ On the left you'll find a graphical view of the flow. From there you can archite
 
 ![Flow editor menu](./flow_editor_menu.png.webp)
 
-There are four kinds of scripts: [Action](../../flows/3_editor_components.mdx#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.md) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action is the default script type.
+There are four kinds of scripts: [Action](../../flows/3_editor_components.mdx#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.mdx) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action is the default script type.
 
 Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), you can also decide to **write them inline**.
 
@@ -184,7 +184,7 @@ At each step, Windmill allows you to [customize the number of retries](../../flo
 
 ### Suspend/Approval Step
 
-At each step you can add [Approval Scripts](../../flows/11_flow_approval.md) to manage security and control over your flows.
+At each step you can add [Approval Scripts](../../flows/11_flow_approval.mdx) to manage security and control over your flows.
 
 Request approvals can be sent by email, Slack, anything. Then you can **automatically resume workflows with secret webhooks** after the approval steps.
 
