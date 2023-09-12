@@ -190,6 +190,7 @@ const sidebars = {
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
 				'core_concepts/ai_generation/index',
+				'core_concepts/persistent_storage/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
@@ -207,7 +208,6 @@ const sidebars = {
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
-				'core_concepts/persistent_storage/index',
 			],
 			collapsed: false
 		},
@@ -551,7 +551,8 @@ const sidebars = {
 					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
-				'misc/share_on_hub/index'
+				'misc/share_on_hub/index',
+				'misc/white_labelling/index',
 			]
 		}
 	]
