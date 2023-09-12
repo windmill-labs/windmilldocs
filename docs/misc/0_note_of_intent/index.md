@@ -61,7 +61,7 @@ Windmill embeds:
   - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
     sleep for a pre-determined amount of time or waiting to be reactivated by an
     external webhook who may contain payloads
-  - [approval steps](../../flows/11_flow_approval.md) leveraging being suspended and reactivated at some secret
+  - [approval steps](../../flows/11_flow_approval.mdx) leveraging being suspended and reactivated at some secret
     urls known only by the approvers
 - a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.mdx)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
