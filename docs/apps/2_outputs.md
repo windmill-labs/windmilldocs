@@ -1,6 +1,8 @@
 # Outputs Guide
 
-On the left-hand side of the app editor, you can find the app outputs. They are three kind of outputs:
+The outputs represent the states & results of the app.
+
+All outputs can be found on the left-hand side of the app editor. There are three kind of outputs:
 
 - Context and state
 - Component outputs
