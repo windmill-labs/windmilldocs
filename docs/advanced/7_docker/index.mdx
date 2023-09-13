@@ -1,12 +1,24 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Run Docker Containers
 
-Windmill support running any docker container through its bash support. As a pre-requisite, the host docker daemon need to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
+Windmill supports running any [Docker](https://www.docker.com/) container through its [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) support. As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
+
+Once Docker is set up, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Docker Quickstart"
+		description="Learn to run a script using from Docker containers."
+		href="/docs/getting_started/scripts_quickstart/docker"
+	/>
+</div>
 
 ## Setup
 
 ### Docker compose
 
-On the docker-compose, it is enough to uncomment the volume mount of the windmill worker
+On the docker-compose, it is enough to uncomment the volume mount of the Windmill worker
 
 ```dockerfile
       # mount the docker socket to allow to run docker containers from within the workers
@@ -15,7 +27,7 @@ On the docker-compose, it is enough to uncomment the volume mount of the windmil
 
 ### Helm charts
 
-In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`
+In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`.
 
 ### Remote Docker Daemon
 
@@ -38,7 +50,6 @@ spec:
     securityContext:
       privileged: true
 ```
-
 
 ## Use
 
@@ -70,15 +81,15 @@ Like any bash script, it will return the last line of the stdout. So be sure to 
 
 As a script:
 
-![script 1](./as_script.png.webp)
+![script 1](./as_script.png)
 
-![script 2](./as_script2.png.webp)
+![script 2](./as_script2.png)
 
 As a flow step:
 
-![flow step 1](./as_flow.png.webp)
+![flow step 1](./as_flow.png)
 
-![flow step 2](./as_flow2.png.webp)
+![flow step 2](./as_flow2.png)
 
 ## Use with Remote Docker Daemon
 

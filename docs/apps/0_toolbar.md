@@ -1,21 +1,8 @@
 # Toolbar Guide
 
-The app toolbar is located at the top of the app editor. It enables you to adjust app settings, toggle between desktop/mobile preview, and debug runs.
+The app toolbar is located at the top of the app editor. It enables you to adjust app settings.
 
-![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png.webp)
-
-- [App Summary](#app-summary): The summary is the name that will be displayed for your app.
-- [Undo/Redo](#app-summary): Perform undo or redo actions.
-- [Desktop/Mobile Mode](#desktopmobile-mode): Switch between Mobile and Desktop layout.
-- [Width](#width): Switch between full and max width.
-- [Deployement history](#deployement-history): View the deployment history of the app.
-- [JSON](#json): Export your app as a JSON or [Hub](https://hub.windmill.dev/) compatible file.
-- [Hub compatible JSON](#hub-compatible-json): View the JSON representation of the app in a format that is compatible with the [Windmill Hub](https://hub.windmill.dev/).
-- [App Inputs Configuration](#app-inputs-configuration): the app inputs menu displays a list of all the inputs of each component.
-- [Debugging](#debug-runs): Open the debugging panel.
-- [Editor/Preview Mode](#preview-mode): Toggle between the Editor and Preview modes.
-- [Save as Draft](#save-as-draft): Save your app as a [draft](../core_concepts/0_draft_and_deploy/index.mdx#draft).
-- [Deploy](#deploy): [Deploy](../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) your app.
+![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png)
 
 ## App Summary
 
@@ -41,19 +28,19 @@ The `⋮` menu provides access to the following options:
 
 ### Deployement history
 
-In the menu, you can view the deployment history of the app. It displays the date and time of the deployment, the user who deployed the app, and the version of the app.
+In the menu, you can view the [deployment](./6_app_deployment.mdx) history of the app. It displays the date and time of the deployment, the user who deployed the app, and the version of the app.
 
 You can:
 
 - View the app at a specific version.
-- Restore a fork
-- Restore here
+- Restore a fork.
+- Restore here.
 
 ![Deployement history](../assets/apps/1_app_toolbar/deployement-history.png.webp)
 
 ### JSON
 
-View the JSON representation of the app.
+View the [JSON representation](../core_concepts/13_json_schema_and_parsing/index.md) of the app.
 
 ### Hub compatible JSON
 
@@ -67,7 +54,7 @@ The app inputs menu displays a list of all the inputs of each component. A toggl
 
 ## Debug Runs
 
-The app builder enables you to examine recent runs to identify potential bugs.
+The app builder enables you to examine recent runs to [identify potential bugs](./5_app_debugging.md).
 
 ![App Debug Runs](../assets/apps/1_app_toolbar/app-debug-runs.png.webp)
 
@@ -77,13 +64,12 @@ The app editor mode can be toggled between `Editor` and `Preview` modes. The pre
 
 ## Save as draft
 
-You can [save](../core_concepts/0_draft_and_deploy/index.mdx) the app. The first time you save the app, you'll be asked to select the owner of the app. You can choose either a user or a [folder](../core_concepts/8_groups_and_folders/index.mdx#folders).
+You can [save](./6_app_deployment.mdx) the app. The first time you save the app, you'll be asked to select the owner of the app. You can choose either a user or a [folder](../core_concepts/8_groups_and_folders/index.mdx#folders).
 
 ## Deploy
 
-You can [deploy](../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) the app as a standalone app via a URL. There are two ways to publish an app:
+Windmill apps are custom-made user interfaces meant to interact with scripts and flows.
 
-- Read-Access Required: The app can be accessed by anyone who has read access to the app.
-- Publish Publicly: The app can be accessed by anyone who knows the secret URL. If set to `Publish Publicly`, the secret URL will be displayed here.
-
-![App Publish](../assets/apps/1_app_toolbar/app-publish.png.webp)
+There are two ways to [deploy](./6_app_deployment.mdx) an app:
+- **Read-Access Required**: The app can be accessed & triggered by anyone who has [read access](../core_concepts/16_roles_and_permissions/index.mdx) to the app.
+- **Publish Publicly**: The app can be accessed as a standalone app by anyone who has the secret URL.
