@@ -1,21 +1,20 @@
 ---
-title: Go Quickstart
-slug: '/getting_started/scripts_quickstart/go'
+title: Docker Quickstart
+slug: '/getting_started/scripts_quickstart/docker'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# Go Quickstart
+# Docker Quickstart
 
-In this quick start guide, we will write our first script in Go.
+In this quick start guide, we will write our first script ran from a [Docker](https://www.docker.com/) container.
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	controls
-	id="main-video"
-	src="/videos/go_quickstart.mp4"
-/>
+Windmill natively supports Python, Typescript, Go, Bash or SQL.
+In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, Windmill allows running any Docker container through its [Bash](../4_bash_quickstart/index.mdx) support.
+
+As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
+
+![script 1](../../../advanced/7_docker/as_script.png)
 
 <br />
 
@@ -36,45 +35,47 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code): for Go scripts, it must have at least a main function.
+- [Code](#code).
 - [Metadata](#metadata): metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature).
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`.
 
-Below is a simple example of a script built in Go with Windmill:
+Below is a simple example of a script built using Bash to run Docker containers from Windmill:
 
-```go
-package inner
+```bash
+# shellcheck shell=bash
+# Bash script that calls docker as a client to the host daemon
+# See documentation: https://www.windmill.dev/docs/advanced/docker
+msg="${1:-world}"
 
-import (
-	"net/http"
-)
+IMAGE="alpine:latest"
+COMMAND="/bin/echo Hello $msg"
 
-func main(url string) (bool, error) {
-	resp, err := http.Get(url) // send a GET request to the provided URL
-	if err != nil {
-		return false, err // if there is an error, return false and the error
-	}
-	defer resp.Body.Close() // make sure to close the response body when the function returns
-
-	// if the status code is between 200 and 299, the page exists
-	if resp.StatusCode >= 200 && resp.StatusCode <= 299 {
-		return true, nil
-	}
-
-	// if the status code is not between 200 and 299, the page does not exist
-	return false, nil
-}
+# ensure that the image is up-to-date
+docker pull $IMAGE
+docker run --rm $IMAGE $COMMAND
 ```
 
-In this quick start guide, we'll create a script that greets the operator running it.
+## Setup
 
-From the Home page, click `+Script`. This will take you to the
+To set-up Docker, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Docker Set-Up"
+		description="Windmill supports running any Docker container through its Bash support."
+		href="/docs/advanced/docker"
+	/>
+</div>
+
+## Use
+
+From the Home page of Windmill App, click `+Script`. This will take you to the
 first step of script creation: Metadata.
 
-## Metadata
+### Metadata
 
-![New script](./create_script_go.png)
+![New script](../4_bash_quickstart/create_script_bash.png)
 
 Each script has metadata associated with it, enabling it to be defined and configured in depth.
 
@@ -100,14 +101,14 @@ Each script has metadata associated with it, enabling it to be defined and confi
 
 Now click on the code editor on the left side.
 
-## Code
+### Code
 
 Windmill provides an online editor to work on your Scripts. The left-side is
 the editor itself. The right-side [previews the UI](../../../core_concepts/6_auto_generated_uis/index.md) that Windmill will
 generate from the Script's signature - this will be visible to the users of the
 Script. You can easily preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for python](./editor_go.png)
+![Editor for Bash](../4_bash_quickstart/editor_bash.png)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -122,81 +123,42 @@ Script. You can easily preview that UI, provide input values, and [test your scr
 	/>
 </div>
 
-As we picked `Go` for this example, Windmill provided some Go
+As we picked `Docker` for this example, Windmill provided some Bash
 boilerplate. Let's take a look:
 
-```go
-package inner
+```bash
+# shellcheck shell=bash
+# Bash script that calls docker as a client to the host daemon
+# See documentation: https://www.windmill.dev/docs/advanced/docker
+msg="${1:-world}"
 
-import (
-	"fmt"
-	"rsc.io/quote"
-	// wmill "github.com/windmill-labs/windmill-go-client"
-)
+IMAGE="alpine:latest"
+COMMAND="/bin/echo Hello $msg"
 
-// the main must return (interface{}, error)
-
-func main(x string, nested struct {
-	Foo string `json:"foo"`
-}) (interface{}, error) {
-	fmt.Println("Hello, World")
-	fmt.Println(nested.Foo)
-	fmt.Println(quote.Opt())
-	// v, _ := wmill.GetVariable("f/examples/secret")
-	return x, nil
-}
+# ensure that the image is up-to-date
+docker pull $IMAGE
+docker run --rm $IMAGE $COMMAND
 ```
 
-In Windmill, scripts need to have a `main` function that will be the script's
-entrypoint. There are a few important things to note about the `main`.
+`msg` is just a normal Bash variable. It can be used to pass arguments to the script. This syntax is the standard Bash one to assign default values to parameters.
 
-- The main arguments are used for generating
-	1. the [input spec](../../../core_concepts/13_json_schema_and_parsing/index.md) of the Script
-	2. the [frontend](../../../core_concepts/6_auto_generated_uis/index.md) that you see when running the Script as a standalone app.
-- Type annotations are used to generate the UI form, and help pre-validate
-  inputs. While not mandatory, they are highly recommended. You can customize
-  the UI in later steps (but not change the input type!).
-- In Go, the main function must return (interface{}, error).
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="JSON Schema and Parsing"
-		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
-		href="/docs/core_concepts/json_schema_and_parsing"
-	/>
-</div>
-
-The last import line imports the Windmill client, which is needed for example to access
-[variables](../../../core_concepts/2_variables_and_secrets/index.mdx) or
-[resources](../../../core_concepts/3_resources_and_types/index.mdx).
-
-In Go, the dependencies and their versions are contained in the script and hence there is no need for any additional steps.
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
-		href="/docs/advanced/imports"
-	/>
-</div>
-
-Back to our Hello World. We can clean up unused import statements, change the
-main to take in the user's name. Let's also return the `name`, maybe we can use
-this later if we use this Script within a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) and need to pass its result on.
-
-```go
-package inner
-
-import (
-	"fmt"
-)
-
-func main(name string) (string, error) {
-	return fmt.Sprintf("Hello %s", name), nil
-}
+```
+docker run --rm <image> <command>
 ```
 
-## Instant Preview & Testing
+--rm is so that the container dispose itself after being executed. It helps unpollute the host.
+
+The image is the docker image to run. It can be any image available on docker hub or any private registry. It can also be a local image.
+
+The command is the command to run inside the container. It can be any command available in the image.
+
+It is just a Bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentification.
+
+Do not use the deamon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
+
+Like any Bash script, it will return the last line of the stdout. So be sure to print the the return value from your command if you'd like to use it as a result.
+
+### Instant Preview & Testing
 
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
@@ -219,14 +181,14 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 Now let's go to the last step: the "Customise" settings.
 
-## Customize Settings
+### Customize Settings
 
-In this step, you can:
+In this menu, you can:
 
 - Give a **script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.md), [Approval](../../../flows/11_flow_approval.mdx) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
 - Customize the script's **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Python](./customize_go.png)
+![Advanced settings for Bash](../4_bash_quickstart/customize_bash.png)
 
 We're done! Save your script. Note that Scripts are versioned in Windmill, and
 each script version is uniquely identified by a hash.
@@ -244,7 +206,7 @@ each script version is uniquely identified by a hash.
 	/>
 </div>
 
-## Run!
+### Run!
 
 Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
 to load the script. You'll see the user input form we defined earlier.
@@ -253,7 +215,7 @@ Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run hello world in Python](./run_go.png)
+![Run Hello in Bash](../4_bash_quickstart/run_bash.png)
 
 You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 

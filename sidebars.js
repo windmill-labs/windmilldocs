@@ -50,6 +50,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'getting_started/scripts_quickstart/docker_quickstart/index',
+							label: 'Docker'
+						},
+						{
+							type: 'doc',
 							id: 'getting_started/scripts_quickstart/go_quickstart/index',
 							label: 'Go'
 						},
@@ -147,12 +152,12 @@ const sidebars = {
 								'apps/app_configuration-settings/app_runnable_triggers',
 								'apps/app_configuration-settings/app_component_configuration',
 								'apps/app_configuration-settings/components_groups',
-								'apps/app_configuration-settings/component_template',
 							]
 						},
 						'apps/app_configuration-settings/app_styling',
 						'apps/app_debugging',
 						'apps/app_deployment',
+						'apps/public_apps',
 						'apps/app_e-commerce'
 					],
 

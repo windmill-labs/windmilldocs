@@ -21,13 +21,14 @@ The app editor is a low-code builder to create apps with components, create inte
 
 <br />
 
-The app editor is composed of 5 main sections:
+The app editor is composed of 6 main sections:
 
 1. [Toolbar](/docs/apps/app_editor#toolbar)
 2. [Canvas](#canvas)
 3. [Outputs](#outputs)
 4. [Runnables panel](#runnables-panel)
 5. [Component Library and Settings](#component-library-and-settings)
+6. [App Styling]
 
 ![App Editor](../../assets/apps/0_app_editor/plain-app-editor.png.webp)
 
@@ -35,7 +36,7 @@ The app editor is composed of 5 main sections:
 
 The topbar helps you in your app editing.
 
-![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png.webp)
+![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png)
 
 #### Learn more
 
@@ -79,7 +80,7 @@ The canvas at the center of the editor is where you design and see the overall U
 
 ## Outputs
 
-On the left panel of the editor, you can see the list of outputs of the app. These outputs represent the state of the app and are categorized into four types:
+On the left panel of the editor, you can see the list of outputs of the app. These outputs represent the states & results of the app and are categorized into four types:
 
 - **Context**: The context holds information such as the user email, username, workspace, query parameters, and more.
 - **State**: The state holds the app's current state, which can be manipulated by the frontend scripts.
@@ -100,8 +101,8 @@ You can perform the following actions with the outputs:
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Context"
-		description="The context holds such information as the user email, username, the workspace, the query parameters, etc."
+		title="Outputs"
+		description="The outputs represent the states & results of the app"
 		href="/docs/apps/outputs"
 	/>
 	<DocCard
@@ -152,6 +153,26 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 		description="Learn how to trigger a runnable."
 		href="/docs/apps/app_configuration-settings/app_runnable_triggers"
 	/>
+</div>
+
+## Styling
+
+Styling on the app editor can be managed at the component and app-level, with pre-set configurations or using CSS & [Tailwind](https://tailwindcss.com/).
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Styling"
+		description="Learn how to edit the component styles."
+		href="/docs/apps/app_configuration-settings/app_styling"
+	/>
+</div>
+
+## Other app features
+
+<div class="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		title="Group of Components"
 		description="Components can be grouped within containers."
@@ -159,9 +180,9 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 		color="orange"
 	/>
 	<DocCard
+		title="Public Apps"
+		description="Apps can be accessed as a standalone app by anyone who has the secret URL"
+		href="/docs/apps/public_apps"
 		color="orange"
-		title="Styling"
-		description="Learn how to edit the component styles."
-		href="/docs/apps/app_configuration-settings/app_styling"
 	/>
 </div>
