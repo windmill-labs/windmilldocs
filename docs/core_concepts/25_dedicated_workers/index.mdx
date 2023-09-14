@@ -5,17 +5,19 @@ import DocCard from '@site/src/components/DocCard';
 Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
-For now it only work with bun scripts that have been pre-deployed.
+Dedicated Workers / Native Performance are an [enterprise-only](../../misc/7_plans_details/index.mdx) feature.
+
+For now it only works with **bun scripts** that have been pre-deployed.
 
 The scripts can be used within flows.
 
 To use:
 
-1. Assign one worker group to execute that script
+1. Assign one worker group to execute that script:
 
 ![Worker group config](./worker_group_config.png)
 
-The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen
+The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen:
 
 2. toggle the "Dedicated Workers" option for that script in the metadata:
 

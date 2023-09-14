@@ -27,13 +27,19 @@ Designed for small teams automating processes.
 - Includes all Community edition features.
 - [Priority Support](../12_support_and_sla/index.mdx) 24/7 with a 48-hour response time and automation engineer assistance.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 7-day retention period.
-- [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../15_css_editor/index.md).
 - [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
 - Each seat: $10/month.
 - Each seat includes one user or two operators.
+- Limited to 20 users per workspace.
 - Up to 10k executions per month.
+
+Features not compa multi-tenant
+SESIM / SAML
+Workers
+
+Enterprise, commune aux deux
 
 `seats = max(users, executions / 10k)`. Meaning if you have 4 users and 60k executions, you pay 60$ = 40$ + 20$.
 
@@ -45,6 +51,7 @@ Dedicated support, guidance and infrastructure for advanced capabilities.
 - [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
 - [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
+- [Worker Group Management UI](../11_worker_group_management_ui/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../15_css_editor/index.md).
 - [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
@@ -58,29 +65,6 @@ Dedicated support, guidance and infrastructure for advanced capabilities.
 - Each worker can run up to ~26M jobs per month.
 
 See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Support & SLA"
-    	description="Our SLAs are designed to provide timely assistance and address any issues."
-    	href="/docs/misc/support_and_sla"
-    />
-    <DocCard
-    	title="Audit Logs"
-    	description="Windmill provides audit logs for every operation and action that has side-effects."
-    	href="/docs/core_concepts/audit_logs"
-    />
-	<DocCard
-    	title="Deploy to Staging or Prod"
-    	description="Deploy items to another staging/prod workspace."
-    	href="/docs/core_concepts/staging_prod"
-    />
-	<DocCard
-    	title="Multiplayer"
-    	description="Collaborate on scripts simultaneously."
-    	href="/docs/core_concepts/multiplayer"
-    />
-</div>
 
 ## Self-hosted
 
@@ -97,39 +81,17 @@ Designed for companies requiring dedicated support and advanced infrastructure.
 - [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
 - [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
+- [Worker Group Management UI](../11_worker_group_management_ui/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../15_css_editor/index.md).
 - [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
-- SAML support.
+- SAML & SCIM support.
 - Shared Global Dependency Cache plugin to allow multiple workers to share a centralized cache.
 - Opportunity to become a design partner for influencing the Windmill roadmap.
 - Each worker: $50/month.
 - Each seat: $20/month.
 
 See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Support & SLA"
-    	description="Our SLAs are designed to provide timely assistance and address any issues."
-    	href="/docs/misc/support_and_sla"
-    />
-    <DocCard
-    	title="Audit Logs"
-    	description="Windmill provides audit logs for every operation and action that has side-effects."
-    	href="/docs/core_concepts/audit_logs"
-    />
-	<DocCard
-    	title="Deploy to Staging or Prod"
-    	description="Deploy items to another staging/prod workspace."
-    	href="/docs/core_concepts/staging_prod"
-    />
-	<DocCard
-    	title="Multiplayer"
-    	description="Collaborate on scripts simultaneously."
-    	href="/docs/core_concepts/multiplayer"
-    />
-</div>
 
 ## White Labeling Windmill
 

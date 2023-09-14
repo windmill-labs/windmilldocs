@@ -36,7 +36,7 @@ Workers can belong to multiple worker groups simultaneously. The default worker 
 
 If you assign custom worker groups to all your workers, make sure that they cover all worker groups above, otherwise those jobs will never be executed.
 
-To make custom tags available from the UI, go to your workspace settings and click on the "Assignable Tags" button:
+To make custom tags available from the UI, go to the dedicated "Workers" tab on the workspace and click on the "Assignable Tags" button:
 
 ![Worker Group Assignable Tags](./worker_group_ui_2.png)
 
@@ -64,7 +64,7 @@ Use the edit/create config next to the worker group name in windmill UI:
 
 ![Worker Group edit config](./worker_group_ui.png)
 
-**Note**: The worker group management UI is an enterprise only feature. It is still possible to use worker groups with the community edition by passing to each worker the env variable `WORKER_TAGS`:
+**Note**: The worker group management UI is an [enterprise only](../../misc/7_plans_details/index.mdx) feature. It is still possible to use worker groups with the community edition by passing to each worker the env variable `WORKER_TAGS`:
 
 ```
 WORKER_TAGS=tag1,tag2
