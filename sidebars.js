@@ -50,6 +50,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'getting_started/scripts_quickstart/docker_quickstart/index',
+							label: 'Docker'
+						},
+						{
+							type: 'doc',
 							id: 'getting_started/scripts_quickstart/go_quickstart/index',
 							label: 'Go'
 						},
@@ -146,11 +151,13 @@ const sidebars = {
 								'apps/app_configuration-settings/app_component_library',
 								'apps/app_configuration-settings/app_runnable_triggers',
 								'apps/app_configuration-settings/app_component_configuration',
-								'apps/app_configuration-settings/app_styling'
+								'apps/app_configuration-settings/components_groups',
 							]
 						},
+						'apps/app_configuration-settings/app_styling',
 						'apps/app_debugging',
 						'apps/app_deployment',
+						'apps/public_apps',
 						'apps/app_e-commerce'
 					],
 
@@ -187,6 +194,8 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/ai_generation/index',
+				'core_concepts/persistent_storage/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
@@ -204,8 +213,6 @@ const sidebars = {
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
-				'core_concepts/persistent_storage/index',
-				'core_concepts/ai_generation/index'
 			],
 			collapsed: false
 		},
@@ -267,11 +274,11 @@ const sidebars = {
 				'misc/plans_details/index',
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
+				'core_concepts/dedicated_workers/index',
 				'core_concepts/staging_prod/index',
+				'misc/css_editor/index',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
-				'misc/css_editor/index',
-				'core_concepts/dedicated_workers/index'
 			]
 		},
 		{
@@ -549,7 +556,8 @@ const sidebars = {
 					items: ['misc/guides/aggrid_table/index']
 				},
 				'misc/note_of_intent/index',
-				'misc/share_on_hub/index'
+				'misc/share_on_hub/index',
+				'misc/white_labelling/index',
 			]
 		}
 	]

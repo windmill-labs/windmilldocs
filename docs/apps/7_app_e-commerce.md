@@ -16,7 +16,7 @@ We will now use the Windmill app builder to build a simple E-commerce backoffice
 It showcases a variety of features that are available in the Windmill app builder, such as:
 
 - [Runnables](/docs/apps/3_app-runnable-panel.mdx): scripts or flows that are executed on demand.
-- [Components](/docs/apps/4_app_configuration-settings/1_app_component_library.md): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
+- [Components](/docs/apps/4_app_configuration-settings/1_app_component_library.mdx): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
 
 :::tip
 

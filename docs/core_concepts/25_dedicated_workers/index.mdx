@@ -2,23 +2,31 @@ import DocCard from '@site/src/components/DocCard';
 
 # Dedicated Workers / Native Performance
 
-Dedicated Workers are workers that are dedicated for a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
+Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
 For now it only work with bun scripts that have been pre-deployed.
 
 The scripts can be used within flows.
 
-To setup, pass:
+To use:
 
-```
-DEDICATED_WORKER=<workspace>:<path>
-```
+1. Assign one worker group to execute that script
 
-to the dedicated worker that will be tasked with executing that script.
+![Worker group config](./worker_group_config.png)
 
-or use the dedicatedWorkers section in the values.yaml of the helm chart.
+The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen
 
-You will also need to toggle the "Dedicated Workers" option for that script in the metadata:
+2. toggle the "Dedicated Workers" option for that script in the metadata:
 
 ![Dedicated Workers](./dedicated_workers.png)
+
+You might also want to look for [Worker Group Tag](../9_worker_groups/index.mdx), which allows to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
+</div>

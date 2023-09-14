@@ -26,6 +26,16 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	href="/docs/core_concepts/instant_preview"
     />
 	<DocCard
+    	title="Persistent Storage"
+    	description="Ensure that your data is safely stored and easily accessible whenever required."
+    	href="/docs/core_concepts/persistent_storage"
+    />
+	<DocCard
+    	title="AI Generation"
+    	description="Have AI complete code on Windmill."
+    	href="/docs/code_editor/ai_generation"
+    />
+	<DocCard
     	title="Roles and Permissions"
     	description="Control access and manage permissions within your instance and workspaces."
     	href="/docs/core_concepts/roles_and_permissions"
@@ -100,11 +110,6 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	description="Develop and cooperate in a structured way."
     	href="/docs/core_concepts/draft_and_deploy"
     />
-    <DocCard
-    	title="Persistent Storage"
-    	description="Ensure that your data is safely stored and easily accessible whenever required."
-    	href="/docs/core_concepts/persistent_storage"
-    />
 	<DocCard
     	title="Handling Files and Binary Data"
     	description="In Windmill, JSON is the primary data format used for representing information. When working with binary data, such as files, they are represented as Base64 encoded strings."
@@ -115,14 +120,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	description="The result renderer in Windmill supports rich display rendering, allowing you to customize the display format of your results."
     	href="/docs/core_concepts/rich_display_rendering"
     />
-    <DocCard
-    	title="AI Generation"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/code_editor/ai_generation"
-    />
 </div>
 
-## Enterprise Features
+## Enterprise & Team Features
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -130,16 +130,26 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     	description="Our SLAs are designed to provide timely assistance and address any issues."
     	href="/docs/misc/support_and_sla"
     />
-    <DocCard
+	<DocCard
     	title="Audit Logs"
     	description="Windmill provides audit logs for every operation and action that has side-effects."
     	href="/docs/core_concepts/audit_logs"
     />
+		<DocCard
+    	title="Dedicated Workers / Native Performance"
+    	description="Dedicated Workers are workers that are dedicated to a particular script."
+    	href="/docs/core_concepts/dedicated_workers"
+    />
 	<DocCard
-    	title="Deploy to Staging or Prod"
+    	title="Deploy to staging/prod web UI"
     	description="Deploy items to another staging/prod workspace."
     	href="/docs/core_concepts/staging_prod"
     />
+		<DocCard
+		title="CSS Editor"
+		description="The Global CSS Editor is designed to give styling and theming across your entire app."
+		href="/docs/misc/css_editor"
+	/>
 	<DocCard
     	title="Multiplayer"
     	description="Collaborate on scripts simultaneously."
@@ -147,15 +157,11 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
     />
 	<DocCard
     	title="SAML & SCIM"
-    	description="Configure Okta for both SAML and SCIM"
+    	description="Configure Okta for both SAML and SCIM."
     	href="/docs/misc/saml_and_scim"
     />
-	<DocCard
-		title="CSS Editor"
-		description="The Global CSS Editor is designed to give styling and theming across your entire app."
-		href="/docs/misc/css_editor"
-	/>
 </div>
+
 
 ## Script-Specific Features
 
@@ -304,14 +310,21 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		color="orange"
 	/>
 	<DocCard
+		title="Group of Components"
+		description="Components can be grouped within containers."
+		href="/docs/apps/app_configuration-settings/components_groups"
+		color="orange"
+	/>
+	<DocCard
 		title="Styling"
 		description="Customize the styling of your App according to your own graphical standards."
 		href="/docs/apps/app_configuration-settings/app_styling"
 		color="orange"
 	/>
 	<DocCard
-		title="Example: E-commerce CRM app"
-		description="Tutorial on how to build a CRM with Windmill."
+		title="Public Apps"
+		description="Apps can be accessed as a standalone app by anyone who has the secret URL"
+		href="/docs/apps/public_apps"
 		color="orange"
 	/>
 </div>

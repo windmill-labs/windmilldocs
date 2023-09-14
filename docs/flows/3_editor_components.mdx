@@ -105,7 +105,7 @@ Flows on Windmill are by default based on a result basis. A step will take as in
 
 For heavier ETLs, you might want to use the `Shared Directory` to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Beware that the `./shared` folder is not preserved across [suspends](./11_flow_approval.md) and [sleeps](./15_sleep.md). The directory is temporary and active for the time of the execution.
+Beware that the `./shared` folder is not preserved across [suspends](./11_flow_approval.mdx) and [sleeps](./15_sleep.md). The directory is temporary and active for the time of the execution.
 
 To enable the shared directory, on the `Settings` menu, go to `Shared Directory` and toggle on `Shared Directory on './shared'`.
 
@@ -140,7 +140,7 @@ Another example is to be found from the [Hub](https://hub.windmill.dev/flows/32/
 
 ### Worker Group Tag
 
-Flows can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.md) for efficient execution on different machines with varying specifications.
+Flows can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.mdx) for efficient execution on different machines with varying specifications.
 
 ![Worker group tag](../core_concepts/9_worker_groups/select_script_builder.png.webp)
 
@@ -267,7 +267,7 @@ To copy the first step inputs, click on the `First step inputs` button.
 
 ## Flow Actions
 
-An action script is simply a script that is neither a [trigger](./10_flow_trigger.md) nor an [approval](./11_flow_approval.md)
+An action script is simply a script that is neither a [trigger](./10_flow_trigger.md) nor an [approval](./11_flow_approval.mdx)
 script. Those are the majority of the scripts.
 
 There are two ways to create an action script:
@@ -284,7 +284,7 @@ You can either create a new action script in:
 - [Typescript](/docs/getting_started/scripts_quickstart/typescript): Windmill uses Deno as the TypeScript runtime.
 - [Go](/docs/getting_started/scripts_quickstart/go).
 - [Bash](/docs/getting_started/scripts_quickstart/bash).
-- Any language [running any docker container](../advanced/7_docker/index.md) through Windmill's bash support.
+- Any language [running any docker container](../advanced/7_docker/index.mdx) through Windmill's bash support.
 
 There are special kinds of scripts:
 
@@ -333,7 +333,7 @@ The header is composed of:
   2. [Concurrency limit](./6_concurrency_limit.mdx): set concurrency limits to prevent exceeding the API Limit of the targeted API.
   3. [Cache](./4_cache.mdx): cache the results of a step for a specified time.
   4. [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
-  5. [Suspend](./11_flow_approval.md): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
+  5. [Suspend](./11_flow_approval.mdx): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful to implement approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
   6. [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
   7. [Mock](./5_step_mocking.md): when a step is mocked, it will immediately return the mocked value without performing any computation.
 

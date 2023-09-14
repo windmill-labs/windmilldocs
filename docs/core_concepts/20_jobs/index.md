@@ -1,12 +1,12 @@
 # Jobs
 
 A job represents a past, present or future "task" or "work" to be executed by a
-[worker](../9_worker_groups/index.md). Future jobs or jobs waiting for a worker are called "queued
+[worker](../9_worker_groups/index.mdx). Future jobs or jobs waiting for a worker are called "queued
 jobs", and are ordered by the time at which they were scheduled for
 (`scheduled_for`). Jobs that are created without being given a future
 `scheduled_for` are [scheduled](../1_scheduling/index.md) for the time at which they were created.
 
-[Workers](../9_worker_groups/index.md) fetch jobs from the queue, start executing them, atomically
+[Workers](../9_worker_groups/index.mdx) fetch jobs from the queue, start executing them, atomically
 set their state in the queue to "running", stream the logs while executing them,
 then once completed remove them from the queue and create a new "completed job".
 

@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # App Editor
 
-The app editor is where you build an app with components, create interactions with runnables, and configure the app settings.
+The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -21,31 +21,22 @@ The app editor is where you build an app with components, create interactions wi
 
 <br />
 
-The app editor is composed of 5 main sections:
+The app editor is composed of 6 main sections:
 
 1. [Toolbar](/docs/apps/app_editor#toolbar)
 2. [Canvas](#canvas)
 3. [Outputs](#outputs)
 4. [Runnables panel](#runnables-panel)
 5. [Component Library and Settings](#component-library-and-settings)
+6. [App Styling]
 
 ![App Editor](../../assets/apps/0_app_editor/plain-app-editor.png.webp)
 
 ## Toolbar
 
-In the topbar, you have several options to configure your app:
+The topbar helps you in your app editing.
 
-- **Change App Summary**: Modify the summary of your app.
-- **Undo/Redo**: Perform undo or redo actions.
-- **Toggle Layout**: Switch between Mobile and Desktop layout.
-- **Toggle Width**: Switch between full and max width.
-- **Export as JSON**: Export your app as a JSON or [Hub](https://hub.windmill.dev/) compatible file.
-- **Debugging**: Open the debugging panel.
-- **Editor/Preview Mode**: Toggle between the Editor and Preview modes.
-- **Save as Draft**: Save your app as a [draft](../../core_concepts/0_draft_and_deploy/index.mdx#draft).
-- **Deploy**: [Deploy](../../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) your app.
-
-![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png.webp)
+![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png)
 
 #### Learn more
 
@@ -55,18 +46,6 @@ In the topbar, you have several options to configure your app:
 		title="Toolbar guide"
 		description="Discover all the features of the toolbar."
 		href="/docs/apps/toolbar"
-	/>
-	<DocCard
-		color="orange"
-		title="Debugging"
-		description="Learn how to debug your app."
-		href="/docs/apps/app_debugging"
-	/>
-	<DocCard
-		color="orange"
-		title="Deployment"
-		description="Save as draft or deploy your app."
-		href="/docs/apps/app_deployment"
 	/>
 </div>
 
@@ -101,14 +80,14 @@ The canvas at the center of the editor is where you design and see the overall U
 
 ## Outputs
 
-On the left panel of the editor, you can see the list of outputs of the app. These outputs represent the state of the app and are categorized into four types:
+On the left panel of the editor, you can see the list of outputs of the app. These outputs represent the states & results of the app and are categorized into four types:
 
 - **Context**: The context holds information such as the user email, username, workspace, query parameters, and more.
 - **State**: The state holds the app's current state, which can be manipulated by the frontend scripts.
 - **Component Outputs**: These outputs correspond to the outputs of the individual components.
 - **Background Runnables**: These outputs represent the outputs of the background runnables.
 
-![App Outputs](../../assets/apps/0_app_editor/app-outputs.png.webp)
+![App Outputs](../../assets/apps/0_app_editor/app-outputs.png)
 
 You can perform the following actions with the outputs:
 
@@ -122,8 +101,8 @@ You can perform the following actions with the outputs:
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Context"
-		description="The context holds such information as the user email, username, the workspace, the query parameters, etc."
+		title="Outputs"
+		description="The outputs represent the states & results of the app"
 		href="/docs/apps/outputs"
 	/>
 	<DocCard
@@ -138,7 +117,7 @@ You can perform the following actions with the outputs:
 
 On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png.webp)
+![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png)
 
 #### Learn more
 
@@ -155,7 +134,9 @@ On the bottom panel of the editor, you can see the list of runnables of the app.
 
 Finally, on the right panel of the editor, you can insert a new component, configure a component or edit the component styles.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-components-settings.png.webp)
+![App Components Library](../../assets/apps/0_app_editor/app_components_add.png "App Components Library")
+
+![App Components Configuration](../../assets/apps/0_app_editor/app_components_configuration.png "App Components Configuration")
 
 #### Learn more
 
@@ -172,16 +153,36 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 		description="Learn how to trigger a runnable."
 		href="/docs/apps/app_configuration-settings/app_runnable_triggers"
 	/>
-	<DocCard
-		color="orange"
-		title="Component Configuration"
-		description="Learn how to configure a component."
-		href="/docs/apps/app_configuration-settings/app_component_configuration"
-	/>
+</div>
+
+## Styling
+
+Styling on the app editor can be managed at the component and app-level, with pre-set configurations or using CSS & [Tailwind](https://tailwindcss.com/).
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
 		title="Styling"
 		description="Learn how to edit the component styles."
 		href="/docs/apps/app_configuration-settings/app_styling"
+	/>
+</div>
+
+## Other app features
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		title="Group of Components"
+		description="Components can be grouped within containers."
+		href="/docs/apps/app_configuration-settings/components_groups"
+		color="orange"
+	/>
+	<DocCard
+		title="Public Apps"
+		description="Apps can be accessed as a standalone app by anyone who has the secret URL"
+		href="/docs/apps/public_apps"
+		color="orange"
 	/>
 </div>

@@ -32,7 +32,7 @@ Those frameworks are a great source of inspiration for us but we bring a more pr
 
 <br/>
 
-From a tech stack perspective, we rely on the ACID properties of PostgreSQL to achieve persistence and transactionality of the workflow's state. We made the simplifying assumption to be an at-least-once workflow engine, where in the exceptionally rare events of an infrastructure crash (machine shutdown, network split, etc), we will recover automatically but it is up to the application developer to implement idempotency in parts where it is critical for everything else, we support the same feature set ([retries](../flows/14_retries.md), [error handler](../flows/7_flow_error_handler.md), [suspend/sleep](../flows/15_sleep.md), [approval steps](../flows/11_flow_approval.md), [cancellation](../flows/2_early_stop.md), [inner workflows](../getting_started/9_trigger_flows/index.mdx#trigger-a-flow-from-another-flow)).
+From a tech stack perspective, we rely on the ACID properties of PostgreSQL to achieve persistence and transactionality of the workflow's state. We made the simplifying assumption to be an at-least-once workflow engine, where in the exceptionally rare events of an infrastructure crash (machine shutdown, network split, etc), we will recover automatically but it is up to the application developer to implement idempotency in parts where it is critical for everything else, we support the same feature set ([retries](../flows/14_retries.md), [error handler](../flows/7_flow_error_handler.md), [suspend/sleep](../flows/15_sleep.md), [approval steps](../flows/11_flow_approval.mdx), [cancellation](../flows/2_early_stop.md), [inner workflows](../getting_started/9_trigger_flows/index.mdx#trigger-a-flow-from-another-flow)).
 
 <br/>
 

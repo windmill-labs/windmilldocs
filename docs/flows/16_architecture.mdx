@@ -1,15 +1,17 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Architecture and Data Exchange
 
 In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.md) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
 1. Reference to a Script from the [Hub](https://hub.windmill.dev/).
 2. Reference to a Script in your [workspace](../core_concepts/16_roles_and_permissions/index.mdx#workspace).
-3. Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.md).
+3. Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.mdx).
 4. [Trigger Scripts](./10_flow_trigger.md) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
 5. [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).
 6. [Branch](./13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order).
 7. [Branches to all](./13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array.
-8. [Approval/Suspend steps](./11_flow_approval.md) which suspend the flow at no cost until it is resumed by getting an approval/resume signal.
+8. [Approval/Suspend steps](./11_flow_approval.mdx) which suspend the flow at no cost until it is resumed by getting an approval/resume signal.
 9. Inner flows.
 
 ![Flow architecture](../assets/flows/flow_architecture.png "Flow architecture")
@@ -62,28 +64,14 @@ From the editor, you can directly get:
 
 ## States
 
-A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct
-executions of the same Script. This is what enables Flows to watch for changes
-in most event watching scenarios. The pattern is as follows:
+A [state](../core_concepts/3_resources_and_types/index.mdx#states) is an object stored as a resource of the resource type `state` which is meant to persist across distinct
+executions of the same Script. This is what enables Flows to watch for changes in most event watching scenarios.
 
-- Retrieve the last state or, if undefined, assume it is the first
-  execution.
-- Retrieve the current state in the external system you are watching, e.g. the
-  list of users having starred your repo or the maximum ID of posts on Hacker
-  News.
-- Calculate the difference between the current state and the last internal
-  state. This difference is what you will want to act upon.
-- Set the new state so that you do not process the
-  elements you just processed.
-- Return the differences calculated previously so that you can process them in
-  the next steps. You will likely want to [forloop](./12_flow_loops.md) over the items and trigger
-  one Flow per item. This is exactly the pattern used when your Flow is in the
-  mode of "Watching changes regularly".
-
-The convenience functions do this in TypeScript are:
-
-- `getState` which retrieves a JSON object stored as a resource of type `state` at a path determined by `getStatePath`, which is unique the trigger (username or schedule path), the embedding flow's path (if any), and the step's or script's path.
-- `setState` which sets the new state.
-
-The states can be seen in the [Resources](../core_concepts/3_resources_and_types/index.mdx) section with a
-[Resource Type](../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) of `state`.
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    title="States"
+    description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
+    href="/docs/core_concepts/resources_and_types#states"
+		color="teal"
+	/>
+</div>

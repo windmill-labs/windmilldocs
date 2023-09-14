@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Workers and Worker Groups
 
 Workers are autonomous processes that run one script at a time using the full
@@ -34,31 +36,41 @@ Workers can belong to multiple worker groups simultaneously. The default worker 
 
 If you assign custom worker groups to all your workers, make sure that they cover all worker groups above, otherwise those jobs will never be executed.
 
-You can customize the worker group of a worker by setting the WORKER_TAGS environment variable.
+To make custom tags available from the UI, go to your workspace settings and click on the "Assignable Tags" button:
+
+![Worker Group Assignable Tags](./worker_group_ui_2.png)
+
+It is possible to restrict some tags to specific workspace using the following syntax:
 
 ```
-WORKER_TAGS=deno,light,gpu
+gpu(workspace+workspace2)
 ```
 
-By default, the `WORKER_TAGS` of workers include `deno, python3, bash, go, flow, hub, dependency`.
+Only 'workspace' and 'workspace2' will be able to use the `gpu` tags.
 
-The configuration above will make the workers accept only deno jobs and jobs with the `light` tag.
+## How to have a worker join a worker group
 
-To make custom tags available from the UI and be authorized to be used, you need to pass the following env variable to the Windmill server:
-
-```
-CUSTOM_TAGS=light,gpu
-```
-
-You can restrict some tags to specific workspace using the following syntax:
+Simply pass the worker group as the env variable `WORKER_GROUP`:
 
 ```
-CUSTOM_TAGS=light,gpu(workspace+workspace2)
+WORKER_GROUP=worker_group_name
 ```
 
-Only workspace and workspace2 will be able to use the `gpu` tags.
+The worker will automatically join the worker group on start and be displayed on the Workers page.
 
-## How to assign a custom worker group
+## How to assign worker tags to a worker group
+
+Use the edit/create config next to the worker group name in windmill UI:
+
+![Worker Group edit config](./worker_group_ui.png)
+
+**Note**: The worker group management UI is an enterprise only feature. It is still possible to use worker groups with the community edition by passing to each worker the env variable `WORKER_TAGS`:
+
+```
+WORKER_TAGS=tag1,tag2
+```
+
+## How to assign a custom worker group to a script or flow
 
 For scripts saved on the script editor, select the corresponding worker group tag in the metadata section.
 
@@ -78,12 +90,27 @@ You can assign a worker group to an entire flow in the flow's settings:
 
 If a workspace tag contains the substring `$workspace`, it will be replaced by the workspace id corresponding to the job. This is especially useful to have the same script deployed to different workspace and have them run on different workers.
 
-In the following setup:
+With the following assignable tag:
 
 ```
-CUSTOM_TAGS=normal-$workspace
+normal-$workspace
 ```
 
 the workspaces, `dev`, `staging`, `prod` and the worker groups: `normal-dev`, `normal-staging`, `normal-prod`. The same script wih the tag `normal-$workspace` will run on the corresponding worker group depending on the workspace it is deployed to. This enable to share the same control plane but use workers with different network restrictions for tighter security.
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
+
+## Dedicated Workers / Native Performance
+
+Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
+They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
+
+Dedicated Workers / Native Performance is an [Enterprise & Team Edition](../../misc/7_plans_details/index.mdx) feature.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dedicated Workers / Native Performance"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+</div>
