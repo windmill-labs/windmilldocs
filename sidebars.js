@@ -275,6 +275,7 @@ const sidebars = {
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
 				'core_concepts/dedicated_workers/index',
+				'misc/worker_group_management_ui/index',
 				'core_concepts/staging_prod/index',
 				'misc/css_editor/index',
 				'core_concepts/multiplayer/index',
