@@ -68,19 +68,14 @@ Be cautious with potentially long-running jobs in **synchronous** mode.
 
 :::
 
-:::tip Asynchronous vs. Synchronous
+### Asynchronous vs. Synchronous
 
 It's always better to use asynchronous mode as it allows your client not to wait for the response and it avoids Windmill to have to maintain a connection to your client while the job is running. However, for short-running jobs where it's easier in your code to block until you get a response, then use the synchronous mode.
 
-<br/>
-
 When using the **synchronous mode**, the webhook returns the result of the script directly. If the script returns an error, the endpoint still returns the `200` status code with the error as a JSON object.
-
-<br/>
 
 When using the **asynchronous mode**, the webhook returns a `uuid` and you can poll the [get job](https://app.windmill.dev/openapi.html#/operations/getJob) API call to fetch the status and results once it is completed.
 
-:::
 
 ## User token
 
