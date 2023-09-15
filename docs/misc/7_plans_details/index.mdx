@@ -14,54 +14,45 @@ Windmill provides a range of pricing plans for both Cloud and Self-hosted deploy
 
 ## Cloud
 
-### Community Edition
+### Community Edition - Cloud
 
 No commitment or credit card required.
-- Features include Google/Github/Microsoft/Gitlab SSO, unlimited variables/resources/scripts/apps/flows (except abuse), and 1000 free executions per month.
-- Public apps, groups, folders, and granular permissions available.
-- Deployment from Github and community support on Discord.
+- Features include Google/Github/Microsoft/Gitlab SSO, unlimited variables/resources/scripts/apps/flows (except abuse), and 1,000 free executions per month.
+- [Granular permissions](../../core_concepts/16_roles_and_permissions/index.mdx), [groups](../../core_concepts/8_groups_and_folders/index.mdx), [folders](../../core_concepts/8_groups_and_folders/index.mdx) and [public apps](../../apps/8_public_apps.md) available.
+- [Deployment from Github](../../advanced/9_deploy_gh_gl/index.md) and community support on [Discord](https://discord.com/invite/V7PM2YHsPB).
 
-### Team Plan
+### Team Plan - Cloud
 
 Designed for small teams automating processes.
 - Includes all Community edition features.
 - [Priority Support](../12_support_and_sla/index.mdx) 24/7 with a 48-hour response time and automation engineer assistance.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 7-day retention period.
-- [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../15_css_editor/index.md).
 - [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
 - Each seat: $10/month.
-- Each seat includes one user or two operators.
-- Limited to 20 users per workspace.
-- Up to 10k executions per month.
-
-Features not compa multi-tenant
-SESIM / SAML
-Workers
-
-Enterprise, commune aux deux
+- Each seat includes one user or two operators and 10k executions.
+- Limited to 20 users.
 
 `seats = max(users, executions / 10k)`. Meaning if you have 4 users and 60k executions, you pay 60$ = 40$ + 20$.
 
 See [Upgrading to Team Edition](#upgrading-to-team-edition).
 
-### Enterprise Plan
+### Enterprise Plan - Cloud
 
+Your own hosted dedicated Windmill cluster without restrictions.
 Dedicated support, guidance and infrastructure for advanced capabilities.
+
+- Isolated & dedicated database network & workers.
 - [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
-- [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
-- [Worker Group Management UI](../11_worker_group_management_ui/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../15_css_editor/index.md).
 - [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
-- SAML support.
-- Opportunity to become a design partner for influencing the Windmill roadmap.
-- Each worker: $100/month.
+- [SAML / SCIM support](../14_saml_and_scim/index.md). Group sync with active directory.
+- Design partner for Windmill roadmap.
+- Base price at $600.
 - Each seat: $40/month.
-- Multi-tenant Shared infrastructure: $200/month.
-- Isolated workers and database (Available in US/EU/Asia): $600/month.
-- Dedicated Kubernetes cluster (Available in US/EU/Asia): $1200/month.
+- Each worker: $100/month.
 - Each worker can run up to ~26M jobs per month.
 
 See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
@@ -74,9 +65,9 @@ See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 - Features [Google/Github/Microsoft/Gitlab SSO](../../misc/2_setup_oauth/index.md) and easy deployment on Fargate/Docker/Kubernetes.
 - Community support on [Discord](https://discord.com/invite/V7PM2YHsPB).
 
-### Enterprise Edition
+### Enterprise Edition - Self-Hosted
 
-Designed for companies requiring dedicated support and advanced infrastructure.
+Designed for companies requiring dedicated support, guidance and advanced infrastructure.
 - Commercial license.
 - [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
@@ -85,11 +76,12 @@ Designed for companies requiring dedicated support and advanced infrastructure.
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../15_css_editor/index.md).
 - [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
-- SAML & SCIM support.
+- [SAML / SCIM support](../14_saml_and_scim/index.md). Group sync with active directory.
 - Shared Global Dependency Cache plugin to allow multiple workers to share a centralized cache.
-- Opportunity to become a design partner for influencing the Windmill roadmap.
+- Design partner for Windmill roadmap.
 - Each worker: $50/month.
 - Each seat: $20/month.
+- Each worker can run up to ~26M jobs per month.
 
 See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 
