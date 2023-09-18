@@ -1,0 +1,115 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Component Library
+
+The app components library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
+
+## Components properties
+
+Components can be configured in two ways:
+
+- **Inputs**: inputs can be [connected to an output](../2_outputs.md#connecting-inputs) or computed using a runnable.
+
+  - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
+    <br/>
+
+- **Configuration**: [configure](./3_app_component_configuration.mdx) property such as the button label, the text input placeholder, etc.
+  - e.g. `Table` component has a configuration property that allows you to configure the search bar: Client-side search, Server-side search, or no search.
+
+## Component outputs
+
+- **Runnable**: some component can [trigger a runnable](./2_app_runnable_triggers.md) when an event occurs, usually when a user interacts with the component. The result of the runnable is stored in the component output in the key `result`. It also stores the `loading` state of the component.
+
+  - e.g. `Button` component can trigger a runnable when clicked.
+    <br/>
+
+- **Own outputs**: some component have [outputs defined by the component](../2_outputs.md).
+  - e.g. `Table` component has a selectedRow output
+
+## Inserting components
+
+Click on a component in the component library to insert it in the app canvas. It will be automatically positioned to the first available spot starting from the top left corner
+
+## Components list
+
+Windmill provides a set of components that can be used to build apps.
+
+The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](/docs/misc/getting_help/).
+
+Even though the list of components is never as up to date as on [Windmill Cloud](https://app.windmill.dev/user/login), here is the list of the available components:
+
+### Layout
+
+The layout components are used to organize the components in the app canvas.
+
+- [Container](./container.mdx)
+- [List](./list.mdx)
+- [Divider X](./divider_x.mdx)
+- [Divider Y](./divider_y.mdx)
+- [Drawer](./drawer.mdx)
+- [Vertical Split Panes](./vertical_split_panes.mdx)
+- [Horizontal Split Panes](./horizontal_split_panes.mdx)
+- [Modal](./modal.mdx)
+- [Stepper](./stepper.mdx)
+
+### Tabs
+
+- [Tabs](./tabs.mdx)
+- [Conditional Tabs](./conditional_tabs.mdx)
+- [Sidebar Tabs](./sidebar_tabs.mdx)
+- [Invisible Tabs](./invisible_tabs.mdx)
+
+### Buttons
+
+- [Button](./button.mdx)
+- [Submit](./submit_form.mdx)
+- [Modal Form](./modal_form.mdx)
+- [Download Button](./download_button.mdx)
+
+### Inputs
+
+- [Form](./form_input.mdx)
+- [Text Input](./text_input.mdx)
+- [Textarea](./textarea.mdx)
+- [Rich Text Editor](./rich_text_editor.mdx)
+- [Password](./password_input.mdx)
+- [Email Input](./email_input.mdx)
+- [Number](./number_input.mdx)
+- [Currency](./currency_input.mdx)
+- [Slider](./slider.mdx)
+- [Range](./range.mdx)
+- [Date](./date_input.mdx)
+- [File Input](./file_input.mdx)
+- [Toggle](./toggle.mdx)
+- [Select](./select.mdx)
+- [Resource Select](./resource_select.mdx)
+- [MultiSelect](./multiselect.mdx)
+- [Select Tab](./select_tab.mdx)
+- [Select Step](./select_step.mdx)
+
+### Tables
+
+- [Table](./table.mdx)
+- [AgGrid Table](./aggrid_table.mdx)
+
+### Display
+
+- [Text](./text.mdx)
+- [Icon](./icon.mdx)
+- [Image](./image.mdx)
+- [Map](./map.mdx)
+- [HTML](./html.mdx)
+- [PDF](./pdf.mdx)
+- [Rich Result](./rich_result.mdx)
+- [Log](./log_display.mdx)
+- [Flow Status](./flow_status.mdx)
+
+### Charts
+
+- [Bar/Line Chart](./bar_line_chart.mdx)
+- [Pie Chart](./pie_chart.mdx)
+- [Vega Lite](./vega_lite.mdx)
+- [Plotly](./plotly.mdx)
+- [Scatter Chart](./scatter_chart.mdx)
+- [Timeseries](./timeseries.mdx)
+- [ChartJs](./chartjs.mdx)

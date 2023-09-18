@@ -147,6 +147,10 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Component Library',
+							link: {
+								type: 'doc',
+								id: 'apps/app_configuration_settings/app_component_library',
+							},
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
 								'apps/app_configuration_settings/bar_line_chart',
@@ -602,7 +606,10 @@ const sidebars = {
 						type: 'doc',
 						id: 'misc/guides/index'
 					},
-					items: ['misc/guides/aggrid_table/index']
+					items: [
+						'misc/guides/aggrid_table/index',
+						'misc/guides/table/index'
+					]
 				},
 				'misc/note_of_intent/index',
 				'misc/share_on_hub/index',

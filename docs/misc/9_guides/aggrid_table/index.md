@@ -21,7 +21,7 @@ If you need the enterprise version of AgGrid, please
 ## AgGrid vs Table component
 
 In Windmill there are 2 table components: one simply called
-[Table](../../../apps/4_app_configuration_settings/1_app_component_library.mdx#table)
+[Table](../table/index.md)
 and AgGrid.
 
 The Table component is for most usecases. It takes an array of objects as

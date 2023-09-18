@@ -2,6 +2,8 @@
 
 This is a introduction on how to use the Table component in Windmill.
 
+![Table API](../../../assets/apps/4_app_component_library/table.png.webp)
+
 ## AgGrid vs Table component
 
 In Windmill there are 2 table components: one simply called Table and
