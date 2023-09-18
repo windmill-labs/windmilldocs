@@ -1,0 +1,331 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Component Library
+
+Windmill provides a set of components that can be used to build apps.
+
+The app components library is located on the right-hand side of the app editor. It displays the app components and allows you to configure them.
+
+The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](/docs/misc/getting_help/).
+
+Even though the list of components is never as up to date as on [Windmill Cloud](https://app.windmill.dev/user/login), here is the list of the available components:
+
+## Components properties
+
+Components can be configured in two ways:
+
+- **Inputs**: inputs can be [connected to an output](../2_outputs.md#connecting-inputs) or computed using a runnable.
+
+  - e.g. `Table` component has an input that can be connected to an output or computed using a runnable, which is an array of objects.
+    <br/>
+
+- **Configuration**: [configure](./3_app_component_configuration.mdx) property such as the button label, the text input placeholder, etc.
+  - e.g. `Table` component has a configuration property that allows you to configure the search bar: Client-side search, Server-side search, or no search.
+
+## Component outputs
+
+- **Runnable**: some component can [trigger a runnable](./2_app_runnable_triggers.md) when an event occurs, usually when a user interacts with the component. The result of the runnable is stored in the component output in the key `result`. It also stores the `loading` state of the component.
+
+  - e.g. `Button` component can trigger a runnable when clicked.
+    <br/>
+
+- **Own outputs**: some component have [outputs defined by the component](../2_outputs.md).
+  - e.g. `Table` component has a selectedRow output
+
+## Inserting components
+
+Click on a component in the component library to insert it in the app canvas. It will be automatically positioned to the first available spot starting from the top left corner
+
+## Layout
+
+The layout components are used to organize the components in the app canvas.
+
+### [Container](./container.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/container.mp4"
+    alt="container component"
+/>
+
+### [List](./list.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/list_component.mp4"
+    alt="list component"
+/>
+
+### [Divider X](./divider_x.mdx)
+
+![Divider X](../../assets/apps/4_app_component_library/divider_x.png.webp)
+
+### [Divider Y](./divider_y.mdx)
+
+![Divider Y](../../assets/apps/4_app_component_library/divider_y.png.webp)
+
+### [Drawer](./drawer.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/drawer.mp4"
+    alt="drawer component"
+/>
+
+### [Vertical Split Panes](./vertical_split_panes.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/vertical_split.mp4"
+    alt="vertical split panes"
+/>
+
+### [Horizontal Split Panes](./horizontal_split_panes.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/horizontal_split.mp4"
+    alt="horizontal split panes"
+/>
+
+### [Modal](./modal.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="modal-layout"
+    src="/videos/modal-layout.mp4"
+    alt="modal component"
+/>
+
+### [Stepper](./stepper.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="modal-layout"
+    src="/videos/stepper.mp4"
+    alt="stepper"
+/>
+
+## Tabs
+
+### [Tabs](./tabs.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/tabs.mp4"
+    alt="tabs component"
+/>
+
+### [Conditional Tabs](./conditional_tabs.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="conditional-tabs-video"
+    src="/videos/conditional-tabs.mp4"
+    alt="Conditional tabs component"
+/>
+
+### [Sidebar Tabs](./sidebar_tabs.mdx)
+
+![Sidebar Tabs](../../assets/apps/4_app_component_library/sidebar_tabs.gif)
+
+### [Invisible Tabs](./invisible_tabs.mdx)
+
+![Inisible Tabs](../../assets/apps/4_app_component_library/invisible_tabs.gif)
+
+## Buttons
+
+### [Button](./button.mdx)
+
+![Button API](../../assets/apps/4_app_component_library/button.png.webp)
+
+### [Submit](./submit_form.mdx)
+
+![Form API](../../assets/apps/4_app_component_library/form.png.webp)
+
+### [Modal Form](./modal_form.mdx)
+
+![Form Modal Button](../../assets/apps/4_app_component_library/form-modal-button.png.webp)
+![Form Modal API](../../assets/apps/4_app_component_library/form-modal.png.webp)
+
+### [Download Button](./download_button.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/download_button.mp4"
+    alt="Download Button"
+/>
+
+## Inputs
+
+### [Form](./form_input.mdx)
+
+![Form Input API](../../assets/apps/4_app_component_library/form_input.png.webp)
+
+### [Text Input](./text_input.mdx)
+
+![Text Input API](../../assets/apps/4_app_component_library/text-input.png.webp)
+
+### [Textarea](./textarea.mdx)
+
+![Textarea API](../../assets/apps/4_app_component_library/textarea.gif)
+
+### [Rich Text Editor](./rich_text_editor.mdx)
+
+![Rich Text Editor API](../../assets/apps/4_app_component_library/rich_text.gif)
+
+### [Password](./password_input.mdx)
+
+![Password Input API](../../assets/apps/4_app_component_library/password-input.png.webp)
+
+### [Email Input](./email_input.mdx)
+
+![Email Input API](../../assets/apps/4_app_component_library/email.png.webp)
+
+### [Number](./number_input.mdx)
+
+![Number Input API](../../assets/apps/4_app_component_library/number-input.png.webp)
+
+### [Currency](./currency_input.mdx)
+
+![Currency Input API](../../assets/apps/4_app_component_library/currency.png.webp)
+
+### [Slider](./slider.mdx)
+
+![Slider API](../../assets/apps/4_app_component_library/slider.png.webp)
+
+### [Range](./range.mdx)
+
+![Range API](../../assets/apps/4_app_component_library/range.png.webp)
+
+### [Date](./date_input.mdx)
+
+![Date Input API](../../assets/apps/4_app_component_library/date-input.png.webp)
+
+### [File Input](./file_input.mdx)
+
+![File Input API](../../assets/apps/4_app_component_library/file_input.png.webp)
+
+### [Toggle](./toggle.mdx)
+
+![Toggle API](../../assets/apps/4_app_component_library/toggle.png.webp)
+
+### [Select](./select.mdx)
+
+![Select API](../../assets/apps/4_app_component_library/select.png.webp)
+
+### [Resource Select](./resource_select.mdx)
+
+![Resource Select](../../assets/apps/4_app_component_library/resource_select.png.webp)
+
+### [MultiSelect](./multiselect.mdx)
+
+![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png.webp)
+
+### [Select Tab](./select_tab.mdx)
+
+![Select Tab](../../assets/apps/4_app_component_library/tab_select.png.webp)
+
+### [Select Step](./select_step.mdx)
+
+![Select Step](../../assets/apps/4_app_component_library/step_select.png.webp)
+
+## Tables
+
+### [Table](./table.mdx)
+
+![Table API](../../assets/apps/4_app_component_library/table.png.webp)
+
+### [AgGrid Table](./aggrid_table.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/aggrid_table.mp4"
+    alt="aggrid table"
+/>
+<br/>
+
+## Display
+
+### [Text](./text.mdx)
+
+![Text API](../../assets/apps/4_app_component_library/text.png.webp)
+
+### [Icon](./icon.mdx)
+
+![Icon](../../assets/apps/4_app_component_library/icon.png.webp)
+
+### [Image](./image.mdx)
+
+![HTML](../../assets/apps/4_app_component_library/image_api.png.webp)
+
+### [Map](./map.mdx)
+
+![map](../../assets/apps/4_app_component_library/map.png.webp)
+
+### [HTML](./html.mdx)
+
+![HTML](../../assets/apps/4_app_component_library/html.png.webp)
+
+### [PDF](./pdf.mdx)
+
+![PDF API](../../assets/apps/4_app_component_library/pdf_api.png.webp)
+
+### [Rich Result](./rich_result.mdx)
+
+![Rich Result](../../assets/apps/4_app_component_library/rich_result.png.webp)
+
+### [Log](./log_display.mdx)
+
+![Log Display](../../assets/apps/4_app_component_library/log_display.png.webp)
+
+### [Flow Status](./flow_status.mdx)
+
+![Flow Status](../../assets/apps/4_app_component_library/flow_status.png.webp)
+
+## Charts
+
+### [Bar/Line Chart](./bar_line_chart.mdx)
+
+![Bar/Line Chart API](../../assets/apps/4_app_component_library/bar.png.webp)
+
+### [Pie Chart](./pie_chart.mdx)
+
+![PDF API](../../assets/apps/4_app_component_library/pdf_api.png.webp)
+
+### [Vega Lite](./vega_lite.mdx)
+
+![Vega Lite API](../../assets/apps/4_app_component_library/vega-lite.png.webp)
+
+### [Plotly](./plotly.mdx)
+
+![Plotly API](../../assets/apps/4_app_component_library/plotly.png.webp)
+
+### [Scatter Chart](./scatter_chart.mdx)
+
+![Scatter Chart API](../../assets/apps/4_app_component_library/scatter.png.webp)
+
+### [Timeseries](./timeseries.mdx)
+
+![Timeseries API](../../assets/apps/4_app_component_library/timeseries.png.webp)
+
+### [ChartJs](./chartjs.mdx)
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/chartjs.mp4"
+    alt="ChartJS"
+/>

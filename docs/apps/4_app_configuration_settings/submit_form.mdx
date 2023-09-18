@@ -1,0 +1,51 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Submit Form
+
+The form component allows you to create a form. It has a submit button that triggers a runnable when clicked.
+The runnable parameters are defined:
+
+- **Static**: the parameter is defined in the component configuration.
+- **User input**: the parameter is defined by the user input.
+- **Connected**: the parameter is connected to an output.
+
+Only user inputs are displayed in the form.
+
+![Form API](../../assets/apps/4_app_component_library/form.png.webp)
+
+The following section details Submit Form component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Form configuration
+
+| Name  |                Type                 | Connectable | Templatable | Default | Description       |
+| ----- | :---------------------------------: | :---------: | :---------: | :-----: | ----------------- |
+| label |               string                |    true     |    false    | Submit  | The button label. |
+| color | blue, red, dark, light, green, gray |    false    |    false    |  dark   | The button color. |
+| size  |         xs, sm, md , lg, xl         |    false    |    false    |   sm    | The button size.  |
+
+:::info
+The form component has a special parameter called `On Success`. See the button component for more information.
+:::
+
+## Outputs
+
+| Name    |  Type   | Description                      |
+| ------- | :-----: | -------------------------------- |
+| result  |   any   | The result of the runnable.      |
+| loading | boolean | The loading state of the button. |

@@ -16,7 +16,7 @@ We will now use the Windmill app builder to build a simple E-commerce backoffice
 It showcases a variety of features that are available in the Windmill app builder, such as:
 
 - [Runnables](/docs/apps/3_app-runnable-panel.mdx): scripts or flows that are executed on demand.
-- [Components](/docs/apps/4_app_configuration-settings/1_app_component_library.mdx): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
+- [Components](/docs/apps/4_app_configuration_settings/1_app_component_library.mdx): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
 
 :::tip
 
@@ -61,9 +61,9 @@ We will structure the app as follows:
 
 ### Products Tab
 
-/docs/apps/app_configuration-settings/app_component_library
+/docs/apps/app_configuration_settings/app_component_library
 
-We will split the product view into two parts, with the [vertical split](/docs/apps/app_configuration-settings/app_component_library#vertical-split-panes). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
+We will split the product view into two parts, with the [vertical split](/docs/apps/app_configuration_settings/app_component_library#vertical-split-panes). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"

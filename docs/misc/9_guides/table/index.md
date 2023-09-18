@@ -2,6 +2,8 @@
 
 This is a introduction on how to use the Table component in Windmill.
 
+![Table API](../../../assets/apps/4_app_component_library/table.png.webp)
+
 ## AgGrid vs Table component
 
 In Windmill there are 2 table components: one simply called Table and
@@ -162,7 +164,7 @@ Please see the [Examples](#examples) for working code.
 
 If you want to do basic sorting, or edit the column header name from the script
 you can use a Transformer script. See the
-[documentation](../../../apps/4_app_configuration-settings/2_app_runnable_triggers.md#transformer)
+[documentation](../../../apps/4_app_configuration_settings/2_app_runnable_triggers.md#transformer)
 for more information.
 
 :::

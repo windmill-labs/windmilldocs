@@ -53,7 +53,7 @@ export default function EnterpriseFeatures() {
 					Enterprise-ready platform
 				</h1>
 				<span className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">
-					Deploy faster, build invincible and reliable workflows in an enterprise-grade platform.
+					Leverage enterprise features, 24/7 support, guidance and advanced infrastructure.
 				</span>
 				<div className="mx-auto w-full">
 					<dl className="grid grid-cols-1 lg:grid-cols-3 border border-gray-50 dark:border-gray-900">

@@ -36,7 +36,7 @@ Each component has its own outputs. The outputs are displayed in a tree structur
 
 ![App outputs](../assets/apps/2_app_outputs/app-output-collapsed.png.webp)
 
-For example, the [Table component](./4_app_configuration-settings/1_app_component_library.mdx#table-1) has the following outputs:
+For example, the [Table component](./4_app_configuration_settings/table.mdx) has the following outputs:
 
 - selectedRow: the selected row as an object
 - loading: the loading state of the table

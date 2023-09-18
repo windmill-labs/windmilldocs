@@ -1,0 +1,59 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Download Button
+
+The download button component allows you to download a file.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/download_button.mp4"
+    alt="Download Button"
+/>
+
+<br/>
+
+The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx):
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/download_base64.mp4"
+    alt="Download Button Base64"
+/>
+
+<br/>
+
+The following section details Download Button component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Download Button configuration
+
+| Name           |                Type                 | Connectable | Templatable |  Default  | Description                                                                                                      |
+| -------------- | :---------------------------------: | :---------: | :---------: | :-------: | ---------------------------------------------------------------------------------------------------------------- |
+| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx). |
+| filename       |               string                |    true     |    false    |           | The name of the file to download.                                                                                |
+| label          |               string                |    true     |    false    | Press me  | The button label.                                                                                                |
+| color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                                                                                                |
+| size           |         xs, sm, md , lg, xl         |    false    |    false    |    sm     | The button size.                                                                                                 |
+| Fill container |               boolean               |    false    |    false    |   false   | Whether the button should fill the container.                                                                    |
+| disabled       |               boolean               |    false    |    false    |   false   | Whether the button should be disabled.                                                                           |
+| Before Icon    |               string                |    false    |    false    | Undefined | The icon to display before the label.                                                                            |
+| After Icon     |               string                |    false    |    false    | Undefined | The icon to display after the label.                                                                             |
