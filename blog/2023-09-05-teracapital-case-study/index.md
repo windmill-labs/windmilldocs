@@ -45,7 +45,7 @@ Within two weeks, everything was set to go with Windmill. Although self-hosting 
 
 ## How do we work with Windmill?
 
-Today, 6 team members are directly using Windmill. Most of our Windmill's users are non-technical, but they can easily fork an app with our entire [identity in CSS](/docs/apps/app_configuration-settings/app_styling) and [use AI to write code](/docs/core_concepts/ai_generation).
+Today, 6 team members are directly using Windmill. Most of our Windmill's users are non-technical, but they can easily fork an app with our entire [identity in CSS](/docs/apps/app_configuration_settings/app_styling) and [use AI to write code](/docs/core_concepts/ai_generation).
 
 While we initially came to Windmill for its [App Editor](/docs/apps/app_editor), we ended up using [scripts](/docs/script_editor) and [flows](/docs/flows/flow_editor) to make our apps deeper and more complex.
 

@@ -162,7 +162,7 @@ Please see the [Examples](#examples) for working code.
 
 If you want to do basic sorting, or edit the column header name from the script
 you can use a Transformer script. See the
-[documentation](../../../apps/4_app_configuration-settings/2_app_runnable_triggers.md#transformer)
+[documentation](../../../apps/4_app_configuration_settings/2_app_runnable_triggers.md#transformer)
 for more information.
 
 :::
