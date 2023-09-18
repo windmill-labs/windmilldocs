@@ -1,0 +1,39 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Image
+
+The Image component allows you to display a picture.
+
+![HTML](../../assets/apps/4_app_component_library/image_api.png.webp)
+
+The following section details Image component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Image configuration
+
+| Name      |             Type             | Connectable | Templatable |  Default  | Description                                                        |
+| --------- | :--------------------------: | :---------: | :---------: | :-------: | ------------------------------------------------------------------ |
+| Source    |            string            |    true     |    false    | /logo.svg | The image.                                                         |
+| Image Fit | string: contain, cover, fill |    false    |    false    |  contain  | How the image will fit the component box.                          |
+| Alt text  |            string            |    false    |    false    |     /     | This text will appear if the image can't be loaded for any reason. |
+
+## Outputs
+
+| Name    |  Type   | Description                               |
+| ------- | :-----: | ----------------------------------------- |
+| loading | boolean | The loading state of the Image component. |

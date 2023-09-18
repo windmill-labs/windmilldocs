@@ -68,4 +68,4 @@ The apps will be permissioned on behalf of the [admin/author](../16_roles_and_pe
 
 <br/>
 
-At last, this is an easy way to get an app for your scripts and flows to be customized with [Styling](../../apps/4_app_configuration-settings/4_app_styling.mdx) and [Components](../../apps/4_app_configuration-settings/1_app_component_library.mdx).
+At last, this is an easy way to get an app for your scripts and flows to be customized with [Styling](../../apps/4_app_configuration_settings/4_app_styling.mdx) and [Components](../../apps/4_app_configuration_settings/1_app_component_library.mdx).

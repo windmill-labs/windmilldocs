@@ -38,7 +38,7 @@ const tabs = [
 				title: 'Building blocks',
 				description: 'Quickly start building complex apps using our 50 built-in components.',
 				icon: Puzzle,
-				caption: <div>Quickly start building complex apps using our <a href="/docs/apps/app_configuration-settings/app_component_library" target="_blank">50 built-in components</a>.</div>,
+				caption: <div>Quickly start building complex apps using our <a href="/docs/apps/app_configuration_settings/app_component_library" target="_blank">50 built-in components</a>.</div>,
 				video: {
 					videoSrc: '/videos/components.mp4',
 					altText: 'Building blocks',
@@ -98,7 +98,7 @@ const tabs = [
 				title: 'Build BI dashboards with charts',
 				description: 'Build complex apps from atomic components.',
 				icon: BarChart,
-				caption: <div>Windmill embeds several <a href="/docs/apps/app_configuration-settings/app_component_library#charts" target="_blank">charts components</a> with unlimited customization possibilities.</div>,
+				caption: <div>Windmill embeds several <a href="/docs/apps/app_configuration_settings/app_component_library#charts" target="_blank">charts components</a> with unlimited customization possibilities.</div>,
 				video: {
 					videoSrc: '/videos/bi-charts.mp4',
 					altText: 'BI charts',
