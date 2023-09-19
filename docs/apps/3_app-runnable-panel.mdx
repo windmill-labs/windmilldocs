@@ -260,6 +260,16 @@ Use the `getAgGrid` function to get the ag-grid instance of a table.
 getAgGrid(id: string)
 ```
 
+### setSelectedIndex
+
+Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+
+#### Syntax
+
+```js
+setSelectedIndex(id: string, index: number)
+```
+
 ### setValue
 
 The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
@@ -282,6 +292,7 @@ Note that it's a bad idea to mix dynamic default value and setValue together.
 - [Slider](./4_app_configuration_settings/slider.mdx)
 - [Select](./4_app_configuration_settings/select.mdx)
 - [Text](./4_app_configuration_settings/text.mdx)
+- [Rich Text Editor](./4_app_configuration_settings/rich_text_editor.mdx)
 
 #### Parameters
 
@@ -300,17 +311,16 @@ Button and Form components can trigger other components to recompute. For exampl
 Caching an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/caching_app.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/caching_app.mp4"
 />
 
-<br/>
+<br />
 
 You can enable caching for an app inline script directly its editor settings. Here's how you can do it:
 
 1. **Settings**: From the Code Editor, go to the top bar and pick the `Cache` tab.
-   
 2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
 
 In the above example, the result of step the script will be cached for 5 minutes. If `Inline Script 0` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
