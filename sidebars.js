@@ -587,7 +587,12 @@ const sidebars = {
 					type: 'doc',
 					id: 'compared_to/retool',
 					label: 'Retool'
-				}
+				},
+				{
+					type: 'doc',
+					id: 'compared_to/prefect',
+					label: 'Prefect'
+				},
 			]
 		},
 		{
