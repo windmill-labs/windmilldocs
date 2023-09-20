@@ -2,19 +2,25 @@ import DocCard from '@site/src/components/DocCard';
 
 # Alternative to Prefect for building Workflows
 
-Prefect is great for building workflows. Windmill does it too, but it gives its users more control to orchestrate their data pipelines without constant back and forth between the code and the UI.
-
-While the approaches to observing and monitoring ETL data are similar, Windmill provides users with much more control and a broader range of uses from local development to low code, complemented by a script and app editors.
-
 ![Windmill Prefect](../assets/compared_to/windmill_prefect.png "Windmill Prefect")
+
+Both Windmill and Prefect support writing complex workflows and ETL with code and run them at scale.
+We highlight below the main differences between the 2 on the following axis:
+- [Alternative to Prefect for building Workflows](#alternative-to-prefect-for-building-workflows)
+	- [Open Source and Hosting](#open-source-and-hosting)
+	- [Workflows and Code](#workflows-and-code)
+	- [Triggers](#triggers)
+	- [Execution Runtime and Coldstarts](#execution-runtime-and-coldstarts)
+		- [Benchmark #1](#benchmark-1)
+		- [Benchmark #2](#benchmark-2)
+	- [Observability and Monitoring](#observability-and-monitoring)
+	- [AI Generation](#ai-generation)
+	- [Pricing](#pricing)
+	- [Scripts and Apps](#scripts-and-apps)
 
 <a href="https://www.prefect.io/" rel="nofollow">Prefect</a> is a data workflow management system, designed to help teams build, run, and monitor data workflows. It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
 
-<br/><br/>
-
-Below you will find our thoughts on the major differences between Prefect and Windmill.
-
-## Open Source & Hosting
+## Open Source and Hosting
 
 [Windmill](https://www.windmill.dev/) is fully open source. This implies that Windmill can be self-hosted with just a few commands, providing cost-effective and secure solutions.
 
@@ -90,7 +96,7 @@ The structuring of the flow and the configurations for each step are defined fro
 
 In particular, Windmill [generates automatically UIs](../core_concepts/6_auto_generated_uis/index.md) for flows and steps and lets users [test](../core_concepts/23_instant_preview/index.mdx) flows, steps or flow until a given step, from the UI.
 
-Flows can be [developed locally](../advanced/4_local_development/index.mdx) in YAML. Windmill will soon unveil an extension to facilitate the editing of flows in local development.
+Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. Windmill will soon unveil an extension to facilitate the editing of flows in local development.
 
 ![Windmill compared to Prefect](../assets/compared_to/windmill_compared_prefect.png "Windmill compared to Prefect")
 
@@ -122,7 +128,7 @@ While Windmill also allows configuration and triggers from the terminal, the pla
 	/>
 </div>
 
-## Execution Runtime & Coldstarts
+## Execution Runtime and Coldstarts
 
 Windmill's architecture allows runnning each task on the current fleet of worker
 (which you can auto-scale automatically) and hence do not suffer from cold start.
@@ -180,7 +186,7 @@ providing insights into the performance metrics.
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
-		description="This folder includes a small deno/ts utility to benchmark execution of jobs & flows."
+		description="This folder includes a small deno/ts utility to benchmark execution of jobs and flows."
 		href="https://github.com/windmill-labs/windmill/tree/main/benchmarks"
 	/>
 	<DocCard
@@ -190,7 +196,7 @@ providing insights into the performance metrics.
     />
 </div>
 
-## Observability & Monitoring
+## Observability and Monitoring
 
 In terms of monitoring and observability, Windmill and Prefect's cloud app fulfill the same functions: audit logs, monitoring of runs and schedules, saving of flows, configurations (<a href="https://docs.prefect.io/latest/concepts/blocks/?h=blocks" rel="nofollow">Blocks</a> in Prefect, [Resource Types](../core_concepts/3_resources_and_types/index.mdx) in Windmill) and variables, [allocation of workers](../core_concepts/9_worker_groups/index.mdx).
 
@@ -273,7 +279,7 @@ Prefect pricing:
 	/>
 </div>
 
-## Scripts & Apps
+## Scripts and Apps
 
 This document has focused on the Flow Editor since it is the product closest to what Prefect does. However, Windmill also includes Script and App editors.
 
@@ -289,7 +295,7 @@ The [script editor](../script_editor/index.mdx) allows users to build long-runni
 	/>
 </div>
 
-The [app editor](../apps/0_app_editor/index.mdx) goes beyond auto-generated UIs and allows you to create your own customized UIs using drag-and-drop from components powered by Windmill scripts & flows."
+The [app editor](../apps/0_app_editor/index.mdx) goes beyond auto-generated UIs and allows you to create your own customized UIs using drag-and-drop from components powered by Windmill scripts and flows.
 
 ![App Editor](../assets/apps/0_app_editor/app-editor.png "App Editor")
 
