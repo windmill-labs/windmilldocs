@@ -66,7 +66,7 @@ Windmill work with those providers using the docker containers and specific guid
 
 Using Docker and Caddy, Windmill can be deployed using 4 files,
 ([`docker-compose.yml`][windmill-docker-compose],
-[`Caddyfile`][windmill-caddyfile]), an .env and an empty oauth.json in a single command.
+[`Caddyfile`][windmill-caddyfile]) and an .env in a single command.
 
 [Caddy][caddy] is the reverse proxy that will redirect traffic to both windmill (port 8000) and the lsp (the monaco assistant) service (port 3001) and multiplayer service (port 3002).
 Postgres holds the entire state of windmill, the rest is fully stateless, Windmill-LSP provides editor intellisense.
@@ -77,7 +77,6 @@ Make sure docker is started (Mac: `open /Applications/Docker.app`, Windows: `sta
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
-echo '{}' > oauth.json
 
 docker compose up -d
 ```

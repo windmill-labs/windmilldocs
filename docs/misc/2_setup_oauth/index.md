@@ -2,27 +2,11 @@
 
 Windmill supports Single Sign-On for Microsoft, Google, GitHub, GitLab, Okta, and domain restriction.
 
-The oauth.json need to be mounted from your Windmill server and worker instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L42-L43), and those [2 other lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L65-L66) and have an oauth.json file in the same folder as the docker-compose.yml.
-
-The oauth.json has the following structure:
-
-```json
-{
-  "<integration>": {
-    "id": "...",
-    "secret": "..."
-  },
-  ....
-}
-```
-
-> `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json)
-
-<br/>
-
-For environments that do not support mounting files or if not practical, you may also pass it base64 as env variable to the server: `OAUTH_JSON_AS_BASE64=$(base64 oauth.json | tr -d '\n')`
+OAuth configuration are set in the instance settings available from the superadmin settings.
 
 ## OAuth Resources
+
+![Setup OAuth](./setup_oauth.png)
 
 ### Slack
 
@@ -69,17 +53,9 @@ settings:
   token_rotation_enabled: false
 ```
 
-1.
+See screenshot above:
 
-```json
-{
-  ...
-  "slack": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>"
-  }
-}
-```
+Superadmin Settings -> Instance Settings -> Resources -> Toggle "slack" -> set client id and client secret
 
 ### Google Sheet
 
@@ -96,20 +72,15 @@ settings:
   - Authorized Redirect URLs: https://<YOUR_INSTANCE>/oauth/callback/gsheets
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
-- Edit your `oauth.json` to look like:
-
-```json
-{
-	"gsheets": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>"
-	}
-}
-```
+- Superadmin Settings -> Instance Settings -> Resources -> Add OAuth "gsheet" -> set client id and client secret
 
 The same steps apply to enable more APIs (**gmail**, **gdrive**, etc) on your Google Account to set up the resources in WindMill.
 
 ## OAuth SSO
+
+![Setup SSO](./setup_sso.png)
+
+We recommend using a private navigation tab to test the new settings as soon as they are saved by refreshing the login page as a non authed user.
 
 ### Google login
 
@@ -125,41 +96,29 @@ First, you need to create a Google OAuth Client:
   - Authorized Redirect URLs: https://<YOUR_INSTANCE>/user/login_callback/google
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
-- Edit your `oauth.json` to look like:
 
-```json
-{
-	"google": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["youremaildomain.dev"]
-	}
-}
-```
+See screenshot above:
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "google" -> set client id, org and client secret
+
+### Microsoft
+
+Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/microsoft
+Login: https://<YOUR_INSTANCE>/user/login
+
+Create a new OAuth 2.0 Client [in microsoft portal](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
+
+and in the "Authentication" tab, set the redirect URI to `BASE_URL/user/login_callback/microsoft`, the logout channel to
+`BASE_URL/auth/logout` where BASE_URL is what you configured as core BASE_URL.
+Also set "Accounts in any organizational directory (Any Microsoft Entra ID tenant -
+Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)", you can restrict the
+emails directly in windmill using the "allowed_domains" setting.
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "microsoft" -> set client id, org and client secret
 
 ### Keycloak
 
-Setup your realm in Keycload then add the following to your `oauth.json`:
-
-```
-{
-  "keycloak_<realm>": {
-    "id": "...",
-    "secret": "...",
-    "connect_config": {
-      "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
-      "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
-      "scopes": ["openid", "offline_access"]
-    },
-    "login_config": {
-      "auth_url": "https://.../realms/<realm>/protocol/openid-connect/auth",
-      "token_url": "https://.../realms/<realm>/protocol/openid-connect/token",
-      "userinfo_url":  "https://.../realms/<realm>/protocol/openid-connect/userinfo",
-      "scopes": ["openid", "offline_access"]
-    }
-  }
-}
-```
+Setup your realm in Keycloak and set Keycloak in Superadmin Settings -> Instance Settings -> SSO -> Keycloak
 
 ### Jumpcloud
 
@@ -175,45 +134,13 @@ Login: https://<YOUR_INSTANCE>/user/login
 Client Authentication Type: Client Secret Basic
 Attribute Mapping, Standard Scopes: Check Email
 
-Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud" to your oauth.json:
+Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud":
 
-```json
-{
-	"jumpcloud": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["youremaildomain.dev"]
-	}
-}
-```
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "jumpcloud" -> set client id and client secret
 
 ![Jumpcloud](./jumpcloud.png.webp)
 
 ### Okta
-
-Setup your `oauth.json` (e.g. via the `oauthConfig` in the values.yaml when using helm), using `okta` as the realm name, though
-you can provide whatever realm name you want here, if you know what you're doing. This is configured as though helm is being
-used for the deployment.
-
-```
-{
-  "okta": {
-    "id": "<client credential from the client ID section of the okta service configuration>",
-    "secret": "<from the CLIENT SECRETS section of the okta service configuration>",
-    "login_config": {
-      "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
-      "token_url": "https://<your org>.okta.com/oauth2/v1/token",
-      "userinfo_url": "https://<your org>.okta.com/oauth2/v1/userinfo",
-      "scopes": ["openid", "profile", "email"]
-    },
-    "connect_config": {
-      "auth_url": "https://<your org>.okta.com/oauth2/v1/authorize",
-      "token_url": "https://<your org>.okta.com/oauth2/v1/token",
-      "scopes": ["openid", "profile", "email"]
-    }
-  }
-}
-```
 
 From your Admin page, setup windmill using the service flow
 
@@ -236,39 +163,14 @@ From your Admin page, setup windmill using the service flow
 - "Login initiated by" `App Only`
 - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
 
-### Microsoft
-
-Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/microsoft
-Login: https://<YOUR_INSTANCE>/user/login
-
-Microsoft's Single Sign-On integration is supported by Windmill. Detailed steps for setting up Microsoft as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
-
-```json
-{
-	"microsoft": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["youremaildomain.dev"]
-	}
-}
-```
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "okta" -> set client id, org and client secret
 
 ### GitHub
 
 Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/github
 Login: https://<YOUR_INSTANCE>/user/login
 
-GitHub's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitHub as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
-
-```json
-{
-	"github": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["youremaildomain.dev"]
-	}
-}
-```
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "github" -> set client id, org and client secret
 
 ### GitLab
 
@@ -277,32 +179,8 @@ Login: https://<YOUR_INSTANCE>/user/login
 
 GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
 
-```json
-{
-	"gitlab": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>",
-		"allowed_domains": ["youremaildomain.dev"]
-	}
-}
-```
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "gitlab" -> set client id, org and client secret
 
 ### Custom OAuth
 
-You can add a completely custom oauth without requiring a dev setup. The item accepts an extra optional field: `connect_config` or `login_config` of type OAuthConfig:
-
-```
-interface OAuthConfig {
-    auth_url: string,
-    token_url: string,
-    userinfo_url?: string,
-    scopes?: string[],
-    extra_params?: Record<string, string>,
-    extra_params_callback?: Record<string, string>,
-    req_body_auth?: bool
-}
-```
-
-`connect_config` is used for resources, and `login_config` for SSO.
-
-Once you have validated your custom item, we would be greateful if you could open a PR. See [Contributor's guide](../4_contributing/index.md) for more details.
+You can use other custom OAuths as resources using the "Add OAuth" button in: Superadmin Settings -> Instance Settings -> Resources -> Add OAuth
