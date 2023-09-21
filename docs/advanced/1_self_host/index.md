@@ -88,6 +88,38 @@ The default super-admin user is: **admin@windmill.dev** / `changeme`.
 
 From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
 
+:::info Deployment on Proxmox VMs
+
+If you deploy Windmill on a default Proxmox VM configuration, you might run into trouble when using libraries or packages that contain AVX instructions (e.g., Tensorflow, Polars...). 
+Should that be the case, then your scripts will throw error messages like:
+
+```
+[
+    {
+        "error": {
+            "name": "ExecutionErr",
+            "message": "error during execution of the script:\nprocess terminated by signal: Some(\n    4,\n), stopped_signal: None, core_dumped: true"
+        }
+    }
+]
+```
+
+```
+Illegal instruction (core dumped)
+```
+
+The problem is that by default, VMs don't entirely emulate your host system's CPU, which prevents them from using the host's AVX instructions.
+There is an easy fix however:
+
+1. Go to the Proxmox UI
+2. Go to the `Hardware` settings of your VM
+3. Edit the `Processors` config and change the processor `Type` to `"host"`
+4. Restart your VM
+
+That should eliminate all `Signal 4` and `Illegal Instructions` errors.
+
+:::
+
 ### Use an external database
 
 For more production use-cases, we recommend using the helm-chart. However, the docker-compose on a big instance is sufficient for many use-cases.
