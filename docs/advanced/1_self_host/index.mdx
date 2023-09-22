@@ -92,7 +92,7 @@ Self-host Windmill in less than a minute:
 
 Using [Docker](https://www.docker.com/) and [Caddy](https://caddyserver.com/), Windmill can be deployed using 4 files,
 ([`docker-compose.yml`][windmill-docker-compose],
-[`Caddyfile`][windmill-caddyfile]), an [.env][windmill-env] and an empty oauth.json in a single command.
+[`Caddyfile`][windmill-caddyfile]) and an [.env][windmill-env] in a single command.
 
 [Caddy][caddy] is the reverse proxy that will redirect traffic to both Windmill (port 8000) and the LSP (the monaco assistant) service (port 3001) and multiplayer service (port 3002).
 Postgres holds the entire state of Windmill, the rest is fully stateless, Windmill-LSP provides editor intellisense.
@@ -108,7 +108,6 @@ and type the following commands:
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml -o docker-compose.yml
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/Caddyfile -o Caddyfile
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
-echo '{}' > oauth.json
 
 docker compose up -d
 ```
