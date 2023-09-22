@@ -1,8 +1,8 @@
 # Setup OAuth and SSO
 
-Windmill supports Single Sign-On for Microsoft, Google, GitHub, GitLab, Okta, and domain restriction.
+Windmill supports Single Sign-On for [Microsoft](#microsoft), [Google](#google-login), [GitHub](#github), [GitLab](#gitlab), [Okta](#okta), and domain restriction.
 
-The oauth.json need to be mounted from your Windmill server and worker instances. On the docker-compose.yml, this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L42-L43), and those [2 other lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L65-L66) and have an oauth.json file in the same folder as the docker-compose.yml.
+On your [self-hosted instance](../../advanced/1_self_host/index.mdx), the oauth.json need to be mounted from your Windmill server and worker instances. On the [`docker-compose.yml`](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml), this would correspond to uncommenting these [2 lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L42-L43), and those [2 other lines](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L65-L66) and have an oauth.json file in the same folder as the docker-compose.yml.
 
 The oauth.json has the following structure:
 
@@ -16,98 +16,11 @@ The oauth.json has the following structure:
 }
 ```
 
-> `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json)
+> `<integration>` code must match with the code that is setup in [oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json).
 
 <br/>
 
-For environments that do not support mounting files or if not practical, you may also pass it base64 as env variable to the server: `OAUTH_JSON_AS_BASE64=$(base64 oauth.json | tr -d '\n')`
-
-## OAuth Resources
-
-### Slack
-
-1. Create a new slack app at <https://api.slack.com/apps?new_app=1>
-
-Your app manifest shoud look like this, replacing `<YOUR INSTANCE URL>` in 2 places.
-
-```yaml
-display_information:
-  name: Windmill
-  description: windmill.dev slackbot and oauth integration
-  background_color: '#3b82f6'
-  long_description: The Windmill app allows to use command to run jobs inside Windmill as well as receiving message as the Windmill app. The windmill app pairs a slack workspace with a windmill workspace. It must be installed from within the settings of a windmill workspace.
-features:
-  app_home:
-    home_tab_enabled: true
-    messages_tab_enabled: true
-    messages_tab_read_only_enabled: true
-  bot_user:
-    display_name: Windmill
-    always_online: true
-  slash_commands:
-    - command: /windmill
-      url: <YOUR INSTANCE URL>/api/oauth/slack_command
-      description: Trigger the script set in your workspace settings for slack
-      usage_hint: the text that will be passed to the script
-      should_escape: false
-oauth_config:
-  redirect_urls:
-    - <YOUR INSTANCE URL>
-  scopes:
-    user:
-      - chat:write
-      - admin
-      - channels:write
-    bot:
-      - chat:write
-      - chat:write.public
-      - channels:join
-      - commands
-settings:
-  org_deploy_enabled: false
-  socket_mode_enabled: false
-  token_rotation_enabled: false
-```
-
-1.
-
-```json
-{
-  ...
-  "slack": {
-    "id": "<CLIENT_ID>",
-    "secret": "<CLIENT_SECRET>"
-  }
-}
-```
-
-### Google Sheet
-
-**Create GSheet OAuth keys**
-
-- Create a Google OAuth account by going to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
-- Click "Enable APIs and Services"
-  - Search "Google Sheets API"
-  - Enable this API
-- Click "Create Credentials", then click "OAuth 2.0 Client IDs" in the drop-down menu.
-- Enter the following:
-  - Application Type: Web Application
-  - Name: Windmill
-  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/oauth/callback/gsheets
-- Click Create.
-- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
-- Edit your `oauth.json` to look like:
-
-```json
-{
-	"gsheets": {
-		"id": "<CLIENT_ID>",
-		"secret": "<CLIENT_SECRET>"
-	}
-}
-```
-
-The same steps apply to enable more APIs (**gmail**, **gdrive**, etc) on your Google Account to set up the resources in WindMill.
+For environments that do not support mounting files or if not practical, you may also pass it base64 as env variable to the server: `OAUTH_JSON_AS_BASE64=$(base64 oauth.json | tr -d '\n')`.
 
 ## OAuth SSO
 
@@ -306,3 +219,90 @@ interface OAuthConfig {
 `connect_config` is used for resources, and `login_config` for SSO.
 
 Once you have validated your custom item, we would be greateful if you could open a PR. See [Contributor's guide](../4_contributing/index.md) for more details.
+
+## OAuth Resources
+
+### Slack
+
+1. Create a new slack app at <https://api.slack.com/apps?new_app=1>
+
+Your app manifest shoud look like this, replacing `<YOUR INSTANCE URL>` in 2 places.
+
+```yaml
+display_information:
+  name: Windmill
+  description: windmill.dev slackbot and oauth integration
+  background_color: '#3b82f6'
+  long_description: The Windmill app allows to use command to run jobs inside Windmill as well as receiving message as the Windmill app. The windmill app pairs a slack workspace with a windmill workspace. It must be installed from within the settings of a windmill workspace.
+features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: true
+  bot_user:
+    display_name: Windmill
+    always_online: true
+  slash_commands:
+    - command: /windmill
+      url: <YOUR INSTANCE URL>/api/oauth/slack_command
+      description: Trigger the script set in your workspace settings for slack
+      usage_hint: the text that will be passed to the script
+      should_escape: false
+oauth_config:
+  redirect_urls:
+    - <YOUR INSTANCE URL>
+  scopes:
+    user:
+      - chat:write
+      - admin
+      - channels:write
+    bot:
+      - chat:write
+      - chat:write.public
+      - channels:join
+      - commands
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
+```
+
+1.
+
+```json
+{
+  ...
+  "slack": {
+    "id": "<CLIENT_ID>",
+    "secret": "<CLIENT_SECRET>"
+  }
+}
+```
+
+### Google Sheet
+
+**Create GSheet OAuth keys**
+
+- Create a Google OAuth account by going to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
+- Click "Enable APIs and Services"
+  - Search "Google Sheets API"
+  - Enable this API
+- Click "Create Credentials", then click "OAuth 2.0 Client IDs" in the drop-down menu.
+- Enter the following:
+  - Application Type: Web Application
+  - Name: Windmill
+  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/oauth/callback/gsheets
+- Click Create.
+- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
+- Edit your `oauth.json` to look like:
+
+```json
+{
+	"gsheets": {
+		"id": "<CLIENT_ID>",
+		"secret": "<CLIENT_SECRET>"
+	}
+}
+```
+
+The same steps apply to enable more APIs ([Gmail](../../integrations/gmail.md), [Gdrive](../../integrations/gdrive.md), etc.) on your Google Account to set up the resources in Windmill.
