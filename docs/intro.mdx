@@ -1,5 +1,5 @@
 import DocCard from '@site/src/components/DocCard';
-import { Book, Pen } from 'lucide-react';
+import { Book, Pen, Home, Cloud } from 'lucide-react';
 
 # Introduction
 
@@ -27,6 +27,19 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 		description="Windmill bridges the gap between no-code/low-code services and traditional programming."
 		href="/docs/misc/note_of_intent"
 		Icon={Pen}
+	/>
+	<DocCard
+		title="Self Host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+		Icon={Home}
+	/>
+	<DocCard
+		target="_blank"
+		title="Windmill Cloud"
+		description="Use Windmill's Cloud App (no credit card required)."
+		href="https://app.windmill.dev/"
+		Icon={Cloud}
 	/>
 </div>
 
@@ -79,6 +92,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 		title="Triggering Flows"
 		description="Trigger flows on-demand, by schedule or on external events."
 		href="/docs/getting_started/trigger_flows"
+		color="teal"
 	/>
 	<DocCard
 		title="Script Editor"
