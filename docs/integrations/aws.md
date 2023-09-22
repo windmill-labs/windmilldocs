@@ -2,6 +2,12 @@
 
 To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
+:::info Self Host
+
+If you're looking for a way to self-host Windmill using AWS, see [Self-Host Windmill](../advanced/1_self_host/index.mdx).
+
+:::
+
 ![Add AWS Resource](../assets/integrations/add-aws.png.webp)
 
 | Property           | Type   | Description                        | Default | Required | Where to Find                                                             |
