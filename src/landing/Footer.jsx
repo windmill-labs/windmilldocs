@@ -135,7 +135,7 @@ export default function Footer() {
 							<div className="flex justify-center items-center mt-4">
 								<img className="h-10" src="/img/soc.png" alt="SOC Compliance badge" />
 								<p className="text-xs text-left leading-6 text-gray-500 ml-2">
-									Windmill Labs is SOC 2 Type I compliant
+									Windmill Labs is SOC 2 Type II compliant
 								</p>
 							</div>
 						</div>
