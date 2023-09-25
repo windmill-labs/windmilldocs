@@ -8,7 +8,7 @@ When jobs reach the concurrency limit, they are automatically queued for executi
 
 ## Concurrency limit of Script
 
-Concurrency limit can be set from the metadata menu. Pick "Concurrency" and define a time window and max number of executions of the flow within that time window.
+Concurrency limit can be set from the Settings menu. Pick "Concurrency" and define a time window and max number of executions of the flow within that time window.
 
 ![Concurrency Limit](../../assets/code_editor/concurrency_limit.png.webp)
 

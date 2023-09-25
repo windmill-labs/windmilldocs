@@ -88,9 +88,9 @@ const sidebars = {
 						id: 'script_editor/index'
 					},
 					items: [
-						'script_editor/metadata',
+						'script_editor/settings',
 						'script_editor/script_kinds',
-						'script_editor/customize_arguments',
+						'script_editor/customize_ui',
 						'script_editor/versioning',
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
