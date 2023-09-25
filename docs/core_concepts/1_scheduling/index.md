@@ -162,7 +162,7 @@ If you want to handle failure and receive another message in that case, add an [
 
 ### Manage permissions from the workflow
 
-From the metadata menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.mdx#folders) (group of people) to manage view and editing rights.
+From the settings menu, change the owner to a [folder](../../core_concepts/8_groups_and_folders/index.mdx#folders) (group of people) to manage view and editing rights.
 
 ![Manage permissions](./5-manage-rights.png.webp 'Manage permissions')
 

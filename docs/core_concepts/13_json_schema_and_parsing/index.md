@@ -140,7 +140,7 @@ Resource types in Windmill are associated with JSON Schemas. A resource type def
 
 ## Advanced Settings
 
-Some arguments' types can be given advanced settings that will affect the inputs' [auto-generated UI](../../core_concepts/6_auto_generated_uis/index.md) and JSON Schema.
+Some arguments' types can be given advanced settings that will affect the inputs' [auto-generated UI](../../core_concepts/6_auto_generated_uis/index.mdx) and JSON Schema.
 
 Here is an example on how to define a python list as an enum of strings using the `Customize` menu.
 

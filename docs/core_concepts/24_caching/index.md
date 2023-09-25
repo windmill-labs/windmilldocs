@@ -18,9 +18,9 @@ Caching a script means caching the results of that script for a certain duration
 
 <br/>
 
-You can enable caching for a script directly in the script metadata. Here's how you can do it:
+You can enable caching for a script directly in the script Settings. Here's how you can do it:
 
-1. **Metadata**: From the Script Editor, pick the "Metdata" menu an scroll to "Cache".
+1. **Settings**: From the Script Editor, pick the "Settings" menu an scroll to "Cache".
 
 2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
 
