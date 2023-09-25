@@ -37,7 +37,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 Scripts consist of 2 parts:
 
 - [Code](#code): for Go scripts, it must have at least a main function.
-- [Metadata](#metadata): metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature).
+- [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature).
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`.
 
@@ -72,11 +72,11 @@ In this quick start guide, we'll create a script that greets the operator runnin
 From the Home page, click `+Script`. This will take you to the
 first step of script creation: Metadata.
 
-## Metadata
+## Settings
 
 ![New script](./create_script_go.png)
 
-Each script has metadata associated with it, enabling it to be defined and configured in depth.
+As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
 - **Path** is the Script's unique identifier that consist of the
   [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
@@ -85,16 +85,22 @@ Each script has metadata associated with it, enabling it to be defined and confi
   will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
   default.
 - **Language** of the script.
-- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.md)
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
   to users on how to run your Script. It supports markdown.
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.md), [Approval](../../../flows/11_flow_approval.mdx) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+
+This menu also has additional settings, such as:
+
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
+- **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Metadata"
-		description="Each script has metadata associated with it, enabling it to be defined and configured in depth."
-		href="/docs/script_editor/metadata"
+		title="Settings"
+		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
+		href="/docs/script_editor/settings"
 	/>
 </div>
 
@@ -103,7 +109,7 @@ Now click on the code editor on the left side.
 ## Code
 
 Windmill provides an online editor to work on your Scripts. The left-side is
-the editor itself. The right-side [previews the UI](../../../core_concepts/6_auto_generated_uis/index.md) that Windmill will
+the editor itself. The right-side [previews the UI](../../../core_concepts/6_auto_generated_uis/index.mdx) that Windmill will
 generate from the Script's signature - this will be visible to the users of the
 Script. You can easily preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
@@ -152,7 +158,7 @@ entrypoint. There are a few important things to note about the `main`.
 
 - The main arguments are used for generating
 	1. the [input spec](../../../core_concepts/13_json_schema_and_parsing/index.md) of the Script
-	2. the [frontend](../../../core_concepts/6_auto_generated_uis/index.md) that you see when running the Script as a standalone app.
+	2. the [frontend](../../../core_concepts/6_auto_generated_uis/index.mdx) that you see when running the Script as a standalone app.
 - Type annotations are used to generate the UI form, and help pre-validate
   inputs. While not mandatory, they are highly recommended. You can customize
   the UI in later steps (but not change the input type!).
@@ -217,19 +223,15 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 	/>
 </div>
 
-Now let's go to the last step: the "Customise" settings.
+Now let's go to the last step: the "Generated UI" settings.
 
-## Customize Settings
+## Customize UI
 
-In this step, you can:
+From the Settings menu, the "Generated UI" tab lets you customize the script's arguments.
 
-- Give a **script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.md), [Approval](../../../flows/11_flow_approval.mdx) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
-- Customize the script's **Arguments**. The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
+The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
 ![Advanced settings for Python](./customize_go.png)
-
-We're done! Save your script. Note that Scripts are versioned in Windmill, and
-each script version is uniquely identified by a hash.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -238,16 +240,19 @@ each script version is uniquely identified by a hash.
 		href="/docs/script_editor/script_kinds"
 	/>
 	<DocCard
-		title="Customize Arguments"
+		title="Customize UI"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
-		href="/docs/script_editor/customize_arguments"
+		href="/docs/script_editor/customize_ui"
 	/>
 </div>
 
 ## Run!
 
-Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
+We're done! Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
 to load the script. You'll see the user input form we defined earlier.
+
+Note that Scripts are versioned in Windmill, and
+each script version is uniquely [identified by a hash](../../../script_editor/versioning.mdx)
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
@@ -297,9 +302,9 @@ For each script, a UI is autogenerated from the jsonchema inferred from the scri
 		href="/docs/core_concepts/auto_generated_uis"
 	/>
 	<DocCard
-		title="Customize Arguments"
+		title="Customize UI"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
-		href="/docs/script_editor/customize_arguments"
+		href="/docs/script_editor/customize_ui"
 	/>
 </div>
 
