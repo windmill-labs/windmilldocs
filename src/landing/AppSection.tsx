@@ -7,7 +7,10 @@ import {
 	Hand,
 	LayoutDashboard,
 	PieChart,
-	Puzzle
+	Puzzle,
+	Palette,
+	ToyBrick,
+	Wall
 } from 'lucide-react';
 import { useDeveloperMode } from '../pages';
 
@@ -106,7 +109,34 @@ const tabs = [
 				}
 			}
 		]
-	}
+	},
+	{
+		label: 'Styling',
+		icon: Palette,
+		id: 'styling',
+		data: [
+			{
+				title: 'Give style to each component',
+				description: 'Configure the style of each component with pre-set options, CSS, or Tailwind Classes.',
+				icon: ToyBrick,
+				caption: <div>Configure the <a href="/docs/apps/app_configuration_settings/app_styling#component-level" target="_blank">style of each component</a> with pre-set options, CSS, or Tailwind Classes.</div>,
+				video: {
+					videoSrc: '/videos/styling_component.mp4',
+					altText: 'Component styling',
+				}
+			},
+			{
+				title: 'Define global themes',
+				description: 'Apply global themes to reuse across your applications based on their purposes.',
+				icon: LayoutDashboard,
+				caption: <div>Apply <a href="/docs/apps/app_configuration_settings/app_styling#global-styling" target="_blank">global themes</a> to reuse across your applications based on their purposes.</div>,
+				video: {
+					videoSrc: '/videos/global_styling.mp4',
+					altText: 'Global styling',
+				}
+			}
+		]
+	},
 ];
 
 const examples = [
