@@ -1,8 +1,18 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Setup OAuth and SSO
 
 Windmill supports Single Sign-On for [Microsoft](#microsoft), [Google](#google-login), [GitHub](#github), [GitLab](#gitlab), [Okta](#okta), and domain restriction.
 
 On [self-hosted instances](../../advanced/1_self_host/index.mdx), OAuth configuration are set in the instance settings available from the superadmin settings.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self Host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+	/>
+</div>
 
 ## OAuth SSO
 
@@ -11,6 +21,18 @@ On [self-hosted instances](../../advanced/1_self_host/index.mdx), OAuth configur
 We recommend using a private navigation tab to test the new settings as soon as they are saved by refreshing the login page as a non authed user.
 
 ### Google login
+
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/jSpuBsRv0yM"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen="true"
+></iframe>
+
+<br/>
 
 **Create Google OAuth keys**
 
@@ -25,24 +47,22 @@ First, you need to create a Google OAuth Client:
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 
-See screenshot above:
-
-Superadmin Settings -> Instance Settings -> SSO -> Toggle "google" -> set client id, org and client secret
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "Google" -> set client id, org and client secret.
 
 ### Microsoft
 
 Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/microsoft
 Login: https://<YOUR_INSTANCE>/user/login
 
-Create a new OAuth 2.0 Client [in microsoft portal](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
+Create a new OAuth 2.0 Client in [Microsoft portal](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade).
 
-and in the "Authentication" tab, set the redirect URI to `BASE_URL/user/login_callback/microsoft`, the logout channel to
+In the "Authentication" tab, set the redirect URI to `BASE_URL/user/login_callback/microsoft`, the logout channel to
 `BASE_URL/auth/logout` where BASE_URL is what you configured as core BASE_URL.
 Also set "Accounts in any organizational directory (Any Microsoft Entra ID tenant -
 Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)", you can restrict the
 emails directly in windmill using the "allowed_domains" setting.
 
-Superadmin Settings -> Instance Settings -> SSO -> Toggle "microsoft" -> set client id, org and client secret
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "microsoft" -> set client id, org and client secret.
 
 ### Keycloak
 
@@ -64,41 +84,43 @@ Attribute Mapping, Standard Scopes: Check Email
 
 Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud":
 
-Superadmin Settings -> Instance Settings -> SSO -> Toggle "jumpcloud" -> set client id and client secret
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "jumpcloud" -> set client id and client secret.
 
 ![Jumpcloud](./jumpcloud.png.webp)
 
 ### Okta
 
-From your Admin page, setup windmill using the service flow
+From your Admin page, setup Windmill using the service flow:
 
-1. `Create a new app integration`
-   a. For "sign-in method" select "OIDC - Open ID Connect"
-   b. For "application type" select "Web Appliction"
-2. Select all of the following options for Grant type of "Client acting on behalf of a user"
+1. `Create a new app integration`:
+   
+   a. For "sign-in method" select "OIDC - Open ID Connect".
+   
+   b. For "application type" select "Web Appliction".
+2. Select all of the following options for Grant type of "Client acting on behalf of a user":
 
-- Authorization Code
-- Refresh Token
-- Implicit (hybrid)
-- Allow ID Token with implicit grant type
-- Allow Access Token with implicit grant type
+   - Authorization Code
+   - Refresh Token
+   - Implicit (hybrid)
+   - Allow ID Token with implicit grant type
+   - Allow Access Token with implicit grant type
 
-3. For Refresh Token, select "Rotate token after every use"
+3. For Refresh Token, select "Rotate token after every use".
 4. Under "LOGIN", set the following:
 
-- "Sign-in redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>/user/login_callback/okta/`
-- "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
-- "Login initiated by" `App Only`
-- "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
+   - "Sign-in redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>/user/login_callback/okta/`
+   - "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
+   - "Login initiated by" `App Only`
+   - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
 
-Superadmin Settings -> Instance Settings -> SSO -> Toggle "okta" -> set client id, org and client secret
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "okta" -> set client id, org and client secret.
 
 ### GitHub
 
 Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/github
 Login: https://<YOUR_INSTANCE>/user/login
 
-Superadmin Settings -> Instance Settings -> SSO -> Toggle "github" -> set client id, org and client secret
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "github" -> set client id, org and client secret.
 
 ### GitLab
 
@@ -107,11 +129,11 @@ Login: https://<YOUR_INSTANCE>/user/login
 
 GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
 
-Superadmin Settings -> Instance Settings -> SSO -> Toggle "gitlab" -> set client id, org and client secret
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "gitlab" -> set client id, org and client secret.
 
 ### Custom OAuth
 
-You can use other custom OAuths as resources using the "Add OAuth" button in: Superadmin Settings -> Instance Settings -> Resources -> Add OAuth
+You can use other custom OAuths as resources using the "Add OAuth" button in: Superadmin Settings -> Instance Settings -> Resources -> Add OAuth.
 
 ## OAuth Resources
 
@@ -244,7 +266,7 @@ settings:
 
 See screenshot above:
 
-Superadmin Settings -> Instance Settings -> Resources -> Toggle "slack" -> set client id and client secret
+Superadmin Settings -> Instance Settings -> Resources -> Toggle "slack" -> set client id and client secret.
 
 ### Google Sheet
 
@@ -263,4 +285,4 @@ Superadmin Settings -> Instance Settings -> Resources -> Toggle "slack" -> set c
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 - Superadmin Settings -> Instance Settings -> Resources -> Add OAuth "gsheet" -> set client id and client secret
 
-The same steps apply to enable more APIs (**gmail**, **gdrive**, etc) on your Google Account to set up the resources in WindMill.
+The same steps apply to enable more APIs (**gmail**, **gdrive**, etc) on your Google Account to set up the resources in Windmill.
