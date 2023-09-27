@@ -307,7 +307,7 @@ const pricing = {
 			],
 			mostPopular: false,
 			customMessage: 'Learn more',
-			href: '/docs/misc/plans_details#white-labeling-windmill'
+			href: '/docs/misc/white_labelling'
 		}
 	]
 };
