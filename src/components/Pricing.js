@@ -9,7 +9,8 @@ import classNames from 'classnames';
 
 const types = [
 	{ value: 'selfhost', label: 'Self-hosted' },
-	{ value: 'cloud', label: 'Cloud' }
+	{ value: 'cloud', label: 'Cloud' },
+	{ value: 'whitelabel', label: 'White Label' },
 ];
 
 const periods = [
@@ -22,7 +23,7 @@ const pricing = {
 		{
 			name: 'Free and Open-source',
 			id: 'tier-free-selfhost',
-			href: '#',
+			href: '/docs/misc/plans_details#free-and-open-source',
 			price: {},
 
 			description: 'Unlimited users & executions',
@@ -36,7 +37,7 @@ const pricing = {
 		{
 			name: 'Enterprise edition',
 			id: 'tier-enterprise-selfhost',
-			href: 'mailto:contact@windmill.dev',
+			href: '/docs/misc/plans_details#self-host',
 			price: {
 				worker: {
 					monthly: 50,
@@ -104,7 +105,7 @@ const pricing = {
 		{
 			name: 'Community',
 			id: 'tier-free',
-			href: '#',
+			href: '/docs/misc/plans_details#community-edition---cloud',
 			price: {},
 			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
@@ -151,7 +152,7 @@ const pricing = {
 		{
 			name: 'Team',
 			id: 'tier-team',
-			href: '/docs/misc/plans_details#upgrading-to-team-edition',
+			href: 'https://app.windmill.dev/',
 			price: {
 				seat: {
 					monthly: 10,
@@ -215,7 +216,7 @@ const pricing = {
 		{
 			name: 'Enterprise',
 			id: 'tier-enterprise',
-			href: 'mailto:contact@windmill.dev',
+			href: '/docs/misc/plans_details#cloud-1',
 			price: {
 				worker: {
 					monthly: 100,
@@ -292,6 +293,22 @@ const pricing = {
 			],
 			mostPopular: false
 		}
+	],
+	whitelabel: [
+		{
+			name: 'White Labeling Windmill',
+			id: 'tier-free-selfhost',
+			price: {},
+
+			description: 'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
+			features: [
+				{ text: 'Embed the entire Windmill app.' },
+				{ text: 'Embed specific components (flow builder, app builder).' },
+			],
+			mostPopular: false,
+			customMessage: 'Learn more',
+			href: '/docs/misc/plans_details#white-labeling-windmill'
+		}
 	]
 };
 
@@ -310,18 +327,45 @@ export default function Pricing() {
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+						className="grid grid-cols-3 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
+							<RadioGroup.Option
+							key={option.value}
+							value={option}
+							className={({ checked }) =>
+								classNames(
+									checked ? (option.value === 'whitelabel' ? 'bg-gray-300 text-white' : 'bg-blue-600 text-white') : '',
+									'cursor-pointer rounded-full px-4 py-2',
+									'transition-all'
+								)
+							}
+						>
+							<span>{option.label}</span>
+						</RadioGroup.Option>
+						
+						))}
+					</RadioGroup>
+					<div>
+					{frequency.value !== 'whitelabel' && (
+					<RadioGroup
+						value={period}
+						onChange={setPeriod}
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+					>
+						<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
+						{periods.map((option) => (
 							<RadioGroup.Option
 								key={option.value}
 								value={option}
 								className={({ checked }) =>
 									classNames(
-										checked ? 'bg-blue-600 text-white' : '',
-										'cursor-pointer rounded-full px-4 py-2',
-										'transition-all '
+										checked
+											? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
+											: 'text-gray-500',
+										'cursor-pointer rounded-full px-2.5 py-1',
+										'transition-all'
 									)
 								}
 							>
@@ -329,37 +373,17 @@ export default function Pricing() {
 							</RadioGroup.Option>
 						))}
 					</RadioGroup>
-					<div>
-						<RadioGroup
-							value={period}
-							onChange={setPeriod}
-							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
-						>
-							<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
-							{periods.map((option) => (
-								<RadioGroup.Option
-									key={option.value}
-									value={option}
-									className={({ checked }) =>
-										classNames(
-											checked
-												? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
-												: 'text-gray-500',
-											'cursor-pointer rounded-full px-2.5 py-1',
-											'transition-all'
-										)
-									}
-								>
-									<span>{option.label}</span>
-								</RadioGroup.Option>
-							))}
-						</RadioGroup>
+				)}						
 					</div>
 				</div>
 				<div
 					className={classNames(
 						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
-						frequency.value === 'selfhost' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
+						{
+							'lg:grid-cols-3': frequency.value === 'cloud',
+							'lg:grid-cols-2': frequency.value === 'selfhost',
+							'lg:grid-cols-1': frequency.value === 'whitelabel',
+						  }
 					)}
 				>
 					{pricing[frequency.value].map((tier, index) => (
@@ -426,16 +450,18 @@ export default function Pricing() {
 								</a>
 							)}
 
-							{index == 0 ? (
-								<div
+						{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
+								
+								<a
 									aria-describedby={tier.id}
+									href={tier.href}
 									className={classNames(
 										'text-gray-900 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:text-white',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
 									)}
 								>
 									No credit card required
-								</div>
+								</a>
 							) : (
 								<a
 									href={tier.href}
@@ -447,7 +473,7 @@ export default function Pricing() {
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
 								>
-									{tier.customMessage ? tier.customMessage : 'Contact us'}
+									{tier.customMessage ? tier.customMessage : 'How to upgrade'}
 								</a>
 							)}
 							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10" style={{ marginBottom: '8rem' }}>
