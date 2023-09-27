@@ -9,7 +9,8 @@ import classNames from 'classnames';
 
 const types = [
 	{ value: 'selfhost', label: 'Self-hosted' },
-	{ value: 'cloud', label: 'Cloud' }
+	{ value: 'cloud', label: 'Cloud' },
+	{ value: 'whitelabel', label: 'White Label' },
 ];
 
 const periods = [
@@ -22,13 +23,13 @@ const pricing = {
 		{
 			name: 'Free and Open-source',
 			id: 'tier-free-selfhost',
-			href: '#',
+			href: '/docs/misc/plans_details#free-and-open-source',
 			price: {},
 
 			description: 'Unlimited users & executions',
 			features: [
-				{ text: 'Google/Github/Microsoft/Gitlab SSO' },
-				{ text: 'Easy to deploy on Fargate/Docker/Kubernetes' },
+				{ text: 'Google / Microsoft / GitHub / GitLab SSO' },
+				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
 				{ text: 'Community support on Discord' }
 			],
 			mostPopular: false
@@ -36,7 +37,7 @@ const pricing = {
 		{
 			name: 'Enterprise edition',
 			id: 'tier-enterprise-selfhost',
-			href: 'mailto:contact@windmill.dev',
+			href: '/docs/misc/plans_details#self-host',
 			price: {
 				worker: {
 					monthly: 50,
@@ -67,27 +68,24 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Windmill Enterprise Edition <b>Plugins</b>
+							Windmill Enterprise Edition <b>Plugins</b>:
 						</span>
 					),
 					features: [
 						{ text: 'Audit logs' },
 						{ text: 'Distributed dependency cache backed by S3' },
 						{ text: 'SAML support including groups synchronization' },
-						{ text: 'Multiplayer on WebIDE' }
+						{ text: 'Dedicated Workers / Native Performance' },
+						{ text: 'Worker Group Management UI' },
+						{ text: 'Deploy to staging/prod web UI' },
+						{ text: 'Global CSS on App Editor' },
+						{ text: 'Multiplayer on WebIDE' },
 					]
 				},
 				{
 					text: (
 						<span>
-							<b>SLA</b>
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -95,7 +93,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Design partners for Roadmap</b>
+							<b>Design partners for roadmap</b>
 						</span>
 					)
 				}
@@ -107,42 +105,45 @@ const pricing = {
 		{
 			name: 'Community',
 			id: 'tier-free',
-			href: '#',
+			href: '/docs/misc/plans_details#community-edition---cloud',
 			price: {},
 			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
 				{
-					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
+					text: <span>Google / Microsoft / GitHub / GitLab SSO</span>
 				},
 				{
 					text: (
 						<span>
-							<b>Unlimited</b> variables/resources/scripts/apps/flows * (except abuse)
+							<b>Unlimited</b> variables/resources/scripts/apps/flows (*except abuse)
 						</span>
 					)
 				},
 				{
 					text: (
 						<span>
-							<b>1000</b> free executions per month
+							<b>1,000</b> free executions per month
 						</span>
 					)
-				},
-				{
-					text: <span>Public apps</span>
 				},
 				{
 					text: <span>Groups, folders and granulars permissions</span>
 				},
 				{
+					text: <span>Public apps</span>
+				},
+				{
 					text: (
 						<span>
-							Deploy from <b>Github</b>
+							Deploy from <b>GitHub</b>
 						</span>
 					)
 				},
 				{
 					text: <span>Community support on Discord</span>
+				},
+				{
+					text: <span><a href="/docs/misc/plans_details#community-edition---cloud">All details</a></span>
 				}
 			],
 
@@ -151,14 +152,14 @@ const pricing = {
 		{
 			name: 'Team',
 			id: 'tier-team',
-			href: '/docs/misc/plans_details#upgrading-to-team-edition',
+			href: 'https://app.windmill.dev/',
 			price: {
 				seat: {
 					monthly: 10,
 					description: 'An author can create scripts and flows',
 					default: 1,
 					min: 1,
-					max: 100
+					max: 20
 				}
 			},
 			minPrice: 10,
@@ -176,7 +177,13 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Each seat includes:</span>,
+					text: <span>Global CSS on App Editor</span>
+				},
+				{
+					text: <span>Multiplayer editing</span>
+				},
+				{
+					text: <span> Each seat includes:</span>,
 					features: [
 						{ text: 'one user or two operators' },
 						{
@@ -188,7 +195,9 @@ const pricing = {
 						}
 					]
 				},
-
+				{
+					text: <span>20 seats maximum</span>
+				},
 				{
 					text: (
 						<span>
@@ -196,6 +205,9 @@ const pricing = {
 							assistance
 						</span>
 					)
+				},
+				{
+					text: <span><a href="/docs/misc/plans_details#team-plan---cloud">All details</a></span>
 				}
 			],
 			mostPopular: true,
@@ -204,7 +216,7 @@ const pricing = {
 		{
 			name: 'Enterprise',
 			id: 'tier-enterprise',
-			href: 'mailto:contact@windmill.dev',
+			href: '/docs/misc/plans_details#cloud-1',
 			price: {
 				worker: {
 					monthly: 100,
@@ -222,31 +234,20 @@ const pricing = {
 					max: 1000
 				}
 			},
-			minPrice: 440,
-			description: 'Dedicated support and infrastructure for your company.',
+			minPrice: 600,
+			description: 'Dedicated support, guidance and infrastructure for your company.',
 			features: [
 				{
 					text: <span>Everything in Team</span>
+				},
+				{
+					text: <span>Isolated & dedicated <b>database network & workers</b></span>
 				},
 
 				{
 					text: (
 						<span>
 							Each worker can run up to <b>~26M</b> jobs per month
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>SAML</b> support including groups synchronization
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>SLA</b>
 						</span>
 					)
 				},
@@ -260,7 +261,21 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							Deploy to staging/prod web UI
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SAML / SCIM</b> support including groups synchronization
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -268,12 +283,31 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Design partners for Roadmap</b>
+							<b>Design partners for roadmap</b>
 						</span>
 					)
+				},
+				{
+					text: <span><a href="/docs/misc/plans_details#enterprise-plan---cloud">All details</a></span>
 				}
 			],
 			mostPopular: false
+		}
+	],
+	whitelabel: [
+		{
+			name: 'White Labeling Windmill',
+			id: 'tier-free-selfhost',
+			price: {},
+
+			description: 'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
+			features: [
+				{ text: 'Embed the entire Windmill app.' },
+				{ text: 'Embed specific components (flow builder, app builder).' },
+			],
+			mostPopular: false,
+			customMessage: 'Learn more',
+			href: '/docs/misc/white_labelling'
 		}
 	]
 };
@@ -293,18 +327,45 @@ export default function Pricing() {
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+						className="grid grid-cols-3 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
+							<RadioGroup.Option
+							key={option.value}
+							value={option}
+							className={({ checked }) =>
+								classNames(
+									checked ? (option.value === 'whitelabel' ? 'bg-gray-300 text-white' : 'bg-blue-600 text-white') : '',
+									'cursor-pointer rounded-full px-4 py-2',
+									'transition-all'
+								)
+							}
+						>
+							<span>{option.label}</span>
+						</RadioGroup.Option>
+						
+						))}
+					</RadioGroup>
+					<div>
+					{frequency.value !== 'whitelabel' && (
+					<RadioGroup
+						value={period}
+						onChange={setPeriod}
+						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+					>
+						<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
+						{periods.map((option) => (
 							<RadioGroup.Option
 								key={option.value}
 								value={option}
 								className={({ checked }) =>
 									classNames(
-										checked ? 'bg-blue-600 text-white' : '',
-										'cursor-pointer rounded-full px-4 py-2',
-										'transition-all '
+										checked
+											? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
+											: 'text-gray-500',
+										'cursor-pointer rounded-full px-2.5 py-1',
+										'transition-all'
 									)
 								}
 							>
@@ -312,37 +373,17 @@ export default function Pricing() {
 							</RadioGroup.Option>
 						))}
 					</RadioGroup>
-					<div>
-						<RadioGroup
-							value={period}
-							onChange={setPeriod}
-							className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
-						>
-							<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
-							{periods.map((option) => (
-								<RadioGroup.Option
-									key={option.value}
-									value={option}
-									className={({ checked }) =>
-										classNames(
-											checked
-												? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
-												: 'text-gray-500',
-											'cursor-pointer rounded-full px-2.5 py-1',
-											'transition-all'
-										)
-									}
-								>
-									<span>{option.label}</span>
-								</RadioGroup.Option>
-							))}
-						</RadioGroup>
+				)}						
 					</div>
 				</div>
 				<div
 					className={classNames(
 						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
-						frequency.value === 'selfhost' ? 'lg:grid-cols-2' : 'lg:grid-cols-3'
+						{
+							'lg:grid-cols-3': frequency.value === 'cloud',
+							'lg:grid-cols-2': frequency.value === 'selfhost',
+							'lg:grid-cols-1': frequency.value === 'whitelabel',
+						  }
 					)}
 				>
 					{pricing[frequency.value].map((tier, index) => (
@@ -409,16 +450,18 @@ export default function Pricing() {
 								</a>
 							)}
 
-							{index == 0 ? (
-								<div
+						{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
+								
+								<a
 									aria-describedby={tier.id}
+									href={tier.href}
 									className={classNames(
 										'text-gray-900 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:text-white',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
 									)}
 								>
 									No credit card required
-								</div>
+								</a>
 							) : (
 								<a
 									href={tier.href}
@@ -430,10 +473,10 @@ export default function Pricing() {
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
 								>
-									{tier.customMessage ? tier.customMessage : 'Contact us'}
+									{tier.customMessage ? tier.customMessage : 'How to upgrade'}
 								</a>
 							)}
-							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
+							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10" style={{ marginBottom: '8rem' }}>
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
 							{Object.keys(tier.price).length > 0 ? (
