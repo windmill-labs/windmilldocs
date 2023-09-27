@@ -5,10 +5,7 @@ import classNames from 'classnames';
 import Slider from './Slider';
 
 const plans = [
-	{ name: 'Multi-tenant', description: 'Shared infrastructure', price: 200 },
-	{ name: 'Isolated workers and database', description: 'Available in US/EU/Asia', price: 600 },
-	{ name: 'Dedicated Kubernetes cluster', description: 'Available in US/EU/Asia', price: 1200 }
-];
+	{ name: 'Core package', description: 'Your own hosted dedicated Windmill cluster without restrictions', price: 360 },];
 
 function calculatePrice(monthlyPrice, period) {
 	if (period === 'annually') {

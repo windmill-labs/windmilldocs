@@ -27,8 +27,8 @@ const pricing = {
 
 			description: 'Unlimited users & executions',
 			features: [
-				{ text: 'Google/Github/Microsoft/Gitlab SSO' },
-				{ text: 'Easy to deploy on Fargate/Docker/Kubernetes' },
+				{ text: 'Google / Microsoft / GitHub / GitLab SSO' },
+				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
 				{ text: 'Community support on Discord' }
 			],
 			mostPopular: false
@@ -67,27 +67,24 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Windmill Enterprise Edition <b>Plugins</b>
+							Windmill Enterprise Edition <b>Plugins</b>:
 						</span>
 					),
 					features: [
 						{ text: 'Audit logs' },
 						{ text: 'Distributed dependency cache backed by S3' },
 						{ text: 'SAML support including groups synchronization' },
-						{ text: 'Multiplayer on WebIDE' }
+						{ text: 'Dedicated Workers / Native Performance' },
+						{ text: 'Worker Group Management UI' },
+						{ text: 'Deploy to staging/prod web UI' },
+						{ text: 'Global CSS on App Editor' },
+						{ text: 'Multiplayer on WebIDE' },
 					]
 				},
 				{
 					text: (
 						<span>
-							<b>SLA</b>
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -95,7 +92,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Design partners for Roadmap</b>
+							<b>Design partners for roadmap</b>
 						</span>
 					)
 				}
@@ -112,37 +109,40 @@ const pricing = {
 			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
 				{
-					text: <span>Google/Github/Microsoft/Gitlab SSO</span>
+					text: <span>Google / Microsoft / GitHub / GitLab SSO</span>
 				},
 				{
 					text: (
 						<span>
-							<b>Unlimited</b> variables/resources/scripts/apps/flows * (except abuse)
+							<b>Unlimited</b> variables/resources/scripts/apps/flows (*except abuse)
 						</span>
 					)
 				},
 				{
 					text: (
 						<span>
-							<b>1000</b> free executions per month
+							<b>1,000</b> free executions per month
 						</span>
 					)
-				},
-				{
-					text: <span>Public apps</span>
 				},
 				{
 					text: <span>Groups, folders and granulars permissions</span>
 				},
 				{
+					text: <span>Public apps</span>
+				},
+				{
 					text: (
 						<span>
-							Deploy from <b>Github</b>
+							Deploy from <b>GitHub</b>
 						</span>
 					)
 				},
 				{
 					text: <span>Community support on Discord</span>
+				},
+				{
+					text: <span><a href="/docs/misc/plans_details#community-edition---cloud">All details</a></span>
 				}
 			],
 
@@ -158,7 +158,7 @@ const pricing = {
 					description: 'An author can create scripts and flows',
 					default: 1,
 					min: 1,
-					max: 100
+					max: 20
 				}
 			},
 			minPrice: 10,
@@ -176,7 +176,13 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Each seat includes:</span>,
+					text: <span>Global CSS on App Editor</span>
+				},
+				{
+					text: <span>Multiplayer editing</span>
+				},
+				{
+					text: <span> Each seat includes:</span>,
 					features: [
 						{ text: 'one user or two operators' },
 						{
@@ -188,7 +194,9 @@ const pricing = {
 						}
 					]
 				},
-
+				{
+					text: <span>20 seats maximum</span>
+				},
 				{
 					text: (
 						<span>
@@ -196,6 +204,9 @@ const pricing = {
 							assistance
 						</span>
 					)
+				},
+				{
+					text: <span><a href="/docs/misc/plans_details#team-plan---cloud">All details</a></span>
 				}
 			],
 			mostPopular: true,
@@ -222,31 +233,20 @@ const pricing = {
 					max: 1000
 				}
 			},
-			minPrice: 440,
-			description: 'Dedicated support and infrastructure for your company.',
+			minPrice: 600,
+			description: 'Dedicated support, guidance and infrastructure for your company.',
 			features: [
 				{
 					text: <span>Everything in Team</span>
+				},
+				{
+					text: <span>Isolated & dedicated <b>database network & workers</b></span>
 				},
 
 				{
 					text: (
 						<span>
 							Each worker can run up to <b>~26M</b> jobs per month
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>SAML</b> support including groups synchronization
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>SLA</b>
 						</span>
 					)
 				},
@@ -260,7 +260,21 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							Deploy to staging/prod web UI
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SAML / SCIM</b> support including groups synchronization
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -268,9 +282,12 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Design partners for Roadmap</b>
+							<b>Design partners for roadmap</b>
 						</span>
 					)
+				},
+				{
+					text: <span><a href="/docs/misc/plans_details#enterprise-plan---cloud">All details</a></span>
 				}
 			],
 			mostPopular: false
@@ -433,7 +450,7 @@ export default function Pricing() {
 									{tier.customMessage ? tier.customMessage : 'Contact us'}
 								</a>
 							)}
-							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10">
+							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10" style={{ marginBottom: '8rem' }}>
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
 							{Object.keys(tier.price).length > 0 ? (
