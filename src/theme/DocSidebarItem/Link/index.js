@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { ThemeClassNames } from '@docusaurus/theme-common';
 import { isActiveSidebarItem } from '@docusaurus/theme-common/internal';
@@ -14,9 +14,20 @@ export default function DocSidebarItemLink({
 	index,
 	...props
 }) {
+	const activeItemRef = useRef(null);
 	const { href, label, className, autoAddBaseUrl } = item;
 	const isActive = isActiveSidebarItem(item, activePath);
 	const isInternalLink = isInternalUrl(href);
+
+	useEffect(() => {
+		if (isActive && activeItemRef.current) {
+			activeItemRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'nearest'
+			});
+		}
+	}, [isActive]);
+
 	return (
 		<li
 			className={clsx(
@@ -28,6 +39,7 @@ export default function DocSidebarItemLink({
 			key={label}
 		>
 			<Link
+				ref={isActive ? activeItemRef : null}
 				className={clsx(
 					'menu__link',
 					!isInternalLink && styles.menuExternalLink,
