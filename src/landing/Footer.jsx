@@ -32,6 +32,7 @@ const navigation = {
 		}
 	],
 	solutions: [
+		{ name: 'Windmill AI', href: '/solutions/windmill_ai' },
 		{ name: 'Supabase', href: '/solutions/supabase' },
 		{ name: 'Hubspot', href: '/solutions/hubspot' },
 		{ name: 'Airtable', href: '/solutions/airtable' }

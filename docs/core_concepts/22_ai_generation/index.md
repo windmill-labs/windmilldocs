@@ -56,6 +56,18 @@ Upon error when executing code, you will be offered to "AI Fix" it. The assistan
     src="/videos/ai_fix.mp4"
 />
 
+## Flow Generation
+
+Generate flows from prompts.
+
+### Sequence
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/flow_ai.mp4"
+/>
+
 ## Code Auto-Completion with Codium
 
 [Codeium](https://codeium.com/) is a code acceleration toolkit built on AI technology. In particular, Codeium has a free [browser extension](https://codeium.com/download) that works as a code completion assistant.

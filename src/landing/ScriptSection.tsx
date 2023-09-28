@@ -200,7 +200,7 @@ const tabs = [
 					altText: 'Add Resources and Variables to Code'
 				},
 				altText: 'AI Generation',
-				caption: <div>Windmill provides ways to have <a href="/docs/code_editor/ai_generation" target="_blank">Code Generation</a> help you in your coding experience.</div>,
+				caption: <div>Windmill provides ways to have <a href="/docs/core_concepts/ai_generation" target="_blank">Code Generation</a> help you in your coding experience.</div>,
 			},
 		]
 	},
