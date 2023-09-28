@@ -11,7 +11,7 @@ import {
 
 This guide is provided by [Sequin](https://sequin.io). With Sequin, developers can build on top of third-party services like Salesforce or HubSpot using SQL.
 
-Sequin runs a real-time sync process that pulls data from the API into your Postgres database. Any time a record changes in the API, that change is synced to your database. Likewise, Sequin intercepts mutations you make to records in your database. It applies them to the API first before committing them to your database.
+Sequin runs a real-time sync process that pulls data from external APIs into your Postgres database. Any time a record changes in the API, that change is synced to your database. Likewise, Sequin intercepts mutations you make to records in your database. It applies them to the API first before committing them to your database.
 
 You can use Sequin to build Windmill apps on top of third-party services using Windmill's PostgreSQL [resource](../../../core_concepts/3_resources_and_types/index.mdx). This means all your scripts can be written in SQL, even if they’re reading data from [Salesforce](https://www.salesforce.com/) or writing data to [HubSpot](https://www.salesforce.com/). You can `join` your API data with your internal data. And because your API data is cached in Postgres, you don't need to worry about rate limits or pagination.
 
