@@ -234,7 +234,7 @@ const pricing = {
 					max: 1000
 				}
 			},
-			minPrice: 600,
+			minPrice: 840,
 			description: 'Dedicated support, guidance and infrastructure for your company.',
 			features: [
 				{
