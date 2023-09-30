@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Slider from './Slider';
 
 const plans = [
-	{ name: 'Core package', description: 'Your own hosted dedicated Windmill cluster without restrictions', price: 360 },];
+	{ name: 'Core package', description: 'Your own hosted dedicated Windmill cluster without restrictions', price: 600 },];
 
 function calculatePrice(monthlyPrice, period) {
 	if (period === 'annually') {
