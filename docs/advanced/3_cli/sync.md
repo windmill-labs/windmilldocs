@@ -1,8 +1,5 @@
 # Sync
 
-> **Warning**
-> As of v1.110.1 The sync command does not work on Windows commandline. This will shortly be fixed. For now, please use WSL.  
-
 Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
