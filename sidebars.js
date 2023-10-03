@@ -275,7 +275,7 @@ const sidebars = {
 				'advanced/self_host/index',
 				{
 					type: 'category',
-					label: 'Command Line Interface (wmill)',
+					label: 'Command Line Interface (CLI)',
 					link: {
 						type: 'doc',
 						id: 'advanced/cli/index'
@@ -329,7 +329,8 @@ const sidebars = {
 				'core_concepts/dedicated_workers/index',
 				'misc/worker_group_management_ui/index',
 				'core_concepts/staging_prod/index',
-				'misc/css_editor/index',
+				'core_concepts/content_search/index',
+				'apps/css_editor',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
 			]
