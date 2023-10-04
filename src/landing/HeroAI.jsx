@@ -53,7 +53,7 @@ export default function HeroAI() {
 					</div>
 				</div>
 				<div className="mt-16 sm:mt-8 h-full rounded-md overflow-hidden">
-					<video src="/videos/flow_ai.mp4" autoplay={true} loading="lazy" />
+					<video src="/videos/flow_ai.mp4" autoPlay={true} loading="lazy" />
 				</div>
 			</div>
 		</div>
