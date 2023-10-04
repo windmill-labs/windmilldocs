@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Script Editor
 
@@ -21,7 +23,8 @@ use the exact same set of versioned dependencies. The code must always have a
 main function, which is its entrypoint when executed as an individual serverless
 endpoint or a [Flow](../flows/1_flow_editor.mdx) module:
 
-TypeScript:
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
   ```typescript
   async function main(param1: string, param2: { nested: string }) {
@@ -29,35 +32,36 @@ TypeScript:
   }
   ```
 
-Python:
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
   ```python
   def main(param1: str, param2: dict, ...):
   	...
   ```
 
-Go:
+</TabItem>
+<TabItem value="Go" label="Go" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-  ```go
+```go
   func main(x string, nested struct{ Foo string \`json:"foo"\` }) (interface{}, error) {
   	...
   }
   ```
 
-Bash:
+</TabItem>
+<TabItem value="Bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 There is no main needed for Bash. The body is executed and the args are passed directly.
+
+</TabItem>
+</Tabs>
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Scripts Quickstart"
 		description="Start writing scripts in Python, TypeScript, Go, Bash and Sql."
 		href="/docs/getting_started/scripts_quickstart"
-	/>
-    <DocCard
-		title="Code Editor"
-		description="The code editor is Windmill's integrated development environment."
-		href="/docs/code_editor"
 	/>
     <DocCard
 		title="JSON Schema and Parsing"
@@ -128,5 +132,15 @@ The Script Editor is made of the following features:
 		title="Write Scripts on VSCode"
 		description="The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode."
 		href="/docs/script_editor/vs_code_scripts"
+	/>
+</div>
+
+For features specific to the [Code Editor](../code_editor/index.mdx), check:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+		title="Code Editor"
+		description="The code editor is Windmill's integrated development environment."
+		href="/docs/code_editor"
 	/>
 </div>

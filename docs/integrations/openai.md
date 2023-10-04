@@ -13,7 +13,7 @@
 
 :::info AI-based programming
 
-If you're interested in AI-based programming check [AI Generation](../code_editor/ai_generation.md).
+If you're interested in AI-based programming check [Windmill AI](../code_editor/ai_generation.mdx).
 
 :::
 

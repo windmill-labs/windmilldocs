@@ -71,10 +71,9 @@ Inputs can be connected to any outputs. When connecting, you can click on the ou
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
     controls
     src="/videos/app-connections.mp4"
+    alt="Connecting inputs"
 />
 
 <br/>
@@ -82,12 +81,14 @@ Inputs can be connected to any outputs. When connecting, you can click on the ou
 Here are the steps to connect an input to an output:
 
 - Click on the component input you want to connect to an output.
-- Click the right arrow to open the connection menu.
-  - You can navigate you app, without running any scripts.
-  - When you hover a component, the corresponding outputs are highlighted in orange.
-  - If you click on a component, the output will be pinned and stays open.
-- You can now click on the output you want to connect to the input.
+- Click on the plug icon to open the connection menu, then:
+  - either click on the red plug directly next to the component, and pick the output
+  - or pick the component directly from the output menu on the left.
 - The input is now connected to the output through an eval.
+
+Alternatively, refer to the component directly through an [eval](./3_app-runnable-panel.mdx#evals), e.g. `a.result`.
+
+![App outputs](../assets/apps/2_app_outputs/connecting_eval.png "Connecting through eval")
 
 ### Editing the id of a component
 
@@ -95,8 +96,6 @@ You can edit the id of a component by clicking on the id. Component id can only 
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    loop
     controls
     src="/videos/app-edit-id.mp4"
 />

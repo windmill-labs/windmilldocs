@@ -19,4 +19,15 @@ Inside those "container groups", you can refer to "group.x" to refer to one of t
 3. Fill the group field's object, either manually or dynamically through an [eval](../3_app-runnable-panel.mdx#evals).
 4. Now the container's components can be [connected](../2_outputs.md#connecting-inputs) to the group fields items through `group.group_field_name.optional_subitems`
 
-The next iteration will allow to save those groups in the workspace.
+Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/save_component_group.mp4"
+/>
+
+<br/>
+
+Group of components are saved as resources, under the `app_groups` [folder](../../core_concepts/8_groups_and_folders/index.mdx).

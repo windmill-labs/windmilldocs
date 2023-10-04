@@ -12,7 +12,7 @@ const resources = [
 	{
 		name: 'Team',
 		description: 'Find out who we are and why we do what we do.',
-		href: '/about'
+		href: '/team'
 	},
 
 	{

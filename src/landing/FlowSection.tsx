@@ -19,7 +19,8 @@ import {
 	InfinityIcon,
 	Voicemail,
 	BedIcon,
-	Calendar
+	Calendar,
+	Bot
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 
@@ -67,6 +68,16 @@ const tabs = [
 					videoSrc: '/videos/flow-loop.mp4',
 					altText: 'Flows for loops',
 					videoLength: '18'
+				}
+			},
+			{
+				title: 'Windmill AI',
+				description: 'Generate flows from prompts.',
+				icon: Bot,
+				caption: <div>Generate flows from prompts with <a href="/docs/core_concepts/ai_generation" target="_blank">Windmill AI</a>.</div>,
+				video: {
+					videoSrc: '/videos/flow_ai.mp4',
+					altText: 'Windmill AI for flows',
 				}
 			},
 		]

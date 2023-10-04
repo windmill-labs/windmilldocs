@@ -8,8 +8,9 @@ const navigation = {
 		{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' }
 	],
 	company: [
-		{ name: 'About', href: '/about' },
-		{ name: 'Blog', href: '/blog' }
+		{ name: 'Team', href: '/team' },
+		{ name: 'Blog', href: '/blog' },
+		{ name: 'Brand', href: '/brand' }
 	],
 	legal: [
 		{ name: 'Privacy Policy', href: '/privacy_policy' },
@@ -32,6 +33,7 @@ const navigation = {
 		}
 	],
 	solutions: [
+		{ name: 'Windmill AI', href: '/windmill_ai' },
 		{ name: 'Supabase', href: '/solutions/supabase' },
 		{ name: 'Hubspot', href: '/solutions/hubspot' },
 		{ name: 'Airtable', href: '/solutions/airtable' }
