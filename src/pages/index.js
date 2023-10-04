@@ -12,7 +12,6 @@ import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
-const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
 
 import TestimonialsSection from '../landing/TestimonialsSection';
@@ -20,6 +19,10 @@ import TestimonialsSection from '../landing/TestimonialsSection';
 export function useDeveloperMode() {
 	return useContext(DeveloperModeContext);
 }
+
+const DeveloperModeContext = createContext();
+
+export { DeveloperModeContext };
 
 function HomepageHeader() {
 	const [developerMode, setDeveloperMode] = useState(false);

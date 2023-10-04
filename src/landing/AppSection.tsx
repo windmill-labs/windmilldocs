@@ -9,8 +9,7 @@ import {
 	PieChart,
 	Puzzle,
 	Palette,
-	ToyBrick,
-	Wall
+	ToyBrick
 } from 'lucide-react';
 import { useDeveloperMode } from '../pages';
 
@@ -30,7 +29,15 @@ const tabs = [
 				description:
 					'Build complex apps from atomic components. Automatically trigger apps and flows from webhooks, a schedule, watching for events, or slack.',
 				icon: Hand,
-				caption: <div>Simply <a href="/docs/getting_started/apps_quickstart" target="_blank">drag and drop components</a>, connect your data and deploy your app in minutes.</div>,
+				caption: (
+					<div>
+						Simply{' '}
+						<a href="/docs/getting_started/apps_quickstart" target="_blank">
+							drag and drop components
+						</a>
+						, connect your data and deploy your app in minutes.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/dnd.mp4',
 					altText: 'Drag and drop',
@@ -41,7 +48,15 @@ const tabs = [
 				title: 'Building blocks',
 				description: 'Quickly start building complex apps using our 50 built-in components.',
 				icon: Puzzle,
-				caption: <div>Quickly start building complex apps using our <a href="/docs/apps/app_configuration_settings/app_component_library" target="_blank">50 built-in components</a>.</div>,
+				caption: (
+					<div>
+						Quickly start building complex apps using our{' '}
+						<a href="/docs/apps/app_configuration_settings/app_component_library" target="_blank">
+							50 built-in components
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/components.mp4',
 					altText: 'Building blocks',
@@ -53,7 +68,15 @@ const tabs = [
 				description:
 					'Run any script or flow from the app editor. In Python, Go, Bash, SQL or Typescript.',
 				icon: Code2,
-				caption: <div>Windmill supports Typescript, Python, Go, Bash and SQL <a href="/docs/getting_started/scripts_quickstart" target="_blank">scripts</a>.</div>,
+				caption: (
+					<div>
+						Windmill supports Typescript, Python, Go, Bash and SQL{' '}
+						<a href="/docs/getting_started/scripts_quickstart" target="_blank">
+							scripts
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/app-scripts.mp4',
 					altText: 'Run any script and flow',
@@ -65,7 +88,15 @@ const tabs = [
 				description:
 					'Our reactive engine ensures your app is always super performant, even when running complex apps.',
 				icon: FaBolt,
-				caption: <div>Example of an <a href="/docs/apps/app_e-commerce" target="_blank">E-commerce CRM app</a>.</div>,
+				caption: (
+					<div>
+						Example of an{' '}
+						<a href="/docs/apps/app_e-commerce" target="_blank">
+							E-commerce CRM app
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/app-performance.mp4',
 					altText: 'Build super performant apps',
@@ -83,7 +114,15 @@ const tabs = [
 				title: 'Build complex admin panel with table, action',
 				description: 'Build complex apps from atomic components.',
 				icon: FormInput,
-				caption: <div>Example of an <a href="/docs/apps/app_e-commerce" target="_blank">E-commerce CRM app</a>.</div>,
+				caption: (
+					<div>
+						Example of an{' '}
+						<a href="/docs/apps/app_e-commerce" target="_blank">
+							E-commerce CRM app
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/app-performance.mp4',
 					altText: 'Build super performant apps',
@@ -101,7 +140,18 @@ const tabs = [
 				title: 'Build BI dashboards with charts',
 				description: 'Build complex apps from atomic components.',
 				icon: BarChart,
-				caption: <div>Windmill embeds several <a href="/docs/apps/app_configuration_settings/app_component_library#charts" target="_blank">charts components</a> with unlimited customization possibilities.</div>,
+				caption: (
+					<div>
+						Windmill embeds several{' '}
+						<a
+							href="/docs/apps/app_configuration_settings/app_component_library#charts"
+							target="_blank"
+						>
+							charts components
+						</a>{' '}
+						with unlimited customization possibilities.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/bi-charts.mp4',
 					altText: 'BI charts',
@@ -117,26 +167,50 @@ const tabs = [
 		data: [
 			{
 				title: 'Give style to each component',
-				description: 'Configure the style of each component with pre-set options, CSS, or Tailwind Classes.',
+				description:
+					'Configure the style of each component with pre-set options, CSS, or Tailwind Classes.',
 				icon: ToyBrick,
-				caption: <div>Configure the <a href="/docs/apps/app_configuration_settings/app_styling#component-level" target="_blank">style of each component</a> with pre-set options, CSS, or Tailwind Classes.</div>,
+				caption: (
+					<div>
+						Configure the{' '}
+						<a
+							href="/docs/apps/app_configuration_settings/app_styling#component-level"
+							target="_blank"
+						>
+							style of each component
+						</a>{' '}
+						with pre-set options, CSS, or Tailwind Classes.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/styling_component.mp4',
-					altText: 'Component styling',
+					altText: 'Component styling'
 				}
 			},
 			{
 				title: 'Define global themes',
-				description: 'Apply global themes to reuse across your applications based on their purposes.',
+				description:
+					'Apply global themes to reuse across your applications based on their purposes.',
 				icon: LayoutDashboard,
-				caption: <div>Apply <a href="/docs/apps/app_configuration_settings/app_styling#global-styling" target="_blank">global themes</a> to reuse across your applications based on their purposes.</div>,
+				caption: (
+					<div>
+						Apply{' '}
+						<a
+							href="/docs/apps/app_configuration_settings/app_styling#global-styling"
+							target="_blank"
+						>
+							global themes
+						</a>{' '}
+						to reuse across your applications based on their purposes.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/global_styling.mp4',
-					altText: 'Global styling',
+					altText: 'Global styling'
 				}
 			}
 		]
-	},
+	}
 ];
 
 const examples = [

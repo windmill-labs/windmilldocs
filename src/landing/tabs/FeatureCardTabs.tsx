@@ -1,33 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Framer } from './framer';
 import TabContent from './TabContent';
 import { Tab, useTabs } from './useTabs';
-
-export const useContainerDimensions = (myRef) => {
-	const [dimensions, setDimensions] = useState({ width: 0 });
-
-	useEffect(() => {
-		const getDimensions = () => ({
-			width: myRef.current.offsetWidth
-		});
-
-		const handleResize = () => {
-			setDimensions(getDimensions());
-		};
-
-		if (myRef.current) {
-			setDimensions(getDimensions());
-		}
-
-		window.addEventListener('resize', handleResize);
-
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, [myRef]);
-
-	return dimensions;
-};
+import useContainerDimensions from './useContainerDimensions';
 
 export default function FeatureCardTabs({ tabs, color = 'blue' as 'blue' | 'teal' | 'orange' }) {
 	const [hookProps] = useState({

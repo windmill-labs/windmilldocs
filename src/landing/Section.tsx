@@ -16,7 +16,8 @@ export default function Section({
 	description,
 	color,
 	examples,
-	kind
+	kind,
+	shouldShowDevModeSwitch = true
 }) {
 	const { developerMode } = useDeveloperMode();
 	const { colorMode } = useColorMode();
@@ -57,7 +58,7 @@ export default function Section({
 						>
 							{title}
 						</h1>
-						<DevModeSwitch color={color} />
+						{shouldShowDevModeSwitch && <DevModeSwitch color={color} />}
 					</div>
 					<h2 className={`${colors.text} text-2xl font-semibold`}>{caption}</h2>
 				</div>
@@ -75,7 +76,7 @@ export default function Section({
 				) : (
 					<>
 						<FeatureCardTabs tabs={tabs} color={color} />
-						<SectionExamples examples={examples} kind={kind} />
+						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}
 					</>
 				)}
 			</div>
