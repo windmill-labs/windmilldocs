@@ -66,21 +66,29 @@ Generate flows from prompts.
 
 Describe the sequence of actions you wish to execute, and the AI Flow builder will write all the steps, link them together, and allow you to trigger the flow manually.
 
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_ai.mp4"
-/>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen="true"
+></iframe>
 
 ### Trigger Flows
 
 Build a flow with two scripts, one that regularly checks for changes in an external system and a second that is executed for each change using a [for-loop](../../flows/12_flow_loops.md).
 
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_ai_trigger.mp4"
-/>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/4HTIKOAyVIg?vq=hd1080"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen="true"
+></iframe>
 
 <br/>
 
