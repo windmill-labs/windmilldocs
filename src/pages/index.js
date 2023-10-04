@@ -21,6 +21,8 @@ export function useDeveloperMode() {
 	return useContext(DeveloperModeContext);
 }
 
+export { DeveloperModeContext };
+
 function HomepageHeader() {
 	const [developerMode, setDeveloperMode] = useState(false);
 
