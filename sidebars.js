@@ -111,6 +111,7 @@ const sidebars = {
 					items: [
 						'flows/architecture',
 						'openflow/index',
+						'flows/ai_flows',
 						'flows/editor_components',
 						'flows/error_handling',
 						'flows/flow_branches',
@@ -243,10 +244,10 @@ const sidebars = {
 					label: 'List of Core Concepts'
 				},
 				'core_concepts/auto_generated_uis/index',
+				'core_concepts/ai_generation/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
-				'core_concepts/ai_generation/index',
 				'core_concepts/persistent_storage/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',

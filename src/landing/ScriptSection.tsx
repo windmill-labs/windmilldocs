@@ -192,14 +192,14 @@ const tabs = [
 				caption: <div>You can add directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
 			},
 			{
-				title: 'AI Generation',
+				title: 'Windmill AI',
 				description: 'From simple prompts, generate Windmill-specific code, edits and fixes.',
 				icon: Bot,
 				video: {
 					videoSrc: '/videos/ai_generation.mp4',
 					altText: 'Add Resources and Variables to Code'
 				},
-				altText: 'AI Generation',
+				altText: 'Windmill AI',
 				caption: <div>Windmill provides ways to have <a href="/docs/core_concepts/ai_generation" target="_blank">Code Generation</a> help you in your coding experience.</div>,
 			},
 		]
