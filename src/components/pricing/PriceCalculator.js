@@ -43,16 +43,17 @@ export default function PriceCalculator({ period, tier }) {
 	return (
 		<div className="mt-16 grow flex flex-col justify-start">
 			<div className="flex justify-between items-center">
-				<h4>Price</h4>
+			<h4>Price</h4>
 
-				<div>
-					<span className="text-2xl text-gray-900 font-semibold dark:text-white">
-						{priceFormatter.format(computeTotalPrice())}
-					</span>
-					<span className="text-md text-gray-500">
-						{period.value === 'annually' ? '/yr' : '/mo'}
-					</span>
-				</div>
+			<div>
+				<span className="text-2xl text-gray-900 font-semibold dark:text-white">
+					{priceFormatter.format(computeTotalPrice())}
+				</span>
+				<span className="text-md text-gray-500">
+					{period.value === 'annually' ? '/yr' : '/mo'}
+					{(tier.id === 'tier-enterprise' || tier.id === 'tier-enterprise-selfhost') && <span>*</span>}
+				</span>
+			</div>
 			</div>
 
 			<p className="mt-4 flex items-baseline gap-x-1">
@@ -198,6 +199,11 @@ export default function PriceCalculator({ period, tier }) {
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
+					{tier.id === 'tier-enterprise' && (
+					<div className="mt-4 text-sm text-gray-600">
+						*We give special discounts to SMBs and small start-ups. Talk to us for custom pricing.
+					</div>
+				)}
 				</div>
 			) : null}
 
@@ -219,6 +225,11 @@ export default function PriceCalculator({ period, tier }) {
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
+					{tier.id === 'tier-enterprise-selfhost' && (
+					<div className="mt-4 text-sm text-gray-600">
+						*We give special discounts to SMBs and small start-ups. Talk to us for custom pricing.
+					</div>
+				)}
 				</div>
 			) : null}
 		</div>
