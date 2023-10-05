@@ -4,15 +4,7 @@ import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import {
-	Code,
-	Hand,
-	Workflow,
-	HeartPulseIcon,
-	FileEditIcon,
-	Wand2,
-	ZapIcon
-} from 'lucide-react';
+import { Code, Workflow, HeartPulseIcon, FileEditIcon, Wand2, ZapIcon } from 'lucide-react';
 import HeroAI from '../landing/HeroAI';
 
 import Section from './../landing/Section';
@@ -27,12 +19,20 @@ const tabs = [
 			{
 				title: 'Generate Windmill-specific code from simple prompt',
 				description:
-					'With a simple prompt, write a script using Windmill\'s main requirements and features.',
+					"With a simple prompt, write a script using Windmill's main requirements and features.",
 				icon: Wand2,
-				caption: <div>From a <a href="/docs/code_editor" target="_blank">code editor</a> (Script, Flow, Apps), click on AI Gen and write with a prompt what the script should do.</div>,
+				caption: (
+					<div>
+						From a{' '}
+						<a href="/docs/code_editor" target="_blank">
+							code editor
+						</a>{' '}
+						(Script, Flow, Apps), click on AI Gen and write with a prompt what the script should do.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/ai_generation.mp4',
-					altText: 'Code Generation',
+					altText: 'Code Generation'
 				}
 			},
 			{
@@ -40,10 +40,18 @@ const tabs = [
 				description:
 					'Select the code section you want to edit and give instructions to the AI assistant.',
 				icon: FileEditIcon,
-				caption: <div>Select the code section you want to edit and give instructions to the <a href="/docs/core_concepts/ai_generation#code-edition" target="_blank">AI assistant</a>.</div>,
+				caption: (
+					<div>
+						Select the code section you want to edit and give instructions to the{' '}
+						<a href="/docs/core_concepts/ai_generation#code-edition" target="_blank">
+							AI assistant
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/ai_edit.mp4',
-					altText: 'Code Edition',
+					altText: 'Code Edition'
 				}
 			},
 			{
@@ -51,10 +59,18 @@ const tabs = [
 				description:
 					'Upon error when executing code, you will be offered to "AI Fix" it. The assistant will automatically read the code, explain what went wrong, and suggest a way to fix it.',
 				icon: HeartPulseIcon,
-				caption: <div>The <a href="/docs/core_concepts/ai_generation#code-fixing" target="_blank">assistant</a> will automatically read the code, explain what went wrong, and suggest a way to fix it.</div>,
+				caption: (
+					<div>
+						The{' '}
+						<a href="/docs/core_concepts/ai_generation#code-fixing" target="_blank">
+							assistant
+						</a>{' '}
+						will automatically read the code, explain what went wrong, and suggest a way to fix it.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/ai_fix.mp4',
-					altText: 'Code Fixing',
+					altText: 'Code Fixing'
 				}
 			}
 		]
@@ -72,10 +88,18 @@ const flowTabs = [
 				description:
 					'Describe the sequence of actions you wish to execute, and the AI Flow builder will write all the steps, link them together, and allow you to trigger the flow manually.',
 				icon: Workflow,
-				caption: <div>Just explain what you want the flow to do, and the <a href="/docs/core_concepts/ai_generation#sequence-flows" target="_blank">assistant</a> will build steps & link them together.</div>,
+				caption: (
+					<div>
+						Just explain what you want the flow to do, and the{' '}
+						<a href="/docs/core_concepts/ai_generation#sequence-flows" target="_blank">
+							assistant
+						</a>{' '}
+						will build steps & link them together.
+					</div>
+				),
 				video: {
-					videoSrc: '/videos/flow_ai.mp4', // https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080
-					altText: 'Sequence Flows',
+					videoSrc: 'https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080',
+					altText: 'Sequence Flows'
 				}
 			},
 			{
@@ -83,10 +107,22 @@ const flowTabs = [
 				description:
 					'Avoid counting on external APIs-sent webhooks and have AI build flows that watch external APIs on a schedule.',
 				icon: ZapIcon,
-				caption: <div>Avoid counting on external APIs-sent webhooks and have the <a href="/docs/core_concepts/ai_generation#trigger-flows" target="_blank">assistant</a> build flows that watch external APIs on a <a href="/docs/core_concepts/scheduling" target="_blank">schedule</a>. </div>,
+				caption: (
+					<div>
+						Avoid counting on external APIs-sent webhooks and have the{' '}
+						<a href="/docs/core_concepts/ai_generation#trigger-flows" target="_blank">
+							assistant
+						</a>{' '}
+						build flows that watch external APIs on a{' '}
+						<a href="/docs/core_concepts/scheduling" target="_blank">
+							schedule
+						</a>
+						.{' '}
+					</div>
+				),
 				video: {
-					videoSrc: '/videos/flow_ai_trigger.mp4', // https://www.youtube.com/embed/4HTIKOAyVIg?vq=hd1080
-					altText: 'Trigger Flows',
+					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg?vq=hd1080',
+					altText: 'Trigger Flows'
 				}
 			}
 		]
