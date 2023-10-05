@@ -144,6 +144,8 @@ The convenience functions do this are:
 
 ## Using Resources
 
+All details on the [Add Resources and Variables to Code Editor](../../code_editor/add_variables_resources.mdx) page:
+
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Add Resources and Variables to Code Editor"
@@ -151,51 +153,6 @@ The convenience functions do this are:
 		href="/docs/code_editor/add_variables_resources"
 	/>
 </div>
-
-There are 2 main ways resources are used within scripts:
-
-### Passing resources as parameters to scripts (prefered)
-
-Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps using the Windmill client. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script.
-
-Typescript:
-
-```typescript
-type Postgresql = object;
-// OR one can fully type it
-type Postgresql = {
-	host: string;
-	port: number;
-	user: string;
-	dbname: string;
-	sslmode: string;
-	password: string;
-};
-
-export async function main(postgres: Postgresql) {
-	// Use Resource...
-}
-```
-
-Python:
-
-```python
-postgresql = dict
-
-def main(postgres: postgresql):
-    # Use Resource...
-```
-
-And then select the Resource in the arguments section on the right:
-
-![Select resource](./select_resource.png.webp)
-
-:::tip
-
-You can also edit the Resource or even create a new one right from the Code
-editor.
-
-:::
 
 ### Fetching them from within a script by using the wmill client in the respective language
 

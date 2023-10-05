@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-	List,
+	Workflow,
 	Bug,
 	Play,
 	CalendarClock,
@@ -12,15 +12,15 @@ import {
 	Webhook,
 	OctagonIcon,
 	CheckCircle2,
-	ServerCrashIcon,
 	TimerOffIcon,
-	ToyBrickIcon,
+	Unplug,
 	Database,
 	InfinityIcon,
 	Voicemail,
 	BedIcon,
 	Calendar,
-	Bot
+	Bot,
+	LucideWebhook
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 
@@ -32,13 +32,13 @@ import { BoltIcon } from '@heroicons/react/20/solid';
 const tabs = [
 	{
 		label: 'Flow editor',
-		icon: List,
+		icon: Workflow,
 		id: 'flow-editor',
 		data: [
 			{
 				title: 'Sequence',
 				description: 'Build complex Flows from atomic scripts.',
-				icon: List,
+				icon: Workflow,
 				caption: <div>Sequence scripts from your workspace, the <a href="https://hub.windmill.dev/" target="_blank">Hub</a> or <a href="/docs/code_editor" target="_blank">write them</a> directly.</div>,
 				video: {
 					videoSrc: '/videos/flow-sequence.mp4',
@@ -103,7 +103,7 @@ const tabs = [
 				title: 'Resume Workflows with secret webhooks',
 				description:
 					'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
-				icon: Verified,
+				icon: LucideWebhook,
 				caption: 'Resume Workflows with secret webhooks.',
 				imageSrc: '/images/page_arguments.png.webp',
 				altText: 'Resume with webhooks'
@@ -123,7 +123,7 @@ const tabs = [
 	},
 	{
 		label: 'Error Handling',
-		icon: ServerCrashIcon,
+		icon: Bug,
 		id: 'error-handling',
 		data: [
 			{
@@ -174,14 +174,14 @@ const tabs = [
 	},
 	{
 		label: 'Integrations',
-		icon: ToyBrickIcon,
+		icon: Unplug,
 		id: 'retries',
 		data: [
 			{
 				title: 'Connect third-party services',
 				description:
 					'Connect data providers & external APIs together.',
-				icon: ToyBrickIcon,
+				icon: Unplug,
 				caption: <div>Connect data providers & <a href="/docs/integrations/integrations_on_windmill" target="_blank">external APIs</a> together.</div>,
 				video: {
 					videoSrc: '/videos/flow_integrations.mp4',

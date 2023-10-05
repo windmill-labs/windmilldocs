@@ -39,7 +39,7 @@ export default function About() {
                     <h2 className="leading-9 mb-6 text-3xl">
                         About Windmill
                     </h2>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 mt-12">
+                    <p className="text-base font-normal text-gray-500 dark:text-gray-200 mt-12">
                         <div className="flex flex-col gap-4">
                             <p>
                                 Windmill is an open-source platform to build internal tools from scripts and low code builders.
@@ -58,7 +58,7 @@ export default function About() {
                     <h2 className="leading-9 mb-6 text-3xl">
                         License
                     </h2>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 mt-12">
+                    <p className="text-base font-normal text-gray-500 dark:text-gray-200 mt-12">
                         <div className="flex flex-col gap-4">
                             <p>
                                 Windmill is released under the AGPLv3 license. This means the software is free and open-source. If you make modifications and distribute them, you must also release those changes under the AGPLv3. Significantly, if you run a modified version of Windmill on a server and let others interact with it over a network, you are obligated to provide them a way to access the modified source code. This ensures the software remains transparent and free for all users, even when used in online applications.
@@ -97,7 +97,7 @@ export default function About() {
                     <h2 className="leading-9 mb-6 text-3xl">
                         Brand Assets
                     </h2>
-                    <p className="text-base font-normal text-gray-500 dark:text-gray-400 mt-12">
+                    <p className="text-base font-normal text-gray-500 dark:text-gray-200 mt-12">
                         <div className="flex flex-col gap-4">
                             <p>
                                 Make sure to use the official Windmill brand assets for your publications.

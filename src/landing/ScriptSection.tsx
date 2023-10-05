@@ -22,7 +22,7 @@ import {
 	Box,
 	Gitlab
 } from 'lucide-react';
-import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode, SiGraphql } from 'react-icons/si/index';
+import { SiGnubash, SiGo, SiPython, SiTypescript, SiVisualstudiocode, SiGraphql } from 'react-icons/si/index';
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
@@ -83,7 +83,7 @@ const tabs = [
 			{
 				title: 'Typescript',
 				description: '',
-				icon: SiDeno,
+				icon: SiTypescript,
 				caption: <div>Deno as the <a href="/docs/getting_started/scripts_quickstart/typescript" target="_blank">TypeScript</a> runtime.</div>,
 				svg: '/images/typescript-code.svg',
 				altText: 'Write scripts in Typescript'

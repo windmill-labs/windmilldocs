@@ -11,7 +11,7 @@ import ThemeToggleButton from './ThemeToggleButton';
 const resources = [
 	{
 		name: 'Team',
-		description: 'Find out who we are and why we do what we do.',
+		description: 'The team behind Windmill.',
 		href: '/team'
 	},
 
