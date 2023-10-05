@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Add Resources and Variables to Code
 
@@ -31,39 +33,56 @@ There are 2 main ways resources are used within scripts:
 
 ### Passing resources as parameters to scripts (prefered)
 
-Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps using the Windmill client. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script.
+Provided you have the right permissions and the resource type exists in the workspace, you can access resource types from scripts, flows and apps using the Windmill client or [TypedDict](https://mypy.readthedocs.io/en/stable/typed_dict.html) in Python.
 
-Typescript:
+From the code editor's toolbar, click on the `+ Type` button and pick the right resource type.  For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script:
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
 type Postgresql = object;
 // OR one can fully type it
 type Postgresql = {
-	host: string;
-	port: number;
-	user: string;
-	dbname: string;
-	sslmode: string;
-	password: string;
-};
+  host: string,
+  port: number,
+  user: string,
+  dbname: string,
+  sslmode: string,
+  password: string,
+  root_certificate_pem: string 
+}
 
 export async function main(postgres: Postgresql) {
 	// Use Resource...
 }
 ```
 
-Python:
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
-postgresql = dict
+from typing import TypedDict
 
-def main(postgres: postgresql):
-    # Use Resource...
+class postgresql(TypedDict):
+    host: str
+    port: int
+    user: str
+    dbname: str
+    sslmode: str
+    password: str
+    root_certificate_pem: str
+    
+def main(selected_postgres: postgresql):
+	# Use Resource...
 ```
+
+</TabItem>
+</Tabs>
 
 And then select the Resource in the arguments section on the right:
 
-![Select resource](../core_concepts/3_resources_and_types/select_resource.png.webp)
+![Select resource](../core_concepts/3_resources_and_types/select_resource.png)
 
 :::tip
 
