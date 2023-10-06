@@ -1,21 +1,24 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Preinstall Binaries
 
-Workers can have binaries preinstalled so that they can use them in subprocesses or in bash directly. npm, aws-cli, kubectl and helm are part of the standard images. To include more binaries, simply extend the base image of Windmill.
+Workers in Windmill.dev can preinstall binaries. This allows them to execute these binaries in subprocesses or directly within bash. While some common binaries like npm, aws-cli, kubectl, and helm are already present in the standard images, you can easily add more by extending the base image of Windmill.
 
-```
+Below are the steps and examples to extend the base image:
+
+```dockerfile
 FROM ghcr.io/windmill-labs/windmill:main
-# or FROM ghcr.io/windmill-labs/windmill-ee:main for extending ee
+# or FROM ghcr.io/windmill-labs/windmill-ee:main for extending the enterprise edition
 
 RUN apt-get update && apt install ....
 
 CMD ["windmill"]
 ```
 
-## Puppeteer Exemple
+## Example: Installing Puppeteer
 
-```
+```dockerfile
 FROM ghcr.io/windmill-labs/windmill-ee:main
-
 
 RUN apt update
 RUN apt install npm -y
@@ -30,4 +33,29 @@ RUN npm install -g puppeteer -y
 CMD ["windmill"]
 ```
 
-Note: the above is using `windmill-ee` as base
+> Note: The example above uses the enterprise edition (`windmill-ee`) as the base.
+
+## Init Scripts
+
+Init scripts provide an efficient method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+
+Any scripts are set from the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), at the worker group level. Any script content specified in `INIT_SCRIPT` will be executed at the beginning when each worker of the worker group starts.
+
+When adjustments are made in the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
+
+![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png)
+
+More at:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Workers and Worker Groups"
+    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+    	href="/docs/core_concepts/worker_groups"
+    />
+	<DocCard
+		title="Worker Groups Management UI"
+		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+</div>

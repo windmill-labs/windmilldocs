@@ -16,7 +16,13 @@ without any overhead.
 
 Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms.
 
-## Assign custom worker groups
+Managing workers is useful for mastering Windmill in depth by assigning different nodes to jobs.
+
+In the [Community Edition](../../misc/7_plans_details/index.mdx), worker management is done using tags that can be respectively assigned to workers (through env variables) and scripts or flows, so that the workers listen to specific jobs queues.
+
+In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups (a single worker can be in several groups), groups for which you can manage the tags, assignment to a single script, or the worker init scripts, from the UI.
+
+## Assign custom Worker Groups
 
 Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
@@ -48,19 +54,9 @@ gpu(workspace+workspace2)
 
 Only 'workspace' and 'workspace2' will be able to use the `gpu` tags.
 
-## How to have a worker join a worker group
+### How to assign Worker tags to a Worker Group
 
-Simply pass the worker group as the env variable `WORKER_GROUP`:
-
-```
-WORKER_GROUP=worker_group_name
-```
-
-The worker will automatically join the worker group on start and be displayed on the Workers page.
-
-## How to assign worker tags to a worker group
-
-Use the edit/create config next to the worker group name in windmill UI:
+Use the edit/create config next to the worker group name in Windmill UI:
 
 ![Worker Group edit config](./worker_group_ui.png)
 
@@ -70,15 +66,15 @@ Use the edit/create config next to the worker group name in windmill UI:
 WORKER_TAGS=tag1,tag2
 ```
 
-## How to assign a custom worker group to a script or flow
+### How to assign a custom Worker Group to a script or flow
 
-For scripts saved on the script editor, select the corresponding worker group tag in the settings section.
+For scripts deployed on the script editor, select the corresponding worker group tag in the settings section.
 
-![Worker group tag](./select_script_builder.png.webp)
+![Worker group tag](./select_script_builder.png)
 
 For scripts inlined in the flow editor, select it in the module header:
 
-![Worker group tag](./select_flow.png.webp)
+![Worker group tag](./select_flow.png)
 
 If no worker group is assigned to a script, it will be assigned the default worker group for its language.
 
@@ -86,7 +82,7 @@ You can assign a worker group to an entire flow in the flow's settings:
 
 ![Flow's Worker Group](flow_wg.png)
 
-## Dynamic tag
+### Dynamic tag
 
 If a workspace tag contains the substring `$workspace`, it will be replaced by the workspace id corresponding to the job. This is especially useful to have the same script deployed to different workspace and have them run on different workers.
 
@@ -99,6 +95,45 @@ normal-$workspace
 the workspaces, `dev`, `staging`, `prod` and the worker groups: `normal-dev`, `normal-staging`, `normal-prod`. The same script wih the tag `normal-$workspace` will run on the corresponding worker group depending on the workspace it is deployed to. This enable to share the same control plane but use workers with different network restrictions for tighter security.
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
+
+## Create Worker Group config
+
+In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups (a single worker can be in several groups), groups for which you can manage the tags, assignment to a single script, or the worker init scripts, from the UI.
+
+Just write the name of your worker group and pick "New worker group config".
+
+![New worker group config](./new_worker_group_config.png "New worker group config")
+
+You can then configure it directly from the UI.
+
+![Worker group config](./worker_group_config.png "Worker group config")
+
+
+### How to have a Worker join a Worker Group
+
+Simply pass the worker group as the env variable `WORKER_GROUP`:
+
+```
+WORKER_GROUP=worker_group_name
+```
+
+The worker will automatically join the worker group on start and be displayed on the Workers page in the Windmill app.
+
+
+## Init Scripts
+
+[Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide an efficient method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+
+
+Under the [Enterprise Edition](../../misc/7_plans_details/index.mdx), they can be set from Windmill UI.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Init Scripts"
+		description="Init Scripts are executed at the beginning when the worker starts."
+		href="/docs/advanced/preinstall_binaries#init-scripts"
+	/>
+</div>
 
 ## Dedicated Workers / Native Performance
 
