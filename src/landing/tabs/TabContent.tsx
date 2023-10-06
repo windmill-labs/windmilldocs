@@ -28,14 +28,25 @@ export default function TabContent({ data, color }) {
 
 	function renderAsset(data) {
 		if (data[selectedIndex].video) {
-			return (
-				<video
-					className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-					autoPlay
-					loop
-					src={data[selectedIndex].video?.videoSrc}
-				/>
-			);
+			if (data[selectedIndex].video?.videoSrc?.startsWith('https://www.youtube.com')) {
+				return (
+					<iframe
+						src={data[selectedIndex].video?.videoSrc}
+						allowFullScreen
+						height="460"
+						className="border-2 rounded-xl  dark:border-gray-800"
+					/>
+				);
+			} else {
+				return (
+					<video
+						className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+						autoPlay
+						loop
+						src={data[selectedIndex].video?.videoSrc}
+					/>
+				);
+			}
 		} else if (data[selectedIndex].imageSrc) {
 			return (
 				<img
