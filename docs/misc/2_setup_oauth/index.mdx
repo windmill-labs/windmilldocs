@@ -141,9 +141,13 @@ You can use other custom OAuths as resources using the "Add OAuth" button in: Su
 
 ### Slack
 
-1. Create a new slack app at <https://api.slack.com/apps?new_app=1>
+Create a new slack app at <https://api.slack.com/apps?new_app=1>
 
-Your app manifest shoud look like this, replacing `<YOUR INSTANCE URL>` in 2 places.
+Pick "From an app manifest", then YAML.
+
+![Slack Create App](./slack_create_app.png "Slack Create App")
+
+Your app manifest shoud look like this, replacing `<YOUR INSTANCE URL>` in 2 places:
 
 ```yaml
 display_information:
@@ -184,9 +188,19 @@ settings:
   token_rotation_enabled: false
 ```
 
-See screenshot above:
+![Slack Manifest](./slack_manifest.png "Slack Manifest")
 
-Superadmin Settings -> Instance Settings -> Resources -> Toggle "slack" -> set client id and client secret.
+Then from your Superadmin Settings, fill with Client ID and Client Secret.
+
+![Slack Fill](./slack_fill.png "Slack Fill")
+
+As for any OAuth Settings, make sure that there is a corresponding resource type with the same name with a "token" field in the [superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#roles-in-windmill) workspace. That should be the case by default with Slack.
+
+![Slack Available](./slack_available.png "Slack Available")
+
+Now users should be able to connect to Slack through OAuth:
+
+![Slack Connect](./slack_connect.png "Slack Connect")
 
 ### Google Sheet
 
