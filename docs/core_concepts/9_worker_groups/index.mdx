@@ -18,7 +18,7 @@ Each worker on Windmill can run up to 26 millions jobs a month, where each job l
 
 Managing workers is useful for mastering Windmill in depth by assigning different nodes to jobs.
 
-In the [Community Edition](../../misc/7_plans_details/index.mdx), worker management is done using tags that can be respectively assigned to workers (through env variables) and scripts or flows, so that the workers listen to specific jobs queues.
+In the [Community Edition](../../misc/7_plans_details/index.mdx), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
 
 In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups (a single worker can be in several groups), groups for which you can manage the tags, assignment to a single script, or the worker init scripts, from the UI.
 
@@ -122,7 +122,7 @@ The worker will automatically join the worker group on start and be displayed on
 
 ## Init Scripts
 
-[Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide an efficient method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+[Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
 
 Under the [Enterprise Edition](../../misc/7_plans_details/index.mdx), they can be set from Windmill UI.

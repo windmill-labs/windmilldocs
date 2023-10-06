@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Preinstall Binaries
 
-Workers in Windmill.dev can preinstall binaries. This allows them to execute these binaries in subprocesses or directly within bash. While some common binaries like npm, aws-cli, kubectl, and helm are already present in the standard images, you can easily add more by extending the base image of Windmill.
+Workers in Windmill can preinstall binaries. This allows them to execute these binaries in subprocesses or directly within bash. While some common binaries like npm, aws-cli, kubectl, and helm are already present in the standard images, you can add more by extending the base image of Windmill.
 
 Below are the steps and examples to extend the base image:
 
@@ -37,7 +37,7 @@ CMD ["windmill"]
 
 ## Init Scripts
 
-Init scripts provide an efficient method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
 Any scripts are set from the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), at the worker group level. Any script content specified in `INIT_SCRIPT` will be executed at the beginning when each worker of the worker group starts.
 
