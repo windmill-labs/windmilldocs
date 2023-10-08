@@ -10,12 +10,12 @@ Below are the steps and examples to extend the base image:
 FROM ghcr.io/windmill-labs/windmill:main
 # or FROM ghcr.io/windmill-labs/windmill-ee:main for extending the enterprise edition
 
-RUN apt-get update && apt install ....
+RUN apt-get update && apt install [...]
 
 CMD ["windmill"]
 ```
 
-## Example: Installing Puppeteer
+## Example: Installing Puppeteer (via npm)
 
 ```dockerfile
 FROM ghcr.io/windmill-labs/windmill-ee:main
@@ -34,6 +34,48 @@ CMD ["windmill"]
 ```
 
 > Note: The example above uses the enterprise edition (`windmill-ee`) as the base.
+
+## Example: Installing Playwright (via pip)
+
+```dockerfile
+FROM ghcr.io/windmill-labs/windmill-ee:main
+
+RUN pip install playwright
+RUN playwright install
+RUN playwright install-deps
+
+CMD ["windmill"]
+```
+
+> Note: The example above uses the enterprise edition (`windmill-ee`) as the base.
+
+## Examples with docker compose
+
+All examples above can be used in your [`docker-compose.yml`](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) by specifying the build context.0
+
+Replace:
+```
+  windmill_worker:
+    image: ${WM_IMAGE}
+```
+
+With the following:
+```
+  windmill_worker:
+    build:
+      context: ./path/to/dockerfile
+      args:
+        WM_IMAGE: ${WM_IMAGE}
+```
+
+Note that you can pass environment variables from your `.env` file via the args above and use them in your `Dockerfile`:
+```dockerfile
+ARG WM_IMAGE
+FROM ${WM_IMAGE}
+
+[...]
+```
+
 
 ## Init Scripts
 
