@@ -73,7 +73,7 @@ The image is the docker image to run. It can be any image available on docker hu
 
 The command is the command to run inside the container. It can be any command available in the image.
 
-It is just a bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentification.
+It is just a bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentication.
 
 Do not use the deamon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
 

@@ -250,7 +250,7 @@ const sidebars = {
 				'advanced/imports/index',
 				'core_concepts/persistent_storage/index',
 				'core_concepts/roles_and_permissions/index',
-				'core_concepts/authentification/index',
+				'core_concepts/authentication/index',
 				'core_concepts/error_handling/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/monitor_past_and_future_runs/index',
