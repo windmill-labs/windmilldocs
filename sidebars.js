@@ -139,12 +139,18 @@ const sidebars = {
 					items: [
 						'apps/toolbar',
 						'apps/canvas',
-						'apps/outputs',
-						'apps/app-runnable-panel',
-						'apps/app_configuration_settings/app_styling',
-						'apps/app_debugging',
-						'apps/app_deployment',
-						'apps/public_apps',
+						{
+							type: 'category',
+							label: 'Connecting Components',
+							link: {
+								type: 'doc',
+								id: 'apps/connecting_components/index'
+							},
+							items: [
+								'apps/app-runnable-panel',
+								'apps/outputs'
+							]
+						},
 						{
 							type: 'category',
 							label: 'Component Library',
@@ -208,8 +214,11 @@ const sidebars = {
 								'apps/app_configuration_settings/vertical_split_panes'
 							]
 						},
-						'apps/app_configuration_settings/app_runnable_triggers',
 						'apps/app_configuration_settings/app_component_configuration',
+						'apps/app_configuration_settings/app_styling',
+						'apps/app_debugging',
+						'apps/app_deployment',
+						'apps/public_apps',
 						'apps/app_configuration_settings/components_groups',
 						'apps/app_e-commerce'
 					],

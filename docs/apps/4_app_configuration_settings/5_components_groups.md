@@ -17,7 +17,7 @@ Inside those "container groups", you can refer to "group.x" to refer to one of t
 1. From the editor, pick a [container](../4_app_configuration_settings/container.mdx) component and enable "Container is a component group".
 2. Create at least one group field.
 3. Fill the group field's object, either manually or dynamically through an [eval](../3_app-runnable-panel.mdx#evals).
-4. Now the container's components can be [connected](../2_outputs.md#connecting-inputs) to the group fields items through `group.group_field_name.optional_subitems`
+4. Now the container's components can be [connected](../2_connecting_components/index.mdx) to the group fields items through `group.group_field_name.optional_subitems`
 
 Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category.
 

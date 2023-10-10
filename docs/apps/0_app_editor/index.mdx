@@ -27,8 +27,11 @@ The app editor is composed of 6 main sections:
 
 1. [Toolbar](/docs/apps/app_editor#toolbar)
 2. [Canvas](#canvas)
-3. [Outputs](#outputs)
+
+_Connecting components_:<br/>
+3. [Outputs](#outputs)<br/>
 4. [Runnables panel](#runnables-panel)
+
 5. [Component Library and Settings](#component-library-and-settings)
 6. [App Styling](#styling)
 
@@ -45,7 +48,7 @@ The topbar helps you in your app editing.
 <div class="grid grid-cols-2 gap-2">
 	<DocCard
 		color="orange"
-		title="Toolbar guide"
+		title="Toolbar"
 		description="Discover all the features of the toolbar."
 		href="/docs/apps/toolbar"
 	/>
@@ -68,7 +71,7 @@ The canvas at the center of the editor is where you design and see the overall U
 <div class="grid grid-cols-2 gap-2">
 	<DocCard
 		color="orange"
-		title="Canvas guide"
+		title="Canvas"
 		description="Move, resize, and nest components."
 		href="/docs/apps/canvas"
 	/>
@@ -80,7 +83,46 @@ The canvas at the center of the editor is where you design and see the overall U
 	/>
 </div>
 
-## Outputs
+## Connecting Components
+
+The strength of Windmill's app editor is the ability to connect everything together:
+- components can be linked to each other
+- components can be directly linked to scripts and trigger them
+- background runnables can be that are run in the background on app refresh on when an input changes
+- frontend scripts can be used to manipulate the client app state
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Connecting Components"
+		description="The strength of Windmill's app editor is the ability to connect everything together."
+		href="/docs/apps/connecting_components"
+	/>
+</div>
+
+In Windmill's app editor:
+
+- the [runnable editor](#runnables-panel) catalogs and configures all the scripts present in the application
+- the [output panel](#outputs) lists the outputs of all the components and scripts in your application
+
+### Runnables panel
+
+On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
+
+![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png)
+
+#### Learn more
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Runnable Editor"
+		description="Learn how to create and configure runnables."
+		href="/docs/apps/app-runnable-panel"
+	/>
+</div>
+
+### Outputs
 
 On the left panel of the editor, you can see the list of outputs of the app. These outputs represent the states & results of the app and are categorized into four types:
 
@@ -96,7 +138,7 @@ You can perform the following actions with the outputs:
 - Search for an output.
 - Edit the output's ID.
 - Select a component to view its outputs.
-- [Connect an input to an output](../2_outputs.md#connecting-inputs).
+- [Connect an input to an output](../2_connecting_components/index.mdx).
 
 #### Learn more
 
@@ -112,23 +154,6 @@ You can perform the following actions with the outputs:
 		title="State"
 		description="Learn how to interact with the app's state using frontend scripts."
 		href="/docs/apps/app-runnable-panel#state"
-	/>
-</div>
-
-## Runnables panel
-
-On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
-
-![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png)
-
-#### Learn more
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		color="orange"
-		title="Runnable Guide"
-		description="Learn how to create and configure runnables."
-		href="/docs/apps/app-runnable-panel"
 	/>
 </div>
 
@@ -151,9 +176,9 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 	/>
 	<DocCard
 		color="orange"
-		title="Runnable Triggers"
-		description="Learn how to trigger a runnable."
-		href="/docs/apps/app_configuration_settings/app_runnable_triggers"
+		title="Component Configuration"
+		description="Each component can be configured individually. This allows for adjusting its value, behavior (especially by linking a script to the component), and styling."
+		href="/docs/apps/app_configuration_settings/app_component_configuration"
 	/>
 </div>
 

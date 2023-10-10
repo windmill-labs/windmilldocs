@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Outputs Guide
 
 The outputs represent the states & results of the app.
@@ -8,14 +10,14 @@ All outputs can be found on the left-hand side of the app editor. There are thre
 - Component outputs
 - Background runnables outputs
 
-![App demo outputs](../assets/apps/2_app_outputs/app-demo-outputs.png.webp)
+![App demo outputs](../assets/apps/2_app_outputs/app-demo-outputs.png)
 
 When a component or a background runnable is selected, the outputs of the component or the background runnable are displayed.
 You can manually open an output by clicking on the header of the output. Once manually opened, the output will stay open until you close it.
 
 You can search for an output by typing in the search bar. It searches in the output name and in the output object keys, recursively.
 
-![App outputs](../assets/apps/2_app_outputs/app_outputs.png.webp)
+![Search outputs](../assets/apps/2_app_outputs/search_output.png "Search outputs")
 
 ### App context
 
@@ -34,7 +36,7 @@ The app state is a client-side store that can be used to store data. The app sta
 
 Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded by clicking on the `{...}` button. Next to the button, you can see the number of outputs.
 
-![App outputs](../assets/apps/2_app_outputs/app-output-collapsed.png.webp)
+![App outputs collapsed](../assets/apps/2_app_outputs/app-output-collapsed.png "App outputs collapsed")
 
 For example, the [Table component](./4_app_configuration_settings/table.mdx) has the following outputs:
 
@@ -44,26 +46,30 @@ For example, the [Table component](./4_app_configuration_settings/table.mdx) has
 - search: the search value of the table
 - selectedRowIndex: the selected row index
 
-![App outputs](../assets/apps/2_app_outputs/app_outputs.png.webp)
+![App outputs](../assets/apps/2_app_outputs/app_outputs.png)
 
 The outputs are used to quickly visualize the current state of the app.
 
 ### Containers
 
-Some components are "containers" and can contain other components. They are 4 types of containers:
-
-- Containers: Plain container that can contain other components
-- Tabs: Tabs that can contain other components
-- Horizontal split: Horizontal split that can contain other components
-- Vertical split: Vertical split that can contain other components
+Some components are "containers" and can contain other components.
 
 The components contained in a container have their outputs displayed in the container outputs.
 
-![App outputs](../assets/apps/2_app_outputs/app-output-container.png.webp)
+![App outputs](../assets/apps/2_app_outputs/app-output-container.png)
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Layout (Containers)"
+		description="Containers can group other components."
+		href="/docs/apps/app_configuration_settings/app_component_library#layout"
+		color="orange"
+	/>
+</div>
 
 ### Background runnables outputs
 
-A background runnable is a script or flow that runs in the background and can be used to perform actions that are not related to the UI.
+A [background runnable](./3_app-runnable-panel.mdx#background-runnables) is a script or flow that runs in the background and can be used to perform actions that are not related to the UI.
 
 ### Connecting inputs
 
