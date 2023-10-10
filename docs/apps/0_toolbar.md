@@ -1,4 +1,4 @@
-# Toolbar Guide
+# Toolbar
 
 The app toolbar is located at the top of the app editor. It enables you to adjust app settings.
 

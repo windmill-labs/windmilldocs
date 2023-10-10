@@ -1,12 +1,14 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Runnable Guide
+# Runnable Editor
 
-Windmill Apps can be powered by code, with scripts linked to components, background runnables that are not linked to a component but run in the background, frontend scripts that can be used to manipulate the client app state, and evals.
+The strength of Windmill's app editor is the ability to connect everything together:
+- components [can be linked to each other](./2_connecting_components/index.mdx)
+- components can be directly [linked to scripts](#inline-scripts) and trigger them
+- [background runnables](#background-runnables) can be that are run in the background on app refresh on when an input changes
+- [frontend scripts](#evals) can be used to manipulate the client app state
 
-## Overview
-
-On the bottom of the app editor, you can find the runnable editor. It allows you to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
+On the bottom of the app editor, you can find the runnable editor. The runnable editor is a [code editor](../code_editor/index.mdx) that allows to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
 ![App Runnables panel](../assets/apps/0_app_editor/app-runnable-panel.png)
 
@@ -27,30 +29,44 @@ When a runnable is selected, the runnable editor is displayed. It is composed of
 
 - **Runnable editor**: The code editor of the runnable.
 
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Code Editor"
+		description="The code editor is Windmill's integrated development environment."
+		href="/docs/code_editor"
+		color="orange"
+	/>
+</div>
+
 ## Types of runnables
 
 There are 5 types of runnables:
 
 - **Inline scripts**: Scripts that are defined on the app editor, linked to a component.
-- **Workspace/Hub**: Runnables (scripts; flows) linked to a component, but defined in the workspace or the Hub.
+- **Workspace/Hub**: Runnables (scripts; flows) linked to a component, but defined in the workspace or the [Hub](https://hub.windmill.dev/).
 - **Background runnables**: Runnables that are not linked to a component, but run in the background.
 - **Frontend scripts**: Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
 - **Evals**: Evals are used to connect data sources to other components or parameters. They are only evaluated on changes to the outputs that have been identified.
 
 They provide interactivity to your app.
 
-## Inline scripts
+### Inline scripts
 
 Inline scripts are scripts that are defined on the app editor.
 They can be either attached to a component or detached.
 
-## Background runnables
+### Frontend scripts
 
-Background runnables are scripts that are executed in the background. They are not attached to any component.
+Frontend scripts are scripts that are executed on the browser.
 
-## Evals
+### Background runnables
 
-Evals are used to [connect data sources](./2_outputs.md#connecting-inputs) to other components or parameters.
+Background runnables are scripts that are executed in the background. They are executed on the server.
+They can be triggered on app refresh or when their input changes. They are not attached to any component but their result can be shared among many components.
+
+### Evals
+
+Evals are used to [connect data sources](./2_connecting_components/index.mdx) to other components or parameters.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -78,7 +94,7 @@ Clicking on the dedicated link, evals can be "transformed to a frontend script".
 
 ![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png)
 
-## Creating a runnable
+## Creating a Runnable
 
 There are several ways to create runnables:
 
@@ -88,223 +104,96 @@ There are several ways to create runnables:
 
 When you create an inline script attached to a component or a background script, the first thing you need to do is to choose the language of the script.
 
-![App Choose Language](../assets/apps/0_app_editor/app-choose-language.png.webp)
+![App Choose Language](../assets/apps/0_app_editor/app-choose-language.png)
 
-There are two kinds of scripts:
+The outputs of your script [can be used](./2_connecting_components/index.mdx) by other scripts or components:
 
-#### Backend scripts
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/connecting_components.mp4"
+/>
 
-Backend scripts are executed on the server and support the following languages:
+<br/>
 
-- Typescript
-- Python3
-- Go
-- Bash
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Connecting Components"
+		description="The strength of Windmill's app editor is the ability to connect everything together."
+		href="/docs/apps/connecting_components"
+	/>
+</div>
 
-In addition, we also provide Typescript templates for common use cases:
+## Runnable Configuration
 
-- **PostgreSQL**: A script that connects to a PostgreSQL database and executes a query.
-- **HTTP**: A script that makes an HTTP request.
+The runnable configuration consists of:
 
-#### Frontend scripts
+- Hide refresh button: Some components have a refresh button. This can be hidden by checking this box.
+- Transformer: A transformer is a function that alters the output of the runnable, often used to format the output.
+- List of triggers: Configure whether the script runs on app start, app refresh, or whenever an input changes.
+- Runnable Inputs: The runnable inputs are [inferred from the inputs](../core_concepts/13_json_schema_and_parsing/index.md) of the flow or script parameters this component is attached to.
 
-Frontend scripts are scripts that are executed on the browser.
+![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png)
 
-## Frontend scripts helpers
+### Transformer
 
-We expose a few functions and global objects to help you interact with the app from a frontend script.
+A [transformer](#transformer) is an optional frontend script executed immediately after the component's script. It's used to perform lightweight transformations in the browser. It accepts the previous computation's result as `result`.
 
-### Context
-
-You can access the context object with the `ctx` global variable.
-
-```js
-console.log(ctx.email);
-```
-
-### State
-
-The app state is a client-side store that can be used to store data.
-
-You can access the state object with the `state` global variable.
+For instance, if component has a script that returns:
 
 ```js
-console.log(state);
+{
+	data: {
+		name: 'John',
+		age: 20
+	}
+}
 ```
 
-You can update the state directly by manipulating the `state` object.
+A transformer could be used to extract the data object:
 
 ```js
-state.foo = 'bar';
+return result.data;
 ```
 
-### goto
+## Runnable Execution
 
-Use the `goto` function to navigate to a specific URL.
+A component can have runnables attached to it. Depending on the component type, the runnables are executed at different times:
 
-#### Syntax
+- **Data source**: The runnable's result is used as the component's data source. It executes on app start and app refresh. For instance, if the component is a table, the runnable's result is used as the table's data source.
+- **Event handler**: The runnable executes when the event is triggered. For instance, if the component is a button, the runnable executes when the button is clicked.
+- **Validations**: Only the `Stepper` component has validations. The runnable executes when the step of the stepper changes.
 
-```js
-goto(path: string, newTab?: boolean)
-```
+### Configure Triggers
 
-#### Parameters
+#### Run on Start and App Refresh
 
-`path`
-The URL to navigate to.
+Two types of runnables can be configured to run on app start and app refresh:
 
-`newTab` (optional)
-Whether to open the URL in a new tab or not.
+- **Background runnables**: Runnables that are run in the background and aren't attached to a component.
+- **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
 
-#### Example
+### Recompute on Any Input Change
 
-```js
-goto('/apps/1');
-goto('https://www.windmill.dev/', true);
-```
+Runnables can be configured to recompute whenever an input changes. This is useful for recomputing a component's runnable when an input changes.
 
-### setTab
+Two types of runnables can be configured to recompute on any input change:
 
-Use the `setTab` function to manually set the tab of a Tab component.
+- **Backend background runnables**: Background runnable that are executed on the server.
+- **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
 
-#### Syntax
+Inputs of runnables that are either connected to an output or [evaluated](#evals) can trigger a recompute. These are displayed in the `Change on value` section.
 
-```js
-setTab(id: string, index: string)
-```
+Runnables can "Recompute" and "Recompute others":
+- Recompute: Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
+- Recompute others: Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
 
-#### Parameters
+### Manual Dependencies
 
-`id` string
-The tab to set.
+Frontend scripts don't have any inputs. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
 
-`index` string
-The index of the tab to set.
-
-#### Example
-
-```js
-setTab('a', '1');
-```
-
-### openModal
-
-Use the `openModal` function to open a modal.
-
-#### Syntax
-
-```js
-openModal(id: string)
-```
-
-#### Parameters
-
-`id` string
-The id of the modal component to open.
-
-#### Example
-
-```js
-openModal('a');
-```
-
-### closeModal
-
-Use the `closeModal` function to close a modal.
-
-#### Syntax
-
-```js
-closeModal(id: string)
-```
-
-#### Parameters
-
-`id` string
-The id of the modal component to close.
-
-#### Example
-
-```js
-closeModal('a');
-```
-
-### recompute
-
-Use the `recompute` function to recompute a component.
-
-#### Syntax
-
-```js
-recompute(id: string)
-```
-
-#### Parameters
-
-`id` string
-The id of the component to recompute.
-
-#### Example
-
-```js
-recompute('a');
-```
-
-### getAgGrid
-
-Use the `getAgGrid` function to get the ag-grid instance of a table.
-
-#### Syntax
-
-```js
-getAgGrid(id: string)
-```
-
-### setSelectedIndex
-
-Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
-
-#### Syntax
-
-```js
-setSelectedIndex(id: string, index: number)
-```
-
-### setValue
-
-The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
-
-Note that it's a bad idea to mix dynamic default value and setValue together.
-
-`setValue` supports the following components:
-
-- [Display](./4_app_configuration_settings/log_display.mdx)
-- [Date Input](./4_app_configuration_settings/date_input.mdx)
-- [Number Input](./4_app_configuration_settings/number_input.mdx)
-- [Currency Input](./4_app_configuration_settings/currency_input.mdx)
-- [Form Input](./4_app_configuration_settings/form_input.mdx)
-- [Toggle](./4_app_configuration_settings/toggle.mdx)
-- [Standalone Tab](./4_app_configuration_settings/select_tab.mdx)
-- [Standalone step](./4_app_configuration_settings/select_step.mdx)
-- [Range](./4_app_configuration_settings/range.mdx)
-- [Multi Select](./4_app_configuration_settings/multiselect.mdx)
-- [Text Input](./4_app_configuration_settings/text_input.mdx)
-- [Slider](./4_app_configuration_settings/slider.mdx)
-- [Select](./4_app_configuration_settings/select.mdx)
-- [Text](./4_app_configuration_settings/text.mdx)
-- [Rich Text Editor](./4_app_configuration_settings/rich_text_editor.mdx)
-
-#### Parameters
-
-`id` string
-
-## Recompute
-
-Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
-
-## Recompute others
-
-Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
+Manual dependencies are found in the `Change on value` section and can be removed by clicking on the `x` button.
 
 ## Cache app inline scripts
 
@@ -316,7 +205,7 @@ Caching an app inline script means caching the results of that script for a cert
 	src="/videos/caching_app.mp4"
 />
 
-<br />
+<br/>
 
 You can enable caching for an app inline script directly its editor settings. Here's how you can do it:
 
@@ -334,6 +223,187 @@ In the above example, the result of step the script will be cached for 5 minutes
 	/>
 </div>
 
+## Frontend scripts helpers
+
+We expose a few functions and global objects to help you interact with the app from a frontend script.
+
+#### Context
+
+You can access the context object with the `ctx` global variable.
+
+```js
+console.log(ctx.email);
+```
+
+Context objects can be seen on the [Output menu](./2_outputs.mdx).
+
+#### State
+
+The app state is a client-side store that can be used to store data.
+
+You can access the state object with the `state` global variable.
+
+```js
+console.log(state);
+```
+
+You can update the state directly by manipulating the `state` object.
+
+```js
+state.foo = 'bar';
+```
+
+#### goto
+
+Use the `goto` function to navigate to a specific URL.
+
+##### Syntax
+
+```js
+goto(path: string, newTab?: boolean)
+```
+
+##### Parameters
+
+`path`
+The URL to navigate to.
+
+`newTab` (optional)
+Whether to open the URL in a new tab or not.
+
+##### Example
+
+```js
+goto('/apps/1');
+goto('https://www.windmill.dev/', true);
+```
+
+#### setTab
+
+Use the `setTab` function to manually set the tab of a Tab component.
+
+##### Syntax
+
+```js
+setTab(id: string, index: string)
+```
+
+##### Parameters
+
+`id` string
+The tab to set.
+
+`index` string
+The index of the tab to set.
+
+##### Example
+
+```js
+setTab('a', '1');
+```
+
+#### openModal
+
+Use the `openModal` function to open a modal.
+
+##### Syntax
+
+```js
+openModal(id: string)
+```
+
+##### Parameters
+
+`id` string
+The id of the modal component to open.
+
+##### Example
+
+```js
+openModal('a');
+```
+
+#### closeModal
+
+Use the `closeModal` function to close a modal.
+
+##### Syntax
+
+```js
+closeModal(id: string)
+```
+
+##### Parameters
+
+`id` string
+The id of the modal component to close.
+
+##### Example
+
+```js
+closeModal('a');
+```
+
+#### recompute
+
+Use the `recompute` function to recompute a component.
+
+##### Syntax
+
+```js
+recompute(id: string)
+```
+
+##### Parameters
+
+`id` string
+The id of the component to recompute.
+
+##### Example
+
+```js
+recompute('a');
+```
+
+#### getAgGrid
+
+Use the `getAgGrid` function to get the ag-grid instance of a table.
+
+##### Syntax
+
+```js
+getAgGrid(id: string)
+```
+
+#### setSelectedIndex
+
+Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+
+##### Syntax
+
+```js
+setSelectedIndex(id: string, index: number)
+```
+
+#### setValue
+
+The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
+
+Note that it's a bad idea to mix dynamic default value and setValue together.
+
+##### Parameters
+
+`id` string
+
 ## Policy
 
 A viewer of the app will execute the runnables of the app on behalf of the publisher avoiding the risk that a resource or script would not be available to the viewer. To guarantee tight security, a policy is computed at time of saving of the app which only allow the scripts/flows referred to in the app to be called on behalf of. Furthermore, static parameters are not overridable. Hence, users will only be able to use the app as intended by the publisher without risk for leaking resources not used in the app.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Roles and Permissions"
+    	description="Control access and manage permissions within your instance and workspaces."
+    	href="/docs/core_concepts/roles_and_permissions"
+		color="orange"
+    />
+</div>
