@@ -20,6 +20,12 @@ const people = [
 		linkedinUrl: 'https://www.linkedin.com/in/faton-ramadani-4b65ab191/'
 	},
 	{
+		name: 'Guillaume Bouvignies',
+		role: 'Lead Backend Engineer',
+		imageUrl: '/team/guillaume-bouvignies.jpg',
+		linkedinUrl: 'https://www.linkedin.com/in/guillaumebouvignies/'
+	},
+	{
 		name: 'Henri Courdent',
 		role: 'Founding Ops Staff',
 		imageUrl: '/team/henri-courdent.jpg.webp',
@@ -75,7 +81,7 @@ export default function About() {
 											<div className="space-y-2">
 												<div className="space-y-1 text-lg font-medium leading-6">
 													<h3>{person.name}</h3>
-													<p className="text-blue-200 text-sm">{person.role}</p>
+													<p className="text-blue-500 dark:text-blue-200 text-sm">{person.role}</p>
 												</div>
 												<ul role="list" className="flex justify-center space-x-5">
 													<li>
