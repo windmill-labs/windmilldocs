@@ -16,6 +16,14 @@ const config = {
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
 
+	customFields: {
+		inkeepCredentials: {
+			apiKey: '',
+			integrationId: '',
+			organizationId: '',
+		}
+	},
+
 	plugins: [
 		async function myPlugin(context, options) {
 			return {

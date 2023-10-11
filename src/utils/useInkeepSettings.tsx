@@ -15,15 +15,14 @@ type InkeepSharedSettings = {
 
 const useInkeepSettings = (): InkeepSharedSettings => {
   const { siteConfig } = useDocusaurusContext();
-  // const inkeepBaseConfig = siteConfig.customFields.inkeepCredentials as InkeepIdentifierSettings;
+  console.log('****')
+  console.log(siteConfig)
+  const inkeepBaseConfig = siteConfig.customFields.inkeepCredentials as InkeepIdentifierSettings;
 
   const baseSettings: InkeepWidgetBaseSettings = {
-    // apiKey: inkeepBaseConfig.apiKey,
-    // integrationId: inkeepBaseConfig.integrationId,
-    // organizationId: inkeepBaseConfig.organizationId,
-    apiKey: '',
-    integrationId: '',
-    organizationId: '',
+    apiKey: inkeepBaseConfig.apiKey || '',
+    integrationId: inkeepBaseConfig.integrationId,
+    organizationId: inkeepBaseConfig.organizationId,
     organizationDisplayName: 'Windmill',
     primaryBrandColor: '#3b82f6',
     theme: {
