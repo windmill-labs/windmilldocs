@@ -1,0 +1,68 @@
+---
+authors: [henricourdent, fatonramadani]
+tags:
+  [
+    'CSS',
+	'Launch week',
+  ]
+image: ./global_css.png
+slug: launch-week-global-css
+description: "Introducing Custom CSS theming to share across your apps.s"
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 1: Global Custom CSS
+
+<br/>
+
+<img src={require("./global_css.png").default} alt="Global CSS" title="Global CSS" style={{width: "90%"}} />
+
+<br/>
+
+Custom styling is essential for aligning internal tools with your brand image. While component-level CSS has always been possible in Windmill App Editor, we are excited to introduce global CSS.
+
+The Global CSS Editor is designed to give styling and theming across your apps. It provides a centralized location for defining, managing, and applying CSS rules. With this feature, you can ensure consistent styling and create reusable themes for different teams, projects, or clients.
+
+## How it works
+
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/6_MjKgbdCFQ?vq=hd1080"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen="true"
+></iframe>
+
+<br/>
+
+To get started, follow these steps:
+
+1. Open the App Editor.
+2. Navigate to the Global Styling tab.
+3. Fork the default theme.
+
+For finer control, specific [class identifiers](/docs/apps/css_editor#class-identifiers) have been added to each component, such as `wm-container` and `wm-button`.
+
+Choose a class and apply CSS to it. Then, from the "Theme" menu, save your configuration in a theme of your choice, ready to use off-the-shelf.
+
+You can also transfer the configuration defined on a component to the global level, affecting all components of that type.
+
+## Learn more
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Styling"
+		description="Learn how to edit the component styles."
+		href="/docs/apps/app_configuration_settings/app_styling"
+	/>
+	<DocCard
+		title="CSS Editor"
+		description="The Global CSS Editor is designed to give styling and theming across your entire app."
+		href="/docs/apps/css_editor"
+		color="orange"
+	/>
+</div>
