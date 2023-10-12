@@ -1,0 +1,190 @@
+---
+slug: ai-flow-builder
+title: Launchweek day X - AI Flow Builder / How to create an AI Copilot to assist the workflow creation process
+authors: [hugocasa]
+tags:
+  [
+    'Windmill AI',
+    'Windmill',
+    'OpenAI',
+    'Natural language processing',
+    'AI-powered assistance',
+    'Developer tools'
+  ]
+image: ./media/cover.jpeg
+---
+
+As part of our launch week, we're excited to release a new Windmill AI feature: a copilot for the flow builder.
+This feature allows you to create a workflow by simply describing it in plain English or by picking scripts from the hub.
+The assistant will generate each step and link them together automatically.
+
+:::info
+What are flows? Check out our [docs](/docs/getting_started/flows_quickstart) to learn more.
+:::
+
+Here's a quick demo of what the AI flow builder can do:
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/y-pV6CShdZA?si=BCrhCvokzzh7GA37"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800 mb-4"
+></iframe>
+
+At the same time, we're also releasing a new feature for the script editor, a code completor.
+Like Github Copilot, you will be prompted with suggestions based on the code you're writing.
+This completes our already existing copilot which allows you to generate, edit and fix your scripts (learn more [here](/docs/core_concepts/ai_generation#windmill-ai-for-scripts)).
+
+Have a look:
+
+[autocomplete video]
+
+:::tip
+To enable Windmill AI, you simply have to setup an OpenAI API key in your workspace settings. There is also a toggle to enable or disable code completion. More info in the [docs](/docs/core_concepts/ai_generation).
+:::
+
+## How to use it
+
+After opening the AI flow builder drawer, you can decide between generating a sequence of steps or a trigger flow.
+The later is a flow with two scripts, one that regularly checks for changes in an external system and a second that is executed for each change using a for-loop.
+You can learn more about the difference between the two [here](/docs/core_concepts/ai_generation#windmill-ai-for-flows).
+
+In both cases, you start writing for each step what you want to do. You can then either choose between generating the step from scratch using GPT-4 or using a similar script from the hub.
+We recommend to give the most details as possible to the AI to make sure that the generated step does not deviate too much from your needs.
+
+[video choosing steps]
+
+Once you're happy with the steps' instructions and selected scripts, submit to start the generation process.
+
+At each step, the copilot will generate the step code as well as the inputs based on the generated code and the previous step.
+When it's done, you're given the possibility to modify the step code and inputs which the copilot will take into account before continuing to the next step.
+
+If you're not happy at all with the generated step, you can edit the instructions and regenerate the step or even the whole flow if needed. Like this:
+
+[video regenerating steps]
+
+At the end of the whole AI flow builder process, flow inputs are automatically generated and you should be able to run the flow right after having entered the inputs values.
+
+Moreover, you can generate just one step wherever you want in the flow.
+Here's how it works:
+
+[video one step only]
+
+As you can see, it also makes sure the step is linked to the previous step.
+
+## Why did we built it that way?
+
+We wanted to streamline the workflow creation process and make it as easy as possible to create a workflow.
+However, we also wanted to make sure that the generated workflow is in line with the user's expectations.
+Therefore, we made the creation process as interactive as possible so that the user can guide the AI along the way to generate the perfect workflow.
+We believe that this is the best way to leverage the power of AI in our workflow builder.
+
+Regarding code completion, we were quite happy with our existing script copilot which helps you generate, edit and fix your scripts, but as developers ourselves we realized that the most useful and time saving feature was code completion.
+We did not implement it at first because we were afraid that it would be too slow or too expensive. But after some testing and optimization, we realized that it was actually quite fast, cheap (thanks to GPT-3.5) and relevant.
+You can learn more about it below.
+
+## How did we build it?
+
+:::info
+This section is a bit more technical and describes how you too can become an AI startup<sup>TM</sup>. It is the continuation of our previous blog post about [how we added an AI copilot to our script editor](/blog/windmill-ai) which you can read first for more context.
+:::
+
+### AI Flow Builder
+
+Similarly as for the script copilot, we're using GPT-4 for the AI flow builder.
+We also use a very similar prompt to generate the steps' code.
+However, we wanted to make sure that the generated script would match the previous' step output.
+To do so, we indicate that the previous' output will be passed as prev_output and we pass the previous step's script so that it can infer the output's type.
+Here's our prompt template:
+
+````
+I'm building a workflow which is a sequence of script steps. Write a script in {codeLang} which should {description}.
+It should take a parameter called "prev_output" which contains the output of the previous script.
+Infer the type of "prev_output" from the previous\'s step code: ```{codeLang}\n{prevCode}\n```
+Return the script's output.
+
+<contextual_information>
+...some contextual information (check the previous blog post or the code for more details)...
+</contextual_information>
+````
+
+We're then able to programmatically generate and fill the step's inputs.
+However, when selecting a hub script instead of generating a step from scratch, we do not adapt the script but we ask GPT-4 to generate and fill in the step's inputs based on the previous step's output and the selected scripts.
+Here's the template we use:
+
+````
+I'm building a workflow which is a sequence of script steps.
+My current step code has the following inputs: {inputs}.
+Determine what to pass as inputs. You can only use the following:
+- `flow_input` (javascript object): general inputs that are passed to the workflow,
+	you can assume any object properties.
+- `prev_output` (javascript object): previous output is the output of the previous step.
+	Infer its type from the previous's step code: ```{codeLang}\n{prevCode}\n```
+
+Reply in the following format:
+input_name: expr
+````
+
+We parse the AI's response using a Regex expression: /([a-zA-Z_0-9]+): (.+)/g which matches two chains of characters: a valid input name and an expression containing any characters, separated by a colon and space.
+We're then able to create and fill in the step's inputs.
+
+When building a trigger flow (a scheduled script which checks for new items and a for-loop executing an action for each new item), we use a slightly different prompt for the first step to better guide the generation:
+
+```
+I'm building a workflow which is a sequence of script steps.
+Write the first script in {codeLang} which should check for {description} and return an array.
+To maintain state across runs, you can use "const {state_name}: {state_type} = await getState()"
+and "await setState(value: any)" which you have to import like this: import { getState, setState } from "windmill-client@1"
+
+<contextual_information>
+...some contextual information (check the previous blog post or the code for more details)...
+</contextual_information>
+```
+
+The prompt for the for-loop action is the same as for a normal step. We simply wrap it in a for-loop module and adapt the step's input to take only one element.
+You can learn more about triggers [here](/docs/flows/flow_trigger) and for-loops [here](/docs/flows/flow_loops).
+
+You can find all our prompts [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/flow.ts)
+
+Regarding the UI, we bring focus on the current step by shadowing other steps, we display the step's code as it is generated
+and show the current status of the generation process in the top bar (e.g. generating code/inputs, waiting for user input, etc.) along action buttons when we need user's input.
+
+### Code completion
+
+For code completion, we use GPT-3.5 instead of GPT-4 as it is more good enough for this use case, much faster and cheaper.
+When enabled, we send the whole code and specify where it should fill in the code using html-/xml like tags. Here's our prompt template:
+
+````
+complete the following code:
+```{language}
+{before}<completion></completion>{after}
+```
+````
+
+Where we replace `{language}` with the language of the code and `{before}` and `{after}` with the code before and after the user's cursor position.
+
+We also pass a system prompt (aka global instructions):
+
+```
+You are a code completion assistant, return the code that should go
+inside the <completion></completion> tags.
+If you add a line break, take into account the indentation of the code.
+You can also not return anything if you think the code is already complete.
+```
+
+It's quite basic but it works well enough.
+To make sure that GPT-3.5 returns answers in the correct format, we pass a small example example along with each request,
+In the future, we plan on passing more context to generate better suggestions.
+
+A request is sent only in certain cases, for example when the user types a space or parenthesis.
+We implement some debouncing to avoid sending too many requests and cancel the previous request if a new one is sent before the previous one is finished.
+We display suggestions the same way a Github copilot in VSCode:
+
+[code completion video]
+
+You can find all our code for code completion [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/completion.ts) and [here](https://github.com/windmill-labs/windmill/blob/2d9878647be60288a6d2d8b0c72af84464eefd9c/frontend/src/lib/components/Editor.svelte#L364)
