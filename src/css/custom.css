@@ -52,10 +52,14 @@ body * {
 
 .markdown {
 	font-size: 16px;
+	line-height: 1.5rem;
+}
+
+.markdown-blog {
 	line-height: 1.75rem;
 }
 
-.markdown > p {
+.markdown-blog > p {
 	font-weight: 300 !important;
 }
 
