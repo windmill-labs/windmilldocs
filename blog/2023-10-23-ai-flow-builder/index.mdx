@@ -108,6 +108,7 @@ Like for the script copilot, we're using GPT-4 for the AI flow builder.
 We also use a very similar prompt to generate the steps' code.
 However, we wanted to make sure that the generated script would match the previous' step output.
 To do so, we indicate that the previous' output will be passed as prev_output and we pass the previous step's script so that it can infer the output's type.
+
 Here's our prompt template:
 
 ````
