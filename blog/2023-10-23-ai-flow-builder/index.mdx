@@ -60,24 +60,23 @@ To enable Windmill AI, you simply have to setup an OpenAI API key in your worksp
 ![Windmill DAG](./media/windmill-dag.png)
 
 Workflows are series of steps connected together through a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph), each step being a script to be executed.
-Through the structure and connection of the steps, we define in what order the steps should be executed.
-
-In addition, a workflow is composed of a separate dataflow graph which defines what data is transferred between the steps, as well as of input transforms which prepare the inputs for each step.
+The order of the steps execution is defined by the DAG's structure.
+A worflow also consists of a separate dataflow graph which defines what data is transferred between the steps, and of input transforms which prepare the inputs for each step.
 Windmill flows support many script languages and can contain for-loops, branches (parralellizable), and much more. Learn more about flows [here](/docs/getting_started/flows_quickstart).
 
 ## Why an AI flow builder?
 
-Workflows can be quite complex and tedious to create, especially connecting steps together, therefore we decided to build an AI copilot to help you create workflows faster and easier.
+Workflows can be quite complex and tedious to create, especially data connections, therefore we decided to build an AI copilot to help you create workflows faster and easier.
 
-However, asking GPT-4 to generate a complete workflow is too hard of a problem: it is too difficult to control and would most of the time generate something that you don't want.
-A good compromise is to first have the user give a structured prompt that mirrors the topologic layout of the DAG:
+However, asking GPT-4 to generate a complete workflow is too hard of a problem: it is too difficult to control and would most of the time generate something that you do not want.
+A good compromise is to first have users give a structured prompt that mirrors the topologic layout of the DAG:
 
 ![Structured prompts](./media/structured-prompts.png)
 
 Then, the AI assistant can step in to build the workflow, one step at a time.
-It generates the code based on the given prompt and workflow context, and more importantly, it establishes the connections between the steps.
-At the end of each step, the user can review and edit each step as needed.
-And If you're not happy at all with the generated step, you can always edit the instructions and regenerate the step or even the whole flow if needed:
+It generates the code based on the given prompt and workflow context, and more importantly, it establishes the data connections between the steps.
+At the end of each step, you can review and edit each step as needed.
+And if you're not happy with the generated step or changed your mind, you can always edit the instructions and regenerate the step or even the whole flow if needed:
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -89,7 +88,7 @@ And If you're not happy at all with the generated step, you can always edit the 
 
 Therefore you get the best of both worlds: most of the boilerplate, tedious aspect of workflows are accelerated by AI, but you are still in full control of the creation process.
 
-Moreover, generating script from scratch is sometimes not necessary as there could a script in the [hub](https://hub.windmill.dev/) that already does what you want, so we give you the option:
+Moreover, generating script from scratch is sometimes not necessary as there could be a script in the [hub](https://hub.windmill.dev/) that already does what you want, so we give you the option:
 
 ![Flow builder step options](./media/flow-builder-step-options.png)
 
