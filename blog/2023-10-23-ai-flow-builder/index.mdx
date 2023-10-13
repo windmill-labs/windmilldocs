@@ -53,26 +53,37 @@ To enable Windmill AI, you simply have to setup an OpenAI API key in your worksp
 
 ## What are Windmill Flows?
 
+Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represents the dependencies between steps.
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
+In windmill, each step is code with a main function in typescript, python, go, bash or raw queries to databases.
+
+The primitives supported by windmill workflows are:
+
+- sequence
+- branch based on conditions
+- branch to all subbranches
+- for loops
+- approval/waiting for event steps
+- sub flows
+
+You can see below an example of a simple workflow with a for-loop:
+
 ![Windmill DAG](./media/windmill-dag.png)
 
-Workflows are series of steps connected together through a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph), each step being a script to be executed.
-The order of the steps execution is defined by the DAG's structure.
-A worflow also consists of a separate dataflow graph which defines what data is transferred between the steps, and of input transforms which prepare the inputs for each step.
-Windmill flows support many script languages and can contain for-loops, branches (parralellizable), and much more. Learn more about flows [here](/docs/getting_started/flows_quickstart).
+## Why add a flow builder copilot?
 
-## Why an AI flow builder?
+Workflows can be quite complex and tedious to create, therefore we decided to build an AI copilot to help users create workflows faster and easier.
+However, asking GPT-4 to generate a complete workflow is too hard of a problem: it is too difficult to control and would most of the time deviate from the user's intent.
 
-Workflows can be quite complex and tedious to create, especially data connections, therefore we decided to build an AI copilot to help you create workflows faster and easier.
-
-However, asking GPT-4 to generate a complete workflow is too hard of a problem: it is too difficult to control and would most of the time generate something that you do not want.
-A good compromise is to first have users give a structured prompt that mirrors the topologic layout of the DAG:
+A good compromise is to first have users give a structured prompt that mirrors the layout of the workflow graph:
 
 ![Structured prompts](./media/structured-prompts.png)
 
-Then, the AI assistant can step in to build the workflow, one step at a time.
+Then, the AI assistant takes care of building the workflow, one step at a time.
 It generates the code based on the given prompt and workflow context, and more importantly, it establishes the data connections between the steps.
-At the end of each step, you can review and edit each step as needed.
-And if you're not happy with the generated step or changed your mind, you can always edit the instructions and regenerate the step or even the whole flow if needed:
+At the end of each step, the user can review and edit each step as desired.
+
+And if they're not happy with their instructions, they can always edit the instructions and regenerate the step or even the whole flow:
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -82,13 +93,13 @@ And if you're not happy with the generated step or changed your mind, you can al
 
 <br />
 
-Therefore you get the best of both worlds: most of the boilerplate, tedious aspect of workflows are accelerated by AI, but you are still in full control of the creation process.
+Therefore, users get the best of both worlds: most of the boilerplate and tedious aspects of workflows are accelerated by AI, but they stay in full control of the creation process.
 
-Moreover, generating script from scratch is sometimes not necessary as there could be a script in the [hub](https://hub.windmill.dev/) that already does what you want, so we give you the option:
+Sometimes, generating a step's script from scratch is not necessary as there could be a script in the [hub](https://hub.windmill.dev/) that already does what the user wants, so we intelligently suggest them based on the user's instructions:
 
 ![Flow builder step options](./media/flow-builder-step-options.png)
 
-And if you want even more control, you can ask to generate only one step wherever you want in the flow:
+And if they want even more control, they can ask to generate only one step anywhere in the flow graph:
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -104,10 +115,12 @@ This section is a bit more technical and describes how you too can become an AI 
 
 ### AI Flow Builder
 
+#### Generating a step from scratch
+
 Like for the script copilot, we're using GPT-4 for the AI flow builder.
 We also use a very similar prompt to generate the steps' code.
 However, we wanted to make sure that the generated script would match the previous' step output.
-To do so, we indicate that the previous' output will be passed as prev_output and we pass the previous step's script so that it can infer the output's type.
+To do so, we indicate that the previous' output will be passed as `prev_output` and we pass the previous step's script so that it can infer the output's type.
 
 Here's our prompt template:
 
@@ -122,8 +135,11 @@ Return the script's output.
 </contextual_information>
 ````
 
-We're then able to programmatically generate and fill the step's inputs.
-However, when selecting a hub script instead of generating a step from scratch, we do not adapt the script but we ask GPT-4 to generate and fill in the step's inputs based on the previous step's output and the selected scripts.
+Knowing that the previous step's output is expected as `prev_output` allows us to fill in the step's inputs automatically.
+
+#### Integrating hub scripts
+
+When selecting a hub script instead of generating a step from scratch, we do not know what input should receive the output of the previous step, therefore we ask GPT-4 to fill in the step's inputs based on the previous step's code and the selected script's inputs.
 Here's the template we use:
 
 ````
@@ -139,8 +155,10 @@ Reply in the following format:
 input_name: expr
 ````
 
-We parse the AI's response using a Regex expression: /([a-zA-Z_0-9]+): (.+)/g which matches two chains of characters: a valid input name and an expression containing any characters, separated by a colon and space.
+We parse the AI's response using a Regex expression: `/([a-zA-Z_0-9]+): (.+)/g` which matches a valid input name followed by an expression containing any characters, separated by a colon and space.
 We're then able to create and fill in the step's inputs.
+
+#### Trigger flows and for-loops
 
 When building a trigger flow (a scheduled script which checks for new items and a for-loop executing an action for each new item), we use a slightly different prompt for the first step to better guide the generation:
 
@@ -155,13 +173,10 @@ and "await setState(value: any)" which you have to import like this: import { ge
 </contextual_information>
 ```
 
-The prompt for the for-loop action is the same as for a normal step. We simply wrap it in a for-loop module and adapt the step's input to take only one element.
+The prompt for the for-loop action is the same as for a normal step. We simply wrap it in a for-loop module and adapt the step's input to take only one element at a time.
 You can learn more about triggers [here](/docs/flows/flow_trigger) and for-loops [here](/docs/flows/flow_loops).
 
 You can find all our prompts [in our codebase](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/flow.ts)
-
-Regarding the UI, we bring focus on the current step by shadowing other steps, we display the step's code as it is generated
-and show the current status of the generation process in the top bar (e.g. generating code/inputs, waiting for user input, etc.) along action buttons when we need the user's input.
 
 ### Code completion
 
