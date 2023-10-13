@@ -15,8 +15,6 @@ type InkeepSharedSettings = {
 
 const useInkeepSettings = (): InkeepSharedSettings => {
   const { siteConfig } = useDocusaurusContext();
-  console.log('****')
-  console.log(siteConfig)
   const inkeepBaseConfig = siteConfig.customFields.inkeepCredentials as InkeepIdentifierSettings;
 
   const baseSettings: InkeepWidgetBaseSettings = {
