@@ -26,13 +26,13 @@ This is a testimonial written by [Romaric Philogène](https://www.linkedin.com/i
 
 [Qovery](https://www.qovery.com/) is a modern infrastructure automation platform that simplifies the process of managing cloud infrastructure for DevOps, Platform and Engineering teams. It provides a set of tools and features that automate the provisioning, configuration, and management of infrastructure resources.
 
-For our daily operations, we need crucial automations (mostly ETLs triggered on a schedule) that cannot be handled by single softwares as our constraints are too specific. Therefore, we built several workflows with Airflow.
+As software, many of our operations require taking into account a large set of data. This implies crucial automations (mostly ETLs triggered on a schedule) that cannot be handled by single softwares as our constraints are too specific. Therefore, we built several workflows with Airflow.
 
 However, Airflow quickly became frustrating because ...
 
 // Ruben or Romaric to write issues with Airflow
 
-Windmill has been able to cover all these needs. We use Windmill as a platform to build, schedule, and monitor all of our scripts & flows. They offer a clear DX for code editing and permission management. Additionally, they have an active community and responsive team.
+Windmill has been able to cover all these needs. We use Windmill as a platform to build, [schedule](/docs/core_concepts/scheduling), and monitor all of our scripts & flows. They offer a clear DX for code editing, [permission management](/docs/core_concepts/roles_and_permissions) and [error handling](/docs/core_concepts/error_handling). Additionally, they have an active community and responsive team.
 
 Below are some use cases that we have built on Windmill.
 
