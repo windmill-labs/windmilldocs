@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { useColorMode } from '@docusaurus/theme-common';
 import useInkeepSettings from '../utils/useInkeepSettings';
 
 export default function SearchBarWrapper() {
@@ -9,30 +8,21 @@ export default function SearchBarWrapper() {
 
   useEffect(() => {
     (async () => {
-      const { InkeepSearchBar } = await import('@inkeep/widgets-migration');
+      const { InkeepSearchBar } = await import('@inkeep/widgets');
       setSearchBar(() => InkeepSearchBar);
     })();
     (async () => {
-      const { InkeepShadow } = await import('@inkeep/widgets-migration');
+      const { InkeepShadow } = await import('@inkeep/widgets');
       setShadow(() => InkeepShadow);
     })();
   }, []);
 
-  const { baseSettings, aiChatSettings } = useInkeepSettings();
-  const { colorMode } = useColorMode();
+  const { baseSettings, aiChatSettings, searchSettings } = useInkeepSettings();
 
   const searchBarProps = {
-    baseSettings: {
-      ...baseSettings,
-      theme: {
-        ...baseSettings.theme,
-        colorMode: {
-          ...baseSettings.theme.colorMode,
-          forcedColorMode: colorMode === 'dark' ? 'dark' : 'light'
-        }
-      }
-    },
+    baseSettings,
     aiChatSettings,
+    searchSettings
   };
 
   return (

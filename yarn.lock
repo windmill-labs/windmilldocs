@@ -2568,82 +2568,72 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@inkeep/color-mode@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@inkeep/color-mode/-/color-mode-0.0.4.tgz#93aa496bdca2a7e0a6fa19a6793405e14a8cddaf"
-  integrity sha512-lv26xn2GtYFtAQPCXe3TUCBHCgD/OwTroYyr5IdzCjB6e3ts49mqYfwxv4NzvZmmiLtf/8gOk1qFjI9W8Ma+lQ==
+"@inkeep/color-mode@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@inkeep/color-mode/-/color-mode-0.0.5.tgz#481837fa3284898b86e18da921f736a485403ad5"
+  integrity sha512-6RGfZnT3Dx0kCYn6mrS0HEzCRzZvw4F49wFn1bBvjdwTwHuo97CvXJAfMgh40sLSaKNy5tZE3BYlunOood4DWQ==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
 
-"@inkeep/components@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@inkeep/components/-/components-0.0.4.tgz#861bae00aefea9e77dc7ada1948678527017a777"
-  integrity sha512-ErjTwIy+lODRP+yoN8QtKHFI4iBPAnMqZYccTdhhFY0FjNxTmqzsc5j++9R9dr8ksI1F5URYivRYJd72RvcTYA==
+"@inkeep/components@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@inkeep/components/-/components-0.0.5.tgz#f2bdb952ba9a0cac4cdfc88fe8530104bb36c1eb"
+  integrity sha512-Xv48Ne53TXcYrdtmCiOwyic8kZ6Z7MnNXfocfkdV4EJ4YF97EV0Xc3hiEkBnRu9QvxLK5se83euRSRHUZy7kNQ==
   dependencies:
     "@ark-ui/react" "^0.15.0"
-    "@inkeep/preset" "^0.0.4"
-    "@inkeep/preset-chakra" "^0.0.4"
-    "@inkeep/shared" "^0.0.4"
-    "@inkeep/styled-system" "^0.0.2"
+    "@inkeep/preset" "^0.0.5"
+    "@inkeep/preset-chakra" "^0.0.5"
+    "@inkeep/shared" "^0.0.6"
+    "@inkeep/styled-system" "^0.0.4"
     "@pandacss/dev" "^0.15.5"
     framer-motion "^10.16.1"
     react "^18.2.0"
     react-dom "^18.2.0"
 
-"@inkeep/preset-chakra@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@inkeep/preset-chakra/-/preset-chakra-0.0.4.tgz#16e8f4dde9812ce06f36bfe720498a3793b2670f"
-  integrity sha512-W4fvR0epg9Pvf/zZhoNrnDmD/v2ZA1nD/Bzk65mLh0fAi+nKgiP5g2XDnYZF0PXFyaX595vuyimaK2vz5QFX3Q==
+"@inkeep/preset-chakra@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@inkeep/preset-chakra/-/preset-chakra-0.0.5.tgz#5c7932da1542a016be4c58e56f5f617430de0ae5"
+  integrity sha512-rQFLv5h76CsKbHHYzr804EdWqGiQ+KVlH2KbrdvGHsC1YR097/e/hZl509HBnCbwOKx09ldDcFOCBNUeuHpUfQ==
   dependencies:
     "@ark-ui/anatomy" "^0.1.0"
-    "@inkeep/shared" "^0.0.4"
+    "@inkeep/shared" "^0.0.6"
     "@pandacss/dev" "^0.15.5"
 
-"@inkeep/preset@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@inkeep/preset/-/preset-0.0.4.tgz#3a9c6cda06eb41b7278ae2e122dc1c89cb5d602d"
-  integrity sha512-TZ5BKQUDDmpQKjdFnthepaQGuoqGIRnmGSqhS/rtD70Yr/hpC6YOBVHpCej+Xws4RdOzETEnxcOkFNlH1r8bhQ==
+"@inkeep/preset@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@inkeep/preset/-/preset-0.0.5.tgz#9c9beaf834e24d88eab64a9d335ae15bcf72065a"
+  integrity sha512-R1zdT8rXCS2p8haRbbWzjOIg3e4zdLVTfOQCW9l6kCI0HkrYNDq7MFe1T5Tcgk7UdqxYec2805hi9DgmpYxCmA==
   dependencies:
     "@ark-ui/anatomy" "^0.1.0"
-    "@inkeep/preset-chakra" "^0.0.4"
-    "@inkeep/shared" "^0.0.4"
+    "@inkeep/preset-chakra" "^0.0.5"
+    "@inkeep/shared" "^0.0.6"
     "@pandacss/dev" "^0.15.5"
     colorjs.io "^0.4.5"
 
-"@inkeep/shared@^0.0.4":
+"@inkeep/shared@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@inkeep/shared/-/shared-0.0.6.tgz#3c147c24c55f5303ff447ddfa5ca7961bad0a4cd"
+  integrity sha512-fSpvMsDYA1trGzxdye6AeOYAN3hUDJgsPA8HElamTawmdRXGVljzHA2eUfrafehpnoso7oLAde1DCrI5kaSjEA==
+
+"@inkeep/styled-system@^0.0.4":
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@inkeep/shared/-/shared-0.0.4.tgz#66a2bae48ba34af0ef3fac5fd09d7cb991108153"
-  integrity sha512-obvfdn5zz4TlQFGxjl/RCnSuECCdJRlMtgOaA6VFPuItPw7dw35hgOjtQT8SaQKq6GVWrZRpEdUfWNfOMQXs1A==
+  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.4.tgz#db81f36b19d7d9670025e34b0794362d6bba6338"
+  integrity sha512-rLqigoqTpKShSAJ/qGRwsGZT/OyIheSLJO9aOSUFglOhttiZmYNiO6XEUV+gPbL74xPiouiCBgLCtdwD8WDQ+A==
 
-"@inkeep/shared@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@inkeep/shared/-/shared-0.0.5.tgz#3557ee3d914743ec70221063f1fd73e8a324cd42"
-  integrity sha512-NnoVkoHr8wX+rqliIsQEuKW2DgG1bMuqWDvvNRqIZmUAKKIGUNSQshIizXOUHOOv8bdvcYbHjo0UXEg48KEz+A==
-
-"@inkeep/styled-system@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.2.tgz#78b82141952b7abf8f3635aa25cfe589a25decfd"
-  integrity sha512-Vd+DneElJRbPP4ue3pAwbpLm7xEJJk/9e1dpppijjzwGhecoSTaD4HIQiOt1DniAi+VRY2ot3L4uvK5SGIkhZw==
-
-"@inkeep/styled-system@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.3.tgz#d5df976182ca5c8b5ac66dd45bc55484b55f270d"
-  integrity sha512-q8ahKv1ZqdfhVFLwAID/hgdO9PYSJx99DYnPprzGTQHjBuAvzNqSsxKQEzm1zVh0+V2KbuHFBKjDFDpHJnykOQ==
-
-"@inkeep/widgets-migration@^0.2.195":
-  version "0.2.195"
-  resolved "https://registry.yarnpkg.com/@inkeep/widgets-migration/-/widgets-migration-0.2.195.tgz#e8389d270b5e8d6bc53677ffd74d02470e3f5a62"
-  integrity sha512-FEkWwlMkkYfRsxA0QiDzh91vKBFwWQ9cM599VwxM6y2wVPK9zYCQdPDvt52tVujV0eFUX4dtRabXKnNooUsAyw==
+"@inkeep/widgets@^0.2.202":
+  version "0.2.202"
+  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.202.tgz#6ef31783e159019877180a3a7bbdfff1e5878322"
+  integrity sha512-ywYmCZ6EQZrgFexA6ZYgM0msRgnJgnQwRiDMFZskICT3Om3cwupWSHK+3n4ftKnfl0eeWDLsZAucxOe0Cxjb7g==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
-    "@inkeep/color-mode" "^0.0.4"
-    "@inkeep/components" "^0.0.4"
-    "@inkeep/preset" "^0.0.4"
-    "@inkeep/preset-chakra" "^0.0.4"
-    "@inkeep/shared" "^0.0.5"
-    "@inkeep/styled-system" "^0.0.3"
+    "@inkeep/color-mode" "^0.0.5"
+    "@inkeep/components" "^0.0.5"
+    "@inkeep/preset" "^0.0.5"
+    "@inkeep/preset-chakra" "^0.0.5"
+    "@inkeep/shared" "^0.0.6"
+    "@inkeep/styled-system" "^0.0.4"
     "@sentry/core" "^7.71.0"
     "@sentry/react" "^7.64.0"
     framer-motion "^10.16.1"
