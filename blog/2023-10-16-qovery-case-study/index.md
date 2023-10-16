@@ -26,13 +26,11 @@ This is a testimonial written by [Romaric Philogène](https://www.linkedin.com/i
 
 [Qovery](https://www.qovery.com/) is a modern infrastructure automation platform that simplifies the process of managing cloud infrastructure for DevOps, Platform and Engineering teams. It provides a set of tools and features that automate the provisioning, configuration, and management of infrastructure resources.
 
-As software, many of our operations require taking into account a large set of data. This implies crucial automations (mostly ETLs triggered on a schedule) that cannot be handled by single softwares as our constraints are too specific. Therefore, we built several workflows with Airflow.
+As a tech company, many of our operations require taking into account a large set of data. As we started growing, our needs expanded beyond scripts that we could run bare on our servers. We needed both a stack that had extensive **observability** capabilities fit for production and the ability to turn our scripts into **workflows and ETLs**. We started with [Airflow](https://airflow.apache.org/) and had an extensive set of workflows in there but we started to hit the limit of Airflow (e.g. Developer Experience, testing, [XCOMs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html) is a hassle and running it in production is painful).
 
-However, Airflow quickly became frustrating because ...
+<!-- @Romaric, check if limit of Airflow is accurate for you -->
 
-// Ruben or Romaric to write issues with Airflow
-
-Windmill has been able to cover all these needs. We use Windmill as a platform to build, [schedule](/docs/core_concepts/scheduling), and monitor all of our scripts & flows. They offer a clear DX for code editing, [permission management](/docs/core_concepts/roles_and_permissions) and [error handling](/docs/core_concepts/error_handling). Additionally, they have an active community and responsive team.
+Windmill has been able to cover all those limitations. We use Windmill as a platform to build, [schedule](/docs/core_concepts/scheduling), and monitor all of our scripts & flows. They offer a clear DX for code editing, [permission management](/docs/core_concepts/roles_and_permissions) and [error handling](/docs/core_concepts/error_handling). Additionally, they have an active community and responsive team.
 
 Below are some use cases that we have built on Windmill.
 
@@ -40,7 +38,7 @@ Below are some use cases that we have built on Windmill.
 
 Some databases are no longer used by clients, and maintaining them is inefficient and costly. Therefore, we created a simple yet devilishly effective trigger flow that regularly monitors the use of databases, and if and only if one of them meets certain criteria, it will be cleaned up.
 
-The killer feature here was the ability to easily combine schedules with the conditional execution of a series of tasks, what Windmill calls Trigger flows.
+The killer feature here was the ability to easily combine schedules with the conditional execution of a series of tasks, what Windmill calls Trigger Flows.
 
 ## Billing engine
 
