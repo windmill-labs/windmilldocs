@@ -30,6 +30,9 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     organizationId: inkeepBaseConfig.organizationId,
     organizationDisplayName: 'Windmill',
     primaryBrandColor: '#3b82f6',
+    optOutAllAnalytics: true,
+    optOutAnalyticalCookies: true,
+    optOutFunctionalCookies: true,
     theme: {
       tokens: {
         // colors: {
@@ -50,22 +53,44 @@ const useInkeepSettings = (): InkeepSharedSettings => {
       colorMode: {
         forcedColorMode: colorMode === 'dark' ? 'dark' : 'light'
       },
-      // components: {
-      //   SearchBarTrigger: {
-      //     defaultProps: {
-      //       variant: ''
-      //     },
-      //   }
-      // },
+    },
+    breadcrumbRules: {
+      urlToBreadcrumbMapper: [
+        {
+          matchingRule: {
+            ruleType: 'PartialUrl',
+            partialUrl: 'https://www.windmill.dev/docs',
+          },
+          replaceLeading: true,
+          breadcrumbName: 'Docs',
+        },
+        {
+          matchingRule: {
+            ruleType: 'PartialUrl',
+            partialUrl: 'https://app.windmill.dev/openapi.html#',
+          },
+          replaceLeading: true,
+          breadcrumbName: 'API',
+        },
+
+      ],
     },
   };
 
   const aiChatSettings: InkeepAIChatSettings = {
-    botName: 'Windmill',
+    botAvatarSrcUrl: '/img/windmill.svg',
+    quickQuestions: [
+      'How do I automatically trigger a flow every 24 hours?',
+      'Can I use an Azure auth provider for authenticating users?',
+      'How do I run Windmill locally with Bun?',
+    ],
   };
 
   const searchSettings: InkeepSearchSettings = {
     placeholder: 'Search...',
+    tabSettings: {
+      isAllTabEnabled: true,
+    },
   }
 
   return { baseSettings, aiChatSettings, searchSettings };
