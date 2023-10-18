@@ -44,6 +44,13 @@ const useInkeepSettings = (): InkeepSharedSettings => {
       },
       primaryColors: {
         textColorOnPrimary: '#ffffff',
+      },
+      components: {
+        SearchBarTrigger: {
+          defaultProps: {
+            size: 'expand',
+          },
+        }
       }
     },
     breadcrumbRules: {
