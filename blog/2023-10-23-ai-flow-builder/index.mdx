@@ -12,12 +12,22 @@ tags:
     'Developer tools',
 		'Workflows'
   ]
-image: ./media/cover.jpeg
+image: ./media/ai_flow_thumbnail.png
 ---
 
-As part of our launch week, we're excited to release a new Windmill AI feature: a copilot for the flow builder.
-This feature allows you to easily create a workflow by simply describing it in plain English or by picking scripts from the hub.
-The copilot will take care of generating each step and link them together automatically.
+import DocCard from '@site/src/components/DocCard';
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/ai_flows.mp4"
+/>
+
+<br/>
+
+As part of our launch week, we're excited to release a new Windmill AI feature: a copilot for the [flow builder](/docs/flows/flow_editor).
+By simply describing your desired workflow in plain English or selecting scripts from [Windmill Hub](https://hub.windmill.dev/), the copilot effortlessly generates each step and connects them automatically.
 
 Here's a quick demo of what the AI flow builder can do:
 
@@ -33,9 +43,17 @@ Here's a quick demo of what the AI flow builder can do:
 
 <br />
 
-At the same time, we're also releasing a new feature for the script editor, a code completion copilot
+At the same time, we're also releasing a new feature for the [script editor](/docs/script_editor), a code completion copilot
 which prompts you with suggestions based on the code you're writing. This completes our already existing
 copilot which allows you to generate, edit and fix your scripts (learn more [here](/docs/core_concepts/ai_generation#windmill-ai-for-scripts)).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Windmill AI"
+    	description="Have AI complete code on Windmill."
+    	href="/docs/core_concepts/ai_generation"
+    />
+</div>
 
 Have a look:
 
@@ -66,7 +84,7 @@ The primitives supported by windmill workflows are:
 - approval/waiting for event steps
 - sub flows
 
-You can see below an example of a simple workflow with a for-loop:
+You can see below an example of a simple workflow with a [for-loop](/docs/flows/flow_loops):
 
 ![Windmill DAG](./media/windmill-dag.png)
 
@@ -95,7 +113,7 @@ And if they're not happy with their instructions, they can always edit the instr
 
 Therefore, users get the best of both worlds: most of the boilerplate and tedious aspects of workflows are accelerated by AI, but they stay in full control of the creation process.
 
-Sometimes, generating a step's script from scratch is not necessary as there could be a script in the [hub](https://hub.windmill.dev/) that already does what the user wants, so we intelligently suggest them based on the user's instructions:
+Sometimes, generating a step's script from scratch is not necessary as there could be a script in the [Hub](https://hub.windmill.dev/) that already does what the user wants, so we intelligently suggest them based on the user's instructions:
 
 ![Flow builder step options](./media/flow-builder-step-options.png)
 
@@ -137,9 +155,9 @@ Return the script's output.
 
 Knowing that the previous step's output is expected as `prev_output` allows us to fill in the step's inputs automatically.
 
-#### Integrating hub scripts
+#### Integrating Hub scripts
 
-When selecting a hub script instead of generating a step from scratch, we do not know what input should receive the output of the previous step, therefore we ask GPT-4 to fill in the step's inputs based on the previous step's code and the selected script's inputs.
+When selecting a Windmill Hub script instead of generating a step from scratch, we do not know what input should receive the output of the previous step, therefore we ask GPT-4 to fill in the step's inputs based on the previous step's code and the selected script's inputs.
 Here's the template we use:
 
 ````
@@ -213,4 +231,4 @@ A request is sent only in certain cases, for example when the user types a space
 We implement some debouncing to avoid sending too many requests and cancel the previous request if a new one is sent before the previous one is finished.
 We leverage monaco editor's [inline completions api](https://microsoft.github.io/monaco-editor/docs.html#functions/languages.registerInlineCompletionsProvider.html) to display the suggestions the same way as Github copilot in VSCode.
 
-You can find all our code for code completion [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/completion.ts) and [here](https://github.com/windmill-labs/windmill/blob/2d9878647be60288a6d2d8b0c72af84464eefd9c/frontend/src/lib/components/Editor.svelte#L364)
+You can find all our code for code completion [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/completion.ts) and [here](https://github.com/windmill-labs/windmill/blob/2d9878647be60288a6d2d8b0c72af84464eefd9c/frontend/src/lib/components/Editor.svelte#L364).
