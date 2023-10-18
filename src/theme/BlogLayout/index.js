@@ -1,19 +1,15 @@
 import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
-import BlogSidebar from '@theme/BlogSidebar';
-import SectionBlur from '../../landing/SectionBlur';
-//import Footer from './../../landing/Footer';
 
 export default function BlogLayout(props) {
-	const { sidebar, toc, children, ...layoutProps } = props;
-	const hasSidebar = sidebar && sidebar.items.length > 0;
+	const { toc, children, ...layoutProps } = props;
 
-	const isBlogPostPageList = Boolean(toc);
+	const isBlogPostPageList = !Boolean(toc);
 
 	return (
 		<Layout {...layoutProps}>
-			{!isBlogPostPageList && (
+			{isBlogPostPageList && (
 				<div className="max-w-7xl w-full mx-auto">
 					<div className="">
 						<div className="relative pt-16 pb-8">
@@ -54,16 +50,14 @@ export default function BlogLayout(props) {
 					</div>
 				</div>
 			)}
-			<div className="container max-w-7xl w-full mx-auto margin-vert--lg bg-transparent">
+			<div className="container w-full max-w-7xl mx-auto margin-vert--lg bg-transparent">
 				<div className="row">
-					<BlogSidebar sidebar={sidebar} />
 					{toc && <div className="col col--2"></div>}
 
 					<main
 						className={clsx('col mt-12', {
-							'col--7': hasSidebar,
-							'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
-							'max-w-4xl mx-auto': !hasSidebar && isBlogPostPageList
+							'col--8': toc,
+							'w-full mx-auto': !toc
 						})}
 						itemScope
 						itemType="http://schema.org/Blog"
