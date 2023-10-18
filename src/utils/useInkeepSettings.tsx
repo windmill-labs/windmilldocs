@@ -35,24 +35,16 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     optOutFunctionalCookies: true,
     theme: {
       tokens: {
-        // colors: {
-        //   'gray.50': '#f3f6f8',
-        //   'gray.100': '#e0e7ed',
-        //   'gray.200': '#c5d0dc',
-        //   'gray.300': '#9dafc3',
-        //   'gray.400': '#6e87a2',
-        //   'gray.500': '#536c87',
-        //   'gray.600': '#475973',
-        //   'gray.700': '#3e4c60',
-        //   'gray.800': '#394251',
-        //   'gray.900': '#2e3440',
-        //   'gray.950': '#1e232e',
-        //   // 'gray.1000': '#181c24',
-        // },
+        colors: {
+          'grayDark.900': '#1e232e',
+        },
       },
       colorMode: {
         forcedColorMode: colorMode === 'dark' ? 'dark' : 'light'
       },
+      primaryColors: {
+        textColorOnPrimary: '#ffffff',
+      }
     },
     breadcrumbRules: {
       urlToBreadcrumbMapper: [
