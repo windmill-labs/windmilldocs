@@ -21,7 +21,10 @@ export default function SearchBarWrapper() {
   const searchBarProps = {
     baseSettings,
     aiChatSettings,
-    searchSettings
+    searchSettings,
+    modalSettings: {
+      openShortcutKey: '/',
+    },
   };
 
   return (

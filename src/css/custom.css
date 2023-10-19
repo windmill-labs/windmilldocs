@@ -343,3 +343,7 @@ div.testimonials a:hover .wm-name {
     width: 100%;
     height: 100%;
 }
+
+.theme-back-to-top-button {
+	bottom: 6.8rem !important;
+}
