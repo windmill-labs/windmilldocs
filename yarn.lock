@@ -2621,10 +2621,15 @@
   resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.6.tgz#4710c641ddd3d28d6faae72521d420fe6985d9d7"
   integrity sha512-/oj0QZ7Lf/3RimO22Vu+raA2qvQxPl78FcLHbfmOHlgqA8FQlthWEaXvewkY0RbbmMeJpbGMAwGBb8PFUnS0lQ==
 
-"@inkeep/widgets@^0.2.204":
-  version "0.2.204"
-  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.204.tgz#e90a216ab3b4272cca21893edfbbe790331c5a9d"
-  integrity sha512-6quuxYntwFk6+pA+r6hK58yhOWVfdFaxrStPKobkOvWIm6ACF2om++NQG3GnRBAI0MtGyQ4Q+4/f+ikceWzRog==
+"@inkeep/styled-system@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.7.tgz#830b2df6e370352ef1f69561ee57431e4c7f73dc"
+  integrity sha512-OOpo6zC9vmCQxVdaE7cBK1c2CTLCDXYmUWLm2QWw/hkzHXPJBXRNxMsBicvH+6DMVkIsu1AY8UxJ6SnFDiZ0yg==
+
+"@inkeep/widgets@^0.2.205":
+  version "0.2.205"
+  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.205.tgz#de947b6c1e919bda20cc07e1de78cdeb29a41cd3"
+  integrity sha512-yPr/c2s2RUKXy2f1L+AdP1alzAkMM3+B/8Mo5J29IBlE3T65Tm8fwmaLu7c6NorlY/jtfGZugJCYcmaBvMc5Dg==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
@@ -2633,7 +2638,7 @@
     "@inkeep/preset" "^0.0.7"
     "@inkeep/preset-chakra" "^0.0.7"
     "@inkeep/shared" "^0.0.8"
-    "@inkeep/styled-system" "^0.0.6"
+    "@inkeep/styled-system" "^0.0.7"
     "@sentry/core" "^7.71.0"
     "@sentry/react" "^7.64.0"
     framer-motion "^10.16.1"
