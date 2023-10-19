@@ -58,11 +58,11 @@ While I manage the back-office for now, our goal is to engage less-technical tea
 Bellow you will find an internal app that is used by our CS team to translate fetch articles with [OpenAI](/docs/integrations/openai) and insert them into Zendesk with the new language.
 
 <iframe
-	width="560"
-	height="315"
-	src="https://www.youtube.com/embed/DvCgpeHYd4Q?vq=hd720"
-	title="YouTube video player"
-	frameborder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowfullscreen="true"
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/DvCgpeHYd4Q?vq=hd720"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>

@@ -62,11 +62,11 @@ Before Windmill, our clients used to receive a monthly PDF with data that was di
 Here is an anonymized version of our client-facing dashboard:
 
 <iframe
-	width="560"
-	height="315"
-	src="https://www.youtube.com/embed/NsAhQZi2FTg?vq=hd1080"
-	title="YouTube video player"
-	frameborder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowfullscreen="true"
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/NsAhQZi2FTg?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>

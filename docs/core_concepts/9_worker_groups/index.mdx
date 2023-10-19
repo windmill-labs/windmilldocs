@@ -111,7 +111,19 @@ You can then configure it directly from the UI.
 
 ### How to have a Worker join a Worker Group
 
-Simply pass the worker group as the env variable `WORKER_GROUP`:
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+Create a worker group in your `docker-compose.yml` and simply pass the worker group as the env variable `WORKER_GROUP`:
 
 ```
 WORKER_GROUP=worker_group_name
@@ -135,16 +147,16 @@ Under the [Enterprise Edition](../../misc/7_plans_details/index.mdx), they can b
 	/>
 </div>
 
-## Dedicated Workers / Native Performance
+## Dedicated Workers / High Throughput
 
 Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
-Dedicated Workers / Native Performance is an [Enterprise & Team Edition](../../misc/7_plans_details/index.mdx) feature.
+Dedicated Workers / High Throughput is an [Enterprise & Team Edition](../../misc/7_plans_details/index.mdx) feature.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Dedicated Workers / Native Performance"
+		title="Dedicated Workers / High Throughput"
 		description="Dedicated Workers are workers that are dedicated to a particular script."
 		href="/docs/core_concepts/dedicated_workers"
 	/>
