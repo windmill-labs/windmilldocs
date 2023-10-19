@@ -23,7 +23,7 @@ export default function SearchBarWrapper() {
     aiChatSettings,
     searchSettings,
     modalSettings: {
-      openShortcutKey: '/',
+      openShortcutKey: 'K',
     },
   };
 

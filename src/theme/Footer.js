@@ -23,7 +23,10 @@ export default function FooterWrapper(props) {
     stylesheetUrls: ['/css/inkeep-style-overrides.css'],
     baseSettings,
     aiChatSettings,
-    searchSettings
+    searchSettings,
+    modalSettings: {
+      openShortcutKey: '/',
+    },
   };
 
   return (

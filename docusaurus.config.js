@@ -17,10 +17,10 @@ const config = {
 	projectName: 'windmill',
 
 	customFields: {
-		inkeepCredentials: {
-			apiKey: '',
-			integrationId: '',
-			organizationId: '',
+		inkeepCredentials:{
+			apiKey: '8ce4bf9ddc2ef8bc9ec53f133fd864292678e2d2e41872a0',
+			integrationId: 'clnxmt23j0001s6015xw7mzmo',
+			organizationId: 'org_eifr1ohM9oAxET8B'
 		}
 	},
 

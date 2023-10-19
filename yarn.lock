@@ -2621,15 +2621,15 @@
   resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.6.tgz#4710c641ddd3d28d6faae72521d420fe6985d9d7"
   integrity sha512-/oj0QZ7Lf/3RimO22Vu+raA2qvQxPl78FcLHbfmOHlgqA8FQlthWEaXvewkY0RbbmMeJpbGMAwGBb8PFUnS0lQ==
 
-"@inkeep/styled-system@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.7.tgz#830b2df6e370352ef1f69561ee57431e4c7f73dc"
-  integrity sha512-OOpo6zC9vmCQxVdaE7cBK1c2CTLCDXYmUWLm2QWw/hkzHXPJBXRNxMsBicvH+6DMVkIsu1AY8UxJ6SnFDiZ0yg==
+"@inkeep/styled-system@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.8.tgz#5b2204247c7076acb1355026fdcdd0fa962e2263"
+  integrity sha512-trtjnINInClC+pQGbFmwy0+tlo77iowA8JgyMlJoFmogTEEdDEt0et4pJ06W5B1ub+voCWt1VnFof310jI7+uw==
 
-"@inkeep/widgets@^0.2.205":
-  version "0.2.205"
-  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.205.tgz#de947b6c1e919bda20cc07e1de78cdeb29a41cd3"
-  integrity sha512-yPr/c2s2RUKXy2f1L+AdP1alzAkMM3+B/8Mo5J29IBlE3T65Tm8fwmaLu7c6NorlY/jtfGZugJCYcmaBvMc5Dg==
+"@inkeep/widgets@^0.2.209":
+  version "0.2.209"
+  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.209.tgz#146138f4d3a1a647d3b7abc3c53dacd78ba8afec"
+  integrity sha512-VRHz1pz4zim08ysx5LAJR0eg1bFKwaIBu10ifHIYXEXD3XydJEGnN4OZbEC8d/7JsIs5OJXYx/GufnVQ68jOUA==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
@@ -2638,15 +2638,14 @@
     "@inkeep/preset" "^0.0.7"
     "@inkeep/preset-chakra" "^0.0.7"
     "@inkeep/shared" "^0.0.8"
-    "@inkeep/styled-system" "^0.0.7"
+    "@inkeep/styled-system" "^0.0.8"
     "@sentry/core" "^7.71.0"
     "@sentry/react" "^7.64.0"
     framer-motion "^10.16.1"
-    graphql "^16.8.0"
+    graphql "^16.8.1"
     graphql-ws "^5.14.0"
     html-react-parser "^3.0.16"
     lodash-es "^4.17.21"
-    posthog-js "^1.77.1"
     react "^18.2.0"
     react-dom "^18.2.0"
     react-error-boundary "^4.0.11"
@@ -9701,7 +9700,7 @@ graphql-ws@^5.14.0:
   resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.14.1.tgz#d05dba9c2cbf1582c990a2dfec4b8f6a55d99da4"
   integrity sha512-aqkls1espsygP1PfkAuuLIV96IbztQ6EaADse97pw8wRIMT3+AL/OYfS8V2iCRkc0gzckitoDRGCQEdnySggiA==
 
-graphql@^16.8.0:
+graphql@^16.8.1:
   version "16.8.1"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
   integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
@@ -13663,13 +13662,6 @@ posthog-js@^1.45.1:
   version "1.67.1"
   resolved "https://registry.npmjs.org/posthog-js/-/posthog-js-1.67.1.tgz"
   integrity sha512-gvdCVrrxoRYbtNTCUt2/YdZ+tfSfzcl72ym/dtRVCYJpwlCUIKnNJ3E2g7Bbw1+Ki6CvGxdu9r7jHIWnvJAMuw==
-  dependencies:
-    fflate "^0.4.1"
-
-posthog-js@^1.77.1:
-  version "1.83.0"
-  resolved "https://registry.yarnpkg.com/posthog-js/-/posthog-js-1.83.0.tgz#e13d114922f863f4bfbf7c7cc4e11dc194139a91"
-  integrity sha512-3dp/yNbRCYsOgvJovFUMCLv9/KxnwmGBy5Ft27Q7/rbW++iJXVR64liX7i0NrXkudjoL9j1GW1LGh84rV7kv8Q==
   dependencies:
     fflate "^0.4.1"
 

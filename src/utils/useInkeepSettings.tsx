@@ -33,6 +33,9 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     optOutAllAnalytics: true,
     optOutAnalyticalCookies: true,
     optOutFunctionalCookies: true,
+    env: 'PRODUCTION',
+    consoleDebugLevel: 0,
+    remoteErrorLogsLevel: 1,
     theme: {
       tokens: {
         colors: {
@@ -71,7 +74,6 @@ const useInkeepSettings = (): InkeepSharedSettings => {
           replaceLeading: true,
           breadcrumbName: 'API',
         },
-
       ],
     },
   };
@@ -83,6 +85,10 @@ const useInkeepSettings = (): InkeepSharedSettings => {
       'Can I use an Azure auth provider for authenticating users?',
       'How do I run Windmill locally with Bun?',
     ],
+    toggleButtonSettings: {
+      isChatModeToggleEnabled: true,
+      chatModeToggleValue: 'TURBO'
+    }
   };
 
   const searchSettings: InkeepSearchSettings = {
