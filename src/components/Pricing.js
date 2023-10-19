@@ -75,7 +75,7 @@ const pricing = {
 						{ text: 'Audit logs' },
 						{ text: 'Distributed dependency cache backed by S3' },
 						{ text: 'SAML support including groups synchronization' },
-						{ text: 'Dedicated Workers / Native Performance' },
+						{ text: 'Dedicated Workers / High Throughput' },
 						{ text: 'Worker Group Management UI' },
 						{ text: 'Deploy to staging/prod web UI' },
 						{ text: 'Global CSS on App Editor' },

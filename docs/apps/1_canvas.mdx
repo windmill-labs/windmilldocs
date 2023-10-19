@@ -1,9 +1,20 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Canvas Guide
+# Canvas
 
 The app canvas is the main area of the app editor. It displays the app components and allows you to configure them.
 You can move and resize components and lock them to prevent them from being moved or resized by another component.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    loop
+    controls
+    id="main-video"
+    src="/videos/dnd.mp4"
+/>
+
+<br/>
 
 The apps are defined by two layouts: `Mobile` and `Desktop`. The layout can be toggled from the toolbar. Layouts are independent and can be configured separately.
 
@@ -135,39 +146,6 @@ Debug a tab by clicking on the arrow down button on the top-right corner of the 
 	id="app-debug-tabs"
 	src="/videos/app-debug-tabs.mp4"
 />
-
-## Copy-Pasting Components Across Apps
-
-Windmill allows you to copy and paste components across different apps. This feature provides a way to create a library of predefined complex components, which can then be shared and reused across various applications.
-
-### How it Works
-
-The process of copying and pasting components is straightforward:
-
-1. Open the application containing the component you wish to copy.
-2. Select the component on the Canvas.
-3. Use the standard copy shortcut (`Ctrl+C` on PC or `Cmd+C` on Mac).
-4. Navigate to the other application where you wish to paste the component.
-5. Click on the Canvas in the location where you wish to paste the component.
-6. Use the standard paste shortcut (`Ctrl+V` on PC or `Cmd+V` on Mac).
-
-The component, with all its predefined configurations and styles, will appear on the Canvas of the second application.
-
-### Use Cases
-
-#### Shared Component Repository (Modules)
-
-Create a dedicated application to serve as a repository for shared components. This repository can then be used as a source for components, which can be copied and pasted into other applications.
-
-Increase efficiency in application development by reusing complex components. Rather than creating and configuring components from scratch for each new application, you can simply copy and paste existing ones.
-
-![Shared Components](../assets/apps/6_app_settings/shared_components.gif)
-
-#### Style Consistency
-
-Maintain consistency in style across multiple applications by creating styled components once and then copying and pasting them into various applications.
-
-![Style Consistency](../assets/apps/6_app_settings/style_consistency.gif)
 
 ### Learn More
 

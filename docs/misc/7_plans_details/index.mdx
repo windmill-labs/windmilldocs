@@ -88,7 +88,7 @@ Designed for companies requiring dedicated support, guidance and advanced infras
 - Commercial license.
 - [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
-- [Dedicated Workers / Native Performance](../../core_concepts/25_dedicated_workers/index.mdx).
+- [Dedicated Workers / High Throughput](../../core_concepts/25_dedicated_workers/index.mdx).
 - [Worker Group Management UI](../11_worker_group_management_ui/index.mdx).
 - [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
 - [Global CSS on App Editor](../../apps/9_css_editor.md).
@@ -140,6 +140,28 @@ Team plans work at the workspace-level.
 
 #### Self-host
 
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/YAoLXwayjT8?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
+- You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
+- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) that is valid for a month (duration of trial). You can also contact us immediately if preferred. At the end of the subscription period (or trial), you will receive another license key valid for a year.
+- To have your instance switch from Community Edition to Enterprise Edition, you'll need to change the Windmill image:
+  - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
+  - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
+- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
+- Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+- (*By end of 2023*: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
+
 <div class="grid grid-cols-2 gap-6 mb-4">
     <DocCard
 		title="Self Host Windmill"
@@ -148,16 +170,11 @@ Team plans work at the workspace-level.
 	/>
 </div>
 
-- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
-- You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
-- Upon subscribing, we will get back to you with a license key that is valid for a month (duration of trial). You can also contact us immediately if preferred. At the end of the subscription period (or trial), you will receive another license key valid for a year.
-- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
-- Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
-- (*By end of 2023*: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
-
 #### Using the License Key (Self-Host)
 
-To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. Pass the license key as the `LICENSE_KEY` environment variable.
+To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
+
+![Use license key](./add_license_key.png "Use license key")
 
 ## Frequently Asked Questions (FAQ)
 

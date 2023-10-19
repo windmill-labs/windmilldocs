@@ -34,7 +34,7 @@ But if you want the user to be able to sort the table, edit a value inplace, adj
 :::info Transformer
 If you want to do basic sorting, or edit the column header name from the script
 you can also use a Transformer script. See the
-[documentation](../../../apps/4_app_configuration_settings/2_app_runnable_triggers.md#transformer)
+[documentation](../../../apps/3_app-runnable-panel.mdx#transformer)
 for more information. 
 :::
 

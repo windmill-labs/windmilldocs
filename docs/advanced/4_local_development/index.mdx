@@ -1,6 +1,7 @@
 ---
 title: Local Development
 ---
+
 import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -20,12 +21,14 @@ To get started with local development and use `git` to version your scripts.
 mkdir myworkspace
 cd myworkspace
 ```
-- Initialise your git repo 
+
+- Initialise your git repo
 
 ```bash
 git init .
 ```
-- Next [add your workspace](../3_cli/workspace-management.md#adding-a-workspace) to the current directory. 
+
+- Next [add your workspace](../3_cli/workspace-management.md#adding-a-workspace) to the current directory.
 
 ```bash
 wmill workspace add myworkspace [workspace_id] [remote]
@@ -37,12 +40,11 @@ wmill workspace add myworkspace [workspace_id] [remote]
 wmill sync pull
 ```
 
-- You should see all your scripts, flows, apps inside the folder. 
+- You should see all your scripts, flows, apps inside the folder.
 
 - You can now edit the files directly as shown below.
 
-- Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [github action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example) 
-
+- Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [github action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example)
 
 ## Deno / Bun
 
@@ -99,7 +101,7 @@ Windmill python scripts can be run like normal python scripts. To add testing or
 debbug code, add this snippet to your file:
 
 ```py
-if __name__ == 'main':
+if __name__ == '__main__':
     # Add your testing & debugging code here.
     pass
 ```
@@ -240,7 +242,6 @@ For example, for TypeScript:
 </TabItem>
 </Tabs>
 
-
 The same `env` & `envFile` options are also supported by python.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -250,7 +251,6 @@ The same `env` & `envFile` options are also supported by python.
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
-
 
 ### JetBrains IDEs
 
