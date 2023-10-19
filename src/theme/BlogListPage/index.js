@@ -10,8 +10,7 @@ import BlogPostItems from '@theme/BlogPostItems';
 function BlogListPageMetadata(props) {
 	const { metadata } = props;
 	const {
-		siteConfig: { title: siteTitle
-		}
+		siteConfig: { title: siteTitle }
 	} = useDocusaurusContext();
 	const { blogDescription, blogTitle, permalink } = metadata;
 	const isBlogOnlyMode = permalink === '/';
