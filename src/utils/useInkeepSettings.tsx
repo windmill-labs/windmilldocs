@@ -30,9 +30,7 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     organizationId: inkeepBaseConfig.organizationId,
     organizationDisplayName: 'Windmill',
     primaryBrandColor: '#3b82f6',
-    optOutAllAnalytics: true,
     optOutAnalyticalCookies: true,
-    optOutFunctionalCookies: true,
     env: 'PRODUCTION',
     consoleDebugLevel: 0,
     remoteErrorLogsLevel: 1,
@@ -55,27 +53,7 @@ const useInkeepSettings = (): InkeepSharedSettings => {
           },
         }
       }
-    },
-    breadcrumbRules: {
-      urlToBreadcrumbMapper: [
-        {
-          matchingRule: {
-            ruleType: 'PartialUrl',
-            partialUrl: 'https://www.windmill.dev/docs',
-          },
-          replaceLeading: true,
-          breadcrumbName: 'Docs',
-        },
-        {
-          matchingRule: {
-            ruleType: 'PartialUrl',
-            partialUrl: 'https://app.windmill.dev/openapi.html#',
-          },
-          replaceLeading: true,
-          breadcrumbName: 'API',
-        },
-      ],
-    },
+    }
   };
 
   const aiChatSettings: InkeepAIChatSettings = {
