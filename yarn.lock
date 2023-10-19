@@ -2626,10 +2626,10 @@
   resolved "https://registry.yarnpkg.com/@inkeep/styled-system/-/styled-system-0.0.8.tgz#5b2204247c7076acb1355026fdcdd0fa962e2263"
   integrity sha512-trtjnINInClC+pQGbFmwy0+tlo77iowA8JgyMlJoFmogTEEdDEt0et4pJ06W5B1ub+voCWt1VnFof310jI7+uw==
 
-"@inkeep/widgets@^0.2.209":
-  version "0.2.209"
-  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.209.tgz#146138f4d3a1a647d3b7abc3c53dacd78ba8afec"
-  integrity sha512-VRHz1pz4zim08ysx5LAJR0eg1bFKwaIBu10ifHIYXEXD3XydJEGnN4OZbEC8d/7JsIs5OJXYx/GufnVQ68jOUA==
+"@inkeep/widgets@^0.2.212":
+  version "0.2.212"
+  resolved "https://registry.yarnpkg.com/@inkeep/widgets/-/widgets-0.2.212.tgz#35a7d855cdc80dee7638b951192f620c57b275e2"
+  integrity sha512-h+Ixq+lFAk3SPtF0aRT/NWE0QAmpIYz8VDP3UziaksviGHAM8XsifrxbH7jrfg3+KXCJnEH3optKU/W2M14yHA==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
@@ -2641,11 +2641,12 @@
     "@inkeep/styled-system" "^0.0.8"
     "@sentry/core" "^7.71.0"
     "@sentry/react" "^7.64.0"
+    "@types/lodash.isequal" "^4.5.7"
     framer-motion "^10.16.1"
     graphql "^16.8.1"
     graphql-ws "^5.14.0"
     html-react-parser "^3.0.16"
-    lodash-es "^4.17.21"
+    lodash.isequal "^4.5.0"
     react "^18.2.0"
     react-dom "^18.2.0"
     react-error-boundary "^4.0.11"
@@ -3657,6 +3658,18 @@
   integrity sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==
   dependencies:
     "@types/node" "*"
+
+"@types/lodash.isequal@^4.5.7":
+  version "4.5.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.isequal/-/lodash.isequal-4.5.7.tgz#8d95603728dc7a8070c37d12d98b27b4d665849a"
+  integrity sha512-UJQsb7aW8JU/h3fivQXVRDp9EKi98T9iQcVeTXBxcD4jApgGgbrET/0hVS6vH/YoYpqkcToMU5fSNPEiWVZgDg==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*":
+  version "4.14.200"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.200.tgz#435b6035c7eba9cdf1e039af8212c9e9281e7149"
+  integrity sha512-YI/M/4HRImtNf3pJgbF+W6FrXovqj+T+/HpENLTooK9PnkacBsDpeP3IpHab40CClUfhNmdM2WTNP2sa2dni5Q==
 
 "@types/mdast@^3.0.0":
   version "3.0.11"
@@ -11284,11 +11297,6 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
-
-lodash-es@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
-  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
 
 lodash.curry@^4.0.1:
   version "4.1.1"
