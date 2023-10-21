@@ -3,6 +3,25 @@ import Footer from '@theme-original/Footer'
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import useInkeepSettings from '../utils/useInkeepSettings';
 
+const cssOverrides = `
+  [data-theme='dark'] .inkeep-floating-button {
+    background: #353e52;
+    color: white;
+  }
+
+  .inkeep-floating-button {
+    background: #F3F6F8;
+    color: var(--inkeep-colors-inkeep-primary-text-subtle);
+  }
+`;
+
+const stylesheets = [
+  <style key="inkeep-overrides">
+    {cssOverrides}
+  </style>
+];
+
+
 export default function FooterWrapper(props) {
   const [ChatButton, setChatButton] = useState(null);
 
@@ -20,7 +39,7 @@ export default function FooterWrapper(props) {
   } = useInkeepSettings();
 
   const chatButtonProps = {
-    stylesheetUrls: ['/css/inkeep-style-overrides.css'],
+    stylesheets,
     baseSettings,
     aiChatSettings,
     searchSettings,

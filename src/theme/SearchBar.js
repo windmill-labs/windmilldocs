@@ -2,7 +2,22 @@ import React, { useEffect, useState } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import useInkeepSettings from '../utils/useInkeepSettings';
 
-export default function SearchBarWrapper() {
+const cssOverrides = `
+  .inkeep-search-bar-trigger__container {
+    padding-inline: var(--inkeep-spacing-3);
+  }
+`;
+
+const stylesheets = [
+  <style key="inkeep-overrides">
+    {cssOverrides}
+  </style>
+];
+
+
+export default function SearchBarWrapper({
+  className,
+}) {
   const [SearchBar, setSearchBar] = useState(null);
 
   useEffect(() => {
@@ -19,6 +34,7 @@ export default function SearchBarWrapper() {
   } = useInkeepSettings();
 
   const searchBarProps = {
+    stylesheets,
     baseSettings,
     aiChatSettings,
     searchSettings,
@@ -28,7 +44,7 @@ export default function SearchBarWrapper() {
   };
 
   return (
-    <div className="Inkeep-Search">
+    <div className={`inkeep-search ${className}`}>
       <BrowserOnly fallback={<div />}>
         {() => {
           return SearchBar ? <SearchBar {...searchBarProps} />: <div />;

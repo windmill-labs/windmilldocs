@@ -1,4 +1,9 @@
-.Inkeep-Search {
+.inkeep-search {
 	height: 36px;
 	width: 220px;
+}
+
+.inkeep-search-compact {
+	height: 36px;
+	width: 150px;
 }
