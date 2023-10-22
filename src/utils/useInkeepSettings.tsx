@@ -37,7 +37,16 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     theme: {
       tokens: {
         colors: {
+          'gray.200': '#f3f6f8',
+          'gray.300': '#e0e7ed',
+          'gray.400': '#c5d0dc',
+          'gray.500': '#9dafc3',
+          'gray.600': '#6e87a2',
+          'gray.700': '#475973',
+          'gray.800': '#3e4c60',
+          'gray.900': '#2e3440',
           'grayDark.900': '#1e232e',
+          'border.default': '#c5d0dc',
         },
       },
       colorMode: {
