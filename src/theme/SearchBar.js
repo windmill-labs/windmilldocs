@@ -44,7 +44,7 @@ export default function SearchBarWrapper({
   };
 
   return (
-    <div className={`inkeep-search ${className}`}>
+    <div className={`inkeep-search ${className || ''}`}>
       <BrowserOnly fallback={<div />}>
         {() => {
           return SearchBar ? <SearchBar {...searchBarProps} />: <div />;
