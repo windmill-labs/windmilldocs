@@ -2131,15 +2131,15 @@
   resolved "https://registry.npmjs.org/@inkeep/styled-system/-/styled-system-0.0.6.tgz"
   integrity sha512-/oj0QZ7Lf/3RimO22Vu+raA2qvQxPl78FcLHbfmOHlgqA8FQlthWEaXvewkY0RbbmMeJpbGMAwGBb8PFUnS0lQ==
 
-"@inkeep/styled-system@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/@inkeep/styled-system/-/styled-system-0.0.8.tgz"
-  integrity sha512-trtjnINInClC+pQGbFmwy0+tlo77iowA8JgyMlJoFmogTEEdDEt0et4pJ06W5B1ub+voCWt1VnFof310jI7+uw==
+"@inkeep/styled-system@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.npmjs.org/@inkeep/styled-system/-/styled-system-0.0.9.tgz"
+  integrity sha512-1+n7/I7r0qRTO5V21INnJhf+Dvx2JBcMn8rejqjYO4bFIO+81mTxNjgfcTAY1Zj0fdeRSkyoD+A58/ZO0pRj8A==
 
-"@inkeep/widgets@^0.2.212":
-  version "0.2.212"
-  resolved "https://registry.npmjs.org/@inkeep/widgets/-/widgets-0.2.212.tgz"
-  integrity sha512-h+Ixq+lFAk3SPtF0aRT/NWE0QAmpIYz8VDP3UziaksviGHAM8XsifrxbH7jrfg3+KXCJnEH3optKU/W2M14yHA==
+"@inkeep/widgets@^0.2.213":
+  version "0.2.213"
+  resolved "https://registry.npmjs.org/@inkeep/widgets/-/widgets-0.2.213.tgz"
+  integrity sha512-KSXgDW/sdAk/OPo+Xuj6xCr4xpjWik1C7/gNNMS6nEeTFnxNlmnoQ06ZIrcg24ZaOL6HR5yiyIIgKrbiVUQBCw==
   dependencies:
     "@apollo/client" "^3.8.1"
     "@ark-ui/react" "^0.15.0"
@@ -2148,7 +2148,7 @@
     "@inkeep/preset" "^0.0.7"
     "@inkeep/preset-chakra" "^0.0.7"
     "@inkeep/shared" "^0.0.8"
-    "@inkeep/styled-system" "^0.0.8"
+    "@inkeep/styled-system" "^0.0.9"
     "@sentry/core" "^7.71.0"
     "@sentry/react" "^7.64.0"
     "@types/lodash.isequal" "^4.5.7"
@@ -10269,6 +10269,8 @@ is-typedarray@^1.0.0:
 
 is-unicode-supported@*:
   version "1.3.0"
+  resolved "https://registry.npmjs.org/is-unicode-supported/-/is-unicode-supported-1.3.0.tgz"
+  integrity sha512-43r2mRvz+8JRIKnWJ+3j8JtjRKZ6GmjzfaE/qiBJnikNnYv/6bagRJ1kUhNk8R5EX/GkobD+r+sfxCPJsiKBLQ==
 
 is-unicode-supported@^0.1.0:
   version "0.1.0"

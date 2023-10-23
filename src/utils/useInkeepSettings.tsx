@@ -77,7 +77,7 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     toggleButtonSettings: {
       isChatModeToggleEnabled: true,
       chatModeToggleValue: 'TURBO'
-    }
+    },
   };
 
   const searchSettings: InkeepSearchSettings = {
