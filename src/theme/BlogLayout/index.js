@@ -57,6 +57,8 @@ export default function BlogLayout(props) {
 			<div className="container max-w-7xl w-full mx-auto margin-vert--lg bg-transparent">
 				<div className="row">
 					<BlogSidebar sidebar={sidebar} />
+					{toc && <div className="col col--2"></div>}
+
 					<main
 						className={clsx('col mt-12', {
 							'col--7': hasSidebar,
@@ -68,7 +70,7 @@ export default function BlogLayout(props) {
 					>
 						{children}
 					</main>
-					{toc && <div className="col col--3">{toc}</div>}
+					{toc && <div className="col col--2">{toc}</div>}
 				</div>
 			</div>
 		</Layout>
