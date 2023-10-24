@@ -1,0 +1,59 @@
+---
+authors: [rubenfiszel]
+tags:
+  [
+    'Components',
+    'App Editor',
+	'Launch week',
+  ]
+image: ./groups_of_components_thumbnail.png
+slug: launch-week-components-groups
+description: "Introducing Components Groups to group and save components, therefore building your own meta components."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day X: Groups of Components
+
+<br/>
+
+![Group of components thumbnail](./groups_of_components_thumbnail.png "Group of components thumbnail")
+
+<br/>
+
+In the [App Editor](/docs/apps/app_editor), components are UI elements with specific appearance and behavior, which can be [linked to scripts or flows](/docs/apps/connecting_components).
+
+Windmill provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users, accessible with a simple drag-and-drop.
+
+We are proud to introduce component groups, which allow you to build your own meta-components, accessible via drag-and-drop from any app in your workspace
+
+## How it works
+
+1. From the editor, pick a [container](/docs/apps/app_configuration_settings/container) component and enable "Container is a component group".
+2. Create at least one group field.
+3. Fill the group field's object, either manually or dynamically through an [eval](/docs/apps/app-runnable-panel#evals).
+4. Now the container's components can be [connected](/docs/apps/connecting_components) to the group fields items through `group.group_field_name.optional_subitems`
+
+Inside those "container groups", you can refer to "group.x" to refer to one of those group field which make this independent of the id of the container itself.
+
+Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category. They saved as resources, under the `app_groups` [folder](/docs/core_concepts/groups_and_folders).
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/save_component_group.mp4"
+/>
+
+<br/>
+
+## Learn more
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Group of Components"
+		description="Documentation on how to group components together."
+		href="/docs/apps/app_configuration_settings/components_groups"
+	/>
+</div>
