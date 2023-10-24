@@ -4,12 +4,12 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import useInkeepSettings from '../utils/useInkeepSettings';
 
 const cssOverrides = `
-  [data-theme='dark'] .inkeep-floating-button {
+  [data-theme='dark'] .ikp-floating-button {
     background: #353e52;
     color: white;
   }
 
-  .inkeep-floating-button {
+  .ikp-floating-button {
     background: #F3F6F8;
     color: var(--inkeep-colors-inkeep-primary-text-subtle);
   }
@@ -43,9 +43,10 @@ export default function FooterWrapper(props) {
     baseSettings,
     aiChatSettings,
     searchSettings,
+    chatButtonType: 'ICON_TEXT',
     modalSettings: {
-      openShortcutKey: '/',
-    },
+      areOpenHotKeysDisabled: true,
+    }
   };
 
   return (

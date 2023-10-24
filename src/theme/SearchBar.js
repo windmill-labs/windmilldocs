@@ -3,8 +3,8 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 import useInkeepSettings from '../utils/useInkeepSettings';
 
 const cssOverrides = `
-  .inkeep-search-bar-trigger__container {
-    padding-inline: var(--inkeep-spacing-3);
+  .ikp-search-bar-trigger__container {
+    padding-inline: var(--ikp-spacing-3);
   }
 `;
 
