@@ -16,7 +16,7 @@ export default function BlogLayout(props) {
 			{!isBlogPostPageList && (
 				<div className="max-w-7xl w-full mx-auto">
 					<div className="">
-						<div className="relative pt-16 pb-8">
+						<div className="relative pt-16 pb-8 overflow-hidden">
 							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900 dark:from-blue-300 dark:to-blue-500">
 								Blog
 							</h1>

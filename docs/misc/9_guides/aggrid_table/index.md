@@ -67,7 +67,7 @@ There is _a lot_ more properties, this is just the first few. See
 [Column Properties](https://www.ag-grid.com/javascript-data-grid/column-properties/)
 for the complete list of properties.
 
-### Dynamicly configure the column definition
+### Dynamically configure the column definition
 
 As with most things, Windmill lets you **dropdown to code** when you want to do
 more advanced stuff, where the gui is more in the way then helping.
