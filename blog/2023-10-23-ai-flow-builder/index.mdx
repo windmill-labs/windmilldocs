@@ -1,6 +1,6 @@
 ---
 slug: ai-flow-builder
-title: Launchweek day X - Flow Builder Copilot
+title: Launch Week day X - Flow Builder Copilot
 authors: [hugocasa]
 tags:
   [
@@ -13,6 +13,7 @@ tags:
 		'Workflows'
   ]
 image: ./media/ai_flow_thumbnail.png
+description: "As part of our launch week, we're excited to release a new Windmill AI feature: a copilot for the flow builder."
 ---
 
 import DocCard from '@site/src/components/DocCard';
@@ -24,7 +25,7 @@ import DocCard from '@site/src/components/DocCard';
 	src="/videos/ai_flows.mp4"
 />
 
-<br/>
+<br />
 
 As part of our launch week, we're excited to release a new Windmill AI feature: a copilot for the [flow builder](/docs/flows/flow_editor).
 By simply describing your desired workflow in plain English or selecting scripts from [Windmill Hub](https://hub.windmill.dev/), the copilot effortlessly generates each step and connects them automatically.
@@ -44,16 +45,7 @@ Here's a quick demo of what the AI flow builder can do:
 <br />
 
 At the same time, we're also releasing a new feature for the [script editor](/docs/script_editor), a code completion copilot
-which prompts you with suggestions based on the code you're writing. This completes our already existing
-copilot which allows you to generate, edit and fix your scripts (learn more [here](/docs/core_concepts/ai_generation#windmill-ai-for-scripts)).
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-    	title="Windmill AI"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation"
-    />
-</div>
+which offers completion suggestions based on the code you're writing.
 
 Have a look:
 
@@ -68,6 +60,16 @@ Have a look:
 :::tip
 To enable Windmill AI, you simply have to setup an OpenAI API key in your workspace settings. There is also a toggle to enable or disable code completion. More info in the [docs](/docs/core_concepts/ai_generation).
 :::
+
+These features complement Windmill AI for Scripts, which lets you generate whole scripts using prompts and fix your errors automatically:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Windmill AI for Scripts"
+		description="Generate Windmill-specific code from simple text"
+		href="/docs/core_concepts/ai_generation#code-generation"
+	/>
+</div>
 
 ## What are Windmill Flows?
 
