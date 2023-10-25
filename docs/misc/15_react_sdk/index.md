@@ -33,9 +33,11 @@ export default defineConfig({
 });
 ```
 
+An example is provided directly in the `windmill-react-sdk` repository.s
+
 ### Using Webpack 5 (Next.js)
 
-Add the following to your `next.config.js`:
+You need to install `svelte-loader` and add the following to your `next.config.js`:
 
 ```js
 const nextConfig = {
