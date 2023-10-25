@@ -1,0 +1,85 @@
+---
+authors: [rubenfiszel]
+tags:
+  [
+    'Launch week',
+    'Worker Groups'
+  ]
+image: ./worker_groups_configuration_thumbnail.png
+slug: launch-week-worker-groups
+description: "Set shared configurations to your workers."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day X: Worker Groups Configuration
+
+<br/>
+
+![Worker Groups Configuration thumbnail](./worker_groups_configuration_thumbnail.png "Worker Groups Configuration thumbnail")
+
+Set shared configurations to your workers.
+
+[Workers](/docs/core_concepts/worker_groups) are the foundation of Windmill. They are autonomous processes that run one script at a time using the full machines resources available to them.
+
+Workers pull [jobs](/docs/core_concepts/jobs) from the queue of jobs in the order of their
+`scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
+a job, it atomically sets its state to "running", runs it, streams its logs then
+once it is complete, saves it back in the database as a "complete job". The
+final result and logs are stored forever.
+
+In other words, workers are what run the code in Windmill. The number of workers can be horizontally scaled up or down depending on needs without any overhead.
+Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms.
+
+The role of workers in Windmill means that by acting directly on them, you can have much more control your Windmill instance (giving priority to certain jobs or faster cold starts).
+The worker groups configs allow you to manage the configuration and allocation of your workers by grouping them into worker groups where you can define common configurations.
+
+Examples of configurations include:
+- [Give tags to workers](/docs/core_concepts/worker_groups#how-to-assign-worker-tags-to-a-worker-group) to assign specific jobs to them.
+- [Set an init script](/docs/advanced/preinstall_binaries#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
+- [Dedicate your worker to a specific script](/docs/core_concepts/dedicated_workers), for high throughput.
+
+## How it works
+
+From Windmill UI's [Workers page](/docs/core_concepts/worker_groups), just write the name of your worker group and pick "New worker group config".
+
+![New worker group config](../../docs/core_concepts/9_worker_groups/new_worker_group_config.png "New worker group config")
+
+You can then configure it directly from the UI.
+
+![Worker group config](../../docs/core_concepts/9_worker_groups/worker_group_config.png "Worker group config")
+
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+## Learn more
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Workers and Worker Groups"
+    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+    	href="/docs/core_concepts/worker_groups"
+    />
+	  <DocCard
+		title="Worker Groups Management UI"
+		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+	<DocCard
+		title="Dedicated Workers / High Throughput"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+	<DocCard
+		title="Init Scripts"
+		description="Init Scripts are executed at the beginning when the worker starts."
+		href="/docs/advanced/preinstall_binaries#init-scripts"
+	/>
+</div>
