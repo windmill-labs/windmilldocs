@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Preinstall Binaries
 
-Workers in Windmill can preinstall binaries. This allows them to execute these binaries in subprocesses or directly within bash. While some common binaries like npm, aws-cli, kubectl, and helm are already present in the standard images, you can add more by extending the base image of Windmill.
+[Workers](../../core_concepts/9_worker_groups/index.mdx) in Windmill can preinstall binaries. This allows them to execute these binaries in subprocesses or directly within bash. While some common binaries like npm, aws-cli, kubectl, and helm are already present in the standard images, you can add more by extending the base image of Windmill.
 
 Below are the steps and examples to extend the base image:
 
@@ -79,6 +79,16 @@ FROM ${WM_IMAGE}
 
 ## Init Scripts
 
+Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+
+Any scripts are set from the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), at the worker group level. Any script content specified in `INIT_SCRIPT` will be executed at the beginning when each worker of the worker group starts.
+
+When adjustments are made in the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
+
+The execution of Init Scripts is inspectable in the superadmin workspace, with `Kind = All` filter. The path of those executions are `init_script_{worker_name}`.
+
+![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png)
+
 <iframe
     style={{ aspectRatio: '16/9' }}
     src="https://www.youtube.com/embed/2o28HMF1Cnk?vq=hd1080"
@@ -91,15 +101,28 @@ FROM ${WM_IMAGE}
 
 <br/>
 
-Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+## Example: Installing Puppeteer (via npm)
 
-Any scripts are set from the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), at the worker group level. Any script content specified in `INIT_SCRIPT` will be executed at the beginning when each worker of the worker group starts.
+```bash
+curl ghcr.io/windmill-labs/windmill-ee:main
+apt update
+apt install npm -y
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key |  gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+apt-get update -y
+apt install nodejs libnss3-dev  libatk1.0-0 libatk-bridge2.0-0 libcups2-dev  libdrm-dev libxkbcommon-dev libxcomposite-dev libxdamage-dev libxrandr-dev\
+  libgbm-dev libpango-1.0 libcairo-dev libasound-dev -y
+npm install -g puppeteer -y
+```
 
-When adjustments are made in the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
+## Example: Installing Playwright (via pip)
 
-The execution of Init Scripts is inspectable in the superadmin workspace, with `Kind = All` filter. The path of those executions are `init_script_{worker_name}`.
-
-![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png)
+```bash
+pip install playwright
+playwright install
+playwright install-deps
+```
 
 More at:
 
