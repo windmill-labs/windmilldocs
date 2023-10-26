@@ -1,6 +1,6 @@
 # White Labeling Windmill
 
-Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand. We do prodive a library to embed the entire Windmill app or specific components - such as the flow builder or the app builder - into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
+Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand. We do provide a library to embed the entire Windmill app or specific components - such as the flow builder or the app builder - into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
 
 Windmill offers an SDK compatible with any framework, simplifying its integration across various platforms.
 

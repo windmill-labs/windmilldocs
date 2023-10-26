@@ -182,14 +182,14 @@ const tabs = [
 			},
 			{
 				title: 'Add Resources and Variables to Code',
-				description: 'You can add directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
+				description: 'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
 				icon: XSquareIcon,
 				video: {
 					videoSrc: '/videos/add_resources_variables.mp4',
 					altText: 'Add Resources and Variables to Code'
 				},
 				altText: 'Add Resources and Variables to Code',
-				caption: <div>You can add directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
+				caption: <div>You can directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
 			},
 			{
 				title: 'Windmill AI',
