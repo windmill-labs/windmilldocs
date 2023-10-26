@@ -349,3 +349,21 @@ div.testimonials a:hover .wm-name {
 	width: 100%;
 	height: 100%;
 }
+
+.generic-workers-image {
+    background-image: url('/static/images/generic_workers.png');
+}
+
+
+[data-theme='dark'] .generic-workers-image {
+    background-image: url('/static/images/generic_workers_dark.png');
+}
+
+.dedicated-workers-image {
+    background-image: url('/static/images/dedicated_workers.png');
+}
+
+
+[data-theme='dark'] .dedicated-workers-image {
+    background-image: url('/static/images/dedicated_workers_dark.png');
+}
