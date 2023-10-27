@@ -81,6 +81,12 @@ FROM ${WM_IMAGE}
 
 Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
+<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+  <img src={require("./init_scripts.png").default} alt="Init Scripts Infographics" title="Init Scripts Infographics" width="70%" />
+</div>
+
+<br/>
+
 Any scripts are set from the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), at the worker group level. Any script content specified in `INIT_SCRIPT` will be executed at the beginning when each worker of the worker group starts.
 
 When adjustments are made in the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
@@ -101,25 +107,11 @@ The execution of Init Scripts is inspectable in the superadmin workspace, with `
 
 <br/>
 
-## Example: Installing Puppeteer (via npm)
-
-```bash
-curl ghcr.io/windmill-labs/windmill-ee:main
-apt update
-apt install npm -y
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key |  gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-apt-get update -y
-apt install nodejs libnss3-dev  libatk1.0-0 libatk-bridge2.0-0 libcups2-dev  libdrm-dev libxkbcommon-dev libxcomposite-dev libxdamage-dev libxrandr-dev\
-  libgbm-dev libpango-1.0 libcairo-dev libasound-dev -y
-npm install -g puppeteer -y
-```
-
-## Example: Installing Playwright (via pip)
+### Example: Installing Playwright (via pip)
 
 ```bash
 pip install playwright
+export PATH=$PATH:/tmp/.local/bin
 playwright install
 playwright install-deps
 ```
