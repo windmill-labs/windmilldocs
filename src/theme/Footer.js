@@ -10,7 +10,7 @@ const cssOverrides = `
   }
 
   .ikp-floating-button {
-    background: #F3F6F8;
+    background: #ebedf0;
     color: var(--inkeep-colors-inkeep-primary-text-subtle);
   }
 `;
