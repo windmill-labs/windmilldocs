@@ -24,7 +24,7 @@
 		"@easyops-cn/docusaurus-search-local": "^0.23.2",
 		"@headlessui/react": "^1.7.7",
 		"@heroicons/react": "^2.0.14",
-		"@inkeep/widgets": "^0.2.222",
+		"@inkeep/widgets": "^0.2.224",
 		"@mdx-js/react": "^1.6.21",
 		"@mendable/search": "^0.0.99",
 		"@svgr/webpack": "^6.5.1",

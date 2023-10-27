@@ -1,5 +1,8 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useColorMode } from '@docusaurus/theme-common';
+import type { ThemeConfig } from '@docusaurus/preset-classic';
+import type { PrismTheme } from 'prism-react-renderer';
+
 import {
   InkeepAIChatSettings,
   InkeepSearchSettings,
@@ -23,6 +26,8 @@ const useInkeepSettings = (): InkeepSharedSettings => {
   const { siteConfig } = useDocusaurusContext();
   const { colorMode } = useColorMode();
   const inkeepBaseConfig = siteConfig.customFields.inkeepCredentials as InkeepIdentifierSettings;
+  const themeConfig: ThemeConfig = siteConfig.themeConfig;
+  const { theme, darkTheme }= themeConfig?.prism || {};
 
   const baseSettings: InkeepWidgetBaseSettings = {
     apiKey: inkeepBaseConfig.apiKey || '',
@@ -34,6 +39,10 @@ const useInkeepSettings = (): InkeepSharedSettings => {
     env: 'PRODUCTION',
     consoleDebugLevel: 0,
     remoteErrorLogsLevel: 1,
+    highlighterTheme: {
+      lightTheme: theme as PrismTheme,
+      darkTheme: darkTheme as PrismTheme,
+    },
     theme: {
       tokens: {
         colors: {
