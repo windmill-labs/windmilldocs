@@ -23,16 +23,16 @@ const pricing = {
 		{
 			name: 'Free and Open-source',
 			id: 'tier-free-selfhost',
-			href: '/docs/misc/plans_details#free-and-open-source',
+			href: '/docs/advanced/self_host',
 			price: {},
-
-			description: 'Unlimited users & executions',
+			description: 'Unlimited users & executions.',
 			features: [
 				{ text: 'Google / Microsoft / GitHub / GitLab SSO' },
 				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
 				{ text: 'Community support on Discord' }
 			],
-			mostPopular: false
+			mostPopular: true,
+			customMessage: 'Learn more',
 		},
 		{
 			name: 'Enterprise edition',
