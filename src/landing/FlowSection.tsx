@@ -262,7 +262,11 @@ const tabs = [
 				description: 'Execute a flow using the CLI.',
 				icon: Terminal,
 				caption: <div>Execute a flow using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
-				imageSrc: '/images/setup.gif',
+				video: {
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoLength: '26',
+					altText: 'Execute using CLI'
+				},
 				altText: 'Execute using CLI'
 			},
 		]
