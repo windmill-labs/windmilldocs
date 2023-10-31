@@ -292,8 +292,8 @@ const sidebars = {
 					},
 					items: [
 						'advanced/cli/installation',
-						'advanced/cli/sync',
 						'advanced/cli/workspace-management',
+						'advanced/cli/sync',
 						'advanced/cli/user',
 						'advanced/cli/flow',
 						'advanced/cli/app',

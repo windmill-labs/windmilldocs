@@ -1,6 +1,6 @@
 # Workspace Management
 
-The CLI can be used to manage workspaces.
+Windmill CLI can be used on several workspaces from several instances.
 
 ## List workspaces
 
@@ -14,6 +14,16 @@ The currently selected workspace will be <ins>underlined</ins>.
 
 ## Adding a workspace
 
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    autoPlay
+    muted
+    src="/videos/cli_add_workspace.mp4"
+    controls
+/>
+<br/>
+
+
 The wmill CLI is capable of handling working with many remotes & workspaces.
 Each combination of remote & workspace is registered with together with a name
 locally using:
@@ -21,6 +31,8 @@ locally using:
 ```bash
 wmill workspace add [workspace_name] [workspace_id] [remote]
 ```
+
+You can login to the workspace with a token or directly from browser.
 
 The new workspace will automatically be [switched](#switching-selection) to.
 
