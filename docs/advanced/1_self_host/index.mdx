@@ -11,7 +11,7 @@ Self-host Windmill on your own infrastructure.
 For small setups, use [Docker](#docker) and Docker Compose on a single instance.
 For larger and production use-cases, use our [Helm chart](#helm-chart) to deploy on Kubernetes.
 
-![Self-hosted Windmill](./self_hosted_windmill.png "Self-hosted Windmill")
+![Self-hosted Windmill](./self_hosted_windmill.png 'Self-hosted Windmill')
 
 Windmill itself just requires 3 elements:
 
@@ -30,6 +30,7 @@ The docker-compose [below](#docker) use the 6 parts and we recommend doing TLS t
 ## Cloud provider-specific guides
 
 For instances with specific cloud providers requirements:
+
 - [AWS, GCP, Azure](#aws-gcp-azure-neon)
 - [Fly.io](#flyio)
 - [Hetzner, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...](#hetzner-digital-ocean-linode-scaleway-vultr-ovh)
@@ -53,22 +54,22 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 :::
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+	<DocCard
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 </div>
 
 ### Fly.io
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Fly.io"
-    	description="Fly.io Community-Contributed Guide."
-    	href="https://dev.to/singee/deploy-windmill-on-flyio-3ii3"
-      target="_blank"
-    />
+	<DocCard
+		title="Fly.io"
+		description="Fly.io Community-Contributed Guide."
+		href="https://dev.to/singee/deploy-windmill-on-flyio-3ii3"
+		target="_blank"
+	/>
 </div>
 
 ### Hetzner, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...
@@ -82,16 +83,16 @@ Windmill works with those providers using the [Docker containers](#docker) and s
 Self-host Windmill in less than a minute:
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/HVrhLy9izAc?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/HVrhLy9izAc?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 Using [Docker](https://www.docker.com/) and [Caddy](https://caddyserver.com/), Windmill can be deployed using 3 files:
 ([`docker-compose.yml`][windmill-docker-compose], [`Caddyfile`][windmill-caddyfile]) and a [.env][windmill-env] in a single command.
@@ -100,6 +101,7 @@ Using [Docker](https://www.docker.com/) and [Caddy](https://caddyserver.com/), W
 Postgres holds the entire state of Windmill, the rest is fully stateless, Windmill-LSP provides editor intellisense.
 
 Make sure Docker is started:
+
 - Mac: `open /Applications/Docker.app`
 - Windows: `start docker`
 - Linux: `sudo systemctl start docker`
@@ -115,7 +117,6 @@ docker compose up -d
 ```
 
 Go to [http://localhost](http://localhost) et voilà!
-
 
 Even if you setup oauth, login as `admin@windmill.dev` / `changeme` to setup the instance & accounts and give yourself super-admin privileges. Have them pre-filled at [http://localhost/user/login?email=admin@windmill.dev&password=changeme](http://localhost/user/login?email=admin@windmill.dev&password=changeme).
 
@@ -144,11 +145,7 @@ In the docker-compose, set the number of windmill_worker and windmill_worker_nat
 
 ### Enterprise Edition
 
-To use the [enterprise edition](../../misc/7_plans_details/index.mdx), you need to set the following environment variables in the .env file:
-
-```
-WM_LICENSE_KEY=your_license_key
-```
+To use the [enterprise edition](../../misc/7_plans_details/index.mdx), you need pass the license key in the instance settings (Superadmin settings -> Instance settings)
 
 You can then set the number of replicas of the multiplayer container to 1 in the docker-compose.
 
@@ -156,20 +153,9 @@ You will be provided a license key when you purchase the enterprise edition. Con
 
 ### Configuring Domain and Reverse Proxy
 
-To deploy Windmill to the `windmill.example.com` , edit the `.env` file that is used by the docker-compose file and that you have curled previously.
+To deploy Windmill to the `windmill.example.com` domain, make sure to set "Base Url" correctly in the Instance Settings (Superadmin Settings -> Instance Settings -> Base Url)
 
-```bash
-# .env
-WM_BASE_URL=http://windmill.example.com
-```
-
-:::info
-
-Many configuration can be done in the docker-compose.yml file. The [README](https://github.com/windmill-labs/windmill#environment-variables) contains all the variables you can pass to the workers or servers to fully customize windmill to your needs. The .env only contains the most crucial ones.
-
-:::
-
-Setting the `WM_BASE_URL` configures Windmill to use it as its base url. You still need to configure a reverse proxy to hit windmill and windmill-lsp on the right ports. You can use any reverse proxy as long as they behave mostly like the default provided following caddy configuration:
+You can use any reverse proxy as long as they behave mostly like the default provided following caddy configuration:
 
 ```
 :80 {
@@ -206,12 +192,7 @@ windmill_server:
     - web
   environment:
     DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-    BASE_URL: ${WM_BASE_URL}
-    RUST_LOG: info
-    ## You can set the number of workers to > 0 and not need any separate worker service
-    NUM_WORKERS: 0
-    DISABLE_SERVER: false
-    METRICS_ADDR: false
+    MODE: server
   labels:
     - 'traefik.enable=true'
     - 'traefik.docker.network=web'
@@ -232,14 +213,7 @@ windmill_worker:
     - web
   environment:
     DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-    BASE_URL: ${WM_BASE_URL}
-    RUST_LOG: info
-    NUM_WORKERS: 1
-    DISABLE_SERVER: true
-    KEEP_JOB_DIR: false
-    DENO_PATH: /usr/bin/deno
-    PYTHON_PATH: /usr/local/bin/python3
-    METRICS_ADDR: false
+    MODE: worker
   volumes:
     - worker_dependency_cache:/tmp/windmill/cache
     - /var/run/docker.sock:/var/run/docker.sock
@@ -367,7 +341,7 @@ You need:
 - an Enterprise license key
 - an AWS account and S3 bucket
 - AWS credentials or IAM roles prepared for access from the Windmill worker pods.
-  <br/>
+  <br />
 
 See the [Helm Chart repository README][helm] for more details. The exact setup
 for S3 access will vary according to your environment.
@@ -435,40 +409,42 @@ SMTP_PASSWORD=app_password
 
 If you used the [Setup Windmill on localhost](#setup-windmill-on-localhost) method, open the `.env` file in any text editor. You can use `nano`, `vim`, or any other editor you're comfortable with.
 
-   ```bash
-   nano .env
-   ```
-   Append the following to the end of your `.env` file:
+```bash
+nano .env
+```
 
-   ```
-   SMTP_FROM=windmill@domain.com
-   SMTP_HOST=smtp.gmail.com
-   SMTP_PORT=587
-   SMTP_USERNAME=your_email@gmail.com
-   SMTP_PASSWORD=your_app_password
-   ```
+Append the following to the end of your `.env` file:
 
-   Make sure to replace `your_email@gmail.com` with your actual Gmail email address and `your_app_password` with the app password you've generated from Gmail.
+```
+SMTP_FROM=windmill@domain.com
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your_email@gmail.com
+SMTP_PASSWORD=your_app_password
+```
 
-   <br/>
+Make sure to replace `your_email@gmail.com` with your actual Gmail email address and `your_app_password` with the app password you've generated from Gmail.
 
-   > **Note**: If you're using Gmail, you'll need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en) to use as `SMTP_PASSWORD`. This is a unique password that Gmail provides for apps and services that want to connect to your account.
+{' '}
+<br />
 
-<br/>
+> **Note**: If you're using Gmail, you'll need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en) to use as `SMTP_PASSWORD`. This is a unique password that Gmail provides for apps and services that want to connect to your account.
 
-  Save and Close the File:
+<br />
 
-   - If using `nano`, press `CTRL + O` to save and then `CTRL + X` to exit.
-   - If using `vim`, press `Esc`, then type `:wq` and press `Enter`.
+Save and Close the File:
+
+- If using `nano`, press `CTRL + O` to save and then `CTRL + X` to exit.
+- If using `vim`, press `Esc`, then type `:wq` and press `Enter`.
 
 Restart your Windmill application:
 
-   - Since you've made changes to the `.env` file, you'll need to restart your Windmill application for the changes to take effect.
+- Since you've made changes to the `.env` file, you'll need to restart your Windmill application for the changes to take effect.
 
-   ```bash
-   docker compose down
-   docker compose up -d
-   ```
+```bash
+docker compose down
+docker compose up -d
+```
 
 Now, your Windmill instance should use the SMTP settings you've provided to send invites and email to manually added users. Make sure the SMTP details you've provided are correct and that the Gmail account you're using has allowed less secure apps or generated an App Password.
 
@@ -477,20 +453,20 @@ Now, your Windmill instance should use the SMTP settings you've provided to send
 #### Set up SMTP from the UI
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/Wyq6d0bkuGo?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Wyq6d0bkuGo?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 From your self-hosted instance, click on your username and pick "Superadmin settings" and "SMTP" tab.
 
-![Superadmin settings](./superadmin_settings.png "Superadmin settings")
+![Superadmin settings](./superadmin_settings.png 'Superadmin settings')
 
 Fill your SMTP details.
 
@@ -498,51 +474,51 @@ Fill your SMTP details.
 
 You'll be offered to "Test SMTP settings" & send a blank e-mail to a given adress.
 
-![Filled SMTP](./smtp_filled.png "Filled SMTP")
+![Filled SMTP](./smtp_filled.png 'Filled SMTP')
 
 #### Manually add user to instance
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Authentification - Manually add user to instance"
-    	description="As a superadmin of the instance, you have the ability to manually add users to the Windmill instance."
-    	href="/docs/core_concepts/authentification#manually-add-users-to-a-windmill-instance"
-    />
+		title="Authentification - Manually add user to instance"
+		description="As a superadmin of the instance, you have the ability to manually add users to the Windmill instance."
+		href="/docs/core_concepts/authentification#manually-add-users-to-a-windmill-instance"
+	/>
 </div>
 
 #### Manually add user to workspace
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Authentification - Manually add user to workspace"
-    	description="As an admin of the workspace, you have the ability to manually add users to the Windmill workspace."
-    	href="/docs/core_concepts/authentification#adding-users-to-a-workspace"
-    />
+		title="Authentification - Manually add user to workspace"
+		description="As an admin of the workspace, you have the ability to manually add users to the Windmill workspace."
+		href="/docs/core_concepts/authentification#adding-users-to-a-workspace"
+	/>
 </div>
 
 #### Set up Auto-Invites
 
 When creating a workspace, you have the option to invite automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
 
-<video 
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    id="new_workspace"
-    src="/videos/new_workspace.mp4"
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	id="new_workspace"
+	src="/videos/new_workspace.mp4"
 />
 
-<br/>
+<br />
 
 > _Create a new workspace._
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Authentification - Set up auto-invite"
-    	description="You can send auto-invites to the workspace to users from your domain."
-    	href="/docs/core_concepts/authentification#auto-invite"
-    />
+		title="Authentification - Set up auto-invite"
+		description="You can send auto-invites to the workspace to users from your domain."
+		href="/docs/core_concepts/authentification#auto-invite"
+	/>
 </div>
 
 ### Admins Workspace
@@ -553,7 +529,7 @@ If you skipped the instance setup or need to sync resource types, you can go to 
 
 ![Sync resource types](./sync_resource_types.gif 'Sync resource types with Hub')
 
-<br/>
+<br />
 
 For more advanced setups, see [Helm Chart](#helm-chart).
 
