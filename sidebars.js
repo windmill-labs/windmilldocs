@@ -146,17 +146,14 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: [
-								'apps/app-runnable-panel',
-								'apps/outputs'
-							]
+							items: ['apps/app-runnable-panel', 'apps/outputs']
 						},
 						{
 							type: 'category',
 							label: 'Component Library',
 							link: {
 								type: 'doc',
-								id: 'apps/app_configuration_settings/app_component_library',
+								id: 'apps/app_configuration_settings/app_component_library'
 							},
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
@@ -274,7 +271,7 @@ const sidebars = {
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
-				'core_concepts/jobs/index',
+				'core_concepts/jobs/index'
 			],
 			collapsed: false
 		},
@@ -343,6 +340,7 @@ const sidebars = {
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
+				'misc/react_sdk/index'
 			]
 		},
 		{
@@ -603,7 +601,7 @@ const sidebars = {
 					type: 'doc',
 					id: 'compared_to/prefect',
 					label: 'Prefect'
-				},
+				}
 			]
 		},
 		{
@@ -630,7 +628,7 @@ const sidebars = {
 				},
 				'misc/note_of_intent/index',
 				'misc/share_on_hub/index',
-				'misc/white_labelling/index',
+				'misc/white_labelling/index'
 			]
 		}
 	]
