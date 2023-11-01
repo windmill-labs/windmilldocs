@@ -43,7 +43,7 @@ export default function Hero() {
 							onClick={() => window.plausible('self-host')}
 							className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200 text !no-underline"
 						>
-							Self-host yourself <span aria-hidden="true">→</span>
+							Self-host <span aria-hidden="true">→</span>
 						</a>
 					</div>
 
