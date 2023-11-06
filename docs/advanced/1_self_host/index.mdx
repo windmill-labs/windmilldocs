@@ -169,7 +169,11 @@ The default docker-compose file exposes the caddy reverse-proxy on port 80 above
 
 #### Use provided Caddy to serve https
 
-For simplicity, we recommend using an external reverse proxy such as Cloudfront or Cloudflare and point to your instance on the port you have chosen (by default, :80). However, you can also set `BASE_URL` in the docker-compose to your domain instead of `:80` and expose the `:443 ports`. See the caddy section in the docker-compose.
+For simplicity, we recommend using an external reverse proxy such as Cloudfront or Cloudflare and point to your instance on the port you have chosen (by default, :80). 
+
+However, Caddy also supports HTTPS natively via its [tls](https://caddyserver.com/docs/caddyfile/directives/tls) directive. Multiple options are available. Caddy can obtain certificates automatically using the ACME protocol, a provided CA file, or even a custom HTTP endpoint. The simplest is to provide your own certifcate and key files. You can do so by mounting an additional volume containing those two files to the Caddy container and adding a `tls /path/to/cert.pem /path/to/key.pem` directive to the Caddy file. Make sure to expose the port `:443` instead of `:80` and Caddy will take care of the rest.
+
+For all the above, see the commented lines in the caddy section of the docker-compose.
 
 #### Traefik configuration
 
