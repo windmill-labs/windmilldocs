@@ -8,8 +8,8 @@ import PriceCalculator from './pricing/PriceCalculator';
 import classNames from 'classnames';
 
 const types = [
-	{ value: 'selfhost', label: 'Self-hosted' },
 	{ value: 'cloud', label: 'Cloud' },
+	{ value: 'selfhost', label: 'Self-hosted' },
 	{ value: 'whitelabel', label: 'White Label' },
 ];
 
@@ -25,24 +25,76 @@ const pricing = {
 			id: 'tier-free-selfhost',
 			href: '/docs/advanced/self_host',
 			price: {},
-			description: 'Unlimited users & executions.',
+			description: 'Unlimited executions.',
 			features: [
 				{ text: 'Google / Microsoft / GitHub / GitLab SSO' },
 				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
 				{ text: 'Community support on Discord' }
 			],
-			mostPopular: true,
+			mostPopular: false,
 			customMessage: 'Learn more',
+			minPrice: 0,
 		},
 		{
-			name: 'Enterprise edition',
+			name: 'SMEs & Nonprofits',
+			id: 'tiertest',
+			href: 'mailto:contact@windmill.dev',
+			description: 'Nonprofits, universities, small start-ups & SMEs.',
+			features: [
+				{
+					text: (
+						<span>
+							Enterprise Edition with regular support & SLA.
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							Windmill Enterprise Edition <b>Plugins</b>:
+						</span>
+					),
+					features: [
+						{ text: 'Audit logs' },
+						{ text: 'Distributed dependency cache backed by S3' },
+						{ text: 'SAML support including groups synchronization' },
+						{ text: 'Dedicated Workers / High Throughput' },
+						{ text: 'Worker Group Management UI' },
+						{ text: 'Deploy to staging/prod web UI' },
+						{ text: 'Global CSS on App Editor' },
+						{ text: 'Multiplayer on WebIDE' },
+					]
+				},
+			],
+			minPrice: 30,
+			mostPopular: true,
+			price: {
+				worker: {
+					monthly: 12.5,
+					description:
+						'1 worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+					default: 2,
+					min: 2,
+					max: 10
+				},
+				seat: {
+					monthly: 5,
+					description: 'An author can create scripts and flows',
+					default: 1,
+					min: 1,
+					max: 30
+				}
+			},
+		},
+		{
+			name: 'Enterprise',
 			id: 'tier-enterprise-selfhost',
-			href: '/docs/misc/plans_details#self-host',
+			href: 'mailto:contact@windmill.dev',
 			price: {
 				worker: {
 					monthly: 50,
 					description:
-						'1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1 worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
@@ -56,12 +108,19 @@ const pricing = {
 				}
 			},
 			minPrice: 120,
-			description: 'Dedicated support and infrastructure for your company.',
+			description: 'Dedicated support and infrastructure.',
 			features: [
 				{
 					text: (
 						<span>
 							<b>Commercial</b> licence
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -85,20 +144,12 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
-						</span>
-					)
-				},
-
-				{
-					text: (
-						<span>
 							<b>Design partners for roadmap</b>
 						</span>
 					)
 				}
 			],
-			mostPopular: true
+			enterprise: true
 		}
 	],
 	cloud: [
@@ -107,6 +158,7 @@ const pricing = {
 			id: 'tier-free',
 			href: '/docs/misc/plans_details#community-edition---cloud',
 			price: {},
+			minPrice: 0,
 			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
 				{
@@ -216,12 +268,13 @@ const pricing = {
 		{
 			name: 'Enterprise',
 			id: 'tier-enterprise',
-			href: '/docs/misc/plans_details#cloud-1',
+			href: 'mailto:contact@windmill.dev',
+			enterprise: true,
 			price: {
 				worker: {
 					monthly: 100,
 					description:
-						' 1 worker can execute about 13mio executions per month. ( on average a script takes 200ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						' 1 worker can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
@@ -297,7 +350,7 @@ const pricing = {
 	whitelabel: [
 		{
 			name: 'White Labeling Windmill',
-			id: 'tier-free-selfhost',
+			id: 'whitelabel',
 			price: {},
 
 			description: 'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
@@ -305,7 +358,6 @@ const pricing = {
 				{ text: 'Embed the entire Windmill app.' },
 				{ text: 'Embed specific components (flow builder, app builder).' },
 			],
-			mostPopular: false,
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
 		}
@@ -380,8 +432,7 @@ export default function Pricing() {
 					className={classNames(
 						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
 						{
-							'lg:grid-cols-3': frequency.value === 'cloud',
-							'lg:grid-cols-2': frequency.value === 'selfhost',
+							'lg:grid-cols-3': frequency.value === 'cloud' || frequency.value === 'selfhost',
 							'lg:grid-cols-1': frequency.value === 'whitelabel',
 						  }
 					)}
@@ -397,16 +448,15 @@ export default function Pricing() {
 							)}
 						>
 							<div className="flex items-center justify-between gap-x-4">
-								<h3
-									id={tier.id}
-									className={classNames(
-										tier.mostPopular ? 'text-blue-600' : '',
-										'text-2xl font-semibold leading-8'
-									)}
-								>
-									{tier.name}
-								</h3>
-
+							<h3
+								id={tier.id}
+								className={classNames(
+									tier.mostPopular ? 'text-blue-600' : tier.enterprise ? 'text-teal-600' : '',
+									'text-2xl font-semibold leading-8'
+								)}
+							>
+								{tier.name}
+							</h3>
 								{period.value === 'annually' && Object.keys(tier.price).length > 0 ? (
 									<p className="rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
 										16% Discount
@@ -436,20 +486,6 @@ export default function Pricing() {
 								{tier.description}
 							</p>
 
-							{index === 1 && frequency.value === 'selfhost' && (
-								<a
-									href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
-									className={classNames(
-										tier.mostPopular
-											? 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300'
-											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-									)}
-								>
-									Get a month free
-								</a>
-							)}
-
 						{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
 								
 								<a
@@ -469,19 +505,34 @@ export default function Pricing() {
 									className={classNames(
 										tier.mostPopular
 											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-500 '
+											: tier.enterprise ? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700 '
 											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
 								>
-									{tier.customMessage ? tier.customMessage : 'How to upgrade'}
+									{tier.customMessage ? tier.customMessage : 'Get in touch'}
 								</a>
 							)}
-							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10" style={{ marginBottom: '8rem' }}>
+							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10" style={{ marginBottom: '12rem' }}>
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
 							{Object.keys(tier.price).length > 0 ? (
 								<PriceCalculator tier={tier} period={period} />
 							) : null}
+							{index === 2 && frequency.value === 'selfhost' && (
+								<a
+									href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
+									className={classNames(
+										tier.mostPopular
+											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700 '
+											: 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700 ',
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+									)}
+									target="_blank"
+								>
+									Get a month free
+								</a>
+							)}
 						</div>
 					))}
 				</div>

@@ -51,7 +51,7 @@ export default function PriceCalculator({ period, tier }) {
 				</span>
 				<span className="text-md text-gray-500">
 					{period.value === 'annually' ? '/yr' : '/mo'}
-					{(tier.id === 'tier-enterprise' || tier.id === 'tier-enterprise-selfhost') && <span>*</span>}
+					{(tier.id === 'tier-enterprise' || tier.id === 'tier-enterprise-selfhost')}
 				</span>
 			</div>
 			</div>
@@ -187,7 +187,7 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`${
-								workers * 13 * (period.value === 'annually' ? 12 : 1)
+								workers * 26 * (period.value === 'annually' ? 12 : 1)
 							}M executions per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
@@ -199,11 +199,6 @@ export default function PriceCalculator({ period, tier }) {
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
-					{tier.id === 'tier-enterprise' && (
-					<div className="mt-4 text-sm text-gray-600">
-						*We give special discounts to SMBs and small start-ups. Talk to us for custom pricing.
-					</div>
-				)}
 				</div>
 			) : null}
 
@@ -213,7 +208,7 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`${
-								workers * 13 * (period.value === 'annually' ? 12 : 1)
+								workers * 26 * (period.value === 'annually' ? 12 : 1)
 							}M executions per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
@@ -225,11 +220,27 @@ export default function PriceCalculator({ period, tier }) {
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
-					{tier.id === 'tier-enterprise-selfhost' && (
-					<div className="mt-4 text-sm text-gray-600">
-						*We give special discounts to SMBs and small start-ups. Talk to us for custom pricing.
+				</div>
+			) : null}
+
+			{tier.id === 'tiertest' ? (
+				<div className="mt-8 flex flex-col gap-1">
+					<h5 className="font-semibold">Summary</h5>
+					<div className="mt-2 flex items-baseline gap-x-1">
+						<div className="text-sm text-gray-600 mt-1">
+							<span>{`${
+								workers * 26 * (period.value === 'annually' ? 12 : 1)
+							}M executions per `}</span>
+							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
+						</div>
 					</div>
-				)}
+					<div className="flex flex-row gap-1">
+						<span className="whitespace-nowrap text-sm">
+							{seats} {seats > 1 ? 'users' : 'user'}
+						</span>
+						<b className="text-sm">OR</b>
+						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+					</div>
 				</div>
 			) : null}
 		</div>

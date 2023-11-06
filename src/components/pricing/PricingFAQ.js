@@ -8,7 +8,7 @@ const faqs = [
         question: 'What is a worker?',
         answer: (
             <span>
-                <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600">Workers</Link> are autonomous processes that run one script at a time using the full machines resources available to them. Workers serve as the backbone of Windmill as they are responsible for executing code.
+                <Link to="/docs/core_concepts/worker_groups" className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600">Workers</Link> are autonomous processes that run one script at a time using the full machines resources available to them. Workers serve as the backbone of Windmill as they are responsible for executing code. <br/> Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms. Workers can be horizontally scaled up or down depending on needs without any overhead.
             </span>
         )
     },
