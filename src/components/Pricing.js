@@ -530,7 +530,7 @@ export default function Pricing() {
 									)}
 									target="_blank"
 								>
-									Get a month free
+									Try it for a month
 								</a>
 							)}
 						</div>
