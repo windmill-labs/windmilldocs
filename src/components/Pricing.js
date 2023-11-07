@@ -44,7 +44,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Subset of <b>Enterprise Plugins</b> including:
+							Subset of <b className="text-teal-600">Enterprise</b> Plugins including:
 						</span>
 					),
 					features: [
@@ -112,11 +112,11 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Windmill <b>Enterprise Edition Plugins</b>:
+							Windmill <b className="text-teal-600">Enterprise</b> Edition Plugins:
 						</span>
 					),
 					features: [
-						{ text: 'Everything in Pro' },
+						{ text:<span>Everything in <b className="text-blue-500">Pro</b></span> },
 						{ text: 'Audit logs' },
 						{ text: 'Distributed dependency cache backed by S3' },
 						{ text: 'SAML support including groups synchronization' }
@@ -286,7 +286,7 @@ const pricing = {
 			description: 'Dedicated support, guidance and infrastructure for your company.',
 			features: [
 				{
-					text: <span>Everything in Team</span>
+					text: <span>Everything in <b className="text-blue-500">Team</b></span>
 				},
 				{
 					text: (
