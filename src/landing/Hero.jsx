@@ -15,7 +15,7 @@ export default function Hero() {
 					<GithubStarCount />
 
 					<h1 className="mt-4 !text-4xl tracking-tight sm:!text-6xl">
-						Developer platform for scripts, background jobs, workflows and UIs
+						Developer platform for APIs, background jobs, workflows and UIs
 					</h1>
 					<h2 className="mt-6 text-lg leading-8  font-medium">
 						Easily create invincible workflows and apps with code only where it matters.
