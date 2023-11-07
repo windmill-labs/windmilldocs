@@ -25,52 +25,51 @@ const pricing = {
 			id: 'tier-free-selfhost',
 			href: '/docs/advanced/self_host',
 			price: {},
-			description: 'Unlimited executions.',
+			description: 'Unlimited users & executions.',
 			features: [
-				{ text: 'Google / Microsoft / GitHub / GitLab SSO' },
 				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
-				{ text: 'Community support on Discord' }
+				{ text: 'Community support on Discord' },
+				{ text: 'Max 10 users with SSO' }
 			],
 			mostPopular: false,
 			customMessage: 'Learn more',
 			minPrice: 0,
 		},
 		{
-			name: 'SMEs & Nonprofits',
+			name: 'Pro',
 			id: 'tiertest',
 			href: 'mailto:contact@windmill.dev',
-			description: 'Nonprofits, universities, small start-ups & SMEs.',
+			description: 'Small businesses, young startups, nonprofits.',
 			features: [
 				{
 					text: (
 						<span>
-							Enterprise Edition with regular support & SLA.
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							Windmill Enterprise Edition <b>Plugins</b>:
+							Subset of <b>Enterprise Plugins</b> including:
 						</span>
 					),
 					features: [
-						{ text: 'Audit logs' },
-						{ text: 'Distributed dependency cache backed by S3' },
-						{ text: 'SAML support including groups synchronization' },
 						{ text: 'Dedicated Workers / High Throughput' },
 						{ text: 'Worker Group Management UI' },
 						{ text: 'Deploy to staging/prod web UI' },
 						{ text: 'Global CSS on App Editor' },
 						{ text: 'Multiplayer on WebIDE' },
+						{ text: 'Prometheus Metrics' }
 					]
 				},
+				{
+					text: (
+						<span>
+							Priority Support 24/7 with 48h response time and automation engineer assistance
+						</span>
+					)
+				},
+				{ text: 'Max 10 users with SSO' }
 			],
-			minPrice: 30,
+			minPrice: 48,
 			mostPopular: true,
 			price: {
 				worker: {
-					monthly: 12.5,
+					monthly: 20,
 					description:
 						'1 worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
@@ -78,11 +77,11 @@ const pricing = {
 					max: 10
 				},
 				seat: {
-					monthly: 5,
+					monthly: 8,
 					description: 'An author can create scripts and flows',
 					default: 1,
 					min: 1,
-					max: 30
+					max: 10
 				}
 			},
 		},
@@ -113,6 +112,19 @@ const pricing = {
 				{
 					text: (
 						<span>
+							Windmill <b>Enterprise Edition Plugins</b>:
+						</span>
+					),
+					features: [
+						{ text: 'Everything in Pro' },
+						{ text: 'Audit logs' },
+						{ text: 'Distributed dependency cache backed by S3' },
+						{ text: 'SAML support including groups synchronization' }
+					]
+				},
+				{
+					text: (
+						<span>
 							<b>Commercial</b> licence
 						</span>
 					)
@@ -120,26 +132,9 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and engineer assistance
 						</span>
 					)
-				},
-				{
-					text: (
-						<span>
-							Windmill Enterprise Edition <b>Plugins</b>:
-						</span>
-					),
-					features: [
-						{ text: 'Audit logs' },
-						{ text: 'Distributed dependency cache backed by S3' },
-						{ text: 'SAML support including groups synchronization' },
-						{ text: 'Dedicated Workers / High Throughput' },
-						{ text: 'Worker Group Management UI' },
-						{ text: 'Deploy to staging/prod web UI' },
-						{ text: 'Global CSS on App Editor' },
-						{ text: 'Multiplayer on WebIDE' },
-					]
 				},
 				{
 					text: (
@@ -147,9 +142,10 @@ const pricing = {
 							<b>Design partners for roadmap</b>
 						</span>
 					)
-				}
+				},
+				{ text: 'Unlimited SSO users' }
 			],
-			enterprise: true
+			enterprise_edition: true
 		}
 	],
 	cloud: [
@@ -162,19 +158,19 @@ const pricing = {
 			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
 				{
+					text: (
+						<span>
+							<b>1,000</b> free executions per month
+						</span>
+					)
+				},
+				{
 					text: <span>Google / Microsoft / GitHub / GitLab SSO</span>
 				},
 				{
 					text: (
 						<span>
-							<b>Unlimited</b> variables/resources/scripts/apps/flows (*except abuse)
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							<b>1,000</b> free executions per month
+							Unlimited variables/resources/scripts/apps/flows (*except abuse)
 						</span>
 					)
 				},
@@ -187,7 +183,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Deploy from <b>GitHub</b>
+							Deploy from GitHub
 						</span>
 					)
 				},
@@ -253,8 +249,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 48h response time and automation engineer
-							assistance
+							<b>Priority Support 24/7 </b> with 48h response time and automation engineer assistance
 						</span>
 					)
 				},
@@ -269,7 +264,7 @@ const pricing = {
 			name: 'Enterprise',
 			id: 'tier-enterprise',
 			href: 'mailto:contact@windmill.dev',
-			enterprise: true,
+			enterprise_edition: true,
 			price: {
 				worker: {
 					monthly: 100,
@@ -294,17 +289,6 @@ const pricing = {
 					text: <span>Everything in Team</span>
 				},
 				{
-					text: <span>Isolated & dedicated <b>database network & workers</b></span>
-				},
-
-				{
-					text: (
-						<span>
-							Each worker can run up to <b>~26M</b> jobs per month
-						</span>
-					)
-				},
-				{
 					text: (
 						<span>
 							Audit logs <b>60 days </b>retention
@@ -321,7 +305,18 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>SAML / SCIM</b> support including groups synchronization
+							SAML / SCIM support including groups synchronization
+						</span>
+					)
+				},
+				{
+					text: <span>Isolated & dedicated database network & workers</span>
+				},
+
+				{
+					text: (
+						<span>
+							Each worker can run up to <b>~26M</b> jobs per month
 						</span>
 					)
 				},
@@ -336,7 +331,7 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Design partners for roadmap</b>
+							Design partners for roadmap
 						</span>
 					)
 				},
@@ -442,23 +437,25 @@ export default function Pricing() {
 							key={tier.id}
 							className={classNames(
 								tier.mostPopular
-									? 'ring-2 ring-blue-600'
+									? 'ring-1 ring-blue-600'
+									: tier.enterprise_edition
+									? 'ring-1 ring-teal-600'
 									: 'ring-1 ring-gray-200 dark:ring-gray-600',
 								'rounded-xl p-6 xl:p-8'
 							)}
 						>
 							<div className="flex items-center justify-between gap-x-4">
-							<h3
-								id={tier.id}
-								className={classNames(
-									tier.mostPopular ? 'text-blue-600' : tier.enterprise ? 'text-teal-600' : '',
-									'text-2xl font-semibold leading-8'
-								)}
-							>
-								{tier.name}
-							</h3>
+								<h3
+									id={tier.id}
+									className={classNames(
+										tier.mostPopular ? 'text-blue-500' : tier.enterprise_edition ? 'text-teal-600' : '',
+										'text-2xl font-semibold leading-8'
+									)}
+								>
+									{tier.name}
+								</h3>
 								{period.value === 'annually' && Object.keys(tier.price).length > 0 ? (
-									<p className="rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
 										16% Discount
 									</p>
 								) : null}
@@ -468,13 +465,13 @@ export default function Pricing() {
 								<p className="mt-6 flex items-baseline gap-x-1">
 									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-										${period.value === 'annually' ? tier.minPrice * 10 : tier.minPrice}
+									${period.value === 'annually' ? (tier.minPrice * 10).toLocaleString('en-US') : tier.minPrice.toLocaleString('en-US')}
 									</span>
 									<span className="text-sm font-semibold leading-6 text-gray-600">
-										{period.value === 'annually' ? '/yr' : '/mo'}
+									{period.value === 'annually' ? '/yr' : '/mo'}
 									</span>
 								</p>
-							) : (
+								) : (
 								<p className="mt-6 flex items-baseline gap-x-1 invisible">
 									<span className="text-sm font-semibold leading-6 text-gray-600">Lorem</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900">Lorem</span>
@@ -505,7 +502,7 @@ export default function Pricing() {
 									className={classNames(
 										tier.mostPopular
 											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-500 '
-											: tier.enterprise ? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700 '
+											: tier.enterprise_edition ? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700 '
 											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
@@ -521,17 +518,16 @@ export default function Pricing() {
 							) : null}
 							{index === 2 && frequency.value === 'selfhost' && (
 								<a
-									href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
-									className={classNames(
-										tier.mostPopular
-											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700 '
-											: 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700 ',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-									)}
-									target="_blank"
-								>
-									Try it for a month
-								</a>
+								href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
+								className={classNames(
+								  tier.mostPopular ? 'additional-class-for-most-popular' : '',
+								  '!text-teal-600 shadow-sm hover:text-teal-800 hover:bg-teal-100 dark:hover:bg-teal-800',
+								  '!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+								)}
+								target="_blank"
+							  >
+								Try it for a month
+							  </a>													
 							)}
 						</div>
 					))}
