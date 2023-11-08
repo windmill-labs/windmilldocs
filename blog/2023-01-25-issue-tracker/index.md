@@ -204,12 +204,12 @@ This can be achieved by Background runnables.
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(auth: Supabase) {
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	const result = await client.from('issues').select();
    	return result.data;
    }
@@ -529,8 +529,8 @@ user and sends them to the database.
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(
@@ -542,7 +542,7 @@ user and sends them to the database.
    	status: string,
    	severity: string
    ) {
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	return await client.from('issues').insert({
    		summary,
    		description,
@@ -586,12 +586,12 @@ the form of buttons. Select the `Table` component and follow the steps:
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(auth: Supabase, id: string) {
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	return await client.from('issues').delete().filter('id', 'eq', id);
    }
    ```
