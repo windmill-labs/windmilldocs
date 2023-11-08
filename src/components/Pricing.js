@@ -93,7 +93,7 @@ const pricing = {
 				vCPU: {
 					monthly: 50,
 					description:
-						'1vCPU is usually assigned to 1 worker and each workers can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1vCPU is usually assigned to 1 worker (or 10 native workers) and each workers can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
@@ -276,7 +276,7 @@ const pricing = {
 				vCPU: {
 					monthly: 100,
 					description:
-						'1vCPU is usually assigned to 1 worker and each workers can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1vCPU is usually assigned to 1 worker (or 10 native workers) and each workers can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
