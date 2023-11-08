@@ -10,7 +10,7 @@ import classNames from 'classnames';
 const types = [
 	{ value: 'cloud', label: 'Cloud' },
 	{ value: 'selfhost', label: 'Self-hosted' },
-	{ value: 'whitelabel', label: 'White Label' },
+	{ value: 'whitelabel', label: 'White Label' }
 ];
 
 const periods = [
@@ -33,7 +33,7 @@ const pricing = {
 			],
 			mostPopular: false,
 			customMessage: 'Learn more',
-			minPrice: 0,
+			minPrice: 0
 		},
 		{
 			name: 'Pro',
@@ -68,10 +68,10 @@ const pricing = {
 			minPrice: 48,
 			mostPopular: true,
 			price: {
-				worker: {
+				vCPU: {
 					monthly: 20,
 					description:
-						'1 worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1 vCPU can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 vCPU can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 10
@@ -83,17 +83,17 @@ const pricing = {
 					min: 1,
 					max: 10
 				}
-			},
+			}
 		},
 		{
 			name: 'Enterprise',
 			id: 'tier-enterprise-selfhost',
 			href: 'mailto:contact@windmill.dev',
 			price: {
-				worker: {
+				vCPU: {
 					monthly: 50,
 					description:
-						'1 worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1vCPU is usually assigned to 1 worker and each workers can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
@@ -116,7 +116,13 @@ const pricing = {
 						</span>
 					),
 					features: [
-						{ text:<span>Everything in <b className="text-blue-500">Pro</b></span> },
+						{
+							text: (
+								<span>
+									Everything in <b className="text-blue-500">Pro</b>
+								</span>
+							)
+						},
 						{ text: 'Audit logs' },
 						{ text: 'Distributed dependency cache backed by S3' },
 						{ text: 'SAML support including groups synchronization' }
@@ -168,11 +174,7 @@ const pricing = {
 					text: <span>Google / Microsoft / GitHub / GitLab SSO</span>
 				},
 				{
-					text: (
-						<span>
-							Unlimited variables/resources/scripts/apps/flows (*except abuse)
-						</span>
-					)
+					text: <span>Unlimited variables/resources/scripts/apps/flows (*except abuse)</span>
 				},
 				{
 					text: <span>Groups, folders and granulars permissions</span>
@@ -181,17 +183,17 @@ const pricing = {
 					text: <span>Public apps</span>
 				},
 				{
-					text: (
-						<span>
-							Deploy from GitHub
-						</span>
-					)
+					text: <span>Deploy from GitHub</span>
 				},
 				{
 					text: <span>Community support on Discord</span>
 				},
 				{
-					text: <span><a href="/docs/misc/plans_details#community-edition---cloud">All details</a></span>
+					text: (
+						<span>
+							<a href="/docs/misc/plans_details#community-edition---cloud">All details</a>
+						</span>
+					)
 				}
 			],
 
@@ -249,12 +251,17 @@ const pricing = {
 				{
 					text: (
 						<span>
-							<b>Priority Support 24/7 </b> with 48h response time and automation engineer assistance
+							<b>Priority Support 24/7 </b> with 48h response time and automation engineer
+							assistance
 						</span>
 					)
 				},
 				{
-					text: <span><a href="/docs/misc/plans_details#team-plan---cloud">All details</a></span>
+					text: (
+						<span>
+							<a href="/docs/misc/plans_details#team-plan---cloud">All details</a>
+						</span>
+					)
 				}
 			],
 			mostPopular: true,
@@ -266,10 +273,10 @@ const pricing = {
 			href: 'mailto:contact@windmill.dev',
 			enterprise_edition: true,
 			price: {
-				worker: {
+				vCPU: {
 					monthly: 100,
 					description:
-						' 1 worker can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
+						'1vCPU is usually assigned to 1 worker and each workers can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
@@ -286,7 +293,11 @@ const pricing = {
 			description: 'Dedicated support, guidance and infrastructure for your company.',
 			features: [
 				{
-					text: <span>Everything in <b className="text-blue-500">Team</b></span>
+					text: (
+						<span>
+							Everything in <b className="text-blue-500">Team</b>
+						</span>
+					)
 				},
 				{
 					text: (
@@ -296,47 +307,40 @@ const pricing = {
 					)
 				},
 				{
-					text: (
-						<span>
-							Deploy to staging/prod web UI
-						</span>
-					)
+					text: <span>Deploy to staging/prod web UI</span>
 				},
 				{
-					text: (
-						<span>
-							SAML / SCIM support including groups synchronization
-						</span>
-					)
+					text: <span>SAML / SCIM support including groups synchronization</span>
 				},
 				{
-					text: <span>Isolated & dedicated database network & workers</span>
+					text: <span>Isolated & dedicated database network & vCPUs</span>
 				},
 
 				{
 					text: (
 						<span>
-							Each worker can run up to <b>~26M</b> jobs per month
+							Each vCPU can run up to <b>~26M</b> jobs per month
 						</span>
 					)
 				},
 				{
 					text: (
 						<span>
-							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer assistance
+							<b>SLA & Priority Support 24/7 </b> with 3h response time and automation engineer
+							assistance
 						</span>
 					)
 				},
 
 				{
-					text: (
-						<span>
-							Design partners for roadmap
-						</span>
-					)
+					text: <span>Design partners for roadmap</span>
 				},
 				{
-					text: <span><a href="/docs/misc/plans_details#enterprise-plan---cloud">All details</a></span>
+					text: (
+						<span>
+							<a href="/docs/misc/plans_details#enterprise-plan---cloud">All details</a>
+						</span>
+					)
 				}
 			],
 			mostPopular: false
@@ -348,10 +352,11 @@ const pricing = {
 			id: 'whitelabel',
 			price: {},
 
-			description: 'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
+			description:
+				'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
 			features: [
 				{ text: 'Embed the entire Windmill app.' },
-				{ text: 'Embed specific components (flow builder, app builder).' },
+				{ text: 'Embed specific components (flow builder, app builder).' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -379,39 +384,16 @@ export default function Pricing() {
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
 							<RadioGroup.Option
-							key={option.value}
-							value={option}
-							className={({ checked }) =>
-								classNames(
-									checked ? (option.value === 'whitelabel' ? 'bg-gray-300 text-white' : 'bg-blue-600 text-white') : '',
-									'cursor-pointer rounded-full px-4 py-2',
-									'transition-all'
-								)
-							}
-						>
-							<span>{option.label}</span>
-						</RadioGroup.Option>
-						
-						))}
-					</RadioGroup>
-					<div>
-					{frequency.value !== 'whitelabel' && (
-					<RadioGroup
-						value={period}
-						onChange={setPeriod}
-						className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
-					>
-						<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
-						{periods.map((option) => (
-							<RadioGroup.Option
 								key={option.value}
 								value={option}
 								className={({ checked }) =>
 									classNames(
 										checked
-											? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
-											: 'text-gray-500',
-										'cursor-pointer rounded-full px-2.5 py-1',
+											? option.value === 'whitelabel'
+												? 'bg-gray-300 text-white'
+												: 'bg-blue-600 text-white'
+											: '',
+										'cursor-pointer rounded-full px-4 py-2',
 										'transition-all'
 									)
 								}
@@ -420,7 +402,33 @@ export default function Pricing() {
 							</RadioGroup.Option>
 						))}
 					</RadioGroup>
-				)}						
+					<div>
+						{frequency.value !== 'whitelabel' && (
+							<RadioGroup
+								value={period}
+								onChange={setPeriod}
+								className="grid grid-cols-2 gap-x-1 rounded-full p-1 text-center text-xs font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+							>
+								<RadioGroup.Label className="sr-only">Payment period</RadioGroup.Label>
+								{periods.map((option) => (
+									<RadioGroup.Option
+										key={option.value}
+										value={option}
+										className={({ checked }) =>
+											classNames(
+												checked
+													? 'bg-gray-800 dark:bg-gray-200 dark:text-gray-900 text-white'
+													: 'text-gray-500',
+												'cursor-pointer rounded-full px-2.5 py-1',
+												'transition-all'
+											)
+										}
+									>
+										<span>{option.label}</span>
+									</RadioGroup.Option>
+								))}
+							</RadioGroup>
+						)}
 					</div>
 				</div>
 				<div
@@ -428,8 +436,8 @@ export default function Pricing() {
 						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
 						{
 							'lg:grid-cols-3': frequency.value === 'cloud' || frequency.value === 'selfhost',
-							'lg:grid-cols-1': frequency.value === 'whitelabel',
-						  }
+							'lg:grid-cols-1': frequency.value === 'whitelabel'
+						}
 					)}
 				>
 					{pricing[frequency.value].map((tier, index) => (
@@ -448,7 +456,11 @@ export default function Pricing() {
 								<h3
 									id={tier.id}
 									className={classNames(
-										tier.mostPopular ? 'text-blue-500' : tier.enterprise_edition ? 'text-teal-600' : '',
+										tier.mostPopular
+											? 'text-blue-500'
+											: tier.enterprise_edition
+											? 'text-teal-600'
+											: '',
 										'text-2xl font-semibold leading-8'
 									)}
 								>
@@ -465,13 +477,16 @@ export default function Pricing() {
 								<p className="mt-6 flex items-baseline gap-x-1">
 									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-									${period.value === 'annually' ? (tier.minPrice * 10).toLocaleString('en-US') : tier.minPrice.toLocaleString('en-US')}
+										$
+										{period.value === 'annually'
+											? (tier.minPrice * 10).toLocaleString('en-US')
+											: tier.minPrice.toLocaleString('en-US')}
 									</span>
 									<span className="text-sm font-semibold leading-6 text-gray-600">
-									{period.value === 'annually' ? '/yr' : '/mo'}
+										{period.value === 'annually' ? '/yr' : '/mo'}
 									</span>
 								</p>
-								) : (
+							) : (
 								<p className="mt-6 flex items-baseline gap-x-1 invisible">
 									<span className="text-sm font-semibold leading-6 text-gray-600">Lorem</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900">Lorem</span>
@@ -483,8 +498,7 @@ export default function Pricing() {
 								{tier.description}
 							</p>
 
-						{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
-								
+							{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
 								<a
 									aria-describedby={tier.id}
 									href={tier.href}
@@ -502,7 +516,8 @@ export default function Pricing() {
 									className={classNames(
 										tier.mostPopular
 											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-500 '
-											: tier.enterprise_edition ? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700 '
+											: tier.enterprise_edition
+											? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700 '
 											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
@@ -510,7 +525,11 @@ export default function Pricing() {
 									{tier.customMessage ? tier.customMessage : 'Get in touch'}
 								</a>
 							)}
-							<ul role="list" className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10" style={{ marginBottom: '12rem' }}>
+							<ul
+								role="list"
+								className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
+								style={{ marginBottom: '12rem' }}
+							>
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
 							{Object.keys(tier.price).length > 0 ? (
@@ -518,16 +537,16 @@ export default function Pricing() {
 							) : null}
 							{index === 2 && frequency.value === 'selfhost' && (
 								<a
-								href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
-								className={classNames(
-								  tier.mostPopular ? 'additional-class-for-most-popular' : '',
-								  '!text-teal-600 shadow-sm hover:text-teal-800 hover:bg-teal-100 dark:hover:bg-teal-800',
-								  '!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-								)}
-								target="_blank"
-							  >
-								Try it for a month
-							  </a>													
+									href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
+									className={classNames(
+										tier.mostPopular ? 'additional-class-for-most-popular' : '',
+										'!text-teal-600 shadow-sm hover:text-teal-800 hover:bg-teal-100 dark:hover:bg-teal-800',
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+									)}
+									target="_blank"
+								>
+									Try it for a month
+								</a>
 							)}
 						</div>
 					))}
