@@ -170,9 +170,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
+							<span>{`~${
 								seats * 10 * (period.value === 'annually' ? 12 : 1)
-							}k executions per `}</span>
+							}k executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -191,9 +191,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
+							<span>{`~${
 								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions per `}</span>
+							}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -212,9 +212,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
+							<span>{`~${
 								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions per `}</span>
+							}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -233,9 +233,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
+							<span>{`~${
 								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions per `}</span>
+							}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
