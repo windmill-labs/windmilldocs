@@ -196,7 +196,7 @@ good idea to query the data once and pass it to the individual components later.
 This can be achieved by Background runnables.
 
 1. Click `Add` next to the `Background runnables` label on the bottom left side.
-2. Make sure the new script is selected and choose `Deno` as the language.
+2. Make sure the new script is selected and choose `TypeScript (Deno)` as the language.
 3. Name the script `Load Issues`.
 4. Paste in the following code:
 
@@ -242,7 +242,7 @@ it:
 
 1. Select `Compute` as the input type and click `Create an inline script`.
    ![Add table component](./10-wm-table.png.webp)
-2. Choose `Deno` as language.
+2. Choose `TypeScript (Deno)` as language.
 3. Name it `Shape Data`
 4. Paste in the following code:
 
@@ -317,7 +317,7 @@ you'll still be able to move them manually.
 2. Select `Compute` as the input type in the right pane.
    ![Compute chart input](./14-wm-status-chart.png.webp)
 3. Click `Create an inline script`.
-4. Choose `Deno` as the language.
+4. Choose `TypeScript (Deno)` as the language.
 5. Name the script `Get Status Chart Data`.
 6. Paste in the following code:
 
@@ -418,7 +418,7 @@ handled by `Select` components.
 
 Since the `Select` components require input data to be in a certain shape, let's
 create a `Background` script first to convert the `users` list. Add a new
-`Background` script, select `Deno` as language and paste in the following code:
+`Background` script, select `TypeScript (Deno)` as language and paste in the following code:
 
 ```tsx
 export async function main(users: undefined | any[]) {
@@ -522,7 +522,7 @@ user and sends them to the database.
    This will result in reloading the issues every time a new one is added and
    therefore it will be added to the table as well.
 
-5. Click `Create an inline script`, select `Deno` as language, name it
+5. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
    `Create Issue` and paste in the following code:
 
    ```tsx
@@ -579,7 +579,7 @@ the form of buttons. Select the `Table` component and follow the steps:
    Because of this, the `issues` data will be reloaded from the database every
    time an issue is deleted.
 
-6. Click `Create an inline script`, select `Deno` as language, name it
+6. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
    `Delete Issue` and paste in the following code:
 
    ```tsx
