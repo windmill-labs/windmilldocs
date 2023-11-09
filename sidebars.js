@@ -608,7 +608,18 @@ const sidebars = {
 			label: 'Misceallaneous',
 			items: [
 				'misc/architecture/index',
-				'misc/benchmarks/index',
+				{
+					type: 'category',
+					label: 'Benchmarks',
+					link: {
+						type: 'doc',
+						id: 'misc/benchmarks/index'
+					},
+					items: [
+						'misc/benchmarks/aws_lambda/index',
+						'misc/benchmarks/competitors/index'
+					]
+				},
 				'misc/changelog/index',
 				'misc/contributing/index',
 				'misc/getting_help/index',

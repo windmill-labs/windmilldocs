@@ -1,4 +1,4 @@
-# Benchmarks
+# Windmill VS AWS Lambda
 
 :::info
 
