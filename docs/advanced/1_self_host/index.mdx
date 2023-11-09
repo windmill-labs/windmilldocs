@@ -278,23 +278,15 @@ Default e-mail is `admin@windmill.dev` and the password is `changeme`.
 To update to a newer version of Windmill, all you have to do is run:
 
 ```bash
-docker compose pull
+docker compose stop windmill_worker
+docker compose pull windmill_server
+docker compose up -d
 ```
 
-Or in case you wish to update only the Windmill image, run:
-
-```bash
-docker compose pull windmill
-```
-
-Database volume is persistent, so updating the database image is safe too.
-
-:::tip
+Database volume is persistent, so updating the database image is safe too. Windmill provides graceful exit for jobs in workers so it will not interrumpt current jobs unless they are longer than docker stop hard kill timeout (30 seconds).
 
 It is sufficient to run `docker compose up -d` again if your Docker is already running detached, since it will pull the latest `:main` version and restart the containers.
 NOTE: The previous images are not removed automatically, you should also run `docker builder prune` to clear old versions.
-
-:::
 
 ### Reset your instance
 

@@ -275,12 +275,12 @@ const tabs = [
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs to edit any step of a flow',
+		title: 'VSCode extension or any IDEs to edit any flow',
 		subtitle:
 			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
 		title: 'Blazing Fast',

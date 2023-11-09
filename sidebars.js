@@ -302,6 +302,7 @@ const sidebars = {
 				},
 				'advanced/deploy_gh_gl/index',
 				'advanced/local_development/index',
+				'cli_local_dev/vscode-extension/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -320,9 +321,7 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_client',
-
-				'cli_local_dev/vscode-extension/index'
+				'advanced/clients/ts_client'
 			]
 		},
 

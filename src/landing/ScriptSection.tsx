@@ -34,7 +34,7 @@ const cards = [
 			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
 		title: 'Version control from Github/Gitlab',

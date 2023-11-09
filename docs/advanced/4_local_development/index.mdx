@@ -8,43 +8,62 @@ import TabItem from '@theme/TabItem';
 
 # Local Development
 
-Although Windmill has an IDE, you can also develop & deploy locally.
+Windmill has [its own integrated development environment](../../code_editor/index.mdx), but you can also develop and run scripts locally.
 
-## Getting Started
+First step to delop locally is to pull your Windmill workspace.
 
-To get started with local development and use `git` to version your scripts.
+To get started with local development and use `git` to version your scripts, install the [Windmill CLI](../3_cli/installation.md).
 
-- Install the [Windmill Cli](../3_cli/installation.md)
-- Create a new working directory for your repository
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-Line Interface"
+		description="Interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+</div>
+
+Create a new working directory for your repository.
 
 ```bash
 mkdir myworkspace
 cd myworkspace
 ```
 
-- Initialise your git repo
+Initialise your git repo.
 
 ```bash
 git init .
 ```
 
-- Next [add your workspace](../3_cli/workspace-management.md#adding-a-workspace) to the current directory.
+Next [add your workspace](../3_cli/workspace-management.md#adding-a-workspace) to the current directory.
 
 ```bash
 wmill workspace add myworkspace [workspace_id] [remote]
 ```
 
-- Now sync your workspace and pull your code from the remote workspace
+Now sync your workspace and pull your code from the remote workspace.
 
 ```bash
 wmill sync pull
 ```
 
-- You should see all your scripts, flows, apps inside the folder.
+You should see all your scripts, flows, apps inside the folder.
 
-- You can now edit the files directly as shown below.
+You can now edit the files directly as shown below.
 
-- Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [github action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example)
+Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [GitHub action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example).
 
 ## Deno / Bun
 
@@ -117,8 +136,12 @@ Often you will need to test a script locally that also interacts with Windmill.
 For example to retrieve resources.
 
 To do so you will need to fill out the context variables that will otherwise be
-filled out by the Windmill runtime for you. The most important ones are
-`WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`. Set `BASE_INTERNAL_URL` to the URL of you Windmill instance,
+filled out by the Windmill runtime for you.
+
+The most important ones are
+`WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`.
+
+Set `BASE_INTERNAL_URL` to the URL of you Windmill instance,
 for example `https://app.windmill.dev`, note that you can never include a
 trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
 token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.mdx)
