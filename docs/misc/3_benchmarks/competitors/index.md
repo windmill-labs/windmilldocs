@@ -45,11 +45,8 @@ with DAG(
 
 ##### Results
 
-|  Type  | Connectable | Templatable | Default | Description         |
-| :----: | :---------: | :---------: | :-----: | ------------------- |
-| Object |    true     |    false    |         | The bar chart data. |
-
 For 10 long running tasks run sequentially:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:04.663    | 0:00:06.541     |
@@ -64,6 +61,7 @@ For 10 long running tasks run sequentially:
 | **task_09** | 0:00:35.982      | 0:00:37.705    | 0:00:40.875     |
 
 For 40 lightweights tasks run sequentially:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:03.354    | 0:00:03.761     |
@@ -154,6 +152,7 @@ if __name__ == "__main__":
 ##### Results
 
 For 10 long running tasks:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.009    | 0:00:01.332     |
@@ -168,6 +167,7 @@ For 10 long running tasks:
 | **task_09** | 0:00:12.138      | 0:00:12.145    | 0:00:13.457     |
 
 For 40 lightweights tasks run sequentially:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.008    | 0:00:00.015     |
@@ -276,8 +276,8 @@ And then we used this script in a simple flow composed of a For-Loop sequentiall
 
 ##### Results
 
-
 For 10 long running tasks in normal mode:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.787     |
@@ -292,6 +292,7 @@ For 10 long running tasks in normal mode:
 | **task_09** | 0:00:07.558      | 0:00:07.562    | 0:00:08.339     |
 
 For 40 lightweights tasks run sequentially in normal mode:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.003    | 0:00:00.055     |
@@ -337,6 +338,7 @@ For 40 lightweights tasks run sequentially in normal mode:
 
 In dedicated worker mode, we obtained the following results.
 For 10 liong running tasks:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.244     |
@@ -351,6 +353,7 @@ For 10 liong running tasks:
 | **task_09** | 0:00:07.128      | 0:00:07.131    | 0:00:07.351     |
 
 And for the 40 lightweight tasks:
+
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.006     |
@@ -410,21 +413,25 @@ But we can deep dive in a little and compare the orchestrators three categories:
 After looking at the macro numbers above, it's interesting to compare the time spent in each of the above categories, relative to the total time the orchestrator took to execute the flow.
 
 For the 10 long running tasks flow, we see the following:
+
 |                    | **Airflow** | **Temporal** | **Windmill Normal** | **Windmill DW** |
-| :----------------: | :---------: | :----------: | :-----------------: | :-------------: |
+| :----------------: | ----------: | -----------: | ------------------: | --------------: |
 | **Total duration** | 0:00:40.875 | 0:00:13.457  | 0:00:08.339         | 0:00:07.351     |
 | **Assignement**    | 43.44%      | 0.61%        | 0.60%               | 0.50%           |
 | **Execution**      | 46.02%      | 98.07%       | 93.01%              | 33.60%          |
 | **Transition**     | 10.54%      | 1.33%        | 6.39%               | 65.90%          |
+
 The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow is spending a lot of time assigning the tasks compared to the two others. Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
 
 If we look at the 40 lightweight tasks flow, we have:
+
 |                    | **Airflow** | **Temporal** | **Windmill Normal** | **Windmill DW** |
-| :----------------: | :---------: | :----------: | :-----------------: | :-------------: |
+| :----------------: | ----------: | -----------: | ------------------: | --------------: |
 | **Total duration** | 0:01:37.607 | 0:00:02.988  | 0:00:04.384         | 0:00:02.527     |
 | **Assignement**    | 60.78%      | 37.63%       | 3.63%               | 6.49%           |
 | **Execution**      | 9.82%       | 9.52%        | 44.66%              | 3.52%           |
 | **Transition**     | 29.40%      | 52.85%       | 51.71%              | 89.99%          |
+
 Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the worker. However, it's by far the fastest assigning tasks to executors. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time transitioning from one task to the next one. 
 
 ### Conclusion
