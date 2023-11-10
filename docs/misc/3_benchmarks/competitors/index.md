@@ -1,11 +1,11 @@
 # Windmill, Airflow and Temporal
 
-We compared Airflow, Temporal and Windmill in the following usecases:
+We compared Airflow, Temporal and Windmill with the following usecases:
 - One flow composed of 40 lightweight tasks.
 - One flow composed of 10 long-running tasks.
 
-We chose to compute Fibonacci numbers as a simple yet universal task that could easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers is very naive:
-```
+We chose to compute Fibonacci numbers as a simple task that can easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers was very naive:
+```python
 def fibo(n: int):
     if n <= 1:
         return n
@@ -13,9 +13,9 @@ def fibo(n: int):
         return fibo(n - 1) + fibo(n - 2)
 ```
 
-After some testing, we chose to compute `fibo(10)` for the lightweight tasks (taking around 10ms in our setup), and `fibo(33)` for what we called "long-running" tasks (taking at least a few hundreds milliseconds as seen in the results)
+After some testing, we chose to compute `fibo(10)` for the lightweight tasks (taking around 10ms in our setup), and `fibo(33)` for what we called "long-running" tasks (taking at least a few hundreds milliseconds as seen in the results).
 
-On the infrastructure side, we went simple and used the `docker-compose.yml` recommended in the documentation of each orchestrator. We restricted docker resources to 10 CPUs and 8GB of memory, although we were able to check that neither CPU nor Memory was ever a bottleneck for the tests.
+On the infrastructure side, we went simple and used the `docker-compose.yml` recommended in the documentation of each orchestrator. We deployed the orchestrators on AWS using `t2-medium` instances.
 
 ### Airflow setup
 We set up Airflow version 2.7.3 using the [docker-compose.yaml](https://airflow.apache.org/docs/apache-airflow/2.7.3/docker-compose.yaml) referenced in Airflows official [documentation](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#fetching-docker-compose-yaml).
@@ -45,68 +45,72 @@ with DAG(
 
 ##### Results
 
+|  Type  | Connectable | Templatable | Default | Description         |
+| :----: | :---------: | :---------: | :-----: | ------------------- |
+| Object |    true     |    false    |         | The bar chart data. |
+
 For 10 long running tasks run sequentially:
-| **Task**   | **Scheduled at** | **Started at** | **Finished at** |
-|:----------:|-----------------:|---------------:|----------------:|
-| **task_0** | 0:00:00.000      | 0:00:01.323    | 0:00:02.006     |
-| **task_1** | 0:00:02.385      | 0:00:02.864    | 0:00:03.518     |
-| **task_2** | 0:00:03.983      | 0:00:04.471    | 0:00:05.114     |
-| **task_3** | 0:00:06.130      | 0:00:06.604    | 0:00:07.247     |
-| **task_4** | 0:00:07.865      | 0:00:08.358    | 0:00:09.005     |
-| **task_5** | 0:00:10.039      | 0:00:10.547    | 0:00:11.201     |
-| **task_6** | 0:00:12.175      | 0:00:12.807    | 0:00:13.498     |
-| **task_7** | 0:00:14.037      | 0:00:14.533    | 0:00:15.198     |
-| **task_8** | 0:00:16.188      | 0:00:16.767    | 0:00:17.427     |
-| **task_9** | 0:00:17.660      | 0:00:18.143    | 0:00:18.866     |
+| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:04.663    | 0:00:06.541     |
+| **task_01** | 0:00:06.850      | 0:00:08.724    | 0:00:10.417     |
+| **task_02** | 0:00:10.562      | 0:00:12.067    | 0:00:13.880     |
+| **task_03** | 0:00:14.100      | 0:00:15.378    | 0:00:16.960     |
+| **task_04** | 0:00:17.006      | 0:00:18.484    | 0:00:20.373     |
+| **task_05** | 0:00:20.746      | 0:00:22.044    | 0:00:23.611     |
+| **task_06** | 0:00:24.063      | 0:00:25.358    | 0:00:26.971     |
+| **task_07** | 0:00:28.057      | 0:00:29.364    | 0:00:31.192     |
+| **task_08** | 0:00:32.082      | 0:00:33.416    | 0:00:35.193     |
+| **task_09** | 0:00:35.982      | 0:00:37.705    | 0:00:40.875     |
 
 For 40 lightweights tasks run sequentially:
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
-|:-----------:|-----------------:|---------------:|----------------:|
-| **task_0**  | 0:00:00.029      | 0:00:00.791    | 0:00:00.912     |
-| **task_1**  | 0:00:01.963      | 0:00:02.471    | 0:00:02.551     |
-| **task_2**  | 0:00:03.109      | 0:00:03.605    | 0:00:03.685     |
-| **task_3**  | 0:00:04.258      | 0:00:04.749    | 0:00:04.832     |
-| **task_4**  | 0:00:05.402      | 0:00:05.888    | 0:00:05.972     |
-| **task_5**  | 0:00:06.998      | 0:00:07.497    | 0:00:07.580     |
-| **task_6**  | 0:00:08.152      | 0:00:08.653    | 0:00:08.731     |
-| **task_7**  | 0:00:09.271      | 0:00:09.787    | 0:00:09.868     |
-| **task_8**  | 0:00:10.159      | 0:00:10.667    | 0:00:10.749     |
-| **task_9**  | 0:00:10.970      | 0:00:11.441    | 0:00:11.522     |
-| **task_10** | 0:00:12.102      | 0:00:12.619    | 0:00:12.711     |
-| **task_11** | 0:00:13.233      | 0:00:13.762    | 0:00:13.840     |
-| **task_12** | 0:00:14.377      | 0:00:14.863    | 0:00:14.951     |
-| **task_13** | 0:00:15.501      | 0:00:15.998    | 0:00:16.080     |
-| **task_14** | 0:00:17.108      | 0:00:17.602    | 0:00:17.687     |
-| **task_15** | 0:00:18.226      | 0:00:18.867    | 0:00:18.960     |
-| **task_16** | 0:00:19.376      | 0:00:19.904    | 0:00:20.003     |
-| **task_17** | 0:00:20.518      | 0:00:21.007    | 0:00:21.090     |
-| **task_18** | 0:00:22.148      | 0:00:22.673    | 0:00:22.765     |
-| **task_19** | 0:00:23.264      | 0:00:23.845    | 0:00:23.938     |
-| **task_20** | 0:00:24.371      | 0:00:24.886    | 0:00:24.995     |
-| **task_21** | 0:00:25.247      | 0:00:25.747    | 0:00:25.832     |
-| **task_22** | 0:00:26.135      | 0:00:26.638    | 0:00:26.720     |
-| **task_23** | 0:00:27.266      | 0:00:27.839    | 0:00:27.938     |
-| **task_24** | 0:00:28.368      | 0:00:28.894    | 0:00:28.986     |
-| **task_25** | 0:00:29.453      | 0:00:29.970    | 0:00:30.059     |
-| **task_26** | 0:00:30.614      | 0:00:31.230    | 0:00:31.325     |
-| **task_27** | 0:00:32.237      | 0:00:32.727    | 0:00:32.809     |
-| **task_28** | 0:00:33.327      | 0:00:33.811    | 0:00:33.904     |
-| **task_29** | 0:00:34.440      | 0:00:34.928    | 0:00:35.018     |
-| **task_30** | 0:00:35.572      | 0:00:36.062    | 0:00:36.142     |
-| **task_31** | 0:00:36.235      | 0:00:36.699    | 0:00:36.814     |
-| **task_32** | 0:00:37.472      | 0:00:37.943    | 0:00:38.027     |
-| **task_33** | 0:00:38.587      | 0:00:39.075    | 0:00:39.159     |
-| **task_34** | 0:00:39.705      | 0:00:40.232    | 0:00:40.317     |
-| **task_35** | 0:00:41.305      | 0:00:41.769    | 0:00:41.849     |
-| **task_36** | 0:00:42.427      | 0:00:42.929    | 0:00:43.018     |
-| **task_37** | 0:00:43.560      | 0:00:44.041    | 0:00:44.125     |
-| **task_38** | 0:00:44.683      | 0:00:45.168    | 0:00:45.254     |
-| **task_39** | 0:00:45.667      | 0:00:46.178    | 0:00:46.261     |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:03.354    | 0:00:03.761     |
+| **task_01** | 0:00:04.762      | 0:00:07.156    | 0:00:07.403     |
+| **task_02** | 0:00:08.339      | 0:00:09.618    | 0:00:09.823     |
+| **task_03** | 0:00:10.614      | 0:00:11.835    | 0:00:12.044     |
+| **task_04** | 0:00:12.548      | 0:00:13.838    | 0:00:14.044     |
+| **task_05** | 0:00:14.870      | 0:00:16.209    | 0:00:16.495     |
+| **task_06** | 0:00:17.595      | 0:00:18.971    | 0:00:19.208     |
+| **task_07** | 0:00:19.985      | 0:00:21.311    | 0:00:21.540     |
+| **task_08** | 0:00:22.633      | 0:00:23.901    | 0:00:24.107     |
+| **task_09** | 0:00:24.895      | 0:00:26.177    | 0:00:26.459     |
+| **task_10** | 0:00:26.562      | 0:00:28.247    | 0:00:28.551     |
+| **task_11** | 0:00:29.629      | 0:00:30.854    | 0:00:31.064     |
+| **task_12** | 0:00:31.599      | 0:00:32.962    | 0:00:33.179     |
+| **task_13** | 0:00:34.077      | 0:00:35.325    | 0:00:35.545     |
+| **task_14** | 0:00:36.345      | 0:00:38.973    | 0:00:39.332     |
+| **task_15** | 0:00:40.274      | 0:00:42.142    | 0:00:42.348     |
+| **task_16** | 0:00:42.988      | 0:00:44.235    | 0:00:44.436     |
+| **task_17** | 0:00:45.275      | 0:00:46.516    | 0:00:46.746     |
+| **task_18** | 0:00:46.898      | 0:00:48.273    | 0:00:48.509     |
+| **task_19** | 0:00:49.283      | 0:00:50.534    | 0:00:50.799     |
+| **task_20** | 0:00:51.545      | 0:00:52.857    | 0:00:53.064     |
+| **task_21** | 0:00:53.210      | 0:00:54.454    | 0:00:54.669     |
+| **task_22** | 0:00:55.474      | 0:00:56.748    | 0:00:56.970     |
+| **task_23** | 0:00:57.205      | 0:00:58.591    | 0:00:58.794     |
+| **task_24** | 0:00:59.466      | 0:01:00.804    | 0:01:01.026     |
+| **task_25** | 0:01:01.887      | 0:01:03.242    | 0:01:03.449     |
+| **task_26** | 0:01:04.535      | 0:01:05.784    | 0:01:06.006     |
+| **task_27** | 0:01:06.796      | 0:01:08.215    | 0:01:08.426     |
+| **task_28** | 0:01:09.575      | 0:01:10.820    | 0:01:11.037     |
+| **task_29** | 0:01:11.854      | 0:01:14.543    | 0:01:14.909     |
+| **task_30** | 0:01:15.955      | 0:01:17.907    | 0:01:18.254     |
+| **task_31** | 0:01:18.710      | 0:01:19.987    | 0:01:20.199     |
+| **task_32** | 0:01:21.009      | 0:01:22.334    | 0:01:22.533     |
+| **task_33** | 0:01:22.706      | 0:01:23.971    | 0:01:24.178     |
+| **task_34** | 0:01:24.944      | 0:01:26.190    | 0:01:26.402     |
+| **task_35** | 0:01:27.181      | 0:01:28.529    | 0:01:28.769     |
+| **task_36** | 0:01:29.497      | 0:01:30.925    | 0:01:31.167     |
+| **task_37** | 0:01:31.818      | 0:01:33.063    | 0:01:33.341     |
+| **task_38** | 0:01:33.945      | 0:01:35.177    | 0:01:35.377     |
+| **task_39** | 0:01:36.174      | 0:01:37.406    | 0:01:37.607     |
 
 ### Temporal setup
-We set up Temporal version 2.19.0 using the [docker-compose.yml from the official Github repository](https://github.com/temporalio/docker-compose)
+We set up Temporal version 2.19.0 using the [docker-compose.yml from the official Github repository](https://github.com/temporalio/docker-compose). 
 
-The flow was defined using the following Python file:
+The flow was defined using the following Python file. We executed it on the EC2 instance, using Python 3.10.12.
 ```python
 ITER = 10     # respectively 40
 FIBO_N = 33   # respectively 10
@@ -150,65 +154,65 @@ if __name__ == "__main__":
 ##### Results
 
 For 10 long running tasks:
-| **Task**   | **Scheduled at** | **Started at** | **Finished at** |
-|:----------:|-----------------:|---------------:|----------------:|
-| **task_0** | 0:00:00.000      | 0:00:00.007    | 0:00:00.387     |
-| **task_1** | 0:00:00.407      | 0:00:00.414    | 0:00:00.780     |
-| **task_2** | 0:00:00.805      | 0:00:00.811    | 0:00:01.174     |
-| **task_3** | 0:00:01.184      | 0:00:01.186    | 0:00:01.545     |
-| **task_4** | 0:00:01.570      | 0:00:01.576    | 0:00:01.938     |
-| **task_5** | 0:00:01.962      | 0:00:01.967    | 0:00:02.329     |
-| **task_6** | 0:00:02.349      | 0:00:02.358    | 0:00:02.722     |
-| **task_7** | 0:00:02.742      | 0:00:02.749    | 0:00:03.111     |
-| **task_8** | 0:00:03.137      | 0:00:03.143    | 0:00:03.506     |
-| **task_9** | 0:00:03.529      | 0:00:03.536    | 0:00:03.899     |
+| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:00.009    | 0:00:01.332     |
+| **task_01** | 0:00:01.351      | 0:00:01.360    | 0:00:02.670     |
+| **task_02** | 0:00:02.688      | 0:00:02.696    | 0:00:04.004     |
+| **task_03** | 0:00:04.022      | 0:00:04.029    | 0:00:05.336     |
+| **task_04** | 0:00:05.357      | 0:00:05.366    | 0:00:06.676     |
+| **task_05** | 0:00:06.694      | 0:00:06.701    | 0:00:08.016     |
+| **task_06** | 0:00:08.035      | 0:00:08.042    | 0:00:09.407     |
+| **task_07** | 0:00:09.426      | 0:00:09.434    | 0:00:10.762     |
+| **task_08** | 0:00:10.781      | 0:00:10.789    | 0:00:12.111     |
+| **task_09** | 0:00:12.138      | 0:00:12.145    | 0:00:13.457     |
 
 For 40 lightweights tasks run sequentially:
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
-|:-----------:|-----------------:|---------------:|----------------:|
-| **task_0**  | 0:00:00.430      | 0:00:00.434    | 0:00:00.439     |
-| **task_1**  | 0:00:00.446      | 0:00:00.449    | 0:00:00.452     |
-| **task_2**  | 0:00:00.458      | 0:00:00.460    | 0:00:00.463     |
-| **task_3**  | 0:00:00.468      | 0:00:00.470    | 0:00:00.472     |
-| **task_4**  | 0:00:00.477      | 0:00:00.480    | 0:00:00.482     |
-| **task_5**  | 0:00:00.487      | 0:00:00.489    | 0:00:00.491     |
-| **task_6**  | 0:00:00.497      | 0:00:00.499    | 0:00:00.501     |
-| **task_7**  | 0:00:00.506      | 0:00:00.508    | 0:00:00.510     |
-| **task_8**  | 0:00:00.515      | 0:00:00.517    | 0:00:00.519     |
-| **task_9**  | 0:00:00.524      | 0:00:00.526    | 0:00:00.528     |
-| **task_10** | 0:00:00.534      | 0:00:00.536    | 0:00:00.538     |
-| **task_11** | 0:00:00.572      | 0:00:00.616    | 0:00:00.620     |
-| **task_12** | 0:00:00.670      | 0:00:00.714    | 0:00:00.720     |
-| **task_13** | 0:00:00.774      | 0:00:00.822    | 0:00:00.834     |
-| **task_14** | 0:00:00.873      | 0:00:00.919    | 0:00:00.924     |
-| **task_15** | 0:00:00.973      | 0:00:01.017    | 0:00:01.021     |
-| **task_16** | 0:00:01.071      | 0:00:01.114    | 0:00:01.120     |
-| **task_17** | 0:00:01.175      | 0:00:01.219    | 0:00:01.225     |
-| **task_18** | 0:00:01.281      | 0:00:01.321    | 0:00:01.331     |
-| **task_19** | 0:00:01.375      | 0:00:01.418    | 0:00:01.425     |
-| **task_20** | 0:00:01.478      | 0:00:01.521    | 0:00:01.533     |
-| **task_21** | 0:00:01.580      | 0:00:01.619    | 0:00:01.627     |
-| **task_22** | 0:00:01.676      | 0:00:01.722    | 0:00:01.731     |
-| **task_23** | 0:00:01.772      | 0:00:01.813    | 0:00:01.820     |
-| **task_24** | 0:00:01.873      | 0:00:01.916    | 0:00:01.923     |
-| **task_25** | 0:00:01.980      | 0:00:02.021    | 0:00:02.030     |
-| **task_26** | 0:00:02.074      | 0:00:02.117    | 0:00:02.124     |
-| **task_27** | 0:00:02.184      | 0:00:02.216    | 0:00:02.223     |
-| **task_28** | 0:00:02.271      | 0:00:02.315    | 0:00:02.321     |
-| **task_29** | 0:00:02.382      | 0:00:02.419    | 0:00:02.428     |
-| **task_30** | 0:00:02.484      | 0:00:02.520    | 0:00:02.529     |
-| **task_31** | 0:00:02.587      | 0:00:02.615    | 0:00:02.621     |
-| **task_32** | 0:00:02.679      | 0:00:02.715    | 0:00:02.721     |
-| **task_33** | 0:00:02.778      | 0:00:02.817    | 0:00:02.827     |
-| **task_34** | 0:00:02.885      | 0:00:02.919    | 0:00:02.928     |
-| **task_35** | 0:00:02.986      | 0:00:03.021    | 0:00:03.029     |
-| **task_36** | 0:00:03.085      | 0:00:03.120    | 0:00:03.133     |
-| **task_37** | 0:00:03.181      | 0:00:03.215    | 0:00:03.223     |
-| **task_38** | 0:00:03.279      | 0:00:03.319    | 0:00:03.328     |
-| **task_39** | 0:00:03.385      | 0:00:03.421    | 0:00:03.429     |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:00.008    | 0:00:00.015     |
+| **task_01** | 0:00:00.040      | 0:00:00.050    | 0:00:00.058     |
+| **task_02** | 0:00:00.075      | 0:00:00.082    | 0:00:00.088     |
+| **task_03** | 0:00:00.108      | 0:00:00.115    | 0:00:00.123     |
+| **task_04** | 0:00:00.140      | 0:00:00.148    | 0:00:00.155     |
+| **task_05** | 0:00:00.172      | 0:00:00.180    | 0:00:00.187     |
+| **task_06** | 0:00:00.204      | 0:00:00.211    | 0:00:00.217     |
+| **task_07** | 0:00:00.235      | 0:00:00.245    | 0:00:00.253     |
+| **task_08** | 0:00:00.271      | 0:00:00.278    | 0:00:00.285     |
+| **task_09** | 0:00:00.303      | 0:00:00.310    | 0:00:00.317     |
+| **task_10** | 0:00:00.334      | 0:00:00.341    | 0:00:00.348     |
+| **task_11** | 0:00:00.366      | 0:00:00.374    | 0:00:00.381     |
+| **task_12** | 0:00:00.397      | 0:00:00.405    | 0:00:00.412     |
+| **task_13** | 0:00:00.430      | 0:00:00.437    | 0:00:00.444     |
+| **task_14** | 0:00:00.461      | 0:00:00.480    | 0:00:00.487     |
+| **task_15** | 0:00:00.541      | 0:00:00.581    | 0:00:00.588     |
+| **task_16** | 0:00:00.640      | 0:00:00.681    | 0:00:00.687     |
+| **task_17** | 0:00:00.740      | 0:00:00.780    | 0:00:00.787     |
+| **task_18** | 0:00:00.840      | 0:00:00.881    | 0:00:00.888     |
+| **task_19** | 0:00:00.940      | 0:00:00.980    | 0:00:00.987     |
+| **task_20** | 0:00:01.040      | 0:00:01.081    | 0:00:01.088     |
+| **task_21** | 0:00:01.141      | 0:00:01.180    | 0:00:01.188     |
+| **task_22** | 0:00:01.241      | 0:00:01.280    | 0:00:01.287     |
+| **task_23** | 0:00:01.352      | 0:00:01.380    | 0:00:01.387     |
+| **task_24** | 0:00:01.439      | 0:00:01.480    | 0:00:01.487     |
+| **task_25** | 0:00:01.539      | 0:00:01.580    | 0:00:01.587     |
+| **task_26** | 0:00:01.640      | 0:00:01.680    | 0:00:01.686     |
+| **task_27** | 0:00:01.740      | 0:00:01.781    | 0:00:01.788     |
+| **task_28** | 0:00:01.841      | 0:00:01.880    | 0:00:01.887     |
+| **task_29** | 0:00:01.940      | 0:00:01.981    | 0:00:01.988     |
+| **task_30** | 0:00:02.040      | 0:00:02.080    | 0:00:02.087     |
+| **task_31** | 0:00:02.140      | 0:00:02.181    | 0:00:02.187     |
+| **task_32** | 0:00:02.240      | 0:00:02.280    | 0:00:02.287     |
+| **task_33** | 0:00:02.339      | 0:00:02.380    | 0:00:02.388     |
+| **task_34** | 0:00:02.439      | 0:00:02.481    | 0:00:02.488     |
+| **task_35** | 0:00:02.540      | 0:00:02.581    | 0:00:02.587     |
+| **task_36** | 0:00:02.641      | 0:00:02.680    | 0:00:02.687     |
+| **task_37** | 0:00:02.741      | 0:00:02.780    | 0:00:02.787     |
+| **task_38** | 0:00:02.840      | 0:00:02.881    | 0:00:02.889     |
+| **task_39** | 0:00:02.940      | 0:00:02.981    | 0:00:02.988     |
 
 ### Windmill setup
-We set up Windmill version 1.201.1 using the [docker-compose.yml from the official Github repository](https://github.com/windmill-labs/windmill).
+We set up Windmill version 1.204.1 using the [docker-compose.yml from the official Github repository](https://github.com/windmill-labs/windmill). We made some adjustments to it to have a similar setup compared to the other orchestrator. We set the number of workers to only one and removed the native workers since they would have been useless.
 
 We executed the Windmill benchmarks in both "normal" and "dedicated worker" mode. To implement the 2 flows in Windmill, we first created a script simply computing the Fibonacci numbers:
 ```python
@@ -272,70 +276,133 @@ And then we used this script in a simple flow composed of a For-Loop sequentiall
 
 ##### Results
 
-For 10 long running tasks:
-| **Task**   | **Scheduled at** | **Started at** | **Finished at** |
-|:----------:|-----------------:|---------------:|----------------:|
-| **task_0** | 0:00:00.348      | 0:00:00.350    | 0:00:00.721     |
-| **task_1** | 0:00:00.775      | 0:00:00.777    | 0:00:01.140     |
-| **task_2** | 0:00:01.193      | 0:00:01.194    | 0:00:01.554     |
-| **task_3** | 0:00:01.608      | 0:00:01.609    | 0:00:01.967     |
-| **task_4** | 0:00:02.021      | 0:00:02.023    | 0:00:02.385     |
-| **task_5** | 0:00:02.439      | 0:00:02.441    | 0:00:02.804     |
-| **task_6** | 0:00:02.858      | 0:00:02.859    | 0:00:03.224     |
-| **task_7** | 0:00:03.279      | 0:00:03.280    | 0:00:03.638     |
-| **task_8** | 0:00:03.693      | 0:00:03.694    | 0:00:04.053     |
-| **task_9** | 0:00:04.108      | 0:00:04.110    | 0:00:04.468     |
 
-For 40 lightweights tasks run sequentially:
+For 10 long running tasks in normal mode:
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
-|-------------|------------------|----------------|-----------------|
-| **task_0**  | 0:00:00.000      | 0:00:00.002    | 0:00:00.035     |
-| **task_1**  | 0:00:00.090      | 0:00:00.092    | 0:00:00.111     |
-| **task_2**  | 0:00:00.165      | 0:00:00.167    | 0:00:00.185     |
-| **task_3**  | 0:00:00.239      | 0:00:00.240    | 0:00:00.259     |
-| **task_4**  | 0:00:00.313      | 0:00:00.314    | 0:00:00.332     |
-| **task_5**  | 0:00:00.386      | 0:00:00.388    | 0:00:00.405     |
-| **task_6**  | 0:00:00.461      | 0:00:00.462    | 0:00:00.481     |
-| **task_7**  | 0:00:00.536      | 0:00:00.538    | 0:00:00.556     |
-| **task_8**  | 0:00:00.610      | 0:00:00.611    | 0:00:00.630     |
-| **task_9**  | 0:00:00.685      | 0:00:00.686    | 0:00:00.704     |
-| **task_10** | 0:00:00.759      | 0:00:00.761    | 0:00:00.779     |
-| **task_11** | 0:00:00.833      | 0:00:00.834    | 0:00:00.852     |
-| **task_12** | 0:00:00.906      | 0:00:00.908    | 0:00:00.925     |
-| **task_13** | 0:00:00.980      | 0:00:00.981    | 0:00:00.999     |
-| **task_14** | 0:00:01.055      | 0:00:01.056    | 0:00:01.075     |
-| **task_15** | 0:00:01.130      | 0:00:01.132    | 0:00:01.150     |
-| **task_16** | 0:00:01.203      | 0:00:01.204    | 0:00:01.221     |
-| **task_17** | 0:00:01.275      | 0:00:01.276    | 0:00:01.293     |
-| **task_18** | 0:00:01.347      | 0:00:01.348    | 0:00:01.365     |
-| **task_19** | 0:00:01.419      | 0:00:01.420    | 0:00:01.438     |
-| **task_20** | 0:00:01.491      | 0:00:01.492    | 0:00:01.510     |
-| **task_21** | 0:00:01.566      | 0:00:01.567    | 0:00:01.587     |
-| **task_22** | 0:00:01.641      | 0:00:01.642    | 0:00:01.660     |
-| **task_23** | 0:00:01.713      | 0:00:01.714    | 0:00:01.731     |
-| **task_24** | 0:00:01.785      | 0:00:01.786    | 0:00:01.803     |
-| **task_25** | 0:00:01.858      | 0:00:01.859    | 0:00:01.876     |
-| **task_26** | 0:00:01.930      | 0:00:01.930    | 0:00:01.949     |
-| **task_27** | 0:00:02.004      | 0:00:02.005    | 0:00:02.024     |
-| **task_28** | 0:00:02.079      | 0:00:02.081    | 0:00:02.100     |
-| **task_29** | 0:00:02.155      | 0:00:02.156    | 0:00:02.175     |
-| **task_30** | 0:00:02.228      | 0:00:02.230    | 0:00:02.248     |
-| **task_31** | 0:00:02.302      | 0:00:02.304    | 0:00:02.323     |
-| **task_32** | 0:00:02.377      | 0:00:02.379    | 0:00:02.398     |
-| **task_33** | 0:00:02.453      | 0:00:02.454    | 0:00:02.476     |
-| **task_34** | 0:00:02.532      | 0:00:02.533    | 0:00:02.551     |
-| **task_35** | 0:00:02.608      | 0:00:02.612    | 0:00:02.630     |
-| **task_36** | 0:00:02.686      | 0:00:02.687    | 0:00:02.706     |
-| **task_37** | 0:00:02.760      | 0:00:02.761    | 0:00:02.779     |
-| **task_38** | 0:00:02.835      | 0:00:02.836    | 0:00:02.855     |
-| **task_39** | 0:00:02.910      | 0:00:02.911    | 0:00:02.929     |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.787     |
+| **task_01** | 0:00:00.847      | 0:00:00.851    | 0:00:01.621     |
+| **task_02** | 0:00:01.679      | 0:00:01.683    | 0:00:02.456     |
+| **task_03** | 0:00:02.515      | 0:00:02.529    | 0:00:03.303     |
+| **task_04** | 0:00:03.364      | 0:00:03.368    | 0:00:04.145     |
+| **task_05** | 0:00:04.204      | 0:00:04.208    | 0:00:04.974     |
+| **task_06** | 0:00:05.032      | 0:00:05.037    | 0:00:05.806     |
+| **task_07** | 0:00:05.863      | 0:00:05.867    | 0:00:06.666     |
+| **task_08** | 0:00:06.723      | 0:00:06.726    | 0:00:07.494     |
+| **task_09** | 0:00:07.558      | 0:00:07.562    | 0:00:08.339     |
+
+For 40 lightweights tasks run sequentially in normal mode:
+| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:00.003    | 0:00:00.055     |
+| **task_01** | 0:00:00.115      | 0:00:00.120    | 0:00:00.169     |
+| **task_02** | 0:00:00.227      | 0:00:00.230    | 0:00:00.279     |
+| **task_03** | 0:00:00.338      | 0:00:00.342    | 0:00:00.392     |
+| **task_04** | 0:00:00.454      | 0:00:00.458    | 0:00:00.505     |
+| **task_05** | 0:00:00.562      | 0:00:00.566    | 0:00:00.623     |
+| **task_06** | 0:00:00.680      | 0:00:00.683    | 0:00:00.732     |
+| **task_07** | 0:00:00.789      | 0:00:00.793    | 0:00:00.840     |
+| **task_08** | 0:00:00.897      | 0:00:00.901    | 0:00:00.951     |
+| **task_09** | 0:00:01.008      | 0:00:01.013    | 0:00:01.062     |
+| **task_10** | 0:00:01.121      | 0:00:01.125    | 0:00:01.174     |
+| **task_11** | 0:00:01.234      | 0:00:01.237    | 0:00:01.283     |
+| **task_12** | 0:00:01.340      | 0:00:01.345    | 0:00:01.395     |
+| **task_13** | 0:00:01.454      | 0:00:01.458    | 0:00:01.514     |
+| **task_14** | 0:00:01.571      | 0:00:01.575    | 0:00:01.628     |
+| **task_15** | 0:00:01.685      | 0:00:01.688    | 0:00:01.737     |
+| **task_16** | 0:00:01.794      | 0:00:01.798    | 0:00:01.846     |
+| **task_17** | 0:00:01.902      | 0:00:01.905    | 0:00:01.956     |
+| **task_18** | 0:00:02.014      | 0:00:02.018    | 0:00:02.064     |
+| **task_19** | 0:00:02.124      | 0:00:02.128    | 0:00:02.175     |
+| **task_20** | 0:00:02.244      | 0:00:02.248    | 0:00:02.294     |
+| **task_21** | 0:00:02.351      | 0:00:02.355    | 0:00:02.405     |
+| **task_22** | 0:00:02.462      | 0:00:02.469    | 0:00:02.516     |
+| **task_23** | 0:00:02.573      | 0:00:02.576    | 0:00:02.625     |
+| **task_24** | 0:00:02.683      | 0:00:02.688    | 0:00:02.735     |
+| **task_25** | 0:00:02.794      | 0:00:02.799    | 0:00:02.845     |
+| **task_26** | 0:00:02.903      | 0:00:02.907    | 0:00:02.954     |
+| **task_27** | 0:00:03.011      | 0:00:03.015    | 0:00:03.062     |
+| **task_28** | 0:00:03.119      | 0:00:03.123    | 0:00:03.171     |
+| **task_29** | 0:00:03.228      | 0:00:03.232    | 0:00:03.280     |
+| **task_30** | 0:00:03.337      | 0:00:03.341    | 0:00:03.401     |
+| **task_31** | 0:00:03.459      | 0:00:03.463    | 0:00:03.512     |
+| **task_32** | 0:00:03.570      | 0:00:03.573    | 0:00:03.620     |
+| **task_33** | 0:00:03.679      | 0:00:03.682    | 0:00:03.729     |
+| **task_34** | 0:00:03.787      | 0:00:03.792    | 0:00:03.840     |
+| **task_35** | 0:00:03.897      | 0:00:03.900    | 0:00:03.947     |
+| **task_36** | 0:00:04.005      | 0:00:04.009    | 0:00:04.056     |
+| **task_37** | 0:00:04.112      | 0:00:04.116    | 0:00:04.167     |
+| **task_38** | 0:00:04.225      | 0:00:04.229    | 0:00:04.276     |
+| **task_39** | 0:00:04.334      | 0:00:04.338    | 0:00:04.384     |
+
+In dedicated worker mode, we obtained the following results.
+For 10 liong running tasks:
+| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.244     |
+| **task_01** | 0:00:00.798      | 0:00:00.801    | 0:00:01.051     |
+| **task_02** | 0:00:01.584      | 0:00:01.588    | 0:00:01.918     |
+| **task_03** | 0:00:02.377      | 0:00:02.381    | 0:00:02.641     |
+| **task_04** | 0:00:03.169      | 0:00:03.173    | 0:00:03.403     |
+| **task_05** | 0:00:03.962      | 0:00:03.966    | 0:00:04.216     |
+| **task_06** | 0:00:04.749      | 0:00:04.752    | 0:00:04.962     |
+| **task_07** | 0:00:05.542      | 0:00:05.547    | 0:00:05.787     |
+| **task_08** | 0:00:06.341      | 0:00:06.344    | 0:00:06.584     |
+| **task_09** | 0:00:07.128      | 0:00:07.131    | 0:00:07.351     |
+
+And for the 40 lightweight tasks:
+| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| :---------: | ---------------: | -------------: | --------------: |
+| **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.006     |
+| **task_01** | 0:00:00.061      | 0:00:00.064    | 0:00:00.066     |
+| **task_02** | 0:00:00.123      | 0:00:00.126    | 0:00:00.128     |
+| **task_03** | 0:00:00.185      | 0:00:00.188    | 0:00:00.190     |
+| **task_04** | 0:00:00.246      | 0:00:00.250    | 0:00:00.251     |
+| **task_05** | 0:00:00.308      | 0:00:00.311    | 0:00:00.313     |
+| **task_06** | 0:00:00.369      | 0:00:00.372    | 0:00:00.374     |
+| **task_07** | 0:00:00.431      | 0:00:00.435    | 0:00:00.437     |
+| **task_08** | 0:00:00.494      | 0:00:00.498    | 0:00:00.501     |
+| **task_09** | 0:00:00.558      | 0:00:00.561    | 0:00:00.563     |
+| **task_10** | 0:00:00.620      | 0:00:00.624    | 0:00:00.626     |
+| **task_11** | 0:00:00.682      | 0:00:00.685    | 0:00:00.687     |
+| **task_12** | 0:00:00.744      | 0:00:00.747    | 0:00:00.749     |
+| **task_13** | 0:00:00.805      | 0:00:00.808    | 0:00:00.810     |
+| **task_14** | 0:00:00.872      | 0:00:00.875    | 0:00:00.877     |
+| **task_15** | 0:00:00.994      | 0:00:01.000    | 0:00:01.002     |
+| **task_16** | 0:00:01.060      | 0:00:01.064    | 0:00:01.066     |
+| **task_17** | 0:00:01.123      | 0:00:01.129    | 0:00:01.132     |
+| **task_18** | 0:00:01.187      | 0:00:01.191    | 0:00:01.193     |
+| **task_19** | 0:00:01.250      | 0:00:01.253    | 0:00:01.255     |
+| **task_20** | 0:00:01.312      | 0:00:01.315    | 0:00:01.317     |
+| **task_21** | 0:00:01.374      | 0:00:01.378    | 0:00:01.380     |
+| **task_22** | 0:00:01.436      | 0:00:01.439    | 0:00:01.441     |
+| **task_23** | 0:00:01.499      | 0:00:01.503    | 0:00:01.505     |
+| **task_24** | 0:00:01.561      | 0:00:01.565    | 0:00:01.567     |
+| **task_25** | 0:00:01.623      | 0:00:01.627    | 0:00:01.629     |
+| **task_26** | 0:00:01.685      | 0:00:01.694    | 0:00:01.698     |
+| **task_27** | 0:00:01.754      | 0:00:01.758    | 0:00:01.766     |
+| **task_28** | 0:00:01.822      | 0:00:01.825    | 0:00:01.827     |
+| **task_29** | 0:00:01.885      | 0:00:01.889    | 0:00:01.891     |
+| **task_30** | 0:00:01.947      | 0:00:01.951    | 0:00:01.953     |
+| **task_31** | 0:00:02.010      | 0:00:02.013    | 0:00:02.015     |
+| **task_32** | 0:00:02.072      | 0:00:02.076    | 0:00:02.078     |
+| **task_33** | 0:00:02.135      | 0:00:02.138    | 0:00:02.140     |
+| **task_34** | 0:00:02.196      | 0:00:02.212    | 0:00:02.214     |
+| **task_35** | 0:00:02.270      | 0:00:02.273    | 0:00:02.275     |
+| **task_36** | 0:00:02.332      | 0:00:02.335    | 0:00:02.337     |
+| **task_37** | 0:00:02.394      | 0:00:02.398    | 0:00:02.400     |
+| **task_38** | 0:00:02.457      | 0:00:02.462    | 0:00:02.464     |
+| **task_39** | 0:00:02.521      | 0:00:02.525    | 0:00:02.527     |
 
 ### Comparisons
 
-At a macro level, it took 18.866s to Airflow to execute the 10 long running tasks, where Windmill took only 04.120s and Temporal 03.899s. The same can be observed for the 40 lightweight tasks, where Airflow took total of 46.233s, Temporal 02.999s and Windmill 02.929s.
-Clearly, Airflow is by far the slowest. Temporal and Windmill competes really closely, the difference being so small that is can barely be representative.
+At a macro level, it took 40.875s to Airflow to execute the 10 long running tasks, where Temporal took 13.457s and Windmill 08.339s in normal mode and 07.351s in dedicated worker mode.
 
-But we can deep dive a little and compare the 3 orchestrators three categories:
+The same can be observed for the 40 lightweight tasks, where Airflow took total of 01m37.607s, Temporal 02.988s and Windmill 04.384s in normal mode and 02.527s in dedicated worker mode.
+
+By far, Airflow is the slowest. Temporal is faster, but not as fast as Windmill. For the 40 lightweight tasks, Windmill was slightly slower than temporal in normal mode. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
+
+But we can deep dive in a little and compare the orchestrators three categories:
 - Execution time: The time it takes for the orchestrator to execute the task once is has been assigned to an executor
 - Assignment time: The time is takes for a task to be assigned to an executor once it has been created in the queue
 - Transition time: The time it takes for to create the following time once a task is finished
@@ -343,22 +410,22 @@ But we can deep dive a little and compare the 3 orchestrators three categories:
 After looking at the macro numbers above, it's interesting to compare the time spent in each of the above categories, relative to the total time the orchestrator took to execute the flow.
 
 For the 10 long running tasks flow, we see the following:
-| **-**                       | **Airflow** | **Temporal** | **Windmill** |
-|-----------------------------|-------------|--------------|--------------|
-| **Total duration (s)**      | 0:00:18.866 | 0:00:03.899  | 0:00:04.120  |
-| **Total in execution (%)**  | 35.33%      | 93.44%       | 87.79%       |
-| **Total in assignment (%)** | 31.56%      | 1.57%        | 0.36%        |
-| **Total in transition (%)** | 33.11%      | 4.99%        | 11.84%       |
-Obviously the portion of the time spent in execution is important here since each task takes a long time to run. It's important to note though that even in this case Airflow is particularly innefficient for transitioning and assigning tasks. If we look at Temporal and Windmill, we see that Windmill is faster at assigning tasks to executors, but Temporal is faster transitioning from one task to the other.
+|                    | **Airflow** | **Temporal** | **Windmill Normal** | **Windmill DW** |
+| :----------------: | :---------: | :----------: | :-----------------: | :-------------: |
+| **Total duration** | 0:00:40.875 | 0:00:13.457  | 0:00:08.339         | 0:00:07.351     |
+| **Assignement**    | 43.44%      | 0.61%        | 0.60%               | 0.50%           |
+| **Execution**      | 46.02%      | 98.07%       | 93.01%              | 33.60%          |
+| **Transition**     | 10.54%      | 1.33%        | 6.39%               | 65.90%          |
+The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow is spending a lot of time assigning the tasks compared to the two others. Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
 
 If we look at the 40 lightweight tasks flow, we have:
-| **-**                       | **Airflow** | **Temporal** | **Windmill** |
-|-----------------------------|-------------|--------------|--------------|
-| **Total duration (s)**      | 0:00:46.233 | 0:00:02.999  | 0:00:02.929  |
-| **Total in execution (%)**  | 7.63%       | 8.67%        | 25.47%       |
-| **Total in assignment (%)** | 44.59%      | 39.40%       | 1.84%        |
-| **Total in transition (%)** | 47.78%      | 51.93%       | 72.69%       |
-Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the executor. However, it's by far the fastest assigning tasks to executors. Temporal is the fastest transitioning from one task to the other, as observed in the other usecase.
+|                    | **Airflow** | **Temporal** | **Windmill Normal** | **Windmill DW** |
+| :----------------: | :---------: | :----------: | :-----------------: | :-------------: |
+| **Total duration** | 0:01:37.607 | 0:00:02.988  | 0:00:04.384         | 0:00:02.527     |
+| **Assignement**    | 60.78%      | 37.63%       | 3.63%               | 6.49%           |
+| **Execution**      | 9.82%       | 9.52%        | 44.66%              | 3.52%           |
+| **Transition**     | 29.40%      | 52.85%       | 51.71%              | 89.99%          |
+Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the worker. However, it's by far the fastest assigning tasks to executors. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time transitioning from one task to the next one. 
 
 ### Conclusion
-Airflow looses in all categories. If you're looking for a performant job orchestrator to run a significant amount of tasks, you shouldn't be using Airflow. Temporal and Windmill are pretty close in terms of performance. Temporal handles transitions slightly faster than Windmill, but Windmill is faster at assigning tasks to executor. Both are good candidates for those looking for performant job orchestrators, and the choice can be made onon different criteria, like usability and user experiences. Windmill has advantage to have a nice and easy to use UI, without sacrificing anything on performance compared to Temporal.
+Airflow is the slowest in all categories. If you're looking for a performant job orchestrator to run a significant amount of tasks, you shouldn't be using Airflow. Temporal and Windmill in are closer to each other in terms of performance, but in both cases Windmill wins either in normal mode or in dedicated more. If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transtions and assignements will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice. It is lightening fast at executing the tasks and assigning tasks to workers.
