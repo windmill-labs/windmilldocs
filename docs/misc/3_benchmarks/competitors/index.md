@@ -1,6 +1,6 @@
-# Windmill, Airflow and Temporal
+# Airflow, Prefect, Temporal and Windmill
 
-We compared Airflow, Temporal and Windmill with the following usecases:
+We compared Airflow, Prefect, Temporal and Windmill with the following usecases:
 - One flow composed of 40 lightweight tasks.
 - One flow composed of 10 long-running tasks.
 
@@ -47,7 +47,7 @@ with DAG(
 
 For 10 long running tasks run sequentially:
 
-| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| **Task**    | **Created at**   | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:04.663    | 0:00:06.541     |
 | **task_01** | 0:00:06.850      | 0:00:08.724    | 0:00:10.417     |
@@ -62,7 +62,7 @@ For 10 long running tasks run sequentially:
 
 For 40 lightweights tasks run sequentially:
 
-| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| **Task**    | **Created at**   | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:03.354    | 0:00:03.761     |
 | **task_01** | 0:00:04.762      | 0:00:07.156    | 0:00:07.403     |
@@ -153,7 +153,7 @@ if __name__ == "__main__":
 
 For 10 long running tasks:
 
-| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| **Task**    | **Created at**   | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.009    | 0:00:01.332     |
 | **task_01** | 0:00:01.351      | 0:00:01.360    | 0:00:02.670     |
@@ -168,7 +168,7 @@ For 10 long running tasks:
 
 For 40 lightweights tasks run sequentially:
 
-| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| **Task**    | **Created at**   | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.008    | 0:00:00.015     |
 | **task_01** | 0:00:00.040      | 0:00:00.050    | 0:00:00.058     |
@@ -210,6 +210,139 @@ For 40 lightweights tasks run sequentially:
 | **task_37** | 0:00:02.741      | 0:00:02.780    | 0:00:02.787     |
 | **task_38** | 0:00:02.840      | 0:00:02.881    | 0:00:02.889     |
 | **task_39** | 0:00:02.940      | 0:00:02.981    | 0:00:02.988     |
+
+### Prefect setup
+We set up Prefect version 2.14.4. We wrote our own simple docker compose since we couldn't find a recommended one in Prefect's documentation. We chose to use Postgresql as a database, as it is the recommended option for production usecases.
+
+```yaml
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: prefect
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prefect-server:
+    image: prefecthq/prefect:2-latest
+    command:
+      - prefect
+      - server
+      - start
+    ports:
+      - 4200:4200
+    depends_on:
+      postgres:
+        condition: service_started
+    volumes:
+      - ${PWD}/prefect:/root/.prefect
+      - ${PWD}/flows:/flows
+    environment:
+      PREFECT_API_DATABASE_CONNECTION_URL: postgresql+asyncpg://postgres:changeme@postgres:5432/prefect
+      PREFECT_LOGGING_SERVER_LEVEL: INFO
+      PREFECT_API_URL: http://localhost:4200/api
+volumes:
+  db_data: null
+```
+
+The flow was defined using the following Python file.
+```python
+from prefect import flow, task
+
+ITER = 10     # respectively 40
+FIBO_N = 33   # respectively 10
+
+def fibo(n: int):
+    if n <= 1:
+        return n
+    else:
+        return fibo(n - 1) + fibo(n - 2)
+
+@task
+def fibo_task():
+    return fibo(FIBO_N)
+
+@flow(name="bench_{}".format(ITER))
+def benchmark_flow():
+    for i in range(ITER):
+        fibo_task()
+
+if __name__ == "__main__":
+    benchmark_flow.serve(name="bench_{}".format(ITER))
+```
+
+##### Results
+
+For 10 long running tasks:
+
+| **Task**    | **Created at** | **Started at** | **Finished at** |
+|-------------|----------------|----------------|-----------------|
+| **task_00** | 0:00:00.000    | 0:00:01.165    | 0:00:02.534     |
+| **task_01** | 0:00:02.573    | 0:00:02.597    | 0:00:03.957     |
+| **task_02** | 0:00:03.990    | 0:00:04.019    | 0:00:05.359     |
+| **task_03** | 0:00:05.389    | 0:00:05.413    | 0:00:06.791     |
+| **task_04** | 0:00:06.820    | 0:00:06.843    | 0:00:08.187     |
+| **task_05** | 0:00:08.219    | 0:00:08.242    | 0:00:09.576     |
+| **task_06** | 0:00:09.606    | 0:00:09.631    | 0:00:10.970     |
+| **task_07** | 0:00:11.000    | 0:00:11.022    | 0:00:12.361     |
+| **task_08** | 0:00:12.390    | 0:00:12.414    | 0:00:13.745     |
+| **task_09** | 0:00:13.774    | 0:00:13.798    | 0:00:15.132     |
+
+For 40 lightweights tasks run sequentially:
+
+| **Task**    | **Created at** | **Started at** | **Finished at** |
+|-------------|----------------|----------------|-----------------|
+| **task_00** | 0:00:00.000    | 0:00:01.144    | 0:00:01.184     |
+| **task_01** | 0:00:01.214    | 0:00:01.237    | 0:00:01.273     |
+| **task_02** | 0:00:01.302    | 0:00:01.328    | 0:00:01.366     |
+| **task_03** | 0:00:01.397    | 0:00:01.421    | 0:00:01.459     |
+| **task_04** | 0:00:01.492    | 0:00:01.515    | 0:00:01.553     |
+| **task_05** | 0:00:01.582    | 0:00:01.606    | 0:00:01.643     |
+| **task_06** | 0:00:01.671    | 0:00:01.695    | 0:00:01.731     |
+| **task_07** | 0:00:01.760    | 0:00:01.787    | 0:00:01.821     |
+| **task_08** | 0:00:01.849    | 0:00:01.871    | 0:00:01.908     |
+| **task_09** | 0:00:01.957    | 0:00:01.980    | 0:00:02.015     |
+| **task_10** | 0:00:02.043    | 0:00:02.066    | 0:00:02.103     |
+| **task_11** | 0:00:02.132    | 0:00:02.156    | 0:00:02.190     |
+| **task_12** | 0:00:02.218    | 0:00:02.241    | 0:00:02.276     |
+| **task_13** | 0:00:02.303    | 0:00:02.326    | 0:00:02.362     |
+| **task_14** | 0:00:02.392    | 0:00:02.414    | 0:00:02.462     |
+| **task_15** | 0:00:02.490    | 0:00:02.514    | 0:00:02.552     |
+| **task_16** | 0:00:02.582    | 0:00:02.605    | 0:00:02.640     |
+| **task_17** | 0:00:02.667    | 0:00:02.690    | 0:00:02.726     |
+| **task_18** | 0:00:02.754    | 0:00:02.784    | 0:00:02.820     |
+| **task_19** | 0:00:02.848    | 0:00:02.872    | 0:00:02.907     |
+| **task_20** | 0:00:02.937    | 0:00:02.959    | 0:00:02.994     |
+| **task_21** | 0:00:03.021    | 0:00:03.043    | 0:00:03.077     |
+| **task_22** | 0:00:03.105    | 0:00:03.128    | 0:00:03.161     |
+| **task_23** | 0:00:03.188    | 0:00:03.211    | 0:00:03.245     |
+| **task_24** | 0:00:03.273    | 0:00:03.296    | 0:00:03.331     |
+| **task_25** | 0:00:03.359    | 0:00:03.382    | 0:00:03.419     |
+| **task_26** | 0:00:03.447    | 0:00:03.470    | 0:00:03.505     |
+| **task_27** | 0:00:03.533    | 0:00:03.557    | 0:00:03.591     |
+| **task_28** | 0:00:03.618    | 0:00:03.641    | 0:00:03.676     |
+| **task_29** | 0:00:03.703    | 0:00:03.725    | 0:00:03.760     |
+| **task_30** | 0:00:03.788    | 0:00:03.811    | 0:00:03.849     |
+| **task_31** | 0:00:03.877    | 0:00:03.900    | 0:00:03.935     |
+| **task_32** | 0:00:04.015    | 0:00:04.038    | 0:00:04.073     |
+| **task_33** | 0:00:04.102    | 0:00:04.126    | 0:00:04.164     |
+| **task_34** | 0:00:04.193    | 0:00:04.217    | 0:00:04.253     |
+| **task_35** | 0:00:04.282    | 0:00:04.306    | 0:00:04.343     |
+| **task_36** | 0:00:04.371    | 0:00:04.394    | 0:00:04.432     |
+| **task_37** | 0:00:04.462    | 0:00:04.485    | 0:00:04.520     |
+| **task_38** | 0:00:04.549    | 0:00:04.572    | 0:00:04.607     |
+| **task_39** | 0:00:04.634    | 0:00:04.657    | 0:00:04.692     |
 
 ### Windmill setup
 We set up Windmill version 1.204.1 using the [docker-compose.yml from the official Github repository](https://github.com/windmill-labs/windmill). We made some adjustments to it to have a similar setup compared to the other orchestrator. We set the number of workers to only one and removed the native workers since they would have been useless.
@@ -278,7 +411,7 @@ And then we used this script in a simple flow composed of a For-Loop sequentiall
 
 For 10 long running tasks in normal mode:
 
-| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| **Task**    | **Created at**   | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.004    | 0:00:00.787     |
 | **task_01** | 0:00:00.847      | 0:00:00.851    | 0:00:01.621     |
@@ -293,7 +426,7 @@ For 10 long running tasks in normal mode:
 
 For 40 lightweights tasks run sequentially in normal mode:
 
-| **Task**    | **Scheduled at** | **Started at** | **Finished at** |
+| **Task**    | **Created at**   | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
 | **task_00** | 0:00:00.000      | 0:00:00.003    | 0:00:00.055     |
 | **task_01** | 0:00:00.115      | 0:00:00.120    | 0:00:00.169     |
@@ -336,8 +469,7 @@ For 40 lightweights tasks run sequentially in normal mode:
 | **task_38** | 0:00:04.225      | 0:00:04.229    | 0:00:04.276     |
 | **task_39** | 0:00:04.334      | 0:00:04.338    | 0:00:04.384     |
 
-In dedicated worker mode, we obtained the following results.
-For 10 liong running tasks:
+In dedicated worker mode, we obtained the following results. For 10 long running tasks:
 
 | **Task**    | **Scheduled at** | **Started at** | **Finished at** |
 | :---------: | ---------------: | -------------: | --------------: |
@@ -399,11 +531,11 @@ And for the 40 lightweight tasks:
 
 ### Comparisons
 
-At a macro level, it took 40.875s to Airflow to execute the 10 long running tasks, where Temporal took 13.457s and Windmill 08.339s in normal mode and 07.351s in dedicated worker mode.
+At a macro level, it took 40.875s to Airflow to execute the 10 long running tasks, where Prefect took 15.132s, Temporal 13.457s and Windmill 08.339s in normal mode (07.351s in dedicated worker mode).
 
-The same can be observed for the 40 lightweight tasks, where Airflow took total of 01m37.607s, Temporal 02.988s and Windmill 04.384s in normal mode and 02.527s in dedicated worker mode.
+The same can be observed for the 40 lightweight tasks, where Airflow took total of 1m37.607s, Prefect 4.692s, Temporal 2.988s and Windmill 4.384s in normal mode (2.527s in dedicated worker mode).
 
-By far, Airflow is the slowest. Temporal is faster, but not as fast as Windmill. For the 40 lightweight tasks, Windmill was slightly slower than temporal in normal mode. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
+By far, Airflow is the slowest. Temporal and Prefect are faster, but not as fast as Windmill. For the 40 lightweight tasks, Windmill in normal mode was equivalent to Prefect and slightly slower than Temporal. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
 
 But we can deep dive in a little and compare the orchestrators three categories:
 - Execution time: The time it takes for the orchestrator to execute the task once is has been assigned to an executor
@@ -414,25 +546,27 @@ After looking at the macro numbers above, it's interesting to compare the time s
 
 For the 10 long running tasks flow, we see the following:
 
-|                    | **Airflow** | **Temporal** | **Windmill Normal** | **Windmill DW** |
-| :----------------: | ----------: | -----------: | ------------------: | --------------: |
-| **Total duration** | 0:00:40.875 | 0:00:13.457  | 0:00:08.339         | 0:00:07.351     |
-| **Assignement**    | 43.44%      | 0.61%        | 0.60%               | 0.50%           |
-| **Execution**      | 46.02%      | 98.07%       | 93.01%              | 33.60%          |
-| **Transition**     | 10.54%      | 1.33%        | 6.39%               | 65.90%          |
+|                    | **Airflow** | **Temporal** | **Prefect** | **Windmill Normal** | **Windmill DW** |
+| :----------------: | ----------: | -----------: | ----------: | ------------------: | --------------: |
+| **Total duration** | 0:00:40.875 | 0:00:13.457  | 0:00:15.132 | 0:00:08.339         | 0:00:07.351     |
+| **Assignement**    | 43.44%      | 0.61%        | 9.14%       | 0.60%               | 0.50%           |
+| **Execution**      | 46.02%      | 98.07%       | 89.00%      | 93.01%              | 33.60%          |
+| **Transition**     | 10.54%      | 1.33%        | 1.86%       | 6.39%               | 65.90%          |
 
-The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow is spending a lot of time assigning the tasks compared to the two others. Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
+
+The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow and Prefect are spending a lot of time assigning the tasks compared to the two others (When we look at the actual numbers, we see that both Prefect and Airflow are spending a lot of time assigning the first tasks, but after that, assignment duration decrease. Airflow remain relatively slow though, and Prefect reaches decent performance. The exact same can be observed with the 40 tasks workflow below). Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
 
 If we look at the 40 lightweight tasks flow, we have:
 
-|                    | **Airflow** | **Temporal** | **Windmill Normal** | **Windmill DW** |
-| :----------------: | ----------: | -----------: | ------------------: | --------------: |
-| **Total duration** | 0:01:37.607 | 0:00:02.988  | 0:00:04.384         | 0:00:02.527     |
-| **Assignement**    | 60.78%      | 37.63%       | 3.63%               | 6.49%           |
-| **Execution**      | 9.82%       | 9.52%        | 44.66%              | 3.52%           |
-| **Transition**     | 29.40%      | 52.85%       | 51.71%              | 89.99%          |
+|                    | **Airflow** | **Temporal** | **Prefect** | **Windmill Normal** | **Windmill DW** |
+| :----------------: | ----------: | -----------: | ----------: | ------------------: | --------------: |
+| **Total duration** | 0:01:37.607 | 0:00:02.988  | 0:00:04.692 | 0:00:04.384         | 0:00:02.527     |
+| **Assignement**    | 60.78%      | 37.63%       | 43.90%      | 3.63%               | 6.49%           |
+| **Execution**      | 9.82%       | 9.52%        | 30.86%      | 44.66%              | 3.52%           |
+| **Transition**     | 29.40%      | 52.85%       | 25.23%      | 51.71%              | 89.99%          |
+
 
 Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the worker. However, it's by far the fastest assigning tasks to executors. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time transitioning from one task to the next one. 
 
 ### Conclusion
-Airflow is the slowest in all categories. If you're looking for a performant job orchestrator to run a significant amount of tasks, you shouldn't be using Airflow. Temporal and Windmill in are closer to each other in terms of performance, but in both cases Windmill wins either in normal mode or in dedicated more. If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transtions and assignements will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice. It is lightening fast at executing the tasks and assigning tasks to workers.
+Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill wins either in normal mode or in dedicated more. If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transtions and assignements will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
