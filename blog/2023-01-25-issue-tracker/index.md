@@ -313,13 +313,14 @@ you'll still be able to move them manually.
 
 **Add a chart for the status**
 
-1. Insert a `Pie Chart`.
-2. Select `Compute` as the input type in the right pane.
+1. Insert a `ChartJs` component from the `Charts` section.
+2. Toggle from the `UI Editor` to the `JSON` input type in the right pane.
+3. Select `Compute` as the data source.
    ![Compute chart input](./14-wm-status-chart.png.webp)
-3. Click `Create an inline script`.
-4. Choose `TypeScript (Deno)` as the language.
-5. Name the script `Get Status Chart Data`.
-6. Paste in the following code:
+4. Click `Create an inline script`.
+5. Choose `TypeScript (Deno)` as the language.
+6. Name the script `Get Status Chart Data`.
+7. Paste in the following code:
 
    ```tsx
    export async function main(issues: any[]) {
@@ -353,7 +354,7 @@ you'll still be able to move them manually.
 
    `{ labels: string[], data: number[] }`
 
-7. Configure the `issues` input of the script on the right pane to be `Connect`
+8. Configure the `issues` input of the script on the right pane to be `Connect`
    type and then select the `result` value of the `background` runnable that is
    responsible for the querying of the issues.
    ![Connected chart input](./15-wm-connect-chart.png.webp)
