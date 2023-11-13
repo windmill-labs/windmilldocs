@@ -436,7 +436,7 @@ handled by `Select` components.
 
 Since the `Select` components require input data to be in a certain shape, let's
 create a `Background` script first to convert the `users` list. Add a new
-`Background` script, select `TypeScript (Deno)` as language and paste in the following code:
+`Background` script, select `TypeScript (Deno)` as language and name it `Get User Selection List`. Paste in the following code:
 
 ```tsx
 export async function main(users: undefined | any[]) {
