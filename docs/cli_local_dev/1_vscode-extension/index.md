@@ -1,6 +1,6 @@
 # VSCode Extension
 
-The Windmill VSCode extension allows you to run your scripts & flows and preview the output within VSCode. This feature lets you preview your work without leaving your code editor.
+The Windmill VSCode extension allows you to run your scripts & flows and preview the output within VSCode. This feature lets you preview your work without leaving the code editor.
 
 ![demo](./main.png.webp)
 

@@ -21,7 +21,7 @@ export default function BlogLayout(props) {
 								Blog
 							</h1>
 							<p className="mt-4 text-lg leading-8 container">
-								Discover the latest news, updates, and articles from the team and community
+								Discover the latest news, updates, and articles from the team and community.
 							</p>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
