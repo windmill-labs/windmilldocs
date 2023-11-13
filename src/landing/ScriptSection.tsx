@@ -29,9 +29,9 @@ import Section from './Section';
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs',
+		title: 'VS Code extension or any IDEs',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/cli_local_dev/vscode-extension'

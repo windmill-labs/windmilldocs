@@ -300,9 +300,24 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
+				{
+					type: 'category',
+					label: 'Local Development',
+					collapsed: false,
+					link: {
+						type: 'doc',
+						id: 'advanced/local_development/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'cli_local_dev/vscode-extension/index',
+							label: 'VS Code'
+						},
+						'advanced/local_development/run_locally'
+					]
+				},
 				'advanced/deploy_gh_gl/index',
-				'advanced/local_development/index',
-				'cli_local_dev/vscode-extension/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
