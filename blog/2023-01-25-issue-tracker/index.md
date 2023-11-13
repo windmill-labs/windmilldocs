@@ -355,13 +355,13 @@ you'll still be able to move them manually.
 
    :::info
 
-   As you can see, the pie chart takes the data in a specific shape. The input
-   should be an object with 2 properties: `labels` and `data`, both of which
-   hold arrays as values. The _label_ at position `[0]` corresponds to the
-   _data_ at position `[0]`. In short, the TypeScript type of the return value
-   should be the following:
-
-   `{ labels: string[], data: number[] }`
+   As you can see, the ChartJs component takes the data in a specific shape. The
+   input should be an object with 2 properties: `labels` and `datasets` `labels`
+   should be an array of the label names, while `datasets` should be an array of
+   dataset objects, each containing a `data` element. You can learn more about
+   the format of dataset objects [in the ChartJs
+   documentation](https://www.chartjs.org/docs/latest/general/data-structures.html).
+   The _label_ at position `[0]` corresponds to the _data_ at position `[0]`.
 
 8. Configure the `issues` input of the script on the right pane to be `Connect`
    type and then select the `result` value of the `background` runnable that is
