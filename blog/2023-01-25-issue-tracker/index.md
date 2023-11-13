@@ -545,7 +545,8 @@ user and sends them to the database.
 1. Insert a `Button` component.
 2. Set the `Label` to `Create Issue`.
 3. Set the `Size` to `md`
-4. Find the ID of the `Load Issues` background runnable and check `Recompute` on
+4. Set the `Styling > Alignment` to right-justified
+5. Find the ID of the `Load Issues` background runnable and check `Recompute` on
    it in the `Recompute others` section.
 
    :::info
@@ -553,7 +554,7 @@ user and sends them to the database.
    This will result in reloading the issues every time a new one is added and
    therefore it will be added to the table as well.
 
-5. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
+6. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
    `Create Issue` and paste in the following code:
 
    ```tsx
@@ -585,9 +586,9 @@ user and sends them to the database.
    }
    ```
 
-6. Select your Supabase resource for the `auth` argument of the script in the
+7. Select your Supabase resource for the `auth` argument of the script in the
    `Settings` pane on the right.
-7. Connect all the other arguments with the `result` value of their
+8. Connect all the other arguments with the `result` value of their
    corresponding inputs.
 
 ![Full create issue form](./22-full-form.png.webp)
