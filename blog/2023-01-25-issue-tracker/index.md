@@ -288,7 +288,7 @@ it:
 
 :::tip
 
-Windmill auto saves your progress but if you are sceptical about it, now would
+Windmill auto saves your progress but if you are skeptical about it, now would
 be a good time to click "Save" in the top right corner.
 
 :::
