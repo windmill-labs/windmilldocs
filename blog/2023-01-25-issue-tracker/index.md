@@ -598,7 +598,7 @@ user and sends them to the database.
 Table components can have actions which will be added to the end of each row in
 the form of buttons. Select the `Table` component and follow the steps:
 
-1. Under the "Settings" tab in the right pane, add an action from the
+1. Under the "Settings" tab in the right pane, add a button action from the
    `Table actions` section.
 2. Click the newly added action.
 3. Set the `Label` argument to `Delete`.
@@ -630,8 +630,7 @@ the form of buttons. Select the `Table` component and follow the steps:
 
 7. Select your Supabase resource for the `auth` argument of the script in the
    `Settings` pane on the right.
-8. Select the `Column` input type for the `id` argument and enter `id` as the
-   value.
+8. Select the `Eval` input type for the `id` argument and connect to the `.selectedRow.id` of the table component.
 
    :::info
 
