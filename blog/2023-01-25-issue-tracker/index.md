@@ -515,19 +515,25 @@ the next steps.
 3. Leave the `Items` argument on `Static` mode and have these 3 as inputs:
 
    ```tsx
-   { "label": "LOW" }
+   { 
+      "value": "LOW",
+      "label": "LOW" 
+   }
    ```
 
    ```tsx
-   { "label": "MEDIUM" }
+   { 
+      "value": "MEDIUM",
+      "label": "MEDIUM" 
+   }
    ```
 
    ```tsx
-   { "label": "HIGH" }
+   { 
+      "value": "HIGH",
+      "label": "HIGH" 
+   }
    ```
-
-4. Set the `Item Key` argument to `label`
-
 ![Severity form field](./21-wm-form-severity.png.webp)
 
 #### Submit button
