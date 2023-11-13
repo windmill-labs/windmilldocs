@@ -324,23 +324,32 @@ you'll still be able to move them manually.
 
    ```tsx
    export async function main(issues: any[]) {
-   	if (!issues) {
-   		return {
-   			labels: [],
-   			data: []
-   		};
-   	}
-   	const values: Record<string, number> = {};
-   	issues.forEach(({ status }) => {
-   		if (!values[status]) {
-   			values[status] = 0;
-   		}
-   		values[status]++;
-   	});
-   	return {
-   		labels: Object.keys(values),
-   		data: Object.values(values)
-   	};
+      if (!issues) {
+         return {
+            labels: [],
+            datasets: [],
+         };
+      }
+      const values: Record<string, number> = {};
+      issues.forEach(({ status }) => {
+         if (!values[status]) {
+            values[status] = 0;
+         }
+         values[status]++;
+      });
+      return {
+         labels: Object.keys(values),
+         datasets: [
+            {
+               data: Object.values(values),
+               backgroundColor: [
+                  "#FF8384",
+                  "#48C0C0",
+                  "#FFCE56",
+               ]
+            },
+         ],
+      };
    }
    ```
 
