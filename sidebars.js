@@ -314,6 +314,7 @@ const sidebars = {
 							id: 'cli_local_dev/vscode-extension/index',
 							label: 'VS Code'
 						},
+						'advanced/local_development/run_locally'
 					]
 				},
 				'advanced/deploy_gh_gl/index',
