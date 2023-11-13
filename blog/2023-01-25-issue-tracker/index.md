@@ -538,7 +538,7 @@ the next steps.
 
 #### Submit button
 
-Now that all the input fields are added and wired up, now the only thing left is
+Now that all the input fields are added and wired up, the only thing left is
 to insert a `Button` component, which collects all the values entered by the
 user and sends them to the database.
 
