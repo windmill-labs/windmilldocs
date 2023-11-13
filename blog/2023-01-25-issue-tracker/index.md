@@ -485,18 +485,25 @@ the next steps.
 3. Leave the `Items` argument on `Static` mode and have these 3 as inputs:
 
    ```tsx
-   { "label": "PENDING" }
+   { 
+      "value": "PENDING",
+      "label": "PENDING" 
+   }
    ```
 
    ```tsx
-   { "label": "WORKED ON" }
+   { 
+      "value": "WORKED ON",
+      "label": "WORKED ON" 
+   }
    ```
 
    ```tsx
-   { "label": "FINISHED" }
+   { 
+      "value": "FINISHED",
+      "label": "FINISHED" 
+   }
    ```
-
-4. Set the `Item Key` argument to `label`
 
 ![Status form field](./20-wm-form-status.png.webp)
 
