@@ -376,28 +376,36 @@ will be that the targeted field of the individual issues is going to be
 the Status chart, then optionally name it `Get Severity Chart Data` and paste in
 the following code:
 
-```tsx
-export async function main(issues: any[]) {
-	if (!issues) {
-		return {
-			labels: [],
-			data: []
-		};
-	}
-	const values: Record<string, number> = {};
-	issues.forEach(({ severity }) => {
-		if (!values[severity]) {
-			values[severity] = 0;
-		}
-		values[severity]++;
-	});
-	return {
-		labels: Object.keys(values),
-		data: Object.values(values)
-	};
-}
-```
-
+   ```tsx
+   export async function main(issues: any[]) {
+      if (!issues) {
+         return {
+            labels: [],
+            datasets: [],
+         };
+      }
+      const values: Record<string, number> = {};
+      issues.forEach(({ severity }) => {
+         if (!values[severity]) {
+            values[severity] = 0;
+         }
+         values[severity]++;
+      });
+      return {
+         labels: Object.keys(values),
+         datasets: [
+            {
+               data: Object.values(values),
+               backgroundColor: [
+                  "#FF8384",
+                  "#48C0C0",
+                  "#FFCE56",
+               ]
+            },
+         ],
+      };
+   }
+   ```
 Finally, connect the result value of the background runnable to the `issues`
 argument of the script, just like in the last step of the other chart.
 
