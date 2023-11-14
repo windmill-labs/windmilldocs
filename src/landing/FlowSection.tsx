@@ -275,7 +275,7 @@ const tabs = [
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs to edit any flow',
+		title: 'VS Code extension or any IDEs to edit any flow',
 		subtitle:
 			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
 		Icon: SiVisualstudiocode,
