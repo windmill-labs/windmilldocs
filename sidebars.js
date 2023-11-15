@@ -616,7 +616,7 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Misceallaneous',
+			label: 'Miscellaneous',
 			items: [
 				'misc/architecture/index',
 				{
