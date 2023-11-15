@@ -611,14 +611,7 @@ const sidebars = {
 					type: 'doc',
 					id: 'compared_to/prefect',
 					label: 'Prefect'
-				}
-			]
-		},
-		{
-			type: 'category',
-			label: 'Miscellaneous',
-			items: [
-				'misc/architecture/index',
+				},
 				{
 					type: 'category',
 					label: 'Benchmarks',
@@ -628,9 +621,20 @@ const sidebars = {
 					},
 					items: [
 						'misc/benchmarks/aws_lambda/index',
-						'misc/benchmarks/competitors/index'
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/index',
+							label: 'vs Airflow vs Prefect vs Temporal'
+						}
 					]
 				},
+			]
+		},
+		{
+			type: 'category',
+			label: 'Miscellaneous',
+			items: [
+				'misc/architecture/index',
 				'misc/changelog/index',
 				'misc/contributing/index',
 				'misc/getting_help/index',
