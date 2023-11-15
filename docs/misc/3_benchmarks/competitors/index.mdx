@@ -550,7 +550,7 @@ For 10 long running tasks in normal mode:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
-		labels={['Windmill N']}
+		labels={[['Windmill', 'Normal']]}
 		rawData={[
 			[
 				[0.004, 0.063, 0.065, 0.063, 0.063, 0.062, 0.062, 0.063, 0.062, 0.063],
@@ -583,7 +583,7 @@ For 40 lightweights tasks run sequentially in normal mode:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
-		labels={['Windmill N']}
+		labels={[['Windmill', 'Normal']]}
 		rawData={[
 			[
 				[
@@ -656,7 +656,7 @@ In dedicated worker mode, we obtained the following results. For 10 long running
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
-		labels={['Windmill DW']}
+		labels={[['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[0.004, 0.071, 0.062, 0.062, 0.067, 0.04, 0.03, 0.059, 0.063, 0.058],
@@ -689,7 +689,7 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
-		labels={['Windmill DW']}
+		labels={[['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
@@ -762,7 +762,7 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
-		labels={['Airflow', 'Prefect', 'Temporal', 'Windmill N', 'Windmill DW']}
+		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[4.347, 2.78, 1.975, 1.708, 1.832, 2.202, 2.641, 2.44, 2.179, 4.292],
@@ -791,7 +791,7 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
-		labels={['Airflow', 'Prefect', 'Temporal', 'Windmill N', 'Windmill DW']}
+		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
@@ -872,7 +872,7 @@ We can exclude Airflow from the previous chart:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks (excluding Airflow)"
-		labels={['Prefect', 'Temporal', 'Windmill N', 'Windmill DW']}
+		labels={[['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
@@ -951,7 +951,7 @@ After looking at the macro numbers above, it's interesting to compare the time s
 
 For the 10 long running tasks flow, we see the following:
 
-|                    | **Airflow** | **Prefect** | **Temporal** | **Windmill Normal** | **Windmill DW** |
+|                    | **Airflow** | **Prefect** | **Temporal** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
 | :----------------: | ----------: | ----------: | -----------: | ------------------: | --------------: |
 | **Total duration** | 0:00:54.668 | 0:00:15.489 |  0:00:13.434 |         0:00:08.351 |     0:00:07.885 |
 |  **Assignement**   |      40.36% |       9.77% |        0.71% |               0.47% |           0.55% |
@@ -962,8 +962,8 @@ The proportion of time spent in execution is important here since each task take
 
 If we look at the 40 lightweight tasks flow, we have:
 
-|      **null**      | **Airflow** | **Prefect** | **Temporal** | **Windmill Normal** | **Windmill DW** |
-| :----------------: | ----------: | ----------: | -----------: | ------------------: | --------------: |
+|                    | **Airflow** | **Prefect** | **Temporal** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
+| :----------------: | ----------: | ----------: | -----------: | ------------------: | :-------------: |
 | **Total duration** | 0:01:56.221 | 0:00:04.872 |  0:00:02.967 |         0:00:04.300 |     0:00:02.429 |
 |  **Assignement**   |      64.63% |      44.62% |       35.58% |               3.42% |           5.89% |
 |   **Execution**    |      10.77% |      31.73% |       11.26% |              44.19% |           3.42% |
@@ -973,4 +973,4 @@ Here we see that Windmill takes a greater portion of time executing the tasks, w
 
 ## Conclusion
 
-Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill wins either in normal mode or in dedicated more. If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transtions and assignements will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
+Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in dedicated mode. If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transtions and assignements will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
