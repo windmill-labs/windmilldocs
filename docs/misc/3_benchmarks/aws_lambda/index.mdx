@@ -6,7 +6,7 @@ import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
 ### Windmill
 
-The setup is the exact same as for the other benchmarks in (Airflow vs Prefect vs Temporal vs Windmill)[../competitors/index.mdx#windmill-setup]. We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official Github repo (with the same adjustement, i.e. 1 worker only, even though for this use case it would not make a difference).
+The setup is the exact same as for the other benchmarks in [Airflow vs Prefect vs Temporal vs Windmill](../competitors/index.mdx). We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official Github repo (with the same adjustement, i.e. 1 worker only, even though for this use case it would not make a difference).
 
 We created a script in Windmill computing a Fibonacci number in Python:
 ```python
