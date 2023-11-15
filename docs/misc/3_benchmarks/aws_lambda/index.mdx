@@ -66,14 +66,14 @@ In the same vein as the other benchmarks, we ran `fibonacci(10)` 500 times (`--r
 
 The results were the following:
 
-| **(in seconds)** | **# reps** | **AWS Lambda** | **Windmill N** | **Windmill DW** |
+| **(in seconds)** | **# reps** | **AWS Lambda** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
 |:----------------:|-----------:|---------------:|---------------:|----------------:|
 | **fibo(10)**     | 500        | 36.56          | 55.36          | 26.81           |
 | **fibo(33)**     | 100        | 93.95          | 109.06         | 104.5           |
 
 Which gives an average duration per job in milliseconds:
 
-| **(in milliseconds)** | **AWS Lambda** | **Windmill N** | **Windmill DW** |
+| **(in milliseconds)** | **AWS Lambda** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
 |:---------------------:|:--------------:|:--------------:|:---------------:|
 | **fibo(10)**          | 73             | 111            | 54              |
 | **fibo(33)**          | 940            | 1091           | 1045            |
@@ -83,7 +83,7 @@ Visually, we have the following graphs:
 <div class="grid">
 	<TaskDurationBarChart
 		title="500 times fibonacci(10) (in seconds)"
-		labels={['AWS Lambda', 'Windmill N', 'Windmill DW']}
+		labels={[['AWS Lambda'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
@@ -116,7 +116,7 @@ Visually, we have the following graphs:
 <div class="grid">
 	<TaskDurationBarChart
 		title="100 times fibonacci(33) (in seconds)"
-		labels={['AWS Lambda', 'Windmill N', 'Windmill DW']}
+		labels={[['AWS Lambda'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
