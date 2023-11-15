@@ -620,12 +620,12 @@ const sidebars = {
 						id: 'misc/benchmarks/index'
 					},
 					items: [
-						'misc/benchmarks/aws_lambda/index',
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
 							label: 'vs Airflow vs Prefect vs Temporal'
-						}
+						},
+						'misc/benchmarks/aws_lambda/index'
 					]
 				},
 			]
