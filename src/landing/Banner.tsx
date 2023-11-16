@@ -9,7 +9,7 @@ export default function Banner() {
 				className="text-sm leading-6 !text-white flex flex-row gap-2 items-center"
 			>
 				<strong className="font-semibold">Windmill Launch Week #1</strong>
-				Join us week of November 20 for exciting announcements! <ArrowRight size={12} />
+				Starting Monday November 20, new features every day! <ArrowRight size={12} />
 			</a>
 			<div className="flex flex-1 justify-end"></div>
 		</div>
