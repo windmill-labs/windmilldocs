@@ -158,7 +158,7 @@ const config = {
 			announcementBar: {
 				id: 'support_us',
 				content:
-					'<a href="/blog/launch-week-1">Windmill Launch Week #1Join us week of November 20 for exciting announcements!</a>',
+					'<a href="/blog/launch-week-1">Windmill Launch Week #1 Starting Monday November 20, new features every day!</a>',
 				backgroundColor: '#0f766e',
 				textColor: '#fff',
 				isCloseable: false
