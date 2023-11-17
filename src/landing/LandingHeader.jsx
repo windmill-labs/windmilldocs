@@ -7,6 +7,8 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
+import SearchBarWrapper from '../theme/SearchBar';
+import Banner from './Banner';
 
 const resources = [
 	{
@@ -46,6 +48,7 @@ export default function LandingHeader() {
 
 	return (
 		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
+			<Banner />
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<a
@@ -106,7 +109,7 @@ export default function LandingHeader() {
 									<Popover.Button
 										className={classNames(
 											open ? 'text-gray-900' : 'text-gray-500',
-											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
+											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
 										)}
 									>
 										<span>More</span>
@@ -155,6 +158,8 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
+						<SearchBarWrapper className={'inkeep-search-compact'} />
+
 						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a

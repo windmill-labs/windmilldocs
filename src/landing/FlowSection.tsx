@@ -262,7 +262,11 @@ const tabs = [
 				description: 'Execute a flow using the CLI.',
 				icon: Terminal,
 				caption: <div>Execute a flow using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
-				imageSrc: '/images/setup.gif',
+				video: {
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoLength: '26',
+					altText: 'Execute using CLI'
+				},
 				altText: 'Execute using CLI'
 			},
 		]
@@ -271,12 +275,12 @@ const tabs = [
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs to edit any step of a flow',
+		title: 'VS Code extension or any IDEs to edit any flow',
 		subtitle:
 			'Develop flow steps locally with your favorite code editor, preview them locally and deploy them with the CLI.',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
 		title: 'Blazing Fast',

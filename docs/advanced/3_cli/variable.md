@@ -1,4 +1,4 @@
-# Variables management
+# Variables
 
 ## Listing variables
 

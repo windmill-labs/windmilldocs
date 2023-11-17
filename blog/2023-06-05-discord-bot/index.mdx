@@ -280,8 +280,8 @@ Supabase is easily [integrated to Windmill](/docs/integrations/supabase#through-
 import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(
@@ -871,13 +871,13 @@ If you have any questions or need further assistance, don't hesitate to reach ou
 ### Video Tutorial
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/VXj7xaWOAxo?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/VXj7xaWOAxo?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
 ### Links

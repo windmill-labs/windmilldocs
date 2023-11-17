@@ -146,21 +146,17 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: [
-								'apps/app-runnable-panel',
-								'apps/outputs'
-							]
+							items: ['apps/app-runnable-panel', 'apps/outputs']
 						},
 						{
 							type: 'category',
 							label: 'Component Library',
 							link: {
 								type: 'doc',
-								id: 'apps/app_configuration_settings/app_component_library',
+								id: 'apps/app_configuration_settings/app_component_library'
 							},
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
-								'apps/app_configuration_settings/bar_line_chart',
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/chartjs',
 								'apps/app_configuration_settings/conditional_tabs',
@@ -189,13 +185,11 @@ const sidebars = {
 								'apps/app_configuration_settings/number_input',
 								'apps/app_configuration_settings/password_input',
 								'apps/app_configuration_settings/pdf',
-								'apps/app_configuration_settings/pie_chart',
 								'apps/app_configuration_settings/plotly',
 								'apps/app_configuration_settings/range',
 								'apps/app_configuration_settings/resource_select',
 								'apps/app_configuration_settings/rich_result',
 								'apps/app_configuration_settings/rich_text_editor',
-								'apps/app_configuration_settings/scatter_chart',
 								'apps/app_configuration_settings/select_step',
 								'apps/app_configuration_settings/select_tab',
 								'apps/app_configuration_settings/select',
@@ -208,7 +202,6 @@ const sidebars = {
 								'apps/app_configuration_settings/text_input',
 								'apps/app_configuration_settings/text',
 								'apps/app_configuration_settings/textarea',
-								'apps/app_configuration_settings/timeseries',
 								'apps/app_configuration_settings/toggle',
 								'apps/app_configuration_settings/vega_lite',
 								'apps/app_configuration_settings/vertical_split_panes'
@@ -274,7 +267,7 @@ const sidebars = {
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
-				'core_concepts/jobs/index',
+				'core_concepts/jobs/index'
 			],
 			collapsed: false
 		},
@@ -292,8 +285,8 @@ const sidebars = {
 					},
 					items: [
 						'advanced/cli/installation',
-						'advanced/cli/sync',
 						'advanced/cli/workspace-management',
+						'advanced/cli/sync',
 						'advanced/cli/user',
 						'advanced/cli/flow',
 						'advanced/cli/app',
@@ -303,8 +296,24 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
+				{
+					type: 'category',
+					label: 'Local Development',
+					collapsed: false,
+					link: {
+						type: 'doc',
+						id: 'advanced/local_development/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'cli_local_dev/vscode-extension/index',
+							label: 'VS Code'
+						},
+						'advanced/local_development/run_locally'
+					]
+				},
 				'advanced/deploy_gh_gl/index',
-				'advanced/local_development/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -323,9 +332,7 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_client',
-
-				'cli_local_dev/vscode-extension/index'
+				'advanced/clients/ts_client'
 			]
 		},
 
@@ -343,6 +350,7 @@ const sidebars = {
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
+				'misc/react_sdk/index'
 			]
 		},
 		{
@@ -604,14 +612,29 @@ const sidebars = {
 					id: 'compared_to/prefect',
 					label: 'Prefect'
 				},
+				{
+					type: 'category',
+					label: 'Benchmarks',
+					link: {
+						type: 'doc',
+						id: 'misc/benchmarks/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/index',
+							label: 'vs Airflow vs Prefect vs Temporal'
+						},
+						'misc/benchmarks/aws_lambda/index'
+					]
+				},
 			]
 		},
 		{
 			type: 'category',
-			label: 'Misceallaneous',
+			label: 'Miscellaneous',
 			items: [
 				'misc/architecture/index',
-				'misc/benchmarks/index',
 				'misc/changelog/index',
 				'misc/contributing/index',
 				'misc/getting_help/index',
@@ -630,7 +653,7 @@ const sidebars = {
 				},
 				'misc/note_of_intent/index',
 				'misc/share_on_hub/index',
-				'misc/white_labelling/index',
+				'misc/white_labelling/index'
 			]
 		}
 	]

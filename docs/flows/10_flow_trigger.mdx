@@ -1,6 +1,8 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Trigger Scripts
 
-Triggers are special actions that run periodically given a schedule.
+Triggers are special actions that run periodically given a [schedule](../core_concepts/1_scheduling/index.md).
 By default, adding a trigger will set the schedule to 15 minutes.
 
 :::info
@@ -9,9 +11,24 @@ Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md
 
 :::
 
-Triggers scripts are designed to pull data from an external source and return all of the new items since the last run.
+Triggers scripts are designed to pull data from an external source and return all of the new items since the last run, using [states](../core_concepts/3_resources_and_types/index.mdx#states).
 
 This type of Flow is meant to be scheduled regularly to reduce latency when reacting to new events. It will **trigger the rest of the Flow once per new item that is returned**. If there are no new items, the flow will be skipped.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="States"
+		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
+		href="/docs/core_concepts/resources_and_types#states"
+		color="teal"
+	/>
+	<DocCard
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+		color="teal"
+    />
+</div>
 
 :::tip
 
@@ -25,7 +42,7 @@ what's not**.
 
 :::
 
-**Flows can be scheduled through the Flow UI** using a CRON expression and then
+Flows can be scheduled through the Flow UI using a CRON expression and then
 activating the schedule as seen in the image below.
 
 ![Schedule Scripts](../getting_started/9_trigger_flows/schedule-flow.png.webp)
