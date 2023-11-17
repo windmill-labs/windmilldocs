@@ -22,7 +22,10 @@ export default function Hero() {
 						Self-hostable <b>worker infrastructure</b>: horizontally scalable, reliable, ultra-fast.
 						<br />
 						<a className="underline" href="https://github.com/windmill-labs/windmill">
-							Fully Open-source and much faster
+							Fully Open-source
+						</a>{' and '}
+						<a className="underline" href="/docs/misc/benchmarks/competitors">
+							much faster
 						</a>{' '}
 						alternative to <i>Airplane</i>, <i>Superblocks</i>, <i>Retool</i>, <i>Prefect</i>,{' '}
 						<i>Airflow</i>.

@@ -311,22 +311,23 @@ const examples = [
 		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
 	},
 	{
-		name: 'Generate image using OpenAI',
+		name: 'Create issue',
 		description: (
 			<>
-				Given a prompt, generate an image using{' '}
+				Create an issue in a given{' '}
 				<a
-					href="https://hub.windmill.dev/integrations/slack"
+					href="https://hub.windmill.dev/integrations/github"
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark className="leading-none bg-purple-100 hover:bg-purple-200 px-2 rounded whitespace-nowrap  text-purple-800 font-semibold">
-						OpenAI
+					<mark className="leading-none bg-blue-100 hover:bg-blue-200 px-2 rounded whitespace-nowrap  text-blue-800 font-semibold">
+						GitHub
 					</mark>
 				</a>
+				repository.
 			</>
 		),
-		href: 'https://hub.windmill.dev/scripts/openai/1451/generate-image-openai'
+		href: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
 	},
 	{
 		name: 'Search documents in MongoDB',
