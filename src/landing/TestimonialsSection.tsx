@@ -178,7 +178,7 @@ const clientTestimonials = [
 		author: {
 			name: 'Jim Hudson',
 			company: 'Deluxebase',
-			position: '',
+			position: 'IT Coordinator',
 			logo: '/images/deluxebase.png'
 		},
 		text: `At Deluxebase, we use Windmill to automate and streamline business processes, analyse figures, and synchronise data between our ERP and external services. Having everything in one place has greatly improved the efficiency of our team. The Windmill team are incredibly responsive, providing excellent support, feature request implementations, and almost instant bug fixes for the few we’ve come across!`
