@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LandingSection from './LandingSection';
 import '../css/custom.css';
 
@@ -140,30 +140,25 @@ const testimonials = [
 const clientTestimonials = [
 	{
 		author: {
-			name: 'Sindre Svendby',
-			company: 'Motimate - a Kahoot company',
-			position: 'Software Engineer',
-			logo: '/images/KahootLogo_Full_purple.png'
-		},
-		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
-	},
-	{
-		author: {
-			name: 'Romaric Philogene',
-			company: 'Qovery',
-			position: 'Co-Founder & CEO',
-			logo: '/images/qovery.png'
-		},
-		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. They made it simple to build, schedule, and monitor script & flows. The platform offers a clear DX for code editing, permission management and error handling.`
-	},
-	{
-		author: {
 			name: 'Eliot Andres',
 			company: 'Photoroom',
 			position: 'Co-Founder & CTO',
 			logo: '/images/photoroom.png'
 		},
+		company_url: 'https://photoroom.com',
+		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
 		text: `Windmill quickly became crucial at Photoroom. We self-hosted Windmill Enterprise Edition to run a large number of internal scripts and business-critical automations. Windmill made chatops and iterations over scripts incredibly easy. It proved very reliable for running and monitoring workloads at scale. On top of that, their support is incredibly fast.`
+	},
+	{
+		author: {
+			name: 'Sindre Svendby',
+			company: 'Motimate - a Kahoot company',
+			position: 'Software Engineer',
+			logo: '/images/KahootLogo_Full_purple.png'
+		},
+		company_url: 'https://motimateapp.com',
+		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
+		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
 	},
 	{
 		author: {
@@ -172,7 +167,21 @@ const clientTestimonials = [
 			position: 'Chief Technology Officer',
 			logo: '/images/Bloomcredit.png'
 		},
-		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`
+		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
+		company_url: 'https://bloomcredit.io',
+		linkedIn: 'https://www.linkedin.com/in/mikeesler/'
+	},
+
+	{
+		author: {
+			name: 'Romaric Philogène',
+			company: 'Qovery',
+			position: 'Co-Founder & CEO',
+			logo: '/images/qovery.png'
+		},
+		company_url: 'https://www.qovery.com',
+		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
+		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. They made it simple to build, schedule, and monitor script & flows. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
 	{
 		author: {
@@ -181,11 +190,18 @@ const clientTestimonials = [
 			position: 'IT Coordinator',
 			logo: '/images/deluxebase.png'
 		},
+		company_url: 'https://www.deluxebase.com',
 		text: `At Deluxebase, we use Windmill to automate and streamline business processes, analyse figures, and synchronise data between our ERP and external services. Having everything in one place has greatly improved the efficiency of our team. The Windmill team are incredibly responsive, providing excellent support, feature request implementations, and almost instant bug fixes for the few we’ve come across!`
 	}
 ];
 
 export default function Example() {
+	const [showAll, setShowAll] = useState(false);
+
+	const toggleTestimonials = () => {
+		setShowAll(!showAll);
+	};
+
 	return (
 		<LandingSection bgClass="">
 			<div>
@@ -199,22 +215,22 @@ export default function Example() {
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
-					<div className="columns-1 sm:columns-2 gap-4 flow-root mb-8">
+					<div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
 						{clientTestimonials.map((testimonial) => (
 							<div
 								key={testimonial.author.name}
-								className="sm:inline-block sm:w-full mb-4 testimonials"
+								className="sm:inline-block sm:w-full mb-8 testimonials"
 							>
 								<a
 									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm"
 									target="_blank"
 								>
-									<div className="dark:text-gray-50 text-gray-900 p-8 font-bold text-md leading-6">
+									<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
 										<p>{testimonial.text}</p>
 									</div>
-									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4">
-										<div className="w-full">
-											<p className="text-sm font-medium dark:text-gray-50 text-gray-900">
+									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4 ">
+										<a className="w-full" href={testimonial.linkedIn} target="_blank">
+											<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
 												{testimonial.author.name}
 											</p>
 											<div className="text-sm dark:text-gray-50 text-gray-500">
@@ -222,17 +238,27 @@ export default function Example() {
 													.filter(Boolean)
 													.join(' @ ')}
 											</div>
-										</div>
-										<div className="flex-shrink-0">
+										</a>
+										<a
+											className="flex-shrink-0 cursor-pointer"
+											href={testimonial.company_url}
+											target="_blank"
+										>
 											<img className="h-6" src={testimonial.author.logo} alt="" />
-										</div>
+										</a>
 									</div>
 								</a>
 							</div>
 						))}
 					</div>
+					<button
+						onClick={toggleTestimonials}
+						className="mb-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-xs font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
+					>
+						{showAll ? 'Show Less' : 'Show All'}
+					</button>
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
-						{testimonials.map((testimonial) => (
+						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial) => (
 							<div
 								key={testimonial.author.handle}
 								className="sm:inline-block sm:w-full mb-4 testimonials"
