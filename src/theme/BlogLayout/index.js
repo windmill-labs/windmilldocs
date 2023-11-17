@@ -5,7 +5,8 @@ import BlogSidebar from '@theme/BlogSidebar';
 //import Footer from './../../landing/Footer';
 
 export default function BlogLayout(props) {
-	const { toc, children, ...layoutProps } = props;
+	const { sidebar, toc, children, ...layoutProps } = props;
+	const hasSidebar = sidebar && sidebar.items.length > 0;
 
 	const isBlogPostPageList = !Boolean(toc);
 
@@ -52,8 +53,9 @@ export default function BlogLayout(props) {
 					</div>
 				</div>
 			)}
-			<div className="container w-full max-w-7xl mx-auto margin-vert--lg bg-transparent">
+			<div className="container max-w-7xl w-full mx-auto margin-vert--lg bg-transparent">
 				<div className="row">
+					<BlogSidebar sidebar={sidebar} />
 					{toc && <div className="col col--2"></div>}
 
 					<main
