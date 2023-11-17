@@ -287,7 +287,7 @@ const cards = [
 		subtitle: "The fastest workflow engine (it's in Rust)",
 		Icon: BoltIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/misc/benchmarks'
+		href: '/docs/misc/benchmarks/competitors'
 	},
 	{
 		title: 'Retries and errors',
@@ -370,10 +370,19 @@ const examples = [
 		href: 'https://hub.windmill.dev/flows/21'
 	},
 	{
-		name: <span>Populate Contact Details from Simple Email</span>,
+		name: <span>Fetch, translate and upload articles</span>,
 		description: (
 			<>
-				From a signup’s email, parse the email and make a Google search. Use{' '}
+				Retrieve articles from{' '}
+				<a
+					href="https://hub.windmill.dev/integrations/zendesk"
+					target="_blank"
+					className="!no-underline"
+				>
+					<mark className="leading-none bg-gray-100 text-gray-700 hover:bg-gray-300 px-2 rounded font-semibold whitespace-nowrap">
+						Zendesk
+					</mark>
+				</a>{' '}, use a for lopp to translate each one with{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/openai"
 					target="_blank"
@@ -383,20 +392,20 @@ const examples = [
 						OpenAI
 					</mark>
 				</a>{' '}
-				to make sense of the results and fill the contact details in an{' '}
+				and store the embeddings in a{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/airtable"
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark className="leading-none bg-yellow-100 text-yellow-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-yellow-200">
+					<mark className="leading-none bg-emerald-100 text-emerald-800 px-2 rounded font-semibold whitespace-nowrap hover:bg-emerald-200">
 						Airtable
 					</mark>
 				</a>
-				CRM.
+				database.
 			</>
 		),
-		href: 'https://www.windmill.dev/blog/automatically-populate-crm'
+		href: 'https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings'
 	}
 ];
 
