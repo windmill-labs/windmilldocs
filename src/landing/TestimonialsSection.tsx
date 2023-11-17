@@ -240,7 +240,7 @@ export default function Example() {
 											</div>
 										</a>
 										<a
-											className="flex-shrink-0 cursor-pointer"
+											className="flex-shrink-0 cursor-pointer bg-white p-2 rounded-lg"
 											href={testimonial.company_url}
 											target="_blank"
 										>
@@ -251,12 +251,17 @@ export default function Example() {
 							</div>
 						))}
 					</div>
-					<button
-						onClick={toggleTestimonials}
-						className="mb-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-xs font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
-					>
-						{showAll ? 'Show Less' : 'Show All'}
-					</button>
+
+					<div className="flex flex-row gap-2 items-center mb-4 h-8">
+						<div className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">Community</div>
+						<button
+							onClick={toggleTestimonials}
+							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-1 text-xs font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
+						>
+							{showAll ? 'Show Less' : 'Show All'}
+						</button>
+					</div>
+
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
 						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial) => (
 							<div
