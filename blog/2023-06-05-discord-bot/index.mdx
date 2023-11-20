@@ -151,100 +151,102 @@ Direclty from Windmill, we picked the script that fetches the content of a repos
 
 We modified it to only extract content from markdown files. As we are using [Docusaurus](https://docusaurus.io/docs), we also need to transform the path of the file to get the correct URL.
 
-<details><summary>Code: Extract content from Github (TypeScript)</summary><p>
+<details>
+  <summary>Code: Extract content from Github (TypeScript)</summary>
 
-```typescript
-import { Octokit } from 'https://cdn.skypack.dev/@octokit/rest';
+```ts
+	import { Octokit } from 'https://cdn.skypack.dev/@octokit/rest';
 
-type FileContent = { content: string; link: string };
+	type FileContent = { content: string; link: string };
 
-type Github = {
-	token: string;
-};
+	type Github = {
+		token: string;
+	};
 
-export async function main(
-	gh_auth: Github,
-	owner: string,
-	repo: string,
-	path?: string,
-	ref?: string,
-	result_format: 'github_object' | 'json' = 'github_object'
-): Promise<FileContent[]> {
-	const octokit = new Octokit({ auth: gh_auth.token });
+	export async function main(
+		gh_auth: Github,
+		owner: string,
+		repo: string,
+		path?: string,
+		ref?: string,
+		result_format: 'github_object' | 'json' = 'github_object'
+	): Promise<FileContent[]> {
+		const octokit = new Octokit({ auth: gh_auth.token });
 
-	const response = await octokit.request(
-		`GET /repos/{owner}/{repo}/contents/${path}${ref ? '?ref=' + ref : ''}`,
-		{
-			owner,
-			repo,
-			headers: {
-				'X-GitHub-Api-Version': '2022-11-28',
-				Accept: `application/${result_format === 'json' ? 'vnd.github+json' : 'vnd.github.object'}`
+		const response = await octokit.request(
+			`GET /repos/{owner}/{repo}/contents/${path}${ref ? '?ref=' + ref : ''}`,
+			{
+				owner,
+				repo,
+				headers: {
+					'X-GitHub-Api-Version': '2022-11-28',
+					Accept: `application/${result_format === 'json' ? 'vnd.github+json' : 'vnd.github.object'}`
+				}
+			}
+		);
+
+		const entries = response.data.entries;
+
+		const fileContents: FileContent[] = [];
+
+		for (const entry of entries) {
+			if (entry.type === 'file') {
+				const isMarkdown = entry.name.endsWith('.md');
+				const isMDX = entry.name.endsWith('.mdx');
+
+				if (isMarkdown || isMDX) {
+					const link = getDocusaurusPathFromGithub(entry.path);
+
+					const contentResponse = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+						owner,
+						repo,
+						path: entry.path,
+						headers: {
+							'X-GitHub-Api-Version': '2022-11-28',
+							Accept: 'application/vnd.github.v3.raw' // Request raw content of the file
+						}
+					});
+
+					const content = contentResponse.data as string;
+
+					fileContents.push({
+						content,
+						link
+					});
+				}
+			} else if (entry.type === 'dir') {
+				// Recursively process directories
+				const dirContents = await main(gh_auth, owner, repo, entry.path, ref, result_format);
+				fileContents.push(...dirContents);
 			}
 		}
-	);
 
-	const entries = response.data.entries;
+		return fileContents;
+	}
 
-	const fileContents: FileContent[] = [];
+	function getDocusaurusPathFromGithub(githubUrl: string): string {
+		const match = githubUrl.match(/docs\/(.+\.(md|mdx))/);
+		if (match) {
+			let filePath = match[1];
+			filePath = filePath.replace(/\.(md|mdx)$/, '');
 
-	for (const entry of entries) {
-		if (entry.type === 'file') {
-			const isMarkdown = entry.name.endsWith('.md');
-			const isMDX = entry.name.endsWith('.mdx');
+			// Split the path into segments
+			let pathSegments = filePath.split('/');
 
-			if (isMarkdown || isMDX) {
-				const link = getDocusaurusPathFromGithub(entry.path);
+			// Remove numbers and underscores from the beginning of each segment
+			pathSegments = pathSegments.map((segment) => segment.replace(/^[0-9]*_/, ''));
 
-				const contentResponse = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-					owner,
-					repo,
-					path: entry.path,
-					headers: {
-						'X-GitHub-Api-Version': '2022-11-28',
-						Accept: 'application/vnd.github.v3.raw' // Request raw content of the file
-					}
-				});
+			// Reconstruct the path
+			filePath = pathSegments.join('/');
 
-				const content = contentResponse.data as string;
-
-				fileContents.push({
-					content,
-					link
-				});
-			}
-		} else if (entry.type === 'dir') {
-			// Recursively process directories
-			const dirContents = await main(gh_auth, owner, repo, entry.path, ref, result_format);
-			fileContents.push(...dirContents);
+			return '/docs/' + filePath;
 		}
+		return githubUrl;
 	}
-
-	return fileContents;
-}
-
-function getDocusaurusPathFromGithub(githubUrl: string): string {
-	const match = githubUrl.match(/docs\/(.+\.(md|mdx))/);
-	if (match) {
-		let filePath = match[1];
-		filePath = filePath.replace(/\.(md|mdx)$/, '');
-
-		// Split the path into segments
-		let pathSegments = filePath.split('/');
-
-		// Remove numbers and underscores from the beginning of each segment
-		pathSegments = pathSegments.map((segment) => segment.replace(/^[0-9]*_/, ''));
-
-		// Reconstruct the path
-		filePath = pathSegments.join('/');
-
-		return '/docs/' + filePath;
-	}
-	return githubUrl;
-}
 ```
 
-</p></details>
+</details>
+
 
 Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the [GitHub token](/docs/integrations/github).
 
@@ -274,10 +276,11 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 
 Supabase is easily [integrated to Windmill](/docs/integrations/supabase#through-supabase-api).
 
-<details><summary>Code: Store the embeddings on Supabase</summary><p>
+<details>
+  <summary>Code: Store the embeddings on Supabase</summary>
 
-```typescript
-import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
+```ts
+	import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
 
 type Supabase = {
 	url: string;
@@ -306,8 +309,7 @@ export async function main(
 	});
 }
 ```
-
-</p></details>
+</details>
 
 ![Gif preview](./flow_md.gif)
 
@@ -383,15 +385,16 @@ This flow will generate the answer and send it back to Discord. It is composed o
 
 Let's extract the question from the Discord request.
 
-<details><summary>Code: Extract the question from the Discord request</summary><p>
+<details>
+  <summary>Code: Extract the question from the Discord request</summary>
 
 ```typescript
 export async function main(interaction: any) {
 	return interaction?.data?.options?.[0]?.value ?? 'No question asked';
 }
 ```
+</details>
 
-</p></details>
 
 ### Create the answer using the question, the embeddings and OpenAI
 
@@ -418,7 +421,8 @@ ${query}
 Answer as markdown (including related code snippets if available):
 ```
 
-<details><summary>Code: Create the answer using the question and the embeddings and OpenAI</summary><p>
+<details>
+	<summary>Code: Create the answer using the question and the embeddings and OpenAI</summary>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
@@ -526,7 +530,7 @@ export async function main(
 
 Depending on your OpenAI plan, you might need to change `model: 'gpt-4',` to `model: "gpt-3.5-turbo",`.
 
-</p></details>
+</details>
 
 ### Create the approval step to validate the answer by a human
 
@@ -541,7 +545,8 @@ We can use Discord buttons to approve or reject the answer.
 
 The `token` input is the token of your Discord bot. We see that in the [Create an application on Discord Developer Portal](#create-an-application-on-discord-developer-portal) section.
 
-<details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
+<details>
+	<summary>Code: Create the approval step to validate the answer by a human</summary>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -574,8 +579,7 @@ export async function main(
 	});
 }
 ```
-
-</p></details>
+</details>
 
 #### Learn more about approval steps
 
@@ -591,7 +595,8 @@ export async function main(
 
 Once approved, the flow will resume and the answer will be sent back to the user.
 
-<details><summary>Code: Send the answer back to Discord</summary><p>
+<details>
+	<summary>Code: Send the answer back to Discord</summary>
 
 ```typescript
 import { REST } from 'npm:@discordjs/rest@1.7.1';
@@ -619,14 +624,14 @@ export async function main(
 	});
 }
 ```
-
-</p></details>
+</details>
 
 ## Create the Slack Answer flow
 
 The Slack Answer flow is similar to the Discord Answer flow. The only difference is that we use Slack buttons instead of Discord buttons.
 
-<details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
+<details>
+	<summary>Code: Create the approval step to validate the answer by a human</summary>
 
 ```typescript
 import { getResumeEndpoints, Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -683,8 +688,7 @@ export async function main(
 	});
 }
 ```
-
-</p></details>
+</details>
 
 Finally we can send the answer back to Slack using this script from the Hub: [Send a message to a channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack).
 
@@ -704,7 +708,8 @@ Discord will give as flow inputs the following parameters:
 
 A template is available on the Windmill Hub: [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
 
-<details><summary>Code: Verify the Discord Request and Defer (script part of the flow)</summary><p>
+<details>
+	<summary>Code: Verify the Discord Request and Defer (script part of the flow)</summary>
 
 ```typescript
 import { REST } from 'npm:@discordjs/rest@1.7.1';
@@ -768,8 +773,7 @@ export async function main(
 	});
 }
 ```
-
-</p></details>
+</details>
 
 With the following inputs:
 
@@ -814,7 +818,8 @@ We receive the following parameters from Slack:
 - `channel_id`: The channel ID
 - `user_id`: The user ID
 
-<details><summary>Code: Create the Slack endpoint</summary><p>
+<details>
+	<summary>Code: Create the Slack endpoint</summary>
 
 ```typescript
 import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
@@ -847,8 +852,7 @@ export async function main(
 	});
 }
 ```
-
-</p></details>
+</details>
 
 ## Conclusion
 
