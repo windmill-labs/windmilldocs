@@ -16,13 +16,6 @@ local devlopment through the [VS Codeextension](../../cli_local_dev/1_vscode-ext
 	/>
 </div>
 
-## Example Repos
-
-We provide an example repo for syncing with Windmill:
-
-- Syncing with a remote:
-  [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example)
-
 ## Raw Syncing
 
 Raw syncing is a one-off operation with no state maintained. It's best used for
@@ -107,6 +100,13 @@ wmill sync push [options]
 | `wmill sync pull --raw` | Pulls remote changes without using state tracking. Overwrites local files with remote changes. |
 | `wmill sync push`       | Pushes local changes and applies them remotely.                                                |
 | `wmill sync push --raw` | Pushes local changes without using state tracking. Overwrites remote files with local changes. |
+
+## Example Repos
+
+We provide an example repo for syncing with Windmill:
+
+- Syncing with a remote:
+  [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example)
 
 ## Erasing Remote Files Not Present Locally
 
