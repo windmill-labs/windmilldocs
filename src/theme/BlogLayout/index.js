@@ -8,11 +8,11 @@ export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
 	const hasSidebar = sidebar && sidebar.items.length > 0;
 
-	const isBlogPostPageList = Boolean(toc);
+	const isBlogPostPageList = !Boolean(toc);
 
 	return (
 		<Layout {...layoutProps}>
-			{!isBlogPostPageList && (
+			{isBlogPostPageList && (
 				<div className="max-w-7xl w-full mx-auto">
 					<div className="">
 						<div className="relative pt-16 pb-8 overflow-hidden">
