@@ -47,7 +47,7 @@ Here's a quick demo of what the AI flow builder can do:
 
 At the same time, we're also releasing a new feature for the [script editor](/docs/script_editor), a code completion copilot
 which prompts you with suggestions based on the code you're writing. This completes our already existing
-copilot which allows you to generate, edit and fix your scripts, learn more heres:
+copilot which allows you to generate, edit and fix your scripts, learn more here:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -81,15 +81,15 @@ These features complement Windmill AI for Scripts, which lets you generate whole
 	/>
 </div>
 
-We are using GPT-4-turbo (1106-preview version) for the AI Flow Builder and have changed Windmill AI for Scripts to use it too, as it is faster, three times cheaper and more up-to-date with libraries than GPT-4. We observed similar results to those obtained with GPT-4 in our tests, but we will continue to monitor the quality of the generations.
+We are using [GPT-4-turbo (1106-preview version)](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo) for the AI Flow Builder and have changed Windmill AI for Scripts to use it too, as it is faster, three times cheaper and more up-to-date with libraries than GPT-4. We observed similar results to those obtained with GPT-4 in our tests, but we will continue to monitor the quality of the generations.
  
 ## What are Windmill Flows?
 
 Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represents the dependencies between steps.
 The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
-In windmill, each step is code with a main function in typescript, python, go, bash or raw queries to databases.
+In Windmill, each step is code with a main function in typescript, python, go, bash or raw queries to databases.
 
-The primitives supported by windmill workflows are:
+The primitives supported by Windmill workflows are:
 
 - sequence
 - branch based on conditions
@@ -101,6 +101,20 @@ The primitives supported by windmill workflows are:
 You can see below an example of a simple workflow with a [for-loop](/docs/flows/flow_loops):
 
 ![Windmill DAG](./media/windmill-dag.png)
+
+
+:::info Workflow engine vs Analytics engine
+All the examples above focus on small api integrations but data pipeline that would usually be run on dedicated analytics engine are a great fit for Windmill when combined with s3, and dataframe/olap libraries such as polars or duckdb.
+Indeed, thanks to these integrations and Windmill's lack of boilerplate, Windmill offers state-of-the-art performances for data processing at scale while keeping complexity low.
+
+<br />
+
+Furthermore, and since Windmill simply orchestrates code using well known code libraries, the AI Copilot is capable to generate full, expert written data pipeline as well.
+
+<br />
+
+We will have much more to share in the next coming days.
+:::
 
 ## Why add a flow builder copilot?
 
