@@ -61,9 +61,11 @@ export default function HeroExample() {
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen="true"
+						className="rounded-xl"
                     ></iframe>
                 </div>
 			</div>
 		</LandingSection>
 	);
 }
+

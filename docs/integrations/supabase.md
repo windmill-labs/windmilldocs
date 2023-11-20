@@ -25,7 +25,7 @@ You can execute queries on Supabase through the regular Postgres protocol.
 2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
 
 3. From Windmill, on the [Resources](../core_concepts/3_resources_and_types/index.mdx) menu click on "Add a resource". Pick "postgresql" and "Add a Supabase DB". This will lead you to a Supabase page where
-you need to pick your organization. Then on Windmill pick a database, fill with database password and that's it.
+   you need to pick your organization. Then on Windmill pick a database, fill with database password and that's it.
 
 ## Through Supabase API
 
@@ -70,8 +70,8 @@ You can reference the type of a Supabase resource in a script the following way:
 // check for the latest version of the Windmill Deno
 // package at https://deno.land/x/windmill/mod.ts
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(auth: Supabase) {

@@ -290,8 +290,8 @@ Create a new background runnable:
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(auth: Supabase, access_token: string) {

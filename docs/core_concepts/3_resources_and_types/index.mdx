@@ -86,13 +86,39 @@ default, etc). You can also view the schema by toggling the "As JSON" option:
 
 ## States
 
+States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
+
 In Windmill, states are considered as resources, but they are excluded from the Workspace tab for clarity.
 They are displayed on the Resources menu, under a dedicated tab.
 
-States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
-
 A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script.
-This is what enables Flows to watch for changes in most event watching scenarios. The pattern is as follows:
+
+```py
+import requests
+from wmill import set_state, get_state
+
+def main():
+	# Get temperature from last execution
+    last_temperature = get_state()
+
+    # Fetch the temperature in Paris from wttr.in
+    response = requests.get("http://wttr.in/Paris?format=%t")
+
+    new_temperature = response.text.strip("°F")
+
+	# Set current temperature to state
+    set_state(new_temperature)
+
+    # Compare last_temperature and new_temperature
+    if last_temperature < new_temperature:
+        return "The temperature has increased."
+    elif last_temperature > new_temperature:
+        return "The temperature has decreased."
+    else:
+        return "The temperature has remained the same."
+```
+
+States are what enable Flows to watch for changes in most event watching scenarios ([trigger scripts](../../flows/10_flow_trigger.mdx)). The pattern is as follows:
 
 - Retrieve the last state or, if undefined, assume it is the first execution.
 - Retrieve the current state in the external system you are watching, e.g. the
@@ -128,8 +154,6 @@ The convenience functions do this are:
   called in - if any - and the path of the Script.
 - `set_state(value: Any)` which sets the new state.
 
-<br/>
-
 > Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Python.
 
 <br/>
@@ -149,7 +173,7 @@ All details on the [Add Resources and Variables to Code Editor](../../code_edito
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Add Resources and Variables to Code Editor"
-		description="You can add directly access Variables and Resources from the Code Editor."
+		description="You can directly access Variables and Resources from the Code Editor."
 		href="/docs/code_editor/add_variables_resources"
 	/>
 </div>

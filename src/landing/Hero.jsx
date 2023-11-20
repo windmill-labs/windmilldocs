@@ -15,16 +15,20 @@ export default function Hero() {
 					<GithubStarCount />
 
 					<h1 className="mt-4 !text-4xl tracking-tight sm:!text-6xl">
-						Turn scripts into workflows and UIs in minutes
+						Developer platform for APIs, background jobs, workflows and UIs
 					</h1>
 					<h2 className="mt-6 text-lg leading-8  font-medium">
-						Easily create internal apps and invincible workflows with code only where it matters.
-						Self-hostable <b>worker infrastructure</b>: scalable, reliable, fast.
+						Easily create invincible workflows and apps with code only where it matters.
+						Self-hostable <b>worker infrastructure</b>: horizontally scalable, reliable, ultra-fast.
 						<br />
 						<a className="underline" href="https://github.com/windmill-labs/windmill">
 							Fully Open-source
+						</a>{' and '}
+						<a className="underline" href="/docs/misc/benchmarks/competitors">
+							much faster
 						</a>{' '}
-						alternative to <i>Airplane</i>, <i>Superblocks</i> & <i>Retool</i>.
+						alternative to <i>Airplane</i>, <i>Superblocks</i>, <i>Retool</i>, <i>Prefect</i>,{' '}
+						<i>Airflow</i>.
 					</h2>
 
 					<div className="mt-10 flex items-center gap-x-6">
@@ -43,7 +47,7 @@ export default function Hero() {
 							onClick={() => window.plausible('self-host')}
 							className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200 text !no-underline"
 						>
-							Self-host yourself <span aria-hidden="true">→</span>
+							Self-host <span aria-hidden="true">→</span>
 						</a>
 					</div>
 

@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Variables and Secrets
 
@@ -24,7 +26,8 @@ Secret Variables.
 Inside the Scripts, one would use the Windmill client to interact with the
 user-defined Variables.
 
-Python:
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 import wmill
@@ -33,14 +36,29 @@ wmill.get_variable("u/user/foo")
 wmill.set_variable("u/user/foo", value)
 ```
 
-TypeScript (Deno):
+</TabItem>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-```typescript
-import { getVariable, setVariable } from 'https://deno.land/x/windmill@v1.101.1/mod.ts';
+```ts
+import { getVariable, setVariable } from "npm:windmill-client@1";
 
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
 ```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import { getVariable, setVariable } from "windmill-client"
+
+getVariable('u/user/foo');
+setVariable('u/user/foo', value);
+```
+
+</TabItem>
+</Tabs>
+
 
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.mdx)
 which are simply Variables that can contain any JSON values, not just a string
@@ -111,7 +129,7 @@ A variable can be made **secret**. In this case, its value will not be visible o
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Add Resources and Variables to Code Editor"
-		description="You can add directly access Variables and Resources from the Code Editor."
+		description="You can directly access Variables and Resources from the Code Editor."
 		href="/docs/code_editor/add_variables_resources"
 	/>
 </div>

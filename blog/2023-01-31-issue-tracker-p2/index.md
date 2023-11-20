@@ -118,15 +118,15 @@ Finally, we need to add a `Button` component to submit the form:
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(auth: Supabase, issue: any, status?: string, severity?: string) {
    	if (!(issue && (status || severity))) {
    		return 'Make sure that an issue is selected in the table';
    	}
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	await client
    		.from('issues')
    		.update({

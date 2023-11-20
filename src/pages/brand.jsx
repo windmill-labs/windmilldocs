@@ -7,6 +7,7 @@ import Footer from '../landing/Footer';
 import RadialBlur from '../landing/RadialBlur';
 import { ArrowRight } from 'lucide-react';
 
+
 export default function About() {
 	return (
 		<LayoutProvider>
@@ -25,7 +26,7 @@ export default function About() {
 						<RadialBlur />
 						<div className="space-y-12 text-center pt-32 pb-16">
 							<div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
-								<h1 className="!text-4xl font-bold tracking-tight sm:!text-5xl mb-8">
+								<h1 className="!text-4xl font-bold tracking-tight sm:!text-5xl mb-8 text-blue-600">
 									Brand
 								</h1>
 								<p className="text-lg">
