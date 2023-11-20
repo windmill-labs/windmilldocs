@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import LandingSection from './LandingSection';
 import '../css/custom.css';
+import { useColorMode } from '@docusaurus/theme-common';
 
 const testimonials = [
 	{
@@ -143,7 +144,9 @@ const clientTestimonials = [
 			name: 'Eliot Andres',
 			company: 'Photoroom',
 			position: 'Co-Founder & CTO',
-			logo: '/images/photoroom.png'
+			dark: '/images/brands/logo-original-dark-transparent.png',
+			light: '/images/brands/logo-original-light-transparent.png',
+			anchor: 'photoroom'
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
@@ -154,7 +157,9 @@ const clientTestimonials = [
 			name: 'Sindre Svendby',
 			company: 'Motimate - a Kahoot company',
 			position: 'Software Engineer',
-			logo: '/images/KahootLogo_Full_purple.png'
+			dark: '/images/brands/Kahoot_Logo-dark.svg',
+			light: '/images/brands/Kahoot_Logo.svg',
+			anchor: 'kahoot'
 		},
 		company_url: 'https://motimateapp.com',
 		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
@@ -165,7 +170,9 @@ const clientTestimonials = [
 			name: 'Mike Esler',
 			company: 'Bloom Credit',
 			position: 'Chief Technology Officer',
-			logo: '/images/Bloomcredit.png'
+			dark: '/images/brands/Bloomcredit-Dark.svg',
+			light: '/images/brands/Bloomcredit-Light.svg',
+			anchor: 'bloomcredit'
 		},
 		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
 		company_url: 'https://bloomcredit.io',
@@ -177,7 +184,9 @@ const clientTestimonials = [
 			name: 'Romaric Philogène',
 			company: 'Qovery',
 			position: 'Co-Founder & CEO',
-			logo: '/images/qovery.png'
+			dark: '/images/brands/Qovery-dark.png',
+			light: '/images/brands/Qovery-light.svg',
+			anchor: 'qovery'
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
@@ -188,7 +197,9 @@ const clientTestimonials = [
 			name: 'Jim Hudson',
 			company: 'Deluxebase',
 			position: 'IT Coordinator',
-			logo: '/images/deluxebase.png'
+			dark: '/images/brands/Deluxebase.png',
+			light: '/images/brands/Deluxebase.png',
+			anchor: 'deluxebase'
 		},
 		company_url: 'https://www.deluxebase.com',
 		text: `At Deluxebase, we use Windmill to automate and streamline business processes, analyse figures, and synchronise data between our ERP and external services. Having everything in one place has greatly improved the efficiency of our team. The Windmill team are incredibly responsive, providing excellent support, feature request implementations, and almost instant bug fixes for the few we’ve come across!`
@@ -197,6 +208,7 @@ const clientTestimonials = [
 
 export default function Example() {
 	const [showAll, setShowAll] = useState(false);
+	const { colorMode } = useColorMode();
 
 	const toggleTestimonials = () => {
 		setShowAll(!showAll);
@@ -219,7 +231,8 @@ export default function Example() {
 						{clientTestimonials.map((testimonial) => (
 							<div
 								key={testimonial.author.name}
-								className="sm:inline-block sm:w-full mb-8 testimonials"
+								className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
+								id={testimonial.author.anchor}
 							>
 								<a
 									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm"
@@ -240,11 +253,18 @@ export default function Example() {
 											</div>
 										</a>
 										<a
-											className="flex-shrink-0 cursor-pointer bg-white p-2 rounded-lg"
+											className="flex-shrink-0 cursor-pointer"
 											href={testimonial.company_url}
 											target="_blank"
 										>
-											<img className="h-6" src={testimonial.author.logo} alt="" />
+											<img
+												width={100}
+												height={32}
+												src={
+													colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light
+												}
+												alt=""
+											/>
 										</a>
 									</div>
 								</a>

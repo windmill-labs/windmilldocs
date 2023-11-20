@@ -14,6 +14,7 @@ import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
+import LogoClouds from '../landing/LogoClouds';
 
 import TestimonialsSection from '../landing/TestimonialsSection';
 
@@ -43,9 +44,9 @@ function HomepageHeader() {
 		>
 			<LandingHeader />
 			<Hero />
+			<LogoClouds />
 
 			<HeroExample />
-
 			<ScriptSection />
 			<FlowSection />
 			<AppSection />
