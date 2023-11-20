@@ -9,6 +9,8 @@ image: ./launch_week.png
 description: "Windmill is proud to announce its first Launch Week."
 ---
 
+import DocCard from '@site/src/components/DocCard';
+
 # Launch Week #1
 
 ![Launch Week Thumbnail](./launch_week.png)
@@ -21,14 +23,21 @@ A summary will be updated progressively on this page.
 
 ## Day 1 - Flow Builder Copilot
 
-THUMBNAIL
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/ai_flows.mp4"
+/>
+
+<br/>
 
 The very first feature of this launch week is Windmill Flow Copilot AI. The Copilot AI can generate the full flow including the code from a few prompts but also do it step-by-step.
 
 It saves time for all users by returning a usable version of the flow in seconds, while leaving room for customization as each step is in the form of code.
 For less technical users, it's an opportunity to use Windmill while avoiding back-and-forth with Chat-GPT.
 
-- Blog post
+- [Blog post](../2023-11-20-ai-flow-builder/index.mdx)
 - Docs - [Windmill AI for Scripts](/docs/core_concepts/ai_generation#windmill-ai-for-scripts)
 - Docs - [Windmill AI for Flows](/docs/core_concepts/ai_generation#windmill-ai-for-flows)
 - Docs - [Windmill AI Code Completion](/docs/core_concepts/ai_generation#windmill-ai-code-completion)
@@ -45,16 +54,22 @@ For less technical users, it's an opportunity to use Windmill while avoiding bac
 
 <br/>
 
-LIEN
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Launch Week Day 1 - Flow Builder Copilot"
+    	description="Generate workflows from prompts."
+    	href="/blog/launch-week-1/ai-flow-builder"
+    />
+</div>
 
 ## Day 1 - VS Code Extension
 
-THUMBNAIL
+![VS Code Extension](../2023-11-20-vscode/vscode_extension.png "VS Code Extension")
 
 Second annoucement of the day is the Windmill [VS Code extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
-It unlocks fully the ability to iterate on your scripts and flows in the comfort of your vscode editor. It integrates particularly well with the current github/gitlab sync: scripts', flow steps' code and flows' yaml definitions can be directly edited in vscode while benefitting from the instant preview UI of windmill.
+It unlocks fully the ability to iterate on your scripts and flows in the comfort of your VS Code editor. It integrates particularly well with the current github/gitlab sync: scripts', flow steps' code and flows' yaml definitions can be directly edited in VS Code while benefitting from the instant preview UI of windmill.
 
-- Blog post
+- [Blog post](../2023-11-20-vscode/index.mdx)
 - Docs - [Windmill VS Code Extension](/docs/cli_local_dev/vscode-extension)
 - Docs - [Local Development](/docs/advanced/local_development)
 - Docs - [Windmill CLI](/docs/advanced/cli)
@@ -71,7 +86,13 @@ It unlocks fully the ability to iterate on your scripts and flows in the comfort
 
 <br/>
 
-LIEN
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Launch Week Day 1 - VS Code Extension"
+    	description="Write scripts & flows in your code editor with a UI preview."
+    	href="/blog/launch-week-1/vscode-extension"
+    />
+</div>
 
 ## Subscribe to follow our latest announcements
 

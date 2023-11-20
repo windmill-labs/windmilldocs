@@ -256,7 +256,7 @@ In the future, we plan on passing more context to generate better suggestions.
 
 A request is sent only in certain cases, for example when the user types a space or parenthesis.
 We implement some debouncing to avoid sending too many requests and cancel the previous request if a new one is sent before the previous one is finished.
-We leverage monaco editor's [inline completions api](https://microsoft.github.io/monaco-editor/docs.html#functions/languages.registerInlineCompletionsProvider.html) to display the suggestions the same way as Github copilot in VSCode.
+We leverage monaco editor's [inline completions api](https://microsoft.github.io/monaco-editor/docs.html#functions/languages.registerInlineCompletionsProvider.html) to display the suggestions the same way as Github copilot in VS Code.
 
 You can find all our code for code completion [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/completion.ts) and [here](https://github.com/windmill-labs/windmill/blob/2d9878647be60288a6d2d8b0c72af84464eefd9c/frontend/src/lib/components/Editor.svelte#L364).
 
