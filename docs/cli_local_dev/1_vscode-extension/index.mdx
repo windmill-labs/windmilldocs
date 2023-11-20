@@ -8,6 +8,14 @@ The Windmill VS Code extension allows you to run your scripts & flows and previe
 
 The extension can be used in particular from a [repository syncronized to a Windmill instance](../../advanced/3_cli/sync.mdx) to [develop scripts & flows locally](../../advanced/4_local_development/index.mdx) while keeping them synced to your workspace.
 
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-Line Interface - Sync"
+		description="Sync with a Windmill workspace from Windmill CLI."
+		href="/docs/advanced/cli"
+	/>
+</div>
+
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/aSOF6AzyDr8?vq=hd1080"
@@ -44,12 +52,10 @@ are actually executed in remote from your Windmill instance. To run scripts loca
 ## Installation
 
 1. Open VS Code and click on the Extensions icon on the Activity Bar on the side of the window.
-2. Search for "Windmill" and select the Windmill extension by Windmill Labs.
+2. Search for "Windmill" and select the [Windmill extension by Windmill Labs](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
 3. Click on the Install button.
 
 ![demo](./wm-install.png.webp)
-
-You can also follow this link to the extension page on the VS Code marketplace: [Install it](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
 
 ## Quick Start
 
@@ -57,7 +63,7 @@ Open the command menu (Ctrl/Cmd+Shift+P) and run:
 
 `> Windmill: Configure remote, workspace and token`
 
-In the settings menu, set the remote url, workspace name and token.
+In the settings menu, set the remote url, workspace name and [token](../../core_concepts/4_webhooks/index.md#user-token).
 
 Once done, on any page you'd like to edit, run:
 

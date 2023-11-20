@@ -1,4 +1,5 @@
 import DocCard from '@site/src/components/DocCard';
+import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
 # Alternative to Prefect for building Workflows
 
@@ -96,7 +97,15 @@ The structuring of the flow and the configurations for each step are defined fro
 
 In particular, Windmill [generates automatically UIs](../core_concepts/6_auto_generated_uis/index.mdx) for flows and steps and lets users [test](../core_concepts/23_instant_preview/index.mdx) flows, steps or flow until a given step, from the UI.
 
-Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. Windmill will soon unveil an extension to facilitate the editing of flows in local development.
+Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. In particular, Windmill has a VS Code extension to edit from your code editor scripts and workflows-as-code.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="VS Code Extension"
+		description="You can also use VS Code with the extension to run scripts & flows on the remote."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
 
 ![Windmill compared to Prefect](../assets/compared_to/windmill_compared_prefect.png "Windmill compared to Prefect")
 
@@ -179,13 +188,94 @@ And records the end time once the loop finishes and then calculates the elapsed 
 
 <br/>
 
+To see more benchmarks, see [Benchmarks](../misc/3_benchmarks/competitors/index.mdx) in docs.
+
+<div class="grid">
+	<TaskDurationBarChart
+		title="40 lightweight tasks"
+		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		rawData={[
+			[
+				[
+					4.335, 3.959, 2.194, 2.192, 1.68, 1.965, 2.377, 2.259, 2.39, 2.6, 2.401, 4.888, 5.118,
+					1.64, 2.396, 2.196, 2.488, 1.853, 1.513, 2.575, 2.218, 2.316, 1.933, 2.176, 2.976, 5.192,
+					1.684, 2.361, 2.218, 1.409, 2.591, 2.192, 2.328, 2.464, 2.88, 2.394, 2.046, 1.537, 4.988,
+					2.784
+				],
+				[
+					0.417, 0.213, 0.203, 0.22, 0.209, 0.262, 0.205, 0.268, 0.209, 0.477, 0.322, 0.817, 0.207,
+					0.253, 0.201, 0.226, 0.212, 0.199, 0.207, 0.435, 0.355, 0.408, 0.431, 0.247, 0.461, 0.717,
+					0.237, 0.246, 0.194, 0.205, 0.421, 0.312, 0.421, 0.25, 0.251, 0.206, 0.352, 0.21, 0.604,
+					0.223
+				]
+			],
+			[
+				[
+					1.213, 0.064, 0.061, 0.059, 0.054, 0.053, 0.053, 0.054, 0.055, 0.056, 0.057, 0.064, 0.052,
+					0.056, 0.056, 0.058, 0.052, 0.051, 0.054, 0.053, 0.053, 0.055, 0.052, 0.054, 0.062, 0.051,
+					0.051, 0.052, 0.051, 0.048, 0.055, 0.057, 0.049, 0.048, 0.055, 0.05, 0.051, 0.05, 0.053,
+					0.054
+				],
+				[
+					0.044, 0.041, 0.04, 0.036, 0.035, 0.038, 0.037, 0.061, 0.039, 0.038, 0.04, 0.038, 0.038,
+					0.041, 0.039, 0.043, 0.035, 0.035, 0.035, 0.038, 0.037, 0.036, 0.036, 0.038, 0.039, 0.034,
+					0.035, 0.037, 0.034, 0.083, 0.035, 0.034, 0.033, 0.034, 0.038, 0.034, 0.034, 0.035, 0.035,
+					0.034
+				]
+			],
+			[
+				[
+					0.009, 0.028, 0.027, 0.029, 0.029, 0.029, 0.03, 0.03, 0.032, 0.028, 0.028, 0.028, 0.029,
+					0.041, 0.029, 0.029, 0.077, 0.09, 0.091, 0.093, 0.092, 0.09, 0.092, 0.091, 0.091, 0.091,
+					0.091, 0.09, 0.091, 0.093, 0.09, 0.093, 0.092, 0.091, 0.09, 0.092, 0.091, 0.091, 0.091,
+					0.092
+				],
+				[
+					0.007, 0.008, 0.008, 0.008, 0.007, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008,
+					0.008, 0.009, 0.009, 0.009, 0.009, 0.008, 0.008, 0.009, 0.008, 0.009, 0.009, 0.009, 0.009,
+					0.009, 0.008, 0.009, 0.009, 0.008, 0.009, 0.009, 0.009, 0.009, 0.009, 0.009, 0.009, 0.008,
+					0.008
+				]
+			],
+			[
+				[
+					0.004, 0.063, 0.061, 0.062, 0.061, 0.061, 0.061, 0.061, 0.062, 0.062, 0.061, 0.061, 0.065,
+					0.063, 0.06, 0.064, 0.062, 0.061, 0.062, 0.062, 0.06, 0.062, 0.06, 0.062, 0.06, 0.063,
+					0.062, 0.061, 0.061, 0.06, 0.061, 0.06, 0.061, 0.061, 0.061, 0.062, 0.06, 0.062, 0.06,
+					0.062
+				],
+				[
+					0.048, 0.048, 0.048, 0.048, 0.047, 0.047, 0.047, 0.046, 0.05, 0.049, 0.047, 0.047, 0.056,
+					0.052, 0.047, 0.045, 0.046, 0.047, 0.047, 0.05, 0.05, 0.047, 0.046, 0.046, 0.046, 0.046,
+					0.046, 0.047, 0.046, 0.046, 0.047, 0.046, 0.046, 0.046, 0.046, 0.048, 0.049, 0.049, 0.047,
+					0.048
+				]
+			],
+			[
+				[
+					0.003, 0.06, 0.059, 0.06, 0.061, 0.061, 0.06, 0.059, 0.061, 0.061, 0.06, 0.06, 0.061,
+					0.061, 0.062, 0.059, 0.06, 0.06, 0.06, 0.058, 0.06, 0.059, 0.06, 0.059, 0.06, 0.059,
+					0.061, 0.061, 0.061, 0.06, 0.059, 0.061, 0.06, 0.06, 0.06, 0.06, 0.059, 0.061, 0.061,
+					0.059
+				],
+				[
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002,
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.004, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002,
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.003, 0.002, 0.002, 0.002,
+					0.002
+				]
+			]
+		]}
+	/>
+</div>
+
 Trust but verify: to ensure the performance of Windmill's workers and measure their capabilities,
 we provide a benchmarking tool. This tool allows you to benchmark the execution of jobs and flows,
 providing insights into the performance metrics.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Benchmarks"
+		title="Benchmarks Folder"
 		description="This folder includes a small deno/ts utility to benchmark execution of jobs and flows."
 		href="https://github.com/windmill-labs/windmill/tree/main/benchmarks"
 	/>

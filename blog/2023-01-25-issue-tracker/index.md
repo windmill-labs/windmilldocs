@@ -598,8 +598,7 @@ user and sends them to the database.
 Table components can have actions which will be added to the end of each row in
 the form of buttons. Select the `Table` component and follow the steps:
 
-1. Under the "Settings" tab in the right pane, add a button action from the
-   `Table actions` section.
+1. Under the "Settings" tab in the right pane, add a button action from the `Table actions` section.
 2. Click the newly added action.
 3. Set the `Label` argument to `Delete`.
 4. Set the `Color` argument to `red`.
@@ -610,6 +609,8 @@ the form of buttons. Select the `Table` component and follow the steps:
 
    Because of this, the `issues` data will be reloaded from the database every
    time an issue is deleted.
+
+   :::
 
 6. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
    `Delete Issue` and paste in the following code:
@@ -636,6 +637,8 @@ the form of buttons. Select the `Table` component and follow the steps:
 
    This will result in the `id` argument being filled by the value of the `id`
    column from the row that the action button was clicked in.
+
+   :::
 
 ![Table component with action buttons](./23-wm-table-action.png.webp)
 
