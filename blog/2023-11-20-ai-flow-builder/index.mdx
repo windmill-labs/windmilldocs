@@ -1,21 +1,21 @@
 ---
-slug: ai-flow-builder
-title: Launchweek day X - Flow Builder Copilot
+slug: launch-week-1/ai-flow-builder
+description: 'Generate workflows from prompts.'
 authors: [hugocasa]
 tags:
   [
     'Windmill AI',
-    'Windmill',
     'OpenAI',
     'Natural language processing',
     'AI-powered assistance',
-    'Developer tools',
-		'Workflows'
+    'Developer tools'
   ]
 image: ./media/ai_flow_thumbnail.png
 ---
 
 import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 1 - Flow Builder Copilot
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -26,7 +26,9 @@ import DocCard from '@site/src/components/DocCard';
 
 <br/>
 
-As part of our launch week, we're excited to release a new Windmill AI feature: a copilot for the [flow builder](/docs/flows/flow_editor).
+Welcome to the first day of the first launch week of Windmill. To follow all the announcements made this week, please go to the [Launch Week #1](../2023-11-15-launch-week-1/index.mdx) page.
+
+We're excited to release a new Windmill AI feature: a copilot for the [flow builder](/docs/flows/flow_editor).
 By simply describing your desired workflow in plain English or selecting scripts from [Windmill Hub](https://hub.windmill.dev/), the copilot effortlessly generates each step and connects them automatically.
 
 Here's a quick demo of what the AI flow builder can do:
@@ -45,13 +47,13 @@ Here's a quick demo of what the AI flow builder can do:
 
 At the same time, we're also releasing a new feature for the [script editor](/docs/script_editor), a code completion copilot
 which prompts you with suggestions based on the code you're writing. This completes our already existing
-copilot which allows you to generate, edit and fix your scripts (learn more [here](/docs/core_concepts/ai_generation#windmill-ai-for-scripts)).
+copilot which allows you to generate, edit and fix your scripts, learn more heres:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Windmill AI"
+    	title="Windmill AI for Scripts"
     	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation"
+    	href="/docs/core_concepts/ai_generation#windmill-ai-for-script"
     />
 </div>
 
@@ -232,3 +234,17 @@ We implement some debouncing to avoid sending too many requests and cancel the p
 We leverage monaco editor's [inline completions api](https://microsoft.github.io/monaco-editor/docs.html#functions/languages.registerInlineCompletionsProvider.html) to display the suggestions the same way as Github copilot in VSCode.
 
 You can find all our code for code completion [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/completion.ts) and [here](https://github.com/windmill-labs/windmill/blob/2d9878647be60288a6d2d8b0c72af84464eefd9c/frontend/src/lib/components/Editor.svelte#L364).
+
+## Learn More
+
+This is just the first day of the launch week! To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+To learn more about Windmill AI, please refer to our documentation:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Windmill AI"
+    	description="Have AI complete code on Windmill."
+    	href="/docs/core_concepts/ai_generation"
+    />
+</div>
