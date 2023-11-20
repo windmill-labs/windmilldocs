@@ -1,0 +1,74 @@
+---
+authors: [rubenfiszel]
+tags:
+  [
+    'Launch week',
+    'VS Code'
+  ]
+image: ./vscode_extension.png
+slug: launch-week-vscode-extension
+description: "Write scripts & flows in your code editor with a UI preview."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 1: VSCode Extension
+
+Welcome to the first day of the first launch week of Windmill. To follow all the announcements made this week, please go to the [Launch Week #1](../2023-11-15-launch-week-1/index.mdx) page.
+
+![VS Code Extension](./vscode_extension.png "VS Code Extension")
+
+One of the features announced today is the Windmill [VS Code extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill). It allows you to build your scripts and flows from your code editor with the traditional Windmill UI preview, and to synchronize everything with the workspace.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/aSOF6AzyDr8?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+## Why a VS Code Extension
+
+Windmill has its own IDE for creating [scripts](/docs/script_editor) and [flows](/docs/flows/flow_editor) from the Windmill application (cloud or [self-hosted](/docs/advanced/self_host)).
+
+![Windmill own IDE](./script_ide.png "Windmill Own IDE")
+> Example of Windmill's own IDE for building scripts.
+
+<br/>
+
+But some developers have their habits, and we don't want to take that away from them. So, we brought Windmill to VS Code with an extension that parses your documents (scripts and YAML for flows) and generates an [interactive UI page](/docs/core_concepts/auto_generated_uis) to test your scripts & flows using all your Windmill resources and variables.
+
+![VS Code example](../../docs/cli_local_dev/1_vscode-extension/main.png)
+
+## How It Works
+
+1. Install the [extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
+2. Enter your Windmill remote URL and [token](/docs/core_concepts/webhooks#user-token), so the extension can execute scripts and flows on your workspace.
+3. From any script file, use `> Windmill: Run preview in the current editor` or Ctrl+Enter and Shift+Enter to generate the UI preview (provided that the script meets the few rules required by Windmill).
+
+In principle, this is enough. However, your extension will be much more powerful if you use it on a [repository synchronized to a Windmill instance](/docs/advanced/cli/sync), thanks to [Windmill CLI](/docs/advanced/cli). For flows, this has the advantage of having them directly in a YAML format readable by the extension.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-Line Interface - Sync"
+		description="Sync with a Windmill workspace from Windmill CLI."
+		href="/docs/advanced/cli"
+	/>
+</div>
+
+## Learn More
+
+This is just the first day of the launch week! To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+To learn more about the VS Code extension, please refer to our documentation:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="VS Code Extension"
+		description="You can also use VS Code with the extension to run scripts & flows on the remote."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
