@@ -40,13 +40,6 @@ export default function LogoClouds() {
 			name: 'Nocd'
 		},
 		{
-			url: 'https://www.deluxebase.com/',
-			dark: '/images/brands/Deluxebase.png',
-			light: '/images/brands/Deluxebase.png',
-			name: 'Deluxebase',
-			anchor: 'deluxebase'
-		},
-		{
 			url: 'https://www.teracapital.com.br/',
 			dark: 'https://media.licdn.com/dms/image/C4D0BAQGQPNUN4VibGA/company-logo_200_200/0/1662497060560?e=2147483647&v=beta&t=oY920CYx6hdvnWpyUYBqIUPeESZ2A3rD5XHewVw-YhI',
 			light:
