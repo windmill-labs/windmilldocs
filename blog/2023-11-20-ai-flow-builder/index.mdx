@@ -178,7 +178,7 @@ My current step code has the following inputs: {inputs}.
 Determine what to pass as inputs. You can only use the following:
 - `flow_input` (javascript object): general inputs that are passed to the workflow,
 	you can assume any object properties.
-- `prev_output` (javascript object): previous output is the output of the previous step.
+- `results.{prevId}` (javascript object): previous output is the output of the previous step.
 	Infer its type from the previous's step code: ```{codeLang}\n{prevCode}\n```
 
 Reply in the following format:
