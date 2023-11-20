@@ -20,7 +20,8 @@ import {
 	BedIcon,
 	Calendar,
 	Bot,
-	LucideWebhook
+	LucideWebhook,
+	BookOpen
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -590,7 +591,7 @@ export default function FlowSection() {
 				kind="flow"
 			/>
 			<LandingSectionWrapper color="teal">
-				<div className="flex flex-col w-full gap-4 justify-center">
+				<div className="flex flex-col w-full gap-4 justify-center items-start">
 					<div className="flex flex-col gap-2 ">
 						<div className="flex justify-between items-center w-full">
 							<h1
@@ -754,6 +755,17 @@ export default function FlowSection() {
 								/>
 							)}
 						</div>
+					</div>
+					<div>
+						<a
+							type="button"
+							target="_blank"
+							href="/docs/misc/benchmarks/competitors"
+							className="cursor-pointer transition-all bg-teal-500 hover:bg-teal-700 flex flex-start dark:text-white items-center rounded-md px-4 py-2 text-sm font-medium text-gray-600 focus:outline-none focus:ring-2  focus:ring-offset-2 !no-underline "
+						>
+							See all benchmarks
+							<BookOpen className="ml-2 h-4" />
+						</a>
 					</div>
 				</div>
 			</LandingSectionWrapper>
