@@ -1,5 +1,6 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
+import classNames from 'classnames';
 
 export default function LogoClouds() {
 	const { colorMode } = useColorMode();
@@ -7,8 +8,8 @@ export default function LogoClouds() {
 	const logos = [
 		{
 			url: 'https://www.photoroom.com',
-			dark: '/images/brands/logo-original-dark-transparent.png',
-			light: '/images/brands/logo-original-light-transparent.png',
+			dark: '/images/brands/logo-mono-white-transparent.png',
+			light: '/images/brands/logo-mono-black-transparent.png',
 			name: 'Photoroom',
 			anchor: 'photoroom'
 		},
@@ -34,17 +35,18 @@ export default function LogoClouds() {
 			anchor: 'bloomcredit'
 		},
 		{
-			url: 'https://www.treatmyocd.com/',
-			dark: '/images/brands/nocd-logo.svg',
-			light: '/images/brands/nocd-logo.svg',
-			name: 'Nocd'
+			url: 'https://www.teracapital.com.br/',
+			dark: '/images/brands/teracapital-dark.svg',
+			light: '/images/brands/teracapital-light.svg',
+			name: 'Tera Capital',
+			gap: true
 		},
 		{
-			url: 'https://www.teracapital.com.br/',
-			dark: 'https://media.licdn.com/dms/image/C4D0BAQGQPNUN4VibGA/company-logo_200_200/0/1662497060560?e=2147483647&v=beta&t=oY920CYx6hdvnWpyUYBqIUPeESZ2A3rD5XHewVw-YhI',
-			light:
-				'https://media.licdn.com/dms/image/C4D0BAQGQPNUN4VibGA/company-logo_200_200/0/1662497060560?e=2147483647&v=beta&t=oY920CYx6hdvnWpyUYBqIUPeESZ2A3rD5XHewVw-YhI',
-			name: 'Tera Capital'
+			url: 'https://www.treatmyocd.com/',
+			dark: '/images/brands/nocd-logo-dark.svg',
+			light: '/images/brands/nocd-logo.svg',
+			name: 'Nocd',
+			gap: true
 		}
 	];
 
@@ -54,7 +56,7 @@ export default function LogoClouds() {
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900">
 					Trusted by 500+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-4 gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-0 lg:max-w-none lg:grid-cols-6">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
@@ -62,7 +64,10 @@ export default function LogoClouds() {
 							target={logo.anchor ? '_self' : '_blank'}
 						>
 							<img
-								className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
+								className={classNames(
+									'col-span-3 max-h-12 w-full object-contain lg:col-span-1 ',
+									logo.gap ? 'py-2' : ''
+								)}
 								src={colorMode === 'light' ? logo.light : logo.dark}
 								alt={logo.name}
 								width={158}
