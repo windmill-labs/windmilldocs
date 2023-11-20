@@ -81,6 +81,8 @@ These features complement Windmill AI for Scripts, which lets you generate whole
 	/>
 </div>
 
+We are using GPT-4-turbo (1106-preview version) for the AI Flow Builder and have changed Windmill AI for Scripts to use it too, as it is faster, three times cheaper and more up-to-date with libraries than GPT-4. We observed similar results to those obtained with GPT-4 in our tests, but we will continue to monitor the quality of the generations.
+ 
 ## What are Windmill Flows?
 
 Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represents the dependencies between steps.
@@ -103,7 +105,7 @@ You can see below an example of a simple workflow with a [for-loop](/docs/flows/
 ## Why add a flow builder copilot?
 
 Workflows can be quite complex and tedious to create, therefore we decided to build an AI copilot to help users create workflows faster and easier.
-However, asking GPT-4 to generate a complete workflow is too hard of a problem: it is too difficult to control and would most of the time deviate from the user's intent.
+However, asking GPT-4-turbo to generate a complete workflow is too hard of a problem: it is too difficult to control and would most of the time deviate from the user's intent.
 
 A good compromise is to first have users give a structured prompt that mirrors the layout of the workflow graph:
 
@@ -147,10 +149,9 @@ This section is a bit more technical and describes how you too can become an AI 
 
 #### Generating a step from scratch
 
-Like for the script copilot, we're using GPT-4 for the AI flow builder.
-We also use a very similar prompt to generate the steps' code.
-However, we wanted to make sure that the generated script would match the previous' step output.
-To do so, we indicate that the previous' output will be passed as `prev_output` and we pass the previous step's script so that it can infer the output's type.
+We use a prompt very similar to the one in Windmill AI for Scripts to generate the steps' code.
+However, we also wanted to make sure that the generated script would match the previous step output.
+Therefore, we indicate that the previous output will be passed as `prev_output` and we pass the previous step's script so that it can infer the output's type.
 
 Here's our prompt template:
 
@@ -169,7 +170,7 @@ Knowing that the previous step's output is expected as `prev_output` allows us t
 
 #### Integrating Hub scripts
 
-When selecting a Windmill Hub script instead of generating a step from scratch, we do not know what input should receive the output of the previous step, therefore we ask GPT-4 to fill in the step's inputs based on the previous step's code and the selected script's inputs.
+When selecting a Windmill Hub script instead of generating a step from scratch, we do not know what input should receive the output of the previous step, therefore we ask GPT-4-turbo to fill in the step's inputs based on the previous step's code and the selected script's inputs.
 Here's the template we use:
 
 ````
@@ -179,7 +180,7 @@ Determine what to pass as inputs. You can only use the following:
 - `flow_input` (javascript object): general inputs that are passed to the workflow,
 	you can assume any object properties.
 - `results.{prevId}` (javascript object): previous output is the output of the previous step.
-	Infer its type from the previous's step code: ```{codeLang}\n{prevCode}\n```
+	Infer its type from the previous step code: ```{codeLang}\n{prevCode}\n```
 
 Reply in the following format:
 input_name: expr
@@ -211,10 +212,10 @@ You can find all our prompts [in our codebase](https://github.com/windmill-labs/
 ### Code completion
 
 We were quite happy with our existing script copilot which helps you generate, edit and fix your scripts, but as developers ourselves we realized that the most useful and time saving feature was code completion.
-We thought that it would be too slow or too expensive, but after some testing and optimization, we realized that it was actually quite fast, cheap (thanks to GPT-3.5) and powerful.
+We thought that it would be too slow or too expensive, but after some testing and optimization, we realized that it was actually quite fast, cheap (thanks to GPT-3.5-turbo) and powerful.
 You can learn more about it below.
 
-For code completion, we use GPT-3.5 instead of GPT-4 as it is good enough for this use case but much faster and cheaper.
+For code completion, we use GPT-3.5-turbo instead of GPT-4-turbo as it is good enough for this use case but much faster and cheaper.
 When enabled, we send the whole code and specify where it should fill in the code. Here's our prompt template:
 
 ````
