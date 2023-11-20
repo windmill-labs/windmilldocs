@@ -355,3 +355,12 @@ div.testimonials a:hover .wm-name {
 .theme-back-to-top-button {
 	bottom: 5.3rem !important;
 }
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.flex-container .logo {
+    margin-left: 8px;
+}
