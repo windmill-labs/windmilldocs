@@ -106,23 +106,10 @@ This approach offers added convenience to pre-install binaries or set initial co
 	/>
 </div>
 
-### Dedicate your worker to a specific script or flow
+### Dedicate your worker to a specific script
 
 [Dedicated Workers](/docs/core_concepts/dedicated_workers) are workers (groups) that are dedicated to a particular script.
-They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
-They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
-
-<img src={require("../../docs/core_concepts/25_dedicated_workers/infographic.png").default} alt="Dedicated workers" title="Dedicated workers" width="75%" />
-
-<br/>
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Dedicated Workers / High Throughput"
-		description="Dedicated Workers are workers that are dedicated to a particular script."
-		href="/docs/core_concepts/dedicated_workers"
-	/>
-</div>
+We've written another blog post dedicated to this [here](https://www.windmill.dev/blog/launch-week-dedicated-workers).
 
 ## How to create worker group configurations
 
@@ -159,11 +146,6 @@ You can then configure it directly from the UI and in particular set tags to lis
 		title="Worker Groups Management UI"
 		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
 		href="/docs/misc/worker_group_management_ui"
-	/>
-	<DocCard
-		title="Dedicated Workers / High Throughput"
-		description="Dedicated Workers are workers that are dedicated to a particular script."
-		href="/docs/core_concepts/dedicated_workers"
 	/>
 	<DocCard
 		title="Init Scripts"
