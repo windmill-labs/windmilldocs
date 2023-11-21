@@ -99,7 +99,7 @@ By default, every worker is the same and interchangeable.
 However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically or have different pre-installed binaries.
 To that end, we introduce the concept of "worker groups".
 
-You can assign worker groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
+You can assign worker groups to flows and flow steps to be executed on specific queues, and for workers to only process jobs coming from specific queues.
 
 Examples of worker groups configurations include:
 
