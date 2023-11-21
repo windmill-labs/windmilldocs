@@ -90,7 +90,7 @@ It unlocks fully the ability to iterate on your scripts and flows in the comfort
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-## Day 2 - Worker Groups Configuration
+## Day 2 - Worker Groups Management UI & Hot Reloading
 
 THUMBNAIL
 
@@ -99,11 +99,18 @@ Today's first annoucement of the day is the power of Worker Groups Configuration
 [Workers](/docs/core_concepts/worker_groups) are the foundation of Windmill. They are autonomous processes that run one script at a time using the entire cpu and memory available to them.
 By default, every worker is the same and interchangeable.
 
-However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically.
-To that end, we introduce the concept of "worker groups", for example:
-- [Give tags to workers](/docs/core_concepts/worker_groups) to assign specific jobs to them.
+By default, every worker is the same and interchangeable.
+However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically or have different pre-installed binaries.
+To that end, we introduce the concept of "worker groups".
+
+You can assigns flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
+
+Examples of worker groups configurations include:
+- [Assign different jobs to specific worker groups](/docs/core_concepts/worker_groups) by giving them tags.
 - [Set an init script](/docs/advanced/preinstall_binaries#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
 - [Dedicate your worker to a specific script or flow](/docs/core_concepts/dedicated_workers), for high throughput.
+
+Once the configurations are done from the Windmill UI, the workers take their configuration dynamically, without having to restart.
 
 CARD
 
