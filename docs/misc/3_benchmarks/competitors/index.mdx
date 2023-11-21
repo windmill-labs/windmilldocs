@@ -1075,12 +1075,12 @@ Airflow is the slowest in all categories, followed by Prefect. If you're looking
 
 ## Appendix: Scaling Windmill
 
-We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this for Airflow, Prefect and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
+We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this assumption for Airflow, Prefect and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
 
-For this test, we've deployed the same docker compose as above on an AWS m4.xlarge instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the NUM_WORKERS environment variable Windmill accepts. Note that it is not strictly speaking equivalent to adding real hardware to the stack, but until we reach the maximum CPU capacity on the instance, we can safely assume it's a good approximation.
-The other change we had to make was to bump the `max_connections` to `1000` on Postgresql: as we're adding more and more workers, each worker needs to connect to the database and we need to increase the maximum connection Posgtresql allows.
+For this test, we've deployed the same docker compose as above on an AWS `m4.xlarge` instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the `NUM_WORKERS` environment variable Windmill accepts. Note that it is not strictly equivalent to adding real hardware to the stack, but until we reach the maximum capacities on the instance, both in terms of CPU and memory, we can assume it's a good approximation.
+The other change we had to make was to bump the `max_connections` to `1000` on Postgresql: as we're adding more and more workers, each worker needs to connect to the database and we need to increase the maximum number of connections Posgtresql allows.
 
-The job we ran was a simple sleeping python job. It sleeps for 100ms, which is a good average during of a regular job ran on an orchestrator.
+The job we ran was a simple sleeping job sleeping for 100ms, which is a good average during for a job running on an orchestrator.
 
 ```
 import time
@@ -1088,7 +1088,7 @@ def main():
 	time.sleep(0.1)
 ```
 
-Finally, we've ran it in Windmill Dedicated Worker mode, and we used a specific endpoint to "bulk-create" the jobs before any worker can start to pull it from the queue and execute it. For this test to be representative, we had to measure the performance of Windmill processing a large number of jobs (10000 in this case), and we quickly realised that the time it was taking to only _insert_ the jobs one by one in the queue was non negligible and was affecting the real performance of workers.
+Finally, we've ran it on Windmill Dedicated Worker mode, and we used a specific endpoint to "bulk-create" the jobs before any worker can start pulling them from the queue. For this test to be representative, we had to measure the performance of Windmill processing a large number of jobs (10000 in this case), and we quickly realised that the time it was taking to only _insert_ the jobs one by one in the queue was non negligible and was affecting the real performance of workers.
 
 The results are the following:
 
@@ -1169,4 +1169,4 @@ The results are the following:
 
 </details>
 
-This proves that Windmill scales linearly with the number of workers (at least up to 100 workers). We also notice that that the throughput is close to the optimal: given that the job takes 100ms to be executed, N workers processing the jobs in parallel can't go above `N*100` jobs per seconds, and Windmill is pretty close.
+This proves that Windmill scales linearly with the number of workers (at least up to 100 workers). We can also notice that the throughput is close to the optimal: given that the job takes 100ms to be executed, N workers processing the jobs in parallel can't go above `N*100` jobs per seconds, and Windmill is pretty close.
