@@ -126,8 +126,8 @@ Now we need to add a button that will save the changes to the product. For the s
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(
@@ -138,7 +138,7 @@ export async function main(
 	quantity: number,
 	price: number
 ) {
-	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+	const client = createClient(auth.url, auth.key);
 
 	return await client.from('products').update({ title, description, quantity, price }).eq('id', id);
 }
@@ -388,12 +388,12 @@ The `Checkout` button needs to create the order. We can use the following fronte
 import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(auth: Supabase, customerId: string, productIds: string[]) {
-	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+	const client = createClient(auth.url, auth.key);
 
 	productIds = productIds.filter(Boolean);
 	const { country, city, address } = await getCustomer(client, customerId);

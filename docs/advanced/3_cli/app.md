@@ -1,4 +1,4 @@
-# Apps management
+# Apps
 
 ## Listing apps
 
