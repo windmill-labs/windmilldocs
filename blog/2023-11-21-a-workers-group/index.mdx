@@ -12,17 +12,24 @@ description: "Set shared configurations to your workers."
 
 import DocCard from '@site/src/components/DocCard';
 
-# Launch Week Day X: Worker Groups Configuration
+# Launch Week Day 2 - Worker Groups Configuration
 
 <br/>
 
 ![Worker Groups Configuration thumbnail](./worker_groups_configuration_thumbnail.png "Worker Groups Configuration thumbnail")
 
-Set shared configurations to your workers.
+Welcome to the second day of Windmill's first launch week. To follow all the announcements made this week, please go to the [Launch Week #1](https://www.windmill.dev/blog/launch-week-1) page.
 
+Today we are unveiling features related to workers.
 [Workers](/docs/core_concepts/worker_groups) are the foundation of Windmill. They are autonomous processes that run one script at a time using the full machines resources available to them.
 
-Workers pull [jobs](/docs/core_concepts/jobs) from the queue of jobs in the order of their
+We are proud to announce that now you can:
+1. Set shared configurations to your workers, especially to allocate the execution of certain scripts or flows according to their priority (this article).
+2. Dedicate workers exclusively to a script or flow, so that your workers continuously pull the same type of job, making the execution as fast as running the same logic in a for loop (other release).
+
+## Why setting Worker Groups Configuration?
+
+In Windmill, workers pull [jobs](/docs/core_concepts/jobs) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
 a job, it atomically sets its state to "running", runs it, streams its logs then
 once it is complete, saves it back in the database as a "complete job". The
