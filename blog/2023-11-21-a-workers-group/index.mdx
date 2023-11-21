@@ -12,7 +12,7 @@ description: "Set shared configurations to your workers."
 
 import DocCard from '@site/src/components/DocCard';
 
-# Launch Week Day 2 - Worker Groups Configuration
+# Launch Week Day 2 - Worker Groups Management UI & Hot Reloading
 
 <br/>
 
@@ -27,27 +27,29 @@ We are proud to announce:
 1. Worker groups to share configurations to your workers, especially to allocate the execution of certain scripts or flows according to their priority (this article).
 2. Why we are the fastest self-hostable workflow engine (other release).
 
-## Why setting Worker Groups Configuration?
+Worker groups are managed from the UI and are hot reloaded.
 
-In Windmill, workers pull [jobs](/docs/core_concepts/jobs) from the queue of jobs in the order of their `scheduled_for` datetime as long as it is in the past.
-As soon as a worker pulls a job, it atomically sets its state to "running", runs it, streams its logs then once it is finished,
-the final result and logs are stored for as long as the retention period allows. Logs are optionally stored to s3.
+## What is the purpose of worker groups?
 
-In other words, workers run the jobs. The number of workers can be horizontally scaled up or down depending on needs without any overhead.
+In Windmill, workers run the jobs. The number of workers can be horizontally scaled up or down depending on needs without any overhead.
 Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms.
 
 By default, every worker is the same and interchangeable.
-However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically.
+However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically or have different pre-installed binaries.
 To that end, we introduce the concept of "worker groups".
 
+You can assigns groups, flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
+
 Examples of configurations include:
-- [Give tags to workers](#give-tags-to-worker-groups) to assign specific jobs to them.
+- [Assign different jobs to specific worker groups](#assign-different-jobs-to-specific-worker-groups) by giving them tags.
 - [Set an init script](#set-an-init-script) that will run at the start of the workers (e.g. to pre-install binaries).
 - [Dedicate your worker to a specific script or flow](#dedicate-your-worker-to-a-specific-script-or-flow), for high throughput.
 
-### Give tags to worker groups
+Once the configurations are done from the Windmill UI, the workers take their configuration dynamically, without having to restart.
 
-[Giving tags to workers](/docs/core_concepts/worker_groups#how-to-assign-worker-tags-to-a-worker-group) will change their behavior to only listen to those same tags in the job queue to be executed.
+### Assign different jobs to specific worker groups
+
+[By giving tags to workers](/docs/core_concepts/worker_groups#how-to-assign-worker-tags-to-a-worker-group) will change their behavior to only listen to those same tags in the job queue to be executed.
 On the script side, you have to assign those tags which will be posted to the jobs and directly assigned to the worker groups corresponding to the tag.
 
 <img src={require("../../docs/core_concepts/9_worker_groups/tags_and_queues.png").default} alt="Tags & Queues" title="Tags & Queues" width="75%" />
@@ -97,7 +99,7 @@ They are as fast as running the same logic in a forloop, but keep the benefit of
 	/>
 </div>
 
-## How to do it
+## How to create worker group configurations
 
 In a [self-hosted](/docs/advanced/self_host) instance, worker groups are created from your `docker-compose.yml` by simply passing the worker group as the env variable `WORKER_GROUP=worker_group_name`.
 It is as simple as that and means that workers can be scaled horizontally.
@@ -106,7 +108,7 @@ The configuration of worker groups is done from the Windmill UI's [Workers page]
 
 ![New worker group config](../../static/images/new_worker_group_config.png "New worker group config")
 
-You can then configure it directly from the UI.
+You can then configure it directly from the UI and in particular set tags to listen to, define an init script or dedicate it to a script.
 
 ![Worker group config](../../static/images/worker_group_config.png "Worker group config")
 
