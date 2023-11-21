@@ -78,7 +78,7 @@ export default function BarChart({ title, labels, rawData, maintainAspectRatio =
 			},
 			title: {
 				display: true,
-				text: title + ' (time speed: 20jx)'
+				text: title + ' (time speed: 20x)'
 			}
 		},
 		animation: {
