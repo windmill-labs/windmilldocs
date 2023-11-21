@@ -1,0 +1,70 @@
+---
+authors: [rubenfiszel]
+tags: ['Launch week', 'Workflow Engine']
+image: ./vscode_extension.png
+slug: launch-week-1/fastest-workflow-engine
+description: 'Why is windmill the fastest self-hostable workflow engine and job processing framework'
+---
+
+# Fastest self-hostable open-source workflow engine
+
+## A more scoped crown
+
+Before you raise your pitchforks, let's unpack our claim a bit, we are not claiming to be necessarily faster than your specialized,
+hand-built workflow engine written on top of the amazing [BEAM](<https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)>)
+(from which, we took inspiration) but rather only among the "all-inclusive", self-hostable workflow engines. We recognize 3 main ones today:
+
+- Airflow
+- Prefect
+- Temporal
+
+There are tons of workflow engines, but not many of them are generic enough to support arbitrary workloads of jobs defined in code,
+and even those have restrictions: Airflow and Prefect only supports Python. Windmill on the other hand supports: Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql.
+Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to.
+Windmill offers an integrated DX that allows to build and test workflows in a few minutes and interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself.
+One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
+
+## Should temporal even be there?
+
+Temporal doesn't actually manage the [workers but only the tasks queues](https://docs.temporal.io/workers). So even after having written your Temporal workflow, you will still need to manage your workers separately.
+To some degree, temporal is not a workflow engine but a specialized durable execution engine. Windmill also support reactivity (aka waiting for event) and can be qualified as a durable execution engine as well.
+That being said, temporal is amazing at what it does and if there are overlap between windmill and temporal, there are clearly use-cases where you should use temporal rather than windmill,
+as the backbone of your micro-services async patterns at the scale of Uber for instance. On the other hand, sending arbitrary jobs to an internal cluster is out-of-scope for temporal as you will still need to painfully deploy "Worker Programs" beforehand.
+
+::: info
+
+We leave analytics/ETL engine such as Spark or Dagster out of it for today as they are not workflow engines _per se_ even if they are built on top of ones.
+
+ETL and analytics workflows will be covered later this week, but you will find that windmill is also extremely performant for analytics workloads.
+
+:::
+
+## Workflow Engine vs Job queues
+
+Job Queues are at the core of Workflow Engines and constitute the crux of any background job processing.
+There are already plenty of great queues implementation under the form of managed services (SQS), distributed scalable services (kafka) and software (e.g: Redis with rmsq) or libraries (Orban).
+They are mostly sufficient to use by themselves and many developers will find satisfaction avoiding a workflow engine
+altogether by building their own logic around a job queue. This is akin to
+
+And here is the benchmark data and dedicated benchmarking post to go along with it.
+
+BENCHMARKING BLOG POST
+
+Here we will focus on the why, the architecture of windmill and the different components of a workflow engine aka orchestration engine
+
+## What is a workflow engine, and what constitute an "all-inclusive" workflow engine
+
+A workflow engine is a software that will take some job definitions, with some metadata attached
+to each job including the [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)
+of dependencies between them and orchestrate them to be executed as efficiently as possible
+on resources that are commonly called "workers". A workflow engine need to also take care of workers
+dynamically evolving and jobs "failing" during their executions, or the workers failing/crashing.
+
+Workflow engines usually represents jobs as a finite state machine [(FSM)](https://en.wikipedia.org/wiki/Finite-state_machine). The 4 main states commonly used are:
+
+- Waiting for pre-requisites (right events like a webhook to have been received, or all the depenency jobs to have been completed)
+- Waiting for a worker to execute it
+- Running
+- Completed (with Success or Failure)
+
+Then on top of that, everything else can be implemented under the form of state transitions
