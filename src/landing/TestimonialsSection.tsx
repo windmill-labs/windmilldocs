@@ -155,7 +155,7 @@ const clientTestimonials = [
 	{
 		author: {
 			name: 'Sindre Svendby',
-			company: 'Motimate - a Kahoot company',
+			company: 'Motimate - a Kahoot! company',
 			position: 'Software Engineer',
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
