@@ -1147,4 +1147,6 @@ The results are the following:
 | 80                    | 786                                         |
 | 100                   | 981                                         |
 
+</details>
+
 This proves that Windmill scales linearly with the number of workers (at least up to 100 workers). We also notice that that the throughput is close to the optimal: given that the job takes 100ms to be executed, N workers processing the jobs in parallel can't go above `N*100` jobs per seconds, and Windmill is pretty close.
