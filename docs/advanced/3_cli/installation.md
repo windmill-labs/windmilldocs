@@ -1,10 +1,22 @@
 # Installation
 
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
 To install the wmill CLI, follow these steps:
 
-1. Make sure you have deno installed. If not, you can install it by following the instructions [here](https://deno.com/manual@v1.34.0/getting_started/installation).
+1. Make sure you have [Deno](https://deno.com/) installed. If not, you can install it by following the instructions [here](https://deno.com/manual@v1.34.0/getting_started/installation).
 
-Please note that your version of deno should be recent (greater than 1.32). If not, you can update deno by running deno upgrade.
+Please note that your version of Deno should be recent (greater than 1.32). If not, you can update Deno by running `deno upgrade`.
 
 2. Install wmill CLI using the following command in your terminal:
 

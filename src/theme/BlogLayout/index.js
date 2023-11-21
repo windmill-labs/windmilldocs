@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
-import SectionBlur from '../../landing/SectionBlur';
 //import Footer from './../../landing/Footer';
 
 export default function BlogLayout(props) {
@@ -21,7 +20,7 @@ export default function BlogLayout(props) {
 								Blog
 							</h1>
 							<p className="mt-4 text-lg leading-8 container">
-								Discover the latest news, updates, and articles from the team and community
+								Discover the latest news, updates, and articles from the team and community.
 							</p>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +62,7 @@ export default function BlogLayout(props) {
 						className={clsx('col mt-12', {
 							'col--7': hasSidebar,
 							'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
-							'max-w-4xl mx-auto': !hasSidebar && isBlogPostPageList
+							'max-w-3xl mx-auto': !hasSidebar && isBlogPostPageList
 						})}
 						itemScope
 						itemType="http://schema.org/Blog"

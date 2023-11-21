@@ -1,4 +1,4 @@
-# Folder management
+# Folder
 
 ## Listing folders
 

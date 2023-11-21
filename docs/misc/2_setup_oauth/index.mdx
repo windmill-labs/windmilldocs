@@ -43,7 +43,7 @@ First, you need to create a Google OAuth Client:
 - Enter the following:
   - Application Type: Web Application
   - Name: Windmill
-  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/user/login_callback/google
+  - Authorized Redirect URLs: `https://<YOUR_INSTANCE>/user/login_callback/google`
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 
@@ -51,8 +51,8 @@ Superadmin Settings -> Instance Settings -> SSO -> Toggle "Google" -> set client
 
 ### Microsoft
 
-Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/microsoft
-Login: https://<YOUR_INSTANCE>/user/login
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/microsoft`
+Login: `https://<YOUR_INSTANCE>/user/login`
 
 Create a new OAuth 2.0 Client in [Microsoft portal](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade).
 
@@ -76,8 +76,8 @@ Name: Windmill
 
 Go to SSO tab:
 
-Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/jumpcloud
-Login: https://<YOUR_INSTANCE>/user/login
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/jumpcloud`
+Login: `https://<YOUR_INSTANCE>/user/login`
 
 Client Authentication Type: Client Secret Basic
 Attribute Mapping, Standard Scopes: Check Email
@@ -117,15 +117,15 @@ Superadmin Settings -> Instance Settings -> SSO -> Toggle "okta" -> set client i
 
 ### GitHub
 
-Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/github
-Login: https://<YOUR_INSTANCE>/user/login
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/github`
+Login: `https://<YOUR_INSTANCE>/user/login`
 
 Superadmin Settings -> Instance Settings -> SSO -> Toggle "github" -> set client id, org and client secret.
 
 ### GitLab
 
-Redirect URI: https://<YOUR_INSTANCE>/user/login_callback/gitlab
-Login: https://<YOUR_INSTANCE>/user/login
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/gitlab`
+Login: `https://<YOUR_INSTANCE>/user/login`
 
 GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
 
@@ -141,7 +141,7 @@ You can use other custom OAuths as resources using the "Add OAuth" button in: Su
 
 ### Slack
 
-Create a new slack app at <https://api.slack.com/apps?new_app=1>
+Create a new slack app at `https://api.slack.com/apps?new_app=1`
 
 Pick "From an app manifest", then YAML.
 
@@ -214,7 +214,7 @@ Now users should be able to connect to Slack through OAuth:
 - Enter the following:
   - Application Type: Web Application
   - Name: Windmill
-  - Authorized Redirect URLs: https://<YOUR_INSTANCE>/oauth/callback/gsheets
+  - Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gsheets`
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 - Superadmin Settings -> Instance Settings -> Resources -> Add OAuth "gsheet" -> set client id and client secret

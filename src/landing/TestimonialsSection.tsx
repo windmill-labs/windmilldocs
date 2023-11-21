@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LandingSection from './LandingSection';
 import '../css/custom.css';
+import { useColorMode } from '@docusaurus/theme-common';
 
 const testimonials = [
 	{
@@ -80,24 +81,7 @@ const testimonials = [
 				'https://discord.com/channels/930051556043276338/930051949888405524/1137307730105868348'
 		}
 	},
-	{
-		body: (
-			<span>
-				As clients, we are very satisfied with{' '}
-				<strong>
-					<span className="text-blue-500">Windmill</span>
-				</strong>
-				{''}. We align with Windmill's mindset of using the littlest code as possible. Everything is
-				well-structured and things do not break.
-			</span>
-		),
-		author: {
-			handle: 'wm',
-			name: 'José Governo - Responsible for Quantitative Strategies and Data Engineering at Tera Capital',
-			backlink: '/blog/teracapital-case-study',
-			date: 'September 5th 2023'
-		}
-	},
+
 	{
 		body: (
 			<span>
@@ -151,29 +135,85 @@ const testimonials = [
 			backlink: 'https://news.ycombinator.com/item?id=37002360',
 			date: 'August 4th 2023'
 		}
+	}
+];
+
+const clientTestimonials = [
+	{
+		author: {
+			name: 'Eliot Andres',
+			company: 'Photoroom',
+			position: 'Co-Founder & CTO',
+			dark: '/images/brands/logo-original-dark-transparent.png',
+			light: '/images/brands/logo-original-light-transparent.png',
+			anchor: 'photoroom'
+		},
+		company_url: 'https://photoroom.com',
+		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
+		text: `Windmill quickly became crucial at Photoroom. We self-hosted Windmill Enterprise Edition to run a large number of internal scripts and business-critical automations. Windmill made chatops and iterations over scripts incredibly easy. It proved very reliable for running and monitoring workloads at scale. On top of that, their support is incredibly fast.`
 	},
 	{
-		body: (
-			<span>
-				Currently with{' '}
-				<strong>
-					<span className="text-blue-500">Windmill</span>
-				</strong>
-				{''}, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as
-				the foundation for essential tasks, allowing users to independently manage their activities
-				according to their specific needs.
-			</span>
-		),
 		author: {
-			handle: 'wm',
-			name: 'Sindre Svendby - Software Engineer at Kahoot!',
-			backlink: '/blog/kahoot-case-study',
-			date: 'September 4th 2023'
-		}
+			name: 'Sindre Svendby',
+			company: 'Motimate - a Kahoot company',
+			position: 'Software Engineer',
+			dark: '/images/brands/Kahoot_Logo-dark.svg',
+			light: '/images/brands/Kahoot_Logo.svg',
+			anchor: 'kahoot'
+		},
+		company_url: 'https://motimateapp.com',
+		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
+		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
+	},
+	{
+		author: {
+			name: 'Mike Esler',
+			company: 'Bloom Credit',
+			position: 'Chief Technology Officer',
+			dark: '/images/brands/Bloomcredit-Dark.svg',
+			light: '/images/brands/Bloomcredit-Light.svg',
+			anchor: 'bloomcredit'
+		},
+		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
+		company_url: 'https://bloomcredit.io',
+		linkedIn: 'https://www.linkedin.com/in/mikeesler/'
+	},
+
+	{
+		author: {
+			name: 'Romaric Philogène',
+			company: 'Qovery',
+			position: 'Co-Founder & CEO',
+			dark: '/images/brands/Qovery-dark.png',
+			light: '/images/brands/Qovery-light.svg',
+			anchor: 'qovery'
+		},
+		company_url: 'https://www.qovery.com',
+		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
+		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. They made it simple to build, schedule, and monitor script & flows. The platform offers a clear DX for code editing, permission management and error handling.`
+	},
+	{
+		author: {
+			name: 'Jim Hudson',
+			company: 'Deluxebase',
+			position: 'IT Coordinator',
+			dark: '/images/brands/Deluxebase.png',
+			light: '/images/brands/Deluxebase.png',
+			anchor: 'deluxebase'
+		},
+		company_url: 'https://www.deluxebase.com',
+		text: `At Deluxebase, we use Windmill to automate and streamline business processes, analyse figures, and synchronise data between our ERP and external services. Having everything in one place has greatly improved the efficiency of our team. The Windmill team are incredibly responsive, providing excellent support, feature request implementations, and almost instant bug fixes for the few we’ve come across!`
 	}
 ];
 
 export default function Example() {
+	const [showAll, setShowAll] = useState(false);
+	const { colorMode } = useColorMode();
+
+	const toggleTestimonials = () => {
+		setShowAll(!showAll);
+	};
+
 	return (
 		<LandingSection bgClass="">
 			<div>
@@ -187,15 +227,70 @@ export default function Example() {
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
+					<div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
+						{clientTestimonials.map((testimonial) => (
+							<div
+								key={testimonial.author.name}
+								className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
+								id={testimonial.author.anchor}
+							>
+								<a
+									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm"
+									target="_blank"
+								>
+									<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
+										<p>{testimonial.text}</p>
+									</div>
+									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4 ">
+										<a className="w-full" href={testimonial.linkedIn} target="_blank">
+											<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
+												{testimonial.author.name}
+											</p>
+											<div className="text-sm dark:text-gray-50 text-gray-500">
+												{[testimonial.author.position, testimonial.author.company]
+													.filter(Boolean)
+													.join(' @ ')}
+											</div>
+										</a>
+										<a
+											className="flex-shrink-0 cursor-pointer"
+											href={testimonial.company_url}
+											target="_blank"
+										>
+											<img
+												width={100}
+												height={32}
+												src={
+													colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light
+												}
+												alt=""
+											/>
+										</a>
+									</div>
+								</a>
+							</div>
+						))}
+					</div>
+
+					<div className="flex flex-row gap-2 items-center mb-4 h-8">
+						<div className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">Community</div>
+						<button
+							onClick={toggleTestimonials}
+							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-1 text-xs font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
+						>
+							{showAll ? 'Show Less' : 'Show All'}
+						</button>
+					</div>
+
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
-						{testimonials.map((testimonial) => (
+						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial) => (
 							<div
 								key={testimonial.author.handle}
 								className="sm:inline-block sm:w-full mb-4 testimonials"
 							>
 								<a
 									href={testimonial.author.backlink}
-									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-8 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
+									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-6 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
 									target="_blank"
 								>
 									<div className="dark:text-gray-50 text-gray-900">
