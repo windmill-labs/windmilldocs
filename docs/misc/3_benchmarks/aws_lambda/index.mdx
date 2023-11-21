@@ -6,10 +6,13 @@ import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
 ### Windmill
 
-The setup is the exact same as for the other benchmarks in (Airflow vs Prefect vs Temporal vs Windmill)[../competitors/index.mdx#windmill-setup]. We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official Github repo (with the same adjustement, i.e. 1 worker only, even though for this use case it would not make a difference).
+The setup is the exact same as for the other benchmarks in [Airflow vs Prefect vs Temporal vs Windmill](../competitors/index.mdx). We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official Github repo (with the same adjustement, i.e. 1 worker only, even though for this use case it would not make a difference).
 
 We created a script in Windmill computing a Fibonacci number in Python:
 ```python
+
+N_FIBO = 33
+
 # WIMDMILL script: `u/benchmarkuser/fibo_script`
 def fibo(n: int):
     if n <= 1:
@@ -17,31 +20,14 @@ def fibo(n: int):
     else:
         return fibo(n - 1) + fibo(n - 2)
 
-def main(
-    n: int,
-):
-    return fibo(n)
+def main():
+    return fibo(N_FIBO)
 ```
 
-which we called multiple times sequentially from a bash for-loop using its webhook.
+which we called multiple times using its webhook. We used `siege` benchmark tool to trigger the jobs multiple times using its webhook:
 ```bash
-#!/bin/bash
-
-ITER=10      # respectively 40
-FIBO_N=33    # respectively 10
-
-for i in $(seq 1 $ITER); do
-	started_at=$(date +"%T.%N")
-	result=$(curl -s --location 'http://<WINDMILL_HOSTNAME>/api/w/benchmarks/jobs/run_wait_result/p/u%2Fbenchmarksuser%2Ffibo_script' \
-		--header "Cookie: token=$WINDMILL_TOKEN" \
-		--header 'Content-Type: application/json' \
-		--data "{\"n\": $FIBO_N}")
-	completed_at=$(date +"%T.%N")
-	echo "$started_at;$result;$completed_at"
-done
+siege -r500 -c1 -v -H "Cookie: token=$WM_TOKEN" "http://$WM_HOST/api/w/benchmarks/jobs/run_wait_result/p/u%2Fbenchmarksuser%2Ffibo_script"
 ```
-
-In the same vein as the other benchmarks, we ran it for `(ITER=10; FIBO_N=33)` and `(ITER=40; FIBO_N=10)`, and we ran it for both Windmill in normal mode and Windmill in dedicated worker mode.
 
 ### AWS Lambda
 
@@ -50,7 +36,7 @@ We set up a Lambda running Python 3.11 with the following simple script:
 ```python
 import json
 
-N_FIBO = 33   # respectively 10
+N_FIBO = 33
 
 def fibo(n: int):
     if n <= 1:
@@ -68,161 +54,99 @@ def lambda_handler(event, context):
 
 We gave the Lambda 2048MB of memory, but according to the logs the memory never exceeded 50MB. On AWS, vCPU is proportional to the memory so we can assume it got a decent vCPU.
 
-We exposed a trigger through AWS API Gateway and from our EC2 instance, we called it N times in a loop using a simple bash script:
+We exposed a trigger through AWS API Gateway and from our EC2 instance, we called it using the same `siege` benchmark tool:
 
 ```bash
-#!/bin/bash
-
-ITER=10     # respectively 40
-
-for i in $(seq 1 $ITER); do
-	started_at=$(date +"%T.%N")
-	result=$(curl -s --location 'https://<AWS_LAMBDA_API>.amazonaws.com/default/fibo_lambda' \
-		--header 'x-api-key: $AWS_LAMBDA_API_KEY')
-  returned_at=$(date +"%T.%N")
-	echo "$started_at;$result;$returned_at"
-done
+siege -r500 -c1 -v -H "x-api-key: $AWS_API_KEY" "https://$AWS_LAMBDA_HOST/default/fibo_lambda"
 ```
-
-We also extracted the duration of each call from the lambda logs in AWS.
 
 ## Results
 
-For 10 times `fibonacci(33)`, we obtained the following results:
+In the same vein as the other benchmarks, we ran `fibonacci(10)` 500 times (`--reps=500` as `siege` argument) and `fibonacci(33)` 100 times.
+
+The results were the following:
+
+| **(in seconds)** | **# reps** | **AWS Lambda** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
+|:----------------:|-----------:|---------------:|---------------:|----------------:|
+| **fibo(10)**     | 500        | 36.56          | 55.36          | 26.81           |
+| **fibo(33)**     | 100        | 93.95          | 109.06         | 104.5           |
+
+Which gives an average duration per job in milliseconds:
+
+| **(in milliseconds)** | **AWS Lambda** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
+|:---------------------:|:--------------:|:--------------:|:---------------:|
+| **fibo(10)**          | 73             | 111            | 54              |
+| **fibo(33)**          | 940            | 1091           | 1045            |
+
+Visually, we have the following graphs:
 
 <div class="grid">
 	<TaskDurationBarChart
-		title="10 long running tasks"
-		labels={['AWS Lambda', 'Windmill N', 'Windmill DW']}
+		title="500 times fibonacci(10) (in seconds)"
+		labels={[['AWS Lambda'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
-          0.000, 0.193, 0.170, 0.169, 0.168, 0.163, 0.169, 0.161, 0.154, 0.195
+          0.000
         ],
 				[
-          0.870, 0.863, 0.873, 0.864, 0.878, 0.864, 0.884, 0.873, 0.861, 0.878
+          36.56
         ]
 			],
 			[
 				[
-          0.000, 0.001, 0.002, 0.002, 0.002, 0.001, 0.002, 0.002, 0.002, 0.001
+          0.000
         ],
 				[
-          0.864, 0.810, 0.861, 0.930, 0.864, 0.805, 0.863, 0.861, 0.863, 0.862
+          55.36
         ]
 			],
 			[
 				[
-          0.000, 0.001, 0.001, 0.002, 0.002, 0.002, 0.001, 0.002, 0.002, 0.001
+          0.000
         ],
 				[
-          0.815, 0.863, 0.812, 0.864, 0.811, 0.803, 0.809, 0.806, 0.862, 0.806
+          26.81
         ]
 			],
 		]}
 	/>
 </div>
 
-<details>
-
-|             | **AWS Lambda** | **AWS Lambda** | **Windmill N** | **Windmill N** | **Windmill DW** | **Windmill DW** |
-| **Task**    | **Created at** | **Returned at**| **Created at** | **Returned at**| **Created at**  | **Returned at** |
-|:-----------:|---------------:|---------------:|---------------:|---------------:|----------------:|----------------:|
-| **task_00** | 0.000          | 0.870          | 0.000          | 0.864          | 0.000           | 0.815           |
-| **task_01** | 1.063          | 1.926          | 0.865          | 1.676          | 0.816           | 1.679           |
-| **task_02** | 2.096          | 2.969          | 1.677          | 2.539          | 1.680           | 2.492           |
-| **task_03** | 3.138          | 4.002          | 2.540          | 3.470          | 2.494           | 3.357           |
-| **task_04** | 4.170          | 5.048          | 3.472          | 4.336          | 3.359           | 4.170           |
-| **task_05** | 5.211          | 6.075          | 4.337          | 5.142          | 4.172           | 4.975           |
-| **task_06** | 6.244          | 7.128          | 5.144          | 6.007          | 4.976           | 5.785           |
-| **task_07** | 7.289          | 8.162          | 6.008          | 6.869          | 5.787           | 6.593           |
-| **task_08** | 8.317          | 9.178          | 6.871          | 7.734          | 6.595           | 7.456           |
-| **task_09** | 9.373          | 10.251         | 7.735          | 8.597          | 7.458           | 8.264           |
-
-</details>
-
-For 40 times `fibonacci(33)`, we obtained the following results:
-
 <div class="grid">
 	<TaskDurationBarChart
-		title="40 lightweight tasks"
-		labels={['AWS Lambda', 'Windmill N', 'Windmill DW']}
+		title="100 times fibonacci(33) (in seconds)"
+		labels={[['AWS Lambda'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
 				[
-          0.000, 0.167, 0.166, 0.163, 0.212, 0.173, 0.168, 0.173, 0.166, 0.163, 0.165, 0.172, 0.169, 0.173, 0.171, 0.165, 0.170, 0.171, 0.165, 0.167, 0.165, 0.163, 0.167, 0.170, 0.169, 0.166, 0.166, 0.166, 0.173, 0.166, 0.168, 0.168, 0.171, 0.165, 0.168, 0.165, 0.169, 0.170, 0.170, 0.168
+          0.000
         ],
 				[
-          0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.004, 0.002, 0.002, 0.002
+          93.95
         ]
 			],
 			[
 				[
-          0.000, 0.002, 0.001, 0.002, 0.002, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.001, 0.002, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.001, 0.002, 0.002, 0.002, 0.002, 0.001, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.001, 0.001, 0.002, 0.002, 0.001, 0.001
+          0.000
         ],
 				[
-          0.124, 0.123, 0.124, 0.123, 0.123, 0.123, 0.123, 0.123, 0.122, 0.123, 0.122, 0.123, 0.123, 0.122, 0.124, 0.123, 0.122, 0.122, 0.070, 0.123, 0.070, 0.122, 0.070, 0.123, 0.126, 0.122, 0.122, 0.121, 0.122, 0.122, 0.122, 0.070, 0.123, 0.124, 0.122, 0.122, 0.122, 0.123, 0.124, 0.124
+          109.06
         ]
 			],
 			[
 				[
-          0.000, 0.002, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.002, 0.001, 0.002, 0.002, 0.002, 0.001, 0.001, 0.001, 0.001, 0.002, 0.001, 0.002, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.002, 0.001, 0.001, 0.001, 0.002, 0.002, 0.002, 0.001, 0.002, 0.001, 0.001, 0.001, 0.001, 0.001
+          0.000
         ],
 				[
-          0.077, 0.072, 0.070, 0.124, 0.071, 0.074, 0.071, 0.070, 0.069, 0.069, 0.069, 0.067, 0.068, 0.068, 0.068, 0.068, 0.069, 0.069, 0.069, 0.069, 0.069, 0.068, 0.072, 0.069, 0.070, 0.069, 0.067, 0.068, 0.068, 0.071, 0.085, 0.075, 0.070, 0.072, 0.068, 0.068, 0.067, 0.069, 0.069, 0.069
+          104.5
         ]
 			],
 		]}
 	/>
 </div>
-
-<details>
-
-|             | **AWS Lambda** | **AWS Lambda** | **Windmill N** | **Windmill N** | **Windmill DW** | **Windmill DW** |
-| **Task**    | **Created at** | **Returned at**| **Created at** | **Returned at**| **Created at**  | **Returned at** |
-|:-----------:|---------------:|---------------:|---------------:|---------------:|----------------:|----------------:|
-| **task_00** | 0.000          | 0.002          | 0.000          | 0.124          | 0.000           | 0.077           |
-| **task_01** | 0.169          | 0.171          | 0.125          | 0.248          | 0.079           | 0.150           |
-| **task_02** | 0.336          | 0.338          | 0.250          | 0.374          | 0.152           | 0.222           |
-| **task_03** | 0.501          | 0.503          | 0.375          | 0.498          | 0.223           | 0.347           |
-| **task_04** | 0.716          | 0.718          | 0.499          | 0.623          | 0.349           | 0.420           |
-| **task_05** | 0.890          | 0.892          | 0.624          | 0.747          | 0.421           | 0.495           |
-| **task_06** | 1.060          | 1.062          | 0.749          | 0.872          | 0.497           | 0.568           |
-| **task_07** | 1.236          | 1.238          | 0.873          | 0.997          | 0.569           | 0.639           |
-| **task_08** | 1.403          | 1.405          | 0.998          | 1.120          | 0.641           | 0.710           |
-| **task_09** | 1.568          | 1.570          | 1.122          | 1.245          | 0.711           | 0.780           |
-| **task_10** | 1.735          | 1.737          | 1.247          | 1.369          | 0.782           | 0.851           |
-| **task_11** | 1.909          | 1.911          | 1.370          | 1.494          | 0.852           | 0.920           |
-| **task_12** | 2.080          | 2.082          | 1.495          | 1.619          | 0.921           | 0.989           |
-| **task_13** | 2.255          | 2.257          | 1.620          | 1.743          | 0.991           | 1.058           |
-| **task_14** | 2.427          | 2.429          | 1.744          | 1.868          | 1.060           | 1.128           |
-| **task_15** | 2.594          | 2.596          | 1.870          | 1.992          | 1.129           | 1.197           |
-| **task_16** | 2.766          | 2.768          | 1.994          | 2.116          | 1.199           | 1.267           |
-| **task_17** | 2.939          | 2.941          | 2.117          | 2.239          | 1.269           | 1.338           |
-| **task_18** | 3.107          | 3.109          | 2.241          | 2.311          | 1.339           | 1.408           |
-| **task_19** | 3.276          | 3.278          | 2.313          | 2.435          | 1.409           | 1.478           |
-| **task_20** | 3.443          | 3.445          | 2.437          | 2.507          | 1.480           | 1.549           |
-| **task_21** | 3.608          | 3.610          | 2.508          | 2.630          | 1.550           | 1.619           |
-| **task_22** | 3.777          | 3.779          | 2.632          | 2.701          | 1.620           | 1.692           |
-| **task_23** | 3.948          | 3.950          | 2.703          | 2.826          | 1.694           | 1.763           |
-| **task_24** | 4.120          | 4.122          | 2.827          | 2.953          | 1.764           | 1.834           |
-| **task_25** | 4.287          | 4.289          | 2.954          | 3.077          | 1.835           | 1.904           |
-| **task_26** | 4.456          | 4.458          | 3.078          | 3.201          | 1.906           | 1.973           |
-| **task_27** | 4.624          | 4.626          | 3.202          | 3.324          | 1.974           | 2.042           |
-| **task_28** | 4.799          | 4.801          | 3.325          | 3.447          | 2.043           | 2.111           |
-| **task_29** | 4.967          | 4.969          | 3.449          | 3.570          | 2.113           | 2.184           |
-| **task_30** | 5.137          | 5.139          | 3.572          | 3.694          | 2.186           | 2.271           |
-| **task_31** | 5.306          | 5.308          | 3.695          | 3.765          | 2.273           | 2.347           |
-| **task_32** | 5.479          | 5.481          | 3.767          | 3.889          | 2.349           | 2.419           |
-| **task_33** | 5.646          | 5.648          | 3.891          | 4.015          | 2.420           | 2.492           |
-| **task_34** | 5.816          | 5.818          | 4.016          | 4.138          | 2.493           | 2.562           |
-| **task_35** | 5.983          | 5.985          | 4.140          | 4.262          | 2.563           | 2.631           |
-| **task_36** | 6.154          | 6.158          | 4.263          | 4.385          | 2.632           | 2.699           |
-| **task_37** | 6.327          | 6.329          | 4.387          | 4.510          | 2.700           | 2.769           |
-| **task_38** | 6.499          | 6.501          | 4.511          | 4.635          | 2.770           | 2.839           |
-| **task_39** | 6.669          | 6.671          | 4.636          | 4.760          | 2.840           | 2.909           |
-
-</details>
 
 ## Conclusion
 
+For running a high number of lightweight tasks (`fibonacci(10)`), we can see that Windmill in dedicated worker mode is the fastest. Windmill in normal mode is slower because it runs a cold start for each task.
+For long running tasks (`fibonacci(33)`), Windmill in normal mode and dedicated worker mode is almost equivalent because the warm-up time needed in normal mode is negligible compared to the duration of tasks. AWS Lambda has slightly better performance for those kind of tasks, likely because it is able to run the core of the Python logic faster than Windmill.

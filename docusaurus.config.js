@@ -17,7 +17,7 @@ const config = {
 	projectName: 'windmill',
 
 	customFields: {
-		inkeepCredentials:{
+		inkeepCredentials: {
 			apiKey: '8ce4bf9ddc2ef8bc9ec53f133fd864292678e2d2e41872a0',
 			integrationId: 'clnxmt23j0001s6015xw7mzmo',
 			organizationId: 'org_eifr1ohM9oAxET8B'
@@ -59,7 +59,8 @@ const config = {
 				},
 				blog: {
 					// 	showReadingTime: true
-					blogSidebarCount: 0
+					blogSidebarCount: 0,
+					postsPerPage: 9
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
@@ -153,6 +154,14 @@ const config = {
 						position: 'right'
 					}
 				]
+			},
+			announcementBar: {
+				id: 'support_us',
+				content:
+					'<a href="/blog/launch-week-1">Windmill Launch Week #1 Starting Monday November 20, new features every day!</a>',
+				backgroundColor: '#0f766e',
+				textColor: '#fff',
+				isCloseable: false
 			},
 			prism: {
 				theme: lightCodeTheme,

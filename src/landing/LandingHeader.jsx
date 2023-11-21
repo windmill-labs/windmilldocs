@@ -8,7 +8,7 @@ import { SiDiscord } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 import SearchBarWrapper from '../theme/SearchBar';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Banner from './Banner';
 
 const resources = [
 	{
@@ -48,13 +48,7 @@ export default function LandingHeader() {
 
 	return (
 		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
-			<div className="flex items-center gap-x-6 bg-gray-900 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
-				<a href="#" className="text-sm leading-6 !text-white flex flex-row gap-2 items-center">
-					<strong class="font-semibold">Windmill Launch week #1</strong>
-					Join us next week for many exciting announcements! <ArrowRight size={12} />
-				</a>
-				<div class="flex flex-1 justify-end"></div>
-			</div>
+			<Banner />
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<a

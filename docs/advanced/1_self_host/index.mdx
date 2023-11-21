@@ -13,6 +13,10 @@ For larger and production use-cases, use our [Helm chart](#helm-chart) to deploy
 
 ![Self-hosted Windmill](./self_hosted_windmill.png 'Self-hosted Windmill')
 
+> Example of self-hosted Windmill on [localhost](#docker).
+
+<br/>
+
 Windmill itself just requires 3 elements:
 
 - A Postgres database, which contains the entire state of Windmill, including the job queue.
@@ -169,7 +173,7 @@ The default docker-compose file exposes the caddy reverse-proxy on port 80 above
 
 #### Use provided Caddy to serve https
 
-For simplicity, we recommend using an external reverse proxy such as Cloudfront or Cloudflare and point to your instance on the port you have chosen (by default, :80). 
+For simplicity, we recommend using an external reverse proxy such as Cloudfront or Cloudflare and point to your instance on the port you have chosen (by default, :80).
 
 However, Caddy also supports HTTPS natively via its [tls](https://caddyserver.com/docs/caddyfile/directives/tls) directive. Multiple options are available. Caddy can obtain certificates automatically using the ACME protocol, a provided CA file, or even a custom HTTP endpoint. The simplest is to provide your own certifcate and key files. You can do so by mounting an additional volume containing those two files to the Caddy container and adding a `tls /path/to/cert.pem /path/to/key.pem` directive to the Caddy file. Make sure to expose the port `:443` instead of `:80` and Caddy will take care of the rest.
 
@@ -294,11 +298,11 @@ Windmill stores all of its state in PostgreSQL and it is enough to reset the dat
 Hence, in the setup above, to reset your Windmill instance, it is enough to reset the PostgreSQL volumes. Run:
 
 ```
-docker-compose down --volumes
+docker compose down --volumes
 docker volume rm -f windmill_db_data
 ```
 
-and then `docker compose up`.
+and then `docker compose up -d`.
 
 ## Helm Chart
 
@@ -422,6 +426,7 @@ SMTP_PASSWORD=your_app_password
 Make sure to replace `your_email@gmail.com` with your actual Gmail email address and `your_app_password` with the app password you've generated from Gmail.
 
 {' '}
+
 <br />
 
 > **Note**: If you're using Gmail, you'll need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en) to use as `SMTP_PASSWORD`. This is a unique password that Gmail provides for apps and services that want to connect to your account.
