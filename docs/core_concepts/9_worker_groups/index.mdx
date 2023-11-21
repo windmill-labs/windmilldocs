@@ -2,21 +2,22 @@ import DocCard from '@site/src/components/DocCard';
 
 # Workers and Worker Groups
 
-Workers are autonomous processes that run one script at a time using the full
-machines resources available to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md).
+Workers are autonomous processes that run one script at a time using the entire cpu and memory available
+to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md).
 
-Workers pull [jobs](../20_jobs/index.md) from the queue of jobs in the order of their
+Workers pull [jobs](../20_jobs/index.mdx) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
 a job, it atomically sets its state to "running", runs it, streams its logs then
-once it is complete, saves it back in the database as a "complete job". The
-final result and logs are stored forever.
+once it is finished, the final result and logs are stored for as long as the retention period allows. Logs are optionally stored to s3.
 
 The number of workers can be horizontally scaled up or down depending on needs
 without any overhead.
 
 Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms.
 
-Managing workers is useful for mastering Windmill in depth by assigning different nodes to jobs.
+Managing workers is useful for mastering Windmill in depth by assigning different nodes to jobs. By default, every worker is the same and interchangeable.
+However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically.
+To that end, we introduce the concept of "worker groups".
 
 In the [Community Edition](../../misc/7_plans_details/index.mdx), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
 
@@ -24,14 +25,13 @@ In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can b
 
 Worker group configuration infographics:
 
-![Worker group config infographics](./wg_config_infographics.png "Worker group config infographics")
+<img src={require("./wg_config_infographics.png").default} alt="Worker group config infographics" title="Worker group config infographics" width="75%" />
 
 <br/>
 
 Tags and Queues infographics:
 
-![Tags and Queues infographics](./tags_and_queues.png "Tags and Queues infographics")
-
+<img src={require("./tags_and_queues.png").default} alt="Tags and Queues infographics" title="Tags and Queues infographics" width="75%" />
 
 ## Assign custom Worker Groups
 
@@ -111,13 +111,13 @@ See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow 
 
 In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups (a single worker can be in several groups), groups for which you can manage the tags, assignment to a single script, or the worker init scripts, from the UI.
 
-Just write the name of your worker group and pick "New worker group config".
+Pick "New worker group config" and just write the name of your worker group.
 
-![New worker group config](./new_worker_group_config.png "New worker group config")
+![New worker group config](../../../static/images/new_worker_group_config.png "New worker group config")
 
 You can then configure it directly from the UI.
 
-![Worker group config](./worker_group_config.png "Worker group config")
+![Worker group config](../../../static/images/worker_group_config.png "Worker group config")
 
 
 ### How to have a Worker join a Worker Group

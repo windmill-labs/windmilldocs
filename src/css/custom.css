@@ -351,7 +351,6 @@ div.testimonials a:hover .wm-name {
 	width: 100%;
 	height: 100%;
 }
-
 .theme-back-to-top-button {
 	bottom: 5.3rem !important;
 }
@@ -363,4 +362,37 @@ div.testimonials a:hover .wm-name {
 
 .flex-container .logo {
     margin-left: 8px;
+}
+
+
+.generic-workers-image {
+	background-image: url('/static/images/generic_workers.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 600px;
+}
+
+[data-theme='dark'] .generic-workers-image {
+	background-image: url('/static/images/generic_workers_dark.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 600px;
+}
+
+.dedicated-workers-image {
+	background-image: url('/static/images/dedicated_workers.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 600px;
+}
+
+[data-theme='dark'] .dedicated-workers-image {
+	background-image: url('/static/images/dedicated_workers_dark.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 600px;
 }

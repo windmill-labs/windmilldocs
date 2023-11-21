@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Jobs
 
 A job represents a past, present or future "task" or "work" to be executed by a
@@ -13,6 +15,29 @@ then once completed remove them from the queue and create a new "completed job".
 Every job has a unique UUID attached to it and as long as you have visibility
 over the execution of the script, you are able to inspect the execution logs,
 output and metadata in the dedicated details page of the job.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+    	title="Workers and Worker Groups"
+    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+    	href="/docs/core_concepts/worker_groups"
+    />
+	<DocCard
+		title="Dedicated Workers / High Throughput"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+  <DocCard
+		title="Worker Groups Management UI"
+		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+	<DocCard
+		title="Init Scripts"
+		description="Init Scripts are executed at the beginning when the worker starts."
+		href="/docs/advanced/preinstall_binaries#init-scripts"
+	/>
+</div>
 
 ## Job kinds
 
