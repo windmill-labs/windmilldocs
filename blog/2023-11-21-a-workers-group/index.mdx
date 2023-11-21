@@ -24,8 +24,8 @@ Today we are unveiling features related to workers.
 [Workers](/docs/core_concepts/worker_groups) are the foundation of Windmill. They are autonomous processes that run one script at a time using the entire cpu and memory available to them.
 
 We are proud to announce:
-1. Worker groups to share configurations to your workers, especially to allocate the execution of certain scripts or flows according to their priority (this article).
-2. Why we are the fastest self-hostable workflow engine (other release).
+1. Worker groups to share configurations to your workers, assign them to listen to particular queues of jobs (and optionally assign priorities) or to change their pre-installed binaries on the fly
+2. Dedicated workers for scripts (other release)
 
 Worker groups are managed from the UI and are hot reloaded.
 
@@ -46,6 +46,31 @@ Examples of configurations include:
 - [Dedicate your worker to a specific script or flow](#dedicate-your-worker-to-a-specific-script-or-flow), for high throughput.
 
 Once the configurations are done from the Windmill UI, the workers take their configuration dynamically, without having to restart.
+
+### How do I spawn workers and assign them to a worker group
+
+It is sufficient to pass `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group. Windmill's responsability is not to spawn the worker itself but to play well with existing service orchestrator such as kubernetes, ecs, nomad or docker compose, and any IaC. In those, you define the number of replicas (which can be auto-scaled up or down), the resource to allocate to those workers and the `WORKER_GROUP` passed as env. Upon start, those workers will automatically join their worker group and fetch their configurations (including init scripts from there). They will also listen for changes on the worker group configuration for hot reloading.
+
+Here is an example of a worker group specification in docker-compose:
+
+```yaml
+  windmill_worker_highmem:
+    image: ghcr.io/windmill-labs/windmill-ee:main
+    pull_policy: always
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "1"
+          memory: 4096M
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=worker
+      - WORKER_GROUP=highmem
+```
+
+Assign replicas, resource constraints, and that's it! Worker only require a database url and can thus be spawned in separate vpcs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
 
 ### Assign different jobs to specific worker groups
 
