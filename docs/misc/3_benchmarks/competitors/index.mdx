@@ -1,11 +1,18 @@
 import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
+import ScatterChart from '@site/src/components/ScatterChart';
 
 # Airflow vs Prefect vs Temporal vs Windmill
 
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
-		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		labels={[
+			['Airflow'],
+			['Prefect'],
+			['Temporal'],
+			['Windmill', 'Normal'],
+			['Windmill', 'Dedicated Worker']
+		]}
 		rawData={[
 			[
 				[
@@ -841,7 +848,13 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
-		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		labels={[
+			['Airflow'],
+			['Prefect'],
+			['Temporal'],
+			['Windmill', 'Normal'],
+			['Windmill', 'Dedicated Worker']
+		]}
 		rawData={[
 			[
 				[4.347, 2.78, 1.975, 1.708, 1.832, 2.202, 2.641, 2.44, 2.179, 4.292],
@@ -870,7 +883,13 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
-		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		labels={[
+			['Airflow'],
+			['Prefect'],
+			['Temporal'],
+			['Windmill', 'Normal'],
+			['Windmill', 'Dedicated Worker']
+		]}
 		rawData={[
 			[
 				[
@@ -1031,22 +1050,22 @@ After looking at the macro numbers above, it's interesting to compare the time s
 For the 10 long running tasks flow, we see the following:
 
 |                    | **Airflow** | **Prefect** | **Temporal** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
-| :----------------: | ----------: | ----------: | -----------: | ------------------: | --------------: |
-| **Total duration** | 0:00:54.668 | 0:00:15.489 |  0:00:13.434 |         0:00:08.351 |     0:00:07.885 |
-|  **Assignement**   |      40.36% |       9.77% |        0.71% |               0.47% |           0.55% |
-|   **Execution**    |      51.72% |      88.18% |       97.74% |              93.17% |          93.46% |
-|   **Transition**   |       7.93% |       2.05% |        1.55% |               6.36% |           6.00% |
+| :----------------: | ----------: | ----------: | -----------: | -----------------------: | ---------------------------------: |
+| **Total duration** | 0:00:54.668 | 0:00:15.489 |  0:00:13.434 |              0:00:08.351 |                        0:00:07.885 |
+|  **Assignement**   |      40.36% |       9.77% |        0.71% |                    0.47% |                              0.55% |
+|   **Execution**    |      51.72% |      88.18% |       97.74% |                   93.17% |                             93.46% |
+|   **Transition**   |       7.93% |       2.05% |        1.55% |                    6.36% |                              6.00% |
 
 The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow and Prefect are spending a lot of time assigning the tasks compared to the two others (When we look at the actual numbers, we see that both Prefect and Airflow are spending a lot of time assigning the first tasks, but after that, assignment duration decrease. Airflow remain relatively slow though, and Prefect reaches decent performance. The exact same can be observed with the 40 tasks workflow below). Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
 
 If we look at the 40 lightweight tasks flow, we have:
 
 |                    | **Airflow** | **Prefect** | **Temporal** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
-| :----------------: | ----------: | ----------: | -----------: | ------------------: | :-------------: |
-| **Total duration** | 0:01:56.221 | 0:00:04.872 |  0:00:02.967 |         0:00:04.300 |     0:00:02.429 |
-|  **Assignement**   |      64.63% |      44.62% |       35.58% |               3.42% |           5.89% |
-|   **Execution**    |      10.77% |      31.73% |       11.26% |              44.19% |           3.42% |
-|   **Transition**   |      24.60% |      23.65% |       53.16% |              52.40% |          90.70% |
+| :----------------: | ----------: | ----------: | -----------: | -----------------------: | :--------------------------------: |
+| **Total duration** | 0:01:56.221 | 0:00:04.872 |  0:00:02.967 |              0:00:04.300 |            0:00:02.429             |
+|  **Assignement**   |      64.63% |      44.62% |       35.58% |                    3.42% |               5.89%                |
+|   **Execution**    |      10.77% |      31.73% |       11.26% |                   44.19% |               3.42%                |
+|   **Transition**   |      24.60% |      23.65% |       53.16% |                   52.40% |               90.70%               |
 
 Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the worker. However, it's by far the fastest assigning tasks to executors. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time transitioning from one task to the next one.
 
@@ -1073,6 +1092,50 @@ Finally, we've ran it in Windmill Dedicated Worker mode, and we used a specific 
 
 The results are the following:
 
+<div class="grid">
+	<ScatterChart
+		title="Job throughput at scale"
+		xTitle="Number of workers"
+		yTitle="Jobs / second"
+		rawData={[
+			{
+				x: 2,
+				y: 19.9
+			},
+			{
+				x: 6,
+				y: 59.8
+			},
+			{
+				x: 10,
+				y: 99.6
+			},
+			{
+				x: 20,
+				y: 198
+			},
+			{
+				x: 40,
+				y: 361
+			},
+			{
+				x: 60,
+				y: 591
+			},
+			{
+				x: 80,
+				y: 786
+			},
+			{
+				x: 100,
+				y: 981
+			}
+		]}
+	/>
+</div>
+
+<details>
+
 | **Number of workers** | **Throughput (jobs/sec) batch of 10K jobs** |
 | --------------------- | ------------------------------------------- |
 | 2                     | 19.9                                        |
@@ -1085,4 +1148,3 @@ The results are the following:
 | 100                   | 981                                         |
 
 This proves that Windmill scales linearly with the number of workers (at least up to 100 workers). We also notice that that the throughput is close to the optimal: given that the job takes 100ms to be executed, N workers processing the jobs in parallel can't go above `N*100` jobs per seconds, and Windmill is pretty close.
-
