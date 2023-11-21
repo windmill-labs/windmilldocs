@@ -86,8 +86,7 @@ export default function BarChart({ title, labels, rawData, maintainAspectRatio =
 		}
 	};
 
-	let t = 0;
-	let dt = 0.5;
+	let dt = 0.2;
 	let iter = 1;
 
 	const sums: number[] = [0, 0, 0, 0, 0];
@@ -125,7 +124,6 @@ export default function BarChart({ title, labels, rawData, maintainAspectRatio =
 						chart.data.datasets = datasets_data;
 						console.log('chart.data.datasets', chart.data.datasets);
 						chart.update();
-
 						clearInterval(interval);
 					} else {
 						iter += 1;
