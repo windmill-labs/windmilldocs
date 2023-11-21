@@ -1,30 +1,27 @@
 ---
 authors: [guillaumebouv]
-tags:
-  [
-    'Launch week',
-    'Worker Groups'
-  ]
+tags: ['Launch week', 'Worker Groups']
 image: ./worker_groups_configuration_thumbnail.png
 slug: /launch-week-1/worker-groups
-description: "Set shared configurations to your workers."
+description: 'Set shared configurations to your workers.'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
 # Launch Week Day 2 - Worker Groups Management UI & Hot Reloading
 
-<br/>
+<br />
 
-![Worker Groups Configuration thumbnail](./worker_groups_configuration_thumbnail.png "Worker Groups Configuration thumbnail")
+![Worker Groups Configuration thumbnail](./worker_groups_configuration_thumbnail.png 'Worker Groups Configuration thumbnail')
 
 Welcome to the second day of Windmill's first launch week. To follow all the announcements made this week, please go to the [Launch Week #1](https://www.windmill.dev/blog/launch-week-1) page.
 
 Today we are unveiling features related to workers.
-[Workers](/docs/core_concepts/worker_groups) are the foundation of Windmill. They are autonomous processes that run one script at a time using the entire cpu and memory available to them.
+[Workers](/docs/core_concepts/worker_groups) are the foundation of Windmill. They are autonomous processes that run one script at a time using the entire CPU and memory available to them.
 
 We are proud to announce:
-1. Worker groups to share configurations to your workers, assign them to listen to particular queues of jobs (and optionally assign priorities) or to change their pre-installed binaries on the fly
+
+1. Worker groups to share configurations between workers, assign them to listen to particular queues of jobs (and optionally assign priorities) or change their pre-installed binaries on the fly
 2. Dedicated workers for scripts (other release)
 
 Worker groups are managed from the UI and are hot reloaded.
@@ -41,62 +38,73 @@ To that end, we introduce the concept of "worker groups".
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
 Examples of configurations include:
+
 - [Assign different jobs to specific worker groups](#assign-different-jobs-to-specific-worker-groups) by giving them tags.
 - [Set an init script](#set-an-init-script) that will run at the start of the workers (e.g. to pre-install binaries).
-- [Dedicate your worker to a specific script or flow](#dedicate-your-worker-to-a-specific-script-or-flow), for high throughput.
+- [Dedicate your worker to a specific script or flow](#dedicate-your-worker-to-a-specific-script-or-flow) for high throughput.
 
-Once the configurations are done from the Windmill UI, the workers take their configuration dynamically, without having to restart.
+Once the configurations are done in the Windmill UI, the workers take their configuration dynamically, without having to manually restart them.
 
 ### How do I spawn workers and assign them to a worker group
 
-It is sufficient to pass `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group. Windmill's responsability is not to spawn the worker itself but to play well with existing service orchestrator such as kubernetes, ecs, nomad or docker compose, and any IaC. In those, you define the number of replicas (which can be auto-scaled up or down), the resource to allocate to those workers and the `WORKER_GROUP` passed as env. Upon start, those workers will automatically join their worker group and fetch their configurations (including init scripts from there). They will also listen for changes on the worker group configuration for hot reloading.
+It is sufficient to pass `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group. Windmill's responsibility is not to spawn the worker itself but to play well with existing service orchestrator such as Kubernetes, ECS, Nomad or Docker Compose, and any IaC. In those, you define the number of replicas (which can be auto-scaled up or down), the resource to allocate to those workers and the `WORKER_GROUP` passed as env. Upon start, those workers will automatically join their worker group and fetch their configurations (including init scripts). They will also listen for changes on the worker group configuration for hot reloading.
 
 Here is an example of a worker group specification in docker-compose:
 
 ```yaml
-  windmill_worker_highmem:
-    image: ghcr.io/windmill-labs/windmill-ee:main
-    pull_policy: always
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: "1"
-          memory: 4096M
-    restart: unless-stopped
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - MODE=worker
-      - WORKER_GROUP=highmem
+windmill_worker_highmem:
+  image: ghcr.io/windmill-labs/windmill-ee:main
+  pull_policy: always
+  deploy:
+    replicas: 2
+    resources:
+      limits:
+        cpus: '1'
+        memory: 4096M
+  restart: unless-stopped
+  environment:
+    - DATABASE_URL=${DATABASE_URL}
+    - MODE=worker
+    - WORKER_GROUP=highmem
 ```
 
-Assign replicas, resource constraints, and that's it! Worker only require a database url and can thus be spawned in separate vpcs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
+Assign replicas, resource constraints, and that's it! Worker only require a database URL and can thus be spawned in separate VPCs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
 
 ### Assign different jobs to specific worker groups
 
-[By giving tags to workers](/docs/core_concepts/worker_groups#how-to-assign-worker-tags-to-a-worker-group) will change their behavior to only listen to those same tags in the job queue to be executed.
-On the script side, you have to assign those tags which will be posted to the jobs and directly assigned to the worker groups corresponding to the tag.
+[Giving tags to workers](/docs/core_concepts/worker_groups#how-to-assign-worker-tags-to-a-worker-group) will change their behavior to only pull and execute jobs with those tags from the queue.
+When writing a script that should be executed on a specific worker group, you have to add at least one tag the worker group is listening for.
 
-<img src={require("../../docs/core_concepts/9_worker_groups/tags_and_queues.png").default} alt="Tags & Queues" title="Tags & Queues" width="75%" />
+<img
+	src={require('../../docs/core_concepts/9_worker_groups/tags_and_queues.png').default}
+	alt="Tags & Queues"
+	title="Tags & Queues"
+	width="75%"
+/>
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Worker Groups and Tags"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Worker Groups and Tags"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 </div>
 
 ### Set an init script
 
-[Setting an init script](/docs/advanced/preinstall_binaries#init-scripts) to a worker group configuration will automatically trigger a Bash script whenever the workers are started.
+[Setting an init script](/docs/advanced/preinstall_binaries#init-scripts) to a worker group configuration will automatically trigger a Bash script every time the workers are started.
 This approach offers added convenience to pre-install binaries or set initial configurations without the need to modify the base image.
 
-<img src={require("../../docs/advanced/8_preinstall_binaries/init_scripts.png").default} alt="Init Script" title="Init Script" width="75%" />
+<img
+	src={require('../../docs/advanced/8_preinstall_binaries/init_scripts.png').default}
+	alt="Init Script"
+	title="Init Script"
+	width="75%"
+/>
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -112,9 +120,14 @@ This approach offers added convenience to pre-install binaries or set initial co
 They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
-<img src={require("../../docs/core_concepts/25_dedicated_workers/infographic.png").default} alt="Dedicated workers" title="Dedicated workers" width="75%" />
+<img
+	src={require('../../docs/core_concepts/25_dedicated_workers/infographic.png').default}
+	alt="Dedicated workers"
+	title="Dedicated workers"
+	width="75%"
+/>
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -131,31 +144,31 @@ It is as simple as that and means that workers can be scaled horizontally.
 
 The configuration of worker groups is done from the Windmill UI's [Workers page](/docs/core_concepts/worker_groups), pick "New worker group config" and just write the name of your worker group.
 
-![New worker group config](../../static/images/new_worker_group_config.png "New worker group config")
+![New worker group config](../../static/images/new_worker_group_config.png 'New worker group config')
 
 You can then configure it directly from the UI and in particular set tags to listen to, define an init script or dedicate it to a script.
 
-![Worker group config](../../static/images/worker_group_config.png "Worker group config")
+![Worker group config](../../static/images/worker_group_config.png 'Worker group config')
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
 ## Learn more
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
-	  <DocCard
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
+	<DocCard
 		title="Worker Groups Management UI"
 		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
 		href="/docs/misc/worker_group_management_ui"
