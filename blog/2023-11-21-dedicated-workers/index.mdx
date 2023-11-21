@@ -20,7 +20,7 @@ Execute jobs targeting a script much faster than normal workers.
 
 ## Workers in Windmill
 
-[Workers](/docs/core_concepts/worker_groups) serve as the backbone of Windmill. Workers are autonomous processes that run one script at a time using the full machines resources available to them.
+[Workers](/docs/core_concepts/worker_groups) serve as the backbone of Windmill. Workers are autonomous processes that run one script at a time using the full cpu and memory available to them.
 
 To put it simply, workers are responsible for executing code in Windmill. A single normal worker in Windmill is capable of handling up to 26 million tasks a month, with each task taking roughly 100ms.  You can easily scale the number of workers horizontally without incurring extra overhead.
 
@@ -32,7 +32,7 @@ This latency amounts to around a dozen milliseconds, which can be crucial in the
 
 <div class="generic-workers-image"/>
 
-## Dedicated Workers
+## Dedicated Workers for scripts
 
 Dedicated workers allow you to remove completely the cold start for selected scripts.
 [Dedicated Workers](/docs/core_concepts/dedicated_workers) are workers that are dedicated to a particular script.
@@ -42,6 +42,12 @@ They are **as fast as running the same logic in a while-loop processing requests
 <div class="dedicated-workers-image"/>
 
 <br/>
+
+### What about AWS Lambda
+
+It is faster than AWS lambda: https://www.windmill.dev/docs/misc/benchmarks/aws_lambda
+
+### For Python and Typescript
 
 Dedicated workers work with Typescript and Python scripts, they have the highest cold starts. Queries to databases such as PostgreSQL, MySQL, BigQuery, or bash and go scripts do not suffer from any cold starts and hence have the same benefits already without any compexity.
 
