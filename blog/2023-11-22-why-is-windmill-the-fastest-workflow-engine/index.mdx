@@ -1,0 +1,328 @@
+---
+title: Launch Week Day 3 - Fastest self-hostable open-source workflow engine
+authors: [rubenfiszel]
+tags: ['Launch week', 'Workflow Engine']
+image: ./fastest_thumbnail.png
+slug: launch-week-1/fastest-workflow-engine
+description: 'Why is Windmill the fastest self-hostable workflow engine and job processing framework'
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Windmill is the fastest self-hostable open-source workflow engine
+
+![Fastest Workflow Engine](./fastest_thumbnail.png 'Fastest Workflow Engine')
+
+_Big claim today: We've benchmarked Windmill to be the fastest self-hostable generic workflow engine among Airflow, Prefect and even Temporal. For Airflow, there is a quite a margin, up to 10x faster!_
+
+import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
+import ScatterChart from '@site/src/components/ScatterChart';
+
+## Fastest self-hostable open-source workflow engine
+
+<div class="grid">
+	<TaskDurationBarChart
+		title="40 lightweight tasks"
+		labels={[
+			['Airflow'],
+			['Prefect'],
+			['Temporal'],
+			['Windmill', 'Normal'],
+			['Windmill', 'Dedicated Worker']
+		]}
+		rawData={[
+			[
+				[
+					4.335, 3.959, 2.194, 2.192, 1.68, 1.965, 2.377, 2.259, 2.39, 2.6, 2.401, 4.888, 5.118,
+					1.64, 2.396, 2.196, 2.488, 1.853, 1.513, 2.575, 2.218, 2.316, 1.933, 2.176, 2.976, 5.192,
+					1.684, 2.361, 2.218, 1.409, 2.591, 2.192, 2.328, 2.464, 2.88, 2.394, 2.046, 1.537, 4.988,
+					2.784
+				],
+				[
+					0.417, 0.213, 0.203, 0.22, 0.209, 0.262, 0.205, 0.268, 0.209, 0.477, 0.322, 0.817, 0.207,
+					0.253, 0.201, 0.226, 0.212, 0.199, 0.207, 0.435, 0.355, 0.408, 0.431, 0.247, 0.461, 0.717,
+					0.237, 0.246, 0.194, 0.205, 0.421, 0.312, 0.421, 0.25, 0.251, 0.206, 0.352, 0.21, 0.604,
+					0.223
+				]
+			],
+			[
+				[
+					1.213, 0.064, 0.061, 0.059, 0.054, 0.053, 0.053, 0.054, 0.055, 0.056, 0.057, 0.064, 0.052,
+					0.056, 0.056, 0.058, 0.052, 0.051, 0.054, 0.053, 0.053, 0.055, 0.052, 0.054, 0.062, 0.051,
+					0.051, 0.052, 0.051, 0.048, 0.055, 0.057, 0.049, 0.048, 0.055, 0.05, 0.051, 0.05, 0.053,
+					0.054
+				],
+				[
+					0.044, 0.041, 0.04, 0.036, 0.035, 0.038, 0.037, 0.061, 0.039, 0.038, 0.04, 0.038, 0.038,
+					0.041, 0.039, 0.043, 0.035, 0.035, 0.035, 0.038, 0.037, 0.036, 0.036, 0.038, 0.039, 0.034,
+					0.035, 0.037, 0.034, 0.083, 0.035, 0.034, 0.033, 0.034, 0.038, 0.034, 0.034, 0.035, 0.035,
+					0.034
+				]
+			],
+			[
+				[
+					0.009, 0.028, 0.027, 0.029, 0.029, 0.029, 0.03, 0.03, 0.032, 0.028, 0.028, 0.028, 0.029,
+					0.041, 0.029, 0.029, 0.077, 0.09, 0.091, 0.093, 0.092, 0.09, 0.092, 0.091, 0.091, 0.091,
+					0.091, 0.09, 0.091, 0.093, 0.09, 0.093, 0.092, 0.091, 0.09, 0.092, 0.091, 0.091, 0.091,
+					0.092
+				],
+				[
+					0.007, 0.008, 0.008, 0.008, 0.007, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008,
+					0.008, 0.009, 0.009, 0.009, 0.009, 0.008, 0.008, 0.009, 0.008, 0.009, 0.009, 0.009, 0.009,
+					0.009, 0.008, 0.009, 0.009, 0.008, 0.009, 0.009, 0.009, 0.009, 0.009, 0.009, 0.009, 0.008,
+					0.008
+				]
+			],
+			[
+				[
+					0.004, 0.063, 0.061, 0.062, 0.061, 0.061, 0.061, 0.061, 0.062, 0.062, 0.061, 0.061, 0.065,
+					0.063, 0.06, 0.064, 0.062, 0.061, 0.062, 0.062, 0.06, 0.062, 0.06, 0.062, 0.06, 0.063,
+					0.062, 0.061, 0.061, 0.06, 0.061, 0.06, 0.061, 0.061, 0.061, 0.062, 0.06, 0.062, 0.06,
+					0.062
+				],
+				[
+					0.048, 0.048, 0.048, 0.048, 0.047, 0.047, 0.047, 0.046, 0.05, 0.049, 0.047, 0.047, 0.056,
+					0.052, 0.047, 0.045, 0.046, 0.047, 0.047, 0.05, 0.05, 0.047, 0.046, 0.046, 0.046, 0.046,
+					0.046, 0.047, 0.046, 0.046, 0.047, 0.046, 0.046, 0.046, 0.046, 0.048, 0.049, 0.049, 0.047,
+					0.048
+				]
+			],
+			[
+				[
+					0.003, 0.06, 0.059, 0.06, 0.061, 0.061, 0.06, 0.059, 0.061, 0.061, 0.06, 0.06, 0.061,
+					0.061, 0.062, 0.059, 0.06, 0.06, 0.06, 0.058, 0.06, 0.059, 0.06, 0.059, 0.06, 0.059,
+					0.061, 0.061, 0.061, 0.06, 0.059, 0.061, 0.06, 0.06, 0.06, 0.06, 0.059, 0.061, 0.061,
+					0.059
+				],
+				[
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002,
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.004, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002,
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.003, 0.002, 0.002, 0.002,
+					0.002
+				]
+			]
+		]}
+	/>
+</div>
+
+[Benchmarking data and dedicated methodology documentation](https://www.Windmill.dev/docs/misc/benchmarks/competitors)
+
+You've known Windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
+
+It was important for us to be transparent and you can find the whole benchmark methodology here:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Benchmarks"
+		description="Comparing performance of Airflow, Prefect, Temporal and Windmill for 2 representative usecases."
+		href="/docs/misc/benchmarks/competitors"
+	/>
+</div>
+
+Enjoy the reading.
+
+## A more scoped crown
+
+Before you raise your pitchforks, let's unpack our claim a bit, we are not claiming to be necessarily faster than your specialized,
+hand-built workflow engine written on top of the amazing [BEAM](<https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)>)
+(from which we took inspiration) but rather only among the "all-inclusive", self-hostable workflow engines. We recognize 3 main ones today:
+
+- Airflow
+- Prefect
+- Temporal
+
+There are tons of workflow engines, but not many of them are generic enough to support arbitrary workloads of jobs defined in code,
+and even those have restrictions: Airflow and Prefect only supports Python. Windmill on the other hand supports: Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql.
+Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to.
+Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
+
+One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
+
+## Should Temporal even be there?
+
+Temporal doesn't actually manage the [workers but only the tasks queues](https://docs.Temporal.io/workers). So even after having written your Temporal workflow, you will still need to manage your workers separately.
+To some degree, Temporal is not a workflow engine but a specialized durable execution engine. Windmill also supports reactivity (aka waiting for event) and can be qualified as a durable execution engine as well.
+That being said, Temporal is amazing at what it does and if there are overlap between Windmill and Temporal, there are clearly use-cases where you should use Temporal rather than Windmill,
+as the backbone of your micro-services async patterns at the scale of Uber for instance. On the other hand, sending arbitrary jobs to an internal cluster is out-of-scope for Temporal as you will still need to painfully deploy "Worker Programs" beforehand.
+
+:::info
+
+We leave analytics/ETL engine such as Spark or Dagster out of it for today as they are not workflow engines _per se_ even if they are built on top of ones.
+
+ETL and analytics workflows will be covered later this week, and you will find that Windmill offers best-in-class performance for analytics workloads leveraging s3, duckdb and polars
+
+:::
+
+## Workflow Engine vs Job queues
+
+Job Queues are at the core of Workflow Engines and constitute the crux of any background job processing.
+There are already plenty of great queues implementation under the form of managed services (SQS), distributed scalable services (kafka) and software (e.g: Redis with rmsq) or libraries (Orban).
+They are mostly sufficient to use by themselves and many developers will find satisfaction avoiding a workflow engine
+altogether by building their own logic around a job queue. This is akin to writing your own specialized workflow engine.
+
+## What is a workflow engine, and what constitutes an "all-inclusive" workflow engine
+
+First some definitions, a workflow is a directed acyclic graph [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of nodes that represent job specifications.
+A workflow engine is a distributed system that takes a workflow and orchestrate it to completion on workers while respecting among others all the dependency constraints of each jobs.
+There exists a great variety of kind of workflows and many softwares are domain specific workflow engine and workflow specs (if you are a software engineer, you probably already wrote one without realizing it).
+
+What will interest us here are workflows that can run arbitrary code in at least one major programming language (Python/Typescript/Go/Bash). Those are the most generic but also the most complex and the most difficult to optimize.
+Every node is code that takes in argument and data from other steps or the flow inputs, do some side effects (http requests, write to disk/s3) and then return some data for other steps to consume.
+
+5 Major benefits of workflow engines:
+
+- **Resource allocation**: Clusters can be well leveraged and every job can be assigned to different workers with different resources (cpu, memory, gpus) and guarantee that the full resource of the worker will be available to the job
+- **Parralelism**: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
+- **Observability**: every job has a unique id and can be observed separately: the inputs, logs, outputs, status can be inspected
+- **Durability**: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
+  Another way is transactional snapshotting of the flow state, store the state after each operation. To resume, simply reload that last state and execute from there. Windmill does the latter and assume that idempotency can be implemented when desired in userland.
+- **Reactivity**: Suspend the flow until it is resumed again based on an event such as a webhook or an approval
+
+Additionally, an all-inclusive workflow engine should dynamically register new available workers and make it easy to deploy new workflow, assign different jobs to different workers, monitor the health of the workers and of the system itself.
+
+A developer platform on top of a workflow engine should handle permissions such that different users with different level of permissions can run different workflows and those workflows to have access to different resources depending on the roles of the caller.
+
+## So why is Windmill very fast
+
+In a workflow engine, the term "efficiency" depends:
+
+- efficiency to compute transitions, the new jobs to schedule given the last job that completed, and the efficiency of the workers themselves to pull scheduled jobs and run them
+- efficiency to pass data between steps
+- efficiency of the worker to pull jobs, start executing the code, and then submit result and new sate
+
+Windmill is extremely fast because on all 3 aspects, it uses a simple design, optimized everywhere, that leverage maximally both Postgresql and Rust.
+
+## System design and Queue
+
+Windmill provides a single binary (compiled from Rust) than can run both as the api server, the worker or both.
+Both workers and servers are connected to Postgresql but not to each other.
+The servers only expose the api and the frontend. The queue is implemented in PG itself.
+Jobs can be triggered externally by calling the api which will push new jobs to the queue.
+
+Jobs are stored in 2 tables in PG:
+
+- queue (while the job is not completed, even when running)
+- completed_job
+
+Jobs are not removed from the queue upon start, but their field `running` is set to true. Queue is implemented with the traditional `UPDATE SKIP LOCKED`
+
+```sql
+UPDATE queue
+SET running = true
+, started_at = coalesce(started_at, now())
+, last_ping = now()
+, suspend_until = null
+WHERE id = (
+    SELECT id
+    FROM queue
+    WHERE running = false AND scheduled_for <= now() AND tag = ANY($1)
+    ORDER BY priority DESC NULLS LAST, scheduled_for, created_at
+    FOR UPDATE SKIP LOCKED
+    LIMIT 1
+)
+RETURNING *
+```
+
+This is as fast as you can get with [Postgresql](/docs/getting_started/scripts_quickstart/sql), as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood.
+
+When a flow job is pushed, its inputs, pointers to an immutable flow definition and initial flow state (see under) is pushed within the job's row (it's a big row!)
+
+A worker will then pick the flow job, read the flow definition and flow state, realize that it needs to push the first step in the queue and that's it. This is the initial transition of the flow.
+
+The workers pull jobs one at a time, run them to completion, and progres the state if the job is a step of a flow (that flow job is a separate job and identified with `parent_job` set to the flow job). The servers themselves do no orchestration, every flow transition is achieved by the worker themselves.
+
+## States
+
+Workflow engines represents jobs as a finite state machine [(FSM)](https://en.wikipedia.org/wiki/Finite-state_machine). The 4 main states commonly used are:
+
+- Waiting for pre-requisites (right events like a webhook to have been received, or all the depenency jobs to have been completed)
+- Pre-requisite fulfilled, waiting for a worker to pull job and execute
+- Running
+- Completed (with Success or Failure)
+
+Other states are usually some refinement on the 4 above
+
+In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flows.rs#L196) of the [flow status](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flow_status.rs#L28) is an easy to read struct.
+
+A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to the for-loop and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_job`.
+
+Hence, branches and Forloops are special kind of flow states that include an array of ids that point to all the subflows that have been launched. When a for-loop/branch is executed sequentially, the transition consist in looking at the flow state and start the next iteration if there are still left, or complete that step if there aren't.
+
+What is convenient about this design is that **every state transition is just one transactionned Postgresql statement**. Postgresql is ACID, and we can leverage those properties to their full extent. A lot of what is hard and slow in a workflow engine is to reach eventual consistency.
+We skip the hard part by:
+
+- using Postgres which implements MVCC and row-level locks.
+- do the transitions by the workers themselves at the end of their jobs
+
+The flow state is implemented as a JSONB and hence state transitions are written in raw sql that mutate directly the flow state in the row corresponding to the flow job in the queue. It is both correct and extremely efficient. That part does not really benefit from Rust and could be implement in any language, even in PL/SQL directly.
+
+The 2 most tricky transitions:
+
+1. the last step of a nested flow (the branch of a branch of a branch)
+2. parallel branches/iterations
+
+In details:
+
+1. At the last step of a nested flow, the worker will update the parent flow state, but will realize that that flow is now completed as well, it will simply recursively go to that flow parent and do a flow transition.
+2. parallel steps: Instead of running one flow at a time, all the subflows are queued when that step is launched. Then, any worker completing the last step of the subflow of each branch will increase a counter atomically. The worker that increase that counter to be as long as the number of iterations knows it needs to do a transition for the entire step since it is completed.
+
+Additionally, processing a completed job is done in a background tokio task that receive the completed job in a channel, allowing for some degree of pipelining. Workers do not need to wait for a job to be fully acknowledged by the database to pick-up another available job.
+
+**Windmill is very fast for transitions because they are implemented as raw Postgresql statement and because of pipelining between executing jobs and updating the database**
+
+## Data passing
+
+In Windmill, there are 3 main ways of doing data passing:
+
+- every input of a step can be a javascript expression that can refer to any step outputs
+
+Every script in typescript, python, go, bash has their main signature parsed (by a WASM program in the frontend) which allow to pre-compute the different inputs needed for a given step.
+For each of those inputs, one can define either a static input or a javascript expression that can refer to the result of any step. e.g: `results.d.foo` where `d` is the id of the step.
+That javascript expression when complex is evaluated by an embedded v8 using deno runtime. It takes ~8ms by expression.
+
+Given that every step result is a job by itself that contains a result in json, it's possible to retrieve the needed result with a single sql statement. The mapping from node id to job id is kept in the flow job state.
+
+Furthermore, most expression are trivial and can be converted directly to raw jsonb statement:
+
+```
+SELECT result #> $3 as result FROM completed_job WHERE id = $1 AND workspace_id = $2"
+```
+
+where $3 is
+
+```
+
+json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
+
+```
+
+- share data in a temporary folder
+  Flows can be configured to be wholly executed on the same worker. When that is a case, a folder is shared and symlinked inside every job's ephemeral folder (jobs are started in an ephemeral folder that is removed at the end of their execution)
+- pass data in s3 using the s3 integration (updates specific to that part to be presented on day 5)
+
+## Workers efficiency
+
+In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, Postgresql, mysql, mssql, bigquery) and then spawn the corresponding runtime then run the job.
+
+Workers run job bare, without running containers which gives us a performance boost compared to container based workflow engines. However, for sandboxing purposes, workers themselves can be ran inside containers and can run each job in an nsjail sandbox.
+
+For query languages, there is no cold start except for establishing the connection. The last connection is maintained for 1 minutes to benefit from [Temporal locality](https://en.wikipedia.org/wiki/Locality_of_reference)
+bash has no cold start, and go scripts are compiled AOT and then the binary is cached locally to avoid any cold starts.
+
+Supporting executing arbitrary python code is hard because we have to support any import with any lockfiles. Since workers don't run that python code in containers, the dependencies have to be handled dynamically.
+To that end, we developped an efficient distributed cache system that dynamically pip install once a specific pair (package, version) and create a dynamic virtual env on the fly to execute the code. The imports are analyzed efficiently just prior to running the code.
+
+Similarly in typescript, the runtimes are either deno or bun so that they can benefit from global cache and never have to install the same dependency twice.
+
+However, handling dependency fast is not sufficient for maximum speed, there are still the cold start of spawning a python (~60ms) or deno/bun (~30ms) process.
+In event streaming cases, the logic itself takes about 1ms and hence the cold start is 30x the overhead of running the script.
+
+Fortunately, we implemented recently [dedicated worker for scripts](/blog/launch-week-dedicated-workers), which spawn a python process once at the start of the worker and then execute the script logic in a while loop, taking the job inputs in stdin and returning the output to sdout.
+
+We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At start, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or Typescript. This completly obliterate the cold starts and make Windmill flows capable of handling even-streaming use-cases and go up to 1000 steps per second on each worker.
+
+The dedicated worker for flows will pull any job relative to that flow and then route it to the proper dedicated process. Still executing only one job at a time but in pre-warmed processes.
+
+## Conclusion
+
+Windmill is very fast because it relies on Postgresql, and Rust, and use a simple design that enable optimizing every parts, small and big. It's a bit of the same answer than why Bun is fast, which is implemented in Zig and is optimised everywhere possible.
