@@ -106,8 +106,6 @@ import ScatterChart from '@site/src/components/ScatterChart';
 
 [Benchmarking data and dedicated methodology documentation](https://www.Windmill.dev/docs/misc/benchmarks/competitors)
 
-> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
-
 You've known Windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
 
 It was important for us to be transparent and you can find the whole benchmark methodology here:
@@ -135,13 +133,9 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 There are tons of workflow engines, but not many of them are generic enough to support arbitrary workloads of jobs defined in code,
 and even those have restrictions: Airflow and Prefect only supports Python. Windmill on the other hand supports: Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql.
 Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to.
-<<<<<<< HEAD:blog/2023-11-22-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
-=======
-Windmill offers an integrated DX to build and test workflows in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [vscode extension](/blog/launch-week-1/vscode-extension).
 
-> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
-> > > > > > > One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
+One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
 
 ## Should Temporal even be there?
 
@@ -186,9 +180,8 @@ Every node is code that takes in argument and data from other steps or the flow 
 - Parralelism: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
 - Observability: every job has a unique id and can be observed separately: the inputs, logs, outputs, status can be inspected
 - Durability: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
-  > > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
-  > > > > > > > This is usually implemented with a log file and an sdk that skip the side effect when the unique id attached to an operation is part of the log.
-  > > > > > > > Another way is transactional snapshotting of the flow state, store the state after each operation. To resume, simply reload that last state and execute from there. Windmill does the latter and assume that idempotency can be implemented when desired in userland.
+  This is usually implemented with a log file and an sdk that skip the side effect when the unique id attached to an operation is part of the log.
+  Another way is transactional snapshotting of the flow state, store the state after each operation. To resume, simply reload that last state and execute from there. Windmill does the latter and assume that idempotency can be implemented when desired in userland.
 - **Reactivity**: Suspend the flow until it is resumed again based on an event such as a webhook or an approval
 
 Additionally, an all-inclusive workflow engine should dynamically register new available workers and make it easy to deploy new workflow, assign different jobs to different workers, monitor the health of the workers and of the system itself.
@@ -236,12 +229,7 @@ WHERE id = (
 RETURNING *
 ```
 
-<<<<<<< HEAD:blog/2023-11-22-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 This is as fast as you can get with [Postgresql](/docs/getting_started/scripts_quickstart/sql), as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood.
-=======
-This is as fast as you can get with Postgresql, as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood and it can reach up to 17000 jobs per sec on a single database.
-
-> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 
 When a flow job is pushed, its inputs, pointers to an immutable flow definition and initial flow state (see under) is pushed within the job's row (it's a big row!)
 
