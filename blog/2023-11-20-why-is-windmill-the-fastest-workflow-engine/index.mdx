@@ -8,11 +8,17 @@ description: 'Why is windmill the fastest self-hostable workflow engine and job 
 
 # Fastest self-hostable open-source workflow engine
 
+For the benchmark data and dedicated benchmarking post to go along with it.
+
+BENCHMARKING BLOG POST
+
+Here we will focus on the why, the architecture of windmill and the different components of a workflow engine aka orchestration engine
+
 ## A more scoped crown
 
 Before you raise your pitchforks, let's unpack our claim a bit, we are not claiming to be necessarily faster than your specialized,
 hand-built workflow engine written on top of the amazing [BEAM](<https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)>)
-(from which, we took inspiration) but rather only among the "all-inclusive", self-hostable workflow engines. We recognize 3 main ones today:
+(from which we took inspiration) but rather only among the "all-inclusive", self-hostable workflow engines. We recognize 3 main ones today:
 
 - Airflow
 - Prefect
@@ -21,7 +27,7 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 There are tons of workflow engines, but not many of them are generic enough to support arbitrary workloads of jobs defined in code,
 and even those have restrictions: Airflow and Prefect only supports Python. Windmill on the other hand supports: Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql.
 Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to.
-Windmill offers an integrated DX that allows to build and test workflows in a few minutes and interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself.
+Windmill offers an integrated DX to build and test workflows in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [vscode extension](https://www.windmill.dev/blog/launch-week-1/vscode-extension).
 One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
 
 ## Should temporal even be there?
@@ -35,7 +41,7 @@ as the backbone of your micro-services async patterns at the scale of Uber for i
 
 We leave analytics/ETL engine such as Spark or Dagster out of it for today as they are not workflow engines _per se_ even if they are built on top of ones.
 
-ETL and analytics workflows will be covered later this week, but you will find that windmill is also extremely performant for analytics workloads.
+ETL and analytics workflows will be covered later this week, and you will find that windmill offers best-in-class performance for analytics workloads leveraging s3, duckdb and polars
 
 :::
 
@@ -44,13 +50,7 @@ ETL and analytics workflows will be covered later this week, but you will find t
 Job Queues are at the core of Workflow Engines and constitute the crux of any background job processing.
 There are already plenty of great queues implementation under the form of managed services (SQS), distributed scalable services (kafka) and software (e.g: Redis with rmsq) or libraries (Orban).
 They are mostly sufficient to use by themselves and many developers will find satisfaction avoiding a workflow engine
-altogether by building their own logic around a job queue. This is akin to
-
-And here is the benchmark data and dedicated benchmarking post to go along with it.
-
-BENCHMARKING BLOG POST
-
-Here we will focus on the why, the architecture of windmill and the different components of a workflow engine aka orchestration engine
+altogether by building their own logic around a job queue. This is akin to writing your own specialized workflow engine.
 
 ## What is a workflow engine, and what constitute an "all-inclusive" workflow engine
 
