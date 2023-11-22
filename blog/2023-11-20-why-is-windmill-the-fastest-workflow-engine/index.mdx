@@ -190,12 +190,19 @@ json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
     Flows can be configured to be wholly executed on the same worker. When that is a case, a folder is shared and symlinked inside every job's ephemeral folder (jobs are started in an ephemeral folder that is removed at the end of their execution)
 - pass data in s3 using the s3 integration (updates specific to that part to be presented on day 5)
 
-## Worker efficiency
+## Workers efficiency
 
 In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, postgresql, mysql, mssql, bigquery) and then spawn the corresponding runtime then run the job.
 
-It can suffer from 2 performances penalties, cold start to spawn the runtime and lack of JIT
+Workers run job bare, without running containers which gives us a performance boost compared to container based workflow engines. However, for sandboxing purposes, workers themselves can be ran inside containers and can run each job in an nsjail sandbox.
 
 For query languages, there is no cold start except for establishing the connection. The last connection is maintained for 1 minutes to benefit from [temporal locality](https://en.wikipedia.org/wiki/Locality_of_reference)
-bash has no cold start, and go scripts are compiled AOT and then cached locally to avoid any cold starts. The only remaining
+bash has no cold start, and go scripts are compiled AOT and then the binary is cached locally to avoid any cold starts.
+
+Supporting executing arbitrary python code is hard because we have to support any import with any lockfiles. Since workers don't run that python code in containers, the dependencies have to be handled dynamically.
+To that end, we developped an efficient distributed cache system that dynamically pip install once a specific pair (package, version) and create a dynamic virtual env on the fly to execute the code. The imports are analyzed efficiently just prior to running the code.
+
+Similarly in typesript, the runtimes are either deno or bun so that they can benefit from global cache and never have to install the same dependency twice.
+
+However, handling
 ```
