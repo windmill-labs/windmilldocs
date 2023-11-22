@@ -6,6 +6,7 @@ import ScatterChart from '@site/src/components/ScatterChart';
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={[
 			['Airflow'],
 			['Prefect'],
@@ -142,6 +143,7 @@ For 10 long running tasks run sequentially:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
 		labels={['Airflow']}
 		rawData={[
 			[
@@ -175,6 +177,7 @@ For 40 lightweights tasks run sequentially:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={['Airflow']}
 		rawData={[
 			[
@@ -323,6 +326,7 @@ For 10 long running tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
 		labels={['Prefect']}
 		rawData={[
 			[
@@ -356,6 +360,7 @@ For 40 lightweights tasks run sequentially:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={['Prefect']}
 		rawData={[
 			[
@@ -477,6 +482,7 @@ For 10 long running tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
 		labels={['Temporal']}
 		rawData={[
 			[
@@ -510,6 +516,7 @@ For 40 lightweights tasks run sequentially:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={['Temporal']}
 		rawData={[
 			[
@@ -636,6 +643,7 @@ For 10 long running tasks in normal mode:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
 		labels={[['Windmill', 'Normal']]}
 		rawData={[
 			[
@@ -669,6 +677,7 @@ For 40 lightweights tasks run sequentially in normal mode:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={[['Windmill', 'Normal']]}
 		rawData={[
 			[
@@ -742,6 +751,7 @@ In [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mod
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
 		labels={[['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
@@ -775,6 +785,7 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={[['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
@@ -848,6 +859,7 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
 		labels={[
 			['Airflow'],
 			['Prefect'],
@@ -883,6 +895,7 @@ And for the 40 lightweight tasks:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
 		labels={[
 			['Airflow'],
 			['Prefect'],
@@ -970,6 +983,7 @@ We can exclude Airflow from the previous chart:
 <div class="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks (excluding Airflow)"
+		xTitle="Duration (in seconds)"
 		labels={[['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
 			[
