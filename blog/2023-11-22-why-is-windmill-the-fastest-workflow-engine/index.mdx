@@ -6,7 +6,6 @@ slug: launch-week-1/fastest-workflow-engine
 description: 'Why is Windmill the fastest self-hostable workflow engine and job processing framework'
 ---
 
-<<<<<<< HEAD:blog/2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx
 import DocCard from '@site/src/components/DocCard';
 
 # Fastest self-hostable open-source workflow engine
@@ -105,11 +104,11 @@ import ScatterChart from '@site/src/components/ScatterChart';
 	/>
 </div>
 
-[Benchmarking data and dedicated methodology documentation](https://www.windmill.dev/docs/misc/benchmarks/competitors)
+[Benchmarking data and dedicated methodology documentation](https://www.Windmill.dev/docs/misc/benchmarks/competitors)
 
-> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-windmill-the-fastest-workflow-engine/index.mdx
+> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 
-You've known windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
+You've known Windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
 
 It was important for us to be transparent and you can find the whole benchmark methodology here:
 
@@ -136,17 +135,17 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 There are tons of workflow engines, but not many of them are generic enough to support arbitrary workloads of jobs defined in code,
 and even those have restrictions: Airflow and Prefect only supports Python. Windmill on the other hand supports: Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql.
 Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to.
-<<<<<<< HEAD:blog/2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx
+<<<<<<< HEAD:blog/2023-11-22-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
 =======
 Windmill offers an integrated DX to build and test workflows in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [vscode extension](/blog/launch-week-1/vscode-extension).
 
-> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-windmill-the-fastest-workflow-engine/index.mdx
+> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 > > > > > > > One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
 
 ## Should Temporal even be there?
 
-Temporal doesn't actually manage the [workers but only the tasks queues](https://docs.temporal.io/workers). So even after having written your Temporal workflow, you will still need to manage your workers separately.
+Temporal doesn't actually manage the [workers but only the tasks queues](https://docs.Temporal.io/workers). So even after having written your Temporal workflow, you will still need to manage your workers separately.
 To some degree, Temporal is not a workflow engine but a specialized durable execution engine. Windmill also supports reactivity (aka waiting for event) and can be qualified as a durable execution engine as well.
 That being said, Temporal is amazing at what it does and if there are overlap between Windmill and Temporal, there are clearly use-cases where you should use Temporal rather than Windmill,
 as the backbone of your micro-services async patterns at the scale of Uber for instance. On the other hand, sending arbitrary jobs to an internal cluster is out-of-scope for Temporal as you will still need to painfully deploy "Worker Programs" beforehand.
@@ -177,7 +176,7 @@ Every node is code that takes in argument and data from other steps or the flow 
 
 5 Major benefits of workflow engines:
 
-<<<<<<< HEAD:blog/2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx
+<<<<<<< HEAD:blog/2023-11-22-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 
 - **Resource allocation**: Clusters can be well leveraged and every job can be assigned to different workers with different resources (cpu, memory, gpus) and guarantee that the full resource of the worker will be available to the job
 - **Parralelism**: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
@@ -187,7 +186,7 @@ Every node is code that takes in argument and data from other steps or the flow 
 - Parralelism: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
 - Observability: every job has a unique id and can be observed separately: the inputs, logs, outputs, status can be inspected
 - Durability: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
-  > > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-windmill-the-fastest-workflow-engine/index.mdx
+  > > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
   > > > > > > > This is usually implemented with a log file and an sdk that skip the side effect when the unique id attached to an operation is part of the log.
   > > > > > > > Another way is transactional snapshotting of the flow state, store the state after each operation. To resume, simply reload that last state and execute from there. Windmill does the latter and assume that idempotency can be implemented when desired in userland.
 - **Reactivity**: Suspend the flow until it is resumed again based on an event such as a webhook or an approval
@@ -237,12 +236,12 @@ WHERE id = (
 RETURNING *
 ```
 
-<<<<<<< HEAD:blog/2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx
+<<<<<<< HEAD:blog/2023-11-22-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 This is as fast as you can get with [Postgresql](/docs/getting_started/scripts_quickstart/sql), as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood.
 =======
 This is as fast as you can get with Postgresql, as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood and it can reach up to 17000 jobs per sec on a single database.
 
-> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-windmill-the-fastest-workflow-engine/index.mdx
+> > > > > > > 4fa6c37 (iterate):blog/2023-11-20-why-is-Windmill-the-fastest-workflow-engine/index.mdx
 
 When a flow job is pushed, its inputs, pointers to an immutable flow definition and initial flow state (see under) is pushed within the job's row (it's a big row!)
 
@@ -261,13 +260,13 @@ Workflow engines represents jobs as a finite state machine [(FSM)](https://en.wi
 
 Other states are usually some refinement on the 4 above
 
-In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-common/src/flows.rs#L196) of the [flow status](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-common/src/flow_status.rs#L28) is an easy to read struct.
+In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flows.rs#L196) of the [flow status](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flow_status.rs#L28) is an easy to read struct.
 
 A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to the for-loop and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_job`.
 
 Hence, branches and Forloops are special kind of flow states that include an array of ids that point to all the subflows that have been launched. When a for-loop/branch is executed sequentially, the transition consist in looking at the flow state and start the next iteration if there are still left, or complete that step if there aren't.
 
-What is convenient about this design is that **every state transition is just one transactionned postgresql statement**. Postgresql is ACID, and we can leverage those properties to their full extent. A lot of what is hard and slow in a workflow engine is to reach eventual consistency.
+What is convenient about this design is that **every state transition is just one transactionned Postgresql statement**. Postgresql is ACID, and we can leverage those properties to their full extent. A lot of what is hard and slow in a workflow engine is to reach eventual consistency.
 We skip the hard part by:
 
 - using Postgres which implements MVCC and row-level locks.
@@ -287,7 +286,7 @@ In details:
 
 Additionally, processing a completed job is done in a background tokio task that receive the completed job in a channel, allowing for some degree of pipelining. Workers do not need to wait for a job to be fully acknowledged by the database to pick-up another available job.
 
-**Windmill is very fast for transitions because they are implemented as raw postgresql statement and because of pipelining between executing jobs and updating the database**
+**Windmill is very fast for transitions because they are implemented as raw Postgresql statement and because of pipelining between executing jobs and updating the database**
 
 ## Data passing
 
@@ -321,7 +320,7 @@ json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
 
 ## Workers efficiency
 
-In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, postgresql, mysql, mssql, bigquery) and then spawn the corresponding runtime then run the job.
+In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, Postgresql, mysql, mssql, bigquery) and then spawn the corresponding runtime then run the job.
 
 Workers run job bare, without running containers which gives us a performance boost compared to container based workflow engines. However, for sandboxing purposes, workers themselves can be ran inside containers and can run each job in an nsjail sandbox.
 
@@ -338,10 +337,10 @@ In event streaming cases, the logic itself takes about 1ms and hence the cold st
 
 Fortunately, we implemented recently [dedicated worker for scripts](/blog/launch-week-dedicated-workers), which spawn a python process once at the start of the worker and then execute the script logic in a while loop, taking the job inputs in stdin and returning the output to sdout.
 
-We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At start, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or Typescript. This completly obliterate the cold starts and make windmill flows capable of handling even-streaming use-cases and go up to 1000 steps per second on each worker.
+We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At start, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or Typescript. This completly obliterate the cold starts and make Windmill flows capable of handling even-streaming use-cases and go up to 1000 steps per second on each worker.
 
 The dedicated worker for flows will pull any job relative to that flow and then route it to the proper dedicated process. Still executing only one job at a time but in pre-warmed processes.
 
 ## Conclusion
 
-Windmill is very fast because it relies on PostgreSQL, and Rust, and use a simple design that enable optimizing every parts, small and big. It's a bit of the same answer than why Bun is fast, which is implemented in Zig and is optimised everywhere possible.
+Windmill is very fast because it relies on Postgresql, and Rust, and use a simple design that enable optimizing every parts, small and big. It's a bit of the same answer than why Bun is fast, which is implemented in Zig and is optimised everywhere possible.
