@@ -139,13 +139,33 @@ In windmill the full flow itself is a finite state machine, where both the [spec
 
 A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to the for-loop and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_job`.
 
-Hence, branches and Forloops are special kind of flow states that include an array of ids that point to all the subflows that have been launched.
+Hence, branches and Forloops are special kind of flow states that include an array of ids that point to all the subflows that have been launched. When a for-loop/branch is executed sequentially, the transition consist in looking at the flow state and start the next iteration if there are still left, or complete that step if there aren't.
 
-What is extremely convenient about this design is that **every state transaction is just one transactionned postgresql statement**
+What is convenient about this design is that **every state transaction is just one transactionned postgresql statement**. Postgresql is ACID, and we can leverage those properties to the full extent. A lot of what is hard and slow in a workflow engine is to reach eventual consistency.
+We skip the hard part by:
+
+- using Postgres which implements MVCC and row-locks
+- do the transitions by the workers themselves at the end of their jobs
+
+The flow state is implemented as a JSONB and hence state transitions are written in raw sql that mutate directly the flow state in the row corresponding to the flow job in the queue. It is both correct and extremely efficient. That part does not really benefit from Rust and could be implement in any language, even in PL/SQL directly.
+
+The 2 most tricky transitions:
+
+1. the last step of a nested flow (the branch of a branch of a branch)
+2. parallel branches/iterations
+
+In details:
+
+1. At the last step of a nested flow, the worker will update the parent flow state, but will realize that that flow is now completed as well, it will simply recursively go to that flow parent and do a flow transition.
+2. parallel steps: Instead of running one flow at a time, all the subflows are queued when that step is launched. Then, any worker completing the last step of the subflow of each branch will increase a counter atomically. The worker that increase that counter to be as long as the number of iterations knows it needs to do a transition for the entire step since it is completed.
+
+Additionally, processing a completed job is done in a background tokio task that receive the completed job in a channel, allowing for some degree of pipelining. Workers do not need to wait for a job to be fully acknowledged by the database to pick-up another available job.
+
+**Windmill is very fast for transitions because they are implemented as raw postgresql statement and because of pipelining between executing jobs and updating the database**
 
 ## Data passing
 
-TODO
+## In windmill, there are 3 main ways of doing data passing:
 
 ## Worker efficiency
 
