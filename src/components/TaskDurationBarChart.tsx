@@ -11,7 +11,13 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { useIntersectionObserver } from './useInteractionObserver';
 
-export default function BarChart({ title, labels, rawData, maintainAspectRatio = true }) {
+export default function BarChart({
+	title,
+	labels,
+	rawData,
+	maintainAspectRatio = true,
+	shouldAnimate = false
+}) {
 	ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -51,7 +57,7 @@ export default function BarChart({ title, labels, rawData, maintainAspectRatio =
 
 	const data = {
 		labels: labels,
-		datasets: []
+		datasets: shouldAnimate ? [] : datasets_data
 	};
 
 	const options = {
@@ -98,7 +104,7 @@ export default function BarChart({ title, labels, rawData, maintainAspectRatio =
 	});
 
 	useEffect(() => {
-		if (isVisible) {
+		if (isVisible && shouldAnimate) {
 			const interval = setInterval(() => {
 				const chart = ChartJS.getChart('canvas-id');
 				if (chart) {
