@@ -165,10 +165,34 @@ Additionally, processing a completed job is done in a background tokio task that
 
 ## Data passing
 
-## In windmill, there are 3 main ways of doing data passing:
+In windmill, there are 3 main ways of doing data passing:
+
+- every input of a step can be a javascript expression that can refer to any step outputs
+
+Every script in typescript, python, go, bash has their main signature parsed (by a WASM program in the frontend) which allow to pre-compute the different inputs needed for a given step.
+For each of those inputs, one can define either a static input or a javascript expression that can refer to the result of any step. e.g: `results.d.foo` where `d` is the id of the step.
+That javascript expression when complex is evaluated by an embedded v8 using deno runtime. It takes a few ms by expression.
+
+Given that every step result is a job by itself that contains a result in json, it's possible to retrieve the needed result with a single sql statement. The mapping from node id to job id is kept in the flow job state.
+
+Furthermore, most expression are trivial and can be converted directly to raw jsonb statement:
+
+```SELECT result #> $3 as result FROM completed_job WHERE id = $1 AND workspace_id = $2"
+where $3 is
+
+```
+
+json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
+
+```
+
+- share data in a temporary folder
+    Flows can be configured to be wholly executed on the same worker. When that is a case, a folder is shared and symlinked inside every job's ephemeral folder (jobs are started in an ephemeral folder that is removed at the end of their execution)
+- pass data in s3 using the s3 integration (updates specific to that part to be presented on day 5)
 
 ## Worker efficiency
 
-TODO
+In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, postgresql, mysql, bigquery).
 
-## Dedicated worker for flows
+For query languages, there is no cold start except for establishing the connection. The last connection is maintained for 1 minutes to benefit from [temporal locality](https://en.wikipedia.org/wiki/Locality_of_reference)
+```
