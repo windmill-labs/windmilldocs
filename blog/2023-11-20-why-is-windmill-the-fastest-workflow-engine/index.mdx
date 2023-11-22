@@ -85,14 +85,63 @@ In a workflow engine, the efficiency depend:
 
 Windmill is extremely fast because on all 3 aspects, it uses a simple design, optimized everywhere, that leverage maximally both Postgresql and Rust.
 
+## System design and Queue
+
+Windmill offers a single binary (compiled from Rust) than can run both as the api server, the worker or both.
+Both workers and servers are connected to Postgresql but not to each other.
+The servers only expose the api and the frontend. The queue is implemented in PG itself.
+Jobs can be triggered externally by calling the api which will push new jobs to the queue.
+
+Jobs are stored in 2 tables in PG:
+
+- queue (while the job is not completed, even when running)
+- completed_job
+
+Jobs are not removed from the queue upon start, but their field `running` is set to true. Queue is implemented with the traditional `UPDATE SKIP LOCKED`
+
+```sql
+UPDATE queue
+SET running = true
+, started_at = coalesce(started_at, now())
+, last_ping = now()
+, suspend_until = null
+WHERE id = (
+    SELECT id
+    FROM queue
+    WHERE running = false AND scheduled_for <= now() AND tag = ANY($1)
+    ORDER BY priority DESC NULLS LAST, scheduled_for, created_at
+    FOR UPDATE SKIP LOCKED
+    LIMIT 1
+)
+RETURNING *
+```
+
+This is as fast as you can get with Postgresql, as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood.
+
+When a flow job is pushed, its inputs, pointers to an immutable flow definition is pushed alongside the job and initial flow state (see under) is pushed within the job (it's a big row!)
+
+A worker will then pick the flow job, read the flow definition and flow state, realize that it needs to push the first step in the queue and that's it. This is the initial transition of the flow.
+
+The workers pull jobs one at a time, run them to completion, and progres the state if the job is part of a flow job (which is a separate job). The servers themselves do no orchestration, every flow progress is run by the worker themselves.
+
 ## States
 
-Workflow engines usually represents jobs as a finite state machine [(FSM)](https://en.wikipedia.org/wiki/Finite-state_machine). The 4 main states commonly used are:
+Workflow engines represents jobs as a finite state machine [(FSM)](https://en.wikipedia.org/wiki/Finite-state_machine). The 4 main states commonly used are:
 
 - Waiting for pre-requisites (right events like a webhook to have been received, or all the depenency jobs to have been completed)
-- Waiting for a worker to execute it
+- Pre-requisite fulfilled, waiting for a worker to pull job and execute
 - Running
 - Completed (with Success or Failure)
+
+Other states are usually some refinement on the 4 above
+
+In windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-common/src/flows.rs#L196) of the [flow status](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-common/src/flow_status.rs#L28) is an easy to read struct.
+
+A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to the for-loop and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_job`.
+
+Hence, branches and Forloops are special kind of flow states that include an array of ids that point to all the subflows that have been launched.
+
+What is extremely convenient about this design is that **every state transaction is just one transactionned postgresql statement**
 
 ## Data passing
 
@@ -101,3 +150,5 @@ TODO
 ## Worker efficiency
 
 TODO
+
+## Dedicated worker for flows
