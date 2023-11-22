@@ -287,7 +287,6 @@ In details:
 
 Additionally, processing a completed job is done in a background tokio task that receive the completed job in a channel, allowing for some degree of pipelining. Workers do not need to wait for a job to be fully acknowledged by the database to pick-up another available job.
 
-<<<<<<< HEAD:blog/2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx
 **Windmill is very fast for transitions because they are implemented as raw postgresql statement and because of pipelining between executing jobs and updating the database**
 
 ## Data passing
@@ -298,7 +297,7 @@ In Windmill, there are 3 main ways of doing data passing:
 
 Every script in typescript, python, go, bash has their main signature parsed (by a WASM program in the frontend) which allow to pre-compute the different inputs needed for a given step.
 For each of those inputs, one can define either a static input or a javascript expression that can refer to the result of any step. e.g: `results.d.foo` where `d` is the id of the step.
-That javascript expression when complex is evaluated by an embedded v8 using deno runtime. It takes a few ms by expression.
+That javascript expression when complex is evaluated by an embedded v8 using deno runtime. It takes ~8ms by expression.
 
 Given that every step result is a job by itself that contains a result in json, it's possible to retrieve the needed result with a single sql statement. The mapping from node id to job id is kept in the flow job state.
 
@@ -332,7 +331,7 @@ bash has no cold start, and go scripts are compiled AOT and then the binary is c
 Supporting executing arbitrary python code is hard because we have to support any import with any lockfiles. Since workers don't run that python code in containers, the dependencies have to be handled dynamically.
 To that end, we developped an efficient distributed cache system that dynamically pip install once a specific pair (package, version) and create a dynamic virtual env on the fly to execute the code. The imports are analyzed efficiently just prior to running the code.
 
-Similarly in typesript, the runtimes are either deno or bun so that they can benefit from global cache and never have to install the same dependency twice.
+Similarly in typescript, the runtimes are either deno or bun so that they can benefit from global cache and never have to install the same dependency twice.
 
 However, handling dependency fast is not sufficient for maximum speed, there are still the cold start of spawning a python (~60ms) or deno/bun (~30ms) process.
 In event streaming cases, the logic itself takes about 1ms and hence the cold start is 30x the overhead of running the script.
