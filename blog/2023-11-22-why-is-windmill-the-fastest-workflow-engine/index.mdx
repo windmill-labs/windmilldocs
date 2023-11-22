@@ -131,10 +131,10 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 - Prefect
 - Temporal
 
-There are tons of workflow engines, but not many of them are generic enough to support arbitrary workloads of jobs defined in code,
-and even those have restrictions: Airflow and Prefect only supports Python. Windmill on the other hand supports: Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql.
-Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to.
-Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
+There are tons of workflow engines, but not many of them are self-hostable and generic enough to support arbitrary workloads of jobs defined in code,
+and even those have restrictions:
+Some like Airflow and Prefect supports only one runtime (Python). Windmill on the other hand supports Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql. And its design makes it easy to add more upon request.
+Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to. Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
 
 One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
 
@@ -142,8 +142,7 @@ One benefit of being very fast is that it makes running tests very fast too both
 
 Temporal doesn't actually manage the [workers but only the tasks queues](https://docs.Temporal.io/workers). So even after having written your Temporal workflow, you will still need to manage your workers separately.
 To some degree, Temporal is not a workflow engine but a specialized durable execution engine. Windmill also supports reactivity (aka waiting for event) and can be qualified as a durable execution engine as well.
-That being said, Temporal is amazing at what it does and if there are overlap between Windmill and Temporal, there are clearly use-cases where you should use Temporal rather than Windmill,
-as the backbone of your micro-services async patterns at the scale of Uber for instance. On the other hand, sending arbitrary jobs to an internal cluster is out-of-scope for Temporal as you will still need to painfully deploy "Worker Programs" beforehand.
+That being said, Temporal is amazing at what it does and if there are overlap between Windmill and Temporal, there are clearly use-cases where you should use Temporal rather than Windmill (as the backbone of your micro-services async patterns at the scale of Uber for instance). On the other hand, sending arbitrary jobs to an internal cluster is out-of-scope for Temporal as you will still need to painfully deploy "Worker Programs" beforehand.
 
 :::info
 
@@ -156,7 +155,7 @@ ETL and analytics workflows will be covered later this week, and you will find t
 ## Workflow Engine vs Job queues
 
 Job Queues are at the core of Workflow Engines and constitute the crux of any background job processing.
-There are already plenty of great queues implementation under the form of managed services (SQS), distributed scalable services (kafka) and software (e.g: Redis with rmsq) or libraries (Orban).
+There are already plenty of great queues implementation under the form of managed services (SQS), distributed scalable services (Kafka) and software (e.g: Redis with rmsq) or libraries (Orban).
 They are mostly sufficient to use by themselves and many developers will find satisfaction avoiding a workflow engine
 altogether by building their own logic around a job queue. This is akin to writing your own specialized workflow engine.
 
@@ -164,21 +163,26 @@ altogether by building their own logic around a job queue. This is akin to writi
 
 First some definitions, a workflow is a directed acyclic graph [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of nodes that represent job specifications.
 A workflow engine is a distributed system that takes a workflow and orchestrate it to completion on workers while respecting among others all the dependency constraints of each jobs.
-There exists a great variety of kind of workflows and many softwares are domain specific workflow engine and workflow specs (if you are a software engineer, you probably already wrote one without realizing it).
+There exists a great variety of workflows and many softwares are domain specific workflow engine and workflow specs (if you are a software engineer, you probably already wrote one without realizing it).
 
 What will interest us here are workflows that can run arbitrary code in at least one major programming language (Python/Typescript/Go/Bash). Those are the most generic but also the most complex and the most difficult to optimize.
-Every node is code that takes in argument and data from other steps or the flow inputs, do some side effects (http requests, write to disk/s3) and then return some data for other steps to consume.
+Every node is a piece of code that takes as input arguments and data from other steps (or the flow inputs), do some side effects (http requests, computation, write to disk/s3) and then return some data for other steps to consume.
 
 5 Major benefits of workflow engines:
 
 - **Resource allocation**: Clusters can be well leveraged and every job can be assigned to different workers with different resources (cpu, memory, gpus) and guarantee that the full resource of the worker will be available to the job
-- **Parralelism**: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
+- **Parralelism**: When the constraints of a workflow allow some steps to be ran in parallel (branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
 - **Observability**: every job has a unique id and can be observed separately: the inputs, logs, outputs, status can be inspected
 - **Durability**: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
+- Resource allocation: Clusters can be fully leveraged and every job can be assigned to different workers with different resources (cpu, memory, gpus) and guarantee that the full resource of the worker will be available to the job
+- Parralelism: When the constraints of a workflow allow some steps to be ran in parallel (branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
+- Observability: every job has a unique ID and can be observed separately: the inputs, logs, outputs, status can be inspected
+- Durability: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
+  This is usually implemented with a log file and an sdk that skip the side effect when the unique id attached to an operation is part of the log.
   Another way is transactional snapshotting of the flow state, store the state after each operation. To resume, simply reload that last state and execute from there. Windmill does the latter and assume that idempotency can be implemented when desired in userland.
 - **Reactivity**: Suspend the flow until it is resumed again based on an event such as a webhook or an approval
 
-Additionally, an all-inclusive workflow engine should dynamically register new available workers and make it easy to deploy new workflow, assign different jobs to different workers, monitor the health of the workers and of the system itself.
+Additionally, an all-inclusive workflow engine should dynamically register new available workers and make it easy to deploy new workflows, assign different jobs to different workers, monitor the health of the workers and of the system itself.
 
 A developer platform on top of a workflow engine should handle permissions such that different users with different level of permissions can run different workflows and those workflows to have access to different resources depending on the roles of the caller.
 
@@ -194,12 +198,12 @@ Windmill is extremely fast because on all 3 aspects, it uses a simple design, op
 
 ## System design and Queue
 
-Windmill provides a single binary (compiled from Rust) than can run both as the api server, the worker or both.
+Windmill provides a single binary (compiled from Rust) than can run both as the api server or the worker.
 Both workers and servers are connected to Postgresql but not to each other.
-The servers only expose the api and the frontend. The queue is implemented in PG itself.
-Jobs can be triggered externally by calling the api which will push new jobs to the queue.
+The servers only expose the api and the frontend. The queue is implemented in Postgresql itself.
+Jobs can be triggered externally by calling the API which will push new jobs to the queue.
 
-Jobs are stored in 2 tables in PG:
+Jobs are stored in 2 tables in Postgresql:
 
 - queue (while the job is not completed, even when running)
 - completed_job
@@ -223,7 +227,7 @@ WHERE id = (
 RETURNING *
 ```
 
-This is as fast as you can get with [Postgresql](/docs/getting_started/scripts_quickstart/sql), as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood.
+This is as fast as it can get with [Postgresql](/docs/getting_started/scripts_quickstart/sql), as long as every field is properly indexed. Some variation of this delete the job from the queue instead of updating a flag, or set a time at which it is invisible for others to be pulled. It's all the same principle under the hood.
 
 When a flow job is pushed, its inputs, pointers to an immutable flow definition and initial flow state (see under) is pushed within the job's row (it's a big row!)
 
@@ -235,23 +239,23 @@ The workers pull jobs one at a time, run them to completion, and progres the sta
 
 Workflow engines represents jobs as a finite state machine [(FSM)](https://en.wikipedia.org/wiki/Finite-state_machine). The 4 main states commonly used are:
 
-- Waiting for pre-requisites (right events like a webhook to have been received, or all the depenency jobs to have been completed)
+- Waiting for pre-requisites (events like a webhook to be received, or all the depenency jobs to be completed)
 - Pre-requisite fulfilled, waiting for a worker to pull job and execute
 - Running
 - Completed (with Success or Failure)
 
 Other states are usually some refinement on the 4 above
 
-In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flows.rs#L196) of the [flow status](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flow_status.rs#L28) is an easy to read struct.
+In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flows.rs#L196) and the [flow status](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flow_status.rs#L28) are an easy to read struct.
 
-A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to the for-loop and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_job`.
+A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to for-loops and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_flow`.
 
-Hence, branches and Forloops are special kind of flow states that include an array of ids that point to all the subflows that have been launched. When a for-loop/branch is executed sequentially, the transition consist in looking at the flow state and start the next iteration if there are still left, or complete that step if there aren't.
+Hence, branches and for-loops are special kind of flow states that include an array of IDs that point to all the subflows that have been launched. When a for-loop/branch is executed sequentially, the transition consist in looking at the flow state and start the next iteration if there is still one left, or complete that step if there aren't.
 
 What is convenient about this design is that **every state transition is just one transactionned Postgresql statement**. Postgresql is ACID, and we can leverage those properties to their full extent. A lot of what is hard and slow in a workflow engine is to reach eventual consistency.
 We skip the hard part by:
 
-- using Postgres which implements MVCC and row-level locks.
+- using Postgresql which implements MVCC and row-level locks.
 - do the transitions by the workers themselves at the end of their jobs
 
 The flow state is implemented as a JSONB and hence state transitions are written in raw sql that mutate directly the flow state in the row corresponding to the flow job in the queue. It is both correct and extremely efficient. That part does not really benefit from Rust and could be implement in any language, even in PL/SQL directly.
