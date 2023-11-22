@@ -171,17 +171,10 @@ Every node is code that takes in argument and data from other steps or the flow 
 
 5 Major benefits of workflow engines:
 
-<<<<<<< HEAD:blog/2023-11-22-why-is-Windmill-the-fastest-workflow-engine/index.mdx
-
 - **Resource allocation**: Clusters can be well leveraged and every job can be assigned to different workers with different resources (cpu, memory, gpus) and guarantee that the full resource of the worker will be available to the job
 - **Parralelism**: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
 - **Observability**: every job has a unique id and can be observed separately: the inputs, logs, outputs, status can be inspected
-- # **Durability**: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
-- Resource allocation: Clusters can be fully leveraged and every job can be assigned to different workers with different resources (cpu, memory, gpus) and guarantee that the full resource of the worker will be available to the job
-- Parralelism: When the constraints of a workflow allow some steps to be ran in parallel (sub-branches, for-loop), a workflow engine can dispatch those steps on multiple physically separate workers and not just threads
-- Observability: every job has a unique id and can be observed separately: the inputs, logs, outputs, status can be inspected
-- Durability: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
-  This is usually implemented with a log file and an sdk that skip the side effect when the unique id attached to an operation is part of the log.
+- **Durability**: Machine dies, side effects fail for unexpected reasons. Workflows need to be restartable as close from the unexpected events. One way of achieving this is idempotency: a single operation is the same as the effect of making several identical operation. When in doubt, replay the entire flow without any consequences.
   Another way is transactional snapshotting of the flow state, store the state after each operation. To resume, simply reload that last state and execute from there. Windmill does the latter and assume that idempotency can be implemented when desired in userland.
 - **Reactivity**: Suspend the flow until it is resumed again based on an event such as a webhook or an approval
 
