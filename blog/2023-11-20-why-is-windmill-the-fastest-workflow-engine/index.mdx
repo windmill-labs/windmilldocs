@@ -204,5 +204,11 @@ To that end, we developped an efficient distributed cache system that dynamicall
 
 Similarly in typesript, the runtimes are either deno or bun so that they can benefit from global cache and never have to install the same dependency twice.
 
-However, handling
+However, handling dependency fast is not sufficient for maximum speed, there are still the cold start of spawning a python (~60ms) or deno/bun (~30ms) process.
+In event streaming cases, the logic itself takes about 1ms and hence the cold start is 30x the overhead of running the script.
+
+However, we implemented recently [dedicated worker for scripts](local link), which spawn a a python process once at the start of the worker and then execute the script logic in a while loop, taking the job inputs in stdin and returning the output to sdout.
+
+We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At start, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or Typescript. This completly obliterate the cold starts and make windmill flows capable of handling even-streaming use-cases and go up to 1000 steps per second on each worker.
+
 ```
