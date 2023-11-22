@@ -720,6 +720,7 @@ export default function FlowSection() {
 												]
 											]
 										]}
+										shouldAnimate={true}
 									/>
 								</div>
 							) : (
@@ -754,6 +755,7 @@ export default function FlowSection() {
 											[0.734, 0.734, 0.729, 0.728, 0.754, 0.759, 0.732, 0.726, 0.728, 0.745]
 										]
 									]}
+									shouldAnimate={true}
 								/>
 							)}
 						</div>
