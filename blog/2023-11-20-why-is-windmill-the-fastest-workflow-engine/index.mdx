@@ -192,7 +192,10 @@ json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
 
 ## Worker efficiency
 
-In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, postgresql, mysql, bigquery).
+In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, postgresql, mysql, mssql, bigquery) and then spawn the corresponding runtime then run the job.
+
+It can suffer from 2 performances penalties, cold start to spawn the runtime and lack of JIT
 
 For query languages, there is no cold start except for establishing the connection. The last connection is maintained for 1 minutes to benefit from [temporal locality](https://en.wikipedia.org/wiki/Locality_of_reference)
+bash has no cold start, and go scripts are compiled AOT and then cached locally to avoid any cold starts. The only remaining
 ```
