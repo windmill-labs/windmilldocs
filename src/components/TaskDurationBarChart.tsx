@@ -13,6 +13,7 @@ import { useIntersectionObserver } from './useInteractionObserver';
 
 export default function BarChart({
 	title,
+	xTitle,
 	labels,
 	rawData,
 	maintainAspectRatio = true,
@@ -70,7 +71,11 @@ export default function BarChart({
 		scales: {
 			x: {
 				stacked: true,
-				max: 120
+				max: 120,
+				title: {
+                    display: true,
+                    text: xTitle,
+                }
 			},
 			y: {
 				stacked: true
