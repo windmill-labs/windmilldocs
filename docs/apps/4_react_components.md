@@ -52,4 +52,4 @@ npm run build
 
 8. Upload the `dist/cc.iife.js` to Windmill and name the component as it has been named in `vite.config.ts`.
 
-![Custom component example](../../blog/2023-11-23-z-react-components/custom_example.png "Custom component example")
+![Custom component example](../../blog/2023-11-23-1-react-components/custom_example.png "Custom component example")
