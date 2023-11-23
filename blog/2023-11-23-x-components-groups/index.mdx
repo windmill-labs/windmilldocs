@@ -7,7 +7,7 @@ tags:
 	  'Launch week',
   ]
 image: ./groups_of_components_thumbnail.png
-slug: launch-week-components-groups
+slug: launch-week-1/components-groups
 description: "Introducing Components Groups to group and save components, therefore building your own meta components."
 ---
 
@@ -21,13 +21,22 @@ import DocCard from '@site/src/components/DocCard';
 
 <br/>
 
-Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create apps with UI elements called components and have them [interact with runnables](/docs/apps/connecting_components) (scripts & flows).
+Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with components linked to runnables (scripts & flows).
 
-Windmill provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users, accessible with a simple drag-and-drop.
+Windmill already provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users, accessible with a simple drag-and-drop.
 
 We are proud to introduce component groups, which allow you to build your own meta-components, accessible via drag-and-drop from any app in your workspace
 
-## How it works
+## How to create groups of components
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/save_component_group.mp4"
+/>
+
+<br/>
 
 1. From the editor, pick a [container](/docs/apps/app_configuration_settings/container) component and enable "Container is a component group".
 2. Create at least one group field.
@@ -38,14 +47,14 @@ Inside those "container groups", you can refer to "group.x" to refer to one of t
 
 Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category. They saved as resources, under the `app_groups` [folder](/docs/core_concepts/groups_and_folders).
 
+Groups of components can be combined with [styling](/docs/apps/app_configuration_settings/app_styling) to provide very custom components:
+
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
     controls
-    src="/videos/save_component_group.mp4"
+    src="/videos/group_of_components_with_style.mp4"
 />
-
-<br/>
 
 ## Learn more
 
