@@ -4,12 +4,15 @@ The Global CSS Editor is designed to give styling and theming across your entire
 
 The Global CSS Editor is a feature exclusive to [Cloud & Enterprise Self-Hosted](../misc/7_plans_details/index.mdx). However, users on the Community Edition can still access and experiment with this tool directly in the editor for evaluation purposes, although these changes will not be reflected in the app preview.
 
-<video
-  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
-  controls
-  src="/videos/global-css.mp4"
-/>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/6_MjKgbdCFQ?vq=hd1080"
+	title="YouTube video player"
+	frameborder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowfullscreen="true"
+></iframe>
 
 ## Class Identifiers
 
