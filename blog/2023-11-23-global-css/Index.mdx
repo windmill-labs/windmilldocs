@@ -20,13 +20,13 @@ import DocCard from '@site/src/components/DocCard';
 
 <br/>
 
-Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create apps with components, create interactions with runnables (scripts & flows), and configure the app settings.
+Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with components linked to runnables (scripts & flows).
 
 Custom styling is essential for aligning internal tools with your brand image. While [component-level CSS](/docs/apps/app_configuration_settings/app_styling#component-level) has always been possible in Windmill App Editor, we are excited to introduce global CSS.
 
 The Global CSS Editor is designed to give styling and theming across your apps. It provides a centralized location for defining, managing, and applying CSS rules. With this feature, you can ensure consistent styling and create reusable themes for different teams, projects, or clients.
 
-## How it works
+## How to add Global Custom CSS theme?
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -46,9 +46,29 @@ To get started, follow these steps:
 2. Navigate to the Global Styling tab.
 3. Fork the default theme.
 
-For finer control, specific [class identifiers](/docs/apps/css_editor#class-identifiers) have been added to each component, such as `wm-container` and `wm-button`.
+Specific [class identifiers](/docs/apps/css_editor#class-identifiers) have been added at different levels foo each component, such as `.wm-button` or `.wm-tabs-container`, `.wm-tabs-tabRow`, `.wm-tabs-alltabs` and `.wm-tabs-selectedTab` for [tabs](/docs/apps/app_configuration_settings/tabs).
+
+You can find those classes in the dedicated class explorer:
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/css_editor.mp4"
+/>
+
+<br/>
 
 Choose a class and apply CSS to it. Then, from the "Theme" menu, save your configuration in a theme of your choice, ready to use off-the-shelf.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/themes.mp4"
+/>
+
+<br/>
 
 You can also transfer the configuration defined on a component to the global level, affecting all components of that type.
 
