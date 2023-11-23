@@ -1,5 +1,5 @@
 ---
-title: Launch Week Day 4 - Custom React Components
+title: Launch Week Day 4 - Custom React Components & Apps
 authors: [rubenfiszel]
 tags: ['Launch week', 'React', 'App Editor']
 image: ./react_components.png
@@ -9,28 +9,24 @@ description: 'Define components in React or Vanilla JS that interact with the re
 
 import DocCard from '@site/src/components/DocCard';
 
-# Launch Week Day 4 - Custom React Components
+# Launch Week Day 4 - Custom React Components & Apps
 
 ![React Components Thumbnail](./react_components.png "React Components")
 
-Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with components linked to runnables (scripts & flows).
+Day 4 of our Launch Week is focused on the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 
-Windmill already provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users, accessible with a simple drag-and-drop. For more control and standardization with your existing stack, you might want to import your own Apps in React.
+Windmill already provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users. They should cover a vast majority of needs.
 
-:::info React
+However, for components that are more specific you can now go even further and import your own components and apps written in React.
 
-If you're looking for a way to:
-- Import whole react apps to Windmill, see [React App Import](/docs/react_vue_svelte_apps/react).
-- Integrate Windmill applications into React-based project, see [Windmill React SDK](/docs/misc/react_sdk).
-
-:::
-
-Once imported to a Windmill app, custom React components will be able to interact with the rest of the app.
+Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
 There are 3 main benefits of using your own components:
 1. Reusing react components you've already written in other codebases.
 2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
-3. Embeding very complex components such as code editor so you are never limited by the built-in components.
+3. Embeding very complex components such as a code editor.
+
+If that's not sufficient you can even [build your own app in react](#how-to-import-whole-react-apps).
 
 ## How to import react components to the App Editor
 
@@ -76,6 +72,19 @@ npm run build
 
 ![Custom component example](./custom_example.png "Custom component example")
 
+## How to import whole React apps
+
+See our documentation:
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="React App Import"
+		description="Import your own React app in Windmill App Editor."
+		href="/docs/react_vue_svelte_apps/react"
+	/>
+</div>
+
 ## Learn more
 
 To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
@@ -88,17 +97,5 @@ For more details on React Components, see:
 		title="Import Custom React Components"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
 		href="/docs/apps/react_components"
-	/>
-	<DocCard
-		color="orange"
-		title="React App Import"
-		description="Import your own React app in Windmill App Editor."
-		href="/docs/react_vue_svelte_apps/react"
-	/>
-	<DocCard
-		color="orange"
-		title="Windmill React SDK"
-		description="The Windmill React SDK provides a suite of tools and components to integrate Windmill applications into React-based projects."
-		href="/docs/misc/react_sdk"
 	/>
 </div>
