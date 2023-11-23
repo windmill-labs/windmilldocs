@@ -1,4 +1,4 @@
-# Resource management
+# Resources
 
 ## Listing resources
 

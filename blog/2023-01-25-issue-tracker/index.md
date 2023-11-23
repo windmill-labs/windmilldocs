@@ -196,7 +196,7 @@ good idea to query the data once and pass it to the individual components later.
 This can be achieved by Background runnables.
 
 1. Click `Add` next to the `Background runnables` label on the bottom left side.
-2. Make sure the new script is selected and choose `Deno` as the language.
+2. Make sure the new script is selected and choose `TypeScript (Deno)` as the language.
 3. Name the script `Load Issues`.
 4. Paste in the following code:
 
@@ -204,12 +204,12 @@ This can be achieved by Background runnables.
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(auth: Supabase) {
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	const result = await client.from('issues').select();
    	return result.data;
    }
@@ -242,7 +242,7 @@ it:
 
 1. Select `Compute` as the input type and click `Create an inline script`.
    ![Add table component](./10-wm-table.png.webp)
-2. Choose `Deno` as language.
+2. Choose `TypeScript (Deno)` as language.
 3. Name it `Shape Data`
 4. Paste in the following code:
 
@@ -288,7 +288,7 @@ it:
 
 :::tip
 
-Windmill auto saves your progress but if you are sceptical about it, now would
+Windmill auto saves your progress but if you are skeptical about it, now would
 be a good time to click "Save" in the top right corner.
 
 :::
@@ -313,47 +313,57 @@ you'll still be able to move them manually.
 
 **Add a chart for the status**
 
-1. Insert a `Pie Chart`.
-2. Select `Compute` as the input type in the right pane.
+1. Insert a `ChartJs` component from the `Charts` section.
+2. Toggle from the `UI Editor` to the `JSON` input type in the right pane.
+3. Select `Compute` as the data source.
    ![Compute chart input](./14-wm-status-chart.png.webp)
-3. Click `Create an inline script`.
-4. Choose `Deno` as the language.
-5. Name the script `Get Status Chart Data`.
-6. Paste in the following code:
+4. Click `Create an inline script`.
+5. Choose `TypeScript (Deno)` as the language.
+6. Name the script `Get Status Chart Data`.
+7. Paste in the following code:
 
    ```tsx
    export async function main(issues: any[]) {
-   	if (!issues) {
-   		return {
-   			labels: [],
-   			data: []
-   		};
-   	}
-   	const values: Record<string, number> = {};
-   	issues.forEach(({ status }) => {
-   		if (!values[status]) {
-   			values[status] = 0;
-   		}
-   		values[status]++;
-   	});
-   	return {
-   		labels: Object.keys(values),
-   		data: Object.values(values)
-   	};
+      if (!issues) {
+         return {
+            labels: [],
+            datasets: [],
+         };
+      }
+      const values: Record<string, number> = {};
+      issues.forEach(({ status }) => {
+         if (!values[status]) {
+            values[status] = 0;
+         }
+         values[status]++;
+      });
+      return {
+         labels: Object.keys(values),
+         datasets: [
+            {
+               data: Object.values(values),
+               backgroundColor: [
+                  "#FF8384",
+                  "#48C0C0",
+                  "#FFCE56",
+               ]
+            },
+         ],
+      };
    }
    ```
 
    :::info
 
-   As you can see, the pie chart takes the data in a specific shape. The input
-   should be an object with 2 properties: `labels` and `data`, both of which
-   hold arrays as values. The _label_ at position `[0]` corresponds to the
-   _data_ at position `[0]`. In short, the TypeScript type of the return value
-   should be the following:
+   As you can see, the ChartJs component takes the data in a specific shape. The
+   input should be an object with 2 properties: `labels` and `datasets` `labels`
+   should be an array of the label names, while `datasets` should be an array of
+   dataset objects, each containing a `data` element. You can learn more about
+   the format of dataset objects [in the ChartJs
+   documentation](https://www.chartjs.org/docs/latest/general/data-structures.html).
+   The _label_ at position `[0]` corresponds to the _data_ at position `[0]`.
 
-   `{ labels: string[], data: number[] }`
-
-7. Configure the `issues` input of the script on the right pane to be `Connect`
+8. Configure the `issues` input of the script on the right pane to be `Connect`
    type and then select the `result` value of the `background` runnable that is
    responsible for the querying of the issues.
    ![Connected chart input](./15-wm-connect-chart.png.webp)
@@ -366,28 +376,36 @@ will be that the targeted field of the individual issues is going to be
 the Status chart, then optionally name it `Get Severity Chart Data` and paste in
 the following code:
 
-```tsx
-export async function main(issues: any[]) {
-	if (!issues) {
-		return {
-			labels: [],
-			data: []
-		};
-	}
-	const values: Record<string, number> = {};
-	issues.forEach(({ severity }) => {
-		if (!values[severity]) {
-			values[severity] = 0;
-		}
-		values[severity]++;
-	});
-	return {
-		labels: Object.keys(values),
-		data: Object.values(values)
-	};
-}
-```
-
+   ```tsx
+   export async function main(issues: any[]) {
+      if (!issues) {
+         return {
+            labels: [],
+            datasets: [],
+         };
+      }
+      const values: Record<string, number> = {};
+      issues.forEach(({ severity }) => {
+         if (!values[severity]) {
+            values[severity] = 0;
+         }
+         values[severity]++;
+      });
+      return {
+         labels: Object.keys(values),
+         datasets: [
+            {
+               data: Object.values(values),
+               backgroundColor: [
+                  "#FF8384",
+                  "#48C0C0",
+                  "#FFCE56",
+               ]
+            },
+         ],
+      };
+   }
+   ```
 Finally, connect the result value of the background runnable to the `issues`
 argument of the script, just like in the last step of the other chart.
 
@@ -418,7 +436,7 @@ handled by `Select` components.
 
 Since the `Select` components require input data to be in a certain shape, let's
 create a `Background` script first to convert the `users` list. Add a new
-`Background` script, select `Deno` as language and paste in the following code:
+`Background` script, select `TypeScript (Deno)` as language and name it `Get User Selection List`. Paste in the following code:
 
 ```tsx
 export async function main(users: undefined | any[]) {
@@ -467,18 +485,25 @@ the next steps.
 3. Leave the `Items` argument on `Static` mode and have these 3 as inputs:
 
    ```tsx
-   { "label": "PENDING" }
+   { 
+      "value": "PENDING",
+      "label": "PENDING" 
+   }
    ```
 
    ```tsx
-   { "label": "WORKED ON" }
+   { 
+      "value": "WORKED ON",
+      "label": "WORKED ON" 
+   }
    ```
 
    ```tsx
-   { "label": "FINISHED" }
+   { 
+      "value": "FINISHED",
+      "label": "FINISHED" 
+   }
    ```
-
-4. Set the `Item Key` argument to `label`
 
 ![Status form field](./20-wm-form-status.png.webp)
 
@@ -490,31 +515,38 @@ the next steps.
 3. Leave the `Items` argument on `Static` mode and have these 3 as inputs:
 
    ```tsx
-   { "label": "LOW" }
+   { 
+      "value": "LOW",
+      "label": "LOW" 
+   }
    ```
 
    ```tsx
-   { "label": "MEDIUM" }
+   { 
+      "value": "MEDIUM",
+      "label": "MEDIUM" 
+   }
    ```
 
    ```tsx
-   { "label": "HIGH" }
+   { 
+      "value": "HIGH",
+      "label": "HIGH" 
+   }
    ```
-
-4. Set the `Item Key` argument to `label`
-
 ![Severity form field](./21-wm-form-severity.png.webp)
 
 #### Submit button
 
-Now that all the input fields are added and wired up, now the only thing left is
+Now that all the input fields are added and wired up, the only thing left is
 to insert a `Button` component, which collects all the values entered by the
 user and sends them to the database.
 
 1. Insert a `Button` component.
 2. Set the `Label` to `Create Issue`.
 3. Set the `Size` to `md`
-4. Find the ID of the `Load Issues` background runnable and check `Recompute` on
+4. Set the `Styling > Alignment` to right-justified
+5. Find the ID of the `Load Issues` background runnable and check `Recompute` on
    it in the `Recompute others` section.
 
    :::info
@@ -522,15 +554,15 @@ user and sends them to the database.
    This will result in reloading the issues every time a new one is added and
    therefore it will be added to the table as well.
 
-5. Click `Create an inline script`, select `Deno` as language, name it
+6. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
    `Create Issue` and paste in the following code:
 
    ```tsx
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(
@@ -542,7 +574,7 @@ user and sends them to the database.
    	status: string,
    	severity: string
    ) {
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	return await client.from('issues').insert({
    		summary,
    		description,
@@ -554,9 +586,9 @@ user and sends them to the database.
    }
    ```
 
-6. Select your Supabase resource for the `auth` argument of the script in the
+7. Select your Supabase resource for the `auth` argument of the script in the
    `Settings` pane on the right.
-7. Connect all the other arguments with the `result` value of their
+8. Connect all the other arguments with the `result` value of their
    corresponding inputs.
 
 ![Full create issue form](./22-full-form.png.webp)
@@ -566,8 +598,7 @@ user and sends them to the database.
 Table components can have actions which will be added to the end of each row in
 the form of buttons. Select the `Table` component and follow the steps:
 
-1. Under the "Settings" tab in the right pane, add an action from the
-   `Table actions` section.
+1. Under the "Settings" tab in the right pane, add a button action from the `Table actions` section.
 2. Click the newly added action.
 3. Set the `Label` argument to `Delete`.
 4. Set the `Color` argument to `red`.
@@ -579,32 +610,35 @@ the form of buttons. Select the `Table` component and follow the steps:
    Because of this, the `issues` data will be reloaded from the database every
    time an issue is deleted.
 
-6. Click `Create an inline script`, select `Deno` as language, name it
+   :::
+
+6. Click `Create an inline script`, select `TypeScript (Deno)` as language, name it
    `Delete Issue` and paste in the following code:
 
    ```tsx
    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
    type Supabase = {
-   	supabaseUrl: string;
-   	supabaseKey: string;
+   	url: string;
+   	key: string;
    };
 
    export async function main(auth: Supabase, id: string) {
-   	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+   	const client = createClient(auth.url, auth.key);
    	return await client.from('issues').delete().filter('id', 'eq', id);
    }
    ```
 
 7. Select your Supabase resource for the `auth` argument of the script in the
    `Settings` pane on the right.
-8. Select the `Column` input type for the `id` argument and enter `id` as the
-   value.
+8. Select the `Eval` input type for the `id` argument and connect to the `.selectedRow.id` of the table component.
 
    :::info
 
    This will result in the `id` argument being filled by the value of the `id`
    column from the row that the action button was clicked in.
+
+   :::
 
 ![Table component with action buttons](./23-wm-table-action.png.webp)
 

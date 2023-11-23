@@ -1,0 +1,114 @@
+import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
+
+# AWS Lambda vs Windmill
+
+## Setup
+
+### Windmill
+
+The setup is the exact same as for the other benchmarks in [Airflow vs Prefect vs Temporal vs Windmill](../competitors/index.mdx). We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official Github repo (with the same adjustement, i.e. 1 worker only, even though for this use case it would not make a difference).
+
+We created a script in Windmill computing a Fibonacci number in Python:
+
+```python
+
+N_FIBO = 33
+
+# WIMDMILL script: `u/benchmarkuser/fibo_script`
+def fibo(n: int):
+    if n <= 1:
+        return n
+    else:
+        return fibo(n - 1) + fibo(n - 2)
+
+def main():
+    return fibo(N_FIBO)
+```
+
+which we called multiple times using its webhook. We used `siege` benchmark tool to trigger the jobs multiple times using its webhook:
+
+```bash
+siege -r500 -c1 -v -H "Cookie: token=$WM_TOKEN" "http://$WM_HOST/api/w/benchmarks/jobs/run_wait_result/p/u%2Fbenchmarksuser%2Ffibo_script"
+```
+
+### AWS Lambda
+
+We set up a Lambda running Python 3.11 with the following simple script:
+
+```python
+import json
+
+N_FIBO = 33
+
+def fibo(n: int):
+    if n <= 1:
+        return n
+    else:
+        return fibo(n - 1) + fibo(n - 2)
+
+def lambda_handler(event, context):
+    result = fibo(N_FIBO)
+    return {
+        'statusCode': 200,
+        'body': json.dumps(result)
+    }
+```
+
+We gave the Lambda 2048MB of memory, but according to the logs the memory never exceeded 50MB. On AWS, vCPU is proportional to the memory so we can assume it got a decent vCPU.
+
+We exposed a trigger through AWS API Gateway and from our EC2 instance, we called it using the same `siege` benchmark tool:
+
+```bash
+siege -r500 -c1 -v -H "x-api-key: $AWS_API_KEY" "https://$AWS_LAMBDA_HOST/default/fibo_lambda"
+```
+
+## Results
+
+In the same vein as the other benchmarks, we ran `fibonacci(10)` 500 times (`--reps=500` as `siege` argument) and `fibonacci(33)` 100 times.
+
+The results were the following:
+
+| **(in seconds)** | **# reps** | **AWS Lambda (sec)** | **Windmill<br />Normal (sec)** | **Windmill<br />Dedicated Worker (sec)** |
+| :--------------: | ---------: | -------------------: | -----------------------------: | ---------------------------------------: |
+|   **fibo(10)**   |        500 |                36.56 |                          55.36 |                                    26.81 |
+|   **fibo(33)**   |        100 |                93.95 |                         109.06 |                                    104.5 |
+
+Which gives an average duration per job in milliseconds:
+
+| **(in milliseconds)** | **AWS Lambda (sec)** | **Windmill<br />Normal (sec)** | **Windmill<br />Dedicated Worker (sec)** |
+| :-------------------: | :------------------: | :----------------------------: | :--------------------------------------: |
+|     **fibo(10)**      |          73          |              111               |                    54                    |
+|     **fibo(33)**      |         940          |              1091              |                   1045                   |
+
+Visually, we have the following graphs:
+
+<div class="grid">
+	<TaskDurationBarChart
+		title="500 times fibonacci(10)"
+		xTitle="Duration (in seconds)"
+		labels={[['AWS Lambda'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		rawData={[
+			[[0.0], [36.56]],
+			[[0.0], [55.36]],
+			[[0.0], [26.81]]
+		]}
+	/>
+</div>
+
+<div class="grid">
+	<TaskDurationBarChart
+		title="100 times fibonacci(33)"
+		xTitle="Duration (in seconds)"
+		labels={[['AWS Lambda'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		rawData={[
+			[[0.0], [93.95]],
+			[[0.0], [109.06]],
+			[[0.0], [104.5]]
+		]}
+	/>
+</div>
+
+## Conclusion
+
+For running a high number of lightweight tasks (`fibonacci(10)`), we can see that Windmill in dedicated worker mode is the fastest. Windmill in normal mode is slower because it runs a cold start for each task.
+For long running tasks (`fibonacci(33)`), Windmill in normal mode and dedicated worker mode is almost equivalent because the warm-up time needed in normal mode is negligible compared to the duration of tasks. AWS Lambda has slightly better performance for those kind of tasks, likely because it is able to run the core of the Python logic faster than Windmill.
