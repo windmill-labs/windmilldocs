@@ -1,4 +1,4 @@
-# Scripts management
+# Scripts
 
 ## Listing scripts
 

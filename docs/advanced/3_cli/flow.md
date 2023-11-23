@@ -1,4 +1,4 @@
-# Flows management
+# Flows
 
 ## Listing flows
 
