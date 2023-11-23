@@ -89,7 +89,7 @@ export default function BarChart({
 			},
 			title: {
 				display: true,
-				text: title + ' (time speed: 20x)'
+				text: title
 			}
 		},
 		animation: {

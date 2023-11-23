@@ -640,7 +640,8 @@ export default function FlowSection() {
 							{chart === 'short' ? (
 								<div>
 									<TaskDurationBarChart
-										title="40 lightweight tasks"
+										title="40 lightweight tasks (animation time speed x20)"
+										xTitle="Duration (in seconds)"
 										labels={[
 											['Airflow'],
 											['Prefect'],
