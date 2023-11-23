@@ -1,49 +1,80 @@
 import React from 'react';
-import kahootLogo from '../../static/images/KahootLogo_Full_purple.png';
+import { useColorMode } from '@docusaurus/theme-common';
+import classNames from 'classnames';
 
 export default function LogoClouds() {
+	const { colorMode } = useColorMode();
+
+	const logos = [
+		{
+			url: 'https://www.photoroom.com',
+			dark: '/images/brands/logo-mono-white-transparent.png',
+			light: '/images/brands/logo-mono-black-transparent.png',
+			name: 'Photoroom',
+			anchor: 'photoroom'
+		},
+		{
+			url: 'https://www.kahoot.com/',
+			dark: '/images/brands/Kahoot_Logo-dark.svg',
+			light: '/images/brands/Kahoot_Logo.svg',
+			name: 'Kahoot',
+			anchor: 'kahoot'
+		},
+		{
+			url: 'https://www.qovery.com/',
+			dark: '/images/brands/Qovery-dark.png',
+			light: '/images/brands/Qovery-light.svg',
+			name: 'Qovery',
+			anchor: 'qovery'
+		},
+		{
+			url: 'https://www.bloomcredit.io/',
+			dark: '/images/brands/Bloomcredit-Dark.svg',
+			light: '/images/brands/Bloomcredit-Light.svg',
+			name: 'Bloomcredit',
+			anchor: 'bloomcredit'
+		},
+		{
+			url: 'https://www.teracapital.com.br/',
+			dark: '/images/brands/teracapital-dark.svg',
+			light: '/images/brands/teracapital-light.svg',
+			name: 'Tera Capital',
+			gap: true
+		},
+		{
+			url: 'https://www.treatmyocd.com/',
+			dark: '/images/brands/nocd-logo-dark.svg',
+			light: '/images/brands/nocd-logo.svg',
+			name: 'Nocd',
+			gap: true
+		}
+	];
+
 	return (
-		<div className="py-16">
+		<div className="py-24 sm:py-32">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
-				<h2 className="text-center text-lg font-semibold leading-8 dark:text-gray-100 text-gray-900">
-					Chosen by leading enterprise customers
+				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900">
+					Trusted by 500+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-					<img
-						className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-						src="https://media.licdn.com/dms/image/C4D0BAQGQPNUN4VibGA/company-logo_200_200/0/1662497060560?e=2147483647&v=beta&t=oY920CYx6hdvnWpyUYBqIUPeESZ2A3rD5XHewVw-YhI"
-						alt="Tera Capital"
-						width={200}
-						height={70}
-					/>
-					<img
-						className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-						src={kahootLogo}						
-						alt="Kahoot"
-						width={158}
-						height={48}
-					/>
-					<img
-						className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-						src="https://ww1.freelogovectors.net/wp-content/uploads/2023/01/photoroom_logo-freelogovectors.net_.png"
-						alt="Photoroom"
-						width={200}
-						height={60}
-					/>
-					<img
-						className="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1"
-						src="https://uploads-ssl.webflow.com/613002375bb42b74d41d771a/61313810c5bb291a726596a7_bloomcredit.png"
-						alt="Bloomcredit"
-						width={158}
-						height={48}
-					/>
-					<img
-						className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
-						src="https://tailwindui.com/img/logos/158x48/statamic-logo-white.svg"
-						alt="Statamic"
-						width={158}
-						height={48}
-					/>
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-0 lg:max-w-none lg:grid-cols-6">
+					{logos.map((logo) => (
+						<a
+							key={logo.name}
+							href={logo.anchor ? `#${logo.anchor}` : logo.url}
+							target={logo.anchor ? '_self' : '_blank'}
+						>
+							<img
+								className={classNames(
+									'col-span-3 max-h-12 w-full object-contain lg:col-span-1 ',
+									logo.gap ? 'py-2' : ''
+								)}
+								src={colorMode === 'light' ? logo.light : logo.dark}
+								alt={logo.name}
+								width={158}
+								height={48}
+							/>
+						</a>
+					))}
 				</div>
 			</div>
 		</div>

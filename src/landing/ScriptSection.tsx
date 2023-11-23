@@ -29,12 +29,12 @@ import Section from './Section';
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs',
+		title: 'VS Code extension or any IDEs',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
 		title: 'Version control from Github/Gitlab',
@@ -182,14 +182,14 @@ const tabs = [
 			},
 			{
 				title: 'Add Resources and Variables to Code',
-				description: 'You can add directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
+				description: 'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
 				icon: XSquareIcon,
 				video: {
 					videoSrc: '/videos/add_resources_variables.mp4',
 					altText: 'Add Resources and Variables to Code'
 				},
 				altText: 'Add Resources and Variables to Code',
-				caption: <div>You can add directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
+				caption: <div>You can directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
 			},
 			{
 				title: 'Windmill AI',
@@ -267,7 +267,11 @@ const tabs = [
 				description: 'Execute a script using the CLI.',
 				icon: Terminal,
 				caption: <div>Execute a script using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
-				imageSrc: '/images/setup.gif',
+				video: {
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoLength: '26',
+					altText: 'Execute using CLI'
+				},
 				altText: 'Execute using CLI'
 			},
 			{
@@ -307,22 +311,23 @@ const examples = [
 		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
 	},
 	{
-		name: 'Generate image using OpenAI',
+		name: 'Create issue',
 		description: (
 			<>
-				Given a prompt, generate an image using{' '}
+				Create an issue in a given{' '}
 				<a
-					href="https://hub.windmill.dev/integrations/slack"
+					href="https://hub.windmill.dev/integrations/github"
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark className="leading-none bg-purple-100 hover:bg-purple-200 px-2 rounded whitespace-nowrap  text-purple-800 font-semibold">
-						OpenAI
+					<mark className="leading-none bg-blue-100 hover:bg-blue-200 px-2 rounded whitespace-nowrap  text-blue-800 font-semibold">
+						GitHub
 					</mark>
 				</a>
+				repository.
 			</>
 		),
-		href: 'https://hub.windmill.dev/scripts/openai/1451/generate-image-openai'
+		href: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
 	},
 	{
 		name: 'Search documents in MongoDB',

@@ -53,16 +53,16 @@ export default function HeroExample() {
 					deploy on small and large infra. Any dependency with zero-config.
 				</p>
 				<div className="video-container">
-                    <iframe
-                        width="100%"
-                        height="100%"
-                        src="https://www.youtube.com/embed/pJh2fdstV-A?vq=hd1080"
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen="true"
-                    ></iframe>
-                </div>
+					<iframe
+						width="100%"
+						height="100%"
+						src="https://www.youtube.com/embed/pJh2fdstV-A?vq=hd1080"
+						title="YouTube video player"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen="true"
+						className="rounded-xl"
+					></iframe>
+				</div>
 			</div>
 		</LandingSection>
 	);

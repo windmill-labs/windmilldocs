@@ -73,12 +73,9 @@ services:
       - '9920-9930:9920-9930' # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
-      - BASE_URL=http://${WM_BASE_URL}
-      - RUST_LOG=info
-      - NUM_WORKERS=10 # <- an increased number of workers is helpful when running a lot of scraping scripts in parallel
+      - MODE=standalone
       - TIMEOUT=99999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
-      - DISABLE_SERVER=false
-      - METRICS_ADDR=false
+
     depends_on:
       db:
         condition: service_healthy
@@ -99,7 +96,6 @@ add the following:
 ```bash
 DB_PASSWORD=changeme
 #use your public base url here
-WM_BASE_URL=http://localhost
 ```
 
 This is the PostgreSQL database password used by Windmill and the base URL of
@@ -233,12 +229,9 @@ services:
       - '9920-9930:9920-9930' # <- added this; only 10 ports are opened; if you want to open more ports increase the 2nd number respectively
     environment:
       - DATABASE_URL=postgres://postgres:${DB_PASSWORD}@db/windmill?sslmode=disable
-      - BASE_URL=${WM_BASE_URL}
-      - RUST_LOG=info
+      - MODE=standalone
       - NUM_WORKERS=10 # <- an increased number of workers is helpful when running a lot of scraping scripts in parallel
-      - TIMEOUT=99999 # <- add this; This is important: Scraping websites usually outlasts normal scripts. To prevent a timeout we should increase this value.
-      - DISABLE_SERVER=false
-      - METRICS_ADDR=false
+
     depends_on:
       db:
         condition: service_healthy

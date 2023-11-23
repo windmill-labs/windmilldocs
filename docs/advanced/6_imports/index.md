@@ -15,6 +15,7 @@ To import other scripts from your workpace, see [Sharing common logic](../5_shar
 ## Imports in Typescript
 
 There are two options for runtimes in TypeScript:
+
 - [Deno](#deno)
 - [Bun](#bun) (compatible 1:1 with Node.js)
 
@@ -25,8 +26,8 @@ The dependencies and their versions are contained in the script and hence there 
 e.g:
 
 ```ts
-import { toWords } from "npm:number-to-words@1"
-import * as wmill from "https://deno.land/x/windmill@v1.84.1/mod.ts"
+import { toWords } from 'npm:number-to-words@1';
+import * as wmill from 'https://deno.land/x/windmill@v1.84.1/mod.ts';
 ```
 
 ### Bun
@@ -36,8 +37,8 @@ The dependencies and their versions are contained in the script and hence there 
 e.g:
 
 ```ts
-import { toWords } from "number-to-words@1"
-import { getVariable } from "windmill-client@1.147.3"
+import { toWords } from 'number-to-words@1';
+import { getVariable } from 'windmill-client@1.147.3';
 ```
 
 ### Private npm registry
@@ -61,7 +62,7 @@ executed with the same versions of its dependencies. It also avoids the hassle
 of having to maintain a separate requirements file.
 
 We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
-You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py/src/lib.rs#L177)
+You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48)
 
 ## Pinning dependencies
 
