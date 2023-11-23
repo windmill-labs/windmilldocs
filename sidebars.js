@@ -213,6 +213,7 @@ const sidebars = {
 						'apps/app_deployment',
 						'apps/public_apps',
 						'apps/app_configuration_settings/components_groups',
+						'apps/react_components',
 						'apps/app_e-commerce'
 					],
 

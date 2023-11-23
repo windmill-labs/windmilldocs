@@ -2,7 +2,7 @@
 
 Although Windmill provides a comprehensive [App editor](../getting_started/7_apps_quickstart/index.mdx) to turn scripts and workflows into custom UIs, you might want to import your own Apps in React.
 
-Apps in react must follow a template found at https://github.com/windmill-labs/windmill-react-template. In short:
+Apps in React must follow a template found at https://github.com/windmill-labs/windmill-react-template. In short:
 
 1. `git clone` the react template repo.
 2. Run `npm install` and `npm run build`.
