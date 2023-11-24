@@ -12,11 +12,13 @@ import BarChart from '@site/src/components/BarChart';
 
 ![Windmill for data pipelines](./data_pipelines.png 'Windmill for data pipelines')
 
+_Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra_
+
 Last day of our launch week today (we know it's sad). Before saying goodbye, we want to tell you about features that will help you in your ETL, with restartable flows and S3 integration for data pipelines (this article).
 
 ## Running an ETL with Windmill
 
-An ETL is nothing else than a sequence of jobs that needs to be orchestrated, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
+An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of jobs, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
 
 Windmill can be a great fit for running data processing pipelines:
 
@@ -34,12 +36,13 @@ Windmill can be a great fit for running data processing pipelines:
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 The particularity of data pipeline flows vs. any other kind of automation flows is that they run computation on large datasets and the result of such computation is itself a (potentially large) dataset that needs to be stored.
 
-For the compute, we truly think that by using the right data processing libraries on servers that are sized for this purpose, a vast majority of ETLs can be run on Windmill.
-We have integrated with [Polars](https://www.pola.rs/) and [DuckDB](https://duckdb.org/), as one of the two best-in-class in-memory data processing libraries for you to leverage Windmill workers as much as you can.
+For the compute, as data practitioner for the most demanding ETLs, we have observed that in almost all cases, the system they run on is ill-designed for their task. Much faster alternatives now exist
+leveraging the modern OLAP processing libraries. We have integrated with [Polars](https://www.pola.rs/) and [DuckDB](https://duckdb.org/), as ones of the best-in-class in-memory data processing
+libraries and they fit particularly well Windmill since you can assign variously sized workers depending on the step.
 
 To give you a quick idea:
 
@@ -48,14 +51,12 @@ To give you a quick idea:
 
 Add to those numbers that on AWS for example, you can get up to [24Tb of memory on a single server](https://aws.amazon.com/ec2/instance-types/high-memory/). Nowadays, you don't need a complex distributed computing architecture to process a large amount of data.
 
-And for the storage, we've made some improvements recently that allow you to connect your Windmill workspace to an S3 bucket and interact with it almost seamlessly.
+And for storage, you can now link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
 
 The very large majority of ETL can be processed step-wise on single nodes and Windmill provides (one of) the best models for orchestrating non-sharded compute. Using this model, your ETL will see a massive performance improvement, your infrastructure
 will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
 
-Let's dig into those features that make data processing easy in Windmill.
-
-### Windmill integration with an external S3 storage
+## Windmill integration with an external S3 storage
 
 In Windmill, a data pipeline is implemented using a flow, and each step of the pipeline is a script. One of the key features of Windmill flows is to easily pass a step result to its dependent steps. But
 because those results are serialized to Windmill database and kept as long as the job is stored, this obviously won't work when the result is a dataset of millions of rows. The solution is to save the datasets to an external storage at the end of each script.
@@ -199,24 +200,21 @@ def main(input_dataset: s3object):
 
 The example uses Polars. If you're more into SQL you can use DuckDB, but the code will have the same structure: initialization, reading from S3, transforming, writing back to S3.
 
-### In-memory data processing performance
+## In-memory data processing performance
 
 By using Polars, DuckDB, or any other data processing libraries inside Windmill, the computation will happen on a single node. Even though you might have multiple Windmill workers, a script will still be run by a single worker and the computation won't be distributed. We've run some benchmarks to clearly expose the performance and scale you could expect for such a setup.
 
-Let's be clear, we're not experts in Polars, DuckDB, or Spark (the reference we've taken below). We haven't done anything or fined-tune the pipeline to optimize the performances. We're trying to be transparent on the use cases you can hope to fully manage in Windmill.
-
 We've taken a well-known benchmark dataset: the [TCP-H](https://www.tpc.org/tpch/default5.asp) dataset. It has the advantage of being available in any size, and being fairly representative of real use cases. We've generated multiple versions: 1Gb, 5Gb, 10Gb and 25Gb (if you prefer thinking in terms of rows, the biggest table of the 25Gb version has around 150M rows). We won't detail here the structure of the database or the queries we've run, but TPC-H is well-documented if needed.
 
-The way we've benchmarked the libraries was simple:
+The following procedure was followed:
 
-- We've loaded all the datasets as parquet files on S3
-- We wrote 8 queries (taken directly from the official TPC-H benchmark documentation) in the different dialects. Those queries were taken directly from the official TPC-H benchmark documentation. They perform numerous joins, aggregations, group-bys, etc.
-- We've run those 8 queries for each benchmark (1Gb, 5Gb, 10Gb, etc.) monitoring the memory of the Windmill worker executing the query.
-- For each script, it was doing:
-  - Read the data straight from the S3 parquet files
-  - Run the query
-  - Store the result in a separate parquet file on S3
-- The 8 queries we run sequentially using a branch-all Windmill flow (no parallel)
+- Datasets provided by TPC-H as CSVs were uploaded as parquet files on S3.
+- TPC-H provides a set of canonical queries. They perform numerous joins, aggregations, group-bys, etc. 8 of them were converted in the different dialects.
+- Those queries were ran sequentially as scripts in for-loop flow in Windmill, and this for each of the benchmark set of data (1Gb, 5Gb, 10Gb, etc.). The memory of the Windmill server was recorded.
+- Each script was:
+  - Reading the data straight from the S3 parquet files
+  - Running the query
+  - Storing the result in a separate parquet file on S3
 
 A couple of notes before the results:
 
@@ -234,15 +232,15 @@ A couple of notes before the results:
 			data: [285, 720, 1170, 2505]
 		},
 		{
-			label: 'Polars',
+			label: 'Windmill + Polars',
 			data: [42, 183, 370, 0]
 		},
 		{
-			label: 'Polars lazy',
+			label: 'Windmill + Polars lazy',
 			data: [247, 1246, 2480, 6498]
 		},
 		{
-			label: 'DuckDB in memory',
+			label: 'Windmill + DuckDB in memory',
 			data: [61, 260, 560, 2767]
 		}
 	]}
@@ -258,21 +256,21 @@ A couple of notes before the results:
 			data: [7.26, 10.3, 11.7, 20.9]
 		},
 		{
-			label: 'Polars',
+			label: 'Windmill + Polars',
 			data: [1.78, 12.2, 24.2, 0]
 		},
 		{
-			label: 'Polars lazy',
+			label: 'Windmill + Polars lazy',
 			data: [2.11, 2.42, 10.4, 19.6]
 		},
 		{
-			label: 'DuckDB in memory',
+			label: 'Windmill + DuckDB in memory',
 			data: [2.94, 6.05, 12.3, 25.7]
 		}
 	]}
 />
 
-Polars is the fastest at computing the results, but consumes slightly more memory than Spark (it OOMed for the 25G benchmark). Polars in lazy mode, however, is a lot more memory efficient and can process a more data, at the expense of computation time.
+Polars is the fastest at computing the results, but consumes slightly more memory than Spark (it OOMed for the 25G benchmark). Polars in lazy mode, however, is a lot more memory efficient and can process more data, at the expense of computation time.
 Overall, both Polars and DuckDB behave very well in terms of memory consumption and computation time. The 10G benchmark contains tables with up to 60 million rows, and we were far from using the most powerful AWS instance. So, it is true that
 this doesn't scale horizontally, but it also confirms that a majority of data pipelines can be addressed with a large enough instance. And when you think about it, what's more convenient? Managing a single beefy server or a fleet of small servers?
 
@@ -290,9 +288,9 @@ To learn more about the launch week, you can visit our [dedicated page](../2023-
 For more details on storage in Windmill, see:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		title="Persistent Storage"
-    	description="Ensure that your data is safely stored and easily accessible whenever required."
-    	href="/docs/core_concepts/persistent_storage"
-    />
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
+	/>
 </div>
