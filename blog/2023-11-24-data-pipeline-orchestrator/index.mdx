@@ -32,7 +32,7 @@ We have integrated with [Polars](https://www.pola.rs/) and [DuckDB](https://duck
 
 To give you a quick idea:
 
-- Running a `SELECT COUNT(*), SUM(column_1), AVG(column_2) FROM my_table GROUP_BY key` with _300M_ entries in `my_table` requires less than _11Gb_ of memory using DuckDB
+- Running a `SELECT COUNT(*), SUM(column_1), AVG(column_2) FROM my_table GROUP_BY key` with _600M_ entries in `my_table` requires less than _24Gb_ of memory using DuckDB
 - Running a `SELECT * FROM table_a JOIN table_b ORDER BY key`, with `table_a` having _300M_ rows and `table_b` _75M_ rows with DuckDB requires _24Gb_ of memory
 
 Add to those numbers that on AWS for example, you can get up to [24Tb of memory on a single server](https://aws.amazon.com/ec2/instance-types/high-memory/). Nowadays, you don't need a complex distributed computing architecture to process a large amount of data.
