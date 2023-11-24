@@ -20,7 +20,7 @@ Last day of our launch week today (we know it's sad). Before saying goodbye, we 
 
 An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of jobs, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
 
-Windmill enables building fast, powerful, reliable, and easy to build data pipelines:
+Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines:
 
 - The DX in Windmill allows you to quickly [assemble flows](/docs/flows/flow_editor) that can process data step by step in a visual and easy-to-manage way;
 - You can control [parallelism](/docs/flows/flow_branches#branch-all) between individual steps, and set [concurrency limits](/docs/flows/concurrency_limit) in case external resources need are fragile or rate limited;
@@ -203,15 +203,15 @@ The example uses Polars. If you're more into SQL you can use DuckDB, but the cod
 
 ## In-memory data processing performance
 
-By using Polars, DuckDB, or any other data processing libraries inside Windmill, the computation will happen on a single node. Even though you might have multiple Windmill workers, a script will still be run by a single worker and the computation won't be distributed. We've run some benchmarks to clearly expose the performance and scale you could expect for such a setup.
+By using Polars, DuckDB, or any other data processing libraries inside Windmill, the computation will happen on a single node. Even though you might have multiple Windmill workers, a script will still be run by a single worker and the computation won't be distributed. We've run some benchmarks to expose the performance and scale you could expect for such a setup.
 
-We've taken a well-known benchmark dataset: the [TCP-H](https://www.tpc.org/tpch/default5.asp) dataset. It has the advantage of being available in any size, and being fairly representative of real use cases. We've generated multiple versions: 1Gb, 5Gb, 10Gb and 25Gb (if you prefer thinking in terms of rows, the biggest table of the 25Gb version has around 150M rows). We won't detail here the structure of the database or the queries we've run, but TPC-H is well-documented if needed.
+We've taken a well-known benchmark dataset: the [TCP-H](https://www.tpc.org/tpch/default5.asp) dataset. It has the advantage of being available in any size and being fairly representative of real use cases. We've generated multiple versions: 1Gb, 5Gb, 10Gb and 25Gb (if you prefer thinking in terms of rows, the biggest table of the 25Gb version has around 150M rows). We won't detail here the structure of the database or the queries we've run, but TPC-H is well-documented if needed.
 
 The following procedure was followed:
 
 - Datasets provided by TPC-H as CSVs were uploaded as parquet files on S3.
 - TPC-H provides a set of canonical queries. They perform numerous joins, aggregations, group-bys, etc. 8 of them were converted in the different dialects.
-- Those queries were ran sequentially as scripts in for-loop flow in Windmill, and this for each of the benchmark set of data (1Gb, 5Gb, 10Gb, etc.). The memory of the Windmill server was recorded.
+- Those queries were run sequentially as scripts in for-loop flow in Windmill, and this for each of the benchmark sets of data (1Gb, 5Gb, 10Gb, etc.). The memory of the Windmill server was recorded.
 - Each script was:
   - Reading the data straight from the S3 parquet files
   - Running the query
@@ -278,7 +278,7 @@ this doesn't scale horizontally, but it also confirms that a majority of data pi
 :::info
 
 DuckDB offers the possibility to back its database with a file on disk to save some memory. This mode fits perfectly with Windmill flows using a shared directory between steps. We implemented a simple flow where the first step loads the DB in
-a file, and the following steps consume this file to run the queries. We were able to run the 8 queries on the 100Gb benchmark successfully. It took 40 minutes consumed 29,1Gb at the peak.
+a file, and the following steps consume this file to run the queries. We were able to run the 8 queries on the 100Gb benchmark successfully. It took 40 minutes and consumed 29,1Gb at the peak.
 
 :::
 
