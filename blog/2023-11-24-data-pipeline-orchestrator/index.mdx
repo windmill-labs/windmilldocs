@@ -13,37 +13,35 @@ import DocCard from '@site/src/components/DocCard';
 
 import BarChart from '@site/src/components/BarChart';
 
-## ETL: theory VS reality
+## Running an ETL in Windmill
 
-Data pipelines are everywhere. The need to extract data from a source, transform it and make it consumable to others is very common if not universal.
+ETLs are nothing else than a sequence of jobs that needs to be orchestrated, each of them reading datasets as input, running computation on them and producing new datasets (or updating them).
 
-The common acronym used to designate a data pipeline is ETL for Extract - Transform - Load:
+Windmill can be a great fit for running and managing data processing pipelines:
 
-- Extract: Fetch some raw data from a third party API, some raw files (like CSVs), from a database, etc.
-- Transform: transform the raw data into something optimized for the future use of this data (run some joins, filter useless rows, parse some data like geo coordinates, dates, phone numbers, etc)
-- Load: load the "cleaned" data into _something_ that will be easily queried by the consumers of this data (typically a database queried by a service)
+- The DX in Windmill allows you to quickly assemble flows that can process data step by step in a visual and easy to manage way
+- You can control parallelism between individual steps, and set concurrency limits in case external resource needs to be protected
+- Monitoring is made easy with error and recovery handlers
 
-In theory, the process is quite clean, but in practice, it looks more like:
+!!!!!!INSERT DATA PIPELINE VIDEO HERE!!!!!!
 
-1. Extract
-2. Transform
-3. Store intermediary result
-4. Loop on steps 1-2-3 multiple times for different heterogeneous data sources
-5. Assemble all intermediary results and load them into the final database.
+The particularity of data pipeline flows VS any other kind of automation flows is that they are usually running computation on large datasets and the result of such computation is itself a dataset that needs to be stored.
 
-It's not uncommon for a single pipeline to have dozens of steps. A step can use the output of some previous steps. In some situation, one step will fail (for various reasons: the source or target is unreachable, the extracted data has an unexpected shape, the job logic itself might have a bug, etc), and the entire pipeline will be stopped.
-Some pipelines need to run on a schedule (to keep the data up-to-date with the source), or should start only when certain conditions are met.
+For the compute, we truly think that by using the right data processing libraries on servers that are sized for this purpose, a vast majority of ETLs can be run on Windmill and benefit from the performance and robustness of Windmill as an orchestrator. We have integrated with Polars and DuckDB, as one of the two best-in-class in-memorye data processing libraries to leverage Windmill workers as much as you can.
 
-We see that the orchestration is key here. Having a good orchestrator allowing you to keep track of each pipeline, each job, being alerted on failure and able to quickly root cause an issue, to restart a pipeline from where it fails, etc. are key components to process data properly. This is Windmill's bread and butter.
+To give you a quick idea of what we're talking about here:
 
-The other big thing in data processing is the scale. Some pipelines need to handle petabytes of data every day. They need to be horizontally scalable, auto-adapt to the load, etc. Some platforms are specialized in this area and Windmill is not going to adventure in this space.
+- Running a `SELECT COUNT(*), SUM(column_1), AVG(column_2) FROM my_table GROUP_BY key` with _300M_ entries in `my_table` requires less than _10.5Gb_ of memory using DuckDB. With Polars, you can expect to need less than _ZGb_ for the same operation.
+- Running a JOIN between 2 tables, one of XM rows and the other one of YM rows with duckDB requires ZGb of memory, and less than YGb with Polars
 
-However, we have observed that:
+Add to those numbers that on AWS for example, you can get up to [24Tb of memory on a single server](https://aws.amazon.com/ec2/instance-types/high-memory/).
 
-1. A vast majority of data pipelines handle a "reasonably small" amount of data (if you've already run a "Count All" on a 10K rows dataset using a distributed Spark cluster, this is what we're talking about)
-2. There are more and more players in the field of "in-memory" data processing. And with the progress they've made, coupled with the natural improvement of hardware, we're able to process fairly large datasets on a single server extremely efficiently.
+And for the storage, we've made some improvements recently that allows you connect your Windmill workspace to an S3 bucket and interact with it almost seamlessly, and we've integrated with the two best-in-class in-memory data processing libraries to leverage
+Windmill workers as much as you can.
 
-With all that, we are convinced that Windmill can be a very good platform for you to manage data pipelines, and we've made some improvement in this direction recently.
+So, to summarize, it's possible that you require a very specific setup to process your data, but we're saying it's _unlikely_, and with the right hardware, you could really benefit from using Windmill to build and manage the entirety of your data pipelines.
+
+Let's dig into those features that makes data processing easy in Windmill.
 
 ### Windmill integration with an external S3 storage
 
@@ -192,7 +190,7 @@ A couple of notes before the results:
 		},
 		{
 			label: 'Polars lazy',
-			data: [247, 1246, 2480, 0]
+			data: [247, 1246, 2480, 6498]
 		},
 		{
 			label: 'DuckDB in memory',
@@ -216,7 +214,7 @@ A couple of notes before the results:
 		},
 		{
 			label: 'Polars lazy',
-			data: [2.11, 2.42, 10.4, 0]
+			data: [2.11, 2.42, 10.4, 19.6]
 		},
 		{
 			label: 'DuckDB in memory',
