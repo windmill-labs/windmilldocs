@@ -111,6 +111,7 @@ const sidebars = {
 					items: [
 						'flows/architecture',
 						'openflow/index',
+						'flows/test_flows',
 						'flows/ai_flows',
 						'flows/editor_components',
 						'flows/error_handling',
