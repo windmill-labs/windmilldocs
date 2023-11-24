@@ -327,25 +327,25 @@ This feature is part of the logic of the different ways to iterate over a flow (
 
 LINK
 
-### Windmill for data pipelines
+### Windmill for data pipelines - S3 Integration
 
 THUMBNAIL
 
-Run your ETLs on-prem up to 5x faster using Windmill compared to spark while simplifying your infra.
+_Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra._
 
 UPDATE TEXT
 
-An ETL is nothing else than a sequence of jobs that needs to be orchestrated, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
+An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of jobs, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
 
-Windmill can be a great fit for running data processing pipelines:
+Windmill enables building fast, powerful, reliable, and easy to build data pipelines:
 
-- The DX in Windmill allows you to quickly [assemble flows](/docs/flows/flow_editor) that can process data step by step in a visual and easy-to-manage way.
-- You can control [parallelism](/docs/flows/flow_branches#branch-all) between individual steps, and set [concurrency limits](/docs/flows/concurrency_limit) in case external resources need are fragile or rate limited.
+- The DX in Windmill allows you to quickly [assemble flows](/docs/flows/flow_editor) that can process data step by step in a visual and easy-to-manage way;
+- You can control [parallelism](/docs/flows/flow_branches#branch-all) between individual steps, and set [concurrency limits](/docs/flows/concurrency_limit) in case external resources need are fragile or rate limited;
+- [Windmill flows can be restarted from any step](../2023-11-24-restartable-flows/index.mdx), making the iteration process of building a pipeline (or debugging one) smooth and efficient;
 - Monitoring is made easy with [error and recovery handlers](/docs/core_concepts/error_handling).
 
-For the storage, we've made some improvements recently that allow you to connect your Windmill workspace to an S3 bucket and interact with it almost seamlessly.
-
-The very large majority of ETL can be processed step-wise on single nodes and Windmill provides (one of) the best models for orchestrating non-sharded compute. Using this model, your ETL will see a massive performance improvement, your infrastructure will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
+The very large majority of ETL can be processed step-wise on single nodes and Windmill provides (one of) the best models for orchestrating non-sharded compute. Using this model, your ETL will see a massive performance improvement, your infrastructure
+will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
