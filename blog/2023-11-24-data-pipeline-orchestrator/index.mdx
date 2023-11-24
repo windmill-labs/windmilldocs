@@ -102,7 +102,7 @@ conn.execute(
 conn.sql("SELECT * FROM read_parquet(s3://windmill_bucket/file.parquet)")
 ```
 
-In windmill, you can just do:
+In Windmill, you can just do:
 
 ```
 conn = duckdb.connect()
@@ -135,7 +135,7 @@ becomes in Windmill:
 
 ```python
 s3_resource = wmill.get_resource("/path/to/resource")
-s3 = s3fs.S3FileSystem(wmill.duckdb_connection_settings(s3_resource))
+s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings(s3_resource))
 with s3.open("s3://windmill_bucket/file.parquet", mode="rb") as f:
     dataframe = pl.read_parquet(f)
 ```
@@ -268,6 +268,6 @@ this doesn't scale horizontally, but it also confirms that a majority of data pi
 :::info
 
 DuckDB offers the possibility to back its database with a file on disk to save some memory. This mode fits perfectly with Windmill flows using a shared directory between steps. We implemented a simple flow where the first step loads the DB in
-a file, and the following steps consume this file to run the queries. We were able to run the 8 queries on the 100Gb benchmark successfully. It took 40 minutes and consumed almost all the memory of the server: 29,1Gb at the peak.
+a file, and the following steps consume this file to run the queries. We were able to run the 8 queries on the 100Gb benchmark successfully. It took 40 minutes consumed 29,1Gb at the peak.
 
 :::
