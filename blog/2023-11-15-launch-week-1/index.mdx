@@ -282,7 +282,7 @@ If that's not sufficient you can even build your own app in React.
 
 <br/>
 
-- Blog post
+- [Blog post](/blog/launch-week-1/react-components)
 - Docs - [Import Custom React Components](/docs/apps/react_components)
 - Docs - [React App Import](/docs/react_vue_svelte_apps/react)
 
@@ -293,6 +293,76 @@ If that's not sufficient you can even build your own app in React.
 		href="/blog/launch-week-1/react-components"
 	/>
 </div>
+
+## Day 5
+
+For the last day of our launch week today we focused on features that will help you in your ETLs, with restartable flows and S3 integration for data pipelines.
+
+### Restartable Flows
+
+THUMBNAIL
+
+The principle is simple: once the flow is executed (whether in test or deployed), you have the possibility to restart it from any node (step, iteration of a for loop, or branch).
+
+For testing, it's great because you can restart from a specific node without recomputing the flow.
+
+For prod, it's great because you can skip the already completed part of the flow avoiding duplicate actions (in particular, ensure data integrity).
+
+This feature is part of the logic of the different ways to iterate over a flow ([testing the entire flow](/docs/flows/test_flows#test-flow), [only one step](/docs/flows/test_flows#test-this-step), or [up to a certain step](/docs/flows/test_flows#test-up-to-step)).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/5_NRFmUxfW0?vq=hd1440"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+- Blog post
+- Docs - [Instant Preview & Testing](/docs/core_concepts/instant_preview)
+
+LINK
+
+### Windmill for data pipelines
+
+THUMBNAIL
+
+Run your ETLs on-prem up to 5x faster using Windmill compared to spark while simplifying your infra.
+
+UPDATE TEXT
+
+An ETL is nothing else than a sequence of jobs that needs to be orchestrated, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
+
+Windmill can be a great fit for running data processing pipelines:
+
+- The DX in Windmill allows you to quickly [assemble flows](/docs/flows/flow_editor) that can process data step by step in a visual and easy-to-manage way.
+- You can control [parallelism](/docs/flows/flow_branches#branch-all) between individual steps, and set [concurrency limits](/docs/flows/concurrency_limit) in case external resources need are fragile or rate limited.
+- Monitoring is made easy with [error and recovery handlers](/docs/core_concepts/error_handling).
+
+For the storage, we've made some improvements recently that allow you to connect your Windmill workspace to an S3 bucket and interact with it almost seamlessly.
+
+The very large majority of ETL can be processed step-wise on single nodes and Windmill provides (one of) the best models for orchestrating non-sharded compute. Using this model, your ETL will see a massive performance improvement, your infrastructure will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/I9owHiLUrKw?vq=hd2160"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+- Blog post
+- Docs - [Persistent Storage](/docs/core_concepts/persistent_storage)
+
+LINK
 
 ## Subscribe to follow our latest announcements
 
