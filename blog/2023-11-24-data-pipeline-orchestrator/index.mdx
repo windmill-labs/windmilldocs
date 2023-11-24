@@ -2,16 +2,17 @@
 title: Launch Week Day 5 - Windmill for data pipelines
 authors: [guillaumebouv]
 tags: ['Launch week', 'Data Pipeline orchestrator']
-image: ./fastest_thumbnail.png
+image: ./data_pipelines.png
 slug: launch-week-1/data-pipeline-orchestrator
-description: 'Use Windmill to build, run, and monitor your data pipelines'
+description: 'Use Windmill to build, run, and monitor your data pipelines.'
 ---
 
 import DocCard from '@site/src/components/DocCard';
-
-![Fastest Workflow Engine](./fastest_thumbnail.png 'Fastest Workflow Engine')
-
 import BarChart from '@site/src/components/BarChart';
+
+![Windmill for data pipelines](./data_pipelines.png 'Windmill for data pipelines')
+
+Last day of our launch week today (we know it's sad). Before saying goodbye, we want to tell you about features that will help you in your ETL, with restartable flows and S3 integration for data pipelines (this article).
 
 ## Running an ETL with Windmill
 
@@ -19,13 +20,23 @@ An ETL is nothing else than a sequence of jobs that needs to be orchestrated, ea
 
 Windmill can be a great fit for running data processing pipelines:
 
-- The DX in Windmill allows you to quickly assemble flows that can process data step by step in a visual and easy-to-manage way
-- You can control parallelism between individual steps, and set concurrency limits in case external resources need are fragile or rate limited
-- Monitoring is made easy with error and recovery handlers
+- The DX in Windmill allows you to quickly [assemble flows](/docs/flows/flow_editor) that can process data step by step in a visual and easy-to-manage way.
+- You can control [parallelism](/docs/flows/flow_branches#branch-all) between individual steps, and set [concurrency limits](/docs/flows/concurrency_limit) in case external resources need are fragile or rate limited.
+- Monitoring is made easy with [error and recovery handlers](/docs/core_concepts/error_handling).
 
-!!!!!!INSERT DATA PIPELINE VIDEO HERE!!!!!!
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/I9owHiLUrKw?vq=hd1440"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
 
-The particularity of data pipeline flows VS any other kind of automation flows is that they run computation on large datasets and the result of such computation is itself a (potentially large) dataset that needs to be stored.
+<br/>
+
+The particularity of data pipeline flows vs. any other kind of automation flows is that they run computation on large datasets and the result of such computation is itself a (potentially large) dataset that needs to be stored.
 
 For the compute, we truly think that by using the right data processing libraries on servers that are sized for this purpose, a vast majority of ETLs can be run on Windmill.
 We have integrated with [Polars](https://www.pola.rs/) and [DuckDB](https://duckdb.org/), as one of the two best-in-class in-memory data processing libraries for you to leverage Windmill workers as much as you can.
@@ -51,7 +62,7 @@ because those results are serialized to Windmill database and kept as long as th
 
 In most cases, S3 is a well-suited storage and Windmill now provides a basic yet very useful integration with external S3 storage.
 
-The first step is to define an S3 resource in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
+The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
 
 ![S3 workspace settings](./workspace_s3_settings.png 'S3 workspace settings')
 
@@ -271,3 +282,17 @@ DuckDB offers the possibility to back its database with a file on disk to save s
 a file, and the following steps consume this file to run the queries. We were able to run the 8 queries on the 100Gb benchmark successfully. It took 40 minutes consumed 29,1Gb at the peak.
 
 :::
+
+## Learn more
+
+To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+For more details on storage in Windmill, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+		title="Persistent Storage"
+    	description="Ensure that your data is safely stored and easily accessible whenever required."
+    	href="/docs/core_concepts/persistent_storage"
+    />
+</div>
