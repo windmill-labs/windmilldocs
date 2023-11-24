@@ -15,11 +15,11 @@ import DocCard from '@site/src/components/DocCard';
 
 # Launch Week Day 5 - Restartable Flows
 
-<br/>
+<br />
 
-![Restartable Flows](./restartable_flows.png "Restartable Flows")
+![Restartable Flows](./restartable_flows.png 'Restartable Flows')
 
-<br/>
+<br />
 
 Last day of our launch week today (we know it's sad). Before saying goodbye, we want to tell you about features that will help you in your ETL, with restartable flows (this article) and S3 integration for data pipelines (link to the blog).
 
@@ -43,9 +43,22 @@ This feature is part of the logic of the different ways to iterate over a flow (
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 In the [flow preview page](/docs/core_concepts/instant_preview), just select a top level node and a "Re-start from X" button will appear at the top, next to "Test flow".
+
+## How does it work?
+
+To understand how Windmill can easily restart a flow from any step, it's important to have in mind how a flow is modeled in the backend.
+All the details are well explained in [this other blog post](../2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx#states), but what's important for the sake of this post is that each flow step is a normal Windmill job being
+executed by the flow state machine. Only the ID of this job will be tracked in the flow status that triggered it (a flow step can be seen as a pointer to any job).
+
+When a flow is restarted from a step (let's call it `Step A`), the logic running in the backend is simple. A brand new run for this flow will be created (as if you were starting it from the beginning), but prior to
+executing it, Windmill will "copy" the status of all the predecessors `Step A` form the original flow into the new flow status. When starting the execution of this flow, the first step pointing to the original flow
+steps will already be in a "Success" state, and the state machine will jump straight to `Step A` as the first step being in a "WaitingForPriorSteps" state. `Step A` will be added to the execution queue and from there the
+flow continue like any other flow.
+
+In the end, the steps prior to `Steps A` are "shared" between the 2 flows (the initial one and the restarted one), and all the steps after `Step A` (included) are specific to each run.
 
 ## Learn more
 
@@ -55,8 +68,8 @@ For more details on instant preview & testing, see:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Instant Preview & Testing"
-    	description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-    	href="/docs/core_concepts/instant_preview"
-    />
+		title="Instant Preview & Testing"
+		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
 </div>
