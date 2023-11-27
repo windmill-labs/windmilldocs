@@ -243,7 +243,7 @@ Workflow engines represent jobs as a finite state machine [(FSM)](https://en.wik
 
 Other states are usually some refinement on the 4 above
 
-In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flows.rs#L196) and the [flow status](https://github.com/Windmill-labs/Windmill/blob/main/backend/Windmill-common/src/flow_status.rs#L28) are an easy to read struct.
+In Windmill the full flow itself is a finite state machine, where both the [spec of the flow](https://github.com/Windmill-labs/Windmill/blob/main/backend/windmill-common/src/flows.rs#L196) and the [flow status](https://github.com/Windmill-labs/Windmill/blob/main/backend/windmill-common/src/flow_status.rs#L28) are an easy to read struct.
 
 A flow state is wholly defined by a step counter and an array of flow module states. Some flow module states are more complex such as the ones corresponding to for-loops and branches. One interesting aspect to note is that subflows like branches or for-loop iterations are their own well defined jobs which have a pointer to the flow that has triggered them as `parent_flow`.
 
