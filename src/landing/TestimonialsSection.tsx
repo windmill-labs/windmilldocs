@@ -81,7 +81,23 @@ const testimonials = [
 				'https://discord.com/channels/930051556043276338/930051949888405524/1137307730105868348'
 		}
 	},
-
+	{
+		body: (
+			<span>
+				A little late but after reading this thread I moved a airflow instance to windmill and I much much prefer
+				{' '}<strong>
+					<span className="text-blue-500">Windmill</span>
+				</strong>{', '}
+				airflow was clunky and heavy for my simple workflow that consist of running a few python script. Also is auto ui is great to play with the arguments in, the cron ui and next start date... Also is it written in rust so much more low usage than airflow that consistently cpu picked while doing nothing.
+			</span>
+		),
+		author: {
+			handle: 'hn',
+			backlink: 'https://news.ycombinator.com/item?id=38432912',
+			name: 'hokkos on HackerNews',
+			date: 'November 27th 2023'
+		}
+	},
 	{
 		body: (
 			<span>
@@ -122,18 +138,18 @@ const testimonials = [
 	{
 		body: (
 			<span>
+				I had the same thought when it popped up on my radar a year ago. Now that I’ve been using it for a few weeks, it’s difficult to go back to the exact tools you’re naming. I didn’t realize how large of an impediment it is to move back and forth all of them. 
 				<strong>
 					<span className="text-blue-500">Windmill</span>
 				</strong>{' '}
-				is amazing, incredibly powerful and easy to run anywhere. Thank you so much for making it
-				open source and building in public. I wish you a LOT of success!
+				is the thing I never knew I needed. It’s changed how I think about delivering data products/solutions.
 			</span>
 		),
 		author: {
-			name: 'js4ever on HackerNews',
+			name: '	knowsuchagency on HackerNews',
 			handle: 'hn',
-			backlink: 'https://news.ycombinator.com/item?id=37002360',
-			date: 'August 4th 2023'
+			backlink: 'https://news.ycombinator.com/item?id=38385712',
+			date: 'November 22nd 2023'
 		}
 	}
 ];
@@ -207,7 +223,7 @@ const clientTestimonials = [
 ];
 
 export default function Example() {
-	const [showAll, setShowAll] = useState(false);
+	const [showAll, setShowAll] = useState(true);
 	const { colorMode } = useColorMode();
 
 	const toggleTestimonials = () => {
