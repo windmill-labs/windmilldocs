@@ -155,14 +155,6 @@ const config = {
 					}
 				]
 			},
-			announcementBar: {
-				id: 'support_us',
-				content:
-					'<a href="/blog/launch-week-1">Windmill Launch Week #1 Starting Monday November 20, new features every day!</a>',
-				backgroundColor: '#0f766e',
-				textColor: '#fff',
-				isCloseable: false
-			},
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme
