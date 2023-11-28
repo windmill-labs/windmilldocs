@@ -102,7 +102,7 @@ Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="VS Code Extension"
-		description="You can also use VS Code with the extension to run scripts & flows on the remote."
+		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
@@ -148,47 +148,8 @@ Windmill can run 26M tasks a month on a single worker costing 5$. Prefect does n
 
 Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/), on which you could imagine launching 1m simulateously by API.
 
-To be completely transparent, we have not yet conducted advanced and at-scale benchmarks with Prefect.
-But for comparison, you will find below the tests between Prefect and Windmill for cold start, execution, and result of a [flow shared by Prefect](#benchmark-1), and of a [Python script](#benchmark-2).
+We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our performance against our competitors.
 
-Each instance is self-hosted.
-
-### Benchmark #1
-
-Flow "Given a GitHub repository, logs the number of stargazers and contributors for that repo", <a href="https://docs.prefect.io/latest/getting-started/quickstart/#step-3-write-a-flow" rel="nofollow">shared by Prefect</a> on their quickstart (at date 09.20.23):
-
-![Prefect flow example](../assets/compared_to/prefect_flow_example.png "Prefect flow example")
-
-- Prefect: Cold start + Execution + Results = 8.09s
-- Windmill: Cold start + Execution + Results = 1.13s
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/windmill_prefect_flow.mp4"
-/>
-
-### Benchmark #2
-
-_Slowfunction_ that makes imports and loops from 11^7 down to 0. For each number i in that range:
-- Calculates the arctangent (math.atan(i)) of the number.
-- Calculates the tangent (math.tan(i)) of the number.
-- Multiplies the two results together and adds them to the result.
-And records the end time once the loop finishes and then calculates the elapsed time.
-
-
-- Prefect: Cold start + Execution + Results = 8.09s
-- Windmill: Cold start + Execution + Results = 12.33s
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/windmill_prefect_slow.mp4"
-/>
-
-<br/>
-
-To see more benchmarks, see [Benchmarks](../misc/3_benchmarks/competitors/index.mdx) in docs.
 
 <div class="grid">
 	<TaskDurationBarChart
@@ -268,6 +229,53 @@ To see more benchmarks, see [Benchmarks](../misc/3_benchmarks/competitors/index.
 		]}
 	/>
 </div>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Benchmarks"
+		description="Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute."
+		href="/docs/misc/benchmarks"
+	/>
+</div>
+
+For comparison, you will find below some tests between Prefect and Windmill for cold start, execution, and result of a [flow shared by Prefect](#benchmark-1), and of a [Python script](#benchmark-2).
+
+Each instance is self-hosted.
+
+### Benchmark #1
+
+Flow "Given a GitHub repository, logs the number of stargazers and contributors for that repo", <a href="https://docs.prefect.io/latest/getting-started/quickstart/#step-3-write-a-flow" rel="nofollow">shared by Prefect</a> on their quickstart (at date 09.20.23):
+
+![Prefect flow example](../assets/compared_to/prefect_flow_example.png "Prefect flow example")
+
+- Prefect: Cold start + Execution + Results = 8.09s
+- Windmill: Cold start + Execution + Results = 1.13s
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/windmill_prefect_flow.mp4"
+/>
+
+### Benchmark #2
+
+_Slowfunction_ that makes imports and loops from 11^7 down to 0. For each number i in that range:
+- Calculates the arctangent (math.atan(i)) of the number.
+- Calculates the tangent (math.tan(i)) of the number.
+- Multiplies the two results together and adds them to the result.
+And records the end time once the loop finishes and then calculates the elapsed time.
+
+
+- Prefect: Cold start + Execution + Results = 8.09s
+- Windmill: Cold start + Execution + Results = 12.33s
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/windmill_prefect_slow.mp4"
+/>
+
+<br/>
 
 Trust but verify: to ensure the performance of Windmill's workers and measure their capabilities,
 we provide a benchmarking tool. This tool allows you to benchmark the execution of jobs and flows,

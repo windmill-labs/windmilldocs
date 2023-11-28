@@ -31,14 +31,14 @@ const cards = [
 	{
 		title: 'VS Code extension or any IDEs',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available.',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
-		title: 'Version control from Github/Gitlab',
-		subtitle: 'Deploy scripts from Github or Gitlab',
+		title: 'Version control from GitHub/GitLab',
+		subtitle: 'Deploy scripts from GitHub or GitLab.',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/deploy_gh_gl',
@@ -46,14 +46,14 @@ const cards = [
 	},
 	{
 		title: 'CLI',
-		subtitle: 'Trigger, sync and monitor scripts from CLI',
+		subtitle: 'Trigger, sync and monitor scripts from CLI.',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/advanced/cli'
 	},
 	{
 		title: 'Lockfile',
-		subtitle: 'A lockfile is generated to ensure reproducibility',
+		subtitle: 'A lockfile is generated to ensure reproducibility.',
 		Icon: Box,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/advanced/imports'
@@ -67,7 +67,7 @@ const cards = [
 	},
 	{
 		title: 'Instant preview and execution',
-		subtitle: 'Preview and execute scripts instantly from the editor',
+		subtitle: 'Preview and execute scripts instantly from the editor.',
 		Icon: Play,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/core_concepts/instant_preview'

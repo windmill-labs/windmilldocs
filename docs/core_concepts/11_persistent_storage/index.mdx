@@ -277,9 +277,27 @@ Where the sslmode should be "require" and Neon uses the default PostgreSQL port,
 
 On heavier data objects & unstructured data storage, Amazon S3 (Simple Storage Service) and its alternatives Cloudflare R2 and MinIO are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
 
+### Windmill embedded integration with S3, Polars and DuckDB for data pipelines
+
+Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra.
+
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+See our page dedicated to Data Pipelines in Windmill:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+      title="Data Pipelines"
+      description="We have integrated with Polars and DuckDB for in-memory data processing and S3 for external storage."
+      href="/docs/core_concepts/data_pipelines"
+    />
+</div>
+
+### Use Amazon S3, R2 and MinIO directly
+
 Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/).
 
-### Amazon S3
+#### Amazon S3
 
 [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) is a scalable and durable object storage service offered by Amazon Web Services (AWS), designed to provide developers and businesses with an effective way to store and retrieve any amount of data from anywhere on the web.
 
@@ -305,7 +323,7 @@ You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windm
 
 :::
 
-### Cloudflare R2
+#### Cloudflare R2
 
 [Cloudflare R2](https://www.cloudflare.com/products/r2/) is a cloud-based storage service that provides developers and businesses with a cost-effective and secure way to store and access their data.
 
@@ -315,7 +333,7 @@ You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windm
 
 3. [Integrate it to Windmill](../../integrations/cloudflare-r2.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
 
-### MinIO
+#### MinIO
 
 For best performance, [install MinIO locally](https://min.io/docs/minio/kubernetes/upstream/).
 

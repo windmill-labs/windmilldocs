@@ -21,8 +21,8 @@ Today we are unveiling features related to workers.
 
 We are proud to announce:
 
-1. Worker groups to share configurations between workers, assign them to listen to particular queues of jobs (and optionally assign priorities) or change their pre-installed binaries on the fly
-2. Dedicated workers for scripts (other release)
+1. Worker groups to share configurations between workers, assign them to listen to particular queues of jobs (and optionally assign priorities) or change their pre-installed binaries on the fly (this article).
+2. [Dedicated workers for scripts](../2023-11-21-dedicated-workers/index.mdx).
 
 Worker groups are managed from the UI and are hot reloaded.
 
@@ -45,11 +45,27 @@ Examples of configurations include:
 
 Once the configurations are done in the Windmill UI, the workers take their configuration dynamically, without having to manually restart them.
 
-### How do I spawn workers and assign them to a worker group
+### How to have a Worker join a Worker Group
 
-It is sufficient to pass `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group. Windmill's responsibility is not to spawn the worker itself but to play well with existing service orchestrator such as Kubernetes, ECS, Nomad or Docker Compose, and any IaC. In those, you define the number of replicas (which can be auto-scaled up or down), the resource to allocate to those workers and the `WORKER_GROUP` passed as env. Upon start, those workers will automatically join their worker group and fetch their configurations (including init scripts). They will also listen for changes on the worker group configuration for hot reloading.
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
 
-Here is an example of a worker group specification in docker-compose:
+<br/>
+
+Create a worker group in your [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and simply pass the worker group as the env variable `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group.
+
+Windmill's responsibility is not to spawn the worker itself but to play well with existing service orchestrator such as Kubernetes, ECS, Nomad or Docker Compose, and any IaC. In those, you define the number of replicas (which can be auto-scaled up or down), the resource to allocate to those workers and the `WORKER_GROUP` passed as env.
+
+Upon start, those workers will automatically join their worker group and fetch their configurations (including init scripts). They will also listen for changes on the worker group configuration for hot reloading.
+
+Here is an example of a worker group specification in [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml):
 
 ```yaml
 windmill_worker_highmem:
@@ -68,7 +84,9 @@ windmill_worker_highmem:
     - WORKER_GROUP=highmem
 ```
 
-Assign replicas, resource constraints, and that's it! Worker only require a database URL and can thus be spawned in separate VPCs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
+Assign replicas, resource constraints, and that's it, the worker will automatically join the worker group on start and be displayed on the Workers page in the Windmill app!
+
+Worker only require a database URL and can thus be spawned in separate VPCs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
 
 ### Assign different jobs to specific worker groups
 

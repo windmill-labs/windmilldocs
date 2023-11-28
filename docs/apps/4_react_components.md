@@ -1,14 +1,23 @@
 # Import Custom React Components
 
-Windmill already provides over [sixty components](./4_app_configuration_settings/1_app_component_library.mdx) for its users, accessible with a simple drag-and-drop. For more control and standardization with your existing stack, you might want to import your own Apps in React.
+Windmill already provides over [sixty components](./4_app_configuration_settings/1_app_component_library.mdx) for its users, accessible with a simple drag-and-drop. For more control and standardization with your existing stack, you might want to import your own components in React.
 
-:::info React
+:::info React & Windmill
 
 If you're looking for a way to:
 - Import whole react apps to Windmill, see [React App Import](../react_vue_svelte_apps/react.md).
 - Integrate Windmill applications into React-based project, see [Windmill React SDK](../misc/15_react_sdk/index.md).
 
 :::
+
+Once imported to Windmill, custom React components will be able to interact with the rest of the app.
+
+There are 3 main benefits of using your own components:
+1. Reusing react components you've already written in other codebases.
+2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
+3. Embeding very complex components such as a code editor.
+
+If that's not sufficient you can even [build your own app in React](../react_vue_svelte_apps/react.md).
 
 ## How to import react components to App Editor
 

@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Group of Components
 
 Components can be grouped within containers. This feature enables making groups generic by having the inner components of it connect to the group fields, therefore building your own meta components.
@@ -19,8 +21,7 @@ Inside those "container groups", you can refer to "group.x" to refer to one of t
 3. Fill the group field's object, either manually or dynamically through an [eval](../3_app-runnable-panel.mdx#evals).
 4. Now the container's components can be [connected](../2_connecting_components/index.mdx) to the group fields items through `group.group_field_name.optional_subitems`
 
-Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category. They saved as resources, under the `app_groups` [folder](../../core_concepts/8_groups_and_folders/index.mdx).
-
+Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category. They are saved as resources, under the `app_groups` [folder](../../core_concepts/8_groups_and_folders/index.mdx).
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -28,3 +29,25 @@ Component groups can be saved to workspace. They will be available from all work
     controls
     src="/videos/save_component_group.mp4"
 />
+
+<br/>
+
+Groups of components can be combined with [styling](./4_app_styling.mdx) to provide very custom components:
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/group_of_components_with_style.mp4"
+/>
+
+<br/>
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Styling"
+		description="Give styling to your app & components."
+		href="/docs/apps/app_configuration_settings/app_styling"
+	/>
+</div>

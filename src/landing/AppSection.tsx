@@ -202,7 +202,7 @@ const examples = [
 const cards = [
 	{
 		title: 'Support for React, Vue, Svelte and vanilla JS',
-		subtitle: 'Build them with Vite locally and deploy them on Windmill',
+		subtitle: 'Build apps or components with Vite locally and deploy them on Windmill.',
 
 		Icon: FaReact,
 		gridArea: 'md:col-span-2 md:row-span-4',
