@@ -5,6 +5,49 @@ import { Link } from 'react-router-dom';
 
 const faqs = [
 	{
+		question: 'What is an operator?',
+		answer: (
+			<span>
+				An{' '}
+				<Link
+					to="/docs/core_concepts/roles_and_permissions#roles-in-windmill"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					operator
+				</Link>{' '}
+				is a user that can only execute script, flows and apps, but not create and edit them.
+				This is enforced by both a simplified frontend and a restricted API.
+				<br/><br/>
+				Operators are 1/2 price of normal users (or 1/2 seats).
+			</span>
+		)
+	},
+	{
+		question: 'What is an execution?',
+		answer: (
+			<span>
+				The single credit-unit is called a "execution". An execution corresponds to a single{' '}
+				<Link
+					to="/docs/core_concepts/jobs"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					job
+				</Link>{' '}
+				whose duration is less than 1s. For any additional seconds of computation, an additional
+				computation is accounted for.
+				<br/><br/>
+				The number of executions of a flow corresponds to the sum of
+				the executions of each step as seconds, considered as one script execution of that same time
+				(time in sleep or doing state transition are not accounted). For apps, a backend script
+				execution is considered as a script execution. As apps frontend scripts execute on browsers,
+				they are not taken into account.
+				<br/><br/>
+				Jobs are executed on one powerful virtual CPU with 2Gb of
+				memory. Most jobs will take less than 200ms to execute.
+			</span>
+		)
+	},
+	{
 		question: 'What is a worker?',
 		answer: (
 			<span>
@@ -16,7 +59,7 @@ const faqs = [
 				</Link>{' '}
 				are autonomous processes that run one script at a time using the entire cpu and memory available
 				to them. Workers serve as the backbone of Windmill as they are responsible for
-				executing code. <br /> Each worker on Windmill can run up to 26 millions jobs a month, where
+				executing code.<br/><br/> Each worker on Windmill can run up to 26 millions jobs a month, where
 				each job lasts approximatively 100ms. Workers can be horizontally scaled up or down
 				depending on needs without any overhead.
 			</span>
@@ -35,38 +78,20 @@ const faqs = [
 		)
 	},
 	{
-		question: 'What is an operator?',
+		question: 'How is the use of the number of vCPUs and seats reported to Windmill?',
 		answer: (
 			<span>
-				An{' '}
-				<Link
-					to="/docs/core_concepts/roles_and_permissions#roles-in-windmill"
+				Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing
+				the data exported by Windmill through the provided export button at the end of the subscription period.
+				<br/><br/>
+				We only count the vCPUs reported by your workers as being used.
+				So you can simply set limits in the
+				{' '}<Link
+					to="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
-					operator
-				</Link>{' '}
-				is a user that can only execute script, flows and apps, but not create and edit them.
-			</span>
-		)
-	},
-	{
-		question: 'What is an execution?',
-		answer: (
-			<span>
-				The single credit-unit is called a "execution". An execution corresponds to a single{' '}
-				<Link
-					to="/docs/core_concepts/jobs"
-					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
-				>
-					job
-				</Link>{' '}
-				whose duration is less than 1s. For any additional seconds of computation, an additional
-				computation is accounted for. The number of executions of a flow corresponds to the sum of
-				the executions of each step as seconds, considered as one script execution of that same time
-				(time in sleep or doing state transition are not accounted). For apps, a backend script
-				execution is considered as a script execution. As apps frontend scripts execute on browsers,
-				they are not taken into account. Jobs are executed on one powerful virtual CPU with 2Gb of
-				memory. Most jobs will take less than 200ms to execute.
+					docker-compose
+				</Link>{' '}and you will never be overcharged
 			</span>
 		)
 	},

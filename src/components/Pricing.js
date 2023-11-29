@@ -50,7 +50,7 @@ const pricing = {
 					features: [
 						{ text: 'Dedicated Workers / High Throughput' },
 						{ text: 'Worker Group Management UI' },
-						{ text: 'Deploy to staging/prod web UI' },
+						{ text: 'Deploy to Staging/Prod Web UI' },
 						{ text: 'Global CSS on App Editor' },
 						{ text: 'Multiplayer on WebIDE' },
 						{ text: 'Prometheus Metrics' }
@@ -307,7 +307,7 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Deploy to staging/prod web UI</span>
+					text: <span>Deploy to Staging/Prod Web UI</span>
 				},
 				{
 					text: <span>SAML / SCIM support including groups synchronization</span>

@@ -1,31 +1,16 @@
----
-title: Launch Week Day 5 - Windmill for data pipelines
-authors: [guillaumebouv]
-tags: ['Launch week', 'Data Pipeline orchestrator']
-image: ./data_pipelines.png
-slug: launch-week-1/data-pipeline-orchestrator
-description: 'Use Windmill to build, run, and monitor your data pipelines.'
----
-
 import DocCard from '@site/src/components/DocCard';
 import BarChart from '@site/src/components/BarChart';
 
-![Windmill for data pipelines](./data_pipelines.png 'Windmill for data pipelines')
-
-_Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra._
-
-Last day of our launch week today (we know it's sad). Before saying goodbye, we want to tell you about features that will help you in your ETLs, with [restartable flows](/blog/launch-week-1/restartable-flows) and S3 integration for data pipelines (this article).
-
-## Running an ETL with Windmill
+# Data Pipelines
 
 An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of jobs, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
 
 Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines:
 
-- The DX in Windmill allows you to quickly [assemble flows](/docs/flows/flow_editor) that can process data step by step in a visual and easy-to-manage way ;
-- You can control [parallelism](/docs/flows/flow_branches#branch-all) between individual steps, and set [concurrency limits](/docs/flows/concurrency_limit) in case external resources need are fragile or rate limited ;
-- [Windmill flows can be restarted from any step](../2023-11-24-restartable-flows/index.mdx), making the iteration process of building a pipeline (or debugging one) smooth and efficient ;
-- Monitoring is made easy with [error and recovery handlers](/docs/core_concepts/error_handling).
+- The DX in Windmill allows you to quickly [assemble flows](../../flows/1_flow_editor.mdx) that can process data step by step in a visual and easy-to-manage way ;
+- You can control [parallelism](../../flows/13_flow_branches.md#branch-all) between individual steps, and set [concurrency limits](../../flows/6_concurrency_limit.mdx) in case external resources need are fragile or rate limited ;
+- [Windmill flows can be restarted from any step](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch), making the iteration process of building a pipeline (or debugging one) smooth and efficient ;
+- Monitoring is made easy with [error and recovery handlers](../10_error_handling/index.mdx).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -54,7 +39,7 @@ Add to those numbers that on AWS for example, you can get up to [24Tb of memory 
 
 And for storage, you can now link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
 
-The very large majority of ETLs can be processed step-wise on single nodes and Windmill provides (one of) the best models for orchestrating non-sharded compute. Using this model, your ETLs will see a massive performance improvement, your infrastructure
+The very large majority of ETLs can be processed step-wise on single nodes and Windmill provides (one of) the [best models](../../misc/3_benchmarks/index.mdx) for orchestrating non-sharded compute. Using this model, your ETLs will see a massive performance improvement, your infrastructure
 will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
 
 ## Windmill integration with an external S3 storage
@@ -66,33 +51,29 @@ In most cases, S3 is a well-suited storage and Windmill now provides a basic yet
 
 The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
 
-![S3 workspace settings](./workspace_s3_settings.png 'S3 workspace settings')
+![S3 workspace settings](../../../blog/2023-11-24-data-pipeline-orchestrator/workspace_s3_settings.png 'S3 workspace settings')
 
 From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
 Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
 
-![Windmill code editor](./s3_object_code_editor.png 'Windmill code editor')
+![Windmill code editor](../../../blog/2023-11-24-data-pipeline-orchestrator/s3_object_code_editor.png 'Windmill code editor')
 
-🤔 So, what happens when I click on this button? Am I redirected to S3?
+Clicking on the button will lead directly to a bucket explorer. You can browse the bucket content and even visualize file content without leaving Windmill.
 
-Better than that! You can browse the bucket content and even visualize file content without leaving Windmill!
-
-![S3 bucket explorer](./bucket_explorer.png 'S3 bucket explorer')
+![S3 bucket explorer](../../../blog/2023-11-24-data-pipeline-orchestrator/bucket_explorer.png 'S3 bucket explorer')
 
 Clicking on one of those buttons, a drawer will open displaying the content of the workspace bucket. You can select any file to get its metadata and if the format is common, you'll see a preview. In the above picture, for example, we're showing a Parquet file, which is very convenient to quickly validate the result of a script.
 
-🤔 That's nice, but I'm still responsible for reading and writing to S3. How do I do that?
-
-Again, you always have the possibility to use the S3 client library of your choice to do this yourself.
+From there you always have the possibility to use the S3 client library of your choice to read and write to S3.
 That being said, Polars and DuckDB can read/write directly from/to files stored in S3 Windmill now ships with helpers to make the entire data processing mechanics very cohesive.
 
 ### Canonical data pipeline in Windmill w/ Polars and DuckDB
 
 With S3 as the external store, a transformation script in a flow will typically perform:
 
-1. Pulling data from S3
-2. Running some computation on the data
-3. Storing the result back to S3 for the next scripts to be run
+1. Pulling data from S3.
+2. Running some computation on the data.
+3. Storing the result back to S3 for the next scripts to be run.
 
 Windmill SDKs now expose helpers to simplify code and help you connect Polars or DuckDB to the Windmill workspace S3 bucket. In your usual IDE, you would need to write for _each script_:
 
@@ -271,6 +252,8 @@ A couple of notes before the results:
 	]}
 />
 
+<br/>
+
 Polars is the fastest at computing the results, but consumes slightly more memory than Spark (it OOMed for the 25G benchmark). Polars in lazy mode, however, is a lot more memory efficient and can process more data, at the expense of computation time.
 Overall, both Polars and DuckDB behave very well in terms of memory consumption and computation time. The 10G benchmark contains tables with up to 60 million rows, and we were far from using the most powerful AWS instance. So, it is true that
 this doesn't scale horizontally, but it also confirms that a majority of data pipelines can be addressed with a large enough instance. And when you think about it, what's more convenient? Managing a single beefy server or a fleet of small servers?
@@ -283,8 +266,6 @@ a file, and the following steps consume this file to run the queries. We were ab
 :::
 
 ## Learn more
-
-To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
 
 For more details on storage in Windmill, see:
 

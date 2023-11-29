@@ -20,7 +20,7 @@ const cards = [
 		subtitle: 'Only 20ms latency between steps',
 		Icon: Gauge,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/misc/benchmarks/competitors',
+		href: '/blog/launch-week-1/fastest-workflow-engine',
 		newTab: true
 	},
 	{

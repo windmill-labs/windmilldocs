@@ -21,7 +21,8 @@ import {
 	Calendar,
 	Bot,
 	LucideWebhook,
-	BookOpen
+	BookOpen,
+	CylinderIcon
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -125,7 +126,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Suspend/Approval Step',
+		label: 'Approval Step',
 		icon: Verified,
 		id: 'suspend-approval',
 		data: [
@@ -344,7 +345,34 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Schedules & Triggers',
+		label: 'Data Pipelines',
+		icon: CylinderIcon,
+		id: 'data-pipelines',
+		data: [
+			{
+				title: 'Windmill for data pipelines',
+				description:
+					'Link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.',
+				icon: CalendarClock,
+				caption: (
+					<div>
+						<a href="/docs/core_concepts/data_pipelines" target="_blank">
+							We have integrated
+						</a>{' '}
+						with Polars and DuckDB for in-memory data processing and S3 for external storage.
+					</div>
+				),
+				video: {
+					videoSrc: 'https://www.youtube.com/embed/I9owHiLUrKw?vq=hd1080',
+					videoLength: '26',
+					altText: 'Windmill for data pipelines'
+				},
+				altText: 'Windmill for data pipelines'
+			}
+		]
+	},
+	{
+		label: 'Triggers',
 		icon: Play,
 		id: 'schedules-webhooks-ui-cli',
 		data: [
@@ -440,14 +468,14 @@ const cards = [
 	},
 	{
 		title: 'Blazing Fast',
-		subtitle: "The fastest workflow engine (it's in Rust)",
+		subtitle: "The fastest workflow engine (it's in Rust).",
 		Icon: BoltIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/misc/benchmarks/competitors'
 	},
 	{
 		title: 'Retries and errors',
-		subtitle: 'Retry failed steps, or handle errors',
+		subtitle: 'Retry failed steps, or handle errors.',
 		Icon: RotateCcw,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/flows/retries'
@@ -455,7 +483,7 @@ const cards = [
 
 	{
 		title: 'Triggers',
-		subtitle: 'Trigger flows from a webhook or schedule',
+		subtitle: 'Trigger flows from a webhook or schedule.',
 		Icon: Webhook,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/getting_started/trigger_flows',
@@ -465,10 +493,19 @@ const cards = [
 	{
 		title: 'Suspend and resume',
 		subtitle:
-			'Automatically resume workflows with secret webhooks. This is useful for resuming workflows after an approval step.',
+			'Automatically resume workflows with secret webhooks.',
 		Icon: CheckCircle2,
-		gridArea: 'md:col-span-2 md:row-span-3',
+		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/flows/flow_approval'
+	},
+
+	{
+		title: 'Data Pipelines',
+		subtitle:
+			'Integration with Polars, DuckDB and S3 for data pipelines.',
+		Icon: CylinderIcon,
+		gridArea: 'md:col-span-1 md:row-span-3',
+		href: '/docs/core_concepts/data_pipelines'
 	}
 ];
 

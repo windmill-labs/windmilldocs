@@ -9,11 +9,22 @@
 
 <br/>
 
+:::info Windmill for data pipelines
+
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+<br/>
+
+See [Windmill for data pipelines](../core_concepts/27_data_pipelines/index.mdx) for more details.
+
+:::
+
 :::info Self Host
 
 If you're looking for a way to self-host Windmill using AWS, see [Self-Host Windmill](../advanced/1_self_host/index.mdx).
 
 :::
+
 
 [Amazon S3](https://aws.amazon.com/s3/)'s API follows the same schema as any S3 compatible API.
 

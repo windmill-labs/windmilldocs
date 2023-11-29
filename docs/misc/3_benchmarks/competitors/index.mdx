@@ -89,10 +89,18 @@ import ScatterChart from '@site/src/components/ScatterChart';
 	/>
 </div>
 
+<br/>
+
 We compared Airflow, Prefect, Temporal and Windmill with the following usecases:
 
 - One flow composed of 40 lightweight tasks.
 - One flow composed of 10 long-running tasks.
+
+:::tip More context
+
+For additional insights about this study, refer to our [blog post](/blog/launch-week-1/fastest-workflow-engine).
+
+:::
 
 We chose to compute Fibonacci numbers as a simple task that can easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers was very naive:
 
