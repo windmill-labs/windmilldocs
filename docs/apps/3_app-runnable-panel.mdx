@@ -391,6 +391,30 @@ The `setValue` function is meant to set or force the value of a component. This 
 
 Note that it's a bad idea to mix dynamic default value and setValue together.
 
+#### validate
+
+Validate a specific field of a form
+
+```js
+validate(id: string, key: string)
+```
+
+#### validateAll
+
+Validate all fields of a form
+
+```js
+validateAll(id: string, key: string)
+```
+
+#### invalidate
+
+Invalidate a specific field of a form
+
+```js
+invalidate(id: string, key: string, error: string)
+```
+
 ##### Parameters
 
 `id` string

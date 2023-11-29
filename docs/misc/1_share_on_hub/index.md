@@ -1,26 +1,27 @@
 # Share on Windmill Hub
 
-**[Windmill Hub][wm-hub] is the community website of Windmill** where you can find
+
+[Windmill Hub][wm-hub] is the community website of Windmill where you can find
 and share your Scripts, Flows, Apps and Resource Types with every Windmill user.
 The best submissions get approved by the Windmill Team and get integrated
 directly in the app for everyone to reuse easily.
 
-Scripts can be written in TypeScript (Deno), Go, Python and Bash, however,
-similarly to the Windmill app, **TypeScript is the recommended language**.
+Scripts can be written in TypeScript, Go, Python and Bash, however,
+similarly to the Windmill app, TypeScript is the recommended language.
 
-With the hub, **we aim to create a trusted support for users** to save time and find inspirations to solve problems they didn't even know Windmill could crack! It is therefore **also made for less technical users** to get familiar with Windmill and find ways to improve their daily work.
+With the hub, we aim to create a trusted support for users to save time and find inspirations to solve problems they didn't even know Windmill could crack! It is therefore also made for less technical users to get familiar with Windmill and find ways to improve their daily work.
 
-The Hub is complementary to our **[Discord][wm-discord]** where community members give mutual support & kudos, you should have a look!
+The Hub is complementary to our [Discord][wm-discord] where community members give mutual support & kudos, you should have a look!
 
 Below you will find guides on how to contribute to the Hub, thank you for being part of the community!
 
 ## Scripts
 
-Currently [Windmill Hub][wm-hub] supports TypeScript(Deno), Python, Go, Bash, SQL
+Currently [Windmill Hub][wm-hub] supports TypeScript, Python, Go, Bash, SQL
 scripts. You can add Common, Error Handler, Approval and Trigger Scripts by
 going to the <a rel="nofollow" href="https://hub.windmill.dev/scripts/add">New Script</a> page. The
-**Summary** will be the title of the Script, **Integration** should have the name of
-the app it integrates with (if there is one), and **Description** should be a
+Summary will be the title of the Script, Integration should have the name of
+the app it integrates with (if there is one), and Description should be a
 short description of the script - it supports Markdown.
 
 Then you can do your magic and write your script for the community.
@@ -28,31 +29,31 @@ Then you can do your magic and write your script for the community.
 ![Add new script](./add_new_script.png.webp)
 
 Once approved by the Windmill Team, the Script will be available for
-**everyone** to use directly on Windmill Cloud.
+everyone to use directly on Windmill Cloud or [Self-Hosted](../../advanced/1_self_host/index.mdx) instances synced with Hub.
 
-![Pick a hub script](./pick_a_hub_script.png.webp)
+![Pick a hub script](./pick_a_hub_script.png)
 
 ## Flows
 
-Using the [OpenFlow](../../openflow/index.md) portable format, one can simply
+Using the [OpenFlow](../../openflow/index.mdx) portable format, one can simply
 copy the JSON from the Flow editor and paste it on the
 [New Flow](https://hub.windmill.dev/flows/add) page to upload it to the Hub.
 
 Then you can do your magic and share your flow for the community.
 
-![Copy OpenFlow JSON](./export_flow.png.webp)
+![Copy OpenFlow JSON](./export_flow.png)
 
 ![New Flow page](./new_flow.png.webp)
 
 Once a Flow is approved by the Windmill Team, it will be directly integrated
-into **every workspace of every instance of Windmill**.
+into every workspace of every instance of Windmill.
 
 ![Approved Flows on Windmill](./approved_flows.png.webp)
 
 ## Resource Types
 
 [Resource Types](../../core_concepts/3_resources_and_types/index.mdx) are simply
-[JSON Schemas](../../core_concepts/13_json_schema_and_parsing/index.md) which create a **Type** to
+[JSON Schemas](../../core_concepts/13_json_schema_and_parsing/index.md) which create a Type to
 Resources by constraining the properties or fields that the Resource can have.
 In addition, they serve two main purposes on Windmill:
 
@@ -67,12 +68,12 @@ To add a Resource Type to the Windmill Hub, go to the
 then add your arguments one by one or use the monaco editor to edit it as a JSON
 directly.
 
-Adding a Resource Type to the [Hub][wm-hub] will be available for **every
-Windmill user**, once it is approved by the Windmill Team.
+Adding a Resource Type to the [Hub][wm-hub] will be available for every
+Windmill user, once it is approved by the Windmill Team.
 
 If it gets approved, the
 windmill-gh-action-deploy will deploy it in the starter workspace of Windmill Cloud. Being deployed on the
-starter workspace means that it will be available to **all workspaces**.
+starter workspace means that it will be available to all workspaces.
 
 ---
 

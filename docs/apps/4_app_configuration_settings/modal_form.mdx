@@ -3,13 +3,13 @@ import DocCard from '@site/src/components/DocCard';
 
 # Modal Form
 
-The form modal component allows you to create a form. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
+The modal form component allows you to create a form linked to a script or flow. It is a [Submit form](./submit_form.mdx) component but with a dedicated modal opened when triggered. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
 
-The runnable parameters are defined:
+The runnable [parameters](../../code_editor/parameter_inference.mdx) are defined:
 
 - **Static**: the parameter is defined in the component configuration.
 - **User input**: the parameter is defined by the user input.
-- **Connected**: the parameter is connected to an output.
+- **Eval**: the parameter is [connected to an output](../2_connecting_components/index.mdx).
 
 Only user inputs are displayed in the form in the modal.
 
@@ -33,21 +33,69 @@ The following section details Modal Form component's specific settings. For more
     />
 </div>
 
+## Controls
+
+This component can be controlled by frontend scripts using these functions:
+
+**setValue**
+
+The [setValue](../3_app-runnable-panel.mdx#setvalue) function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern. Note that it's a bad idea to mix dynamic default value and setValue together.
+
+`setValue(id: string, value: any)`
+
+**validate**
+
+Validate a specific field of a form
+
+`validate(id: string, key: string)`
+
+**validateAll**
+
+Validate all fields of a form
+
+`validateAll(id: string, key: string)`
+
+**invalidate**
+
+Invalidate a specific field of a form
+
+`invalidate(id: string, key: string, error: string)`
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Runnable Editor"
+		description="Learn how to create and configure runnables."
+		href="/docs/apps/app-runnable-panel"
+	/>
+</div>
+
 ## Form Modal configuration
 
 | Name  |                Type                 | Connectable | Templatable |  Default   | Description       |
 | ----- | :---------------------------------: | :---------: | :---------: | :--------: | ----------------- |
+| Modal Title |               string                |    true     |    false    | Modal title | Title of the component. |
 | label |               string                |    true     |    false    | Open popup | The button label. |
-| color | blue, red, dark, light, green, gray |    false    |    false    |    dark    | The button color. |
-| size  |         xs, sm, md , lg, xl         |    false    |    false    |     sm     | The button size.  |
+| color | blue, red, dark, light, green, gray |    true    |    false    |    dark    | The button color. |
+| size  |         xs, sm, md , lg, xl         |    true    |    false    |     sm     | The button size.  |
 
-:::info
-The button label is used as the modal title.
-:::
+The form component has a special parameters called `On Success` and `On Error`.
 
-:::info
-The form modal component has a special parameter called `On Success`. See the button component for more information.
-:::
+The options for On Sucess are:
+- Do nothing
+- Go to an url
+- Set the tab of a [tabs component](./tabs.mdx)
+- Display a toast notification
+- Open a [modal](./modal.mdx) or a [drawer](./drawer.mdx)
+- Close a [modal](./modal.mdx) or a [drawer](./drawer.mdx)
+
+The options for On Error are:
+- Show error overlay
+- Go to an url
+- Set the tab of a [tabs component](./tabs.mdx)
+- Display a toast notification
+- Open a [modal](./modal.mdx) or a [drawer](./drawer.mdx)
+- Close a [modal](./modal.mdx) or a [drawer](./drawer.mdx)
 
 ## Outputs
 
