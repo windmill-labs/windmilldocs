@@ -124,6 +124,7 @@ const sidebars = {
 						'flows/cache',
 						'flows/step_mocking',
 						'flows/early_stop',
+						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
 						'flows/custom_timeout'
@@ -252,6 +253,7 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/draft_and_deploy/index',
 				'core_concepts/persistent_storage/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
@@ -267,7 +269,6 @@ const sidebars = {
 				'core_concepts/worker_groups/index',
 				'core_concepts/concurrency_limits/index',
 				'core_concepts/caching/index',
-				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index'

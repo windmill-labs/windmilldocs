@@ -13,7 +13,7 @@ This repo is used to sync with the example folder in the demo workspace.
 Write access to the workspace is required. This is done using an access token.
 To generate a new token log into your Windmill instance
 (<a href="https://app.windmill.dev/" rel="nofollow">https://app.windmill.dev/</a> for cloud hosted instances) and navigate to the
-account settings, which contains a "[Tokens](../../core_concepts/4_webhooks/index.md#user-token)" section, use the relevant button
+account settings, which contains a "[Tokens](../../core_concepts/4_webhooks/index.mdx#user-token)" section, use the relevant button
 there to generate a new token. Note that you will only be able to copy this
 token once!
 

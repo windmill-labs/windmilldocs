@@ -71,7 +71,7 @@ Windmill embeds:
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),
   [OAuth handling](../2_setup_oauth/index.mdx) for fetching and
   refreshing credentials
-- **[webhooks](../../core_concepts/4_webhooks/index.md)** for every scripts and flows to
+- **[webhooks](../../core_concepts/4_webhooks/index.mdx)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
   current infrastructure
 - a **[scheduler](../../core_concepts/1_scheduling/index.md)** to trigger Scripts and

@@ -35,7 +35,7 @@ export default function LogoClouds() {
 			anchor: 'bloomcredit'
 		},
 		{
-			url: 'https://www.teracapital.com.br/',
+			url: '/blog/teracapital-case-study',
 			dark: '/images/brands/teracapital-dark.svg',
 			light: '/images/brands/teracapital-light.svg',
 			name: 'Tera Capital',
