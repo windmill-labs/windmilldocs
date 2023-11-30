@@ -48,6 +48,10 @@ View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsi
 
 Hub Compatible JSON: View the JSON / YAML representation of the app in a format that is compatible with the [Windmill Hub](https://hub.windmill.dev/).
 
+![Submit App JSON to Hub](../assets/apps/1_app_toolbar/export_hub.png "Submit App JSON to Hub")
+
+![Submit App JSON to Hub](../assets/apps/1_app_toolbar/submit_app.png "Submit App JSON to Hub")
+
 ### App Inputs
 
 The app inputs menu displays a list of all the inputs of each component. A toggle allows you to display only resources inputs, enabling you to easily configure your third-party resources for an app imported from the Hub, for example:
