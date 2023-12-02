@@ -8,40 +8,38 @@ There are 5 ways to do error handling in Windmill.
 
 One way to handle errors in Windmill is by using the `try/catch` block within a Script. This method is not specific to Windmill and can be used in any programming language that supports exception handling.
 
-Here is an example in TypeScript:
+Here is an example in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx):
 
 ```ts
-export async function main(): Promise<void> {
-	try {
-		// Code that might throw an exception
-		const result = await fetchData(); // Asynchronous operation that may throw an exception
-		console.log('Data:', result); // If no exception occurs, display the data
-	} catch (error) {
-		// Code to handle the exception
-		console.error('An error occurred:', error);
-	}
-}
+// Define the main function which will handle errors using try/catch
+export async function main() {
+  try {
+    // Your code that might throw errors goes here
+    // For example, let's simulate a fetch request
+    const response = await fetch("https://api.example.com/data");
+    const data = await response.json();
 
-async function fetchData(): Promise<string> {
-	// Simulating an asynchronous operation that may throw an exception
-	return new Promise((resolve, reject) => {
-		// Intentionally throwing an exception
-		setTimeout(() => {
-			reject(new Error('Failed to fetch data'));
-		}, 2000);
-	});
+    // Return the result if everything goes well
+    return data;
+  } catch (error) {
+    // Handle errors that might occur during the fetch operation
+    console.error("An error occurred:", error);
+
+    // Return a custom error object or message
+    return { error: "An error occurred while fetching data." };
+  }
 }
 ```
 
 <br />
 
-![Try Catch](./try_catch.png.webp)
+![Try Catch](./try_catch.png)
 
 ## Flows' Error Handlers
 
-The Error Handler is a special flow step that is executed when an error occurs within a flow.
+The Error Handler is a special [flow](../../flows/1_flow_editor.mdx) step that is executed when an error occurs within a flow.
 
-If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
+If defined, the error handler will take as input the result of the step that errored (which has its error in the 'error field').
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -59,9 +57,22 @@ If defined, the error handler will take as input, the result of the step that er
 	/>
 </div>
 
+### Special Case: Error Handling in Flows
+
+There are other tricks to do Error handling in flows, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Error Handling in Flows"
+		description="There are four ways to handle errors in Windmill flows."
+		href="/docs/flows/error_handling"
+	/>
+</div>
+
+
 ## Schedules' Error Handlers
 
-Add a special script or flow to execute in case of an error in your scheduled script or flow.
+Add a special script or flow to execute in case of an error in your [scheduled](../1_scheduling/index.md) script or flow.
 
 You can pick the Slack pre-set schedule error handler or define your own.
 
@@ -82,11 +93,29 @@ You can pick the Slack pre-set schedule error handler or define your own.
 
 ## Workspace Error Handler
 
-You can define a script to be executed automatically in case of error in the workspace.
+### Workspace Error Handler on Slack
 
-From the workspace settings, pick the "Error Handler" tab and pick a script.
+On [Cloud, Self-Host Pro & Enterprise Editions](../../misc/7_plans_details/index.mdx), you can [connect workspace to Slack](../../integrations/slack.mdx) and enable an automated error handler on a given channel.
 
-![Workspace Error Handler](./workspace_error_handler.png.webp)
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/6QPONDONd5k?vq=1080p"
+	title="Workspace Error Handler on Slack"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+### Custom Workspace Error Handler
+
+You can also define a custom script or flow to be executed automatically in case of error in the workspace.
+
+From the workspace settings, on the "Error Handler" tab and pick a script or flow.
+
+![Workspace Error Handler](./workspace_error_handler.png "Workspace Error Handler")
 
 The following args will be passed to the error handler:
 
@@ -102,7 +131,7 @@ The Error handler will be executed by the automatically created group g/error_ha
 Here is a template for your workspace error handler:
 
 ```ts
-// Global / workspace error handler template
+// Workspace error handler template
 
 export async function main(
 	path: string, // The path of the script or flow that errored
@@ -123,7 +152,7 @@ export async function main(
 
 ## Instance Error Handler
 
-You can define a script to be executed automatically in case of error in your instance.
+You can define a script to be executed automatically in case of error in your instance (all workspaces).
 
 This Superadmin Error handler is defined by setting the path to the script to be executed as an env variable to all servers using: `GLOBAL_ERROR_HANDLER_PATH_IN_ADMINS_WORKSPACE`.
 
@@ -157,15 +186,3 @@ export async function main(
 	return error;
 }
 ```
-
-## Special Case: Error Handling in Flows
-
-For more information on Error handling in flows, see:
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Error Handling in Flows"
-		description="There are four ways to handle errors in Windmill flows."
-		href="/docs/flows/error_handling"
-	/>
-</div>

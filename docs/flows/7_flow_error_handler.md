@@ -2,7 +2,7 @@
 
 The error handler is a special flow step that is executed when an error occurs in the flow.
 
-If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
+If defined, the error handler will take as input the result of the step that errored (which has its error in the 'error field').
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"

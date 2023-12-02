@@ -111,6 +111,7 @@ const sidebars = {
 					items: [
 						'flows/architecture',
 						'openflow/index',
+						'flows/test_flows',
 						'flows/ai_flows',
 						'flows/editor_components',
 						'flows/error_handling',
@@ -123,6 +124,7 @@ const sidebars = {
 						'flows/cache',
 						'flows/step_mocking',
 						'flows/early_stop',
+						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
 						'flows/custom_timeout'
@@ -146,21 +148,17 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: [
-								'apps/app-runnable-panel',
-								'apps/outputs'
-							]
+							items: ['apps/app-runnable-panel', 'apps/outputs']
 						},
 						{
 							type: 'category',
 							label: 'Component Library',
 							link: {
 								type: 'doc',
-								id: 'apps/app_configuration_settings/app_component_library',
+								id: 'apps/app_configuration_settings/app_component_library'
 							},
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
-								'apps/app_configuration_settings/bar_line_chart',
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/chartjs',
 								'apps/app_configuration_settings/conditional_tabs',
@@ -171,6 +169,7 @@ const sidebars = {
 								'apps/app_configuration_settings/divider_y',
 								'apps/app_configuration_settings/download_button',
 								'apps/app_configuration_settings/drawer',
+								'apps/app_configuration_settings/dropdown_menu',
 								'apps/app_configuration_settings/email_input',
 								'apps/app_configuration_settings/file_input',
 								'apps/app_configuration_settings/flow_status',
@@ -189,18 +188,17 @@ const sidebars = {
 								'apps/app_configuration_settings/number_input',
 								'apps/app_configuration_settings/password_input',
 								'apps/app_configuration_settings/pdf',
-								'apps/app_configuration_settings/pie_chart',
 								'apps/app_configuration_settings/plotly',
 								'apps/app_configuration_settings/range',
 								'apps/app_configuration_settings/resource_select',
 								'apps/app_configuration_settings/rich_result',
 								'apps/app_configuration_settings/rich_text_editor',
-								'apps/app_configuration_settings/scatter_chart',
 								'apps/app_configuration_settings/select_step',
 								'apps/app_configuration_settings/select_tab',
 								'apps/app_configuration_settings/select',
 								'apps/app_configuration_settings/sidebar_tabs',
 								'apps/app_configuration_settings/slider',
+								'apps/app_configuration_settings/statistic_card',
 								'apps/app_configuration_settings/stepper',
 								'apps/app_configuration_settings/submit_form',
 								'apps/app_configuration_settings/table',
@@ -208,7 +206,6 @@ const sidebars = {
 								'apps/app_configuration_settings/text_input',
 								'apps/app_configuration_settings/text',
 								'apps/app_configuration_settings/textarea',
-								'apps/app_configuration_settings/timeseries',
 								'apps/app_configuration_settings/toggle',
 								'apps/app_configuration_settings/vega_lite',
 								'apps/app_configuration_settings/vertical_split_panes'
@@ -220,6 +217,7 @@ const sidebars = {
 						'apps/app_deployment',
 						'apps/public_apps',
 						'apps/app_configuration_settings/components_groups',
+						'apps/react_components',
 						'apps/app_e-commerce'
 					],
 
@@ -257,7 +255,9 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/draft_and_deploy/index',
 				'core_concepts/persistent_storage/index',
+				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
@@ -271,10 +271,9 @@ const sidebars = {
 				'core_concepts/worker_groups/index',
 				'core_concepts/concurrency_limits/index',
 				'core_concepts/caching/index',
-				'core_concepts/draft_and_deploy/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
-				'core_concepts/jobs/index',
+				'core_concepts/jobs/index'
 			],
 			collapsed: false
 		},
@@ -292,8 +291,8 @@ const sidebars = {
 					},
 					items: [
 						'advanced/cli/installation',
-						'advanced/cli/sync',
 						'advanced/cli/workspace-management',
+						'advanced/cli/sync',
 						'advanced/cli/user',
 						'advanced/cli/flow',
 						'advanced/cli/app',
@@ -303,8 +302,24 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
+				{
+					type: 'category',
+					label: 'Local Development',
+					collapsed: false,
+					link: {
+						type: 'doc',
+						id: 'advanced/local_development/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'cli_local_dev/vscode-extension/index',
+							label: 'VS Code'
+						},
+						'advanced/local_development/run_locally'
+					]
+				},
 				'advanced/deploy_gh_gl/index',
-				'advanced/local_development/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -323,9 +338,7 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_client',
-
-				'cli_local_dev/vscode-extension/index'
+				'advanced/clients/ts_client'
 			]
 		},
 
@@ -339,10 +352,12 @@ const sidebars = {
 				'core_concepts/dedicated_workers/index',
 				'misc/worker_group_management_ui/index',
 				'core_concepts/staging_prod/index',
+				'misc/s3_cache/index',
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
 				'misc/saml_and_scim/index',
+				'misc/react_sdk/index'
 			]
 		},
 		{
@@ -604,14 +619,29 @@ const sidebars = {
 					id: 'compared_to/prefect',
 					label: 'Prefect'
 				},
+				{
+					type: 'category',
+					label: 'Benchmarks',
+					link: {
+						type: 'doc',
+						id: 'misc/benchmarks/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/index',
+							label: 'vs Airflow vs Prefect vs Temporal'
+						},
+						'misc/benchmarks/aws_lambda/index'
+					]
+				},
 			]
 		},
 		{
 			type: 'category',
-			label: 'Misceallaneous',
+			label: 'Miscellaneous',
 			items: [
 				'misc/architecture/index',
-				'misc/benchmarks/index',
 				'misc/changelog/index',
 				'misc/contributing/index',
 				'misc/getting_help/index',
@@ -630,7 +660,7 @@ const sidebars = {
 				},
 				'misc/note_of_intent/index',
 				'misc/share_on_hub/index',
-				'misc/white_labelling/index',
+				'misc/white_labelling/index'
 			]
 		}
 	]

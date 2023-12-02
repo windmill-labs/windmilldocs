@@ -29,16 +29,16 @@ import Section from './Section';
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs',
+		title: 'VS Code extension or any IDEs',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available.',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
-		title: 'Version control from Github/Gitlab',
-		subtitle: 'Deploy scripts from Github or Gitlab',
+		title: 'Version control from GitHub/GitLab',
+		subtitle: 'Deploy scripts from GitHub or GitLab.',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/deploy_gh_gl',
@@ -46,14 +46,14 @@ const cards = [
 	},
 	{
 		title: 'CLI',
-		subtitle: 'Trigger, sync and monitor scripts from CLI',
+		subtitle: 'Trigger, sync and monitor scripts from CLI.',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/advanced/cli'
 	},
 	{
 		title: 'Lockfile',
-		subtitle: 'A lockfile is generated to ensure reproducibility',
+		subtitle: 'A lockfile is generated to ensure reproducibility.',
 		Icon: Box,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/advanced/imports'
@@ -67,7 +67,7 @@ const cards = [
 	},
 	{
 		title: 'Instant preview and execution',
-		subtitle: 'Preview and execute scripts instantly from the editor',
+		subtitle: 'Preview and execute scripts instantly from the editor.',
 		Icon: Play,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/core_concepts/instant_preview'
@@ -267,7 +267,11 @@ const tabs = [
 				description: 'Execute a script using the CLI.',
 				icon: Terminal,
 				caption: <div>Execute a script using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
-				imageSrc: '/images/setup.gif',
+				video: {
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoLength: '26',
+					altText: 'Execute using CLI'
+				},
 				altText: 'Execute using CLI'
 			},
 			{
@@ -307,22 +311,23 @@ const examples = [
 		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
 	},
 	{
-		name: 'Generate image using OpenAI',
+		name: 'Create issue',
 		description: (
 			<>
-				Given a prompt, generate an image using{' '}
+				Create an issue in a given{' '}
 				<a
-					href="https://hub.windmill.dev/integrations/slack"
+					href="https://hub.windmill.dev/integrations/github"
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark className="leading-none bg-purple-100 hover:bg-purple-200 px-2 rounded whitespace-nowrap  text-purple-800 font-semibold">
-						OpenAI
+					<mark className="leading-none bg-blue-100 hover:bg-blue-200 px-2 rounded whitespace-nowrap  text-blue-800 font-semibold">
+						GitHub
 					</mark>
 				</a>
+				repository.
 			</>
 		),
-		href: 'https://hub.windmill.dev/scripts/openai/1451/generate-image-openai'
+		href: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
 	},
 	{
 		name: 'Search documents in MongoDB',

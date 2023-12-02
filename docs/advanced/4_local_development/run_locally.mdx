@@ -1,0 +1,301 @@
+---
+title: Run locally
+---
+
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Run Locally
+
+Windmill has [its own integrated development environment](../../code_editor/index.mdx). But for iteration, integration with CI/CD and testing purposes you may need to run a script locally that also interacts with Windmill (for example, to retrieve resources).
+It will allow to integrate Windmill with any testing framework.
+
+To edit scripts and flows locally, see [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
+
+To do this, you will need to fill out the context variables that would otherwise be filled out by the Windmill runtime for you.
+
+First step to develop locally is to pull your Windmill workspace.
+
+To get started with local development and use `git` to version your scripts, install the [Windmill CLI](../3_cli/installation.md).
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-Line Interface"
+		description="Interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+  <DocCard
+		title="Local Development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
+Create a new working directory for your repository.
+
+```bash
+mkdir myworkspace
+cd myworkspace
+```
+
+Initialise your git repo.
+
+```bash
+git init .
+```
+
+Next [add your workspace](../3_cli/workspace-management.md#adding-a-workspace) to the current directory.
+
+```bash
+wmill workspace add myworkspace [workspace_id] [remote]
+```
+
+Now sync your workspace and pull your code from the remote workspace.
+
+```bash
+wmill sync pull
+```
+
+You should see all your scripts, flows, apps inside the folder.
+
+You can now edit the files directly as shown below.
+
+Once you have finished developement, you can either [push the files directly to your remote](#pushing-your-scripts-to-windmill) or setup [GitHub action to push changes to your workspace on commit](https://github.com/windmill-labs/windmill-sync-example).
+
+## Deno / Bun
+
+Windmill [Deno](https://deno.land/) & [Bun](https://bun.sh/) scripts can be run like normal scripts. To add testing or
+debugging code, add this snippet to your file:
+
+```ts
+if (import.meta.main) {
+	// Add your testing & debugging code here.
+}
+```
+
+You can then use your script like normal (for example,
+`deno run -A --watch my_script.ts` / `bun run --watch my_script.ts`), and even write tests inside.
+
+If you'd like to tweak the client settings more directly, use:
+
+```ts
+wmill.setClient(<TOKEN>, <API BASE URL>)
+```
+
+On import, the wmill client does the following:
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+setClient(
+	Deno.env.get('WM_TOKEN') ?? 'no_token',
+	Deno.env.get('BASE_INTERNAL_URL') ?? 'http://localhost:8000'
+);
+```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+setClient(
+	Bun.env.get('WM_TOKEN') ?? 'no_token',
+	Bun.env.get('BASE_INTERNAL_URL') ?? 'http://localhost:8000'
+);
+```
+
+</TabItem>
+</Tabs>
+
+which is why we recommend setting those environment variables in the sections below.
+
+For more information on Deno & Bun development in general, see their official doc: [Deno](https://deno.land/manual@v1.36.1/getting_started), [Bun](https://bun.sh/docs).
+
+## Python
+
+Windmill Python scripts can be run like normal Python scripts. To add testing or
+debug code, add this snippet to your file:
+
+```py
+if __name__ == '__main__':
+    # Add your testing & debugging code here.
+    pass
+```
+
+You can then run your script: `python -m f/folder/my_script` and even write tests inside.
+
+For more information on Python development in general,
+[see the official docs](https://www.python.org/doc/)
+
+## Interacting with Windmill locally
+
+To interact with Windmill locally, you will need to fill out the context variables that would otherwise be filled out by the Windmill runtime for you.
+
+The most important ones are
+`WM_TOKEN`, `WM_WORKSPACE` and `BASE_INTERNAL_URL`.
+
+Set `BASE_INTERNAL_URL` to the URL of you Windmill instance,
+for example `https://app.windmill.dev`, note that you can never include a
+trailing `/`, or the client will fail to connect. Then set `WM_TOKEN` to a
+token, either create this in the UI, or use [wmill, the CLI](../3_cli/index.mdx)
+using `wmill user create-token`. And then `WM_WORKSPACE` corresponds to your workspace id.
+Below are some examples on how to do this in various environments.
+
+### State
+
+To use the `getState` and `setState` functions, you will have to set `WM_STATE_PATH`. We recommend using your script path name as the state path, for example:
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+let fullUrl = import.meta.url;
+let pathS = fullUrl.substring(8, fullUrl.length - 3).split('/');
+const path = pathS.slice(pathS.length - 3, pathS.length).join('/');
+Deno.env.set('WM_STATE_PATH', path);
+```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+let fullUrl = import.meta.url;
+let pathS = fullUrl.substring(8, fullUrl.length - 3).split('/');
+const path = pathS.slice(pathS.length - 3, pathS.length).join('/');
+Bun.env.set('WM_STATE_PATH', path);
+```
+
+</TabItem>
+</Tabs>
+
+### Terminal
+
+On UNIX platforms you can simply do
+`BASE_INTERNAL_URL=https://app.windmill.dev WM_TOKEN=ThisIsAToken deno run -A my_script.ts`
+with the relevant info provided, the same will work for Python.
+
+On windows this is not possible, you will have to use
+[set](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/set_1).
+For example:
+
+```cmd
+set "BASE_INTERNAL_URL=https://app.windmill.dev"
+set "WM_TOKEN=ThisIsAToken"
+set "WM_WORKSPACE=workspace_id"
+```
+
+then simply run the relevant command for your language.
+
+### VS Code
+
+The easiest way to do this is using a launch.json. See how to create one for
+[Python](https://code.visualstudio.com/docs/python/debugging) and
+[Deno](https://deno.land/manual@v1.9.2/getting_started/debugging_your_code#vscode).
+
+Then add environment files using the "env" section in your configuration.
+
+:::caution
+
+Make sure you are not checking your Token into git.
+
+To manage your secrets it may be easier to use a .env file, and add it to
+.gitignore, this is also done below.
+
+:::
+
+For example, for TypeScript:
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Deno",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["run", "--inspect-brk", "-A", "${file}"],
+      "env" {
+        "BASE_INTERNAL_URL": "https://app.windmill.dev",
+        "WM_TOKEN": "ThisIsAToken",
+        "WM_WORKSPACE": "workspace_id"
+      },
+      "envFile": ".env"
+    }
+  ]
+}
+```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Bun",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["run", "${file}"],
+      "env" {
+        "BASE_INTERNAL_URL": "https://app.windmill.dev",
+        "WM_TOKEN": "ThisIsAToken",
+        "WM_WORKSPACE": "workspace_id"
+      },
+      "envFile": ".env"
+    }
+  ]
+}
+```
+
+</TabItem>
+</Tabs>
+
+The same `env` & `envFile` options are also supported by Python.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="VS Code Extension"
+		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
+### JetBrains IDEs
+
+Especially for Python you may prefer using a JetBrains IDE. Simply navigate to
+your
+[run config](https://www.jetbrains.com/help/idea/run-debug-configuration-python.html#1)
+and add two lines
+
+```
+BASE_INTERNAL_URL = https://app.windmill.dev
+WM_TOKEN = ThisIsAToken
+WM_WORKSPACE= workspace_id
+```
+
+:::caution
+
+Make sure you are not checking your Token into git.
+
+:::
+
+## Pushing your scripts to Windmill
+
+Once you are done developing your script, you can push it to Windmill using the CLI!
+
+Be sure to add wmill to your path after installing.
+
+```
+deno install --unstable -A https://deno.land/x/wmill/main.ts
+wmill workspace add
+wmill sync push
+```

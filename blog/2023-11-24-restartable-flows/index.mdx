@@ -1,0 +1,73 @@
+---
+authors: [guillaumebouv]
+tags:
+  [
+	'Launch week',
+    'Flows',
+    'Testing'
+  ]
+image: ./restartable_flows.png
+slug: /launch-week-1/restartable-flows
+description: "Re-start a flow from a specific node."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 5 - Restartable Flows
+
+<br />
+
+![Restartable Flows](./restartable_flows.png 'Restartable Flows')
+
+Last day of our launch week today (we know it's sad). Before saying goodbye, we want to tell you about features that will help you in your ETLs, with restartable flows (this article) and [S3 integration for data pipelines](/blog/launch-week-1/data-pipeline-orchestrator).
+
+The principle is simple: once the flow is executed (whether in test or deployed), you have the possibility to restart it from any node (step, iteration of a for loop, or branch).
+
+For testing, it's great because you can restart from a specific node without recomputing the flow.
+
+For prod, it's great because you can skip the already completed part of the flow avoiding duplicate actions (in particular, ensure data integrity).
+
+This feature is part of the logic of the different ways to iterate over a flow ([testing the entire flow](/docs/flows/test_flows#test-flow), [only one step](/docs/flows/test_flows#test-this-step), or [up to a certain step](/docs/flows/test_flows#test-up-to-step)).
+
+## How to restart a flow from a given node
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/5_NRFmUxfW0?vq=1080p"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+In the [flow preview page](/docs/core_concepts/instant_preview), just select a top level node and a "Re-start from X" button will appear at the top, next to "Test flow".
+
+## How does it work?
+
+To understand how Windmill can easily restart a flow from any step, it's important to have in mind how a flow is modeled in the backend.
+All the details are well explained in [this other blog post](../2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx#states), but what's important for the sake of this post is that each flow step is a normal Windmill job being
+executed by the flow state machine. Only the ID of this job will be tracked in the flow status that triggered it (a flow step can be seen as a pointer to any job).
+
+When a flow is restarted from a step (let's call it `Step A`), the logic running in the backend is simple. A brand new run for this flow will be created (as if you were starting it from the beginning), but prior to
+executing it, Windmill will "copy" the status of all the predecessors `Step A` form the original flow into the new flow status. When starting the execution of this flow, the first step pointing to the original flow
+steps will already be in a "Success" state, and the state machine will jump straight to `Step A` as the first step being in a "WaitingForPriorSteps" state. `Step A` will be added to the execution queue and from there the
+flow continue like any other flow.
+
+In the end, the steps prior to `Steps A` are "shared" between the 2 flows (the initial one and the restarted one), and all the steps after `Step A` (included) are specific to each run.
+
+## Learn more
+
+To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+For more details on instant preview & testing, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instant Preview & Testing"
+		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
+</div>

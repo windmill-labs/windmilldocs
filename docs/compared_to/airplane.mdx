@@ -64,15 +64,13 @@ Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/),
 
 This inability to scale, inefficient architecture and high cold-start is the most common reasons for users to migrate from Airplane to Windmill.
 
-Trust but verify: to ensure the performance of Windmill's workers and measure their capabilities,
-we provide a benchmarking tool. This tool allows you to benchmark the execution of jobs and flows,
-providing insights into the performance metrics.
+We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our performance against our competitors.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
-		description="This folder includes a small deno/ts utility to benchmark execution of jobs & flows."
-		href="https://github.com/windmill-labs/windmill/tree/main/benchmarks"
+		description="Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute."
+		href="/docs/misc/benchmarks"
 	/>
 	<DocCard
     	title="OpenAPI"
@@ -127,7 +125,7 @@ Building scripts in Airplane involves transitioning
 from the web UI to a separate code editor and eventually employing the terminal.
 :::
 
-Windmill has a Script Editor with an integrated [Monaco Editor](../code_editor/index.mdx). Only if you prefer, you can also use our [CLI](../cli_local_dev/index.md) and [VSCode](../cli_local_dev/1_vscode-extension/index.md), and write your code [concurrently with your team](../core_concepts/7_multiplayer/index.md).
+Windmill has a Script Editor with an integrated [Monaco Editor](../code_editor/index.mdx). Only if you prefer, you can also use our [CLI](../cli_local_dev/index.mdx) and [VS Code](../cli_local_dev/1_vscode-extension/index.mdx), and write your code [concurrently with your team](../core_concepts/7_multiplayer/index.md).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -171,7 +169,7 @@ represented as DAGs. As the flow editor has a dedicated web UI and relies on scr
 Building apps in Airplane implies going 100% through code using React, with <a href="https://docs.airplane.dev/views/components" rel="nofollow">limited available components</a>.
 :::
 
-Windmill's App Editor works on a drap-and-drop basis, with code where it matters. If you prefer, you can also [import apps in React/Vue/Svelte](../react_vue_svelte_apps/index.md) and link them to your scripts and flows.
+Windmill's App Editor works on a drap-and-drop basis, with code where it matters. If you prefer, you can also [import apps in React/Vue/Svelte](../react_vue_svelte_apps/index.mdx) and link them to your scripts and flows.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -218,7 +216,7 @@ Anyone can create an integration with just a few clicks.
 
 ## Everything else
 
-For everyting else, it's comparable: you can [develop locally and source control](../core_concepts/17_collaboration/index.mdx#git-integration), [use VSCode](../cli_local_dev/1_vscode-extension/index.md), generate [webhooks](../core_concepts/4_webhooks/index.md), etc.
+For everyting else, it's comparable: you can [develop locally and source control](../core_concepts/17_collaboration/index.mdx#git-integration), [use VS Code](../cli_local_dev/1_vscode-extension/index.mdx), generate [webhooks](../core_concepts/4_webhooks/index.mdx), etc.
 
 To conclude, Airplane is excellent for executing scripts within a familiar framework for developers.
 

@@ -71,7 +71,7 @@ Windmill embeds:
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),
   [OAuth handling](../2_setup_oauth/index.mdx) for fetching and
   refreshing credentials
-- **[webhooks](../../core_concepts/4_webhooks/index.md)** for every scripts and flows to
+- **[webhooks](../../core_concepts/4_webhooks/index.mdx)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
   current infrastructure
 - a **[scheduler](../../core_concepts/1_scheduling/index.md)** to trigger Scripts and
@@ -127,7 +127,7 @@ with:
   scalability** and have **no open APIs**.
 
 You will find more details on our view over our space and competitors in the
-[Windmill compared to its peers](../../compared_to/peers.mdx) page.
+[Windmill compared to competitors](../../compared_to/peers.mdx) page.
 
 :::info About
 **[Windmill](https://www.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](../../advanced/1_self_host/index.mdx)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.

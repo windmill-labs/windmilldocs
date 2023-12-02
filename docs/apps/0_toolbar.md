@@ -36,27 +36,43 @@ You can:
 - Restore a fork.
 - Restore here.
 
-![Deployement history](../assets/apps/1_app_toolbar/deployement-history.png.webp)
+![Deployement history](../assets/apps/1_app_toolbar/deployement-history.png.webp "Deployement history")
 
-### JSON
+### Export
 
-View the [JSON representation](../core_concepts/13_json_schema_and_parsing/index.md) of the app.
+View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsing/index.md) of the app.
+
+![App Export](../assets/apps/1_app_toolbar/app-export.png "App Export")
 
 ### Hub compatible JSON
 
-Hub Compatible JSON: View the JSON representation of the app in a format that is compatible with the [Windmill Hub](https://hub.windmill.dev/).
+Hub Compatible JSON: View the JSON / YAML representation of the app in a format that is compatible with the [Windmill Hub](https://hub.windmill.dev/).
 
-### App Inputs Configuration
+![Submit App JSON to Hub](../assets/apps/1_app_toolbar/export_hub.png "Submit App JSON to Hub")
+
+![Submit App JSON to Hub](../assets/apps/1_app_toolbar/submit_app.png "Submit App JSON to Hub")
+
+### App Inputs
 
 The app inputs menu displays a list of all the inputs of each component. A toggle allows you to display only resources inputs, enabling you to easily configure your third-party resources for an app imported from the Hub, for example:
 
-![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png.webp)
+![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png.webp "App Inputs Configuration")
+
+### Diff
+
+Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.mdx#local-edits) and [lastest deployed version](../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) or [latest draft](../core_concepts/0_draft_and_deploy/index.mdx#draft).
+
+![Diff Viewer](../assets/apps/1_app_toolbar/diff_viewer.png "Diff Viewer")
 
 ## Debug Runs
 
 The app builder enables you to examine recent runs to [identify potential bugs](./5_app_debugging.md).
 
-![App Debug Runs](../assets/apps/1_app_toolbar/app-debug-runs.png.webp)
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/debug_app.mp4"
+/>
 
 ## Preview Mode
 

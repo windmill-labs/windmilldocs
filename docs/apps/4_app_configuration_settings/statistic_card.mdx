@@ -1,0 +1,47 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Statistic card
+
+The statistic card component is a pannel meant to display a value and progress.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/stat_card.mp4"
+/>
+
+<br/>
+
+The following section details Statistic card component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Statistic card configuration
+
+| Name  |                Type                 | Connectable | Templatable | Default | Description       |
+| ----- | :---------------------------------: | :---------: | :---------: | :-----: | ----------------- |
+| Title |               string                |    true     |    false    | Title  | The title displayed within component. |
+| Value | string |    true    |    false    |  Value   | The actual value displayed by the component (in particular, can be a number, with currency etc.) |
+| Progress  |         number         |    true    |    false    |   0    | The progress, in %. Green when positive, red when negative.  |
+
+### Media
+
+| Name  |                Type                 | Connectable | Templatable | Default | Description       |
+| ----- | :---------------------------------: | :---------: | :---------: | :-----: | ----------------- |
+| Media |         string: Image, Icon    |    false     |    false    | Image  | The picture that will be displayed. |
+| (If Media = "Image") Source | string |    true    |    false    |  /logo.svg   | The source of the image: can also be a downloaded image.  |
+| (If Media = "Image") Source Kind  |         string: url, png encoded as base64, jpeg encoded as base64, svg encoded as base64         |    true    |    false    |   url    | Kind of source that is used.  |
+| (If Media = "Icon") Icon | string |    true    |    false    |  null   | The icon that will be displayed.  |

@@ -1,0 +1,99 @@
+---
+authors: [rubenfiszel]
+tags:
+  [
+    'Launch week',
+    'Dedicated Workers for scripts'
+  ]
+image: ./dedicated_workers_thumbnail.png
+slug: launch-week-dedicated-workers
+description: "Execute jobs targeting a script much faster than normal workers."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 2 - Dedicated Workers for Scripts
+
+Execute jobs targeting a script much faster than normal workers.
+
+![Dedicated Workers thumbnail](./dedicated_workers_thumbnail.png "Dedicated Workers thumbnail")
+
+## Workers in Windmill
+
+[Workers](/docs/core_concepts/worker_groups) serve as the backbone of Windmill. Workers are autonomous processes that run one script at a time using the full cpu and memory available to them.
+
+To put it simply, workers are responsible for executing code in Windmill. A single normal worker in Windmill is capable of handling up to 26 million tasks a month, with each task taking roughly 100ms.  You can easily scale the number of workers horizontally without incurring extra overhead.
+
+Typically, workers fetch [jobs](/docs/core_concepts/jobs) from the job queue based on their `scheduled_for` datetime, provided it's in the past. Once a worker retrieves a job, it immediately changes its status to "running", processes it, streams its logs, and upon completion, archives it in the database as a "finished job". Both the final outcome and the logs are preserved indefinitely.
+
+This simple process allows one to reliably count on a small number of workers for very different jobs.
+However, there is a **latency between each task** since the worker must perform a clean-up and a cold start between each execution (to be able to handle successive jobs but from completely different scripts).
+This latency amounts to around a dozen milliseconds, which can be crucial in the execution of certain priority jobs:
+
+<div class="generic-workers-image"/>
+
+## Dedicated Workers for scripts
+
+Dedicated workers allow you to remove completely the cold start for selected scripts.
+[Dedicated Workers](/docs/core_concepts/dedicated_workers) are workers that are dedicated to a particular script.
+They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
+They are **as fast as running the same logic in a while-loop processing requests**, that is how they are implemented actually, but keep the benefit of showing separate jobs per execution:
+
+<div class="dedicated-workers-image"/>
+
+<br/>
+
+### What about AWS Lambda
+
+It is faster than AWS lambda: https://www.windmill.dev/docs/misc/benchmarks/aws_lambda.
+
+### For Python and Typescript
+
+Dedicated workers work with Typescript and Python scripts, they have the highest cold starts. Queries to databases such as PostgreSQL, MySQL, BigQuery, or bash and go scripts do not suffer from any cold starts and hence have the same benefits already without any compexity.
+
+## How to assign dedicated workers to a script
+
+From Windmill UI's Workers page:
+
+1. "Edit config" of a [worker group](/docs/core_concepts/worker_groups) and enter script's workspace & [path](/docs/script_editor/settings#path) as `worker:path`.
+
+![Worker group config](../../docs/core_concepts/25_dedicated_workers/worker_group_config.png)
+
+The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen:
+
+2. Toggle the "Dedicated Workers" option for that script in the [script Settings](/docs/script_editor/settings):
+
+![Dedicated Workers in Settings](../../docs/core_concepts/25_dedicated_workers/dedicated_workers.png "Dedicated Workers in Settings")
+
+Each [run](/docs/core_concepts/monitor_past_and_future_runs) will have a Worker Group Tag assigned to it. [Worker Group Tags](/docs/core_concepts/worker_groups) allow to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
+
+![Dedicated Workers Tag](../../docs/core_concepts/25_dedicated_workers/dedicated_worker_tag.png "Dedicated Workers Tag")
+
+## What does it mean for flows ?
+
+Flows steps that use scripts with a dedicated worker already benefit from the speed up of dedicated workers. However, you may wonder, could we not use dedicated workers to accelerate full flows ? Yes, you would be exactly right and we have a bigger announcement on the subject tomorrow.
+
+## Learn more
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dedicated Workers / High Throughput"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+	<DocCard
+    	title="Workers and Worker Groups"
+    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+    	href="/docs/core_concepts/worker_groups"
+    />
+	  <DocCard
+		title="Worker Groups Management UI"
+		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+	<DocCard
+		title="Init Scripts"
+		description="Init Scripts are executed at the beginning when the worker starts."
+		href="/docs/advanced/preinstall_binaries#init-scripts"
+	/>
+</div>
