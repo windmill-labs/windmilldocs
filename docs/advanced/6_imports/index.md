@@ -43,7 +43,7 @@ import { getVariable } from 'windmill-client@1.147.3';
 
 ### Private npm registry
 
-If you are using a private artifactory, you can set the env variable `NPM_CONFIG_REGISTRY` for the worker to the url of your artifactory.
+If you are using a private artifactory, you can set the env variable `NPM_CONFIG_REGISTRY` for the worker to the url of your artifactory. If the private registry is exposing custom certificates,`DENO_CERT` and `DENO_TLS_CA_STORE` env variables can be used as well (see [Deno documentaion](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables) for more info on those options).
 
 ```dockerfile
 windmill_worker:
@@ -51,7 +51,14 @@ windmill_worker:
   environment:
     ...
     - NPM_CONFIG_REGISTRY=https://registry.yarnpkg.com.
+    - DENO_CERT=/custom-certs/root-ca.crt
 ```
+
+:::info
+
+Bun runtime on Windmill does not support custom NPM registries.
+
+:::
 
 ## Imports in Python
 
@@ -95,8 +102,8 @@ def main(...):
 
 ### Private PyPi repository
 
-In addition to that, environment variables can be set to customize `pip`'s
-index-url and extra-index-url. This is useful for private repositories.
+In addition to that, environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate. 
+This is useful for private repositories.
 
 In a docker-compose file, you would add following lines:
 
@@ -108,6 +115,7 @@ windmill_worker:
     - PIP_INDEX_URL=https://pypi.org/simple
     - PIP_EXTRA_INDEX_URL=https://pypi.org/simple
     - PIP_TRUSTED_HOST=pypi.org
+    - PIP_INDEX_CERT=/custom-certs/root-ca.crt
 ```
 
 ## Imports in Go

@@ -9,7 +9,7 @@ Webhooks are a way to interact with Windmill using standard web technologies.
 Snippet of a Deno/TypeScript script using only native JavaScript to trigger a
 webhook can be found on [Windmill Hub][script].
 
-<br/>
+<br />
 
 Some use cases include triggering scripts and flows from [Slack](/blog/handler-slack-commands) or [Emails](../../integrations/mailchimp_mandrill.md).
 
@@ -79,7 +79,6 @@ It's always better to use asynchronous mode as it allows your client not to wait
 When using the **synchronous mode**, the webhook returns the result of the script directly. If the script returns an error, the endpoint still returns the `200` status code with the error as a JSON object.
 
 When using the **asynchronous mode**, the webhook returns a `uuid` and you can poll the [get job](https://app.windmill.dev/openapi.html#/operations/getJob) API call to fetch the status and results once it is completed.
-
 
 ## User token
 
@@ -189,9 +188,47 @@ Similarly to request headers, if the query args contain `raw=true`, then an addi
 
 ## Custom Response Code
 
-For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code.
+For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code. For example, if a script or flow returns:
 
-e.g: `{"windmill_status_code": 201}`
+```json
+{
+	"windmill_status_code": 201,
+	"result": {
+		"Hello": "World"
+	}
+}
+```
+
+the synchronous endpoint will return:
+
+```json
+{
+	"Hello": "World"
+}
+```
+
+with a status code `201`.
+
+Note that if the status code is invalid (w.r.t [RFC9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes)), the endpoint will return an error.
+
+## Custom Content Type
+
+Similarly to the above, for all sync run jobs endpoints, if the response contains a key `windmill_content_type`, the associated value will be used as the content type header of the response. For example, if a script or flow returns:
+
+```json
+{
+	"windmill_content_type": "text/csv",
+	"result": "Hello;World"
+}
+```
+
+the synchronous endpoint will return:
+
+```csv
+"Hello;World"
+```
+
+with the response header: "Content-Type: text/csv".
 
 ## Return early for flows
 

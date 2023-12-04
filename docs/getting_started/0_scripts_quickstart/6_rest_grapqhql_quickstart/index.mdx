@@ -153,6 +153,8 @@ This is also a way to have users fill [resources](../../../core_concepts/3_resou
 
 > In the example above, a custom resource is declared as a parameter of the main function. It will be asked by the user through the auto-generated UI and used directly in the script (here for the bearer token).
 
+If the endpoint is and HTTPS endpoint exposing custom certificate, the fetch will fail. Custom certificates can be trusted using the `DENO_CERT` env variable (see [Deno official documentation](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables))
+
 <br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
