@@ -92,7 +92,7 @@ As part of the settings menu, each script has metadata associated with it, enabl
 This menu also has additional settings, such as:
 
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
-- **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
+- **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU acceleration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
 - **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
 
@@ -157,8 +157,8 @@ In Windmill, scripts need to have a `main` function that will be the script's
 entrypoint. There are a few important things to note about the `main`.
 
 - The main arguments are used for generating
-	1. the [input spec](../../../core_concepts/13_json_schema_and_parsing/index.md) of the Script
-	2. the [frontend](../../../core_concepts/6_auto_generated_uis/index.mdx) that you see when running the Script as a standalone app.
+  1.  the [input spec](../../../core_concepts/13_json_schema_and_parsing/index.md) of the Script
+  2.  the [frontend](../../../core_concepts/6_auto_generated_uis/index.mdx) that you see when running the Script as a standalone app.
 - Type annotations are used to generate the UI form, and help pre-validate
   inputs. While not mandatory, they are highly recommended. You can customize
   the UI in later steps (but not change the input type!).
@@ -208,12 +208,12 @@ Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/auto_g_ui_landing.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/auto_g_ui_landing.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

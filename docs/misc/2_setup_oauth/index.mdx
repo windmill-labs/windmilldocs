@@ -23,16 +23,16 @@ We recommend using a private navigation tab to test the new settings as soon as 
 ### Google login
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/jSpuBsRv0yM?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/jSpuBsRv0yM?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 **Create Google OAuth keys**
 
@@ -93,10 +93,11 @@ Superadmin Settings -> Instance Settings -> SSO -> Toggle "jumpcloud" -> set cli
 From your Admin page, setup Windmill using the service flow:
 
 1. `Create a new app integration`:
-   
+
    a. For "sign-in method" select "OIDC - Open ID Connect".
-   
+
    b. For "application type" select "Web Appliction".
+
 2. Select all of the following options for Grant type of "Client acting on behalf of a user":
 
    - Authorization Code
@@ -145,9 +146,9 @@ Create a new slack app at `https://api.slack.com/apps?new_app=1`
 
 Pick "From an app manifest", then YAML.
 
-![Slack Create App](./slack_create_app.png "Slack Create App")
+![Slack Create App](./slack_create_app.png 'Slack Create App')
 
-Your app manifest shoud look like this, replacing `<YOUR INSTANCE URL>` in 2 places:
+Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 2 places:
 
 ```yaml
 display_information:
@@ -188,19 +189,19 @@ settings:
   token_rotation_enabled: false
 ```
 
-![Slack Manifest](./slack_manifest.png "Slack Manifest")
+![Slack Manifest](./slack_manifest.png 'Slack Manifest')
 
 Then from your Superadmin Settings, fill with Client ID and Client Secret.
 
-![Slack Fill](./slack_fill.png "Slack Fill")
+![Slack Fill](./slack_fill.png 'Slack Fill')
 
 As for any OAuth Settings, make sure that there is a corresponding resource type with the same name with a "token" field in the [superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#roles-in-windmill) workspace. That should be the case by default with Slack.
 
-![Slack Available](./slack_available.png "Slack Available")
+![Slack Available](./slack_available.png 'Slack Available')
 
 Now users should be able to connect to Slack through OAuth:
 
-![Slack Connect](./slack_connect.png "Slack Connect")
+![Slack Connect](./slack_connect.png 'Slack Connect')
 
 ### Google Sheet
 
@@ -239,4 +240,4 @@ interface OAuthConfig {
 
 `connect_config` is used for resources, and `login_config` for SSO.
 
-Once you have validated your custom item, we would be greateful if you could open a PR. See [Contributor's guide](../4_contributing/index.md) for more details.
+Once you have validated your custom item, we would be grateful if you could open a PR. See [Contributor's guide](../4_contributing/index.md) for more details.

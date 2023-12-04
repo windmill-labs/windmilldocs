@@ -5,18 +5,18 @@ import DocCard from '@site/src/components/DocCard';
 The present document will introduce you to Flows and how to build your first one.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/flows_quickstart_example.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/flows_quickstart_example.mp4"
 />
 
-<br/>
+<br />
 
 > [Here](https://hub.windmill.dev/flows/43/) is an example of a simple flow built with Windmill.
 
-<br/>
+<br />
 
 It is important to have in mind that **in Windmill Scripts are at the basis of Flows and Apps**. To sum up roughly, workflows are state machines represented as DAG to compose scripts together. Learn more in the [Script Quickstart](../0_scripts_quickstart/index.mdx) in the previous section. You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
 
@@ -40,23 +40,23 @@ Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor 
 
 The first thing you'll see is the [Metadata](../../flows/3_editor_components.mdx#metadata) menu. From there, you can set the [permissions](../../core_concepts/16_roles_and_permissions/index.mdx) of the workflow: User (by default, you), and Folder (referring to read and/or write groups).
 
-Also, you can give succintly a Name, a Summary and a Description to your flow. Those are supposed to be explicit, we recommend you to give context and make them as self-explainatory as possible.
+Also, you can give succinctly a Name, a Summary and a Description to your flow. Those are supposed to be explicit, we recommend you to give context and make them as self-explanatory as possible.
 
 ![Flows metadata](./flows_metadata.png.webp)
 
 ### Schedule
 
-On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.md)* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.mdx) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
+On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.md)\* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.mdx) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
 
 ![Flows schedule](./flows_schedule.png.webp)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <DocCard
-  		color="teal"
-    	title="Scheduling"
-    	description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-    	href="/docs/core_concepts/scheduling"
-    />
+	<DocCard
+		color="teal"
+		title="Scheduling"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+	/>
 </div>
 
 ### Shared Directory
@@ -72,12 +72,12 @@ Get more details on the [Persistent Storage dedicated page](../../core_concepts/
 ![Flows shared directory](./flows_shared_directory.png.webp)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		color="teal"
 		title="Persistent Storage"
-    	description="Ensure that your data is safely stored and easily accessible whenever required."
-    	href="/docs/core_concepts/persistent_storage"
-    />
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
+	/>
 </div>
 
 ### Worker Group
@@ -85,12 +85,12 @@ Get more details on the [Persistent Storage dedicated page](../../core_concepts/
 When a worker group is defined at the flow level, any steps inside the flow will run on that worker group, regardless of the steps' worker group. If no worker group is defined, the flow controls will be executed by the default worker group 'flow' and the steps will be executed in their respective worker group.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		color="teal"
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 </div>
 
 You can always go back to this menu by clicking on `Settings` on the top lef, or on the name of the flow on the [toolbar](../../flows/3_editor_components.mdx#toolbar).
@@ -130,7 +130,7 @@ Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), yo
 
 ![Import or write scripts](./import_or_write_scripts.png.webp)
 
-<br/>
+<br />
 
 Your flow can be deepened with [additional features](../../flows/1_flow_editor.mdx), below are some major ones.
 
@@ -189,13 +189,13 @@ At each step you can add [Approval Scripts](../../flows/11_flow_approval.mdx) to
 Request approvals can be sent by email, Slack, anything. Then you can **automatically resume workflows with secret webhooks** after the approval steps.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/flow-approval.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/flow-approval.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -234,13 +234,13 @@ There are several ways to trigger a flow with Windmill.
 You don't have to explore all flows editor possibilities at once. At each step, **test what you're building** to keep control on your wonder. You can also test up to a certain step by clicking on an action (x) and then on `Test up to x`.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/test_flow.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/test_flow.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

@@ -41,7 +41,6 @@ Caching a flow means caching the results of that script for a certain duration. 
 You can enable caching for a flow directly in the flow settings. Here's how you can do it:
 
 1. **Settings**: From the Flow Editor, go to the "Settings" menu and pick the `Cache` tab.
-   
 2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
 
 In the above example, the result of step the flow will be cached for 60 seconds. If `u/henri/example_flow_quickstart_no_slack` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
@@ -89,7 +88,6 @@ Caching an app inline script means caching the results of that script for a cert
 You can enable caching for an app inline script directly its editor settings. Here's how you can do it:
 
 1. **Settings**: From the Code Editor, go to the top bar and pick the `Cache` tab.
-   
 2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
 
 In the above example, the result of step the script will be cached for 5 minutes. If `Inline Script 0` is re-triggered with the same input within this period, Windmill will immediately return the cached result.

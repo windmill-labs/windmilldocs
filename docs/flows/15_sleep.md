@@ -19,7 +19,7 @@ This feature is made to hold a flow **inside of it**. Based on your specific nee
 
 - [Schedule the trigger](../core_concepts/1_scheduling/index.md) of a script or flow.
 - [Suspend a flow until a step is approved](./11_flow_approval.mdx).
-- [Retry](./14_retries.md) a step multiple times untill it is successful.
+- [Retry](./14_retries.md) a step multiple times until it is successful.
 - [Early stop/Break](./2_early_stop.md) the flow if a step met a predicate expression.
 
 :::

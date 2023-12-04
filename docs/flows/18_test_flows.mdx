@@ -6,10 +6,10 @@ On top of its integrated editors ([scripts](../script_editor/index.mdx), [flows]
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Instant Preview & Testing"
-    	description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-    	href="/docs/core_concepts/instant_preview"
-    />
+		title="Instant Preview & Testing"
+		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
 </div>
 
 ## Instant preview in Flow Editor
@@ -19,12 +19,12 @@ The flow editor has several methods of previewing results instantly.
 Testing the flow or certain steps is often required to have the outputs of previous steps suggested as input for another step:
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_test_preview_results.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_test_preview_results.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -40,38 +40,38 @@ Testing the flow or certain steps is often required to have the outputs of previ
 While editing the flow, you can run the whole flow as a test.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_test_flow.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_test_flow.mp4"
 />
 
-<br/>
+<br />
 
 Click on `Test flow`. This will open a drawer with the [flow's inputs](./3_editor_components.mdx#flow-inputs) and its status.
 
 Upon execution, you can graphically preview (as a directed acyclic graph) the execution of the flow & the results & logs of each step.
 
-![Flow status](../core_concepts/23_instant_preview/flow_status.png "Flow status")
+![Flow status](../core_concepts/23_instant_preview/flow_status.png 'Flow status')
 
 From the menu, you can also access past runs & saved inputs.
 
-![Input library](../core_concepts/23_instant_preview/input_library.png "Input library")
+![Input library](../core_concepts/23_instant_preview/input_library.png 'Input library')
 
 At last, you can fill arguments from a request.
 
-![Fill from request](../core_concepts/23_instant_preview/fill_from_request.png "Fill from request")
+![Fill from request](../core_concepts/23_instant_preview/fill_from_request.png 'Fill from request')
 
 ### Test up to step
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_test_up_to.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_test_up_to.mp4"
 />
 
-<br/>
+<br />
 
-As for `Test flow`, you will get the same components (Flow inputs, status, input library etc.), only the flow will execute untill a given step, included.
+As for `Test flow`, you will get the same components (Flow inputs, status, input library etc.), only the flow will execute until a given step, included.
 
 ### Restart from step, iteration or branch
 
@@ -90,22 +90,21 @@ To see how it works, see our [dedicated blog post](/blog/launch-week-1/restartab
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-
-<br/>
+<br />
 
 Under [enterprise edition](../misc/7_plans_details/index.mdx), this feature is also available for [deployed](../core_concepts/0_draft_and_deploy/index.mdx) flows.
 
-![Restart deployed flow](../core_concepts/23_instant_preview/restart_flow_2.png "Restart deployed flow")
+![Restart deployed flow](../core_concepts/23_instant_preview/restart_flow_2.png 'Restart deployed flow')
 
 ### Test this step
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_test_this_step.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_test_this_step.mp4"
 />
 
-<br/>
+<br />
 
 `Test this step` is a way to test a single step of the flow. It comes useful to check your code or to have the results of your current steps suggested as inputs for further steps.
 

@@ -12,4 +12,4 @@ For more information about white labeling and customization options, please reac
 
 Example of Windmill's [flow editor](../../flows/1_flow_editor.mdx) being white labeled by [Premote](https://www.premote.nl/):
 
-![Flow Editor Premote](./premote_windmill.png "Flow Editor Premote")
+![Flow Editor Premote](./premote_windmill.png 'Flow Editor Premote')

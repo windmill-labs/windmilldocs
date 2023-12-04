@@ -5,6 +5,7 @@ Windmill already provides over [sixty components](./4_app_configuration_settings
 :::info React & Windmill
 
 If you're looking for a way to:
+
 - Import whole react apps to Windmill, see [React App Import](../react_vue_svelte_apps/react.md).
 - Integrate Windmill applications into React-based project, see [Windmill React SDK](../misc/15_react_sdk/index.md).
 
@@ -13,9 +14,10 @@ If you're looking for a way to:
 Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
 There are 3 main benefits of using your own components:
+
 1. Reusing react components you've already written in other codebases.
 2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
-3. Embeding very complex components such as a code editor.
+3. Embedding very complex components such as a code editor.
 
 If that's not sufficient you can even [build your own app in React](../react_vue_svelte_apps/react.md).
 
@@ -53,7 +55,7 @@ npm run dev
 6. Edit COMPONENT_NAME in `vite.config.ts` to match your component name. It will
    be useful later.
 
-7. Build the iife using:
+7. Build the IIFE using:
 
 ```bash
 npm run build
@@ -61,4 +63,4 @@ npm run build
 
 8. Upload the `dist/cc.iife.js` to Windmill and name the component as it has been named in `vite.config.ts`.
 
-![Custom component example](../../blog/2023-11-23-1-react-components/custom_example.png "Custom component example")
+![Custom component example](../../blog/2023-11-23-1-react-components/custom_example.png 'Custom component example')
