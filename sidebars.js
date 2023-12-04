@@ -284,6 +284,23 @@ const sidebars = {
 				'advanced/self_host/index',
 				{
 					type: 'category',
+					label: 'Local Development',
+					collapsed: false,
+					link: {
+						type: 'doc',
+						id: 'advanced/local_development/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'cli_local_dev/vscode-extension/index',
+							label: 'VS Code'
+						},
+						'advanced/local_development/run_locally'
+					]
+				},
+				{
+					type: 'category',
 					label: 'Command Line Interface (CLI)',
 					link: {
 						type: 'doc',
@@ -300,23 +317,6 @@ const sidebars = {
 						'advanced/cli/variable',
 						'advanced/cli/folder',
 						'advanced/cli/script'
-					]
-				},
-				{
-					type: 'category',
-					label: 'Local Development',
-					collapsed: false,
-					link: {
-						type: 'doc',
-						id: 'advanced/local_development/index'
-					},
-					items: [
-						{
-							type: 'doc',
-							id: 'cli_local_dev/vscode-extension/index',
-							label: 'VS Code'
-						},
-						'advanced/local_development/run_locally'
 					]
 				},
 				'advanced/deploy_gh_gl/index',
