@@ -17,4 +17,4 @@ In the background, the entire worker cache is synced so that most dependencies g
 
 ## Entire Local Cache snapshotting
 
-Another mechanism of the s3 distributed cache is the snapshotting of the entire cache as a single tar. This tar is created approximately every day by one of the worker (at random). This snapshot is then pulled at start of any worker. It enables workers to start with all the dependencies installed. Is it faster than pulling the list of all dependencies  because it is much faster to pull one big object from s3 than many small ones (around 30s). The workers then start processing jobs with an "hot" cache.
+Another mechanism of the s3 distributed cache is the snapshotting of the entire cache as a single tar. This tar is created approximately every day by one of the worker (at random). This snapshot is then pulled at start of any worker. It enables workers to start with all the dependencies installed. Is it faster than pulling the list of all dependencies because it is much faster to pull one big object from s3 than many small ones (around 30s). The workers then start processing jobs with an "hot" cache.

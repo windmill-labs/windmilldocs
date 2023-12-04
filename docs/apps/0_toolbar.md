@@ -10,7 +10,7 @@ The app summary can be modified on the left side of the toolbar. It serves to de
 
 ## Undo/Redo
 
-The undo/redo buttons facilitate undoing or redoing the most recent action.
+The undo/redo buttons facilitates undoing or redoing the most recent action.
 
 ## Desktop/Mobile Mode
 
@@ -19,6 +19,7 @@ You can switch the canvas' mode to `Mobile` or `Desktop` layout from the toolbar
 ## Width
 
 You can set the canvas' width to:
+
 - Limited width: The max width is 1168px and the content stay centered instead of taking the full page width.
 - Max width: The width is of the app if the full width of its container.
 
@@ -26,7 +27,7 @@ You can set the canvas' width to:
 
 The `⋮` menu provides access to the following options:
 
-### Deployement history
+### Deployment history
 
 In the menu, you can view the [deployment](./6_app_deployment.mdx) history of the app. It displays the date and time of the deployment, the user who deployed the app, and the version of the app.
 
@@ -36,33 +37,33 @@ You can:
 - Restore a fork.
 - Restore here.
 
-![Deployement history](../assets/apps/1_app_toolbar/deployement-history.png.webp "Deployement history")
+![Deployement history](../assets/apps/1_app_toolbar/deployement-history.png.webp 'Deployement history')
 
 ### Export
 
 View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsing/index.md) of the app.
 
-![App Export](../assets/apps/1_app_toolbar/app-export.png "App Export")
+![App Export](../assets/apps/1_app_toolbar/app-export.png 'App Export')
 
 ### Hub compatible JSON
 
 Hub Compatible JSON: View the JSON / YAML representation of the app in a format that is compatible with the [Windmill Hub](https://hub.windmill.dev/).
 
-![Submit App JSON to Hub](../assets/apps/1_app_toolbar/export_hub.png "Submit App JSON to Hub")
+![Submit App JSON to Hub](../assets/apps/1_app_toolbar/export_hub.png 'Submit App JSON to Hub')
 
-![Submit App JSON to Hub](../assets/apps/1_app_toolbar/submit_app.png "Submit App JSON to Hub")
+![Submit App JSON to Hub](../assets/apps/1_app_toolbar/submit_app.png 'Submit App JSON to Hub')
 
 ### App Inputs
 
 The app inputs menu displays a list of all the inputs of each component. A toggle allows you to display only resources inputs, enabling you to easily configure your third-party resources for an app imported from the Hub, for example:
 
-![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png.webp "App Inputs Configuration")
+![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png.webp 'App Inputs Configuration')
 
 ### Diff
 
-Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.mdx#local-edits) and [lastest deployed version](../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) or [latest draft](../core_concepts/0_draft_and_deploy/index.mdx#draft).
+Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.mdx#local-edits) and [latest deployed version](../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) or [latest draft](../core_concepts/0_draft_and_deploy/index.mdx#draft).
 
-![Diff Viewer](../assets/apps/1_app_toolbar/diff_viewer.png "Diff Viewer")
+![Diff Viewer](../assets/apps/1_app_toolbar/diff_viewer.png 'Diff Viewer')
 
 ## Debug Runs
 
@@ -87,5 +88,6 @@ You can [save](./6_app_deployment.mdx) the app. The first time you save the app,
 Windmill apps are custom-made user interfaces meant to interact with scripts and flows.
 
 There are two ways to [deploy](./6_app_deployment.mdx) an app:
+
 - **Read-Access Required**: The app can be accessed & triggered by anyone who has [read access](../core_concepts/16_roles_and_permissions/index.mdx) to the app.
 - **Publish Publicly**: The app can be accessed as a standalone app by anyone who has the secret URL.

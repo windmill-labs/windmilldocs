@@ -3,9 +3,7 @@ title: Build on APIs with SQL using Sequin
 ---
 
 import DocCard from '@site/src/components/DocCard';
-import {
-	SiPostgresql,
-} from 'react-icons/si/index';
+import { SiPostgresql } from 'react-icons/si/index';
 
 # Use SQL to build on external APIs using Sequin
 
@@ -16,17 +14,17 @@ Sequin runs a real-time sync process that pulls data from external APIs into you
 You can use Sequin to build Windmill apps on top of third-party services using Windmill's PostgreSQL [resource](../../../core_concepts/3_resources_and_types/index.mdx). This means all your scripts can be written in SQL, even if they’re reading data from [Salesforce](https://www.salesforce.com/) or writing data to [HubSpot](https://www.salesforce.com/). You can `join` your API data with your internal data. And because your API data is cached in Postgres, you don't need to worry about rate limits or pagination.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Resources and Resource Types"
-    	description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
-    	href="/docs/core_concepts/resources_and_types"
-    />
 	<DocCard
-    	title="Guide on Sequin.io"
-    	description="Original guide on Sequin.io"
-    	href="https://docs.sequin.io/guides/windmill"
+		title="Resources and Resource Types"
+		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		href="/docs/core_concepts/resources_and_types"
+	/>
+	<DocCard
+		title="Guide on Sequin.io"
+		description="Original guide on Sequin.io"
+		href="https://docs.sequin.io/guides/windmill"
 		target="_blank"
-    />
+	/>
 </div>
 
 ## Setup a Sequin sync
@@ -35,9 +33,9 @@ Before you can use Sequin with Windmill, you'll need to create a Sequin sync to 
 
 **Step 1**: After [signing up for Sequin](https://app.sequin.io), you'll connect Sequin to the API you want to sync:
 
-![Sequin Console, showing an established connection between Sequin and Airtable](./sequin_1.png "Sequin Console, showing an established connection between Sequin and Airtable")
+![Sequin Console, showing an established connection between Sequin and Airtable](./sequin_1.png 'Sequin Console, showing an established connection between Sequin and Airtable')
 
-<br/>
+<br />
 
 **Step 2**: Configure your schema by selecting the tables and columns you want to sync.
 
@@ -47,15 +45,15 @@ Before you can use Sequin with Windmill, you'll need to create a Sequin sync to 
 
 Sequin will provide you with the connection instructions for your Postgres database. Keep this tab open, as you'll need it to configure Windmill:
 
-![Sequin Console, showing the connection instructions page which lists the credentials for connecting to the Postgres database](./sequin_2.png "Sequin Console, showing the connection instructions page which lists the credentials for connecting to the Postgres database")
+![Sequin Console, showing the connection instructions page which lists the credentials for connecting to the Postgres database](./sequin_2.png 'Sequin Console, showing the connection instructions page which lists the credentials for connecting to the Postgres database')
 
-<br/>
+<br />
 
 For more details on setting up a Sequin sync, [see this guide](https://docs.sequin.io/getting-started#create-a-sync).
 
 ## Create a Windmill Resource
 
-Windmill provides integrations with many different apps and services with [resources](../../../core_concepts/3_resources_and_types/index.mdx). Each Resource has a Resource Type (PostgreSQL, MySQL, BigQuery, Snowflake) that defines the schema that the resource of this type needs to implement. 
+Windmill provides integrations with many different apps and services with [resources](../../../core_concepts/3_resources_and_types/index.mdx). Each Resource has a Resource Type (PostgreSQL, MySQL, BigQuery, Snowflake) that defines the schema that the resource of this type needs to implement.
 
 Sequin uses a [Postgres Proxy](https://docs.sequin.io/writes#configuration) to interface with your Sequin-synced tables. The Proxy lets Sequin capture inserts, updates, and deletes you make in your database and commit them to the API.
 
@@ -87,6 +85,7 @@ Here's an example Airtable query that returns all the product names in the Produ
 /*Assumes the default value Bag but can be changed from the menu.*/
 SELECT product_name from airtable.product_inventory WHERE type = $1::TEXT
 ```
+
 The type is an argument with a default value of “Bag” but you can always pass a different value from the input field right below the “Test” button.
 
 ![Sequin 3](./sequin_3.png)
@@ -95,7 +94,7 @@ The type is an argument with a default value of “Bag” but you can always pas
 
 With Sequin, you can also make [mutations](https://docs.sequin.io/writes) via your database as well. Inserts, updates, and deletes you make to Sequin-synced tables are first applied to the API. If they pass validation, they're committed to your database.
 
-To write your first mutation query, navigate to "Home" on the left sidebar and click the “+ Script” button. 
+To write your first mutation query, navigate to "Home" on the left sidebar and click the “+ Script” button.
 
 In the list of Resources, select the Postgres connection to Sequin.
 
@@ -105,6 +104,7 @@ You can compose an `insert` query by populating `values` with various input fiel
 insert into salesforce.contact (first_name, last_name, email)
 values ($1::TEXT, $2::TEXT, $3::TEXT);
 ```
+
 Provide argument values and click on the "Test" button in the top right to execute the insert query.
 
 ![Sequin 4](./sequin_4.png)

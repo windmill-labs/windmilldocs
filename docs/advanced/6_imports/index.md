@@ -8,7 +8,7 @@ On the [enterprise edition](../../misc/7_plans_details/index.mdx), Windmill's ca
 
 :::info
 
-To import other scripts from your workpace, see [Sharing common logic](../5_sharing_common_logic/index.md).
+To import other scripts from your workspace, see [Sharing common logic](../5_sharing_common_logic/index.md).
 
 :::
 

@@ -89,7 +89,7 @@ import ScatterChart from '@site/src/components/ScatterChart';
 	/>
 </div>
 
-<br/>
+<br />
 
 We compared Airflow, Prefect, Temporal and Windmill with the following usecases:
 
@@ -1093,7 +1093,7 @@ Here we see that Windmill takes a greater portion of time executing the tasks, w
 
 ## Conclusion
 
-Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transtions and assignements will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
+Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transitions and assignments will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
 
 ## Appendix: Scaling Windmill
 

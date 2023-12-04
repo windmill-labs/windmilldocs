@@ -45,13 +45,13 @@ Below is a simple example of a script built in Rest with Windmill:
 
 ```ts
 export async function main() {
-  const res = await fetch("https://api.supabase.com/v1/organizations", {
-    headers: {
-      "Authorization": `Bearer <your_supabase_token>`,
-      "Content-Type": "application/json"
-    },
-  });
-  return res.json();
+	const res = await fetch('https://api.supabase.com/v1/organizations', {
+		headers: {
+			Authorization: `Bearer <your_supabase_token>`,
+			'Content-Type': 'application/json'
+		}
+	});
+	return res.json();
 }
 ```
 
@@ -75,7 +75,7 @@ As part of the settings menu, each script has metadata associated with it, enabl
 This menu also has additional settings, such as:
 
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
-- **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
+- **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU acceleration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
 - **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
 
@@ -96,7 +96,7 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for GraphQL](./editor_graphql.png "Code Editor GrapQL")
+![Editor for GraphQL](./editor_graphql.png 'Code Editor GrapQL')
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -119,11 +119,11 @@ As we picked `Rest` for this example, Windmill provided some boilerplate. Let's 
 // Fetch-only script, no imports allowed but benefits from a dedicated highly efficient runtime
 
 export async function main(example_input: number = 3) {
-  // "3" is the default value of example_input, it can be overriden with code or using the UI
-  const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${example_input}`, {
-    headers: { "Content-Type": "application/json" },
-  });
-  return res.json();
+	// "3" is the default value of example_input, it can be overriden with code or using the UI
+	const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${example_input}`, {
+		headers: { 'Content-Type': 'application/json' }
+	});
+	return res.json();
 }
 ```
 
@@ -149,11 +149,11 @@ This is also a way to have users fill [resources](../../../core_concepts/3_resou
 	src="/videos/rest_supabase.mp4"
 />
 
-<br/>
+<br />
 
 > In the example above, a custom resource is declared as a parameter of the main function. It will be asked by the user through the auto-generated UI and used directly in the script (here for the bearer token).
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -180,6 +180,7 @@ query($name1: String, $name2: Int, $name3: [String]) {
 The query itself is similar to any GraphQL query.
 
 To trigger each GraphQL script, an input named 'api' will be required. This is a [GraphQL resource](https://hub.windmill.dev/resource_types/112/graphql) defined by the JSON schema:
+
 ```js
 {
     "type": "object",
@@ -232,7 +233,7 @@ The UI is available in the script editor to [test your code](../../../core_conce
 	src="/videos/graphql_example.mp4"
 />
 
-<br/>
+<br />
 
 > In the example above, a [GraphQL resource](https://hub.windmill.dev/resource_types/112/graphql) is used with details on base URL and bearer token. Also was used the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx) to fill the argument `login`.
 

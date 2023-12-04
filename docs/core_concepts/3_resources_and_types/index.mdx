@@ -134,7 +134,7 @@ States are what enable Flows to watch for changes in most event watching scenari
 
 The convenience functions do this are:
 
-*TypeScript*
+_TypeScript_
 
 - `getState()` which retrieves an object of any type (internally a simple
   Resource) at a path determined by `getStatePath`, which is unique to the user
@@ -144,9 +144,9 @@ The convenience functions do this are:
 
 > Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Deno/Bun.
 
-<br/>
+<br />
 
-*Python*
+_Python_
 
 - `get_state()` which retrieves an object of any type (internally a simple
   Resource) at a path determined by `get_state_path`, which is unique to the user
@@ -156,14 +156,14 @@ The convenience functions do this are:
 
 > Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Python.
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Persistent Storage"
-    	description="Ensure that your data is safely stored and easily accessible whenever required."
-    	href="/docs/core_concepts/persistent_storage"
-    />
+	<DocCard
+		title="Persistent Storage"
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
+	/>
 </div>
 
 ## Using Resources
@@ -208,4 +208,4 @@ curl -s -H "Authorization: Bearer $WM_TOKEN" \
     | jq -r .value
 ```
 
-![Fectch resource](./fetch_resource.png.webp)
+![Fetch resource](./fetch_resource.png.webp)

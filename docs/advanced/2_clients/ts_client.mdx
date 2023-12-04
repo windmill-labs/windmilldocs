@@ -15,14 +15,14 @@ Once Deno/Bun is installed, you can import the `windmill` module directly from t
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/mod.ts'
+import * as wmill from 'https://deno.land/x/windmill/mod.ts';
 ```
 
 </TabItem>
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
-import * as wmill from "windmill-client@1.147.3"
+import * as wmill from 'windmill-client@1.147.3';
 ```
 
 </TabItem>
@@ -36,10 +36,10 @@ The TypeScript client provides several functions that you can use to interact wi
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
-import * as wmill from 'https://deno.land/x/windmill/mod.ts'
+import * as wmill from 'https://deno.land/x/windmill/mod.ts';
 
 export async function main() {
-  let x = await wmill.getResource('u/user/name')
+	let x = await wmill.getResource('u/user/name');
 }
 ```
 
@@ -47,15 +47,14 @@ export async function main() {
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
-import * as wmill from "windmill-client@1.147.3"
+import * as wmill from 'windmill-client@1.147.3';
 
 export async function main() {
-  let x = await wmill.getResource('u/user/name')
+	let x = await wmill.getResource('u/user/name');
 }
 ```
 
 </TabItem>
 </Tabs>
-
 
 In the example above, the `getResource` function is used to retrieve a resource with the path `'u/user/name'` from the Windmill platform. The returned resource can be further processed or used as needed in your application.

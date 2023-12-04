@@ -1,15 +1,15 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Authentification
+# Authentication
 
 Windmill provides flexible authentication options to ensure secure access to the platform. Users can authenticate through Single Sign-On (SSO) with a restricted domain or with a simple e-mail if added manually by superadmins.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Roles and Permissions"
-    	description="Find out about the roles within a Windmill instance and their respective permissions."
-    	href="/docs/core_concepts/roles_and_permissions"
-    />
+		title="Roles and Permissions"
+		description="Find out about the roles within a Windmill instance and their respective permissions."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
 </div>
 
 ## Restricted Domain Authentication
@@ -23,6 +23,7 @@ To enable restricted domain authentication, an administrator can configure the a
 As a superadmin of the instance, you have the ability to manually add users to the Windmill instance. This is useful for inviting users who do not have SSO credentials or for providing access to individuals outside the restricted domain.
 
 To manually add users:
+
 1. Log in to the Windmill instance as a superadmin.
 2. Click on your username and pick "Superadmin settings".
 3. Fill:
@@ -32,23 +33,23 @@ To manually add users:
    - Company (Optional): The company or organization the user belongs to.
 4. "Add user to instance".
 
-![Manually Add Users](./add_global_users.png "Manually Add Users")
+![Manually Add Users](./add_global_users.png 'Manually Add Users')
 
 If [SMTP is configured](../../advanced/1_self_host/index.mdx#set-up-smtp-from-the-ui), an email will be sent to the user with their account details and instructions for accessing Windmill.
 
 By default, users are not invited to any workspace, unless auto-invite has been set-up.
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/Wyq6d0bkuGo?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Wyq6d0bkuGo?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -67,36 +68,37 @@ Windmill can be configured to remove the ability for non-[superadmins](../16_rol
 ### Manually
 
 From the Workspace settings, in the `Users & Invites` tab, any admin can manually add users, filling:
+
 - `email`: the email address linked to the Windmill account.
 - `user`: the username (specific to workspace).
 
 Users can be given roles Operator, Author or Admin. Any user can also be manually removed.
 
-![Manually Add User to Workspace](./add_user_to_workspace.png "Manually add user to workspace")
+![Manually Add User to Workspace](./add_user_to_workspace.png 'Manually add user to workspace')
 
 The user will be added to the workspace even if no Windmill account is created yet. Once access is created to a Windmill account, the workspace will be available from the "Select a workspace" menu.
 
-![Select a workspace](./select_workspace.png "Select a workspace")
+![Select a workspace](./select_workspace.png 'Select a workspace')
 
 You can also choose to invite users instead of adding them directly. You only need to fill in the users' email and they will have to pick the username.
 
-![Invite a user manually](./invite_manually.png "Invite a user manually")
+![Invite a user manually](./invite_manually.png 'Invite a user manually')
 
 > Add the user's email to the list of invites, with the appropriate [level of permission](../16_roles_and_permissions/index.mdx).
 
-<br/>
+<br />
 
-![Select an invited workspace](./get_invite.png "Select an invited workspace")
+![Select an invited workspace](./get_invite.png 'Select an invited workspace')
 
 > The invite will be available in the "Invites to join a Workspace" section.
 
-<br/>
+<br />
 
-![Set Username](./set_username.png "Set a Username")
+![Set Username](./set_username.png 'Set a Username')
 
 > From where the users can set their username.
 
-<br/>
+<br />
 
 If [SMTP is configured](../../advanced/1_self_host/index.mdx#set-up-smtp-from-the-ui), the invite will be sent even if no Windmill account is created yet. Once access is created to a Windmill account, an invite will be available from the "Select a workspace" menu.
 
@@ -106,18 +108,18 @@ You can send auto-invites to the workspace to users from your domain.
 
 From the Workspace settings, in the `Users & Invites` tab, go to "Set auto-invite to [domain]".
 
-![Auto Invites](./auto_invite.png "Auto invites")
+![Auto Invites](./auto_invite.png 'Auto invites')
 
 This will add users to the list of Pending Invites, from where you can still manually cancel any invite.
 
 At last, you can enable "Auto-invited users to join as operators".
 
-![Pending invites](./pending_invites.png "Pending invites")
+![Pending invites](./pending_invites.png 'Pending invites')
 
 Once access is created to a Windmill account, an invite will be available in the "Invites to join a Workspace" section.
 
-![Select an invited workspace](./get_invite.png "Select an invited workspace")
+![Select an invited workspace](./get_invite.png 'Select an invited workspace')
 
 From where each user can set their username.
 
-![Set Username](./set_username.png "Set a Username")
+![Set Username](./set_username.png 'Set a Username')

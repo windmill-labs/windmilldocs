@@ -17,6 +17,7 @@ Windmill provides a range of pricing plans for both Cloud and Self-hosted deploy
 ### Community Edition - Cloud
 
 No commitment or credit card required.
+
 - Google / Microsoft / GitHub / GitLab SSO.
 - Unlimited [variables](../../core_concepts/2_variables_and_secrets/index.mdx), [resources](../../core_concepts/3_resources_and_types/index.mdx), [scripts](../../script_editor/index.mdx), [apps](../../apps/0_app_editor/index.mdx), [flows](../../flows/1_flow_editor.mdx) (except abuse).
 - 1,000 free executions per month.
@@ -30,6 +31,7 @@ No commitment or credit card required.
 ### Team Plan - Cloud
 
 Designed for small teams automating processes.
+
 - Includes all Community edition features.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 7-day retention period.
 - [Deployment from GitHub](../../advanced/9_deploy_gh_gl/index.md).
@@ -72,7 +74,7 @@ See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 ## Self-hosted
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		title="Self Host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
@@ -107,6 +109,7 @@ See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 ### Enterprise Edition - Self-Hosted
 
 Designed for companies requiring dedicated support, guidance and advanced infrastructure.
+
 - Commercial license.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
 - Prometheus Metrics.
@@ -134,11 +137,11 @@ Windmill offers white labeling capabilities, allowing you to customize the Windm
 For more information about white labeling and customization options, see:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="White Labeling Windmill"
-    	description="Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand."
-    	href="/docs/misc/white_labelling"
-    />
+	<DocCard
+		title="White Labeling Windmill"
+		description="Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand."
+		href="/docs/misc/white_labelling"
+	/>
 </div>
 
 ## How to Upgrade to Each Plan
@@ -165,16 +168,16 @@ Team plans work at the workspace-level.
 #### Self-host
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/YAoLXwayjT8?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/YAoLXwayjT8?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
 - You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
@@ -185,10 +188,10 @@ Team plans work at the workspace-level.
 - To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
 - Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
-- (*By end of 2023*: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
+- (_By end of 2023_: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		title="Self Host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
@@ -199,33 +202,38 @@ Team plans work at the workspace-level.
 
 To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
 
-![Use license key](./add_license_key.png "Use license key")
+![Use license key](./add_license_key.png 'Use license key')
 
 ## Frequently Asked Questions (FAQ)
 
 - **What is an operator?**
-	
-	An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user that can only execute script, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of normal users (or 1/2 seats).
+
+  An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user that can only execute script, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of normal users (or 1/2 seats).
+
 - **What is an execution?**
 
-	The single credit-unit is called a "execution". An execution corresponds to a single [job](../../core_concepts/20_jobs/index.mdx) whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for.
-	
-	The number of executions of a flow corresponds to the sum of the executions of each step as seconds, considered as one script execution of that same time (time in sleep or doing state transition are not accounted). For apps, a backend script execution is considered as a script execution. As apps frontend scripts execute on browsers, they are not taken into account.
-	
-	Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
+  The single credit-unit is called a "execution". An execution corresponds to a single [job](../../core_concepts/20_jobs/index.mdx) whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for.
+
+  The number of executions of a flow corresponds to the sum of the executions of each step as seconds, considered as one script execution of that same time (time in sleep or doing state transition are not accounted). For apps, a backend script execution is considered as a script execution. As apps frontend scripts execute on browsers, they are not taken into account.
+
+  Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
+
 - **How is the use of the number of vCPUs and seats reported to Windmill?**
 
-	Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
-	
-	We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and you will never be overcharged
+  Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+
+  We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and you will never be overcharged
+
 - **What is your Technical Support SLA?**
 
-	We provide [support](../12_support_and_sla/index.mdx) with different response times based on issue priorities. Our support team is available 24/7, and the SLA is consistent for both Cloud and Self-hosted deployments.
+  We provide [support](../12_support_and_sla/index.mdx) with different response times based on issue priorities. Our support team is available 24/7, and the SLA is consistent for both Cloud and Self-hosted deployments.
+
 - **What is your Security level on APIs?**
-	
-	Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
+
+  Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
+
 - **Could the application keep running if Windmill as a company is shut down?**
-	
-	Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection. If Windmill shuts down, license keys will be extended indefinitely.
+
+  Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection. If Windmill shuts down, license keys will be extended indefinitely.
 
 For any further inquiries or assistance regarding the Enterprise Edition upgrade process, please [contact us](../6_getting_help/index.mdx).
