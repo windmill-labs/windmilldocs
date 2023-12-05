@@ -3,6 +3,7 @@ import DocCard from '@site/src/components/DocCard';
 # Runnable Editor
 
 The strength of Windmill's app editor is the ability to connect everything together:
+
 - components [can be linked to each other](./2_connecting_components/index.mdx)
 - components can be directly [linked to scripts](#inline-scripts) and trigger them
 - [background runnables](#background-runnables) can be that are run in the background on app refresh on when an input changes
@@ -114,7 +115,7 @@ The outputs of your script [can be used](./2_connecting_components/index.mdx) by
 	src="/videos/connecting_components.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -186,6 +187,7 @@ Two types of runnables can be configured to recompute on any input change:
 Inputs of runnables that are either connected to an output or [evaluated](#evals) can trigger a recompute. These are displayed in the `Change on value` section.
 
 Runnables can "Recompute" and "Recompute others":
+
 - Recompute: Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
 - Recompute others: Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
 
@@ -205,7 +207,7 @@ Caching an app inline script means caching the results of that script for a cert
 	src="/videos/caching_app.mp4"
 />
 
-<br/>
+<br />
 
 You can enable caching for an app inline script directly its editor settings. Here's how you can do it:
 
@@ -391,6 +393,30 @@ The `setValue` function is meant to set or force the value of a component. This 
 
 Note that it's a bad idea to mix dynamic default value and setValue together.
 
+#### validate
+
+Validate a specific field of a form
+
+```js
+validate(id: string, key: string)
+```
+
+#### validateAll
+
+Validate all fields of a form
+
+```js
+validateAll(id: string, key: string)
+```
+
+#### invalidate
+
+Invalidate a specific field of a form
+
+```js
+invalidate(id: string, key: string, error: string)
+```
+
 ##### Parameters
 
 `id` string
@@ -401,9 +427,9 @@ A viewer of the app will execute the runnables of the app on behalf of the publi
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Roles and Permissions"
-    	description="Control access and manage permissions within your instance and workspaces."
-    	href="/docs/core_concepts/roles_and_permissions"
+		title="Roles and Permissions"
+		description="Control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
 		color="orange"
-    />
+	/>
 </div>

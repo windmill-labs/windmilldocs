@@ -12,13 +12,13 @@ In this quick start guide, we will write our first script in SQL. We will see ho
 ![Windmill & PostgreSQL, MySQL, BigQuery and Snowflake](./sqls.png)
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="/videos/test_postgres.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+	src="/videos/test_postgres.mp4"
 />
 
-<br/>
+<br />
 
 Windmill supports [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [BigQuery](https://cloud.google.com/bigquery) and [Snowflake](https://www.snowflake.com/). In any case, it requires creating a dedicated resource.
 
@@ -38,7 +38,6 @@ that defines the schema that the resource of this type needs to implement. Schem
 		href="/docs/core_concepts/resources_and_types"
 	/>
 </div>
-
 
 :::tip
 
@@ -72,12 +71,12 @@ every user. It is available under the path `f/examples/demo_windmillshowcases`.
 Windmill provides a wizard to easily add a [Supabase](../../../integrations/supabase.md) database through PostgreSQL.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/supabase_wizard.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/supabase_wizard.mp4"
 />
 
-<br/>
+<br />
 
 When creating a new PostgreSQL resource, just "Add a Supabase DB". This will lead you to a Supabase page where
 you need to pick your organization. Then on Windmill pick a database, fill with database password and that's it.
@@ -91,7 +90,7 @@ With [Sequin](https://sequin.io), developers can build on top of third-party ser
 		title="Use SQL to build on external APIs using Sequin"
 		description=" With Sequin, developers can build on top of third-party services like Salesforce or HubSpot using SQL."
 		href="/docs/misc/guides/sequin"
-    />
+	/>
 </div>
 
 ### MySQL
@@ -115,7 +114,6 @@ Fill out the form with the information of your MySQL instance and "Test connecti
 | database | string | Database name   |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 | password | string | User's password |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 
-
 ### BigQuery
 
 To be able to connect to a [BigQuery](https://cloud.google.com/bigquery) instance, we'll need to define a Resource with the `BigQuery` Resource Type first.
@@ -125,18 +123,18 @@ Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resource
 
 ![Select BigQuery Resource Type](./select_bigquery.png)
 
-| Property                     | Type   | Description                                     | Required |
-| ---------------------------- | ------ | ----------------------------------------------- | -------- |
-| auth_provider_x509_cert_url  | string | Auth provider X.509 certificate URL.            | false    |
-| client_x509_cert_url         | string | Client X.509 certificate URL.                   | false    |
-| private_key_id               | string | ID of the private key used for authentication.  | false    |
-| client_email                 | string | Email associated with the service account.      | false    |
-| private_key                  | string | Private key used for authentication.            | false    |
-| project_id                   | string | Google Cloud project ID.                       | true     |
-| token_uri                    | string | OAuth 2.0 token URI.                            | false    |
-| client_id                    | string | Client ID used for OAuth 2.0 authentication.   | false    |
-| auth_uri                     | string | OAuth 2.0 authorization URI.                   | false    |
-| type                         | string | Type of the authentication method.             | false    |
+| Property                    | Type   | Description                                    | Required |
+| --------------------------- | ------ | ---------------------------------------------- | -------- |
+| auth_provider_x509_cert_url | string | Auth provider X.509 certificate URL.           | false    |
+| client_x509_cert_url        | string | Client X.509 certificate URL.                  | false    |
+| private_key_id              | string | ID of the private key used for authentication. | false    |
+| client_email                | string | Email associated with the service account.     | false    |
+| private_key                 | string | Private key used for authentication.           | false    |
+| project_id                  | string | Google Cloud project ID.                       | true     |
+| token_uri                   | string | OAuth 2.0 token URI.                           | false    |
+| client_id                   | string | Client ID used for OAuth 2.0 authentication.   | false    |
+| auth_uri                    | string | OAuth 2.0 authorization URI.                   | false    |
+| type                        | string | Type of the authentication method.             | false    |
 
 Here's a step-by-step guide on where to find each detail.
 
@@ -165,12 +163,13 @@ Here's a step-by-step guide on where to find each detail.
    Once you've generated the key, the downloaded JSON file will contain all the required properties.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/add_bigquery.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_bigquery.mp4"
 />
 
-<br/>You can directly "Test connection" if needed.
+<br />
+You can directly "Test connection" if needed.
 
 ### Snowflake
 
@@ -181,23 +180,23 @@ Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resource
 
 ![Select Snowflake Resource Type](./select_snowflake.png)
 
-| Property            | Type   | Description                                                                                              | Required |
-| ------------------- | ------ | -------------------------------------------------------------------------------------------------------- | -------- |
-| account_identifier  | string | Snowflake account identifier in the format `<orgname>-<account_name>`.                                 | true     |
-| private_key         | string | Private key used for authentication.                                                                    | true     |
-| public_key          | string | Public key used for authentication.                                                                     | true     |
-| warehouse           | string | Snowflake warehouse to be used for queries.                                                             | false    |
-| username            | string | Username for Snowflake login.                                                                           | true     |
-| database            | string | Name of the Snowflake database to connect to.                                                          | true     |
-| schema              | string | Schema within the Snowflake database.                                                                   | false    |
-| role                | string | Role to be assumed upon connection.                                                                     | false    |
+| Property           | Type   | Description                                                            | Required |
+| ------------------ | ------ | ---------------------------------------------------------------------- | -------- |
+| account_identifier | string | Snowflake account identifier in the format `<orgname>-<account_name>`. | true     |
+| private_key        | string | Private key used for authentication.                                   | true     |
+| public_key         | string | Public key used for authentication.                                    | true     |
+| warehouse          | string | Snowflake warehouse to be used for queries.                            | false    |
+| username           | string | Username for Snowflake login.                                          | true     |
+| database           | string | Name of the Snowflake database to connect to.                          | true     |
+| schema             | string | Schema within the Snowflake database.                                  | false    |
+| role               | string | Role to be assumed upon connection.                                    | false    |
 
 Here's a step-by-step guide on where to find each detail.
 
 1. **Account Identifier**:
 
    The account identifier typically follows the format: `<orgname>-<account_name>`. You can find it in the Snowflake web interface:
-   
+
    - Log in to your Snowflake account.
    - The account identifier can often be found in the URL or at the top of the Snowflake interface after you log in (in the format `https://app.snowflake.com/orgname/account_name/`).
 
@@ -206,7 +205,7 @@ Here's a step-by-step guide on where to find each detail.
 2. **Username**:
 
    The username is the Snowflake user you will use to connect to the database. You will need to create a user if you don't have one:
-   
+
    - In the Snowflake web interface, go to the "ACCOUNT" tab.
    - Select "Users" from the left navigation pane.
    - Click the "+ CREATE USER" button to create a new user with a username and password.
@@ -233,7 +232,7 @@ Here's a step-by-step guide on where to find each detail.
    - `role`: The role you want to use for authentication.
 
    You can find these details in the Snowflake web interface:
-   
+
    - Log in to your Snowflake account.
    - You can find the names of warehouses, schemas, databases, and roles in the interface or by running SQL queries.
 
@@ -242,7 +241,7 @@ You can directly "Test connection" if needed.
 ## Create Script
 
 Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
-click on the "+Script" button. Name the Script, give it a summary, and select your prefered language, "PostgreSQL", "MySQL", "BigQuery", "Snowflake".
+click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, "PostgreSQL", "MySQL", "BigQuery", "Snowflake".
 
 ![Script creation first step](../../../assets/integrations/sql_new_script.png)
 
@@ -263,9 +262,9 @@ INSERT INTO demo VALUES ($1::TEXT, $2::INT) RETURNING *
 You can then write your prepared statement.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/test_postgres.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/test_postgres.mp4"
 />
 
 ### MySQL
@@ -300,9 +299,9 @@ INSERT INTO `demodb.demo` VALUES (@name1, @name2, @name3)
 You can then write your prepared statement.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/test_bigquery.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/test_bigquery.mp4"
 />
 
 ### Snowflake
@@ -351,12 +350,12 @@ export async function main(db: Postgresql, query: Sql = 'SELECT * FROM demo;') {
 This will allow you to execute all commands from one script. But that's also the vulnerability of it as it opens the door to harmful commands. To make it more secure, do not take the query directly as input but its parameters and then sanitize it properly so SQL injections are mitigated unless you are in a trusted environment.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/raw_query.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/raw_query.mp4"
 />
 
-<br/>
+<br />
 
 :::tip
 
@@ -373,7 +372,7 @@ Feel free to customize your script's metadata ([path](../../../core_concepts/16_
 runtime ([concurrency limits](../../../script_editor/concurrency_limit.mdx), [worker group](../../../script_editor/worker_group_tag.mdx),
 [cache](../../../core_concepts/24_caching/index.md), [dedicated workers](../../../core_concepts/25_dedicated_workers/index.mdx)) and [generated UI](../../../script_editor/customize_ui.mdx).
 
-![Customize SQL](./customize_sql.png "Customize SQL")
+![Customize SQL](./customize_sql.png 'Customize SQL')
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -426,7 +425,7 @@ For each script, a UI is autogenerated from the jsonchema inferred from the scri
 	/>
 </div>
 
-In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.md) are generated for each deployment.
+In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.mdx) are generated for each deployment.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

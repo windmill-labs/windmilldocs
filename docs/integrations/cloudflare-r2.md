@@ -2,6 +2,16 @@
 
 [Cloudflare](https://www.cloudflare.com/products/r2/)'s API follows the same schema as any S3 compatible API.
 
+:::info Windmill for data pipelines
+
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+<br/>
+
+See [Windmill for data pipelines](../core_concepts/27_data_pipelines/index.mdx) for more details.
+
+:::
+
 To integrate Cloudflare to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![S3 resource type](../assets/integrations/add-s3.png.webp)

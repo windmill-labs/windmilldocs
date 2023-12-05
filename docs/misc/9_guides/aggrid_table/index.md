@@ -9,13 +9,13 @@ little to no knowledge about AgGrid.
 ## What is AgGrid Table.
 
 The AgGrid Table component (called AgGrid from here) is a small wrapper around a
-fantastic libary called [AgGrid](https://www.ag-grid.com/). It provides you with
+fantastic library called [AgGrid](https://www.ag-grid.com/). It provides you with
 a lot of advanced features. It comes in a free and a Enterprise (paid) version.
 All features below are part of the free version of AgGrid.
 
-:::tip Enterprise 
+:::tip Enterprise
 If you need the enterprise version of AgGrid, please
-[contact us](../../6_getting_help/index.mdx). 
+[contact us](../../6_getting_help/index.mdx).
 :::
 
 ## AgGrid vs Table component
@@ -24,10 +24,10 @@ In Windmill there are 2 table components: one simply called
 [Table](../table/index.md)
 and AgGrid.
 
-The Table component is for most usecases. It takes an array of objects as
+The Table component is for most usecases. It takes an array of objects as d
 input, and uses the key of the object as the header of the table. It also
 provides you with one or more action buttons to trigger an action for the row or
-create a dropdown button based on the row data. 
+create a dropdown button based on the row data.
 
 But if you want the user to be able to sort the table, edit a value inplace, adjust width and more you want to reach for AgGrid.
 
@@ -35,7 +35,7 @@ But if you want the user to be able to sort the table, edit a value inplace, adj
 If you want to do basic sorting, or edit the column header name from the script
 you can also use a Transformer script. See the
 [documentation](../../../apps/3_app-runnable-panel.mdx#transformer)
-for more information. 
+for more information.
 :::
 
 ## Column Definition
@@ -46,8 +46,8 @@ done in the Configuration on the right side.
 
 ![Column definitions](./../../../../static/img/guide/aggrid-column-definition-menu.png.webp)
 
-You can staticly set the properties of each column and many properties are
-available. Let's walk trough the one you may be most likley to use:
+You can statically set the properties of each column and many properties are
+available. Let's walk trough the one you may be most likely to use:
 
 - field (string) - which field to use from the rowdata |
   [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-columns-field)
@@ -67,7 +67,7 @@ There is _a lot_ more properties, this is just the first few. See
 [Column Properties](https://www.ag-grid.com/javascript-data-grid/column-properties/)
 for the complete list of properties.
 
-### Dynamicly configure the column definition
+### Dynamically configure the column definition
 
 As with most things, Windmill lets you **dropdown to code** when you want to do
 more advanced stuff, where the gui is more in the way then helping.
@@ -80,30 +80,30 @@ connecting it with the col def.
 Here you can provide your own column definition that is more then a JSON but
 also includes classes and functions.
 
-Below is a series of snippest that will help you get started.
+Below is a series of snippets that will help you get started.
 
 #### Provide default values for all columns
 
-Create a background runnable in deno with the following content:
+Create a background runnable in Deno with the following content:
 
 ```js
 export async function main() {
-  const columnDef = [
-    {
-      field: "name",
-      headerName: "Full name",
-    },
-    {
-      field: "age",
-      sortable: false,
-    },
-  ];
+	const columnDef = [
+		{
+			field: 'name',
+			headerName: 'Full name'
+		},
+		{
+			field: 'age',
+			sortable: false
+		}
+	];
 
-  const defaultColumnProperties = {
-    sortable: true,
-  };
+	const defaultColumnProperties = {
+		sortable: true
+	};
 
-  return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
+	return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
 }
 ```
 
@@ -113,22 +113,22 @@ Create a background runnable in deno with the following content:
 
 ```ts
 export async function main() {
-  const columnDef = [
-    {
-      field: "name",
-      headerName: "Full name",
-    },
-    {
-      field: "age",
-      sortable: false,
-    },
-  ];
+	const columnDef = [
+		{
+			field: 'name',
+			headerName: 'Full name'
+		},
+		{
+			field: 'age',
+			sortable: false
+		}
+	];
 
-  const defaultColumnProperties = {
-    sortable: true,
-  };
+	const defaultColumnProperties = {
+		sortable: true
+	};
 
-  return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
+	return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
 }
 ```
 
@@ -142,19 +142,19 @@ Create a frontend script in JS with the following content:
 
 ```js
 return [
-  {
-    field: "name",
-    headerName: "Full name",
-  },
-  {
-    field: "age",
-    cellEditorParams: function (params) {
-      return { values: [1, params.data.age, 100] };
-    },
-    cellEditor: "agSelectCellEditor",
-    editable: true,
-    useFormatter: true,
-  },
+	{
+		field: 'name',
+		headerName: 'Full name'
+	},
+	{
+		field: 'age',
+		cellEditorParams: function (params) {
+			return { values: [1, params.data.age, 100] };
+		},
+		cellEditor: 'agSelectCellEditor',
+		editable: true,
+		useFormatter: true
+	}
 ];
 ```
 
@@ -171,37 +171,37 @@ Create a frontend script in JS with the following content:
 
 ```js
 class BtnCellRenderer {
-  constructor() {}
-  init(params) {
-    this.params = params;
-    this.eGui = document.createElement("button");
-    this.eGui.innerHTML = "Push me!";
-    this.btnClickedHandler = this.btnClickedHandler.bind(this);
-    this.eGui.addEventListener("click", this.btnClickedHandler);
-  }
-  getGui() {
-    return this.eGui;
-  }
-  destroy() {
-    this.eGui.removeEventListener("click", this.btnClickedHandler);
-  }
+	constructor() {}
+	init(params) {
+		this.params = params;
+		this.eGui = document.createElement('button');
+		this.eGui.innerHTML = 'Push me!';
+		this.btnClickedHandler = this.btnClickedHandler.bind(this);
+		this.eGui.addEventListener('click', this.btnClickedHandler);
+	}
+	getGui() {
+		return this.eGui;
+	}
+	destroy() {
+		this.eGui.removeEventListener('click', this.btnClickedHandler);
+	}
 }
 BtnCellRenderer.prototype.btnClickedHandler = function () {
-  if (!state.logs) {
-    state.logs = [];
-  }
-  state.logs.push({
-    rowDataAfterChange: JSON.stringify(this.params.data),
-  });
+	if (!state.logs) {
+		state.logs = [];
+	}
+	state.logs.push({
+		rowDataAfterChange: JSON.stringify(this.params.data)
+	});
 };
 
 return [
-  { field: "name" },
-  { field: "age" },
-  {
-    headerName: "Send row data to state",
-    cellRenderer: BtnCellRenderer,
-  },
+	{ field: 'name' },
+	{ field: 'age' },
+	{
+		headerName: 'Send row data to state',
+		cellRenderer: BtnCellRenderer
+	}
 ];
 ```
 

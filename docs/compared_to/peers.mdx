@@ -1,10 +1,14 @@
+---
+title: Our Competitors
+---
+
 import DocCard from '@site/src/components/DocCard';
 
-# Windmill Compared to its Peers
+# Windmill Compared to Competitors
 
 We are aware other frameworks exist out there. Some of them might suit your specific needs. We believe Windmill is **the only solution to provide this comprehensive set of feature and to be fully open-source** at the same time.
 
-Out of transparency, here is our (subjective) impression on other players you might come across.
+Out of transparency, here is our subjective impression on other players you might come across.
 
 ## No-code solutions
 
@@ -26,28 +30,28 @@ examples: _Temporal_, _Airflow_, _Prefect_ & _Dagster_
 
 Airflow and Temporal are the golden standards. They are very good, battle tested and scale well. They brought all the good abstractions for workflows and from a bird's eye perspective, we are all running DAGs of tasks, sorted in topological order, parallelized where possible and run by a fleet of workers.
 
-<br/>
+<br />
 
 Those frameworks are a great source of inspiration for us but we bring a more principled and more opinionated approach so that one can focus on writing scripts rather than becoming a workflow engine expert. The goal of Windmill is to bring the benefits of those workflow engines in a more accessible package that is fit not just for data engineers but for hybrid teams made of data scientist, ops, and software engineers with standard scripts in Python/Typescript/Go/Bash and low-code builder for the graph itself the common denominator, without any sacrifice on performance (and actually we run workflows faster than those frameworks, more on that in [1]), features, scalability/reliability and by improving the debuggability and developer experience of those.
 
-<br/>
+<br />
 
 From a tech stack perspective, we rely on the ACID properties of PostgreSQL to achieve persistence and transactionality of the workflow's state. We made the simplifying assumption to be an at-least-once workflow engine, where in the exceptionally rare events of an infrastructure crash (machine shutdown, network split, etc), we will recover automatically but it is up to the application developer to implement idempotency in parts where it is critical for everything else, we support the same feature set ([retries](../flows/14_retries.md), [error handler](../flows/7_flow_error_handler.md), [suspend/sleep](../flows/15_sleep.md), [approval steps](../flows/11_flow_approval.mdx), [cancellation](../flows/2_early_stop.md), [inner workflows](../getting_started/9_trigger_flows/index.mdx#trigger-a-flow-from-another-flow)).
 
-<br/>
+<br />
 
 To do a fair comparison, looking at the quickstart is a great way to see the different orientation of the product.
 The [Airflow quickstart](https://airflow.apache.org/docs/apache-airflow/stable/tutorial/fundamentals.html#example-pipeline-definition) is a great starting point. One has to learn what is an Airflow pipeline before being able to create or edit them. They also do not provide a great way to debug locally and iterate on those pipelines. You have to write them, deploy them, and then test them. By comparison, in Windmill you can [write scripts locally](../advanced/4_local_development/index.mdx), or test them either step by step or the full flow in the [web UI](../core_concepts/6_auto_generated_uis/index.mdx).
 
-<br/>
+<br />
 
 Temporal is an sdk for workflows, meaning you have to code around their sdk and learn their abstractions. It is made for teams of software engineers that want to control very finely the execution of the workflow. Their [documentation](https://docs.temporal.io/application-development/foundations?lang=python#activity-execution) has good examples of that. Temporal is top notch, but it is complex and their primary language support is Go.
 
-<br/>
+<br />
 
 By comparison, in Windmill one would just write the canonical python or typescript scripts, exposing just a main function and build a dag in the low-code builder.
 
-<br/>
+<br />
 
 > [1]: Windmill is not just a workflow engine, it is also a function as a service (FaaS) infrastructure where it can run arbitrary scripts in typescript/python/bash/go. Contrary to lambda or gcp cloud functions, we do not need the functions to be pre-packaged and deployed in advance AOT. For typescript, we rely on the deno runtime that leverage v8 isolates and the immutable caching capabilities of deno. For python, we have implemented our own dependency resolver that will override the python virtual path and create a unique virtual environment for that specific script that will respect the lockfile generated at time of saving the script/flow for reproducibility. Given that those are interpreted languages, we pay no performance penalty to interpret that code on demand. So the only limiting factor for task execution is that in the events that dependencies are not cached by the worker, they need to be installed at time of execution. With a limited number of workers, the likelihood of a cache miss is low as soon as one script/workflow is executed more than once. With a large fleet of workers, cache miss increase and hence we have implemented a global caching mechanism that relies on syncing the cache through s3. It is only available in our [enterprise edition](../misc/7_plans_details/index.mdx). With it in place, we run tasks and workflows with 0 overhead versus running the same scripts on bare-metal. You can even leverage hardware acceleration without any additional configuration.
 
@@ -71,7 +75,7 @@ Those are great tools and since they focus solely on the UI builder part, they h
 
 If you were to choose Windmill for the workflow engine, we hope to convince you that it might be worth the switch later for the UI builder part given our high level of integrations between those layers and us having caught up with them on the UI builder part.
 
-examples: _Retool_ and their open source alternatives _Tooljet_, _Appsmith_ & _Openblocks_
+examples: _Retool_ and its open source alternatives _Tooljet_, _Appsmith_ & _Openblocks_
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -113,7 +117,7 @@ and the aim to solve main issues (scalability, technicity for advanced use cases
 
 We believe Windmill is different because:
 
-- it allows building internal tools through code much faster, without sacrificing on one side intuitivity and **visibility**, and on the other side,
+- it allows building internal tools through code much faster, without sacrificing on one side intuitively and **visibility**, and on the other side,
   **control**, reliability, performance, flexibility and scalability
 - it **empowers semi-technical users** to access and edit that code without being overwhelmed by the usual barriers to entry
   (git, IDE, local environments, secrets managements, etc.)

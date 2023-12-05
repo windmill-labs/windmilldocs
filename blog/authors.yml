@@ -1,6 +1,6 @@
 rubenfiszel:
   name: Ruben Fiszel
-  title: Founder at Windmill Labs
+  title: Founder at Windmill
   url: https://github.com/rubenfiszel
   image_url: https://github.com/rubenfiszel.png
 adamkov:
@@ -66,6 +66,11 @@ sindresvendby:
   title: Software Engineer at Kahoot!
   url: https://github.com/SindreSvendby
   image_url: https://avatars.githubusercontent.com/u/1047421?v=4
+guillaumebouv:
+  name: Guillaume Bouvignies
+  title: Lead Backend Engineer
+  url: https://www.linkedin.com/in/guillaumebouvignies/
+  image_url: '/team/guillaume-bouvignies.jpg'
 romaricphilogene:
   name: Romaric Philogène
   title: CEO & Co-founder at Qovery

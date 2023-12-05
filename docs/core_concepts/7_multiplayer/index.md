@@ -12,7 +12,7 @@ The Multiplayer feature allows you to collaborate with team members on scripts s
 
 <br/>
 
-> Example of two team members simulatneously working on a script.
+> Example of two team members simultaneously working on a script.
 
 <br/>
 

@@ -11,7 +11,7 @@ All code is not made equal and can be split in 2 categories:
 - **Boilerplate**: all the rest is boilerplate. Be it UI and frontends that
   allow you to call the code above, API calls to external services, error
   handling, retries, logic to make your code scalable, dependency management,
-  CI/CD, managing secrets, schedule, permissions, authentification, etc. That
+  CI/CD, managing secrets, schedule, permissions, authentication, etc. That
   code is boilerplate because it _feels_ like you shouldn't have to reinvent the
   wheel, over and over again.
 
@@ -71,7 +71,7 @@ Windmill embeds:
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),
   [OAuth handling](../2_setup_oauth/index.mdx) for fetching and
   refreshing credentials
-- **[webhooks](../../core_concepts/4_webhooks/index.md)** for every scripts and flows to
+- **[webhooks](../../core_concepts/4_webhooks/index.mdx)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
   current infrastructure
 - a **[scheduler](../../core_concepts/1_scheduling/index.md)** to trigger Scripts and
@@ -79,7 +79,7 @@ Windmill embeds:
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
 - a **[CLI](../../advanced/3_cli/index.mdx)** and GitHub Actions for **GitHub** and local
-  based developement and code management.
+  based development and code management.
 
 On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.
@@ -127,7 +127,7 @@ with:
   scalability** and have **no open APIs**.
 
 You will find more details on our view over our space and competitors in the
-[Windmill compared to its peers](../../compared_to/peers.mdx) page.
+[Windmill compared to competitors](../../compared_to/peers.mdx) page.
 
 :::info About
 **[Windmill](https://www.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](../../advanced/1_self_host/index.mdx)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.

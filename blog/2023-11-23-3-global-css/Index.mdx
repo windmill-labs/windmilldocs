@@ -1,0 +1,98 @@
+---
+authors: [fatonramadani]
+tags:
+  [
+    'CSS',
+	'Launch week',
+  ]
+image: ./global_css.png
+slug: /launch-week-1/global-css
+description: "Introducing Custom CSS theming to share across your apps."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 4 - Global Custom CSS
+
+<br/>
+
+![Global Custom CSS Thumbnail](./global_css.png "Global Custom CSS Thumbnail")
+
+<br/>
+
+Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
+
+Custom styling is essential for aligning internal tools with your brand image. While [component-level CSS](/docs/apps/app_configuration_settings/app_styling#component-level) has always been possible in Windmill App Editor, we are excited to introduce global CSS.
+
+CSS can now be defined globally: for an entire app and across all apps as themes.
+This CSS is editable from a new CSS editor, a centralized location for defining, managing, and applying CSS rules.
+
+With this feature, you can ensure consistent styling and create reusable themes for different teams, projects, clients etc.
+Not only that, but we also took care of doing an exhaustive hierarchy of classes that correspond to the strucuture ou our components, enabling to customize any aspect of them.
+
+## How to add Global Custom CSS theme?
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/6_MjKgbdCFQ?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+To get started, follow these steps:
+
+1. Open the App Editor.
+2. Navigate to the Global Styling tab.
+3. Fork the default theme.
+
+Specific [class identifiers](/docs/apps/css_editor#class-identifiers) have been added at different levels foo each component, such as `.wm-button` or `.wm-tabs-container`, `.wm-tabs-tabRow`, `.wm-tabs-alltabs` and `.wm-tabs-selectedTab` for [tabs](/docs/apps/app_configuration_settings/tabs).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/css_editor.mp4"
+/>
+
+<br/>
+
+Choose a class and apply CSS to it. Then, from the "Theme" menu, save your configuration in a theme of your choice, ready to use off-the-shelf.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/themes.mp4"
+/>
+
+<br/>
+
+You can also transfer the configuration defined on a component to the global level, affecting all components of that type.
+
+The Global CSS Editor is a feature exclusive to [Cloud & Enterprise Self-Hosted](/pricing).
+
+## Learn more
+
+To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+For more details on styling, see:
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Styling"
+		description="Give styling to your app & components."
+		href="/docs/apps/app_configuration_settings/app_styling"
+	/>
+	<DocCard
+		title="CSS Editor"
+		description="The Global CSS Editor is designed to give styling and theming across your entire app."
+		href="/docs/apps/css_editor"
+		color="orange"
+	/>
+</div>

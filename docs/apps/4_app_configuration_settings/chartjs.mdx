@@ -20,7 +20,7 @@ The following section details ChartJs component's specific settings. For more de
     <DocCard
         color="orange"
         title="App Editor Documentation"
-        description="The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings."
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
         href="/docs/apps/app_editor"
     />
     <DocCard
@@ -31,21 +31,26 @@ The following section details ChartJs component's specific settings. For more de
     />
 </div>
 
-## ChartJs Input
+The configuration is divided into two parts: X-axis data and an array of datasets. Each dataset hold the data for the Y-axis and the configuration for the plot (type, color, etc).
 
-|    Type     | Connectable | Templatable |       Default        | Description                            |
-| :---------: | :---------: | :---------: | :------------------: | -------------------------------------- |
-| Data source |    true     |    false    | {"label":["Pie"]...} | The Json source of the displayed data. |
+## Ploty configuration
 
-## ChartJs configuration
+|    Name     |    Type     | Connectable | Templatable |       Default        | Description                            |
+| :---------: | :---------: | :---------: | :---------: | :------------------: | -------------------------------------- |
+| X-axis data | json |    true     |    false    | [1, 2, 3, 4] |  Horizontal axis values or labels that are used to plot the data points on a chart. |
 
-|  Type   | Connectable | Templatable | Default | Description                                                                          |
-| :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------------------ |
-|  Type   |    false    |    false    |   Pie   | The type of the chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
-| Options |    true     |    false    |  none   | ChartJs [options](https://www.chartjs.org/docs/latest/general/options.html) object.  |
+## Dataset
 
-## Outputs
+For each dataset, you can specify the data for the Y-axis and the configuration for the plot (type, color, etc). If you want to have an eval for every data point, you can switch to JSON mode. There can be several datasets.
 
-| Name   |  Type  | Description       |
-| ------ | :----: | ----------------- |
-| result | Object | The ChartJs data. |
+|  Name   |  Type   | Connectable | Templatable | Default | Description                                                                          |
+| :-----: | :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------------------ |
+|  Name   |  string   |    false    |    false    |   Dataset 1   | The name of your dataset. |
+| Data | json (int) |    true     |    false    |  [25, 25, 50]   | The actual data of your chart.  |
+
+## Configuration
+
+|  Name   |  Type   | Connectable | Templatable | Default | Description                                                                          |
+| :-----: | :-----: | :---------: | :---------: | :-----: | ------------------------------------------------------------------------------------ |
+|  Type   |  select   |    true    |    false    |   pie   | The type of chart (bar, bubble, doughnut, line, pie, polarArea, radar, scatter). |
+| Options | json |    true     |    false    |  {}   | [ChartJs options](https://www.chartjs.org/docs/latest/general/options.html) object.  |

@@ -5,7 +5,12 @@ import classNames from 'classnames';
 import Slider from './Slider';
 
 const plans = [
-	{ name: 'Core package', description: 'Your own hosted dedicated Windmill cluster without restrictions', price: 600 },];
+	{
+		name: 'Core package',
+		description: 'Your own hosted dedicated Windmill cluster without restrictions',
+		price: 600
+	}
+];
 
 function calculatePrice(monthlyPrice, period) {
 	if (period === 'annually') {
@@ -24,7 +29,7 @@ const priceFormatter = new Intl.NumberFormat('en-US', {
 export default function PriceCalculator({ period, tier }) {
 	const [selected, setSelected] = useState(plans[0]);
 	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
-	const [workers, setWorkers] = useState(tier.price.worker ? tier.price.worker.default : 2);
+	const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
 
 	function computeTotalPrice() {
 		let total = tier.id === 'tier-enterprise' ? calculatePrice(selected.price, period.value) : 0;
@@ -33,8 +38,8 @@ export default function PriceCalculator({ period, tier }) {
 			total += calculatePrice(tier.price.seat.monthly, period.value) * seats;
 		}
 
-		if (tier.price.worker) {
-			total += calculatePrice(tier.price.worker.monthly, period.value) * workers;
+		if (tier.price.vCPU) {
+			total += calculatePrice(tier.price.vCPU.monthly, period.value) * vCPUs;
 		}
 
 		return total;
@@ -43,17 +48,17 @@ export default function PriceCalculator({ period, tier }) {
 	return (
 		<div className="mt-16 grow flex flex-col justify-start">
 			<div className="flex justify-between items-center">
-			<h4>Price</h4>
+				<h4>Price</h4>
 
-			<div>
-				<span className="text-2xl text-gray-900 font-semibold dark:text-white">
-					{priceFormatter.format(computeTotalPrice())}
-				</span>
-				<span className="text-md text-gray-500">
-					{period.value === 'annually' ? '/yr' : '/mo'}
-					{(tier.id === 'tier-enterprise' || tier.id === 'tier-enterprise-selfhost') && <span>*</span>}
-				</span>
-			</div>
+				<div>
+					<span className="text-2xl text-gray-900 font-semibold dark:text-white">
+						{priceFormatter.format(computeTotalPrice())}
+					</span>
+					<span className="text-md text-gray-500">
+						{period.value === 'annually' ? '/yr' : '/mo'}
+						{tier.id === 'tier-enterprise' || tier.id === 'tier-enterprise-selfhost'}
+					</span>
+				</div>
 			</div>
 
 			<p className="mt-4 flex items-baseline gap-x-1">
@@ -63,7 +68,7 @@ export default function PriceCalculator({ period, tier }) {
 							<div className="flex justify-between w-full items-center">
 								<div>
 									<span className="text-sm text-gray-600 dark:text-gray-200">
-										{key === 'worker' ? workers : seats}
+										{key === 'vCPU' ? vCPUs : seats}
 									</span>
 									<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
 										{' '}
@@ -86,8 +91,8 @@ export default function PriceCalculator({ period, tier }) {
 								step={1}
 								defaultValue={tier.price[key].default}
 								onChange={(value) => {
-									if (key === 'worker') {
-										setWorkers(value);
+									if (key === 'vCPU') {
+										setvCPUs(value);
 									}
 
 									if (key === 'seat') {
@@ -165,9 +170,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
+							<span>{`~${
 								seats * 10 * (period.value === 'annually' ? 12 : 1)
-							}k executions per `}</span>
+							}k executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -186,9 +191,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
-								workers * 13 * (period.value === 'annually' ? 12 : 1)
-							}M executions per `}</span>
+							<span>{`~${
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
+							}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -199,11 +204,6 @@ export default function PriceCalculator({ period, tier }) {
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
-					{tier.id === 'tier-enterprise' && (
-					<div className="mt-4 text-sm text-gray-600">
-						*We give special discounts to SMBs and small start-ups. Talk to us for custom pricing.
-					</div>
-				)}
 				</div>
 			) : null}
 
@@ -212,9 +212,9 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
-							<span>{`${
-								workers * 13 * (period.value === 'annually' ? 12 : 1)
-							}M executions per `}</span>
+							<span>{`~${
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
+							}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -225,11 +225,27 @@ export default function PriceCalculator({ period, tier }) {
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
 					</div>
-					{tier.id === 'tier-enterprise-selfhost' && (
-					<div className="mt-4 text-sm text-gray-600">
-						*We give special discounts to SMBs and small start-ups. Talk to us for custom pricing.
+				</div>
+			) : null}
+
+			{tier.id === 'tiertest' ? (
+				<div className="mt-8 flex flex-col gap-1">
+					<h5 className="font-semibold">Summary</h5>
+					<div className="mt-2 flex items-baseline gap-x-1">
+						<div className="text-sm text-gray-600 mt-1">
+							<span>{`~${
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
+							}M executions of 100ms per `}</span>
+							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
+						</div>
 					</div>
-				)}
+					<div className="flex flex-row gap-1">
+						<span className="whitespace-nowrap text-sm">
+							{seats} {seats > 1 ? 'users' : 'user'}
+						</span>
+						<b className="text-sm">OR</b>
+						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+					</div>
 				</div>
 			) : null}
 		</div>

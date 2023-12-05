@@ -16,7 +16,8 @@ table.
 See bottom of documents for the current Limitations.
 
 ### Examples
-:::info  
+
+:::info
 
 [Table Showcase](https://hub.windmill.dev/apps/19/table-component-showcase) - See the hub for a app that showcases all Table options as working code
 See below to copy/paste fast. Hopefully you then have the best from both world. Easy copy/paste, and working code you can look at
@@ -39,13 +40,13 @@ script from your workspace or create a inline script.
 :::tip
 
 You can not edit a result of a script, so if you want to later change the data
-based on another component the reccomendation is to store that data as a state.
+based on another component the recommendation is to store that data as a state.
 :::
 
-## Refering to data from the row to create a new row in the table
+## Referring to data from the row to create a new row in the table
 
 Sometimes you want to ref to table data in the table. E.g if you want to have a
-select that is spesify to each row using anopther field. This can be achived
+select that is specify to each row using another field. This can be achieved
 with the `row.value` and `row.index` properties.
 
 You will find example of using `row.value` and `row.index`
@@ -54,7 +55,7 @@ You will find example of using `row.value` and `row.index`
 
 :::info
 
-The inital state is from
+The initial state is from
 https://tanstack.com/table/v8/docs/api/core/table#initialstate but not all
 states work, currently `columnVisibility`, `columnOrder`, `columnPinning` and
 `columnSizing` is implemented.
@@ -89,7 +90,7 @@ here we hide the column id.
 By default the table components is showing columns in the order it is added to
 the array. You can rearrange the order of the column with the following config
 
-In the `Inital State` field in the table config add:
+In the `Initial State` field in the table config add:
 
 ```tsx
 {
@@ -106,7 +107,7 @@ Here we rearrange the order so we have the "name" column first and then "age",
 
 ### columnPinning
 
-In the `Inital State` field in the table config add:
+In the `Initial State` field in the table config add:
 
 ```tsx
 {
@@ -125,7 +126,7 @@ In the `Inital State` field in the table config add:
 
 ### columnSizing
 
-In the `Inital State` field in the table config add:
+In the `Initial State` field in the table config add:
 
 ```tsx
 {
@@ -136,10 +137,12 @@ In the `Inital State` field in the table config add:
   }
 }
 ```
-Leave out the fields you do not need, you are only spes the desire behavior, it's still tanstack logic that do the final calulations.
+
+Leave out the fields you do not need, you are only spes the desire behavior, it's still tanstack logic that do the final calculations.
 
 ## Search
 
+d d
 **by component** - a nice feature of the table component is that it can do the
 search for you based on the data in the component
 
@@ -155,7 +158,7 @@ Please see the [Examples](#examples) for working code.
 
 ## Not supported features
 
-- Resizeable by the user 
+- Resizeable by the user
 - Grouping
 - sorting (But can be done by a transformer, but not the user)
 - rename headers (But can be done by a transformer, see below)
@@ -169,8 +172,5 @@ for more information.
 
 :::
 
-If some of these features is importent we recommend to use the
+If some of these features is important we recommend to use the
 [AgGrid Component](../aggrid_table/index.md)
-
-
-

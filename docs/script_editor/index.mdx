@@ -15,7 +15,7 @@ A Script can be written in:
 two most important components are the input [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.md)
 specification and the [code content](../code_editor/index.mdx).
 
-![Script languages](../../static/images/script_languages.png "Script languages")
+![Script languages](../../static/images/script_languages.png 'Script languages')
 
 Python and Go Scripts also have an
 auto-generated lockfile that ensure that executions of the same Script always
@@ -26,19 +26,19 @@ endpoint or a [Flow](../flows/1_flow_editor.mdx) module:
 <Tabs className="unique-tabs">
 <TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-  ```typescript
-  async function main(param1: string, param2: { nested: string }) {
-  	...
-  }
-  ```
+```typescript
+async function main(param1: string, param2: { nested: string }) {
+	...
+}
+```
 
 </TabItem>
 <TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-  ```python
-  def main(param1: str, param2: dict, ...):
-  	...
-  ```
+```python
+def main(param1: str, param2: dict, ...):
+	...
+```
 
 </TabItem>
 <TabItem value="Go" label="Go" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -47,7 +47,7 @@ endpoint or a [Flow](../flows/1_flow_editor.mdx) module:
   func main(x string, nested struct{ Foo string \`json:"foo"\` }) (interface{}, error) {
   	...
   }
-  ```
+```
 
 </TabItem>
 <TabItem value="Bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -63,17 +63,17 @@ There is no main needed for Bash. The body is executed and the args are passed d
 		description="Start writing scripts in Python, TypeScript, Go, Bash and Sql."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
-    <DocCard
+	<DocCard
 		title="JSON Schema and Parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
 		href="/docs/core_concepts/json_schema_and_parsing"
-    />
-    <DocCard
+	/>
+	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/core_concepts/auto_generated_uis"
 	/>
-    <DocCard
+	<DocCard
 		title="Triggering Scripts"
 		description="Trigger flows on-demand, by schedule or on external events."
 		href="/docs/getting_started/trigger_scripts"
@@ -88,22 +88,22 @@ The Script Editor is made of the following features:
 		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
 		href="/docs/script_editor/settings"
 	/>
-    <DocCard
+	<DocCard
 		title="Script Kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
 		href="/docs/script_editor/script_kinds"
 	/>
-    <DocCard
+	<DocCard
 		title="Customize UI"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
 		href="/docs/script_editor/customize_ui"
-    />
-    <DocCard
+	/>
+	<DocCard
 		title="Versioning"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/script_editor/versioning"
 	/>
-    <DocCard
+	<DocCard
 		title="Worker Group Tag"
 		description="Scripts can be assigned custom worker groups for efficient execution on different machines with varying specifications."
 		href="/docs/script_editor/worker_group_tag"
@@ -112,7 +112,7 @@ The Script Editor is made of the following features:
 		title="Concurrency Limit"
 		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
 		href="/docs/script_editor/concurrency_limit"
-    />
+	/>
 	<DocCard
 		title="Custom Environment Variables"
 		description="In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts."
@@ -123,14 +123,14 @@ The Script Editor is made of the following features:
 		description="For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code."
 		href="/docs/script_editor/custom_response_code"
 	/>
-    <DocCard
+	<DocCard
 		title="Multiplayer"
 		description="The Multiplayer feature allows you to collaborate with team members on scripts simultaneously."
 		href="/docs/script_editor/multiplayer"
 	/>
-    <DocCard
-		title="Write Scripts on VSCode"
-		description="The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode."
+	<DocCard
+		title="Write Scripts on VS Code"
+		description="The Windmill VS Code extension allows you to run your scripts and preview the output within VS Code."
 		href="/docs/script_editor/vs_code_scripts"
 	/>
 </div>
@@ -138,7 +138,7 @@ The Script Editor is made of the following features:
 For features specific to the [Code Editor](../code_editor/index.mdx), check:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."
 		href="/docs/code_editor"

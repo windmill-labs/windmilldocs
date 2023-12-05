@@ -86,7 +86,7 @@ A product has the folowing fields:
 
 First we need to configure the data source for the Table component. We will pick the [Fetch data (supabase)](https://hub.windmill.dev/scripts/supabase/1512/fetch-data-supabase) script, available in the Hub.
 
-This script has multilpe input, but we only need to specify the table name and the auth token.
+This script has multiple input, but we only need to specify the table name and the auth token.
 
 Normally the component has now thrown an error: The Table component is expecting an array but got an object. This is because the script returns an object with the data in the `data` field. We can use a **transformer** to fix this.
 
@@ -126,8 +126,8 @@ Now we need to add a button that will save the changes to the product. For the s
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(
@@ -138,7 +138,7 @@ export async function main(
 	quantity: number,
 	price: number
 ) {
-	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+	const client = createClient(auth.url, auth.key);
 
 	return await client.from('products').update({ title, description, quantity, price }).eq('id', id);
 }
@@ -329,7 +329,7 @@ export async function main(users: any[]) {
 
 We will use a table to display the list of products. This is the same list of products that we used in the products tab. But we need to add a table action to the products table to add the selected product to the cart.
 
-We can now use the concept of frontent script. Frontend scripts are scripts that are executed in the browser. We can use frontend scripts to interact with the local state of the app. Given that the id of the table is `ao`:
+We can now use the concept of frontend script. Frontend scripts are scripts that are executed in the browser. We can use frontend scripts to interact with the local state of the app. Given that the id of the table is `ao`:
 
 ```ts
 if (state.cart) {
@@ -388,12 +388,12 @@ The `Checkout` button needs to create the order. We can use the following fronte
 import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.10.0';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(auth: Supabase, customerId: string, productIds: string[]) {
-	const client = createClient(auth.supabaseUrl, auth.supabaseKey);
+	const client = createClient(auth.url, auth.key);
 
 	productIds = productIds.filter(Boolean);
 	const { country, city, address } = await getCustomer(client, customerId);

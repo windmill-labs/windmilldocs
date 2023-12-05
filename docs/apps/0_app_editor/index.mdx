@@ -3,7 +3,7 @@ import { Timer } from 'lucide-react';
 
 # App Editor
 
-The app editor is a low-code builder to create apps with components, create interactions with runnables, and configure the app settings.
+The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -28,14 +28,12 @@ The app editor is composed of 6 main sections:
 1. [Toolbar](/docs/apps/app_editor#toolbar)
 2. [Canvas](#canvas)
 
-_Connecting components_:<br/>
-3. [Outputs](#outputs)<br/>
-4. [Runnables panel](#runnables-panel)
+_Connecting components_:<br/> 3. [Outputs](#outputs)<br/> 4. [Runnables panel](#runnables-panel)
 
 5. [Component Library and Settings](#component-library-and-settings)
 6. [App Styling](#styling)
 
-![App Editor](../../assets/apps/0_app_editor/app-editor.png "App Editor")
+![App Editor](../../assets/apps/0_app_editor/app-editor.png 'App Editor')
 
 ## Toolbar
 
@@ -86,6 +84,7 @@ The canvas at the center of the editor is where you design and see the overall U
 ## Connecting Components
 
 The strength of Windmill's app editor is the ability to connect everything together:
+
 - components can be linked to each other
 - components can be directly linked to scripts and trigger them
 - background runnables can be that are run in the background on app refresh on when an input changes
@@ -161,9 +160,9 @@ You can perform the following actions with the outputs:
 
 Finally, on the right panel of the editor, you can insert a new component, configure a component or edit the component styles.
 
-![App Components Library](../../assets/apps/0_app_editor/app_components_add.png "App Components Library")
+![App Components Library](../../assets/apps/0_app_editor/app_components_add.png 'App Components Library')
 
-![App Components Configuration](../../assets/apps/0_app_editor/app_components_configuration.png "App Components Configuration")
+![App Components Configuration](../../assets/apps/0_app_editor/app_components_configuration.png 'App Components Configuration')
 
 #### Learn more
 
@@ -192,7 +191,7 @@ Styling on the app editor can be managed at the component and app-level, with pr
 	<DocCard
 		color="orange"
 		title="Styling"
-		description="Learn how to edit the component styles."
+		description="Give styling to your app & components."
 		href="/docs/apps/app_configuration_settings/app_styling"
 	/>
 </div>
@@ -211,5 +210,11 @@ Styling on the app editor can be managed at the component and app-level, with pr
 		description="Apps can be accessed as a standalone app by anyone who has the secret URL"
 		href="/docs/apps/public_apps"
 		color="orange"
+	/>
+	<DocCard
+		color="orange"
+		title="Import Custom React Components"
+		description="Define components in React or Vanilla JS that interact with the rest of your app."
+		href="/docs/apps/react_components"
 	/>
 </div>

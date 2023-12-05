@@ -1,0 +1,101 @@
+---
+title: Launch Week Day 4 - Custom React Components & Apps
+authors: [rubenfiszel]
+tags: ['Launch week', 'React', 'App Editor']
+image: ./react_components.png
+slug: launch-week-1/react-components
+description: 'Define components in React or Vanilla JS that interact with the rest of your app.'
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 4 - Custom React Components & Apps
+
+![React Components Thumbnail](./react_components.png "React Components")
+
+Day 4 of our Launch Week is focused on the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
+
+Windmill already provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users. They should cover a vast majority of needs.
+
+However, for components that are more specific you can now go even further and import your own components and apps written in React.
+
+Once imported to Windmill, custom React components will be able to interact with the rest of the app.
+
+There are 3 main benefits of using your own components:
+1. Reusing react components you've already written in other codebases.
+2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
+3. Embeding very complex components such as a code editor.
+
+If that's not sufficient you can even [build your own app in React](#how-to-import-whole-react-apps).
+
+## How to import react components to the App Editor
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/LO83BKAe6zg?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+1. Clone the [template project](https://github.com/windmill-labs/windmill-custom-component-template).
+2. Install the dependencies:
+
+```bash
+npm install
+```
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+4. Open your browser to see the live result.
+
+5. Start editing the `src/Component.tsx` file to start building your component.
+
+6. Edit COMPONENT_NAME in `vite.config.ts` to match your component name. It will
+   be useful later.
+
+7. Build the iife using:
+
+```bash
+npm run build
+```
+
+8. Upload the `dist/cc.iife.js` to Windmill and name the component as it has been named in `vite.config.ts`.
+
+![Custom component example](./custom_example.png "Custom component example")
+
+## How to import whole React apps
+
+See our documentation:
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="React App Import"
+		description="Import your own React app in Windmill App Editor."
+		href="/docs/react_vue_svelte_apps/react"
+	/>
+</div>
+
+## Learn more
+
+To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+For more details on React Components, see:
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Import Custom React Components"
+		description="Define components in React or Vanilla JS that interact with the rest of your app."
+		href="/docs/apps/react_components"
+	/>
+</div>

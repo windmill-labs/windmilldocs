@@ -1,4 +1,4 @@
-# Flows management
+# Flows
 
 ## Listing flows
 
@@ -54,7 +54,7 @@ wmill flow run <remote_path> [options]
 
 ## Flow specification
 
-You can find the definition of the flow file structure [here](/docs/openflow/index.md).
+You can find the definition of the flow file structure [here](/docs/openflow/index.mdx).
 
 ## Remote path format
 

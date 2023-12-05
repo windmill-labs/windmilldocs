@@ -1,0 +1,79 @@
+---
+authors: [henricourdent]
+tags:
+  [
+    'Components',
+    'App Editor',
+	  'Launch week',
+  ]
+image: ./groups_of_components_thumbnail.png
+slug: launch-week-1/components-groups
+description: "Introducing Components Groups to group and save components, therefore building your own meta components."
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Launch Week Day 4 - Groups of Components
+
+<br/>
+
+![Group of components thumbnail](./groups_of_components_thumbnail.png "Group of components thumbnail")
+
+<br/>
+
+Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
+
+Windmill already provides over [sixty components](/docs/apps/app_configuration_settings/app_component_library) for its users. All components cover vast majority of needs. Components are most powerful when grouped together, enabling to implement complex logic.
+
+We are proud to introduce component groups, which allow you to build your own meta-components, accessible via drag-and-drop from any app in your workspace.
+Saved components group keep the logic between each components, avoiding creating it over and over.
+
+## How to create groups of components
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/save_component_group.mp4"
+/>
+
+<br/>
+
+1. From the editor, pick a [container](/docs/apps/app_configuration_settings/container) component and enable "Container is a component group".
+2. Create at least one group field.
+3. Fill the group field's object, either manually or dynamically through an [eval](/docs/apps/app-runnable-panel#evals).
+4. Now the container's components can be [connected](/docs/apps/connecting_components) to the group fields items through `group.group_field_name.optional_subitems`
+
+Inside those "container groups", you can refer to "group.x" to refer to one of those group field which make this independent of the id of the container itself.
+
+Component groups can be saved to workspace. They will be available from all workspace apps as a component under the "Groups" category. They are saved as resources, under the `app_groups` [folder](/docs/core_concepts/groups_and_folders).
+
+Groups of components can be combined with [styling](/docs/apps/app_configuration_settings/app_styling) to provide very custom components:
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    src="/videos/group_of_components_with_style.mp4"
+/>
+
+## Learn more
+
+To learn more about the launch week, you can visit our [dedicated page](../2023-11-15-launch-week-1/index.mdx) or subscribe via our [newsletter sign up form](https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1).
+
+For more details on group of components, see:
+
+<div class="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Group of Components"
+		description="Documentation on how to group components together."
+		href="/docs/apps/app_configuration_settings/components_groups"
+	/>
+  <DocCard
+		color="orange"
+		title="Component Library"
+		description="Discover all the components available in the library, and their configurations."
+		href="/docs/apps/app_configuration_settings/app_component_library"
+	/>
+</div>

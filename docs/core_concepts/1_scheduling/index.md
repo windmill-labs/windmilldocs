@@ -23,7 +23,7 @@ However, as with any powerful tool, using cron comes with its own set of challen
 - **Runs History**: to maintain a record of script runs and log outputs through cron, you must manually incorporate that logic.
 - **Error Handling**: in the event of a failed run, self-crafted logic is required for notifications (Slack, emails).
 - **Manual Runs**: executing a cron job manually, outside of its schedule, proves difficult and can lead to inconsistencies due to potential environment differences.
-- **No UI**: navigating cron jobs is challenging without a centralized hub, particularly for larger engineering teams. This comes with induced issues: 1. **Handling permissions and Errors** among users and editors and 2. **Server downtime**: when the server hosting the job experiences downtime, monitoring and alterting is problematic.
+- **No UI**: navigating cron jobs is challenging without a centralized hub, particularly for larger engineering teams. This comes with induced issues: 1. **Handling permissions and Errors** among users and editors and 2. **Server downtime**: when the server hosting the job experiences downtime, monitoring and alerting is problematic.
 
 :::info A bit of Context: How Windmill Works
 
@@ -35,7 +35,7 @@ Managing scripts, flows and apps on Windmill works at the [workspace](../16_role
 
 <br/>
 
-Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill** (among [webhooks](../4_webhooks/index.md), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
+Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill** (among [webhooks](../4_webhooks/index.mdx), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
 
 :::
 

@@ -1,29 +1,47 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Dedicated Workers / Native Performance
+# Dedicated Workers / High Throughput
 
-Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
+Dedicated Workers are [workers](../9_worker_groups/index.mdx) that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
-Dedicated Workers / Native Performance are an [enterprise-only](../../misc/7_plans_details/index.mdx) feature.
+Workers serve as the backbone of Windmill. Workers are autonomous processes that run one script at a time using the full cpu and memory available to them.
 
-For now it only works with **bun scripts** that have been pre-deployed.
+To put it simply, workers are responsible for executing code in Windmill. A single normal worker in Windmill is capable of handling up to 26 million tasks a month, with each task taking roughly 100ms. You can easily scale the number of workers horizontally without incurring extra overhead.
+
+Typically, workers fetch jobs from the job queue based on their `scheduled_for` datetime, provided it's in the past. Once a worker retrieves a job, it immediately changes its status to "running", processes it, streams its logs, and upon completion, archives it in the database as a "finished job". Both the final outcome and the logs are preserved indefinitely.
+
+This simple process allows one to reliably count on a small number of workers for very different jobs. However, there is a latency between each task since the worker must perform a clean-up and a cold start between each execution (to be able to handle successive jobs but from completely different scripts). This latency amounts to around a dozen milliseconds, which can be crucial in the execution of certain priority jobs:
+
+![Worker group config](./infographic.png)
+
+Dedicated workers allow you to remove completely the cold start for selected scripts. They are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script. They are as fast as running the same logic in a while-loop processing requests, that is how they are implemented actually, but keep the benefit of showing separate jobs per execution.
+
+Dedicated Workers / High Throughput are an [enterprise-only](../../misc/7_plans_details/index.mdx#enterprise-edition---self-hosted) feature.
+
+Dedicated workers work with [Typescript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) scripts, they have the highest cold starts. Queries to databases such as PostgreSQL, MySQL, BigQuery, or bash and go scripts do not suffer from any cold starts and hence have the same benefits already without any compexity.
 
 The scripts can be used within flows.
 
-To use:
+Dedicated workers are faster than AWS lambda: https://www.windmill.dev/docs/misc/benchmarks/aws_lambda.
 
-1. Assign one worker group to execute that script:
+## How to assign dedicated workers to a script
+
+From Windmill UI's Workers page:
+
+1. "Edit config" of a [worker group](../9_worker_groups/index.mdx) and enter script's workspace & [path](../../script_editor/settings.mdx#path) as `worker:path`.
 
 ![Worker group config](./worker_group_config.png)
 
 The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen:
 
-2. toggle the "Dedicated Workers" option for that script in the Settings:
+1. Toggle the "Dedicated Workers" option for that script in the [script Settings](../../script_editor/settings.mdx):
 
-![Dedicated Workers](./dedicated_workers.png)
+![Dedicated Workers in Settings](./dedicated_workers.png 'Dedicated Workers in Settings')
 
-You might also want to look for [Worker Group Tag](../9_worker_groups/index.mdx), which allows to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications:
+Each [run](../5_monitor_past_and_future_runs/index.mdx) will have a Worker Group Tag assigned to it. [Worker Group Tags](../9_worker_groups/index.mdx) allow to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
+
+![Dedicated Workers Tag](./dedicated_worker_tag.png 'Dedicated Workers Tag')
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

@@ -38,21 +38,21 @@ Drafts can be run and tested only from the editor (script, flow or app) with the
 
 ## Deployed Version
 
-The deployed version is the authoritative version of a runnable. Once deployed, it is not only visible by workspace members [with the right permissions](../16_roles_and_permissions/index.mdx) but has its own [auto-generated UI](../6_auto_generated_uis/index.mdx), [webhooks](../4_webhooks/index.md), or can be called from flows and apps (for sripts and flows). This also means that local edits and drafts can be made in parallel to a deployed version of a runnable without affecting its behavior.
+The deployed version is the authoritative version of a runnable. Once deployed, it is not only visible by workspace members [with the right permissions](../16_roles_and_permissions/index.mdx) but has its own [auto-generated UI](../6_auto_generated_uis/index.mdx), [webhooks](../4_webhooks/index.mdx), or can be called from flows and apps (for scripts and flows). This also means that local edits and drafts can be made in parallel to a deployed version of a runnable without affecting its behavior.
 
 If you want to have several versions of the same runnable, just fork it with the `Fork` button on the drop down menu of `Deploy`.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Roles and Permissions"
-    	description="Control access and manage permissions within your instance and workspaces."
-    	href="/docs/core_concepts/roles_and_permissions"
-    />
+		title="Roles and Permissions"
+		description="Control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
 </div>
 
 ## Diff Viewer
 
-A diff viewer is available when loading scripts from autosave or draft.
+Visualize changes between [current](#local-edits) and [latest deployed version](#deployed-version) or [latest draft](#draft) for any script, flow or app.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
