@@ -1,18 +1,15 @@
 ---
 authors: [henricourdent]
-tags:
-  [
-    'Supabase',
-    'Partnership',
-    'Database',
-  ]
+tags: ['Supabase', 'Partnership', 'Database']
 image: ./0-header.png
 ---
 
 # Windmill and Supabase partner for smooth integration between databases and internal tools
 
 Windmill is proud to announce a partnership with [Supabase](https://supabase.com/) to easily integrate databases to interact with scripts, flows, and apps.
+
 <!--truncate-->
+
 Although we support multiple database providers, Supabase is by far the most recommended one due to its performance and security capabilities.
 
 <br/>
