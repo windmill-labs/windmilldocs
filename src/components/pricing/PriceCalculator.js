@@ -62,7 +62,7 @@ export default function PriceCalculator({ period, tier }) {
 			</div>
 
 			<p className="mt-4 flex items-baseline gap-x-1">
-				<ul class="flex flex-col gap-2 w-full">
+				<ul className="flex flex-col gap-2 w-full">
 					{Object.keys(tier.price).map((key) => (
 						<li key={key} className="flex flex-col ">
 							<div className="flex justify-between w-full items-center">
