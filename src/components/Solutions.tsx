@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 import LayoutProvider from '@theme/Layout/Provider';
 import { Helmet } from 'react-helmet-async';
 import { useColorMode } from '@docusaurus/theme-common';
+import SolutionSVG from './SolutionSVG.svg';
 
 function Screenshot({ darkScreenshot, lightScreenshot }) {
 	const { colorMode } = useColorMode();
@@ -130,6 +131,9 @@ export default function Solution({
 						</div>
 					</div>
 				</LandingSection>
+				<div className="svg-container">
+                	<SolutionSVG className="scaled-svg" style={{ width: '60%', height: '60%' }} />
+            	</div>
 				<Footer />
 			</main>
 		</LayoutProvider>

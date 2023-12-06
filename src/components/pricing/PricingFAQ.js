@@ -86,12 +86,13 @@ const faqs = [
 				<br/><br/>
 				We only count the vCPUs reported by your workers as being used.
 				So you can simply set limits in the
-				{' '}<Link
-					to="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
+				{' '}<a
+					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank" rel="noopener noreferrer"
 				>
 					docker-compose
-				</Link>{' '}and you will never be overcharged
+				</a>{' '}and you will never be overcharged
 			</span>
 		)
 	},
