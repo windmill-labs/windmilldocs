@@ -10,7 +10,7 @@
 <path d="M4686 1283L3094 1283" stroke="#ACA9A9" stroke-width="5" stroke-linecap="round"/>
 <path opacity="0.6" fill-rule="evenodd" clip-rule="evenodd" d="M3607 3447.33C3624.94 3447.33 3639.47 3461.87 3639.47 3479.81V3926.5C3639.47 3944.59 3633.34 3962.39 3624.98 3976.88C3616.61 3991.37 3604.26 4005.58 3588.6 4014.62L3364.24 4144.16C3348.7 4153.13 3328.84 4147.8 3319.88 4132.27C3310.91 4116.74 3316.23 4096.88 3331.76 4087.91L3556.12 3958.38C3559.59 3956.37 3564.56 3951.63 3568.73 3944.4C3572.9 3937.18 3574.52 3930.5 3574.52 3926.5V3479.81C3574.52 3461.87 3589.06 3447.33 3607 3447.33Z" fill="#68F8EF"/>
 <g filter="url(#filter0_d_276_210)">
-<a href="/docs/core_concepts/worker_groups" target="_blank">
+<a xlink:href="/docs/core_concepts/worker_groups" target="_blank" class="cursor-pointer">
     <title>Worker Groups</title>
     <desc>Workers are autonomous processes that run one script at a time using the entire cpu and memory available to them.</desc>
     <rect width="1825.29" height="965.68" rx="40" transform="matrix(0.866025 0.5 -0.866025 0.5 2324.3 3394)" fill="#FFFDFD" class="hover-change-color"/>
