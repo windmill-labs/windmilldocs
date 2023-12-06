@@ -541,7 +541,7 @@ export default function Pricing() {
 									className={classNames(
 										tier.mostPopular ? 'additional-class-for-most-popular' : '',
 										'!text-blue-600 shadow-sm hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-800',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-lg font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
 									target="_blank"
 								>
@@ -554,7 +554,7 @@ export default function Pricing() {
 									className={classNames(
 										tier.mostPopular ? 'additional-class-for-most-popular' : '',
 										'!text-teal-600 shadow-sm hover:text-teal-800 hover:bg-teal-100 dark:hover:bg-teal-800',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-lg font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
 									)}
 									target="_blank"
 								>
