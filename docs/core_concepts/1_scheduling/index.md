@@ -1,4 +1,4 @@
-# Scheduling
+# Schedules
 
 Windmill provides the same set of features as CRON, but with a user interface and control panels. It allows you to define Schedules for Scripts and Flows. Once a schedule is defined, the script will automatically run at the set frequency. Think of it as an easy-to-use scheduler similar to CRON that you can share with other users.
 

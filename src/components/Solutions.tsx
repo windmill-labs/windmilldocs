@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useColorMode } from '@docusaurus/theme-common';
 import SolutionSVG from './SolutionSVG.svg';
 
+
 function Screenshot({ darkScreenshot, lightScreenshot }) {
 	const { colorMode } = useColorMode();
 	const screenshot = colorMode === 'dark' ? darkScreenshot : lightScreenshot;

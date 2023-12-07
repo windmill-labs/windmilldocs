@@ -410,3 +410,14 @@ div.testimonials a:hover .wm-name {
 .hover-change-color:hover {
     fill: #F0F0F0
 }
+
+.hover-darker-color:hover {
+    filter: brightness(80%);
+}
+.group-darker-change-color:hover {
+    filter: brightness(80%);
+}
+
+.image-hover-change-color:hover {
+    filter: brightness(80%);
+}
