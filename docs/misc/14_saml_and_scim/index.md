@@ -10,7 +10,7 @@ ACS Url is `<instance_url>/api/saml/acs`
 SCIM connector is `<instance_url>/api/scim`
 Application username format is `Email`
 
-Pass SAML_METADATA to the server containers to enable SAML authentication. In the helm charts, the value is `enterprise.samlMetadata`
+Pass SAML_METADATA containing the metadata URL to the server containers to enable SAML authentication. In the helm charts, the value is `enterprise.samlMetadata`
 
 ### Okta
 
@@ -18,7 +18,7 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 
 ![Okta settings](./okta.png.webp)
 
-Pass SAML_METADATA to the server containers to enable SAML authentication. In the helm charts, the value is `enterprise.samlMetadata`:
+Pass SAML_METADATA containing the metadata URL to the server containers to enable SAML authentication. In the helm charts, the value is `enterprise.samlMetadata`:
 
 ![Okta Metadata URL](./okta2.png.webp)
 
