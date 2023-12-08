@@ -338,7 +338,8 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_client'
+				'advanced/clients/ts_client',
+				'advanced/browser_automation/index'
 			]
 		},
 
@@ -634,7 +635,7 @@ const sidebars = {
 						},
 						'misc/benchmarks/aws_lambda/index'
 					]
-				},
+				}
 			]
 		},
 		{

@@ -1,0 +1,95 @@
+# Browser automation
+
+Windmill makes it easy to perform browser automation tasks, such as testing or web scraping.
+
+:::info
+Not sure what a worker group is? You should probably [read about it first](/docs/core_concepts/worker_groups).
+:::
+
+By default, a worker group named `reports` is available which will handle jobs with the `chromium` tag.
+Workers assigned to this group will install chromium on start (learn more about [init scripts](/docs/core_concepts/worker_groups#init-scripts)).
+You have to set the worker group of at least one worker to `reports`.
+There is a sample worker container definition called `windmill_worker_reports` in the `docker-compose.yml` file which you can uncomment to quickly start a worker with the right worker group.
+
+The chromium binary will be available on these workers at `/usr/bin/chromium`.
+You will need to disable the sandbox to run it inside windmill workers. 
+You can do this by passing the `--no-sandbox` flag. 
+
+:::caution
+Running chromium without the sandbox is a security risk. Make sure you trust the website you are visiting.
+:::
+
+To run jobs on a chromium-equipped worker, you have to select the `chromium` tag in the settings of the script or flow step.
+[Learn how here](/docs/script_editor/worker_group_tag).
+
+
+## Examples using Puppeteer
+
+Here are some basic examples using [Puppeteer](https://pptr.dev/) to get you started with chromium in Deno, Bun, and Python.
+
+### Deno
+
+```typescript
+import puppeteer from "npm:puppeteer-core";
+
+export async function main() {
+  const browser = await puppeteer.launch({
+    headless: "new",
+    executablePath: "/usr/bin/chromium",
+    args: ["--no-sandbox"],
+    //userDataDir: "./user-data", // this is only required when windmill is running with nsjail where you don't have access to the default user data dir
+  });
+
+  const page = await browser.newPage();
+  await page.goto("https://google.ch");
+
+  const title = await page.title();
+
+  await browser.close();
+
+  return title;
+}
+```
+
+### Bun
+
+```typescript
+import puppeteer from "puppeteer-core";
+
+export async function main() {
+  const browser = await puppeteer.launch({
+    headless: "new",
+    executablePath: "/usr/bin/chromium",
+    args: ["--no-sandbox"],
+  });
+
+  const page = await browser.newPage();
+  await page.goto("https://google.ch");
+
+  const title = await page.title();
+
+  await browser.close();
+
+  return title;
+}
+```
+
+
+
+### Python
+
+```python
+from pyppeteer import launch
+import asyncio
+
+async def pup():
+    browser = await launch(executablePath="/usr/bin/chromium", args=["--no-sandbox"])
+    page = await browser.newPage()
+    await page.goto('https://google.com')
+    title = await page.title()
+    await browser.close()
+    return title
+
+def main():
+    return asyncio.get_event_loop().run_until_complete(pup())
+```
