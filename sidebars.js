@@ -320,6 +320,7 @@ const sidebars = {
 					]
 				},
 				'advanced/deploy_gh_gl/index',
+				'advanced/git_sync/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -453,6 +454,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/gsheets',
 							label: 'Google Sheets'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/git_repository',
+							label: 'Git Repository'
 						},
 						{
 							type: 'doc',
