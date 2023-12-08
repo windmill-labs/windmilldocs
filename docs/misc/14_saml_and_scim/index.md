@@ -18,7 +18,7 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 
 ![Okta settings](./okta.png.webp)
 
-Pass SAML_METADATA to the container to enable SAML authentication. In the helm charts, the value is `enterprise.samlMetadata`:
+Pass SAML_METADATA to the server containers to enable SAML authentication. In the helm charts, the value is `enterprise.samlMetadata`:
 
 ![Okta Metadata URL](./okta2.png.webp)
 
