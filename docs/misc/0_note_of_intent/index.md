@@ -11,7 +11,7 @@ All code is not made equal and can be split in 2 categories:
 - **Boilerplate**: all the rest is boilerplate. Be it UI and frontends that
   allow you to call the code above, API calls to external services, error
   handling, retries, logic to make your code scalable, dependency management,
-  CI/CD, managing secrets, schedule, permissions, authentification, etc. That
+  CI/CD, managing secrets, schedule, permissions, authentication, etc. That
   code is boilerplate because it _feels_ like you shouldn't have to reinvent the
   wheel, over and over again.
 
@@ -79,7 +79,7 @@ Windmill embeds:
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
 - a **[CLI](../../advanced/3_cli/index.mdx)** and GitHub Actions for **GitHub** and local
-  based developement and code management.
+  based development and code management.
 
 On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.

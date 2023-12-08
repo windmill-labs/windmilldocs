@@ -5,7 +5,7 @@ import DocCard from '@site/src/components/DocCard';
 Workers are autonomous processes that run one script at a time using the entire cpu and memory available
 to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md) as run the jobs.
 The number of workers can be horizontally scaled up or down depending on needs without any overhead.
-Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximatively 100ms.
+Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximately 100ms.
 
 Workers pull [jobs](../20_jobs/index.mdx) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
@@ -17,14 +17,16 @@ By default, every worker is the same and interchangeable. However, there are oft
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
 In the [Community Edition](../../misc/7_plans_details/index.mdx), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
+
 > [Go to section](#set-tags-to-assign-specific-queues).
 
-<br/>
+<br />
 
 In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups (a single worker can be in several groups), groups for which you can manage the tags, assignment to a single script, or the worker init scripts, from the UI.
+
 > [Go to section](#create-worker-group-config).
 
-<br/>
+<br />
 
 Examples of configurations include:
 
@@ -41,16 +43,16 @@ This feature is useful if you want to run some scripts on a GPU machine, or if y
 ### How to have a Worker join a Worker Group
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 Create a worker group in your [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and simply pass the worker group as the env variable `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group.
 
@@ -85,13 +87,19 @@ Worker only require a database URL and can thus be spawned in separate VPCs if n
 
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
-<img src={require("./tags_and_queues.png").default} alt="Tags and Queues infographics" title="Tags and Queues infographics" width="75%" />
+<img
+	src={require('./tags_and_queues.png').default}
+	alt="Tags and Queues infographics"
+	title="Tags and Queues infographics"
+	width="75%"
+/>
 
-<br/>
+<br />
 
 There are 2 worker groups by default: _default_ and _native_.
 
 The tags of _default_ worker group are:
+
 - `deno`: The default worker group for deno scripts.
 - `python3`: The default worker group for python scripts.
 - `go`: The default worker group for go scripts.
@@ -106,6 +114,7 @@ The tags of _default_ worker group are:
 Button `Reset to all tags minus native ones` will reset the tags of _default_ worker group to a given worker group.
 
 The tags of _native_ worker group are:
+
 - `nativets`: The default worker group for rest scripts.
 - `postgresql`: The default worker group for postgresql scripts.
 - `mysql`: The default worker group for mysql scripts.
@@ -120,7 +129,7 @@ Button `Reset to native tags` will reset the tags of _native_ worker group to a 
 
 Button `Reset to all tags` will reset the tags of _default_ and _native_ worker group to a given worker group.
 
-![Reset to tags buttons](./reset_tags.png "Reset to tags buttons")
+![Reset to tags buttons](./reset_tags.png 'Reset to tags buttons')
 
 To make custom tags available from the UI, go to the dedicated "Workers" tab on the workspace and click on the "Assignable Tags" button:
 
@@ -138,7 +147,7 @@ Only 'workspace' and 'workspace2' will be able to use the `gpu` tags.
 
 Use the edit/create config next to the worker group name in Windmill UI:
 
-![Worker group config](../../../static/images/worker_group_config.png "Worker group config")
+![Worker group config](../../../static/images/worker_group_config.png 'Worker group config')
 
 **Note**: The worker group management UI is an [enterprise only](../../misc/7_plans_details/index.mdx) feature. It is still possible to use worker groups with the community edition by passing to each worker the env variable `WORKER_TAGS`:
 
@@ -178,25 +187,30 @@ See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow 
 
 ## Create Worker Group config
 
-<img src={require("./wg_config_infographics.png").default} alt="Worker group config infographics" title="Worker group config infographics" width="75%" />
+<img
+	src={require('./wg_config_infographics.png').default}
+	alt="Worker group config infographics"
+	title="Worker group config infographics"
+	width="75%"
+/>
 
-<br/>
+<br />
 
 In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups (a single worker can be in several groups), groups for which you can manage the tags, assignment to a single script, or the worker init scripts, from the UI.
 
 > In [Community Edition](../../misc/7_plans_details/index.mdx) Workers can still have their WORKER_TAGS passed as env.
 
-<br/>
+<br />
 
 Pick "New worker group config" and just write the name of your worker group.
 
-![New worker group config](../../../static/images/new_worker_group_config.png "New worker group config")
+![New worker group config](../../../static/images/new_worker_group_config.png 'New worker group config')
 
 You can then configure it directly from the UI.
 
-![Worker group config](../../../static/images/worker_group_config.png "Worker group config")
+![Worker group config](../../../static/images/worker_group_config.png 'Worker group config')
 
-<br/>
+<br />
 
 Examples of configurations include:
 
@@ -211,10 +225,15 @@ Examples of configurations include:
 Under the [Enterprise Edition](../../misc/7_plans_details/index.mdx), they can be set from Windmill UI.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-  <img src={require("../../advanced/8_preinstall_binaries/init_scripts.png").default} alt="Init Scripts Infographics" title="Init Scripts Infographics" width="70%" />
+	<img
+		src={require('../../advanced/8_preinstall_binaries/init_scripts.png').default}
+		alt="Init Scripts Infographics"
+		title="Init Scripts Infographics"
+		width="70%"
+	/>
 </div>
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -231,7 +250,7 @@ They are as fast as running the same logic in a forloop, but keep the benefit of
 
 Dedicated Workers / High Throughput is an [Enterprise & Team Edition](../../misc/7_plans_details/index.mdx) feature.
 
-![Dedicated Workers Infographics](../25_dedicated_workers/infographic.png "Dedicated Workers Infographics")
+![Dedicated Workers Infographics](../25_dedicated_workers/infographic.png 'Dedicated Workers Infographics')
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

@@ -15,7 +15,7 @@ For larger and production use-cases, use our [Helm chart](#helm-chart) to deploy
 
 > Example of self-hosted Windmill on [localhost](#docker).
 
-<br/>
+<br />
 
 Windmill itself just requires 3 elements:
 
@@ -134,13 +134,21 @@ To setup an external database, you need to set DATABASE_URL in the .env file to 
 
 :::tip
 
-In some exotic setups, you will need to set the initial role manually. You can do so by running the following command:
+In setups where you do not have access to the PG superuser (Azure PostgreSQL, GCP Postgresql, etc), you will need to set the initial role manually. You can do so by running the following command:
 
 ```bash
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql -o init-db-as-superuser.sql
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
 
+Make sure that the user used in the DATABASE_URL passed to windmill has the role `windmill_admin` and `windmill_user`:
+
+```sql
+GRANT ROLE windmill_admin TO <user used in database_url>;
+GRANT ROLE windmill_user TO <user used in database_url>;
+```
+
+If you cannot use BYPASSRLS (for instance on Azure PostgreSQL), see this [workaround](https://github.com/windmill-labs/windmill/issues/2345#issuecomment-1739777068)
 :::
 
 ### Set number of replicas accordingly in docker-compose
@@ -287,7 +295,7 @@ docker compose pull windmill_server
 docker compose up -d
 ```
 
-Database volume is persistent, so updating the database image is safe too. Windmill provides graceful exit for jobs in workers so it will not interrumpt current jobs unless they are longer than docker stop hard kill timeout (30 seconds).
+Database volume is persistent, so updating the database image is safe too. Windmill provides graceful exit for jobs in workers so it will not interrupt current jobs unless they are longer than docker stop hard kill timeout (30 seconds).
 
 It is sufficient to run `docker compose up -d` again if your Docker is already running detached, since it will pull the latest `:main` version and restart the containers.
 NOTE: The previous images are not removed automatically, you should also run `docker builder prune` to clear old versions.
@@ -386,7 +394,7 @@ GRANT USAGE ON SCHEMA public TO windmill_user;
 
 ### Complete New Windmill Set-Up
 
-In the Admin Workspace execute the New User Setup App. This will import the default [resources types](../../core_concepts/3_resources_and_types/index.mdx) from [WindmillHub](https://hub.windmill.dev/) and update the default user credentails
+In the Admin Workspace execute the New User Setup App. This will import the default [resources types](../../core_concepts/3_resources_and_types/index.mdx) from [WindmillHub](https://hub.windmill.dev/) and update the default user credentials
 
 ### Authentication and user management
 
@@ -473,7 +481,7 @@ Fill your SMTP details.
 
 **Note**: If you're using Gmail, you'll need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en) to use as `SMTP_PASSWORD`. This is a unique password that Gmail provides for apps and services that want to connect to your account.
 
-You'll be offered to "Test SMTP settings" & send a blank e-mail to a given adress.
+You'll be offered to "Test SMTP settings" & send a blank e-mail to a given address.
 
 ![Filled SMTP](./smtp_filled.png 'Filled SMTP')
 

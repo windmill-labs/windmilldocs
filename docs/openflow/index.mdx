@@ -19,7 +19,7 @@ executors.
 Flows can be shared and showcased on
 [Windmill Hub](https://hub.windmill.dev/flows). To see an example of an OpenFlow
 in practice, go to the Hub and pick a Flow (e.g
-[Upon new user signup, check for existence in postgres, hash password, add record to postgres and airtable, send an email to new user](https://hub.windmill.dev/flows/23/)),
+[Upon new user sign up, check for existence in postgres, hash password, add record to postgres and Airtable, send an email to new user](https://hub.windmill.dev/flows/23/)),
 then select the JSON tab to see its specification.
 
 ## OpenFlow
@@ -73,9 +73,9 @@ type FlowValue = {
 A Flow is just a sequence of modules, and an optional failure module that will
 be triggered to handle a failure at any point of the Flow. Think `try/catch` in
 terms of programming languages. See an example of modules represented in a graph
-below - this visualisation is built-in on the Windmill Flow editor.
+below - this visualization is built-in on the Windmill Flow editor.
 
-![Flow Modules](./modules_graph.png "Flow Modules")
+![Flow Modules](./modules_graph.png 'Flow Modules')
 
 ### FlowModule
 
@@ -198,7 +198,7 @@ directly**, so you could imagine composing your email body or SQL query using
 string interpolation and populating it with previous results. The Windmill
 Editor makes it very easy to do so, using the properties picker:
 
-![Prop picker](./prop_picker.png "Prop picker")
+![Prop picker](./prop_picker.png 'Prop picker')
 
 More details at:
 
@@ -242,7 +242,7 @@ If present:
 
   This
   is useful for inserting user inputs during the execution of a Flow, such as
-  approving (resum) or disapproving (cancel) a Flow.
+  approving (resume) or disapproving (cancel) a Flow.
 
 Resume messages are sent to
 `https://app.windmill.dev/w/<WORKSPACE>/jobs/resume/<JOB_ID>` as POST or GET

@@ -31,7 +31,7 @@ In the charts values of our [helm charts](https://github.com/windmill-labs/windm
 
 ### Remote Docker Daemon
 
-One possibility to use the docker daemon wiht k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
+One possibility to use the docker daemon with k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
 
 Here an example of a dind template to be adapted:
 
@@ -42,13 +42,13 @@ metadata:
   name: dind
 spec:
   containers:
-  - name: dind
-    image: 'docker:stable-dind'
-    command:
-    - dockerd
-    - --host=tcp://0.0.0.0:8000
-    securityContext:
-      privileged: true
+    - name: dind
+      image: 'docker:stable-dind'
+      command:
+        - dockerd
+        - --host=tcp://0.0.0.0:8000
+      securityContext:
+        privileged: true
 ```
 
 ## Use
@@ -73,9 +73,9 @@ The image is the docker image to run. It can be any image available on docker hu
 
 The command is the command to run inside the container. It can be any command available in the image.
 
-It is just a bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentification.
+It is just a bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentication.
 
-Do not use the deamon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
+Do not use the daemon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
 
 Like any bash script, it will return the last line of the stdout. So be sure to print the the return value from your command if you'd like to use it as a result.
 
@@ -118,6 +118,6 @@ latest: Pulling from library/alpine
 7264a8db6415: Pull complete
 Digest: sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
 Status: Downloaded newer image for alpine:latest
-Hello 
+Hello
 + exit 0
 ```

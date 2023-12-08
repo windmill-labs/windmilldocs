@@ -5,6 +5,7 @@ Although Windmill provides a comprehensive [App editor](../getting_started/7_app
 :::info React & Windmill
 
 If you're looking for a way to:
+
 - Import your own components in React that interact with the rest of the [App editor](../getting_started/7_apps_quickstart/index.mdx), see [Import Custom React Components](../apps/4_react_components.md).
 - Integrate Windmill applications into React-based project, see [Windmill React SDK](../misc/15_react_sdk/index.md).
 

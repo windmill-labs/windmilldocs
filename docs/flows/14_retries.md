@@ -39,12 +39,12 @@ From the `Advanced` menu, pick `Retries` and toggle `Exponential backoff enabled
 
 From there, define a maximum number of attempts and a given exponential delay defined by a base (in seconds), a multiplier and the number of the attempt.
 
-The formular being given by `delay = multiplier * base ^ (number of attempt)`.
+The formula being given by `delay = multiplier * base ^ (number of attempt)`.
 
 For example, for:
 
 - base = 3
-- mutliplier = 2
+- multiplier = 2
 - attempts = 5
 
 Here are the delays between each attempts:

@@ -7,12 +7,12 @@ import TabItem from '@theme/TabItem';
 You can directly access Variables and Resources from the Code Editor.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/add_resources_variables.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -31,11 +31,11 @@ You can directly access Variables and Resources from the Code Editor.
 
 There are 2 main ways resources are used within scripts:
 
-### Passing resources as parameters to scripts (prefered)
+### Passing resources as parameters to scripts (preferred)
 
 Provided you have the right permissions and the resource type exists in the workspace, you can access resource types from scripts, flows and apps using the Windmill client or [TypedDict](https://mypy.readthedocs.io/en/stable/typed_dict.html) in Python.
 
-From the code editor's toolbar, click on the `+ Type` button and pick the right resource type.  For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script:
+From the code editor's toolbar, click on the `+ Type` button and pick the right resource type. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script:
 
 <Tabs className="unique-tabs">
 <TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -44,14 +44,14 @@ From the code editor's toolbar, click on the `+ Type` button and pick the right 
 type Postgresql = object;
 // OR one can fully type it
 type Postgresql = {
-  host: string,
-  port: number,
-  user: string,
-  dbname: string,
-  sslmode: string,
-  password: string,
-  root_certificate_pem: string 
-}
+	host: string;
+	port: number;
+	user: string;
+	dbname: string;
+	sslmode: string;
+	password: string;
+	root_certificate_pem: string;
+};
 
 export async function main(postgres: Postgresql) {
 	// Use Resource...
@@ -72,7 +72,7 @@ class postgresql(TypedDict):
     sslmode: str
     password: str
     root_certificate_pem: str
-    
+
 def main(selected_postgres: postgresql):
 	# Use Resource...
 ```

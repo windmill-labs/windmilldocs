@@ -2,7 +2,7 @@
 
 It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and Deno.
 
-Note that in both the webeditor and with the CLI, your scripts do not necessarily need to have a main function. If they don't, they are asummed to be shared logic and not runnable scripts.
+Note that in both the webeditor and with the CLI, your scripts do not necessarily need to have a main function. If they don't, they are assumed to be shared logic and not runnable scripts.
 
 It works extremely well in combination with [Developing scripts locally](../4_local_development/index.mdx) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
 

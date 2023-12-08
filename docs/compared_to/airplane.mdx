@@ -6,9 +6,11 @@ Airplane is great for building internal tools. Windmill does it too, but makes i
 
 Although being a tool similar to Airplane, Windmill adopts radically different approaches.
 
-![Windmill Airplane](../assets/compared_to/windmill_airplane.png "Windmill Airplane")
+![Windmill Airplane](../assets/compared_to/windmill_airplane.png 'Windmill Airplane')
 
-<a href="https://www.airplane.dev/" rel="nofollow">Airplane</a> is a developer platform to build internal UIs and workload automation.
+<a href="https://www.airplane.dev/" rel="nofollow">
+	Airplane
+</a> is a developer platform to build internal UIs and workload automation.
 
 ## Open Source
 
@@ -21,7 +23,7 @@ to meet the community's needs.
 Finally, Windmill provides and integrates into its platform a [public Community Hub](https://hub.windmill.dev/)
 where users share useful and proven scripts, flows, and applications.
 
-![Windmill Github](../assets/compared_to/windmill_gh.png "Windmill Github")
+![Windmill Github](../assets/compared_to/windmill_gh.png 'Windmill Github')
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -29,12 +31,12 @@ where users share useful and proven scripts, flows, and applications.
 		description="Windmill's official repository."
 		href="https://github.com/windmill-labs/windmill"
 	/>
-    <DocCard
+	<DocCard
 		title="Self Host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
 	/>
-    <DocCard
+	<DocCard
 		title="Contributor Guide"
 		description="Contribute to our codebase, Windmill Hub or our Discord."
 		href="/docs/misc/contributing"
@@ -60,7 +62,7 @@ Thus Airplane cannot run to the scale of millions of tasks because of this desig
 and require a much costlier and heavier infrastructure than windmill.
 Windmill can run 26M tasks a month on a single worker costing 5$. Airplane does not provide figures on its average runtime and performance.
 
-Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/), on which you could imagine launching 1m simulateously by API.
+Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/), on which you could imagine launching 1m simultaneously by API.
 
 This inability to scale, inefficient architecture and high cold-start is the most common reasons for users to migrate from Airplane to Windmill.
 
@@ -73,10 +75,10 @@ We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our pe
 		href="/docs/misc/benchmarks"
 	/>
 	<DocCard
-    	title="OpenAPI"
-    	description="Interact with Windmill."
-    	href="https://app.windmill.dev/openapi.html"
-    />
+		title="OpenAPI"
+		description="Interact with Windmill."
+		href="https://app.windmill.dev/openapi.html"
+	/>
 </div>
 
 ## Building and Deploying
@@ -89,19 +91,21 @@ Deployments in Windmill can be done from the web UI in a matter of seconds, or f
 Before deployment and at any point, you can test what you are building directly from the editors.
 
 The videos below show how to:
+
 - build
 - manage dependencies
 - deploy
 
 the same script on Windmill vs Airplane (all loading times are at 100% speed).
 
-<br/>
+<br />
 
 > On Windmill, write and test your script from the editor. Deploy it with web UI and it's ready for running & sharing.
 
-<br/>
+<br />
 
 For Airplane, it implies:
+
 - Creating the file from the web UI (or CLI).
 - Editing it on a separate code editor.
 - Testing on the web UI.
@@ -111,14 +115,14 @@ For Airplane, it implies:
 - Running the actual script on another web UI page.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/cowsay_deploy_airplane.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/cowsay_deploy_airplane.mp4"
 />
 
 ## Low-Code Editors
 
-Windmill embedds a web IDE and low-code builders to create endpoints, flows and apps.
+Windmill embeds a web IDE and low-code builders to create endpoints, flows and apps.
 
 :::info Scripts in Airplane
 Building scripts in Airplane involves transitioning
@@ -140,12 +144,12 @@ The workflow engine of Airplane is <a href="https://docs.airplane.dev/tasks/work
 which is incredibly complex.
 This complexity results in a lack of efficiency and intuitiveness.
 
-<br/>
+<br />
 
 Airplane also embeds an equivalent feature called <a href="https://docs.airplane.dev/runbooks/getting-started" rel="nofollow">Runbooks</a> that allows to compose multiple tasks together.
-Airplanes's Runbooks are a good fit for small series of succint simple tasks executing one after each other.
+Airplanes's Runbooks are a good fit for small series of succinct simple tasks executing one after each other.
 
-<br/>
+<br />
 
 Runbooks will hardly support complexity as the Airplane does not provide a graphical view, or built-in ways to create
 conditional branches or loops.
@@ -169,7 +173,7 @@ represented as DAGs. As the flow editor has a dedicated web UI and relies on scr
 Building apps in Airplane implies going 100% through code using React, with <a href="https://docs.airplane.dev/views/components" rel="nofollow">limited available components</a>.
 :::
 
-Windmill's App Editor works on a drap-and-drop basis, with code where it matters. If you prefer, you can also [import apps in React/Vue/Svelte](../react_vue_svelte_apps/index.mdx) and link them to your scripts and flows.
+Windmill's App Editor works on a drag-and-drop basis, with code where it matters. If you prefer, you can also [import apps in React/Vue/Svelte](../react_vue_svelte_apps/index.mdx) and link them to your scripts and flows.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -191,7 +195,7 @@ Windmill is cheaper at scale and can be used for free at any scale thanks to its
 		description="Windmill's subscription plans and simulations."
 		href="/pricing"
 	/>
-    <DocCard
+	<DocCard
 		title="Plans Details and Subscriptions"
 		description="Windmill transparently provides the content and pricing of its upgraded plans."
 		href="/docs/misc/plans_details"
@@ -213,10 +217,9 @@ Anyone can create an integration with just a few clicks.
 	/>
 </div>
 
-
 ## Everything else
 
-For everyting else, it's comparable: you can [develop locally and source control](../core_concepts/17_collaboration/index.mdx#git-integration), [use VS Code](../cli_local_dev/1_vscode-extension/index.mdx), generate [webhooks](../core_concepts/4_webhooks/index.mdx), etc.
+For everything else, it's comparable: you can [develop locally and source control](../core_concepts/17_collaboration/index.mdx#git-integration), [use VS Code](../cli_local_dev/1_vscode-extension/index.mdx), generate [webhooks](../core_concepts/4_webhooks/index.mdx), etc.
 
 To conclude, Airplane is excellent for executing scripts within a familiar framework for developers.
 
