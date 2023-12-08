@@ -18,23 +18,25 @@ From the workspace settings, you can set a [git_repository](../../integrations/g
 
 :::info Private Folders
 
-Script, flows and apps in the user private folders will be ignored 
 All scripts, flows and apps located in the workspace will be pushed to the Git repository, except the ones that are saved in private user folders (i.e. where the path starts with `u/`, use those with `f/` instead).
+
+<br/>
+
+Filtering out certain sensitive folders from the sync will be available soon.
 
 :::
 
-Every time a script is deployed, only the updated script will be pushed to the remote Git repository.
+On each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx#deployed-version), only the updated script/flow/app will be pushed to the remote Git repository.
 
 For the Git repo to be representative of the entire workspace, it is recommended to set it up using the [Windmill CLI](../3_cli/index.mdx) before turning this option on.
 
 Run the following commands from the git repo folder to push the initial workspace content to the remote:
 
 ```bash
-
-> wmill workspace add WORKSPACE_NAME WORKSPACE_ID WINDMILL_URL
+> echo 'u/' > .wmillignore
 > wmill sync pull --raw --skip-variables --skip-secrets --skip-resources
-> git add -A git commit -m 'Initial commit'
-> git push
+> git add -A
+> git commit -m 'Initial commit'
 
 ```
 
