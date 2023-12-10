@@ -18,9 +18,10 @@ export default function Hero() {
 						Developer platform for APIs, critical jobs, workflows, data pipelines and UIs
 					</h1>
 					<h2 className="mt-6 text-lg leading-8  font-medium">
-						Turn scripts into sharable apps and APIs, compose them as workflows and expose them with
-						UIs on the <b>fastest</b> and most <b>reliable</b> job <b>orchestrator</b>.
-						Self-hostable <b>worker infrastructure</b>: horizontally scalable, reliable, ultra-fast.
+						Turn scripts into sharable apps and APIs, compose them as workflows or data pipelines
+						and expose them with UIs on the <b>fastest</b> and most <b>reliable</b> job{' '}
+						<b>orchestrator</b>. Self-hostable <b>worker infrastructure</b>: horizontally scalable,
+						reliable, ultra-fast.
 						<br />
 						<a className="underline" href="https://github.com/windmill-labs/windmill">
 							Fully Open-source
