@@ -61,7 +61,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
-							label: 'PgSQL / MySQL / BigQuery / Snowflake'
+							label: 'SQL & Query languages'
 						},
 						{
 							type: 'doc',
@@ -216,6 +216,7 @@ const sidebars = {
 						'apps/app_debugging',
 						'apps/app_deployment',
 						'apps/public_apps',
+						'apps/schedule_reports',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/app_e-commerce'
@@ -510,6 +511,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/mongodb',
 							label: 'MongoDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mssql',
+							label: 'MSSQL'
 						},
 						{
 							type: 'doc',

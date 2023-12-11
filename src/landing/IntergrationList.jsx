@@ -7,6 +7,7 @@ import {
 	SiLinkedin,
 	SiMatrix,
 	SiMysql,
+	SiMicrosoftsqlserver,
 	SiOpenai,
 	SiTelegram,
 	SiToggl,
@@ -16,6 +17,7 @@ import {
 const integrations = [
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'MySQL', src: 'third_party_logos/mysql.svg', Icon: SiMysql },
+	{ name: 'MSSQL', src: 'third_party_logos/msssql.svg', Icon: SiMicrosoftsqlserver },
 	{ name: 'BigQuery', src: 'third_party_logos/bigquery.svg' },
 	{ name: 'Snowflake', src: 'third_party_logos/snowflake.svg'},
 	{ name: 'GitHub', src: 'third_party_logos/github.svg', Icon: SiGithub },
@@ -79,7 +81,7 @@ export default function IntergrationList() {
                             ' hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
                         )}
                         href={
-							(item.name === 'PostgreSQL' || item.name === 'MySQL' || item.name === 'BigQuery' || item.name === 'Snowflake') ?
+							(item.name === 'PostgreSQL' || item.name === 'MySQL' || item.name === 'BigQuery' || item.name === 'MSSQL' || item.name === 'Snowflake') ?
                             '/docs/getting_started/scripts_quickstart/sql' :
                             `/docs/integrations/${item.name
                                 .toLowerCase()
