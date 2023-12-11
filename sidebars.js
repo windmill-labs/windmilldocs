@@ -320,6 +320,7 @@ const sidebars = {
 					]
 				},
 				'advanced/deploy_gh_gl/index',
+				'advanced/git_sync/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -338,7 +339,8 @@ const sidebars = {
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_client'
+				'advanced/clients/ts_client',
+				'advanced/browser_automation/index'
 			]
 		},
 
@@ -453,6 +455,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/gsheets',
 							label: 'Google Sheets'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/git_repository',
+							label: 'Git Repository'
 						},
 						{
 							type: 'doc',
@@ -634,7 +641,7 @@ const sidebars = {
 						},
 						'misc/benchmarks/aws_lambda/index'
 					]
-				},
+				}
 			]
 		},
 		{

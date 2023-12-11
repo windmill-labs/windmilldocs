@@ -26,8 +26,16 @@ deno install --unstable -A https://deno.land/x/wmill/main.ts
 
 Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example:
 
+Linux:
+
 ```bash
-export PATH="/Users/yourusername/.deno/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
+```
+
+Mac:
+
+```bash
+export PATH="/Users/<username>/.deno/bin:$PATH"
 ```
 
 :::tip
