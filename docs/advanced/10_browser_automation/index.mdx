@@ -1,4 +1,4 @@
-# Browser automation
+# Browser Automation
 
 Windmill makes it easy to perform browser automation tasks, such as testing or web scraping.
 
@@ -37,7 +37,7 @@ export async function main() {
     headless: "new",
     executablePath: "/usr/bin/chromium",
     args: ["--no-sandbox"],
-    //userDataDir: "./user-data", // this is only required when windmill is running with nsjail where you don't have access to the default user data dir
+    //userDataDir: "./user-data", // this is only required when Windmill is running with nsjail where you don't have access to the default user data dir
   });
 
   const page = await browser.newPage();
