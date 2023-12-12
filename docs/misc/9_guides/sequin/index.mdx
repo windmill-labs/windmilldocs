@@ -53,7 +53,7 @@ For more details on setting up a Sequin sync, [see this guide](https://docs.sequ
 
 ## Create a Windmill Resource
 
-Windmill provides integrations with many different apps and services with [resources](../../../core_concepts/3_resources_and_types/index.mdx). Each Resource has a Resource Type (PostgreSQL, MySQL, BigQuery, Snowflake) that defines the schema that the resource of this type needs to implement.
+Windmill provides integrations with many different apps and services with [resources](../../../core_concepts/3_resources_and_types/index.mdx). Each Resource has a Resource Type (PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake) that defines the schema that the resource of this type needs to implement.
 
 Sequin uses a [Postgres Proxy](https://docs.sequin.io/writes#configuration) to interface with your Sequin-synced tables. The Proxy lets Sequin capture inserts, updates, and deletes you make in your database and commit them to the API.
 
@@ -130,7 +130,7 @@ With Sequin, you can build Windmill apps on top of sources like Salesforce, Airt
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="SQL Quickstart"
-		description="Write your first Windmill script in PostgreSQL, MySQL, BigQuery or Snowflake SQL."
+		description="Write your first Windmill script in PostgreSQL, MySQL, MSSQL, BigQuery or Snowflake SQL."
 		href="/docs/getting_started/scripts_quickstart/sql"
 		Icon={SiPostgresql}
 	/>

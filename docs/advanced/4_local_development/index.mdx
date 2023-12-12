@@ -11,7 +11,8 @@ Windmill has [its own integrated development environment](../../code_editor/inde
 Local development in Windmill (whether [self-hosted](../1_self_host/index.mdx) or on the cloud) has two distinct aspects:
 
 1. **Editing scripts and flows**: This is done in [VS Code](../../cli_local_dev/1_vscode-extension/index.mdx) where Windmill has its own [extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill). The extension allows for [UI pre-visualization](../../core_concepts/23_instant_preview/index.mdx), fetching resources, variables, scripts & flows, and testing them. However, these runs and executions are technically carried out from your remote instance.
-2. **Run locally**. For iteration, integration with CI/CD and testing purposes you may need to [run a script locally](./run_locally.mdx) that also interacts with Windmill (for example, to retrieve resources). It will allow to integrate Windmill with any testing framework. To do this, you will need to fill out the context variables that would otherwise be filled out by the Windmill runtime for you.
+
+![VS Code Extension](../../../blog/2023-11-20-vscode/vscode_extension.png "Windmill VS Code extension")
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -19,12 +20,31 @@ Local development in Windmill (whether [self-hosted](../1_self_host/index.mdx) o
 		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
-	<DocCard
+</div>
+
+<br/>
+
+2. **Run locally**. For iteration, integration with CI/CD and testing purposes you may need to [run a script locally](./run_locally.mdx) that also interacts with Windmill (for example, to retrieve resources). It will allow to integrate Windmill with any testing framework. To do this, you will need to fill out the context variables that would otherwise be filled out by the Windmill runtime for you.
+
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
 		title="Run Locally"
 		description="Run scripts locally that interact with a Windmill instance."
 		href="/docs/advanced/local_development/run_locally"
 	/>
-	<DocCard
+    <DocCard
 		title="Command-Line Interface (CLI)"
 		description="Interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"

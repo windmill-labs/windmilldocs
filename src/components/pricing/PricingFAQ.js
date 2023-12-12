@@ -70,7 +70,7 @@ const faqs = [
 		answer: (
 			<span>
 				A "native" worker is a normal worker that listens solely for "native" jobs: PostgreSQL,
-				MySQL, BigQuery, Snowflake, REST which are implemented in windmill natively in our Rust
+				MySQL, MSSQL, BigQuery, Snowflake, REST which are implemented in windmill natively in our Rust
 				backend and thus those jobs have minimal memory footprint and are mostly IO bounds so
 				require little vCPUs. In a typical deployment, native workers have limits of 0.1 vCPU and
 				200Mb instead of the usual 1vCPU and 2Gb.

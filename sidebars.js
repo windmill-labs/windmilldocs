@@ -61,7 +61,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
-							label: 'PgSQL / MySQL / BigQuery / Snowflake'
+							label: 'SQL & Query languages'
 						},
 						{
 							type: 'doc',
@@ -216,6 +216,7 @@ const sidebars = {
 						'apps/app_debugging',
 						'apps/app_deployment',
 						'apps/public_apps',
+						'apps/schedule_reports',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/app_e-commerce'
@@ -284,6 +285,23 @@ const sidebars = {
 				'advanced/self_host/index',
 				{
 					type: 'category',
+					label: 'Local Development',
+					collapsed: false,
+					link: {
+						type: 'doc',
+						id: 'advanced/local_development/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'cli_local_dev/vscode-extension/index',
+							label: 'VS Code'
+						},
+						'advanced/local_development/run_locally'
+					]
+				},
+				{
+					type: 'category',
 					label: 'Command Line Interface (CLI)',
 					link: {
 						type: 'doc',
@@ -302,24 +320,8 @@ const sidebars = {
 						'advanced/cli/script'
 					]
 				},
-				{
-					type: 'category',
-					label: 'Local Development',
-					collapsed: false,
-					link: {
-						type: 'doc',
-						id: 'advanced/local_development/index'
-					},
-					items: [
-						{
-							type: 'doc',
-							id: 'cli_local_dev/vscode-extension/index',
-							label: 'VS Code'
-						},
-						'advanced/local_development/run_locally'
-					]
-				},
 				'advanced/deploy_gh_gl/index',
+				'advanced/git_sync/index',
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -457,6 +459,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/git_repository',
+							label: 'Git Repository'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/github',
 							label: 'GitHub'
 						},
@@ -504,6 +511,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/mongodb',
 							label: 'MongoDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mssql',
+							label: 'MSSQL'
 						},
 						{
 							type: 'doc',
