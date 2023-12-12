@@ -17,7 +17,7 @@ Executions within a flow can be suspended for a given time.
 
 This feature is made to hold a flow **inside of it**. Based on your specific needs, you may want to utilize other features:
 
-- [Schedule the trigger](../core_concepts/1_scheduling/index.md) of a script or flow.
+- [Schedule the trigger](../core_concepts/1_scheduling/index.mdx) of a script or flow.
 - [Suspend a flow until a step is approved](./11_flow_approval.mdx).
 - [Retry](./14_retries.md) a step multiple times until it is successful.
 - [Early stop/Break](./2_early_stop.md) the flow if a step met a predicate expression.

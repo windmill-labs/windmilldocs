@@ -37,7 +37,7 @@ Users can be given different levels of permissions:
 
 2. **Admin**:
 	- At the [workspace](#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
-	- At the [folder](../8_groups_and_folders/index.mdx#folders) level, an admin of a folder has read, write and archive access to all the elements inside the folders ([scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.mdx), [apps](../../getting_started/7_apps_quickstart/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.md)) and can manage the permissions as well as add new admins.
+	- At the [folder](../8_groups_and_folders/index.mdx#folders) level, an admin of a folder has read, write and archive access to all the elements inside the folders ([scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.mdx), [apps](../../getting_started/7_apps_quickstart/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.mdx)) and can manage the permissions as well as add new admins.
 
 3. **Author**: Authors can execute and view scripts, flows, and apps within a workspace. Authors see the full interface of Windmill and contrary to the Operators, they have the ability to create and edit scripts, flows and apps. Authors have read and write access to the entities they create or have been [granted access to by others](../8_groups_and_folders/index.mdx).
 
@@ -71,7 +71,7 @@ Windmill implements a fine-grained Access Control List (ACL) by default, allowin
 - [scripts](../../getting_started/0_scripts_quickstart/index.mdx)
 - [resources](../3_resources_and_types/index.mdx)
 - [variables](../2_variables_and_secrets/index.mdx)
-- [schedules](../1_scheduling/index.md)
+- [schedules](../1_scheduling/index.mdx)
 - [jobs](../20_jobs/index.mdx)
 
 There are 3 possible roles for each item:
@@ -85,7 +85,7 @@ The ACLs are defined by the path of the item.
 
 ### Path
 
-Windmill uniquely identifies [scripts](../../getting_started/0_scripts_quickstart/index.mdx), [variables](../2_variables_and_secrets/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.md) - and in general almost everything - using their path. The paths are globally unique within the category of entities they represent. In short, a Resource and a Schedule for example can have the same path, without conflict.
+Windmill uniquely identifies [scripts](../../getting_started/0_scripts_quickstart/index.mdx), [variables](../2_variables_and_secrets/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.mdx) - and in general almost everything - using their path. The paths are globally unique within the category of entities they represent. In short, a Resource and a Schedule for example can have the same path, without conflict.
 
 Each entity's ACL defines its owner and specifies the read and write permissions. By default, only the owner of an entity has read and write access to it. Entities can be explicitly shared with other [groups](../8_groups_and_folders/index.mdx#groups) and users in either read-only or read and write mode through [folders](../8_groups_and_folders/index.mdx#folders). Write mode implicitly includes read permission.
 

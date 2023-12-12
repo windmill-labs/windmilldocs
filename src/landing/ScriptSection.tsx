@@ -118,11 +118,11 @@ const tabs = [
 				altText: 'Write scripts in Rest & GraphQL'
 			},
 			{
-				title: 'PostgreSQL / MySQL / BigQuery / Snowflake',
+				title: 'PostgreSQL / MSSQL / MySQL / BigQuery / Snowflake',
 				icon: Database,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL / MySQL / BigQuery / Snowflake</a>.</div>,
+				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake</a>.</div>,
 				imageSrc: '/images/sql-code.png',
-				altText: 'Write scripts in PostgreSQL / MySQL / BigQuery / Snowflake'
+				altText: 'Write scripts in PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake'
 			},
 		]
 	},

@@ -1,11 +1,11 @@
 ---
-title: 'Quickstart PostgreSQL / MySQL / BigQuery / Snowflake'
+title: 'Quickstart PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake'
 slug: '/getting_started/scripts_quickstart/sql'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# PostgreSQL / MySQL / BigQuery / Snowflake
+# PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake
 
 In this quick start guide, we will write our first script in SQL. We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
@@ -20,14 +20,14 @@ In this quick start guide, we will write our first script in SQL. We will see ho
 
 <br />
 
-Windmill supports [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [BigQuery](https://cloud.google.com/bigquery) and [Snowflake](https://www.snowflake.com/). In any case, it requires creating a dedicated resource.
+Windmill supports [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [Microsoft SQL Server](https://www.microsoft.com/sql-server), [BigQuery](https://cloud.google.com/bigquery) and [Snowflake](https://www.snowflake.com/). In any case, it requires creating a dedicated resource.
 
 ## Create Resource
 
 Windmill provides integrations with many different apps and services with the use
 of [Resources](../../../core_concepts/3_resources_and_types/index.mdx). Resources are rich objects in JSON that allow to store configuration and credentials.
 
-Each Resource has a _Resource Type_ ([PostgreSQL](https://hub.windmill.dev/resource_types/114/postgresql), [MySQL](https://hub.windmill.dev/resource_types/111/mysql), [BigQuery](https://hub.windmill.dev/resource_types/108/bigquery), [Snowflake](https://hub.windmill.dev/resource_types/107/snowflake))
+Each Resource has a _Resource Type_ ([PostgreSQL](https://hub.windmill.dev/resource_types/114/postgresql), [MySQL](https://hub.windmill.dev/resource_types/111/mysql), [MSSQL](https://hub.windmill.dev/resource_types/132/ms_sql_server), [BigQuery](https://hub.windmill.dev/resource_types/108/bigquery), [Snowflake](https://hub.windmill.dev/resource_types/107/snowflake))
 that defines the schema that the resource of this type needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
 
@@ -113,6 +113,27 @@ Fill out the form with the information of your MySQL instance and "Test connecti
 | user     | string | Username        |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 | database | string | Database name   |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 | password | string | User's password |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
+
+### MSSQL
+
+To be able to connect to a [Microsoft SQL Server](https://www.microsoft.com/sql-server) instance, we'll need to define a Resource with the `ms_sql_server` Resource Type first.
+
+Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
+"Add a resource/API" in the top right corner and select the `ms_sql_server` type.
+
+![Select MySQL Resource Type](./select_mssql.png)
+
+Fill out the form with the information of your MySQL instance and "Test connection" if needed.
+
+![Paste in Resource Values](./fill_mssql.png)
+
+| Property | Type   | Description                                                | Default | Required | Where to Find                                                                          |
+| -------- | ------ | ---------------------------------------------------------- | ------- | -------- | -------------------------------------------------------------------------------------- |
+| host     | string | Instance host                                              |         | true     | Your hosting provider's control panel or in your server's MSSQL configuration file     |
+| port     | number | Instance port                                              |         | false    | Your hosting provider's control panel or in your server's MSSQL configuration file     |
+| user     | string | Username                                                   |         | true     | Created in MSSQL (e.g., via SQL Server Management Studio) or provided by your hosting |
+| dbname   | string | Database name                                              |         | true     | Created in MSSQL (e.g., via SQL Server Management Studio) or provided by your hosting |
+| password | string | User's password                                            |         | true     | Created in MSSQL (e.g., via SQL Server Management Studio) or provided by your hosting |
 
 ### BigQuery
 
@@ -241,7 +262,7 @@ You can directly "Test connection" if needed.
 ## Create Script
 
 Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
-click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, "PostgreSQL", "MySQL", "BigQuery", "Snowflake".
+click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, [PostgreSQL](#postgresql-1), [MySQL](#mysql-1), [MSSQL](#mssql-1), [BigQuery](#bigquery-1), [Snowflake](#snowflake-1).
 
 ![Script creation first step](../../../assets/integrations/sql_new_script.png)
 
@@ -282,6 +303,22 @@ INSERT INTO demo VALUES (?, ?)
 You can then write your prepared statement.
 
 ![Mysql statement](./mysql_statement.png)
+
+### MSSQL
+
+Arguments need to be passed in the given format:
+
+```sql
+-- @p1 name1 (varchar) = default arg
+-- @p2 name2 (int)
+INSERT INTO demo VALUES (@p1, @p2)
+```
+
+"name1", "name2" being the names of the arguments, and "default arg" the optional default value.
+
+You can then write your prepared statement.
+
+![Mysql statement](./mssql_statement.png)
 
 ### BigQuery
 
