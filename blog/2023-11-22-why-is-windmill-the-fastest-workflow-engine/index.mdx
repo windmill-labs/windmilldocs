@@ -303,7 +303,7 @@ json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
 
 ## Workers efficiency
 
-In normal mode, workers pull job one at a time, identify the language used by the job (Python, TypeScript, Go, Bash, SnowFlake, PostgreSql, MySql, MSSQL, BiQquery) and then spawn the corresponding runtime then run the job.
+In normal mode, workers pull job one at a time, identify the language used by the job (Python, TypeScript, Go, Bash, SnowFlake, PostgreSql, MySql, MSSQL, BigQquery) and then spawn the corresponding runtime then run the job.
 
 Workers run jobs bare, without running containers which gives us a performance boost compared to container based workflow engines. However, for sandboxing purposes, workers themselves can be run inside containers and can run each job in an nsjail sandbox.
 
