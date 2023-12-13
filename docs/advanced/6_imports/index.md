@@ -125,9 +125,20 @@ script and hence there is no need for any additional steps.
 
 e.g:
 
-```
+```go
 import (
 	"rsc.io/quote"
     wmill "github.com/windmill-labs/windmill-go-client"
 )
 ```
+
+## Imports in PowerShell
+
+For PowerShell, imports are parsed when the script is run and modules are automatically installed if they are not found in the cache.
+
+e.g.: 
+
+```powershell
+Import-Module -Name MyModule
+```
+
