@@ -119,8 +119,8 @@ In Windmill, you can just do:
 
 ```
 conn = duckdb.connect()
-s3_resource = wmill.get_resource("/path/to/resource")
-conn.execute(wmill.duckdb_connection_settings(s3_resource)["connection_settings_str"])
+# path/to/resource arg is optional and by default the workspace s3 resource will be used
+conn.execute(wmill.duckdb_connection_settings("/path/to/resource")["connection_settings_str"])
 
 conn.sql("SELECT * FROM read_parquet(s3://windmill_bucket/file.parquet)")
 ```
@@ -147,8 +147,8 @@ with s3.open("s3://windmill_bucket/file.parquet", mode="rb") as f:
 becomes in Windmill:
 
 ```python
-s3_resource = wmill.get_resource("/path/to/resource")
-s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings(s3_resource))
+# /path/to/resource arg is optional and by default the workspace s3 resource will be used
+s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings("/path/to/resource")["s3fs_args"])
 with s3.open("s3://windmill_bucket/file.parquet", mode="rb") as f:
     dataframe = pl.read_parquet(f)
 ```
@@ -167,7 +167,7 @@ s3object = dict
 def main(input_dataset: s3object):
     # initialization: connect Polars to the workspace bucket
     s3_resource = wmill.get_resource("/path/to/resource")
-    s3 = s3fs.S3FileSystem(wmill.duckdb_connection_settings(s3_resource))
+    s3 = s3fs.S3FileSystem(wmill.polars_connection_settings("/path/to/resource")["s3fs_args"])
 
     # reading data from s3:
     bucket = s3_resource["bucket"]
