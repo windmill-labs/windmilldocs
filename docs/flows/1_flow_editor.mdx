@@ -5,10 +5,12 @@ import { Timer, TerminalSquare } from 'lucide-react';
 
 Windmill's Flow Editor allows you to build flows with a low-code builder.
 
-:::info Workflows
+Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
 
-A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) in the case of Windmill.
-:::
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
+
+In Windmill, each step is code with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
+
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

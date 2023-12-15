@@ -15,11 +15,11 @@ export default function Content() {
 	const color = '#6ccc93';
 	const name = 'Supabase';
 	const website = 'https://supabase.com/';
-	const windmill_color = '#4E80EE';
 
 	const data = {
-		title: `Build internal tools with ${name}`,
-		subtitle: `Windmill unlocks your creation of internal tools with ${name}. From scripts, build admin panels, BI dashboards, workflows, and more.`,
+		title: `APIs, workflows and UIs with ${name}`,
+		subtitle: `Create workflows, data pipelines, endpoints or admin panels that interact with ${name}.`,
+		logo: '/third_party_logos/supabase.svg',
 		description: (
 			<div className="flex flex-col gap-4">
 				<p>
@@ -42,11 +42,8 @@ export default function Content() {
 				<p>Windmill supports PostgreSQL queries directly in the UI.</p>
 			</div>
 		),
-		darkScreenshot: '/integrations/solutions_dark.png',
-		lightScreenshot: '/integrations/solutions_light.png',
-		documentationLink: 'https://docs.windmillui.com/',
 
-		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from WindmillHub community library.`,
+		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from WindmillHub community library. Windmill supports scripts in TypeScript, Python, Go, Bash and SQL.`,
 		hubIntegrations: [
 			{
 				title: 'Fetch data',
@@ -95,7 +92,7 @@ export default function Content() {
 						Windmill also supports{' '}
 						<a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">
 							<strong>
-								<span style={{ color: windmill_color }}>PostgreSQL</span>
+								<span>PostgreSQL</span>
 							</strong>
 						</a>{' '}
 						as a language. For
@@ -118,5 +115,5 @@ export default function Content() {
 		</>
 	);
 
-	return <Solution data={data} name={name} color={color} extraBlock={extraBlock} />;
+	return <Solution data={data} name={name} color={color} website={website} extraBlock={extraBlock} />;
 }

@@ -19,6 +19,7 @@ export default function PricingPage() {
 						name="description"
 						content="Windmill is free to use. Price of paying offer depends of Self-hosted vs. Cloud, and of features between Team and Enterprise offers. "
 					/>
+					<link rel="icon" href="/img/logo.svg" />
 				</Head>
 				<LandingSection bgClass="relative">
 					<>

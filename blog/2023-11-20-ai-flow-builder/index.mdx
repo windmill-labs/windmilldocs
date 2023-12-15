@@ -85,9 +85,9 @@ We are using [GPT-4-turbo (1106-preview version)](https://platform.openai.com/do
  
 ## What are Windmill Flows?
 
-Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represents the dependencies between steps.
-The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
-In Windmill, each step is code with a main function in typescript, python, go, bash or raw queries to databases.
+Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
+In Windmill, each step is code with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
 
 The primitives supported by Windmill workflows are:
 
