@@ -39,7 +39,7 @@ const navigation = {
 		{ name: 'Windmill AI', href: '/windmill_ai' },
 		{ name: 'Supabase', href: '/integrations/supabase' },
 		{ name: 'Slack', href: '/integrations/slack' },
-		{ name: 'Hubspot', href: '/integrations/hubspot' },
+		{ name: 'Stripe', href: '/integrations/stripe' },
 	]
 };
 
