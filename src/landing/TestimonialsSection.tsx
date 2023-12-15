@@ -101,24 +101,6 @@ const testimonials = [
 	{
 		body: (
 			<span>
-				The best part about{' '}
-				<strong>
-					<span className="text-blue-500">Windmill</span>
-				</strong>{' '}
-				is the team behind it, join the discord server to see how fast they fix issues and add
-				features.
-			</span>
-		),
-		author: {
-			handle: 'hn',
-			backlink: 'https://news.ycombinator.com/item?id=35921601',
-			name: 'thawab on HackerNews',
-			date: 'May 12th 2023'
-		}
-	},
-	{
-		body: (
-			<span>
 				Love{' '}
 				<strong>
 					<span className="text-blue-500">Windmill</span>
@@ -133,6 +115,23 @@ const testimonials = [
 			backlink: 'https://news.ycombinator.com/item?id=37001402',
 			name: 'slig on HackerNews',
 			date: 'August 4th 2023'
+		}
+	},
+	{
+		body: (
+			<span>
+				played with{' '}
+				<strong>
+					<span className="text-blue-500">windmill.dev</span>
+				</strong>{' '}
+				over the weekend, and it's really hitting a sweet spot for me between no-code/low-code, a fancy UI but still being powerful enough to actually replace significant amounts of code.
+			</span>
+		),
+		author: {
+			handle: 'x',
+			backlink: 'https://twitter.com/moritzhaarmann/status/1731580514136469659',
+			name: 'Moritz Haarmann, former Director of Engineering at adidas',
+			date: 'December 4th 2023'
 		}
 	},
 	{

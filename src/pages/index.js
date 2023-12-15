@@ -83,6 +83,7 @@ export default function Home() {
 						name="description"
 						content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
 					/>
+					<link rel="icon" href="/img/logo.svg" />
 				</Head>
 				<HomepageHeader />
 			</main>

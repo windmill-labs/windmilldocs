@@ -421,3 +421,28 @@ div.testimonials a:hover .wm-name {
 .image-hover-change-color:hover {
     filter: brightness(80%);
 }
+
+.interactive-image {
+	cursor: pointer;
+	transition: filter 0.3s;
+	border-radius: 2px;
+	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .interactive-image:hover {
+	filter: brightness(90%);
+  }
+  
+  .svg-image {
+	box-shadow: none;
+  }
+
+.group:hover .banner {
+    display: block;
+}
+
+.banner {
+    transition: all 0.3s ease;
+    border-bottom-left-radius: 0.5rem; /* Adjust the radius as needed */
+    border-bottom-right-radius: 0.5rem; /* Adjust the radius as needed */
+}

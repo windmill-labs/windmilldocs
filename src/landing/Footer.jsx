@@ -6,9 +6,9 @@ const navigation = {
 	support: [
 		{ name: 'Pricing', href: '/pricing' },
 		{ name: 'Documentation', href: '/docs/intro' },
-		{ name: 'Github', href: 'https://github.com/windmill-labs/windmill' },
-		{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' },
-		{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' }
+		{ name: 'GitHub', href: 'https://github.com/windmill-labs/windmill' },
+		{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' },
+		{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' }
 	],
 	company: [
 		{ name: 'Team', href: '/team' },
@@ -37,9 +37,9 @@ const navigation = {
 	],
 	solutions: [
 		{ name: 'Windmill AI', href: '/windmill_ai' },
-		{ name: 'Supabase', href: '/solutions/supabase' },
-		{ name: 'Hubspot', href: '/solutions/hubspot' },
-		{ name: 'Airtable', href: '/solutions/airtable' }
+		{ name: 'Supabase', href: '/integrations/supabase' },
+		{ name: 'Slack', href: '/integrations/slack' },
+		{ name: 'Hubspot', href: '/integrations/hubspot' },
 	]
 };
 
@@ -73,7 +73,9 @@ export default function Footer() {
 						</div>
 						<div className="">
 							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
-								Solutions
+								<a href="/integrations" className="text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-200 hover:underline">
+									Integrations
+								</a>
 							</h3>
 							<ul role="list" className="mt-6 space-y-4">
 								{navigation.solutions.map((item) => (
