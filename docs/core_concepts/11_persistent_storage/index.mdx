@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Persistent Storage
 
@@ -10,13 +12,13 @@ In the context of Windmill, the stakes are: **where to effectively store and man
 
 When it comes to storing data manipulated by Windmil, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
 
-<br/>
+<br />
 
 This present document gives a list of trusted services to use alongside Windmill.
 
 :::
 
-<br/>
+<br />
 
 There are 4 kinds of persistent storage in Windmill:
 
@@ -98,7 +100,7 @@ States are what enable Flows to watch for changes in most event watching scenari
 
 The convenience functions do this are:
 
-*TypeScript*
+_TypeScript_
 
 - `getState()` which retrieves an object of any type (internally a simple
   Resource) at a path determined by `getStatePath`, which is unique to the user
@@ -108,9 +110,9 @@ The convenience functions do this are:
 
 > Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Deno/Bun.
 
-<br/>
+<br />
 
-*Python*
+_Python_
 
 - `get_state()` which retrieves an object of any type (internally a simple
   Resource) at a path determined by `get_state_path`, which is unique to the user
@@ -120,14 +122,14 @@ The convenience functions do this are:
 
 > Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Python.
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-      title="States"
-      description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
-      href="/docs/core_concepts/resources_and_types#states"
-    />
+	<DocCard
+		title="States"
+		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
+		href="/docs/core_concepts/resources_and_types#states"
+	/>
 </div>
 
 #### Resources
@@ -205,12 +207,12 @@ For Postgres databases (best for structured data storage and retrieval, where yo
 4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the `sslmode` to "disable".
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/supabase_postgres_integration.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/supabase_postgres_integration.mp4"
 />
 
-<br/>
+<br />
 
 You can also integrate Supabase [directly through its API](../../integrations/supabase.md#through-supabase-api).
 
@@ -218,7 +220,7 @@ You can also integrate Supabase [directly through its API](../../integrations/su
 
 You can find examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
 
-<br/>
+<br />
 
 More tutorials on Supabase:
 
@@ -243,18 +245,18 @@ More tutorials on Supabase:
 4. From Windmill, add your Neon.tech connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/neon_integration.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/neon_integration.mp4"
 />
 
-<br/>
+<br />
 
 :::tip
 
 Adding the connection string as a Postgres resource requires to parse it.
 
-<br/>
+<br />
 
 For example, for `psql postgres://daniel:<password>@ep-restless-rice.us-east-2.aws.neon.tech/neondb`, that would be:
 
@@ -277,22 +279,6 @@ Where the sslmode should be "require" and Neon uses the default PostgreSQL port,
 
 On heavier data objects & unstructured data storage, Amazon S3 (Simple Storage Service) and its alternatives Cloudflare R2 and MinIO are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
 
-### Windmill embedded integration with S3, Polars and DuckDB for data pipelines
-
-Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra.
-
-You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
-
-See our page dedicated to Data Pipelines in Windmill:
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-      title="Data Pipelines"
-      description="We have integrated with Polars and DuckDB for in-memory data processing and S3 for external storage."
-      href="/docs/core_concepts/data_pipelines"
-    />
-</div>
-
 ### Use Amazon S3, R2 and MinIO directly
 
 Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/).
@@ -302,12 +288,12 @@ Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore 
 [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) is a scalable and durable object storage service offered by Amazon Web Services (AWS), designed to provide developers and businesses with an effective way to store and retrieve any amount of data from anywhere on the web.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/s3_objects_in_bucket.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/s3_objects_in_bucket.mp4"
 />
 
-<br/>
+<br />
 
 1. [Sign-up to AWS](https://aws.amazon.com/resources/create-account/).
 
@@ -340,6 +326,207 @@ For best performance, [install MinIO locally](https://min.io/docs/minio/kubernet
 [MinIO](https://min.io/) is an open-source, high-performance, and scalable object storage server that is compatible with Amazon S3 APIs, designed for building private and public cloud storage solutions.
 
 Then from Windmill, just [fill the S3 resource type](../../integrations/s3.md).
+
+#### Windmill code snippets
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from 'npm:windmill-client@1';
+import { S3Client } from 'https://deno.land/x/s3_lite_client@0.2.0/mod.ts';
+
+type s3object = object;
+
+export async function main(inputFile: s3object) {
+	const s3Resource = await wmill.getResource('<PATH_TO_S3_RESOURCE>');
+	const s3Client = new S3Client(s3Resource);
+	const outputFile = 'output/hello.txt';
+
+	// read object from S3
+	const getObjectResponse = await s3Client.getObject(inputFile['s3']);
+	const inputObjContent = await getObjectResponse.text();
+	console.log(inputObjContent);
+
+	// write object to S3
+	await s3Client.putObject(outputFile, 'Hello Windmill!');
+
+	// list objects from bucket
+	for await (const obj of s3Client.listObjects({ prefix: 'output/' })) {
+		console.log(obj.key);
+	}
+
+	return {
+		s3: outputFile
+	};
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+import boto3
+
+s3object = dict
+
+
+def main(input_file: s3object):
+    s3_resource = wmill.get_resource("<PATH_TO_S3_RESOURCE>")
+    bucket = s3_resource["bucket"]
+    s3client = boto3.client(
+        "s3",
+        region_name=s3_resource["region"],
+        aws_access_key_id=s3_resource["accessKey"],
+        aws_secret_access_key=s3_resource["secretKey"],
+    )
+    output_file = "output/hello.txt"
+
+    # read object from S3 and print its content
+    input_obj = s3client.get_object(Bucket=bucket, Key=input_file["s3"])["Body"].read()
+    print(input_obj)
+
+    # write object to s3
+    s3client.put_object(Bucket=bucket, Key=output_file, Body="Hello Windmill!")
+
+    # download file to the job temporary folder:
+    s3client.download_file(
+        Bucket=bucket, Key=input_file["s3"], Filename="./download.txt"
+    )
+    with open("./download.txt", mode="rb") as downloaded_file:
+        print(downloaded_file.read())
+
+    # upload file from temporary folder to S3
+    uploaded_file = "output/uploaded.txt"
+    with open("./upload.txt", mode="wb") as file_to_upload:
+        file_to_upload.write(str.encode("Hello Windmill!"))
+    s3client.upload_file(Bucket=bucket, Key=uploaded_file, Filename="./upload.txt")
+
+    # see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-examples.html
+    # and https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html
+    # for more code examples (listing object, deleting files, etc)
+
+    return [
+        s3object({"s3": output_file}),
+        s3object({"s3": uploaded_file}),
+    ]
+```
+
+</TabItem>
+</Tabs>
+
+### Windmill embedded integration with S3, Polars and DuckDB for data pipelines
+
+Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra.
+
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+<Tabs className="unique-tabs">
+<TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+import polars as pl
+import s3fs
+
+s3object = dict
+
+
+def main(input_file: s3object):
+    s3 = s3fs.S3FileSystem(
+        # this will default to the workspace s3 resource
+        **wmill.polars_connection_settings()["s3fs_args"]
+        # this will use the designated resource
+        # **wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>")["s3fs_args"]
+    )
+
+    bucket = "<S3_BUCKET_NAME>"
+    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
+    output_file = "output/result.parquet"
+    output_uri = "s3://{}/{}".format(bucket, output_file)
+
+    with (
+        s3.open(input_uri, mode="rb") as input_s3,
+        s3.open(output_uri, mode="wb") as output_s3,
+    ):
+        # input is a parquet file, we use read_parquet in lazy mode.
+        # Polars can read various file types, see
+        # https://pola-rs.github.io/polars/py-polars/html/reference/io.html
+        input_df = pl.read_parquet(input_s3).lazy()
+
+        # process the Polars dataframe. See Polars docs:
+        # for dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html
+        # for lazy dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html
+        output_df = input_df.collect()
+        print(output_df)
+
+        # persist the output dataframe back to S3 and return it
+        output_df.write_parquet(output_s3)
+    return s3object({"s3": output_file})
+```
+
+</TabItem>
+<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+import duckdb
+
+s3object = dict
+
+
+def main(input_file: s3object):
+    # create a DuckDB database in memory
+    # see https://duckdb.org/docs/api/python/dbapi
+    conn = duckdb.connect()
+    # connect duck db to the S3 bucket - this will default to the workspace s3 resource
+    conn.execute(wmill.duckdb_connection_settings()["connection_settings_str"])
+    # this will use the designated resource
+    # conn.execute(wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>")["connection_settings_str"])
+
+    bucket = "<S3_BUCKET_NAME>"
+    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
+    output_file = "output/result.parquet"
+    output_uri = "s3://{}/{}".format(bucket, output_file)
+
+    # Run queries directly on the parquet file
+    query_result = conn.sql(
+        """
+        SELECT * FROM read_parquet('{}')
+    """.format(
+            input_uri
+        )
+    )
+    query_result.show()
+
+    # Write the result of a query to a different parquet file on S3
+    conn.execute(
+        """
+        COPY (
+            SELECT COUNT(*) FROM read_parquet('{input_uri}')
+        ) TO '{output_uri}' (FORMAT 'parquet');
+    """.format(
+            input_uri=input_uri, output_uri=output_uri
+        )
+    )
+
+    conn.close()
+    return s3object({"s3": output_file})
+```
+
+</TabItem>
+</Tabs>
+
+For more info, see our page dedicated to Data Pipelines in Windmill:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Data Pipelines"
+		description="We have integrated with Polars and DuckDB for in-memory data processing and S3 for external storage."
+		href="/docs/core_concepts/data_pipelines"
+	/>
+</div>
 
 ## Key-Value Stores: MongoDB Atlas, Redis, Upstash
 

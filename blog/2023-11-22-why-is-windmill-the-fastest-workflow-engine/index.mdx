@@ -134,7 +134,7 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 
 There are tons of workflow engines, but not many of them are self-hostable and generic enough to support arbitrary workloads of jobs defined in code,
 and even those have restrictions:
-Some like Airflow and Prefect support only one runtime (Python). Windmill on the other hand supports Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql. And its design makes it easy to add more upon request.
+Some like Airflow and Prefect support only one runtime (Python). Windmill on the other hand supports Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql, MSSQL. And its design makes it easy to add more upon request.
 Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to. Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
 
 One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
@@ -303,7 +303,7 @@ json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
 
 ## Workers efficiency
 
-In normal mode, workers pull job one at a time, identify the language used by the job (python, typescript, go, bash, snowflake, Postgresql, mysql, mssql, bigquery) and then spawn the corresponding runtime then run the job.
+In normal mode, workers pull job one at a time, identify the language used by the job (Python, TypeScript, Go, Bash, SnowFlake, PostgreSql, MySql, MSSQL, BigQquery) and then spawn the corresponding runtime then run the job.
 
 Workers run jobs bare, without running containers which gives us a performance boost compared to container based workflow engines. However, for sandboxing purposes, workers themselves can be run inside containers and can run each job in an nsjail sandbox.
 

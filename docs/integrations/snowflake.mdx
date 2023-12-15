@@ -6,7 +6,7 @@ Windmill natively supports Snowflake scripts:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="SQL (PostgreSQL, MySQL, BigQuery, Snowflake) Quickstart"
+		title="SQL (PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake) Quickstart"
 		description="Learn how to build your first script in PostgreSQL, MySQL, BigQuery, Snowflake."
 		href="/docs/getting_started/scripts_quickstart/sql"
 	/>
@@ -28,6 +28,16 @@ To integrate [Snowflake](https://www.snowflake.com/en/) with Windmill, you need 
 | role                | string | Snowflake role for access control          |         | true     | Snowflake Console > Users and Security > Roles                            |
 
 <br/><br/>
+
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
 
 :::tip
 

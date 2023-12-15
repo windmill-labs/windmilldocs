@@ -65,7 +65,7 @@ fi
 </TabItem>
 <TabItem value="powershell" label="PowerShell" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-```ts
+```powershell
 param($url = "default value")
 
 $status_code = (Invoke-WebRequest -Uri $url -Method Get).StatusCode
@@ -158,24 +158,26 @@ echo "Hello $msg"
 
 In Bash, the arguments are inferred from the arguments requiring a $1, $2, $3. Default arguments can be specified using the syntax above: `dflt="${2:-default value}"`.
 
-The command `echo` allows you to return the result, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
+The last line of the output, here `echo "Hello $msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
 ### PowerShell
 
-As we picked `PowerShell` for this example, Windmill provided some Bash
+As we picked `PowerShell` for this example, Windmill provided some PowerShell
 boilerplate. Let's take a look:
 
-```bash
+```powershell
 param($Msg, $Dflt = "default value", [int]$Nb = 3)
+
+# Import-Module MyModule
 
 # the last line of the stdout is the return value
 Write-Output "Hello $Msg"
 ```
 
-In PowerShell, the arguments are inferred from the arguments requiring a "$" preceding its name.
+In PowerShell, the arguments are inferred from the param instruction. It has to be first in the script.
 Default arguments can be specified using the syntax above: `$argument_name = "Its default value"`.
 
-The command `Write-Output` allows you to return the result, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
+The last line of the output, here `Write-Output "Hello $Msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
 ## Instant Preview & Testing
 
