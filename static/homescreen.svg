@@ -417,14 +417,14 @@
 <g filter="url(#filter11_d_276_210)">
 <path d="M749.884 622.991C730.752 611.946 699.733 611.946 680.602 622.991L42.3408 991.491C34.3203 996.122 29.6621 1001.96 28.3667 1007.99H27.9922V1081.99H28C28.2153 1089.06 32.9956 1096.1 42.3408 1101.49L1229.66 1786.99C1248.79 1798.04 1279.81 1798.04 1298.94 1786.99L1937.2 1418.49C1946.11 1413.35 1950.87 1406.72 1951.48 1399.99H1951.99V1325.99H1951.36C1950.39 1319.61 1945.67 1313.38 1937.2 1308.49L749.884 622.991Z" fill="#CFDEFF"/>
 </g>
-<a xlink:href="/docs/core_concepts/auto_generated_uis" target="_blank" class="cursor-pointer">
+<a xlink:href="/docs/apps/app_editor" target="_blank" class="cursor-pointer">
     <title>Apps</title>
     <desc>The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 </desc>
     <rect width="1473.11" height="815.273" rx="40" transform="matrix(0.866025 0.5 -0.866025 0.5 706.047 594)" fill="#FFFDFD" class="hover-change-color"/>
 </a>
 <rect width="1436.75" height="795.289" rx="40" transform="matrix(0.866025 0.5 -0.866025 0.5 714.734 623)" fill="url(#pattern0)"/>
-<a xlink:href="/docs/core_concepts/auto_generated_uis" target="_blank" class="cursor-pointer">
+<a xlink:href="/docs/apps/app_editor" target="_blank" class="cursor-pointer">
     <title>Apps</title>
     <desc>The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 </desc>
