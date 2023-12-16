@@ -275,7 +275,8 @@ const sidebars = {
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
-				'core_concepts/jobs/index'
+				'core_concepts/jobs/index',
+				'core_concepts/agent_workers/index'
 			],
 			collapsed: false
 		},
