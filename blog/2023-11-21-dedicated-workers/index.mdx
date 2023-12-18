@@ -16,7 +16,7 @@ import DocCard from '@site/src/components/DocCard';
 
 Execute jobs targeting a script much faster than normal workers.
 
-![Dedicated Workers thumbnail](./dedicated_workers_thumbnail.png "Dedicated Workers thumbnail")
+![Dedicated Workers thumbnail](./dedicated_workers_thumbnail.png.webp "Dedicated Workers thumbnail")
 
 ## Workers in Windmill
 
@@ -57,17 +57,17 @@ From Windmill UI's Workers page:
 
 1. "Edit config" of a [worker group](/docs/core_concepts/worker_groups) and enter script's workspace & [path](/docs/script_editor/settings#path) as `worker:path`.
 
-![Worker group config](../../docs/core_concepts/25_dedicated_workers/worker_group_config.png)
+![Worker group config](../../docs/core_concepts/25_dedicated_workers/worker_group_config.png.webp)
 
 The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen:
 
 2. Toggle the "Dedicated Workers" option for that script in the [script Settings](/docs/script_editor/settings):
 
-![Dedicated Workers in Settings](../../docs/core_concepts/25_dedicated_workers/dedicated_workers.png "Dedicated Workers in Settings")
+![Dedicated Workers in Settings](../../docs/core_concepts/25_dedicated_workers/dedicated_workers.png.webp "Dedicated Workers in Settings")
 
 Each [run](/docs/core_concepts/monitor_past_and_future_runs) will have a Worker Group Tag assigned to it. [Worker Group Tags](/docs/core_concepts/worker_groups) allow to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
-![Dedicated Workers Tag](../../docs/core_concepts/25_dedicated_workers/dedicated_worker_tag.png "Dedicated Workers Tag")
+![Dedicated Workers Tag](../../docs/core_concepts/25_dedicated_workers/dedicated_worker_tag.png.webp "Dedicated Workers Tag")
 
 ## What does it mean for flows ?
 

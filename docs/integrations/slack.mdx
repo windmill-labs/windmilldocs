@@ -79,7 +79,7 @@ After the Script is deployed, navigate back to the
 [Slack settings][wm-slack-settings], choose the "Script" option for adding a
 command handler and select your newly created Script.
 
-![Connected settings](../assets/integrations/slack-3-connected.png)
+![Connected settings](../assets/integrations/slack-3-connected.png.webp)
 
 Congratulations! You've just created a Slack command handler. Now you can use
 the `/windmill` command in your Slack workspace to trigger the Script. Try it
@@ -140,7 +140,7 @@ We cover in a [subsequent article](/blog/handler-slack-commands) how to manage m
 You can see who ran the `/windmill` command by going to the [Runs page][wm-runs]
 on Windmill. The runs will be permissioned through the `g/slack` global group.
 
-![Run info](../assets/integrations/slack-6-run-info.png)
+![Run info](../assets/integrations/slack-6-run-info.png.webp)
 
 You can also monitor and permission it from within the script leveraging the [contextual variable](../core_concepts/2_variables_and_secrets/index.mdx#contextual-variables) `WM_USERNAME` that will get the value of the Slack user.
 
@@ -177,7 +177,7 @@ You can read more about Resources in the documentation [here][docs-resource].
 
 :::
 
-![Create Slack resource](../assets/integrations/slack-7-resources.png)
+![Create Slack resource](../assets/integrations/slack-7-resources.png.webp)
 
 Select the `slack` Resource Type from the "OAuth APIs" list and by clicking
 "Connect", you will be redirected to the Slack accounted associated with your browser. Click "Allow" to let
@@ -223,7 +223,7 @@ export async function main(
 }
 ```
 
-![Test script](../assets/integrations/slack-9-script-result.png)
+![Test script](../assets/integrations/slack-9-script-result.png.webp)
 
 ### Have messages published on Windmill's behalf
 
