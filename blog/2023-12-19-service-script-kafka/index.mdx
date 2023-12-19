@@ -3,29 +3,31 @@ slug: service-script-kafka
 title: Service script pattern in Windmill using Kafka
 authors: [guillaumebouv]
 tags: ['Windmill', 'Kafka', 'Developer tools']
-image: ./wm-kafka.png
+image: ./wm_kafka.png
+description: "This example shows how to use a perpetual script to implement a service in Windmill leveraging Kafka."
 ---
+import DocCard from '@site/src/components/DocCard';
 
-This example shows how to use a perpetual script to implement a service in Windmill leveraging Kafka. Services are processes listening on certain events and triggering actions based on the events it received, and this is now easily achievable in Windmill.
+This example shows how to use a [perpetual script](/docs/script_editor/perpetual_scripts) to implement a service in Windmill leveraging [Apache Kafka](https://kafka.apache.org/). Services are processes listening to certain events and triggering actions based on the events they received, and this is now easily achievable in Windmill.
 
-First we need a messaging service to listen to. Here we will use Kafka, but it can easily be adapted to others. In Windmill, we are going to implement a perpetual script that will listen for events coming from a Kafka topic. On every event received, the perpetual script will spin off a Windmill job with the content of the event being passed as an argument to the job.
+First, we need a messaging service to listen to. Here we will use Kafka, but it can easily be adapted to others. In Windmill, we are going to implement a perpetual script that will listen to events coming from a Kafka topic. On every event received, the perpetual script will spin off a Windmill job with the content of the event being passed as an argument to the job.
 
-For the purpose of this blog post, the consumer of the event will only print the event content, but you can make it do whatever you want with it (ping a Slack channel, update a database table, etc.)
+For this blog post, the consumer of the event will only print the event content, but you can make it do whatever you want with it (ping a Slack channel, update a database table, etc.)
 
-### Setup
+## Setup
 
-First, we're going to setup a stack with the following:
-- Kafka + Zookeeper to have a working Kafka instance to play with
-- A Windmill cluster composed of one server and 2 workers. We need 3 workers here to be able to run multiple jobs in parallel (the listener and the producer). If you are fine sending messages to Kafka using the CLI, then one worker will be enough.
+First, we're going to set-up a stack with the following:
+- [Kafka](https://kafka.apache.org/) + [Zookeeper](https://zookeeper.apache.org/) to have a working Kafka instance to play with.
+- A Windmill cluster composed of one server and 2 [workers](/docs/core_concepts/worker_groups). We need 3 workers here to be able to run multiple jobs in parallel (the listener and the producer). If you are fine sending messages to Kafka using the [CLI](/docs/advanced/cli), then one worker will be enough.
 
 We wrote a [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/examples/deploy/kafka-job-adapter/docker-compose.yml) to easily build this stack:
 ```
 docker compose up -d
 ```
 
-### Create a Kafka topic
+## Create a Kafka topic
 
-The easiest is to do it via Windmill, but you can also do it with Kafka CLI. Go to [your local Windmill](http://localhost:8000) and create a Python script with the following content. It simply creates the topic in Kafka and returns.
+The easiest is to do it via Windmill, but you can also do it with Kafka CLI. Go to [your local Windmill](http://localhost:8000) and create a [Python script](/docs/getting_started/scripts_quickstart/python) with the following content. It simply creates the topic in Kafka and returns.
 
 ```python
 from confluent_kafka.admin import AdminClient, NewTopic
@@ -56,7 +58,7 @@ docker exec -it $KAFKA_CONTAINER_ID kafka-topics.sh --create --topic windmill-ev
 
 </details>
 
-### Create a topic listener in Windmill
+## Create a topic listener in Windmill
 
 As said in the intro, the purpose of this perpetual script is to listen to the `windmill-events` topic and trigger new Windmill job when a message is received. The content is quite simple:
 
@@ -98,7 +100,19 @@ def main(kafka_topic: str = "windmill-events"):
     return 
 ```
 
-Before deploying the script, don't forget to toggle the "Perpetual Script" toggle in the script settings. As a Perpetual script, Windmill will make sure to restart a new job every time one finishes.
+Before [deploying the script](/docs/core_concepts/draft_and_deploy), don't forget to toggle the "Perpetual Script" toggle in the [script settings](/docs/script_editor/settings). As a Perpetual script, Windmill will make sure to restart a new job every time one finishes. Here is a short tutorial on how to enable "Perpetual Scripts":
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/5uw3JWiIFp0?vq=hd1080"
+	title="Perpetual Scripts"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
 
 Lastly, we need to create `u/admin/consume_message` script. As said previously, here it only prints the message content:
 
@@ -111,7 +125,7 @@ def main(
 
 The listener script can now be started. It will run perpetually.
 
-### Publish messages to the Kafka topic
+## Publish messages to the Kafka topic
 
 Finally, to prove that the above works, we need to publish messages to the Kafka topic. It can be done with Kafka CLI, but why not doing it in Windmill? Here is a script that will publish 10 messages with random sleep in between:
 
@@ -154,7 +168,19 @@ Run the following log into the Kafka container and run the `kafka-console-produc
 docker exec -it $KAFKA_CONTAINER_ID kafka-console-producer.sh --topic windmill-events --bootstrap-server localhost:9092
 ```
 
-One line is one message sent to the topic
+One line is one message sent to the topic.
 </details>
 
 On every message, the listener will trigger the consuming script with the message payload, and Windmill will restart it immediately!
+
+## Learn more
+
+To learn more about Perpetual Scripts, you can visit our dedicated docs page:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Running Services with Perpetual Scripts"
+		description="Perpetual scripts restart upon ending unless canceled."
+		href="/blog/service-script-kafka"
+	/>
+</div>
