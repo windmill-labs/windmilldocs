@@ -119,7 +119,7 @@ You can get the username of the Slack user that triggered the workflow, leveragi
 
 To the first step of your script, click on "+Context Var" and pick `WM_USERNAME`. The variable will take the value of the Slack username.
 
-![Add Context Var](./add_context_var.png "Add context variable")
+![Add Context Var](./add_context_var.png.webp "Add context variable")
 
 For example, our parser:
 
@@ -154,7 +154,7 @@ Such piece of information can be used to [monitor runs](/docs/core_concepts/moni
 
 Also, in any case you can check from the runs [runs menu](/docs/core_concepts/monitor_past_and_future_runs), the username of the Slack account that triggered the workflow.
 
-![Flow Slack Username](./flow_slack_username.png "Flow Slack Username")
+![Flow Slack Username](./flow_slack_username.png.webp "Flow Slack Username")
 
 ### Fine-tuning the parser to manage longer commands
 

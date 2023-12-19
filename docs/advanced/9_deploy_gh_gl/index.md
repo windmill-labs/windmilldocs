@@ -17,13 +17,13 @@ account settings, which contains a "[Tokens](../../core_concepts/4_webhooks/inde
 there to generate a new token. Note that you will only be able to copy this
 token once!
 
-![Account settings](../../assets/deploy_gh_gl/account-settings.png) ![Tokens](../../assets/deploy_gh_gl/tokens.png)
+![Account settings](../../assets/deploy_gh_gl/account-settings.png.webp) ![Tokens](../../assets/deploy_gh_gl/tokens.png.webp)
 
 Add an environment "windmill" to the repository via the settings. You may name
 this anything, but will need to adjust the workflow accordingly. Then add a
 secret "WMILL_TOKEN" to this environment.
 
-![GH environment](../../assets/deploy_gh_gl/gh-environment-light.png)
+![GH environment](../../assets/deploy_gh_gl/gh-environment-light.png.webp)
 
 Edit the workflows:
 
@@ -34,7 +34,7 @@ Edit the workflows:
 
 - [.github/workflows/pull-workspace.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/pull-workspace.yaml) to sync back any changes made in Windmill UI to this repo under the form of either a Pull Request or a commit to main directly.
 
-![Configuration](../../assets/deploy_gh_gl/configure-light.png)
+![Configuration](../../assets/deploy_gh_gl/configure-light.png.webp)
 
 ### Security
 

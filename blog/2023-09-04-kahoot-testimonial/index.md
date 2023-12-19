@@ -26,7 +26,7 @@ This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvend
 
 <br/>
 
-![Windmill Kahoot!](./wm_kahoot.png)
+![Windmill Kahoot!](./wm_kahoot.png.webp)
 
 I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot!](https://kahoot.com/). While the brand Kahoot! traditionally focuses on B2C, we target Enterprise clients.
 
