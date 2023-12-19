@@ -88,7 +88,7 @@ SELECT product_name from airtable.product_inventory WHERE type = $1::TEXT
 
 The type is an argument with a default value of “Bag” but you can always pass a different value from the input field right below the “Test” button.
 
-![Sequin 3](./sequin_3.png)
+![Sequin 3](./sequin_3.png.webp)
 
 ## Writing back to the API
 
@@ -107,7 +107,7 @@ values ($1::TEXT, $2::TEXT, $3::TEXT);
 
 Provide argument values and click on the "Test" button in the top right to execute the insert query.
 
-![Sequin 4](./sequin_4.png)
+![Sequin 4](./sequin_4.png.webp)
 
 ## Errors
 
@@ -117,11 +117,11 @@ Let’s say you make a mutation to a Salesforce Contact with an invalid email. S
 
 As an example, Windmill has a Submit button with an **onFailure** property. You can display an error message to the user if the script throws an error:
 
-![Sequin 5](./sequin_5.png)
+![Sequin 5](./sequin_5.png.webp)
 
 By setting "Append Error" to true, Windmill will append the error returned by Salesforce to the toast notification:
 
-![Sequin 6](./sequin_6.png)
+![Sequin 6](./sequin_6.png.webp)
 
 ## Next steps
 

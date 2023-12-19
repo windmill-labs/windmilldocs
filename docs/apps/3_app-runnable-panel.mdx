@@ -11,7 +11,7 @@ The strength of Windmill's app editor is the ability to connect everything toget
 
 On the bottom of the app editor, you can find the runnable editor. The runnable editor is a [code editor](../code_editor/index.mdx) that allows to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
-![App Runnables panel](../assets/apps/0_app_editor/app-runnable-panel.png)
+![App Runnables panel](../assets/apps/0_app_editor/app-runnable-panel.png.webp)
 
 The panel is structured as follows:
 
@@ -93,7 +93,7 @@ Evals are only evaluated on changes to the outputs that have been identified.
 
 Clicking on the dedicated link, evals can be "transformed to a frontend script".
 
-![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png)
+![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp)
 
 ## Creating a Runnable
 
@@ -105,7 +105,7 @@ There are several ways to create runnables:
 
 When you create an inline script attached to a component or a background script, the first thing you need to do is to choose the language of the script.
 
-![App Choose Language](../assets/apps/0_app_editor/app-choose-language.png)
+![App Choose Language](../assets/apps/0_app_editor/app-choose-language.png.webp)
 
 The outputs of your script [can be used](./2_connecting_components/index.mdx) by other scripts or components:
 
@@ -135,7 +135,7 @@ The runnable configuration consists of:
 - List of triggers: Configure whether the script runs on app start, app refresh, or whenever an input changes.
 - Runnable Inputs: The runnable inputs are [inferred from the inputs](../core_concepts/13_json_schema_and_parsing/index.md) of the flow or script parameters this component is attached to.
 
-![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png)
+![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png.webp)
 
 ### Transformer
 
@@ -219,7 +219,7 @@ In the above example, the result of step the script will be cached for 5 minutes
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Caching in Windmill"
+		title="Caching"
 		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
 		href="/docs/core_concepts/caching"
 	/>

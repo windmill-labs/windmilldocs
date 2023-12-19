@@ -144,8 +144,8 @@ psql <DATABASE_URL> -f init-db-as-superuser.sql
 Make sure that the user used in the DATABASE_URL passed to windmill has the role `windmill_admin` and `windmill_user`:
 
 ```sql
-GRANT ROLE windmill_admin TO <user used in database_url>;
-GRANT ROLE windmill_user TO <user used in database_url>;
+GRANT windmill_admin TO <user used in database_url>;
+GRANT windmill_user TO <user used in database_url>;
 ```
 
 If you cannot use BYPASSRLS (for instance on Azure PostgreSQL), see this [workaround](https://github.com/windmill-labs/windmill/issues/2345#issuecomment-1739777068)

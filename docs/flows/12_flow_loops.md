@@ -21,10 +21,10 @@ There are 4 configuration options:
 - **Run in parallel**: if set to `true`, all iterations will be run in parallel.
 - **Parallelism**: assign a given number of parallel branches to control huge for-loops.
 
-![For loop step](../assets/flows/flow_for_loop.png "For loop step")
+![For loop step](../assets/flows/flow_for_loop.png.webp "For loop step")
 
 <br/>
 
 Steps within the flow can use both the iteration index and value. For example in `["Paris", "Lausanne", "Lille"]`, for iteration index "1", "Lausanne" is the value.
 
-![Iter value & index](../assets/flows/iter_value_index.png "Iter value & index")
+![Iter value & index](../assets/flows/iter_value_index.png.webp "Iter value & index")

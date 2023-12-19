@@ -2,6 +2,7 @@ import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
 import { useColorMode } from '@docusaurus/theme-common';
+import HomescreenSvg from '../../static/homescreen.svg';
 
 export default function Hero() {
 	const { colorMode } = useColorMode();
@@ -81,14 +82,9 @@ export default function Hero() {
 				</div>
 				<div className="mx-auto mt-16 sm:mt-8">
 					<div className="flex-none !rounded-2xl overflow-hidden dark:bg-[#2e344033]">
-						<img
-							src={colorMode === 'dark' ? '/homescreen-dark.svg' : '/homescreen.svg'}
-							alt="Windmill infrastructure"
-							className="w-full"
-							width="1825"
-							height="1920"
-							loading="lazy"
-						/>
+					<div className="svg-container">
+						<HomescreenSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
+					</div>
 					</div>
 				</div>
 			</div>

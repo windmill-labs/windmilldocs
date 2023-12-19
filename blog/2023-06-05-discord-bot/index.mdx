@@ -121,7 +121,16 @@ We need to ingest a data source, here the [Windmill documentation](/docs/intro).
 
 :::info Workflows
 
-A [workflow](/docs/flows/flow_editor) is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](/docs/getting_started/scripts_quickstart) in the case of Windmill.
+[Workflows](/docs/flows/flow_editor) are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
+
+<br/>
+
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
+
+<br/>
+
+In Windmill, each step is [code](/docs/getting_started/scripts_quickstart) with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
+
 :::
 
 ![Flow](./flow.png.webp 'Create a scheduled flow that scrapes the Windmill documentation')

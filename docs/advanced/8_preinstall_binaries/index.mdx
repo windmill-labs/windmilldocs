@@ -88,7 +88,7 @@ FROM ${WM_IMAGE}
 Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-  <img src={require("./init_scripts.png").default} alt="Init Scripts Infographics" title="Init Scripts Infographics" width="70%" />
+  <img src={require("./init_scripts.png.webp").default} alt="Init Scripts Infographics" title="Init Scripts Infographics" width="70%" />
 </div>
 
 <br/>
@@ -99,7 +99,7 @@ When adjustments are made in the [Worker Management UI](../../misc/11_worker_gro
 
 The execution of Init Scripts is inspectable in the superadmin workspace, with `Kind = All` filter. The path of those executions are `init_script_{worker_name}`.
 
-![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png)
+![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png.webp)
 
 <iframe
     style={{ aspectRatio: '16/9' }}

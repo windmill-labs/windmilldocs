@@ -11,15 +11,14 @@ import SearchBarWrapper from '../theme/SearchBar';
 
 const resources = [
 	{
-		name: 'Team',
-		description: 'The team behind Windmill.',
-		href: '/team'
-	},
-
-	{
 		name: 'Blog',
 		description: 'Stay up to date with our latest news and articles.',
 		href: '/blog'
+	},
+	{
+		name: 'Team',
+		description: 'The team behind Windmill.',
+		href: '/team'
 	},
 	{
 		name: 'Jobs',

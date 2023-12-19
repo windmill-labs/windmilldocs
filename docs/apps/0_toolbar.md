@@ -2,7 +2,7 @@
 
 The app toolbar is located at the top of the app editor. It enables you to adjust app settings.
 
-![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png)
+![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png.webp)
 
 ## App Summary
 

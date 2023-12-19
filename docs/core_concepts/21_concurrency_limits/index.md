@@ -16,7 +16,7 @@ Concurrency limit can be set from the Settings menu. Pick "Concurrency" and defi
 
 From the Flow Settings menu, pick "Concurrency" and define a time window and max number of executions of the flow within that time window.
 
-![Concurrency limit of flow](../../assets/flows/concurrency_flow.png "Concurrency limit of flow")
+![Concurrency limit of flow](../../assets/flows/concurrency_flow.png.webp "Concurrency limit of flow")
 
 ## Concurrency limit of scripts within flow
 

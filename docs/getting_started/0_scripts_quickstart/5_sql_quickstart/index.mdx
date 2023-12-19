@@ -9,7 +9,7 @@ import DocCard from '@site/src/components/DocCard';
 
 In this quick start guide, we will write our first script in SQL. We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
-![Windmill & PostgreSQL, MySQL, BigQuery and Snowflake](./sqls.png)
+![Windmill & PostgreSQL, MySQL, BigQuery and Snowflake](./sqls.png.webp)
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -53,11 +53,11 @@ To be able to connect to a [PostgreSQL](https://www.postgresql.org/) instance ([
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `PostgreSQL` type.
 
-![Select PostgreSQL Resource Type](../../../assets/integrations/psql-1-resources.png)
+![Select PostgreSQL Resource Type](../../../assets/integrations/psql-1-resources.png.webp)
 
 Fill out the form with the information of your PostgreSQL instance and "Test connection" if needed.
 
-![Paste in Resource Values](../../../assets/integrations/psql-2-postgres-rt.png)
+![Paste in Resource Values](../../../assets/integrations/psql-2-postgres-rt.png.webp)
 
 :::tip
 
@@ -100,11 +100,11 @@ To be able to connect to a [MySQL](https://www.mysql.com/) instance, we'll need 
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `MySQL` type.
 
-![Select MySQL Resource Type](./select_mysql.png)
+![Select MySQL Resource Type](./select_mysql.png.webp)
 
 Fill out the form with the information of your MySQL instance and "Test connection" if needed.
 
-![Paste in Resource Values](./fill_mysql.png)
+![Paste in Resource Values](./fill_mysql.png.webp)
 
 | Property | Type   | Description     | Default | Required | Where to Find                                                                          |
 | -------- | ------ | --------------- | ------- | -------- | -------------------------------------------------------------------------------------- |
@@ -121,11 +121,11 @@ To be able to connect to a [Microsoft SQL Server](https://www.microsoft.com/sql-
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `ms_sql_server` type.
 
-![Select MySQL Resource Type](./select_mssql.png)
+![Select MySQL Resource Type](./select_mssql.png.webp)
 
 Fill out the form with the information of your MySQL instance and "Test connection" if needed.
 
-![Paste in Resource Values](./fill_mssql.png)
+![Paste in Resource Values](./fill_mssql.png.webp)
 
 | Property | Type   | Description                                                | Default | Required | Where to Find                                                                          |
 | -------- | ------ | ---------------------------------------------------------- | ------- | -------- | -------------------------------------------------------------------------------------- |
@@ -142,7 +142,7 @@ To be able to connect to a [BigQuery](https://cloud.google.com/bigquery) instanc
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `BigQuery` type.
 
-![Select BigQuery Resource Type](./select_bigquery.png)
+![Select BigQuery Resource Type](./select_bigquery.png.webp)
 
 | Property                    | Type   | Description                                    | Required |
 | --------------------------- | ------ | ---------------------------------------------- | -------- |
@@ -199,7 +199,7 @@ To be able to connect to a [Snowflake](https://www.snowflake.com/) instance, we'
 Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
 "Add a resource/API" in the top right corner and select the `Snowflake` type.
 
-![Select Snowflake Resource Type](./select_snowflake.png)
+![Select Snowflake Resource Type](./select_snowflake.png.webp)
 
 | Property           | Type   | Description                                                            | Required |
 | ------------------ | ------ | ---------------------------------------------------------------------- | -------- |
@@ -264,7 +264,7 @@ You can directly "Test connection" if needed.
 Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
 click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, [PostgreSQL](#postgresql-1), [MySQL](#mysql-1), [MSSQL](#mssql-1), [BigQuery](#bigquery-1), [Snowflake](#snowflake-1).
 
-![Script creation first step](../../../assets/integrations/sql_new_script.png)
+![Script creation first step](../../../assets/integrations/sql_new_script.png.webp)
 
 You can also give more details to your script, in the [settings section](../../../script_editor/settings.mdx), you can also get back to that later at any point.
 
@@ -302,7 +302,7 @@ INSERT INTO demo VALUES (?, ?)
 
 You can then write your prepared statement.
 
-![Mysql statement](./mysql_statement.png)
+![Mysql statement](./mysql_statement.png.webp)
 
 ### MSSQL
 
@@ -318,7 +318,7 @@ INSERT INTO demo VALUES (@p1, @p2)
 
 You can then write your prepared statement.
 
-![Mysql statement](./mssql_statement.png)
+![Mysql statement](./mssql_statement.png.webp)
 
 ### BigQuery
 
@@ -355,7 +355,7 @@ INSERT INTO demo VALUES (?, ?)
 
 You can then write your prepared statement.
 
-![Snowflake statement](./snowflake_statement.png)
+![Snowflake statement](./snowflake_statement.png.webp)
 
 ### Raw Queries
 

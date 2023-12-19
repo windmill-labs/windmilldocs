@@ -13,7 +13,7 @@ Typically, workers fetch jobs from the job queue based on their `scheduled_for` 
 
 This simple process allows one to reliably count on a small number of workers for very different jobs. However, there is a latency between each task since the worker must perform a clean-up and a cold start between each execution (to be able to handle successive jobs but from completely different scripts). This latency amounts to around a dozen milliseconds, which can be crucial in the execution of certain priority jobs:
 
-![Worker group config](./infographic.png)
+![Worker group config](./infographic.png.webp)
 
 Dedicated workers allow you to remove completely the cold start for selected scripts. They are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script. They are as fast as running the same logic in a while-loop processing requests, that is how they are implemented actually, but keep the benefit of showing separate jobs per execution.
 
@@ -31,7 +31,7 @@ From Windmill UI's Workers page:
 
 1. "Edit config" of a [worker group](../9_worker_groups/index.mdx) and enter script's workspace & [path](../../script_editor/settings.mdx#path) as `worker:path`.
 
-![Worker group config](./worker_group_config.png)
+![Worker group config](./worker_group_config.png.webp)
 
 The worker group will restart (assuming the pods/restart are set to restart automatically) and will now wait for step 2. below to happen:
 
