@@ -94,6 +94,7 @@ const sidebars = {
 						'script_editor/versioning',
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
+						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
 						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
@@ -253,7 +254,6 @@ const sidebars = {
 					label: 'List of Core Concepts'
 				},
 				'core_concepts/auto_generated_uis/index',
-				'core_concepts/ai_generation/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
@@ -263,7 +263,6 @@ const sidebars = {
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
-				'core_concepts/collaboration/index',
 				'core_concepts/monitor_past_and_future_runs/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
@@ -276,7 +275,8 @@ const sidebars = {
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
-				'core_concepts/agent_workers/index'
+				'core_concepts/collaboration/index',
+				'core_concepts/ai_generation/index',
 			],
 			collapsed: false
 		},
@@ -358,6 +358,7 @@ const sidebars = {
 				'misc/worker_group_management_ui/index',
 				'core_concepts/staging_prod/index',
 				'misc/s3_cache/index',
+				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
