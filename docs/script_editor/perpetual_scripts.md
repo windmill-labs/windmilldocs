@@ -1,4 +1,4 @@
-# Perpetual Scripts
+# Running Services with Perpetual Scripts
 
 Perpetual scripts restart upon ending unless canceled.
 
