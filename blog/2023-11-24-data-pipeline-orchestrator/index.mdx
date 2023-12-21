@@ -158,16 +158,22 @@ And more to come! With both Windmill providing the boilerplate code, and Polars 
 In the end, a canonical pipeline step in Windmill will look something like this:
 
 ```python
+#requirements:
+#polars==0.19.19
+#s3fs==2023.12.0
+#wmill>=1.229.0
+
 import polars as pl
 import s3fs
 import datetime
 import wmill
 
-s3object = dict
-def main(input_dataset: s3object):
+
+def main(input_dataset: S3Object):
     # initialization: connect Polars to the workspace bucket
     s3_resource = wmill.get_resource("/path/to/resource")
-    s3 = s3fs.S3FileSystem(wmill.polars_connection_settings("/path/to/resource")["s3fs_args"])
+    s3fs_args = wmill.polars_connection_settings().s3fs_args
+    s3 = s3fs.S3FileSystem(**s3fs_args)
 
     # reading data from s3:
     bucket = s3_resource["bucket"]
@@ -194,9 +200,7 @@ def main(input_dataset: s3object):
         output.write_parquet(output_dataset)
 
     # returning the URI of the output for next steps to process it
-    return s3object({
-        "s3": output_dataset_uri
-    })
+    return S3Object(s3=output_dataset_uri)
 ```
 
 The example uses Polars. If you're more into SQL you can use DuckDB, but the code will have the same structure: initialization, reading from S3, transforming, writing back to S3.
