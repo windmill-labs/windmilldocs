@@ -244,6 +244,36 @@ Useful when some webhooks need to return extremely fast but not just the uuid (d
 	/>
 </div>
 
+## Exposing a webhook URL
+
+Single port proxy can be leveraged to expose a webhook with a custom URL. In its docker-compose, Windmill uses Caddy but the logic can be adapted for others.
+
+In the Caddyfile, the (`handle_path`)[https://caddyserver.com/docs/caddyfile/directives/handle_path#handle-path] and (`rewrite`)[https://caddyserver.com/docs/caddyfile/directives/rewrite#rewrite] directive can be used:
+
+```
+{$BASE_URL} {
+	bind {$ADDRESS}
+
+	handle_path /mywebhook {
+		rewrite * /api/w/demo/jobs/run_wait_result/p/u/bot/hello_world_deno"
+		# You can optionally inject the token in Caddy to have the endpoint exposed publicly
+		# request_header Authorization "Bearer <WINDMILL_GENERATED_TOKEN>"
+	}
+
+	...
+	reverse_proxy /* http://windmill_server:8000
+}
+```
+
+The job can then be triggered with:
+
+```
+curl -X POST                               \
+    --data '{}'                            \
+    -H "Content-Type: application/json"    \
+    ".../mywebhook?payload=<URL_SAFE_BASE64_ENCODED_JSON>"
+```
+
 <!-- Resources -->
 
 [runs]: ../5_monitor_past_and_future_runs/index.mdx
