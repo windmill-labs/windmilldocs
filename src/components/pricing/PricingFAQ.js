@@ -48,32 +48,24 @@ const faqs = [
 		)
 	},
 	{
-		question: 'What is a worker?',
+		question: 'How is the use of the number of vCPUs estimated?',
 		answer: (
 			<span>
-				<Link
-					to="/docs/core_concepts/worker_groups"
-					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
-				>
-					Workers
-				</Link>{' '}
-				are autonomous processes that run one script at a time using the entire cpu and memory available
-				to them. Workers serve as the backbone of Windmill as they are responsible for
-				executing code.<br/><br/> Each worker on Windmill can run up to 26 millions jobs a month, where
-				each job lasts approximatively 100ms. Workers can be horizontally scaled up or down
-				depending on needs without any overhead.
-			</span>
-		)
-	},
-	{
-		question: 'What is a "native" worker?',
-		answer: (
-			<span>
-				A "native" worker is a normal worker that listens solely for "native" jobs: PostgreSQL,
-				MySQL, MSSQL, BigQuery, Snowflake, REST which are implemented in windmill natively in our Rust
-				backend and thus those jobs have minimal memory footprint and are mostly IO bounds so
-				require little vCPUs. In a typical deployment, native workers have limits of 0.1 vCPU and
-				200Mb instead of the usual 1vCPU and 2Gb.
+				Even though Windmill's <a
+				href='/docs/misc/architecture'
+				className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				target="_blank">architecture</a>{' '}
+				relies on <a
+				href='/docs/core_concepts/worker_groups'
+				className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				target="_blank">workers</a>, Pricing is vCPU based.
+
+				For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with 4 vCPU would count as 4 vCPU.
+				But if it only runs for 1h every day, you would divide that by 24.
+
+				<br/><br/>
+
+				Our compute pricing should be linear to the compute cost from your cloud provider.
 			</span>
 		)
 	},
