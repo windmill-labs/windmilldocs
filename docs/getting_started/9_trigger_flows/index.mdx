@@ -145,15 +145,17 @@ Windmill supports inner flows. This allows you to call a flow from another workf
 
 ### Scheduling + Trigger Scripts
 
-A particular use case for schedules are Trigger Scripts. Their purpose is to pull data from an external source and return all of the new items since the last run, using [states](../../core_concepts/3_resources_and_types/index.mdx#states).
+A particular use case for schedules are [Trigger Scripts](../../flows/10_flow_trigger.mdx).
 
-This type of Flow is meant to be scheduled regularly to reduce latency when reacting to new events. It will **trigger the rest of the Flow once per new item that is returned**. If there are no new items, the flow will be skipped.
+Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+
+By default, adding a trigger will set the schedule to 15 minutes.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Trigger Scripts"
 		color="teal"
-		description="Triggers are special actions that run periodically given a schedule."
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
 </div>

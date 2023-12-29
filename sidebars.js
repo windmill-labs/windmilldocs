@@ -161,6 +161,7 @@ const sidebars = {
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
 								'apps/app_configuration_settings/button',
+								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',

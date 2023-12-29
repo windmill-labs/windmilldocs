@@ -3,12 +3,17 @@ slug: query-grpc-service
 title: Querying gRPC service in Windmill
 authors: [guillaumebouv]
 tags: ['Windmill', 'gRPC', 'Developer tools']
+description: 'Learn how to query gRPC service in Windmill'
 image: ./wmill_grpc.png
 ---
 
+Learn how to query [gRPC](https://grpc.io/) service in Windmill.
+
+![gRPC Windmill](./wmill_grpc.png)
+
 To query a gRPC service, the client needs to know about its API definition (i.e. the `.proto` files). In some situations, the proto files are compiled in the desired language by the owner of the service and published as a package in the package repository. But when it's not the case, it can be cumbersome to query such a service.
 
-In this post, we're going to see how you can easily workaround this limitation in Windmill using Bun and gRPC javascript `proto-loader` package.
+In this post, we're going to see how you can easily workaround this limitation in Windmill using Bun and gRPC JavaScript `proto-loader` package.
 
 ### Example stack
 
@@ -43,11 +48,11 @@ message HelloReply {
 
 As said in the intro, most language requires to manually "compile" the `.proto` files to be able to use them (we explain below how this can also be done in Windmill).
 
-Thankfully, Javascript has is able to dynamically build a client from the raw `.proto` files. Here we're going to use Bun which recently added support for the HTTP2 protocol used by gRPC.
+Thankfully, JavaScript has is able to dynamically build a client from the raw `.proto` files. Here we're going to use Bun which recently added support for the HTTP2 protocol used by gRPC.
 
 First, we need to save the content of the `.proto` file. We're going to use a Windmill variable so that it can be used in multiple scripts. Here we save it to a variable named `service_proto`.
 
-Once it's done, we create a Bun script in Windmill with the following content:
+Once it's done, we create a [Bun script in Windmill](/docs/getting_started/scripts_quickstart/typescript) with the following content:
 
 ```js
 import * as wmill from "windmill-client"
@@ -106,7 +111,7 @@ This canonical script can be used in Flows to easily query the service and proce
 
 ### Statically defined gRPC services
 
-If the `.proto` are not compiled by the service owner and you want to use another language than typescript (if if you're using javascript but don't want dynamic loading), you will have no other choice than to compile the `.proto` yourself. And then, to use the compiled service definition in Windmill, the easiest is to publish the files to a private package registry.
+If the `.proto` are not compiled by the service owner and you want to use another language than typescript (if if you're using JavaScript but don't want dynamic loading), you will have no other choice than to compile the `.proto` yourself. And then, to use the compiled service definition in Windmill, the easiest is to publish the files to a private package registry.
 
 For Python for example, you can compile the `.proto` with:
 
@@ -114,12 +119,12 @@ For Python for example, you can compile the `.proto` with:
 protoc --python_out=./ ./helloworld.proto
 ```
 
-This will generate a python file corresponding to your service definition in Python. You can then add this file to a python package of your choice, and publish it to a private Pypi repository (like [pypiserver](https://pypi.org/project/pypiserver/)). You can then (configure Windmill to use this repository)[https://www.windmill.dev/docs/advanced/imports#private-pypi-repository] and you will be able to pull the pre-compiled service definition from any python script in Windmill.
+This will generate a Python file corresponding to your service definition in Python. You can then add this file to a Python package of your choice, and publish it to a private Pypi repository (like [pypiserver](https://pypi.org/project/pypiserver/)). You can then ([configure Windmill to use this repository](/docs/advanced/imports#private-pypi-repository)) and you will be able to pull the pre-compiled service definition from any [Python script](/docs/getting_started/scripts_quickstart/python) in Windmill.
 
-The same can be done for javascript. To compile the `.proto`, simply run:
+The same can be done for JavaScript. To compile the `.proto`, simply run:
 
 ```bash
 grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=grpc_js:./ helloworld.proto
 ```
 
-And then upload the content as a NPM package to a private NPM registry (like [verdaccio](https://verdaccio.org/)) and (configure Windmill to pull package from it)[https://www.windmill.dev/docs/advanced/imports#private-npm-registry].
+And then upload the content as a NPM package to a private NPM registry (like [verdaccio](https://verdaccio.org/)) and ([configure Windmill to pull package from it](/docs/advanced/imports#private-npm-registry)).
