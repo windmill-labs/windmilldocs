@@ -314,12 +314,12 @@ const sidebars = {
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
 						'advanced/cli/user',
+						'advanced/cli/script',
 						'advanced/cli/flow',
 						'advanced/cli/app',
 						'advanced/cli/resource',
 						'advanced/cli/variable',
-						'advanced/cli/folder',
-						'advanced/cli/script'
+						'advanced/cli/folder'
 					]
 				},
 				'advanced/deploy_gh_gl/index',

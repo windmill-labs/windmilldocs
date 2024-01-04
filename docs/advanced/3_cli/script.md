@@ -72,8 +72,10 @@ wmill script run <remote_path> [options]
 
 | Option         | Parameters | Description                                                                   |
 | -------------- | ---------- | ----------------------------------------------------------------------------- |
-| `-d, --data`   | `data`     | Inputs specified as a JSON string or a file using @filename or stdin using @- |
+| `-d, --data`   | `data`     | Inputs specified as a JSON string or a file using @filename or stdin using @- . Resources and variables must be passed using "$res:..." or "$var:..." For example `wmill script run u/henri/message_to_slack -d '{"slack":"$res:u/henri/henri_slack_perso","channel":"general","text":"hello dear team"}'` |
 | `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.      |
+
+![CLI arguments](../../assets/cli/cli_arguments.png "CLI arguments")
 
 ## Remote path format
 
