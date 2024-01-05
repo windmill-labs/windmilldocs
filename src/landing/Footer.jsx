@@ -147,7 +147,7 @@ export default function Footer() {
 						</div>
 						<div className="footer-section mt-1 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
 							<p className="text-center text-xs leading-5 text-gray-400">
-								&copy; 2023 Windmill Labs, Inc. All rights reserved. <br />
+								&copy; 2024 Windmill Labs, Inc. All rights reserved. <br />
 								1111B S Governors Ave, Dover, DE 19904, USA
 							</p>
 							<div className="flex justify-center items-center mt-4">

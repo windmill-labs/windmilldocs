@@ -155,6 +155,14 @@ const config = {
 					}
 				]
 			},
+			announcementBar: {
+				id: 'airplane_migration',
+				content:
+					'<a href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
+				backgroundColor: '#6b21a8',
+				textColor: '#fff',
+				isCloseable: true
+			},
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme,
