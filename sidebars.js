@@ -672,6 +672,7 @@ const sidebars = {
 					items: [
 						'misc/guides/aggrid_table/index',
 						'misc/guides/table/index',
+						'misc/guides/airplane/index',
 						'misc/guides/sequin/index'
 					]
 				},
