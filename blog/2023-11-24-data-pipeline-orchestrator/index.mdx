@@ -159,7 +159,7 @@ In the end, a canonical pipeline step in Windmill will look something like this:
 
 ```python
 #requirements:
-#polars==0.19.19
+#polars==0.20.2
 #s3fs==2023.12.0
 #wmill>=1.229.0
 
@@ -172,35 +172,36 @@ import wmill
 def main(input_dataset: S3Object):
     # initialization: connect Polars to the workspace bucket
     s3_resource = wmill.get_resource("/path/to/resource")
-    s3fs_args = wmill.polars_connection_settings().s3fs_args
-    s3 = s3fs.S3FileSystem(**s3fs_args)
+    storage_options = wmill.polars_connection_settings().storage_options
 
     # reading data from s3:
     bucket = s3_resource["bucket"]
     input_dataset_uri = "s3://{}/{}".format(bucket, input_dataset["s3"])
-    output_dataset_uri = "s3://{}/output.parquet".format(bucket)
-    with s3.open(input_dataset_uri, mode="rb") as input_dataset, s3.open(output_dataset_uri, mode="rb") as output_dataset:
-        input = pl.read_parquet(input_dataset)
+	input = pl.read_parquet(input_dataset_uri, storage_options=storage_options)
 
-        # transforming the data
-        output = (
-            input.filter(pl.col("L_SHIPDATE") >= datetime.datetime(1994, 1, 1))
-                .filter(
-                    pl.col("L_SHIPDATE")
-                    < datetime.datetime(1994, 1, 1) + datetime.timedelta(days=365)
-                )
-                .filter((pl.col("L_DISCOUNT").is_between(0.06 - 0.01, 0.06 + 0.01)))
-                .filter(pl.col("L_QUANTITY") < 24)
-                .select([(pl.col("L_EXTENDEDPRICE") * pl.col("L_DISCOUNT")).alias("REVENUE")])
-                .sum()
-                .collect()
-        )
+	# transforming the data
+	output = (
+		input.filter(pl.col("L_SHIPDATE") >= datetime.datetime(1994, 1, 1))
+			.filter(
+				pl.col("L_SHIPDATE")
+				< datetime.datetime(1994, 1, 1) + datetime.timedelta(days=365)
+			)
+			.filter((pl.col("L_DISCOUNT").is_between(0.06 - 0.01, 0.06 + 0.01)))
+			.filter(pl.col("L_QUANTITY") < 24)
+			.select([(pl.col("L_EXTENDEDPRICE") * pl.col("L_DISCOUNT")).alias("REVENUE")])
+			.sum()
+			.collect()
+	)
 
-        # writing the output back to S3
+	# writing the output back to S3
+    s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings().s3fs_args)
+	output_dataset_filename = "output.parquet"
+    output_dataset_uri = "s3://{}/{}".format(bucket, output_dataset_filename)
+    with s3.open(output_dataset_uri, mode="rb") as output_dataset:
         output.write_parquet(output_dataset)
 
     # returning the URI of the output for next steps to process it
-    return S3Object(s3=output_dataset_uri)
+    return S3Object(s3=output_dataset_filename)
 ```
 
 The example uses Polars. If you're more into SQL you can use DuckDB, but the code will have the same structure: initialization, reading from S3, transforming, writing back to S3.
