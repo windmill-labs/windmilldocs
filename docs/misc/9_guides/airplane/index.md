@@ -6,8 +6,6 @@ The migration from Airplane to Windmill is made easy by the same developer-first
 
 Windmill offers 3 months of [Enterprise Edtion](/pricing) to Airplane users. To get started, contact us at [ruben@windmill.dev](mailto:ruben@windmill.dev).
 
-## Core concepts
-
 The following section covers the main concepts of Windmill, starting from those of Airplane. To see all the Core Concepts of Windmill, see:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -18,7 +16,7 @@ The following section covers the main concepts of Windmill, starting from those 
 	/>
 </div>
 
-### Self-hosting
+## Self-hosting
 
 Windmill is [open source](https://github.com/windmill-labs/windmill), and can be [self-hosted](../../../advanced/1_self_host/index.mdx) to access all of its features locally. You have the option to self-host Windmill on your own infrastructure using Docker for smaller setups or a Helm chart for larger, production use-cases.
 
@@ -32,7 +30,7 @@ The platform will continue to operate autonomously, even in the event of a disco
 	/>
 </div>
 
-### Version Control & Deployments
+## Version Control & Deployments
 
 Deploying scripts is simple in both Airplane and Windmill. Basically you write one script (”Task” in Airplane) in an environment, and then you can promote it to another environment. The main advantage you get from this process is that your script can use a [variable](../../../core_concepts/2_variables_and_secrets/index.mdx) / [resource](../../../core_concepts/3_resources_and_types/index.mdx), for example to reference a DB connection / URL, which is present in both environments but with different values.
 
@@ -57,19 +55,30 @@ This way you can test your script in your dev environment on a dummy DB, then on
 
 <br/>
 
-Windmill does not have the concept of environment per-se, Windmill uses workspaces exclusively. You declare one workspace as being the "prod" version of your dev workspace. This can be done in Workspace settings.
+Windmill does not have the concept of environment per-se. Here is how you it works in Windmill.
 
-Each "asset" (script, flow, app) can be deployed to the prod workspace by clicking on the `...` next to each script, then [Deploy to Staging/Prod](../../../core_concepts/12_staging_prod/index.md).
+### Deploy to Prod
 
-NB: Each new script, flow or app can be [individually deployed](../../../core_concepts/0_draft_and_deploy/index.mdx) to workspace.
+Deployments in Windmill are commonly done from the same workspace using the [Draft and Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) buttons.
 
-NB: Multiple workspaces can be "chained". So you can [have a dev workspace linked to a staging workspace](../../../core_concepts/12_staging_prod/index.md), linked to a prod workspace.
+For finer control, you might want to deploy to a prod workspace from a staging area. Here are the options:
 
-NB: You can synchronize folders & git repositories to a Windmill instance using [CLI](../../../advanced/3_cli/sync.mdx).
+#### Deploy to Staging/Prod Web UI
 
-NB: You can [check the diff](../../../core_concepts/0_draft_and_deploy/index.mdx#diff-viewer) before promoting an asset, to double check what you're doing.
+From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace. This feature implies having at least 2 workspaces.
 
-NB: Only users with write permissions to the target workspaces are able to do [promotion](../../../core_concepts/12_staging_prod/index.md#how-it-works) A "regular" user can request an admin to review a change and promote.
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    id="main-video"
+    src="/videos/staging_prod.mp4"
+/>
+
+<br/>
+
+Deploy to Staging/Prod Web UI is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+
+More details at:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -77,61 +86,85 @@ NB: Only users with write permissions to the target workspaces are able to do [p
 		description="Develop and cooperate in a structured way."
 		href="/docs/core_concepts/draft_and_deploy"
 	/>
-    <DocCard
-		title="Deploy to Staging or Prod"
-		description="Deploy items to another staging/prod workspace."
-		href="/docs/core_concepts/staging_prod"
-	/>
 </div>
 
-### Git Sync
+#### Deploy to Prod using a Git Workflow
 
-<div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
-  <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
-  <div>
-    <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
-    <p class="dark:text-gray-900"><br/>Git integration uses uni-directional sync:<br/>- You update your assets as code in your IDE, then you commit and push to the repo.
-    <br/>- From there, the repo has automations to pickup your change an automatically deploy it to Airplane.
+Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps. 
 
-<br/><br/>
+The process is as follows:
+- Users iterate and make their changes in a "staging" Windmill workspace.
+- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI), Windmill automatically commits it to this repo and creates one branch per app/flow/script.
+- On every commit from Windmill, PRs are automatically created via a GitHub action. Approved GitHub users can review and merge those PRs.
+- Every time a PR is merged, another GitHub action automatically deploys the change to a "production" Windmill workspace.
 
+This gives the flexibility to fully test new Windmill scripts, flows and apps, while having them version-controlled and deployed in an automated way to the production environment.
 
-[https://docs.airplane.dev/dev-lifecycle/deployments](https://docs.airplane.dev/dev-lifecycle/deployments)
-    
-</p>
+Deploy to Prod using a Git Workflow is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
 
-  </div>
-</div>
-
-<br/>
-
-Windmill uses Bi-directional sync
-
-**Git → Windmill**
-
-Use a [custom Github automation](../../../advanced/9_deploy_gh_gl/index.md) that uses the windmill CLI underneath. See [https://github.com/windmill-labs/windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example) for an automation example. The CLI is capable of computing the diff of a folder layout vs a Windmill workspace and will only deploy the assets that have changed (and display the diff for a final review).
-
-**Windmill → Git**
-
-Configure your workspace to [automatically commit and push any change to a git repository](../../../advanced/10_git_sync/index.mdx) on a specific branch. 2 use cases:
-
-- a git repo to backup the changes done in the UI ;
-- git backed review process: deployment process: Windmill UI staging workspace → Git non-main branches/PR  —Approval review → Git main branch → Windmill prod workspace.
+More details at:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-		title="Sync Workspace to Remote Git Repository"
-		description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
-		href="/docs/advanced/git_sync"
-	/>
-    <DocCard
-		title="GitHub / GitLab for Version Control"
-		description="Learn how to integrate GitHub / GitLab repositories with your Windmill workspace for effective version control."
+	<DocCard
+		title="Deploy to Prod using a Git Workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>
 
-### Tasks / Scripts
+#### Using Windmill CLI in GitHub actions
+
+Finally, you can define your own GitHub actions to pull Windmill workspace regularly from GitHub using [Windmill CLI](../../../advanced/3_cli/index.mdx). To automatically deploy a PR to the Windmill workspace, the [push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) can be used.
+
+And another GitHub action can be created to regularly pull Windmill workspace to the GitHub repo using Windmill CLI. This action can be run on a schedule to keep the repo and the workspace in sync.
+
+### Version Control
+
+Manage changes to scripts workflows, apps and resources using commits & push on remote repositories.
+
+#### Sync Workspace to Remote Git Repository
+
+From the workspace settings, you can set a [git_repository](../../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../../core_concepts/0_draft_and_deploy/index.mdx).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/JqG0KNYWLx0?vq=hd1080"
+	title="Sync Workspace to Remote Git Repository"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+Sync Workspace to Remote Git Repository is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+
+More details at:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+		<DocCard
+			title="Sync Workspace to Remote Git Repository"
+			description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
+			href="/docs/advanced/git_sync"
+	/>
+</div>
+
+#### CLI Sync
+
+You can use Windmill CLI to sync workspace to a git repository.
+
+More details at:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-Line Interface - Sync"
+		description="Synchronize folders & git repositories to a Windmill instance"
+		href="/docs/advanced/cli/sync"
+	/>
+</div>
+
+## Tasks / Scripts
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -174,7 +207,7 @@ Scripts can are created from within Windmill app (cloud or self-hosted). Then ca
 	/>
 </div>
 
-### Schedules
+## Schedules
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -210,7 +243,7 @@ All schedules can be attached to a custom Error Handler (or [workspace error han
 	/>
 </div>
 
-### Permissions & RBAC
+## Permissions & RBAC
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -263,7 +296,7 @@ Windmill provides a very similar comprehensive roles and permissions system that
 	/>
 </div>
 
-### Workflows
+## Workflows
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -306,7 +339,7 @@ It is also possible to define the flows as code in YAML through the [VS Code ext
 	/>
 </div>
 
-### Approval flows & Prompts
+## Approval flows & Prompts
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -336,7 +369,7 @@ For approval flows, Windmill uses [Approval Steps](https://www.windmill.dev/docs
 	/>
 </div>
 
-### Custom UIs
+## Custom UIs
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -383,7 +416,7 @@ Users can also [create their own React components](https://www.windmill.dev/docs
 </div>
 
 
-### Connecting your data
+## Connecting your data
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -434,7 +467,7 @@ Resources can embed variables, for example creating a new [PostgreSQL resource](
 	/>
 </div>
 
-### Auditing & Observability
+## Auditing & Observability
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
@@ -474,7 +507,7 @@ By the end of January, Windmill will also support streaming logs to log manageme
     />
 </div>
 
-### Routing jobs to different VPC / Worker Groups / Queues / Tags
+## Routing jobs to different VPC / Worker Groups / Queues / Tags
 
 <div class="flex p-4 border border-gray-200 rounded-lg bg-blue-50">
   <img src="/images/airplane_emoji.png" alt="Icon" style={{ width: '20px', height: '20px' }} />
