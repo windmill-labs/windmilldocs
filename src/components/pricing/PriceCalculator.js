@@ -178,7 +178,7 @@ export default function PriceCalculator({ period, tier }) {
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
@@ -199,7 +199,7 @@ export default function PriceCalculator({ period, tier }) {
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
@@ -220,7 +220,7 @@ export default function PriceCalculator({ period, tier }) {
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
@@ -241,7 +241,7 @@ export default function PriceCalculator({ period, tier }) {
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>

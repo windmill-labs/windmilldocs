@@ -78,7 +78,7 @@ const pricing = {
 				},
 				seat: {
 					monthly: 8,
-					description: 'An author can create scripts and flows',
+					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 10
@@ -100,7 +100,7 @@ const pricing = {
 				},
 				seat: {
 					monthly: 20,
-					description: 'An author can create scripts and flows',
+					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 1000
@@ -206,7 +206,7 @@ const pricing = {
 			price: {
 				seat: {
 					monthly: 10,
-					description: 'An author can create scripts and flows',
+					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 20
@@ -235,7 +235,7 @@ const pricing = {
 				{
 					text: <span> Each seat includes:</span>,
 					features: [
-						{ text: 'one user or two operators' },
+						{ text: 'one developer or two operators' },
 						{
 							text: (
 								<span>
@@ -283,7 +283,7 @@ const pricing = {
 				},
 				seat: {
 					monthly: 40,
-					description: 'An author can create scripts and flows',
+					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 1000

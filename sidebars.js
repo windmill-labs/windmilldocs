@@ -322,8 +322,34 @@ const sidebars = {
 						'advanced/cli/folder'
 					]
 				},
-				'advanced/deploy_gh_gl/index',
-				'advanced/git_sync/index',
+				{
+					type: 'category',
+					label: 'Deploy to Prod',
+					link: {
+						type: 'doc',
+						id: 'advanced/deploy_to_prod/index'
+					},
+					items: [
+						'core_concepts/staging_prod/index',
+						'advanced/deploy_gh_gl/index'
+					]
+				},
+				{
+					type: 'category',
+					label: 'Version Control in Windmill',
+					link: {
+						type: 'doc',
+						id: 'advanced/version_control/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'advanced/git_sync/index',
+							label: 'Sync to Remote Git Repository'
+						},
+						'advanced/git_sync/cli_sync',
+					]
+				},
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -357,7 +383,6 @@ const sidebars = {
 				'core_concepts/dedicated_workers/index',
 				'misc/worker_group_management_ui/index',
 				'core_concepts/concurrency_limits/index',
-				'core_concepts/staging_prod/index',
 				'misc/s3_cache/index',
 				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',
