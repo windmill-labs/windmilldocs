@@ -284,7 +284,17 @@ const sidebars = {
 			type: 'category',
 			label: 'Developer',
 			items: [
-				'advanced/self_host/index',
+				{
+					type: 'category',
+					label: 'Self Host',
+					link: {
+						type: 'doc',
+						id: 'advanced/self_host/index'
+					},
+					items: [
+						'advanced/self_host/aws_ecs'
+					]
+				},
 				{
 					type: 'category',
 					label: 'Local Development',
