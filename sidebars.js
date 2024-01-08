@@ -713,6 +713,7 @@ const sidebars = {
 				},
 				'misc/note_of_intent/index',
 				'misc/share_on_hub/index',
+				'misc/partners/index',
 				'misc/white_labelling/index'
 			]
 		}
