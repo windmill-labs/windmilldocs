@@ -109,7 +109,7 @@ We will create 6 tasks definitions here:
    - Essential container: YES
    - Port mapping: 8000 / TCP / http / HTTP
    - Resource allocation: 1 CPU / 1.5 GiB memory
-   - Environment variable: `MODE=server` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`. Replace the hostname and password with the ones from the RDS database your created above
+   - Environment variable: `JSON_FMT=true`, `MODE=server` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`. Replace the hostname and password with the ones from the RDS database your created above
    - Turn on log collection for easy debugging
    - Add the following health check: `CMD-SHELL, curl -f http://localhost:8000/api/version || exit 1` / 10s interval / 5s timeout and 5 retries
    - Leave the rest default
@@ -129,7 +129,7 @@ We will create 6 tasks definitions here:
    - Essential container: YES
    - Port mapping: No port mapping for workers
    - Resource allocation: 2 CPU / 3.5 GiB memory
-   - Environment variable: `MODE=worker`, `WORKER_GROUP=default` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`
+   - Environment variable: `JSON_FMT=true`, `MODE=worker`, `WORKER_GROUP=default` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`
    - TODO: elaborate on volumes
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
@@ -149,7 +149,7 @@ We will create 6 tasks definitions here:
    - Essential container: YES
    - Port mapping: no port mapping for workers
    - Resource allocation: 2 CPU / 3.5 GiB memory
-   - Environment variable: `MODE=worker`, `WORKER_GROUP=native` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`
+   - Environment variable: `JSON_FMT=true`, `MODE=worker`, `WORKER_GROUP=native` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`
    - TODO: elaborate on volumes
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
@@ -169,7 +169,7 @@ We will create 6 tasks definitions here:
    - Essential container: YES
    - Port mapping: 3001 / TCP / http / HTTP
    - Resource allocation: 1 CPU / 1.5 GiB memory
-   - Environment variable: No env variable
+   - Environment variable: `JSON_FMT=true`,
    - TODO: elaborate on volumes
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
@@ -189,7 +189,7 @@ We will create 6 tasks definitions here:
    - Essential container: YES
    - Port mapping: 3002 / TCP / http / HTTP
    - Resource allocation: 1 CPU / 1.5 GiB memory
-   - Environment variable: No env variable
+   - Environment variable: `JSON_FMT=true`
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
