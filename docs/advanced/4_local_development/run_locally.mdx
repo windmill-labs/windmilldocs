@@ -189,6 +189,74 @@ set "WM_WORKSPACE=workspace_id"
 
 then simply run the relevant command for your language.
 
+### Metadata file
+
+Metadata files are used with the [CLI sync](../11_git_sync/cli_sync.mdx) to push to a windmill workspace with additional data such as
+summary, description, additional UI configs and the full lockfile. The metadata file ias at <script_path without extension>.script.yaml.
+
+```
+f/foo/my_script.ts
+f/foo/my_script.script.yaml
+```
+
+The metadata file has the following format:
+
+```
+summary: 'My summary'
+description: 'My description'
+lock:
+  - anyio==4.2.0
+  - certifi==2023.11.17
+  - h11==0.14.0
+  - httpcore==0.17.3
+  - httpx==0.24.1
+  - idna==3.6
+  - sniffio==1.3.0
+  - wmill==1.237.0
+schema:
+  $schema: 'https://json-schema.org/draft/2020-12/schema'
+  type: object
+  properties:
+    name:
+      type: string
+      description: ''
+      default: Nicolas Bourbaki
+    age:
+      type: integer
+      description: ''
+      default: 42
+    file_:
+      type: string
+      description: ''
+      contentEncoding: base64
+      default: <function call>
+    l:
+      type: array
+      description: ''
+      default:
+        - or
+        - lists!
+      items:
+        type: string
+        enum: null
+    no_default:
+      type: string
+      description: ''
+      default: null
+    obj:
+      type: object
+      description: ''
+      default:
+        even: dicts
+      properties: {}
+  required:
+    - no_default
+is_template: false
+kind: script
+```
+
+Schema is following the [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) format
+
 ### VS Code
 
 :::info VS Code Extension
