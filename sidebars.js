@@ -324,18 +324,6 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Deploy to Prod',
-					link: {
-						type: 'doc',
-						id: 'advanced/deploy_to_prod/index'
-					},
-					items: [
-						'core_concepts/staging_prod/index',
-						'advanced/deploy_gh_gl/index'
-					]
-				},
-				{
-					type: 'category',
 					label: 'Version Control in Windmill',
 					link: {
 						type: 'doc',
@@ -348,6 +336,18 @@ const sidebars = {
 							label: 'Sync to Remote Git Repository'
 						},
 						'advanced/git_sync/cli_sync',
+					]
+				},
+				{
+					type: 'category',
+					label: 'Deploy to Prod',
+					link: {
+						type: 'doc',
+						id: 'advanced/deploy_to_prod/index'
+					},
+					items: [
+						'core_concepts/staging_prod/index',
+						'advanced/deploy_gh_gl/index'
 					]
 				},
 				'advanced/preinstall_binaries/index',

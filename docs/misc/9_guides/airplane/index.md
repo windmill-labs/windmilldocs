@@ -95,8 +95,8 @@ Windmill integration with Git repositories makes it possible to adopt a robust d
 The process is as follows:
 - Users iterate and make their changes in a "staging" Windmill workspace.
 - Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI), Windmill automatically commits it to this repo and creates one branch per app/flow/script.
-- On every commit from Windmill, PRs are automatically created via a GitHub action. Approved GitHub users can review and merge those PRs.
-- Every time a PR is merged, another GitHub action automatically deploys the change to a "production" Windmill workspace.
+- On every commit from Windmill, PRs are automatically created via a GitHub Action. Approved GitHub users can review and merge those PRs.
+- Every time a PR is merged, another GitHub Action automatically deploys the change to a "production" Windmill workspace.
 
 This gives the flexibility to fully test new Windmill scripts, flows and apps, while having them version-controlled and deployed in an automated way to the production environment.
 
@@ -112,24 +112,24 @@ More details at:
 	/>
 </div>
 
-#### Using Windmill CLI in GitHub actions
+#### Using Windmill CLI in GitHub Actions
 
-Finally, you can define your own GitHub actions to pull Windmill workspace regularly from GitHub using [Windmill CLI](../../../advanced/3_cli/index.mdx). To automatically deploy a PR to the Windmill workspace, the [push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) can be used.
+Finally, you can define your own GitHub Actions to pull Windmill workspace regularly from GitHub using [Windmill CLI](../../../advanced/3_cli/index.mdx). To automatically deploy a PR to the Windmill workspace, the [push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) can be used.
 
-And another GitHub action can be created to regularly pull Windmill workspace to the GitHub repo using Windmill CLI. This action can be run on a schedule to keep the repo and the workspace in sync.
+And another GitHub Action can be created to regularly pull Windmill workspace to the GitHub repo using Windmill CLI. This action can be run on a schedule to keep the repo and the workspace in sync.
 
 ### Version Control
 
 Manage changes to scripts workflows, apps and resources using commits & push on remote repositories.
 
-#### Sync Workspace to Remote Git Repository
+#### Git Sync
 
 From the workspace settings, you can set a [git_repository](../../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../../core_concepts/0_draft_and_deploy/index.mdx).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/JqG0KNYWLx0?vq=hd1080"
-	title="Sync Workspace to Remote Git Repository"
+	title="Git Sync"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -138,13 +138,13 @@ From the workspace settings, you can set a [git_repository](../../../integration
 
 <br/>
 
-Sync Workspace to Remote Git Repository is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+Git Sync is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
 
 More details at:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 		<DocCard
-			title="Sync Workspace to Remote Git Repository"
+			title="Git Sync"
 			description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
 			href="/docs/advanced/git_sync"
 	/>
@@ -445,7 +445,7 @@ Windmill employs the exact same concept of [Resources](https://www.windmill.dev/
 
 The platform contains more than [70 integrations](https://www.windmill.dev/docs/integrations/integrations_on_windmill) created by the community on [WindmillHub](https://hub.windmill.dev/) and approved by the Windmill team. It is very easy to [create your own Resource Types](https://www.windmill.dev/docs/core_concepts/resources_and_types#create-a-resource-type) to interact with new external systems.
 
-Just like Airplane, secret are handled with [Variables](https://www.windmill.dev/docs/core_concepts/variables_and_secrets). Variables are dynamic values that have a key associated to them and can be retrieved during the execution of a Script or Flow. All Variables (not just secrets) are encrypted with a workspace specific symmetric key to avoid leakage. There are two types of Variables in Windmill: [user-defined](https://www.windmill.dev/docs/core_concepts/variables_and_secrets#user-defined-variables) and [contextual](https://www.windmill.dev/docs/core_concepts/variables_and_secrets#contextual-variables).
+Just like Airplane, secrets are handled with [Variables](https://www.windmill.dev/docs/core_concepts/variables_and_secrets). Variables are dynamic values that have a key associated to them and can be retrieved during the execution of a Script or Flow. All Variables (not just secrets) are encrypted with a workspace specific symmetric key to avoid leakage. There are two types of Variables in Windmill: [user-defined](https://www.windmill.dev/docs/core_concepts/variables_and_secrets#user-defined-variables) and [contextual](https://www.windmill.dev/docs/core_concepts/variables_and_secrets#contextual-variables).
 
 Resources can embed variables, for example creating a new [PostgreSQL resource](https://hub.windmill.dev/resource_types/114/postgresql) will create for field password a variable found at the same path.
 
@@ -542,3 +542,17 @@ The tag can also be dynamic (tag-$workspace) where $workspace is replaced with t
     	href="/docs/core_concepts/worker_groups"
     />
 </div>
+
+## Tutorials
+
+### Migrate from Airplane a Scheduled Script Using Secrets
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/--ZyfCHvvWo?vq=hd1080"
+	title="Migrate from Airplane a Scheduled Script Using Secrets"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
