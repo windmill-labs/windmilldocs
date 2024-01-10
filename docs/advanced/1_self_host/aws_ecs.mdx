@@ -53,7 +53,7 @@ Familiar with Terraform? The terraform files are available [here in Windmill's G
    - The DB doesn't need public access
    - Link it the security group created above
    - RDS proxy can be a good option in certain cases. It is not required
-   - We advise to create a certificate authority and use it here
+   - We advise to use a certificate authority
    - The port can be left to the default: `5432`
 1. Database authentication
    - Windmill uses Password authentication
@@ -81,8 +81,47 @@ As said in the introduction, the architecture of your stack depends of your need
    - We recommend allocating at least 100GiB of volume size
 1. Network settings for EC2 instances
    - Attach it to the VPC and security group created above
-   - Make sure to select the PUBLIC subnets if your VPC has private and public ones. The instance should be on the PUBLIC subnets
-   - WARNING: You need to TURN ON auto-assign public IP. Otherwise the EC2 agent on the servers will not be able to register the host to the EC2 cluster. This happens if you didn't set a NAT on your VPC
+   - The instance can be placed in the private subnets, we will access them through a load balancer
+
+## Create a Load Balancer and Target Groups
+
+We're going to create 3 target groups, for the Windmill server, LSP and Multiplayer
+
+1. Go to Target Groups and create a new one
+   - Target type: IP addresses
+   - Target group name: `windmill-cluster-server-tg`
+   - Protocol: HTTP / Port 8000
+   - Attach it to the VPC created above
+   - Protocol Version: HTTP1
+   - No need to add explicit IP targets right now. The ECS services will register themselves automatically
+1. Do the same for LSP
+   - Same steps as above but with name: `windmill-cluster-lsp-tg` and port: `3001`
+1. Do the same for Multiplayer
+   - Same steps as above but with name: `windmill-cluster-multip-tg` and port: `3002`
+
+Now create a Load balancer:
+
+1. Create a new Application Load Balancer
+   - Name: `windmill-cluster-alb`
+   - It must be internet facing
+   - IP address type: IPv4
+   - Network mapping: select the VPC created above and map it to the 2 public subnets
+   - Security group: Select the security group created above
+   - Listener: Default listener on port 80 / Foward to the Target Group `windmill-cluster-server-tg`
+   - Click on Create
+1. Once the ALB is created, go to its page to add rules for LSP and Multiplayer
+   - Select the Listener `HTTP:80` and click on Manage rule > Add Rule
+1. Add a Route for LSP
+   - Name: `lsp`
+   - Add a condition: `Path is /ws/*`
+   - Click Next
+   - Select target group `windmill-lsp-tg`
+   - Give it a priority of `10`
+   - Click on Create
+1. Add a group for Multiplayer
+   - Same steps as for LSP above
+   - The path should be `/ws_mp/*`
+   - The target group should be `windmill-multiplayer-tg`
 
 ## Create the task definitions
 
@@ -130,7 +169,7 @@ We will create 6 tasks definitions here:
    - Port mapping: No port mapping for workers
    - Resource allocation: 2 CPU / 3.5 GiB memory
    - Environment variable: `JSON_FMT=true`, `MODE=worker`, `WORKER_GROUP=default` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`
-   - TODO: elaborate on volumes
+   - Add a Bind volume named `worker_dependency_cache` mapped to `/tmp/windmill/cache`
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
@@ -150,7 +189,7 @@ We will create 6 tasks definitions here:
    - Port mapping: no port mapping for workers
    - Resource allocation: 2 CPU / 3.5 GiB memory
    - Environment variable: `JSON_FMT=true`, `MODE=worker`, `WORKER_GROUP=native` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`
-   - TODO: elaborate on volumes
+   - Add a Bind volume named `worker_dependency_cache` mapped to `/tmp/windmill/cache`
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
@@ -170,7 +209,7 @@ We will create 6 tasks definitions here:
    - Port mapping: 3001 / TCP / http / HTTP
    - Resource allocation: 1 CPU / 1.5 GiB memory
    - Environment variable: `JSON_FMT=true`,
-   - TODO: elaborate on volumes
+   - Add a Bind volume named `lsp_cache` mapped to `/root/.cache`
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
@@ -205,7 +244,7 @@ One for each task definition, we now will create 6 services.
 1. Service name: `windmill-server`
 1. Service replica: 2 (to follow the architecture we presented above)
 1. Networking: Select the VPC created above, and place the services in the PUBLIC subnets. Select the security group created above (or the one allowing traffic on port 80)
-1. Load balancer: It's important to create a load balancer here as it will be the entry point to Windmill. Create an Application Load Balancer `windmill-server-lb` with a target group `windmill-server-tg`
+1. Load balancer: Link it to the load balancer created above with the target group `windmill-cluster-server-tg`
 
 #### Multi-purpose Windmill worker
 
@@ -229,32 +268,11 @@ One for each task definition, we now will create 6 services.
 1. Service name: `windmill-lsp`
 1. Service replica: 1
 1. Networking: Select the VPC created above, and place the services in the PUBLIC subnets. Select the security group created above
-1. Load balancer: Create a load balancer. All we need is actually a Target Group, but using this menu AWS will create both, and we will just have to remove the load balancer later and keep only the target group. Name them `windmill-lsp-lb` and `windmill-lsp-tg`
+1. Load balancer: Link it to the load balancer created above with the target group `windmill-cluster-lsp-tg`
 
 #### Windmill Multiplayer
 
 1. Same as Windmill LSP, using the task definition `windmill-native-worker`.
-
-## Add Networking Routes for Windmill LSP and Multiplayer
-
-Here we will add the appropriate routes for requests that the UI will want to make to LSP or Multiplayer. We create 2 load balancers for Windmill LSP and Multiplayer, but only their Target Groups are needed. We will use the Windmill Service Load Balancer to route certain requests to those target groups based on their path.
-
-Go to AWS EC2 Load Balancer menu and start by deleting the load balancers named `windmill-lsp-lb` and `windmill-multiplayer-lb`. Then go to `windmill-server-lb` Load Balancer to update it:
-
-1. Open the `HTTP:80` listener and click on the `Add Rule` button on the right
-1. Add a Route for LSP
-   - Name: `lsp`
-   - Add a condition: `Path is /ws/*`
-   - Click Next
-   - Select target group `windmill-lsp-tg`
-   - Give it a priority of `10`
-   - Click on Create
-1. Add a group for Multiplayer
-   - Same steps as for LSP above
-   - The path should be `/ws_mp/*`
-   - The target group should be `windmill-multiplayer-tg`
-
-LSP and Multiplayer should now be all set.
 
 ## Open Windmill
 
