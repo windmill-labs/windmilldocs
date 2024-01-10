@@ -38,8 +38,8 @@ Windmill integration with Git repositories makes it possible to adopt a robust d
 The process is as follows:
 - Users iterate and make their changes in a "staging" Windmill workspace.
 - Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI), Windmill automatically commits it to this repo and creates one branch per app/flow/script.
-- On every commit from Windmill, PRs are automatically created via a GitHub action. Approved GitHub users can review and merge those PRs.
-- Every time a PR is merged, another GitHub action automatically deploys the change to a "production" Windmill workspace.
+- On every commit from Windmill, PRs are automatically created via a GitHub Action. Approved GitHub users can review and merge those PRs.
+- Every time a PR is merged, another GitHub Action automatically deploys the change to a "production" Windmill workspace.
 
 This gives the flexibility to fully test new Windmill scripts, flows and apps, while having them version-controlled and deployed in an automated way to the production environment.
 
@@ -55,8 +55,8 @@ More details at:
 	/>
 </div>
 
-## Using Windmill CLI in GitHub actions
+## Using Windmill CLI in GitHub Actions
 
-Finally, you can define your own GitHub actions to pull Windmill workspace regularly from GitHub using [Windmill CLI](../3_cli/index.mdx). To automatically deploy a PR to the Windmill workspace, the [push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) can be used.
+Finally, you can define your own GitHub Actions to pull Windmill workspace regularly from GitHub using [Windmill CLI](../3_cli/index.mdx). To automatically deploy a PR to the Windmill workspace, the [push-on-merge.yaml](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) can be used.
 
-And another GitHub action can be created to regularly pull Windmill workspace to the GitHub repo using Windmill CLI. This action can be run on a schedule to keep the repo and the workspace in sync.
+And another GitHub Action can be created to regularly pull Windmill workspace to the GitHub repo using Windmill CLI. This action can be run on a schedule to keep the repo and the workspace in sync.
