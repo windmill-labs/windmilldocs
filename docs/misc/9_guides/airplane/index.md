@@ -547,10 +547,28 @@ The tag can also be dynamic (tag-$workspace) where $workspace is replaced with t
 
 ### Migrate from Airplane a Scheduled Script Using Secrets
 
+Airplane Tasks have their equivalent in Windmill Scripts. They can be built from the [Script Editor](../../../script_editor/index.mdx) or from [VS Code](../../../cli_local_dev/1_vscode-extension/index.mdx).
+
+[This tutorial](https://www.youtube.com/watch?v=--ZyfCHvvWo) covers how to migrate from Airplane to Windmill a [scheduled](../../../core_concepts/1_scheduling/index.mdx) script connected to Discord using [resources](../../../core_concepts/3_resources_and_types/index.mdx) and [variables](../../../core_concepts/2_variables_and_secrets/index.mdx).
+
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/--ZyfCHvvWo?vq=hd1080"
 	title="Migrate from Airplane a Scheduled Script Using Secrets"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+### Migrate an Airplane View to Windmill and Make it an App
+
+In Airplane, views are custom UIs made in react. [This tutorial](https://www.youtube.com/watch?v=jncbSnVZGsU) covers from an Airplane View how to build the equivalent App using Windmill low-code [App Editor](../../../apps/0_app_editor/index.mdx).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/jncbSnVZGsU?vq=hd1080"
+	title="Migrate an Airplane View to Windmill and Make it an App"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
