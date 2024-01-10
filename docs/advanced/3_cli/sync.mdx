@@ -18,7 +18,9 @@ local development through the [VS Codeextension](../../cli_local_dev/1_vscode-ex
 
 ## Raw Syncing
 
-Raw syncing is a one-off operation with no state maintained. It's best used for
+Raw syncing is a one-off operation with no state maintained. When using Windmill EE and [Git Sync](../11_git_sync/index.mdx),
+this is what you should use since Git Sync will always keep your git repo up-to-date.
+When not used in with Git Sync. It's best used for
 making backups, cloning a complete workspace, and similar one-off operations.
 
 Raw syncing is done using `wmill sync pull --raw` & `wmill sync push --raw`
@@ -38,10 +40,9 @@ updating the remote equivalents.
 
 ## Stateful Syncing
 
-Stateful syncing is best used when you want to continuously synchronize a folder
-or git(hub) repository with a Windmill instance. The CLI will automatically
-maintain state for you and ensure modifications that happen concurrently on the
-remote and locally stay in sync.
+Stateful syncing is best used when your Git repo and windmill workspace might diverge (because of not using [Git Sync](../11_git_sync/index.mdx))
+and you want to keep track of the state the last time you pulled to check for merge conflicts.The CLI will automatically
+maintain state for you and ensure modifications that happen concurrently on the remote and locally stay in sync.
 
 ### Pulling
 
