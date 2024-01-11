@@ -6,6 +6,8 @@ The migration from Airplane to Windmill is made easy by the same developer-first
 
 Windmill offers 3 months of [Enterprise Edtion](/pricing) to Airplane users. To get started, contact us at [ruben@windmill.dev](mailto:ruben@windmill.dev).
 
+The migration from Airplane is included in the Enterprise Edition. Upon subscription, we can organize a migration session from Airplane to Windmill. We can also recreate your scripts, flows, and applications from exports and screenshots of Airplane, in collaboration with you if your instance is self-hosted. If you are interested, contact us at [ruben@windmill.dev](mailto:ruben@windmill.dev).
+
 The following section covers the main concepts of Windmill, starting from those of Airplane. To see all the Core Concepts of Windmill, see:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -126,10 +128,12 @@ Manage changes to scripts workflows, apps and resources using commits & push on 
 
 From the workspace settings, you can set a [git_repository](../../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../../core_concepts/0_draft_and_deploy/index.mdx).
 
+The first 5 minutes of this video show how to set up a Git repository for a workspace, the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions:
+
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/JqG0KNYWLx0?vq=hd1080"
-	title="Git Sync"
+	src="https://www.youtube.com/embed/0ZoMBXJOgGU?vq=hd1080"
+	title="Deploy to a Prod Workspace using a Git Workflow"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen

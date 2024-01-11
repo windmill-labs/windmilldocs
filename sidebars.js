@@ -356,8 +356,8 @@ const sidebars = {
 						id: 'advanced/deploy_to_prod/index'
 					},
 					items: [
-						'core_concepts/staging_prod/index',
-						'advanced/deploy_gh_gl/index'
+						'advanced/deploy_gh_gl/index',
+						'core_concepts/staging_prod/index'
 					]
 				},
 				'advanced/preinstall_binaries/index',

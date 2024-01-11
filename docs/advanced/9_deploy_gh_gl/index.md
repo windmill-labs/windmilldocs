@@ -1,4 +1,4 @@
-# Deploy to prod using a Git Workflow
+# Deploy to Prod using a Git Workflow
 
 Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps.
 
@@ -16,11 +16,6 @@ The process is as follows:
 
 This gives the flexibility to fully test new Windmill scripts, flows and apps, while having them [version-controlled](../13_version_control/index.mdx) and deployed in an automated way to the production environment.
 
-:::info
-
-Windmill workspace sync to a Git repository is a [Cloud and Self-Hosted Enterprise Edition](/pricing)-only feature.
-
-:::
 
 :::tip
 
@@ -28,9 +23,23 @@ Check out the [windmill-sync-example repository](https://github.com/windmill-lab
 
 :::
 
+## Git Sync
+
+Deploying to a prod workspace using git requires the [Git Sync](../11_git_sync/index.mdx) feature, which is is a [Cloud and Self-Hosted Enterprise Edition](/pricing)-only feature.
+
 ## Setup
 
 Note: this is the detailed setup steps for a [GitHub](https://github.com/) repository. It will need to be adapted for [GitLab](https://about.gitlab.com/).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/0ZoMBXJOgGU?vq=hd1080"
+	title="Deploy to a Prod Workspace using a Git Workflow"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
 
 ### GitHub repository setup
 
