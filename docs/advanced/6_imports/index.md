@@ -41,24 +41,39 @@ import { toWords } from 'number-to-words@1';
 import { getVariable } from 'windmill-client@1.147.3';
 ```
 
-### Private npm registry
+### Private npm registry & Private npm packages
 
-If you are using a private artifactory, you can set the env variable `NPM_CONFIG_REGISTRY` for the worker to the url of your artifactory. If the private registry is exposing custom certificates,`DENO_CERT` and `DENO_TLS_CA_STORE` env variables can be used as well (see [Deno documentaion](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables) for more info on those options).
+![Private NPM registry](private_registry.png)
+
+On EE, go to `Instance settings -> Core -> NPM Config Registry`.
+
+Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
+
+#### Private NPM packages requiring token
+
+:::caution
+
+Currently, deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
+
+:::
+
+If a token is required, append `:_authToken=<your url>` to the URL.
+
+Combining the two, you can import private packages from npm
+
+```
+https://registry.npmjs.org/:_authToken=npm_bKZp1kOKzWsNPUvx2LpyUzIJqi2uaw23eqw
+```
+
+If the private registry is exposing custom certificates,`DENO_CERT` and `DENO_TLS_CA_STORE` env variables can be used as well (see [Deno documentaion](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables) for more info on those options).
 
 ```dockerfile
 windmill_worker:
   ...
   environment:
     ...
-    - NPM_CONFIG_REGISTRY=https://registry.yarnpkg.com.
     - DENO_CERT=/custom-certs/root-ca.crt
 ```
-
-:::info
-
-Bun runtime on Windmill does not support custom NPM registries.
-
-:::
 
 ## Imports in Python
 
@@ -102,7 +117,7 @@ def main(...):
 
 ### Private PyPi repository
 
-In addition to that, environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate. 
+In addition to that, environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate.
 This is useful for private repositories.
 
 In a docker-compose file, you would add following lines:
@@ -136,9 +151,8 @@ import (
 
 For PowerShell, imports are parsed when the script is run and modules are automatically installed if they are not found in the cache.
 
-e.g.: 
+e.g.:
 
 ```powershell
 Import-Module -Name MyModule
 ```
-
