@@ -2,6 +2,10 @@
 title: Windmill on AWS ECS
 ---
 
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 Windmill can be deployed on an ECS cluster. Below are the detailed steps to get a Windmill stack up and running. The number of servers and workers, as well as the instance sizes, should be tuned to your own usecases.
 
 To give a brief overview, we will first create a VPC and an associated security group. This VPC will contain the Database, the instances powering the ECS cluster, and the windmill containers. Then we will create a database on RDS, and finally the ECS cluster.
@@ -36,17 +40,18 @@ Familiar with Terraform? The terraform files are available [here in Windmill's G
    - PostgreSQL
    - Any recent version of PostgreSQL will work. At the time of writing we're using 16.1-R1
 1. Template
-   - Choose the template of your choice (Production VS Dev/Test) depending on your needs. Obviously this will significantly impact costs
+   - Choose the template of your choice (Production VS Dev/Test) depending on your needs. This will significantly impact costs
 1. Availability and durability
-   - This will be preset depending on the template option you chose. You can customize it depending on your needs.
+   - We recommend using a Multi-AZ DB instance for production use cases. Single DB instance can be a good fit for testing Windmill, as it is less expensive
 1. Settings
    - DB instance identifier: `windmill-db`
    - Leave `postgres` as the username, and choose a strong master password. Keep it in a safe place, you will need it in the following steps
 1. Instance configuration
-   - The instance type will be preset depending on the template you chose. Default is usually a good starting point
+   - We recommend using at least a `db.t4g.xlarge` or `db.m5d.xlarge`
+   - The number of connection should be taken into account to determine the instance size. AWS has [its own rule](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html) to set the default number of connections, depending on the instance memory. Windmill requires 50 connection per server plus 5 additional connection per worker. So, for example for the 2 servers plus 4 workers we're deploying here, we need at least 120 DB connections
 1. Storage. This is on a per-usecase basis. Just be aware that Windmill stores logs and job results in the database. Depending on the job retention period you want to later configure in Windmill, you might have different requirements
    - A good starting point is 400Gib / 12000 IOPS
-   - If you chose Multi AZ instance or Standalone instance, it is recommended to turn on autoscaling.
+   - It is recommended to turn on autoscaling.
 1. Connectivity
    - Don't connect to an EC2 compute resource. Container of the ECS cluster will connect to it using its URL
    - Attach it to the VPC created above
@@ -101,13 +106,17 @@ We're going to create 3 target groups, for the Windmill server, LSP and Multipla
 
 Now create a Load balancer:
 
+:::tip
+The load balancer plays the role of a single entry door for all Windmill endpoints. If you want to expose Windmill over HTTPS, only the Load Balancer LISTENER created below should be changed to listen on protocol `HTTPS` / port `443` and then you can customize the server certificate you want to use. No other action is required on the services as they are placed in the private subnets and not exposed directly.
+:::
+
 1. Create a new Application Load Balancer
    - Name: `windmill-cluster-alb`
    - It must be internet facing
    - IP address type: IPv4
    - Network mapping: select the VPC created above and map it to the 2 public subnets
    - Security group: Select the security group created above
-   - Listener: Default listener on port 80 / Foward to the Target Group `windmill-cluster-server-tg`
+   - Listener: Default listener on port 80 / Forward to the Target Group `windmill-cluster-server-tg`
    - Click on Create
 1. Once the ALB is created, go to its page to add rules for LSP and Multiplayer
    - Select the Listener `HTTP:80` and click on Manage rule > Add Rule
@@ -115,25 +124,31 @@ Now create a Load balancer:
    - Name: `lsp`
    - Add a condition: `Path is /ws/*`
    - Click Next
-   - Select target group `windmill-lsp-tg`
+   - Select target group `windmill-cluster-lsp-tg`
    - Give it a priority of `10`
    - Click on Create
 1. Add a group for Multiplayer
-   - Same steps as for LSP above
-   - The path should be `/ws_mp/*`
-   - The target group should be `windmill-multiplayer-tg`
+   - Name: `multiplayer`
+   - Add a condition: `Path is /ws_mp/*`
+   - Click Next
+   - Select target group `windmill-cluster-multiplayer-tg`
+   - Give it a priority of `20`
+   - Click on Create
 
 ## Create the task definitions
 
 We will create 6 tasks definitions here:
 
-- _REQUIRED_ For Windmill Server
-- _REQUIRED_ For multi-purpose Windmill workers
-- _OPTIONAL_ For native Windmill workers
-- _OPTIONAL_ For Windmill LSP
-- _OPTIONAL_ For Windmill Multiplayer
+- _REQUIRED_ - For Windmill Server
+- _REQUIRED_ - For multi-purpose Windmill workers
+- _OPTIONAL_ - For native Windmill workers
+- _OPTIONAL_ - For Windmill LSP
+- _OPTIONAL_ - For Windmill Multiplayer
 
-#### Windmill Server
+<Tabs className="unique-tabs">
+<TabItem value="Server" label="Server" attributes={{className: "p-4 !mt-0 !ml-0"}}>
+
+#### Windmill server
 
 1. Name: `windmill-server`
 1. Launch Type: AWS EC2 instances
@@ -144,14 +159,89 @@ We will create 6 tasks definitions here:
 1. No Task placement
 1. Container:
    - name: `windmill-server`
-   - image: `ghcr.io/windmill-labs/windmill:main` (or `ghcr.io/windmill-labs/windmill-ee:main` for EE)
+   - image: `ghcr.io/windmill-labs/windmill:<LATEST_RELEASE>` (or `ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>` for EE). The latest released version can be found [here](https://github.com/windmill-labs/windmill/releases). To upgrade Windmill, all tasks definition will need to be updated.
    - Essential container: YES
    - Port mapping: 8000 / TCP / http / HTTP
    - Resource allocation: 1 CPU / 1.5 GiB memory
    - Environment variable: `JSON_FMT=true`, `MODE=server` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill`. Replace the hostname and password with the ones from the RDS database your created above
    - Turn on log collection for easy debugging
-   - Add the following health check: `CMD-SHELL, curl -f http://localhost:8000/api/version || exit 1` / 10s interval / 5s timeout and 5 retries
+   - Add the following health check: `CMD-SHELL, curl -f http://localhost:8000/api/version || exit 1` - Interval: `10s` - Timeout: `5s` - Retries: `5`
    - Leave the rest default
+
+<details>
+   <summary>Task definition JSON</summary>
+
+The following fields needs to be set manually: `LATEST_RELEASE`, `DB_PASSWORD`, `DB_HOSTNAME` and `ECS_TASK_EXECUTION_ROLE_ARN`.
+
+```json
+{
+	"containerDefinitions": [
+		{
+			"name": "windmill-server",
+			"image": "ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>",
+			"cpu": 1024,
+			"memory": 1536,
+			"portMappings": [
+				{
+					"name": "http",
+					"containerPort": 8000,
+					"hostPort": 8000,
+					"protocol": "tcp",
+					"appProtocol": "http"
+				}
+			],
+			"essential": true,
+			"environment": [
+				{
+					"name": "JSON_FMT",
+					"value": "true"
+				},
+				{
+					"name": "DATABASE_URL",
+					"value": "postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill"
+				},
+				{
+					"name": "MODE",
+					"value": "server"
+				}
+			],
+			"mountPoints": [],
+			"volumesFrom": [],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "/ecs/windmill-server",
+					"awslogs-region": "us-east-2",
+					"awslogs-stream-prefix": "ecs"
+				}
+			},
+			"healthCheck": {
+				"command": ["CMD-SHELL", "curl -f http://localhost:8000/api/version || exit 1"],
+				"interval": 10,
+				"timeout": 5,
+				"retries": 5
+			}
+		}
+	],
+	"family": "windmill-server-json",
+	"executionRoleArn": "<ECS_TASK_EXECUTION_ROLE_ARN>",
+	"networkMode": "awsvpc",
+	"volumes": [],
+	"placementConstraints": [],
+	"requiresCompatibilities": ["EC2"],
+	"cpu": "1024",
+	"memory": "1536",
+	"runtimePlatform": {
+		"cpuArchitecture": "X86_64",
+		"operatingSystemFamily": "LINUX"
+	}
+}
+```
+
+</details>
+
+</TabItem>
+<TabItem value="Multi-purpose worker" label="Multi-purpose worker" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Windmill multi-purpose worker
 
@@ -164,7 +254,7 @@ We will create 6 tasks definitions here:
 1. No Task placement
 1. Container:
    - name: `windmill-worker`
-   - image: `ghcr.io/windmill-labs/windmill:main` (or `ghcr.io/windmill-labs/windmill-ee:main` for EE)
+   - image: `ghcr.io/windmill-labs/windmill:<LATEST_RELEASE>` (or `ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>` for EE)
    - Essential container: YES
    - Port mapping: No port mapping for workers
    - Resource allocation: 2 CPU / 3.5 GiB memory
@@ -172,6 +262,78 @@ We will create 6 tasks definitions here:
    - Add a Bind volume named `worker_dependency_cache` mapped to `/tmp/windmill/cache`
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
+
+<details>
+   <summary>Task definition JSON</summary>
+
+The following fields needs to be set manually: `LATEST_RELEASE`, `DB_PASSWORD`, `DB_HOSTNAME` and `ECS_TASK_EXECUTION_ROLE_ARN`.
+
+```json
+{
+	"containerDefinitions": [
+		{
+			"name": "windmill-worker",
+			"image": "ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>",
+			"cpu": 2048,
+			"memory": 3072,
+			"portMappings": [],
+			"essential": true,
+			"environment": [
+				{
+					"name": "DATABASE_URL",
+					"value": "postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill"
+				},
+				{
+					"name": "JSON_FMT",
+					"value": "true"
+				},
+				{
+					"name": "WORKER_GROUP",
+					"value": "default"
+				},
+				{
+					"name": "MODE",
+					"value": "worker"
+				}
+			],
+			"mountPoints": [],
+			"volumesFrom": [],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "/ecs/windmill-worker",
+					"awslogs-region": "us-east-2",
+					"awslogs-stream-prefix": "ecs"
+				}
+			}
+		}
+	],
+	"family": "windmill-worker",
+	"executionRoleArn": "<ECS_TASK_EXECUTION_ROLE_ARN>",
+	"networkMode": "awsvpc",
+	"volumes": [
+		{
+			"name": "worker_dependency_cache",
+			"host": {
+				"sourcePath": "/tmp/windmill/cache"
+			}
+		}
+	],
+	"placementConstraints": [],
+	"requiresCompatibilities": ["EC2"],
+	"cpu": "2048",
+	"memory": "3072",
+	"runtimePlatform": {
+		"cpuArchitecture": "X86_64",
+		"operatingSystemFamily": "LINUX"
+	}
+}
+```
+
+</details>
+
+</TabItem>
+<TabItem value="Native worker" label="Native worker" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Windmill native worker
 
@@ -184,7 +346,7 @@ We will create 6 tasks definitions here:
 1. No Task placement
 1. Container:
    - name: `windmill-worker`
-   - image: `ghcr.io/windmill-labs/windmill:main` (or `ghcr.io/windmill-labs/windmill-ee:main` for EE)
+   - image: `ghcr.io/windmill-labs/windmill:<LATEST_RELEASE>` (or `ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>` for EE)
    - Essential container: YES
    - Port mapping: no port mapping for workers
    - Resource allocation: 2 CPU / 3.5 GiB memory
@@ -192,6 +354,79 @@ We will create 6 tasks definitions here:
    - Add a Bind volume named `worker_dependency_cache` mapped to `/tmp/windmill/cache`
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
+
+<details>
+   <summary>Task definition JSON</summary>
+
+The following fields needs to be set manually: `LATEST_RELEASE`, `DB_PASSWORD`, `DB_HOSTNAME` and `ECS_TASK_EXECUTION_ROLE_ARN`.
+
+```json
+{
+	"containerDefinitions": [
+		{
+			"name": "windmill-native-worker",
+			"image": "ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>",
+			"cpu": 2048,
+			"memory": 3072,
+			"portMappings": [],
+			"essential": true,
+			"environment": [
+				{
+					"name": "DATABASE_URL",
+					"value": "postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill"
+				},
+				{
+					"name": "JSON_FMT",
+					"value": "true"
+				},
+				{
+					"name": "WORKER_GROUP",
+					"value": "native"
+				},
+				{
+					"name": "MODE",
+					"value": "worker"
+				}
+			],
+			"mountPoints": [],
+			"volumesFrom": [],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "/ecs/windmill-native-worker",
+					"awslogs-region": "us-east-2",
+					"awslogs-stream-prefix": "ecs"
+				},
+				"secretOptions": []
+			}
+		}
+	],
+	"family": "windmill-native-worker",
+	"executionRoleArn": "<ECS_TASK_EXECUTION_ROLE_ARN>",
+	"networkMode": "awsvpc",
+	"volumes": [
+		{
+			"name": "worker_dependency_cache",
+			"host": {
+				"sourcePath": "/tmp/windmill/cache"
+			}
+		}
+	],
+	"placementConstraints": [],
+	"requiresCompatibilities": ["EC2"],
+	"cpu": "2048",
+	"memory": "3072",
+	"runtimePlatform": {
+		"cpuArchitecture": "X86_64",
+		"operatingSystemFamily": "LINUX"
+	}
+}
+```
+
+</details>
+
+</TabItem>
+<TabItem value="LSP" label="LSP" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Windmill LSP
 
@@ -213,6 +448,74 @@ We will create 6 tasks definitions here:
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
+<details>
+   <summary>Task definition JSON</summary>
+
+The following field needs to be set manually: `ECS_TASK_EXECUTION_ROLE_ARN`.
+
+```json
+{
+	"containerDefinitions": [
+		{
+			"name": "windmill-lsp",
+			"image": "ghcr.io/windmill-labs/windmill-lsp:latest",
+			"cpu": 1024,
+			"memory": 1536,
+			"portMappings": [
+				{
+					"name": "http",
+					"containerPort": 3001,
+					"hostPort": 3001,
+					"protocol": "tcp",
+					"appProtocol": "http"
+				}
+			],
+			"essential": true,
+			"environment": [
+				{
+					"name": "JSON_FMT",
+					"value": "true"
+				}
+			],
+			"mountPoints": [],
+			"volumesFrom": [],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "/ecs/windmill-lsp",
+					"awslogs-region": "us-east-2",
+					"awslogs-stream-prefix": "ecs"
+				}
+			}
+		}
+	],
+	"family": "windmill-lsp",
+	"executionRoleArn": "<ECS_TASK_EXECUTION_ROLE_ARN>",
+	"networkMode": "awsvpc",
+	"volumes": [
+		{
+			"name": "lsp_cache",
+			"host": {
+				"sourcePath": "/root/.cache"
+			}
+		}
+	],
+	"placementConstraints": [],
+	"requiresCompatibilities": ["EC2"],
+	"cpu": "1024",
+	"memory": "1536",
+	"runtimePlatform": {
+		"cpuArchitecture": "X86_64",
+		"operatingSystemFamily": "LINUX"
+	}
+}
+```
+
+</details>
+
+</TabItem>
+<TabItem value="Multiplayer" label="Multiplayer" attributes={{className: "p-4 !mt-0 !ml-0"}}>
+
 #### Windmill Multiplayer
 
 1. Name: `windmill-multiplayer`
@@ -232,9 +535,73 @@ We will create 6 tasks definitions here:
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
+<details>
+   <summary>Task definition JSON</summary>
+
+The following field needs to be set manually: `ECS_TASK_EXECUTION_ROLE_ARN`.
+
+```json
+{
+	"containerDefinitions": [
+		{
+			"name": "windmill-multiplayer",
+			"image": "ghcr.io/windmill-labs/windmill-multiplayer:latest",
+			"cpu": 1024,
+			"memory": 1536,
+			"portMappings": [
+				{
+					"name": "http",
+					"containerPort": 3002,
+					"hostPort": 3002,
+					"protocol": "tcp",
+					"appProtocol": "http"
+				}
+			],
+			"essential": true,
+			"environment": [
+				{
+					"name": "JSON_FMT",
+					"value": "true"
+				}
+			],
+			"mountPoints": [],
+			"volumesFrom": [],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "/ecs/windmill-multiplayer",
+					"awslogs-region": "us-east-2",
+					"awslogs-stream-prefix": "ecs"
+				}
+			}
+		}
+	],
+	"family": "windmill-multiplayer",
+	"executionRoleArn": "<ECS_TASK_EXECUTION_ROLE_ARN>",
+	"networkMode": "awsvpc",
+	"volumes": [],
+	"placementConstraints": [],
+	"requiresCompatibilities": ["EC2"],
+	"cpu": "1024",
+	"memory": "1536",
+	"runtimePlatform": {
+		"cpuArchitecture": "X86_64",
+		"operatingSystemFamily": "LINUX"
+	}
+}
+```
+
+</details>
+
+</TabItem>
+</Tabs>
+
 ## Create the services
 
-One for each task definition, we now will create 6 services.
+One for each task definition, we will now create 6 services. Obviously if you skipped some optional task definition above, the corresponding service shouldn't be created.
+
+<Tabs className="unique-tabs">
+<TabItem value="Server" label="Server" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Windmill server
 
@@ -243,8 +610,11 @@ One for each task definition, we now will create 6 services.
 1. Task definition: select the latest revision of the `windmill-server` task
 1. Service name: `windmill-server`
 1. Service replica: 2 (to follow the architecture we presented above)
-1. Networking: Select the VPC created above, and place the services in the PUBLIC subnets. Select the security group created above (or the one allowing traffic on port 80)
+1. Networking: Select the VPC created above, and place the services in the private subnets. Select the security group created above (or the one allowing traffic on port 80)
 1. Load balancer: Link it to the load balancer created above with the target group `windmill-cluster-server-tg`
+
+</TabItem>
+<TabItem value="Multi-purpose worker" label="Multi-purpose worker" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Multi-purpose Windmill worker
 
@@ -253,12 +623,24 @@ One for each task definition, we now will create 6 services.
 1. Task definition: select the latest revision of the `windmill-worker` task
 1. Service name: `windmill-worker`
 1. Service replica: 2 (to follow the architecture we presented above)
-1. Networking: Select the VPC created above, and place the services in the PRIVATE subnets. No need for workers to be in the public subnets, as there's NAT in the VPC. Select the security group created above
+1. Networking: Select the VPC created above, and place the services in the private subnets. No need for workers to be in the public subnets, as there's NAT in the VPC. Select the security group created above
 1. Load balancer: No load balancer, the container is not exposing any port
 
-#### Native Windmill Worker
+</TabItem>
+<TabItem value="Native worker" label="Native worker" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
-1. Same a the multi-purpose Windmill worker, except that the task definition should be `windmill-native-worker`
+#### Native Windmill worker
+
+1. Environment: leave everything default. It will be using the default capacity provider
+1. Application type: Service
+1. Task definition: select the latest revision of the `windmill-native-worker` task
+1. Service name: `windmill-native-worker`
+1. Service replica: 1 (to follow the architecture we presented above)
+1. Networking: Select the VPC created above, and place the services in the private subnets. No need for workers to be in the public subnets, as there's NAT in the VPC. Select the security group created above
+1. Load balancer: No load balancer, the container is not exposing any port
+
+</TabItem>
+<TabItem value="LSP" label="LSP" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Windmill LSP
 
@@ -267,13 +649,33 @@ One for each task definition, we now will create 6 services.
 1. Task definition: select the latest revision of the `windmill-lsp` task
 1. Service name: `windmill-lsp`
 1. Service replica: 1
-1. Networking: Select the VPC created above, and place the services in the PUBLIC subnets. Select the security group created above
+1. Networking: Select the VPC created above, and place the services in the private subnets. Select the security group created above
 1. Load balancer: Link it to the load balancer created above with the target group `windmill-cluster-lsp-tg`
+
+</TabItem>
+<TabItem value="Multiplayer" label="Multiplayer" attributes={{className: "p-4 !mt-0 !ml-0"}}>
 
 #### Windmill Multiplayer
 
-1. Same as Windmill LSP, using the task definition `windmill-native-worker`.
+1. Environment: leave everything default. It will be using the default capacity provider
+1. Application type: Service
+1. Task definition: select the latest revision of the `windmill-multiplayer` task
+1. Service name: `windmill-multiplayer`
+1. Service replica: 1
+1. Networking: Select the VPC created above, and place the services in the private subnets. Select the security group created above
+1. Load balancer: Link it to the load balancer created above with the target group `windmill-cluster-multip-tg`
+
+</TabItem>
+</Tabs>
 
 ## Open Windmill
 
-Go back to the `windmill-server-lb` and copy its DNS. Open it in a new tab. You should see the Windmill Login interface. Follow the instructions to go through the initial Windmill setup
+Go back to the `windmill-server-lb` and copy its DNS. Open it in a new tab. You should see the Windmill Login interface. The default credentials are `admin@windmill.dev` / `changeme`. Follow the instructions to go through the initial Windmill setup during which you will be invited to update your login email and password.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instance setup"
+		description="Self-hosted instance initial setup guide."
+		href="/docs/advanced/self_host#self-hosted-instance-set-up"
+	/>
+</div>
