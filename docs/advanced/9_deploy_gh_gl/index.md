@@ -33,7 +33,7 @@ Note: this is the detailed setup steps for a [GitHub](https://github.com/) repos
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/0ZoMBXJOgGU?vq=hd1080"
+	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
 	title="Deploy to a Prod Workspace using a Git Workflow"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
