@@ -133,7 +133,7 @@ Example here just using `windmill -h`:
 
 :::
 
-## Whoami
+## whoami
 
 The wmill workspace whoami command allows you to display the currently active user and the active workspace.
 

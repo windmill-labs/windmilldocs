@@ -10,10 +10,12 @@ For all details on Version Control in Windmill, see [Version Control](../../adva
 
 :::
 
+The first 5 minutes of this video show how to set up a Git repository for a workspace, the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions:
+
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/JqG0KNYWLx0?vq=hd1080"
-	title="Git Sync"
+	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
+	title="Deploy to a Prod Workspace using a Git Workflow"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -48,11 +50,18 @@ Run the following commands from the git repo folder to push the initial workspac
 
 This feature is [Cloud & Enterprise Self-Hosted](../../misc/7_plans_details/index.mdx) only.
 
-<div class="text-xl mb-2 font-semibold"></div>
+## Deploy to Prod using a Git Workflow
+
+This feature can be used alongside GiHub Actions to adopt a robust development process for your Windmill scripts, flows and apps,
+with for example a Staging Workspace making automatically PRs on a repo that pushes to a Prod workspace upon merge.
+
+More details at:
+
+
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Command-Line Interface"
-		description="Interact with Windmill instances right from your terminal."
-		href="/docs/advanced/cli"
+		title="Deploy to Prod using a Git Workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>

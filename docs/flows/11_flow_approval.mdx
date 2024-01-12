@@ -71,6 +71,8 @@ Note that approval steps can be applied the same configurations as regular steps
 
 You can add an arbitrary schema form to be provided and displayed on the approval page. Users opening the approval page would then be offered to fill arguments you can use in the flow.
 
+Adding a form to an approval step is a [Cloud & Enterprise Self-Hosted](/pricing) only feature.
+
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
     controls
@@ -94,6 +96,31 @@ You can use the arguments values [connecting](./16_architecture.mdx#input-transf
 ![Use argument](../assets/flows/approval_argument.png.webp "Use argument")
 
 This is a way to introduce human-in-the-loop workflows and condition branches on approval steps inputs.
+
+### How to add dynamic default args & enums?
+
+On your form, you can dynamically set the default arguments and enums with the logic of the approval script.
+Which means they can depend on previous results/API.
+
+As one of the return key of this step, return an object `default_args` that contains the default arguments of the form arguments. e.g:
+
+```
+return {
+	endpoints,
+	default_args: {
+		foo: "foo",
+		bar: true,
+	},
+}
+
+For enums, use `enums`, e.g:
+return {
+	endpoints,
+	enums: {
+		foo: ["choice1", "choice2"]
+	},
+}
+```
 
 ## Tutorial: A Slack Approval Step Conditioning Flow Branches
 
