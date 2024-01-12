@@ -47,7 +47,7 @@ Familiar with Terraform? The terraform files are available [here in Windmill's G
    - DB instance identifier: `windmill-db`
    - Leave `postgres` as the username, and choose a strong master password. Keep it in a safe place, you will need it in the following steps
 1. Instance configuration
-   - We recommend using at least a `db.m5d.xlarge`
+   - We recommend using at least a `db.t4g.xlarge` or `db.m5d.xlarge`
    - The number of connection should be taken into account to determine the instance size. AWS has [its own rule](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Limits.html) to set the default number of connections, depending on the instance memory. Windmill requires 50 connection per server plus 5 additional connection per worker. So, for example for the 2 servers plus 4 workers we're deploying here, we need at least 120 DB connections
 1. Storage. This is on a per-usecase basis. Just be aware that Windmill stores logs and job results in the database. Depending on the job retention period you want to later configure in Windmill, you might have different requirements
    - A good starting point is 400Gib / 12000 IOPS
