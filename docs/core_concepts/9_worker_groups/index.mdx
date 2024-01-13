@@ -196,6 +196,8 @@ normal-$workspace
 
 the workspaces, `dev`, `staging`, `prod` and the worker groups: `normal-dev`, `normal-staging`, `normal-prod`. The same script wih the tag `normal-$workspace` will run on the corresponding worker group depending on the workspace it is deployed to. This enable to share the same control plane but use workers with different network restrictions for tighter security.
 
+Last, if the tags contain `$args[argName]` (e.g: `foo-$args[foobar])` then the tag will be replaced by the string value at the arg key `argName` and thus can be fully dynamic.
+
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
 
 ## Create Worker Group config
