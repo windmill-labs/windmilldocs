@@ -307,7 +307,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'cli_local_dev/vscode-extension/index',
-							label: 'VS Code'
+							label: 'VS Code Extension'
 						},
 						'advanced/local_development/run_locally'
 					]
