@@ -1,6 +1,10 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Deploy to Prod using a Git Workflow
 
 Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps.
+
+This feature can be referred as [Git Sync](../11_git_sync/index.mdx) - Item mode.
 
 :::tip Deploy to prod
 
@@ -23,9 +27,25 @@ Check out the [windmill-sync-example repository](https://github.com/windmill-lab
 
 :::
 
+This process can be used in particular for local development with a solid setup:
+
+![Local Development Setup](../4_local_development/local_development_v0.png "Local Development Setup")
+
+More details at:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local Development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
 ## Git Sync
 
 Deploying to a prod workspace using git requires the [Git Sync](../11_git_sync/index.mdx) feature, which is is a [Cloud and Self-Hosted Enterprise Edition](/pricing)-only feature.
+
+From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
 
 ## Setup
 

@@ -128,7 +128,7 @@ Manage changes to scripts workflows, apps and resources using commits & push on 
 
 From the workspace settings, you can set a [git_repository](../../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../../core_concepts/0_draft_and_deploy/index.mdx).
 
-The first 5 minutes of this video show how to set up a Git repository for a workspace, the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions:
+The first 5 minutes of this video show how to set up a Git repository for a workspace (Git Sync - workspace mode), the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions (Git Sync - item mode):
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
