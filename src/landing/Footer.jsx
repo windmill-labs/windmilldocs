@@ -1,15 +1,19 @@
 import React from 'react';
+import { SiDiscord, SiX, SiLinkedin } from 'react-icons/si';
+import '../css/custom.css';
+
 const navigation = {
 	support: [
 		{ name: 'Pricing', href: '/pricing' },
 		{ name: 'Documentation', href: '/docs/intro' },
-		{ name: 'Github', href: 'https://github.com/windmill-labs/windmill' },
-		{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' },
-		{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' }
+		{ name: 'GitHub', href: 'https://github.com/windmill-labs/windmill' },
+		{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' },
+		{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' }
 	],
 	company: [
-		{ name: 'About', href: '/about' },
-		{ name: 'Blog', href: '/blog' }
+		{ name: 'Team', href: '/team' },
+		{ name: 'Blog', href: '/blog' },
+		{ name: 'Brand', href: '/brand' }
 	],
 	legal: [
 		{ name: 'Privacy Policy', href: '/privacy_policy' },
@@ -30,6 +34,12 @@ const navigation = {
 				</svg>
 			)
 		}
+	],
+	solutions: [
+		{ name: 'Windmill AI', href: '/windmill_ai' },
+		{ name: 'Supabase', href: '/integrations/supabase' },
+		{ name: 'Slack', href: '/integrations/slack' },
+		{ name: 'Stripe', href: '/integrations/stripe' },
 	]
 };
 
@@ -43,13 +53,32 @@ export default function Footer() {
 				<div className="flex flex-row-reverse flex-wrap justify-between gap-8 lg:gap-20">
 					<div></div>
 
-					<div className="mx-auto grid grid-cols-3 gap-20">
+					<div className="mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-20">
 						<div className="">
 							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
 								Support
 							</h3>
 							<ul role="list" className="mt-6 space-y-4">
 								{navigation.support.map((item) => (
+									<li key={item.name}>
+										<a
+											href={item.href}
+											className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-gray-200"
+										>
+											{item.name}
+										</a>
+									</li>
+								))}
+							</ul>
+						</div>
+						<div className="">
+							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+								<a href="/integrations" className="text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-200 hover:underline">
+									Integrations
+								</a>
+							</h3>
+							<ul role="list" className="mt-6 space-y-4">
+								{navigation.solutions.map((item) => (
 									<li key={item.name}>
 										<a
 											href={item.href}
@@ -97,7 +126,7 @@ export default function Footer() {
 						</div>
 					</div>
 
-					<div className="space-y-8 text-left mx-auto">
+					<div className="space-y-5 text-left mx-auto">
 						<div className="flex items-center">
 							<img className="h-16 mr-3" src="/img/windmill.svg" alt="Windmill Labs" />
 							<p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
@@ -105,15 +134,26 @@ export default function Footer() {
 								San Francisco and Paris.
 							</p>
 						</div>
-						<div className="mt-16 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
-							<p className="text-center text-xs leading-5 text-gray-500">
-								&copy; 2023 Windmill Labs, Inc. All rights reserved. <br />
+						<div className="social-icons flex justify-center space-x-4 mt-1 mb-1">
+							<a href="https://discord.com/invite/V7PM2YHsPB" className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2">
+								<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
+							</a>
+							<a href="https://www.linkedin.com/company/windmill-dev/" className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2">
+								<SiLinkedin className="h-5 w-5 dark:text-white text-gray-800" />
+							</a>
+							<a href="https://twitter.com/WindmillDev" className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2">
+								<SiX className="h-5 w-5 dark:text-white text-gray-800" />
+							</a>
+						</div>
+						<div className="footer-section mt-1 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">
+							<p className="text-center text-xs leading-5 text-gray-400">
+								&copy; 2024 Windmill Labs, Inc. All rights reserved. <br />
 								1111B S Governors Ave, Dover, DE 19904, USA
 							</p>
 							<div className="flex justify-center items-center mt-4">
-								<img className="h-10" src="/img/soc.png" alt="SOC Compliance badge" />
-								<p className="text-xs text-left leading-6 text-gray-500 ml-2">
-									Windmill Labs is SOC 2 Type I compliant
+								<img className="h-10" src="/img/soc.png.webp" alt="SOC Compliance badge" />
+								<p className="text-xs text-left leading-6 text-gray-400 ml-2">
+									Windmill Labs is SOC 2 Type II compliant.
 								</p>
 							</div>
 						</div>

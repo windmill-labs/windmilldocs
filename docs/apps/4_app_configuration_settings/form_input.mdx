@@ -1,0 +1,92 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Form
+
+The Form component allows you to create a form and get answers from the user.
+
+![Form API](../../assets/apps/4_app_component_library/form_input.png.webp)
+
+The following section details Form component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Data source
+
+Fields are called property, they can be added as eval or [connected to other components](../2_connecting_components/index.mdx). They can be seen and filled as JSON.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/arguments_form.mp4"
+/>
+
+## Controls
+
+This component can be controlled by frontend scripts using these functions:
+
+**setValue**
+
+The [setValue](../3_app-runnable-panel.mdx#setvalue) function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern. Note that it's a bad idea to mix dynamic default value and setValue together.
+
+`setValue(id: string, value: any)`
+
+**validate**
+
+Validate a specific field of a form
+
+`validate(id: string, key: string)`
+
+**validateAll**
+
+Validate all fields of a form
+
+`validateAll(id: string, key: string)`
+
+**invalidate**
+
+Invalidate a specific field of a form
+
+`invalidate(id: string, key: string, error: string)`
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Runnable Editor"
+		description="Learn how to create and configure runnables."
+		href="/docs/apps/app-runnable-panel"
+	/>
+</div>
+
+## Form configuration
+
+| Name         |  Type   | Connectable | Templatable | Default | Description                                                                  |
+| ------------ | :-----: | :---------: | :---------: | :-----: | ---------------------------------------------------------------------------- |
+| Display Type | boolean |    true    |    false    |  false  | This will display the type and/or the format on the field next to the label. |
+| Large Gap    | boolean |    true    |    false    |  false  | This will add a large gap between the field elements.                        |
+
+Each argument can be configured (name, description, type, default value, advanced parameters).
+
+![Form Arguments](../../assets/apps/4_app_component_library/form_input_argument.png.webp)
+
+## Outputs
+
+| Name       |         Type          | Description                                     |
+| ---------- | :-------------------: | ----------------------------------------------- |
+| properties |        string         | Type, description and default of each argument. |
+| loading    |        boolean        | The loading state of the text component.        |
+| valid      |        boolean        |                                                 |
+| values     | same as each argument | Value of each answer by the user.               |

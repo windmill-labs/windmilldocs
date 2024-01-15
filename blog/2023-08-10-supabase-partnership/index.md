@@ -1,29 +1,26 @@
 ---
 authors: [henricourdent]
-tags:
-  [
-    'Supabase',
-    'Partnership',
-    'Database',
-  ]
+tags: ['Supabase', 'Partnership', 'Database']
 image: ./0-header.png
 ---
 
 # Windmill and Supabase partner for smooth integration between databases and internal tools
 
 Windmill is proud to announce a partnership with [Supabase](https://supabase.com/) to easily integrate databases to interact with scripts, flows, and apps.
+
 <!--truncate-->
+
 Although we support multiple database providers, Supabase is by far the most recommended one due to its performance and security capabilities.
 
 <br/>
 
-![Supabase Windmill](./0-header.png)
+![Supabase Windmill](./0-header.png.webp)
 
 This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/launch-week). Today the team is launching their new Integrations Marketplace offering and asked us to exclusively preview this experience that allows you to connect your Supabase account with just a few clicks!
 
 ## Windmill for internal tools
 
-Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go & Bash, or any docker image) and low code builders. It embeds all-in-one:
+Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
 
 - an **execution runtime** to execute functions at scale with low-latency and no overhead on a fleet of workers
 - an **orchestrator** to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)

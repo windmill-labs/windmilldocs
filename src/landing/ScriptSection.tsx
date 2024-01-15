@@ -11,28 +11,34 @@ import {
 	CalendarClock,
 	FormInputIcon,
 	FileCode,
+	AlignLeftIcon,
+	CurlyBracesIcon,
 	FileLock2,
 	Lock,
+	XSquareIcon,
+	DownloadIcon,
+	Bot,
+	MessageSquareIcon,
 	Box,
 	Gitlab
 } from 'lucide-react';
-import { SiGnubash, SiGo, SiPython, SiDeno, SiVisualstudiocode } from 'react-icons/si/index';
+import { SiGnubash, SiGo, SiPython, SiTypescript, SiVisualstudiocode, SiGraphql } from 'react-icons/si/index';
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
 
 const cards = [
 	{
-		title: 'VSCode extension or any IDEs',
+		title: 'VS Code extension or any IDEs',
 		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VSCode extension available',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available.',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		href: '/docs/cli_local_dev/vscode-extension'
 	},
 	{
-		title: 'Version control from Github/Gitlab',
-		subtitle: 'Deploy scripts from Github or Gitlab',
+		title: 'Version control from GitHub/GitLab',
+		subtitle: 'Deploy scripts from GitHub or GitLab.',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/deploy_gh_gl',
@@ -40,14 +46,14 @@ const cards = [
 	},
 	{
 		title: 'CLI',
-		subtitle: 'Trigger, sync and monitor scripts from CLI',
+		subtitle: 'Trigger, sync and monitor scripts from CLI.',
 		Icon: Terminal,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/advanced/cli'
 	},
 	{
 		title: 'Lockfile',
-		subtitle: 'A lockfile is generated to ensure reproducibility',
+		subtitle: 'A lockfile is generated to ensure reproducibility.',
 		Icon: Box,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/advanced/imports'
@@ -61,7 +67,7 @@ const cards = [
 	},
 	{
 		title: 'Instant preview and execution',
-		subtitle: 'Preview and execute scripts instantly from the editor',
+		subtitle: 'Preview and execute scripts instantly from the editor.',
 		Icon: Play,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/core_concepts/instant_preview'
@@ -77,7 +83,7 @@ const tabs = [
 			{
 				title: 'Typescript',
 				description: '',
-				icon: SiDeno,
+				icon: SiTypescript,
 				caption: <div>Deno as the <a href="/docs/getting_started/scripts_quickstart/typescript" target="_blank">TypeScript</a> runtime.</div>,
 				svg: '/images/typescript-code.svg',
 				altText: 'Write scripts in Typescript'
@@ -105,12 +111,19 @@ const tabs = [
 				altText: 'Write scripts in Bash'
 			},
 			{
-				title: 'PostgreSQL / MySQL',
+				title: 'Rest / GraphQL',
+				icon: SiGraphql,
+				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/rest_graphql" target="_blank">Rest / GraphQL</a>.</div>,
+				imageSrc: '/images/graphql-code.png',
+				altText: 'Write scripts in Rest & GraphQL'
+			},
+			{
+				title: 'PostgreSQL / MSSQL / MySQL / BigQuery / Snowflake',
 				icon: Database,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL / MySQL</a>.</div>,
+				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake</a>.</div>,
 				imageSrc: '/images/sql-code.png',
-				altText: 'Write scripts in PostgreSQL / MySQL'
-			}
+				altText: 'Write scripts in PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake'
+			},
 		]
 	},
 	{
@@ -134,7 +147,7 @@ const tabs = [
 				title: 'Automatic Dependency Management',
 				description:
 					'Windmill automatically infers your dependencies and generate lockfiles to guarantee reproducible execution. Dependencies are cached for instant executions.',
-				icon: FormInputIcon,
+				icon: DownloadIcon,
 				imageSrc: '/images/dependencies.png',
 				height: '600px',
 				caption: <div>Infer <a href="/docs/advanced/imports" target="_blank">dependencies</a> from your imports.</div>,
@@ -148,14 +161,47 @@ const tabs = [
 		id: 'web-ide-github-sync',
 		data: [
 			{
-				title: 'Web IDE',
-				description: 'LSP support for Typescript, Python, Go and Bash scripts.',
-				icon: FileCode,
+				title: 'Web IDE & Assistants',
+				description: 'LSP support for Typescript, Python, Go, Bash and SQL scripts.',
+				icon: AlignLeftIcon,
 				imageSrc: '/images/code_editor_script.png',
 				altText: 'Web IDE',
-				caption: <div>Windmill embeds a <a href="/docs/code_editor" target="_blank">code editor</a> within its script, flow and app editors.</div>,
+				caption: <div>Windmill embeds a <a href="/docs/code_editor" target="_blank">code editor</a> and <a href="/docs/code_editor/assistants" target="_blank">code assistants</a> within its script, flow and app editors.</div>,
 
-			}
+			},
+			{
+				title: 'Parameter Inference',
+				description: 'Windmill employs JSON Schema to validate and align the format and type of parameters across scripts, flows, and resources.',
+				icon: CurlyBracesIcon,
+				video: {
+					videoSrc: '/videos/parameter_inference.mp4',
+					altText: 'Parameter Inference'
+				},
+				altText: 'Parameter Inference',
+				caption: <div>JSON Schema is used behind the scenes to construct a comprehensive specification of the expected <a href="/docs/code_editor/parameter_inference" target="_blank">input parameters</a>.</div>,
+			},
+			{
+				title: 'Add Resources and Variables to Code',
+				description: 'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
+				icon: XSquareIcon,
+				video: {
+					videoSrc: '/videos/add_resources_variables.mp4',
+					altText: 'Add Resources and Variables to Code'
+				},
+				altText: 'Add Resources and Variables to Code',
+				caption: <div>You can directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
+			},
+			{
+				title: 'Windmill AI',
+				description: 'From simple prompts, generate Windmill-specific code, edits and fixes.',
+				icon: Bot,
+				video: {
+					videoSrc: '/videos/ai_generation.mp4',
+					altText: 'Add Resources and Variables to Code'
+				},
+				altText: 'Windmill AI',
+				caption: <div>Windmill provides ways to have <a href="/docs/core_concepts/ai_generation" target="_blank">Code Generation</a> help you in your coding experience.</div>,
+			},
 		]
 	},
 	{
@@ -183,7 +229,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Multiple Triggers',
+		label: 'Schedules & Triggers',
 		icon: Play,
 		id: 'schedules-webhooks-ui-cli',
 		data: [
@@ -199,9 +245,9 @@ const tabs = [
 
 			{
 				title: 'UI',
-				description: 'You can directly trigger a script using the autogenerated UI.',
+				description: 'You can directly trigger a script using the autogenerated UI or Windmill Apps.',
 				icon: FormInput,
-				caption: <div>You can directly trigger a script using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a>.</div>,
+				caption: <div>You can directly trigger a script using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a> or <a href="/docs/getting_started/apps_quickstart" target="_blank">Windmill Apps</a>.</div>,
 				video: {
 					videoSrc: '/videos/auto_generated_uis.mp4',
 					videoLength: '26',
@@ -221,13 +267,17 @@ const tabs = [
 				description: 'Execute a script using the CLI.',
 				icon: Terminal,
 				caption: <div>Execute a script using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
-				imageSrc: '/images/setup.gif',
+				video: {
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoLength: '26',
+					altText: 'Execute using CLI'
+				},
 				altText: 'Execute using CLI'
 			},
 			{
 				title: 'Slack',
-				description: 'Run scripts from a slack command.',
-				icon: Terminal,
+				description: 'Run scripts from a Slack command.',
+				icon: MessageSquareIcon,
 				caption: <div>Trigger scripts from commands and approve flows directly from <a href="/docs/integrations/slack" target="_blank">Slack</a>.</div>,
 				imageSrc: '/images/slack-trigger.png'
 			}
@@ -261,22 +311,23 @@ const examples = [
 		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
 	},
 	{
-		name: 'Generate image using OpenAI',
+		name: 'Create issue',
 		description: (
 			<>
-				Given a prompt, generate an image using{' '}
+				Create an issue in a given{' '}
 				<a
-					href="https://hub.windmill.dev/integrations/slack"
+					href="https://hub.windmill.dev/integrations/github"
 					target="_blank"
 					className="!no-underline"
 				>
-					<mark className="leading-none bg-purple-100 hover:bg-purple-200 px-2 rounded whitespace-nowrap  text-purple-800 font-semibold">
-						OpenAI
+					<mark className="leading-none bg-blue-100 hover:bg-blue-200 px-2 rounded whitespace-nowrap  text-blue-800 font-semibold">
+						GitHub
 					</mark>
 				</a>
+				repository.
 			</>
 		),
-		href: 'https://hub.windmill.dev/scripts/openai/1451/generate-image-openai'
+		href: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
 	},
 	{
 		name: 'Search documents in MongoDB',

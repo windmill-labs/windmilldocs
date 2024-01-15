@@ -68,13 +68,13 @@ Workspaces in Windmill enable a dev/staging/prod workflow directly from the web 
 
 :::info Enterprise Feature
 
-This feature is [enterprise edition](../../misc/7_plans_details/index.mdx) only.
+This feature is [Cloud & Enterprise Self-Hosted](../../misc/7_plans_details/index.mdx) only.
 
 :::
 
 ## Multiplayer Editing
 
-Multiplayer editing is available for script editing in the enterprise edition of Windmill. It allows simultaneous collaboration and displays a presence bar to avoid conflicts. Windmill is actively working on adding multiplayer editing for flow and app editors as well. This feature enhances real-time collaboration among team members.
+Multiplayer editing is available for script editing in the Cloud & Enterprise Self-Hosted of Windmill. It allows simultaneous collaboration and displays a presence bar to avoid conflicts. Windmill is actively working on adding multiplayer editing for flow and app editors as well. This feature enhances real-time collaboration among team members.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -95,7 +95,7 @@ Multiplayer editing is available for script editing in the enterprise edition of
 
 :::info Enterprise Feature
 
-This feature is [enterprise edition](/pricing) only.
+This feature is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
 
 :::
 
@@ -103,28 +103,38 @@ This feature is [enterprise edition](/pricing) only.
 
 Windmill supports 2-way sync from any source control (hence github and gitlab, but also any other source control) leveraging our [CLI](../../advanced/3_cli/index.mdx) and CI actions. The CLI can pull a workspace locally (of all the items one has permission on, if admin, it will be the entire workspace) and push local changes to the remote. The CLI has an internal state stored in .wmill which can detect conflicts when changes have been made both locally and on the remote.
 
-![Windmill CLI](../../assets/advanced/cli/setup.gif)
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
 
 You can use this to:
 
 1. Backup regularly your workspaces to git.
 
-2. Develop locally using your favorite [code editor](../../cli_local_dev/1_vscode-extension/index.md) and push changes to the remote.
+2. Develop locally using your favorite [code editor](../../cli_local_dev/1_vscode-extension/index.mdx) and push changes to the remote.
 
 3. Implement a dev/staging/prod workflow where changes are automatically pulled from one workspace and transformed into a pull request. And only once the pull request is approved are the changes deployed to the target workspace. This enable full GitOps style of deployments while still allowing users to use the web UI to edit scripts/flows/apps/.
 
-![Demo VS Code](../../cli_local_dev/1_vscode-extension/main.png.webp)
+![VS Code Extention](../../../blog/2023-11-20-vscode/vscode_extension.png.webp "VS Code Extension")
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Command Line Interface (wmill)"
+		title="Command Line Interface (CLI)"
 		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
 	/>
 	<DocCard
-		title="VSCode Extension"
-		description="The Windmill VSCode extension allows you to run your scripts and preview the output within VSCode."
+		title="VS Code Extension"
+		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>

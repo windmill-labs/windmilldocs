@@ -52,33 +52,16 @@ export default function HeroExample() {
 					infra or ours, with permissioning and monitoring included. Fully open-source and easy to
 					deploy on small and large infra. Any dependency with zero-config.
 				</p>
-
-				<div className="relative">
-					{!played && (
-						<div>
-							<div className="absolute top-0 bottom-0 left-0 right-0 bg-gray-900 opacity-20 dark:opacity-80 rounded-xl z-50 flex justify-center items-center flex-col gap-2"></div>
-							<div className="absolute top-0 bottom-0 left-0 right-0 rounded-xl z-50 flex justify-center items-center flex-col gap-2">
-								<PlayCircle
-									size={80}
-									onClick={() => setPlayed(true)}
-									className="text-gray-700 hover:text-blue-400 cursor-pointer transition-all dark:text-white"
-								/>
-								<span className="text-gray-700 font-bold text-2xl inline-flex gap-2 items-center dark:text-white">
-									A tour of Windmill in 52s{' '}
-									<div className="inline-flex items-center">
-										(<VolumeX size="30px" />)
-									</div>
-								</span>
-							</div>
-						</div>
-					)}
-
-					<video
-						className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-						controls={played}
-						id="main-video"
-						src="/videos/main.mp4"
-					/>
+				<div className="video-container">
+					<iframe
+						width="100%"
+						height="100%"
+						src="https://www.youtube.com/embed/pJh2fdstV-A?vq=hd1080"
+						title="YouTube video player"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen="true"
+						className="rounded-xl"
+					></iframe>
 				</div>
 			</div>
 		</LandingSection>

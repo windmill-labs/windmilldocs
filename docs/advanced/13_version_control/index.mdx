@@ -1,0 +1,49 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Version Control
+
+Manage changes to scripts workflows, apps and resources using commits & push on remote repositories.
+
+## Git Sync
+
+From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
+
+The first 5 minutes of this video show how to set up a Git repository for a workspace (Git Sync - workspace mode), the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions (Git Sync - item mode):
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
+	title="Deploy to a Prod Workspace using a Git Workflow"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+Git Sync is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+
+More details at:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+		<DocCard
+			title="Git Sync"
+			description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
+			href="/docs/advanced/git_sync"
+	/>
+</div>
+
+## CLI Sync
+
+You can use Windmill CLI to sync workspace to a git repository.
+
+More details at:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-Line Interface - Sync"
+		description="Synchronize folders & git repositories to a Windmill instance"
+		href="/docs/advanced/cli/sync"
+	/>
+</div>

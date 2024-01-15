@@ -11,7 +11,7 @@ All code is not made equal and can be split in 2 categories:
 - **Boilerplate**: all the rest is boilerplate. Be it UI and frontends that
   allow you to call the code above, API calls to external services, error
   handling, retries, logic to make your code scalable, dependency management,
-  CI/CD, managing secrets, schedule, permissions, authentification, etc. That
+  CI/CD, managing secrets, schedule, permissions, authentication, etc. That
   code is boilerplate because it _feels_ like you shouldn't have to reinvent the
   wheel, over and over again.
 
@@ -24,7 +24,7 @@ restricted forms.
 
 Windmill is different:
 
-- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, Bash) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Airplane and n8n.
+- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, Bash, SQL) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Airplane and n8n.
 - It **empowers semi-technical users** to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
   environments, secrets managements, etc).
@@ -61,7 +61,7 @@ Windmill embeds:
   - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
     sleep for a pre-determined amount of time or waiting to be reactivated by an
     external webhook who may contain payloads
-  - [approval steps](../../flows/11_flow_approval.md) leveraging being suspended and reactivated at some secret
+  - [approval steps](../../flows/11_flow_approval.mdx) leveraging being suspended and reactivated at some secret
     urls known only by the approvers
 - a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.mdx)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
@@ -69,17 +69,17 @@ Windmill embeds:
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),
-  [OAuth handling](../2_setup_oauth/index.md) for fetching and
+  [OAuth handling](../2_setup_oauth/index.mdx) for fetching and
   refreshing credentials
-- **[webhooks](../../core_concepts/4_webhooks/index.md)** for every scripts and flows to
+- **[webhooks](../../core_concepts/4_webhooks/index.mdx)** for every scripts and flows to
   be triggered externally and an open api to be easily embedded into your
   current infrastructure
-- a **[scheduler](../../core_concepts/1_scheduling/index.md)** to trigger Scripts and
+- a **[scheduler](../../core_concepts/1_scheduling/index.mdx)** to trigger Scripts and
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
 - a **[CLI](../../advanced/3_cli/index.mdx)** and GitHub Actions for **GitHub** and local
-  based developement and code management.
+  based development and code management.
 
 On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.
@@ -127,11 +127,11 @@ with:
   scalability** and have **no open APIs**.
 
 You will find more details on our view over our space and competitors in the
-[Windmill compared to its peers](../../compared_to/peers.mdx) page.
+[Windmill compared to competitors](../../compared_to/peers.mdx) page.
 
 :::info About
-**[Windmill](https://www.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](../../advanced/1_self_host/index.md)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.
+**[Windmill](https://www.windmill.dev/)** is an **[open-source](https://github.com/windmill-labs/windmill)** and **[self-hostable](../../advanced/1_self_host/index.mdx)** serverless runtime and platform combining the power of code with the velocity of low-code. We turn your scripts into internal apps and composable steps of flows that automate repetitive workflows.
 
-You can **[self-host](../../advanced/1_self_host/index.md)** Windmill using a `docker compose up`, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">Cloud App</a>**.
+You can **[self-host](../../advanced/1_self_host/index.mdx)** Windmill using a `docker compose up`, our go with the **<a href="https://app.windmill.dev/" rel="nofollow">Cloud App</a>**.
 
 :::

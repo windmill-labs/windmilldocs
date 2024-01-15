@@ -1,0 +1,243 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Setup OAuth and SSO
+
+Windmill supports Single Sign-On for [Microsoft](#microsoft), [Google](#google-login), [GitHub](#github), [GitLab](#gitlab), [Okta](#okta), and domain restriction.
+
+On [self-hosted instances](../../advanced/1_self_host/index.mdx), OAuth configuration are set in the instance settings available from the superadmin settings.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self Host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+	/>
+</div>
+
+## OAuth SSO
+
+![Setup SSO](./setup_sso.png.webp)
+
+We recommend using a private navigation tab to test the new settings as soon as they are saved by refreshing the login page as a non authed user.
+
+### Google login
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/jSpuBsRv0yM?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+**Create Google OAuth keys**
+
+First, you need to create a Google OAuth Client:
+
+- Go to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
+- Click "Create Credentials", then click "OAuth Client ID" in the drop-down menu.
+- Enter the following:
+  - Application Type: Web Application
+  - Name: Windmill
+  - Authorized Redirect URLs: `https://<YOUR_INSTANCE>/user/login_callback/google`
+- Click Create.
+- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "Google" -> set client id, org and client secret.
+
+### Microsoft
+
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/microsoft`
+Login: `https://<YOUR_INSTANCE>/user/login`
+
+Create a new OAuth 2.0 Client in [Microsoft portal](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade).
+
+In the "Authentication" tab, set the redirect URI to `BASE_URL/user/login_callback/microsoft`, the logout channel to
+`BASE_URL/auth/logout` where BASE_URL is what you configured as core BASE_URL.
+Also set "Accounts in any organizational directory (Any Microsoft Entra ID tenant -
+Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)", you can restrict the
+emails directly in windmill using the "allowed_domains" setting.
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "microsoft" -> set client id, org and client secret.
+
+### Keycloak
+
+Setup your realm in Keycloak and set Keycloak in Superadmin Settings -> Instance Settings -> SSO -> Keycloak
+
+### Jumpcloud
+
+SSO -> Custom OIDC
+
+Name: Windmill
+
+Go to SSO tab:
+
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/jumpcloud`
+Login: `https://<YOUR_INSTANCE>/user/login`
+
+Client Authentication Type: Client Secret Basic
+Attribute Mapping, Standard Scopes: Check Email
+
+Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud":
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "jumpcloud" -> set client id and client secret, and "Client Authentication Type" to "Client Secret Basic"
+
+![Jumpcloud](./jumpcloud.png.webp)
+
+### Okta
+
+From your Admin page, setup Windmill using the service flow:
+
+1. `Create a new app integration`:
+
+   a. For "sign-in method" select "OIDC - Open ID Connect".
+
+   b. For "application type" select "Web Appliction".
+
+2. Select all of the following options for Grant type of "Client acting on behalf of a user":
+
+   - Authorization Code
+   - Refresh Token
+   - Implicit (hybrid)
+   - Allow ID Token with implicit grant type
+   - Allow Access Token with implicit grant type
+
+3. For Refresh Token, select "Rotate token after every use".
+4. Under "LOGIN", set the following:
+
+   - "Sign-in redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>/user/login_callback/okta/`
+   - "Sign-out redirect URIs" `https://<your windmill's public hostname as configured in values.yaml>`
+   - "Login initiated by" `App Only`
+   - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "okta" -> set client id, org and client secret.
+
+### GitHub
+
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/github`
+Login: `https://<YOUR_INSTANCE>/user/login`
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "github" -> set client id, org and client secret.
+
+### GitLab
+
+Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/gitlab`
+Login: `https://<YOUR_INSTANCE>/user/login`
+
+GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
+
+Superadmin Settings -> Instance Settings -> SSO -> Toggle "gitlab" -> set client id, org and client secret.
+
+### Custom OAuth
+
+You can use other custom OAuths as resources using the "Add OAuth" button in: Superadmin Settings -> Instance Settings -> Resources -> Add OAuth.
+
+## OAuth Resources
+
+![Setup OAuth](./setup_oauth.png.webp)
+
+### Slack
+
+Create a new slack app at `https://api.slack.com/apps?new_app=1`
+
+Pick "From an app manifest", then YAML.
+
+![Slack Create App](./slack_create_app.png 'Slack Create App')
+
+Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 2 places:
+
+```yaml
+display_information:
+  name: Windmill
+  description: windmill.dev slackbot and oauth integration
+  background_color: '#3b82f6'
+  long_description: The Windmill app allows to use command to run jobs inside Windmill as well as receiving message as the Windmill app. The windmill app pairs a slack workspace with a windmill workspace. It must be installed from within the settings of a windmill workspace.
+features:
+  app_home:
+    home_tab_enabled: true
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: true
+  bot_user:
+    display_name: Windmill
+    always_online: true
+  slash_commands:
+    - command: /windmill
+      url: <YOUR INSTANCE URL>/api/oauth/slack_command
+      description: Trigger the script set in your workspace settings for slack
+      usage_hint: the text that will be passed to the script
+      should_escape: false
+oauth_config:
+  redirect_urls:
+    - <YOUR INSTANCE URL>
+  scopes:
+    user:
+      - chat:write
+      - admin
+      - channels:write
+    bot:
+      - chat:write
+      - chat:write.public
+      - channels:join
+      - commands
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
+```
+
+![Slack Manifest](./slack_manifest.png 'Slack Manifest')
+
+Then from your Superadmin Settings, fill with Client ID and Client Secret.
+
+![Slack Fill](./slack_fill.png 'Slack Fill')
+
+As for any OAuth Settings, make sure that there is a corresponding resource type with the same name with a "token" field in the [superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#roles-in-windmill) workspace. That should be the case by default with Slack.
+
+![Slack Available](./slack_available.png 'Slack Available')
+
+Now users should be able to connect to Slack through OAuth:
+
+![Slack Connect](./slack_connect.png 'Slack Connect')
+
+### Google Sheet
+
+**Create GSheet OAuth keys**
+
+- Create a Google OAuth account by going to https://console.developers.google.com/apis/credentials and create a project if you did not have one.
+- Click "Enable APIs and Services"
+  - Search "Google Sheets API"
+  - Enable this API
+- Click "Create Credentials", then click "OAuth 2.0 Client IDs" in the drop-down menu.
+- Enter the following:
+  - Application Type: Web Application
+  - Name: Windmill
+  - Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gsheets`
+- Click Create.
+- Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
+- Superadmin Settings -> Instance Settings -> Resources -> Add OAuth "gsheet" -> set client id and client secret
+
+The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your Google Account to set up the resources in Windmill.
+
+### Custom OAuth
+
+You can add a completely custom OAuth without requiring a dev setup. The item accepts an extra optional field: `connect_config` or `login_config` of type OAuthConfig:
+
+```
+interface OAuthConfig {
+    auth_url: string,
+    token_url: string,
+    userinfo_url?: string,
+    scopes?: string[],
+    extra_params?: Record<string, string>,
+    extra_params_callback?: Record<string, string>,
+    req_body_auth?: bool
+}
+```
+
+`connect_config` is used for resources, and `login_config` for SSO.
+
+Once you have validated your custom item, we would be grateful if you could open a PR. See [Contributor's guide](../4_contributing/index.md) for more details.

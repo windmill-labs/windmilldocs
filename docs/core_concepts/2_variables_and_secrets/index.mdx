@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Variables and Secrets
 
@@ -24,7 +26,8 @@ Secret Variables.
 Inside the Scripts, one would use the Windmill client to interact with the
 user-defined Variables.
 
-Python:
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 import wmill
@@ -33,14 +36,29 @@ wmill.get_variable("u/user/foo")
 wmill.set_variable("u/user/foo", value)
 ```
 
-TypeScript (Deno):
+</TabItem>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-```typescript
-import { getVariable, setVariable } from 'https://deno.land/x/windmill@v1.101.1/mod.ts';
+```ts
+import { getVariable, setVariable } from "npm:windmill-client@1";
 
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
 ```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import { getVariable, setVariable } from "windmill-client"
+
+getVariable('u/user/foo');
+setVariable('u/user/foo', value);
+```
+
+</TabItem>
+</Tabs>
+
 
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.mdx)
 which are simply Variables that can contain any JSON values, not just a string
@@ -111,7 +129,7 @@ A variable can be made **secret**. In this case, its value will not be visible o
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Add Resources and Variables to Code Editor"
-		description="You can add directly access Variables and Resources from the Code Editor."
+		description="You can directly access Variables and Resources from the Code Editor."
 		href="/docs/code_editor/add_variables_resources"
 	/>
 </div>
@@ -132,7 +150,7 @@ There are 2 main ways variables are used within scripts:
 
 #### Passing variables as parameters to scripts
 
-Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+Variables can be passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
 ![Select Variable](./select_variable.png.webp)
 
@@ -168,4 +186,13 @@ curl -s -H "Authorization: Bearer $WM_TOKEN" \
     | jq -r .value
 ```
 
-The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.
+PowerShell:
+
+```powershell
+$Headers = @{
+  "Authorization" = "Bearer $Env:WM_TOKEN"
+}
+Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_WORKSPACE/variables/get/u/user/foo"
+```
+
+The last examples in bash and PowerShell showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as an environment variable to the job.

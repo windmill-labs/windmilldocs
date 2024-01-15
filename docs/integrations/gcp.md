@@ -4,6 +4,12 @@ To integrate [GCP](https://cloud.google.com/gcp) to Windmill, you need to save t
 
 ![Add Google Cloud Platform Resource](../assets/integrations/add-gcp.png.webp)
 
+:::info Self Host
+
+If you're looking for a way to self-host Windmill using GCP, see [Self-Host Windmill](../advanced/1_self_host/index.mdx).
+
+:::
+
 | Property                    | Type   | Description                                          | Default | Required | Where to Find                                                                                     |
 | --------------------------- | ------ | ---------------------------------------------------- | ------- | -------- | ------------------------------------------------------------------------------------------------- |
 | type                        | string | Type of credentials object                           |         | false    | Google Cloud Console > APIs & Services > Credentials > Create service account key > JSON key file |

@@ -1,8 +1,15 @@
-# Runnable Guide
+import DocCard from '@site/src/components/DocCard';
 
-## Overview
+# Runnable Editor
 
-On the bottom of the app editor, you can find the runnable editor. It allows you to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
+The strength of Windmill's app editor is the ability to connect everything together:
+
+- components [can be linked to each other](./2_connecting_components/index.mdx)
+- components can be directly [linked to scripts](#inline-scripts) and trigger them
+- [background runnables](#background-runnables) can be that are run in the background on app refresh on when an input changes
+- [frontend scripts](#evals) can be used to manipulate the client app state
+
+On the bottom of the app editor, you can find the runnable editor. The runnable editor is a [code editor](../code_editor/index.mdx) that allows to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
 ![App Runnables panel](../assets/apps/0_app_editor/app-runnable-panel.png.webp)
 
@@ -15,49 +22,80 @@ When a runnable is selected, the runnable editor is displayed. It is composed of
 
 - **Header**: The header of the runnable editor. It contains:
 
-  - An editable name
+  - An editable name.
   - The status of the runnable can either be valid, invalid depending on the LSP response.
-  - A delete button
+  - A delete button.
   - A format button: Formats the code of the runnable. It's also triggered when you save the runnable.
   - A run button: Runs the runnable.
 
 - **Runnable editor**: The code editor of the runnable.
 
-:::tip Auto-complete code with AI
-
-Note that you can have [AI suggest code on Windmill](../code_editor/ai_generation.md):
-
-<br />
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/codeium_example.mp4"
-/>
-
-:::
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Code Editor"
+		description="The code editor is Windmill's integrated development environment."
+		href="/docs/code_editor"
+		color="orange"
+	/>
+</div>
 
 ## Types of runnables
 
-There are 4 types of runnables:
+There are 5 types of runnables:
 
-- Inline scripts: Scripts that are defined on the app editor, linked to a component.
-- Workspace/Hub: Runnables (scripts; flows) linked to a component, but defined in the workspace or the Hub.
-- Background runnables: Runnables that are not linked to a component, but run in the background.
-- Frontend scripts: Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
+- **Inline scripts**: Scripts that are defined on the app editor, linked to a component.
+- **Workspace/Hub**: Runnables (scripts; flows) linked to a component, but defined in the workspace or the [Hub](https://hub.windmill.dev/).
+- **Background runnables**: Runnables that are not linked to a component, but run in the background.
+- **Frontend scripts**: Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
+- **Evals**: Evals are used to connect data sources to other components or parameters. They are only evaluated on changes to the outputs that have been identified.
 
 They provide interactivity to your app.
 
-## Inline scripts
+### Inline scripts
 
 Inline scripts are scripts that are defined on the app editor.
 They can be either attached to a component or detached.
 
-## Background runnables
+### Frontend scripts
 
-Background runnables are scripts that are executed in the background. They are not attached to any component.
+Frontend scripts are scripts that are executed on the browser.
 
-## Creating a runnable
+### Background runnables
+
+Background runnables are scripts that are executed in the background. They are executed on the server.
+They can be triggered on app refresh or when their input changes. They are not attached to any component but their result can be shared among many components.
+
+### Evals
+
+Evals are used to [connect data sources](./2_connecting_components/index.mdx) to other components or parameters.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	controls
+	src="/videos/app-connections.mp4"
+/>
+<br />
+
+Windmill parses your eval and frontend scripts using the swc parser compiled to wasm to extract any references to outputs.
+It allows Windmill to suggest dependencies for frontend scripts.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/eval_1.mp4"
+/>
+
+<br />
+
+Evals are only evaluated on changes to the outputs that have been identified.
+
+Clicking on the dedicated link, evals can be "transformed to a frontend script".
+
+![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp)
+
+## Creating a Runnable
 
 There are several ways to create runnables:
 
@@ -69,31 +107,129 @@ When you create an inline script attached to a component or a background script,
 
 ![App Choose Language](../assets/apps/0_app_editor/app-choose-language.png.webp)
 
-There are two kinds of scripts:
+The outputs of your script [can be used](./2_connecting_components/index.mdx) by other scripts or components:
 
-#### Backend scripts
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/connecting_components.mp4"
+/>
 
-Backend scripts are executed on the server and support the following languages:
+<br />
 
-- Typescript
-- Python3
-- Go
-- Bash
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Connecting Components"
+		description="The strength of Windmill's app editor is the ability to connect everything together."
+		href="/docs/apps/connecting_components"
+	/>
+</div>
 
-In addition, we also provide Typescript templates for common use cases:
+## Runnable Configuration
 
-- **PostgreSQL**: A script that connects to a PostgreSQL database and executes a query.
-- **HTTP**: A script that makes an HTTP request.
+The runnable configuration consists of:
 
-#### Frontend scripts
+- Hide refresh button: Some components have a refresh button. This can be hidden by checking this box.
+- Transformer: A transformer is a function that alters the output of the runnable, often used to format the output.
+- List of triggers: Configure whether the script runs on app start, app refresh, or whenever an input changes.
+- Runnable Inputs: The runnable inputs are [inferred from the inputs](../core_concepts/13_json_schema_and_parsing/index.md) of the flow or script parameters this component is attached to.
 
-Frontend scripts are scripts that are executed on the browser.
+![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png.webp)
+
+### Transformer
+
+A [transformer](#transformer) is an optional frontend script executed immediately after the component's script. It's used to perform lightweight transformations in the browser. It accepts the previous computation's result as `result`.
+
+For instance, if component has a script that returns:
+
+```js
+{
+	data: {
+		name: 'John',
+		age: 20
+	}
+}
+```
+
+A transformer could be used to extract the data object:
+
+```js
+return result.data;
+```
+
+## Runnable Execution
+
+A component can have runnables attached to it. Depending on the component type, the runnables are executed at different times:
+
+- **Data source**: The runnable's result is used as the component's data source. It executes on app start and app refresh. For instance, if the component is a table, the runnable's result is used as the table's data source.
+- **Event handler**: The runnable executes when the event is triggered. For instance, if the component is a button, the runnable executes when the button is clicked.
+- **Validations**: Only the `Stepper` component has validations. The runnable executes when the step of the stepper changes.
+
+### Configure Triggers
+
+#### Run on Start and App Refresh
+
+Two types of runnables can be configured to run on app start and app refresh:
+
+- **Background runnables**: Runnables that are run in the background and aren't attached to a component.
+- **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
+
+### Recompute on Any Input Change
+
+Runnables can be configured to recompute whenever an input changes. This is useful for recomputing a component's runnable when an input changes.
+
+Two types of runnables can be configured to recompute on any input change:
+
+- **Backend background runnables**: Background runnable that are executed on the server.
+- **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
+
+Inputs of runnables that are either connected to an output or [evaluated](#evals) can trigger a recompute. These are displayed in the `Change on value` section.
+
+Runnables can "Recompute" and "Recompute others":
+
+- Recompute: Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
+- Recompute others: Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
+
+### Manual Dependencies
+
+Frontend scripts don't have any inputs. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
+
+Manual dependencies are found in the `Change on value` section and can be removed by clicking on the `x` button.
+
+## Cache app inline scripts
+
+Caching an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/caching_app.mp4"
+/>
+
+<br />
+
+You can enable caching for an app inline script directly its editor settings. Here's how you can do it:
+
+1. **Settings**: From the Code Editor, go to the top bar and pick the `Cache` tab.
+2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
+
+In the above example, the result of step the script will be cached for 5 minutes. If `Inline Script 0` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Caching"
+		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
+		href="/docs/core_concepts/caching"
+	/>
+</div>
 
 ## Frontend scripts helpers
 
 We expose a few functions and global objects to help you interact with the app from a frontend script.
 
-### Context
+#### Context
 
 You can access the context object with the `ctx` global variable.
 
@@ -101,7 +237,9 @@ You can access the context object with the `ctx` global variable.
 console.log(ctx.email);
 ```
 
-### State
+Context objects can be seen on the [Output menu](./2_outputs.mdx).
+
+#### State
 
 The app state is a client-side store that can be used to store data.
 
@@ -117,17 +255,17 @@ You can update the state directly by manipulating the `state` object.
 state.foo = 'bar';
 ```
 
-### goto
+#### goto
 
 Use the `goto` function to navigate to a specific URL.
 
-#### Syntax
+##### Syntax
 
 ```js
 goto(path: string, newTab?: boolean)
 ```
 
-#### Parameters
+##### Parameters
 
 `path`
 The URL to navigate to.
@@ -135,24 +273,24 @@ The URL to navigate to.
 `newTab` (optional)
 Whether to open the URL in a new tab or not.
 
-#### Example
+##### Example
 
 ```js
 goto('/apps/1');
 goto('https://www.windmill.dev/', true);
 ```
 
-### setTab
+#### setTab
 
 Use the `setTab` function to manually set the tab of a Tab component.
 
-#### Syntax
+##### Syntax
 
 ```js
 setTab(id: string, index: string)
 ```
 
-#### Parameters
+##### Parameters
 
 `id` string
 The tab to set.
@@ -160,78 +298,138 @@ The tab to set.
 `index` string
 The index of the tab to set.
 
-#### Example
+##### Example
 
 ```js
 setTab('a', '1');
 ```
 
-### recompute
+#### openModal
+
+Use the `openModal` function to open a modal.
+
+##### Syntax
+
+```js
+openModal(id: string)
+```
+
+##### Parameters
+
+`id` string
+The id of the modal component to open.
+
+##### Example
+
+```js
+openModal('a');
+```
+
+#### closeModal
+
+Use the `closeModal` function to close a modal.
+
+##### Syntax
+
+```js
+closeModal(id: string)
+```
+
+##### Parameters
+
+`id` string
+The id of the modal component to close.
+
+##### Example
+
+```js
+closeModal('a');
+```
+
+#### recompute
 
 Use the `recompute` function to recompute a component.
 
-#### Syntax
+##### Syntax
 
 ```js
 recompute(id: string)
 ```
 
-#### Parameters
+##### Parameters
 
 `id` string
 The id of the component to recompute.
 
-#### Example
+##### Example
 
 ```js
 recompute('a');
 ```
 
-### getAgGrid
+#### getAgGrid
 
 Use the `getAgGrid` function to get the ag-grid instance of a table.
 
-#### Syntax
+##### Syntax
 
 ```js
 getAgGrid(id: string)
 ```
 
-### setValue
+#### setSelectedIndex
+
+Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+
+##### Syntax
+
+```js
+setSelectedIndex(id: string, index: number)
+```
+
+#### setValue
 
 The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
 
 Note that it's a bad idea to mix dynamic default value and setValue together.
 
-`setValue` supports the following components:
+#### validate
 
-- [Display](./4_app_configuration-settings/1_app_component_library.md#display)
-- [Date Input](./4_app_configuration-settings/1_app_component_library.md#date-input)
-- [Number Input](./4_app_configuration-settings/1_app_component_library.md#number-input)
-- [Currency Input](./4_app_configuration-settings/1_app_component_library.md#currency-input)
-- [Schema Form](./4_app_configuration-settings/1_app_component_library.md#schema-form)
-- [Checkbox](./4_app_configuration-settings/1_app_component_library.md#checkbox)
-- [Standalone Tab](./4_app_configuration-settings/1_app_component_library.md#select-tab)
-- [Standalone step](./4_app_configuration-settings/1_app_component_library.md#select-step)
-- [Range](./4_app_configuration-settings/1_app_component_library.md#range)
-- [Multi Select](./4_app_configuration-settings/1_app_component_library.md#multi-select)
-- [Text Input](./4_app_configuration-settings/1_app_component_library.md#text-input)
-- [Slider](./4_app_configuration-settings/1_app_component_library.md#slider)
-- [Select](./4_app_configuration-settings/1_app_component_library.md#select)
-- [Text](./4_app_configuration-settings/1_app_component_library.md#text)
+Validate a specific field of a form
 
-#### Parameters
+```js
+validate(id: string, key: string)
+```
+
+#### validateAll
+
+Validate all fields of a form
+
+```js
+validateAll(id: string, key: string)
+```
+
+#### invalidate
+
+Invalidate a specific field of a form
+
+```js
+invalidate(id: string, key: string, error: string)
+```
+
+##### Parameters
 
 `id` string
-
-## Recompute
-
-Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
-
-## Recompute others
-
-Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
 
 ## Policy
 
 A viewer of the app will execute the runnables of the app on behalf of the publisher avoiding the risk that a resource or script would not be available to the viewer. To guarantee tight security, a policy is computed at time of saving of the app which only allow the scripts/flows referred to in the app to be called on behalf of. Furthermore, static parameters are not overridable. Hence, users will only be able to use the app as intended by the publisher without risk for leaking resources not used in the app.
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Roles and Permissions"
+		description="Control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
+		color="orange"
+	/>
+</div>

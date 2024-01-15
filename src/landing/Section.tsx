@@ -16,7 +16,8 @@ export default function Section({
 	description,
 	color,
 	examples,
-	kind
+	kind,
+	shouldShowDevModeSwitch = true
 }) {
 	const { developerMode } = useDeveloperMode();
 	const { colorMode } = useColorMode();
@@ -51,13 +52,13 @@ export default function Section({
 					<div className="flex justify-between items-center w-full">
 						<h1
 							className={classNames(
-								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br ',
+								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br leading-8',
 								colors.gradient
 							)}
 						>
 							{title}
 						</h1>
-						<DevModeSwitch color={color} />
+						{shouldShowDevModeSwitch && <DevModeSwitch color={color} />}
 					</div>
 					<h2 className={`${colors.text} text-2xl font-semibold`}>{caption}</h2>
 				</div>
@@ -75,7 +76,7 @@ export default function Section({
 				) : (
 					<>
 						<FeatureCardTabs tabs={tabs} color={color} />
-						<SectionExamples examples={examples} kind={kind} />
+						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}{' '}
 					</>
 				)}
 			</div>

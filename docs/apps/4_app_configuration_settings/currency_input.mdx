@@ -1,0 +1,40 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Currency Input
+
+The currency input component allows you to get a written amount of money in a set currency from the user.
+
+![Currency Input API](../../assets/apps/4_app_component_library/currency.png.webp)
+
+The following section details Currency Input component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Currency Input configuration
+
+| Name                |                                     Type                                     | Connectable | Templatable | Default | Description                              |
+| ------------------- | :--------------------------------------------------------------------------: | :---------: | :---------: | :-----: | ---------------------------------------- |
+| default value       |                                    number                                    |    true     |    false    |    /    | The default value of the currency input. |
+| is negative allowed |                                   boolean                                    |    false    |    false    |  false  | If negative amounts will be accepted.    |
+| currency            |             string: USD, EUR, GBP, CAD, AUD, JPY, CNY, INR, BRL              |    false    |    false    |   USD   | The default value of the currency input. |
+| locale              | string: en-US, en-GB, en-IE, de-DE, fr-FR, br-FR, ja-JP, pt-TL, fr-CA, en-CA |    false    |    false    |  en-US  | The format of the amount.                |
+
+## Outputs
+
+| Name   |  Type  | Description              |
+| ------ | :----: | ------------------------ |
+| result | number | The currency input value |

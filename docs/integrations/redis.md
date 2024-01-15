@@ -1,6 +1,6 @@
 # Redis Integration
 
-Redis follows the same connection method as MongoDB, providing the database name, TLS settings, server information, and credentials for authentication.
+Redis follows the same connection method as [MongoDB](./mongodb.md), providing the database name, TLS settings, server information, and credentials for authentication.
 
 ![Add Mongodb](../assets/integrations/add_mongodb.png.webp)
 

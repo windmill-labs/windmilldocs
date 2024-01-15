@@ -1,0 +1,65 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Table
+
+The table component allows you to display a table.
+
+![Table API](../../assets/apps/4_app_component_library/table.png.webp)
+
+:::tip Guide
+If you are new to Tables, check out our [Introduction guide](../../misc/9_guides/table/index.md).
+:::
+
+The following section details Table component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Table Input
+
+|      Type       | Connectable | Templatable | Default | Description     |
+| :-------------: | :---------: | :---------: | :-----: | --------------- |
+| `Array<Object>` |    true     |    false    |         | The table data. |
+
+:::info
+The columns are automatically generated from all the keys of the objects in the array.
+:::
+
+## Table configuration
+
+| Name   |                   Type                    | Connectable | Templatable |  Default   | Description                           |
+| ------ | :---------------------------------------: | :---------: | :---------: | :--------: | ------------------------------------- |
+| search | 'Disabled', 'By Runnable', 'By component' |    false    |    false    | 'Disabled' | The search query to filter the table. |
+
+Search can be configured in the following ways:
+
+- **Disabled**: The search is disabled.
+- **By Runnable**: The search is done in the backend.
+- **By component**: The search is done in the frontend.
+
+## Table actions
+
+`Table` can define actions that will be displayed in each row of the table. An action is a `Button` component that cannot be moved.
+
+## Outputs
+
+| Name             |  Type   | Description                              |
+| ---------------- | :-----: | ---------------------------------------- |
+| result           | Object  | The table data.                          |
+| loading          | boolean | The loading state of the table component |
+| selectedRow      | Object  | The selected row                         |
+| selectedRowIndex | number  | The selected row index                   |
+| search           | string  | The search query                         |

@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Creating integrations on Windmill
+# Integrations on Windmill
 
 Integrations are key on Windmill as they allow databases (internal & external) and service providers to interact.
 
@@ -16,13 +16,39 @@ We already have pre-set integrations (or resource types), the list is available 
     />
 </div>
 
+## Using integrations
+
+Interacting with an integration means using a resource, see the dedicated doc part:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+    	title="Using Resources"
+    	description="Resources can be used passed as script parameters or directly fetched within code."
+    	href="/docs/core_concepts/resources_and_types#using-resources"
+    />
+</div>
+
+<br/>
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
 ## You feel one integration is missing?
 
 ### Create one
 
 You can [create a resource type](../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type). Use the "Add Property" button to add a field to the resource type. You can specify constraints for the field (a type, making it mandatory, specifying a default, etc). You can also view the schema by toggling the "As JSON" option.
 
-Once you're comfortable with the new integration, we would be super grateful if you could [share it on hub](/docs/misc/share_on_hub).
+Once you're comfortable with the new integration, we would be super grateful if you could [share it on Hub](../misc/1_share_on_hub/index.md).
+
+You will be asked to fill Name, Integration (the corresponding service it interacts with) and Schema (the JSON Schema of the Resource Type).
+
+Verified Resource Types on the Hub are directly added to the list of available Resource Types on each new Windmill instance synced with the Hub.
+
+![Share resource type](../core_concepts/3_resources_and_types//new_resource_type_hub.png)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
     <DocCard
@@ -38,7 +64,7 @@ Just [reach out to us](../misc/6_getting_help/index.mdx), we'll be happy to list
 
 <div class="grid grid-cols-2 gap-6 mb-4">
     <DocCard
-    	title="Getting Help"
+    	title="Contact / Getting Help"
     	description="Getting stuck using Windmill? Your problem can be quickly solved and reporting it is the best way to contribute!"
     	href="/docs/misc/getting_help"
     />
@@ -48,7 +74,7 @@ Just [reach out to us](../misc/6_getting_help/index.mdx), we'll be happy to list
 
 ### OAuth APIs
 
-On [self-hosted instances](../advanced/1_self_host/index.md), integrating OAuth APIs will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.md).
+On [self-hosted instances](../advanced/1_self_host/index.mdx), integrating OAuth APIs will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.mdx).
 
 | Service Provider                              | Description                                                                                                               |
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -56,8 +82,8 @@ On [self-hosted instances](../advanced/1_self_host/index.md), integrating OAuth 
 | [Google Drive (gdrive)](./gdrive.md)          | Cloud-based storage platform                                                                                              |
 | [Gmail](./gmail.md)                           | Free email service provided by Google                                                                                     |
 | [Google Sheets (gsheets)](./gsheets.md)       | Online spreadsheet application                                                                                            |
-| [GitHub](./github.md)                         | Web-based platform for version control and collaboration                                                                  |
-| [GitLab](./gitlab.md)                         | Web-based Git-repository manager with CI/CD capabilities                                                                  |
+| [GitHub](./github.mdx)                         | Web-based platform for version control and collaboration                                                                  |
+| [GitLab](./gitlab.mdx)                         | Web-based Git-repository manager with CI/CD capabilities                                                                  |
 | [LinkedIn](./linkedin.md)                     | Professional networking and career development platform                                                                   |
 | [Slack](./slack.mdx)                           | Instant messaging and collaboration platform                                                                              |
 
@@ -67,24 +93,28 @@ On [self-hosted instances](../advanced/1_self_host/index.md), integrating OAuth 
 | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | [Airtable](./airtable.md)                     | Cloud collaboration platform for organizing and managing data                                                             |
 | [Appwrite](./appwrite.md)                     | End-to-end backend server for web and mobile apps                                                                         |
-| [AWS](./aws.md)                               | Cloud computing platform offering various services like computing, storage, databases, and more                           |
+| [AWS](./aws.md)                               | Cloud computing platform offering various services like computing, storage and databases                                  |
 | [Amazon S3](./aws-s3.md)                      | Cloud storage service                                                                                                     |
+| [BigQuery](./bigquery.mdx)                    | Cloud-based data warehousing platform                                                                                     |
 | [Clickhouse](./clickhouse.md)                 | Open-source column-oriented database management system                                                                    |
-| [Cloudlare R2](./cloudlare-r2.md)             | Cloud object storage service for data-intensive applications                                                              |
+| [Cloudlare R2](./cloudflare-r2.md)            | Cloud object storage service for data-intensive applications                                                              |
 | [Datadog](./datadog.md)                       | Monitoring and analytics platform for cloud-scale infrastructure and applications                                         |
 | [Discord](./discord.md)                       | Voice, video, and text communication platform for gamers                                                                  |
 | [FaunaDB](./faunadb.md)                       | Serverless, document-oriented database for modern applications                                                            |
 | [Funkwhale](./funkwhale.md)                   | Open-source music streaming and sharing platform                                                                          |
+| [Git repository](./git_repository.mdx)        | Remote git repository                                                                                                     |
 | [Google Cloud Platform (gcp)](./gcp.md)       | Suite of cloud computing services for building and deploying applications                                                 |
 | [HubSpot](./hubspot.md)                       | Inbound marketing, sales, and customer service platform                                                                   |
-| [LinkedIn](./linkedin.md)                     | Professional networking and career development platform                                                                   |
+| [Linkding](./linkding.md)                     | Self-hosted bookmark manager                                                                                              |
 | [Mailchimp](./mailchimp.md)                   | All-in-one marketing platform for small businesses                                                                        |
 | [Mailchimp Mandrill](./mailchimp_mandrill.md) | Delivery service for transactional emails from websites and application: used for triggering scripts and flows via e-mail |
 | [Mastodon](./mastodon.md)                     | Open-source, decentralized social network                                                                                 |
 | [Matrix](./matrix.md)                         | Open standard for decentralized, real-time communication                                                                  |
 | [MongoDB](./mongodb.md)                       | NoSQL document-oriented database                                                                                          |
+| [MSSQL](./mssql.md)                           | database management system	                                                                                            |
 | [MySQL](./mysql.md)                           | Open-source relational database management system                                                                         |
 | [Neon.tech](./neon.md)                        | Open-source database management system                                                                                    |
+| [Nextcloud](./nextcloud.md)                   | Suite of client-server software for creating and using file hosting services    											|
 | [OpenAI](./openai.md)                         | Research laboratory consisting of the for-profit OpenAI LP and the non-profit OpenAI Inc                                  |
 | [PostgreSQL](./postgresql.md)                 | Open-source object-relational database management system                                                                  |
 | [Redis](./redis.md)                           | In-memory data structure store used as a database, cache, and message broker                                              |
@@ -92,6 +122,7 @@ On [self-hosted instances](../advanced/1_self_host/index.md), integrating OAuth 
 | [S3 compatible APIs](./s3.md)                 | Cloud-based object storage service designed to store and retrieve any amount of data.                                     |
 | [SendGrid](./sendgrid.md)                     | Email API and delivery service                                                                                            |
 | [SMTP](./smtp.md)                             | Internet standard for electronic mail transmission                                                                        |
+| [Snowflake](./snowflake.mdx)                  | Cloud-based data warehousing platform 																					|
 | [Square](./square.md)                         | Payment and financial services company                                                                                    |
 | [Stripe](./stripe.md)                         | Payment processing platform                                                                                               |
 | [Supabase](./supabase.md)                     | Open-source Firebase alternative                                                                                          |

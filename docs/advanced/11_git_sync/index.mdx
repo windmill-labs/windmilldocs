@@ -1,0 +1,61 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Git Sync
+
+From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
+
+:::tip Version Control
+
+For all details on Version Control in Windmill, see [Version Control](../../advanced/13_version_control/index.mdx).
+
+:::
+
+The first 5 minutes of this video show how to set up a Git repository for a workspace (Git Sync - workspace mode), the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions (Git Sync - item mode):
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
+	title="Deploy to a Prod Workspace using a Git Workflow"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+## Git Sync - Workspace mode
+
+All scripts, flows and apps located in the workspace will be pushed to the Git repository, except the ones that are saved in private user folders (i.e. where the path starts with `u/`, use those with `f/` instead). Filtering out certain sensitive folders from the sync will be available soon.
+
+On each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx#deployed-version), only the updated script/flow/app will be pushed to the remote Git repository.
+
+For the Git repo to be representative of the entire workspace, it is recommended to set it up using the [Windmill CLI](../3_cli/index.mdx) before turning this option on.
+
+Run the following commands from the git repo folder to push the initial workspace content to the remote:
+
+```bash
+> echo 'u/' > .wmillignore
+> wmill sync pull --raw --skip-variables --skip-secrets --skip-resources
+> git add -A
+> git commit -m 'Initial commit'
+
+```
+
+This feature is [Cloud & Enterprise Self-Hosted](../../misc/7_plans_details/index.mdx) only.
+
+## Git Sync - Item mode: Deploy to Prod using a Git Workflow
+
+This feature can be used alongside GiHub Actions to adopt a robust development process for your Windmill scripts, flows and apps,
+with for example a Staging Workspace making automatically PRs on a repo that pushes to a Prod workspace upon merge.
+
+More details at:
+
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to Prod using a Git Workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
+	/>
+</div>

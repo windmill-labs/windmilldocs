@@ -5,18 +5,18 @@ import DocCard from '@site/src/components/DocCard';
 The present document will introduce you to Flows and how to build your first one.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/flows_quickstart_example.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/flows_quickstart_example.mp4"
 />
 
-<br/>
+<br />
 
 > [Here](https://hub.windmill.dev/flows/43/) is an example of a simple flow built with Windmill.
 
-<br/>
+<br />
 
 It is important to have in mind that **in Windmill Scripts are at the basis of Flows and Apps**. To sum up roughly, workflows are state machines represented as DAG to compose scripts together. Learn more in the [Script Quickstart](../0_scripts_quickstart/index.mdx) in the previous section. You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
 
@@ -40,44 +40,44 @@ Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor 
 
 The first thing you'll see is the [Metadata](../../flows/3_editor_components.mdx#metadata) menu. From there, you can set the [permissions](../../core_concepts/16_roles_and_permissions/index.mdx) of the workflow: User (by default, you), and Folder (referring to read and/or write groups).
 
-Also, you can give succintly a Name, a Summary and a Description to your flow. Those are supposed to be explicit, we recommend you to give context and make them as self-explainatory as possible.
+Also, you can give succinctly a Name, a Summary and a Description to your flow. Those are supposed to be explicit, we recommend you to give context and make them as self-explanatory as possible.
 
 ![Flows metadata](./flows_metadata.png.webp)
 
 ### Schedule
 
-On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.md)* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.md) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
+On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.mdx)\* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.mdx) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
 
 ![Flows schedule](./flows_schedule.png.webp)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <DocCard
-  		color="teal"
-    	title="Scheduling"
-    	description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-    	href="/docs/core_concepts/scheduling"
-    />
+	<DocCard
+		color="teal"
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+	/>
 </div>
 
 ### Shared Directory
 
-Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.md#shared-directory).
+Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.mdx#shared-directory).
 
 By default, flows on Windmill are based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
 For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.md).
+Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
 
 ![Flows shared directory](./flows_shared_directory.png.webp)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		color="teal"
 		title="Persistent Storage"
-    	description="Ensure that your data is safely stored and easily accessible whenever required."
-    	href="/docs/core_concepts/persistent_storage"
-    />
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
+	/>
 </div>
 
 ### Worker Group
@@ -85,12 +85,12 @@ Get more details on the [Persistent Storage dedicated page](../../core_concepts/
 When a worker group is defined at the flow level, any steps inside the flow will run on that worker group, regardless of the steps' worker group. If no worker group is defined, the flow controls will be executed by the default worker group 'flow' and the steps will be executed in their respective worker group.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+	<DocCard
 		color="teal"
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 </div>
 
 You can always go back to this menu by clicking on `Settings` on the top lef, or on the name of the flow on the [toolbar](../../flows/3_editor_components.mdx#toolbar).
@@ -102,12 +102,12 @@ Flows on Windmill are generic and reusable, they therefore expose inputs. Input 
 Inputs are either:
 
 - [Static](../../flows/3_editor_components.mdx#static-inputs): you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
-- [Dynamically linked to others](../../flows/16_architecture.md): with [JSON objects](../../core_concepts/13_json_schema_and_parsing/index.md) as result that allow to refer to the output of any step.
+- [Dynamically linked to others](../../flows/16_architecture.mdx): with [JSON objects](../../core_concepts/13_json_schema_and_parsing/index.md) as result that allow to refer to the output of any step.
   You can refer to the result of any step:
   - using the id associated with the step
   - clicking on the plug logo that will let you pick flow inputs or previous steps' results (after testing flow or step)
 
-![Static & Dynamic Inputs](./static_and_dynamic_inputs.png)
+![Static & Dynamic Inputs](./static_and_dynamic_inputs.png.webp)
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -124,13 +124,13 @@ On the left you'll find a graphical view of the flow. From there you can archite
 
 ![Flow editor menu](./flow_editor_menu.png.webp)
 
-There are four kinds of scripts: [Action](../../flows/3_editor_components.mdx#flow-actions), [Trigger](../../flows/10_flow_trigger.md), [Approval](../../flows/11_flow_approval.md) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action is the default script type.
+There are four kinds of scripts: [Action](../../flows/3_editor_components.mdx#flow-actions), [Trigger](../../flows/10_flow_trigger.mdx), [Approval](../../flows/11_flow_approval.mdx) and [Error handler](../../flows/7_flow_error_handler.md). You can sequence them how you want. Action is the default script type.
 
 Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), you can also decide to **write them inline**.
 
 ![Import or write scripts](./import_or_write_scripts.png.webp)
 
-<br/>
+<br />
 
 Your flow can be deepened with [additional features](../../flows/1_flow_editor.mdx), below are some major ones.
 
@@ -151,7 +151,7 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 
 ### Branching
 
-[Branches](../../flows/13_flow_branches.md) allow you to build branching logic to create and manage complex workflows based on conditions. There are two of them:
+[Branches](../../flows/13_flow_branches.md) build branching logic to create and manage complex workflows based on conditions. There are two of them:
 
 - [Branch one](../../flows/13_flow_branches.md#branch-one): allows you to execute a branch if a condition is true.
 - [Branch all](../../flows/13_flow_branches.md#branch-all): allows you to execute all the branches in parallel, as if each branch is a flow.
@@ -184,18 +184,18 @@ At each step, Windmill allows you to [customize the number of retries](../../flo
 
 ### Suspend/Approval Step
 
-At each step you can add [Approval Scripts](../../flows/11_flow_approval.md) to manage security and control over your flows.
+At each step you can add [Approval Scripts](../../flows/11_flow_approval.mdx) to manage security and control over your flows.
 
 Request approvals can be sent by email, Slack, anything. Then you can **automatically resume workflows with secret webhooks** after the approval steps.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/flow-approval.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/flow-approval.mp4"
 />
 
-<br/>
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -212,13 +212,13 @@ You can find all the flows' features in their [dedicated section](../../flows/1_
 
 There are several ways to trigger a flow with Windmill.
 
-1. The most direct one is from the [autogenerated UI provided by Windmill](../../core_concepts/6_auto_generated_uis/index.md). It is the one you will see from the flow editor.
+1. The most direct one is from the [autogenerated UI provided by Windmill](../../core_concepts/6_auto_generated_uis/index.mdx). It is the one you will see from the flow editor.
 2. A similar but more customized way is to use Windmill Apps using the [App editor](../7_apps_quickstart/index.mdx).
-3. We saw above that you can trigger flows using [schedules](../../core_concepts/1_scheduling/index.md) that you can check from the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. One special way to use scheduling is to combine it with [trigger scripts](../../flows/10_flow_trigger.md).
+3. We saw above that you can trigger flows using [schedules](../../core_concepts/1_scheduling/index.mdx) that you can check from the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. One special way to use scheduling is to combine it with [trigger scripts](../../flows/10_flow_trigger.mdx).
 4. [Execute flows from the CLI](../../advanced/3_cli/index.mdx) to trigger your flows from your terminal.
 5. [Trigger the flow from another flow](../9_trigger_flows/index.mdx#trigger-a-flow-from-another-flow).
-6. Using [trigger scripts](../../flows/10_flow_trigger.md) to trigger only if a condition has been met.
-7. [Webhooks](../../core_concepts/4_webhooks/index.md). Each Flow created in the app gets autogenerated webhooks. You can see them once you flow is saved. You can even [trigger flows without leaving Slack](/blog/handler-slack-commands)!
+6. Using [trigger scripts](../../flows/10_flow_trigger.mdx) to trigger only if a condition has been met.
+7. [Webhooks](../../core_concepts/4_webhooks/index.mdx). Each Flow created in the app gets autogenerated webhooks. You can see them once you flow is saved. You can even [trigger flows without leaving Slack](/blog/handler-slack-commands)!
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -234,14 +234,23 @@ There are several ways to trigger a flow with Windmill.
 You don't have to explore all flows editor possibilities at once. At each step, **test what you're building** to keep control on your wonder. You can also test up to a certain step by clicking on an action (x) and then on `Test up to x`.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/test_flow.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/test_flow.mp4"
 />
 
-<br/>
+<br />
 
-When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, [create and app from it](../../core_concepts/6_auto_generated_uis/index.md#automatically-generated-apps), or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Testing Flows"
+		description="Iterate quickly and get control on your flow testing."
+		href="/docs/flows/test_flows"
+	/>
+</div>
+
+When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, [create and app from it](../../core_concepts/6_auto_generated_uis/index.mdx#automatically-generated-apps), or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
 
 Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.

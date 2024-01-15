@@ -1,0 +1,47 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Stepper
+
+The stepper component helps you lay out multi-step apps, with an optional validation function to validate a step.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    id="modal-layout"
+    src="/videos/stepper.mp4"
+    alt="stepper"
+/>
+
+<br/>
+
+If no validation function is defined, the stepper will behave a tabs component where the user can switch between tabs (with `Previous` and `Next` buttons, or directly on the step).
+
+A validation function can be set and won't allow users to go to the next step while the runnable returns an error.
+
+The following section details Stepper component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Outputs
+
+| Name             |            Type            | Description                            |
+| ---------------- | :------------------------: | -------------------------------------- | --- |
+| currentStepIndex |           number           | Number of the step / tab.              |
+| result           |            any             | The result of the runnable.            |
+| loading          |          boolean           | The loading state of the button.       |
+| lastAction       | string: "previous", "next" | The last action performed by the user. | F   |

@@ -1,0 +1,48 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Schedule App Reports
+
+Send a PDF or PNG preview of any app at a given [schedule](../core_concepts/1_scheduling/index.mdx). Enabling this feature will create a flow and a schedule in your workspace.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/4VSAZ-WTh4Y?vq=hd1080"
+	title="Scheduled App Reports Tutorial"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+For the flow to be executed, you need to set the WORKER_GROUP environment variable of one of your [workers](../core_concepts/9_worker_groups/index.mdx) to "reports" or add the tag "chromium" to one of your worker groups.
+
+## Startup duration in seconds
+
+Startup duration is the number of seconds to wait before capturing a preview to ensure that all startup scripts have been executed.
+
+It can be defined manually.
+
+## Screenshot kind
+
+Whether you want the screenshot to be in pdf or png (useful for previews).
+
+## Notification
+
+![Report Notitications](../assets/apps/10_schedule_reports/notifications.png.webp "Report Notitications")
+
+Reports will be sent through a dedicated medium. Under [cloud & self-hosted Pro & Enterprise plans](../misc/7_plans_details/index.mdx), screenshots can be sent through pre-set scripts to Slack (on your workspace's chosen [Slack resource](../integrations/slack.mdx)), [Discord](../integrations/discord.md), or Email ([SMTP](../integrations/smtp.md)). Otherwise, you can pick a custom script to handle the report.
+
+![App Report on Discord](../assets/apps/10_schedule_reports/app_report_discord.png.webp "App Report on Discord")
+
+## More about Schedules
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+		color="orange"
+	/>
+</div>

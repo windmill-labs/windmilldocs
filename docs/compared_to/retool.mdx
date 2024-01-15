@@ -1,27 +1,32 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Open Source Alernative to Retool for building UIs
+# Open Source Alternative to Retool for building UIs
 
-Retool is great for building internal tools in low code. Windmill does it too, but it also broadens the realm of possibilities for more demanding and ambitious developers.
+Retool is great for building internal tools in low code. Windmill does it too, but it also broadens the realm of possibilities for more demanding developers.
 
-Although having a very similar app builder, Windmill complements it with much more powerful and versatile script & flow editors that will take you further in your app building.
+Although having a very similar app builder, Windmill complements it with much more powerful and versatile script & flow editors that will take you further in your app building experience.
 
-![Windmill Retool](../assets/compared_to/windmill_retool.png "Windmill Retool")
+![Windmill Retool](../assets/compared_to/windmill_retool.png 'Windmill Retool')
+
+<a href="https://retool.com/" rel="nofollow">
+	Retool
+</a> is a development platform that allows developers to build internal tools by connecting to various
+databases, APIs, and third-party integrations. It offers a drag-and-drop interface combined with the
+flexibility of custom code.
 
 ## Open Source
 
-Windmill is fully open source. Which mean you can read Windmill's tech stack and contribute to it.
+[Windmill](https://www.windmill.dev/) is fully open source. This implies that Windmill can be self-hosted with just a few commands, providing cost-effective and secure solutions.
 
-This implies that Windmill can be self-hosted with just a few commands, providing cost-effective and secure solutions.
 Windmill offers a clean slate, allowing you to fully explore its platform before committing to the product.
-Windmill's open-source nature ensures that our platform is tested, approved, and continuously enhanced
+Windmill's open-source nature ensures that the platform is tested, approved, and continuously enhanced
 to meet the community's needs.
 
-"Finally, Windmill provides and integrates into its platform a [public Community Hub](https://hub.windmill.dev/)
+Finally, Windmill provides and integrates into its platform a [public Community Hub](https://hub.windmill.dev/)
 where users share useful and proven scripts, flows, and applications.
-Unlike Retool, where you are limited to pre-written templates by the Retool teams."
+Unlike Retool, where you are limited to pre-written templates by the Retool teams.
 
-![Windmill Github](../assets/compared_to/windmill_gh.png "Windmill Github")
+![Windmill Github](../assets/compared_to/windmill_gh.png 'Windmill Github')
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -29,12 +34,12 @@ Unlike Retool, where you are limited to pre-written templates by the Retool team
 		description="Windmill's official repository."
 		href="https://github.com/windmill-labs/windmill"
 	/>
-    <DocCard
-		title="Self Host Windmill tutorial"
+	<DocCard
+		title="Self Host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
 	/>
-    <DocCard
+	<DocCard
 		title="Contributor Guide"
 		description="Contribute to our codebase, Windmill Hub or our Discord."
 		href="/docs/misc/contributing"
@@ -54,7 +59,7 @@ Anyone can create an integration with just a few clicks.
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Creating integrations on Windmill"
+		title="Integrations on Windmill"
 		description="Windmill provides a framework to easily add integrations."
 		href="/docs/integrations/integrations_on_windmill"
 	/>
@@ -63,32 +68,30 @@ Anyone can create an integration with just a few clicks.
 :::info Retool
 You can only use Retool's pre-approved integrations and "Suggest a resource" instead of adding it or sharing it yourself.
 
-<br/>
+<br />
 
-![Retool Integrations](../assets/compared_to/retool_integrations.png "Retool Integrations")
+![Retool Integrations](../assets/compared_to/retool_integrations.png 'Retool Integrations')
 :::
 
 ## Versatility
 
 The app builder of Retool is very similar to that of Windmill.
 In the architecture, both platforms allow connecting components to code or workflows.
-However, the possibilities with code will be much more limited.
+However, the possibilities with code on Retool will be much more limited:
 
 ### Languages and Scripts
 
 Retool only supports JavaScript and SQL. Windmill supports JavaScript ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx), but also [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx).
-For each of those languages, scripts can be run without having to deal with [separate dependency files](../advanced/6_imports/index.md).
-Also, for other languages, Windmill support [running any docker container](../advanced/7_docker/index.md) through its bash support.
+For each of those languages, scripts can be run [without having to deal with separate dependency files](../advanced/6_imports/index.md).
+For other languages, Windmill supports [running any docker container](../advanced/7_docker/index.mdx) through its bash support.
 
-All operations in Windmill are based on scripts, for the sake of clarity, control, and performance.
-
-Unlike Retool, scripts in Windmill can be considered as standalone endpoints: 
-executable through [autogenerated UIs](../core_concepts/6_auto_generated_uis/index.md), [webhooks](../core_concepts/4_webhooks/index.md), etc.
+All operations in Windmill are based on scripts. Unlike Retool, scripts in Windmill can be considered as standalone endpoints:
+executable through [autogenerated UIs](../core_concepts/6_auto_generated_uis/index.mdx), [webhooks](../core_concepts/4_webhooks/index.mdx), etc.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Windmill Scripts"
-		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash or launch docker containers."
+		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash, SQL or launch docker containers."
 		href="/docs/script_editor"
 	/>
 	<DocCard
@@ -103,7 +106,7 @@ executable through [autogenerated UIs](../core_concepts/6_auto_generated_uis/ind
 Retool is not originally designed as a workflow engine.
 Its flow capabilities are geared towards non-technical users, similar to n8n.
 Adding steps or for loops can be frustrating.
-Flows will be limited without features like [approval steps](../flows/11_flow_approval.md), [early stop](../flows/2_early_stop.md), [sleep](../flows/15_sleep.md), etc.
+Flows will be limited without features like [approval steps](../flows/11_flow_approval.mdx), [early stop](../flows/2_early_stop.md), [sleep](../flows/15_sleep.md), etc.
 
 The flow-building experience is cumbersome, as Retool has not managed to incorporate the same level
 of low-code simplicity found in its app builder (e.g. picking inputs from previous steps’ outputs).
@@ -116,15 +119,12 @@ of low-code simplicity found in its app builder (e.g. picking inputs from previo
 	/>
 </div>
 
-
 ### Developer experience
 
-<br/>
+Despite being a low-code tool, Windmill has been designed to cater to developers.
+It is possible to use Windmill from the terminal through its CLI, from VS Code, or deploy it from GitHub/GitLab.
 
-Despite being a low-code tool, Windmill has always been designed to cater to developers.
-It is possible to use Windmill from the terminal through its CLI, from VSCode, or deploy it from GitHub/GitLab.
-
-Additionally, you can bypass the app builder in a no-code manner by directly [importing apps in React/Vue/Svelte](../react_vue_svelte_apps/index.md).
+Additionally, you can bypass the app builder in a no-code manner by directly [importing apps in React/Vue/Svelte](../react_vue_svelte_apps/index.mdx).
 
 <div class="text-xl mb-2 font-semibold"></div>
 <div class="grid grid-cols-2 gap-6 mb-4">
@@ -135,13 +135,13 @@ Additionally, you can bypass the app builder in a no-code manner by directly [im
 	/>
 	<DocCard
 		title="Local Development"
-		description="Develop from various environments such as your terminal, VSCode, and JetBrains IDEs."
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
 		href="/docs/advanced/local_development"
 	/>
 	<DocCard
-		title="Version control from GitHub/GitLab"
-		description="Use a GH/GL repo as the source of truth for part or all of your Windmill workspace."
-		href="/docs/advanced/deploy_gh_gl"
+		title="Version Control in Windmill"
+		description="Sync your workspace to a git repository."
+		href="/docs/advanced/version_control"
 	/>
 </div>
 
@@ -157,30 +157,34 @@ Windmill is cheaper at scale and can be used for free at any scale thanks to its
 		description="Windmill's subscription plans and simulations."
 		href="/pricing"
 	/>
+	<DocCard
+		title="Plans Details and Subscriptions"
+		description="Windmill transparently provides the content and pricing of its upgraded plans."
+		href="/docs/misc/plans_details"
+	/>
 </div>
 
-## What Retool does better and what Windmill does on those topics
+## What Retool does better and where is Windmill on those topics
 
-Retool is not just anyone in the market. Beyond their user experience, they benefit from a vast library of templates.
-Windmill perceives code as a community affair and opens up the Windmill Hub for sharing scripts, flows, and apps.
-On the Windmill team's side, the most relevant elements from the Hub are labeled as "Approved" 
-and the tema continues to feed the Hub to inspire its users.
+Retool benefits from a vast library of <a href="https://retool.com/templates/" rel="nofollow">templates</a>.
 
-Finally, Retool has a broader library of components.
-On one hand, due to the limitations of using code in Retool, many of these components are duplicates or even triplicates,
+Windmill provides the [Windmill Hub](https://hub.windmill.dev/) platform where anyone can share scripts, flows, and applications.
+The most relevant ones are marked as "Approved" by the Windmill team and directly incorporated into the product.
+
+Finally, Retool has a broad library of <a href="https://retool.com/components" rel="nofollow">components</a>.
+On one hand, due to the limitations of using code & customization in Retool, many of these components are duplicates or even triplicates,
 whereas they would be single customizable components in Windmill.
-On the other hand, our list of components is determined by the needs of our users.
-Most of our users who have chosen Windmill over Retool have favored our advanced capabilities
-for adding features and components.
+On the other hand, [our list of components](../apps/4_app_configuration_settings/1_app_component_library.mdx) is determined by the needs of our users.
+Most of our users who have chosen Windmill over Retool have favored
+Windmill's ability to quickly add the components that are useful to them.
 
 ## Everything else
 
-For everyting else, it's comparable: you can run on [schedules](../core_concepts/1_scheduling/index.md) or [webhooks](../core_concepts/4_webhooks/index.md),
+For everything else, it's comparable: you can run on [schedules](../core_concepts/1_scheduling/index.mdx) or [webhooks](../core_concepts/4_webhooks/index.mdx),
 [source control](../core_concepts/17_collaboration/index.mdx#git-integration),
 seamlessly interact your apps with [databases](../integrations/postgresql.md),
-[link runnables to components](../apps/3_app-runnable-panel.mdx), give [styling](../apps/4_app_configuration-settings/4_app_styling.md) to apps, [resources](../core_concepts/3_resources_and_types/index.mdx) are handled in a similar way.
+[link runnables to components](../apps/3_app-runnable-panel.mdx), give [styling](../apps/4_app_configuration_settings/4_app_styling.mdx) to apps, [resources](../core_concepts/3_resources_and_types/index.mdx) are handled in a similar way.
 
 To conclude, Retool is an excellent engine for building custom applications within a reassuring and defined framework.
 
-Windmill provides its users with transparency and versatility to delve into the complexity
-and power of these applications.
+Windmill provides its users with transparency and versatility to delve deeper into the building of apps.

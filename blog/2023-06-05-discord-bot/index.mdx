@@ -121,7 +121,16 @@ We need to ingest a data source, here the [Windmill documentation](/docs/intro).
 
 :::info Workflows
 
-A [workflow](/docs/flows/flow_editor) is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](/docs/getting_started/scripts_quickstart) in the case of Windmill.
+[Workflows](/docs/flows/flow_editor) are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
+
+<br/>
+
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
+
+<br/>
+
+In Windmill, each step is [code](/docs/getting_started/scripts_quickstart) with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
+
 :::
 
 ![Flow](./flow.png.webp 'Create a scheduled flow that scrapes the Windmill documentation')
@@ -141,7 +150,7 @@ Then we use a [for-loop](/docs/flows/flow_loops) to iterate over the results and
 
 Each iteration of the for-loop are indiviual jobs and can be run [in parallel](/docs/flows/flow_branches#branch-all), [retried](/docs/flows/retries) and [error handled](/docs/flows/flow_error_handler) independently.
 
-From Windmill, pick `+ Flow`, and either import JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
+From Windmill, pick `+ Flow`, and either import YAML or JSON from the [Hub](https://hub.windmill.dev/flows/45/) or start building manually.
 
 ### Scraping the Windmill documentation
 
@@ -151,9 +160,10 @@ Direclty from Windmill, we picked the script that fetches the content of a repos
 
 We modified it to only extract content from markdown files. As we are using [Docusaurus](https://docusaurus.io/docs), we also need to transform the path of the file to get the correct URL.
 
-<details><summary>Code: Extract content from Github (TypeScript)</summary><p>
+<details>
+  <summary>Code: Extract content from Github (TypeScript)</summary>
 
-```typescript
+```ts
 import { Octokit } from 'https://cdn.skypack.dev/@octokit/rest';
 
 type FileContent = { content: string; link: string };
@@ -244,14 +254,14 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 }
 ```
 
-</p></details>
+</details>
 
 Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the [GitHub token](/docs/integrations/github).
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Resources"
-		description="Create and manager your resources"
+		description="Resources are rich objects in JSON that allow to store configuration and credentials."
 		href="/docs/core_concepts/resources_and_types"
 	/>
 </div>
@@ -274,14 +284,15 @@ Finally, we can store the embeddings in Supabase using the [pgvector](https://su
 
 Supabase is easily [integrated to Windmill](/docs/integrations/supabase#through-supabase-api).
 
-<details><summary>Code: Store the embeddings on Supabase</summary><p>
+<details>
+  <summary>Code: Store the embeddings on Supabase</summary>
 
-```typescript
+```ts
 import { refreshAndRetryIfExpired } from 'https://deno.land/x/windmill_helpers@v1.1.1/mod.ts';
 
 type Supabase = {
-	supabaseUrl: string;
-	supabaseKey: string;
+	url: string;
+	key: string;
 };
 
 export async function main(
@@ -307,7 +318,7 @@ export async function main(
 }
 ```
 
-</p></details>
+</details>
 
 ![Gif preview](./flow_md.gif)
 
@@ -374,16 +385,87 @@ A template is available on the Windmill Hub: [Generate answer from embeddings wi
 
 This flow will generate the answer and send it back to Discord. It is composed of the following steps:
 
+1. [Verify and defer the request](#verifying-the-discord-request-and-defer) from Discord.
 1. [Extract the question](#extract-the-question-from-the-discord-request) from the Discord request.
-2. [Create the answer](#create-the-answer-using-the-question-the-embeddings-and-openai) using the question and the embeddings and OpenAI.
-3. [Create an approval step](#create-the-approval-step-to-validate-the-answer-by-a-human) to validate the answer by a human.
-4. If validated, [send the answer publicly](#send-the-answer-back-to-discord).
+1. [Create the answer](#create-the-answer-using-the-question-the-embeddings-and-openai) using the question and the embeddings and OpenAI.
+1. [Create an approval step](#create-the-approval-step-to-validate-the-answer-by-a-human) to validate the answer by a human.
+1. If validated, [send the answer publicly](#send-the-answer-back-to-discord).
+
+### Verifying the Discord request and Defer
+
+We need to verify the request from Discord and defer it. This is a requirement from Discord.
+Discord gives us the following parameters as query parameters:
+
+- `x_signature_ed25519`: the `X-Signature-Ed25519` header from the Discord request.
+- `x_signature_timestamp`: the `X-Signature-Timestamp` header from the Discord request.
+- `raw_string`: the stringified interaction payload from the Discord request.
+
+We can pipe these parameters to the script or flow inputs using the `include_header` query parameter See [Building the URL for the Discord Interaction endpoint](#building-the-url-for-the-discord-interaction-endpoint).
+
+We need to need three things to verify the request:
+
+- If the signature are not valid, we need to throw an error.
+- If the request is a `PING`, we need to respond with a `PONG`. Discord will send a `PING` request when registering the command.
+- If the request is not a `PING`, we need to respond with a `DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE`. This will tell Discord that we are working on the request and that we will send the answer later.
+
+<details>
+  <summary>Code: Verifying the Discord request and Defer</summary>
+
+```typescript
+import { type Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
+
+import {
+	InteractionResponseType,
+	InteractionType,
+	verifyKey
+} from 'npm:discord-interactions@3.4.0';
+
+type DiscordInteraction = {
+	id: string;
+	token: string;
+	type: InteractionType;
+};
+
+export async function main(
+	x_signature_ed25519: string,
+	x_signature_timestamp: string,
+	raw_string: string,
+	token: string,
+	discord_config: Resource<'c_discord_bot'>
+) {
+	const interaction: DiscordInteraction = JSON.parse(raw_string);
+
+	// We'll need the http request body as a string and the two headers to verify the request signature
+	// https://discord.com/developers/docs/interactions/receiving-and-responding#security-and-authorization
+	const isVerified = verifyKey(
+		raw_string,
+		x_signature_ed25519,
+		x_signature_timestamp,
+		discord_config.public_key
+	);
+
+	if (!isVerified) {
+		throw new Error('The request signature is not valid');
+	}
+
+	// If we get a PING, we need to respond with a PONG
+	const type = interaction.type as InteractionType;
+	if (type === InteractionType.PING) {
+		return { type: InteractionResponseType.PONG };
+	}
+
+	return { type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE };
+}
+```
+
+</details>
 
 ### Extract the question from the Discord request
 
 Let's extract the question from the Discord request.
 
-<details><summary>Code: Extract the question from the Discord request</summary><p>
+<details>
+  <summary>Code: Extract the question from the Discord request</summary>
 
 ```typescript
 export async function main(interaction: any) {
@@ -391,7 +473,7 @@ export async function main(interaction: any) {
 }
 ```
 
-</p></details>
+</details>
 
 ### Create the answer using the question, the embeddings and OpenAI
 
@@ -418,7 +500,8 @@ ${query}
 Answer as markdown (including related code snippets if available):
 ```
 
-<details><summary>Code: Create the answer using the question and the embeddings and OpenAI</summary><p>
+<details>
+	<summary>Code: Create the answer using the question and the embeddings and OpenAI</summary>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.104.2/mod.ts';
@@ -526,7 +609,7 @@ export async function main(
 
 Depending on your OpenAI plan, you might need to change `model: 'gpt-4',` to `model: "gpt-3.5-turbo",`.
 
-</p></details>
+</details>
 
 ### Create the approval step to validate the answer by a human
 
@@ -541,7 +624,8 @@ We can use Discord buttons to approve or reject the answer.
 
 The `token` input is the token of your Discord bot. We see that in the [Create an application on Discord Developer Portal](#create-an-application-on-discord-developer-portal) section.
 
-<details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
+<details>
+	<summary>Code: Create the approval step to validate the answer by a human</summary>
 
 ```typescript
 import * as wmill from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -575,7 +659,7 @@ export async function main(
 }
 ```
 
-</p></details>
+</details>
 
 #### Learn more about approval steps
 
@@ -591,7 +675,8 @@ export async function main(
 
 Once approved, the flow will resume and the answer will be sent back to the user.
 
-<details><summary>Code: Send the answer back to Discord</summary><p>
+<details>
+	<summary>Code: Send the answer back to Discord</summary>
 
 ```typescript
 import { REST } from 'npm:@discordjs/rest@1.7.1';
@@ -620,13 +705,14 @@ export async function main(
 }
 ```
 
-</p></details>
+</details>
 
 ## Create the Slack Answer flow
 
 The Slack Answer flow is similar to the Discord Answer flow. The only difference is that we use Slack buttons instead of Discord buttons.
 
-<details><summary>Code: Create the approval step to validate the answer by a human</summary><p>
+<details>
+	<summary>Code: Create the approval step to validate the answer by a human</summary>
 
 ```typescript
 import { getResumeEndpoints, Resource } from 'https://deno.land/x/windmill@v1.85.0/mod.ts';
@@ -684,11 +770,13 @@ export async function main(
 }
 ```
 
-</p></details>
+</details>
 
 Finally we can send the answer back to Slack using this script from the Hub: [Send a message to a channel](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack).
 
-## Create the Discord Interaction endpoint
+## Building the URL for the Discord Interaction endpoint
+
+### Create the Discord Interaction endpoint
 
 Every Windmill script or flow exposes a [webhook endpoint](/docs/core_concepts/webhooks) that can be used to trigger it.
 
@@ -700,92 +788,9 @@ Discord will give as flow inputs the following parameters:
 - `x_signature_timestamp`: the `X-Signature-Timestamp` header from the Discord request.
 - `raw_string`: the stringified interaction payload from the Discord request.
 
-### Verifying the Discord request and Defer
-
-A template is available on the Windmill Hub: [Verify the Discord Request, Defer and trigger a flow](https://hub.windmill.dev/flows/44/verify-the-discord-request%2C-defer-and-trigger-a-flow).
-
-<details><summary>Code: Verify the Discord Request and Defer (script part of the flow)</summary><p>
-
-```typescript
-import { REST } from 'npm:@discordjs/rest@1.7.1';
-import { API, MessageFlags } from 'npm:@discordjs/core@0.6.0';
-import { JobService, type Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
-
-import {
-	InteractionResponseType,
-	InteractionType,
-	verifyKey
-} from 'npm:discord-interactions@3.4.0';
-
-type DiscordInteraction = {
-	id: string;
-	token: string;
-	type: InteractionType;
-};
-
-export async function main(
-	x_signature_ed25519: string,
-	x_signature_timestamp: string,
-	raw_string: string,
-	token: string,
-	discord_config: Resource<'discord_bot_configuration'>,
-	workspace: string,
-	path: string
-) {
-	const rest = new REST({ version: '10' }).setToken(token);
-	const api = new API(rest);
-	const interaction: DiscordInteraction = JSON.parse(raw_string);
-
-	// We'll need the http request body as a string and the two headers to verify the request signature
-	// https://discord.com/developers/docs/interactions/receiving-and-responding#security-and-authorization
-	const isVerified = verifyKey(
-		raw_string,
-		x_signature_ed25519,
-		x_signature_timestamp,
-		discord_config.public_key
-	);
-
-	if (!isVerified) {
-		throw new Error('The request signature is not valid');
-	}
-
-	// If we get a PING, we need to respond with a PONG
-	const type = interaction.type as InteractionType;
-	if (type === InteractionType.PING) {
-		return { type: InteractionResponseType.PONG };
-	}
-
-	await JobService.runFlowByPath({
-		workspace,
-		path,
-		requestBody: {
-			interaction
-		}
-	});
-
-	await api.interactions.defer(interaction.id, interaction.token, {
-		flags: MessageFlags.Ephemeral
-	});
-}
-```
-
-</p></details>
-
-With the following inputs:
-
-- `path`: the [path](/docs/core_concepts/roles_and_permissions#path) of the [Discord answer flow](#create-the-discord-answer-flow).
-- `workspace`: the Windmill [workspace](/docs/core_concepts/roles_and_permissions#workspace) of the Discord answer flow.
-- `token`: your [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens).
-- `discord_config`:
-
-After verifying the request, we can defer the request to Discord using the `api.interactions.defer` method.
-Now we can run the `discordAnswerFlowPath` flow that will generate the answer and send it back to Discord.
-
-### Building the URL for the Discord Interaction endpoint
-
 Let's create the URL for the Discord Interaction endpoint.
 
-1. Go into the Webhooks section of the "[Verify the Discord Request, Defer and trigger a flow](#verifying-the-discord-request-and-defer)" flow's `Detail` page.
+1. Go into the Webhooks section of the "[Discord flow](#verifying-the-discord-request-and-defer)" flow's `Detail` page.
 2. Copy the `Result/Sync` webhook URL.
 3. Create a [webhook-specific token](/docs/core_concepts/webhooks#webhook-specific-tokens).
 
@@ -805,6 +810,18 @@ Copy and paste this URL into the Discord Interaction endpoint.
 
 ![Building the URL for the Discord Interaction endpoint](./discord-interactions-endpoint.png.webp 'Building the URL for the Discord Interaction endpoint')
 
+### Early return
+
+Discord expects a response within 3 seconds, yet the flow might take longer to run.
+
+It is possible to define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously.
+
+We need to configure the early return node to return after the verification step.
+
+![Early return](./early_return.png 'Early return')
+
+We can use early returns to defer the request from Discord as soon as possible in sync, and then continue the flow asynchronously.
+
 ## Create the Slack Interaction endpoint
 
 For Slack, we will use the Slack web client to send ephemeral messages to the user while the bot is thinking.
@@ -814,7 +831,8 @@ We receive the following parameters from Slack:
 - `channel_id`: The channel ID
 - `user_id`: The user ID
 
-<details><summary>Code: Create the Slack endpoint</summary><p>
+<details>
+	<summary>Code: Create the Slack endpoint</summary>
 
 ```typescript
 import { Resource } from 'https://deno.land/x/windmill@v1.108.0/mod.ts';
@@ -848,7 +866,7 @@ export async function main(
 }
 ```
 
-</p></details>
+</details>
 
 ## Conclusion
 
@@ -871,13 +889,13 @@ If you have any questions or need further assistance, don't hesitate to reach ou
 ### Video Tutorial
 
 <iframe
-	width="560"
-	height="315"
-	src="https://www.youtube.com/embed/VXj7xaWOAxo"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/VXj7xaWOAxo?vq=hd1080"
 	title="YouTube video player"
-	frameborder="0"
+	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowfullscreen
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
 ### Links

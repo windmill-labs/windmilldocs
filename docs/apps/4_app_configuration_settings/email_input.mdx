@@ -1,0 +1,38 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Email Input
+
+The email input component allows you to get an email from the user.
+
+![Email Input API](../../assets/apps/4_app_component_library/email.png.webp)
+
+The following section details Email Input component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Email Input configuration
+
+| Name          |  Type  | Connectable | Templatable | Default | Description                    |
+| ------------- | :----: | :---------: | :---------: | :-----: | ------------------------------ |
+| Placeholder   | string |    false    |    false    |  Email  | The email input placeholder.   |
+| Default value | string |    true     |    false    |  Email  | The email input default value. |
+
+## Outputs
+
+| Name   |  Type  | Description            |
+| ------ | :----: | ---------------------- |
+| Result | string | The email input value. |

@@ -1,69 +1,90 @@
 # AgGrid Table
 
-This is a basic introduction on how to use [AgGrid Table](https://www.ag-grid.com/) together with Windmill.
-It assumes little to no knowledge about AgGrid.
+This is a basic introduction on how to use
+[AgGrid Table](https://www.ag-grid.com/) together with Windmill. It assumes
+little to no knowledge about AgGrid.
 
 ![AgGrid Overview](../../../../static/img/guide/aggrid_overview.png.webp)
 
 ## What is AgGrid Table.
 
-The AgGrid Table component (called AgGrid from here) is a small wrapper around a fantastic libary called [AgGrid](https://www.ag-grid.com/).
-It provides you with a lot of advanced features. It comes in a free and a Enterprise (paid) version.
+The AgGrid Table component (called AgGrid from here) is a small wrapper around a
+fantastic library called [AgGrid](https://www.ag-grid.com/). It provides you with
+a lot of advanced features. It comes in a free and a Enterprise (paid) version.
 All features below are part of the free version of AgGrid.
 
 :::tip Enterprise
-If you need the enterprise version of AgGrid, please [contact us](../../6_getting_help/index.mdx).
+If you need the enterprise version of AgGrid, please
+[contact us](../../6_getting_help/index.mdx).
 :::
 
 ## AgGrid vs Table component
 
-In Windmill there are 2 table components: one simply called [Table](../../../apps/4_app_configuration-settings/1_app_component_library.md#table) and AgGrid.
+In Windmill there are 2 table components: one simply called
+[Table](../table/index.md)
+and AgGrid.
 
-The Table component is for basic usecases. It takes an array of objects as input, and uses the key of the object as the header of the table. It also provides you with one or more action buttons to trigger an action for the row.
+The Table component is for most usecases. It takes an array of objects as d
+input, and uses the key of the object as the header of the table. It also
+provides you with one or more action buttons to trigger an action for the row or
+create a dropdown button based on the row data.
 
-But if you want the user to be able to sort the table, edit a value, adjust width and more you want to reach for AgGrid.
+But if you want the user to be able to sort the table, edit a value inplace, adjust width and more you want to reach for AgGrid.
 
-:::info Transformer  
- If you want to do basic sorting, or edit the column header name from the script you can also use a Transformer script.
-See the [documentation](../../../apps/4_app_configuration-settings/2_app_runnable_triggers.md#transformer) for more information.
+:::info Transformer
+If you want to do basic sorting, or edit the column header name from the script
+you can also use a Transformer script. See the
+[documentation](../../../apps/3_app-runnable-panel.mdx#transformer)
+for more information.
 :::
 
 ## Column Definition
 
-AgGrid needs two inputs, rowdata and column definitions.
-By default AgGrid does not show the rowdata. You need to specify the properties of each column.
-This is done in the Configuration on the right side.
+AgGrid needs two inputs, rowdata and column definitions. By default AgGrid does
+not show the rowdata. You need to specify the properties of each column. This is
+done in the Configuration on the right side.
 
 ![Column definitions](./../../../../static/img/guide/aggrid-column-definition-menu.png.webp)
 
-You can staticly set the properties of each column and many properties are available.
-Let's walk trough the one you may be most likley to use:
+You can statically set the properties of each column and many properties are
+available. Let's walk trough the one you may be most likely to use:
 
-- field (string) - which field to use from the rowdata | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-columns-field)
-- headerName (string) - rename the column header to something other than the field name | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-header-headerName)
-- sortable (boolean)- should the column be sortable by the user | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-sort-sortable)
-- sort (asc|desc) - which order to sort the column | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-sort-sort)
-- resizable (boolean) - should the column be resizable | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-width-resizable)
-- rowDrag (boolean) - should the user be able to drag the column | [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-row%20dragging-rowDrag)
+- field (string) - which field to use from the rowdata |
+  [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-columns-field)
+- headerName (string) - rename the column header to something other than the
+  field name |
+  [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-header-headerName)
+- sortable (boolean)- should the column be sortable by the user |
+  [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-sort-sortable)
+- sort (asc|desc) - which order to sort the column |
+  [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-sort-sort)
+- resizable (boolean) - should the column be resizable |
+  [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-width-resizable)
+- rowDrag (boolean) - should the user be able to drag the column |
+  [documentation](https://www.ag-grid.com/javascript-data-grid/column-properties/#reference-row%20dragging-rowDrag)
 
-There is _a lot_ more properties, this is just the first few.
-See [Column Properties](https://www.ag-grid.com/javascript-data-grid/column-properties/) for the complete list of properties.
+There is _a lot_ more properties, this is just the first few. See
+[Column Properties](https://www.ag-grid.com/javascript-data-grid/column-properties/)
+for the complete list of properties.
 
-### Dynamicly configure the column definition
+### Dynamically configure the column definition
 
-As with most things, Windmill lets you **dropdown to code** when you want to do more advanced stuff, where the gui is more in the way then helping.
+As with most things, Windmill lets you **dropdown to code** when you want to do
+more advanced stuff, where the gui is more in the way then helping.
 
-The Windmill way wil be to first create a background runnable and then connecting it with the col def.
+The Windmill way wil be to first create a background runnable and then
+connecting it with the col def.
 
 ![Column definitions](./../../../../static/img/guide/coldef-connect.png.webp)
 
-Here you can provide your own column definition that is more then a JSON but also includes classes and functions.
+Here you can provide your own column definition that is more then a JSON but
+also includes classes and functions.
 
-Below is a series of snippest that will help you get started.
+Below is a series of snippets that will help you get started.
 
 #### Provide default values for all columns
 
-Create a background runnable in deno with the following content:
+Create a background runnable in Deno with the following content:
 
 ```js
 export async function main() {
@@ -113,7 +134,9 @@ export async function main() {
 
 #### Create a select button
 
-Here we are using a AgGrid Component called `agSelectCellEditor`. There [exist more predefined cell components](https://www.ag-grid.com/javascript-data-grid/provided-cell-editors/#select-cell-editor) like this.
+Here we are using a AgGrid Component called `agSelectCellEditor`. There
+[exist more predefined cell components](https://www.ag-grid.com/javascript-data-grid/provided-cell-editors/#select-cell-editor)
+like this.
 
 Create a frontend script in JS with the following content:
 
@@ -137,7 +160,8 @@ return [
 
 and connect it to the column definition.
 
-If you want to act on changes in the select dropdown, you may use the components states `newChanges`, or `selectedRow`.
+If you want to act on changes in the select dropdown, you may use the components
+states `newChanges`, or `selectedRow`.
 
 ![Aggrid component state](./../../../../static/img/guide/aggrid-state.png.webp)
 
@@ -183,7 +207,10 @@ return [
 
 and connect it to the column definition.
 
-This example demonstrates how to create a custom cell renderer component. Where we put the data from the row into
-our state. from here we can use other scripts to act on the row data as we like.
+This example demonstrates how to create a custom cell renderer component. Where
+we put the data from the row into our state. from here we can use other scripts
+to act on the row data as we like.
 
-You can create a lot of components, not only for cell rendering, to understand how check out [AgGrid's documentation for components](https://www.ag-grid.com/javascript-data-grid/components/).
+You can create a lot of components, not only for cell rendering, to understand
+how check out
+[AgGrid's documentation for components](https://www.ag-grid.com/javascript-data-grid/components/).

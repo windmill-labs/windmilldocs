@@ -5,17 +5,19 @@ import DocCard from '@site/src/components/DocCard';
 You can attach additional functionalities to Scripts by specializing them into
 specific Script kinds.
 
+From the [Settings](./settings.mdx) of a script, the "Metadata" tab lets you define the following Script kinds:
+
 ## Actions
 
 Actions - or Common Scripts - are the basic building blocks for the flows.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <DocCard
+	<DocCard
 		title="Scripts Quickstart"
 		description="Start writing scripts in Python, TypeScript, Go, Bash and Sql."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
-  <DocCard
+	<DocCard
 		title="Flows Quickstart"
 		description="Learn how to build flows."
 		href="/docs/getting_started/flows_quickstart"
@@ -30,13 +32,13 @@ external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <DocCard
+	<DocCard
 		title="Trigger Scripts"
-		description="Triggers are special actions that run periodically given a schedule."
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
-  <DocCard
-		title="Scheduling"
+	<DocCard
+		title="Schedules"
 		description="Windmill provides the same set of features as CRON, but with a user interface and control panels."
 		href="/docs/core_concepts/scheduling"
 	/>
@@ -51,7 +53,7 @@ send an external notification with an URL that can be used to resume or cancel a
 flow.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <DocCard
+	<DocCard
 		title="Approval Steps in Flows"
 		description="Flows can be suspended until resumed or cancelled event(s) are received."
 		href="/docs/flows/flow_approval"
@@ -66,7 +68,7 @@ and will have a success status. So in most cases, you will have to rethrow an
 error to have it be listed as a failed flow.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-  <DocCard
+	<DocCard
 		title="Error Handler"
 		description="The error handler is a special flow step that is executed when an error occurs in the flow."
 		href="/docs/flows/flow_error_handler"

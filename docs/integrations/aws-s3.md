@@ -9,6 +9,23 @@
 
 <br/>
 
+:::info Windmill for data pipelines
+
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+<br/>
+
+See [Windmill for data pipelines](../core_concepts/27_data_pipelines/index.mdx) for more details.
+
+:::
+
+:::info Self Host
+
+If you're looking for a way to self-host Windmill using AWS, see [Self-Host Windmill](../advanced/1_self_host/index.mdx).
+
+:::
+
+
 [Amazon S3](https://aws.amazon.com/s3/)'s API follows the same schema as any S3 compatible API.
 
 To integrate Amazon S3 to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
@@ -24,6 +41,16 @@ To integrate Amazon S3 to Windmill, you need to save the following elements as a
 | secretKey | string  | AWS secret key               |         | true for Amazon | AWS Management Console (IAM)                       | Secret access key for AWS account owner. Can be found in the IAM section of the AWS Management Console under "My Security Credentials". Make sure the user has the right policies allocated.      |
 
 <br/><br/>
+
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
 
 :::tip
 

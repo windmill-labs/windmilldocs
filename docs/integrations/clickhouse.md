@@ -1,8 +1,8 @@
-# Clickhouse Integration
+# ClickHouse Integration
 
-To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate [ClickHouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Clickhouse Resource](../assets/integrations/add-clickhouse.png.webp)
+![Add ClickHouse Resource](../assets/integrations/add-clickhouse.png.webp)
 
 | Property | Type   | Description                         | Default | Required | Where to Find                                                                                |
 | -------- | ------ | ----------------------------------- | ------- | -------- | -------------------------------------------------------------------------------------------- |
@@ -12,10 +12,20 @@ To integrate [Clickhouse](https://clickhouse.com/) to Windmill, you need to save
 
 <br/><br/>
 
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
+
 :::tip
 
-Find some pre-set interactions with Clickhouse on the [Hub](https://hub.windmill.dev/integrations/clickhouse).
+Find some pre-set interactions with ClickHouse on the [Hub](https://hub.windmill.dev/integrations/clickhouse).
 
-Feel free to create your own Clickhouse scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+Feel free to create your own ClickHouse scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

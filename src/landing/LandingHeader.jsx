@@ -7,18 +7,19 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
+import SearchBarWrapper from '../theme/SearchBar';
+import Banner from './Banner';
 
 const resources = [
-	{
-		name: 'Team',
-		description: 'Find out who we are and why we do what we do.',
-		href: '/about'
-	},
-
 	{
 		name: 'Blog',
 		description: 'Stay up to date with our latest news and articles.',
 		href: '/blog'
+	},
+	{
+		name: 'Team',
+		description: 'The team behind Windmill.',
+		href: '/team'
 	},
 	{
 		name: 'Jobs',
@@ -46,6 +47,7 @@ export default function LandingHeader() {
 
 	return (
 		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
+			<Banner />
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<a
@@ -106,7 +108,7 @@ export default function LandingHeader() {
 									<Popover.Button
 										className={classNames(
 											open ? 'text-gray-900' : 'text-gray-500',
-											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
+											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
 										)}
 									>
 										<span>More</span>
@@ -155,6 +157,8 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
+						<SearchBarWrapper className={'inkeep-search-compact'} />
+
 						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a
@@ -241,7 +245,7 @@ export default function LandingHeader() {
 								</div>
 								<div className="mt-6">
 									<a
-										href="https://cal.com/ruben-windmill/windmill-demo"
+										href="https://www.windmill.dev/book-demo"
 										data-analytics='"schedule-demo"'
 										onClick={() => window.plausible('schedule-demo')}
 										className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"

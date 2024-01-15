@@ -2,7 +2,7 @@
 
 Windmill integrates code assistants into its code editor to provide language-specific suggestions, linting, formatting, and more.
 
-![Code Assistant Deno](../assets/code_editor/code_assistant.png "Code Assistant Deno")
+![Code Assistant Deno](../assets/code_editor/code_assistant.png.webp "Code Assistant Deno")
 
 ## How Code Assistants Work
 
@@ -10,17 +10,17 @@ The code assistants in Windmill are integrated into the Monaco code editor. Wind
 
 Here's an overview of how the code assistants work:
 
-1. Language Server Protocol (LSP): Windmill utilizes the Language Server Protocol, a standardized protocol for communication between code editors and language servers.
+1. **Language Server Protocol (LSP)**: Windmill utilizes the Language Server Protocol, a standardized protocol for communication between code editors and language servers.
 
-2. Language Servers: For each supported programming language, Windmill employs dedicated language servers responsible for providing code assistance and language-specific functionality. The following language servers are used by Windmill for each language:
+2. **Language Servers**: For each supported programming language, Windmill employs dedicated language servers responsible for providing code assistance and language-specific functionality. The following language servers are used by Windmill for each language:
 
    - Deno: Deno LSP
    - Python: Ruff, Black, Pyright
    - Bash: shellcheck
    - Go: Go LSP
 
-3. WebSocket Communication: The language servers communicate with the Windmill backend through websockets, enabling real-time exchange of information between the code editor and the language servers.
+3. **WebSocket Communication**: The language servers communicate with the Windmill backend through websockets, enabling real-time exchange of information between the code editor and the language servers.
 
-4. Calculations and Suggestions: As developers write code in the Windmill editor, the language servers process the code, perform calculations, and provide relevant suggestions. These suggestions can include auto-completion, syntax highlighting, linting errors, formatting options, and more.
+4. **Calculations and Suggestions**: As developers write code in the Windmill editor, the language servers process the code, perform calculations, and provide relevant suggestions. These suggestions can include auto-completion, syntax highlighting, linting errors, formatting options, and more.
 
 By integrating these code assistants, Windmill enhances the development workflow, enabling developers to write code more efficiently, identify and correct errors, and adhere to best practices specific to each programming language.

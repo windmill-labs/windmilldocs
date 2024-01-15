@@ -7,7 +7,10 @@ import {
 	Hand,
 	LayoutDashboard,
 	PieChart,
-	Puzzle
+	Puzzle,
+	Palette,
+	ToyBrick,
+	Wall
 } from 'lucide-react';
 import { useDeveloperMode } from '../pages';
 
@@ -38,7 +41,7 @@ const tabs = [
 				title: 'Building blocks',
 				description: 'Quickly start building complex apps using our 50 built-in components.',
 				icon: Puzzle,
-				caption: <div>Quickly start building complex apps using our <a href="/docs/apps/app_configuration-settings/app_component_library" target="_blank">50 built-in components</a>.</div>,
+				caption: <div>Quickly start building complex apps using our <a href="/docs/apps/app_configuration_settings/app_component_library" target="_blank">50 built-in components</a>.</div>,
 				video: {
 					videoSrc: '/videos/components.mp4',
 					altText: 'Building blocks',
@@ -48,7 +51,7 @@ const tabs = [
 			{
 				title: 'Run any script and flow',
 				description:
-					'Run any script or flow from the app editor. In Python, Go, Bash or Typescript.',
+					'Run any script or flow from the app editor. In Python, Go, Bash, SQL or Typescript.',
 				icon: Code2,
 				caption: <div>Windmill supports Typescript, Python, Go, Bash and SQL <a href="/docs/getting_started/scripts_quickstart" target="_blank">scripts</a>.</div>,
 				video: {
@@ -98,7 +101,7 @@ const tabs = [
 				title: 'Build BI dashboards with charts',
 				description: 'Build complex apps from atomic components.',
 				icon: BarChart,
-				caption: <div>Windmill embeds several <a href="/docs/apps/app_configuration-settings/app_component_library#charts" target="_blank">charts components</a> with unlimited customization possibilities.</div>,
+				caption: <div>Windmill embeds several <a href="/docs/apps/app_configuration_settings/app_component_library#charts" target="_blank">charts components</a> with unlimited customization possibilities.</div>,
 				video: {
 					videoSrc: '/videos/bi-charts.mp4',
 					altText: 'BI charts',
@@ -106,7 +109,34 @@ const tabs = [
 				}
 			}
 		]
-	}
+	},
+	{
+		label: 'Styling',
+		icon: Palette,
+		id: 'styling',
+		data: [
+			{
+				title: 'Give style to each component',
+				description: 'Configure the style of each component with pre-set options, CSS, or Tailwind Classes.',
+				icon: ToyBrick,
+				caption: <div>Configure the <a href="/docs/apps/app_configuration_settings/app_styling#component-level" target="_blank">style of each component</a> with pre-set options, CSS, or Tailwind Classes.</div>,
+				video: {
+					videoSrc: '/videos/styling_component.mp4',
+					altText: 'Component styling',
+				}
+			},
+			{
+				title: 'Define global themes',
+				description: 'Apply global themes to reuse across your applications based on their purposes.',
+				icon: LayoutDashboard,
+				caption: <div>Apply <a href="/docs/apps/app_configuration_settings/app_styling#global-styling" target="_blank">global themes</a> to reuse across your applications based on their purposes.</div>,
+				video: {
+					videoSrc: '/videos/global_styling.mp4',
+					altText: 'Global styling',
+				}
+			}
+		]
+	},
 ];
 
 const examples = [
@@ -172,7 +202,7 @@ const examples = [
 const cards = [
 	{
 		title: 'Support for React, Vue, Svelte and vanilla JS',
-		subtitle: 'Build them with Vite locally and deploy them on Windmill',
+		subtitle: 'Build apps or components with Vite locally and deploy them on Windmill.',
 
 		Icon: FaReact,
 		gridArea: 'md:col-span-2 md:row-span-4',
@@ -198,13 +228,13 @@ export default function AppSection() {
 			caption={
 				developerMode
 					? 'Build your apps with code '
-					: 'Build super fast and powerful apps using DnD'
+					: 'Build super fast and powerful apps using drag-and-drop'
 			}
 			cards={cards}
 			tabs={tabs}
 			description={
 				developerMode
-					? 'Either build your app locally with Vite and your favorite frontend framework or use our drag-and-drop editor and use any Typescript, Python, Go or Bash.'
+					? 'Either build your app locally with Vite and your favorite frontend framework or use our drag-and-drop editor and use any Typescript, Python, Go, Bash or SQL.'
 					: 'Build your own UI. Simply drag and drop components, connect your data and deploy your app in minutes.'
 			}
 			color="orange"

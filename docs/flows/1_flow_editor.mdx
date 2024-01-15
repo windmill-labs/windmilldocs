@@ -5,10 +5,12 @@ import { Timer, TerminalSquare } from 'lucide-react';
 
 Windmill's Flow Editor allows you to build flows with a low-code builder.
 
-:::info Workflows
+Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
 
-A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) in the case of Windmill.
-:::
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
+
+In Windmill, each step is code with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
+
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -25,6 +27,18 @@ A workflow is a series of connected tasks, events, or processes that occur autom
 		href="/docs/cli_local_dev"
 		Icon={TerminalSquare}
 	/>
+	<DocCard
+		color="teal"
+		title="Architecture and Data Exchange"
+		description="A workflow is a JSON serializable value in the OpenFlow format."
+		href="/docs/flows/architecture"
+	/>
+	<DocCard
+		color="teal"
+		title="OpenFlow Spec"
+		description="OpenFlow is an open standard for defining Flows."
+		href="/docs/openflow"
+	/>
 </div>
 
 <br />
@@ -34,15 +48,21 @@ The Flow Editor has the following features which are the subject of specific pag
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Architecture and Data Exchange"
-		description="A workflow is a JSON serializable value in the OpenFlow format."
-		href="/docs/flows/architecture"
-	/>
-	<DocCard
-		color="teal"
 		title="Triggering Flows"
 		description="Trigger flows on-demand, by schedule or on external events."
 		href="/docs/getting_started/trigger_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="Testing Flows"
+		description="Iterate quickly and get control on your flow testing."
+		href="/docs/flows/test_flows"
+	/>
+	<DocCard
+		color="teal"
+		title="AI-Generated Flows"
+		description="Generate flows from prompts."
+		href="/docs/flows/ai_flows"
 	/>
 	<DocCard
 		color="teal"
@@ -77,7 +97,7 @@ The Flow Editor has the following features which are the subject of specific pag
 	<DocCard
 		color="teal"
 		title="Trigger Scripts"
-		description="Trigger flows upon a given event with a dedicated trigger script."
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
 	<DocCard
@@ -109,6 +129,12 @@ The Flow Editor has the following features which are the subject of specific pag
 		title="Early Stop / Break"
 		description="Suspend executions within a flow for a specified time."
 		href="/docs/flows/sleep"
+	/>
+	<DocCard
+		color="teal"
+		title="Return Early for Flows"
+		description="Define a node at which the flow will return at for sync endpoints."
+		href="/docs/flows/early_return"
 	/>
 	<DocCard
 		color="teal"

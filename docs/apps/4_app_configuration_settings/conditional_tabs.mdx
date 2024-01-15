@@ -1,0 +1,46 @@
+
+import DocCard from '@site/src/components/DocCard';
+
+# Conditional Tabs
+
+Conditional tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    autoPlay
+    controls
+    id="conditional-tabs-video"
+    src="/videos/conditional-tabs.mp4"
+    alt="Conditional tabs component"
+/>
+<br/>
+
+The following section details Conditional Tabs component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+    <DocCard
+        color="orange"
+        title="App Editor Documentation"
+        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+        href="/docs/apps/app_editor"
+    />
+    <DocCard
+        color="orange"
+        title="Apps Quickstart"
+        description="Learn how to build your first app in a matter of minutes."
+        href="/docs/getting_started/apps_quickstart"
+    />
+</div>
+
+## Conditional Tabs configuration
+
+| Name       |   Type    | Connectable | Templatable | Default | Description                            |
+| ---------- | :-------: | :---------: | :---------: | :-----: | -------------------------------------- |
+| Conditions | boolean[] |    false    |    false    |  false  | The conditions that will be evaluated. |
+
+## Outputs
+
+| Name                   |   Type    | Description                         |
+| ---------------------- | :-------: | ----------------------------------- |
+| conditions             | boolean[] | The conditions evalutation          |
+| selectedConditionIndex |  number   | The index of the selected condition |

@@ -1,8 +1,18 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Add Resources and Variables to Code
 
-You can add directly access Variables and Resources from the Code Editor.
+You can directly access Variables and Resources from the Code Editor.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br />
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -21,11 +31,14 @@ You can add directly access Variables and Resources from the Code Editor.
 
 There are 2 main ways resources are used within scripts:
 
-### Passing resources as parameters to scripts (prefered)
+### Passing resources as parameters to scripts (preferred)
 
-Provided you have the right permissions and the resource type exists in the workspace, you can access resources from scripts, flows and apps using the Windmill client. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script.
+Provided you have the right permissions and the resource type exists in the workspace, you can access resource types from scripts, flows and apps using the Windmill client or [TypedDict](https://mypy.readthedocs.io/en/stable/typed_dict.html) in Python.
 
-Typescript:
+From the code editor's toolbar, click on the `+ Type` button and pick the right resource type. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script:
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
 type Postgresql = object;
@@ -37,6 +50,7 @@ type Postgresql = {
 	dbname: string;
 	sslmode: string;
 	password: string;
+	root_certificate_pem: string;
 };
 
 export async function main(postgres: Postgresql) {
@@ -44,14 +58,27 @@ export async function main(postgres: Postgresql) {
 }
 ```
 
-Python:
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
-postgresql = dict
+from typing import TypedDict
 
-def main(postgres: postgresql):
-    # Use Resource...
+class postgresql(TypedDict):
+    host: str
+    port: int
+    user: str
+    dbname: str
+    sslmode: str
+    password: str
+    root_certificate_pem: str
+
+def main(selected_postgres: postgresql):
+	# Use Resource...
 ```
+
+</TabItem>
+</Tabs>
 
 And then select the Resource in the arguments section on the right:
 
@@ -116,7 +143,7 @@ There are 2 main ways variables are used within scripts:
 
 ### Passing variables as parameters to scripts
 
-Variables can be easily passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
+Variables can be passed as parameters of the script, using the UI based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
 ### Fetching them from within a script by using the wmill client in the respective language
 

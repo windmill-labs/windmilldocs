@@ -8,7 +8,7 @@ There are four ways to handle errors in Windmill flows: [retries](./14_retries.m
 
 The Error Handler is a special flow step that is executed when an error occurs within a flow.
 
-If defined, the error handler will take as input, the result of the step that errored (which has its error in the 'error field').
+If defined, the error handler will take as input the result of the step that errored (which has its error in the 'error field').
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -54,7 +54,7 @@ Steps within a flow can be retried a specified number of times and at a defined 
 
 ## Early Stop / Break
 
-The Early Stop/Break feature allows you to define a predicate expression that determines whether the flow should stop early at the end of a step.
+The Early Stop/Break feature allows you to define a predicate expression that determines whether the flow should stop early at the end or before a step.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -83,6 +83,8 @@ For each step can be defined a timeout. If the execution takes longer than the t
 	src="/videos/custom_timeout.mp4"
 />
 
+<br/>
+
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
     	color="teal"
@@ -99,8 +101,8 @@ For more details on Error Handling in Windmill, see:
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
     	color="teal"
-        title="Collaboration in Windmill"
-    	description="Collaboration in Windmill is simplified through various features and workflows."
-    	href="/docs/core_concepts/collaboration"
+        title="Error Handling"
+    	description="There are 5 ways to do error handling in Windmill."
+    	href="/docs/core_concepts/error_handling"
     />
 </div>

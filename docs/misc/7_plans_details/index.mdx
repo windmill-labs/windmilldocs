@@ -14,116 +14,146 @@ Windmill provides a range of pricing plans for both Cloud and Self-hosted deploy
 
 ## Cloud
 
-### Free Plan
+### Community Edition - Cloud
 
 No commitment or credit card required.
-- Features include Google/Github/Microsoft/Gitlab SSO, unlimited variables/resources/scripts/apps/flows (except abuse), and 1000 free executions per month.
-- Public apps, groups, folders, and granular permissions available.
-- Deployment from Github and community support on Discord.
 
-### Team Plan
+- Google / Microsoft / GitHub / GitLab SSO.
+- Unlimited [variables](../../core_concepts/2_variables_and_secrets/index.mdx), [resources](../../core_concepts/3_resources_and_types/index.mdx), [scripts](../../script_editor/index.mdx), [apps](../../apps/0_app_editor/index.mdx), [flows](../../flows/1_flow_editor.mdx) (except abuse).
+- 1,000 free executions per month.
+- Community support on [Discord](https://discord.com/invite/V7PM2YHsPB).
+- [Granular permissions](../../core_concepts/16_roles_and_permissions/index.mdx), [groups](../../core_concepts/8_groups_and_folders/index.mdx), [folders](../../core_concepts/8_groups_and_folders/index.mdx) and [public apps](../../apps/8_public_apps.md) available.
+- [Deployment from GitHub](../../advanced/9_deploy_gh_gl/index.md).
+- [Git Sync](../../advanced/11_git_sync/index.mdx).
+- [Concurrency Limits](../../core_concepts/21_concurrency_limits/index.md).
+- [Content Search](../../core_concepts/26_content_search/index.md).
+- [Global CSS on App Editor](../../apps/9_css_editor.mdx).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- Slack integration for [Workspace Error Handling](../../core_concepts/10_error_handling/index.mdx).
+
+### Team Plan - Cloud
 
 Designed for small teams automating processes.
-- Includes all Free plan features.
+
+- Includes all Community edition features.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 7-day retention period.
-- [Multiplayer](../../core_concepts/7_multiplayer/index.md) and [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
-- [Priority Support](../12_support_and_sla/index.mdx) 24/7 with a 48-hour response time and automation engineer assistance.
+- [Deployment from GitHub](../../advanced/9_deploy_gh_gl/index.md).
+- [Git Sync](../../advanced/11_git_sync/index.mdx).
+- [Concurrency Limits](../../core_concepts/21_concurrency_limits/index.md).
+- [Content Search](../../core_concepts/26_content_search/index.md).
+- [Global CSS on App Editor](../../apps/9_css_editor.mdx).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- Slack integration for [Workspace Error Handling](../../core_concepts/10_error_handling/index.mdx).
 - Each seat: $10/month.
-- Each seat includes one user or two operators.
-- Up to 10k executions per month.
+- Each seat includes one developer or two operators and 10k executions.
+- [Priority Support](../12_support_and_sla/index.mdx) 24/7 with a 48-hour response time and automation engineer assistance.
+- Limited to 20 users.
 
 `seats = max(users, executions / 10k)`. Meaning if you have 4 users and 60k executions, you pay 60$ = 40$ + 20$.
 
 See [Upgrading to Team Edition](#upgrading-to-team-edition).
 
-### Enterprise Plan
+### Enterprise Plan - Cloud
 
-Dedicated support and infrastructure for advanced capabilities.
+Your own hosted dedicated Windmill cluster without restrictions.
+Dedicated support, guidance and infrastructure for advanced capabilities.
+
+- Isolated & dedicated database network & workers.
 - [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
-- SAML support.
-- [Multiplayer](../../core_concepts/7_multiplayer/index.md) and [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
-- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time,
-- Opportunity to become a design partner for influencing the Windmill roadmap.
-- Each worker: $100/month.
+- [Deploy to Staging/Prod Web UI](../../core_concepts/12_staging_prod/index.md).
+- [Deployment from GitHub](../../advanced/9_deploy_gh_gl/index.md).
+- [Git Sync](../../advanced/11_git_sync/index.mdx).
+- [Concurrency Limits](../../core_concepts/21_concurrency_limits/index.md).
+- [Content Search](../../core_concepts/26_content_search/index.md).
+- [Global CSS on App Editor](../../apps/9_css_editor.mdx).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- [SAML / SCIM support](../14_saml_and_scim/index.md). Group sync with active directory.
+- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
+- Slack integration for [Workspace Error Handling](../../core_concepts/10_error_handling/index.mdx).
+- Design partner for Windmill roadmap.
+- Base price at $600.
 - Each seat: $40/month.
-- Multi-tenant Shared infrastructure: $200/month.
-- Isolated workers and database (Available in US/EU/Asia): $600/month.
-- Dedicated Kubernetes cluster (Available in US/EU/Asia): $1200/month.
+- Each worker: $100/month.
 - Each worker can run up to ~26M jobs per month.
 
 See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Support & SLA"
-    	description="Our SLAs are designed to provide timely assistance and address any issues."
-    	href="/docs/misc/support_and_sla"
-    />
-    <DocCard
-    	title="Audit Logs"
-    	description="Windmill provides audit logs for every operation and action that has side-effects."
-    	href="/docs/core_concepts/audit_logs"
-    />
-	<DocCard
-    	title="Deploy to Staging or Prod"
-    	description="Deploy items to another staging/prod workspace."
-    	href="/docs/core_concepts/staging_prod"
-    />
-	<DocCard
-    	title="Multiplayer"
-    	description="Collaborate on scripts simultaneously."
-    	href="/docs/core_concepts/multiplayer"
-    />
-</div>
-
 ## Self-hosted
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self Host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+	/>
+</div>
 
 ### Free and Open-source
 
 - Unlimited users and executions.
-- Features [Google/Github/Microsoft/Gitlab SSO](../../misc/2_setup_oauth/index.md) and easy deployment on Fargate/Docker/Kubernetes.
+- Features [Google/Microsoft/GitHub/GitLab SSO](../../misc/2_setup_oauth/index.mdx) and easy deployment on Fargate/Docker/Kubernetes.
 - Community support on [Discord](https://discord.com/invite/V7PM2YHsPB).
 
-### Enterprise Edition
+### Pro - Self-Hosted
 
-Designed for companies requiring dedicated support and advanced infrastructure.
-- [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
-- Commercial license, [distributed dependency cache](../../advanced/6_imports/index.md), SAML support, [multiplayer on WebIDE](../../core_concepts/7_multiplayer/index.md), [Deploy to staging/prod web UI](../../core_concepts/12_staging_prod/index.md).
-- Shared Global Dependency Cache plugin to allow multiple workers to share a centralized cache.
-- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time,
-- Each worker: $50/month.
-- Each seat: $20/month.
+Designed for small businesses, young startups, nonprofits & universities.
+
+- [Dedicated Workers / High Throughput](../../core_concepts/25_dedicated_workers/index.mdx).
+- [Worker Group Management UI](../11_worker_group_management_ui/index.mdx).
+- [Deploy to Staging/Prod Web UI](../../core_concepts/12_staging_prod/index.md).
+- [Git Sync](../../advanced/11_git_sync/index.mdx).
+- [Global CSS on App Editor](../../apps/9_css_editor.mdx).
+- [Concurrency Limits](../../core_concepts/21_concurrency_limits/index.md).
+- [Content Search](../../core_concepts/26_content_search/index.md).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- Slack integration for [Workspace Error Handling](../../core_concepts/10_error_handling/index.mdx).
+- Prometheus Metrics.
+- Priority Support 24/7. Our goal is to respond within 48 hours and provide assistance from our automation engineers.
+- Each worker: $20/month.
+- Each seat: $8/month.
+- Each worker can run up to ~26M jobs per month.
 
 See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-    	title="Support & SLA"
-    	description="Our SLAs are designed to provide timely assistance and address any issues."
-    	href="/docs/misc/support_and_sla"
-    />
-    <DocCard
-    	title="Audit Logs"
-    	description="Windmill provides audit logs for every operation and action that has side-effects."
-    	href="/docs/core_concepts/audit_logs"
-    />
-	<DocCard
-    	title="Deploy to Staging or Prod"
-    	description="Deploy items to another staging/prod workspace."
-    	href="/docs/core_concepts/staging_prod"
-    />
-	<DocCard
-    	title="Multiplayer"
-    	description="Collaborate on scripts simultaneously."
-    	href="/docs/core_concepts/multiplayer"
-    />
-</div>
+### Enterprise Edition - Self-Hosted
+
+Designed for companies requiring dedicated support, guidance and advanced infrastructure.
+
+- Commercial license.
+- [Audit logs](../../core_concepts/14_audit_logs/index.mdx) with a 60-day retention period.
+- Prometheus Metrics.
+- [Dedicated Workers / High Throughput](../../core_concepts/25_dedicated_workers/index.mdx).
+- [Worker Group Management UI](../11_worker_group_management_ui/index.mdx).
+- [Git Sync](../../advanced/11_git_sync/index.mdx).
+- [Deploy to Staging/Prod Web UI](../../core_concepts/12_staging_prod/index.md).
+- [Global CSS on App Editor](../../apps/9_css_editor.mdx).
+- [Concurrency Limits](../../core_concepts/21_concurrency_limits/index.md).
+- [Content Search](../../core_concepts/26_content_search/index.md).
+- [Multiplayer](../../core_concepts/7_multiplayer/index.md) editing.
+- Slack integration for [Workspace Error Handling](../../core_concepts/10_error_handling/index.mdx).
+- [SAML / SCIM support](../14_saml_and_scim/index.md). Group sync with active directory.
+- Shared Global Dependency Cache plugin to allow multiple workers to share a centralized cache.
+- [SLA and priority support](../12_support_and_sla/index.mdx) with a 3-hour response time.
+- Design partner for Windmill roadmap.
+- Each worker: $50/month.
+- Each seat: $20/month.
+- Each worker can run up to ~26M jobs per month.
+
+See [Upgrading to Enterprise Edition](#upgrading-to-enterprise-edition).
 
 ## White Labeling Windmill
 
-Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand. We do prodive a library to embed the entire Windmill app or specific components, such as the flow builder, into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
+Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand. We do provide a library to embed the entire Windmill app or specific components - such as the flow builder or the app builder - into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
 
-For more information about white labeling and customization options, please reach out to us at contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
+For more information about white labeling and customization options, see:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="White Labeling Windmill"
+		description="Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand."
+		href="/docs/misc/white_labelling"
+	/>
+</div>
 
 ## How to Upgrade to Each Plan
 
@@ -139,29 +169,82 @@ Team plans work at the workspace-level.
 
 ### Upgrading to Enterprise Edition
 
-**Cloud**
+#### Cloud
 
 - For upgrading your instance to the Enterprise Edition, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
 - Once you contact us, we will provide you with a secure payment link.
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
 - After completing the payment, your workspace and, if applicable, the cluster will be upgraded to the Enterprise Edition, offering dedicated support and advanced features.
 
-**Self-host**
+#### Self-host
 
-- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT).
-- To upgrade, with a one-month free trial, use the link, or reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
-- Upon subscribing, you will receive a license key that is valid for one year. To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing). At the end of the subscription period, you will receive another license key valid for one year. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/YAoLXwayjT8?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
 
-:::tip Using the License Key
-To utilize the license key, switch from the windmill image to the windmill-ee image in both the server and workers. Pass the license key as the `LICENSE_KEY` environment variable.
-:::
+<br />
+
+- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
+- You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
+- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) that is valid for a month (duration of trial). You can also contact us immediately if preferred. At the end of the subscription period (or trial), you will receive another license key valid for a year.
+- To have your instance switch from Community Edition to Enterprise Edition, you'll need to change the Windmill image:
+  - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
+  - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
+- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
+- Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
+- (_By end of 2023_: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self Host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+	/>
+</div>
+
+#### Using the License Key (Self-Host)
+
+To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
+
+![Use license key](./add_license_key.png 'Use license key')
 
 ## Frequently Asked Questions (FAQ)
 
-- **What is an operator?** An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user who can only execute scripts, flows, and apps but cannot create or edit them.
-- **What is an execution?** An execution corresponds to a single job with a duration of less than 1s. Additional computation is accounted for based on the duration of each job.
-- **What is your Technical Support SLA?** We provide [support](../12_support_and_sla/index.mdx) with different response times based on issue priorities. Our support team is available 24/7, and the SLA is consistent for both Cloud and Self-hosted deployments.
-- **What is your Security level on APIs?** Windmill is SOC 2 Type I compliant, and we prioritize addressing vulnerabilities promptly.
-- **Could the application keep running if Windmill as a company is shut down?** Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection.
+- **What is an operator?**
+
+  An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user that can only execute script, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of normal users (or 1/2 seats).
+
+- **What is an execution?**
+
+  The single credit-unit is called a "execution". An execution corresponds to a single [job](../../core_concepts/20_jobs/index.mdx) whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for.
+
+  The number of executions of a flow corresponds to the sum of the executions of each step as seconds, considered as one script execution of that same time (time in sleep or doing state transition are not accounted). For apps, a backend script execution is considered as a script execution. As apps frontend scripts execute on browsers, they are not taken into account.
+
+  Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
+
+- **How is the use of the number of vCPUs and seats reported to Windmill?**
+
+  Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+
+  We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and you will never be overcharged
+
+- **What is your Technical Support SLA?**
+
+  We provide [support](../12_support_and_sla/index.mdx) with different response times based on issue priorities. Our support team is available 24/7, and the SLA is consistent for both Cloud and Self-hosted deployments.
+
+- **What is your Security level on APIs?**
+
+  Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
+
+- **Could the application keep running if Windmill as a company is shut down?**
+
+  Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection. If Windmill shuts down, license keys will be extended indefinitely.
 
 For any further inquiries or assistance regarding the Enterprise Edition upgrade process, please [contact us](../6_getting_help/index.mdx).

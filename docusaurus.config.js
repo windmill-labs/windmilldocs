@@ -12,9 +12,17 @@ const config = {
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
 	trailingSlash: false,
-	favicon: 'img/logo.svg',
+	favicon: 'img/docs_logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
+
+	customFields: {
+		inkeepCredentials: {
+			apiKey: '8ce4bf9ddc2ef8bc9ec53f133fd864292678e2d2e41872a0',
+			integrationId: 'clnxmt23j0001s6015xw7mzmo',
+			organizationId: 'org_eifr1ohM9oAxET8B'
+		}
+	},
 
 	plugins: [
 		async function myPlugin(context, options) {
@@ -51,7 +59,8 @@ const config = {
 				},
 				blog: {
 					// 	showReadingTime: true
-					blogSidebarCount: 0
+					blogSidebarCount: 0,
+					postsPerPage: 9
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
@@ -146,9 +155,18 @@ const config = {
 					}
 				]
 			},
+			announcementBar: {
+				id: 'airplane_migration',
+				content:
+					'<a href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
+				backgroundColor: '#6b21a8',
+				textColor: '#fff',
+				isCloseable: true
+			},
 			prism: {
 				theme: lightCodeTheme,
-				darkTheme: darkCodeTheme
+				darkTheme: darkCodeTheme,
+				additionalLanguages: ['powershell']
 			},
 			colorMode: {
 				defaultMode: 'dark',

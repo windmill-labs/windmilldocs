@@ -1,15 +1,15 @@
 import DocCard from '@site/src/components/DocCard';
-import { Book, Pen } from 'lucide-react';
+import { Book, Pen, Home, Cloud } from 'lucide-react';
 
 # Introduction
 
-Windmill is an **<a href="https://github.com/windmill-labs/windmill" >open-source</a>**, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to **build all your internal tools (endpoints, workflows, UIs) through the combination of code** (in Typescript, Python, Go & Bash, or any docker image) and low code builders. It embeds all-in-one:
+Windmill is an **<a href="https://github.com/windmill-labs/windmill" >open-source</a>**, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to **build all your internal tools (endpoints, workflows, UIs) through the combination of code** (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
 
-- an **execution runtime** to execute functions at scale with low-latency and no overhead on a fleet of workers
-- an **orchestrator** to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
-- an **app builder** to build application and data-intensive dashboards built with low-code or JS frameworks such a React.
+- an [execution runtime](./getting_started/0_scripts_quickstart/index.mdx) to execute functions at scale with low-latency and no overhead on a fleet of workers
+- an [orchestrator](./getting_started/6_flows_quickstart/index.mdx) to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
+- an [app builder](./getting_started/7_apps_quickstart/index.mdx) to build application and data-intensive dashboards built with low-code or JS frameworks such as React.
 
-Windmill can be used solely from its UI through its [webIDE](./getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), and low-code builders but it is also possible to keep using your editor and deploy from a [git repo](./advanced/9_deploy_gh_gl/index.md) using a [CLI](./cli_local_dev/index.md).
+Windmill can be used solely from its UI through its [webIDE](./code_editor/index.mdx), and low-code builders but it is also possible to keep using your editor and deploy from a [git repo](./advanced/12_deploy_to_prod/index.mdx) using a [CLI](./advanced/3_cli/index.mdx).
 
 Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow" >Cloud App</a>** (no credit card required) or **<a href="/docs/advanced/self_host" >Self-Host</a>** yourself.
 
@@ -28,9 +28,22 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 		href="/docs/misc/note_of_intent"
 		Icon={Pen}
 	/>
+	<DocCard
+		title="Self Host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+		Icon={Home}
+	/>
+	<DocCard
+		target="_blank"
+		title="Windmill Cloud"
+		description="Use Windmill's Cloud App (no credit card required)."
+		href="https://app.windmill.dev/"
+		Icon={Cloud}
+	/>
 </div>
 
-## Quick Overview of Windmill
+## Quickstarts
 
 Windmill is a feature-rich platform that allows you to build endpoints, cron jobs, workflows & UIs. Each of these features can be used standalone.
 
@@ -39,7 +52,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Scripts"
-		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash or launch docker containers."
+		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash, SQL or launch docker containers."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 	<DocCard
@@ -79,15 +92,23 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 		title="Triggering Flows"
 		description="Trigger flows on-demand, by schedule or on external events."
 		href="/docs/getting_started/trigger_flows"
+		color="teal"
+	/>
+	<DocCard
+		title="Script Editor"
+		description="Low-code editor to build scripts."
+		href="/docs/script_editor"
 	/>
 	<DocCard
 		title="Flow Editor"
 		description="Low-code editor to build workflows."
+		color="teal"
 		href="/docs/flows/flow_editor"
 	/>
 	<DocCard
 		title="App Editor"
 		description="Drag-and-drop editor to build apps."
+		color="orange"
 		href="/docs/apps/app_editor"
 	/>
 </div>
@@ -103,13 +124,18 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 	/>
 	<DocCard
 		title="Local Development"
-		description="Develop from various environments such as your terminal, VSCode, and JetBrains IDEs."
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
 		href="/docs/advanced/local_development"
 	/>
 	<DocCard
-		title="Version control from GitHub/GitLab"
-		description="Use a GH/GL repo as the source of truth for part or all of your Windmill workspace."
-		href="/docs/advanced/deploy_gh_gl"
+		title="Version Control in Windmill"
+		description="Sync your workspace to a git repository."
+		href="/docs/advanced/version_control"
+	/>
+	<DocCard
+		title="Deploy to prod"
+		description="Deploy to prod using a staging workspace"
+		href="/docs/advanced/deploy_to_prod"
 	/>
 	<DocCard
 		title="Run Docker Containers"

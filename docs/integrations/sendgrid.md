@@ -1,8 +1,8 @@
-# Sendgrid Integration
+# SendGrid Integration
 
-To integrate [Sendgrid](https://sendgrid.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate [SendGrid](https://sendgrid.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Sendgrid Resource](../assets/integrations/add-sendgrid.png.webp)
+![Add SendGrid Resource](../assets/integrations/add-sendgrid.png.webp)
 
 | Property | Type   | Description | Required | Where to find                                                                      |
 | -------- | ------ | ----------- | -------- | ---------------------------------------------------------------------------------- |
@@ -10,10 +10,20 @@ To integrate [Sendgrid](https://sendgrid.com/) to Windmill, you need to save the
 
 <br/><br/>
 
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
+
 :::tip
 
-Find some pre-set interactions with Sendgrid on the [Hub](https://hub.windmill.dev/integrations/sendgrid).
+Find some pre-set interactions with SendGrid on the [Hub](https://hub.windmill.dev/integrations/sendgrid).
 
-Feel free to create your own Sendgrid scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+Feel free to create your own SendGrid scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

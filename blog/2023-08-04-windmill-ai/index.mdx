@@ -67,7 +67,7 @@ However, we are looking forward to experimenting with other models in the future
 The technics we have used here should be applicable to those as well.
 
 We interact with GPT-4 (8K context) using the OpenAI Node API v4 library (currently in beta).
-You can explore all our code on GitHub [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/codeGen/lib.ts).
+You can explore all our code on GitHub [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/lib.ts).
 Additionally, we have implemented a backend service in Rust to proxy the user's request and add the OpenAI API key without revealing it in the frontend.
 You can find the relevant code [here](https://github.com/windmill-labs/windmill/blob/main/backend/windmill-api/src/openai.rs).
 
@@ -111,7 +111,7 @@ Specify the parameter types. Do not call the main function.
 ```
 
 The {description} placeholder gets replaced by the user's instructions.
-In addition, we simply instruct the model to fit Windmill's execution model: a main function with typed parameters which it use to infer the script's inputs.
+In addition, we simply instruct the model to fit Windmill's execution model: a main function with typed parameters used to infer the script's inputs.
 
 ### Handling resource types
 
@@ -236,7 +236,7 @@ Name the parameters by adding comments before the command like that:
 ```
 
 The idea is the same for other supported SQL languages and similar for bash scripts.
-You can find the code generation templates for all languages and runtimes [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/codeGen/prompts/gen.yaml).
+You can find the code generation templates for all languages and runtimes [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/prompts/gen.yaml).
 
 ### Handling database schemas
 
@@ -381,7 +381,7 @@ Watch our Copilot fix a bug in a Python script:
   </sup>
 </div>
 
-You can find all of our prompts templates [here](https://github.com/windmill-labs/windmill/tree/main/frontend/src/lib/components/codeGen/prompts).
+You can find all of our prompts templates [here](https://github.com/windmill-labs/windmill/tree/main/frontend/src/lib/components/copilot/prompts).
 We store them in yaml files, making it easy to read and edit.
 In order to evaluate the evolution of our Copilot's performance, each time we modify the prompts we (re)generate answers to sample questions.
 The samples can be found [here](https://github.com/windmill-labs/windmill/tree/main/llm).
