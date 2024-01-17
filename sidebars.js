@@ -387,15 +387,16 @@ const sidebars = {
 				'misc/plans_details/index',
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
-				'core_concepts/dedicated_workers/index',
 				'misc/worker_group_management_ui/index',
 				'core_concepts/concurrency_limits/index',
 				'misc/s3_cache/index',
+				'core_concepts/oidc/index',
+				'misc/saml_and_scim/index',
+				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
-				'misc/saml_and_scim/index',
 				'misc/react_sdk/index'
 			]
 		},
