@@ -3,9 +3,21 @@ import DocCard from '@site/src/components/DocCard';
 # Handling Files and Binary Data
 
 In Windmill, JSON is the primary data format used for representing information.
-When working with binary data, such as files, they are represented as Base64 encoded strings.
-Those Base64 strings can not be distinguished from normal strings.
-Hence, the interpretation those Base64 encoded strings it either done depending on the context,
+Binary data, such as files, are not easily to handle. Windmill provides two options.
+
+1. Have a dedicated storage for binary data: S3. Windmill has a first class integration with S3 buckets.
+2. If S3 is not an option, there's always the possibility to store the binary as base64 encoded string.
+
+### Windmill integration with S3
+
+The recommended way to store binary data is to upload it to S3 leveraging Windmill native S3 integration.
+
+By defining an S3 resource for the workspace, you can have an easy access to your bucket from the script editor. It becomes easy to consume s3 files as input, and write back to s3 at the end of the script. See [more details here](/docs/core_concepts/data_pipelines#windmill-integration-with-an-external-s3-storage) on how to set up the S3 connection within your workspace, and [here](/docs/core_concepts/persistent_storage#windmill-code-snippets) you have an example on how to read and write back to S3 within scripts.
+
+### Base64 encoded strings
+
+Base64 strings can also be used, but the main difficulty is that those Base64 strings can not be distinguished from normal strings.
+Hence, the interpretation ofthose Base64 encoded strings is either done depending on the context,
 or by pre-fixing those strings with the [`<data specifier:>`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types).
 
 In explicit contexts, when the JSON schema specifies that a property represents Base64-encoded data:
