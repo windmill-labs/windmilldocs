@@ -11,10 +11,7 @@ Windmill OpenID Connect (OIDC) allows your tasks to authenticate to other APIs (
 Your Windmill tasks can generate short-lived ID tokens which are passed to a target API to authenticate and "prove" their identity. ID tokens contain subject and claim information specific to the task and runner, allowing for fine-grained access control (e.g. allowing specific tasks to access AWS buckets).
 This page documents how to generate Windmill tokens and the token format. For guides on how to integrate OIDC with cloud providers like AWS or your own API, see:
 
-OIDC with AWS
-OIDC with GCP
-OIDC with your API
-Generating tokens
+## Generating tokens
 
 OIDC tokens are generated at runtime and are scoped to the task that generated them. Tokens can be generated with Windmill's SDKs or they can be configured within a task or resource definition.
 Your token must be associated with an audience which identifies the intended recipient of the token. The audience is provided as a parameter when generating the token. If the audience is incorrect, the consumer will reject the token. (For AWS, this audience is sts.amazonaws.com. For your own APIs, you can specify an audience such as auth.yourcompany.com.)
