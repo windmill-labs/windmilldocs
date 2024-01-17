@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 OIDC is an EE feature only
 
-Windmill OpenID Connect (OIDC) allows your tasks to authenticate to other APIs (such as AWS, GCP, or your own API) without having to store sensitive, long-lived credentials.
+Windmill OpenID Connect (OIDC) allows your scripts to authenticate to other APIs (such as AWS, GCP, or your own API) without having to store sensitive, long-lived credentials.
 Your Windmill tasks can generate short-lived ID tokens which are passed to a target API to authenticate and "prove" their identity. ID tokens contain subject and claim information specific to the task and runner, allowing for fine-grained access control (e.g. allowing specific tasks to access AWS buckets).
 This page documents how to generate Windmill tokens and the token format. For guides on how to integrate OIDC with cloud providers like AWS or your own API, see:
 
@@ -15,9 +15,13 @@ This page documents how to generate Windmill tokens and the token format. For gu
 
 OIDC tokens are generated at runtime and are scoped to the task that generated them. Tokens can be generated with Windmill's SDKs or they can be configured within a task or resource definition.
 Your token must be associated with an audience which identifies the intended recipient of the token. The audience is provided as a parameter when generating the token. If the audience is incorrect, the consumer will reject the token. (For AWS, this audience is sts.amazonaws.com. For your own APIs, you can specify an audience such as auth.yourcompany.com.)
-If you are using a JavaScript or Python task, you can use the Windmill SDK to generate tokens. For other tasks like REST or shell, you should, you should use the auth.idToken(aud) JST in your task configuration to generate tokens.
-JST configuration can also be used to configure resources if you want to always attach tokens when using those resources. For example, this can be used to always include the token as a header for a REST resource or a GraphQL resource.
-SDKs
+If you are using a TypeScript or Python scripts, you can use the Windmill SDK to generate tokens. For other like REST or shell, you should use the REST api directly:
+
+```
+curl -s -H "Authorization: Bearer $WM_TOKEN" \
+
+  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/oidc/token/MY_AUDIENCE"
+```
 
 Tokens can be generated at runtime with Windmill's SDKs. For example, to generate an OIDC token with audience sts.amazonaws.com to assume an AWS role:
 
