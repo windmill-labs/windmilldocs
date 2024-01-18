@@ -1,6 +1,6 @@
 # MySQL Integration
 
-Windmill provides a framework to support MySQL databsases, either with native SQL scripts or through TypeScript for raw queries.
+Windmill provides a framework to support MySQL databases, either with native SQL scripts or through TypeScript for raw queries.
 
 ![Integration between MySQL and Windmill](../assets/integrations/mysql_header.png 'Connect a MySQL instance with Windmill')
 

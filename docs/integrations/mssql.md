@@ -1,6 +1,6 @@
 # MSSQL Integration
 
-Windmill provides a framework to support MSSQL databsases, either with native SQL scripts or through TypeScript for raw queries.
+Windmill provides a framework to support MSSQL databases, either with native SQL scripts or through TypeScript for raw queries.
 
 ![Integration between MSSQL and Windmill](../assets/integrations/windmill_and_mssql.png 'Connect a MSSQL instance with Windmill')
 
