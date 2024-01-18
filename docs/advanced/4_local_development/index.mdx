@@ -118,8 +118,6 @@ But what if you want to create a new script from scratch? It's also easy, just c
 
 Similar for flow, you can manually create a folder ending with `.flow` and containing a `flow.yaml` file.
 
-:::
-
 <details>
   <summary>`flow.yaml` initial content</summary>
 
@@ -145,8 +143,12 @@ More info [here](../../core_concepts/13_json_schema_and_parsing/index.md).
 
 Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
 
+:::
+
 :::tip
+
 Windmill CLI also has a `bootstrap` command (both for `wmill script` and `wmill flow`) which can be used to create a new script in the desired language or flow. All files will be automatically created and the script content will be a simply "Hello world" in the desired language, which can then be updated.
+
 :::
 
 To summarize, here are the canonical process for scripts:
@@ -247,4 +249,4 @@ To close the loop, all the above can be leveraged to achieve a simple yet robust
 
 The goal is the following. Have a staging Windmill workspace on which you can quickly make changes and iterate with co-workers. Once you've reached a good state, you can deploy all your changes, all at once, to another Windmill workspace (the Production one) in a fully-automated fashion.
 
-the full setup is described in the [Deploy to Prod using a Git Workflow](/docs/advanced/deploy_gh_gl) documentation page.
+The full setup is described in the [Deploy to Prod using a Git Workflow](/docs/advanced/deploy_gh_gl) documentation page.
