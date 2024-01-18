@@ -219,8 +219,8 @@ jobs:
       # (push will pull first to detect conflicts and only push actual changes)
       - name: Push changes
         run: |
-          deno run --unstable -A  https://deno.land/x/wmill@v1.246.11/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
-          deno run --unstable -A  https://deno.land/x/wmill@v1.246.11/main.ts sync push --yes --raw --skip-variables --skip-secrets --skip-resources
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts sync push --yes --raw --skip-variables --skip-secrets --skip-resources
 ```
 
 The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it. As mentioned above, we're using the `--raw` format here as `--stateful` sync is not needed, and we ignore variables, secrets and resources to avoid committing secrets to the repository. Feel free to adapt this to your use case.
