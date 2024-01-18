@@ -64,6 +64,8 @@ We recommend using `--raw` here, which will soon be the default for the CLI `syn
 
 :::
 
+This will download the content of the workspace into your local folder. You will see an `f/` and a `u/` folder appearing, replicating the folder structure of the workspace.
+
 :::caution
 
 `wmill sync pull` will pull everything from the Windmill workspace, including resources and variables, even secrets. If you're planning to use Git as explained below, we recommend only pulling scripts, flows and apps, skipping the rest. It can be done with:
@@ -73,8 +75,6 @@ wmill sync pull --raw --skip-variables --skip-secrets --skip-resources
 ```
 
 :::
-
-This will download the content of the workspace into your local folder. You will see an `f/` and a `u/` folder appearing, replicating the folder structure of the workspace.
 
 Each script will be represented by a content file (`.py`, `.ts`, `.go` depending on the language) plus a metadata file (ending with `.script.yaml`). This file contains various metadata about the script, like a summary and description, but also the content of the lock file and the schema of the script (i.e. the signature of its `main` method). We will come back to this later.
 For flows, one flow will be represented by a folder, containing a `flow.yaml` file being the definition of the flow, and additional files for inline scripts.
@@ -118,10 +118,6 @@ But what if you want to create a new script from scratch? It's also easy, just c
 
 Similar for flow, you can manually create a folder ending with `.flow` and containing a `flow.yaml` file.
 
-:::tip
-
-Flows can be more difficult to edit at the beginning b/c ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
-
 :::
 
 <details>
@@ -146,7 +142,11 @@ More info [here](../../core_concepts/13_json_schema_and_parsing/index.md).
 </details>
 
 :::tip
-Windmill CLI also has a `bootstrap` command (both for script and flow) which can be used to create a new script in the desired language or flow. All files will be automatically created and the script content will be a simply "Hello world" in the desired language, which can then be updated.
+
+Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
+
+:::tip
+Windmill CLI also has a `bootstrap` command (both for `wmill script` and `wmill flow`) which can be used to create a new script in the desired language or flow. All files will be automatically created and the script content will be a simply "Hello world" in the desired language, which can then be updated.
 :::
 
 To summarize, here are the canonical process for scripts:
@@ -178,45 +178,63 @@ wmill sync push --raw
 
 Lastly, it is possible to execute scripts locally and even plug them to any unit testing framework. More info on the [Run locally documentation page](/docs/advanced/local_development/run_locally)
 
-## Git Sync
+## Syncing workspace to Git repository
 
-It's very common to use version control when developing locally. Windmill has an embedded integration with Git which makes it easy to achieve the workflow described above. It is an EE feature but we also provide an alternative setup below for CE users.
+It's very common to use version control when developing locally. Pushing changes from Git to Windmill can easily be achieved with a CI automation. For the other way around, Windmill pushing changes to the Git repo is also made easy with Windmill embedded Git integration (Enterprise Edition feature only).
 
-The recommended way to version control your Windmill workspace using git is to use Windmill's Git integration and let Windmill commit to the git repo for you. This has 2 advantages. First, you only have to push your local changes to Windmill (using `wmill sync push`) and Windmill takes care of the rest. Second, you can seamlessly combine changes made locally through the local development setup seen above with changes made via the Windmill UI - given that Windmill handles the sync, both will be reflected in your Git repository.
+#### From Git to Windmill
 
-:::tip
+Git can deploy the changes pushed to a branch automatically to a Windmill workspace with a simple CI automation. This way, developers making changes locally using the process described above can simply commit and push to the Git repository, and not care about manually deploying their changes to Windmill.
+
+Here is the automation for Github Actions, but it is simple enough to easily be adapted for other CIs.
+
+```yaml
+name: 'Push main to Windmill workspace'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
+    # paths:
+    #   - wm/**
+
+env:
+  WMILL_URL: https://app.windmill.dev/
+  WMILL_WORKSPACE: github-sync-example-prod
+
+jobs:
+  sync:
+    environment: windmill
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      # (push will pull first to detect conflicts and only push actual changes)
+      - name: Push changes
+        run: |
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.11/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.11/main.ts sync push --yes --raw --skip-variables --skip-secrets --skip-resources
+```
+
+The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it. As mentioned above, we're using the `--raw` format here as `--stateful` sync is not needed, and we ignore variables, secrets and resources to avoid committing secrets to the repository. Feel free to adapt this to your use case.
+
+#### From Windmill to Git
+
+Windmill pushing changes to Git can be necessary when some users make changes to the workspace via Windmill's UI. In this case, Windmill will automatically commit the changes to the Git repository, keeping the two in perfect sync.
 
 To setup Windmill Git integration, see our dedicated page [here](../11_git_sync/index.mdx)
 
-:::
-
-If you opt for pushing to individual branches, we recommend setting up [the corresponding automation](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/open-pr-on-commit.yaml) so that Github can automatically open a PR when a new branch is created.
-
-To summarize, the workflow is the following:
-
-```bash
-# make edits to your workspace folder and push it to Windmill
-wmill sync push --raw
-
-# Go to your Git repository. If you opted for individual branches, one (or more) PRs will be opened reflecting your changes (one per script / flow updated). If not, you will see new commits on the branch, each commit reflecting one script or flow update
-```
-
-<details>
-  <summary>Syncing to Git by hand</summary>
-
-Version control can also be achieved manually via cloning, committing and pushing to the Git repo, and then configuring an automation for your CI to automatically push the change to your Windmill workspace.
-
-The way it works is by doing the following:
-
-- Clone the workspace Git repo (or create one by doing the initial setup steps seen above)
-- Make edits to your scripts and flows using your local IDE.
-- Commit and push to your Git repository - NOT to your Windmill workspace
-- Configure your Git repository to run an automation on each commit which will deploy the workspace to Windmill. See [this automation](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml) for inspiration
-
-</details>
-
 :::info
-Using the git sync automated setup described above, it is still possible to manually commit and push to the git repository from your local environment. If you first commit and push to git, and then push to the windmill workspace, Windmill will notice that there's no change between the newly deployed script / flow and what exists in the Git repository and will skip the commit.
+
+Windmill pushing changes to Git is an enterprise edition feature
+
 :::
 
 ## Staging/Production deployment workflow
