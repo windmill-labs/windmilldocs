@@ -23,6 +23,8 @@ curl -s -H "Authorization: Bearer $WM_TOKEN" \
   "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/oidc/token/MY_AUDIENCE"
 ```
 
+### Generate the token
+
 Tokens can be generated at runtime with Windmill's SDKs. For example, to generate an OIDC token with audience sts.amazonaws.com to assume an AWS role:
 
 <Tabs className="unique-tabs">
@@ -119,10 +121,10 @@ workspace: workspace_id the job is executed in
 The token also has additional standard claims.
 
 ```
-exp The expiration time of the token.
-iat The time the token was issued.
-alg The algorithm used to sign the token.
-kid The key ID used to sign the token.
+exp: The expiration time of the token.
+iat: The time the token was issued.
+alg: The algorithm used to sign the token.
+kid: The key ID used to sign the token.
 ```
 
 The following example token was requested with the audience `sts.amazonaws.com` from the script `` in the foobar environment:
@@ -131,7 +133,7 @@ The following example token was requested with the audience `sts.amazonaws.com` 
 eyJhbGciOiJSUzI1NiIsImtpZCI6IndpbmRtaWxsIn0.eyJpc3MiOiJodHRwczovL215Y29tcGFueS5jb20iLCJhdWQiOlsic3RzLmFtYXpvbi5jb20iXSwiZXhwIjoxNzA1NjYwOTU1LCJpYXQiOjE3MDU0ODgxNTUsInN1YiI6ImFkbWluQHdpbmRtaWxsLmRldjo6dS9hZG1pbi9hbWJpdGlvdXNfc2NyaXB0Ojpub19mbG93Ojpmb29iYXIiLCJlbWFpbCI6ImFkbWluQHdpbmRtaWxsLmRldiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJqb2JfaWQiOiIwMThkMTcwNC0wMGMxLTA1YmItNDE4My1lNTZhOGVkZWI4MjMiLCJwYXRoIjoidS9hZG1pbi9hbWJpdGlvdXNfc2NyaXB0IiwiZmxvd19wYXRoIjpudWxsLCJncm91cHMiOlsiYWxsIl0sInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQHdpbmRtaWxsLmRldiIsIndvcmtzcGFjZSI6ImZvb2JhciJ9.FLOAMsT7wTuCMM7hdZBGU5uMna3v-3FVXbouQ5CXJ61Vp7Ew82w9K2IFdb5rE-x-YDra-MdT8F3v1CNcvB1vQ4jSsgPLFm_fDu0aA2fI_B69Kno2KBpd5afXVhMUwSF4zyRiruZdIS1hL8PjeNsMOIfy-c_FnF_BchbarXswpo6_UjjsJg353l2C5wOqny8OT4fNGn4yyvTM5PDPaisxOrBuSQDK0GhuB1zSZ4OAGChnd5-KwopqlYmm0NlNiUUTYa5tORtNfbvDFM-hrQ1GOKCKn18nmSV5QKjzn8Au8lP8qNmoZPXdXhxr4yPx8mxWHge7ckABZfB3xGpufG436g
 
 {
-  "iss": "https://mycompany.com",
+  "iss": "https://mycompany.com/api/oidc/",
   "aud": [
     "sts.amazonaws.com"
   ],
@@ -163,4 +165,136 @@ Jwks are available directly at:
 
 ```
 <base_url>/api/oidc/jwks
+```
+
+## Use OIDC with AWS
+
+### Create an identity provider with AWS for OIDC
+
+1. Search for the `Identity Providers` tab in the console search or IAM.
+2. Add provider
+3. Select OpenID Connect
+4. Provider Url: `<base_url>/api/oidc/`, audience: `sts.amazonaws.com`
+
+### Create a role
+
+1. IAM -> Roles -> Create Role
+2. Web Identity
+3. Pick provider created above, audience: `sts.amazonaws.com`
+4. Pick the permission policy to attach to this role. You can create as many roles as needed so it's best to be specific.
+5. fill the Trust policy:
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": "sts:AssumeRoleWithWebIdentity",
+          "Principal": {
+              "Federated": "arn:aws:iam::976079455550:oidc-provider/acme.com/api/oidc/"
+          },
+          "Condition": {
+              "StringEquals": {
+                  "acme.com:aud": "sts.amazonaws.com",
+                  "acme.com:workspace: "production
+                  ...
+              },
+
+          }
+      }
+  ]
+}
+```
+
+Note that you can use all those claims as conditions:
+
+```
+job_id: Job id
+path: Job's path (the script path for a script or a virtual path for a step part of a flow)
+flow_path: If job is part of a flow, contain the path of the flow
+groups: the groups the requester is part of
+username: the username the requester has in the given workspace
+email: the email of the requester
+workspace: workspace_id the job is executed in
+```
+
+### Get AWS credentials
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { STSClient } from 'npm:@aws-sdk/client-sts';
+import { AssumeRoleWithWebIdentityCommand } from 'npm:@aws-sdk/client-sts';
+import * as wmill from 'npm:windmill-client';
+
+export async function main() {
+	const token = await wmill.getIdToken('sts.amazonaws.com');
+
+	const command = new AssumeRoleWithWebIdentityCommand({
+		RoleArn: 'arn:aws:iam::000000000000:role/my_aws_role',
+		WebIdentityToken: token,
+		RoleSessionName: 'my_session'
+	});
+
+	const client = new STSClient({ region: 'us-east-1' });
+	console.log(await client.send(command));
+}
+```
+
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { STSClient } from '@aws-sdk/client-sts';
+import { AssumeRoleWithWebIdentityCommand } from '@aws-sdk/client-sts';
+import * as wmill from 'windmill-client';
+
+export async function main() {
+	const token = await wmill.getIdToken('sts.amazonaws.com');
+
+	const command = new AssumeRoleWithWebIdentityCommand({
+		RoleArn: 'arn:aws:iam::000000000000:role/my_aws_role',
+		WebIdentityToken: token,
+		RoleSessionName: 'my_session'
+	});
+
+	const client = new STSClient({ region: 'us-east-1' });
+	console.log(await client.send(command));
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+import boto3
+
+def main():
+
+    sts = boto3.client("sts")
+    token = wmill.get_id_token("sts.amazonaws.com")
+
+    credentials = sts.assume_role_with_web_identity(
+        RoleArn="arn:aws:iam::000000000000:role/my_aws_role",
+        WebIdentityToken=token,
+        RoleSessionName="my_session",
+    )
+
+    print(credentials)
+```
+
+</TabItem>
+</Tabs>
+
+You can now get the ephemeral access key, secret key, and session token from it to use with any AWS API.
+
+```
+credentials = credentials["Credentials"]
+
+aws_access_key_id=credentials["AccessKeyId"]
+aws_secret_access_key=credentials["SecretAccessKey"]
+aws_session_token=credentials["SessionToken"]
 ```
