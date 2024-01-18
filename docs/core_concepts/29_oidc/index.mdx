@@ -79,7 +79,7 @@ import boto3
 def main():
 
     sts = boto3.client("sts")
-    token = wmill.get_id_token("sts.amazon.com")
+    token = wmill.get_id_token("sts.amazonaws.com")
 
     credentials = sts.assume_role_with_web_identity(
         RoleArn="arn:aws:iam::000000000000:role/my_aws_role",
@@ -133,7 +133,7 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IndpbmRtaWxsIn0.eyJpc3MiOiJodHRwczovL215Y29tcGFueS5j
 {
   "iss": "https://mycompany.com",
   "aud": [
-    "sts.amazon.com"
+    "sts.amazonaws.com"
   ],
   "exp": 1705660955,
   "iat": 1705488155,
