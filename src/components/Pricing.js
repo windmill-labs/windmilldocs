@@ -48,7 +48,7 @@ const pricing = {
 						</span>
 					),
 					features: [
-						{ text: 'Dedicated Workers / High Throughput' },
+						{ text: 'Script specific Workers (dedicated) / High Throughput' },
 						{ text: 'Worker Group Management UI' },
 						{ text: 'Deploy to Staging/Prod Web UI' },
 						{ text: 'Global CSS on App Editor' },

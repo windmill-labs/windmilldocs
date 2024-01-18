@@ -219,7 +219,7 @@ To enable the license key, switch from the windmill image to the windmill-ee ima
 
 - **What is an operator?**
 
-  An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user that can only execute script, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of normal users (or 1/2 seats).
+  An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user that can only execute script, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of developers (or 1/2 seats).
 
 - **What is an execution?**
 
@@ -231,9 +231,9 @@ To enable the license key, switch from the windmill image to the windmill-ee ima
 
 - **How is the use of the number of vCPUs and seats reported to Windmill?**
 
-  Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+  Subscription is self-declared and crossed with the lightweight telemetry that we do. For an air-gapped environment, We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
 
-  We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and you will never be overcharged
+  The vCPUs reported is the sum of the vCPUs used by all your workers. 5 workers with 0.2vCPUs each will count as 1vCPU. 2 workers with 4vCPU each will count as 8vCPUs. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or ecs/kubernetes limits and you will never be overcharged
 
 - **What is your Technical Support SLA?**
 

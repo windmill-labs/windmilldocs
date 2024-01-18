@@ -6,63 +6,247 @@ import DocCard from '@site/src/components/DocCard';
 
 # Local Development
 
-Windmill has [its own integrated development environment](../../code_editor/index.mdx), but you can also develop and run scripts locally, on both [self-hosted](../1_self_host/index.mdx) and cloud instances.
+Windmill has [its own integrated development environment](../../code_editor/index.mdx), but you can also develop and run scripts locally, both with [self-hosted](../1_self_host/index.mdx) and cloud instances.
 
 ## Local Development Recommended Setup
 
-For a more complex and robust local development process, we recommend the following setup with one git repository, a staging and a prod workspace:
+Local development involves two components:
+
+1. Being able to create and edit Windmill scripts and flow from your favorite IDE
+2. Deploy them to Windmill and at the same time version them in a Git repository
+
+In addition to the core functionalities just mentioned, some might want to add the concept of deployment. This encompass having a staging and production Windmill environment, and being able to deploy from Staging to Production.
+
+The diagram below illustrate the full process. We're going to explain it quickly, and in the following sections we will decompose it.
 
 ![Local Development v0](./local_development_v0.png)
 
 It works as follows:
-- A git repository with 2 branches: staging and main.
-- A staging workspace with [Git Sync](../11_git_sync/index.mdx) workspace mode (all items stored in [folders](../../core_concepts/8_groups_and_folders/index.mdx) are commited to the repo) to staging branch and [Git Sync](../11_git_sync/index.mdx) item mode (any change is committed to an item-specific branch targeting main, with an associated PR, this can be done with GitHub Action [Open PR on Commit](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/open-pr-on-commit.yaml)) to main branch.
-- A prod workspace with [Git Sync](../11_git_sync/index.mdx) workspace mode to main branch.
-- Continuous Integration + [Windmill CLI](../../advanced/3_cli/index.mdx) between Main (resp. Staging) branch and Prod (resp. Staging) workspace to automatically push repo branch changes to workspace. This can be done with GitHub Action [Push on Merge](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml).
 
-With this set up, users can concurrently iterate on both Windmill IDE and code editors locally and commit changes to an item-specific branch targetting main.
+- 2 different workspaces exist in Windmill: one for Staging, and one for Prod and a Git repository as we been set to sync the Windmill Staging workspace.
+- Some developers work form their favorite IDE. They can create new Windmill scripts and flows, edit existing ones, and push them to the Staging repository. Some developers can work directly in Windmill's web IDE. All of this happen in the Staging workspace
+- Every time a script or a flow is deployed in the Staging workspace, Windmill will automatically commit the change to the Git repository. It can either commit directly to a specific (i.e. `staging`) branch, or open PRs to this branch (one PR per script/flow)
+- Within the Git repository, every time the `staging` branch is merged to the production branch (i.e. `main`), all the changes are pushed at once the the Windmill Production workspace.
 
-## Editing scripts and flows
+To summarize, developers operates only in Windmill Staging workspace. Windmill Production workspace is updated only by the CI when the Git staging branch is merged to the production branch.
 
-Scripts and flow can be editied from any code editor. For VS Code, Windmill has a dedicated [VS Code Extnsion](../../cli_local_dev/1_vscode-extension/index.mdx) that can be found on [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill). The extension allows for [UI pre-visualization](../../core_concepts/23_instant_preview/index.mdx), fetching resources, variables, scripts & flows, and testing them. However, these runs and executions are technically carried out from your remote instance.
+Now let's deep dive into each part. We will first explain how developers can setup their local environment to be able to create and edit Windmill script from their IDE, then we will see how to sync Windmill workspaces to a Git repository. Lastly, we will see how to achive the full staging/prod deployment workflow.
 
-![VS Code Extension](../../../blog/2023-11-20-vscode/vscode_extension.png.webp "Windmill VS Code extension")
+## Develop locally
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
-		href="/docs/cli_local_dev/vscode-extension"
-	/>
-</div>
+#### Setting up the workspace folder
 
-<br/>
+Developing Windmill scripts and flows from your favorite IDE is made easy by using Windmill CLI. Here we will go through the full process of cloning a Windmill workspace locally, creating and editing new scripts and flows, and pushing them back the Windmill workspace.
 
-## Run locally
+:::tip
+Not familiar with Windmill CLI? Get started with it [here](/docs/advanced/cli/installation)
+:::
 
-For iteration, integration with CI/CD and testing purposes you may need to [run a script locally](./run_locally.mdx) that also interacts with Windmill (for example, to retrieve resources). It will allow to integrate Windmill with any testing framework. To do this, you will need to fill out the context variables that would otherwise be filled out by the Windmill runtime for you.
+The first step is to clone an existing Windmill workspace into a local folder.
 
-<iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
-></iframe>
+Create an empty folder:
 
-<br/>
+```bash
+mkdir myworkspace
+cd myworkspace
+```
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-		title="Run Locally"
-		description="Run scripts locally that interact with a Windmill instance."
-		href="/docs/advanced/local_development/run_locally"
-	/>
-    <DocCard
-		title="Command-Line Interface (CLI)"
-		description="Interact with Windmill instances right from your terminal."
-		href="/docs/advanced/cli"
-	/>
-</div>
+Add the workspace and pull its the content using the [CLI `pull` command](/docs/advanced/cli/sync#raw-syncing):
+
+```bash
+wmill workspace add myworkspace [workspace_id] [remote]
+wmill sync pull --raw
+```
+
+:::info
+
+We recommend using `--raw` here, which will soon be the default for the CLI `sync` command. Stateful sync is not needed here.
+
+:::
+
+This will download the content of the workspace into your local folder. You will see an `f/` and a `u/` folder appearing, replicating the folder structure of the workspace.
+
+:::caution
+
+`wmill sync pull` will pull everything from the Windmill workspace, including resources and variables, even secrets. If you're planning to use Git as explained below, we recommend only pulling scripts, flows and apps, skipping the rest. It can be done with:
+
+```bash
+wmill sync pull --raw --skip-variables --skip-secrets --skip-resources
+```
+
+:::
+
+Each script will be represented by a content file (`.py`, `.ts`, `.go` depending on the language) plus a metadata file (ending with `.script.yaml`). This file contains various metadata about the script, like a summary and description, but also the content of the lock file and the schema of the script (i.e. the signature of its `main` method). We will come back to this later.
+For flows, one flow will be represented by a folder, containing a `flow.yaml` file being the definition of the flow, and additional files for inline scripts.
+
+:::tip
+
+The metadata file schema is available [here](../../core_concepts/13_json_schema_and_parsing/index.md).
+
+:::
+
+#### Making edits
+
+Once the workspace folder is pulled, edits can be made using any IDE.
+
+Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there as possibilities to even run it locally if you have the correct development environment setup for the script language.
+
+Some fields of the metadata file can also be edited by hand, like the summary of the description fields. If you update the dependencies of your script, or the signature of the `main` method, the lockfile and/or the script schema will need to be updated in the metadata file. We do not recommend doing it by hand. Windmill CLI comes with a `generate-metadata` command that will read the updated code of the script and update the lockfile and schema inplace. Be re-assured, any manual update to other files like summary and description will be kept.
+
+But what if you want to create a new script from scratch? It's also easy, just create a file with the correct extension, and simply run `generate-metadata` command to generate the metadata file. The name of the file and its location in the folder will become the script path in Windmill
+
+<details>
+  <summary>File extension per script language</summary>
+
+| **Script language** | **Expected file extension** |
+| ------------------- | --------------------------- |
+| TypeScript (deno)   | `.ts`                       |
+| Python              | `.py`                       |
+| TypeScript (bun)    | `.bun.ts`                   |
+| Bash                | `.sh`                       |
+| Go                  | `.go`                       |
+| REST                | `.fetch.ts`                 |
+| PostgreSQL          | `.pg.sql`                   |
+| MySQL               | `.my.sql`                   |
+| BigQuery            | `.bq.sql`                   |
+| Snowflake           | `.sf.sql`                   |
+| MS SQL Server       | `.ms.sql`                   |
+| GraphQL             | `.gql`                      |
+| PowerShell          | `.ps1`                      |
+
+</details>
+
+Similar for flow, you can manually create a folder ending with `.flow` and containing a `flow.yaml` file.
+
+<details>
+  <summary>`flow.yaml` initial content</summary>
+
+```yaml
+summary: ''
+description: ''
+value:
+  modules: []
+schema:
+  $schema: 'https://json-schema.org/draft/2020-12/schema'
+  type: object
+  order: []
+  properties: {}
+  required: []
+ws_error_handler_muted: false
+```
+
+More info [here](../../core_concepts/13_json_schema_and_parsing/index.md).
+
+</details>
+
+:::tip
+
+Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
+
+:::
+
+:::tip
+
+Windmill CLI also has a `bootstrap` command (both for `wmill script` and `wmill flow`) which can be used to create a new script in the desired language or flow. All files will be automatically created and the script content will be a simply "Hello world" in the desired language, which can then be updated.
+
+:::
+
+To summarize, here are the canonical process for scripts:
+
+```bash
+# optional - create a new script using the CLI (can be done manually)
+wmill script bootstrap f/my_space/flashy_script python3
+
+# edit the script content manually, writing your python code within your IDE
+
+# edit the script metadata (required if you made edits to the dependencies or the main signature method)
+wmill script generate-metadata f/my_space/flashy_script.py
+
+# push your changes to the Windmill workspace
+wmill sync push --raw
+```
+
+... and for flows:
+
+```bash
+# optional - create a new script using the CLI (can be done manually)
+wmill flow bootstrap f/my_space/groundbreaking_flow
+
+# edit the flow definition manually, or using the VSCode extension
+
+# push your changes to the Windmill workspace
+wmill sync push --raw
+```
+
+Lastly, it is possible to execute scripts locally and even plug them to any unit testing framework. More info on the [Run locally documentation page](/docs/advanced/local_development/run_locally)
+
+## Syncing workspace to Git repository
+
+It's very common to use version control when developing locally. Pushing changes from Git to Windmill can easily be achieved with a CI automation. For the other way around, Windmill pushing changes to the Git repo is also made easy with Windmill embedded Git integration (Enterprise Edition feature only).
+
+#### From Git to Windmill
+
+Git can deploy the changes pushed to a branch automatically to a Windmill workspace with a simple CI automation. This way, developers making changes locally using the process described above can simply commit and push to the Git repository, and not care about manually deploying their changes to Windmill.
+
+Here is the automation for Github Actions, but it is simple enough to easily be adapted for other CIs.
+
+```yaml
+name: 'Push main to Windmill workspace'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
+    # paths:
+    #   - wm/**
+
+env:
+  WMILL_URL: https://app.windmill.dev/
+  WMILL_WORKSPACE: github-sync-example-prod
+
+jobs:
+  sync:
+    environment: windmill
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      # (push will pull first to detect conflicts and only push actual changes)
+      - name: Push changes
+        run: |
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts sync push --yes --raw --skip-variables --skip-secrets --skip-resources
+```
+
+The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it. As mentioned above, we're using the `--raw` format here as `--stateful` sync is not needed, and we ignore variables, secrets and resources to avoid committing secrets to the repository. Feel free to adapt this to your use case.
+
+#### From Windmill to Git
+
+Windmill pushing changes to Git can be necessary when some users make changes to the workspace via Windmill's UI. In this case, Windmill will automatically commit the changes to the Git repository, keeping the two in perfect sync.
+
+To setup Windmill Git integration, see our dedicated page [here](../11_git_sync/index.mdx)
+
+:::info
+
+Windmill pushing changes to Git is an enterprise edition feature
+
+:::
+
+## Staging/Production deployment workflow
+
+:::info
+This is mostly for EE customers as it heavily leverages Windmill Git integration.
+:::
+
+To close the loop, all the above can be leveraged to achieve a simple yet robust automated Production deployment process.
+
+The goal is the following. Have a staging Windmill workspace on which you can quickly make changes and iterate with co-workers. Once you've reached a good state, you can deploy all your changes, all at once, to another Windmill workspace (the Production one) in a fully-automated fashion.
+
+The full setup is described in the [Deploy to Prod using a Git Workflow](/docs/advanced/deploy_gh_gl) documentation page.

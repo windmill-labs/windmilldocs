@@ -160,6 +160,7 @@ const sidebars = {
 							},
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
+								'apps/app_configuration_settings/agcharts',
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
@@ -175,6 +176,7 @@ const sidebars = {
 								'apps/app_configuration_settings/dropdown_menu',
 								'apps/app_configuration_settings/email_input',
 								'apps/app_configuration_settings/file_input',
+								'apps/app_configuration_settings/s3fileinput',
 								'apps/app_configuration_settings/flow_status',
 								'apps/app_configuration_settings/form_input',
 								'apps/app_configuration_settings/horizontal_split_panes',
@@ -276,7 +278,7 @@ const sidebars = {
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/collaboration/index',
-				'core_concepts/ai_generation/index',
+				'core_concepts/ai_generation/index'
 			],
 			collapsed: false
 		},
@@ -291,9 +293,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: [
-						'advanced/self_host/aws_ecs'
-					]
+					items: ['advanced/self_host/aws_ecs']
 				},
 				{
 					type: 'category',
@@ -345,7 +345,7 @@ const sidebars = {
 							id: 'advanced/git_sync/index',
 							label: 'Sync to Remote Git Repository'
 						},
-						'advanced/git_sync/cli_sync',
+						'advanced/git_sync/cli_sync'
 					]
 				},
 				{
@@ -355,10 +355,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/deploy_to_prod/index'
 					},
-					items: [
-						'advanced/deploy_gh_gl/index',
-						'core_concepts/staging_prod/index'
-					]
+					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index']
 				},
 				'advanced/preinstall_binaries/index',
 				{
@@ -390,15 +387,16 @@ const sidebars = {
 				'misc/plans_details/index',
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
-				'core_concepts/dedicated_workers/index',
 				'misc/worker_group_management_ui/index',
 				'core_concepts/concurrency_limits/index',
 				'misc/s3_cache/index',
+				'core_concepts/oidc/index',
+				'misc/saml_and_scim/index',
+				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
-				'misc/saml_and_scim/index',
 				'misc/react_sdk/index'
 			]
 		},
