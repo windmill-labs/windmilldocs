@@ -167,6 +167,7 @@ const sidebars = {
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',
 								'apps/app_configuration_settings/currency_input',
+								'apps/app_configuration_settings/database_studio',
 								'apps/app_configuration_settings/date_input',
 								'apps/app_configuration_settings/decision_tree',
 								'apps/app_configuration_settings/divider_x',
