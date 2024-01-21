@@ -13,7 +13,8 @@ const navigation = {
 	company: [
 		{ name: 'Team', href: '/team' },
 		{ name: 'Blog', href: '/blog' },
-		{ name: 'Brand', href: '/brand' }
+		{ name: 'Brand', href: '/brand' },
+		{ name: 'Changelog', href: '/changelog' }
 	],
 	legal: [
 		{ name: 'Privacy Policy', href: '/privacy_policy' },
@@ -39,7 +40,7 @@ const navigation = {
 		{ name: 'Windmill AI', href: '/windmill_ai' },
 		{ name: 'Supabase', href: '/integrations/supabase' },
 		{ name: 'Slack', href: '/integrations/slack' },
-		{ name: 'Stripe', href: '/integrations/stripe' },
+		{ name: 'Stripe', href: '/integrations/stripe' }
 	]
 };
 
@@ -73,7 +74,10 @@ export default function Footer() {
 						</div>
 						<div className="">
 							<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
-								<a href="/integrations" className="text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-200 hover:underline">
+								<a
+									href="/integrations"
+									className="text-gray-900 dark:text-gray-100 hover:text-gray-600 dark:hover:text-gray-200 hover:underline"
+								>
 									Integrations
 								</a>
 							</h3>
@@ -135,13 +139,22 @@ export default function Footer() {
 							</p>
 						</div>
 						<div className="social-icons flex justify-center space-x-4 mt-1 mb-1">
-							<a href="https://discord.com/invite/V7PM2YHsPB" className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2">
+							<a
+								href="https://discord.com/invite/V7PM2YHsPB"
+								className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+							>
 								<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
-							<a href="https://www.linkedin.com/company/windmill-dev/" className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2">
+							<a
+								href="https://www.linkedin.com/company/windmill-dev/"
+								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
+							>
 								<SiLinkedin className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
-							<a href="https://twitter.com/WindmillDev" className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2">
+							<a
+								href="https://twitter.com/WindmillDev"
+								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
+							>
 								<SiX className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
 						</div>
