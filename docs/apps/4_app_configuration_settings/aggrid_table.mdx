@@ -42,14 +42,16 @@ The following section details AgGrid Table component's specific settings. For mo
 
 ## AgGrid Table configuration
 
-| Name                       |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
-| -------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
-| Column Defs                | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
-| Flex                       | boolean |    false    |    false    |     true      | Allows you to distribute available space among multiple elements to control their relative sizes and positions. |
-| All Editable               | boolean |    false    |    false    |     false     | Whether you want all columns to be editable.                                                                    |
-| Multiple Selectable        | boolean |    false    |    false    |     false     | Make multiple rows selectable at once.                                                                          |
-| Row Multiselect With Click | boolean |    false    |    false    |     true      | If multiple selectable, allow multiselect with click.                                                           |
-| Pagination                 | boolean |    false    |    false    |     false     | Whether you want pages on your table.                                                                           |
+| Name                        |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
+| --------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
+| Column Defs                 | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
+| Flex                        | boolean |    false    |    false    |     true      | Allows you to distribute available space among multiple elements to control their relative sizes and positions. |
+| All Editable                | boolean |    false    |    false    |     false     | Whether you want all columns to be editable.                                                                    |
+| Multiple Selectable         | boolean |    false    |    false    |     false     | Make multiple rows selectable at once.                                                                          |
+| Row Multiselect With Click  | boolean |    false    |    false    |     true      | If multiple selectable, allow multiselect with click.                                                           |
+| Pagination                  | boolean |    false    |    false    |     false     | Whether you want pages on your table.                                                                           |
+| Select First Row By Default | boolean |    false    |    false    |     false     | Whether you want the first row to be selected by default.                                                       |
+| Extra Config                | object  |    true     |    false    |               | Extra configuration for the AgGrid table.                                                                       |
 
 ## Outputs
 
@@ -59,3 +61,6 @@ The following section details AgGrid Table component's specific settings. For mo
 | loading          | boolean | The loading state of the AgGrid table component |
 | selectedRow      | Object  | The selected row                                |
 | selectedRowIndex | number  | The selected row index                          |
+| selectedRows     |  Array  | The selected rows                               |
+| page             | number  | The current page                                |
+| newChanges       | Object  | The latest updated row                          |
