@@ -82,7 +82,8 @@ export default function Changelog() {
 					<meta name="title" content={currentChangelog.title} />
 					<meta property="og:title" content={currentChangelog.title} />
 					<meta property="og:description" content={currentChangelog.description} />
-					<meta property="og:image" content={currentChangelog.image} />
+					<meta property="og:image" content={window.location.origin + currentChangelog.image} />
+					<meta property="site_name" content="Windmill" />
 				</Head>
 				<LandingHeader />
 				<LandingSection bgClass="relative">
