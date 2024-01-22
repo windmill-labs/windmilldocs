@@ -15,7 +15,7 @@ export default function BlogLayout(props) {
 	return (
 		<Layout {...layoutProps}>
 			{!isBlogPostPageList && (
-				<div className={twMerge('w-full mx-auto', isChangelog ? 'max-w-5xl' : 'max-w-7xl ')}>
+				<div className={twMerge('w-full mx-auto', isChangelog ? 'max-w-6xl' : 'max-w-7xl ')}>
 					<div className="">
 						<div className="relative pt-16 pb-8 overflow-hidden">
 							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900 dark:from-blue-300 dark:to-blue-500">
@@ -60,7 +60,7 @@ export default function BlogLayout(props) {
 			<div
 				className={twMerge(
 					'container w-full mx-auto margin-vert--lg bg-transparent',
-					isChangelog ? 'max-w-5xl' : 'max-w-7xl'
+					isChangelog ? 'max-w-6xl' : 'max-w-7xl'
 				)}
 			>
 				<div className="row">
@@ -68,11 +68,15 @@ export default function BlogLayout(props) {
 					{toc && <div className="col col--2"></div>}
 
 					<main
-						className={clsx('col mt-12', {
-							'col--7': hasSidebar,
-							'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
-							'max-w-3xl mx-auto': !hasSidebar && isBlogPostPageList
-						})}
+						className={clsx(
+							'col',
+							{
+								'col--7': hasSidebar,
+								'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
+								'max-w-3xl mx-auto': !hasSidebar && isBlogPostPageList
+							},
+							isChangelog ? 'mt-0' : 'mt-12'
+						)}
 						itemScope
 						itemType="http://schema.org/Blog"
 					>

@@ -15,8 +15,8 @@ export default function BlogPostItemContainer({ children, className }) {
 
 	if (isChangelog) {
 		return (
-			<div className="w-max max-w-3xl">
-				<div className="flex flex-row gap-1 items-center mb-4">
+			<div className="w-full">
+				<div className="flex flex-row gap-2 items-center mb-4">
 					<h3 className="text-xl font-semibold text-gray-900 dark:text-white ">{metadata.title}</h3>
 					{metadata?.tags.map((tag) => (
 						<span
