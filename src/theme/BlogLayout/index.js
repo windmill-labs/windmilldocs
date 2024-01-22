@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
 import { twMerge } from 'tailwind-merge';
-//import Footer from './../../landing/Footer';
 
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;

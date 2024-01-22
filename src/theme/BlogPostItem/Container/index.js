@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
 import { Archive, Blocks, Sparkles } from 'lucide-react';
+import Head from '@docusaurus/Head';
 
 export default function BlogPostItemContainer({ children, className }) {
 	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
@@ -16,6 +17,16 @@ export default function BlogPostItemContainer({ children, className }) {
 	if (isChangelog) {
 		return (
 			<div className="w-full">
+				<Head>
+					<title>{metadata.title}</title>
+					<meta name="title" content={metadata.title} />
+					<meta property="og:title" content={metadata.title} />
+					<meta property="og:description" content={metadata.description} />
+					<meta property="og:image" content={metadata.image} />
+					<meta property="site_name" content="Windmill" />
+					<meta property="og:type" content="changelog" />
+					<meta property="og:url" content={window.location.href} />
+				</Head>
 				<div className="flex flex-row gap-2 items-center mb-4">
 					<h3 className="text-xl font-semibold text-gray-900 dark:text-white ">{metadata.title}</h3>
 					{metadata?.tags.map((tag) => (
