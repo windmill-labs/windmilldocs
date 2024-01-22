@@ -58,16 +58,32 @@ export default function Changelog() {
 		}
 	];
 
+	function getCurrentChangelog(changelogs) {
+		const hash = window.location.hash;
+
+		const changelogId = decodeURIComponent(hash.substring(1));
+
+		return changelogs.find((changelog) => changelog.date === changelogId);
+	}
+
+	const currentChangelog = getCurrentChangelog(changelogs);
+
+	useEffect(() => {
+		if (currentChangelog) {
+			// Set dynamic document title
+			document.title = currentChangelog.title;
+		}
+	}, [currentChangelog]);
+
 	return (
 		<LayoutProvider>
 			<main>
 				<Head>
-					<title>Changelog</title>
-					<meta name="title" content="Changelog" />
-					<meta
-						name="description"
-						content="We are a team commited to open source, with a strong will to improve internal tools for everyone."
-					/>
+					<title>{currentChangelog.title}</title>
+					<meta name="title" content={currentChangelog.title} />
+					<meta property="og:title" content={currentChangelog.title} />
+					<meta property="og:description" content={currentChangelog.description} />
+					<meta property="og:image" content={currentChangelog.image} />
 				</Head>
 				<LandingHeader />
 				<LandingSection bgClass="relative">
