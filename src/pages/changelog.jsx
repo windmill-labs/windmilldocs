@@ -66,11 +66,7 @@ export default function Changelog() {
 		return changelogs.find((changelog) => changelog.date === changelogId);
 	}
 
-	let currentChangelog = getCurrentChangelog(changelogs);
-
-	if (!currentChangelog) {
-		currentChangelog = changelogs[0];
-	}
+	let currentChangelog = getCurrentChangelog(changelogs) || changelogs[0];
 
 	useEffect(() => {
 		if (currentChangelog) {
