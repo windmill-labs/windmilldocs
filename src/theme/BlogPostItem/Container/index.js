@@ -22,7 +22,7 @@ export default function BlogPostItemContainer({ children, className }) {
 					<meta name="title" content={metadata.title} />
 					<meta property="og:title" content={metadata.title} />
 					<meta property="og:description" content={metadata.description} />
-					<meta property="og:image" content={metadata.image} />
+					<meta property="og:image" content={image} />
 					<meta property="site_name" content="Windmill" />
 					<meta property="og:type" content="changelog" />
 					<meta property="og:url" content={window.location.href} />
