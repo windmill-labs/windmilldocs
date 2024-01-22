@@ -45,7 +45,7 @@ export default function Changelog() {
 				<LandingSection bgClass="relative">
 					<div className="flex flex-col mt-12 max-w-3xl">
 						<h2 className="text-3xl font-extrabold text-white sm:text-4xl">Changelog</h2>
-						<p className="mt-3 text-xl text-gray-300 sm:mt-4">See what's new with Commit.</p>
+						<p className="mt-3 text-xl text-gray-300 sm:mt-4">See what's new with Windmill.</p>
 
 						<div className="max-w-3xl mx-auto divide-y-2 divide-gray-700">
 							{changelogs.map((changelog, idx) => (
