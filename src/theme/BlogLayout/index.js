@@ -58,8 +58,8 @@ export default function BlogLayout(props) {
 			)}
 			<div
 				className={twMerge(
-					'container w-full mx-auto margin-vert--lg bg-transparent',
-					isChangelog ? 'max-w-6xl' : 'max-w-7xl'
+					' w-full mx-auto margin-vert--lg bg-transparent',
+					isChangelog ? 'max-w-6xl  px-4' : 'max-w-7xl container'
 				)}
 			>
 				<div className="row">
