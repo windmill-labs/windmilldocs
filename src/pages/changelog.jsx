@@ -37,7 +37,7 @@ export default function Changelog() {
 				'Support for markdown'
 			],
 			image: '/images/changelog/2024-01-21.png',
-			badge: 'App',
+			badge: 'Script',
 			improvements: [],
 			deprecations: [],
 			date: '2024-01-21'
