@@ -35,7 +35,7 @@ For the Git repo to be representative of the entire workspace, it is recommended
 Run the following commands from the git repo folder to push the initial workspace content to the remote:
 
 ```bash
-> echo 'u/' > .wmillignore
+> echo 'includes: ["f/**"]' > wmill.yaml
 > wmill sync pull --raw --skip-variables --skip-secrets --skip-resources
 > git add -A
 > git commit -m 'Initial commit'
