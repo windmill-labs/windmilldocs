@@ -2,6 +2,7 @@ import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
+import { twMerge } from 'tailwind-merge';
 //import Footer from './../../landing/Footer';
 
 export default function BlogLayout(props) {
@@ -9,18 +10,21 @@ export default function BlogLayout(props) {
 	const hasSidebar = sidebar && sidebar.items.length > 0;
 
 	const isBlogPostPageList = Boolean(toc);
+	const isChangelog = window.location.pathname.includes('/changelog');
 
 	return (
 		<Layout {...layoutProps}>
 			{!isBlogPostPageList && (
-				<div className="max-w-7xl w-full mx-auto">
+				<div className={twMerge('w-full mx-auto', isChangelog ? 'max-w-5xl' : 'max-w-7xl ')}>
 					<div className="">
 						<div className="relative pt-16 pb-8 overflow-hidden">
 							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900 dark:from-blue-300 dark:to-blue-500">
-								Blog
+								{isChangelog ? 'Changelog' : 'Blog'}
 							</h1>
 							<p className="mt-4 text-lg leading-8 container">
-								Discover the latest news, updates, and articles from the team and community.
+								{isChangelog
+									? "See what's new with Windmill."
+									: 'Discover the latest news, updates, and articles from the team and community.'}
 							</p>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +57,12 @@ export default function BlogLayout(props) {
 					</div>
 				</div>
 			)}
-			<div className="container max-w-7xl w-full mx-auto margin-vert--lg bg-transparent">
+			<div
+				className={twMerge(
+					'container w-full mx-auto margin-vert--lg bg-transparent',
+					isChangelog ? 'max-w-5xl' : 'max-w-7xl'
+				)}
+			>
 				<div className="row">
 					<BlogSidebar sidebar={sidebar} />
 					{toc && <div className="col col--2"></div>}

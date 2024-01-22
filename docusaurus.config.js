@@ -46,7 +46,15 @@ const config = {
 				]
 			}
 		],
-		['docusaurus-plugin-image-zoom', {}]
+		['docusaurus-plugin-image-zoom', {}],
+		[
+			'@docusaurus/plugin-content-blog',
+			{
+				id: 'changelog',
+				routeBasePath: 'changelog',
+				path: './changelog'
+			}
+		]
 	],
 	presets: [
 		[

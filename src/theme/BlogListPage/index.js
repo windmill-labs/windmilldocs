@@ -26,9 +26,17 @@ function BlogListPageMetadata(props) {
 function BlogListPageContent(props) {
 	const { metadata, items, sidebar } = props;
 
+	const isChangelog = window.location.pathname.includes('/changelog');
+
 	return (
 		<BlogLayout sidebar={sidebar}>
-			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div
+				className={
+					isChangelog
+						? 'flex flex-col gap-16'
+						: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+				}
+			>
 				<BlogPostItems items={items} />
 			</div>
 
