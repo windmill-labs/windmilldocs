@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from '@docusaurus/Head';
 import LayoutProvider from '@theme/Layout/Provider';
 import LandingSection from '../landing/LandingSection';
