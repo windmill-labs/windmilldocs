@@ -29,9 +29,9 @@ export default function BlogPostItemContainer({ children, className }) {
 				</Head>
 				<div className="flex flex-row gap-2 items-center mb-4">
 					<h3 className="text-xl font-semibold text-gray-900 dark:text-white ">{metadata.title}</h3>
-					{metadata?.tags.map((tag) => (
+					{metadata?.tags.map((tag, index) => (
 						<span
-							key={tag}
+							key={tag + index}
 							className={
 								'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium ' +
 								(tag.label === 'App'
@@ -66,7 +66,7 @@ export default function BlogPostItemContainer({ children, className }) {
 						</h4>
 						<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
 							{frontMatter?.improvements.map((improvement, idx) => (
-								<li key={idx} className="list-disc">
+								<li key={idx + 'improvements'} className="list-disc">
 									{improvement}
 								</li>
 							))}
@@ -81,7 +81,7 @@ export default function BlogPostItemContainer({ children, className }) {
 						</h4>
 						<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
 							{frontMatter?.features.map((newFeature, idx) => (
-								<li key={idx} className="list-disc">
+								<li key={idx + 'features'} className="list-disc">
 									{newFeature}
 								</li>
 							))}
@@ -96,7 +96,7 @@ export default function BlogPostItemContainer({ children, className }) {
 						</h4>
 						<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
 							{frontMatter?.deprecations.map((deprecation, idx) => (
-								<li key={idx} className="list-disc">
+								<li key={idx + 'deprecations'} className="list-disc">
 									{deprecation}
 								</li>
 							))}
