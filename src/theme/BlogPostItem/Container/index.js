@@ -6,6 +6,7 @@ import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
 import { Archive, Blocks, Sparkles } from 'lucide-react';
 import Head from '@docusaurus/Head';
+import { twMerge } from 'tailwind-merge';
 
 export default function BlogPostItemContainer({ children, className }) {
 	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
@@ -44,6 +45,14 @@ export default function BlogPostItemContainer({ children, className }) {
 							{tag.label}
 						</span>
 					))}
+					<span
+						className={twMerge(
+							'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium',
+							'bg-gray-100 text-gray-800'
+						)}
+					>
+						{frontMatter.version}
+					</span>
 				</div>
 
 				<div className="mb-6">

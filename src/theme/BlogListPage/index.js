@@ -24,75 +24,59 @@ function BlogListPageMetadata(props) {
 }
 
 function Sidebar({ items }) {
-	const [groupType, setGroupType] = React.useState('version');
+	// Get the current month and year
+	const currentDate = new Date();
+	const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
+	const currentYear = currentDate.getFullYear();
+	const currentMonthYear = `${currentMonth} ${currentYear}`;
 
-	// group items by version
-	const groupedItems =
-		groupType === 'version'
-			? items.reduce((acc, item) => {
-					const version = item.content.frontMatter.version;
-					if (!acc[version]) {
-						acc[version] = [];
-					}
-					acc[version].push(item);
-					return acc;
-			  }, {})
-			: items.reduce((acc, item) => {
-					const date = new Date(item.content.metadata.date);
-					const month = date.toLocaleString('default', { month: 'long' });
-					const year = date.getFullYear();
-					const dateStr = `${month} ${year}`;
-					if (!acc[dateStr]) {
-						acc[dateStr] = [];
-					}
-					acc[dateStr].push(item);
-					return acc;
-			  }, {});
+	// Group items by month and find the latest version for each month
+	const groupedItems = items.reduce((acc, item) => {
+		const date = new Date(item.content.metadata.date);
+		const month = date.toLocaleString('default', { month: 'long' });
+		const year = date.getFullYear();
+		const dateStr = `${month} ${year}`;
+
+		if (!acc[dateStr]) {
+			acc[dateStr] = { items: [], latestVersion: '' };
+		}
+
+		acc[dateStr].items.push(item);
+
+		// Update latest version if needed
+		const version = item.content.frontMatter.version;
+		if (
+			dateStr !== currentMonthYear &&
+			(!acc[dateStr].latestVersion || acc[dateStr].latestVersion < version)
+		) {
+			acc[dateStr].latestVersion = version;
+		}
+
+		return acc;
+	}, {});
 
 	return (
-		<div className="flex flex-col gap-4 w-96">
-			<div className="flex flex-row gap-2">
-				<button
-					className={clsx(
-						'px-2 py-1 rounded-md text-xs font-medium ',
-						groupType === 'version'
-							? 'bg-gray-900 text-white'
-							: 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
-					)}
-					onClick={() => setGroupType('version')}
-				>
-					By Version
-				</button>
-				<button
-					className={clsx(
-						'px-2 py-1 rounded-md text-xs font-medium ',
-						groupType === 'month'
-							? 'bg-gray-900 text-white'
-							: 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-100'
-					)}
-					onClick={() => setGroupType('month')}
-				>
-					By month
-				</button>
-			</div>
+		<div className="flex flex-col gap-4 max-w-sm w-full">
+			{Object.keys(groupedItems).map((dateStr) => {
+				const isCurrentMonth = dateStr === currentMonthYear;
+				const header = isCurrentMonth
+					? dateStr
+					: `${dateStr} - ${groupedItems[dateStr].latestVersion}`;
 
-			{Object.keys(groupedItems).map((version) => {
 				return (
-					<div key={version}>
-						<h3 className="text-lg font-bold">{version}</h3>
+					<div key={dateStr}>
+						<h3 className="text-lg font-bold">{header}</h3>
 						<ul className="flex flex-col gap-2">
-							{groupedItems[version].map((item) => {
-								return (
-									<li key={item.content.metadata.permalink}>
-										<a
-											href={item.content.metadata.permalink}
-											className="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
-										>
-											{item.content.frontMatter.title}
-										</a>
-									</li>
-								);
-							})}
+							{groupedItems[dateStr].items.map((item) => (
+								<li key={item.content.metadata.permalink}>
+									<a
+										href={item.content.metadata.permalink}
+										className="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300"
+									>
+										{item.content.frontMatter.title}
+									</a>
+								</li>
+							))}
 						</ul>
 					</div>
 				);
