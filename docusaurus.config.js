@@ -139,6 +139,11 @@ const config = {
 						position: 'left',
 						label: 'Blog'
 					},
+					{
+						href: '/changelog',
+						position: 'left',
+						label: 'Changelog'
+					},
 					// {
 					// 	href: '/hiring',
 					// 	position: 'right',
