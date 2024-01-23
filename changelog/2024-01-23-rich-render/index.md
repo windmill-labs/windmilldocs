@@ -1,5 +1,6 @@
 ---
 slug: rich-render
+version: v1.251.1
 title: Rich results render
 tags: ['Windmill', 'Script']
 image: ./rich-render.png

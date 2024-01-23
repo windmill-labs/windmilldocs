@@ -52,7 +52,8 @@ const config = {
 			{
 				id: 'changelog',
 				routeBasePath: 'changelog',
-				path: './changelog'
+				path: './changelog',
+				blogSidebarCount: 0
 			}
 		]
 	],
@@ -70,6 +71,7 @@ const config = {
 					blogSidebarCount: 0,
 					postsPerPage: 9
 				},
+
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
 				},

@@ -1,5 +1,6 @@
 ---
 slug: ag-charts
+version: v1.251
 title: Ag Charts
 tags: ['Windmill', 'App', 'Postgres']
 image: ./ag-charts.png

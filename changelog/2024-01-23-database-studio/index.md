@@ -1,5 +1,6 @@
 ---
 slug: database-studio
+version: v1.251.1
 title: Database Studio
 tags: ['Windmill', 'App', 'Postgres']
 image: ./database-studio.png
