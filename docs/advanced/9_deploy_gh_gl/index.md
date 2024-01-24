@@ -26,7 +26,6 @@ This gives the flexibility to fully test new Windmill scripts, flows and apps, w
 :::tip
 
 Check out the [windmill-sync-example repository](https://github.com/windmill-labs/windmill-sync-example) as an illustration of this process.
-
 :::
 
 This process can be used in particular for local development with a solid setup:
@@ -53,6 +52,8 @@ From the workspace settings, you can set a [git_repository](../../integrations/g
 
 Note: this is the detailed setup steps for a [GitHub](https://github.com/) repository. It will need to be adapted for [GitLab](https://about.gitlab.com/).
 
+The Video below show a simplified setup, see the steps below it for the full setup.
+
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
@@ -68,8 +69,14 @@ If you are not using the EE version of Windmill, you can still follow the parts 
 :::
 
 :::tip
-
 The guide covers a staging and prod setup. To add an additional dev environment, simply consider staging to be the target of the dev workspace and prod to be the target of the staging workspace..
+:::
+
+:::tip
+What about variables, resources and secrets?
+
+The CLI is able to sync variables, resources and secrets as well. However, everywhere the CLI is used here, it it set with the flags `--skip-variables --skip-secrets --skip-resources` to avoid syncing them. This is because variables, resources and secrets should have values that are specific to each environment. For instance, a resource named `f/myproject/myimportantdb` should have a different value in staging and prod. This is why they are not synced and should be set manually in each environment. You can however if you prefer, manually sync those. Do note that secrets have an additional layer of encryption and are by default exported in their encrypted form whose decryption key is workspace specific. To sync them between workspace, use `--plain-secrets` to export them in plain text.
+
 :::
 
 ### GitHub repository setup
@@ -111,6 +118,45 @@ First, the GitHub repo needs to be set up and Windmill needs to be able to commi
 
 ![Github Actions](gh_actions.png)
 
+Here is the automation for Github Actions, but it is simple enough to easily be adapted for other CIs.
+
+```yaml
+name: 'Push main to Windmill workspace'
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
+    # paths:
+    #   - wm/**
+
+env:
+  WMILL_URL: https://app.windmill.dev/
+  WMILL_WORKSPACE: github-sync-example-prod
+
+jobs:
+  sync:
+    environment: windmill
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      # (push will pull first to detect conflicts and only push actual changes)
+      - name: Push changes
+        run: |
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
+          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts sync push --yes --raw --skip-variables --skip-secrets --skip-resources
+```
+
+The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it. As mentioned above, we're using the `--raw` format here as `--stateful` sync is not needed, and we ignore variables, secrets and resources to avoid committing secrets to the repository. Feel free to adapt this to your use case.
+
 ### Windmill Github Sync setup
 
 1. **staging** workspace:
@@ -126,6 +172,8 @@ First, the GitHub repo needs to be set up and Windmill needs to be able to commi
    1. In Windmill, create a [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) resource pointing to the GitHub repository and containing the token generated previously. You URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`. Set the branch to main
 
    ![Prod setup](prod.png)
+
+See our dedicated page [here](../11_git_sync/index.mdx)
 
 ### Testing
 
