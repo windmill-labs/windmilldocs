@@ -6,16 +6,10 @@ Windmill integration with Git repositories makes it possible to adopt a robust d
 
 This feature can be referred as [Git Sync](../11_git_sync/index.mdx) - Item mode.
 
-:::tip Deploy to prod
-
-For all details on Deployments to Prods, see [Deploy to Prod](../../advanced/12_deploy_to_prod/index.mdx).
-
-:::
-
 The process is as follows:
 
-- Users iterate and make their changes in a "staging" Windmill workspace.
-- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI), Windmill automatically commits it to this repo and creates one branch per app/flow/script.
+- Users iterate and make their changes in the "staging" Windmill workspace UI or in the staging branch directly.
+- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the github action that deploys to staging upon any change), Windmill automatically commits it to this repo and creates one branch per app/flow/script.
 - On every commit from Windmill, PRs are automatically created via a [GitHub Action](https://docs.github.com/en/actions). Approved GitHub users can review and merge those PRs.
 - Every time a PR is merged, another GitHub Action automatically deploys the change to a "production" Windmill workspace.
 

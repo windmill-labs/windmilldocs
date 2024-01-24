@@ -1,4 +1,4 @@
-# Deploy to Staging/Prod Web UI
+# Deploy to Prod using the UI
 
 From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Enterprise Edition](../../misc/7_plans_details/index.mdx) only.
 
