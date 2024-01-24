@@ -46,7 +46,16 @@ const config = {
 				]
 			}
 		],
-		['docusaurus-plugin-image-zoom', {}]
+		['docusaurus-plugin-image-zoom', {}],
+		[
+			'@docusaurus/plugin-content-blog',
+			{
+				id: 'changelog',
+				routeBasePath: 'changelog',
+				path: './changelog',
+				blogSidebarCount: 0
+			}
+		]
 	],
 	presets: [
 		[
@@ -62,6 +71,7 @@ const config = {
 					blogSidebarCount: 0,
 					postsPerPage: 9
 				},
+
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
 				},
@@ -128,6 +138,11 @@ const config = {
 						href: '/blog',
 						position: 'left',
 						label: 'Blog'
+					},
+					{
+						href: '/changelog',
+						position: 'left',
+						label: 'Changelog'
 					},
 					// {
 					// 	href: '/hiring',

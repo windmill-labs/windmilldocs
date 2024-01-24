@@ -576,7 +576,7 @@ const examples = [
 						Zendesk
 					</mark>
 				</a>{' '}
-				, use a for lopp to translate each one with{' '}
+				, use a for loop to translate each one with{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/openai"
 					target="_blank"

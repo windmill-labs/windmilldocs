@@ -4,12 +4,117 @@ import { useBlogPost } from '@docusaurus/theme-common/internal';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
+import { Archive, Blocks, Sparkles } from 'lucide-react';
+import Head from '@docusaurus/Head';
+import { twMerge } from 'tailwind-merge';
 
 export default function BlogPostItemContainer({ children, className }) {
 	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
 	const { withBaseUrl } = useBaseUrlUtils();
 	const image = assets.image ?? frontMatter.image;
 
+	const isChangelog = window.location.pathname.includes('/changelog');
+
+	if (isChangelog) {
+		return (
+			<div className="w-full">
+				<Head>
+					<title>{metadata.title}</title>
+					<meta name="title" content={metadata.title} />
+					<meta property="og:title" content={metadata.title} />
+					<meta property="og:description" content={metadata.description} />
+					<meta property="og:image" content={image} />
+					<meta property="site_name" content="Windmill" />
+					<meta property="og:type" content="changelog" />
+					<meta property="og:url" content={window.location.href} />
+				</Head>
+				<div className="flex flex-row gap-2 items-center mb-4">
+					<h3 className="text-xl font-semibold text-gray-900 dark:text-white ">{metadata.title}</h3>
+					{metadata?.tags.map((tag, index) => (
+						<span
+							key={tag + index}
+							className={
+								'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium ' +
+								(tag.label === 'App'
+									? 'bg-orange-100 text-orange-800'
+									: tag.label === 'Flow'
+									? 'bg-emerald-100 text-emerald-800'
+									: 'bg-blue-100 text-blue-800')
+							}
+						>
+							{tag.label}
+						</span>
+					))}
+					<span
+						className={twMerge(
+							'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium',
+							'bg-gray-100 text-gray-800'
+						)}
+					>
+						{frontMatter.version}
+					</span>
+				</div>
+
+				<div className="mb-6">
+					<p className="text-base dark:text-gray-300 text-gray-600">
+						{new Date(metadata.date).toLocaleDateString()}
+					</p>
+				</div>
+				<img
+					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
+					src={image}
+					alt=""
+				/>
+				<p className="text-base dark:text-gray-200 text-gray-600">{metadata.description}</p>
+
+				{frontMatter?.improvements?.length > 0 && (
+					<div className="mt-6">
+						<h4 className="text-lg font-medium text-gray-900 dark:text-white flex flex-row gap-1 items-center">
+							<Sparkles className="inline-block w-6 h-6 mr-2" />
+							Improvements
+						</h4>
+						<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
+							{frontMatter?.improvements.map((improvement, idx) => (
+								<li key={idx + 'improvements'} className="list-disc">
+									{improvement}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+				{frontMatter?.features?.length > 0 && (
+					<div className="mt-6">
+						<h4 className="text-lg font-medium text-gray-900 dark:text-white flex flex-row gap-1 items-center">
+							<Blocks className="inline-block w-6 h-6 mr-2" />
+							New Features
+						</h4>
+						<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
+							{frontMatter?.features.map((newFeature, idx) => (
+								<li key={idx + 'features'} className="list-disc">
+									{newFeature}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+				{frontMatter?.deprecations?.length > 0 && (
+					<div className="mt-6">
+						<h4 className="text-lg font-medium text-gray-900 dark:text-white flex flex-row gap-1 items-center">
+							<Archive className="inline-block w-6 h-6 mr-2" />
+							Deprecations
+						</h4>
+						<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
+							{frontMatter?.deprecations.map((deprecation, idx) => (
+								<li key={idx + 'deprecations'} className="list-disc">
+									{deprecation}
+								</li>
+							))}
+						</ul>
+					</div>
+				)}
+			</div>
+		);
+	}
 	return (
 		<article
 			className={clsx(className, {
