@@ -1,4 +1,3 @@
-
 import DocCard from '@site/src/components/DocCard';
 
 # Text
@@ -10,18 +9,18 @@ The text component allows you to display text.
 The following section details Text component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
 <div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        color="orange"
-        title="App Editor Documentation"
-        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
-        href="/docs/apps/app_editor"
-    />
-    <DocCard
-        color="orange"
-        title="Apps Quickstart"
-        description="Learn how to build your first app in a matter of minutes."
-        href="/docs/getting_started/apps_quickstart"
-    />
+	<DocCard
+		color="orange"
+		title="App Editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
 </div>
 
 ## Text Input
@@ -32,10 +31,11 @@ The following section details Text component's specific settings. For more detai
 
 ## Text configuration
 
-| Name        |                      Type                      | Connectable | Templatable | Default | Description                                                     |
-| ----------- | :--------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
-| style       | 'title', 'subtitle', 'body', 'label','caption' |    false    |    false    | 'body'  | The text style.                                                 |
-| Extra Style |                     string                     |    false    |    false    |         | Extra style to apply to the text: CSS rules like "color: blue;" |
+| Name        |                      Type                      | Connectable | Templatable | Default | Description                       |
+| ----------- | :--------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------- |
+| style       | 'title', 'subtitle', 'body', 'label','caption' |    false    |    false    | 'body'  | The text style.                   |
+| Copy button |                    boolean                     |    false    |    false    |  false  | Whether to display a copy button. |
+| Tooltip     |                    boolean                     |    false    |    false    |  false  | Whether to display a tooltip.     |
 
 ## Outputs
 
@@ -49,8 +49,8 @@ The following section details Text component's specific settings. For more detai
 You can directly edit the text by click the `Pen` icon on the app editor. You can also double click on the text to edit it.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/text_editor.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/text_editor.mp4"
 />
