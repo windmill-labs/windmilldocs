@@ -2,16 +2,24 @@ import DocCard from '@site/src/components/DocCard';
 
 # Deploy to Prod using a Git Workflow
 
-Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps.
+The integration with git works in three-folds:
 
-This feature can be referred as [Git Sync](../11_git_sync/index.mdx) - Item mode.
+1. Github Action + CLI: upon any commit to a particular branch, the Github action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push --raw` (non-EE)
+2. Git Sync (Workspace mode): Windmill automatically committing to a git repository upon any deploy to a workspace, this works using the CLI doing `wmill sync pull --raw` (EE). Having it commit back to windmill has 2 benefits:
 
-The process is as follows:
+- It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance)
+- It ensures that any modification done in the UI is kept in sync with the git repository and guarantees a bi-sync between the repo and the UI
 
-- Users iterate and make their changes in the "staging" Windmill workspace UI or in the staging branch directly.
-- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the github action that deploys to staging upon any change), Windmill automatically commits it to this repo and creates one branch per app/flow/script.
-- On every commit from Windmill, PRs are automatically created via a [GitHub Action](https://docs.github.com/en/actions). Approved GitHub users can review and merge those PRs.
+3. Git Sync (Item mode): Windmill automatically create a branch specific to that item (and whose name is derived from that item) that targets the branch set in the git sync settings, upon any change to any items, be it from the UI or from git (EE). This should be coupled with a Github action that automatically create a PR when a branch is created. This PR can then be reviewed and merged. Upon being merged to the prod branch, a Github action as described in 1. would then deploy it to the prod branch.
+
+Once everything is setup, the process is as follows:
+
+- Users iterate and make their changes in the "staging" Windmill workspace UI or in the git staging branch directly.
+- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the github action that deploys to staging upon any change), Windmill automatically sync it back to the repo on the "staging" branch (Git Sync - Workspace mode) and also create a branch that targets prod and keep it in sync with any new changes (Git Sync - Item mode)
+- On every new branch created, PRs are automatically created via a [GitHub Action](https://docs.github.com/en/actions). Approved GitHub users can review and merge those PRs.
 - Every time a PR is merged, another GitHub Action automatically deploys the change to a "production" Windmill workspace.
+
+Note that although the CLI is used by both the GitHub Action and the Git Sync, the CLI does not need to be used directly by any users and everything happen behind the scene in an automated way.
 
 This gives the flexibility to fully test new Windmill scripts, flows and apps, while having them [version-controlled](../13_version_control/index.mdx) and deployed in an automated way to the production environment.
 
@@ -41,7 +49,7 @@ Deploying to a prod workspace using git requires the [Git Sync](../11_git_sync/i
 
 From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
 
-## Setup
+## Setup the full Git workflow
 
 Note: this is the detailed setup steps for a [GitHub](https://github.com/) repository. It will need to be adapted for [GitLab](https://about.gitlab.com/).
 
@@ -54,6 +62,15 @@ Note: this is the detailed setup steps for a [GitHub](https://github.com/) repos
 	allowFullScreen
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
+
+:::warning
+If you are not using the EE version of Windmill, you can still follow the parts of this guide that do not involve Git Sync.
+:::
+
+:::tip
+
+The guide covers a staging and prod setup. To add an additional dev environment, simply consider staging to be the target of the dev workspace and prod to be the target of the staging workspace..
+:::
 
 ### GitHub repository setup
 
