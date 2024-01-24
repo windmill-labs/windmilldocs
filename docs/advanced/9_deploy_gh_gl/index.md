@@ -88,12 +88,17 @@ First, the GitHub repo needs to be set up and Windmill needs to be able to commi
 1. The first one to automatically create a PR when Windmill commits a change after a user deployed a script/flow/app in the staging workspace. The workflow file is available in [the example repo](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/open-pr-on-commit.yaml). All branches created by Windmill will have a `wm_deploy/` prefix, which is handy to trigger this action only when a branch matching this pattern is created.
 1. The second one to automatically push the content of the repo to the Windmill prod workspace when a PR is merged. The workflow file is available in [the example repo](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml). This action uses the wmill itself with `wmill sync push --raw`.
    For this action to work, you need to set the following secrets in the repo Settings > "Secret and Variable" > "Actions":
+
    - `WMILL_TOKEN`: the token generated previously in Windmill
 
-2 other variables need to be set in the github action workflow file:
+   2 other variables need to be set in the github action workflow file:
 
-- `WMILL_WORKSPACE`: the name of the workspace
-- `WMILL_URL`: the base URL of the Windmill instance (e.g. `https://app.windmill.dev/`)
+   - `WMILL_WORKSPACE`: the name of the workspace
+   - `WMILL_URL`: the base URL of the Windmill instance (e.g. `https://app.windmill.dev/`)
+
+1. Copy the previous github action/workflow file but now set the `WMILL_WORKSPACE` variable to the id of the staging workspace and the `WMILL_URL` variable to the base URL of the Windmill instance if different than the one for prod. Also changes the trigger to listen to the branches: 'staging'.
+
+![Github Actions](gh_actions.png)
 
 ### Windmill Github Sync setup
 
