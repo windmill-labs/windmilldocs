@@ -24,9 +24,9 @@ There are 4 kinds of persistent storage in Windmill:
 
 1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-2. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
+2. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
 
-3. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
+3. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
 4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
 
@@ -186,98 +186,11 @@ Keep in mind that the contents of the `./shared` folder are not preserved across
 
 :::
 
-## Structured Databases: Postgres (Supabase, Neon.tech)
-
-For Postgres databases (best for structured data storage and retrieval, where you can define schema and relationships between entities), we recommend using Supabase or Neon.tech.
-
-### Supabase
-
-[Supabase](https://supabase.com/) is an open-source alternative to Firebase, providing a backend-as-a-service platform that offers a suite of tools, including real-time subscriptions, authentication, storage, and a PostgreSQL-based database.
-
-1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
-
-2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
-
-3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
-
-   - Go to the `Settings` section.
-   - Click `Database`.
-   - Find your Connection Info and Connection String. Direct connections are on port 5432.
-
-4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the `sslmode` to "disable".
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/supabase_postgres_integration.mp4"
-/>
-
-<br />
-
-You can also integrate Supabase [directly through its API](../../integrations/supabase.md#through-supabase-api).
-
-:::tip
-
-You can find examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
-
-<br />
-
-More tutorials on Supabase:
-
-- [How to Send Database Events From Supabase to Windmill](/blog/database-events-from-supabase-to-windmill)
-- [Create an E-commerce backoffice](../../apps/7_app_e-commerce.md)
-- [Create an Issue Tracker App with Supabase in 15 Minutes](/blog/create-issue-tracker-in-15-minutes)
-- [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](/blog/create-issue-tracker-part-2)
-- [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
-
-:::
-
-### Neon.tech
-
-[Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.
-
-1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" >Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
-
-2. [Set up a project and add data](https://neon.tech/docs/manage/projects).
-
-3. Get a [Connection string](https://neon.tech/docs/connect/query-with-psql-editor). You can obtain it connection string from the Connection Details widget on the Neon Dashboard: select a branch, a role, and the database you want to connect to and a connection string will be constructed for you.
-
-4. From Windmill, add your Neon.tech connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/neon_integration.mp4"
-/>
-
-<br />
-
-:::tip
-
-Adding the connection string as a Postgres resource requires to parse it.
-
-<br />
-
-For example, for `psql postgres://daniel:<password>@ep-restless-rice.us-east-2.aws.neon.tech/neondb`, that would be:
-
-```json
-{
-	"host": "ep-restless-rice.us-east-2.aws.neon.tech",
-	"port": 5432,
-	"user": "daniel",
-	"dbname": "neondb",
-	"sslmode": "require",
-	"password": "<password>"
-}
-```
-
-Where the sslmode should be "require" and Neon uses the default PostgreSQL port, `5432`.
-
-:::
-
 ## Large Data Files: S3, R2, MinIO
 
 On heavier data objects & unstructured data storage, Amazon S3 (Simple Storage Service) and its alternatives Cloudflare R2 and MinIO are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
+
+Windmill comes with a native integration with S3, making it the recommended storage for large objects like files and binary data.
 
 ### Use Amazon S3, R2 and MinIO directly
 
@@ -326,6 +239,12 @@ For best performance, [install MinIO locally](https://min.io/docs/minio/kubernet
 [MinIO](https://min.io/) is an open-source, high-performance, and scalable object storage server that is compatible with Amazon S3 APIs, designed for building private and public cloud storage solutions.
 
 Then from Windmill, just [fill the S3 resource type](../../integrations/s3.md).
+
+### Connect your Windmill workspace to your S3 bucket
+
+Once you've created an S3 resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+
+From there, Windmill makes it easy to interact with S3 objects directly from scripts.
 
 #### Windmill code snippets
 
@@ -543,6 +462,95 @@ For more info, see our page dedicated to Data Pipelines in Windmill:
 		href="/docs/core_concepts/data_pipelines"
 	/>
 </div>
+
+## Structured Databases: Postgres (Supabase, Neon.tech)
+
+For Postgres databases (best for structured data storage and retrieval, where you can define schema and relationships between entities), we recommend using Supabase or Neon.tech.
+
+### Supabase
+
+[Supabase](https://supabase.com/) is an open-source alternative to Firebase, providing a backend-as-a-service platform that offers a suite of tools, including real-time subscriptions, authentication, storage, and a PostgreSQL-based database.
+
+1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
+
+2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
+
+3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
+
+   - Go to the `Settings` section.
+   - Click `Database`.
+   - Find your Connection Info and Connection String. Direct connections are on port 5432.
+
+4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the `sslmode` to "disable".
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/supabase_postgres_integration.mp4"
+/>
+
+<br />
+
+You can also integrate Supabase [directly through its API](../../integrations/supabase.md#through-supabase-api).
+
+:::tip
+
+You can find examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
+
+<br />
+
+More tutorials on Supabase:
+
+- [How to Send Database Events From Supabase to Windmill](/blog/database-events-from-supabase-to-windmill)
+- [Create an E-commerce backoffice](../../apps/7_app_e-commerce.md)
+- [Create an Issue Tracker App with Supabase in 15 Minutes](/blog/create-issue-tracker-in-15-minutes)
+- [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](/blog/create-issue-tracker-part-2)
+- [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
+
+:::
+
+### Neon.tech
+
+[Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.
+
+1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" >Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
+
+2. [Set up a project and add data](https://neon.tech/docs/manage/projects).
+
+3. Get a [Connection string](https://neon.tech/docs/connect/query-with-psql-editor). You can obtain it connection string from the Connection Details widget on the Neon Dashboard: select a branch, a role, and the database you want to connect to and a connection string will be constructed for you.
+
+4. From Windmill, add your Neon.tech connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/neon_integration.mp4"
+/>
+
+<br />
+
+:::tip
+
+Adding the connection string as a Postgres resource requires to parse it.
+
+<br />
+
+For example, for `psql postgres://daniel:<password>@ep-restless-rice.us-east-2.aws.neon.tech/neondb`, that would be:
+
+```json
+{
+	"host": "ep-restless-rice.us-east-2.aws.neon.tech",
+	"port": 5432,
+	"user": "daniel",
+	"dbname": "neondb",
+	"sslmode": "require",
+	"password": "<password>"
+}
+```
+
+Where the sslmode should be "require" and Neon uses the default PostgreSQL port, `5432`.
+
+:::
 
 ## Key-Value Stores: MongoDB Atlas, Redis, Upstash
 
