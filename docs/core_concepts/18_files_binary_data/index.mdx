@@ -151,6 +151,10 @@ def main(s3_file_path: str):
 
 ![Write to S3 file](./s3_file_output.png)
 
+:::info
+Certain file types, typically parquet files, can be directly rendered by Windmill
+:::
+
 #### Windmill embedded integration with Polars and DuckDB for data pipelines
 
 ETL can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
