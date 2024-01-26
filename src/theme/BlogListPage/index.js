@@ -99,13 +99,16 @@ function BlogListPageContent(props) {
 						: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
 				}
 			>
-				<div className={isChangelog ? 'flex flex-row gap-2' : ''}>
-					{isChangelog && <Sidebar items={items} />}
-
-					<div class="flex flex-col gap-16">
-						<BlogPostItems items={items} />
+				{isChangelog ? (
+					<div className="flex flex-row gap-2">
+						<Sidebar items={items} />
+						<div class="flex flex-col gap-16">
+							<BlogPostItems items={items} />
+						</div>
 					</div>
-				</div>
+				) : (
+					<BlogPostItems items={items} />
+				)}
 			</div>
 
 			<BlogListPaginator metadata={metadata} />
