@@ -244,224 +244,24 @@ Then from Windmill, just [fill the S3 resource type](../../integrations/s3.md).
 
 Once you've created an S3 resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
-From there, Windmill makes it easy to interact with S3 objects directly from scripts.
+![S3 storage workspace settings](./workspace_settings.png)
 
-#### Windmill code snippets
+The resource can be set to be public. In this case, the permissions set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
+When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
 
-<Tabs className="unique-tabs">
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+Once the workspace is configured, access to the bucket is made easy in Windmill.
 
-```ts
-import type { S3Object } from 'npm:windmill-client@^1.229.0';
-import * as wmill from 'npm:windmill-client@^1.229.0';
-import { S3Client } from 'https://deno.land/x/s3_lite_client@0.2.0/mod.ts';
+When a script accepts a S3 file as input, it can be directly uploaded or chosen from from the bucket explorer.
 
-export async function main(inputFile: S3Object) {
-	// this will default to the workspace s3 resource
-	let args = await wmill.denoS3LightClientSettings();
-	// this will use the designated resource
-	// let args = await wmill.denoS3LightClientSettings("<PATH_TO_S3_RESOURCE>");
-	const s3Client = new S3Client(args);
+![S3 file upload](./file_upload.png)
 
-	const outputFile = 'output/hello.txt';
+![S3 bucket browsing](./bucket_browsing.png)
 
-	// read object from S3
-	const getObjectResponse = await s3Client.getObject(inputFile.s3);
-	const inputObjContent = await getObjectResponse.text();
-	console.log(inputObjContent);
+When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
 
-	// write object to S3
-	await s3Client.putObject(outputFile, 'Hello Windmill!');
+![S3 file download](./file_download.png)
 
-	// list objects from bucket
-	for await (const obj of s3Client.listObjects({ prefix: 'output/' })) {
-		console.log(obj.key);
-	}
-
-	const result: S3Object = {
-		s3: outputFile
-	};
-	return result;
-}
-```
-
-</TabItem>
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#boto3==1.34.4
-#wmill>=1.229.0
-
-import wmill
-from wmill import S3Object
-import boto3
-
-
-def main(input_file: S3Object):
-    bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
-
-    # this will default to the workspace s3 resource
-    args = wmill.boto3_connection_settings()
-    # this will use the designated resource
-    # args = wmill.boto3_connection_settings("<PATH_TO_S3_RESOURCE>")
-    s3client = boto3.client("s3", **args)
-
-    output_file = "output/hello.txt"
-
-    # read object from S3 and print its content
-    input_obj = s3client.get_object(Bucket=bucket, Key=input_file["s3"])["Body"].read()
-    print(input_obj)
-
-    # write object to s3
-    s3client.put_object(Bucket=bucket, Key=output_file, Body="Hello Windmill!")
-
-    # download file to the job temporary folder:
-    s3client.download_file(
-        Bucket=bucket, Key=input_file["s3"], Filename="./download.txt"
-    )
-    with open("./download.txt", mode="rb") as downloaded_file:
-        print(downloaded_file.read())
-
-    # upload file from temporary folder to S3
-    uploaded_file = "output/uploaded.txt"
-    with open("./upload.txt", mode="wb") as file_to_upload:
-        file_to_upload.write(str.encode("Hello Windmill!"))
-    s3client.upload_file(Bucket=bucket, Key=uploaded_file, Filename="./upload.txt")
-
-    # see https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3-examples.html
-    # and https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html
-    # for more code examples (listing object, deleting files, etc)
-    return [
-        S3Object(s3=output_file),
-        S3Object(s3=uploaded_file),
-    ]
-```
-
-</TabItem>
-</Tabs>
-
-### Windmill embedded integration with S3, Polars and DuckDB for data pipelines
-
-Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra.
-
-You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
-
-<Tabs className="unique-tabs">
-<TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#polars==0.20.2
-#s3fs==2023.12.0
-#wmill>=1.229.0
-
-import wmill
-from wmill import S3Object
-import polars as pl
-import s3fs
-
-
-def main(input_file: S3Object):
-    bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
-
-    # this will default to the workspace s3 resource
-    storage_options = wmill.polars_connection_settings().storage_options
-    # this will use the designated resource
-    # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
-
-    # input is a parquet file, we use read_parquet in lazy mode.
-    # Polars can read various file types, see
-    # https://pola-rs.github.io/polars/py-polars/html/reference/io.html
-    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
-    input_df = pl.read_parquet(input_uri, storage_options=storage_options).lazy()
-
-    # process the Polars dataframe. See Polars docs:
-    # for dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html
-    # for lazy dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html
-    output_df = input_df.collect()
-    print(output_df)
-
-    # To write back the result to S3, Polars needs an s3fs connection
-    s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings().s3fs_args)
-    output_file = "output/result.parquet"
-    output_uri = "s3://{}/{}".format(bucket, output_file)
-    with s3.open(output_uri, mode="wb") as output_s3:
-        # persist the output dataframe back to S3 and return it
-        output_df.write_parquet(output_s3)
-
-    return S3Object(s3=output_file)
-```
-
-</TabItem>
-<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#wmill>=1.229.0
-#duckdb==0.9.1
-
-import wmill
-from wmill import S3Object
-import duckdb
-
-
-def main(input_file: S3Object):
-    bucket = wmill.get_resource("u/admin/windmill-cloud-demo")["bucket"]
-
-    # create a DuckDB database in memory
-    # see https://duckdb.org/docs/api/python/dbapi
-    conn = duckdb.connect()
-
-    # this will default to the workspace s3 resource
-    args = wmill.duckdb_connection_settings().connection_settings_str
-    # this will use the designated resource
-    # args = wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>").connection_settings_str
-
-    # connect duck db to the S3 bucket - this will default to the workspace s3 resource
-    conn.execute(args)
-
-    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
-    output_file = "output/result.parquet"
-    output_uri = "s3://{}/{}".format(bucket, output_file)
-
-    # Run queries directly on the parquet file
-    query_result = conn.sql(
-        """
-        SELECT * FROM read_parquet('{}')
-    """.format(
-            input_uri
-        )
-    )
-    query_result.show()
-
-    # Write the result of a query to a different parquet file on S3
-    conn.execute(
-        """
-        COPY (
-            SELECT COUNT(*) FROM read_parquet('{input_uri}')
-        ) TO '{output_uri}' (FORMAT 'parquet');
-    """.format(
-            input_uri=input_uri, output_uri=output_uri
-        )
-    )
-
-    conn.close()
-    return S3Object(s3=output_file)
-```
-
-</TabItem>
-</Tabs>
-
-For more info, see our page dedicated to Data Pipelines in Windmill:
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Data Pipelines"
-		description="We have integrated with Polars and DuckDB for in-memory data processing and S3 for external storage."
-		href="/docs/core_concepts/data_pipelines"
-	/>
-</div>
+For more info on how to use S3 files in Windmill, see [Handling files and binary data](/docs/core_concepts/files_binary_data)
 
 ## Structured Databases: Postgres (Supabase, Neon.tech)
 
