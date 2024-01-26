@@ -142,7 +142,6 @@ Leave out the fields you do not need, you are only spes the desire behavior, it'
 
 ## Search
 
-d d
 **by component** - a nice feature of the table component is that it can do the
 search for you based on the data in the component
 
@@ -161,7 +160,6 @@ Please see the [Examples](#examples) for working code.
 - Resizeable by the user
 - Grouping
 - sorting (But can be done by a transformer, but not the user)
-- rename headers (But can be done by a transformer, see below)
 
 :::info Transformer
 

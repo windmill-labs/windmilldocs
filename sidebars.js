@@ -356,7 +356,8 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/deploy_to_prod/index'
 					},
-					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index']
+					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					collapsed: false
 				},
 				'advanced/preinstall_binaries/index',
 				{

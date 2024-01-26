@@ -30,7 +30,17 @@ It works as follows:
 
 To summarize, developers operates only in Windmill Staging workspace. Windmill Production workspace is updated only by the CI when the Git staging branch is merged to the production branch.
 
-Now let's deep dive into each part. We will first explain how developers can setup their local environment to be able to create and edit Windmill script from their IDE, then we will see how to sync Windmill workspaces to a Git repository. Lastly, we will see how to achive the full staging/prod deployment workflow.
+Now let's deep dive into the first part. We will first explain how developers can setup their local environment to be able to create and edit Windmill script from their IDE, then we will see how to sync Windmill workspaces to a Git repository.
+
+The second part is well covered in:
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to Prod using a Git Workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
+	/>
+</div>
 
 ## Develop locally
 
@@ -180,73 +190,14 @@ wmill sync push --raw
 
 Lastly, it is possible to execute scripts locally and even plug them to any unit testing framework. More info on the [Run locally documentation page](/docs/advanced/local_development/run_locally)
 
-## Syncing workspace to Git repository
+## Deploy from Github/Gitlab with Staging/Prod
 
-It's very common to use version control when developing locally. Pushing changes from Git to Windmill can easily be achieved with a CI automation. For the other way around, Windmill pushing changes to the Git repo is also made easy with Windmill embedded Git integration (Enterprise Edition feature only).
+Syncing directly from the CLI is great, but instead of using the CLI directly, you should combine it with your CI/CD and setup a full productive Git workflow with a Staging and Prod workspaces. See more details here:
 
-#### From Git to Windmill
-
-Git can deploy the changes pushed to a branch automatically to a Windmill workspace with a simple CI automation. This way, developers making changes locally using the process described above can simply commit and push to the Git repository, and not care about manually deploying their changes to Windmill.
-
-Here is the automation for Github Actions, but it is simple enough to easily be adapted for other CIs.
-
-```yaml
-name: 'Push main to Windmill workspace'
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - 'main'
-    # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
-    # paths:
-    #   - wm/**
-
-env:
-  WMILL_URL: https://app.windmill.dev/
-  WMILL_WORKSPACE: github-sync-example-prod
-
-jobs:
-  sync:
-    environment: windmill
-    runs-on: 'ubuntu-latest'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: vx.x.x
-
-      # (push will pull first to detect conflicts and only push actual changes)
-      - name: Push changes
-        run: |
-          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
-          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts sync push --yes --raw --skip-variables --skip-secrets --skip-resources
-```
-
-The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it. As mentioned above, we're using the `--raw` format here as `--stateful` sync is not needed, and we ignore variables, secrets and resources to avoid committing secrets to the repository. Feel free to adapt this to your use case.
-
-#### From Windmill to Git
-
-Windmill pushing changes to Git can be necessary when some users make changes to the workspace via Windmill's UI. In this case, Windmill will automatically commit the changes to the Git repository, keeping the two in perfect sync.
-
-To setup Windmill Git integration, see our dedicated page [here](../11_git_sync/index.mdx)
-
-:::info
-
-Windmill pushing changes to Git is an enterprise edition feature
-
-:::
-
-## Staging/Production deployment workflow
-
-:::info
-This is mostly for EE customers as it heavily leverages Windmill Git integration.
-:::
-
-To close the loop, all the above can be leveraged to achieve a simple yet robust automated Production deployment process.
-
-The goal is the following. Have a staging Windmill workspace on which you can quickly make changes and iterate with co-workers. Once you've reached a good state, you can deploy all your changes, all at once, to another Windmill workspace (the Production one) in a fully-automated fashion.
-
-The full setup is described in the [Deploy to Prod using a Git Workflow](/docs/advanced/deploy_gh_gl) documentation page.
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to Prod using a Git Workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
+	/>
+</div>
