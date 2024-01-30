@@ -294,7 +294,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/self_host/aws_ecs']
+					items: ['advanced/self_host/aws_ecs', 'advanced/self_host/easypanel']
 				},
 				{
 					type: 'category',
