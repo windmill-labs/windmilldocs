@@ -14,4 +14,5 @@ features:
     'Search and filter',
     'Support for markdown'
   ]
+docs: /docs/core_concepts/rich_display_rendering
 ---

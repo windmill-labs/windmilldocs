@@ -10,4 +10,5 @@ features:
     'Chart Display: Leverages the Ag Charts library to present data in a visually appealing chart format.',
     'Diverse Chart Types: Supports multiple chart types including Bar, Line, Scatter, Area, and Range Bar (exclusive to Enterprise Edition).'
   ]
+docs: /docs/apps/app_configuration_settings/agcharts
 ---

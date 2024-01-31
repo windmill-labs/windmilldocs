@@ -446,3 +446,14 @@ div.testimonials a:hover .wm-name {
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
 }
+
+.custom-link {
+	color: inherit;
+	text-decoration: underline dashed;
+  }
+  
+  .custom-link:hover {
+	color: rgb(30, 58, 138);
+	text-decoration: underline dashed;
+  }
+  

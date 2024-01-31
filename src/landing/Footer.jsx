@@ -37,6 +37,7 @@ const navigation = {
 		}
 	],
 	solutions: [
+		{ name: 'Pricing Bis', href: '/pricing_bis' },
 		{ name: 'Windmill AI', href: '/windmill_ai' },
 		{ name: 'Supabase', href: '/integrations/supabase' },
 		{ name: 'Slack', href: '/integrations/slack' },

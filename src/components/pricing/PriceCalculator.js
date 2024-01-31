@@ -7,7 +7,7 @@ import Slider from './Slider';
 const plans = [
 	{
 		name: 'Core package',
-		description: 'Your own hosted dedicated Windmill cluster without restrictions',
+		description: 'Your own hosted dedicated Windmill cluster without restrictions or maintenance.',
 		price: 600
 	}
 ];
@@ -150,7 +150,7 @@ export default function PriceCalculator({ period, tier }) {
 
 											<span
 												className={classNames(
-													active ? 'border' : 'border-2',
+													'border',
 													checked ? 'border-blue-600' : 'border-transparent',
 													'pointer-events-none absolute -inset-px rounded-lg'
 												)}
