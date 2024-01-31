@@ -32,7 +32,7 @@ Windmill has its own IDE for creating [scripts](../../script_editor/index.mdx) a
 
 The Windmill UI allows you to edit directly the deployed scripts & flows, which is great for maintenance and quick prototyping.
 
-However in many production settings it is more common to version everything from git and to that end we have a CLI to sync a workspace to a local directory and the inverse operation (deploy local directory to a workspace). With this extension, you can efficiently edit scripts & flows directly from there.
+However in many production settings it is more common to version everything from Git and to that end we have a CLI to sync a workspace to a local directory and the inverse operation (deploy local directory to a workspace). With this extension, you can efficiently edit scripts & flows directly from there.
 
 To run scripts locally, see [Run Locally](../../advanced/4_local_development/run_locally.mdx).
 
@@ -109,6 +109,14 @@ In particular:
 	loop
 	src="/videos/yaml_to_ui.mp4"
 />
+
+## Infer lockfile or Use current lockfile
+
+With this toggle, you can choose to use the metadata lockfile instead of inferring them directly from the script.
+
+![Toggle Lockfile](./toggle_lockfile.png "Toggle Lockfile")
+
+To learn more about lockfile, see [Local Development](../../advanced/4_local_development/index.mdx).
 
 ## Commands
 
