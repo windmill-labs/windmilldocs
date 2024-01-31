@@ -21,7 +21,7 @@ Please note that your version of Deno should be recent (greater than 1.32). If n
 2. Install wmill CLI using the following command in your terminal:
 
 ```bash
-deno install --unstable -A https://deno.land/x/wmill/main.ts
+deno install -A https://deno.land/x/wmill/main.ts
 ```
 
 Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example:
