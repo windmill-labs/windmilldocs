@@ -462,7 +462,7 @@ div.testimonials a:hover .wm-name {
 
 .reset th {
 	border: 0 !important;
-	border-color: red;
+	@apply bg-white dark:bg-gray-950;
 }
 
 .reset thead > tr > th {

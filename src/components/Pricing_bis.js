@@ -567,7 +567,7 @@ export default function Pricing() {
 				</div>
 			</div>
 			<div className="h-14"></div>
-			<div className="relative bg-gray-50 dark:bg-slate-900 lg:pt-14">
+			<div className="relative  dark:bg-gray-950 lg:pt-14">
 				<div className="mx-auto max-w-7xl px-6 py-1 lg:px-8">
 					{/* Feature comparison (up to lg) */}
 					<section aria-labelledby="mobile-comparison-heading" className="lg:hidden">
@@ -624,7 +624,7 @@ export default function Pricing() {
 																? 'ring-1 ring-blue-500'
 																: pricingItem.enterprise_edition
 																? 'ring-2 ring-teal-600'
-																: 'ring-1 ring-gray-900/10',
+																: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
 															'relative rounded-lg bg-white shadow-sm sm:rounded-none sm:bg-transparent sm:shadow-none sm:ring-0'
 														)}
 													>
@@ -683,7 +683,7 @@ export default function Pricing() {
 																? 'ring-1 ring-blue-500'
 																: pricingItem.enterprise_edition
 																? 'ring-2 ring-teal-600'
-																: 'ring-1 ring-gray-900/10',
+																: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
 															'pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 rounded-lg sm:block'
 														)}
 													/>
@@ -779,9 +779,9 @@ export default function Pricing() {
 														{getPricingArray().map((pricingItem) => (
 															<td
 																key={pricingItem.id}
-																className="relative w-1/4 px-4 py-0 text-center"
+																className="relative w-1/4 px-4 py-0 text-center "
 															>
-																<span className="relative h-full w-full py-3">
+																<span className="relative h-full w-full py-3 ">
 																	{typeof attribute.tiers[pricingItem.name] === 'string' ? (
 																		<span
 																			className={classNames(
@@ -789,7 +789,7 @@ export default function Pricing() {
 																					? 'font-semibold text-blue-500'
 																					: pricingItem.enterprise_edition
 																					? 'font-semibold text-teal-600'
-																					: 'text-gray-900',
+																					: 'text-gray-900 dark:text-white',
 																				'text-sm leading-6'
 																			)}
 																		>
@@ -824,7 +824,7 @@ export default function Pricing() {
 
 										{/* Fake card borders */}
 										<div
-											className="pointer-events-none absolute inset-x-8 inset-y-0 grid grid-cols-4 gap-x-8 before:block"
+											className="pointer-events-none absolute inset-x-8 inset-y-0 grid grid-cols-4 gap-x-8 before:block mt-4"
 											aria-hidden="true"
 										>
 											{getPricingArray().map((pricingItem) => (
@@ -835,7 +835,7 @@ export default function Pricing() {
 															? 'ring-1 ring-blue-500'
 															: pricingItem.enterprise_edition
 															? 'ring-1 ring-teal-600'
-															: 'ring-1 ring-gray-900/10',
+															: 'ring-1 ring-gray-900/10 dark:ring-gray-100/10',
 														'rounded-lg'
 													)}
 												/>
