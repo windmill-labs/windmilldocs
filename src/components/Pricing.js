@@ -318,10 +318,6 @@ const sections = [
 				link: '/docs/core_concepts/multiplayer'
 			},
 			{
-				name: 'Commercial licence',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
-			},
-			{
 				name: 'Content Search',
 				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
 				link: '/docs/core_concepts/content_search'
@@ -330,21 +326,16 @@ const sections = [
 				name: 'S3 integration (>50mb upload)',
 				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
 				link: '/docs/core_concepts/persistent_storage#large-data-files-s3-r2-minio'
+			},
+			{
+				name: 'Commercial licence',
+				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
 			}
 		]
 		},
 		{
 				name: 'Security & Support',
 				attributes: [
-					{
-						name: 'Support levels',
-						tiers: { 'Free and Open-source': 'Community support on Discord', Pro: '24/7 Priority Support with 48h Response & Engineer Assistance', Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance', Community: 'Community support on Discord', Team: '24/7 Priority Support with 48h Response & Engineer Assistance' },
-						link: '/docs/misc/support_and_sla'
-					},
-					{
-						name: 'Design partners for roadmap',
-						tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
-					},
 					{
 						name: 'Number of users with SSO',
 						tiers: { 'Free and Open-source': '10', Pro: '10', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' },
@@ -354,16 +345,21 @@ const sections = [
 						name: 'SAML & SCIM support including groups synchronization',
 						tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
 						link: '/docs/misc/saml_and_scim'
+					},
+					{
+						name: 'Support levels',
+						tiers: { 'Free and Open-source': 'Community support on Discord', Pro: '24/7 Priority Support with 48h Response & Engineer Assistance', Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance', Community: 'Community support on Discord', Team: '24/7 Priority Support with 48h Response & Engineer Assistance' },
+						link: '/docs/misc/support_and_sla'
+					},
+					{
+						name: 'Design partners for roadmap',
+						tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
 					}
 				]
 		},
 		{
 				name: 'Observability',
 				attributes: [
-					{
-						name: 'Prometheus Metrics',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true }
-					},
 					{
 						name: 'Audit logs',
 						tiers: { 'Free and Open-source': false, Pro: 'Retained for 60 days', Enterprise: 'Retained for 60 days', Community: true, Team: 'Retained for 7 days' },
@@ -373,6 +369,10 @@ const sections = [
 						name: 'Workspace Error Handler',
 						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
 						link: '/docs/core_concepts/error_handling'
+					},
+					{
+						name: 'Prometheus Metrics',
+						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true }
 					}
 				]
 		},
@@ -445,14 +445,14 @@ const sections = [
 				name: 'Flow Editor',
 				attributes: [
 					{
-						name: 'Restart deployed flows from any node',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/blog/launch-week-1/restartable-flows'
-					},
-					{
 						name: 'Adding forms to approval steps',
 						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
 						link: '/docs/flows/flow_approval'
+					},
+					{
+						name: 'Restart deployed flows from any node',
+						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+						link: '/blog/launch-week-1/restartable-flows'
 					}
 				]
 		},
@@ -470,7 +470,7 @@ const sections = [
 						link: '/docs/apps/schedule_reports'
 					},
 					{
-						name: 'License key of AgCharts and AgGrid',
+						name: 'License key for AgCharts and AgGrid',
 						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
 						link: '/docs/apps/app_configuration_settings/aggrid_table'
 					}
