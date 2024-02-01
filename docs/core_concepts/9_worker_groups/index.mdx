@@ -5,7 +5,7 @@ import DocCard from '@site/src/components/DocCard';
 Workers are autonomous processes that run one script at a time using the entire cpu and memory available
 to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md) as run the jobs.
 The number of workers can be horizontally scaled up or down depending on needs without any overhead.
-Each worker on Windmill can run up to 26 millions jobs a month, where each job lasts approximately 100ms.
+Each worker on Windmill can run up to 26 million jobs a month, where each job lasts approximately 100ms.
 
 Workers pull [jobs](../20_jobs/index.mdx) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls

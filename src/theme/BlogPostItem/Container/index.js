@@ -15,14 +15,22 @@ export default function BlogPostItemContainer({ children, className }) {
 
 	const isChangelog = window.location.pathname.includes('/changelog');
 
+	const defaultTitle = "Windmill | Changelog";
+    const defaultDescription = "See what's new with Windmill.";
+
+    const isFeaturePage = window.location.pathname.includes('/changelog/') && frontMatter.slug;
+
+    const pageTitle = isFeaturePage ? metadata.title : defaultTitle;
+    const pageDescription = isFeaturePage ? metadata.description : defaultDescription;
+
 	if (isChangelog) {
 		return (
 			<div className="w-full">
 				<Head>
-					<title>{metadata.title}</title>
+					<title>{pageTitle}</title>
 					<meta name="title" content={metadata.title} />
 					<meta property="og:title" content={metadata.title} />
-					<meta property="og:description" content={metadata.description} />
+					<meta property="og:description" content={pageDescription} />
 					<meta property="og:image" content={image} />
 					<meta property="site_name" content="Windmill" />
 					<meta property="og:type" content="changelog" />

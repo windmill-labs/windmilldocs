@@ -8,7 +8,7 @@ description: The Ag Charts component integrates the Ag Charts library, enabling 
 features:
   [
     'Chart Display: Leverages the Ag Charts library to present data in a visually appealing chart format.',
-    'Diverse Chart Types: Supports multiple chart types including Bar, Line, Scatter, Area, and Range Bar (exclusive to Enterprise Edition).'
+    'Diverse Chart Types: Supports multiple chart types including Bar, Line, Scatter, and both Area & Range Bar that are exclusive to Enterprise Edition (because Ag Charts key needed).'
   ]
 docs: /docs/apps/app_configuration_settings/agcharts
 ---

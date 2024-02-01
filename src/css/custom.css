@@ -447,13 +447,15 @@ div.testimonials a:hover .wm-name {
 }
 
 .custom-link {
-	color: inherit;
-	text-decoration: underline dashed;
+    color: inherit;
+    text-decoration: underline dashed;
+    text-decoration-thickness: 0.5px;
 }
 
 .custom-link:hover {
-	color: rgb(30, 58, 138);
-	text-decoration: underline dashed;
+    color: rgb(42, 77, 173);
+    text-decoration: underline dashed;
+    text-decoration-thickness: 0.5px;
 }
 
 .reset table {
@@ -476,4 +478,32 @@ div.testimonials a:hover .wm-name {
 
 .reset thead th {
 	@apply bg-white/50 dark:bg-gray-900/50;
+}
+
+.tooltip-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 300px;
+    background-color: #0f172a;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-icon:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
