@@ -107,7 +107,7 @@ const pricing = {
 				}
 			},
 			minPrice: 120,
-			description: 'Dedicated support and infrastructure.',
+			description: 'Dedicated support, all compliance and security features.',
 			features: [
 				{
 					text: (
@@ -290,7 +290,7 @@ const pricing = {
 				}
 			},
 			minPrice: 840,
-			description: 'Dedicated support, guidance and infrastructure for your company.',
+			description: 'Dedicated support and infrastructure, all compliance and security features',
 			features: [
 				{
 					text: (

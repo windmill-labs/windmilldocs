@@ -33,7 +33,7 @@ function Sidebar({ items }) {
 	// Group items by month and find the latest version for each month
 	const groupedItems = items.reduce((acc, item) => {
 		const date = new Date(item.content.metadata.date);
-		const month = date.toLocaleString('default', { month: 'long' });
+		const month = date.toLocaleString('en', { month: 'long' });
 		const year = date.getFullYear();
 		const dateStr = `${month} ${year}`;
 
