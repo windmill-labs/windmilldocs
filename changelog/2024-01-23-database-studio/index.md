@@ -14,4 +14,5 @@ features:
     'Search and filter',
     'Support for markdown'
   ]
+docs: /docs/apps/app_configuration_settings/database_studio
 ---

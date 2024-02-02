@@ -356,14 +356,13 @@ div.testimonials a:hover .wm-name {
 }
 
 .flex-container {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .flex-container .logo {
-    margin-left: 8px;
+	margin-left: 8px;
 }
-
 
 .generic-workers-image {
 	background-image: url('/static/images/generic_workers.png');
@@ -398,28 +397,28 @@ div.testimonials a:hover .wm-name {
 }
 
 .social-icons {
-    margin-top: 2px;
-    margin-bottom: 2px;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 .footer-section {
-    margin-top: 4px;
-    padding-top: 4px;
+	margin-top: 4px;
+	padding-top: 4px;
 }
 
 .hover-change-color:hover {
-    fill: #F0F0F0
+	fill: #f0f0f0;
 }
 
 .hover-darker-color:hover {
-    filter: brightness(80%);
+	filter: brightness(80%);
 }
 .group-darker-change-color:hover {
-    filter: brightness(80%);
+	filter: brightness(80%);
 }
 
 .image-hover-change-color:hover {
-    filter: brightness(80%);
+	filter: brightness(80%);
 }
 
 .interactive-image {
@@ -427,22 +426,84 @@ div.testimonials a:hover .wm-name {
 	transition: filter 0.3s;
 	border-radius: 2px;
 	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .interactive-image:hover {
+}
+
+.interactive-image:hover {
 	filter: brightness(90%);
-  }
-  
-  .svg-image {
+}
+
+.svg-image {
 	box-shadow: none;
-  }
+}
 
 .group:hover .banner {
-    display: block;
+	display: block;
 }
 
 .banner {
-    transition: all 0.3s ease;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
+	transition: all 0.3s ease;
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+.custom-link {
+    color: inherit;
+    text-decoration: underline dashed;
+    text-decoration-thickness: 0.5px;
+}
+
+.custom-link:hover {
+    color: rgb(42, 77, 173);
+    text-decoration: underline dashed;
+    text-decoration-thickness: 0.5px;
+}
+
+.reset table {
+	@apply mb-0;
+}
+
+.reset th {
+	border: 0 !important;
+	@apply bg-white dark:bg-gray-950;
+}
+
+.reset thead > tr > th {
+	padding: 0 !important;
+}
+
+.reset td {
+	border: 0 !important;
+	@apply bg-white/50 dark:bg-gray-900/50;
+}
+
+.reset thead th {
+	@apply bg-white/50 dark:bg-gray-900/50;
+}
+
+.tooltip-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 300px;
+    background-color: #0f172a;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-icon:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }

@@ -344,7 +344,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'advanced/git_sync/index',
-							label: 'Sync to Remote Git Repository'
+							label: 'Git Sync'
 						},
 						'advanced/git_sync/cli_sync'
 					]
