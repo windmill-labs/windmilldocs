@@ -59,24 +59,24 @@ const pricing = {
 					min: 1,
 					max: 10
 				}
-			},
-			features: [
-				{
-					text: (
-						<span>
-							Subset of <b className="text-teal-600">Enterprise</b> Plugins
-						</span>
-					)
 				},
-				{
-					text: (
-						<span>
-							Priority Support 24/7 with 48h response time and automation engineer assistance
-						</span>
-					)
-				},
-				{ text: 'Max 10 users with SSO' }
-			]
+				features: [
+					{
+						text: (
+							<span>
+								Subset of <b className="text-teal-600">Enterprise</b> Plugins
+							</span>
+						)
+					},
+					{
+						text: (
+							<span>
+								Priority Support 24/7 with 48h response time and automation engineer assistance
+							</span>
+						)
+					},
+					{ text: 'Max 10 users with SSO' }
+				]
 		},
 		{
 			name: 'Enterprise',
@@ -287,7 +287,7 @@ const sections = [
 			},
 			{
 				name: 'Maximum number of seats',
-				tiers: { 'Free and Open-source': 'Unlimited', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' }
+				tiers: { 'Free and Open-source': 'Unlimited', Pro: '10', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' }
 			},
 			{
 				name: 'Number of workspaces',
@@ -719,13 +719,13 @@ export default function Pricing() {
 													? 'text-blue-600'
 													: pricingItem.enterprise_edition
 													? 'text-teal-600'
-													: 'text-gray-900',
+													: 'text-gray-900 dark:text-white',
 												'text-sm font-semibold leading-6'
 											)}
 										>
 											{pricingItem.name}
 										</h3>
-										<p className="mt-1 text-sm leading-6 text-gray-600">
+										<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-200">
 											{pricingItem.description}
 										</p>
 									</div>
@@ -733,7 +733,7 @@ export default function Pricing() {
 									<div className="mt-10 space-y-10">
 										{sections.map((section) => (
 											<div key={section.name}>
-												<h4 className="text-sm font-semibold leading-6 text-gray-900">
+												<h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
 													{section.name}
 												</h4>
 												<div className="relative mt-6">
@@ -750,7 +750,7 @@ export default function Pricing() {
 																: pricingItem.enterprise_edition
 																? 'ring-2 ring-teal-600'
 																: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
-															'relative rounded-lg bg-white shadow-sm sm:rounded-none sm:bg-transparent sm:shadow-none sm:ring-0'
+															'relative rounded-lg bg-white dark:bg-slate-900 shadow-sm sm:rounded-none sm:bg-transparent sm:shadow-none sm:ring-0'
 														)}
 													>
 														<dl className="divide-y divide-gray-200 text-sm leading-6">
@@ -759,7 +759,7 @@ export default function Pricing() {
 																key={attribute.name}
 																className="flex items-center justify-between px-4 py-3 sm:grid sm:grid-cols-2 sm:px-0"
 															>
-																<dt className="pr-4 text-gray-600">
+																<dt className="pr-4 text-gray-600 dark:text-gray-200">
 																	{attribute.link ? (
 																		<a
 																			href={attribute.link}
@@ -772,6 +772,14 @@ export default function Pricing() {
 																	) : (
 																		attribute.name
 																	)}
+																	{attribute.tooltip && (
+																	<span className="ml-2 tooltip-icon">
+																		ⓘ
+																		<span className="tooltip-text">
+																			{attribute.tooltip}
+																		</span>
+																	</span>
+																)}
 																</dt>
 																	<dd className="flex items-center justify-end sm:justify-center sm:px-4">
 																		{typeof attribute.tiers[pricingItem.name] === 'string' ? (
@@ -781,7 +789,7 @@ export default function Pricing() {
 																						? 'font-semibold text-blue-600'
 																						: pricingItem.enterprise_edition
 																						? 'font-semibold text-teal-600'
-																						: 'text-gray-900'
+																						: 'text-gray-900 dark:text-white'
 																				}
 																			>
 																				{attribute.tiers[pricingItem.name]}
@@ -872,12 +880,11 @@ export default function Pricing() {
 								</div>
 							))}
 						</div>
-
-						<div className="-mt-6 space-y-16">
+						<div className="mt-6 space-y-16">
 							{sections.map((section) => (
 								<div key={section.name}>
-									<h3 className="text-sm font-semibold leading-6 text-gray-900">{section.name}</h3>
-									<div className="relative -mx-8 mt-10 reset">
+									<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{section.name}</h3>
+									<div className="relative -mx-8 reset">
 										<table className="relative w-full border-separate border-spacing-x-8">
 											<thead>
 												<tr className="text-left">
@@ -896,7 +903,7 @@ export default function Pricing() {
 												<tr key={attribute.name}>
 													<th
 														scope="row"
-														className="w-1/4 py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900"
+														className="w-1/4 py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white"
 													>
 														<div className="flex items-center relative">
 															{attribute.link ? (
