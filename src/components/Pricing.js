@@ -334,147 +334,147 @@ const sections = [
 		]
 		},
 		{
-				name: 'Security & Support',
-				attributes: [
-					{
-						name: 'Number of users with SSO',
-						tiers: { 'Free and Open-source': '10', Pro: '10', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' },
-						link: '/docs/core_concepts/authentification'
-					},
-					{
-						name: 'SAML & SCIM support including groups synchronization',
-						tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
-						link: '/docs/misc/saml_and_scim'
-					},
-					{
-						name: 'Support levels',
-						tiers: { 'Free and Open-source': 'Community support on Discord', Pro: '24/7 Priority Support with 48h Response & Engineer Assistance', Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance', Community: 'Community support on Discord', Team: '24/7 Priority Support with 48h Response & Engineer Assistance' },
-						link: '/docs/misc/support_and_sla'
-					},
-					{
-						name: 'Design partners for roadmap',
-						tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
-					}
-				]
+		name: 'Security & Support',
+		attributes: [
+			{
+				name: 'Number of users with SSO',
+				tiers: { 'Free and Open-source': '10', Pro: '10', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' },
+				link: '/docs/core_concepts/authentification'
+			},
+			{
+				name: 'SAML & SCIM support including groups synchronization',
+				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
+				link: '/docs/misc/saml_and_scim'
+			},
+			{
+				name: 'Support levels',
+				tiers: { 'Free and Open-source': 'Community support on Discord', Pro: '24/7 Priority Support with 48h Response & Engineer Assistance', Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance', Community: 'Community support on Discord', Team: '24/7 Priority Support with 48h Response & Engineer Assistance' },
+				link: '/docs/misc/support_and_sla'
+			},
+			{
+				name: 'Design partners for roadmap',
+				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
+			}
+		]
 		},
 		{
-				name: 'Observability',
-				attributes: [
-					{
-						name: 'Audit logs',
-						tiers: { 'Free and Open-source': false, Pro: 'Retained for 60 days', Enterprise: 'Retained for 60 days', Community: true, Team: 'Retained for 7 days' },
-						link: '/docs/core_concepts/audit_logs'
-					},
-					{
-						name: 'Workspace Error Handler',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/core_concepts/error_handling'
-					},
-					{
-						name: 'Prometheus Metrics',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true }
-					}
-				]
+		name: 'Observability',
+		attributes: [
+			{
+				name: 'Audit logs',
+				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: 'Unlimited', Community: true, Team: 'Retained for 7 days' },
+				link: '/docs/core_concepts/audit_logs'
+			},
+			{
+				name: 'Workspace Error Handler',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/core_concepts/error_handling'
+			},
+			{
+				name: 'Prometheus Metrics',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true }
+			}
+		]
 		},
 		{
-				name: 'Developers & Deployments',
-				attributes: [
-					{
-						name: 'Deployment on Fargate / Docker / Kubernetes',
-						tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: false, Team: false },
-						link: '/docs/advanced/self_host',
-						tooltip: 'Self-hosted only'
-					},
-					{
-						name: 'Isolated & dedicated database network & vCPUs',
-						tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: false, Team: false }
-					},
-					{
-						name: 'Deploy from GitHub',
-						tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/advanced/deploy_to_prod'
-					},
-					{
-						name: 'Git Sync',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/advanced/git_sync'
-					},
-					{
-						name: 'Deploy to Staging/Prod Web UI',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/core_concepts/staging_prod'
-					},
-					{
-						name: 'Distributed dependency cache backed by S3',
-						tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
-						link: '/docs/misc/s3_cache'
-					},
-					{
-						name: 'Agent Workers',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/core_concepts/agent_workers'
-					},
-					{
-						name: 'Edit the wmill CLI binary',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: false, Team: false },
-						link: '/docs/advanced/cli/installation'
-					}
-				]
+		name: 'Developers & Deployments',
+		attributes: [
+			{
+				name: 'Deployment on Fargate / Docker / Kubernetes',
+				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: false, Team: false },
+				link: '/docs/advanced/self_host',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'Isolated & dedicated database network & vCPUs',
+				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: false, Team: false }
+			},
+			{
+				name: 'Deploy from GitHub',
+				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/advanced/deploy_to_prod'
+			},
+			{
+				name: 'Git Sync',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/advanced/git_sync'
+			},
+			{
+				name: 'Deploy to Staging/Prod Web UI',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/core_concepts/staging_prod'
+			},
+			{
+				name: 'Distributed dependency cache backed by S3',
+				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
+				link: '/docs/misc/s3_cache'
+			},
+			{
+				name: 'Agent Workers',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/core_concepts/agent_workers'
+			},
+			{
+				name: 'Edit the wmill CLI binary',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: false, Team: false },
+				link: '/docs/advanced/cli/installation'
+			}
+		]
 		},
 		{
-				name: 'Performance',
-				attributes: [
-					{
-						name: 'Worker Group Management UI (including Init Scripts)',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/core_concepts/worker_groups'
-					},
-					{
-						name: 'Script-specific Workers (dedicated) / High Throughput',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/core_concepts/dedicated_workers'
-					},
-					{
-						name: 'Concurrency limits',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/core_concepts/concurrency_limits'
-					}
-				]
+		name: 'Performance',
+		attributes: [
+			{
+				name: 'Worker Group Management UI (including Init Scripts)',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/core_concepts/worker_groups'
+			},
+			{
+				name: 'Script-specific Workers (dedicated) / High Throughput',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/core_concepts/dedicated_workers'
+			},
+			{
+				name: 'Concurrency limits',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/core_concepts/concurrency_limits'
+			}
+		]
 		},
 		{
-				name: 'Flow Editor',
-				attributes: [
-					{
-						name: 'Adding forms to approval steps',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/flows/flow_approval'
-					},
-					{
-						name: 'Restart deployed flows from any node',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/blog/launch-week-1/restartable-flows'
-					}
-				]
+		name: 'Flow Editor',
+		attributes: [
+			{
+				name: 'Adding forms to approval steps',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/flows/flow_approval'
+			},
+			{
+				name: 'Restart deployed flows from any node',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/blog/launch-week-1/restartable-flows'
+			}
+		]
 		},
 		{
-				name: 'App Editor',
-				attributes: [
-					{
-						name: 'Global CSS',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/apps/css_editor'
-					},
-					{
-						name: 'Send schedule reports of Apps (png or pdf) through Slack, Discord or Email',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/apps/schedule_reports'
-					},
-					{
-						name: 'License key for AgCharts and AgGrid',
-						tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-						link: '/docs/apps/app_configuration_settings/aggrid_table'
-					}
-				]
+		name: 'App Editor',
+		attributes: [
+			{
+				name: 'Global CSS',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/apps/css_editor'
+			},
+			{
+				name: 'Send schedule reports of Apps (png or pdf) through Slack, Discord or Email',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/apps/schedule_reports'
+			},
+			{
+				name: 'License key for AgCharts and AgGrid',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/apps/app_configuration_settings/aggrid_table'
+			}
+		]
 		}
 ];
 
