@@ -211,7 +211,7 @@ const cards = [
 	},
 	{
 		title: 'Inline scripts',
-		subtitle: 'Wrote your low-code app logic in Python, TypeScript, Go or Bash.',
+		subtitle: 'Write your low-code app logic in Python, TypeScript, SQL, Go, Bash or any supported language on Windmill.',
 		Icon: SiTypescript,
 		gridArea: 'md:col-span-2 md:row-span-4',
 		icons: [SiPython, SiGo, SiPostgresql],

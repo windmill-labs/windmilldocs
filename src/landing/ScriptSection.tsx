@@ -34,11 +34,11 @@ const cards = [
 			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available.',
 		Icon: SiVisualstudiocode,
 		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/cli_local_dev/vscode-extension'
+		href: '/docs/advanced/local_development'
 	},
 	{
-		title: 'Version control from GitHub/GitLab',
-		subtitle: 'Deploy scripts from GitHub or GitLab.',
+		title: 'Deploy to Prod using a Git Workflow',
+		subtitle: 'Windmill integration with Git repositories makes it possible to adopt a robust development process and version control.',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/deploy_gh_gl',

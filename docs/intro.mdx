@@ -1,5 +1,5 @@
 import DocCard from '@site/src/components/DocCard';
-import { Book, Pen, Home, Cloud } from 'lucide-react';
+import { Book, Pen, Home, Cloud, Terminal } from 'lucide-react';
 
 # Introduction
 
@@ -40,6 +40,12 @@ Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow
 		description="Use Windmill's Cloud App (no credit card required)."
 		href="https://app.windmill.dev/"
 		Icon={Cloud}
+	/>
+	<DocCard
+		title="Local Development"
+		description="Develop & deploy from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+		Icon={Terminal}
 	/>
 </div>
 
@@ -128,12 +134,17 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 		href="/docs/advanced/local_development"
 	/>
 	<DocCard
+		title="VS Code Extension"
+		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+	<DocCard
 		title="Version Control in Windmill"
 		description="Sync your workspace to a git repository."
 		href="/docs/advanced/version_control"
 	/>
 	<DocCard
-		title="Deploy to prod"
+		title="Deploy to Prod"
 		description="Deploy to prod using a staging workspace"
 		href="/docs/advanced/deploy_to_prod"
 	/>

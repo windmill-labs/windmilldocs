@@ -708,7 +708,8 @@ const sidebars = {
 						'misc/guides/aggrid_table/index',
 						'misc/guides/table/index',
 						'misc/guides/airplane/index',
-						'misc/guides/sequin/index'
+						'misc/guides/sequin/index',
+						'misc/guides/app_send_email_smtp/index',
 					]
 				},
 				'misc/note_of_intent/index',
