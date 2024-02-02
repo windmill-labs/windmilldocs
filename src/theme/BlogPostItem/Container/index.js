@@ -15,21 +15,33 @@ export default function BlogPostItemContainer({ children, className }) {
 
 	const isChangelog = window.location.pathname.includes('/changelog');
 
+	const defaultTitle = "Windmill | Changelog";
+    const defaultDescription = "See what's new with Windmill.";
+
+    const isFeaturePage = window.location.pathname.includes('/changelog/') && frontMatter.slug;
+
+    const pageTitle = isFeaturePage ? metadata.title : defaultTitle;
+    const pageDescription = isFeaturePage ? metadata.description : defaultDescription;
+
 	if (isChangelog) {
 		return (
 			<div className="w-full">
 				<Head>
-					<title>{metadata.title}</title>
+					<title>{pageTitle}</title>
 					<meta name="title" content={metadata.title} />
 					<meta property="og:title" content={metadata.title} />
-					<meta property="og:description" content={metadata.description} />
+					<meta property="og:description" content={pageDescription} />
 					<meta property="og:image" content={image} />
 					<meta property="site_name" content="Windmill" />
 					<meta property="og:type" content="changelog" />
 					<meta property="og:url" content={window.location.href} />
 				</Head>
 				<div className="flex flex-row gap-2 items-center mb-4">
-					<h3 className="text-xl font-semibold text-gray-900 dark:text-white ">{metadata.title}</h3>
+				<h3 className="text-xl font-semibold">
+					<a href={`/changelog/${frontMatter.slug}`} className="text-gray-900 dark:text-white hover:text-blue-600">
+						{metadata.title}
+					</a>
+				</h3>
 					{metadata?.tags.map((tag, index) => (
 						<span
 							key={tag + index}
@@ -54,11 +66,17 @@ export default function BlogPostItemContainer({ children, className }) {
 						{frontMatter.version}
 					</span>
 				</div>
-
 				<div className="mb-6">
-					<p className="text-base dark:text-gray-300 text-gray-600">
-						{new Date(metadata.date).toLocaleDateString()}
-					</p>
+					<div className="flex items-center">
+						<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
+							{new Date(metadata.date).toLocaleDateString()} |{' '}
+						</p>
+						{frontMatter.docs && (
+							<a href={frontMatter.docs} className="text-base dark:text-gray-300 text-gray-600">
+								Docs
+							</a>
+						)}
+					</div>
 				</div>
 				<img
 					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"

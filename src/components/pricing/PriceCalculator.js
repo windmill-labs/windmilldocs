@@ -7,7 +7,7 @@ import Slider from './Slider';
 const plans = [
 	{
 		name: 'Core package',
-		description: 'Your own hosted dedicated Windmill cluster without restrictions',
+		description: 'Your own hosted dedicated Windmill cluster without restrictions or maintenance.',
 		price: 600
 	}
 ];
@@ -67,9 +67,9 @@ export default function PriceCalculator({ period, tier }) {
 						<li key={key} className="flex flex-col ">
 							<div className="flex justify-between w-full items-center">
 								<div>
-									<span className="text-sm text-gray-600 dark:text-gray-200">
-										{key === 'vCPU' ? vCPUs : seats}
-									</span>
+								<span className="text-sm text-gray-600 dark:text-gray-200">
+									{key === 'vCPU' ? vCPUs.toLocaleString() : seats.toLocaleString()}
+								</span>
 									<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
 										{' '}
 										{key}s:
@@ -150,7 +150,7 @@ export default function PriceCalculator({ period, tier }) {
 
 											<span
 												className={classNames(
-													active ? 'border' : 'border-2',
+													'border',
 													checked ? 'border-blue-600' : 'border-transparent',
 													'pointer-events-none absolute -inset-px rounded-lg'
 												)}
@@ -171,17 +171,18 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								seats * 10 * (period.value === 'annually' ? 12 : 1)
-							}k executions of 100ms per `}</span>
+								seats * 10 * (period.value === 'annually' ? 12 : 1
+								).toLocaleString()}k executions of 100ms per `}
+							</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'developers' : 'developer'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}
@@ -192,17 +193,16 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions of 100ms per `}</span>
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'developers' : 'developer'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}
@@ -213,17 +213,16 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions of 100ms per `}</span>
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'developers' : 'developer'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}
@@ -234,17 +233,16 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions of 100ms per `}</span>
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'developers' : 'developer'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}

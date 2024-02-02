@@ -12,6 +12,11 @@ import Banner from './Banner';
 
 const resources = [
 	{
+		name: 'Changelog',
+		description: 'See the latest changes to Windmill.',
+		href: '/changelog'
+	},
+	{
 		name: 'Blog',
 		description: 'Stay up to date with our latest news and articles.',
 		href: '/blog'
@@ -25,11 +30,6 @@ const resources = [
 		name: 'Jobs',
 		description: 'See our current job openings and apply for a position.',
 		href: 'https://www.ycombinator.com/companies/windmill/jobs'
-	},
-	{
-		name: 'Changelog',
-		description: 'See the latest changes to Windmill.',
-		href: '/changelog'
 	}
 ];
 
