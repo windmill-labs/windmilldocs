@@ -2,6 +2,8 @@ import DocCard from '@site/src/components/DocCard';
 
 # Deploy to Prod using a Git Workflow
 
+Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps.
+
 The integration with git works in three-folds:
 
 1. GitHub Action + [CLI](../../cli_local_dev/index.mdx): upon any commit to a particular branch, the GitHub action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push` ([free & open source](/pricing))

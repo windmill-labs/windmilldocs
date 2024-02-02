@@ -29,7 +29,7 @@ It works as follows:
 
 - 2 different workspaces exist in Windmill: one for Staging and one for Prod, and a Git repository that has been set to sync the Windmill Staging workspace.
 - Some developers work from their favorite IDE. They can create new Windmill scripts and flows, edit existing ones, and push them to the Staging repository. Some developers can work directly in Windmill's web IDE. All of this happens in the Staging workspace.
-- Every time a script or a flow is deployed in the Staging workspace, Windmill will automatically commit the change to the Git repository. It can either commit directly to a specific (i.e. `staging`) branch, or open PRs to this branch (one PR per script/flow).
+- Every time a script or a flow is deployed in the Staging workspace, Windmill will automatically commit the change to the Git repository using [Git Sync](../11_git_sync/index.mdx). It can either commit directly to a specific (i.e. `staging`) branch, or open PRs to this branch (one PR per script/flow).
 - Within the Git repository, every time the `staging` branch is merged into the production branch (i.e. `main`), all the changes are pushed at once the the Windmill Production workspace.
 
 To summarize, developers operate only in Windmill Staging workspace. Windmill Production workspace is updated only by the CI when the Git staging branch is merged into the production branch.
@@ -58,7 +58,11 @@ Local development quickstart:
 	src="/videos/local_dev_quickstart.mp4"
 />
 
-#### Setting up the workspace folder
+<br/>
+
+All details and commands are available [below](#editing-and-creating-scripts-locally).
+
+### Setting up the workspace folder
 
 Developing Windmill scripts and flows from your favorite IDE is made easy by using Windmill CLI. Here we will go through the full process of cloning a Windmill workspace locally, creating and editing new scripts and flows, and pushing them back the Windmill workspace.
 
@@ -103,7 +107,7 @@ The metadata file schema is available [here](../../core_concepts/13_json_schema_
 
 :::
 
-#### Editing and creating scripts locally
+### Editing and creating scripts locally
 
 To summarize, here are the canonical process for scripts (details below):
 
@@ -204,7 +208,19 @@ More info [here](../../core_concepts/13_json_schema_and_parsing/index.md).
 
 </details>
 
-Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx):
+Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
+
+:::tip CLI Bootstrap
+
+Windmill CLI also has a `bootstrap` command (both for `wmill script` and `wmill flow`) which can be used to create a new script in the desired language or flow. All files will be automatically created and the script content will be a simply "Hello world" in the desired language, which can then be updated.
+
+:::
+
+Lastly, it is possible to execute scripts locally and even plug them to any unit testing framework. More info on the [Run locally documentation page](../4_local_development/run_locally.mdx).
+
+### VS Code Extension
+
+The Windmill VS Code extension allows you to build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -216,17 +232,9 @@ Flows can be more difficult to edit at the beginning because ones need to be fam
 
 ![VS Code Extension](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code Extension')
 
-:::tip CLI Bootstrap
-
-Windmill CLI also has a `bootstrap` command (both for `wmill script` and `wmill flow`) which can be used to create a new script in the desired language or flow. All files will be automatically created and the script content will be a simply "Hello world" in the desired language, which can then be updated.
-
-:::
-
-Lastly, it is possible to execute scripts locally and even plug them to any unit testing framework. More info on the [Run locally documentation page](../4_local_development/run_locally.mdx).
-
 ## Deploy from Github/Gitlab with Staging/Prod
 
-Syncing directly from the CLI is great, but instead of using the CLI directly, you should combine it with your CI/CD and set up a full productive Git workflow with a Staging and Prod workspaces. See more details here:
+Syncing directly from the CLI is great, but instead of using the CLI directly, you should combine it with your CI/CD and set up a full productive Git workflow with a Staging and Prod workspaces and [Git Sync](../11_git_sync/index.mdx). See more details here:
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
