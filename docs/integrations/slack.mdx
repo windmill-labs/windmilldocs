@@ -27,8 +27,8 @@ src="/videos/slack_script.mp4"
 
 First, you need to be a **workspace admin**. Then you
 should go to
-[workspace settings page](https://app.windmill.dev/workspace_settings) and
-select the "Slack Command" tab. On there, click "Connect to Slack".
+<a href="https://app.windmill.dev/workspace_settings" rel="nofollow">Workspace Settings Page</a>
+and select the "Slack Command" tab. On there, click "Connect to Slack".
 
 :::info Self-hosted
 
@@ -48,7 +48,7 @@ src="/videos/adding_slack_resource.mp4"
 
 :::note
 
-At the time of writing, Slack cautiones that Windmill is not an approved app. We
+At the time of writing, Slack cautions that Windmill is not an approved app. We
 are working on getting the app approved but you can safely ignore it for now.
 
 :::
@@ -73,10 +73,12 @@ export async function main(
   });
   const username = await Deno.env.get('WM_USERNAME')
   console.log(`user = ${username}`)
+}
 ```
 
 After the Script is deployed, navigate back to the
-[Slack settings][wm-slack-settings], choose the "Script" option for adding a
+<a href="https://app.windmill.dev/workspace_settings?tab=slack" rel="nofollow">Slack settings</a>,
+choose the "Script" option for adding a
 command handler and select your newly created Script.
 
 ![Connected settings](../assets/integrations/slack-3-connected.png.webp)
@@ -137,7 +139,8 @@ We cover in a [subsequent article](/blog/handler-slack-commands) how to manage m
 
 ### Monitor who ran the command
 
-You can see who ran the `/windmill` command by going to the [Runs page][wm-runs]
+You can see who ran the `/windmill` command by going to the
+<a href="https://app.windmill.dev/runs" rel="nofollow">Runs page</a>
 on Windmill. The runs will be permissioned through the `g/slack` global group.
 
 ![Run info](../assets/integrations/slack-6-run-info.png.webp)
@@ -168,7 +171,7 @@ will console.log `user = username`, username being the Slack username.
 The second way to make Slack and Windmill interact is through scripts triggered from Windmill to the Slack API. In other words, our goal here is to allow Windmill Scripts
 acting on Slack on your behalf.
 
-Lets navigate to the [Resources][wm-resource] page and click "Add a
+Lets navigate to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources page</a> page and click "Add a
 resource/API".
 
 :::info
@@ -180,7 +183,7 @@ You can read more about Resources in the documentation [here][docs-resource].
 ![Create Slack resource](../assets/integrations/slack-7-resources.png.webp)
 
 Select the `slack` Resource Type from the "OAuth APIs" list and by clicking
-"Connect", you will be redirected to the Slack accounted associated with your browser. Click "Allow" to let
+"Connect", you will be redirected to the Slack account associated with your browser. Click "Allow" to let
 Windmill access your Slack workspace. Once that's done, you will be redirected
 back to Windmill, where you can name your Slack Resource and Save it.
 
@@ -251,10 +254,6 @@ More details on [Error Handling](../core_concepts/10_error_handling/index.mdx) p
 
 <!-- Links -->
 
-[wm-slack-settings]: https://app.windmill.dev/workspace_settings?tab=slack
-[wm-runs]: https://app.windmill.dev/runs
-[wm-resource]: https://app.windmill.dev/resources
-[wm-home]: https://app.windmill.dev
 [hub-slack]: https://hub.windmill.dev/integrations/slack
 [hub-script]: https://hub.windmill.dev/scripts/slack/649/list-users-slack
 [docs-resource]: /docs/core_concepts/resources_and_types

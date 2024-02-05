@@ -12,4 +12,4 @@ Search any scripts, flows, resources, apps for a specific string similar to GitH
 
 <br/>
 
-This feature is [Cloud & Enterprise Self-Hosted](../../misc/7_plans_details/index.mdx) only.
+This feature is [Cloud & Enterprise Self-Hosted](/pricing) only.

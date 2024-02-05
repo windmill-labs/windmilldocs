@@ -291,7 +291,7 @@ const sections = [
 			},
 			{
 				name: 'Number of workspaces',
-				tiers: { 'Free and Open-source': '3', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: 'Unlimited', Team: 'Unlimited' }
+				tiers: { 'Free and Open-source': '3', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '1' }
 			},
 			{
 				name: 'Variables, resources, scripts, apps, flows',
@@ -325,7 +325,7 @@ const sections = [
 			{
 				name: 'S3 integration (>50mb upload)',
 				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
-				link: '/docs/core_concepts/persistent_storage#large-data-files-s3-r2-minio'
+				link: '/blog/launch-week-1/data-pipeline-orchestrator'
 			},
 			{
 				name: 'Commercial licence',
@@ -347,7 +347,7 @@ const sections = [
 				link: '/docs/misc/saml_and_scim'
 			},
 			{
-				name: 'Support levels',
+				name: 'Support level',
 				tiers: { 'Free and Open-source': 'Community support on Discord', Pro: '24/7 Priority Support with 48h Response & Engineer Assistance', Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance', Community: 'Community support on Discord', Team: '24/7 Priority Support with 48h Response & Engineer Assistance' },
 				link: '/docs/misc/support_and_sla'
 			},

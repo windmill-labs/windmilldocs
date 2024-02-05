@@ -1,6 +1,8 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-# Approval Steps / Suspend in Flows
+# Suspend & Approval / Prompts
 
 Flows can be suspended until resumed or cancelled event(s) are received. This
 feature is most useful to implement approval steps but can be used for other
@@ -97,28 +99,114 @@ You can use the arguments values [connecting](./16_architecture.mdx#input-transf
 
 This is a way to introduce human-in-the-loop workflows and condition branches on approval steps inputs.
 
-### How to add dynamic default args & enums?
+### Prompts
 
-On your form, you can dynamically set the default arguments and enums with the logic of the approval script.
-Which means they can depend on previous results/API.
+A prompt is simply an approval step that can be self-approved. To do this, include the resume url in the returned payload of the step. The UX will automatically adapt and show the prompt to the operator when running the flow. e.g:
+
+<Tabs className="unique-tabs">
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from "npm:windmill-client@^1.158.2"
+    
+export async function main() {
+    const resumeUrls = await wmill.getResumeUrls("approver1")
+
+    return {
+        resume: resumeUrls['resume']
+        default_args: {}, // optional
+        enums: {} // optional
+    }
+}
+```
+</TabItem>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from "windmill-client"
+        
+export async function main() {
+    const resumeUrls = await wmill.getResumeUrls("approver1")
+
+    return {
+        resume: resumeUrls['resume']
+        default_args: {}, // optional
+        enums: {} // optional
+    }
+}
+```
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+
+def main():
+    urls = wmill.get_resume_urls()
+    return {
+        "resume": urls["resume"]
+        "default_args": {}, # optional
+        "enums": {} # optional
+    }
+```
+</TabItem>
+</Tabs>
+
+In the video below, you can see a user creating an approval step within a flow including the resume url in the returned payload of the step.
+Then another user ([operator](../core_concepts/16_roles_and_permissions/index.mdx#roles-in-windmill), since is only "Viewer" in the [folder](../core_concepts/8_groups_and_folders/index.mdx) of the flow), runs the flow and sees the prompt automatically shown when running the flow.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    src="/videos/prompt_example.mp4"
+/>
+
+<br/>
+
+### Default args
 
 As one of the return key of this step, return an object `default_args` that contains the default arguments of the form arguments. e.g:
 
-```
-return {
-	endpoints,
-	default_args: {
-		foo: "foo",
-		bar: true,
-	},
-}
+```ts
+//this assumes the Form tab has a string field named "foo" and a checkbox named "bar"
 
-For enums, use `enums`, e.g:
-return {
-	endpoints,
-	enums: {
-		foo: ["choice1", "choice2"]
-	},
+import * as wmill from "npm:windmill-client@^1.158.2"
+
+export async function main() {
+    // if no argument is passed, if user is logged in, it will use the user's username
+    const resumeUrls = await wmill.getResumeUrls("approver1") 
+
+    // send the resumeUrls to the recipient or see Prompt section above
+
+    return {
+        default_args: {
+            foo: "foo",
+            bar: true
+        }
+    }
+}
+```
+
+### Dynamics enums
+
+As one of the return key of this step, return an object `enums` that contains the default arguments of the form arguments. e.g:
+
+```ts
+//this assumes the Form tab has a string field named "foo"
+
+import * as wmill from "npm:windmill-client@^1.158.2"
+
+export async function main() {
+    // if no argument is passed, if user is logged in, it will use the user's username
+    const resumeUrls = await wmill.getResumeUrls("approver1") 
+
+    // send the resumeUrls to the recipient or see Prompt section above
+
+    return {
+        enums: {
+            foo: ["choice1", "choice2"]
+        },
+    }
 }
 ```
 

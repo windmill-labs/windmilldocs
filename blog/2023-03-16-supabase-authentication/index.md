@@ -600,7 +600,6 @@ navigated to the "Data" tab.
 [tera]: https://www.teracapital.com.br/
 [hub]: https://hub.windmill.dev
 [hub-resources]: https://hub.windmill.dev/resources
-[app]: https://app.windmill.dev/
 [js-template-string]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
 [supabase-auth-fe-example]: https://hub.windmill.dev/apps/9/supabase-authentication-example---frontend-scripts-version
 [supabase-auth-be-example]: https://hub.windmill.dev/apps/11/supabase-authentication-example---backend-scripts-version
