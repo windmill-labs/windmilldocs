@@ -6,7 +6,7 @@ The Concurrency Limit operates globally and across flow runs. It involves two ke
 
 When jobs reach the concurrency limit, they are automatically queued for execution at the next available optimal slot given the time window.
 
-Concurrency limit is a [Cloud and Pro & Enterprise Self-Hosted](../../misc/7_plans_details/index.mdx) only.
+Concurrency limit is a [Cloud and Pro & Enterprise Self-Hosted](/pricing) only.
 
 ## Concurrency limit of Script
 

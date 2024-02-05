@@ -20,7 +20,7 @@ It showcases a variety of features that are available in the Windmill app builde
 
 :::tip
 
-This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be used on our [Demo workspace](https://app.windmill.dev/user/login) with the proper Supabase integration.
+This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be used on our <a href="https://app.windmill.dev/" rel="nofollow">Demo Workspace</a> with the proper Supabase integration.
 
 :::
 

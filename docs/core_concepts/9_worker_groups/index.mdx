@@ -16,7 +16,7 @@ By default, every worker is the same and interchangeable. However, there are oft
 
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
-In the [Community Edition](../../misc/7_plans_details/index.mdx), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
+In the [Community Edition](/pricing), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -28,7 +28,7 @@ In the [Community Edition](../../misc/7_plans_details/index.mdx), worker managem
 
 <br />
 
-In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups, groups for which you can manage the tags they listen to, assignment to a single script, or the worker init scripts, from the UI.
+In the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups, groups for which you can manage the tags they listen to, assignment to a single script, or the worker init scripts, from the UI.
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -162,7 +162,7 @@ Use the edit/create config next to the worker group name in Windmill UI:
 
 ![Worker group config](../../../static/images/worker_group_config.png 'Worker group config')
 
-**Note**: The worker group management UI is an [enterprise only](../../misc/7_plans_details/index.mdx) feature. It is still possible to use worker groups with the community edition by passing to each worker the env variable `WORKER_TAGS`:
+**Note**: The worker group management UI is a [Cloud plans & Self-Hosted Enterprise Edition](/pricing) feature. It is still possible to use worker groups with the community edition by passing to each worker the env variable `WORKER_TAGS`:
 
 ```
 WORKER_TAGS=tag1,tag2
@@ -211,9 +211,9 @@ See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow 
 
 <br />
 
-In the [Enterprise Edition](../../misc/7_plans_details/index.mdx), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups, groups for which you can manage the tags they listen to (queue), assignment to a single script, or the worker init scripts, from the UI.
+In the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups, groups for which you can manage the tags they listen to (queue), assignment to a single script, or the worker init scripts, from the UI.
 
-> In [Community Edition](../../misc/7_plans_details/index.mdx) Workers can still have their WORKER_TAGS passed as env.
+> In [Community Edition](/pricing) Workers can still have their WORKER_TAGS passed as env.
 
 <br />
 
@@ -237,7 +237,7 @@ Examples of configurations include:
 
 [Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
-Under the [Enterprise Edition](../../misc/7_plans_details/index.mdx), they can be set from Windmill UI.
+Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), they can be set from Windmill UI.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
 	<img
@@ -263,7 +263,7 @@ Under the [Enterprise Edition](../../misc/7_plans_details/index.mdx), they can b
 Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
-Dedicated Workers / High Throughput is an [Enterprise & Team Edition](../../misc/7_plans_details/index.mdx) feature.
+Dedicated Workers / High Throughput is a [Cloud plans & Self-Hosted Enterprise Edition](/pricing) feature.
 
 ![Dedicated Workers Infographics](../25_dedicated_workers/infographic.png 'Dedicated Workers Infographics')
 
