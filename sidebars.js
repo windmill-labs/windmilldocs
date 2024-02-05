@@ -548,6 +548,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/microsoft-azure-blob',
+							label: 'Microsoft Azure Blob'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/mongodb',
 							label: 'MongoDB'
 						},

@@ -7,12 +7,18 @@ import TabItem from '@theme/TabItem';
 In Windmill, JSON is the primary data format used for representing information.
 Binary data, such as files, are not easily to handle. Windmill provides two options.
 
-1. Have a dedicated storage for binary data: S3. Windmill has a first class integration with S3 buckets.
-2. If S3 is not an option, there's always the possibility to store the binary as base64 encoded string.
+1. Have a dedicated storage for binary data: S3 or Azure Blob. Windmill has a first class integration with S3 buckets or Azure Blob containers.
+2. If the above is not an option, there's always the possibility to store the binary as base64 encoded string.
 
-### Windmill integration with S3
+### Windmill integration with S3 or Azure Blob Storage
 
-The recommended way to store binary data is to upload it to S3 leveraging Windmill native S3 integration.
+The recommended way to store binary data is to upload it to S3 leveraging Windmill's native integrations.
+
+::: info
+
+Windmill's integration with S3 and Azure Blob Storage works exactly the same and the features described below works in both cases. The only difference is that you need to select an `azure_blob` resource when setting up the S3 storage in the Workspace settings.
+
+:::
 
 By [setting a S3 resource for the workspace](/docs/core_concepts/data_pipelines#windmill-integration-with-an-external-s3-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
 
@@ -37,12 +43,16 @@ import * as wmill from 'windmill-client';
 import { S3Object } from 'windmill-client';
 
 export async function main(input_file: S3Object) {
-	// file_content is a Uint8Array
+	// Load the entire file_content as a Uint8Array
 	const file_content = await wmill.loadS3File(input_file);
 
 	const decoder = new TextDecoder();
 	const file_content_str = decoder.decode(file_content);
 	console.log(file_content_str);
+
+	// Or load the file lazily as a Blob
+	let fileContentBlob = await wmill.loadS3FileStream(inputFile);
+	console.log(await fileContentBlob.text());
 }
 ```
 
@@ -55,12 +65,16 @@ import * as wmill from 'npm:windmill-client@1.253.7';
 import S3Object from 'npm:windmill-client@1.253.7';
 
 export async function main(input_file: S3Object) {
-	// file_content is a Uint8Array
+	// Load the entire file_content as a Uint8Array
 	const file_content = await wmill.loadS3File(input_file);
 
 	const decoder = new TextDecoder();
 	const file_content_str = decoder.decode(file_content);
 	console.log(file_content_str);
+
+	// Or load the file lazily as a Blob
+	let fileContentBlob = await wmill.loadS3FileStream(inputFile);
+	console.log(await fileContentBlob.text());
 }
 ```
 
@@ -75,9 +89,13 @@ import wmill
 from wmill import S3Object
 
 def main(input_file: S3Object):
-    # file_content is a bytes array
+    # Load the entire file_content as a bytes array
     file_content = wmill.load_s3_file(input_file)
     print(file_content.decode('utf-8'))
+
+    # Or load the file lazily as a Buffered reader:
+    with wmill.load_s3_file_reader(input_file) as file_reader:
+        print(file_reader.read())
 ```
 
 </TabItem>

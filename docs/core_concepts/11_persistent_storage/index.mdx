@@ -186,15 +186,15 @@ Keep in mind that the contents of the `./shared` folder are not preserved across
 
 :::
 
-## Large Data Files: S3, R2, MinIO
+## Large Data Files: S3, R2, MinIO, Azure Blob
 
-On heavier data objects & unstructured data storage, Amazon S3 (Simple Storage Service) and its alternatives Cloudflare R2 and MinIO are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
+On heavier data objects & unstructured data storage, Amazon S3 (Simple Storage Service) and its alternatives Cloudflare R2 and MinIO as well as Azure Blob storage are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
 
-Windmill comes with a native integration with S3, making it the recommended storage for large objects like files and binary data.
+Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data.
 
-### Use Amazon S3, R2 and MinIO directly
+### Use Amazon S3, R2, MinIO and Azure Blob directly
 
-Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/).
+Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/). Azure Blob has a slightly different API than S3 but works with Windmill as well using its dedicated [resource type](https://hub.windmill.dev/resource_types/137/)
 
 #### Amazon S3
 
@@ -240,9 +240,21 @@ For best performance, [install MinIO locally](https://min.io/docs/minio/kubernet
 
 Then from Windmill, just [fill the S3 resource type](../../integrations/s3.md).
 
-### Connect your Windmill workspace to your S3 bucket
+#### Azure Blob
 
-Once you've created an S3 resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+[Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) is Microsoft's alternative to S3. It serve the same purpose but has a slightly different API.
+
+1. Go to your Azure Portal and go to the "Storage account" application
+
+2. Either select an existing account of create a new one
+
+3. Under the account, go to "Containers" in the left menu bar and create a new one. Azure's containers are roughly the equivalent of an S3 bucket. Note though that secret access key are per account, not per container.
+
+4. [Integrate it to Windmill](../../integrations/microsoft-azure-blob.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/137) for Azure Blob APIs.
+
+### Connect your Windmill workspace to your S3 bucket or you Azure Blob storage
+
+Once you've created an S3 or Azure Blob resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
 ![S3 storage workspace settings](./workspace_settings.png)
 
