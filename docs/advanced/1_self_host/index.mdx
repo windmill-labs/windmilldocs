@@ -153,7 +153,7 @@ GRANT windmill_admin TO <user used in database_url>;
 GRANT windmill_user TO <user used in database_url>;
 ```
 
-If you cannot use BYPASSRLS (for instance on Azure PostgreSQL), see this [workaround](https://github.com/windmill-labs/windmill/issues/2345#issuecomment-1739777068)
+If you cannot use BYPASSRLS (for instance on Azure PostgreSQL), on EE, pass `MIGRATION_NO_BYPASSRLS=true` to your servers, otherwise see this [workaround](https://github.com/windmill-labs/windmill/issues/2345#issuecomment-1739777068)
 :::
 
 ### Set number of replicas accordingly in docker-compose
