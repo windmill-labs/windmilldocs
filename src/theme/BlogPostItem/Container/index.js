@@ -3,7 +3,7 @@ import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
 import { useBlogPost } from '@docusaurus/theme-common/internal';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, FileText } from 'lucide-react';
 import { Archive, Blocks, Sparkles } from 'lucide-react';
 import Head from '@docusaurus/Head';
 import { twMerge } from 'tailwind-merge';
@@ -15,7 +15,7 @@ export default function BlogPostItemContainer({ children, className }) {
 
 	const isChangelog = window.location.pathname.includes('/changelog');
 
-	const defaultTitle = "Windmill | Changelog";
+	const defaultTitle = "Changelog | Windmill";
     const defaultDescription = "See what's new with Windmill.";
 
     const isFeaturePage = window.location.pathname.includes('/changelog/') && frontMatter.slug;
@@ -42,19 +42,27 @@ export default function BlogPostItemContainer({ children, className }) {
 						{metadata.title}
 					</a>
 				</h3>
-					{metadata?.tags.map((tag, index) => (
+				{metadata?.tags.map((tag, index) => (
 						<span
 							key={tag + index}
 							className={
 								'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium ' +
-								(tag.label === 'App'
+								(tag.label === 'App Editor'
 									? 'bg-orange-100 text-orange-800'
 									: tag.label === 'Flow'
 									? 'bg-emerald-100 text-emerald-800'
+									: tag.label === 'Enterprise & Cloud'
+									? 'bg-gray-50 text-blue-900'
 									: 'bg-blue-100 text-blue-800')
 							}
 						>
-							{tag.label}
+							{tag.label === 'Enterprise & Cloud' ? (
+								<a href="/pricing" className="text-blue-900 hover:text-blue-700">
+									{tag.label}
+								</a>
+							) : (
+								tag.label
+							)}
 						</span>
 					))}
 					<span
@@ -67,16 +75,20 @@ export default function BlogPostItemContainer({ children, className }) {
 					</span>
 				</div>
 				<div className="mb-6">
-					<div className="flex items-center">
-						<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
-							{new Date(metadata.date).toLocaleDateString()} |{' '}
-						</p>
-						{frontMatter.docs && (
-							<a href={frontMatter.docs} className="text-base dark:text-gray-300 text-gray-600">
-								Docs
-							</a>
-						)}
-					</div>
+				<div className="flex items-center">
+					<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
+						{new Date(metadata.date).toLocaleDateString()} |{' '}
+					</p>
+					{frontMatter.docs && (
+						<button
+							className="hover:bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:hover:bg-slate-800 px-2.5 py-1 rounded-xl text-xs text-gray-600 dark:text-gray-200"
+							onClick={() => window.location.href = frontMatter.docs}
+						>
+							<FileText className="inline mr-2" aria-hidden="true" style={{ width: '14px', height: '14px' }} />
+							<span className="align-middle">Docs</span>
+						</button>
+					)}
+				</div>
 				</div>
 				<img
 					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"

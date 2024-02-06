@@ -49,7 +49,7 @@ On EE, go to `Instance settings -> Core -> NPM Config Registry`.
 
 Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
 
-#### Private NPM packages requiring token
+#### Private npm packages requiring token
 
 :::caution
 
