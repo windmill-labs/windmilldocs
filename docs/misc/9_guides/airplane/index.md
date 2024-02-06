@@ -78,7 +78,7 @@ From a workspace in Windmill, you can deploy a script/flow/resource/variable and
 
 <br/>
 
-Deploy to Staging/Prod Web UI is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+Deploy to Staging/Prod Web UI is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 More details at:
 
@@ -102,7 +102,7 @@ The process is as follows:
 
 This gives the flexibility to fully test new Windmill scripts, flows and apps, while having them version-controlled and deployed in an automated way to the production environment.
 
-Deploy to Prod using a Git Workflow is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+Deploy to Prod using a Git Workflow is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 More details at:
 
@@ -142,7 +142,7 @@ The first 5 minutes of this video show how to set up a Git repository for a work
 
 <br/>
 
-Git Sync is [Cloud and Self-Hosted Enterprise Edition](/pricing) only.
+Git Sync is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 More details at:
 
@@ -363,7 +363,17 @@ It is also possible to define the flows as code in YAML through the [VS Code ext
 
 <br/>
 
-For approval flows, Windmill uses [Approval Steps](https://www.windmill.dev/docs/flows/flow_approval) that will suspend the execution of a flow until it has been approved through the resume endpoints or the approval page by and solely by the recipients of the secret urls.
+For approval flows, Windmill uses [Approval Steps](/docs/flows/flow_approval) that will suspend the execution of a flow until it has been approved through the resume endpoints or the approval page by and solely by the recipients of the secret urls.
+
+You can then have a [Windmill equivalent of prompts](/docs/flows/flow_approval#prompts) with a custom form to your approval step that the UI shows to operators when running:
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full"
+    controls
+    src="/videos/prompt_example.mp4"
+/>
+
+<br/>
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

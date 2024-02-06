@@ -22,14 +22,12 @@ rights. Some experience with [Windmill](/docs/intro) helps, but not required.
 
 :::tip
 
-[Supabase Database Webhooks][supabase-webhook] allow you to send real-time data
-from your database to Windmill whenever a table event occurs. You can hook into
-three table events: `INSERT`, `UPDATE`, and `DELETE`. All events are fired after
-a database row is changed.
+[Supabase Database Webhooks](https://supabase.com/docs/guides/database/webhooks) allow you to send real-time data from your database to Windmill whenever a table event occurs.
+You can hook into three table events: `INSERT`, `UPDATE`, and `DELETE`. All events are fired after a database row is changed.
 
 :::
 
-We will leverage [Windmill Webhooks][docs-webhook] that allow triggering
+We will leverage [Windmill Webhooks](/docs/core_concepts/webhooks) that allow triggering
 Windmill Scripts and Flows via `HTTP POST` requests.
 
 ## Create Windmill Script
@@ -147,9 +145,3 @@ payload passed to the Script:
 Now you know what kind of information is transmitted from Supabase, so feel free
 to check how the payload values change on the `UPDATE` and `DELETE` events or
 just customize the Script to your needs straight away!
-
-<!-- Links -->
-
-[wm-runs]: https://app.windmill.dev/runs
-[supabase-webhook]: https://supabase.com/docs/guides/database/webhooks
-[docs-webhook]: /docs/core_concepts/webhooks

@@ -50,7 +50,7 @@ To safely use secret values throughout Windmill, you can save them in
 want an integration to be supported by Windmill directly, please submit a new
 `resource type` on [Windmill Hub](https://hub.windmill.dev/resources).
 
-**Navigate to the [Resources](https://app.windmill.dev/resources) page**
+**Navigate to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources page</a> page**
 ![Resources page](../assets/integrations/sb-2-1-resources.png.webp)
 
 **Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png.webp)

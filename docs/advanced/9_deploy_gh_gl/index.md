@@ -46,7 +46,7 @@ More details at:
 
 ## Git Sync
 
-Deploying to a prod workspace using git requires the [Git Sync](../11_git_sync/index.mdx) feature, which is is a [Cloud and Self-Hosted Enterprise Edition](/pricing)-only feature.
+Deploying to a prod workspace using git requires the [Git Sync](../11_git_sync/index.mdx) feature, which is is a [Cloud plans and Self-Hosted Enterprise Edition](/pricing)-only feature.
 
 From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
 

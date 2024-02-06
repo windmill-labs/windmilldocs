@@ -9,7 +9,7 @@ const faqs = [
 		answer: (
 			<span>
 				The Pro plan is only available in Self-hosted for: <br />- Businesses with less than 10
-				employees and 250k revenues<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits
+				employees and $250k revenues<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits
 				of workers & users) <br />
 				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
