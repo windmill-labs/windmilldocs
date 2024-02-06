@@ -2,7 +2,7 @@
 slug: decision-tree
 version: v1.227.0
 title: Decision Tree
-tags: ['Windmill', 'App', 'Component']
+tags: ['App Editor', 'Component']
 image: ./decision-tree.png
 description: This component allows you to create a decision tree. The decision tree is controlled by a flow-like structure. Each node in the tree represents a decision point and can lead to one or more subsequent nodes based on specified conditions.
 features:

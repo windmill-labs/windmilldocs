@@ -7,7 +7,7 @@ The strength of Windmill's app editor is the ability to connect everything toget
 - components [can be linked to each other](./2_connecting_components/index.mdx)
 - components can be directly [linked to scripts](#inline-scripts) and trigger them
 - [background runnables](#background-runnables) can be that are run in the background on app refresh on when an input changes
-- [frontend scripts](#evals) can be used to manipulate the client app state
+- [evals](#evals) can be used to manipulate the client app state
 
 On the bottom of the app editor, you can find the runnable editor. The runnable editor is a [code editor](../code_editor/index.mdx) that allows to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
@@ -51,6 +51,8 @@ There are 5 types of runnables:
 
 They provide interactivity to your app.
 
+![Types of runnables](../assets/apps/0_app_editor/app_scripts.png)
+
 ### Inline scripts
 
 Inline scripts are scripts that are defined on the app editor.
@@ -58,7 +60,7 @@ They can be either attached to a component or detached.
 
 ### Frontend scripts
 
-Frontend scripts are scripts that are executed on the browser.
+Frontend scripts are JavaScripts that are executed on the browser.
 
 ### Background runnables
 
@@ -105,7 +107,7 @@ There are several ways to create runnables:
 
 When you create an inline script attached to a component or a background script, the first thing you need to do is to choose the language of the script.
 
-![App Choose Language](../assets/apps/0_app_editor/app-choose-language.png.webp)
+![Types of runnables](../assets/apps/0_app_editor/app_scripts.png)
 
 The outputs of your script [can be used](./2_connecting_components/index.mdx) by other scripts or components:
 
@@ -227,9 +229,9 @@ In the above example, the result of step the script will be cached for 5 minutes
 
 ## Frontend scripts helpers
 
-We expose a few functions and global objects to help you interact with the app from a frontend script.
+We expose a few functions and global objects to help you interact with the app from a [frontend script](#frontend-scripts).
 
-#### Context
+### ctx
 
 You can access the context object with the `ctx` global variable.
 
@@ -239,7 +241,7 @@ console.log(ctx.email);
 
 Context objects can be seen on the [Output menu](./2_outputs.mdx).
 
-#### State
+### state
 
 The app state is a client-side store that can be used to store data.
 
@@ -255,17 +257,17 @@ You can update the state directly by manipulating the `state` object.
 state.foo = 'bar';
 ```
 
-#### goto
+### goto
 
 Use the `goto` function to navigate to a specific URL.
 
-##### Syntax
+Syntax:
 
 ```js
 goto(path: string, newTab?: boolean)
 ```
 
-##### Parameters
+Parameters:
 
 `path`
 The URL to navigate to.
@@ -273,127 +275,136 @@ The URL to navigate to.
 `newTab` (optional)
 Whether to open the URL in a new tab or not.
 
-##### Example
+Example:
 
 ```js
 goto('/apps/1');
 goto('https://www.windmill.dev/', true);
 ```
 
-#### setTab
+### setTab
 
 Use the `setTab` function to manually set the tab of a Tab component.
 
-##### Syntax
+This works for all components that have multiple tabs ([Tabs](./4_app_configuration_settings/tabs.mdx), [Conditional tabs](./4_app_configuration_settings/conditional_tabs.mdx), [Sidebar Tabs](./4_app_configuration_settings/sidebar_tabs.mdx), [Invisible Tabs](./4_app_configuration_settings/invisible_tabs.mdx), [Stepper](./4_app_configuration_settings/stepper.mdx), [Decision Tree](./4_app_configuration_settings/stepper.mdx)).
+
+Syntax:
 
 ```js
 setTab(id: string, index: string)
 ```
 
-##### Parameters
+Parameters:
 
-`id` string
-The tab to set.
+`id` string: The id of the component.
 
-`index` string
-The index of the tab to set.
+`index` string: The index of the tab to set.
 
-##### Example
+Example:
 
 ```js
-setTab('a', '1');
+setTab('a', 1);
 ```
 
-#### openModal
+Where 'a' is the id of the component and 1 is the index of the tab to set.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/setTab.mp4"
+/>
+<br/>
+
+### openModal
 
 Use the `openModal` function to open a modal.
 
-##### Syntax
+Syntax:
 
 ```js
 openModal(id: string)
 ```
 
-##### Parameters
+Parameters:
 
 `id` string
 The id of the modal component to open.
 
-##### Example
+Example:
 
 ```js
 openModal('a');
 ```
 
-#### closeModal
+### closeModal
 
 Use the `closeModal` function to close a modal.
 
-##### Syntax
+Syntax:
 
 ```js
 closeModal(id: string)
 ```
 
-##### Parameters
+Parameters:
 
 `id` string
 The id of the modal component to close.
 
-##### Example
+Example:
 
 ```js
 closeModal('a');
 ```
 
-#### recompute
+### recompute
 
 Use the `recompute` function to recompute a component.
 
-##### Syntax
+Syntax:
 
 ```js
 recompute(id: string)
 ```
 
-##### Parameters
+Parameters:
 
 `id` string
 The id of the component to recompute.
 
-##### Example
+Example:
 
 ```js
 recompute('a');
 ```
 
-#### getAgGrid
+### getAgGrid
 
 Use the `getAgGrid` function to get the ag-grid instance of a table.
 
-##### Syntax
+Syntax:
 
 ```js
 getAgGrid(id: string)
 ```
 
-#### setSelectedIndex
+### setSelectedIndex
 
 Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
 
-##### Syntax
+Syntax:
 
 ```js
 setSelectedIndex(id: string, index: number)
 ```
 
-#### setValue
+### setValue
 
 The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
 
 Note that it's a bad idea to mix dynamic default value and setValue together.
 
-#### validate
+### validate
 
 Validate a specific field of a form
 
@@ -401,7 +412,7 @@ Validate a specific field of a form
 validate(id: string, key: string)
 ```
 
-#### validateAll
+### validateAll
 
 Validate all fields of a form
 
@@ -409,7 +420,7 @@ Validate all fields of a form
 validateAll(id: string, key: string)
 ```
 
-#### invalidate
+### invalidate
 
 Invalidate a specific field of a form
 
@@ -417,7 +428,7 @@ Invalidate a specific field of a form
 invalidate(id: string, key: string, error: string)
 ```
 
-##### Parameters
+Parameters:
 
 `id` string
 

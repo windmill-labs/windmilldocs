@@ -405,14 +405,19 @@ const sections = [
 				link: '/docs/core_concepts/staging_prod'
 			},
 			{
-				name: 'Distributed dependency cache backed by S3',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
-				link: '/docs/misc/s3_cache'
+				name: 'Node.js compatibility',
+				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				link: '/docs/getting_started/scripts_quickstart/typescript#nodejs'
 			},
 			{
 				name: 'Agent Workers',
 				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
 				link: '/docs/core_concepts/agent_workers'
+			},
+			{
+				name: 'Distributed dependency cache backed by S3',
+				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
+				link: '/docs/misc/s3_cache'
 			},
 			{
 				name: 'Edit the wmill CLI binary',
