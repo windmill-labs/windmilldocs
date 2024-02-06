@@ -1,0 +1,37 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Alert
+
+The alert component allows you to display a message in 4 different styles: `info`, `success`, `warning`, and `error`.
+
+![Alert API](../../assets/apps/4_app_component_library/alert.png.webp)
+
+The following section details Alert component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div class="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App Editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
+</div>
+
+## Alert configuration
+
+| Name                |  Type   | Connectable | Templatable | Default | Description                                                             |
+| ------------------- | :-----: | :---------: | :---------: | :-----: | ----------------------------------------------------------------------- |
+| type                | string  |    false    |    false    | "info"  | The type of the alert. Can be `info`, `success`, `warning`, or `error`. |
+| title               | string  |    false    |    false    |   ""    | The title of the alert.                                                 |
+| description         | string  |    false    |    false    |   ""    | The description of the alert.                                           |
+| Not rounded         | boolean |    false    |    false    |  false  | Disable rounded corners.                                                |
+| tooltip             | string  |    false    |    false    |   ""    | The tooltip of the alert.                                               |
+| size                | string  |    false    |    false    | 'small' | The size of the alert. Can be `extra small` or `small`.                 |
+| collapsible         | boolean |    false    |    false    |  false  | Enable the alert to be collapsible.                                     |
+| Initially collapsed | boolean |    false    |    false    |  false  | Set the alert to be initially collapsed.                                |
