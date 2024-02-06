@@ -161,6 +161,7 @@ const sidebars = {
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
 								'apps/app_configuration_settings/agcharts',
+								'apps/app_configuration_settings/alert',
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
@@ -204,6 +205,7 @@ const sidebars = {
 								'apps/app_configuration_settings/select',
 								'apps/app_configuration_settings/sidebar_tabs',
 								'apps/app_configuration_settings/slider',
+								'apps/app_configuration_settings/date_slider',
 								'apps/app_configuration_settings/statistic_card',
 								'apps/app_configuration_settings/stepper',
 								'apps/app_configuration_settings/submit_form',
@@ -714,7 +716,7 @@ const sidebars = {
 						'misc/guides/table/index',
 						'misc/guides/airplane/index',
 						'misc/guides/sequin/index',
-						'misc/guides/app_send_email_smtp/index',
+						'misc/guides/app_send_email_smtp/index'
 					]
 				},
 				'misc/note_of_intent/index',
