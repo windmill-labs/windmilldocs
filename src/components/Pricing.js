@@ -59,24 +59,24 @@ const pricing = {
 					min: 1,
 					max: 10
 				}
+			},
+			features: [
+				{
+					text: (
+						<span>
+							Subset of <b className="text-teal-600">Enterprise</b> Plugins
+						</span>
+					)
 				},
-				features: [
-					{
-						text: (
-							<span>
-								Subset of <b className="text-teal-600">Enterprise</b> Plugins
-							</span>
-						)
-					},
-					{
-						text: (
-							<span>
-								Priority Support 24/7 with 48h response time and automation engineer assistance
-							</span>
-						)
-					},
-					{ text: 'Max 10 users with SSO' }
-				]
+				{
+					text: (
+						<span>
+							Priority Support 24/7 with 48h response time and automation engineer assistance
+						</span>
+					)
+				},
+				{ text: 'Max 10 users with SSO' }
+			]
 		},
 		{
 			name: 'Enterprise',
@@ -169,7 +169,8 @@ const pricing = {
 				}
 			},
 			minPrice: 10,
-			description: 'For small teams that want to automate their processes. Plan is at workspace level.',
+			description:
+				'For small teams that want to automate their processes. Plan is at workspace level.',
 			features: [
 				{
 					text: <span>Everything in free</span>
@@ -282,207 +283,412 @@ const sections = [
 		attributes: [
 			{
 				name: 'Executions per month',
-				tiers: { 'Free and Open-source': 'Unlimited', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: '1,000', Team: '10k per user' },
-				tooltip: 'Each vCPU can run up to ~26M jobs per month',
+				tiers: {
+					'Free and Open-source': 'Unlimited',
+					Pro: 'Unlimited',
+					Enterprise: 'Unlimited',
+					Community: '1,000',
+					Team: '10k per user'
+				},
+				tooltip: 'Each vCPU can run up to ~26M jobs per month'
 			},
 			{
 				name: 'Maximum number of seats',
-				tiers: { 'Free and Open-source': 'Unlimited', Pro: '10', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' }
+				tiers: {
+					'Free and Open-source': 'Unlimited',
+					Pro: '10',
+					Enterprise: 'Unlimited',
+					Community: 'Unlimited',
+					Team: '10'
+				}
 			},
 			{
 				name: 'Number of workspaces',
-				tiers: { 'Free and Open-source': '3', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '1' }
+				tiers: {
+					'Free and Open-source': '3',
+					Pro: 'Unlimited',
+					Enterprise: 'Unlimited',
+					Community: 'Unlimited',
+					Team: '1'
+				}
 			},
 			{
 				name: 'Variables, resources, scripts, apps, flows',
-				tiers: { 'Free and Open-source': 'Unlimited', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: 'Unlimited unless abuse', Team: 'Unlimited' }
+				tiers: {
+					'Free and Open-source': 'Unlimited',
+					Pro: 'Unlimited',
+					Enterprise: 'Unlimited',
+					Community: 'Unlimited unless abuse',
+					Team: 'Unlimited'
+				}
 			},
 			{
 				name: 'Groups, folders and granular permissions',
-				tiers: { 'Free and Open-source': 'Maximum 4 groups', Pro: 'Unlimited', Enterprise: 'Unlimited', Community: 'Unlimited', Team: 'Unlimited' },
+				tiers: {
+					'Free and Open-source': 'Maximum 4 groups',
+					Pro: 'Unlimited',
+					Enterprise: 'Unlimited',
+					Community: 'Unlimited',
+					Team: 'Unlimited'
+				},
 				link: '/docs/core_concepts/roles_and_permissions'
 			},
 			{
 				name: 'All open source features',
-				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': true,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts'
 			},
 			{
 				name: 'Public apps',
-				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': true,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/apps/public_apps'
 			},
 			{
 				name: 'Multiplayer on WebIDE',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/multiplayer'
 			},
 			{
 				name: 'Content Search',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/content_search'
 			},
 			{
 				name: 'S3 integration (>50mb upload)',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/blog/launch-week-1/data-pipeline-orchestrator'
 			},
 			{
 				name: 'Commercial licence',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				}
 			}
 		]
-		},
-		{
+	},
+	{
 		name: 'Security & Support',
 		attributes: [
 			{
 				name: 'Number of users with SSO',
-				tiers: { 'Free and Open-source': '10', Pro: '10', Enterprise: 'Unlimited', Community: 'Unlimited', Team: '10' },
+				tiers: {
+					'Free and Open-source': '10',
+					Pro: '10',
+					Enterprise: 'Unlimited',
+					Community: 'Unlimited',
+					Team: '10'
+				},
 				link: '/docs/core_concepts/authentification'
 			},
 			{
 				name: 'SAML & SCIM support including groups synchronization',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
 				link: '/docs/misc/saml_and_scim'
 			},
 			{
 				name: 'Support level',
-				tiers: { 'Free and Open-source': 'Community support on Discord', Pro: '24/7 Priority Support with 48h Response & Engineer Assistance', Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance', Community: 'Community support on Discord', Team: '24/7 Priority Support with 48h Response & Engineer Assistance' },
+				tiers: {
+					'Free and Open-source': 'Community support on Discord',
+					Pro: '24/7 Priority Support with 48h Response & Engineer Assistance',
+					Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance',
+					Community: 'Community support on Discord',
+					Team: '24/7 Priority Support with 48h Response & Engineer Assistance'
+				},
 				link: '/docs/misc/support_and_sla'
 			},
 			{
 				name: 'Design partners for roadmap',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false }
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				}
 			}
 		]
-		},
-		{
+	},
+	{
 		name: 'Observability',
 		attributes: [
 			{
 				name: 'Audit logs',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: 'Unlimited', Community: true, Team: 'Retained for 7 days' },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: 'Unlimited',
+					Community: true,
+					Team: 'Retained for 7 days'
+				},
 				link: '/docs/core_concepts/audit_logs'
 			},
 			{
 				name: 'Workspace Error Handler',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/error_handling'
 			},
 			{
 				name: 'Prometheus Metrics',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true }
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				}
 			}
 		]
-		},
-		{
+	},
+	{
 		name: 'Developers & Deployments',
 		attributes: [
 			{
 				name: 'Deployment on Fargate / Docker / Kubernetes',
-				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: false, Team: false },
+				tiers: {
+					'Free and Open-source': true,
+					Pro: true,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
 				link: '/docs/advanced/self_host',
 				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'Isolated & dedicated database network & vCPUs',
-				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: false, Team: false }
+				tiers: {
+					'Free and Open-source': true,
+					Pro: true,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				}
 			},
 			{
 				name: 'Deploy from GitHub',
-				tiers: { 'Free and Open-source': true, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': true,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/advanced/deploy_to_prod'
 			},
 			{
 				name: 'Git Sync',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/advanced/git_sync'
 			},
 			{
 				name: 'Deploy to Staging/Prod Web UI',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/staging_prod'
 			},
 			{
 				name: 'Distributed dependency cache backed by S3',
-				tiers: { 'Free and Open-source': false, Pro: false, Enterprise: true, Community: false, Team: false },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
 				link: '/docs/misc/s3_cache'
 			},
 			{
 				name: 'Agent Workers',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/agent_workers'
 			},
 			{
 				name: 'Edit the wmill CLI binary',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: false, Team: false },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
 				link: '/docs/advanced/cli/installation'
 			}
 		]
-		},
-		{
+	},
+	{
 		name: 'Performance',
 		attributes: [
 			{
 				name: 'Worker Group Management UI (including Init Scripts)',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/worker_groups'
 			},
 			{
 				name: 'Script-specific Workers (dedicated) / High Throughput',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/dedicated_workers'
 			},
 			{
 				name: 'Concurrency limits',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/core_concepts/concurrency_limits'
 			}
 		]
-		},
-		{
+	},
+	{
 		name: 'Flow Editor',
 		attributes: [
 			{
 				name: 'Adding forms to approval steps',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/flows/flow_approval'
 			},
 			{
 				name: 'Restart deployed flows from any node',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/blog/launch-week-1/restartable-flows'
 			}
 		]
-		},
-		{
+	},
+	{
 		name: 'App Editor',
 		attributes: [
 			{
 				name: 'Global CSS',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/apps/css_editor'
 			},
 			{
 				name: 'Send schedule reports of Apps (png or pdf) through Slack, Discord or Email',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/apps/schedule_reports'
 			},
 			{
 				name: 'License key for AgCharts and AgGrid',
-				tiers: { 'Free and Open-source': false, Pro: true, Enterprise: true, Community: true, Team: true },
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			}
 		]
-		}
+	}
 ];
 
 export default function Pricing() {
 	const [frequency, setFrequency] = useState(types[1]);
 	const [period, setPeriod] = useState(periods[0]);
 
-	const getPricingArray = () => {
+	const getPricingArray = (removePro) => {
+		console.log(frequency.value, removePro);
 		switch (frequency.value) {
 			case 'cloud':
 				return pricing.cloud;
@@ -490,7 +696,11 @@ export default function Pricing() {
 				return pricing.selfhost;
 			case 'selfhost':
 			default:
-				return pricing.selfhost;
+				if (removePro) {
+					return pricing.selfhost.filter((tier) => tier.name !== 'Pro');
+				} else {
+					return pricing.selfhost;
+				}
 		}
 	};
 	return (
@@ -690,76 +900,221 @@ export default function Pricing() {
 					))}
 				</div>
 			</div>
-			<div className="h-14"></div>
+			<div className="h-14 "></div>
 			{frequency.value !== 'whitelabel' && (
 				<div className="relative  dark:bg-gray-950 lg:pt-14">
 					<div className="mx-auto max-w-7xl px-6 py-1 lg:px-8">
-					{/* Feature comparison (up to lg) */}
-					<section aria-labelledby="mobile-comparison-heading" className="lg:hidden">
-						<h2 id="mobile-comparison-heading" className="sr-only">
-							Feature comparison
-						</h2>
+						{/* Feature comparison (up to lg) */}
+						<section aria-labelledby="mobile-comparison-heading" className="lg:hidden">
+							<h2 id="mobile-comparison-heading" className="sr-only">
+								Feature comparison
+							</h2>
 
-						<div className="mx-auto max-w-2xl space-y-16">
-							{getPricingArray().map((pricingItem) => (
-								<div key={pricingItem.id} className="border-t border-gray-900/10">
-									<div
-										className={classNames(
-											pricingItem.mostPopular
-												? 'border-blue-600'
-												: pricingItem.enterprise_edition
-												? 'border-teal-600'
-												: 'border-transparent',
-											'-mt-px w-72 border-t-2 pt-4 md:w-80'
-										)}
-									>
-										<h3
+							<div className="mx-auto max-w-2xl space-y-16">
+								{getPricingArray(true).map((pricingItem) => (
+									<div key={pricingItem.id} className="border-t border-gray-900/10">
+										<div
 											className={classNames(
 												pricingItem.mostPopular
-													? 'text-blue-600'
+													? 'border-blue-600'
 													: pricingItem.enterprise_edition
-													? 'text-teal-600'
-													: 'text-gray-900 dark:text-white',
-												'text-sm font-semibold leading-6'
+													? 'border-teal-600'
+													: 'border-transparent',
+												'-mt-px w-72 border-t-2 pt-4 md:w-80'
 											)}
 										>
-											{pricingItem.name}
-										</h3>
-										<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-200">
-											{pricingItem.description}
-										</p>
+											<h3
+												className={classNames(
+													pricingItem.mostPopular
+														? 'text-blue-600'
+														: pricingItem.enterprise_edition
+														? 'text-teal-600'
+														: 'text-gray-900 dark:text-white',
+													'text-sm font-semibold leading-6'
+												)}
+											>
+												{pricingItem.name}
+											</h3>
+											<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-200">
+												{pricingItem.description}
+											</p>
+										</div>
+
+										<div className="mt-10 space-y-10">
+											{sections.map((section) => (
+												<div key={section.name}>
+													<h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+														{section.name}
+													</h4>
+													<div className="relative mt-6">
+														{/* Fake card background */}
+														<div
+															aria-hidden="true"
+															className="absolute inset-y-0 right-0 hidden w-1/2 rounded-lg bg-white shadow-sm sm:block"
+														/>
+
+														<div
+															className={classNames(
+																pricingItem.mostPopular
+																	? 'ring-1 ring-blue-600'
+																	: pricingItem.enterprise_edition
+																	? 'ring-2 ring-teal-600'
+																	: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
+																'relative rounded-lg bg-white dark:bg-slate-900 shadow-sm sm:rounded-none sm:bg-transparent sm:shadow-none sm:ring-0'
+															)}
+														>
+															<dl className="divide-y divide-gray-200 text-sm leading-6">
+																{section.attributes.map((attribute) => (
+																	<div
+																		key={attribute.name}
+																		className="flex items-center justify-between px-4 py-3 sm:grid sm:grid-cols-2 sm:px-0"
+																	>
+																		<dt className="pr-4 text-gray-600 dark:text-gray-200">
+																			{attribute.link ? (
+																				<a
+																					href={attribute.link}
+																					target="_blank"
+																					rel="noopener noreferrer"
+																					className="custom-link"
+																				>
+																					{attribute.name}
+																				</a>
+																			) : (
+																				attribute.name
+																			)}
+																			{attribute.tooltip && (
+																				<span className="ml-2 tooltip-icon">
+																					ⓘ<span className="tooltip-text">{attribute.tooltip}</span>
+																				</span>
+																			)}
+																		</dt>
+																		<dd className="flex items-center justify-end sm:justify-center sm:px-4">
+																			{typeof attribute.tiers[pricingItem.name] === 'string' ? (
+																				<span
+																					className={
+																						pricingItem.mostPopular
+																							? 'font-semibold text-blue-600'
+																							: pricingItem.enterprise_edition
+																							? 'font-semibold text-teal-600'
+																							: 'text-gray-900 dark:text-white'
+																					}
+																				>
+																					{attribute.tiers[pricingItem.name]}
+																				</span>
+																			) : (
+																				<>
+																					{attribute.tiers[pricingItem.name] === true ? (
+																						<CheckIcon
+																							className="mx-auto h-5 w-5 text-teal-600"
+																							aria-hidden="true"
+																						/>
+																					) : (
+																						<XMarkIcon
+																							className="mx-auto h-5 w-5 text-gray-400"
+																							aria-hidden="true"
+																						/>
+																					)}
+
+																					<span className="sr-only">
+																						{attribute.tiers[pricingItem.name] === true
+																							? 'Yes'
+																							: 'No'}
+																					</span>
+																				</>
+																			)}
+																		</dd>
+																	</div>
+																))}
+															</dl>
+														</div>
+
+														{/* Fake card border */}
+														<div
+															aria-hidden="true"
+															className={classNames(
+																pricingItem.mostPopular
+																	? 'ring-1 ring-blue-600'
+																	: pricingItem.enterprise_edition
+																	? 'ring-2 ring-teal-600'
+																	: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
+																'pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 rounded-lg sm:block'
+															)}
+														/>
+													</div>
+												</div>
+											))}
+										</div>
 									</div>
+								))}
+							</div>
+						</section>
 
-									<div className="mt-10 space-y-10">
-										{sections.map((section) => (
-											<div key={section.name}>
-												<h4 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-													{section.name}
-												</h4>
-												<div className="relative mt-6">
-													{/* Fake card background */}
-													<div
-														aria-hidden="true"
-														className="absolute inset-y-0 right-0 hidden w-1/2 rounded-lg bg-white shadow-sm sm:block"
-													/>
+						{/* Feature comparison (lg+) */}
+						<section aria-labelledby="comparison-heading" className="hidden lg:block">
+							<h2 id="comparison-heading" className="sr-only">
+								Feature comparison
+							</h2>
 
-													<div
-														className={classNames(
-															pricingItem.mostPopular
-																? 'ring-1 ring-blue-600'
-																: pricingItem.enterprise_edition
-																? 'ring-2 ring-teal-600'
-																: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
-															'relative rounded-lg bg-white dark:bg-slate-900 shadow-sm sm:rounded-none sm:bg-transparent sm:shadow-none sm:ring-0'
-														)}
-													>
-														<dl className="divide-y divide-gray-200 text-sm leading-6">
-															{section.attributes.map((attribute) => (
-																<div
-																key={attribute.name}
-																className="flex items-center justify-between px-4 py-3 sm:grid sm:grid-cols-2 sm:px-0"
+							<div className="grid grid-cols-3 gap-x-8 border-t border-gray-900/10 before:block">
+								{getPricingArray(true).map((pricingItem) => (
+									<div key={pricingItem.id}>
+										<div
+											className={classNames(
+												pricingItem.mostPopular
+													? 'border-blue-600'
+													: pricingItem.enterprise_edition
+													? 'border-teal-600'
+													: 'border-transparent',
+												'border-t-2 pt-10'
+											)}
+										>
+											<p
+												className={classNames(
+													pricingItem.mostPopular
+														? 'text-blue-600'
+														: pricingItem.enterprise_edition
+														? 'text-teal-600'
+														: 'text-gray-900 dark:text-white',
+													'text-sm font-semibold leading-6'
+												)}
+											>
+												{pricingItem.name}
+											</p>
+											<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-100">
+												{pricingItem.description}
+											</p>
+										</div>
+									</div>
+								))}
+							</div>
+							<div className="mt-6 space-y-16">
+								{sections.map((section) => (
+									<div key={section.name}>
+										<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+											{section.name}
+										</h3>
+										<div className="relative -mx-8 reset">
+											<table className="relative w-full border-separate border-spacing-x-8">
+												<thead>
+													<tr className="text-left">
+														<th scope="col">
+															<span className="sr-only">Feature</span>
+														</th>
+														{getPricingArray(true).map((pricingItem) => (
+															<th key={pricingItem.id} scope="col">
+																<span className="sr-only">{pricingItem.name} tier</span>
+															</th>
+														))}
+													</tr>
+												</thead>
+												<tbody>
+													{section.attributes.map((attribute, featureIdx) => (
+														<tr key={attribute.name}>
+															<th
+																scope="row"
+																className="w-1/3 py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white"
 															>
-																<dt className="pr-4 text-gray-600 dark:text-gray-200">
+																<div className="flex items-center relative">
 																	{attribute.link ? (
 																		<a
 																			href={attribute.link}
@@ -770,27 +1125,34 @@ export default function Pricing() {
 																			{attribute.name}
 																		</a>
 																	) : (
-																		attribute.name
+																		<span>{attribute.name}</span>
 																	)}
 																	{attribute.tooltip && (
-																	<span className="ml-2 tooltip-icon">
-																		ⓘ
-																		<span className="tooltip-text">
-																			{attribute.tooltip}
+																		<span className="ml-2 tooltip-icon">
+																			ⓘ<span className="tooltip-text">{attribute.tooltip}</span>
 																		</span>
-																	</span>
-																)}
-																</dt>
-																	<dd className="flex items-center justify-end sm:justify-center sm:px-4">
+																	)}
+																</div>
+																{featureIdx !== section.attributes.length - 1 ? (
+																	<div className="absolute inset-x-8 mt-3 h-px bg-gray-200" />
+																) : null}
+															</th>
+															{getPricingArray(true).map((pricingItem) => (
+																<td
+																	key={pricingItem.id}
+																	className="relative w-1/3 px-4 py-0 text-center "
+																>
+																	<span className="relative h-full w-full py-3 ">
 																		{typeof attribute.tiers[pricingItem.name] === 'string' ? (
 																			<span
-																				className={
+																				className={classNames(
 																					pricingItem.mostPopular
 																						? 'font-semibold text-blue-600'
 																						: pricingItem.enterprise_edition
 																						? 'font-semibold text-teal-600'
-																						: 'text-gray-900 dark:text-white'
-																				}
+																						: 'text-gray-900 dark:text-white',
+																					'text-sm leading-6'
+																				)}
 																			>
 																				{attribute.tiers[pricingItem.name]}
 																			</span>
@@ -815,196 +1177,41 @@ export default function Pricing() {
 																				</span>
 																			</>
 																		)}
-																	</dd>
-																</div>
+																	</span>
+																</td>
 															))}
-														</dl>
-													</div>
-
-													{/* Fake card border */}
+														</tr>
+													))}
+												</tbody>
+											</table>
+											{/* Fake card borders */}
+											<div
+												className="pointer-events-none absolute inset-x-8 inset-y-0 grid grid-cols-3 gap-x-8 before:block mt-4"
+												aria-hidden="true"
+											>
+												{getPricingArray(true).map((pricingItem) => (
 													<div
-														aria-hidden="true"
+														key={pricingItem.id}
 														className={classNames(
 															pricingItem.mostPopular
 																? 'ring-1 ring-blue-600'
 																: pricingItem.enterprise_edition
-																? 'ring-2 ring-teal-600'
-																: 'ring-1 dark:ring-gray-100/10 ring-gray-900/10',
-															'pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 rounded-lg sm:block'
+																? 'ring-1 ring-teal-600'
+																: 'ring-1 ring-gray-900/10 dark:ring-gray-100/10',
+															'rounded-lg'
 														)}
 													/>
-												</div>
-											</div>
-										))}
-									</div>
-								</div>
-							))}
-						</div>
-					</section>
-
-					{/* Feature comparison (lg+) */}
-					<section aria-labelledby="comparison-heading" className="hidden lg:block">
-						<h2 id="comparison-heading" className="sr-only">
-							Feature comparison
-						</h2>
-
-						<div className="grid grid-cols-4 gap-x-8 border-t border-gray-900/10 before:block">
-							{getPricingArray().map((pricingItem) => (
-								<div key={pricingItem.id}>
-									<div
-										className={classNames(
-											pricingItem.mostPopular
-												? 'border-blue-600'
-												: pricingItem.enterprise_edition
-												? 'border-teal-600'
-												: 'border-transparent',
-											'border-t-2 pt-10'
-										)}
-									>
-										<p
-											className={classNames(
-												pricingItem.mostPopular
-													? 'text-blue-600'
-													: pricingItem.enterprise_edition
-													? 'text-teal-600'
-													: 'text-gray-900 dark:text-white',
-												'text-sm font-semibold leading-6'
-											)}
-										>
-											{pricingItem.name}
-										</p>
-										<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-100">
-											{pricingItem.description}
-										</p>
-									</div>
-								</div>
-							))}
-						</div>
-						<div className="mt-6 space-y-16">
-							{sections.map((section) => (
-								<div key={section.name}>
-									<h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">{section.name}</h3>
-									<div className="relative -mx-8 reset">
-										<table className="relative w-full border-separate border-spacing-x-8">
-											<thead>
-												<tr className="text-left">
-													<th scope="col">
-														<span className="sr-only">Feature</span>
-													</th>
-													{getPricingArray().map((pricingItem) => (
-														<th key={pricingItem.id} scope="col">
-															<span className="sr-only">{pricingItem.name} tier</span>
-														</th>
-													))}
-												</tr>
-											</thead>
-											<tbody>
-											{section.attributes.map((attribute, featureIdx) => (
-												<tr key={attribute.name}>
-													<th
-														scope="row"
-														className="w-1/4 py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white"
-													>
-														<div className="flex items-center relative">
-															{attribute.link ? (
-																<a
-																	href={attribute.link}
-																	target="_blank"
-																	rel="noopener noreferrer"
-																	className="custom-link"
-																>
-																	{attribute.name}
-																</a>
-															) : (
-																<span>{attribute.name}</span>
-															)}
-															{attribute.tooltip && (
-																<span className="ml-2 tooltip-icon">
-																	ⓘ
-																	<span className="tooltip-text">
-																		{attribute.tooltip}
-																	</span>
-																</span>
-															)}
-														</div>
-														{featureIdx !== section.attributes.length - 1 ? (
-															<div className="absolute inset-x-8 mt-3 h-px bg-gray-200" />
-														) : null}
-													</th>
-														{getPricingArray().map((pricingItem) => (
-															<td
-																key={pricingItem.id}
-																className="relative w-1/4 px-4 py-0 text-center "
-															>
-																<span className="relative h-full w-full py-3 ">
-																	{typeof attribute.tiers[pricingItem.name] === 'string' ? (
-																		<span
-																			className={classNames(
-																				pricingItem.mostPopular
-																					? 'font-semibold text-blue-600'
-																					: pricingItem.enterprise_edition
-																					? 'font-semibold text-teal-600'
-																					: 'text-gray-900 dark:text-white',
-																				'text-sm leading-6'
-																			)}
-																		>
-																			{attribute.tiers[pricingItem.name]}
-																		</span>
-																	) : (
-																		<>
-																			{attribute.tiers[pricingItem.name] === true ? (
-																				<CheckIcon
-																					className="mx-auto h-5 w-5 text-teal-600"
-																					aria-hidden="true"
-																				/>
-																			) : (
-																				<XMarkIcon
-																					className="mx-auto h-5 w-5 text-gray-400"
-																					aria-hidden="true"
-																				/>
-																			)}
-
-																			<span className="sr-only">
-																				{attribute.tiers[pricingItem.name] === true ? 'Yes' : 'No'}
-																			</span>
-																		</>
-																	)}
-																</span>
-															</td>
-														))}
-													</tr>
 												))}
-											</tbody>
-										</table>
-										{/* Fake card borders */}
-										<div
-											className="pointer-events-none absolute inset-x-8 inset-y-0 grid grid-cols-4 gap-x-8 before:block mt-4"
-											aria-hidden="true"
-										>
-											{getPricingArray().map((pricingItem) => (
-												<div
-													key={pricingItem.id}
-													className={classNames(
-														pricingItem.mostPopular
-															? 'ring-1 ring-blue-600'
-															: pricingItem.enterprise_edition
-															? 'ring-1 ring-teal-600'
-															: 'ring-1 ring-gray-900/10 dark:ring-gray-100/10',
-														'rounded-lg'
-													)}
-												/>
-											))}
+											</div>
 										</div>
 									</div>
-								</div>
-							))}
-						</div>
-					</section>
-				</div>
+								))}
+							</div>
+						</section>
+					</div>
 				</div>
 			)}
-			<div className="relative  dark:bg-gray-950 lg:pt-14">
-			</div>
+			<div className="relative dark:bg-gray-950 lg:pt-14"></div>
 			<PricingFAQ />
 		</div>
 	);
