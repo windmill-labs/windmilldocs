@@ -88,7 +88,7 @@ const testimonials = [
 				{' '}<strong>
 					<span className="text-blue-500">Windmill</span>
 				</strong>{', '}
-				airflow was clunky and heavy for my simple workflow that consist of running a few python script. Also is auto ui is great to play with the arguments in, the cron ui and next start date... Also is it written in rust so much more low usage than airflow that consistently cpu picked while doing nothing.
+				airflow was clunky and heavy for my simple workflow that consists of running a few python script. Also is auto ui is great to play with the arguments in, the cron ui and next start date... Also is it written in rust so much more low usage than airflow that consistently cpu picked while doing nothing.
 			</span>
 		),
 		author: {

@@ -699,7 +699,6 @@ const sidebars = {
 			label: 'Miscellaneous',
 			items: [
 				'misc/architecture/index',
-				'misc/changelog/index',
 				'misc/contributing/index',
 				'misc/getting_help/index',
 				{
