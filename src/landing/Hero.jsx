@@ -12,13 +12,13 @@ export default function Hero() {
 			<RadialBlur />
 
 			<div className="grid gap-4 mx-auto max-w-7xl px-6 gap-y-8 lg:flex lg:px-8 py-16">
-				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
+				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 flex flex-col justify-center">
 					<GithubStarCount />
 
-					<h1 className="mt-4 !text-3xl tracking-tight sm:!text-5xl">
-						Developer platform for APIs, critical jobs, workflows, data pipelines and UIs
+					<h1 className="mt-4  !text-4xl  !tracking-tight !font-bold sm:!text-6xl">
+						Developer platform for internal tools
 					</h1>
-					<h2 className="mt-6 text-lg leading-8  font-medium">
+					<div className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-100">
 						Turn scripts into sharable apps and APIs, compose them as workflows or data pipelines
 						and expose them with UIs on the <b>fastest</b> and most <b>reliable</b> job{' '}
 						<b>orchestrator</b>. Self-hostable <b>worker infrastructure</b>: horizontally scalable,
@@ -33,7 +33,7 @@ export default function Hero() {
 						</a>{' '}
 						alternative to <i>Airplane</i>, <i>Superblocks</i>, <i>Retool</i>, <i>Prefect</i>,{' '}
 						<i>Airflow</i>.
-					</h2>
+					</div>
 
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
@@ -81,10 +81,8 @@ export default function Hero() {
 					</div>
 				</div>
 				<div className="mx-auto mt-16 sm:mt-8">
-					<div className="flex-none !rounded-2xl overflow-hidden dark:bg-[#2e344033]">
-					<div className="svg-container">
+					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
 						<HomescreenSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
-					</div>
 					</div>
 				</div>
 			</div>

@@ -58,13 +58,12 @@ export default function Section({
 						>
 							{title}
 						</h1>
+						{shouldShowDevModeSwitch && <DevModeSwitch color={color} />}
 					</div>
 					<h2 className={`${colors.text} text-2xl font-semibold`}>{caption}</h2>
 				</div>
 
 				<span className={`text-lg ${colors.text} max-w-3xl mb-8`}>{description}</span>
-				
-				{shouldShowDevModeSwitch && <DevModeSwitch color={color} />}
 
 				{developerMode ? (
 					<CardsContainer
