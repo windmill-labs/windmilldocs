@@ -6,7 +6,7 @@ Windmill integration with Git repositories makes it possible to adopt a robust d
 
 The integration with git works in three-folds:
 
-1. GitHub Action + [CLI](../../cli_local_dev/index.mdx): upon any commit to a particular branch, the GitHub action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push` ([free & open source](/pricing))
+1. GitHub Action + [CLI](../3_cli/index.mdx): upon any commit to a particular branch, the GitHub action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push` ([free & open source](/pricing))
 2. [Git Sync](../11_git_sync/index.mdx) (Workspace mode): Windmill automatically committing to a git repository upon any deployment to a workspace, this works using the CLI doing `wmill sync pull` ([Cloud and Enterprise Self-Hosted](/pricing)). Having it commit back to Windmill has 2 benefits:
 
 - It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance).
