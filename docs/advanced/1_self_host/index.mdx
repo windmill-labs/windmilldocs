@@ -217,73 +217,187 @@ For all the above, see the commented lines in the caddy section of the docker-co
 #### Traefik configuration
 
 <details>
-  <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Code below:</summary>
+  <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Make sure to replace the `traefik` network with whatever network you have it running on. Code below:</summary>
+
+You may need to adapt this depending on if you have Traefik running or on your configuration. This also assumes you have a `letsencryptresolver` or change the name to your certificate resolver if you want to use the `websecure` entrypoint.
 
 ```yaml
-version: '3.7'
+version: "3.7"
 
 services:
-windmill_server:
-  image: ghcr.io/windmill-labs/windmill:main
-  deploy:
-    replicas: 1
-  restart: unless-stopped
-  expose:
-    - 8000
-  networks:
-    - pg_network
-    - web
-  environment:
-    DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-    MODE: server
-  labels:
-    - 'traefik.enable=true'
-    - 'traefik.docker.network=web'
-    - 'traefik.http.routers.windmill.tls=true'
-    - 'traefik.http.routers.windmill.service=windmill'
-    - 'traefik.http.routers.windmill.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/`)'
-    - 'traefik.http.routers.windmill.tls.certresolver=lets-encrypt'
-    - 'traefik.http.services.windmill.loadbalancer.server.port=8000'
+  db:
+    deploy:
+      # To use an external database, set replicas to 0 and set DATABASE_URL to the external database url in the .env file
+      replicas: 1
+    image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    networks:
+      - windmill
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: windmill
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-windmill_worker:
-  image: ghcr.io/windmill-labs/windmill:main
-  deploy:
-    # Rules of thumb, use 1 replica per vCPU. Make sure your postgres can handle 5*worker_replicas + 50*server_replicas max connections.
-    replicas: 3
-  restart: unless-stopped
-  networks:
-    - pg_network
-    - web
-  environment:
-    DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-    MODE: worker
-  volumes:
-    - worker_dependency_cache:/tmp/windmill/cache
-    - /var/run/docker.sock:/var/run/docker.sock
+  windmill_server:
+    image: ${WM_IMAGE}
+    pull_policy: always
+    deploy:
+      replicas: 1
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=server
+    networks:
+      - windmill
+      - traefik
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.windmill_server.loadbalancer.server.port=8000
+      #http
+      - traefik.http.routers.windmill_server_http.entrypoints=web
+      - traefik.http.routers.windmill_server_http.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_server_http.service=windmill_server
+      # https
+      - traefik.http.routers.windmill_server_https.entrypoints=websecure
+      - traefik.http.routers.windmill_server_https.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_server_https.service=windmill_server
+      - traefik.http.routers.windmill_server_https.tls=true
+      - traefik.http.routers.windmill_server_https.tls.certresolver=letsencryptresolver
 
-lsp:
-  image: ghcr.io/windmill-labs/windmill-lsp:latest
-  restart: unless-stopped
-  labels:
-    - 'traefik.enable=true'
-    - 'traefik.docker.network=web'
-    - 'traefik.http.routers.windmill_lsp.tls=true'
-    - 'traefik.http.routers.windmill_lsp.service=windmill_lsp'
-    - 'traefik.http.routers.windmill_lsp.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/ws`)'
-    - 'traefik.http.routers.windmill_lsp.tls.certresolver=lets-encrypt'
-    - 'traefik.http.services.windmill_lsp.loadbalancer.server.port=3001'
-  expose:
-    - 3001
+  windmill_worker:
+    image: ${WM_IMAGE}
+    pull_policy: always
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "1"
+          memory: 2048M
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=worker
+      - WORKER_GROUP=default
+    networks:
+      - windmill
+    depends_on:
+      db:
+        condition: service_healthy
+    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+    volumes:
+      # mount the docker socket to allow to run docker containers from within the workers
+      - /var/run/docker.sock:/var/run/docker.sock
+      - worker_dependency_cache:/tmp/windmill/cache
+
+  ## This worker is specialized for "native" jobs. Native jobs run in-process and thus are much more lightweight than other jobs
+  windmill_worker_native:
+    # Use ghcr.io/windmill-labs/windmill-ee:main for the ee
+    image: ${WM_IMAGE}
+    pull_policy: always
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 128M
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=worker
+      - WORKER_GROUP=native
+    networks:
+      - windmill
+    depends_on:
+      db:
+        condition: service_healthy
+
+  ## This worker is specialized for reports or scraping jobs. It is assigned the "reports" worker group which has an init script that installs chromium and can be targeted by using the "chromium" worker tag.
+#  windmill_worker_reports:
+#    image: ${WM_IMAGE}
+#    pull_policy: always
+#    deploy:
+#      replicas: 1
+#      resources:
+#        limits:
+#          cpus: "1"
+#          memory: 2048M
+#    restart: unless-stopped
+#    environment:
+#      - DATABASE_URL=${DATABASE_URL}
+#      - MODE=worker
+#      - WORKER_GROUP=reports
+#    networks:
+#      - windmill
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+#    volumes:
+#      # mount the docker socket to allow to run docker containers from within the workers
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - worker_dependency_cache:/tmp/windmill/cache
+
+  lsp:
+    image: ghcr.io/windmill-labs/windmill-lsp:latest
+    pull_policy: always
+    restart: unless-stopped
+    networks:
+      - windmill
+      - traefik
+    expose:
+      - 3001
+    volumes:
+      - lsp_cache:/root/.cache
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.windmill_lsp.loadbalancer.server.port=3001
+      #http
+      - traefik.http.routers.windmill_lsp_http.entrypoints=web
+      - traefik.http.routers.windmill_lsp_http.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_http.service=windmill_lsp
+      # https
+      - traefik.http.routers.windmill_lsp_https.entrypoints=websecure
+      - traefik.http.routers.windmill_lsp_https.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_https.service=windmill_lsp
+      - traefik.http.routers.windmill_lsp_https.tls=true
+      - traefik.http.routers.windmill_lsp_https.tls.certresolver=letsencryptresolver
+
+  multiplayer:
+    image: ghcr.io/windmill-labs/windmill-multiplayer:latest
+    deploy:
+      replicas: 0 # Set to 1 to enable multiplayer, only available on Enterprise Edition
+    restart: unless-stopped
+    networks:
+      - windmill
+    expose:
+      - 3002
 
 volumes:
-worker_dependency_cache:
+  db_data: null
+  worker_dependency_cache: null
+  lsp_cache: null
 
 networks:
-pg_network:
-  name: pg_network
-web:
-  name: web
-  external: true
+  windmill:
+    name: windmill
+  traefik:
+    name: traefik
+    external: true
 ```
 
 </details>

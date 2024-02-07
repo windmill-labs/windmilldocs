@@ -2,7 +2,7 @@
 slug: ag-charts
 version: v1.251
 title: Ag Charts
-tags: ['Windmill', 'App', 'Postgres']
+tags: ['App Editor', 'Postgres']
 image: ./ag-charts.png
 description: The Ag Charts component integrates the Ag Charts library, enabling the visualization of data through various chart types. This component is designed to offer a flexible and powerful way to display data graphically within the application.
 features:

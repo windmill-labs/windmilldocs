@@ -4,7 +4,16 @@ import DocCard from '@site/src/components/DocCard';
 
 This component allows you to create a decision tree. The decision tree is controlled by a flow-like structure. Each node in the tree represents a decision point and can lead to one or more subsequent nodes based on specified conditions.
 
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/decision_tree_demo.mp4"
+/>
+
+<br/>
+
 ![Decision Tree](../../assets/apps/4_app_component_library/decision-tree.png.webp)
+
 ## Flow actions
 
 You can directly interact with the flow using the following actions:
@@ -47,18 +56,32 @@ The component has the following actions:
 - **Next**: Go to the next node. Use the conditions of the current node to select the next node. Is disabled when the current node has no next node or when the current node is not allowed to go to the next node.
 - **Previous**: Go to the previous node. Goes to the first parent node it can find.
 
-The curent node is displayed in the component next to the actions.
+The current node is displayed in the component next to the actions.
 
 ## Component debug
 
 Using the debug menu, you can jump to any node in the decision tree. This is useful to test the different branches of the decision tree.
+
+## setTab
+
+To bypass the decision tree logic and directly set a node that is not adjacent to the current node, you can use the [function](../3_app-runnable-panel.mdx#frontend-scripts-helpers) `setTab('x', k)`
+which allows you to directly set a tab (k) within a component ('x').
+This works for all components that have multiple tabs (Tabs, Conditional tabs, Sidebar Tabs, Invisible Tabs, Stepper, Decision Tree).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/setTab_decsion_tree.mp4"
+/>
+
+<br/>
 
 ## Example
 
 In this example, we create a decision tree to make an onboarding process.
 
 The app is available on the Hub:
-[Onboarding example](https://hub.windmill.dev/apps/20/decision-tree---on-boarding-example)
+[Onboarding example](https://hub.windmill.dev/apps/20/decision-tree---on-boarding-example).
 
 <div className="grid grid-cols-1 md:grid-cols-2 w-full mb-4">
 <video

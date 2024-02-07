@@ -67,7 +67,7 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
 									label: 'Rest / GraphQL'
-								},
+								}
 							]
 						},
 						{
@@ -157,7 +157,7 @@ const sidebars = {
 						}
 					]
 				},
-				'misc/contributing/index',				
+				'misc/contributing/index'
 			]
 		},
 		{
@@ -220,7 +220,7 @@ const sidebars = {
 						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
 						'script_editor/vs_code_scripts'
-					],
+					]
 				},
 				{
 					type: 'category',
