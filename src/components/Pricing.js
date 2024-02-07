@@ -7,6 +7,7 @@ import PricingFAQ from './pricing/PricingFAQ';
 import FeatureList from './pricing/FeatureList';
 import PriceCalculator from './pricing/PriceCalculator';
 import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
 const types = [
 	{ value: 'cloud', label: 'Cloud' },
@@ -710,7 +711,6 @@ export default function Pricing() {
 	const [period, setPeriod] = useState(periods[0]);
 
 	const getPricingArray = (removePro) => {
-		console.log(frequency.value, removePro);
 		switch (frequency.value) {
 			case 'cloud':
 				return pricing.cloud;
@@ -736,7 +736,9 @@ export default function Pricing() {
 					<RadioGroup
 						value={frequency}
 						onChange={setFrequency}
-						className="grid grid-cols-3 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700"
+						className={twMerge(
+							'grid grid-cols-3 gap-x-1 rounded-full p-1 text-center text-md font-semibold leading-5 ring-1 ring-inset ring-gray-200 dark:ring-gray-700'
+						)}
 					>
 						<RadioGroup.Label className="sr-only">Payment frequency</RadioGroup.Label>
 						{types.map((option) => (
@@ -1077,7 +1079,12 @@ export default function Pricing() {
 								Feature comparison
 							</h2>
 
-							<div className="grid grid-cols-3 gap-x-8 border-t border-gray-900/10 before:block">
+							<div
+								className={twMerge(
+									'grid  gap-x-8 border-t border-gray-900/10 before:block',
+									frequency.value === 'cloud' ? 'grid-cols-4' : 'grid-cols-3'
+								)}
+							>
 								{getPricingArray(true).map((pricingItem) => (
 									<div key={pricingItem.id}>
 										<div
@@ -1134,7 +1141,10 @@ export default function Pricing() {
 														<tr key={attribute.name}>
 															<th
 																scope="row"
-																className="w-1/3 py-3 pr-4 pl-0 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white"
+																className={twMerge(
+																	'py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white',
+																	frequency.value === 'cloud' ? 'w-1/4' : 'w-1/3'
+																)}
 															>
 																<div className="flex items-center relative">
 																	{attribute.link ? (
@@ -1162,7 +1172,10 @@ export default function Pricing() {
 															{getPricingArray(true).map((pricingItem) => (
 																<td
 																	key={pricingItem.id}
-																	className="relative w-1/3 px-4 py-0 text-center "
+																	className={twMerge(
+																		'relative px-4 py-0 text-center ',
+																		frequency.value === 'cloud' ? 'w-1/4' : 'w-1/3'
+																	)}
 																>
 																	<span className="relative h-full w-full py-3 ">
 																		{typeof attribute.tiers[pricingItem.name] === 'string' ? (
@@ -1208,7 +1221,10 @@ export default function Pricing() {
 											</table>
 											{/* Fake card borders */}
 											<div
-												className="pointer-events-none absolute inset-x-8 inset-y-0 grid grid-cols-3 gap-x-8 before:block mt-4"
+												className={twMerge(
+													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
+													frequency.value === 'cloud' ? 'grid-cols-4' : 'grid-cols-3'
+												)}
 												aria-hidden="true"
 											>
 												{getPricingArray(true).map((pricingItem) => (

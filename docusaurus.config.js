@@ -173,8 +173,8 @@ const config = {
 			announcementBar: {
 				id: 'airplane_migration',
 				content:
-					'<a href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
-				backgroundColor: '#6b21a8',
+					'<a style="height:20px;" href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
+				backgroundColor: '#2563eb',
 				textColor: '#fff',
 				isCloseable: true
 			},

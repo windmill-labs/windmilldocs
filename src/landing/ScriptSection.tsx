@@ -15,14 +15,21 @@ import {
 	CurlyBracesIcon,
 	FileLock2,
 	Lock,
-	XSquareIcon,
 	DownloadIcon,
-	Bot,
 	MessageSquareIcon,
 	Box,
-	Gitlab
+	Gitlab,
+	BoxesIcon,
+	Sparkles
 } from 'lucide-react';
-import { SiGnubash, SiGo, SiPython, SiTypescript, SiVisualstudiocode, SiGraphql } from 'react-icons/si/index';
+import {
+	SiGnubash,
+	SiGo,
+	SiPython,
+	SiTypescript,
+	SiVisualstudiocode,
+	SiGraphql
+} from 'react-icons/si/index';
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
@@ -38,7 +45,8 @@ const cards = [
 	},
 	{
 		title: 'Deploy to Prod using a Git Workflow',
-		subtitle: 'Windmill integration with Git repositories makes it possible to adopt a robust development process and version control.',
+		subtitle:
+			'Windmill integration with Git repositories makes it possible to adopt a robust development process and version control.',
 		Icon: Github,
 		gridArea: 'md:col-span-2 md:row-span-3',
 		href: '/docs/advanced/deploy_gh_gl',
@@ -84,7 +92,15 @@ const tabs = [
 				title: 'Typescript',
 				description: '',
 				icon: SiTypescript,
-				caption: <div>Deno as the <a href="/docs/getting_started/scripts_quickstart/typescript" target="_blank">TypeScript</a> runtime.</div>,
+				caption: (
+					<div>
+						Deno as the{' '}
+						<a href="/docs/getting_started/scripts_quickstart/typescript" target="_blank">
+							TypeScript
+						</a>{' '}
+						runtime.
+					</div>
+				),
 				svg: '/images/typescript-code.svg',
 				altText: 'Write scripts in Typescript'
 			},
@@ -92,38 +108,77 @@ const tabs = [
 				title: 'Python',
 				description: '',
 				icon: SiPython,
-				caption: <div><a href="/docs/getting_started/scripts_quickstart/python" target="_blank">Python</a>  3.11 environment.</div>,
+				caption: (
+					<div>
+						<a href="/docs/getting_started/scripts_quickstart/python" target="_blank">
+							Python
+						</a>{' '}
+						3.11 environment.
+					</div>
+				),
 				imageSrc: '/images/python-code.png',
 				altText: 'Write scripts in Python'
 			},
 			{
 				title: 'Go',
 				icon: SiGo,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/go" target="_blank">Go</a>.</div>,
+				caption: (
+					<div>
+						Script in{' '}
+						<a href="/docs/getting_started/scripts_quickstart/go" target="_blank">
+							Go
+						</a>
+						.
+					</div>
+				),
 				svg: '/images/go-code.svg',
 				altText: 'Write scripts in Go'
 			},
 			{
 				title: 'Bash',
 				icon: SiGnubash,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/bash" target="_blank">Bash</a>.</div>,
+				caption: (
+					<div>
+						Script in{' '}
+						<a href="/docs/getting_started/scripts_quickstart/bash" target="_blank">
+							Bash
+						</a>
+						.
+					</div>
+				),
 				svg: '/images/bash-code.svg',
 				altText: 'Write scripts in Bash'
 			},
 			{
 				title: 'Rest / GraphQL',
 				icon: SiGraphql,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/rest_graphql" target="_blank">Rest / GraphQL</a>.</div>,
+				caption: (
+					<div>
+						Script in{' '}
+						<a href="/docs/getting_started/scripts_quickstart/rest_graphql" target="_blank">
+							Rest / GraphQL
+						</a>
+						.
+					</div>
+				),
 				imageSrc: '/images/graphql-code.png',
 				altText: 'Write scripts in Rest & GraphQL'
 			},
 			{
 				title: 'PostgreSQL / MSSQL / MySQL / BigQuery / Snowflake',
 				icon: Database,
-				caption: <div>Script in <a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake</a>.</div>,
+				caption: (
+					<div>
+						Script in{' '}
+						<a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">
+							PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake
+						</a>
+						.
+					</div>
+				),
 				imageSrc: '/images/sql-code.png',
 				altText: 'Write scripts in PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake'
-			},
+			}
 		]
 	},
 	{
@@ -136,7 +191,15 @@ const tabs = [
 				description:
 					"Share your app with non-technical users without spending time building the UI. It's automatically generated from script parameters, and customizable.",
 				icon: FormInputIcon,
-				caption: <div>Adding a new parameter to your script will automatically add a new field to the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">UI</a>.</div>,
+				caption: (
+					<div>
+						Adding a new parameter to your script will automatically add a new field to the{' '}
+						<a href="/docs/core_concepts/auto_generated_uis" target="_blank">
+							UI
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/auto_g_ui_landing.mp4',
 					videoLength: '26',
@@ -150,8 +213,15 @@ const tabs = [
 				icon: DownloadIcon,
 				imageSrc: '/images/dependencies.png',
 				height: '600px',
-				caption: <div>Infer <a href="/docs/advanced/imports" target="_blank">dependencies</a> from your imports.</div>,
-
+				caption: (
+					<div>
+						Infer{' '}
+						<a href="/docs/advanced/imports" target="_blank">
+							dependencies
+						</a>{' '}
+						from your imports.
+					</div>
+				)
 			}
 		]
 	},
@@ -166,42 +236,80 @@ const tabs = [
 				icon: AlignLeftIcon,
 				imageSrc: '/images/code_editor_script.png',
 				altText: 'Web IDE',
-				caption: <div>Windmill embeds a <a href="/docs/code_editor" target="_blank">code editor</a> and <a href="/docs/code_editor/assistants" target="_blank">code assistants</a> within its script, flow and app editors.</div>,
-
+				caption: (
+					<div>
+						Windmill embeds a{' '}
+						<a href="/docs/code_editor" target="_blank">
+							code editor
+						</a>{' '}
+						and{' '}
+						<a href="/docs/code_editor/assistants" target="_blank">
+							code assistants
+						</a>{' '}
+						within its script, flow and app editors.
+					</div>
+				)
 			},
 			{
 				title: 'Parameter Inference',
-				description: 'Windmill employs JSON Schema to validate and align the format and type of parameters across scripts, flows, and resources.',
+				description:
+					'Windmill employs JSON Schema to validate and align the format and type of parameters across scripts, flows, and resources.',
 				icon: CurlyBracesIcon,
 				video: {
 					videoSrc: '/videos/parameter_inference.mp4',
 					altText: 'Parameter Inference'
 				},
 				altText: 'Parameter Inference',
-				caption: <div>JSON Schema is used behind the scenes to construct a comprehensive specification of the expected <a href="/docs/code_editor/parameter_inference" target="_blank">input parameters</a>.</div>,
+				caption: (
+					<div>
+						JSON Schema is used behind the scenes to construct a comprehensive specification of the
+						expected{' '}
+						<a href="/docs/code_editor/parameter_inference" target="_blank">
+							input parameters
+						</a>
+						.
+					</div>
+				)
 			},
 			{
 				title: 'Add Resources and Variables to Code',
-				description: 'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
-				icon: XSquareIcon,
+				description:
+					'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
+				icon: BoxesIcon,
 				video: {
 					videoSrc: '/videos/add_resources_variables.mp4',
 					altText: 'Add Resources and Variables to Code'
 				},
 				altText: 'Add Resources and Variables to Code',
-				caption: <div>You can directly <a href="/docs/code_editor/add_variables_resources" target="_blank">access Variables and Resources</a> from the Code Editor by fetching it or using the auto-generated UI.</div>,
+				caption: (
+					<div>
+						You can directly{' '}
+						<a href="/docs/code_editor/add_variables_resources" target="_blank">
+							access Variables and Resources
+						</a>{' '}
+						from the Code Editor by fetching it or using the auto-generated UI.
+					</div>
+				)
 			},
 			{
 				title: 'Windmill AI',
 				description: 'From simple prompts, generate Windmill-specific code, edits and fixes.',
-				icon: Bot,
+				icon: Sparkles,
 				video: {
 					videoSrc: '/videos/ai_generation.mp4',
 					altText: 'Add Resources and Variables to Code'
 				},
 				altText: 'Windmill AI',
-				caption: <div>Windmill provides ways to have <a href="/docs/core_concepts/ai_generation" target="_blank">Code Generation</a> help you in your coding experience.</div>,
-			},
+				caption: (
+					<div>
+						Windmill provides ways to have{' '}
+						<a href="/docs/core_concepts/ai_generation" target="_blank">
+							Code Generation
+						</a>{' '}
+						help you in your coding experience.
+					</div>
+				)
+			}
 		]
 	},
 	{
@@ -214,7 +322,15 @@ const tabs = [
 				description:
 					'Credentials and sensitive values are tightly permissioned and stored securely as secrets.',
 				icon: Key,
-				caption: <div>Credentials and sensitive values are tightly permissioned and stored securely as <a href="/docs/core_concepts/variables_and_secrets#secrets" target="_blank">secrets</a>.</div>,
+				caption: (
+					<div>
+						Credentials and sensitive values are tightly permissioned and stored securely as{' '}
+						<a href="/docs/core_concepts/variables_and_secrets#secrets" target="_blank">
+							secrets
+						</a>
+						.
+					</div>
+				),
 				imageSrc: '/images/script-secret.png',
 				altText: 'Secret management'
 			},
@@ -222,7 +338,15 @@ const tabs = [
 				title: 'Permissions',
 				description: 'Granular permisioning through the use of folders.',
 				icon: FileLock2,
-				caption: <div>Granular permisioning through the use of <a href="/docs/core_concepts/groups_and_folders" target="_blank">folders</a>.</div>,
+				caption: (
+					<div>
+						Granular permisioning through the use of{' '}
+						<a href="/docs/core_concepts/groups_and_folders" target="_blank">
+							folders
+						</a>
+						.
+					</div>
+				),
 				imageSrc: '/images/script-permissions.png',
 				altText: 'Permissions'
 			}
@@ -238,16 +362,38 @@ const tabs = [
 				description:
 					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
 				icon: CalendarClock,
-				caption: <div>Windmill allows you to define <a href="/docs/core_concepts/scheduling" target="_blank">schedules</a> for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.</div>,
+				caption: (
+					<div>
+						Windmill allows you to define{' '}
+						<a href="/docs/core_concepts/scheduling" target="_blank">
+							schedules
+						</a>{' '}
+						for Scripts and Flows. Once a schedule is defined, it will automatically run the script
+						at the set frequency.
+					</div>
+				),
 				imageSrc: '/images/script-schedule.png',
 				altText: 'Schedules'
 			},
 
 			{
 				title: 'UI',
-				description: 'You can directly trigger a script using the autogenerated UI or Windmill Apps.',
+				description:
+					'You can directly trigger a script using the autogenerated UI or Windmill Apps.',
 				icon: FormInput,
-				caption: <div>You can directly trigger a script using the <a href="/docs/core_concepts/auto_generated_uis" target="_blank">autogenerated UI</a> or <a href="/docs/getting_started/apps_quickstart" target="_blank">Windmill Apps</a>.</div>,
+				caption: (
+					<div>
+						You can directly trigger a script using the{' '}
+						<a href="/docs/core_concepts/auto_generated_uis" target="_blank">
+							autogenerated UI
+						</a>{' '}
+						or{' '}
+						<a href="/docs/getting_started/apps_quickstart" target="_blank">
+							Windmill Apps
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: '/videos/auto_generated_uis.mp4',
 					videoLength: '26',
@@ -258,7 +404,15 @@ const tabs = [
 				title: 'Webhooks',
 				description: 'You can trigger a script using a webhook.',
 				icon: WebhookIcon,
-				caption: <div>Every script has a sync and async <a href="/docs/core_concepts/webhooks" target="_blank">webhook</a> generated for every version of the script.</div>,
+				caption: (
+					<div>
+						Every script has a sync and async{' '}
+						<a href="/docs/core_concepts/webhooks" target="_blank">
+							webhook
+						</a>{' '}
+						generated for every version of the script.
+					</div>
+				),
 				imageSrc: '/images/script-webhook.png',
 				altText: 'Webhooks'
 			},
@@ -266,7 +420,15 @@ const tabs = [
 				title: 'CLI',
 				description: 'Execute a script using the CLI.',
 				icon: Terminal,
-				caption: <div>Execute a script using the <a href="/docs/advanced/cli" target="_blank">CLI</a>.</div>,
+				caption: (
+					<div>
+						Execute a script using the{' '}
+						<a href="/docs/advanced/cli" target="_blank">
+							CLI
+						</a>
+						.
+					</div>
+				),
 				video: {
 					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
 					videoLength: '26',
@@ -278,7 +440,15 @@ const tabs = [
 				title: 'Slack',
 				description: 'Run scripts from a Slack command.',
 				icon: MessageSquareIcon,
-				caption: <div>Trigger scripts from commands and approve flows directly from <a href="/docs/integrations/slack" target="_blank">Slack</a>.</div>,
+				caption: (
+					<div>
+						Trigger scripts from commands and approve flows directly from{' '}
+						<a href="/docs/integrations/slack" target="_blank">
+							Slack
+						</a>
+						.
+					</div>
+				),
 				imageSrc: '/images/slack-trigger.png'
 			}
 		]

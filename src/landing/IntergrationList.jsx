@@ -73,8 +73,6 @@ export default function IntergrationList() {
 					Connect your apps and services to automate your workflows.
 				</span>
 
-				<div className="flex flex-col items-center justify-center w-full"></div>
-
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-12 gap-4">
 					{integrations.map((item) => (
 						<a

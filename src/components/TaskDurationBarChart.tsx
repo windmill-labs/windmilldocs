@@ -73,9 +73,9 @@ export default function BarChart({
 				stacked: true,
 				max: 120,
 				title: {
-                    display: true,
-                    text: xTitle,
-                }
+					display: true,
+					text: xTitle
+				}
 			},
 			y: {
 				stacked: true

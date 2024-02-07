@@ -16,23 +16,18 @@ export default function Hero() {
 					<GithubStarCount />
 
 					<h1 className="mt-4  !text-4xl  !tracking-tight !font-bold sm:!text-6xl">
-						Developer platform for internal tools
+						Open-source <span class="text-blue-400">#1</span> developer platform
 					</h1>
-					<div className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-100">
-						Turn scripts into sharable apps and APIs, compose them as workflows or data pipelines
-						and expose them with UIs on the <b>fastest</b> and most <b>reliable</b> job{' '}
-						<b>orchestrator</b>. Self-hostable <b>worker infrastructure</b>: horizontally scalable,
-						reliable, ultra-fast.
-						<br />
-						<a className="underline" href="https://github.com/windmill-labs/windmill">
-							Fully Open-source
-						</a>
-						{' and '}
+					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
+						Turn scripts into auto-generated UIs, APIs and cron jobs. <br /> Compose them as
+						workflows or data pipelines. <br />
+						Build complex, data-intensive UIs with ease.
+						<br /> <br />
+						Write and deploy software 10x faster, and run it with the highest reliability and
+						observabilty on the{' '}
 						<a className="underline" href="/docs/misc/benchmarks/competitors">
-							much faster
-						</a>{' '}
-						alternative to <i>Airplane</i>, <i>Superblocks</i>, <i>Retool</i>, <i>Prefect</i>,{' '}
-						<i>Airflow</i>.
+							fastest self-hostable job orchestrator.
+						</a>
 					</div>
 
 					<div className="mt-10 flex items-center gap-x-6">
