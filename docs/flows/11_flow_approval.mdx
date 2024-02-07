@@ -61,15 +61,24 @@ When adding a step to a flow, pick `Approval`, and write a new approval script o
 
 Use `wmill.getResumeUrls()` in Typescript or `wmill.get_resume_urls()` in Python from the wmill client to generate secret URLs.
 
-The number of required approvals can be
-customized. This allows flexibility and security for cases where you either require
-approvals from all authorized people or only from one.
+## Core
 
-![Required approvals](../assets/flows/flow-number-of-approvals.png.webp 'Required approvals')
+### Number of approvals/events required for resuming flow
+
+The number of required approvals can be customized.
+This allows flexibility and security for cases where you either require approvals from all authorized people or only from one.
+
+![Required approvals](../assets/flows/flow-number-of-approvals.png 'Required approvals')
 
 Note that approval steps can be applied the same configurations as regular steps ([Retries](./14_retries.md), [Early stop/Break](./2_early_stop.md) or [Suspend](./15_sleep.md)).
 
-## Add a form to the approval page
+### Timeout
+
+Set a custom timeout after which the flow will be automatically canceled if no approval is received.
+
+![Approval Timeout](../assets/flows/approvals-timeout.png 'Approval Timeout')
+
+## Form
 
 You can add an arbitrary schema form to be provided and displayed on the approval page. Users opening the approval page would then be offered to fill arguments you can use in the flow.
 
@@ -209,6 +218,32 @@ export async function main() {
     }
 }
 ```
+
+## Permissions
+
+Customizing permissions of approval steps is a [Cloud & Enterprise Self-Hosted](/pricing) only feature.
+
+### Require approvers to be logged in
+
+By enabling this option, only users logged in to Windmill can approve the step.
+
+![Approval Logged In](../assets/flows/approval-logged-in.png 'Approval Logged In')
+
+### Disable self-approval
+
+The user who triggered the flow will not be allowed to approve it.
+
+![Disable self-approval](../assets/flows/disable-self-approval.png 'Disable self-approval')
+
+### Require approvers to be members of a group
+
+By enabling this option, only logged in users who are members of the specified [group](../core_concepts/8_groups_and_folders/index.mdx) can approve the step.
+
+![Require approvers to be members of a group](../assets/flows/approval-require-group.png 'Require approvers to be members of a group')
+
+You can also dynamically set the group by connecting it to another node's output.
+
+![Approval group dynamic](../assets/flows/approval-group-dynamic.png 'Approval group dynamic')
 
 ## Tutorial: A Slack Approval Step Conditioning Flow Branches
 

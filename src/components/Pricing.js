@@ -239,7 +239,7 @@ const pricing = {
 					text: <span>Audit logs 60 days retention</span>
 				},
 				{
-					text: <span>Isolated & dedicated database network & vCPUs</span>
+					text: <span>Isolated & dedicated workers and database</span>
 				},
 
 				{
@@ -502,7 +502,7 @@ const sections = [
 				tooltip: 'Self-hosted only'
 			},
 			{
-				name: 'Isolated & dedicated database network & vCPUs',
+				name: 'Isolated & dedicated workers and database',
 				tiers: {
 					'Free and Open-source': true,
 					Pro: true,
@@ -523,7 +523,7 @@ const sections = [
 				link: '/docs/advanced/deploy_to_prod'
 			},
 			{
-				name: 'Git Sync',
+				name: 'Sync GitHub to Windmill (Git Sync)',
 				tiers: {
 					'Free and Open-source': false,
 					Pro: true,
@@ -543,28 +543,6 @@ const sections = [
 					Team: true
 				},
 				link: '/docs/core_concepts/staging_prod'
-			},
-			{
-				name: 'Distributed dependency cache backed by S3',
-				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: false
-				},
-				link: '/docs/misc/s3_cache'
-			},
-			{
-				name: 'Node.js compatibility',
-				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
-				},
-				link: '/docs/getting_started/scripts_quickstart/typescript#nodejs'
 			},
 			{
 				name: 'Agent Workers',
@@ -587,17 +565,6 @@ const sections = [
 					Team: false
 				},
 				link: '/docs/misc/s3_cache'
-			},
-			{
-				name: 'Edit the wmill CLI binary',
-				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: false,
-					Team: false
-				},
-				link: '/docs/advanced/cli/installation'
 			}
 		]
 	},
@@ -640,19 +607,8 @@ const sections = [
 		]
 	},
 	{
-		name: 'Flow Editor',
+		name: 'Flows',
 		attributes: [
-			{
-				name: 'Adding forms to approval steps',
-				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
-				},
-				link: '/docs/flows/flow_approval'
-			},
 			{
 				name: 'Restart deployed flows from any node',
 				tiers: {
@@ -663,11 +619,89 @@ const sections = [
 					Team: true
 				},
 				link: '/blog/launch-week-1/restartable-flows'
+			},
+			{
+				name: 'Priority for Steps',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
+				link: '/docs/flows/priority',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'Lifetime / Delete after Use',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/flows/lifetime'
+			},
+			{
+				name: 'Approval steps - Adding forms',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/flows/flow_approval#form'
+			},
+			{
+				name: 'Approval steps - Adding prompts (self-approval)',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/flows/flow_approval#prompts'
+			},
+			{
+				name: 'Approval steps - Require approvers to be logged in',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/flows/flow_approval#require-approvers-to-be-logged-in'
+			},
+			{
+				name: 'Approval steps - Disable self-approval',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/flows/flow_approval#require-approvers-to-be-members-of-a-group'
+			},
+			{
+				name: 'Approval steps - Require approvers to be members of a group',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/flows/flow_approval#require-approvers-to-be-members-of-a-group'
 			}
 		]
 	},
 	{
-		name: 'App Editor',
+		name: 'Apps',
 		attributes: [
 			{
 				name: 'Global CSS',

@@ -348,15 +348,27 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Cache for Steps"
-		description="Re-use a step's previous results."
-		href="/docs/flows/cache"
+		title="Custom Timeout for Step"
+		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
+		href="/docs/flows/early_stop"
 	/>
 	<DocCard
 		color="teal"
-		title="Step Mocking"
-		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
-		href="/docs/flows/step_mocking"
+		title="Priority for Steps"
+		description="Prioritize a flow step in the execution queue."
+		href="/docs/flows/priority"
+	/>
+	<DocCard
+		color="teal"
+		title="Lifetime / Delete after Use"
+		description="The logs, arguments and results of this flow step will be completely deleted from Windmill once the flow is complete."
+		href="/docs/flows/lifetime"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
 	/>
 	<DocCard
 		color="teal"
@@ -366,13 +378,13 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Return Early for Flows"
-		description="Define a node at which the flow will return at for sync endpoints."
+		title="Early Return"
+		description="Define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously."
 		href="/docs/flows/early_return"
 	/>
 	<DocCard
 		color="teal"
-		title="Approval Steps in Flows"
+		title="Suspend & Approval / Prompts"
 		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
 		href="/docs/flows/flow_approval"
 	/>
@@ -384,9 +396,9 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Custom Timeout for Step"
-		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
-		href="/docs/flows/early_stop"
+		title="Step Mocking"
+		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
+		href="/docs/flows/step_mocking"
 	/>
 </div>
 

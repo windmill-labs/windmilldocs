@@ -377,7 +377,7 @@ You can then have a [Windmill equivalent of prompts](/docs/flows/flow_approval#p
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Approval step"
+		title="Suspend & Approval / Prompts"
 		description="Flows can be suspended until resumed or cancelled event(s) are received"
 		href="/docs/flows/flow_approval"
 	/>

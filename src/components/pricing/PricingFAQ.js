@@ -84,8 +84,7 @@ const faqs = [
 		question: 'How is the use of the number of vCPUs and seats reported to Windmill?',
 		answer: (
 			<span>
-				Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing
-				the data exported by Windmill through the provided export button at the end of the subscription period.
+				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription.
 				<br/><br/>
 				We only count the vCPUs reported by your workers as being used.
 				So you can simply set limits in the

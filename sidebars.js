@@ -122,13 +122,15 @@ const sidebars = {
 						'flows/flow_trigger',
 						'flows/retries',
 						'flows/concurrency_limit',
+						'flows/custom_timeout',
+						'flows/priority',
+						'flows/lifetime',
 						'flows/cache',
-						'flows/step_mocking',
 						'flows/early_stop',
 						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
-						'flows/custom_timeout'
+						'flows/step_mocking'
 					],
 					collapsed: true
 				},
