@@ -76,7 +76,7 @@ export default function Section({
 				) : (
 					<>
 						<FeatureCardTabs tabs={tabs} color={color} />
-						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}{' '}
+						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}
 					</>
 				)}
 			</div>
