@@ -1134,7 +1134,7 @@ export default function Pricing() {
 														<tr key={attribute.name}>
 															<th
 																scope="row"
-																className="w-1/3 py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white"
+																className="w-1/3 py-3 pr-4 pl-0 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white"
 															>
 																<div className="flex items-center relative">
 																	{attribute.link ? (
