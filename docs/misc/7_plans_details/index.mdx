@@ -104,7 +104,7 @@ Team plans work at the workspace-level.
   - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
   - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
 - To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
-- Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+- Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
 - (_By end of 2023_: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
 
@@ -138,7 +138,7 @@ To enable the license key, switch from the windmill image to the windmill-ee ima
 
 - **How is the use of the number of vCPUs and seats reported to Windmill?**
 
-  Subscription is self-declared and crossed with the lightweight telemetry that we do. For an air-gapped environment, We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+  Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used.
 
   The vCPUs reported is the sum of the vCPUs used by all your workers. 5 workers with 0.2vCPUs each will count as 1vCPU. 2 workers with 4vCPU each will count as 8vCPUs. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or ecs/kubernetes limits and you will never be overcharged
 
