@@ -24,7 +24,7 @@ There are 4 kinds of persistent storage in Windmill:
 
 1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-2. [Object storage for large data](#large-data-files-s3-r2-minio) such as S3.
+2. [Object storage for large data](#large-data-files-s3-r2-minio-azure-blob) such as S3.
 
 3. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
@@ -248,7 +248,7 @@ Then from Windmill, just [fill the S3 resource type](../../integrations/s3.md).
 
 2. Either select an existing account of create a new one
 
-3. Under the account, go to "Containers" in the left menu bar and create a new one. Azure's containers are roughly the equivalent of an S3 bucket. Note though that secret access key are per account, not per container.
+3. [Create a container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal). Azure's containers are roughly the equivalent to S3 buckets. Note though that secret access key are per account, not per container.
 
 4. [Integrate it to Windmill](../../integrations/microsoft-azure-blob.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/137) for Azure Blob APIs.
 
