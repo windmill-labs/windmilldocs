@@ -102,6 +102,11 @@ const sidebars = {
 							id: 'advanced/browser_automation/index',
 							label: 'Browser Automation'
 						},
+						'misc/guides/aggrid_table/index',
+						'misc/guides/table/index',
+						'misc/guides/airplane/index',
+						'misc/guides/sequin/index',
+						'misc/guides/app_send_email_smtp/index'
 					]
 				},
 				{
@@ -142,19 +147,20 @@ const sidebars = {
 							]
 						}
 					]
-				}				
+				},
+				'misc/contributing/index',				
 			]
 		},
 		{
 			type: 'category',
 			label: 'Core Concepts',
-
 			items: [
 				{
 					type: 'doc',
 					id: 'core_concepts/index',
 					label: 'List of Core Concepts'
 				},
+				'misc/architecture/index',
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
@@ -179,7 +185,7 @@ const sidebars = {
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index'
 			],
-			collapsed: false
+			collapsed: true
 		},
 		{
 			type: 'category',
@@ -188,6 +194,7 @@ const sidebars = {
 				{
 					type: 'category',
 					label: 'Script Editor',
+					collapsed: true,
 					link: {
 						type: 'doc',
 						id: 'script_editor/index'
@@ -205,7 +212,6 @@ const sidebars = {
 						'script_editor/multiplayer',
 						'script_editor/vs_code_scripts'
 					],
-					collapsed: true
 				},
 				{
 					type: 'category',
@@ -370,7 +376,7 @@ const sidebars = {
 				{
 					type: 'category',
 					label: 'Local Development',
-					collapsed: false,
+					collapsed: true,
 					link: {
 						type: 'doc',
 						id: 'advanced/local_development/index'
@@ -428,7 +434,7 @@ const sidebars = {
 						id: 'advanced/deploy_to_prod/index'
 					},
 					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
-					collapsed: false
+					collapsed: true
 				},
 				'advanced/preinstall_binaries/index',
 				{
@@ -449,6 +455,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
 				'advanced/clients/ts_client',
+				'misc/share_on_hub/index',
 				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
@@ -717,35 +724,8 @@ const sidebars = {
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
+				'misc/white_labelling/index',
 				'misc/react_sdk/index'
-			]
-		},
-		{
-			type: 'category',
-			label: 'Miscellaneous',
-			items: [
-				'misc/architecture/index',
-				'misc/changelog/index',
-				'misc/contributing/index',
-				'misc/getting_help/index',
-				{
-					type: 'category',
-					label: 'Guides',
-					link: {
-						type: 'doc',
-						id: 'misc/guides/index'
-					},
-					items: [
-						'misc/guides/aggrid_table/index',
-						'misc/guides/table/index',
-						'misc/guides/airplane/index',
-						'misc/guides/sequin/index',
-						'misc/guides/app_send_email_smtp/index'
-					]
-				},
-				'misc/note_of_intent/index',
-				'misc/share_on_hub/index',
-				'misc/white_labelling/index'
 			]
 		}
 	]
