@@ -523,7 +523,7 @@ const sections = [
 				link: '/docs/advanced/deploy_to_prod'
 			},
 			{
-				name: 'Sync GitHub to Windmill (Git Sync)',
+				name: 'Sync Windmill to a Git Repository (Git Sync)',
 				tiers: {
 					'Free and Open-source': false,
 					Pro: true,

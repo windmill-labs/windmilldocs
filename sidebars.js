@@ -32,6 +32,10 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Scripts',
+							link: {
+								type: 'doc',
+								id: 'getting_started/scripts_quickstart/index'
+							},
 							items: [
 								{
 									type: 'doc',
