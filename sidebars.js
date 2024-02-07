@@ -27,7 +27,7 @@ const sidebars = {
 				{
 					type: 'category',
 					label: 'Tutorials',
-					collapsed: true,
+					collapsed: false,
 					items: [
 						{
 							type: 'category',
@@ -81,14 +81,22 @@ const sidebars = {
 							label: 'Apps'
 						},
 						{
-							type: 'doc',
-							id: 'getting_started/trigger_scripts/index',
-							label: 'Triggering Scripts'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/trigger_flows/index',
-							label: 'Triggering Flows'
+							type: 'category',
+							label: 'Guides',
+							link: {
+								type: 'doc',
+								id: 'misc/guides/index'
+							},
+							items: [
+								'misc/guides/aggrid_table/index',
+								'misc/guides/table/index',
+								'misc/guides/sequin/index',
+								{
+									type: 'doc',
+									id: 'misc/guides/app_send_email_smtp/index',
+									label: 'App that Sends Email with SMTP'
+								}
+							]
 						}
 					]
 				},
@@ -99,14 +107,15 @@ const sidebars = {
 					items: [
 						{
 							type: 'doc',
-							id: 'advanced/browser_automation/index',
-							label: 'Browser Automation'
+							id: 'getting_started/trigger_scripts/index',
+							label: 'Triggering Scripts'
 						},
-						'misc/guides/aggrid_table/index',
-						'misc/guides/table/index',
-						'misc/guides/airplane/index',
-						'misc/guides/sequin/index',
-						'misc/guides/app_send_email_smtp/index'
+						{
+							type: 'doc',
+							id: 'getting_started/trigger_flows/index',
+							label: 'Triggering Flows'
+						},
+						'misc/guides/airplane/index'
 					]
 				},
 				{
@@ -189,7 +198,7 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Windmill Editor Suite',
+			label: 'Windmill Editors Suite',
 			items: [
 				{
 					type: 'category',
@@ -362,7 +371,7 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Hosting and Operations',
+			label: 'Hosting and Advanced',
 			items: [
 				{
 					type: 'category',
@@ -450,6 +459,7 @@ const sidebars = {
 						'react_vue_svelte_apps/svelte'
 					]
 				},
+				'advanced/browser_automation/index',
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
