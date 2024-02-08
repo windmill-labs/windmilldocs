@@ -275,7 +275,8 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: ['apps/app-runnable-panel', 'apps/outputs']
+							items: ['apps/app-runnable-panel', 'apps/outputs'],
+							collapsed: false
 						},
 						{
 							type: 'category',
@@ -349,6 +350,11 @@ const sidebars = {
 						'apps/app_configuration_settings/app_styling',
 						'apps/app_debugging',
 						'apps/app_deployment',
+						{
+							type: 'doc',
+							id: 'apps/download_files',
+							label: 'Download Files'
+						},
 						'apps/public_apps',
 						'apps/schedule_reports',
 						'apps/app_configuration_settings/components_groups',
