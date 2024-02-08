@@ -41,13 +41,19 @@ The following section details Download Button component's specific settings. For
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
 	/>
+	<DocCard
+		color="orange"
+		title="Download Files in Apps"
+		description="Learn how to have users download files in your apps."
+		href="/docs/apps/download_files"
+	/>
 </div>
 
 ## Download Button configuration
 
 | Name           |                Type                 | Connectable | Templatable |  Default  | Description                                                                                                      |
 | -------------- | :---------------------------------: | :---------: | :---------: | :-------: | ---------------------------------------------------------------------------------------------------------------- |
-| source         |           string or File            |    true     |    false    |           | The source of the file to download ([Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx). |
+| source         |           string or File            |    true     |    false    |           | The source of the file to download (data URL scheme with a [Base64 encoded string](../../core_concepts/18_files_binary_data/index.mdx)).|
 | filename       |               string                |    true     |    false    |           | The name of the file to download.                                                                                |
 | label          |               string                |    true     |    false    | Press me  | The button label.                                                                                                |
 | color          | blue, red, dark, light, green, gray |    false    |    false    |   blue    | The button color.                                                                                                |
