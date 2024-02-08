@@ -24,8 +24,8 @@ export default function Hero() {
 						Write and deploy software 10x faster, and run it with the highest reliability and
 						observabilty on the{' '}
 						<a className="underline" href="/docs/misc/benchmarks/competitors">
-							fastest self-hostable job orchestrator.
-						</a>
+							fastest self-hostable job orchestrator
+						</a>.
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
