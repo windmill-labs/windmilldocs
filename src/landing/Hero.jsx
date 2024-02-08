@@ -8,12 +8,13 @@ export default function Hero() {
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-16  max-w-7xl px-8 mx-auto py-16 mt-16">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-2  max-w-7xl px-8 mx-auto py-16 ">
 				<div>
-					<GithubStarCount />
-
+					<div className="flex flex-row items-end gap-8">
+						<GithubStarCount />
+					</div>
 					<h1 className="mt-4 !text-4xl !tracking-tight !font-bold sm:!text-6xl">
-						Open-source <span class="text-blue-400">#1</span> developer platform
+						Open-source developer platform and workflow engine
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
 						Turn scripts into auto-generated UIs, APIs and cron jobs. <br /> Compose them as
@@ -26,7 +27,6 @@ export default function Hero() {
 							fastest self-hostable job orchestrator.
 						</a>
 					</div>
-
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
 							href="https://app.windmill.dev/user/login"
@@ -46,7 +46,6 @@ export default function Hero() {
 							Self-host in 3 mins <span aria-hidden="true">→</span>
 						</a>
 					</div>
-
 					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
 						Backed by
 						<a href="https://www.ycombinator.com/companies/windmill" target="_blank">
