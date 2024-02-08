@@ -1,5 +1,5 @@
 import React from 'react';
-import { SiDiscord, SiX, SiLinkedin } from 'react-icons/si';
+import { SiDiscord, SiX, SiLinkedin, SiYoutube } from 'react-icons/si';
 import '../css/custom.css';
 
 const navigation = {
@@ -156,6 +156,12 @@ export default function Footer() {
 								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
 							>
 								<SiX className="h-5 w-5 dark:text-white text-gray-800" />
+							</a>
+							<a
+								href="https://www.youtube.com/channel/UChD8Xc-wCGk46HDhRNwWmZA"
+								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
+							>
+								<SiYoutube className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
 						</div>
 						<div className="footer-section mt-1 border-t border-gray-900/10 pt-8 sm:mt-20 lg:mt-24">

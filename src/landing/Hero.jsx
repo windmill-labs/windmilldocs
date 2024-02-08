@@ -1,40 +1,32 @@
 import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
-import { useColorMode } from '@docusaurus/theme-common';
 import HomescreenSvg from '../../static/homescreen.svg';
 
 export default function Hero() {
-	const { colorMode } = useColorMode();
-
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
 
-			<div className="grid gap-4 mx-auto max-w-7xl px-6 gap-y-8 lg:flex lg:px-8 py-16">
-				<div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-					<GithubStarCount />
-
-					<h1 className="mt-4 !text-3xl tracking-tight sm:!text-5xl">
-						Developer platform for APIs, critical jobs, workflows, data pipelines and UIs
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-2  max-w-7xl px-8 mx-auto py-16 ">
+				<div>
+					<div className="flex flex-row items-end gap-8">
+						<GithubStarCount />
+					</div>
+					<h1 className="mt-4 !text-4xl !tracking-tight !font-bold sm:!text-6xl">
+						Open-source developer platform and workflow engine
 					</h1>
-					<h2 className="mt-6 text-lg leading-8  font-medium">
-						Turn scripts into sharable apps and APIs, compose them as workflows or data pipelines
-						and expose them with UIs on the <b>fastest</b> and most <b>reliable</b> job{' '}
-						<b>orchestrator</b>. Self-hostable <b>worker infrastructure</b>: horizontally scalable,
-						reliable, ultra-fast.
-						<br />
-						<a className="underline" href="https://github.com/windmill-labs/windmill">
-							Fully Open-source
-						</a>
-						{' and '}
+					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
+						Turn scripts into auto-generated UIs, APIs and cron jobs. <br /> Compose them as
+						workflows or data pipelines. <br />
+						Build complex, data-intensive UIs with ease.
+						<br /> <br />
+						Write and deploy software 10x faster, and run it with the highest reliability and
+						observabilty on the{' '}
 						<a className="underline" href="/docs/misc/benchmarks/competitors">
-							much faster
-						</a>{' '}
-						alternative to <i>Airplane</i>, <i>Superblocks</i>, <i>Retool</i>, <i>Prefect</i>,{' '}
-						<i>Airflow</i>.
-					</h2>
-
+							fastest self-hostable job orchestrator
+						</a>.
+					</div>
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
 							href="https://app.windmill.dev/user/login"
@@ -54,7 +46,6 @@ export default function Hero() {
 							Self-host in 3 mins <span aria-hidden="true">→</span>
 						</a>
 					</div>
-
 					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
 						Backed by
 						<a href="https://www.ycombinator.com/companies/windmill" target="_blank">
@@ -80,11 +71,9 @@ export default function Hero() {
 						</a>
 					</div>
 				</div>
-				<div className="mx-auto mt-16 sm:mt-8">
-					<div className="flex-none !rounded-2xl overflow-hidden dark:bg-[#2e344033]">
-					<div className="svg-container">
+				<div>
+					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
 						<HomescreenSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
-					</div>
 					</div>
 				</div>
 			</div>

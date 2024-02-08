@@ -17,9 +17,9 @@ export default function DocCard({
 	};
 
 	const iconColors = {
-		blue: 'bg-blue-200 text-blue-800 dark:bg-blue-500 dark:text-blue-100',
-		teal: 'bg-teal-200 text-teal-800 dark:bg-teal-600 dark:text-teal-100',
-		orange: 'bg-orange-200 text-orange-800 dark:bg-orange-600 dark:text-orange-100'
+		blue: 'bg-blue-100 text-blue-600 dark:bg-blue-500 dark:text-blue-100',
+		teal: 'bg-teal-100 text-teal-600 dark:bg-teal-600 dark:text-teal-100',
+		orange: 'bg-orange-200 text-orange-600 dark:bg-orange-600 dark:text-orange-100'
 	};
 
 	return (
