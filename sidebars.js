@@ -17,7 +17,7 @@ const sidebars = {
 	tutorialSidebar: [
 		{
 			type: 'category',
-			label: 'Getting Started',
+			label: 'About Windmill',
 			items: [
 				'intro',
 				{
@@ -26,63 +26,188 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Scripts Quickstarts',
-					link: {
-						type: 'doc',
-						id: 'getting_started/scripts_quickstart/index'
-					},
+					label: 'Tutorials',
 					collapsed: false,
 					items: [
 						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/typescript_quickstart/index',
-							label: 'TypeScript'
+							type: 'category',
+							label: 'Scripts',
+							link: {
+								type: 'doc',
+								id: 'getting_started/scripts_quickstart/index'
+							},
+							items: [
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/typescript_quickstart/index',
+									label: 'TypeScript'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/python_quickstart/index',
+									label: 'Python'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/bash_quickstart/index',
+									label: 'Bash / PowerShell'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/docker_quickstart/index',
+									label: 'Docker'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/go_quickstart/index',
+									label: 'Go'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/sql_quickstart/index',
+									label: 'SQL & Query languages'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
+									label: 'Rest / GraphQL'
+								}
+							]
 						},
 						{
 							type: 'doc',
-							id: 'getting_started/scripts_quickstart/python_quickstart/index',
-							label: 'Python'
+							id: 'getting_started/flows_quickstart/index',
+							label: 'Flows'
 						},
 						{
 							type: 'doc',
-							id: 'getting_started/scripts_quickstart/bash_quickstart/index',
-							label: 'Bash / PowerShell'
+							id: 'getting_started/apps_quickstart/index',
+							label: 'Apps'
 						},
 						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/docker_quickstart/index',
-							label: 'Docker'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/go_quickstart/index',
-							label: 'Go'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
-							label: 'SQL & Query languages'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
-							label: 'Rest / GraphQL'
+							type: 'category',
+							label: 'Guides',
+							link: {
+								type: 'doc',
+								id: 'misc/guides/index'
+							},
+							items: [
+								'misc/guides/aggrid_table/index',
+								'misc/guides/table/index',
+								'misc/guides/sequin/index',
+								{
+									type: 'doc',
+									id: 'misc/guides/app_send_email_smtp/index',
+									label: 'App that Sends Email with SMTP'
+								}
+							]
 						}
 					]
 				},
-				'getting_started/flows_quickstart/index',
-				'getting_started/apps_quickstart/index',
-				'getting_started/trigger_scripts/index',
-				'getting_started/trigger_flows/index'
+				{
+					type: 'category',
+					label: 'Examples',
+					collapsed: true,
+					items: [
+						{
+							type: 'doc',
+							id: 'getting_started/trigger_scripts/index',
+							label: 'Triggering Scripts'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/trigger_flows/index',
+							label: 'Triggering Flows'
+						},
+						'misc/guides/airplane/index'
+					]
+				},
+				{
+					type: 'category',
+					label: 'Compare',
+					collapsed: true,
+					items: [
+						'compared_to/peers',
+						{
+							type: 'doc',
+							id: 'compared_to/airplane',
+							label: 'Airplane'
+						},
+						{
+							type: 'doc',
+							id: 'compared_to/retool',
+							label: 'Retool'
+						},
+						{
+							type: 'doc',
+							id: 'compared_to/prefect',
+							label: 'Prefect'
+						},
+						{
+							type: 'category',
+							label: 'Benchmarks',
+							link: {
+								type: 'doc',
+								id: 'misc/benchmarks/index'
+							},
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/index',
+									label: 'vs Airflow vs Prefect vs Temporal'
+								},
+								'misc/benchmarks/aws_lambda/index'
+							]
+						}
+					]
+				},
+				'misc/contributing/index'
 			]
 		},
 		{
 			type: 'category',
-			label: 'Editors Manual',
+			label: 'Core Concepts',
+			items: [
+				{
+					type: 'doc',
+					id: 'core_concepts/index',
+					label: 'List of Core Concepts'
+				},
+				'misc/architecture/index',
+				'core_concepts/auto_generated_uis/index',
+				'core_concepts/json_schema_and_parsing/index',
+				'core_concepts/instant_preview/index',
+				'advanced/imports/index',
+				'core_concepts/draft_and_deploy/index',
+				'core_concepts/persistent_storage/index',
+				'core_concepts/data_pipelines/index',
+				'core_concepts/roles_and_permissions/index',
+				'core_concepts/authentification/index',
+				'core_concepts/error_handling/index',
+				'core_concepts/monitor_past_and_future_runs/index',
+				'core_concepts/scheduling/index',
+				'core_concepts/webhooks/index',
+				'core_concepts/variables_and_secrets/index',
+				'core_concepts/resources_and_types/index',
+				'core_concepts/groups_and_folders/index',
+				'core_concepts/worker_groups/index',
+				'core_concepts/caching/index',
+				'core_concepts/files_binary_data/index',
+				'core_concepts/rich_display_rendering/index',
+				'core_concepts/jobs/index',
+				'core_concepts/collaboration/index',
+				'core_concepts/ai_generation/index'
+			],
+			collapsed: true
+		},
+		{
+			type: 'category',
+			label: 'Windmill Editors Suite',
 			items: [
 				{
 					type: 'category',
 					label: 'Script Editor',
+					collapsed: true,
 					link: {
 						type: 'doc',
 						id: 'script_editor/index'
@@ -99,8 +224,7 @@ const sidebars = {
 						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
 						'script_editor/vs_code_scripts'
-					],
-					collapsed: true
+					]
 				},
 				{
 					type: 'category',
@@ -122,13 +246,15 @@ const sidebars = {
 						'flows/flow_trigger',
 						'flows/retries',
 						'flows/concurrency_limit',
+						'flows/custom_timeout',
+						'flows/priority',
+						'flows/lifetime',
 						'flows/cache',
-						'flows/step_mocking',
 						'flows/early_stop',
 						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
-						'flows/custom_timeout'
+						'flows/step_mocking'
 					],
 					collapsed: true
 				},
@@ -251,43 +377,7 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Core Concepts',
-
-			items: [
-				{
-					type: 'doc',
-					id: 'core_concepts/index',
-					label: 'List of Core Concepts'
-				},
-				'core_concepts/auto_generated_uis/index',
-				'core_concepts/json_schema_and_parsing/index',
-				'core_concepts/instant_preview/index',
-				'advanced/imports/index',
-				'core_concepts/draft_and_deploy/index',
-				'core_concepts/persistent_storage/index',
-				'core_concepts/data_pipelines/index',
-				'core_concepts/roles_and_permissions/index',
-				'core_concepts/authentification/index',
-				'core_concepts/error_handling/index',
-				'core_concepts/monitor_past_and_future_runs/index',
-				'core_concepts/scheduling/index',
-				'core_concepts/webhooks/index',
-				'core_concepts/variables_and_secrets/index',
-				'core_concepts/resources_and_types/index',
-				'core_concepts/groups_and_folders/index',
-				'core_concepts/worker_groups/index',
-				'core_concepts/caching/index',
-				'core_concepts/files_binary_data/index',
-				'core_concepts/rich_display_rendering/index',
-				'core_concepts/jobs/index',
-				'core_concepts/collaboration/index',
-				'core_concepts/ai_generation/index'
-			],
-			collapsed: false
-		},
-		{
-			type: 'category',
-			label: 'Developer',
+			label: 'Hosting and Advanced',
 			items: [
 				{
 					type: 'category',
@@ -301,7 +391,7 @@ const sidebars = {
 				{
 					type: 'category',
 					label: 'Local Development',
-					collapsed: false,
+					collapsed: true,
 					link: {
 						type: 'doc',
 						id: 'advanced/local_development/index'
@@ -359,7 +449,7 @@ const sidebars = {
 						id: 'advanced/deploy_to_prod/index'
 					},
 					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
-					collapsed: false
+					collapsed: true
 				},
 				'advanced/preinstall_binaries/index',
 				{
@@ -375,39 +465,13 @@ const sidebars = {
 						'react_vue_svelte_apps/svelte'
 					]
 				},
+				'advanced/browser_automation/index',
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
 				'advanced/clients/ts_client',
-				'advanced/browser_automation/index'
-			]
-		},
-
-		{
-			type: 'category',
-			label: 'Enterprise Features',
-			items: [
-				'misc/plans_details/index',
-				'misc/support_and_sla/index',
-				'core_concepts/audit_logs/index',
-				'misc/worker_group_management_ui/index',
-				'core_concepts/concurrency_limits/index',
-				'misc/s3_cache/index',
-				'core_concepts/oidc/index',
-				'misc/saml_and_scim/index',
-				'core_concepts/dedicated_workers/index',
-				'core_concepts/agent_workers/index',
-				'core_concepts/content_search/index',
-				'apps/css_editor',
-				'core_concepts/multiplayer/index',
-				'misc/react_sdk/index'
-			]
-		},
-		{
-			type: 'category',
-			label: 'Integrations',
-			items: [
+				'misc/share_on_hub/index',
 				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
@@ -658,69 +722,26 @@ const sidebars = {
 				}
 			]
 		},
+
 		{
 			type: 'category',
-			label: 'Windmill Compared to',
+			label: 'Enterprise Features',
 			items: [
-				'compared_to/peers',
-				{
-					type: 'doc',
-					id: 'compared_to/airplane',
-					label: 'Airplane'
-				},
-				{
-					type: 'doc',
-					id: 'compared_to/retool',
-					label: 'Retool'
-				},
-				{
-					type: 'doc',
-					id: 'compared_to/prefect',
-					label: 'Prefect'
-				},
-				{
-					type: 'category',
-					label: 'Benchmarks',
-					link: {
-						type: 'doc',
-						id: 'misc/benchmarks/index'
-					},
-					items: [
-						{
-							type: 'doc',
-							id: 'misc/benchmarks/competitors/index',
-							label: 'vs Airflow vs Prefect vs Temporal'
-						},
-						'misc/benchmarks/aws_lambda/index'
-					]
-				}
-			]
-		},
-		{
-			type: 'category',
-			label: 'Miscellaneous',
-			items: [
-				'misc/architecture/index',
-				'misc/contributing/index',
-				'misc/getting_help/index',
-				{
-					type: 'category',
-					label: 'Guides',
-					link: {
-						type: 'doc',
-						id: 'misc/guides/index'
-					},
-					items: [
-						'misc/guides/aggrid_table/index',
-						'misc/guides/table/index',
-						'misc/guides/airplane/index',
-						'misc/guides/sequin/index',
-						'misc/guides/app_send_email_smtp/index'
-					]
-				},
-				'misc/note_of_intent/index',
-				'misc/share_on_hub/index',
-				'misc/white_labelling/index'
+				'misc/plans_details/index',
+				'misc/support_and_sla/index',
+				'core_concepts/audit_logs/index',
+				'misc/worker_group_management_ui/index',
+				'core_concepts/concurrency_limits/index',
+				'misc/s3_cache/index',
+				'core_concepts/oidc/index',
+				'misc/saml_and_scim/index',
+				'core_concepts/dedicated_workers/index',
+				'core_concepts/agent_workers/index',
+				'core_concepts/content_search/index',
+				'apps/css_editor',
+				'core_concepts/multiplayer/index',
+				'misc/white_labelling/index',
+				'misc/react_sdk/index'
 			]
 		}
 	]
