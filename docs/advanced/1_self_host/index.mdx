@@ -222,7 +222,7 @@ For all the above, see the commented lines in the caddy section of the docker-co
 You may need to adapt this depending on if you have Traefik running or on your configuration. This also assumes you have a `letsencryptresolver` or change the name to your certificate resolver if you want to use the `websecure` entrypoint.
 
 ```yaml
-version: "3.7"
+version: '3.7'
 
 services:
   db:
@@ -243,7 +243,7 @@ services:
       POSTGRES_PASSWORD: changeme
       POSTGRES_DB: windmill
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -286,7 +286,7 @@ services:
       replicas: 3
       resources:
         limits:
-          cpus: "1"
+          cpus: '1'
           memory: 2048M
     restart: unless-stopped
     environment:
@@ -313,7 +313,7 @@ services:
       replicas: 2
       resources:
         limits:
-          cpus: "0.1"
+          cpus: '0.1'
           memory: 128M
     restart: unless-stopped
     environment:
@@ -327,30 +327,30 @@ services:
         condition: service_healthy
 
   ## This worker is specialized for reports or scraping jobs. It is assigned the "reports" worker group which has an init script that installs chromium and can be targeted by using the "chromium" worker tag.
-#  windmill_worker_reports:
-#    image: ${WM_IMAGE}
-#    pull_policy: always
-#    deploy:
-#      replicas: 1
-#      resources:
-#        limits:
-#          cpus: "1"
-#          memory: 2048M
-#    restart: unless-stopped
-#    environment:
-#      - DATABASE_URL=${DATABASE_URL}
-#      - MODE=worker
-#      - WORKER_GROUP=reports
-#    networks:
-#      - windmill
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
-#    volumes:
-#      # mount the docker socket to allow to run docker containers from within the workers
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - worker_dependency_cache:/tmp/windmill/cache
+  #  windmill_worker_reports:
+  #    image: ${WM_IMAGE}
+  #    pull_policy: always
+  #    deploy:
+  #      replicas: 1
+  #      resources:
+  #        limits:
+  #          cpus: "1"
+  #          memory: 2048M
+  #    restart: unless-stopped
+  #    environment:
+  #      - DATABASE_URL=${DATABASE_URL}
+  #      - MODE=worker
+  #      - WORKER_GROUP=reports
+  #    networks:
+  #      - windmill
+  #    depends_on:
+  #      db:
+  #        condition: service_healthy
+  #    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+  #    volumes:
+  #      # mount the docker socket to allow to run docker containers from within the workers
+  #      - /var/run/docker.sock:/var/run/docker.sock
+  #      - worker_dependency_cache:/tmp/windmill/cache
 
   lsp:
     image: ghcr.io/windmill-labs/windmill-lsp:latest
@@ -368,11 +368,11 @@ services:
       - traefik.http.services.windmill_lsp.loadbalancer.server.port=3001
       #http
       - traefik.http.routers.windmill_lsp_http.entrypoints=web
-      - traefik.http.routers.windmill_lsp_http.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_http.rule=Host(`windmill.yourdomain.com`) && PathPrefix(`/`)
       - traefik.http.routers.windmill_lsp_http.service=windmill_lsp
       # https
       - traefik.http.routers.windmill_lsp_https.entrypoints=websecure
-      - traefik.http.routers.windmill_lsp_https.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_https.rule=Host(`windmill.yourdomain.com`) && PathPrefix(`/`)
       - traefik.http.routers.windmill_lsp_https.service=windmill_lsp
       - traefik.http.routers.windmill_lsp_https.tls=true
       - traefik.http.routers.windmill_lsp_https.tls.certresolver=letsencryptresolver
