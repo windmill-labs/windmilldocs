@@ -36,6 +36,7 @@ const sidebars = {
 								type: 'doc',
 								id: 'getting_started/scripts_quickstart/index'
 							},
+							collapsed: false,
 							items: [
 								{
 									type: 'doc',
