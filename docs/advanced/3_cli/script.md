@@ -73,11 +73,15 @@ wmill script generate-metadata [--lock-only] [--schema-only] [<path>]
 
 Note that you can explicitly exclude (or include) specific files or folders to be taken into account by this command, with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
+### Package.json & requirements.txt
+
+If you have a `package.json` or `requirements.txt` file in the same directory as your script, the `wmill script generate-metadata` command will automatically include the dependencies in the metadata file.
+
 ### Arguments
 
-| Argument   | Description                            |
-| ---------- | -------------------------------------- |
-| `path`     | The path of the script content file.   |
+| Argument | Description                          |
+| -------- | ------------------------------------ |
+| `path`   | The path of the script content file. |
 
 ### Examples
 
@@ -125,12 +129,12 @@ wmill script run <remote_path> [options]
 
 ### Options
 
-| Option         | Parameters | Description                                                                   |
-| -------------- | ---------- | ----------------------------------------------------------------------------- |
+| Option         | Parameters | Description                                                                                                                                                                                                                                                                                                |
+| -------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `-d, --data`   | `data`     | Inputs specified as a JSON string or a file using @filename or stdin using @- . Resources and variables must be passed using "$res:..." or "$var:..." For example `wmill script run u/henri/message_to_slack -d '{"slack":"$res:u/henri/henri_slack_perso","channel":"general","text":"hello dear team"}'` |
-| `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.      |
+| `-s, --silent` |            | Do not ouput anything other then the final output. Useful for scripting.                                                                                                                                                                                                                                   |
 
-![CLI arguments](../../assets/cli/cli_arguments.png "CLI arguments")
+![CLI arguments](../../assets/cli/cli_arguments.png 'CLI arguments')
 
 ## Remote path format
 
