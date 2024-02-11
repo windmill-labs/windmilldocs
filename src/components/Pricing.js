@@ -464,6 +464,17 @@ const sections = [
 				link: '/docs/core_concepts/audit_logs'
 			},
 			{
+				name: 'Retention period of jobs',
+				tiers: {
+					'Free and Open-source': '<= 30 days',
+					Pro: 'Unlimited',
+					Enterprise: 'Unlimited',
+					Community: true,
+					Team: '60 days'
+				},
+				link: '/docs/core_concepts/audit_logs'
+			},
+			{
 				name: 'Workspace Error Handler',
 				tiers: {
 					'Free and Open-source': false,
