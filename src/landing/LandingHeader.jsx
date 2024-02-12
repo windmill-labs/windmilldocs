@@ -262,7 +262,31 @@ export default function LandingHeader() {
 										</a>
 									))}
 								</div>
-								<div className="mt-6">
+								<div className="mt-6 flex justify-center items-center space-x-4 mb-4">
+									<a
+										href="https://github.com/windmill-labs/windmill"
+										data-analytics='"github"'
+										onClick={() => window.plausible('github')}
+										className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<SiGithub className="h-5 w-5 dark:text-white text-gray-800" />
+									</a>
+
+									<a
+										href="https://discord.com/invite/V7PM2YHsPB"
+										data-analytics='"discord"'
+										onClick={() => window.plausible('discord')}
+										className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
+									</a>
+									</div>
+
+									<div className="mt-6">
 									<a
 										href="https://www.windmill.dev/book-demo"
 										data-analytics='"schedule-demo"'
