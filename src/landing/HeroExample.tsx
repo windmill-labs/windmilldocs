@@ -59,7 +59,7 @@ export default function HeroExample() {
 						src="https://www.youtube.com/embed/pJh2fdstV-A?vq=hd1080"
 						title="YouTube video player"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						allowfullscreen="true"
+						allowFullScreen={true}
 						className="rounded-xl"
 					></iframe>
 				</div>
