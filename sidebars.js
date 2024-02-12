@@ -36,7 +36,6 @@ const sidebars = {
 								type: 'doc',
 								id: 'getting_started/scripts_quickstart/index'
 							},
-							collapsed: false,
 							items: [
 								{
 									type: 'doc',
@@ -88,19 +87,15 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Guides',
-							link: {
-								type: 'doc',
-								id: 'misc/guides/index'
-							},
 							items: [
-								'misc/guides/aggrid_table/index',
-								'misc/guides/table/index',
-								'misc/guides/sequin/index',
 								{
 									type: 'doc',
 									id: 'misc/guides/app_send_email_smtp/index',
 									label: 'App that Sends Email with SMTP'
-								}
+								},
+								'misc/guides/aggrid_table/index',
+								'misc/guides/table/index',
+								'misc/guides/sequin/index'
 							]
 						}
 					]
@@ -147,10 +142,6 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Benchmarks',
-							link: {
-								type: 'doc',
-								id: 'misc/benchmarks/index'
-							},
 							items: [
 								{
 									type: 'doc',
