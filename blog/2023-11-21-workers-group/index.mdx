@@ -48,16 +48,16 @@ Once the configurations are done in the Windmill UI, the workers take their conf
 ### How to have a Worker join a Worker Group
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 Create a worker group in your [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and simply pass the worker group as the env variable `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group.
 
@@ -102,7 +102,7 @@ When writing a script that should be executed on a specific worker group, you ha
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Worker Groups and Tags"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
@@ -124,7 +124,7 @@ This approach offers added convenience to pre-install binaries or set initial co
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Init Scripts"
 		description="Init Scripts are executed at the beginning when the worker starts."
@@ -162,7 +162,7 @@ You can then configure it directly from the UI and in particular set tags to lis
 
 ## Learn more
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workers and Worker Groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."

@@ -43,7 +43,7 @@ This feature is also usable directly in the script editor to test a flow in the 
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -63,7 +63,7 @@ Windmill provides a WYSIWYG app editor. It allows you to build your own UI with 
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="App Editor"
 		color="orange"
@@ -94,7 +94,7 @@ You can create schedules by specifying a script or flow, its arguments, and a CR
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Schedules"
 		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
@@ -118,7 +118,7 @@ The `wmill` CLI allows you to interact with Windmill instances right from your t
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Command-Line Interface"
 		description="Interact with Windmill instances right from your terminal."
@@ -132,7 +132,7 @@ Windmill supports inner flows. This allows you to call a flow from another workf
 
 ![Inner Flows](./inner_flow.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Flow Editor"
 		color="teal"
@@ -151,7 +151,7 @@ Trigger scripts are designed to pull data from an external source and return all
 
 By default, adding a trigger will set the schedule to 15 minutes.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Trigger Scripts"
 		color="teal"
@@ -168,7 +168,7 @@ These webhooks accept incoming HTTP requests, allowing users to easily trigger t
 
 Using webhooks, you could also trigger a flow from scripts.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Webhooks"
 		description="Trigger scripts and flows from webhooks."
@@ -190,7 +190,7 @@ One use case of webhooks is [building a Slackbot with Windmill](/blog/handler-sl
 
 Windmill uses Slack to trigger scripts and flows by establishing Slackbots and creating specific commands. By connecting Slack with Windmill, parsing incoming Slack commands, and leveraging Windmill workflows, operational teams can trigger complex automations directly from Slack.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Slack Integration"
 		description="Learn how to integrate Slack with Windmill."
@@ -212,7 +212,7 @@ One use case of webhooks is [triggering scripts via inbound emails using Mailchi
 
 Windmill leverages [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/)'s capabilities to initiate scripts and flows via email-triggered events. By parsing inbound emails and routing the content to Windmill through webhooks, scripts or flows are activated, enabling automation based on email content or just their arrival.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Mailchimp Mandrill Integration"
 		description="Learn how to integrate Mailchimp Mandrill with Windmill."

@@ -1,4 +1,3 @@
-
 import DocCard from '@site/src/components/DocCard';
 
 # Modal Form
@@ -18,19 +17,19 @@ Only user inputs are displayed in the form in the modal.
 
 The following section details Modal Form component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        color="orange"
-        title="App Editor Documentation"
-        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
-        href="/docs/apps/app_editor"
-    />
-    <DocCard
-        color="orange"
-        title="Apps Quickstart"
-        description="Learn how to build your first app in a matter of minutes."
-        href="/docs/getting_started/apps_quickstart"
-    />
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App Editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
 </div>
 
 ## Controls
@@ -61,7 +60,7 @@ Invalidate a specific field of a form
 
 `invalidate(id: string, key: string, error: string)`
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Runnable Editor"
@@ -72,16 +71,17 @@ Invalidate a specific field of a form
 
 ## Form Modal configuration
 
-| Name  |                Type                 | Connectable | Templatable |  Default   | Description       |
-| ----- | :---------------------------------: | :---------: | :---------: | :--------: | ----------------- |
+| Name        |                Type                 | Connectable | Templatable |   Default   | Description             |
+| ----------- | :---------------------------------: | :---------: | :---------: | :---------: | ----------------------- |
 | Modal Title |               string                |    true     |    false    | Modal title | Title of the component. |
-| label |               string                |    true     |    false    | Open popup | The button label. |
-| color | blue, red, dark, light, green, gray |    true    |    false    |    dark    | The button color. |
-| size  |         xs, sm, md , lg, xl         |    true    |    false    |     sm     | The button size.  |
+| label       |               string                |    true     |    false    | Open popup  | The button label.       |
+| color       | blue, red, dark, light, green, gray |    true     |    false    |    dark     | The button color.       |
+| size        |         xs, sm, md , lg, xl         |    true     |    false    |     sm      | The button size.        |
 
 The form component has a special parameters called `On Success` and `On Error`.
 
 The options for On Success are:
+
 - Do nothing
 - Go to an url
 - Set the tab of a [tabs component](./tabs.mdx)
@@ -90,6 +90,7 @@ The options for On Success are:
 - Close a [modal](./modal.mdx) or a [drawer](./drawer.mdx)
 
 The options for On Error are:
+
 - Show error overlay
 - Go to an url
 - Set the tab of a [tabs component](./tabs.mdx)

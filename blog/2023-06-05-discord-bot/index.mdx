@@ -123,11 +123,11 @@ We need to ingest a data source, here the [Windmill documentation](/docs/intro).
 
 [Workflows](/docs/flows/flow_editor) are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
 
-<br/>
+<br />
 
 The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
 
-<br/>
+<br />
 
 In Windmill, each step is [code](/docs/getting_started/scripts_quickstart) with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
 
@@ -258,7 +258,7 @@ function getDocusaurusPathFromGithub(githubUrl: string): string {
 
 Notice that the script takes a special parameter `gh_auth` which is a Windmill resource that contains the [GitHub token](/docs/integrations/github).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Resources"
 		description="Resources are rich objects in JSON that allow to store configuration and credentials."
@@ -335,7 +335,7 @@ We can [schedule](/docs/core_concepts/scheduling) the flow to run every month.
 
 #### Learn more about Windmill features
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard title="For loops" description="For loops documentation" href="/docs/flows/flow_loops" />
 	<DocCard
 		title="Schedule"
@@ -663,7 +663,7 @@ export async function main(
 
 #### Learn more about approval steps
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Suspend & Approval / Prompts"
 		description="Flows can be suspended until resumed or cancelled event(s) are received"

@@ -5,7 +5,7 @@ import FooterLogo from '@theme/Footer/Logo';
 import FooterCopyright from '@theme/Footer/Copyright';
 import FooterLayout from '@theme/Footer/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import useInkeepSettings from '../utils/useInkeepSettings';
+import useInkeepSettings from '../../utils/useInkeepSettings';
 
 function Footer() {
 	const { footer } = useThemeConfig();

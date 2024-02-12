@@ -252,7 +252,7 @@ A couple of notes before the results:
 	]}
 />
 
-<br/>
+<br />
 
 Polars is the fastest at computing the results, but consumes slightly more memory than Spark (it OOMed for the 25G benchmark). Polars in lazy mode, however, is a lot more memory efficient and can process more data, at the expense of computation time.
 Overall, both Polars and DuckDB behave very well in terms of memory consumption and computation time. The 10G benchmark contains tables with up to 60 million rows, and we were far from using the most powerful AWS instance. So, it is true that
@@ -269,7 +269,7 @@ a file, and the following steps consume this file to run the queries. We were ab
 
 For more details on storage in Windmill, see:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Persistent Storage"
 		description="Ensure that your data is safely stored and easily accessible whenever required."

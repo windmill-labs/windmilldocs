@@ -41,7 +41,7 @@ For less technical users, it's an opportunity to use Windmill while avoiding bac
 - Docs - [Windmill AI for Flows](/docs/core_concepts/ai_generation#windmill-ai-for-flows)
 - Docs - [Windmill AI Code Completion](/docs/core_concepts/ai_generation#windmill-ai-code-completion)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 1 - Flow Builder Copilot"
 		description="Generate workflows from prompts."
@@ -71,7 +71,7 @@ It unlocks fully the ability to iterate on your scripts and flows in the comfort
 - Docs - [Local Development](/docs/advanced/local_development)
 - Docs - [Windmill CLI](/docs/advanced/cli)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 1 - VS Code Extension"
 		description="Write scripts & flows in your code editor with a UI preview."
@@ -115,7 +115,7 @@ Examples of worker groups configurations include:
 
 Once the configurations are done from the Windmill UI, the workers take their configuration dynamically, without having to restart.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 2 - Worker Groups"
 		description="Define Worker Groups and configure them in the UI"
@@ -143,7 +143,7 @@ Dedicated Workers for scripts enable to reach up to 1000rps per worker for a giv
 
 - Docs - [Dedicated Workers - High Throughput](/docs/core_concepts/dedicated_workers)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 2 - Dedicated Workers for scripts"
 		description="Assign workers dedciated to a script for maxmium performance by removing cold starts"
@@ -162,9 +162,9 @@ Dedicated Workers for scripts enable to reach up to 1000rps per worker for a giv
 	src="/videos/windmill_fastest.mp4"
 />
 
-<br/>
+<br />
 
-Big claim today: We've benchmarked Windmill to be the fastest self-hostable generic workflow engine among Airflow, Prefect and even Temporal. For Airflow, there is a quite a margin, up to 10x faster! 
+Big claim today: We've benchmarked Windmill to be the fastest self-hostable generic workflow engine among Airflow, Prefect and even Temporal. For Airflow, there is a quite a margin, up to 10x faster!
 
 You've known Windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
 
@@ -177,7 +177,7 @@ Enjoy the reading.
 - [Blog post](../2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx)
 - Docs - [Benchmarks](/docs/misc/benchmarks/competitors)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 3 - Fastest self-hostable open-source workflow engine"
 		description="Why is Windmill the fastest self-hostable workflow engine and job processing framework"
@@ -211,13 +211,13 @@ Not only that, but we also took care of doing an exhaustive hierarchy of classes
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-23-3-global-css/Index.mdx)
 - Docs - [Styling](/docs/apps/app_configuration_settings/app_styling)
 - Docs - [CSS Editor](/docs/apps/css_editor)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 4 - Global Custom CSS"
 		description="Introducing Custom CSS theming to share across your apps."
@@ -234,18 +234,18 @@ Windmill already provides over sixty components for its users. All components co
 We are proud to introduce component groups, which allow you to build your own meta-components, accessible via drag-and-drop from any app in your workspace. Saved components group keep the logic between each components, avoiding creating it over and over.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/save_component_group.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/save_component_group.mp4"
 />
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-23-2-components-groups/index.mdx)
 - Docs - [Groups of components](/docs/apps/app_configuration_settings/components_groups)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 4 - Groups of Components"
 		description="Introducing Components Groups to group and save components, therefore building your own meta components."
@@ -264,6 +264,7 @@ However, for components that are more specific you can now go even further and i
 Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
 There are 3 main benefits of using your own components:
+
 1. Reusing react components you've already written in other codebases.
 2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
 3. Embeding very complex components such as a code editor.
@@ -280,13 +281,13 @@ If that's not sufficient you can even build your own app in React.
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](/blog/launch-week-1/react-components)
 - Docs - [Import Custom React Components](/docs/apps/react_components)
 - Docs - [React App Import](/docs/react_vue_svelte_apps/react)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 4 - Custom React Components & Apps"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
@@ -300,7 +301,7 @@ For the last day of our launch week today we focused on features that will help 
 
 ### Windmill for data pipelines - S3 Integration
 
-![Windmill for data pipelines - S3 Integration](../2023-11-24-data-pipeline-orchestrator/data_pipelines.png.webp "Windmill for data pipelines - S3 Integration")
+![Windmill for data pipelines - S3 Integration](../2023-11-24-data-pipeline-orchestrator/data_pipelines.png.webp 'Windmill for data pipelines - S3 Integration')
 
 _Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra._
 
@@ -328,12 +329,12 @@ will be easier to manage and your pipeline will be easier to write, maintain, an
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-24-data-pipeline-orchestrator/index.mdx)
 - Docs - [Persistent Storage](/docs/core_concepts/persistent_storage)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 5 - Windmill for data pipelines"
 		description="Use Windmill to build, run, and monitor your data pipelines."
@@ -343,7 +344,7 @@ will be easier to manage and your pipeline will be easier to write, maintain, an
 
 ### Restartable Flows
 
-![Restartable flows](../2023-11-24-restartable-flows/restartable_flows.png.webp "Restartable flows")
+![Restartable flows](../2023-11-24-restartable-flows/restartable_flows.png.webp 'Restartable flows')
 
 The principle is simple: once the flow is executed (whether in test or deployed), you have the possibility to restart it from any node (step, iteration of a for loop, or branch).
 
@@ -363,12 +364,12 @@ This feature is part of the logic of the different ways to iterate over a flow (
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-24-restartable-flows/index.mdx)
 - Docs - [Instant Preview & Testing](/docs/core_concepts/instant_preview)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 5 - Restartable Flows"
 		description="Re-start a flow from a specific node."
