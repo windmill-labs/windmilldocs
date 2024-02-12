@@ -2,6 +2,8 @@
 
 The result renderer in Windmill supports rich display rendering, allowing you to customize the display format of your results. By leveraging specific formats, you can display images, files, tables, HTML, JSON, and more.
 
+## Rich display formats
+
 This feature is useful if you want to display an image, a GIF, a file, or specify the filename for a rich result.
 
 If the result is an object/dict with a single key (except for `approval`, which needs 3), you can leverage the following rich results:
@@ -42,26 +44,47 @@ export async function main() {
 }
 ```
 
-# Rich table display
+## Rich table display
 
-The rich table display will be enabled when:
+The rich table display will be enabled for [scripts](../../script_editor/index.mdx) or [flows](../../flows/1_flow_editor.mdx) when:
 
-- The result is an array of objects
-- The result has a 'table-col' key
+- The result is an array of objects.
+- The result has a 'table-col' key.
 
 ![Default](./default.png 'Rich table display')
 
-## Interactions
+### Interactions
 
 The rich display renderer also supports interactions. Interactions are a way to display a result and allow the user to interact with it. For example, you can display a table and allow the user to sort it by clicking on the column headers.
 
 The features are:
 
-- Search
-- Hide/show columns
+- Search.
+- Hide/show columns.
 - Sort by column (ascending/descending): Only enabled if the column is sortable, i.e. if the column is a number or a string.
-- Pagination
-- Download as CSV. If one selected rows, it will download the selected rows as CSV. If no rows are selected, it will download the entire table as CSV.
-- Download as JSON
+- Pagination.
+- Download as CSV. If the user selected rows, it will download the selected rows as CSV. If no rows are selected, it will download the entire table as CSV.
+- Download as JSON.
 
-![Interactions](./interactions.png 'Interactions')
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/rich_table_display.mp4"
+/>
+
+### Example
+
+Try with this [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx$$):
+
+```py
+import requests
+from typing import Any, Dict
+
+
+def main() -> Dict[str, Any]:
+
+    url = "https://jsonplaceholder.typicode.com/posts"
+    response = requests.get(url)
+    data = response.json()
+    return data
+```
