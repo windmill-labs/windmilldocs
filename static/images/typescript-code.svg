@@ -16310,7 +16310,7 @@
                                    rx="6"
                                    ry="6"
                                    id="rect9427" />
-                                <image
+                                <image loading=" lazy"
                                    id="background-image1"
                                    width="21"
                                    height="21"

@@ -29,7 +29,7 @@ import {
 	SiTypescript,
 	SiVisualstudiocode,
 	SiGraphql
-} from 'react-icons/si/index';
+} from 'react-icons/si';
 import { useDeveloperMode } from '../pages';
 
 import Section from './Section';
@@ -126,7 +126,7 @@ const tabs = [
 					<div>
 						Script in{' '}
 						<a href="/docs/getting_started/scripts_quickstart/go" target="_blank">
-							Go
+							the Go Language
 						</a>
 						.
 					</div>

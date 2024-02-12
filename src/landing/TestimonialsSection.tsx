@@ -263,16 +263,30 @@ export default function Example() {
 										<p>{testimonial.text}</p>
 									</div>
 									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4 ">
-										<a className="w-full" href={testimonial.linkedIn} target="_blank">
-											<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
-												{testimonial.author.name}
-											</p>
-											<div className="text-sm dark:text-gray-50 text-gray-500">
-												{[testimonial.author.position, testimonial.author.company]
-													.filter(Boolean)
-													.join(' @ ')}
-											</div>
-										</a>
+										{testimonial.linkedIn ? (
+											<a className="w-full" href={testimonial.linkedIn} target="_blank">
+												<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
+													{testimonial.author.name}
+												</p>
+												<div className="text-sm dark:text-gray-50 text-gray-500">
+													{[testimonial.author.position, testimonial.author.company]
+														.filter(Boolean)
+														.join(' @ ')}
+												</div>
+											</a>
+										) : (
+											<>
+												<p className="text-sm font-bold dark:text-gray-50 text-gray-900 w-full ">
+													{testimonial.author.name}
+												</p>
+												<div className="text-sm dark:text-gray-50 text-gray-500">
+													{[testimonial.author.position, testimonial.author.company]
+														.filter(Boolean)
+														.join(' @ ')}
+												</div>
+											</>
+										)}
+
 										<a
 											className="flex-shrink-0 cursor-pointer"
 											href={testimonial.company_url}
