@@ -32,6 +32,10 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Scripts',
+							link: {
+								type: 'doc',
+								id: 'getting_started/scripts_quickstart/index'
+							},
 							items: [
 								{
 									type: 'doc',
@@ -84,14 +88,14 @@ const sidebars = {
 							type: 'category',
 							label: 'Guides',
 							items: [
-								'misc/guides/aggrid_table/index',
-								'misc/guides/table/index',
-								'misc/guides/sequin/index',
 								{
 									type: 'doc',
 									id: 'misc/guides/app_send_email_smtp/index',
 									label: 'App that Sends Email with SMTP'
-								}
+								},
+								'misc/guides/aggrid_table/index',
+								'misc/guides/table/index',
+								'misc/guides/sequin/index'
 							]
 						}
 					]
