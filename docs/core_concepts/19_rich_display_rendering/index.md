@@ -74,7 +74,7 @@ The features are:
 
 ### Example
 
-Try with this [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx$$):
+Try with this [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx):
 
 ```py
 import requests
