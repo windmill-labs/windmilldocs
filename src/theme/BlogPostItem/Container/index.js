@@ -65,14 +65,19 @@ export default function BlogPostItemContainer({ children, className }) {
 							)}
 						</span>
 					))}
-					<span
-						className={twMerge(
+					<a
+						href={`https://github.com/windmill-labs/windmill/releases/tag/${frontMatter.version}`}
+						target="_blank"
+						>
+						<span
+							className={twMerge(
 							'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium',
-							'bg-gray-100 text-gray-800'
-						)}
-					>
-						{frontMatter.version}
-					</span>
+							'bg-gray-100 hover:bg-gray-200 text-gray-800'
+							)}
+						>
+							{frontMatter.version}
+						</span>
+					</a>
 				</div>
 				<div className="mb-6">
 				<div className="flex items-center">
