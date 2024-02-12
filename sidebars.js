@@ -32,10 +32,6 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Scripts',
-							link: {
-								type: 'doc',
-								id: 'getting_started/scripts_quickstart/index'
-							},
 							items: [
 								{
 									type: 'doc',
@@ -87,10 +83,6 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Guides',
-							link: {
-								type: 'doc',
-								id: 'misc/guides/index'
-							},
 							items: [
 								'misc/guides/aggrid_table/index',
 								'misc/guides/table/index',
@@ -146,10 +138,6 @@ const sidebars = {
 						{
 							type: 'category',
 							label: 'Benchmarks',
-							link: {
-								type: 'doc',
-								id: 'misc/benchmarks/index'
-							},
 							items: [
 								{
 									type: 'doc',
