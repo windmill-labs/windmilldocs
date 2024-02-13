@@ -43,11 +43,10 @@ This way you can test your script in your dev environment on a dummy DB, then on
   <div>
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
-		In Airplane, you declare as many "Environments" as you need, and set one to be the default one. Usually the Prod one. Then for each "asset" (task or view), you manually "promote" them to your Prod environment. \ \ Effectively, this will copy the content of the script to the prod environment, nothing more.
-    \\
+		In Airplane, you declare as many "Environments" as you need, and set one to be the default one. Usually the Prod one. Then for each "asset" (task or view), you manually "promote" them to your Prod environment. <br /> Effectively, this will copy the content of the script to the prod environment, nothing more.
+    <br />
 
 [https://docs.airplane.dev/dev-lifecycle/studio](https://docs.airplane.dev/dev-lifecycle/studio)
-
 [https://docs.airplane.dev/dev-lifecycle/deployments](https://docs.airplane.dev/dev-lifecycle/deployments)
 
 </p>
@@ -55,7 +54,7 @@ This way you can test your script in your dev environment on a dummy DB, then on
   </div>
 </div>
 
-\
+<br />
 
 Windmill does not have the concept of environment per-se. Here is how you it works in Windmill.
 
@@ -76,7 +75,7 @@ From a workspace in Windmill, you can deploy a script/flow/resource/variable and
     src="/videos/staging_prod.mp4"
 />
 
-\
+<br />
 
 Deploy to Staging/Prod Web UI is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
@@ -141,7 +140,7 @@ The first 5 minutes of this video show how to set up a Git repository for a work
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-\
+<br />
 
 Git Sync is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
@@ -177,17 +176,15 @@ More details at:
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 		Tasks are functions that anyone on your team can execute. A task can be a SQL query, custom TypeScript/JavaScript/Python, or even a wrapper around a REST API call. Users can execute tasks through a simple Airplane-generated UI, complete with rich components and validation.
-
-\\
+		<br />
 
 [https://docs.airplane.dev/getting-started/tasks](https://docs.airplane.dev/getting-started/tasks)
 
 </p>
-
   </div>
 </div>
 
-\
+<br />
 
 Windmill’s equivalent of Tasks are Scripts. Scripts are the basis of all major features (they are the steps of [flows](../../../flows/1_flow_editor.mdx), [linked to apps components](../../../apps/3_app-runnable-panel.mdx), or can be [run as standalone](../../../getting_started/8_trigger_scripts/index.mdx)).
 
@@ -220,8 +217,7 @@ Scripts can are created from within Windmill app (cloud or self-hosted). Then ca
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 		Schedules allow you to automatically run tasks on a recurring cadence using CRON expressions.
-    \\
-
+  <br/>
 [https://docs.airplane.dev/tasks/schedules](https://docs.airplane.dev/tasks/schedules)
 
 </p>
@@ -229,7 +225,7 @@ Scripts can are created from within Windmill app (cloud or self-hosted). Then ca
   </div>
 </div>
 
-\
+ <br/>
 
 Just like Airplane, Windmill provides [schedules](https://www.windmill.dev/docs/core_concepts/scheduling) that allow to run scripts & flows at a given frequency, just like CRON but with a user interface and control panels.
 
@@ -256,8 +252,7 @@ All schedules can be attached to a custom Error Handler (or [workspace error han
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 Airplane's permissioning system allows for fine-grained, role-based access control using [groups](https://docs.airplane.dev/platform/groups) and [roles](https://docs.airplane.dev/platform/team-roles).
-
-\
+<br />
 
 [https://docs.airplane.dev/platform/permissions](https://docs.airplane.dev/platform/permissions)
 
@@ -265,9 +260,7 @@ Airplane's permissioning system allows for fine-grained, role-based access contr
 
   </div>
 </div>
-
-\
-
+<br />
 Windmill provides a very similar comprehensive roles and permissions system that allows you to manage access within your Windmill instance and workspaces. Here is how permissions work in Windmill:
 
 1. **Users**: Users are identified by their email and have unique usernames within each workspace they belong to.
@@ -307,7 +300,7 @@ Windmill provides a very similar comprehensive roles and permissions system that
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 		Airplane Tasks make it possible to orchestrate processes that span multiple steps and engage with human operators, thanks to execution of tasks from within other tasks.
-    \\
+    <br />
 
 [https://docs.airplane.dev/getting-started/orchestration](https://docs.airplane.dev/getting-started/orchestration)
 
@@ -316,7 +309,7 @@ Windmill provides a very similar comprehensive roles and permissions system that
   </div>
 </div>
 
-\
+<br />
 
 Windmill embeds a native way to create workflows, in the form of [DAGs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (Directed Acyclic Graphs) that represent [dependencies between steps](https://www.windmill.dev/docs/flows/architecture) in the [OpenFlow](https://www.windmill.dev/docs/openflow) format.
 
@@ -359,7 +352,7 @@ It is also possible to define the flows as code in YAML through the [VS Code ext
   </div>
 </div>
 
-\
+    <br/>
 
 For approval flows, Windmill uses [Approval Steps](/docs/flows/flow_approval) that will suspend the execution of a flow until it has been approved through the resume endpoints or the approval page by and solely by the recipients of the secret urls.
 
@@ -371,7 +364,7 @@ You can then have a [Windmill equivalent of prompts](/docs/flows/flow_approval#p
     src="/videos/prompt_example.mp4"
 />
 
-\
+    <br/>
 
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -389,8 +382,8 @@ You can then have a [Windmill equivalent of prompts](/docs/flows/flow_approval#p
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 		Airplane developed Views, which is a React component library that integrates with other Airplane features.
-    \\Views are defined as code.
-    \\
+  	<br />Views are defined as code.
+    <br />
 
 [https://docs.airplane.dev/views/overview](https://docs.airplane.dev/views/overview)
 
@@ -399,7 +392,7 @@ You can then have a [Windmill equivalent of prompts](/docs/flows/flow_approval#p
   </div>
 </div>
 
-\
+<br/>
 
 Windmill also allows for the creation of customized UIs to build internal dashboards, customer-facing apps, etc. Windmill adopts a different approach as the UIs are created in the [App Editor](https://www.windmill.dev/docs/apps/app_editor), a low-code drag-and-drop builder.
 
@@ -435,13 +428,13 @@ Users can also [create their own React components](https://www.windmill.dev/docs
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 		Airplane uses Resources that allow you to easily configure connections to external systems like databases and APIs and use them in your tasks and runbooks.
-    \\
+    <br />
 
 [https://docs.airplane.dev/resources/overview](https://docs.airplane.dev/resources/overview)
 
-\Secrets are managed through config variables that are stored encrypted at rest.
+<br />Secrets are managed through config variables that are stored encrypted at rest.
 
-\\
+<br />
 
 [https://docs.airplane.dev/platform/configs](https://docs.airplane.dev/platform/configs)
 
@@ -450,7 +443,7 @@ Users can also [create their own React components](https://www.windmill.dev/docs
   </div>
 </div>
 
-\
+<br />
 
 Windmill employs the exact same concept of [Resources](https://www.windmill.dev/docs/core_concepts/resources_and_types), which are essentially rich objects in JSON that allow for the storage of configuration and credentials. Each Resource has a Resource Type that defines the schema the resource of this type needs to implement. Schemas implement the [JSON Schema specification](https://json-schema.org/).
 
@@ -486,7 +479,7 @@ Resources can embed variables, for example creating a new [PostgreSQL resource](
     <h4 class="font-bold text-blue-500 dark:text-blue-500">&nbsp;Airplane</h4>
     <p class="dark:text-gray-900">
 		Task executions (runs), changes to resources, changes to team members, and other important events are captured in Airplane's audit log, accessible from Airplane’s Activity page.
-    \\
+    <br />
 
 [https://docs.airplane.dev/platform/audit-logs](https://docs.airplane.dev/platform/audit-logs)
 
@@ -495,7 +488,7 @@ Resources can embed variables, for example creating a new [PostgreSQL resource](
   </div>
 </div>
 
-\
+<br />
 
 Windmill provides 2 ways to monitor activity.
 
@@ -527,7 +520,7 @@ By the end of January, Windmill will also support streaming logs to log manageme
     <p class="dark:text-gray-900">
 
 In Airplane it is possible to assign jobs to a given VPC using [run constraints](https://docs.airplane.dev/platform/execute-rules#run-constraints).
-\\
+<br />
 
 [https://docs.airplane.dev/platform/execute-rules#run-constraints](https://docs.airplane.dev/platform/execute-rules#run-constraints)
 
@@ -536,7 +529,7 @@ In Airplane it is possible to assign jobs to a given VPC using [run constraints]
   </div>
 </div>
 
-\
+<br />
 
 In Windmill, there is a concept of [Worker groups](https://www.windmill.dev/docs/core_concepts/worker_groups) and tags which correspond to queues. Worker groups are assigned to listen to those different queues.
 
