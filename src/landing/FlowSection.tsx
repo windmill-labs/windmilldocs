@@ -644,6 +644,7 @@ export default function FlowSection() {
 							</span>
 							<Switch
 								checked={chart === 'short'}
+								title="Switch between short and long running tasks"
 								onChange={() => {
 									setChart(chart === 'long' ? 'short' : 'long');
 								}}

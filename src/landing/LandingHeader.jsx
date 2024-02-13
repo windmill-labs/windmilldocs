@@ -171,6 +171,7 @@ export default function LandingHeader() {
 							data-analytics='"discord"'
 							onClick={() => window.plausible('discord')}
 							className=" rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+							title="Join our Discord community"
 						>
 							<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
 						</a>

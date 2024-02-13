@@ -170,7 +170,12 @@ export default function Footer() {
 								1111B S Governors Ave, Dover, DE 19904, USA
 							</p>
 							<div className="flex justify-center items-center mt-4">
-								<img className="h-10" src="/img/soc.png.webp" alt="SOC Compliance badge" />
+								<img
+									className="h-10"
+									src="/img/soc.png.webp"
+									alt="SOC Compliance badge"
+									loading="lazy"
+								/>
 								<p className="text-xs text-left leading-6 text-gray-400 ml-2">
 									Windmill Labs is SOC 2 Type II compliant.
 								</p>

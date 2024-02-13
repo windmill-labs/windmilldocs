@@ -1,6 +1,7 @@
 import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
+import HomescreenSvg from '../../static/homescreen.svg';
 
 export default function Hero() {
 	return (
@@ -48,7 +49,11 @@ export default function Hero() {
 					</div>
 					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
 						Backed by
-						<a href="https://www.ycombinator.com/companies/windmill" target="_blank">
+						<a
+							href="https://www.ycombinator.com/companies/windmill"
+							target="_blank"
+							title="Y-Combinator"
+						>
 							<svg
 								className="logo"
 								width="137"
@@ -72,7 +77,9 @@ export default function Hero() {
 					</div>
 				</div>
 				<div>
-					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]"></div>
+					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
+						<HomescreenSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
+					</div>
 				</div>
 			</div>
 		</div>
