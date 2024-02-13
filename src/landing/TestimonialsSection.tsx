@@ -290,6 +290,7 @@ export default function Example() {
 											className="flex-shrink-0 cursor-pointer"
 											href={testimonial.company_url}
 											target="_blank"
+											title={testimonial.author.company}
 										>
 											<img
 												width={100}

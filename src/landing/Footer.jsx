@@ -142,24 +142,28 @@ export default function Footer() {
 							<a
 								href="https://discord.com/invite/V7PM2YHsPB"
 								className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+								title="Join our Discord community!"
 							>
 								<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
 							<a
 								href="https://www.linkedin.com/company/windmill-dev/"
 								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
+								title="Follow us on LinkedIn!"
 							>
 								<SiLinkedin className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
 							<a
 								href="https://twitter.com/WindmillDev"
 								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
+								title="Follow us on X!"
 							>
 								<SiX className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
 							<a
 								href="https://www.youtube.com/channel/UChD8Xc-wCGk46HDhRNwWmZA"
 								className="rounded-full hover:bg-blue-200 dark:hover:bg-blue-400 p-2"
+								title="Subscribe to our YouTube channel!"
 							>
 								<SiYoutube className="h-5 w-5 dark:text-white text-gray-800" />
 							</a>
