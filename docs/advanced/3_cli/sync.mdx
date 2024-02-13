@@ -8,7 +8,7 @@ using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 Having a Windmill instance synchronized to folders & git repositories allows for
 local development through the [VS Codeextension](../../cli_local_dev/1_vscode-extension/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="VS Code Extension"
 		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
@@ -70,13 +70,13 @@ wmill sync pull [options]
 
 ### Options
 
-| Option             | parameter | Description                                                                                                        |
-| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| `--fail-conflicts` | None      | Error on conflicts (both remote and local have changes on the same item).                                          |
-| `--yes`            | None      | Pull without needing confirmation. The command proceeds automatically without user intervention.                   |
-| `--stateful`       | None      | Pull using local state tracking, do not overwrite local files with remote changes.                                 |
-| `--plain-secrets`  | None      | Pull secrets as plain text. Secrets are downloaded without encryption or obfuscation.                              |
-| `--json`           | None      | Use JSON instead of YAML. The downloaded files are in JSON format instead of YAML.                                 |
+| Option             | parameter | Description                                                                                      |
+| ------------------ | --------- | ------------------------------------------------------------------------------------------------ |
+| `--fail-conflicts` | None      | Error on conflicts (both remote and local have changes on the same item).                        |
+| `--yes`            | None      | Pull without needing confirmation. The command proceeds automatically without user intervention. |
+| `--stateful`       | None      | Pull using local state tracking, do not overwrite local files with remote changes.               |
+| `--plain-secrets`  | None      | Pull secrets as plain text. Secrets are downloaded without encryption or obfuscation.            |
+| `--json`           | None      | Use JSON instead of YAML. The downloaded files are in JSON format instead of YAML.               |
 
 ## Push API
 
@@ -88,23 +88,23 @@ wmill sync push [options]
 
 ### Options
 
-| Option             | parameter | Description                                                                                                        |
-| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| `--fail-conflicts` | None      | Error on conflicts (both remote and local have changes on the same item).                                          |
-| `--skip-pull`      | None      | Push without pulling first. Assumes that the pull operation has already been performed.                            |
-| `--yes`            | None      | Push without needing confirmation. The command proceeds automatically without user intervention.                   |
-| `--stateful`       | None      | Push using local state tracking, do not overwrite local files with remote changes.                                 |
-| `--plain-secrets`  | None      | Push secrets as plain text. Secrets are uploaded without encryption or obfuscation.                                |
-| `--json`           | None      | Use JSON instead of YAML. The uploaded files are in JSON format instead of YAML.                                   |
+| Option             | parameter | Description                                                                                      |
+| ------------------ | --------- | ------------------------------------------------------------------------------------------------ |
+| `--fail-conflicts` | None      | Error on conflicts (both remote and local have changes on the same item).                        |
+| `--skip-pull`      | None      | Push without pulling first. Assumes that the pull operation has already been performed.          |
+| `--yes`            | None      | Push without needing confirmation. The command proceeds automatically without user intervention. |
+| `--stateful`       | None      | Push using local state tracking, do not overwrite local files with remote changes.               |
+| `--plain-secrets`  | None      | Push secrets as plain text. Secrets are uploaded without encryption or obfuscation.              |
+| `--json`           | None      | Use JSON instead of YAML. The uploaded files are in JSON format instead of YAML.                 |
 
 ## How `stateful` mode works
 
-| Command                 | Description                                                                                    |
-| ----------------------- | ---------------------------------------------------------------------------------------------- |
-| `wmill sync pull` | Pulls remote changes without using state tracking. Overwrites local files with remote changes. |
-| `wmill sync pull --stateful`       | Pulls remote changes and applies them locally.                                                 |
-| `wmill sync push` | Pushes local changes without using state tracking. Overwrites remote files with local changes. |
-| `wmill sync push --stateful`       | Pushes local changes and applies them remotely.                                                |
+| Command                      | Description                                                                                    |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- |
+| `wmill sync pull`            | Pulls remote changes without using state tracking. Overwrites local files with remote changes. |
+| `wmill sync pull --stateful` | Pulls remote changes and applies them locally.                                                 |
+| `wmill sync push`            | Pushes local changes without using state tracking. Overwrites remote files with local changes. |
+| `wmill sync push --stateful` | Pushes local changes and applies them remotely.                                                |
 
 # wmill.yaml
 

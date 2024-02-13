@@ -5,11 +5,10 @@ import BlogSidebar from '@theme/BlogSidebar';
 import { twMerge } from 'tailwind-merge';
 
 export default function BlogLayout(props) {
-	const { sidebar, toc, children, ...layoutProps } = props;
+	const { sidebar, toc, children, location, ...layoutProps } = props;
 	const hasSidebar = sidebar && sidebar.items.length > 0;
-
 	const isBlogPostPageList = Boolean(toc);
-	const isChangelog = window.location.pathname.includes('/changelog');
+	const isChangelog = location?.pathname?.includes('/changelog');
 
 	return (
 		<Layout {...layoutProps}>

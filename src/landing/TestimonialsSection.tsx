@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import LandingSection from './LandingSection';
-import '../css/custom.css';
 import { useColorMode } from '@docusaurus/theme-common';
 
 const testimonials = [
@@ -84,11 +83,16 @@ const testimonials = [
 	{
 		body: (
 			<span>
-				A little late but after reading this thread I moved a airflow instance to windmill and I much much prefer
-				{' '}<strong>
+				A little late but after reading this thread I moved a airflow instance to windmill and I
+				much much prefer{' '}
+				<strong>
 					<span className="text-blue-500">Windmill</span>
-				</strong>{', '}
-				airflow was clunky and heavy for my simple workflow that consists of running a few python script. Also is auto ui is great to play with the arguments in, the cron ui and next start date... Also is it written in rust so much more low usage than airflow that consistently cpu picked while doing nothing.
+				</strong>
+				{', '}
+				airflow was clunky and heavy for my simple workflow that consists of running a few python
+				script. Also is auto ui is great to play with the arguments in, the cron ui and next start
+				date... Also is it written in rust so much more low usage than airflow that consistently cpu
+				picked while doing nothing.
 			</span>
 		),
 		author: {
@@ -124,7 +128,8 @@ const testimonials = [
 				<strong>
 					<span className="text-blue-500">windmill.dev</span>
 				</strong>{' '}
-				over the weekend, and it's really hitting a sweet spot for me between no-code/low-code, a fancy UI but still being powerful enough to actually replace significant amounts of code.
+				over the weekend, and it's really hitting a sweet spot for me between no-code/low-code, a
+				fancy UI but still being powerful enough to actually replace significant amounts of code.
 			</span>
 		),
 		author: {
@@ -137,11 +142,14 @@ const testimonials = [
 	{
 		body: (
 			<span>
-				I had the same thought when it popped up on my radar a year ago. Now that I’ve been using it for a few weeks, it’s difficult to go back to the exact tools you’re naming. I didn’t realize how large of an impediment it is to move back and forth all of them. 
+				I had the same thought when it popped up on my radar a year ago. Now that I’ve been using it
+				for a few weeks, it’s difficult to go back to the exact tools you’re naming. I didn’t
+				realize how large of an impediment it is to move back and forth all of them.
 				<strong>
 					<span className="text-blue-500">Windmill</span>
 				</strong>{' '}
-				is the thing I never knew I needed. It’s changed how I think about delivering data products/solutions.
+				is the thing I never knew I needed. It’s changed how I think about delivering data
+				products/solutions.
 			</span>
 		),
 		author: {
@@ -243,34 +251,46 @@ export default function Example() {
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
 					<div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
-						{clientTestimonials.map((testimonial) => (
+						{clientTestimonials.map((testimonial, index) => (
 							<div
-								key={testimonial.author.name}
+								key={testimonial.author.name + index}
 								className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
 								id={testimonial.author.anchor}
 							>
-								<a
-									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm"
-									target="_blank"
-								>
+								<div className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm">
 									<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
 										<p>{testimonial.text}</p>
 									</div>
 									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4 ">
-										<a className="w-full" href={testimonial.linkedIn} target="_blank">
-											<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
-												{testimonial.author.name}
-											</p>
-											<div className="text-sm dark:text-gray-50 text-gray-500">
-												{[testimonial.author.position, testimonial.author.company]
-													.filter(Boolean)
-													.join(' @ ')}
-											</div>
-										</a>
+										{testimonial.linkedIn ? (
+											<a className="w-full" href={testimonial.linkedIn} target="_blank">
+												<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
+													{testimonial.author.name}
+												</p>
+												<div className="text-sm dark:text-gray-50 text-gray-500">
+													{[testimonial.author.position, testimonial.author.company]
+														.filter(Boolean)
+														.join(' @ ')}
+												</div>
+											</a>
+										) : (
+											<>
+												<p className="text-sm font-bold dark:text-gray-50 text-gray-900 w-full ">
+													{testimonial.author.name}
+												</p>
+												<div className="text-sm dark:text-gray-50 text-gray-500">
+													{[testimonial.author.position, testimonial.author.company]
+														.filter(Boolean)
+														.join(' @ ')}
+												</div>
+											</>
+										)}
+
 										<a
 											className="flex-shrink-0 cursor-pointer"
 											href={testimonial.company_url}
 											target="_blank"
+											title={testimonial.author.company}
 										>
 											<img
 												width={100}
@@ -282,7 +302,7 @@ export default function Example() {
 											/>
 										</a>
 									</div>
-								</a>
+								</div>
 							</div>
 						))}
 					</div>
@@ -298,9 +318,9 @@ export default function Example() {
 					</div>
 
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
-						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial) => (
+						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial, index) => (
 							<div
-								key={testimonial.author.handle}
+								key={testimonial.author.handle + index}
 								className="sm:inline-block sm:w-full mb-4 testimonials"
 							>
 								<a

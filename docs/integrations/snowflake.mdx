@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 Windmill natively supports Snowflake scripts:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="SQL (PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake) Quickstart"
 		description="Learn how to build your first script in PostgreSQL, MySQL, BigQuery, Snowflake."
@@ -16,18 +16,19 @@ To integrate [Snowflake](https://www.snowflake.com/en/) with Windmill, you need 
 
 ![Add BigQuery Resource](../assets/integrations/add-snowflake.png.webp)
 
-| Property            | Type   | Description                                | Default | Required | Where to Find                                                             |
-| ------------------- | ------ | ------------------------------------------ | ------- | -------- | ------------------------------------------------------------------------- |
-| account_identifier  | string | Snowflake account identifier               |         | true     | Snowflake Console > Account > Account Info > Account Identifier          |
-| private_key         | string | Snowflake private key                      |         | true     | Snowflake Console > Account > Security > RSA Key Pair                    |
-| public_key          | string | Snowflake public key                       |         | true     | Snowflake Console > Account > Security > RSA Key Pair                    |
-| warehouse           | string | Snowflake warehouse name                   |         | true     | Snowflake Console > Warehouses                                           |
-| username            | string | Snowflake username for authentication      |         | true     | Snowflake Console > Users and Security > Users                           |
-| database            | string | Snowflake database name                    |         | true     | Snowflake Console > Databases                                            |
-| schema              | string | Snowflake schema name                      |         | true     | Snowflake Console > Databases > [Your Database] > Schemas                |
-| role                | string | Snowflake role for access control          |         | true     | Snowflake Console > Users and Security > Roles                            |
+| Property           | Type   | Description                           | Default | Required | Where to Find                                                   |
+| ------------------ | ------ | ------------------------------------- | ------- | -------- | --------------------------------------------------------------- |
+| account_identifier | string | Snowflake account identifier          |         | true     | Snowflake Console > Account > Account Info > Account Identifier |
+| private_key        | string | Snowflake private key                 |         | true     | Snowflake Console > Account > Security > RSA Key Pair           |
+| public_key         | string | Snowflake public key                  |         | true     | Snowflake Console > Account > Security > RSA Key Pair           |
+| warehouse          | string | Snowflake warehouse name              |         | true     | Snowflake Console > Warehouses                                  |
+| username           | string | Snowflake username for authentication |         | true     | Snowflake Console > Users and Security > Users                  |
+| database           | string | Snowflake database name               |         | true     | Snowflake Console > Databases                                   |
+| schema             | string | Snowflake schema name                 |         | true     | Snowflake Console > Databases > [Your Database] > Schemas       |
+| role               | string | Snowflake role for access control     |         | true     | Snowflake Console > Users and Security > Roles                  |
 
-<br/><br/>
+<br />
+<br />
 
 Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
 
@@ -37,7 +38,7 @@ Your resource can be used [passed as parameters](../core_concepts/3_resources_an
 	src="/videos/add_resources_variables.mp4"
 />
 
-<br/>
+<br />
 
 :::tip
 

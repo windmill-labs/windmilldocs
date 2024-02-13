@@ -9,19 +9,19 @@ import Head from '@docusaurus/Head';
 import { twMerge } from 'tailwind-merge';
 
 export default function BlogPostItemContainer({ children, className }) {
-	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
+	const { frontMatter, assets, isBlogPostPage, metadata, ...props } = useBlogPost();
 	const { withBaseUrl } = useBaseUrlUtils();
 	const image = assets.image ?? frontMatter.image;
 
-	const isChangelog = window.location.pathname.includes('/changelog');
+	const isChangelog = metadata.permalink.includes('/changelog');
 
-	const defaultTitle = "Changelog | Windmill";
-    const defaultDescription = "See what's new with Windmill.";
+	const defaultTitle = 'Changelog | Windmill';
+	const defaultDescription = "See what's new with Windmill.";
 
-    const isFeaturePage = window.location.pathname.includes('/changelog/') && frontMatter.slug;
+	const isFeaturePage = isChangelog && frontMatter.slug;
 
-    const pageTitle = isFeaturePage ? metadata.title : defaultTitle;
-    const pageDescription = isFeaturePage ? metadata.description : defaultDescription;
+	const pageTitle = isFeaturePage ? metadata.title : defaultTitle;
+	const pageDescription = isFeaturePage ? metadata.description : defaultDescription;
 
 	if (isChangelog) {
 		return (
@@ -34,15 +34,17 @@ export default function BlogPostItemContainer({ children, className }) {
 					<meta property="og:image" content={image} />
 					<meta property="site_name" content="Windmill" />
 					<meta property="og:type" content="changelog" />
-					<meta property="og:url" content={window.location.href} />
 				</Head>
 				<div className="flex flex-row gap-2 items-center mb-4">
-				<h3 className="text-xl font-semibold">
-					<a href={`/changelog/${frontMatter.slug}`} className="text-gray-900 dark:text-white hover:text-blue-600">
-						{metadata.title}
-					</a>
-				</h3>
-				{metadata?.tags.map((tag, index) => (
+					<h3 className="text-xl font-semibold">
+						<a
+							href={`/changelog/${frontMatter.slug}`}
+							className="text-gray-900 dark:text-white hover:text-blue-600"
+						>
+							{metadata.title}
+						</a>
+					</h3>
+					{metadata?.tags.map((tag, index) => (
 						<span
 							key={tag + index}
 							className={
@@ -80,20 +82,24 @@ export default function BlogPostItemContainer({ children, className }) {
 					</a>
 				</div>
 				<div className="mb-6">
-				<div className="flex items-center">
-					<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
-						{new Date(metadata.date).toLocaleDateString()} |{' '}
-					</p>
-					{frontMatter.docs && (
-						<button
-							className="hover:bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:hover:bg-slate-800 px-2.5 py-1 rounded-xl text-xs text-gray-600 dark:text-gray-200"
-							onClick={() => window.location.href = frontMatter.docs}
-						>
-							<FileText className="inline mr-2" aria-hidden="true" style={{ width: '14px', height: '14px' }} />
-							<span className="align-middle">Docs</span>
-						</button>
-					)}
-				</div>
+					<div className="flex items-center">
+						<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
+							{new Date(metadata.date).toLocaleDateString()} |{' '}
+						</p>
+						{frontMatter.docs && (
+							<button
+								className="hover:bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:hover:bg-slate-800 px-2.5 py-1 rounded-xl text-xs text-gray-600 dark:text-gray-200"
+								onClick={() => (window.location.href = frontMatter.docs)}
+							>
+								<FileText
+									className="inline mr-2"
+									aria-hidden="true"
+									style={{ width: '14px', height: '14px' }}
+								/>
+								<span className="align-middle">Docs</span>
+							</button>
+						)}
+					</div>
 				</div>
 				<img
 					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
@@ -167,7 +173,7 @@ export default function BlogPostItemContainer({ children, className }) {
 
 					<div className="p-4 flex flex-col h-64 overflow-auto">
 						<div className="text-xs font-semibold flex justify-between items-center">
-							<div class="flex flex-col">
+							<div className="flex flex-col">
 								{metadata.authors.map((author, index) => (
 									<span>
 										{index === 0 ? 'by ' : 'and '}

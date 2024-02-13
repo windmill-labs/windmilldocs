@@ -8,7 +8,7 @@ The S3 file upload component allows you to upload files to an S3 bucket.
 
 The following section details S3 File upload component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="App Editor Documentation"
@@ -43,7 +43,7 @@ The S3 File Upload component offers the following interactions:
 | Accepted File Types |    array    |    false    |    false    | "image/\*" ; "application/pdf"                         | The types of files you accept to be submitted.                 |
 |   Allow Multiple    |   boolean   |    false    |    false    | false                                                  | If allowed, the user will be able to select more than one file |
 |        Text         |   string    |    false    |    false    | Drag and drop files or click to select them            | The text displayed on the file input.                          |
-|    Path template    |   string    |    false    |    false    | ${file.name}                                           | The path template to use to upload the file.                   |
+|    Path template    |   string    |    false    |    false    | $\{file.name\}                                         | The path template to use to upload the file.                   |
 
 ## Outputs
 

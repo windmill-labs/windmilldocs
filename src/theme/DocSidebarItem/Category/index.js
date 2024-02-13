@@ -9,7 +9,7 @@ import {
 } from '@docusaurus/theme-common';
 import {
 	isActiveSidebarItem,
-	findFirstCategoryLink,
+	findFirstSidebarItemLink,
 	useDocSidebarItemsExpandedState,
 	isSamePath
 } from '@docusaurus/theme-common/internal';
@@ -39,7 +39,7 @@ function useAutoExpandActiveCategory({ isActive, collapsed, updateCollapsed }) {
 function useCategoryHrefWithSSRFallback(item) {
 	const isBrowser = useIsBrowser();
 	return useMemo(() => {
-		if (item.href) {
+		if (item.href && !item.linkUnlisted) {
 			return item.href;
 		}
 		// In these cases, it's not necessary to render a fallback
@@ -47,20 +47,31 @@ function useCategoryHrefWithSSRFallback(item) {
 		if (isBrowser || !item.collapsible) {
 			return undefined;
 		}
-		return findFirstCategoryLink(item);
+		return findFirstSidebarItemLink(item);
 	}, [item, isBrowser]);
 }
-function CollapseButton({ categoryLabel, onClick }) {
+function CollapseButton({ collapsed, categoryLabel, onClick }) {
 	return (
 		<button
-			aria-label={translate(
-				{
-					id: 'theme.DocSidebarItem.toggleCollapsedCategoryAriaLabel',
-					message: "Toggle the collapsible sidebar category '{label}'",
-					description: 'The ARIA label to toggle the collapsible sidebar category'
-				},
-				{ label: categoryLabel }
-			)}
+			aria-label={
+				collapsed
+					? translate(
+							{
+								id: 'theme.DocSidebarItem.expandCategoryAriaLabel',
+								message: "Expand sidebar category '{label}'",
+								description: 'The ARIA label to expand the sidebar category'
+							},
+							{ label: categoryLabel }
+					  )
+					: translate(
+							{
+								id: 'theme.DocSidebarItem.collapseCategoryAriaLabel',
+								message: "Collapse sidebar category '{label}'",
+								description: 'The ARIA label to collapse the sidebar category'
+							},
+							{ label: categoryLabel }
+					  )
+			}
 			type="button"
 			className="clean-btn menu__caret"
 			onClick={onClick}
@@ -161,19 +172,19 @@ export default function DocSidebarItemCategory({
 						>
 							{label}
 						</Link>
-						{href && collapsible && (
-							<CollapseButton
-								categoryLabel={label}
-								onClick={(e) => {
-									e.preventDefault();
-									updateCollapsed();
-								}}
-							/>
-						)}
 					</>
 				)}
+				{href && collapsible && (
+					<CollapseButton
+						collapsed={collapsed}
+						categoryLabel={label}
+						onClick={(e) => {
+							e.preventDefault();
+							updateCollapsed();
+						}}
+					/>
+				)}
 			</div>
-
 			{level > 1 ? (
 				<Collapsible lazy as="ul" className="menu__list" collapsed={collapsed}>
 					<DocSidebarItems
@@ -193,7 +204,6 @@ export default function DocSidebarItemCategory({
 					level={level + 1}
 				/>
 			)}
-
 			{level === 1 && <div className="my-8" />}
 		</li>
 	);

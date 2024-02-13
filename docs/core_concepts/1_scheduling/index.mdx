@@ -9,14 +9,14 @@ A Schedule consists of a **Script or Flow**, its **arguments**, a **CRON express
 <!--truncate-->
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/schedule-cron-menu.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/schedule-cron-menu.mp4"
 />
 
-<br/>
+<br />
 
 Cron is a powerful and versatile tool that enables users to automate tasks by scheduling them to run at specific intervals or times. From automating routine system maintenance to sending periodic email reports, cron plays an indispensable role in streamlining processes and improving productivity for developers, system administrators, and even casual users.
 
@@ -31,11 +31,11 @@ However, as with any powerful tool, using cron comes with its own set of challen
 
 [Windmill](../../intro.mdx) is an open-source developer platform and infra to build all internal tools through code, such as UIs and workflows based on simple scripts (TypeScript, Python, Go, Bash, SQL).
 
-<br/>
+<br />
 
 Managing scripts, flows and apps on Windmill works at the [workspace](../16_roles_and_permissions/index.mdx#workspace)-level. Admins invite developers and operators to the workspace where are hosted workflows. The first two can write and edit flows as well as managing permissions, executions etc.
 
-<br/>
+<br />
 
 Cron jobs are one of **many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill** (among [webhooks](../4_webhooks/index.mdx), [auto-generated UIs][flows], [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
 
@@ -82,13 +82,13 @@ If the Schedules menu allows you to control future executions of scripts and wor
 The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.mdx).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/schedule-cron.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/schedule-cron.mp4"
 />
 
-<br/>
+<br />
 
 From your workspace, pick the workflow you want to schedule.
 
@@ -106,7 +106,6 @@ Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set
 
 ![Save and schedule](./4-inputs-toggle.png.webp 'Save and schedule')
 
-
 ## Schedule App Reports
 
 Send a PDF or PNG preview of any [app](../../apps/0_app_editor/index.mdx) at a given schedule.
@@ -121,11 +120,11 @@ Send a PDF or PNG preview of any [app](../../apps/0_app_editor/index.mdx) at a g
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 More at:
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		title="Schedule App Reports"
 		description="Send a PDF or PNG preview of any app at a given schedule."
@@ -168,19 +167,19 @@ In this example I chose to [receive an email](https://hub.windmill.dev/scripts/g
 
 ![Add an email step](./7-add-email-step.png.webp 'Add an email step')
 
-<br/>
+<br />
 
 Configure the email.
 
 ![Configure email](./8-configure-email.png.webp 'Configure email')
 
-<br/>
+<br />
 
 And watch your mailbox.
 
 ![Receive the email](./9-receive-email.png.webp 'Receive the email')
 
-<br/>
+<br />
 
 Given how [flows][flows] work on Windmill, it means that once the previous step has been successful, the Email step will trigger.
 
@@ -196,7 +195,7 @@ From the settings menu, change the owner to a [folder](../../core_concepts/8_gro
 
 ![Manage permissions](./5-manage-rights.png.webp 'Manage permissions')
 
-<br/>
+<br />
 
 The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
 

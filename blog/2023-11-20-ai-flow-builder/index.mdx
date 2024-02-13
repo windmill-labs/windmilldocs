@@ -49,12 +49,12 @@ At the same time, we're also releasing a new feature for the [script editor](/do
 which prompts you with suggestions based on the code you're writing. This completes our already existing
 copilot which allows you to generate, edit and fix your scripts, learn more here:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Windmill AI for Scripts"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation#windmill-ai-for-script"
-    />
+		title="Windmill AI for Scripts"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation#windmill-ai-for-script"
+	/>
 </div>
 
 Have a look:
@@ -73,7 +73,7 @@ To enable Windmill AI, you simply have to setup an OpenAI API key in your worksp
 
 These features complement Windmill AI for Scripts, which lets you generate whole scripts using prompts and fix your errors automatically:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Windmill AI for Scripts"
 		description="Generate Windmill-specific code from simple text"
@@ -82,7 +82,7 @@ These features complement Windmill AI for Scripts, which lets you generate whole
 </div>
 
 We are using [GPT-4-turbo (1106-preview version)](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo) for the AI Flow Builder and have changed Windmill AI for Scripts to use it too, as it is faster, three times cheaper and more up-to-date with libraries than GPT-4. We observed similar results to those obtained with GPT-4 in our tests, but we will continue to monitor the quality of the generations.
- 
+
 ## What are Windmill Flows?
 
 Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
@@ -101,7 +101,6 @@ The primitives supported by Windmill workflows are:
 You can see below an example of a simple workflow with a [for-loop](/docs/flows/flow_loops):
 
 ![Windmill DAG](./media/windmill-dag.png.webp)
-
 
 :::info Workflow engine vs Analytics engine
 All the examples above focus on small api integrations but data pipeline that would usually be run on dedicated analytics engine are a great fit for Windmill when combined with s3, and dataframe/olap libraries such as polars or duckdb.
@@ -266,10 +265,10 @@ This is just the first day of the launch week! To learn more about the launch we
 
 To learn more about Windmill AI, please refer to our documentation:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Windmill AI"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation"
-    />
+		title="Windmill AI"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation"
+	/>
 </div>

@@ -6,7 +6,6 @@ import BlogLayout from '@theme/BlogLayout';
 import BlogListPaginator from '@theme/BlogListPaginator';
 import SearchMetadata from '@theme/SearchMetadata';
 import BlogPostItems from '@theme/BlogPostItems';
-
 function BlogListPageMetadata(props) {
 	const { metadata } = props;
 	const {
@@ -86,9 +85,8 @@ function Sidebar({ items }) {
 }
 
 function BlogListPageContent(props) {
-	const { metadata, items, sidebar } = props;
-
-	const isChangelog = window.location.pathname.includes('/changelog');
+	const { metadata, items, sidebar, location } = props;
+	const isChangelog = location?.pathname.includes('/changelog');
 
 	return (
 		<BlogLayout sidebar={sidebar}>
@@ -102,7 +100,7 @@ function BlogListPageContent(props) {
 				{isChangelog ? (
 					<div className="flex flex-row gap-2">
 						<Sidebar items={items} />
-						<div class="flex flex-col gap-16">
+						<div className="flex flex-col gap-16">
 							<BlogPostItems items={items} />
 						</div>
 					</div>

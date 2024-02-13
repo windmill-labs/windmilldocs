@@ -11,7 +11,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Launch Week Day 4 - Custom React Components & Apps
 
-![React Components Thumbnail](./react_components.png.webp "React Components")
+![React Components Thumbnail](./react_components.png.webp 'React Components')
 
 Day 4 of our Launch Week is focused on the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 
@@ -22,6 +22,7 @@ However, for components that are more specific you can now go even further and i
 Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
 There are 3 main benefits of using your own components:
+
 1. Reusing react components you've already written in other codebases.
 2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
 3. Embeding very complex components such as a code editor.
@@ -40,7 +41,7 @@ If that's not sufficient you can even [build your own app in React](#how-to-impo
 	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 1. Clone the [template project](https://github.com/windmill-labs/windmill-custom-component-template).
 2. Install the dependencies:
@@ -70,13 +71,13 @@ npm run build
 
 8. Upload the `dist/cc.iife.js` to Windmill and name the component as it has been named in `vite.config.ts`.
 
-![Custom component example](./custom_example.png.webp "Custom component example")
+![Custom component example](./custom_example.png.webp 'Custom component example')
 
 ## How to import whole React apps
 
 See our documentation:
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
 		title="React App Import"
@@ -91,7 +92,7 @@ To learn more about the launch week, you can visit our [dedicated page](../2023-
 
 For more details on React Components, see:
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
 		title="Import Custom React Components"

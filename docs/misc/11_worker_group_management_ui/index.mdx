@@ -5,7 +5,7 @@ import DocCard from '@site/src/components/DocCard';
 Workers are autonomous processes that run one script at a time using the full
 machines resources available to them. They are at the basis of [Windmill's architecture](../10_architecture/index.md).
 
-In the [Community Edition](/pricing), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
+In the [Community Edition](/pricing), worker management is done using tags that can be respectively assigned to workers (through the [env variable](../../core_concepts/9_worker_groups/index.mdx#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
 
 Under [Cloud plans & Self-Hosted Enterprise license](/pricing), worker groups can be managed through Windmill UI.
 
@@ -15,7 +15,7 @@ Specifically, you can group the workers into worker groups, groups for which you
 
 More at:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workers and Worker Groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."

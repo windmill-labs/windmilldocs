@@ -42,7 +42,7 @@ The deployed version is the authoritative version of a runnable. Once deployed, 
 
 If you want to have several versions of the same runnable, just fork it with the `Fork` button on the drop down menu of `Deploy`.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Roles and Permissions"
 		description="Control access and manage permissions within your instance and workspaces."
@@ -70,7 +70,7 @@ Apps and Flows only have one deployed version at a given path and doing a new de
 
 Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. The path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
@@ -82,7 +82,7 @@ Scripts are special because each deployment of a script creates an immutable has
 
 Windmill apps can be [Published Publicly](../../apps/8_public_apps.md). It means that the app can be accessed as a standalone app by anyone who has the secret URL.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Public Apps"
 		description="Apps can be accessed as a standalone app by anyone who has the secret URL"

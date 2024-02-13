@@ -62,6 +62,7 @@ export default function LogoClouds() {
 							key={logo.name}
 							href={logo.anchor ? `#${logo.anchor}` : logo.url}
 							target={logo.anchor ? '_self' : '_blank'}
+							title={String(logo.name)}
 						>
 							<img
 								className={classNames(
@@ -72,6 +73,7 @@ export default function LogoClouds() {
 								alt={logo.name}
 								width={158}
 								height={48}
+								loading="lazy"
 							/>
 						</a>
 					))}

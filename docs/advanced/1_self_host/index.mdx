@@ -57,7 +57,7 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 `WHITELIST_ENVS = "AWS_EXECUTION_ENV,AWS_CONTAINER_CREDENTIALS_RELATIVE_URI,AWS_DEFAULT_REGION,AWS_REGION"`
 :::
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workers and Worker Groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
@@ -72,7 +72,7 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 
 ### Fly.io
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Fly.io"
 		description="Fly.io Community-Contributed Guide."
@@ -182,7 +182,7 @@ You will be provided a license key when you purchase the enterprise edition. Con
 
 More details at:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Upgrade to Enterprise Edition"
 		description="Docs on how to upgrade to the Enterprise Edition of a Self-Hosted Windmill instance."
@@ -222,7 +222,7 @@ For all the above, see the commented lines in the caddy section of the docker-co
 You may need to adapt this depending on if you have Traefik running or on your configuration. This also assumes you have a `letsencryptresolver` or change the name to your certificate resolver if you want to use the `websecure` entrypoint.
 
 ```yaml
-version: "3.7"
+version: '3.7'
 
 services:
   db:
@@ -243,7 +243,7 @@ services:
       POSTGRES_PASSWORD: changeme
       POSTGRES_DB: windmill
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -286,7 +286,7 @@ services:
       replicas: 3
       resources:
         limits:
-          cpus: "1"
+          cpus: '1'
           memory: 2048M
     restart: unless-stopped
     environment:
@@ -313,7 +313,7 @@ services:
       replicas: 2
       resources:
         limits:
-          cpus: "0.1"
+          cpus: '0.1'
           memory: 128M
     restart: unless-stopped
     environment:
@@ -327,30 +327,30 @@ services:
         condition: service_healthy
 
   ## This worker is specialized for reports or scraping jobs. It is assigned the "reports" worker group which has an init script that installs chromium and can be targeted by using the "chromium" worker tag.
-#  windmill_worker_reports:
-#    image: ${WM_IMAGE}
-#    pull_policy: always
-#    deploy:
-#      replicas: 1
-#      resources:
-#        limits:
-#          cpus: "1"
-#          memory: 2048M
-#    restart: unless-stopped
-#    environment:
-#      - DATABASE_URL=${DATABASE_URL}
-#      - MODE=worker
-#      - WORKER_GROUP=reports
-#    networks:
-#      - windmill
-#    depends_on:
-#      db:
-#        condition: service_healthy
-#    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
-#    volumes:
-#      # mount the docker socket to allow to run docker containers from within the workers
-#      - /var/run/docker.sock:/var/run/docker.sock
-#      - worker_dependency_cache:/tmp/windmill/cache
+  #  windmill_worker_reports:
+  #    image: ${WM_IMAGE}
+  #    pull_policy: always
+  #    deploy:
+  #      replicas: 1
+  #      resources:
+  #        limits:
+  #          cpus: "1"
+  #          memory: 2048M
+  #    restart: unless-stopped
+  #    environment:
+  #      - DATABASE_URL=${DATABASE_URL}
+  #      - MODE=worker
+  #      - WORKER_GROUP=reports
+  #    networks:
+  #      - windmill
+  #    depends_on:
+  #      db:
+  #        condition: service_healthy
+  #    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+  #    volumes:
+  #      # mount the docker socket to allow to run docker containers from within the workers
+  #      - /var/run/docker.sock:/var/run/docker.sock
+  #      - worker_dependency_cache:/tmp/windmill/cache
 
   lsp:
     image: ghcr.io/windmill-labs/windmill-lsp:latest
@@ -630,7 +630,7 @@ You'll be offered to "Test SMTP settings" & send a blank e-mail to a given addre
 
 #### Manually add user to instance
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Authentification - Manually add user to instance"
 		description="As a superadmin of the instance, you have the ability to manually add users to the Windmill instance."
@@ -640,7 +640,7 @@ You'll be offered to "Test SMTP settings" & send a blank e-mail to a given addre
 
 #### Manually add user to workspace
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Authentification - Manually add user to workspace"
 		description="As an admin of the workspace, you have the ability to manually add users to the Windmill workspace."
@@ -665,7 +665,7 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Authentification - Set up auto-invite"
 		description="You can send auto-invites to the workspace to users from your domain."

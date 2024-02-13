@@ -9,14 +9,14 @@ feature is most useful to implement approval steps but can be used for other
 purposes as well.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/flow-approval.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/flow-approval.mp4"
 />
 
-<br/>
+<br />
 
 An approval step will suspend the execution of a flow until it has been approved
 through the resume endpoints or the approval page by and solely by the recipients of
@@ -40,7 +40,7 @@ An event can be:
 
 For the moment we receive the approval steps in the form of an HTTP request. For each event, a single URL is generated. It is not unique to each user to whom it is sent.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="WindmillHub | Approval"
 		description="Find a library of Approval Scripts on WindmillHub."
@@ -85,26 +85,26 @@ You can add an arbitrary schema form to be provided and displayed on the approva
 Adding a form to an approval step is a [Cloud & Enterprise Self-Hosted](/pricing) only feature.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/form_approval_page.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/form_approval_page.mp4"
 />
 
-<br/>
+<br />
 
 In the `Advanced` menu of a step, go to the "Suspend/Approval" tab and enable the `Add a form to the approval page` button.
 
 Add properties and define their Name, Description, Type, Default Value and Advanced settings.
 
-![Add argument](../assets/flows/add_argument.png.webp "Add argument")
+![Add argument](../assets/flows/add_argument.png.webp 'Add argument')
 
 That will the be displayed on the approval page.
 
-![Fill argument](../assets/flows/page_arguments.png.webp "Fill argument")
+![Fill argument](../assets/flows/page_arguments.png.webp 'Fill argument')
 
 You can use the arguments values [connecting](./16_architecture.mdx#input-transform) to `resume["argument_name"]` in further steps.
 
-![Use argument](../assets/flows/approval_argument.png.webp "Use argument")
+![Use argument](../assets/flows/approval_argument.png.webp 'Use argument')
 
 This is a way to introduce human-in-the-loop workflows and condition branches on approval steps inputs.
 
@@ -117,7 +117,7 @@ A prompt is simply an approval step that can be self-approved. To do this, inclu
 
 ```ts
 import * as wmill from "npm:windmill-client@^1.158.2"
-    
+
 export async function main() {
     const resumeUrls = await wmill.getResumeUrls("approver1")
 
@@ -128,12 +128,13 @@ export async function main() {
     }
 }
 ```
+
 </TabItem>
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
 import * as wmill from "windmill-client"
-        
+
 export async function main() {
     const resumeUrls = await wmill.getResumeUrls("approver1")
 
@@ -144,6 +145,7 @@ export async function main() {
     }
 }
 ```
+
 </TabItem>
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
@@ -158,6 +160,7 @@ def main():
         "enums": {} # optional
     }
 ```
+
 </TabItem>
 </Tabs>
 
@@ -165,12 +168,12 @@ In the video below, you can see a user creating an approval step within a flow i
 Then another user ([operator](../core_concepts/16_roles_and_permissions/index.mdx#roles-in-windmill), since is only "Viewer" in the [folder](../core_concepts/8_groups_and_folders/index.mdx) of the flow), runs the flow and sees the prompt automatically shown when running the flow.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/prompt_example.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/prompt_example.mp4"
 />
 
-<br/>
+<br />
 
 ### Default args
 
@@ -179,20 +182,20 @@ As one of the return key of this step, return an object `default_args` that cont
 ```ts
 //this assumes the Form tab has a string field named "foo" and a checkbox named "bar"
 
-import * as wmill from "npm:windmill-client@^1.158.2"
+import * as wmill from 'npm:windmill-client@^1.158.2';
 
 export async function main() {
-    // if no argument is passed, if user is logged in, it will use the user's username
-    const resumeUrls = await wmill.getResumeUrls("approver1") 
+	// if no argument is passed, if user is logged in, it will use the user's username
+	const resumeUrls = await wmill.getResumeUrls('approver1');
 
-    // send the resumeUrls to the recipient or see Prompt section above
+	// send the resumeUrls to the recipient or see Prompt section above
 
-    return {
-        default_args: {
-            foo: "foo",
-            bar: true
-        }
-    }
+	return {
+		default_args: {
+			foo: 'foo',
+			bar: true
+		}
+	};
 }
 ```
 
@@ -203,19 +206,19 @@ As one of the return key of this step, return an object `enums` that contains th
 ```ts
 //this assumes the Form tab has a string field named "foo"
 
-import * as wmill from "npm:windmill-client@^1.158.2"
+import * as wmill from 'npm:windmill-client@^1.158.2';
 
 export async function main() {
-    // if no argument is passed, if user is logged in, it will use the user's username
-    const resumeUrls = await wmill.getResumeUrls("approver1") 
+	// if no argument is passed, if user is logged in, it will use the user's username
+	const resumeUrls = await wmill.getResumeUrls('approver1');
 
-    // send the resumeUrls to the recipient or see Prompt section above
+	// send the resumeUrls to the recipient or see Prompt section above
 
-    return {
-        enums: {
-            foo: ["choice1", "choice2"]
-        },
-    }
+	return {
+		enums: {
+			foo: ['choice1', 'choice2']
+		}
+	};
 }
 ```
 
@@ -252,12 +255,12 @@ The answer to the arguments of an approval page can be used as an input to condi
 Here is a basic example we will detail below.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/example_approval_branches.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/example_approval_branches.mp4"
 />
 
-<br/>
+<br />
 
 This flow:
 
@@ -271,7 +274,7 @@ An [automated trigger version](#automated-trigger-version) of this flow is avail
 
 :::
 
-For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.mdx#auto-generated-uis). Two input were used: "User email" and "Order number", both strings.
+For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.mdx). Two input were used: "User email" and "Order number", both strings.
 
 ![Flow inputs](../assets/flows/tuto_approval_input.png.webp)
 
@@ -301,7 +304,7 @@ Those are the keys you can use as predicate expressions for your [branches](./13
 
 > With [Branch one](./13_flow_branches.md#branch-one), the first branch whose predicate expression is `true` will execute.
 
-<br/>
+<br />
 
 The content of each branch is of little importance for this tutorial as it depends each operations and tech stack. For the example we used two Hub scripts: [Send Email](https://hub.windmill.dev/scripts/gmail/1291/) with [Gmail](../integrations/gmail.md) and [Send Message to Channel](https://hub.windmill.dev/scripts/slack/1284/) with [Slack](../integrations/slack.mdx).
 
@@ -310,7 +313,7 @@ The content of each branch is of little importance for this tutorial as it depen
 
 ![Gmail inputs](../assets/flows/tuto_approval_gmail.png.webp)
 
-<br/>
+<br />
 
 ![Slack inputs](../assets/flows/tuto_approval_slack2.png.webp)
 
@@ -321,12 +324,12 @@ The content of each branch is of little importance for this tutorial as it depen
 You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_mandrill.md) to trigger this flow manually by an email reception.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/automated_refund.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full"
+	controls
+	src="/videos/automated_refund.mp4"
 />
 
-<br/>
+<br />
 
 :::tip Find it on Windmill Hub
 

@@ -133,7 +133,6 @@ export default function BarChart({
 
 					if (passedTime > Math.max(...sums)) {
 						chart.data.datasets = datasets_data;
-						console.log('chart.data.datasets', chart.data.datasets);
 						chart.update();
 						clearInterval(interval);
 					} else {

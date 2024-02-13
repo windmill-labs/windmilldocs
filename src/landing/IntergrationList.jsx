@@ -12,7 +12,7 @@ import {
 	SiTelegram,
 	SiToggl,
 	SiBigquery
-} from 'react-icons/si/index';
+} from 'react-icons/si';
 
 const integrations = [
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
@@ -91,6 +91,7 @@ export default function IntergrationList() {
 									: `/docs/integrations/${item.name.toLowerCase().replace(/\s/g, '')}`
 							}
 							target="_blank"
+							title={item.name}
 						>
 							{item.Icon ? (
 								<item.Icon className="w-10 h-full text-gray-900 dark:text-white" />

@@ -12,7 +12,7 @@ Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md
 
 :::
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="States"
 		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
@@ -50,11 +50,11 @@ activating the schedule as seen in the image below.
 
 Example of a trigger script watching new Slack posts with a given word in a given channel and the flow sending each of them by email in a for loop:
 
-![Example of a schedule script with a for loop](../getting_started/9_trigger_flows/schedule-flow.png "Example of a schedule script with a for loop")
+![Example of a schedule script with a for loop](../getting_started/9_trigger_flows/schedule-flow.png 'Example of a schedule script with a for loop')
 
 > This flow can be found on [WindmillHub](https://hub.windmill.dev/flows/51/watch-slack-posts-containing-a-given-word-and-send-all-new-ones-per-email).
 
-<br/>
+<br />
 
 Examples of trigger scripts include:
 
@@ -66,7 +66,7 @@ The following TypeScript code is an example of the first module of a Flow that
 checks for new documents in a MongoDB collection on a regular schedule. In this
 case we query documents that were created after a specific time, expressed with
 a timestamp. The timestamp is stored with the help of Windmill's built-in
-[state functions](../core_concepts/3_resources_and_types/index.mdx#state) and is
+[state functions](../core_concepts/3_resources_and_types/index.mdx#states) and is
 updated in each run.
 
 <details>

@@ -30,7 +30,7 @@ When a runnable is selected, the runnable editor is displayed. It is composed of
 
 - **Runnable editor**: The code editor of the runnable.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."
@@ -68,8 +68,6 @@ Background runnables are scripts that are executed in the background. They are e
 They can be triggered on app refresh or when their input changes. They are not attached to any component but their result can be shared among many components.
 
 See Background runnables configurations at [Runnable Execution](#runnable-execution).
-
-#### 
 
 ### Evals
 
@@ -123,7 +121,7 @@ The outputs of your script [can be used](./2_connecting_components/index.mdx) by
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Connecting Components"
@@ -172,7 +170,6 @@ Here is an example of a transformer used with a [background script](#background-
 	src="/videos/transformer_background.mp4"
 	alt="Transformer background script"
 />
-
 
 ## Runnable Execution
 
@@ -232,7 +229,7 @@ You can enable caching for an app inline script directly its editor settings. He
 
 In the above example, the result of step the script will be cached for 5 minutes. If `Inline Script 0` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Caching"
@@ -327,7 +324,7 @@ Where 'a' is the id of the component and 1 is the index of the tab to set.
 	controls
 	src="/videos/setTab.mp4"
 />
-<br/>
+<br />
 
 ### open
 
@@ -450,7 +447,7 @@ Parameters:
 
 A viewer of the app will execute the runnables of the app on behalf of the publisher avoiding the risk that a resource or script would not be available to the viewer. To guarantee tight security, a policy is computed at time of saving of the app which only allow the scripts/flows referred to in the app to be called on behalf of. Furthermore, static parameters are not overridable. Hence, users will only be able to use the app as intended by the publisher without risk for leaking resources not used in the app.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Roles and Permissions"
 		description="Control access and manage permissions within your instance and workspaces."

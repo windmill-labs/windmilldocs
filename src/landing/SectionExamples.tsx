@@ -17,6 +17,7 @@ export default function SectionExamples({ examples, kind }) {
 
 	const colorByKind = {
 		script: 'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500  ',
+
 		flow: 'bg-teal-500 hover:bg-teal-600 focus:ring-teal-500 ',
 		app: 'bg-orange-500 hover:bg-orange-600 focus:ring-orange-500 '
 	};
@@ -30,20 +31,20 @@ export default function SectionExamples({ examples, kind }) {
 				<div className="border rounded-lg divide-y shadow-sm dark:border-gray-800">
 					<div className="grid grid-cols-1 lg:grid-cols-3 divide-x-0 divide-y lg:divide-x lg:divide-y-0 dark:divide-gray-800">
 						{examples.map((example, index) => (
-							<a
-								key={example.name}
+							<div
+								key={example.name + index}
 								className={classNames(
 									'flex flex-col p-6 hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer !no-underline overflow-hidden ',
 									index === 0 ? 'rounded-l-lg' : '',
 									index === examples.length - 1 ? 'rounded-r-lg' : ''
 								)}
-								href={example.href}
-								target="_blank"
 							>
 								<div className="flex flex-auto flex-col text-base leading-7  gap-2">
-									<p className="text-md font-bold text-gray-600 dark:text-gray-200">
-										{example.name}
-									</p>
+									<a href={example.href} target="_blank">
+										<p className="text-md font-bold text-gray-600 dark:text-gray-200">
+											{example.name}
+										</p>
+									</a>
 									<p className="flex-auto text-sm text-gray-600 dark:text-gray-200">
 										{example.description}
 									</p>
@@ -51,7 +52,7 @@ export default function SectionExamples({ examples, kind }) {
 										See example -{'>'}
 									</p>
 								</div>
-							</a>
+							</div>
 						))}
 					</div>
 				</div>

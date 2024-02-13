@@ -3,7 +3,7 @@ import ScatterChart from '@site/src/components/ScatterChart';
 
 # Airflow vs Prefect vs Temporal vs Windmill
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -148,7 +148,7 @@ with DAG(
 
 For 10 long running tasks run sequentially:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
 		xTitle="Duration (in seconds)"
@@ -182,7 +182,7 @@ For 10 long running tasks run sequentially:
 
 For 40 lightweights tasks run sequentially:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -331,7 +331,7 @@ if __name__ == "__main__":
 
 For 10 long running tasks:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
 		xTitle="Duration (in seconds)"
@@ -365,7 +365,7 @@ For 10 long running tasks:
 
 For 40 lightweights tasks run sequentially:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -487,7 +487,7 @@ if __name__ == "__main__":
 
 For 10 long running tasks:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
 		xTitle="Duration (in seconds)"
@@ -521,7 +521,7 @@ For 10 long running tasks:
 
 For 40 lightweights tasks run sequentially:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -648,7 +648,7 @@ schema:
 
 For 10 long running tasks in normal mode:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
 		xTitle="Duration (in seconds)"
@@ -682,7 +682,7 @@ For 10 long running tasks in normal mode:
 
 For 40 lightweights tasks run sequentially in normal mode:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -756,7 +756,7 @@ For 40 lightweights tasks run sequentially in normal mode:
 
 In [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mode, we obtained the following results. For 10 long running tasks:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
 		xTitle="Duration (in seconds)"
@@ -790,7 +790,7 @@ In [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mod
 
 And for the 40 lightweight tasks:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -864,7 +864,7 @@ And for the 40 lightweight tasks:
 
 ## Comparisons
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="10 long running tasks"
 		xTitle="Duration (in seconds)"
@@ -900,7 +900,7 @@ And for the 40 lightweight tasks:
 	/>
 </div>
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -988,7 +988,7 @@ And for the 40 lightweight tasks:
 
 We can exclude Airflow from the previous chart:
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks (excluding Airflow)"
 		xTitle="Duration (in seconds)"
@@ -1114,7 +1114,7 @@ Finally, we've ran it on Windmill Dedicated Worker mode, and we used a specific 
 
 The results are the following:
 
-<div class="grid">
+<div className="grid">
 	<ScatterChart
 		title="Job throughput at scale"
 		xTitle="Number of workers"
