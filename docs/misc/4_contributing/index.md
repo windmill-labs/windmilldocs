@@ -4,42 +4,37 @@ title: 'Contributor Guide'
 
 # Contributor Guide
 
-## Getting started
+As an open-source platform, Windmill relies on the developer community for enhancements and support. Your work, from coding to writing docs, directly improves our platform. This guide outlines how you can get involved.
 
-**First, thank you for showing interest in contributing to Windmill**.
+Here are some ways you can contribute to our platform:
 
-You can contribute to Windmill in three ways:
+- **Share Your Work**: [Upload your Scripts, Flows, Apps, and Resource Types](../1_share_on_hub/index.md) to Windmill Hub. Approved high-quality submissions are accessible for community use.
+- **Code Contributions**: Enhance the [Windmill codebase](https://github.com/windmill-labs/windmill) by submitting pull requests (PRs) on GitHub. Bug reports and feature requests are valuable—please file an issue to start the conversation.
+- **Community Engagement**: Join our [Discord community](https://discord.com/invite/V7PM2YHsPB) to offer suggestions, assist others, or discuss your ideas.
 
-- [Sharing Scripts, Flows, Apps and Resource Types](../1_share_on_hub/index.md)
-  on [Windmill Hub](https://hub.windmill.dev/).
-- Contributing to the
-  [Windmill codebase](https://github.com/windmill-labs/windmill).
-- Join our [Discord](https://discord.com/invite/V7PM2YHsPB) to make suggestions or even help other users.
+## Security Bounty Program
 
-The best way to share what you created on Windmill with the community, is to
-submit it on [Windmill Hub](https://hub.windmill.dev/). If the submission meets our quality
-standards, they get approved, and become available for anyone to use directly
-from their instance of Windmill. For this use case, please refer to the
-[Share on Windmill Hub](../1_share_on_hub/index.md) guide.
+We are committed to rewarding white hat hackers who help us by identifying and reporting significant security vulnerabilities.
 
-If you want to contribute to the Windmill codebase itself, you can do so by
-opening a PR on our [GitHub](https://github.com/windmill-labs/windmill). If you
-have a bug to report or want to request a feature, you can always
-[create a new issue](https://github.com/windmill-labs/windmill/issues/new/choose).
+**Eligibility and Rewards**:
+We offer rewards of up to $2,500 for the discovery and reporting of severe security flaws that could potentially impact the integrity, confidentiality, or availability of our services.
+The reward amount is determined by the severity and impact of the vulnerability.
 
-In case you found a typo, something incorrect or just unclear in the
-documentation, please
-[create a new issue](https://github.com/windmill-labs/windmilldocs/issues/new)
-in the
-[Windmill Docs repository](https://github.com/windmill-labs/windmilldocs). PRs
-are also welcome!
+**Reporting Process**:
+To report a vulnerability, please send a detailed description, including steps to reproduce it, to security@windmill.dev.
+Our team will work with you to assess the report and, if validated, make the necessary fixes.
 
-## Add new OAuth provider
+**Guidelines**:
+We ask that you act responsibly, not disclose the vulnerability publicly or to third parties before it is fixed, and give us at least 48 hours to address the issue.
 
-To add a new OAuth provider, open a Pull Request to add a new item to:
-[backend/oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json).
+Thank you for helping us keep Windmill secure.
 
-The format is as follows:
+## Expanding Windmill's Integrations: Adding New OAuth Providers
+
+To enhance Windmill's connectivity and integration capabilities, we welcome contributions that add new OAuth providers. This not only broadens the range of services Windmill can interact with but also directly impacts the platform's functionality and user experience.
+
+**How to Contribute a New OAuth Provider**:
+Submit a Pull Request: Add your new OAuth provider configuration to the [backend/oauth_connect.json](https://github.com/windmill-labs/windmill/blob/main/backend/oauth_connect.json) file with the following format:
 
 ```json
 "<name_of_resource_type_for_integration>": {

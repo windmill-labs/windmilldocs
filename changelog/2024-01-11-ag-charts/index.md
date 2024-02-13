@@ -1,6 +1,6 @@
 ---
 slug: ag-charts
-version: v1.251
+version: v1.239.0
 title: Ag Charts
 tags: ['App Editor', 'Postgres']
 image: ./ag-charts.png
