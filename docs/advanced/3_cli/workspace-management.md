@@ -23,7 +23,6 @@ The currently selected workspace will be <ins>underlined</ins>.
 />
 <br/>
 
-
 The wmill CLI is capable of handling working with many remotes & workspaces.
 Each combination of remote & workspace is registered with together with a name
 locally using:
@@ -34,7 +33,7 @@ wmill workspace add [workspace_name] [workspace_id] [remote]
 
 You can login to the workspace with a token or directly from browser.
 
-The new workspace will automatically be [switched](#switching-selection) to.
+The new workspace will automatically be [switched](#switch-workspaces) to.
 
 ### Arguments
 

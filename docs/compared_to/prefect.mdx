@@ -8,23 +8,18 @@ import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 Both Windmill and Prefect support writing complex workflows and ETL with code and run them at scale.
 We highlight below the main differences between the 2 on the following axis:
 
-- [Alternative to Prefect for building Workflows](#alternative-to-prefect-for-building-workflows)
-  - [Open Source and Hosting](#open-source-and-hosting)
-  - [Workflows and Code](#workflows-and-code)
-  - [Triggers](#triggers)
-  - [Execution Runtime and Coldstarts](#execution-runtime-and-coldstarts)
-    - [Benchmark #1](#benchmark-1)
-    - [Benchmark #2](#benchmark-2)
-  - [Observability and Monitoring](#observability-and-monitoring)
-  - [Windmill AI](#ai-generation)
-  - [Pricing](#pricing)
-  - [Scripts and Apps](#scripts-and-apps)
+- [Open Source and Hosting](#open-source-and-hosting)
+- [Workflows and Code](#workflows-and-code)
+- [Triggers](#triggers)
+- [Execution Runtime and Coldstarts](#execution-runtime-and-coldstarts)
+  - [Benchmark #1](#benchmark-1)
+  - [Benchmark #2](#benchmark-2)
+- [Observability and Monitoring](#observability-and-monitoring)
+- [Windmill AI](#windmill-ai)
+- [Pricing](#pricing)
+- [Scripts and Apps](#scripts-and-apps)
 
-<a href="https://www.prefect.io/" rel="nofollow">
-	Prefect
-</a>
-is a data workflow management system, designed to help teams build, run, and monitor data workflows.
-It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
+<a href="https://www.prefect.io/" rel="nofollow"> Prefect </a> is a data workflow management system, designed to help teams build, run, and monitor data workflows. It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
 
 ## Open Source and Hosting
 
@@ -59,7 +54,7 @@ where users share useful and proven scripts, flows, and applications.
 
 Prefect has an Apache v2.0 License and can be self-hosted.
 
-Prefect's [monitoring](#observability--monitoring) is done through a cloud platform that requires subscription. Many of the features necessary for its proper functioning are only available under Prefect Cloud:
+Prefect's [monitoring](#observability-and-monitoring) is done through a cloud platform that requires subscription. Many of the features necessary for its proper functioning are only available under Prefect Cloud:
 
 ![Prefect cloud features](../assets/compared_to/prefect_cloud_features.png.webp 'Prefect cloud features')
 
@@ -90,7 +85,7 @@ Prefect is heavily code-based. Everything is and can only be defined in Python. 
 
 <br />
 
-In Windmill, the steps are also code-based but built from scripts ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) ...). Users can write the code directly, choose a script from the workspace, the community library [WindmillHub](https://hub.windmill.dev/), or have it [generated with AI](#ai-generation). Each script can be saved with [permissions](../core_concepts/16_roles_and_permissions/index.mdx) set from the workspace.
+In Windmill, the steps are also code-based but built from scripts ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) ...). Users can write the code directly, choose a script from the workspace, the community library [WindmillHub](https://hub.windmill.dev/), or have it [generated with AI](#windmill-ai). Each script can be saved with [permissions](../core_concepts/16_roles_and_permissions/index.mdx) set from the workspace.
 
 The structuring of the flow and the configurations for each step are defined from a User Interface. With a _code when you need_ mindset, the user can navigate the flow editor in low-code.
 

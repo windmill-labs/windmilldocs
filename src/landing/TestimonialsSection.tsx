@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import LandingSection from './LandingSection';
-import '../css/custom.css';
 import { useColorMode } from '@docusaurus/theme-common';
 
 const testimonials = [

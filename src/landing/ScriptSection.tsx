@@ -125,8 +125,12 @@ const tabs = [
 				caption: (
 					<div>
 						Script in{' '}
-						<a href="/docs/getting_started/scripts_quickstart/go" target="_blank">
-							the Go Language
+						<a
+							href="/docs/getting_started/scripts_quickstart/go"
+							target="_blank"
+							title="Write scripts in Go"
+						>
+							the Go language
 						</a>
 						.
 					</div>
