@@ -9,16 +9,16 @@ import Head from '@docusaurus/Head';
 import { twMerge } from 'tailwind-merge';
 
 export default function BlogPostItemContainer({ children, className }) {
-	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
+	const { frontMatter, assets, isBlogPostPage, metadata, ...props } = useBlogPost();
 	const { withBaseUrl } = useBaseUrlUtils();
 	const image = assets.image ?? frontMatter.image;
 
-	const isChangelog = window.location.pathname.includes('/changelog');
+	const isChangelog = metadata.permalink.includes('/changelog');
 
 	const defaultTitle = 'Changelog | Windmill';
 	const defaultDescription = "See what's new with Windmill.";
 
-	const isFeaturePage = window.location.pathname.includes('/changelog/') && frontMatter.slug;
+	const isFeaturePage = isChangelog && frontMatter.slug;
 
 	const pageTitle = isFeaturePage ? metadata.title : defaultTitle;
 	const pageDescription = isFeaturePage ? metadata.description : defaultDescription;
@@ -34,7 +34,6 @@ export default function BlogPostItemContainer({ children, className }) {
 					<meta property="og:image" content={image} />
 					<meta property="site_name" content="Windmill" />
 					<meta property="og:type" content="changelog" />
-					<meta property="og:url" content={window.location.href} />
 				</Head>
 				<div className="flex flex-row gap-2 items-center mb-4">
 					<h3 className="text-xl font-semibold">
@@ -169,7 +168,7 @@ export default function BlogPostItemContainer({ children, className }) {
 
 					<div className="p-4 flex flex-col h-64 overflow-auto">
 						<div className="text-xs font-semibold flex justify-between items-center">
-							<div class="flex flex-col">
+							<div className="flex flex-col">
 								{metadata.authors.map((author, index) => (
 									<span>
 										{index === 0 ? 'by ' : 'and '}

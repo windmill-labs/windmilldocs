@@ -15,6 +15,7 @@ import LandingHeader from '../landing/LandingHeader';
 const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import TestimonialsSection from '../landing/TestimonialsSection';
 
@@ -85,7 +86,7 @@ export default function Home() {
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
-				<HomepageHeader />
+				<BrowserOnly fallback={<div>Loading...</div>}>{() => <HomepageHeader />}</BrowserOnly>
 			</main>
 		</LayoutProvider>
 	);

@@ -36,7 +36,7 @@ This process can be used in particular for [local development](../4_local_develo
 
 More details at:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Local Development"
 		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
