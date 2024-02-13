@@ -1,21 +1,8 @@
-import React from 'react';
-import { useThemeConfig } from '@docusaurus/theme-common';
-import FooterLinks from '@theme/Footer/Links';
-import FooterLogo from '@theme/Footer/Logo';
-import FooterCopyright from '@theme/Footer/Copyright';
-import FooterLayout from '@theme/Footer/Layout';
+import React, { useEffect, useState } from 'react';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import useInkeepSettings from '../../utils/useInkeepSettings';
 
 function Footer() {
-	const { footer } = useThemeConfig();
-	if (!footer) {
-		return null;
-	}
-	const { copyright, links, logo, style } = footer;
-
-	// INKEEP
-
 	const [ChatButton, setChatButton] = useState(null);
 
 	useEffect(() => {
@@ -25,7 +12,7 @@ function Footer() {
 		})();
 	}, []);
 
-	const { baseSettings, aiChatSettings, searchSettings } = useInkeepSettings();
+	const { baseSettings, aiChatSettings, searchSettings, stylesheets } = useInkeepSettings();
 
 	const chatButtonProps = {
 		stylesheets,
@@ -38,22 +25,12 @@ function Footer() {
 		}
 	};
 
-	// INKEEP
-
 	return (
-		<>
-			<BrowserOnly fallback={<div />}>
-				{() => {
-					return ChatButton ? <ChatButton {...chatButtonProps} /> : <div />;
-				}}
-			</BrowserOnly>
-			<FooterLayout
-				style={style}
-				links={links && links.length > 0 && <FooterLinks links={links} />}
-				logo={logo && <FooterLogo logo={logo} />}
-				copyright={copyright && <FooterCopyright copyright={copyright} />}
-			/>
-		</>
+		<BrowserOnly fallback={<div />}>
+			{() => {
+				return ChatButton ? <ChatButton {...chatButtonProps} /> : <div />;
+			}}
+		</BrowserOnly>
 	);
 }
 export default React.memo(Footer);
