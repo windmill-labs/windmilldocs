@@ -28,7 +28,7 @@ import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
 
 import Section from './Section';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
 import { SiVisualstudiocode } from 'react-icons/si';
 import { BoltIcon } from '@heroicons/react/20/solid';
 import TaskDurationBarChart from '../components/TaskDurationBarChart';

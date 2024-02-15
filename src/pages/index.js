@@ -1,6 +1,5 @@
-import React, { useEffect, useContext, createContext, useState } from 'react';
+import React from 'react';
 import Hero from '../landing/Hero';
-import ScriptSection from '../landing/ScriptSection';
 import FlowSection from '../landing/FlowSection';
 import AppSection from '../landing/AppSection';
 import CoreSection from '../landing/CoreSection';
@@ -12,37 +11,15 @@ import EntrepriseFeatures from '../landing/EntrepriseFeatures';
 import Head from '@docusaurus/Head';
 import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
-const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-
+import GlobalContextProvider from '../components/GlobalContextProvider';
 import TestimonialsSection from '../landing/TestimonialsSection';
 
-export function useDeveloperMode() {
-	return useContext(DeveloperModeContext);
-}
-
-export { DeveloperModeContext };
-
 function HomepageHeader() {
-	const [developerMode, setDeveloperMode] = useState(false);
-
-	useEffect(() => {
-		window.plausible =
-			window.plausible ||
-			function () {
-				(window.plausible.q = window.plausible.q || []).push(arguments);
-			};
-	});
-
 	return (
-		<DeveloperModeContext.Provider
-			value={{
-				developerMode: developerMode,
-				setDeveloperMode: setDeveloperMode
-			}}
-		>
+		<>
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
@@ -67,7 +44,7 @@ function HomepageHeader() {
 				<CallToAction />
 			</LandingSection>
 			<Footer />
-		</DeveloperModeContext.Provider>
+		</>
 	);
 }
 
@@ -84,7 +61,14 @@ export default function Home() {
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
-				<BrowserOnly fallback={<div>Loading...</div>}>{() => <HomepageHeader />}</BrowserOnly>
+
+				<BrowserOnly fallback={<div>Loading...</div>}>
+					{() => (
+						<GlobalContextProvider>
+							<HomepageHeader />
+						</GlobalContextProvider>
+					)}
+				</BrowserOnly>
 			</main>
 		</LayoutProvider>
 	);

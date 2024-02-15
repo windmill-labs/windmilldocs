@@ -1,5 +1,6 @@
 import React from 'react';
-import { useDeveloperMode } from '../pages/scripts';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
+
 import LandingSectionWrapper from './LandingSectionWrapper';
 import DevModeSwitch from './DevModeSwitch';
 import CardsContainer from '../landing/cards/Cards';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Head from '@docusaurus/Head';
 import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
@@ -8,7 +8,7 @@ import { Code, Workflow, HeartPulseIcon, FileEditIcon, Wand2, ZapIcon } from 'lu
 import HeroAI from '../landing/HeroAI';
 
 import Section from './../landing/Section';
-import { DeveloperModeContext } from './index';
+import GlobalContextProvider from '../components/GlobalContextProvider';
 
 const tabs = [
 	{
@@ -130,17 +130,10 @@ const flowTabs = [
 ];
 
 export default function Windmill_AI() {
-	const [developerMode, setDeveloperMode] = useState(false);
-
 	return (
-		<DeveloperModeContext.Provider
-			value={{
-				developerMode: developerMode,
-				setDeveloperMode: setDeveloperMode
-			}}
-		>
-			<LayoutProvider>
-				<main>
+		<LayoutProvider>
+			<main>
+				<GlobalContextProvider>
 					<Head>
 						<title>Windmill AI</title>
 						<meta name="Windmill AI" content="Windmill Team." />
@@ -179,8 +172,8 @@ export default function Windmill_AI() {
 					/>
 
 					<Footer />
-				</main>
-			</LayoutProvider>
-		</DeveloperModeContext.Provider>
+				</GlobalContextProvider>
+			</main>
+		</LayoutProvider>
 	);
 }
