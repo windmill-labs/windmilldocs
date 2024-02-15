@@ -296,3 +296,98 @@ aws_access_key_id=credentials["AccessKeyId"]
 aws_secret_access_key=credentials["SecretAccessKey"]
 aws_session_token=credentials["SessionToken"]
 ```
+
+## Use OIDC with Hashicorp Vault
+
+```
+vault auth enable jwt
+
+vault write auth/jwt/config \
+  bound_issuer="<base_url>/api/oidc/" \
+  oidc_discovery_url="<base_url>/api/oidc/"
+
+vault write auth/jwt/role/myproject-production -<<EOF
+{
+  "role_type": "jwt",
+  "bound_audiences": ["MY_AUDIENCE"],
+  "bound_claims": { "email": "admin@windmill.dev"},
+  "user_claim": "sub",
+  "policies": ["myproject-production"],
+  "ttl": "10m"
+}
+EOF
+
+ vault policy write myproject-production - <<EOF
+# Read-only permission on 'secret/data/production/*' path
+
+path "secret/data/production/*" {
+  capabilities = [ "read" ]
+}
+EOF
+```
+
+### Test it
+
+Write a secret at production/foo:
+
+```bash
+vault kv put -mount=secret production/foo foo=world
+```
+
+<Tabs className="unique-tabs">
+<TabItem value="basb" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```bash
+export VAULT_ADDR='http://127.0.0.1:8200'
+
+export VAULT_JWT=$(curl -s -X POST -H "Authorization: Bearer $WM_TOKEN" "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/oidc/token/MY_AUDIENCE")
+export VAULT_TOKEN=$(vault write -field=token auth/jwt/login role=myproject-production jwt=$VAULT_JWT)
+
+vault kv get -mount=secret production/foo
+```
+
+</TabItem>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+import hvac
+
+def main():
+
+    token = wmill.get_id_token("MY_AUDIENCE")
+
+    client = hvac.Client()
+
+    response = client.auth.jwt.jwt_login(
+        role="myproject-production",
+        jwt=token,
+    )
+    print('Client token returned: %s' % response['auth']['client_token'])
+    print(client.secrets.kv.read_secret_version(path='production/foo'))
+```
+
+</TabItem>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as wmill from 'windmill-client';
+
+export async function main() {
+	const jwt = await wmill.getIdToken('MY_AUDIENCE');
+	const res = await fetch('http://127.0.0.1:8200/v1/auth/jwt/login', {
+		method: 'POST',
+		body: JSON.stringify({ jwt, role: 'myproject-production' })
+	});
+	const token = (await res.json()).auth.client_token;
+
+	const password = await fetch('http://127.0.0.1:8200/v1/secret/production/foo', {
+		headers: { 'X-Vault-Token': token }
+	});
+
+	return password.json();
+}
+```
+
+</TabItem>
+</Tabs>
