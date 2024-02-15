@@ -104,7 +104,7 @@ iss: The issuer of the token, your base_url set in in your instance settings
 sub: The subject claim is validated by your cloud provider. The subject is formatted as `{email}::{script_path}::{flow_path}::{workspace}.
 ```
 
-The token also includes custom claims provided by Windmill. To see the full list of claims supported by Windmill's OIDC provider, see the claims_supported entries at `base_url/.well-known/openid-configuration`.
+The token also includes custom claims provided by Windmill. To see the full list of claims supported by Windmill's OIDC provider, see the claims_supported entries at `base_url/api/oidc/.well-known/openid-configuration`.
 
 ```
 job_id: Job id
