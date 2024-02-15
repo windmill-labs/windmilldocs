@@ -30,7 +30,7 @@ import {
 	SiVisualstudiocode,
 	SiGraphql
 } from 'react-icons/si';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../pages/scripts';
 
 import Section from './Section';
 

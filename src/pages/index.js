@@ -46,9 +46,7 @@ function HomepageHeader() {
 			<LandingHeader />
 			<Hero />
 			<LogoClouds />
-
 			<HeroExample />
-			<ScriptSection />
 			<FlowSection />
 			<AppSection />
 			<CoreSection

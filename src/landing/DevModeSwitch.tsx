@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch } from '@headlessui/react';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../pages/scripts';
 import classNames from 'classnames';
 
 export default function DevModeSwitch({ color = 'blue' }) {
