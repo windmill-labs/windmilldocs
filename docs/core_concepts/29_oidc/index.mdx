@@ -18,9 +18,7 @@ Your token must be associated with an audience which identifies the intended rec
 If you are using a TypeScript or Python scripts, you can use the Windmill SDK to generate tokens. For other like REST or shell, you should use the REST api directly:
 
 ```
-curl -s -H "Authorization: Bearer $WM_TOKEN" \
-
-  "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/oidc/token/MY_AUDIENCE"
+curl -s -X POST -H "Authorization: Bearer $WM_TOKEN" "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/oidc/token/MY_AUDIENCE"
 ```
 
 ### Generate the token

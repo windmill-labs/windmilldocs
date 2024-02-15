@@ -39,6 +39,11 @@ GRANT SELECT, INSERT on pip_resolution_cache to agent;
 
 CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
 CREATE POLICY agent ON completed_job TO agent USING (true);
+CREATE POLICY agent
+   ON audit
+   FOR INSERT
+   TO agent
+   WITH CHECK  (true);
 
 ```
 
