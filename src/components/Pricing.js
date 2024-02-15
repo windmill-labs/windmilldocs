@@ -416,17 +416,6 @@ const sections = [
 				link: '/docs/core_concepts/authentification'
 			},
 			{
-				name: 'OpenID Connect (OIDC)',
-				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
-				},
-				link: '/docs/core_concepts/oidc'
-			},
-			{
 				name: 'SAML & SCIM support including groups synchronization',
 				tiers: {
 					'Free and Open-source': false,
@@ -576,6 +565,17 @@ const sections = [
 					Team: true
 				},
 				link: '/docs/core_concepts/agent_workers'
+			},
+			{
+				name: 'OpenID Connect (OIDC)',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/core_concepts/oidc'
 			},
 			{
 				name: 'Distributed dependency cache backed by S3',

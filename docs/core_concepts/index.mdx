@@ -160,7 +160,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 	/>
 </div>
 
-## Enterprise & Team Features
+## Enterprise & Cloud Features
+
+All details & features on [Pricing page](/pricing).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -174,9 +176,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/audit_logs"
 	/>
 	<DocCard
-		title="Dedicated Workers / High Throughput"
-		description="Dedicated Workers are workers that are dedicated to a particular script."
-		href="/docs/core_concepts/dedicated_workers"
+		title="Deploy to Staging/Prod Web UI"
+		description="Deploy items to another staging/prod workspace."
+		href="/docs/core_concepts/staging_prod"
 	/>
 	<DocCard
 		title="Git Sync"
@@ -189,14 +191,34 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/misc/worker_group_management_ui"
 	/>
 	<DocCard
-		title="Deploy to Staging/Prod Web UI"
-		description="Deploy items to another staging/prod workspace."
-		href="/docs/core_concepts/staging_prod"
-	/>
-	<DocCard
 		title="Concurrency Limits"
 		description="The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows."
 		href="/docs/core_concepts/concurrency_limits"
+	/>
+	<DocCard
+		title="S3 Distributed Dependency Cache"
+		description="Leverage a global S3 cache to speed up Python dependency handling by storing and reusing pre-installed package."
+		href="/docs/misc/s3_cache"
+	/>
+	<DocCard
+		title="OpenID Connect (OIDC)"
+		description="Use Windmill's OIDC provider to authenticate from scripts to cloud providers and other APIs."
+		href="/docs/core_concepts/oidc"
+	/>
+	<DocCard
+		title="SAML & SCIM"
+		description="Configure Okta for both SAML and SCIM."
+		href="/docs/misc/saml_and_scim"
+	/>
+	<DocCard
+		title="Dedicated Workers / High Throughput"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+	<DocCard
+		title="Agent Workers"
+		description="Agent Workers are a 4th mode of execution of the Windmill binary, but instead of using MODE=worker, we use here MODE=agent."
+		href="/docs/core_concepts/agent_workers"
 	/>
 	<DocCard
 		title="Content Search"
@@ -212,11 +234,6 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		title="Multiplayer"
 		description="Collaborate on scripts simultaneously."
 		href="/docs/core_concepts/multiplayer"
-	/>
-	<DocCard
-		title="SAML & SCIM"
-		description="Configure Okta for both SAML and SCIM."
-		href="/docs/misc/saml_and_scim"
 	/>
 </div>
 
