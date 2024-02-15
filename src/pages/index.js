@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from '../landing/Hero';
 import FlowSection from '../landing/FlowSection';
 import AppSection from '../landing/AppSection';
-import CoreSection from '../landing/CoreSection';
 import Footer from '../landing/Footer';
 import IntergrationList from '../landing/IntergrationList';
 import LandingSection from '../landing/LandingSection';
@@ -24,19 +23,6 @@ function HomepageHeader() {
 			<Hero />
 			<LogoClouds />
 			<HeroExample />
-			<FlowSection />
-			<AppSection />
-			<CoreSection
-				title="Scripts"
-				caption="No overhead, scalable, self-hostable FaaS"
-				cards={[]}
-				description={
-					'Run long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. Trigger them from a webhook or the auto-generated UI and monitor them easily.'
-				}
-				color="blue"
-				key="script-card"
-				kind="script"
-			/>
 			<IntergrationList />
 			<EntrepriseFeatures />
 			<TestimonialsSection />

@@ -7,8 +7,25 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
-import SearchBarWrapper from '../theme/SearchBar';
 import Banner from './Banner';
+
+const products = [
+	{
+		name: 'Scripts',
+		description: 'Code to production in minutes.',
+		href: '/scripts'
+	},
+	{
+		name: 'Flows',
+		description: 'Build complex flows without complexity.',
+		href: '/flows'
+	},
+	{
+		name: 'Apps',
+		description: 'Build super fast and powerful apps using drag-and-drop.',
+		href: '/apps'
+	}
+];
 
 const resources = [
 	{
@@ -86,6 +103,60 @@ export default function LandingHeader() {
 						</Popover.Button>
 					</div>
 					<Popover.Group as="nav" className="hidden space-x-10 md:flex">
+					<Popover className="relative">
+							{({ open }) => (
+								<>
+									<Popover.Button
+										className={classNames(
+											open ? 'text-gray-900' : 'text-gray-500',
+											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
+										)}
+									>
+										<span>Products</span>
+										<ChevronDownIcon
+											className={classNames(
+												open ? 'text-gray-600' : 'text-gray-400',
+												'ml-2 h-5 w-5 group-hover:text-gray-500'
+											)}
+											aria-hidden="true"
+										/>
+									</Popover.Button>
+
+									<Transition
+										as={Fragment}
+										enter="transition ease-out duration-200"
+										enterFrom="opacity-0 translate-y-1"
+										enterTo="opacity-100 translate-y-0"
+										leave="transition ease-in duration-150"
+										leaveFrom="opacity-100 translate-y-0"
+										leaveTo="opacity-0 translate-y-1"
+									>
+										<Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-xs -translate-x-1/2 transform px-2 sm:px-0">
+											<div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+												<div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8">
+													{products.map((product) => (
+														<a
+															key={product.name}
+															href={product.href}
+															className="-m-3 block rounded-md p-3 hover:bg-gray-50 dark:hover:bg-gray-700 !no-underline"
+															target={product.newtab ? '_blank' : undefined}
+															rel={product.newtab ? 'noopener noreferrer' : undefined}
+														>
+															<p className="font-medium text-gray-900 dark:text-gray-100">
+																{product.name}
+															</p>
+															<p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+																{product.description}
+															</p>
+														</a>
+													))}
+												</div>
+											</div>
+										</Popover.Panel>
+									</Transition>
+								</>
+							)}
+						</Popover>
 						<a
 							href="/docs/intro"
 							onClick={() => window.plausible('read-docs')}
@@ -164,7 +235,6 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
-						<SearchBarWrapper className={'inkeep-search-compact'} />
 
 						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
