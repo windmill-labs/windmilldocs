@@ -738,8 +738,8 @@ const sidebars = {
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
-				'misc/white_labelling/index',
-				'misc/react_sdk/index'
+				'misc/react_sdk/index',
+				'misc/white_labelling/index'
 			]
 		}
 	]
