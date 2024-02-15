@@ -9,6 +9,7 @@ function exponentialScale(value, min, max) {
 
 function inverseExponentialScale(value, min, max) {
     if (value <= min) return min;
+    if (value >= max) return max;
     const scale = (max - min) / Math.log(max - min + 1);
     let displayValue = scale * Math.log(value - min + 1);
     return Math.min(displayValue, max); // Ensure the display value does not exceed max
@@ -16,7 +17,7 @@ function inverseExponentialScale(value, min, max) {
 
 export default function Slider({ min, max, step, defaultValue, onChange }) {
     const [value, setValue] = useState(defaultValue);
-    const isExponential = max > 100;
+    const isExponential = max > 99;
     
     const handleChange = (event) => {
         let newValue = parseFloat(event.target.value);
