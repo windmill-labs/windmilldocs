@@ -381,7 +381,7 @@ export async function main() {
 	});
 	const token = (await res.json()).auth.client_token;
 
-	const password = await fetch('http://127.0.0.1:8200/v1/secret/production/foo', {
+	const password = await fetch('http://127.0.0.1:8200/v1/secret/data/production/foo', {
 		headers: { 'X-Vault-Token': token }
 	});
 
