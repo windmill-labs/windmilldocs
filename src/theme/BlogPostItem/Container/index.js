@@ -7,18 +7,20 @@ import { ArrowRight, FileText } from 'lucide-react';
 import { Archive, Blocks, Sparkles } from 'lucide-react';
 import Head from '@docusaurus/Head';
 import { twMerge } from 'tailwind-merge';
+import { useLocation } from '@docusaurus/router';
 
 export default function BlogPostItemContainer({ children, className }) {
-	const { frontMatter, assets, isBlogPostPage, metadata, ...props } = useBlogPost();
+	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
 	const { withBaseUrl } = useBaseUrlUtils();
+	const location = useLocation();
 	const image = assets.image ?? frontMatter.image;
 
-	const isChangelog = metadata.permalink.includes('/changelog');
+	const isChangelog = location.pathname.includes('/changelog');
 
 	const defaultTitle = 'Changelog | Windmill';
 	const defaultDescription = "See what's new with Windmill.";
 
-	const isFeaturePage = isChangelog && frontMatter.slug;
+	const isFeaturePage = !location.pathname.endsWith('/changelog');
 
 	const pageTitle = isFeaturePage ? metadata.title : defaultTitle;
 	const pageDescription = isFeaturePage ? metadata.description : defaultDescription;
@@ -27,6 +29,7 @@ export default function BlogPostItemContainer({ children, className }) {
 		return (
 			<div className="w-full">
 				<Head>
+					<title>{metadata.title}</title>
 					<title>{pageTitle}</title>
 					<meta name="title" content={metadata.title} />
 					<meta property="og:title" content={metadata.title} />
@@ -35,6 +38,7 @@ export default function BlogPostItemContainer({ children, className }) {
 					<meta property="site_name" content="Windmill" />
 					<meta property="og:type" content="changelog" />
 				</Head>
+
 				<div className="flex flex-row gap-2 items-center mb-4">
 					<h3 className="text-xl font-semibold">
 						<a
@@ -70,17 +74,18 @@ export default function BlogPostItemContainer({ children, className }) {
 					<a
 						href={`https://github.com/windmill-labs/windmill/releases/tag/${frontMatter.version}`}
 						target="_blank"
-						>
+					>
 						<span
 							className={twMerge(
-							'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium',
-							'bg-gray-100 hover:bg-gray-200 text-gray-800'
+								'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium',
+								'bg-gray-100 hover:bg-gray-200 text-gray-800'
 							)}
 						>
 							{frontMatter.version}
 						</span>
 					</a>
 				</div>
+
 				<div className="mb-6">
 					<div className="flex items-center">
 						<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
@@ -101,6 +106,8 @@ export default function BlogPostItemContainer({ children, className }) {
 						)}
 					</div>
 				</div>
+				{isFeaturePage ? "I'm a feature page" : "I'm a changelog page"}
+
 				<img
 					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
 					src={image}

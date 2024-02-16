@@ -3,11 +3,14 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
 import { twMerge } from 'tailwind-merge';
+import { useLocation } from '@docusaurus/router';
 
 export default function BlogLayout(props) {
-	const { sidebar, toc, children, location, ...layoutProps } = props;
+	const { sidebar, toc, children, ...layoutProps } = props;
 	const hasSidebar = sidebar && sidebar.items.length > 0;
 	const isBlogPostPageList = Boolean(toc);
+	const location = useLocation();
+
 	const isChangelog = location?.pathname?.includes('/changelog');
 
 	return (
