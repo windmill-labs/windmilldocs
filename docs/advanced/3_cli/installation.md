@@ -40,7 +40,13 @@ export PATH="/Users/<username>/.deno/bin:$PATH"
 
 :::tip
 
-In an enterprise setting with custom certificates, you can edit the wmill binary to ignore CA issues:
+In an enterprise setting with custom certificates, you can set the following env variable to use system certificate store:
+
+```
+export DENO_TLS_CA_STORE=system
+```
+
+Alternatively, you can edit the wmill binary to ignore CA issues:
 
 ```
 sed -i 's/deno run/deno run --unsafely-ignore-certificate-errors/' ~/.deno/bin/wmill
