@@ -687,7 +687,9 @@ For more advanced setups, see [Helm Chart](#helm-chart).
 
 ## Self-signed certificates
 
-TL;DR:
+Detailed [guide](https://www.lfanew.com/posts/windmill-ca-trust/) for using Windmill with self-signed certificates
+
+TL;DR: below
 
 ### Mount CA Certificates in Windmill:
 
@@ -703,8 +705,6 @@ Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml 
 ### Configure Python (requests & httpx) Trust:
 
 Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with the same value in the worker’s environment variables.
-
-See this [guide](https://www.lfanew.com/posts/windmill-ca-trust/) for using Windmill with self-signed certificates
 
 <!-- Resources -->
 
