@@ -166,7 +166,7 @@ const pricing = {
 					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
-					max: 20
+					max: 10
 				}
 			},
 			minPrice: 10,
@@ -190,7 +190,7 @@ const pricing = {
 					]
 				},
 				{
-					text: <span>20 seats maximum</span>
+					text: <span>10 seats maximum</span>
 				},
 				{
 					text: (
@@ -565,6 +565,17 @@ const sections = [
 					Team: true
 				},
 				link: '/docs/core_concepts/agent_workers'
+			},
+			{
+				name: 'OpenID Connect (OIDC)',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/core_concepts/oidc'
 			},
 			{
 				name: 'Distributed dependency cache backed by S3',

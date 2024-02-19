@@ -15,6 +15,9 @@ import LogoClouds from '../landing/LogoClouds';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import GlobalContextProvider from '../components/GlobalContextProvider';
 import TestimonialsSection from '../landing/TestimonialsSection';
+import ScriptLightSection from '../landing/ScriptLightSection';
+import AppLightSection from '../landing/AppLightSection';
+import FlowLightSection from '../landing/FlowLightSection';
 
 function HomepageHeader() {
 	return (
@@ -23,6 +26,9 @@ function HomepageHeader() {
 			<Hero />
 			<LogoClouds />
 			<HeroExample />
+			<ScriptLightSection />
+			<FlowLightSection />
+			<AppLightSection />
 			<IntergrationList />
 			<EntrepriseFeatures />
 			<TestimonialsSection />

@@ -52,32 +52,33 @@ Scripts in Windmill have input parameters defined by a JSON Schema, where each p
 
 In Python:
 
-| Python     | JSON Schema                      |
-| ---------- | -------------------------------- |
-| `str`      | `string`                         |
-| `float`    | `number`                         |
-| `str`      | `string`                         |
-| `float`    | `number`                         |
-| `int`      | `integer`                        |
-| `bool`     | `boolean`                        |
-| `dict`     | `object`                         |
-| `list`     | `any[]`                          |
-| `bytes`    | `string, encodingFormat: base64` |
-| `datetime` | `str, format: date-time`         |
-| `_`        | `any`                            |
+| Python              | JSON Schema                      |
+| ------------------- | -------------------------------- |
+| `str`               | `string`                         |
+| `float`             | `number`                         |
+| `Literal["a", "b"]` | `string` with enums: "a", "b"    |
+| `int`               | `integer`                        |
+| `bool`              | `boolean`                        |
+| `dict`              | `object`                         |
+| `list`              | `any[]`                          |
+| `List[str]`         | `string[]`                       |
+| `bytes`             | `string, encodingFormat: base64` |
+| `datetime`          | `str, format: date-time`         |
+| `_`                 | `any`                            |
 
-In Deno:
+In Deno/Bun/REST:
 
-| Deno                 | JSON Schema |
-| -------------------- | ----------- |
-| `string`             | `string`    |
-| `object`             | `object`    |
-| `boolean`            | `boolean`   |
-| `bigint`             | `int`       |
-| `number`             | `number`    |
-| `string[]`           | `string[]`  |
-| `("foo" \| "bar")[]` | `enum[]`    |
-| ...                  | ...         |
+| Deno                 | JSON Schema                   |
+| -------------------- | ----------------------------- |
+| `string`             | `string`                      |
+| `"a" \| "b"`         | `string` with enums: "a", "b" |
+| `object`             | `object`                      |
+| `boolean`            | `boolean`                     |
+| `bigint`             | `int`                         |
+| `number`             | `number`                      |
+| `string[]`           | `string[]`                    |
+| `("foo" \| "bar")[]` | `enum[]`                      |
+| ...                  | ...                           |
 
 However in Deno there also some special types that are specific to Windmill.
 They are as follows:
