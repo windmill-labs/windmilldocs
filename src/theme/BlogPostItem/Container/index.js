@@ -106,7 +106,6 @@ export default function BlogPostItemContainer({ children, className }) {
 						)}
 					</div>
 				</div>
-				{isFeaturePage ? "I'm a feature page" : "I'm a changelog page"}
 
 				<img
 					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
