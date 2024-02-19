@@ -3,14 +3,16 @@ import BarChart from '@site/src/components/BarChart';
 
 # Data Pipelines
 
-An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of jobs, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
+## Data Pipelines
 
-Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines:
+In essence, an ETL (Extract, Transform, Load) process is a Directed Acyclic Graph (DAG) of jobs where each job reads data, performs computations, and outputs new or updated datasets.
 
-- The DX in Windmill allows you to quickly [assemble flows](../../flows/1_flow_editor.mdx) that can process data step by step in a visual and easy-to-manage way ;
-- You can control [parallelism](../../flows/13_flow_branches.md#branch-all) between individual steps, and set [concurrency limits](../../flows/6_concurrency_limit.mdx) in case external resources need are fragile or rate limited ;
-- [Windmill flows can be restarted from any step](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch), making the iteration process of building a pipeline (or debugging one) smooth and efficient ;
-- Monitoring is made easy with [error and recovery handlers](../10_error_handling/index.mdx).
+Windmill streamlines the creation of data pipelines that are not only fast and reliable but also straightforward to construct:
+
+- **Developer Experience**: Windmill's design facilitates the swift assembly of data flows, allowing for step-by-step data processing in a visually intuitive and manageable manner.
+- **Control and Efficiency**: It offers the ability to manage parallelism across steps and set concurrency limits to accommodate external resources that may be sensitive to overload or have rate limits.
+- **Flexibility in Execution**: Flows in Windmill can be restarted from any point, enhancing the process of pipeline development and debugging by making it more flexible and efficient.
+- **Simplified Monitoring**: Built-in error and recovery handling mechanisms simplify monitoring, ensuring that managing your data pipelines is both effective and straightforward.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
