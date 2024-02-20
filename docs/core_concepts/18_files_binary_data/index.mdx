@@ -5,14 +5,14 @@ import TabItem from '@theme/TabItem';
 # Handling Files and Binary Data
 
 In Windmill, JSON is the primary data format used for representing information.
-Binary data, such as files, are not easily to handle. Windmill provides two options.
+Binary data, such as files, are not easy to handle. Windmill provides two options.
 
 1. Have a dedicated storage for binary data: S3 or Azure Blob. Windmill has a first class integration with S3 buckets or Azure Blob containers.
 2. If the above is not an option, there's always the possibility to store the binary as base64 encoded string.
 
-### Windmill integration with S3 or Azure Blob Storage
+## Windmill integration with S3 or Azure Blob Storage
 
-The recommended way to store binary data is to upload it to S3 leveraging Windmill's native integrations.
+The recommended way to store binary data is to upload it to S3 leveraging [Windmill's native S3 integrations](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage).
 
 :::info
 
@@ -32,7 +32,16 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 
 Windmill provides helpers in its SDKs to consume and produce S3 file seamlessly.
 
-#### Read a file from S3 within a script
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Persistent Storage - S3 Integration"
+		description="Connect your Windmill workspace to your S3 bucket or you Azure Blob storage."
+		href="/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage"
+	/>
+</div>
+
+
+### Read a file from S3 within a script
 
 <Tabs className="unique-tabs">
 
@@ -103,7 +112,7 @@ def main(input_file: S3Object):
 
 ![Read S3 file](./s3_file_input.png)
 
-#### Create a file in S3 within a script
+### Create a file in S3 within a script
 
 <Tabs className="unique-tabs">
 
@@ -173,7 +182,7 @@ def main(s3_file_path: str):
 Certain file types, typically parquet files, can be directly rendered by Windmill
 :::
 
-#### Windmill embedded integration with Polars and DuckDB for data pipelines
+### Windmill embedded integration with Polars and DuckDB for data pipelines
 
 ETL can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
 
@@ -299,7 +308,7 @@ For more info, see our page dedicated to Data Pipelines in Windmill:
 	/>
 </div>
 
-### Base64 encoded strings
+## Base64 encoded strings
 
 Base64 strings can also be used, but the main difficulty is that those Base64 strings can not be distinguished from normal strings.
 Hence, the interpretation ofthose Base64 encoded strings is either done depending on the context,
