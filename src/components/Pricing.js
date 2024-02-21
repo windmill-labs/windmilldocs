@@ -116,6 +116,7 @@ const pricing = {
 						{ text: 'SAML support including groups synchronization' }
 					]
 				},
+				{ text: 'Unlimited SSO users' },
 				{
 					text: <span>Commercial licence</span>
 				},
@@ -126,8 +127,7 @@ const pricing = {
 				},
 				{
 					text: <span>Design partners for roadmap</span>
-				},
-				{ text: 'Unlimited SSO users' }
+				}
 			]
 		}
 	],
@@ -269,8 +269,8 @@ const pricing = {
 			description:
 				'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
 			features: [
-				{ text: 'Embed the entire Windmill app.' },
-				{ text: 'Embed specific components (flow builder, app builder).' }
+				{ text: 'Embed the entire Windmill app' },
+				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -425,6 +425,17 @@ const sections = [
 					Team: false
 				},
 				link: '/docs/misc/saml_and_scim'
+			},
+			{
+				name: 'Workspace Secret Encryption',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: false
+				},
+				link: '/docs/core_concepts/workspace_secret_encryption'
 			},
 			{
 				name: 'Support level',
@@ -757,6 +768,17 @@ const sections = [
 					Team: true
 				},
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
+			},
+			{
+				name: 'Workspace Default App',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/apps/default_app'
 			}
 		]
 	}

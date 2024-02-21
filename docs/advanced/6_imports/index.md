@@ -86,7 +86,7 @@ of having to maintain a separate requirements file.
 We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
 You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48)
 
-## Pinning dependencies
+## Pinning dependencies and Requirements
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the inferred imports. One needs to head the Script with the following comment:

@@ -20,7 +20,15 @@ There are 4 configuration options:
 
  ### Iterator expression
  
- The [JS expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators) that will be evaluated to get the list of items to iterate over. You can also [connect with a previous result](./16_architecture.mdx) that contain several items, it will iterate over all of them.
+ The [JavaScript expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators) that will be evaluated to get the list of items to iterate over. You can also [connect with a previous result](./16_architecture.mdx) that contain several items, it will iterate over all of them.
+
+ It can be pre-filled automatically by [Windmill AI](../core_concepts/22_ai_generation/index.mdx) from flow context:
+
+ <video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/iterator_prefill.mp4"
+/>
 
 ### Skip failure
 
