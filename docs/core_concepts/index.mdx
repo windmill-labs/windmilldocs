@@ -160,83 +160,6 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 	/>
 </div>
 
-## Enterprise & Cloud Features
-
-All details & features on [Pricing page](/pricing).
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Support & SLA"
-		description="Our SLAs are designed to provide timely assistance and address any issues."
-		href="/docs/misc/support_and_sla"
-	/>
-	<DocCard
-		title="Audit Logs"
-		description="Windmill provides audit logs for every operation and action that has side-effects."
-		href="/docs/core_concepts/audit_logs"
-	/>
-	<DocCard
-		title="Deploy to Staging/Prod Web UI"
-		description="Deploy items to another staging/prod workspace."
-		href="/docs/core_concepts/staging_prod"
-	/>
-	<DocCard
-		title="Git Sync"
-		description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
-		href="/docs/advanced/git_sync"
-	/>
-	<DocCard
-		title="Worker Groups Management UI"
-		description="Manage Worker Groups through Windmill UI."
-		href="/docs/misc/worker_group_management_ui"
-	/>
-	<DocCard
-		title="Concurrency Limits"
-		description="The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows."
-		href="/docs/core_concepts/concurrency_limits"
-	/>
-	<DocCard
-		title="S3 Distributed Dependency Cache"
-		description="Leverage a global S3 cache to speed up Python dependency handling by storing and reusing pre-installed package."
-		href="/docs/misc/s3_cache"
-	/>
-	<DocCard
-		title="OpenID Connect (OIDC)"
-		description="Use Windmill's OIDC provider to authenticate from scripts to cloud providers and other APIs."
-		href="/docs/core_concepts/oidc"
-	/>
-	<DocCard
-		title="SAML & SCIM"
-		description="Configure Okta for both SAML and SCIM."
-		href="/docs/misc/saml_and_scim"
-	/>
-	<DocCard
-		title="Dedicated Workers / High Throughput"
-		description="Dedicated Workers are workers that are dedicated to a particular script."
-		href="/docs/core_concepts/dedicated_workers"
-	/>
-	<DocCard
-		title="Agent Workers"
-		description="Agent Workers are a 4th mode of execution of the Windmill binary, but instead of using MODE=worker, we use here MODE=agent."
-		href="/docs/core_concepts/agent_workers"
-	/>
-	<DocCard
-		title="Content Search"
-		description="Search any scripts, flows, resources, apps for a specific string similar to GitHub search."
-		href="/docs/core_concepts/content_search"
-	/>
-	<DocCard
-		title="CSS Editor"
-		description="The Global CSS Editor is designed to give styling and theming across your entire app."
-		href="/docs/apps/css_editor"
-	/>
-	<DocCard
-		title="Multiplayer"
-		description="Collaborate on scripts simultaneously."
-		href="/docs/core_concepts/multiplayer"
-	/>
-</div>
-
 ## Code Editor-Specific Features
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -467,5 +390,92 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		title="Import Custom React Components"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
 		href="/docs/apps/react_components"
+	/>
+</div>
+
+## Enterprise & Cloud Features
+
+All details & features on [Pricing page](/pricing).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Support & SLA"
+		description="Our SLAs are designed to provide timely assistance and address any issues."
+		href="/docs/misc/support_and_sla"
+	/>
+	<DocCard
+		title="Audit Logs"
+		description="Windmill provides audit logs for every operation and action that has side-effects."
+		href="/docs/core_concepts/audit_logs"
+	/>
+	<DocCard
+		title="Deploy to Staging/Prod Web UI"
+		description="Deploy items to another staging/prod workspace."
+		href="/docs/core_concepts/staging_prod"
+	/>
+	<DocCard
+		title="Git Sync"
+		description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
+		href="/docs/advanced/git_sync"
+	/>
+	<DocCard
+		title="Worker Groups Management UI"
+		description="Manage Worker Groups through Windmill UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+	<DocCard
+		title="Concurrency Limits"
+		description="The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows."
+		href="/docs/core_concepts/concurrency_limits"
+	/>
+	<DocCard
+		title="S3 Distributed Dependency Cache"
+		description="Leverage a global S3 cache to speed up Python dependency handling by storing and reusing pre-installed package."
+		href="/docs/misc/s3_cache"
+	/>
+	<DocCard
+		title="OpenID Connect (OIDC)"
+		description="Use Windmill's OIDC provider to authenticate from scripts to cloud providers and other APIs."
+		href="/docs/core_concepts/oidc"
+	/>
+	<DocCard
+		title="SAML & SCIM"
+		description="Configure Okta for both SAML and SCIM."
+		href="/docs/misc/saml_and_scim"
+	/>
+	<DocCard
+		title="Dedicated Workers / High Throughput"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+	<DocCard
+		title="Agent Workers"
+		description="Agent Workers are a 4th mode of execution of the Windmill binary, but instead of using MODE=worker, we use here MODE=agent."
+		href="/docs/core_concepts/agent_workers"
+	/>
+	<DocCard
+		title="Content Search"
+		description="Search any scripts, flows, resources, apps for a specific string similar to GitHub search."
+		href="/docs/core_concepts/content_search"
+	/>
+	<DocCard
+		title="CSS Editor"
+		description="The Global CSS Editor is designed to give styling and theming across your entire app."
+		href="/docs/apps/css_editor"
+	/>
+	<DocCard
+		title="Multiplayer"
+		description="Collaborate on scripts simultaneously."
+		href="/docs/core_concepts/multiplayer"
+	/>
+	<DocCard
+		title="Workspace Default App"
+		description="If configured, users who are operators in this workspace will be redirected to this app automatically when logging into this workspace."
+		href="/docs/apps/default_app"
+	/>
+	<DocCard
+		title="Workspace Secret Encryption"
+		description="When updating the encryption key of a workspace, all secrets will be re-encrypted with the new key and the previous key will be replaced by the new one."
+		href="/docs/core_concepts/workspace_secret_encryption"
 	/>
 </div>
