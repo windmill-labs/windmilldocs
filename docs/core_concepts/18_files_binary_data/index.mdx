@@ -12,7 +12,7 @@ Binary data, such as files, are not easy to handle. Windmill provides two option
 
 ## Windmill integration with S3 or Azure Blob Storage
 
-The recommended way to store binary data is to upload it to S3 leveraging [Windmill's native S3 integrations](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage).
+The recommended way to store binary data is to upload it to S3 leveraging [Windmill's native S3 integrations](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
 
 :::info
 
@@ -20,7 +20,7 @@ Windmill's integration with S3 and Azure Blob Storage works exactly the same and
 
 :::
 
-By [setting a S3 resource for the workspace](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
+By [setting a S3 resource for the workspace](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
 
 S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
 
@@ -45,8 +45,8 @@ Windmill provides helpers in its SDKs to consume and produce S3 file seamlessly.
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Persistent Storage - S3 Integration"
-		description="Connect your Windmill workspace to your S3 bucket or you Azure Blob storage."
-		href="/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage."
+		href="/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage"
 	/>
 </div>
 
@@ -303,7 +303,7 @@ def main(input_file: S3Object):
 
 :::info
 
-Polars and DuckDB needs to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage).
+Polars and DuckDB needs to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
 
 :::
 
