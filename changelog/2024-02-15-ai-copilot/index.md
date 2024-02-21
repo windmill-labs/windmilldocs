@@ -3,7 +3,8 @@ slug: ai-copilot
 version: v1.270.0
 title: Flow & Metadata Copilot
 tags: ['Windmill AI', 'Flow Editor', 'Scripts']
-image: ./ai_predicate.png
+# image: ./ai_predicate.png
+video: /videos/ai_fill_inputs.mp4
 description: The Flow & Metadata Copilot is an assistant powered by an OpenAI resource that simplifies your script & flow building by pre-filling fields (Summary, inputs, js expressions) based on a context automatically detected or from a prompt.
 features:
   [
