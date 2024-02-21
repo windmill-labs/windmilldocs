@@ -14,6 +14,7 @@ export default function BlogPostItemContainer({ children, className }) {
 	const { withBaseUrl } = useBaseUrlUtils();
 	const location = useLocation();
 	const image = assets.image ?? frontMatter.image;
+	const video = assets.video ?? frontMatter.video;
 
 	const isChangelog = location.pathname.includes('/changelog');
 
@@ -55,7 +56,7 @@ export default function BlogPostItemContainer({ children, className }) {
 								'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium ' +
 								(tag.label === 'App Editor'
 									? 'bg-orange-100 text-orange-800'
-									: tag.label === 'Flow'
+									: tag.label === 'Flow Editor'
 									? 'bg-emerald-100 text-emerald-800'
 									: tag.label === 'Enterprise & Cloud'
 									? 'bg-gray-50 text-blue-900'
@@ -92,26 +93,39 @@ export default function BlogPostItemContainer({ children, className }) {
 							{new Date(metadata.date).toLocaleDateString()} |{' '}
 						</p>
 						{frontMatter.docs && (
-							<button
-								className="hover:bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:hover:bg-slate-800 px-2.5 py-1 rounded-xl text-xs text-gray-600 dark:text-gray-200"
-								onClick={() => (window.location.href = frontMatter.docs)}
+							<a
+								href={frontMatter.docs}
+								className="hover:bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 dark:hover:bg-slate-800 px-2.5 py-1 rounded-xl text-xs text-gray-600 dark:text-gray-200 inline-flex items-center"
 							>
 								<FileText
-									className="inline mr-2"
+									className="mr-2"
 									aria-hidden="true"
 									style={{ width: '14px', height: '14px' }}
 								/>
 								<span className="align-middle">Docs</span>
-							</button>
+							</a>
 						)}
 					</div>
 				</div>
 
-				<img
-					className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
-					src={image}
-					alt=""
-				/>
+				{image ? (
+					<img
+						className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
+						src={image}
+						alt=""
+					/>
+				) : video ? (
+					<video
+						src={video}
+						className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
+						autoPlay
+						muted
+						loop
+						disableRemotePlayback
+					/>
+				) : (
+					''
+				)}
 				<p className="text-base dark:text-gray-200 text-gray-600">{metadata.description}</p>
 
 				{frontMatter?.improvements?.length > 0 && (

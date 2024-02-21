@@ -497,11 +497,6 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'integrations/s3',
-							label: 'S3 APIs'
-						},
-						{
-							type: 'doc',
 							id: 'integrations/bigquery',
 							label: 'BigQuery'
 						},
@@ -699,6 +694,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/surrealdb',
 							label: 'SurrealDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/s3',
+							label: 'S3 APIs'
 						},
 						{
 							type: 'doc',

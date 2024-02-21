@@ -67,6 +67,16 @@ Clicking on one of those buttons, a drawer will open displaying the content of t
 From there you always have the possibility to use the S3 client library of your choice to read and write to S3.
 That being said, Polars and DuckDB can read/write directly from/to files stored in S3 Windmill now ships with helpers to make the entire data processing mechanics very cohesive.
 
+More details on S3 integration:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Persistent Storage - S3 Integration"
+		description="Connect your Windmill workspace to your S3 bucket or you Azure Blob storage."
+		href="/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-you-azure-blob-storage"
+	/>
+</div>
+
 ### Canonical data pipeline in Windmill w/ Polars and DuckDB
 
 With S3 as the external store, a transformation script in a flow will typically perform:

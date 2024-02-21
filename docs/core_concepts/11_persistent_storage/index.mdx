@@ -254,16 +254,18 @@ Then from Windmill, just [fill the S3 resource type](../../integrations/s3.md).
 
 ### Connect your Windmill workspace to your S3 bucket or you Azure Blob storage
 
-Once you've created an S3 or Azure Blob resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+Once you've created an [S3 or Azure Blob resource](../../integrations/s3.md) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
 ![S3 storage workspace settings](./workspace_settings.png)
 
-The resource can be set to be public. In this case, the permissions set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
+The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
+
+In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
 When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
 
 Once the workspace is configured, access to the bucket is made easy in Windmill.
 
-When a script accepts a S3 file as input, it can be directly uploaded or chosen from from the bucket explorer.
+When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
 
 ![S3 file upload](./file_upload.png)
 
@@ -273,7 +275,7 @@ When a script outputs a S3 file, it can be downloaded or previewed directly in W
 
 ![S3 file download](./file_download.png)
 
-For more info on how to use S3 files in Windmill, see [Handling files and binary data](/docs/core_concepts/files_binary_data)
+For more info on how to use files and S3 files in Windmill, see [Handling files and binary data](/docs/core_concepts/files_binary_data)
 
 ## Structured Databases: Postgres (Supabase, Neon.tech)
 
