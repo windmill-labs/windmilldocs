@@ -78,7 +78,7 @@ export default function Home() {
 		<LayoutProvider>
 			<main>
 				<Head>
-					<title>Windmill | Open source platform to build internal tools with scripts</title>
+					<title>Windmill | Open-source developer platform and workflow engine</title>
 					<meta name="title" content="Internal tools with scripts." />
 					<meta
 						name="description"
@@ -86,7 +86,7 @@ export default function Home() {
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
-				<BrowserOnly fallback={<div>Loading...</div>}>{() => <HomepageHeader />}</BrowserOnly>
+				<HomepageHeader />
 			</main>
 		</LayoutProvider>
 	);
