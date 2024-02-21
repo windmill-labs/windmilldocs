@@ -121,6 +121,7 @@ export default function BlogPostItemContainer({ children, className }) {
 						autoPlay
 						muted
 						loop
+						disableRemotePlayback
 					/>
 				) : (
 					''
