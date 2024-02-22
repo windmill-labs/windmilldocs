@@ -416,6 +416,17 @@ const sections = [
 				link: '/docs/core_concepts/authentification'
 			},
 			{
+				name: 'Workspace Secret Custom Encryption',
+				tiers: {
+					'Free and Open-source': true,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: false
+				},
+				link: '/docs/core_concepts/workspace_secret_encryption'
+			},
+			{
 				name: 'SAML & SCIM support including groups synchronization',
 				tiers: {
 					'Free and Open-source': false,
@@ -425,17 +436,6 @@ const sections = [
 					Team: false
 				},
 				link: '/docs/misc/saml_and_scim'
-			},
-			{
-				name: 'Workspace Secret Encryption',
-				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: false
-				},
-				link: '/docs/core_concepts/workspace_secret_encryption'
 			},
 			{
 				name: 'Support level',
@@ -893,32 +893,31 @@ export default function Pricing() {
 								<h3
 									id={tier.id}
 									className={classNames(
-										tier.mostPopular
-											? 'text-blue-600'
-											: tier.enterprise_edition
-											? 'text-teal-600'
-											: '',
+										tier.mostPopular ? 'text-blue-600' 
+										: tier.enterprise_edition ? 'text-teal-600' 
+										: '', 
 										'text-2xl font-semibold leading-8'
 									)}
 								>
 									{tier.name}
 								</h3>
-								{period.value === 'annually' && Object.keys(tier.price).length > 0 ? (
+								{period.value === 'annually' && Object.keys(tier.price).length > 0 && tier.id !== 'tier-team' ? (
 									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
 										16% Discount
 									</p>
 								) : null}
 							</div>
-
 							{tier.minPrice !== undefined ? (
 								<p className="mt-6 flex items-baseline gap-x-1">
 									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-										$
-										{period.value === 'annually'
-											? (tier.minPrice * 10).toLocaleString('en-US')
-											: tier.minPrice.toLocaleString('en-US')}
-									</span>
+											$
+											{period.value === 'annually'
+												? tier.id === 'tier-team'
+													? (tier.minPrice * 12).toLocaleString('en-US')
+													: (tier.minPrice * 10).toLocaleString('en-US')
+												: tier.minPrice.toLocaleString('en-US')}
+										</span>
 									<span className="text-sm font-semibold leading-6 text-gray-600">
 										{period.value === 'annually' ? '/yr' : '/mo'}
 									</span>

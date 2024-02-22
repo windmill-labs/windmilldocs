@@ -1,54 +1,80 @@
-import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Handling Files and Binary Data
+# S3 APIs integrations
 
-In Windmill, JSON is the primary data format used for representing information.
-Binary data, such as files, are not easy to handle. Windmill provides two options.
+Windmill provides a unique [resource type](https://hub.windmill.dev/resource_types/42/) for any API following the typical S3 schema.
 
-1. Have a dedicated storage for binary data: S3 or Azure Blob. Windmill has a first class integration with S3 buckets or Azure Blob containers.
-2. If the above is not an option, there's always the possibility to store the binary as base64 encoded string.
+:::info Windmill for data pipelines
 
-## Windmill integration with S3 or Azure Blob Storage
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
 
-The recommended way to store binary data is to upload it to S3 leveraging [Windmill's native S3 integrations](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
+<br/>
 
-:::info
-
-Windmill's integration with S3 and Azure Blob Storage works exactly the same and the features described below works in both cases. The only difference is that you need to select an `azure_blob` resource when setting up the S3 storage in the Workspace settings.
+See [Windmill for data pipelines](../core_concepts/27_data_pipelines/index.mdx) for more details.
 
 :::
 
-By [setting a S3 resource for the workspace](../11_persistent_storage/index.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
+## Add an S3 Resource
 
-S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
+Here are the required details:
 
-```json
-{
-	"s3": "/s3/object/file/key"
-}
-```
+![S3 resource type](../assets/integrations/add-s3.png.webp)
+
+| Property  | Type    | Description               | Default | Required |
+| --------- | ------- | ------------------------- | ------- | -------- |
+| bucket    | string  | S3 bucket name            |         | true     |
+| region    | string  | S3 region for the bucket  |         | true     |
+| useSSL    | boolean | Use SSL for connections   | true    | false    |
+| endPoint  | string  | S3 endpoint               |         | true     |
+| accessKey | string  | AWS access key            |         | false    |
+| pathStyle | boolean | Use path-style addressing | false   | false    |
+| secretKey | string  | AWS secret key            |         | false    |
+
+<br/>
+
+For guidelines on where to find such details on a given platform, please go to the [AWS S3](./aws-s3.md) or [Cloudflare R2](./cloudflare-r2.md) pages.
+
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
+
+:::tip
+
+Find some pre-set interactions with S3 on the [Hub](https://hub.windmill.dev/integrations/s3).
+
+Feel free to create your own S3 scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+
+:::
+
+## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
+
+Once you've created an S3 or Azure Blob resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+
+![S3 storage workspace settings](../core_concepts/11_persistent_storage/workspace_settings.png)
+
+The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
+
+In this case, the [permissions](../core_concepts/16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
+When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
+
+Once the workspace is configured, access to the bucket is made easy in Windmill.
 
 When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
 
-![S3 file upload](../11_persistent_storage/file_upload.png)
+![S3 file upload](../core_concepts/11_persistent_storage/file_upload.png)
 
-![S3 bucket browsing](../11_persistent_storage/bucket_browsing.png)
+![S3 bucket browsing](../core_concepts/11_persistent_storage/bucket_browsing.png)
 
 When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
 
-![S3 file download](../11_persistent_storage/file_download.png)
-
-Windmill provides helpers in its SDKs to consume and produce S3 file seamlessly.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Persistent Storage - S3 Integration"
-		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage."
-		href="/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage"
-	/>
-</div>
+![S3 file download](../core_concepts/11_persistent_storage/file_download.png)
 
 ### Read a file from S3 within a script
 
@@ -119,7 +145,7 @@ def main(input_file: S3Object):
 </TabItem>
 </Tabs>
 
-![Read S3 file](./s3_file_input.png)
+![Read S3 file](../core_concepts/18_files_binary_data/s3_file_input.png)
 
 ### Create a file in S3 within a script
 
@@ -185,7 +211,7 @@ def main(s3_file_path: str):
 </TabItem>
 </Tabs>
 
-![Write to S3 file](./s3_file_output.png)
+![Write to S3 file](../core_concepts/18_files_binary_data/s3_file_output.png)
 
 :::info
 Certain file types, typically parquet files, can be directly rendered by Windmill
@@ -307,59 +333,4 @@ Polars and DuckDB need to be configured to access S3 within the Windmill script.
 
 :::
 
-For more info, see our page dedicated to Data Pipelines in Windmill:
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Data Pipelines"
-		description="We have integrated with Polars and DuckDB for in-memory data processing and S3 for external storage."
-		href="/docs/core_concepts/data_pipelines"
-	/>
-</div>
-
-## Base64 encoded strings
-
-Base64 strings can also be used, but the main difficulty is that those Base64 strings can not be distinguished from normal strings.
-Hence, the interpretation ofthose Base64 encoded strings is either done depending on the context,
-or by pre-fixing those strings with the [`<data specifier:>`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types).
-
-In explicit contexts, when the JSON schema specifies that a property represents Base64-encoded data:
-
-```
-foo:
-    type: string
-    format: base64
-```
-
-If necessary, Windmill automatically converts it to the corresponding binary type in the corresponding
-language as defined in the schema.
-In python, it will be converted to the `bytes` type. In Typescript, they are simply represented as strings.
-
-In ambiguous situations (file ino) where the context does not provide clear indications,
-it is necessary to precede the binary data with the `data:base64` [encoding declaration](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs).
-
-In the app editor, in some cases when there is no ambiguity, the data prefix is optional.
-
-Base64 encoded strings are used in:
-
-- File Input component in the app editor: files uploaded are converted and returned as a Base64 encoded string.
-- Download Button: the source to be downloaded must be in Base64 format.
-- File inputs to run scripts must be typed into the [JSON](../13_json_schema_and_parsing/index.md) `string, encodingFormat: base64` (python: `bytes`, Deno: `wmill.Base64`).
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="File Input Component"
-		description="The file input allows users to drop files into the app."
-		href="/docs/apps/app_configuration_settings/app_component_library#file-input"
-	/>
-	<DocCard
-		title="Download Button"
-		description="The download button component allows you to download a file."
-		href="/docs/apps/app_configuration_settings/app_component_library#download-button"
-	/>
-	<DocCard
-		title="JSON Schema and Parsing"
-		description="JSON Schema is a key component in Windmill for defining and validating the structure and constraints of JSON data."
-		href="/docs/core_concepts/json_schema_and_parsing"
-	/>
-</div>
+For more info on how Data Pipelines in Windmill, see [Data Pipelines](../core_concepts/27_data_pipelines/index.mdx).

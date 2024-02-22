@@ -93,14 +93,19 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/worker_groups"
 	/>
 	<DocCard
+		title="Caching"
+		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
+		href="/docs/core_concepts/caching"
+	/>
+	<DocCard
 		title="Jobs"
 		description="A job represents a past, present or future `task` or `work` to be executed by a worker."
 		href="/docs/core_concepts/jobs"
 	/>
-	<DocCard
-		title="Caching"
-		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
-		href="/docs/core_concepts/caching"
+		<DocCard
+		title="Workspace Secret Encryption"
+		description="When updating the encryption key of a workspace, all secrets will be re-encrypted with the new key and the previous key will be replaced by the new one."
+		href="/docs/core_concepts/workspace_secret_encryption"
 	/>
 	<DocCard
 		title="Draft and Deploy"
@@ -472,10 +477,5 @@ All details & features on [Pricing page](/pricing).
 		title="Workspace Default App"
 		description="If configured, users who are operators in this workspace will be redirected to this app automatically when logging into this workspace."
 		href="/docs/apps/default_app"
-	/>
-	<DocCard
-		title="Workspace Secret Encryption"
-		description="When updating the encryption key of a workspace, all secrets will be re-encrypted with the new key and the previous key will be replaced by the new one."
-		href="/docs/core_concepts/workspace_secret_encryption"
 	/>
 </div>
