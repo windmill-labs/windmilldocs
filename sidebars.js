@@ -183,6 +183,7 @@ const sidebars = {
 				'core_concepts/resources_and_types/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
+				'core_concepts/workspace_secret_encryption/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
@@ -739,7 +740,6 @@ const sidebars = {
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
 				'apps/default_app/index',
-				'core_concepts/workspace_secret_encryption/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index'
 			]
