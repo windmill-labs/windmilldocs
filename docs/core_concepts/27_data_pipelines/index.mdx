@@ -88,7 +88,7 @@ export async function main(input_file: S3Object) {
 	console.log(file_content_str);
 
 	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(inputFile);
+	let fileContentBlob = await wmill.loadS3FileStream(input_file);
 	console.log(await fileContentBlob.text());
 }
 ```
@@ -110,7 +110,7 @@ export async function main(input_file: S3Object) {
 	console.log(file_content_str);
 
 	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(inputFile);
+	let fileContentBlob = await wmill.loadS3FileStream(input_file);
 	console.log(await fileContentBlob.text());
 }
 ```
