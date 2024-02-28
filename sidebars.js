@@ -341,8 +341,9 @@ const sidebars = {
 						},
 						'apps/app_configuration_settings/app_component_configuration',
 						'apps/app_configuration_settings/app_styling',
-						'apps/app_debugging',
 						'apps/app_deployment',
+						'apps/app_debugging',
+						'apps/troubleshoot_panel/index',
 						{
 							type: 'doc',
 							id: 'apps/download_files',
