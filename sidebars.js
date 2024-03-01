@@ -353,6 +353,7 @@ const sidebars = {
 						'apps/schedule_reports',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
+						'apps/default_app/index',
 						'apps/app_e-commerce'
 					],
 
@@ -740,7 +741,6 @@ const sidebars = {
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
-				'apps/default_app/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index'
 			]
