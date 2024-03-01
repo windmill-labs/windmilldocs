@@ -17,7 +17,7 @@ import {
 const integrations = [
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'MySQL', src: 'third_party_logos/mysql.svg', Icon: SiMysql },
-	{ name: 'MSSQL', src: 'third_party_logos/msssql.svg', Icon: SiMicrosoftsqlserver },
+	{ name: 'MS SQL', src: 'third_party_logos/msssql.svg', Icon: SiMicrosoftsqlserver },
 	{ name: 'BigQuery', src: 'third_party_logos/bigquery.svg' },
 	{ name: 'Snowflake', src: 'third_party_logos/snowflake.svg' },
 	{ name: 'GitHub', src: 'third_party_logos/github.svg', Icon: SiGithub },
@@ -85,7 +85,7 @@ export default function IntergrationList() {
 								item.name === 'PostgreSQL' ||
 								item.name === 'MySQL' ||
 								item.name === 'BigQuery' ||
-								item.name === 'MSSQL' ||
+								item.name === 'MS SQL' ||
 								item.name === 'Snowflake'
 									? '/docs/getting_started/scripts_quickstart/sql'
 									: `/docs/integrations/${item.name.toLowerCase().replace(/\s/g, '')}`

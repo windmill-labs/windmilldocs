@@ -1,11 +1,11 @@
 ---
-title: 'Quickstart PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake'
+title: 'Quickstart PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake'
 slug: '/getting_started/scripts_quickstart/sql'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake
+# PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake
 
 In this quick start guide, we will write our first script in SQL. We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
@@ -27,7 +27,7 @@ Windmill supports [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www
 Windmill provides integrations with many different apps and services with the use
 of [Resources](../../../core_concepts/3_resources_and_types/index.mdx). Resources are rich objects in JSON that allow to store configuration and credentials.
 
-Each Resource has a _Resource Type_ ([PostgreSQL](https://hub.windmill.dev/resource_types/114/postgresql), [MySQL](https://hub.windmill.dev/resource_types/111/mysql), [MSSQL](https://hub.windmill.dev/resource_types/132/ms_sql_server), [BigQuery](https://hub.windmill.dev/resource_types/108/bigquery), [Snowflake](https://hub.windmill.dev/resource_types/107/snowflake))
+Each Resource has a _Resource Type_ ([PostgreSQL](https://hub.windmill.dev/resource_types/114/postgresql), [MySQL](https://hub.windmill.dev/resource_types/111/mysql), [MS SQL](https://hub.windmill.dev/resource_types/132/ms_sql_server), [BigQuery](https://hub.windmill.dev/resource_types/108/bigquery), [Snowflake](https://hub.windmill.dev/resource_types/107/snowflake))
 that defines the schema that the resource of this type needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
 
@@ -114,7 +114,7 @@ Fill out the form with the information of your MySQL instance and "Test connecti
 | database | string | Database name   |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 | password | string | User's password |         | true     | Created in MySQL (e.g., via phpMyAdmin or MySQL Workbench) or provided by your hosting |
 
-### MSSQL
+### MS SQL
 
 To be able to connect to a [Microsoft SQL Server](https://www.microsoft.com/sql-server) instance, we'll need to define a Resource with the `ms_sql_server` Resource Type first.
 
@@ -129,11 +129,11 @@ Fill out the form with the information of your MySQL instance and "Test connecti
 
 | Property | Type   | Description     | Default | Required | Where to Find                                                                         |
 | -------- | ------ | --------------- | ------- | -------- | ------------------------------------------------------------------------------------- |
-| host     | string | Instance host   |         | true     | Your hosting provider's control panel or in your server's MSSQL configuration file    |
-| port     | number | Instance port   |         | false    | Your hosting provider's control panel or in your server's MSSQL configuration file    |
-| user     | string | Username        |         | true     | Created in MSSQL (e.g., via SQL Server Management Studio) or provided by your hosting |
-| dbname   | string | Database name   |         | true     | Created in MSSQL (e.g., via SQL Server Management Studio) or provided by your hosting |
-| password | string | User's password |         | true     | Created in MSSQL (e.g., via SQL Server Management Studio) or provided by your hosting |
+| host     | string | Instance host   |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file    |
+| port     | number | Instance port   |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file    |
+| user     | string | Username        |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
+| dbname   | string | Database name   |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
+| password | string | User's password |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
 
 ### BigQuery
 
@@ -262,7 +262,7 @@ You can directly "Test connection" if needed.
 ## Create Script
 
 Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
-click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, [PostgreSQL](#postgresql-1), [MySQL](#mysql-1), [MSSQL](#mssql-1), [BigQuery](#bigquery-1), [Snowflake](#snowflake-1).
+click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, [PostgreSQL](#postgresql-1), [MySQL](#mysql-1), [MS SQL](#ms-sql-1), [BigQuery](#bigquery-1), [Snowflake](#snowflake-1).
 
 ![Script creation first step](../../../assets/integrations/sql_new_script.png.webp)
 
@@ -279,6 +279,16 @@ INSERT INTO demo VALUES ($1::TEXT, $2::INT) RETURNING *
 ```
 
 "name1", "name2" being the names of the arguments, and "default arg" the optional default value.
+
+Database resource can be specified from the UI or directly within script with a line `-- database resource_path`.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/pin_database.mp4"
+/>
+
+<br/>
 
 You can then write your prepared statement.
 
@@ -300,11 +310,20 @@ INSERT INTO demo VALUES (?, ?)
 
 "name1", "name2" being the names of the arguments, and "default arg" the optional default value.
 
+Database resource can be specified from the UI or directly within script with a line `-- database resource_path`.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/pin_database.mp4"
+/>
+
+<br/>
 You can then write your prepared statement.
 
 ![Mysql statement](./mysql_statement.png.webp)
 
-### MSSQL
+### MS SQL
 
 Arguments need to be passed in the given format:
 
@@ -316,6 +335,15 @@ INSERT INTO demo VALUES (@p1, @p2)
 
 "name1", "name2" being the names of the arguments, and "default arg" the optional default value.
 
+Database resource can be specified from the UI or directly within script with a line `-- database resource_path`.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/pin_database.mp4"
+/>
+
+<br/>
 You can then write your prepared statement.
 
 ![Mysql statement](./mssql_statement.png.webp)
@@ -333,6 +361,15 @@ INSERT INTO `demodb.demo` VALUES (@name1, @name2, @name3)
 
 "name1", "name2", "name3" being the names of the arguments, "default arg" the optional default value and `string`, `integer` and `string[]` the types.
 
+Database resource can be specified from the UI or directly within script with a line `-- database resource_path`.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/pin_database.mp4"
+/>
+
+<br/>
 You can then write your prepared statement.
 
 <video
@@ -353,6 +390,15 @@ INSERT INTO demo VALUES (?, ?)
 
 "name1", "name2" being the names of the arguments, "default arg" the optional default value and `varchar` & `int` the types.
 
+Database resource can be specified from the UI or directly within script with a line `-- database resource_path`.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/pin_database.mp4"
+/>
+
+<br/>
 You can then write your prepared statement.
 
 ![Snowflake statement](./snowflake_statement.png.webp)

@@ -621,7 +621,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/mssql',
-							label: 'MSSQL'
+							label: 'MS SQL'
 						},
 						{
 							type: 'doc',
