@@ -687,7 +687,24 @@ For more advanced setups, see [Helm Chart](#helm-chart).
 
 ## Self-signed certificates
 
-See this [guide](https://www.lfanew.com/posts/windmill-ca-trust/) for using Windmill with self-signed certificates
+Detailed [guide](https://www.lfanew.com/posts/windmill-ca-trust/) for using Windmill with self-signed certificates
+
+TL;DR: below
+
+### Mount CA Certificates in Windmill:
+
+1. Ensure CA certificate is base64 encoded and has .crt extension.
+2. Create a directory for CA certificates.
+3. Modify docker-compose.yml to mount this directory to /usr/local/share/ca-certificates in read-only mode.
+4. Use INIT_SCRIPT in the worker config to run update-ca-certificates in worker containers.
+
+### Establish Deno’s Trust:
+
+Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml for Windmill workers.
+
+### Configure Python (requests & httpx) Trust:
+
+Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with the same value in the worker’s environment variables.
 
 <!-- Resources -->
 

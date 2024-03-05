@@ -53,11 +53,11 @@ Create a Git repository (in the example, on GitHub).
 Run the following commands from the git repo folder to push the initial workspace content to the remote:
 
 ```bash
-> git init
-> git remote add origin https://github.com/username/reponame.git
-> git add .
-> git commit -m 'Initial commit'
-> git push -u origin main
+git init
+git remote add origin https://github.com/username/reponame.git
+git add .
+git commit -m 'Initial commit'
+git push -u origin main
 ```
 
 You now have your Windmill workspace on a GitHub repository. See the following section for an automated sync.
@@ -70,7 +70,11 @@ Add this resource to the workspace settings, in "Git Sync" tab and `Save Git syn
 
 ![Git Sync Setup](./git_sync_setup.png 'Git Sync Setup')
 
-And that's it! Now, all scripts, flows and apps located in the workspace and `f/` [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be pushed to the Git repository.
+And that's it! Now, all scripts, flows apps, resources, variables, schedules and resource types located in the workspace and `f/` [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be pushed to the Git repository.
+
+You can filter on type if you don't want some items (e.g. variables) to be pushed to the Git repository.
+
+Additionally, you can filter on path, meaning only scripts, flows and apps with their path matching one of those filters will be synced to the Git repositories below. The filters allow '*'' and '**' characters, with '*'' matching any character allowed in paths until the next slash (/) and '**' matching anything including slashes. By default everything in folders will be synced.
 
 ## Git Sync - Item mode: Deploy to Prod using a Git Workflow
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import Hero from '../landing/Hero';
-import FlowSection from '../landing/FlowSection';
-import AppSection from '../landing/AppSection';
 import Footer from '../landing/Footer';
 import IntergrationList from '../landing/IntergrationList';
 import LandingSection from '../landing/LandingSection';
@@ -12,8 +10,6 @@ import HeroExample from '../landing/HeroExample';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
-import BrowserOnly from '@docusaurus/BrowserOnly';
-import GlobalContextProvider from '../components/GlobalContextProvider';
 import TestimonialsSection from '../landing/TestimonialsSection';
 import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
@@ -45,7 +41,7 @@ export default function Home() {
 		<LayoutProvider>
 			<main>
 				<Head>
-					<title>Windmill | Open source platform to build internal tools with scripts</title>
+					<title>Windmill | Open-source developer platform and workflow engine</title>
 					<meta name="title" content="Internal tools with scripts." />
 					<meta
 						name="description"
@@ -53,14 +49,7 @@ export default function Home() {
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
-
-				<BrowserOnly fallback={<div>Loading...</div>}>
-					{() => (
-						<GlobalContextProvider>
-							<HomepageHeader />
-						</GlobalContextProvider>
-					)}
-				</BrowserOnly>
+				<HomepageHeader />
 			</main>
 		</LayoutProvider>
 	);

@@ -4,7 +4,7 @@ import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Code, Workflow, HeartPulseIcon, FileEditIcon, Wand2, ZapIcon } from 'lucide-react';
+import { Code, Workflow, HeartPulseIcon, FileEditIcon, Wand2, ZapIcon, Plug, Braces } from 'lucide-react';
 import HeroAI from '../landing/HeroAI';
 
 import Section from './../landing/Section';
@@ -123,6 +123,47 @@ const flowTabs = [
 				video: {
 					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg?vq=hd1080',
 					altText: 'Trigger Flows'
+				}
+			},
+			{
+				title: 'Step Input Copilot',
+				description:
+					'When adding a new step to a flow, the AI assistant will suggest inputs based on the previous steps` results and flow inputs.',
+				icon: Plug,
+				caption: (
+					<div>
+						When adding a new step to a flow, the AI assistant will suggest inputs{' '}
+						<a href="/docs/flows/architecture#connecting-flow-steps" target="_blank">
+							inputs
+						</a>
+						.based on the previous steps' results and flow inputs.
+					</div>
+				),
+				video: {
+					videoSrc: '/videos/step_input_copilot.mp4',
+					altText: 'Step Input Copilot'
+				}
+			},
+			{
+				title: 'Predicate Expressions Copilot for Branches and For Loops',
+				description:
+					'When adding a for loop or a branch, the AI assistant will suggest iterator expressions based on the previous steps` results or from a prompt.',
+				icon: Braces,
+				caption: (
+					<div>
+						When adding a for loop or a branch
+						<a href="/docs/flows/flow_loops" target="_blank">
+							for loop
+						</a>{' '} or a {' '}
+						<a href="/docs/flows/flow_branches" target="_blank">
+							branch
+						</a>
+						, the AI assistant will suggest iterator expressions based on the previous steps` results or from a prompt.
+					</div>
+				),
+				video: {
+					videoSrc: '/videos/branch_predicate_copilot.mp4',
+					altText: 'Predicate Expressions Copilot for Branches and For Loops'
 				}
 			}
 		]
