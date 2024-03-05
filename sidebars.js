@@ -93,7 +93,11 @@ const sidebars = {
 									id: 'misc/guides/app_send_email_smtp/index',
 									label: 'App that Sends Email with SMTP'
 								},
-								'misc/guides/aggrid_table/index',
+								{
+									type: 'doc',
+									id: 'misc/guides/aggrid_table/index',
+									label: 'AgGrid Table'
+								},
 								'misc/guides/table/index',
 								'misc/guides/sequin/index'
 							]
