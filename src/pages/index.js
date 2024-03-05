@@ -15,7 +15,6 @@ import LandingHeader from '../landing/LandingHeader';
 const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import TestimonialsSection from '../landing/TestimonialsSection';
 

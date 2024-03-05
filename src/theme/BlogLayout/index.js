@@ -16,7 +16,7 @@ export default function BlogLayout(props) {
 	const isChangelog = location?.pathname?.includes('/changelog');
 	const title = 'Changelog | Windmill';
 	const description = 'See the latest changes to Windmill';
-	const image = '../../img/changelog.png';
+	const image = '/img/changelog.png';
 
 	return (
 		<Layout {...layoutProps}>

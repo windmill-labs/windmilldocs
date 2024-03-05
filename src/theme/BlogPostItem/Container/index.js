@@ -40,7 +40,7 @@ export default function BlogPostItemContainer({ children, className }) {
 							<meta name="title" content={metadata.title} />
 							<meta property="og:title" content={metadata.title} />
 							<meta property="og:description" content={pageDescription} />
-							<meta property="og:image" content={image ?? '../../img/changelog.png'} />
+							<meta property="og:image" content={image ?? '/img/changelog.png'} />
 							<meta property="site_name" content="Windmill" />
 							<meta property="og:type" content="changelog" />
 						</Head>
