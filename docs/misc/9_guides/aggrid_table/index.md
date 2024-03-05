@@ -1,4 +1,4 @@
-# AgGrid Table
+# AgGrid Table Guide
 
 This is a basic introduction on how to use
 [AgGrid Table](https://www.ag-grid.com/) together with Windmill. It assumes
@@ -6,9 +6,9 @@ little to no knowledge about AgGrid.
 
 ![AgGrid Overview](../../../../static/img/guide/aggrid_overview.png.webp)
 
-## What is AgGrid Table.
+## What is AgGrid Table
 
-The AgGrid Table component (called AgGrid from here) is a small wrapper around a
+The [AgGrid Table component](../../../apps/4_app_configuration_settings/aggrid_table.mdx) (called AgGrid from here) is a small wrapper around a
 fantastic library called [AgGrid](https://www.ag-grid.com/). It provides you with
 a lot of advanced features. It comes in a free and a Enterprise (paid) version.
 All features below are part of the free version of AgGrid.
@@ -18,18 +18,17 @@ If you need the enterprise version of AgGrid, please
 [contact us](../../6_getting_help/index.mdx).
 :::
 
-## AgGrid vs Table component
+## AgGrid vs Table component vs Database Studio
 
-In Windmill there are 2 table components: one simply called
-[Table](../table/index.md)
-and AgGrid.
+In Windmill there are 3 table components: one simply called [Table](../../../apps/4_app_configuration_settings/table.mdx),
+[AgGrid](../aggrid_table/index.md) and [Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx).
 
-The Table component is for most usecases. It takes an array of objects as d
+The [Table component](../../../apps/4_app_configuration_settings/table.mdx) is for most usecases. It takes an array of objects as d
 input, and uses the key of the object as the header of the table. It also
 provides you with one or more action buttons to trigger an action for the row or
 create a dropdown button based on the row data.
 
-But if you want the user to be able to sort the table, edit a value inplace, adjust width and more you want to reach for AgGrid.
+[Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx) is a web-based database management tool. It allows you to display and edit the content of a database.
 
 :::info Transformer
 If you want to do basic sorting, or edit the column header name from the script
@@ -72,7 +71,7 @@ for the complete list of properties.
 As with most things, Windmill lets you **dropdown to code** when you want to do
 more advanced stuff, where the gui is more in the way then helping.
 
-The Windmill way wil be to first create a background runnable and then
+The Windmill way will be to first create a background runnable and then
 connecting it with the col def.
 
 ![Column definitions](./../../../../static/img/guide/coldef-connect.png.webp)
@@ -84,53 +83,28 @@ Below is a series of snippets that will help you get started.
 
 #### Provide default values for all columns
 
-Create a background runnable in Deno with the following content:
+Create a [background runnable](../../../apps/3_app-runnable-panel.mdx#background-runnables) that is a [Frontend JavaScript](../../../apps/3_app-runnable-panel.mdx#frontend-scripts) with the following content:
 
 ```js
-export async function main() {
-	const columnDef = [
-		{
-			field: 'name',
-			headerName: 'Full name'
-		},
-		{
-			field: 'age',
-			sortable: false
-		}
-	];
+const columnDef = [
+  {
+    field: 'name',
+    headerName: 'Full name'
+  },
+  {
+    field: 'age',
+    sortable: false
+  }
+];
 
-	const defaultColumnProperties = {
-		sortable: true
-	};
+const defaultColumnProperties = {
+  sortable: true
+};
 
-	return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
-}
+return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
 ```
 
-#### Provide default values for all columns
-
-Create a background runnable in deno with the following content:
-
-```ts
-export async function main() {
-	const columnDef = [
-		{
-			field: 'name',
-			headerName: 'Full name'
-		},
-		{
-			field: 'age',
-			sortable: false
-		}
-	];
-
-	const defaultColumnProperties = {
-		sortable: true
-	};
-
-	return columnDef.map((col) => ({ ...defaultColumnProperties, ...col }));
-}
-```
+![Column Def Script](./column_def1.png )
 
 #### Create a select button
 
@@ -138,7 +112,7 @@ Here we are using a AgGrid Component called `agSelectCellEditor`. There
 [exist more predefined cell components](https://www.ag-grid.com/javascript-data-grid/provided-cell-editors/#select-cell-editor)
 like this.
 
-Create a frontend script in JS with the following content:
+Create a [Frontend JavaScript](../../../apps/3_app-runnable-panel.mdx#frontend-scripts) with the following content:
 
 ```js
 return [
@@ -158,7 +132,7 @@ return [
 ];
 ```
 
-and connect it to the column definition.
+and [connect it](../../../apps/2_connecting_components/index.mdx) to the column definition.
 
 If you want to act on changes in the select dropdown, you may use the components
 states `newChanges`, or `selectedRow`.
@@ -167,7 +141,7 @@ states `newChanges`, or `selectedRow`.
 
 ### Create a button (custom component)
 
-Create a frontend script in JS with the following content:
+Create a [Frontend JavaScript](../../../apps/3_app-runnable-panel.mdx#frontend-scripts) with the following content:
 
 ```js
 class BtnCellRenderer {
@@ -205,7 +179,7 @@ return [
 ];
 ```
 
-and connect it to the column definition.
+and [connect it](../../../apps/2_connecting_components/index.mdx) to the column definition.
 
 This example demonstrates how to create a custom cell renderer component. Where
 we put the data from the row into our state. from here we can use other scripts
