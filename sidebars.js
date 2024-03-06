@@ -174,6 +174,7 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/persistent_storage/index',
 				'core_concepts/data_pipelines/index',
@@ -193,8 +194,7 @@ const sidebars = {
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/collaboration/index',
-				'core_concepts/ai_generation/index',
-				'core_concepts/workflows_as_code/index'
+				'core_concepts/ai_generation/index'
 			],
 			collapsed: true
 		},
