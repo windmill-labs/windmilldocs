@@ -193,7 +193,8 @@ const sidebars = {
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/collaboration/index',
-				'core_concepts/ai_generation/index'
+				'core_concepts/ai_generation/index',
+				'core_concepts/workflows_as_code/index'
 			],
 			collapsed: true
 		},
