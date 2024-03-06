@@ -1,21 +1,21 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Workflows as code
+# Workflows as Code
 
-![Script in python executing workflow as code ](python_editor.png)
+[Flows](../../flows/1_flow_editor.mdx) are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.
 
-Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.
+![Script in python executing workflow as code](python_editor.png "Script in python executing workflow as code")
 
-One way of doing this is to use the API of windmill itself, to run jobs imperatively, using run_script and run_flow (their sync or async counterparts). This is a powerful way to define workflows, but it can be complex and verbose.
+One way of doing this is to use the [API of Windmill](https://app.windmill.dev/openapi.html) itself, to run jobs imperatively, using run_script and run_flow (their sync or async counterparts). This is a powerful way to define workflows, but it can be complex and verbose.
 
-It also require to define the different jobs in different scripts. This is why, Windmill supports to define workflows as code in a single script in both Python and Typescript using intuitive and lightweight syntax.
+It also requires to define the different jobs in different scripts. This is why, Windmill supports defining workflows as code in a single script in both [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) using intuitive and lightweight syntax.
 
-The syntax is highlighted in the below examples, note that the subtask are indeed executed as distinct jobs, with their own logs, and their relationship with their parent task is recorded which allow for the timeline of each task to be displayed in the UI.
+The syntax is highlighted in the below examples, note that the subtask are indeed executed as distinct jobs, with their own logs, and their relationship with their parent task is recorded which allows for the timeline of each task to be displayed in the UI.
 
-To have some steps refer to other scripts and flows not in this file, use the normal functions `run_script` from the windmill SDK. The script below is a normal script and does not need special consideration. As such, it will already work with all the features of normal script and can be synced with the git and the CLI.
+To have some steps refer to other scripts and flows not in this file, use the normal functions `run_script` from the windmill SDK. The script below is a normal script and does not need special consideration. As such, it will already work with all the features of normal script and can be [synced with the git](../../advanced/11_git_sync/index.mdx) and the [CLI](../../advanced/11_git_sync/cli_sync.mdx).
 
-</TabItem>
+<Tabs className="unique-tabs">
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
