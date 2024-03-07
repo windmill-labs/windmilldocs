@@ -1,16 +1,3 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-
-// @ts-check
-
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
 	// By default, Docusaurus generates a sidebar from the docs folder structure
@@ -176,7 +163,36 @@ const sidebars = {
 				'advanced/imports/index',
 				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
-				'core_concepts/persistent_storage/index',
+				{
+					type: 'category',
+					label: 'Persistent Storage & Databases',
+					link: {
+						type: 'doc',
+						id: 'core_concepts/persistent_storage/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/within_windmill',
+							label: 'Within Windmill (not recommended)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/large_data_files',
+							label: 'Object Storage for Large Data (S3)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/structured_databases',
+							label: 'Big Structured SQL Data (Postgres)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/key_value_stores',
+							label: 'NoSQL and Document Databases'
+						}
+					]
+				},
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
@@ -500,11 +516,6 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'integrations/aws-s3',
-							label: 'AWS S3'
-						},
-						{
-							type: 'doc',
 							id: 'integrations/bigquery',
 							label: 'BigQuery'
 						},
@@ -707,6 +718,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/s3',
 							label: 'S3 APIs'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/aws-s3',
+							label: 'AWS S3'
 						},
 						{
 							type: 'doc',

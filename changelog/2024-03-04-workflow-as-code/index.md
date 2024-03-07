@@ -1,7 +1,7 @@
 ---
 slug: workflow-as-code
 version: v1.284.0
-title: Workflow as Code
+title: Workflows as Code
 tags: ['Scripts', 'Flow Editor']
 image: ./python_editor.png
 description: Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.

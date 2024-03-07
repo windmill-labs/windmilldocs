@@ -9,9 +9,9 @@ An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acycl
 
 Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines:
 
-- The DX in Windmill allows you to quickly [assemble flows](../../flows/1_flow_editor.mdx) that can process data step by step in a visual and easy-to-manage way ;
-- You can control [parallelism](../../flows/13_flow_branches.md#branch-all) between individual steps, and set [concurrency limits](../../flows/6_concurrency_limit.mdx) in case external resources need are fragile or rate limited ;
-- [Windmill flows can be restarted from any step](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch), making the iteration process of building a pipeline (or debugging one) smooth and efficient ;
+- The DX in Windmill allows you to quickly [assemble flows](../../flows/1_flow_editor.mdx) that can process data step by step in a visual and easy-to-manage way.
+- You can control [parallelism](../../flows/13_flow_branches.md#branch-all) between individual steps, and set [concurrency limits](../../flows/6_concurrency_limit.mdx) in case external resources need are fragile or rate limited.
+- [Windmill flows can be restarted from any step](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch), making the iteration process of building a pipeline (or debugging one) smooth and efficient.
 - Monitoring is made easy with [error and recovery handlers](../10_error_handling/index.mdx).
 
 <iframe
@@ -57,6 +57,14 @@ The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill 
 
 From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
 Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
+
+S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
+
+```json
+{
+	"s3": "/s3/object/file/key"
+}
+```
 
 ![Windmill code editor](../../../blog/2023-11-24-data-pipeline-orchestrator/s3_object_code_editor.png 'Windmill code editor')
 
@@ -322,7 +330,7 @@ def main(input_file: S3Object):
 
 :::info
 
-Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
+Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
 
 :::
 
@@ -525,13 +533,13 @@ a file, and the following steps consume this file to run the queries. We were ab
 
 :::
 
-## Learn more
+## Persistent Storage & Databases
 
 For more details on storage in Windmill, see:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>

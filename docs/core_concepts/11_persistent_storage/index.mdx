@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Persistent Storage
+# Persistent Storage & Databases
 
 Persistent storage refers to any method of storing data that remains intact and accessible even after a system is powered off, restarted, or experiences a crash.
 
@@ -10,7 +10,7 @@ In the context of Windmill, the stakes are: **where to effectively store and man
 
 :::info TLDR
 
-When it comes to storing data manipulated by Windmil, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
+When it comes to storing data manipulated by Windmill, it is recommended to only store Windmill-specific elements ([resources](../3_resources_and_types/index.mdx), [variables](../2_variables_and_secrets/index.mdx) etc.). To store data, it is recommended to use external storage service providers that can be accessed from Windmill.
 
 <br />
 
@@ -24,11 +24,11 @@ There are 4 kinds of persistent storage in Windmill:
 
 1. [Small data](#within-windmill-not-recommended) that is relevant in between script/flow execution and can be persisted on Windmill itself.
 
-2. [Object storage for large data](#large-data-files-s3-r2-minio-azure-blob) such as S3.
+2. [Object storage for large data](#object-storage-for-large-data-s3-r2-minio-azure-blob) such as S3.
 
-3. [Big structured SQL data](#structured-databases-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
+3. [Big structured SQL data](#structured-sql-data-postgres-supabase-neontech) that is critical to your services and that is stored externally on an SQL Database or Data Warehouse.
 
-4. [NoSQL and document database](#key-value-stores-mongodb-atlas-redis-upstash) such as MongoDB and Key-Value stores.
+4. [NoSQL and document database](#nosql-and-document-databases-mongodb-key-value-stores) such as MongoDB and Key-Value stores.
 
 ## You already have your own database
 
@@ -36,7 +36,7 @@ If you already have your own database provided by a supported integration, you c
 
 If your service provider is already part of [our list of integrations](../../integrations/0_integrations_on_windmill.mdx), just add your database as a [resource](../../core_concepts/3_resources_and_types/index.mdx).
 
-"If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
+If your service provider is not already integrated with Windmill, you can create a [new resource type](../../core_concepts/3_resources_and_types/index.mdx#create-a-resource-type) to establish the connection (and if you want, [share the schema on our Hub](../../misc/1_share_on_hub/index.md)).
 
 ## Within Windmill: not recommended
 
@@ -46,627 +46,56 @@ Instead, Windmill is very convenient to use alongside data storage providers to 
 
 There are however internal methods to persist data between executions of jobs.
 
-### States and Resources
-
-Within Windmill, you can use States and Resources as a way to store a transient state - that can be represented as small JSON.
-
-#### States
-
-States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
-
-In Windmill, [States](../3_resources_and_types/index.mdx#states) are considered as resources, but they are excluded from the Workspace tab for clarity.
-They are displayed on the Resources menu, under a dedicated tab.
-
-A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script.
-
-```py
-import requests
-from wmill import set_state, get_state
-
-def main():
-	# Get temperature from last execution
-    last_temperature = get_state()
-
-    # Fetch the temperature in Paris from wttr.in
-    response = requests.get("http://wttr.in/Paris?format=%t")
-
-    new_temperature = response.text.strip("°F")
-
-	# Set current temperature to state
-    set_state(new_temperature)
-
-    # Compare last_temperature and new_temperature
-    if last_temperature < new_temperature:
-        return "The temperature has increased."
-    elif last_temperature > new_temperature:
-        return "The temperature has decreased."
-    else:
-        return "The temperature has remained the same."
-```
-
-States are what enable Flows to watch for changes in most event watching scenarios ([trigger scripts](../../flows/10_flow_trigger.mdx)). The pattern is as follows:
-
-- Retrieve the last state or, if undefined, assume it is the first execution.
-- Retrieve the current state in the external system you are watching, e.g. the
-  list of users having starred your repo or the maximum ID of posts on Hacker News.
-- Calculate the difference between the current state and the last internal
-  state. This difference is what you will want to act upon.
-- Set the new state as the current state so that you do not process the
-  elements you just processed.
-- Return the differences calculated previously so that you can process them in
-  the next steps. You will likely want to [forloop](../../flows/12_flow_loops.md) over the items and trigger
-  one Flow per item. This is exactly the pattern used when your Flow is in the
-  mode of "Watching changes regularly".
-
-The convenience functions do this are:
-
-_TypeScript_
-
-- `getState()` which retrieves an object of any type (internally a simple
-  Resource) at a path determined by `getStatePath`, which is unique to the user
-  currently executing the Script, the Flow in which it is currently getting
-  called in - if any - and the path of the Script.
-- `setState(value: any)` which sets the new state.
-
-> Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Deno/Bun.
-
-<br />
-
-_Python_
-
-- `get_state()` which retrieves an object of any type (internally a simple
-  Resource) at a path determined by `get_state_path`, which is unique to the user
-  currently executing the Script, the Flow in which it is currently getting
-  called in - if any - and the path of the Script.
-- `set_state(value: Any)` which sets the new state.
-
-> Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Python.
-
-<br />
+All details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="States"
-		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
-		href="/docs/core_concepts/resources_and_types#states"
+		title="Within Windmill: not recommended"
+		description="Windmill is not designed to store heavy data that extends beyond the execution of a script or flow. There are however internal methods to persist data between executions of jobs."
+		href="/docs/core_concepts/persistent_storage/within_windmill"
 	/>
 </div>
 
-#### Resources
+## Object Storage for Large Data: S3, R2, MinIO, Azure Blob
 
-[States](#states) are a specific type of [resources](../3_resources_and_types/index.mdx) in Windmill where the type is `state` the path is automatically calculated for you based on the schedule path (if any) and the script path. In some cases, you want to set the path arbitrarily and/or use a different type than `state`. In this case, you can use the `setResource` and `getResource` functions. A same resource can be used across different scripts and flows.
+On heavier data objects & unstructured data storage, [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) and its alternatives [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/) and [MinIO](https://min.io/) as well as [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) storage are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
 
-- `setResource(value: any, path?: string, initializeToTypeIfNotExist?: string)`: which sets a resource at a given path. This is
-  equivalent to `setState` but allows you to set an arbitrary path and chose a type other than state if wanted. [See API](https://deno.land/x/windmill/mod.ts?s=setResource).
-- `getResource(path: string)`: gets a resource at a given path. [See API](https://deno.land/x/windmill/mod.ts?s=getResource).
+Windmill comes with a [native integration with S3 and Azure Blob](./large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), making it the recommended storage for large objects like files and binary data.
 
-The states can be seen in the Resources section of Windmill app with a
-[Resource Type](../3_resources_and_types/index.mdx#create-a-resource-type) of `state`.
-
-:::tip
-
-Variables are similar to resources but have no types, can be tagged as `secret` (in which case they are encrypted by the workspace key) and can only store strings. In some situations, you may prefer `setVariable`/`getVariable` to resources.
-:::
-
-In conclusion `setState` and `setResource` are convenient ways to persist json between multiple script executions.
+All details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Resources and Resource Types"
-		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
-		href="/docs/core_concepts/resources_and_types"
+		title="Object Storage for Large Data: S3, R2, MinIO, Azure Blob"
+		description="Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data."
+		href="/docs/core_concepts/persistent_storage/large_data_files"
 	/>
 </div>
 
-### Shared Directory
-
-For heavier ETL processes or sharing data between steps in a flow, Windmill provides a [Shared Directory](../../flows/3_editor_components.mdx#shared-directory) feature.
-
-The Shared Directory allows steps within a flow to share data by storing it in a designated folder.
-
-:::caution
-
-Although Shared Folders are recommended for persisting states within a flow, it's important to note that all steps are executed on the same worker and the data stored in the Shared Directory is strictly ephemeral to the flow execution.
-
-:::
-
-To enable the Shared Directory, follow these steps:
-
-1. Open the `Settings` menu in the Windmill interface.
-2. Go to the `Shared Directory` section.
-3. Toggle on the option for `Shared Directory on './shared'`.
-
-![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png.webp)
-
-Once the Shared Directory is enabled, you can use it in your flow by referencing the `./shared` folder. This folder is shared among the steps in the flow, allowing you to store and access data between them.
-
-:::tip
-
-Keep in mind that the contents of the `./shared` folder are not preserved across [suspends](../../flows/11_flow_approval.mdx) and [sleeps](../../flows/15_sleep.md). The directory is temporary and active only during the execution of the flow.
-
-:::
-
-## Large Data Files: S3, R2, MinIO, Azure Blob
-
-On heavier data objects & unstructured data storage, Amazon S3 (Simple Storage Service) and its alternatives Cloudflare R2 and MinIO as well as Azure Blob storage are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
-
-Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data.
-
-### Use Amazon S3, R2, MinIO and Azure Blob directly
-
-Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/). Azure Blob has a slightly different API than S3 but works with Windmill as well using its dedicated [resource type](https://hub.windmill.dev/resource_types/137/)
-
-#### Amazon S3
-
-[Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) is a scalable and durable object storage service offered by Amazon Web Services (AWS), designed to provide developers and businesses with an effective way to store and retrieve any amount of data from anywhere on the web.
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/s3_objects_in_bucket.mp4"
-/>
-
-<br />
-
-1. [Sign-up to AWS](https://aws.amazon.com/resources/create-account/).
-
-2. [Create a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) on S3.
-
-3. [Integrate it to Windmill](../../integrations/aws-s3.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
-
-Make sure the user associated with the resource has the [right policies allowed](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) in AWS Identity and Access Management (IAM).
-
-:::tip
-
-You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windmill.dev/integrations/s3).
-
-:::
-
-#### Cloudflare R2
-
-[Cloudflare R2](https://www.cloudflare.com/products/r2/) is a cloud-based storage service that provides developers and businesses with a cost-effective and secure way to store and access their data.
-
-1. [Sign-up to Cloudflare](https://developers.cloudflare.com/fundamentals/account-and-billing/account-setup/create-account/)
-
-2. [Create a bucket](https://developers.cloudflare.com/r2/get-started/) on R2.
-
-3. [Integrate it to Windmill](../../integrations/cloudflare-r2.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
-
-#### MinIO
-
-For best performance, [install MinIO locally](https://min.io/docs/minio/kubernetes/upstream/).
-
-[MinIO](https://min.io/) is an open-source, high-performance, and scalable object storage server that is compatible with Amazon S3 APIs, designed for building private and public cloud storage solutions.
-
-Then from Windmill, just [fill the S3 resource type](../../integrations/s3.mdx).
-
-#### Azure Blob
-
-[Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) is Microsoft's alternative to S3. It serve the same purpose but has a slightly different API.
-
-1. Go to your Azure Portal and go to the "Storage account" application
-
-2. Either select an existing account of create a new one
-
-3. [Create a container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal). Azure's containers are roughly the equivalent to S3 buckets. Note though that secret access key are per account, not per container.
-
-4. [Integrate it to Windmill](../../integrations/microsoft-azure-blob.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/137) for Azure Blob APIs.
-
-### Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
-
-Once you've created an [S3 or Azure Blob resource](../../integrations/s3.mdx) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
-
-![S3 storage workspace settings](./workspace_settings.png)
-
-The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
-
-In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
-When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
-
-Once the workspace is configured, access to the bucket is made easy in Windmill.
-
-When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
-
-![S3 file upload](./file_upload.png)
-
-![S3 bucket browsing](./bucket_browsing.png)
-
-When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
-
-![S3 file download](./file_download.png)
-
-#### Read a file from S3 within a script
-
-<Tabs className="unique-tabs">
-
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'windmill-client';
-import { S3Object } from 'windmill-client';
-
-export async function main(input_file: S3Object) {
-	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
-
-	const decoder = new TextDecoder();
-	const file_content_str = decoder.decode(file_content);
-	console.log(file_content_str);
-
-	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
-	console.log(await fileContentBlob.text());
-}
-```
-
-</TabItem>
-
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
-
-export async function main(input_file: S3Object) {
-	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
-
-	const decoder = new TextDecoder();
-	const file_content_str = decoder.decode(file_content);
-	console.log(file_content_str);
-
-	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
-	console.log(await fileContentBlob.text());
-}
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#wmill>=1.251.7
-import wmill
-from wmill import S3Object
-
-def main(input_file: S3Object):
-    # Load the entire file_content as a bytes array
-    file_content = wmill.load_s3_file(input_file)
-    print(file_content.decode('utf-8'))
-
-    # Or load the file lazily as a Buffered reader:
-    with wmill.load_s3_file_reader(input_file) as file_reader:
-        print(file_reader.read())
-```
-
-</TabItem>
-</Tabs>
-
-![Read S3 file](../18_files_binary_data/s3_file_input.png)
-
-#### Create a file in S3 within a script
-
-<Tabs className="unique-tabs">
-
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'windmill-client';
-import { S3Object } from 'windmill-client';
-
-export async function main(s3_file_path: string) {
-	const s3_file_output: S3Object = {
-		s3: s3_file_path
-	};
-
-	const file_content = 'Hello Windmill!';
-	// file_content can be either a string or ReadableStream<Uint8Array>
-	await wmill.writeS3File(s3_file_output, file_content);
-	return s3_file_output;
-}
-```
-
-</TabItem>
-
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
-
-export async function main(s3_file_path: string) {
-	const s3_file_output: S3Object = {
-		s3: s3_file_path
-	};
-
-	const file_content = 'Hello Windmill!';
-	// file_content can be either a string or ReadableStream<Uint8Array>
-	await wmill.writeS3File(s3_file_output, file_content);
-	return s3_file_output;
-}
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#wmill>=1.251.7
-import wmill
-from wmill import S3Object
-
-def main(s3_file_path: str):
-    s3_file_output = S3Object(s3=s3_file_path)
-
-    file_content = b"Hello Windmill!"
-	# file_content can be either bytes or a BufferedReader
-    file_content = wmill.write_s3_file(s3_file_output, file_content)
-    return s3_file_output
-```
-
-</TabItem>
-</Tabs>
-
-![Write to S3 file](../18_files_binary_data/s3_file_output.png)
-
-:::info
-Certain file types, typically parquet files, can be directly rendered by Windmill
-:::
-
-For more info on how to use files and S3 files in Windmill, see [Handling files and binary data](/docs/core_concepts/files_binary_data).
-
-### Windmill embedded integration with Polars and DuckDB for data pipelines
-
-ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
-
-<Tabs className="unique-tabs">
-<TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#polars==0.20.2
-#s3fs==2023.12.0
-#wmill>=1.229.0
-
-import wmill
-from wmill import S3Object
-import polars as pl
-import s3fs
-
-
-def main(input_file: S3Object):
-    bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
-
-    # this will default to the workspace s3 resource
-    storage_options = wmill.polars_connection_settings().storage_options
-    # this will use the designated resource
-    # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
-
-    # input is a parquet file, we use read_parquet in lazy mode.
-    # Polars can read various file types, see
-    # https://pola-rs.github.io/polars/py-polars/html/reference/io.html
-    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
-    input_df = pl.read_parquet(input_uri, storage_options=storage_options).lazy()
-
-    # process the Polars dataframe. See Polars docs:
-    # for dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html
-    # for lazy dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html
-    output_df = input_df.collect()
-    print(output_df)
-
-    # To write back the result to S3, Polars needs an s3fs connection
-    s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings().s3fs_args)
-    output_file = "output/result.parquet"
-    output_uri = "s3://{}/{}".format(bucket, output_file)
-    with s3.open(output_uri, mode="wb") as output_s3:
-        # persist the output dataframe back to S3 and return it
-        output_df.write_parquet(output_s3)
-
-    return S3Object(s3=output_file)
-```
-
-</TabItem>
-<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-#requirements:
-#wmill>=1.229.0
-#duckdb==0.9.1
-
-import wmill
-from wmill import S3Object
-import duckdb
-
-
-def main(input_file: S3Object):
-    bucket = wmill.get_resource("u/admin/windmill-cloud-demo")["bucket"]
-
-    # create a DuckDB database in memory
-    # see https://duckdb.org/docs/api/python/dbapi
-    conn = duckdb.connect()
-
-    # this will default to the workspace s3 resource
-    args = wmill.duckdb_connection_settings().connection_settings_str
-    # this will use the designated resource
-    # args = wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>").connection_settings_str
-
-    # connect duck db to the S3 bucket - this will default to the workspace s3 resource
-    conn.execute(args)
-
-    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
-    output_file = "output/result.parquet"
-    output_uri = "s3://{}/{}".format(bucket, output_file)
-
-    # Run queries directly on the parquet file
-    query_result = conn.sql(
-        """
-        SELECT * FROM read_parquet('{}')
-    """.format(
-            input_uri
-        )
-    )
-    query_result.show()
-
-    # Write the result of a query to a different parquet file on S3
-    conn.execute(
-        """
-        COPY (
-            SELECT COUNT(*) FROM read_parquet('{input_uri}')
-        ) TO '{output_uri}' (FORMAT 'parquet');
-    """.format(
-            input_uri=input_uri, output_uri=output_uri
-        )
-    )
-
-    conn.close()
-    return S3Object(s3=output_file)
-```
-
-</TabItem>
-</Tabs>
-
-:::info
-
-Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
-
-:::
-
-For more info on how Data Pipelines in Windmill, see [Data Pipelines](../27_data_pipelines/index.mdx).
-
-## Structured Databases: Postgres (Supabase, Neon.tech)
+## Structured SQL Data: Postgres (Supabase, Neon.tech)
 
 For Postgres databases (best for structured data storage and retrieval, where you can define schema and relationships between entities), we recommend using Supabase or Neon.tech.
 
-### Supabase
+All details at:
 
-[Supabase](https://supabase.com/) is an open-source alternative to Firebase, providing a backend-as-a-service platform that offers a suite of tools, including real-time subscriptions, authentication, storage, and a PostgreSQL-based database.
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Big Structured SQL Data: Postgres (Supabase, Neon.tech)"
+		description="For Postgres databases (best for structured data storage and retrieval, where you can define schema and relationships between entities), we recommend using Supabase or Neon.tech."
+		href="/docs/core_concepts/persistent_storage/structured_databases"
+	/>
+</div>
 
-1. Sign-up to Supabase's <a href="https://app.supabase.com/sign-up" rel="nofollow" >Cloud App</a> or [Self-Host](https://supabase.com/docs/guides/self-hosting) it.
-
-2. [Create a new Supabase project](https://supabase.com/docs/guides/getting-started).
-
-3. Get a [Connection string](https://supabase.com/docs/guides/database/connecting-to-postgres#finding-your-connection-string).
-
-   - Go to the `Settings` section.
-   - Click `Database`.
-   - Find your Connection Info and Connection String. Direct connections are on port 5432.
-
-4. From Windmill, add your Supabase connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql). Tip: you might need to set the `sslmode` to "disable".
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/supabase_postgres_integration.mp4"
-/>
-
-<br />
-
-You can also integrate Supabase [directly through its API](../../integrations/supabase.md#through-supabase-api).
-
-:::tip
-
-You can find examples and premade Supabase scripts on [Windmill Hub](https://hub.windmill.dev/integrations/supabase).
-
-<br />
-
-More tutorials on Supabase:
-
-- [How to Send Database Events From Supabase to Windmill](/blog/database-events-from-supabase-to-windmill)
-- [Create an E-commerce backoffice](../../apps/7_app_e-commerce.md)
-- [Create an Issue Tracker App with Supabase in 15 Minutes](/blog/create-issue-tracker-in-15-minutes)
-- [Create an Issue Tracker App with Supabase - Part 2 Customize Your App](/blog/create-issue-tracker-part-2)
-- [Use Supabase Authentication on Windmill to query RLS protected tables for external apps](/blog/supabase-authentication-and-rls-protected-tables-on-windmill)
-
-:::
-
-### Neon.tech
-
-[Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.
-
-1. Sign-up to Neon's <a href="https://console.neon.tech/sign_in" rel="nofollow" >Cloud App</a> or [Self-Host](https://community.neon.tech/t/can-neon-be-self-hosted/51) it.
-
-2. [Set up a project and add data](https://neon.tech/docs/manage/projects).
-
-3. Get a [Connection string](https://neon.tech/docs/connect/query-with-psql-editor). You can obtain it connection string from the Connection Details widget on the Neon Dashboard: select a branch, a role, and the database you want to connect to and a connection string will be constructed for you.
-
-4. From Windmill, add your Neon.tech connection string as a [Postgresql resource](https://hub.windmill.dev/resource_types/114/postgresql) and [Execute queries](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
-
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/neon_integration.mp4"
-/>
-
-<br />
-
-:::tip
-
-Adding the connection string as a Postgres resource requires to parse it.
-
-<br />
-
-For example, for `psql postgres://daniel:<password>@ep-restless-rice.us-east-2.aws.neon.tech/neondb`, that would be:
-
-```json
-{
-	"host": "ep-restless-rice.us-east-2.aws.neon.tech",
-	"port": 5432,
-	"user": "daniel",
-	"dbname": "neondb",
-	"sslmode": "require",
-	"password": "<password>"
-}
-```
-
-Where the sslmode should be "require" and Neon uses the default PostgreSQL port, `5432`.
-
-:::
-
-## Key-Value Stores: MongoDB Atlas, Redis, Upstash
+## NoSQL and Document Databases (Mongodb, Key-Value Stores)
 
 Key-value stores are a popular choice for managing non-structured data, providing a flexible and scalable solution for various data types and use cases. In the context of Windmill, you can use MongoDB Atlas, Redis, and Upstash to store and manipulate non-structured data effectively.
 
-### MongoDB Atlas
+All details at:
 
-[MongoDB Atlas](https://www.mongodb.com/atlas/database) is a managed database-as-a-service platform that provides an efficient way to deploy, manage, and optimize MongoDB instances. As a document-oriented NoSQL database, MongoDB is well-suited for handling large volumes of unstructured data. Its dynamic schema enables the storage and retrieval of JSON-like documents with diverse structures, making it a suitable option for managing non-structured data.
-
-To use MongoDB Atlas with Windmill:
-
-1. [Sign-up to Atlas](https://www.mongodb.com/cloud/atlas/signup).
-
-2. [Create a database](https://www.mongodb.com/basics/create-database).
-
-3. [Integrate it to Windmill](../../integrations/mongodb.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/).
-
-:::tip
-
-You can find examples and premade MonggoDB scripts on [Windmill Hub](https://hub.windmill.dev/integrations/mongodb).
-
-:::
-
-### Redis
-
-[Redis](https://redis.io/) is an open-source, in-memory key-value store that can be used for caching, message brokering, and real-time analytics. It supports a variety of data structures such as strings, lists, sets, and hashes, providing flexibility for non-structured data storage and management. Redis is known for its high performance and low-latency data access, making it a suitable choice for applications requiring fast data retrieval and processing.
-
-To use Redis with Windmill:
-
-1. [Sign-up to Redis](https://redis.com/try-free/).
-
-2. [Create a database](https://developer.redis.com/create).
-
-3. [Integrate it to Windmill](../../integrations/redis.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
-
-### Upstash
-
-[Upstash](https://upstash.com/) is a serverless, edge-optimized key-value store designed for low-latency access to non-structured data. It is built on top of Redis, offering similar performance benefits and data structure support while adding serverless capabilities, making it easy to scale your data storage needs.
-
-To use Upstash with Windmill:
-
-1. [Sign-up to Upstash](https://console.upstash.com/).
-
-2. [Create a database](https://docs.upstash.com/redis).
-
-3. [Integrate it to Windmill](../../integrations/upstash.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="NoSQL and Document Databases (Mongodb, Key-Value Stores)"
+		description="Key-value stores are a popular choice for managing non-structured data, providing a flexible and scalable solution for various data types and use cases."
+		href="/docs/core_concepts/persistent_storage/key_value_stores"
+	/>
+</div>
