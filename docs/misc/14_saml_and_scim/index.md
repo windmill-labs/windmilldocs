@@ -42,6 +42,14 @@ Edit the configuration to set the Entity ID to `windmill` and the ACS url to `<i
 
 ![Azure SAML](azure-saml-configure_2.png)
 
+![Azure SAML metadata](azure_saml_metadata.png)
+
+Copy the App Federation Metadata URL and paste it in the Instance Settings UI.
+
+![Instance Settings UI](instance_settings.png)
+
+If for some reasons, the metadata URL cannot be used, you can copy the XML content and paste it in the field instead.
+
 Once it's saved, you can test the login by clicking on the `Test` button at the bottom, then on the drawer `Test sign in`.
 
 ![Azure SAML](azure-saml-saml_test.png)

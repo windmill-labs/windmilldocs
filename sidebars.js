@@ -93,7 +93,11 @@ const sidebars = {
 									id: 'misc/guides/app_send_email_smtp/index',
 									label: 'App that Sends Email with SMTP'
 								},
-								'misc/guides/aggrid_table/index',
+								{
+									type: 'doc',
+									id: 'misc/guides/aggrid_table/index',
+									label: 'AgGrid Table'
+								},
 								'misc/guides/table/index',
 								'misc/guides/sequin/index'
 							]
@@ -170,6 +174,7 @@ const sidebars = {
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
 				'advanced/imports/index',
+				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
 				'core_concepts/persistent_storage/index',
 				'core_concepts/data_pipelines/index',
@@ -183,6 +188,7 @@ const sidebars = {
 				'core_concepts/resources_and_types/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
+				'core_concepts/workspace_secret_encryption/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
@@ -340,8 +346,9 @@ const sidebars = {
 						},
 						'apps/app_configuration_settings/app_component_configuration',
 						'apps/app_configuration_settings/app_styling',
-						'apps/app_debugging',
 						'apps/app_deployment',
+						'apps/app_debugging',
+						'apps/troubleshoot_panel/index',
 						{
 							type: 'doc',
 							id: 'apps/download_files',
@@ -351,6 +358,7 @@ const sidebars = {
 						'apps/schedule_reports',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
+						'apps/default_app/index',
 						'apps/app_e-commerce'
 					],
 
@@ -618,7 +626,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/mssql',
-							label: 'MSSQL'
+							label: 'MS SQL'
 						},
 						{
 							type: 'doc',
@@ -738,8 +746,6 @@ const sidebars = {
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
-				'apps/default_app/index',
-				'core_concepts/workspace_secret_encryption/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index'
 			]

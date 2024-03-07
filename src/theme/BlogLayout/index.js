@@ -4,6 +4,7 @@ import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
 import { twMerge } from 'tailwind-merge';
 import { useLocation } from '@docusaurus/router';
+import Head from '@docusaurus/Head';
 
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
@@ -11,10 +12,26 @@ export default function BlogLayout(props) {
 	const isBlogPostPageList = Boolean(toc);
 	const location = useLocation();
 
+	const isChangelogHomepage = location?.pathname?.endsWith('/changelog');
 	const isChangelog = location?.pathname?.includes('/changelog');
+	const title = 'Changelog | Windmill';
+	const description = 'See the latest changes to Windmill';
+	const image = '../../img/changelog.png';
 
 	return (
 		<Layout {...layoutProps}>
+			{isChangelogHomepage && (
+				<Head>
+					<title>{title}</title>
+					<meta name="title" content={title} />
+					<meta property="og:title" content={title} />
+					<meta property="og:description" content={description} />
+					<meta property="og:image" content={image} />
+					<meta property="site_name" content="Windmill" />
+					<meta property="og:type" content="changelog" />
+				</Head>
+			)}
+
 			{!isBlogPostPageList && (
 				<div className={twMerge('w-full mx-auto', isChangelog ? 'max-w-6xl' : 'max-w-7xl ')}>
 					<div className="">
@@ -67,7 +84,6 @@ export default function BlogLayout(props) {
 				<div className="row">
 					<BlogSidebar sidebar={sidebar} />
 					{toc && <div className="col col--2"></div>}
-
 					<main
 						className={clsx(
 							'col',

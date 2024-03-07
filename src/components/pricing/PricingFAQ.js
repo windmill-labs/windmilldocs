@@ -76,6 +76,10 @@ const faqs = [
 
 				<br/><br/>
 
+				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
+
+				<br/><br/>
+
 				Our compute pricing should be linear to the compute cost from your cloud provider.
 			</span>
 		)
