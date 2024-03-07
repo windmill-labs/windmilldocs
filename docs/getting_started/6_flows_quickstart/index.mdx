@@ -61,20 +61,20 @@ On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/
 
 ### Shared Directory
 
-Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.mdx#shared-directory).
+Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/within_windmill.mdx#shared-directory).
 
 By default, flows on Windmill are based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
 For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
+Get more details on the [Persistent Storage & Databases dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
 
 ![Flows shared directory](./flows_shared_directory.png.webp)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>

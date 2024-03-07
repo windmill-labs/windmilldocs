@@ -478,12 +478,12 @@ Those scripts are minimal working examples, but there's a few more steps that ca
   to a script.
 - Connect to [resources](../../../core_concepts/3_resources_and_types/index.mdx).
 - [Trigger that script](../../8_trigger_scripts/index.mdx) in many ways.
-- Compose scripts in [Flows](../../../flows/1_flow_editor.mdx) or [Apps](../../../apps/0_app_editor/index.mdx).
+- Compose scripts in [Flows](../../../flows/1_flow_editor.mdx) or [Apps](../../../apps/0_app_editor/index.mdx) (in particular, [Database Studio](#database-studio) to visualize and manage your databases in apps).
 - You can [share your scripts](../../../misc/1_share_on_hub/index.md) with the community on [Windmill Hub](https://hub.windmill.dev). Once
   submitted, they will be verified by moderators before becoming available to
   everyone right within Windmill.
 
-Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
+Scripts are immutable and there is a hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -515,5 +515,37 @@ In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhoo
 		title="Webhooks"
 		description="Trigger scripts and flows from webhooks."
 		href="/docs/core_concepts/webhooks"
+	/>
+</div>
+
+## Database Studio
+
+From Windmill [App Editor](../../../apps/0_app_editor/index.mdx), you can also use the [Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx) component to visualize and manage your databases (PostgreSQL / MySQL / MS SQL / Snowflake / BigQuery are all supported).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Fd_0EffVDtw?vq=hd1080"
+	title="Database Studio"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+The Database Studio component allows you to:
+- Display the content of a table.
+- Edit the content of a table by directly editing the cells (only when the cell is editable).
+- Add a new row.
+- Delete a row.
+
+All details at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Database Studio"
+		description="The Database Studio is a web-based database management tool that leverages Ag Grid for table display and interaction"
+		href="/docs/apps/app_configuration_settings/database_studio"
 	/>
 </div>
