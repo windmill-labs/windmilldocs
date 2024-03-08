@@ -12,14 +12,9 @@ Windmill comes with a [native integration with S3 and Azure Blob](#connect-your-
 
 ## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
 
-Once you've created an [S3 or Azure Blob resource](../../integrations/s3.mdx) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+Once you've created an [S3 or Azure Blob resource](#use-amazon-s3-r2-minio-and-azure-blob-directly) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
 ![S3 storage workspace settings](./workspace_settings.png)
-
-The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
-
-In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
-When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
 
 From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
 Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
@@ -31,6 +26,14 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 	"s3": "/s3/object/file/key"
 }
 ```
+
+![S3 Integration Infographic](./s3_infographics.png "S3 Integration Infographic")
+
+The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
+
+In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
+
+When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
 
 When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
 
