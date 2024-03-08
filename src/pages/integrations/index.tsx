@@ -14,6 +14,12 @@ const files = [
         url: '/integrations/airtable',
     },
     {
+        title: 'Google Sheets',
+        source:
+        '/third_party_logos/gsheets.svg',
+        url: '/integrations/gsheets',
+    },
+    {
         title: 'Hubspot',
         source:
         '/third_party_logos/hubspot.svg',
@@ -60,7 +66,7 @@ export default function About() {
 						<RadialBlur />
 						<div className="space-y-12 text-center pt-32 pb-16">
 							<div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
-								<h1 className="!text-4xl font-bold tracking-tight sm:!text-5xl mb-8">
+								<h1 className="!text-4xl font-bold tracking-tight text-blue-500 dark:text-blue-400 sm:!text-5xl mb-8">
 									Integrations
 								</h1>
 								<p className="text-lg">
