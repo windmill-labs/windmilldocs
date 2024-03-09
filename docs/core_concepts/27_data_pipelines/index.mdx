@@ -62,7 +62,7 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 
 ```json
 {
-	"s3": "/s3/object/file/key"
+	"s3": "path/to/file"
 }
 ```
 
@@ -333,7 +333,6 @@ def main(input_file: S3Object):
 Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
 
 :::
-
 
 ### Canonical data pipeline in Windmill w/ Polars and DuckDB
 
