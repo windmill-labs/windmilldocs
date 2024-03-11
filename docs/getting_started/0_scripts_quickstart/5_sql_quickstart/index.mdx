@@ -413,48 +413,6 @@ A more convenient but less secure option is to execute raw queries with a TypeSc
 
 <Tabs className="unique-tabs">
 
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import {
-  type Sql,
-} from "https://deno.land/x/windmill@v1.88.1/mod.ts";
-
-import { Client } from "https://deno.land/x/postgres@v0.17.0/mod.ts"
-
-type Postgresql = {
-  host: string;
-  port: number;
-  user: string;
-  dbname: string;
-  sslmode: string;
-  password: string;
-};
-export async function main(db: Postgresql, query: Sql = "SELECT * FROM demo;") {
-  if (!query) {
-    throw Error("Query must not be empty.");
-  }
-  const { rows } = await pgClient(db).queryObject(query);
-  return rows;
-}
-
-export function pgClient(db: any) {    
-  let db2 = {
-    ...db,
-    hostname: db.host,
-    database: db.dbname,
-    tls: {
-        enabled: false,
-    },
-  }
-  return new Client(db2)
-}
-```
-
-View script on [Windmill Hub](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
-
-</TabItem>
-
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
@@ -505,6 +463,48 @@ export async function main(query = 'SELECT * FROM demo', pg_resource: Postgresql
 ```
 
 View script on [Windmill Hub](https://hub.windmill.dev/scripts/postgresql/7105/execute-arbitrary-query-and-return-results-postgresql).
+
+</TabItem>
+
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import {
+  type Sql,
+} from "https://deno.land/x/windmill@v1.88.1/mod.ts";
+
+import { Client } from "https://deno.land/x/postgres@v0.17.0/mod.ts"
+
+type Postgresql = {
+  host: string;
+  port: number;
+  user: string;
+  dbname: string;
+  sslmode: string;
+  password: string;
+};
+export async function main(db: Postgresql, query: Sql = "SELECT * FROM demo;") {
+  if (!query) {
+    throw Error("Query must not be empty.");
+  }
+  const { rows } = await pgClient(db).queryObject(query);
+  return rows;
+}
+
+export function pgClient(db: any) {    
+  let db2 = {
+    ...db,
+    hostname: db.host,
+    database: db.dbname,
+    tls: {
+        enabled: false,
+    },
+  }
+  return new Client(db2)
+}
+```
+
+View script on [Windmill Hub](https://hub.windmill.dev/scripts/postgresql/1294/execute-query-and-return-results-postgresql).
 
 </TabItem>
 
@@ -573,62 +573,6 @@ You can find more Script examples related to PostgreSQL on
 The same logic goes for MySQL.
 
 <Tabs className="unique-tabs">
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import { createPool as createMysqlPool } from "npm:mysql2/promise";
-
-// Define the MySQL resource type as specified
-type Mysql = {
-  ssl: boolean,
-  host: string,
-  port: number,
-  user: string,
-  database: string,
-  password: string
-
-}
-
-// The main function that executes a query on a MySQL database
-export async function main(
-  mysqlResource: Mysql,
-  query: string,
-): Promise<any> {
-  // Adjust the SSL configuration based on the mysqlResource.ssl value
-  const sslConfig = mysqlResource.ssl ? { rejectUnauthorized: true } : false;
-
-  // Create a new connection pool using the provided MySQL resource
-  const pool = createMysqlPool({
-    host: mysqlResource.host,
-    user: mysqlResource.user,
-    database: mysqlResource.database,
-    password: mysqlResource.password,
-    port: mysqlResource.port,
-    // Use the adjusted SSL configuration
-    ssl: sslConfig,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-  });
-
-  try {
-    // Get a connection from the pool and execute the query
-    const [rows] = await pool.query(query);
-    return rows;
-  } catch (error) {
-    // If an error occurs, throw it to be handled by the caller
-    throw new Error(`Failed to execute query: ${error}`);
-  } finally {
-    // Always close the pool after the operation is complete
-    await pool.end();
-  }
-}
-
-```
-
-View script on [Windmill Hub](https://hub.windmill.dev/scripts/mysql/7107/execute-arbitrary-query-mysql).
-
-</TabItem>
 
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
@@ -683,6 +627,63 @@ export async function main(mysqlResource: Mysql, query: string): Promise<any> {
 ```
 
 View script on [Windmill Hub](https://hub.windmill.dev/scripts/mysql/7108/execute-arbitrary-query-mysql).
+
+</TabItem>
+
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import { createPool as createMysqlPool } from "npm:mysql2/promise";
+
+// Define the MySQL resource type as specified
+type Mysql = {
+  ssl: boolean,
+  host: string,
+  port: number,
+  user: string,
+  database: string,
+  password: string
+
+}
+
+// The main function that executes a query on a MySQL database
+export async function main(
+  mysqlResource: Mysql,
+  query: string,
+): Promise<any> {
+  // Adjust the SSL configuration based on the mysqlResource.ssl value
+  const sslConfig = mysqlResource.ssl ? { rejectUnauthorized: true } : false;
+
+  // Create a new connection pool using the provided MySQL resource
+  const pool = createMysqlPool({
+    host: mysqlResource.host,
+    user: mysqlResource.user,
+    database: mysqlResource.database,
+    password: mysqlResource.password,
+    port: mysqlResource.port,
+    // Use the adjusted SSL configuration
+    ssl: sslConfig,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+  });
+
+  try {
+    // Get a connection from the pool and execute the query
+    const [rows] = await pool.query(query);
+    return rows;
+  } catch (error) {
+    // If an error occurs, throw it to be handled by the caller
+    throw new Error(`Failed to execute query: ${error}`);
+  } finally {
+    // Always close the pool after the operation is complete
+    await pool.end();
+  }
+}
+
+```
+
+View script on [Windmill Hub](https://hub.windmill.dev/scripts/mysql/7107/execute-arbitrary-query-mysql).
 
 </TabItem>
 
