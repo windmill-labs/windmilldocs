@@ -1,103 +1,39 @@
 import React from 'react';
 import LandingSection from './LandingSection';
 import LightFeatureCard from './LightFeatureCard';
-import {
-	SiGnubash,
-	SiGo,
-	SiPython,
-	SiTypescript,
-	SiGraphql,
-	SiDocker,
-	SiPostgresql
-} from 'react-icons/si';
+import polyGlott from '/illustrations/polyglot.json';
+import smartIde from '/illustrations/smart_ide.json';
+import secrets from '/illustrations/secrets.json';
+import thirdparty from '/illustrations/thirdparty.json';
 
 const features = [
 	{
 		title: 'Polyglott',
 		description:
 			'Windmill supports a wide range of languages: Python, Node, Deno, Bun, Go, PostgresQL, bash and more. Dependencies are automatically managed. An UI is auto-generated for your scripts.',
-		images: ['/images/script-1-light.png'],
-		span: 'col-span-2',
-		height: 600,
-		buttons: [
-			{
-				title: 'Typescript (Deno, Bun, Node.js)',
-				description: 'Write your first Windmill script in Typescript.',
-				href: '/docs/getting_started/scripts_quickstart/typescript',
-				Icon: SiTypescript
-			},
-			{
-				title: 'Python',
-				description: 'Write your first Windmill script in Python.',
-				href: '/docs/getting_started/scripts_quickstart/python',
-				Icon: SiPython
-			},
-			{
-				title: 'Bash / Powershell',
-				description: 'Write your first Windmill script in Bash / Powershell.',
-				href: '/docs/getting_started/scripts_quickstart/bash',
-				Icon: SiGnubash
-			},
-			{
-				title: 'Docker',
-				description: 'Windmill supports running any docker container through its Bash support.',
-				href: '/docs/getting_started/scripts_quickstart/docker',
-				Icon: SiDocker
-			},
-			{
-				title: 'Go',
-				description: 'Write your first Windmill script in Go.',
-				href: '/docs/getting_started/scripts_quickstart/go',
-				Icon: SiGo
-			},
-			{
-				title: 'SQL & Query Languages',
-				description:
-					'Write your first Windmill script in PostgreSQL, MySQL, BigQuery or Snowflake SQL.',
-				href: '/docs/getting_started/scripts_quickstart/sql',
-				Icon: SiPostgresql
-			},
-			{
-				title: 'Rest / GraphQL',
-				description: 'Write your first Windmill script in Rest / GraphQL.',
-				href: '/docs/getting_started/scripts_quickstart/rest_graphql',
-				Icon: SiGraphql
-			}
-		]
+		lottieData: polyGlott,
+		span: 'col-span-1'
 	},
 	{
 		title: 'Windmill Smart IDE',
 		description:
 			'From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
-		images: ['/images/script-1.png'],
-		span: 'col-span-2',
-		height: 500
-	},
-
-	{
-		title: 'Resources and variables',
-		description:
-			'Easily share third-party API keys and other sensitive data with your team. Without compromising security.',
-		images: ['/images/script-2.png'],
-		span: 'col-span-1',
-		height: 500
+		lottieData: smartIde,
+		span: 'col-span-1'
 	},
 	{
-		title: 'Triggers',
+		title: 'Secret Management',
 		description:
-			'Trigger scripts from webhooks, schedules, CLI, Slack, and more. Easily integrate with your existing tools.',
-		images: ['/images/script-1.png'],
-		span: 'col-span-1',
-		height: 500
+			'Easily share secrets and other sensitive data with your team. Without compromising security.',
+		lottieData: secrets,
+		span: 'col-span-1'
 	},
 	{
-		title: 'Developer first',
+		title: 'Third-party integrations',
 		description:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI, sync them with Git. Iterate quickly with our VS Code Extension.',
-		images: ['/images/script-1.png', '/images/script-1.png', '/images/script-1.png'],
-		span: 'col-span-2',
-		height: 500,
-		noAnimation: true
+			'Connect to APIs using rich objects that you can pick manually before each run or fetch directly within code. Dozens of pre-made integrations on WindmillHub or add your own in minutes.',
+		lottieData: thirdparty,
+		span: 'col-span-1'
 	}
 ] as {
 	title: string;
@@ -106,7 +42,7 @@ const features = [
 	span: string;
 	height: number;
 	noAnimation?: boolean;
-	buttons?: { title: string; Icon: any; description: string; href: string }[];
+	lottieData?: unknown;
 }[];
 
 const colors = {
@@ -131,14 +67,11 @@ export default function ScriptSection() {
 						<LightFeatureCard
 							key={index}
 							feature={feature}
-							colors={{
-								bgColor: colors.bgColor
-							}}
 							animationDelay={(index + 1) * 32}
 							span={feature.span}
 							height={feature.height}
 							noAnimation={feature.noAnimation}
-							buttons={feature?.buttons}
+							lottieData={feature?.lottieData}
 						/>
 					))}
 				</div>

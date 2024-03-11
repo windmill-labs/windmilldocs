@@ -34,542 +34,69 @@ import {
 
 import LandingSection from './LandingSection';
 
-const cards = [
+import polyGlott from '/illustrations/approval.json';
+import smartIde from '/illustrations/performance.json';
+import secrets from '/illustrations/triggers.json';
+import thirdparty from '/illustrations/triggers.json';
+import LightFeatureCard from './LightFeatureCard';
+
+const features = [
 	{
-		title: 'VS Code extension or any IDEs',
-		subtitle:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI. VS Code extension available.',
-		Icon: SiVisualstudiocode,
-		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/local_development'
+		title: 'Polyglott',
+		description:
+			'Windmill supports a wide range of languages: Python, Node, Deno, Bun, Go, PostgresQL, bash and more. Dependencies are automatically managed. An UI is auto-generated for your scripts.',
+		lottieData: polyGlott,
+		span: 'col-span-1'
 	},
 	{
-		title: 'Deploy to Prod using a Git Workflow',
-		subtitle:
-			'Windmill integration with Git repositories makes it possible to adopt a robust development process and version control.',
-		Icon: Github,
-		gridArea: 'md:col-span-2 md:row-span-3',
-		href: '/docs/advanced/deploy_gh_gl',
-		icons: [Gitlab]
+		title: 'Windmill Smart IDE',
+		description:
+			'From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
+		lottieData: smartIde,
+		span: 'col-span-1'
 	},
 	{
-		title: 'CLI',
-		subtitle: 'Trigger, sync and monitor scripts from CLI.',
-		Icon: Terminal,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/advanced/cli'
+		title: 'Secret Management',
+		description:
+			'Easily share secrets and other sensitive data with your team. Without compromising security.',
+		lottieData: secrets,
+		span: 'col-span-1'
 	},
 	{
-		title: 'Lockfile',
-		subtitle: 'A lockfile is generated to ensure reproducibility.',
-		Icon: Box,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/advanced/imports'
-	},
-	{
-		title: 'Immutable script versions',
-		subtitle: 'Every deployed script has a unique and permanent hash.',
-		Icon: Lock,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/script_editor/versioning#script-hashes'
-	},
-	{
-		title: 'Instant preview and execution',
-		subtitle: 'Preview and execute scripts instantly from the editor.',
-		Icon: Play,
-		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/core_concepts/instant_preview'
+		title: 'Third-party integrations',
+		description:
+			'Connect to APIs using rich objects that you can pick manually before each run or fetch directly within code. Dozens of pre-made integrations on WindmillHub or add your own in minutes.',
+		lottieData: thirdparty,
+		span: 'col-span-1'
 	}
-];
+] as {
+	title: string;
+	description: string;
+	images: string[];
+	span: string;
+	height: number;
+	noAnimation?: boolean;
+	lottieData?: unknown;
+}[];
 
-const tabs = [
-	{
-		label: 'Polyglot',
-		icon: Code,
-		id: 'script',
-		data: [
-			{
-				title: 'Typescript',
-				description: '',
-				icon: SiTypescript,
-				caption: (
-					<div>
-						Deno as the{' '}
-						<a href="/docs/getting_started/scripts_quickstart/typescript" target="_blank">
-							TypeScript
-						</a>{' '}
-						runtime.
-					</div>
-				),
-				svg: '/images/typescript-code.svg',
-				altText: 'Write scripts in Typescript'
-			},
-			{
-				title: 'Python',
-				description: '',
-				icon: SiPython,
-				caption: (
-					<div>
-						<a href="/docs/getting_started/scripts_quickstart/python" target="_blank">
-							Python
-						</a>{' '}
-						3.11 environment.
-					</div>
-				),
-				imageSrc: '/images/python-code.png',
-				altText: 'Write scripts in Python'
-			},
-			{
-				title: 'Go',
-				icon: SiGo,
-				caption: (
-					<div>
-						Script in{' '}
-						<a
-							href="/docs/getting_started/scripts_quickstart/go"
-							target="_blank"
-							title="Write scripts in Go"
-						>
-							the Go language
-						</a>
-						.
-					</div>
-				),
-				svg: '/images/go-code.svg',
-				altText: 'Write scripts in Go'
-			},
-			{
-				title: 'Bash',
-				icon: SiGnubash,
-				caption: (
-					<div>
-						Script in{' '}
-						<a href="/docs/getting_started/scripts_quickstart/bash" target="_blank">
-							Bash
-						</a>
-						.
-					</div>
-				),
-				svg: '/images/bash-code.svg',
-				altText: 'Write scripts in Bash'
-			},
-			{
-				title: 'Rest / GraphQL',
-				icon: SiGraphql,
-				caption: (
-					<div>
-						Script in{' '}
-						<a href="/docs/getting_started/scripts_quickstart/rest_graphql" target="_blank">
-							Rest / GraphQL
-						</a>
-						.
-					</div>
-				),
-				imageSrc: '/images/graphql-code.png',
-				altText: 'Write scripts in Rest & GraphQL'
-			},
-			{
-				title: 'PostgreSQL / MSSQL / MySQL / BigQuery / Snowflake',
-				icon: Database,
-				caption: (
-					<div>
-						Script in{' '}
-						<a href="/docs/getting_started/scripts_quickstart/sql" target="_blank">
-							PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake
-						</a>
-						.
-					</div>
-				),
-				imageSrc: '/images/sql-code.png',
-				altText: 'Write scripts in PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake'
-			}
-		]
-	},
-	{
-		label: 'Autogenerated UI & Dependencies',
-		icon: FormInputIcon,
-		id: 'autogenerated-ui',
-		data: [
-			{
-				title: 'Autogenerated UI',
-				description:
-					"Share your app with non-technical users without spending time building the UI. It's automatically generated from script parameters, and customizable.",
-				icon: FormInputIcon,
-				caption: (
-					<div>
-						Adding a new parameter to your script will automatically add a new field to the{' '}
-						<a href="/docs/core_concepts/auto_generated_uis" target="_blank">
-							UI
-						</a>
-						.
-					</div>
-				),
-				video: {
-					videoSrc: '/videos/auto_g_ui_landing.mp4',
-					videoLength: '26',
-					altText: 'Autogenerated UI'
-				}
-			},
-			{
-				title: 'Automatic Dependency Management',
-				description:
-					'Windmill automatically infers your dependencies and generate lockfiles to guarantee reproducible execution. Dependencies are cached for instant executions.',
-				icon: DownloadIcon,
-				imageSrc: '/images/dependencies.png',
-				height: '600px',
-				caption: (
-					<div>
-						Infer{' '}
-						<a href="/docs/advanced/imports" target="_blank">
-							dependencies
-						</a>{' '}
-						from your imports.
-					</div>
-				)
-			}
-		]
-	},
-	{
-		label: 'Web IDE',
-		icon: FileCode,
-		id: 'web-ide-github-sync',
-		data: [
-			{
-				title: 'Web IDE & Assistants',
-				description: 'LSP support for Typescript, Python, Go, Bash and SQL scripts.',
-				icon: AlignLeftIcon,
-				imageSrc: '/images/code_editor_script.png',
-				altText: 'Web IDE',
-				caption: (
-					<div>
-						Windmill embeds a{' '}
-						<a href="/docs/code_editor" target="_blank">
-							code editor
-						</a>{' '}
-						and{' '}
-						<a href="/docs/code_editor/assistants" target="_blank">
-							code assistants
-						</a>{' '}
-						within its script, flow and app editors.
-					</div>
-				)
-			},
-			{
-				title: 'Parameter Inference',
-				description:
-					'Windmill employs JSON Schema to validate and align the format and type of parameters across scripts, flows, and resources.',
-				icon: CurlyBracesIcon,
-				video: {
-					videoSrc: '/videos/parameter_inference.mp4',
-					altText: 'Parameter Inference'
-				},
-				altText: 'Parameter Inference',
-				caption: (
-					<div>
-						JSON Schema is used behind the scenes to construct a comprehensive specification of the
-						expected{' '}
-						<a href="/docs/code_editor/parameter_inference" target="_blank">
-							input parameters
-						</a>
-						.
-					</div>
-				)
-			},
-			{
-				title: 'Add Resources and Variables to Code',
-				description:
-					'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
-				icon: BoxesIcon,
-				video: {
-					videoSrc: '/videos/add_resources_variables.mp4',
-					altText: 'Add Resources and Variables to Code'
-				},
-				altText: 'Add Resources and Variables to Code',
-				caption: (
-					<div>
-						You can directly{' '}
-						<a href="/docs/code_editor/add_variables_resources" target="_blank">
-							access Variables and Resources
-						</a>{' '}
-						from the Code Editor by fetching it or using the auto-generated UI.
-					</div>
-				)
-			},
-			{
-				title: 'Windmill AI',
-				description: 'From simple prompts, generate Windmill-specific code, edits and fixes.',
-				icon: Sparkles,
-				video: {
-					videoSrc: '/videos/ai_generation.mp4',
-					altText: 'Add Resources and Variables to Code'
-				},
-				altText: 'Windmill AI',
-				caption: (
-					<div>
-						Windmill provides ways to have{' '}
-						<a href="/docs/core_concepts/ai_generation" target="_blank">
-							Code Generation
-						</a>{' '}
-						help you in your coding experience.
-					</div>
-				)
-			}
-		]
-	},
-	{
-		label: 'Secrets & Permissions',
-		icon: Key,
-		id: 'secrets-permissions',
-		data: [
-			{
-				title: 'Secret management',
-				description:
-					'Credentials and sensitive values are tightly permissioned and stored securely as secrets.',
-				icon: Key,
-				caption: (
-					<div>
-						Credentials and sensitive values are tightly permissioned and stored securely as{' '}
-						<a href="/docs/core_concepts/variables_and_secrets#secrets" target="_blank">
-							secrets
-						</a>
-						.
-					</div>
-				),
-				imageSrc: '/images/script-secret.png',
-				altText: 'Secret management'
-			},
-			{
-				title: 'Permissions',
-				description: 'Granular permisioning through the use of folders.',
-				icon: FileLock2,
-				caption: (
-					<div>
-						Granular permisioning through the use of{' '}
-						<a href="/docs/core_concepts/groups_and_folders" target="_blank">
-							folders
-						</a>
-						.
-					</div>
-				),
-				imageSrc: '/images/script-permissions.png',
-				altText: 'Permissions'
-			}
-		]
-	},
-	{
-		label: 'Schedules & Triggers',
-		icon: Play,
-		id: 'schedules-webhooks-ui-cli',
-		data: [
-			{
-				title: 'Schedules',
-				description:
-					'Windmill allows you to define schedules for Scripts and Flows. Once a schedule is defined, it will automatically run the script at the set frequency.',
-				icon: CalendarClock,
-				caption: (
-					<div>
-						Windmill allows you to define{' '}
-						<a href="/docs/core_concepts/scheduling" target="_blank">
-							schedules
-						</a>{' '}
-						for Scripts and Flows. Once a schedule is defined, it will automatically run the script
-						at the set frequency.
-					</div>
-				),
-				imageSrc: '/images/script-schedule.png',
-				altText: 'Schedules'
-			},
-
-			{
-				title: 'UI',
-				description:
-					'You can directly trigger a script using the autogenerated UI or Windmill Apps.',
-				icon: FormInput,
-				caption: (
-					<div>
-						You can directly trigger a script using the{' '}
-						<a href="/docs/core_concepts/auto_generated_uis" target="_blank">
-							autogenerated UI
-						</a>{' '}
-						or{' '}
-						<a href="/docs/getting_started/apps_quickstart" target="_blank">
-							Windmill Apps
-						</a>
-						.
-					</div>
-				),
-				video: {
-					videoSrc: '/videos/auto_generated_uis.mp4',
-					videoLength: '26',
-					altText: 'Autogenerated UI'
-				}
-			},
-			{
-				title: 'Webhooks',
-				description: 'You can trigger a script using a webhook.',
-				icon: WebhookIcon,
-				caption: (
-					<div>
-						Every script has a sync and async{' '}
-						<a href="/docs/core_concepts/webhooks" target="_blank">
-							webhook
-						</a>{' '}
-						generated for every version of the script.
-					</div>
-				),
-				imageSrc: '/images/script-webhook.png',
-				altText: 'Webhooks'
-			},
-			{
-				title: 'CLI',
-				description: 'Execute a script using the CLI.',
-				icon: Terminal,
-				caption: (
-					<div>
-						Execute a script using the{' '}
-						<a href="/docs/advanced/cli" target="_blank">
-							CLI
-						</a>
-						.
-					</div>
-				),
-				video: {
-					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
-					videoLength: '26',
-					altText: 'Execute using CLI'
-				},
-				altText: 'Execute using CLI'
-			},
-			{
-				title: 'Slack',
-				description: 'Run scripts from a Slack command.',
-				icon: MessageSquareIcon,
-				caption: (
-					<div>
-						Trigger scripts from commands and approve flows directly from{' '}
-						<a href="/docs/integrations/slack" target="_blank">
-							Slack
-						</a>
-						.
-					</div>
-				),
-				imageSrc: '/images/slack-trigger.png'
-			}
-		]
-	}
-];
-
-declare global {
-	interface Window {
-		plausible: (name: string) => void;
-	}
-}
-
-const examples = [
-	{
-		name: <span>Slack messaging</span>,
-		description: (
-			<>
-				Send message to a specific channel on{' '}
-				<a
-					href="https://hub.windmill.dev/integrations/slack"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-pink-200 hover:bg-pink-200 px-2 rounded whitespace-nowrap  text-[#611f69] font-semibold">
-						Slack
-					</mark>
-				</a>
-			</>
-		),
-		href: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
-	},
-	{
-		name: 'Create issue',
-		description: (
-			<>
-				Create an issue in a given{' '}
-				<a
-					href="https://hub.windmill.dev/integrations/github"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-green-200 hover:bg-green-200 px-2 rounded whitespace-nowrap  text-green-800 font-semibold">
-						GitHub
-					</mark>
-				</a>
-				repository.
-			</>
-		),
-		href: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
-	},
-	{
-		name: 'Search documents in MongoDB',
-		description: (
-			<>
-				Selects documents in a{' '}
-				<a
-					href="https://hub.windmill.dev/scripts/mongodb/839/search-documents-mongodb"
-					target="_blank"
-					className="!no-underline"
-				>
-					<mark className="leading-none bg-green-200 hover:bg-green-200 px-2 rounded whitespace-nowrap  text-green-800 font-semibold">
-						MongoDB
-					</mark>
-				</a>{' '}
-				collection or view and returns a cursor to the selected documents
-			</>
-		),
-		href: 'https://hub.windmill.dev/scripts/mongodb/839/search-documents-mongodb'
-	}
-];
-
-export default function ScriptSection() {
+export default function FlowsLightSections() {
 	return (
 		<LandingSection bgClass="">
 			<div className="w-full gap-8 flex flex-col">
 				<div className="text-4xl font-medium text-green-900">Flows</div>
 				<div className="text-lg text-gray-600">Code to production in minutes</div>
-				<div className="grid grid-cols-2 gap-8">
-					<div className="bg-green-200/40 dark:bg-green-500/20 p-8 rounded-lg h-[400px] overflow-hidden">
-						<div className="font-medium text-xl mb-4 text-green-900">Windmill Smart IDE</div>
-						<div className="text-sm mb-4">
-							From LSP support to AI code generation, Windmill provides a powerful IDE for your
-							scripts.
-						</div>
-
-						<img src="/images/script-1.png" alt="Web IDE" className="rounded-lg shadow-md" />
-					</div>
-					<div className="bg-green-200/40 dark:bg-green-500/20 p-8 rounded-lg h-[400px] overflow-hidden">
-						<div className="font-medium text-xl mb-4">Polyglott</div>
-						<div className="text-sm mb-4">
-							From Typescript to Python, Windmill supports a wide range of languages. Dependencies
-							are automatically managed.
-						</div>
-						<img src="/images/script-2.png" alt="Web IDE" className="rounded-lg shadow-md" />
-					</div>
-					<div className="bg-green-200/40 dark:bg-green-500/20 p-8 rounded-lg h-[400px] overflow-hidden">
-						<div className="font-medium text-xl mb-4">Resources and variables</div>
-						<div className="text-sm mb-4">
-							Easily share third-party API keys and other sensitive data with your team.
-						</div>
-					</div>
-
-					<div className="bg-green-200/40 dark:bg-green-500/20 p-8 rounded-lg h-[400px] overflow-hidden">
-						<div className="font-medium text-xl mb-4">Triggers</div>
-						<div className="text-sm mb-4">
-							Trigger scripts from webhooks, schedules, CLI, Slack, and more.
-						</div>
-						<img src="/images/script-1.png" alt="Web IDE" className="rounded-lg shadow-md" />
-					</div>
-					<div className="bg-green-200/40 dark:bg-green-500/20 p-8 rounded-lg h-[400px] overflow-hidden col-span-2">
-						<div className="font-medium text-xl mb-4">Developer first</div>
-						<div className="text-sm mb-4 max-w-xl">
-							Develop scripts locally with your favorite code editor, preview them locally and
-							deploy them with the CLI, sync them with Git. VS Code extension available.
-						</div>
-						<img src="/images/script-1.png" alt="Web IDE" className="rounded-lg shadow-md" />
-					</div>
+				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+					{features.map((feature, index) => (
+						<LightFeatureCard
+							key={index}
+							feature={feature}
+							animationDelay={(index + 1) * 32}
+							span={feature.span}
+							height={feature.height}
+							noAnimation={feature.noAnimation}
+							lottieData={feature?.lottieData}
+						/>
+					))}
 				</div>
 			</div>
 		</LandingSection>

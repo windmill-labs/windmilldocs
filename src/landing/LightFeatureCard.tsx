@@ -1,66 +1,54 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { type CarouselApi } from './../@/components/ui/carousel';
-import { Carousel, CarouselContent, CarouselItem } from './../@/components/ui/carousel';
+import { useLottie } from 'lottie-react';
+import { ArrowRight } from 'lucide-react';
 
 type FeatureCardProps = {
 	feature: { title: string; description: string; images: string[] };
-	colors: { bgColor: string };
 	animationDelay: number;
 	span: string;
 	height: number;
 	noAnimation: boolean;
-	buttons: { title: string; Icon: any; description: string; href: string }[];
+	lottieData: unknown;
 };
 
 export default function LightFeatureCard({
 	feature,
-	colors,
 	animationDelay,
 	span,
-	height = 400,
 	noAnimation = false,
-	buttons
+	lottieData
 }: FeatureCardProps) {
 	const [api, setApi] = React.useState<CarouselApi>();
 
+	const options = {
+		animationData: lottieData,
+		loop: true
+	};
+
+	const { View } = useLottie(options);
 	const animation = noAnimation ? {} : { opacity: 0, y: animationDelay };
 	return (
 		<motion.div
-			className={`${colors.bgColor} rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative`}
-			style={{ height: `${height}px` }}
+			className={`bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative grid ${
+				span === 'col-span-1' ? 'grid-cols-1' : 'grid-cols-2'
+			} gap-16`}
 			initial={animation}
 			whileInView={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: 'easeIn' }}
 		>
-			<div className="font-medium text-xl mb-4">{feature.title}</div>
-			<div className="text-md mb-4 max-w-3xl h-16">{feature.description}</div>
+			<div>
+				<div className="font-medium text-2xl mb-6">{feature.title}</div>
+				<div className="text-lg mb-4 ">{feature.description}</div>
 
-			<div className="flex flex-row w-full mb-4 gap-2">
-				{buttons?.map((button, index) => (
-					<div className="flex items-center justify-center text-xs gap-2 bg-white py-2 px-4 rounded-md">
-						<button.Icon size={20} className="text-blue-500" />
-						{button.title}
-					</div>
-				))}
-			</div>
-			{feature.images.map((img, index) => (
-				<div key={index} className=" overflow-hidden rounded-xl">
-					<Carousel className="w-full" setApi={setApi}>
-						<CarouselContent>
-							{Array.from({ length: 5 }).map((_, index) => (
-								<CarouselItem key={index}>
-									<img
-										src={img}
-										alt={feature.title}
-										className="shadow-md transition-transform duration-500 w-full h-auto group-hover:scale-[1.05]" // Scale image on hover
-									/>
-								</CarouselItem>
-							))}
-						</CarouselContent>
-					</Carousel>
+				<div className="text-sm text-blue-500 flex flex-row items-center gap-2">
+					Learn more
+					<ArrowRight size={24} />
 				</div>
-			))}
+			</div>
+
+			<div className="rounded-lg overflow-hidden h-full w-full">{View}</div>
 		</motion.div>
 	);
 }
