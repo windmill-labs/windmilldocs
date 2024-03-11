@@ -156,7 +156,7 @@ More details at:
 
 #### CLI Sync
 
-You can use Windmill CLI to sync workspace to a git repository.
+You can use [Windmill CLI](../../../advanced/3_cli/index.mdx) to sync workspace to a git repository.
 
 More details at:
 

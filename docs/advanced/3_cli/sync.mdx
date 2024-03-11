@@ -106,11 +106,18 @@ wmill sync push [options]
 | `wmill sync push`            | Pushes local changes without using state tracking. Overwrites remote files with local changes. |
 | `wmill sync push --stateful` | Pushes local changes and applies them remotely.                                                |
 
-# wmill.yaml
+## wmill.yaml
 
-Note that you can explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
+Note that you can set the default typescirpt language and explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
-## Example Repos
+```yaml
+includes: ['f/**'] # uses "*" or uncomment this line to include everything. Note that wmill will only consider files with valid path (u/ or f/, with the right extension)
+excludes: [] # excludes patterns here
+
+defaultTs: 'bun' # deno is the default, set it to bun if you primarily use bun to avoid needing the .bun.ts extension
+```
+
+## Example Repo for Syncing with Windmill in Git
 
 We provide an example repo for syncing with Windmill:
 

@@ -30,7 +30,11 @@ export default function Content() {
                     is a software specializing in online payment processing systems.
 				</p>
 				<p>
-					Connecting Windmill to <span> {name}</span> takes a few seconds and lets you build
+					Connecting <a href="/">
+						<strong>
+							<span style={{ color: '##3b82f6' }}>Windmill</span>
+						</strong>
+					</a>{' '} to <span> {name}</span> takes a few seconds and lets you build
 					internal tools from it and integrate with any other platform.
 				</p>
 				<p>
