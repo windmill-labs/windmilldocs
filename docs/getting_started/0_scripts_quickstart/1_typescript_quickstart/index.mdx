@@ -346,13 +346,31 @@ The UI is generated from the Script's main function signature, but you can add a
 	/>
 </div>
 
+## Workflows as Code
+
+One way to write distributed programs that execute distinct jobs is to use [flows](../../../flows/1_flow_editor.mdx) that chain scripts together.
+
+Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as [workflows as code](../../../core_concepts/31_workflows_as_code/index.mdx).
+
+![Flow as code in TypeScript](./flow_as_code_ts.png "Flow as code in TypeScript")
+
+All details at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workflows as Code"
+		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+</div>
+
 ## Run!
 
 We're done! Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
 to load the script. You'll see the user input form we defined earlier.
 
-Note that Scripts are versioned in Windmill, and
-each script version is uniquely [identified by a hash](../../../script_editor/versioning.mdx)
+Note that Scripts are [versioned](../../../script_editor/versioning.mdx) in Windmill, and
+each script version is uniquely identified by a hash.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
@@ -360,7 +378,7 @@ the left.
 
 ![Run hello world in TypeScript](./run_ts.png.webp)
 
-You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -378,7 +396,7 @@ This script is a minimal working example, but there's a few more steps that can 
   to a script.
 - Connect to [resources](../../../core_concepts/3_resources_and_types/index.mdx).
 - [Trigger that script](../../8_trigger_scripts/index.mdx) in many ways.
-- Compose scripts in [Flows][flows] or [Apps](../../7_apps_quickstart/index.mdx).
+- Compose scripts in [Flows](../../../flows/1_flow_editor.mdx) or [Apps](../../7_apps_quickstart/index.mdx).
 - You can [share your scripts](../../../misc/1_share_on_hub/index.md) with the community on [Windmill Hub](https://hub.windmill.dev). Once
   submitted, they will be verified by moderators before becoming available to
   everyone right within Windmill.

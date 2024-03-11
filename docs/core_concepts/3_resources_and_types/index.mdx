@@ -174,11 +174,43 @@ _Python_
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
 </div>
+
+### States Path
+
+States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the script, script within a flow or schedule. The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
+
+```rust
+    let state_path = {
+        let trigger = if schedule_path.is_some() {
+            username.to_string()
+        } else {
+            "user".to_string()
+        };
+
+        if let Some(flow_path) = flow_path.clone() {
+            format!(
+                "{flow_path}/{}_{trigger}",
+                step_id.clone().unwrap_or_else(|| "nostep".to_string())
+            )
+        } else if let Some(script_path) = path.clone() {
+            let script_path = if script_path.ends_with("/") {
+                "noname".to_string()
+            } else {
+                script_path
+            };
+            format!("{script_path}/{trigger}")
+        } else {
+            format!("u/{username}/tmp_state")
+        }
+    };
+```
+
+For example, if a script using states is used within a flow that is scheduled, the state will take a new path as: `folder/flow_path/script_path/schedule_path`, or more concretely: `u/username/u/username/flow_name/u/username/script_name/u/username/schedule_name`.
 
 ## Using Resources
 

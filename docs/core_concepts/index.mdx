@@ -8,14 +8,14 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
+		title="Architecture"
+		description="Schema of Windmill architecture"
+		href="/docs/misc/architecture"
+	/>
+	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/core_concepts/auto_generated_uis"
-	/>
-	<DocCard
-		title="Windmill AI"
-		description="Have AI complete code on Windmill."
-		href="/docs/core_concepts/ai_generation"
 	/>
 	<DocCard
 		title="JSON Schema and Parsing"
@@ -23,19 +23,34 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/json_schema_and_parsing"
 	/>
 	<DocCard
-		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
-		href="/docs/advanced/imports"
-	/>
-	<DocCard
 		title="Instant Preview & Testing"
 		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
 		href="/docs/core_concepts/instant_preview"
 	/>
 	<DocCard
-		title="Persistent Storage"
+		title="Dependency Management & Imports"
+		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
+		href="/docs/advanced/imports"
+	/>
+	<DocCard
+		title="Workflows as Code"
+		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+	<DocCard
+		title="Draft and Deploy"
+		description="Develop and cooperate in a structured way."
+		href="/docs/core_concepts/draft_and_deploy"
+	/>
+	<DocCard
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
+	/>
+	<DocCard
+		title="Data Pipelines"
+		description="Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines."
+		href="/docs/core_concepts/data_pipelines"
 	/>
 	<DocCard
 		title="Roles and Permissions"
@@ -53,19 +68,14 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/error_handling"
 	/>
 	<DocCard
-		title="Collaboration in Windmill"
-		description="Collaboration in Windmill is simplified through various features and workflows."
-		href="/docs/core_concepts/collaboration"
+		title="Monitor Past and Future Runs"
+		description="Get an aggregated view of past and future runs on your workspace."
+		href="/docs/core_concepts/monitor_past_and_future_runs"
 	/>
 	<DocCard
 		title="Schedules"
 		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
 		href="/docs/core_concepts/scheduling"
-	/>
-	<DocCard
-		title="Monitor Past and Future Runs"
-		description="Get an aggregated view of past and future runs on your workspace."
-		href="/docs/core_concepts/monitor_past_and_future_runs"
 	/>
 	<DocCard
 		title="Webhooks"
@@ -93,24 +103,14 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/worker_groups"
 	/>
 	<DocCard
-		title="Caching"
-		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
-		href="/docs/core_concepts/caching"
-	/>
-	<DocCard
-		title="Jobs"
-		description="A job represents a past, present or future `task` or `work` to be executed by a worker."
-		href="/docs/core_concepts/jobs"
-	/>
-		<DocCard
 		title="Workspace Secret Encryption"
 		description="When updating the encryption key of a workspace, all secrets will be re-encrypted with the new key and the previous key will be replaced by the new one."
 		href="/docs/core_concepts/workspace_secret_encryption"
 	/>
 	<DocCard
-		title="Draft and Deploy"
-		description="Develop and cooperate in a structured way."
-		href="/docs/core_concepts/draft_and_deploy"
+		title="Caching"
+		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
+		href="/docs/core_concepts/caching"
 	/>
 	<DocCard
 		title="Handling Files and Binary Data"
@@ -121,6 +121,21 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		title="Rich Display Rendering"
 		description="The result renderer in Windmill supports rich display rendering, allowing you to customize the display format of your results."
 		href="/docs/core_concepts/rich_display_rendering"
+	/>
+	<DocCard
+		title="Jobs"
+		description="A job represents a past, present or future `task` or `work` to be executed by a worker."
+		href="/docs/core_concepts/jobs"
+	/>
+	<DocCard
+		title="Collaboration in Windmill"
+		description="Collaboration in Windmill is simplified through various features and workflows."
+		href="/docs/core_concepts/collaboration"
+	/>
+	<DocCard
+		title="Windmill AI"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation"
 	/>
 </div>
 
@@ -390,11 +405,17 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		href="/docs/apps/app_configuration_settings/components_groups"
 		color="orange"
 	/>
-	<DocCard
-		color="orange"
+	<DocCard		
 		title="Import Custom React Components"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
 		href="/docs/apps/react_components"
+		color="orange"
+	/>
+	<DocCard
+		title="Workspace Default App"
+		description="If configured, users who are operators in this workspace will be redirected to this app automatically when logging into this workspace."
+		href="/docs/apps/default_app"
+		color="orange"
 	/>
 </div>
 
@@ -472,10 +493,5 @@ All details & features on [Pricing page](/pricing).
 		title="Multiplayer"
 		description="Collaborate on scripts simultaneously."
 		href="/docs/core_concepts/multiplayer"
-	/>
-	<DocCard
-		title="Workspace Default App"
-		description="If configured, users who are operators in this workspace will be redirected to this app automatically when logging into this workspace."
-		href="/docs/apps/default_app"
 	/>
 </div>

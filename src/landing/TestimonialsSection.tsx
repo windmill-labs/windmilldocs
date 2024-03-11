@@ -105,20 +105,18 @@ const testimonials = [
 	{
 		body: (
 			<span>
-				Love{' '}
+				I migrated to{' '}
 				<strong>
-					<span className="text-blue-500">Windmill</span>
+					<span className="text-blue-500">windmill.dev</span>
 				</strong>{' '}
-				so much. It's blazing fast, super easier to try it out locally with docker-compose, and
-				Ruben and his team are shipping new features / fixing bugs every day, and the product only
-				gets better.
+				a couple of weeks ago and couldn't be happier. Honestly the product is simply better than Airplane. I looked at Windmill.dev a 18 months ago when I adopted Airplane, and it was less mature - but it was open source and I wish I'd given that more weight.
 			</span>
 		),
 		author: {
 			handle: 'hn',
-			backlink: 'https://news.ycombinator.com/item?id=37001402',
-			name: 'slig on HackerNews',
-			date: 'August 4th 2023'
+			backlink: 'https://news.ycombinator.com/item?id=39623203',
+			name: 'jeremyjh on HackerNews',
+			date: 'March 6th 2024'
 		}
 	},
 	{

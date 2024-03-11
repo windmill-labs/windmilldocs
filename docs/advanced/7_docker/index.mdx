@@ -121,3 +121,68 @@ Status: Downloaded newer image for alpine:latest
 Hello
 + exit 0
 ```
+
+## Kubernetes
+
+If you use kubernetes and would like to run your docker file directly on the kubernetes host, use the following script:
+
+```
+# shellcheck shell=bash
+# Bash script that calls docker as a client to the host daemon
+# See documentation: https://www.windmill.dev/docs/advanced/docker
+msg="${1:-world}"
+
+IMAGE="docker/whalesay:latest"
+COMMAND=(sh -c "cowsay $msg")
+
+APISERVER=https://kubernetes.default.svc
+SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
+NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
+TOKEN=$(cat ${SERVICEACCOUNT}/token)
+CACERT=${SERVICEACCOUNT}/ca.crt
+
+kubectl config set-cluster local --server="${APISERVER}" --certificate-authority="${CACERT}"
+kubectl config set-credentials local --token="${TOKEN}"
+kubectl config set-context local --cluster=local --user=local --namespace="${NAMESPACE}"
+kubectl config use-context local
+
+kubectl run task -it --rm --restart=Never --image="$IMAGE" -- "${COMMAND[@]}"
+```
+
+and use the following additional privileges
+
+```yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: windmill
+  name: pod-management
+rules:
+  - apiGroups: ['']
+    resources: ['pods']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
+  - apiGroups: ['']
+    resources: ['pods/log']
+    verbs: ['get', 'list', 'watch']
+  - apiGroups: ['']
+    resources: ['pods/attach']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
+  - apiGroups: ['']
+    resources: ['events']
+    verbs: ['get', 'list', 'watch']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-management
+  namespace: windmill
+subjects:
+  - kind: ServiceAccount
+    name: windmill-chart
+    namespace: windmill
+roleRef:
+  kind: Role
+  name: pod-management
+  apiGroup: rbac.authorization.k8s.io
+```

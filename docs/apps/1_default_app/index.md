@@ -1,6 +1,6 @@
 # Workspace Default App
 
-If configured, users who are [operators](../../core_concepts/16_roles_and_permissions/index.mdx) in this workspace will be redirected to this app automatically when logging into this workspace.
+If configured, users who are [operators](../../core_concepts/16_roles_and_permissions/index.mdx) in this workspace will be redirected to this app automatically when logging into this workspace. Workspace Default App is a [Cloud plan & Self-Hosted Enterprise](/pricing) feature.
 
 Make sure the default app is [shared with all the operators](../../core_concepts/8_groups_and_folders/index.mdx) of this workspace before turning this feature on.
 
