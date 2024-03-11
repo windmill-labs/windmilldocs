@@ -21,7 +21,7 @@ In this quick start guide, we will write our first script in Go.
 
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Editor"
 		description="All the details on scripts."
@@ -74,11 +74,11 @@ first step of script creation: Metadata.
 
 ## Settings
 
-![New script](./create_script_go.png)
+![New script](./create_script_go.png.webp)
 
 As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
-- **Path** is the Script's unique identifier that consist of the
+- **Path** is the Script's unique identifier that consists of the
   [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
   The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
 - **Summary** (optional) is a short, human-readable summary of the Script. It
@@ -94,9 +94,9 @@ This menu also has additional settings, such as:
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU acceleration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
-- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with Python and TypeScript.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Settings"
 		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
@@ -113,9 +113,9 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for python](./editor_go.png)
+![Editor for python](./editor_go.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."
@@ -164,7 +164,7 @@ entrypoint. There are a few important things to note about the `main`.
   the UI in later steps (but not change the input type!).
 - In Go, the main function must return (interface{}, error).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="JSON Schema and Parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
@@ -178,7 +178,7 @@ The last import line imports the Windmill client, which is needed for example to
 
 In Go, the dependencies and their versions are contained in the script and hence there is no need for any additional steps.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Dependency Management & Imports"
 		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
@@ -215,7 +215,7 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instant Preview & Testing"
 		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
@@ -231,9 +231,9 @@ From the Settings menu, the "Generated UI" tab lets you customize the script's a
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Python](./customize_go.png)
+![Advanced settings for Python](./customize_go.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
@@ -251,18 +251,18 @@ The UI is generated from the Script's main function signature, but you can add a
 We're done! Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
 to load the script. You'll see the user input form we defined earlier.
 
-Note that Scripts are versioned in Windmill, and
-each script version is uniquely [identified by a hash](../../../script_editor/versioning.mdx)
+Note that Scripts are [versioned](../../../script_editor/versioning.mdx) in Windmill, and
+each script version is uniquely identified by a hash.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run hello world in Python](./run_go.png)
+![Run hello world in Python](./run_go.png.webp)
 
-You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Triggering Scripts"
 		description="Trigger flows on-demand, by schedule or on external events."
@@ -285,7 +285,7 @@ This script is a minimal working example, but there's a few more steps that can 
 
 Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
@@ -295,7 +295,7 @@ Scripts are immutable and there is an hash for each deployment of a given script
 
 For each script, a UI is autogenerated from the jsonchema inferred from the script signature, and can be customized further as standalone or embedded into rich UIs using the [App builder](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -310,7 +310,7 @@ For each script, a UI is autogenerated from the jsonchema inferred from the scri
 
 In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.mdx) are generated for each deployment.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Webhooks"
 		description="Trigger scripts and flows from webhooks."

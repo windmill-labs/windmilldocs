@@ -1,4 +1,3 @@
-
 import DocCard from '@site/src/components/DocCard';
 
 # Tabs
@@ -11,31 +10,31 @@ Tabs have three display modes:
 - `Invisible on view`: The tabs are not displayed when the app is viewed. They are only displayed in the app editor. This is useful to make multi-page apps, where each page is a tab.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/tabs.mp4"
-    alt="tabs component"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/tabs.mp4"
+	alt="tabs component"
 />
-<br/>
+<br />
 
-To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or your can move an existing component by cutting it and pasting it in the tabs component.
+To add a component to a tabs component, you can either click on `Insert` while you selected the tabs component, or you can move an existing component by cutting it and pasting it in the tabs component.
 
 The following section details Tabs component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        color="orange"
-        title="App Editor Documentation"
-        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
-        href="/docs/apps/app_editor"
-    />
-    <DocCard
-        color="orange"
-        title="Apps Quickstart"
-        description="Learn how to build your first app in a matter of minutes."
-        href="/docs/getting_started/apps_quickstart"
-    />
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App Editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
 </div>
 
 ## Tabs configuration
@@ -43,3 +42,15 @@ The following section details Tabs component's specific settings. For more detai
 | Name      |               Type               | Connectable | Templatable | Default | Description                   |
 | --------- | :------------------------------: | :---------: | :---------: | :-----: | ----------------------------- |
 | Tabs Kind | Tabs, Sidebar, Invisible on view |    false    |    false    |  Tabs   | The display mode of the tabs. |
+
+## Outputs
+
+| Name             |  Type  | Description                 |
+| ---------------- | :----: | --------------------------- |
+| selectedTabIndex | number | Number of the selected tab. |
+
+## Component controls
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| setTab | id: string, index:number | Set the current tab. | setTab('a',1) |

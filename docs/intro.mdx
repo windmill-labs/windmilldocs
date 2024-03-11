@@ -1,148 +1,69 @@
 import DocCard from '@site/src/components/DocCard';
-import { Book, Pen, Home, Cloud } from 'lucide-react';
+import { Book, Pen, Home, Cloud, Terminal } from 'lucide-react';
 
-# Introduction
+# What is Windmill?
 
-Windmill is an **<a href="https://github.com/windmill-labs/windmill" >open-source</a>**, blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to **build all your internal tools (endpoints, workflows, UIs) through the combination of code** (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
+Windmill is a fast, **<a href="https://github.com/windmill-labs/windmill">open-source</a>** alternative to platforms like Retool, Airplane, Superblocks, n8n, Airflow, and Temporal, designed to **build comprehensive internal tools** (endpoints, workflows, UIs). It supports coding in Typescript, Python, Go, Bash, SQL, or any Docker image, alongside intuitive low-code builders, featuring:
 
-- an [execution runtime](./getting_started/0_scripts_quickstart/index.mdx) to execute functions at scale with low-latency and no overhead on a fleet of workers
-- an [orchestrator](./getting_started/6_flows_quickstart/index.mdx) to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
-- an [app builder](./getting_started/7_apps_quickstart/index.mdx) to build application and data-intensive dashboards built with low-code or JS frameworks such as React.
+- An [execution runtime](./getting_started/0_scripts_quickstart/index.mdx) for scalable, low-latency function execution across a worker fleet.
+- An [orchestrator](./getting_started/6_flows_quickstart/index.mdx) for assembling these functions into efficient, low-latency flows, using either a low-code builder or YAML.
+- An [app builder](./getting_started/7_apps_quickstart/index.mdx) for creating data-centric dashboards, utilizing low-code or JS frameworks like React.
 
-Windmill can be used solely from its UI through its [webIDE](./code_editor/index.mdx), and low-code builders but it is also possible to keep using your editor and deploy from a [git repo](./advanced/9_deploy_gh_gl/index.md) using a [CLI](./cli_local_dev/index.mdx).
+Windmill supports both UI-based operations via its webIDE and low-code builders, as well as [CLI](./advanced/3_cli/index.mdx) deployments [from a Git repository](./advanced/11_git_sync/index.mdx), aligning with your preferred development style.
 
-Start building now using our **<a href="https://app.windmill.dev/" rel="nofollow" >Cloud App</a>** (no credit card required) or **<a href="/docs/advanced/self_host" >Self-Host</a>** yourself.
+Start your project today with our **<a href="https://app.windmill.dev/" rel="nofollow" >Cloud App</a>** (no credit card needed) or opt for **<a href="/docs/advanced/self_host" >self-hosting</a>**.
 
-## Learn about Windmill
+## Develop Faster
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+Focus on code that matters: your critical business logic, from data transformation to internal API calls, starts as scripts and SQL files. Windmill transforms these into scalable microservices and tools without the usual heavy lifting.
+
+Boilerplate code is eliminated as Windmill takes care of the repetitive work of building UIs, [handling errors](./core_concepts/10_error_handling/index.mdx), scaling logic, and [managing dependencies](./advanced/6_imports/index.md), making these aspects more streamlined.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Get Started with Windmill"
+		title="Getting Started"
 		description="Get started in 30 seconds."
 		href="/docs/getting_started/how_to_use_windmill"
 		Icon={Book}
 	/>
-	<DocCard
-		title="Note of Intent"
-		description="Windmill bridges the gap between no-code/low-code services and traditional programming."
-		href="/docs/misc/note_of_intent"
-		Icon={Pen}
-	/>
-	<DocCard
-		title="Self Host Windmill"
-		description="Self host Windmill in 2 minutes."
-		href="/docs/advanced/self_host/"
-		Icon={Home}
-	/>
-	<DocCard
-		target="_blank"
-		title="Windmill Cloud"
-		description="Use Windmill's Cloud App (no credit card required)."
-		href="https://app.windmill.dev/"
-		Icon={Cloud}
-	/>
 </div>
 
-## Quickstarts
+## Core Features
 
-Windmill is a feature-rich platform that allows you to build endpoints, cron jobs, workflows & UIs. Each of these features can be used standalone.
+**An efficient runtime**: execute code [across languages](./getting_started/0_scripts_quickstart/index.mdx) with minimal overhead and instant starts.
 
-However the 3 core layers of Windmill, namely Scripts, Flows and Apps are complementary. Scripts are the smallest "unit" of abstraction: workflows and UIs all rely on them.
+**Smart dependency and input management**: automatically generate lockfiles and input specs from your code, ensuring consistent [dependency versions](./advanced/6_imports/index.md) and simplified [input handling](./core_concepts/13_json_schema_and_parsing/index.md).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+**Dynamic web IDE and Low-Code builders**: create [scripts](./script_editor/index.mdx) with advanced editing tools and [auto-generated UIs](./core_concepts/6_auto_generated_uis/index.mdx), build [flows](./flows/1_flow_editor.mdx) with a drag-and-drop interface, and design [apps](./apps/0_app_editor/index.mdx) without extensive coding.
+
+**Enterprise-Ready**: Windmill offers robust [permissioning](./core_concepts/16_roles_and_permissions/index.mdx), [secret management](./core_concepts/2_variables_and_secrets/index.mdx), OAuth, and more, wrapped in an enterprise-grade platform.
+
+**Integrations and Automations**: with [webhooks](./core_concepts/4_webhooks/index.mdx), an [open API](https://app.windmill.dev/openapi.html), and a [scheduler](./core_concepts/1_scheduling/index.mdx), Windmill fits seamlessly into your infrastructure, allowing for extensive automation capabilities.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Scripts"
-		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash, SQL or launch docker containers."
+		title="Core Concepts"
+		description="Learn about Windmill's core concepts in depth."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 	<DocCard
-		title="Flows"
-		description="Flows are state machines represented as DAGs that compose steps together to build workflows and ETLs."
-		href="/docs/getting_started/flows_quickstart"
+		title="Enterprise"
+		description="Learn how to run Windmill in an enterprise environment."
+		href="/docs/misc/plans_details"
 		color="teal"
-	/>
-	<DocCard
-		title="Apps"
-		description="Apps are customized, user-friendly interfaces built using a drag-and-drop editor."
-		href="/docs/getting_started/apps_quickstart"
-		color="orange"
 	/>
 </div>
 
-## Learn more about Windmill
+## Compare
 
-<div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Core Concepts"
-		description="The essential principles and features that underpin the platform's capabilities."
-		href="/docs/core_concepts/"
-	/>
-	<DocCard
-		title="Integrations"
-		description="Windmill provides a framework to easily add integrations."
-		href="/docs/integrations/integrations_on_windmill"
-	/>
-	<DocCard
-		title="Triggering Scripts"
-		description="Trigger flows on-demand, by schedule or on external events."
-		href="/docs/getting_started/trigger_scripts"
-	/>
-	<DocCard
-		title="Triggering Flows"
-		description="Trigger flows on-demand, by schedule or on external events."
-		href="/docs/getting_started/trigger_flows"
-		color="teal"
-	/>
-	<DocCard
-		title="Script Editor"
-		description="Low-code editor to build scripts."
-		href="/docs/script_editor"
-	/>
-	<DocCard
-		title="Flow Editor"
-		description="Low-code editor to build workflows."
-		color="teal"
-		href="/docs/flows/flow_editor"
-	/>
-	<DocCard
-		title="App Editor"
-		description="Drag-and-drop editor to build apps."
-		color="orange"
-		href="/docs/apps/app_editor"
-	/>
-</div>
+While other frameworks offer pieces of what Windmill does, none combine its comprehensive feature set with full open-source accessibility. Whether compared to workflow engines like Temporal and Airflow or UI builders like Retool, Windmill stands out for its scalability, open APIs, and ease of use.
 
-## Windmill for Developers
+Windmill is an open-source, self-hostable platform that marries the flexibility of code with the speed of low-code solutions, enabling seamless automation of repetitive tasks.
 
-<div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Command-Line Interface"
-		description="Interact with Windmill instances right from your terminal."
-		href="/docs/advanced/cli"
-	/>
-	<DocCard
-		title="Local Development"
-		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
-		href="/docs/advanced/local_development"
-	/>
-	<DocCard
-		title="Version control from GitHub/GitLab"
-		description="Use a GH/GL repo as the source of truth for part or all of your Windmill workspace."
-		href="/docs/advanced/deploy_gh_gl"
-	/>
-	<DocCard
-		title="Run Docker Containers"
-		description="Windmill supports running any docker container through its bash integration."
-		href="/docs/advanced/docker"
-	/>
-</div>
+Learn how Windmill compares to other products like Retool, Airplane, Superblocks, n8n, Airflow, and Temporal.
 
-## Comparisons
-
-<div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="text-xl mb-2 font-semibold"></div>
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
 		description="Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute."
@@ -150,7 +71,7 @@ However the 3 core layers of Windmill, namely Scripts, Flows and Apps are comple
 	/>
 	<DocCard
 		title="Windmill Compared to Peers"
-		description="Our subjective impression on other players you might come across."
+		description="See where Windmill sits in the market of workflow engines and compares to its peers."
 		href="/docs/compared_to/peers"
 	/>
 </div>

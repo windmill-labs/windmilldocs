@@ -1,8 +1,11 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+// @ts-ignore
+import { themes } from 'prism-react-renderer';
+
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -12,7 +15,7 @@ const config = {
 	onBrokenLinks: 'throw',
 	onBrokenMarkdownLinks: 'throw',
 	trailingSlash: false,
-	favicon: 'img/logo.svg',
+	favicon: 'img/docs_logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
 
@@ -46,7 +49,16 @@ const config = {
 				]
 			}
 		],
-		['docusaurus-plugin-image-zoom', {}]
+		['docusaurus-plugin-image-zoom', {}],
+		[
+			'@docusaurus/plugin-content-blog',
+			{
+				id: 'changelog',
+				routeBasePath: 'changelog',
+				path: './changelog',
+				blogSidebarCount: 0
+			}
+		]
 	],
 	presets: [
 		[
@@ -62,6 +74,7 @@ const config = {
 					blogSidebarCount: 0,
 					postsPerPage: 9
 				},
+
 				theme: {
 					customCss: require.resolve('./src/css/custom.css')
 				},
@@ -129,6 +142,11 @@ const config = {
 						position: 'left',
 						label: 'Blog'
 					},
+					{
+						href: '/changelog',
+						position: 'left',
+						label: 'Changelog'
+					},
 					// {
 					// 	href: '/hiring',
 					// 	position: 'right',
@@ -155,9 +173,18 @@ const config = {
 					}
 				]
 			},
+			announcementBar: {
+				id: 'airplane_migration',
+				content:
+					'<a style="height:20px;" href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
+				backgroundColor: '#2563eb',
+				textColor: '#fff',
+				isCloseable: true
+			},
 			prism: {
 				theme: lightCodeTheme,
-				darkTheme: darkCodeTheme
+				darkTheme: darkCodeTheme,
+				additionalLanguages: ['powershell']
 			},
 			colorMode: {
 				defaultMode: 'dark',

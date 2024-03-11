@@ -52,10 +52,10 @@ Summary (optional) is a short, human-readable summary of the Script. It will be 
 
 #### Path
 
-**Path** is the Flow's unique identifier that consist of the [flow's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
+**Path** is the Flow's unique identifier that consists of the [flow's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
 The owner can be either a user, or a group of users ([folder](../core_concepts/8_groups_and_folders/index.mdx#folders)).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Roles and Permissions"
 		description="Control access and manage permissions within your instance and workspaces."
@@ -78,7 +78,7 @@ This is where you can give instructions to users on how to run your Flow. It sup
 
 ### Schedule
 
-Flows can be [triggered](../getting_started/9_trigger_flows/index.mdx) by any [schedules](../core_concepts/1_scheduling/index.md), their [webhooks](../core_concepts/4_webhooks/index.mdx) or their [UI](../core_concepts/6_auto_generated_uis/index.mdx) but they only have only one primary schedules with which they share the same path. The primary schedule can be set here.
+Flows can be [triggered](../getting_started/9_trigger_flows/index.mdx) by any [schedules](../core_concepts/1_scheduling/index.mdx), their [webhooks](../core_concepts/4_webhooks/index.mdx) or their [UI](../core_concepts/6_auto_generated_uis/index.mdx) but they only have only one primary schedules with which they share the same path. The primary schedule can be set here.
 
 A CRON expression is used to define the schedule. Schedules can also be disabled.
 
@@ -90,10 +90,10 @@ Have more details on all the ways to trigger flows [here](../getting_started/9_t
 
 :::
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Scheduling"
+		title="Schedules"
 		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
 		href="/docs/core_concepts/scheduling"
 	/>
@@ -129,10 +129,10 @@ This flow can be found on the Demo workspace.
 
 Another example is to be found from the [Hub](https://hub.windmill.dev/flows/32/same-worker-example-of-using-the-'.%2Fshared'-folder).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
@@ -142,9 +142,9 @@ Another example is to be found from the [Hub](https://hub.windmill.dev/flows/32/
 
 Flows can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.mdx) for efficient execution on different machines with varying specifications.
 
-![Worker group tag](../core_concepts/9_worker_groups/select_script_builder.png)
+![Worker group tag](../core_concepts/9_worker_groups/select_script_builder.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Worker Groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
@@ -169,7 +169,7 @@ At last, you can directly [test a step](#test-this-step).
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instant Preview & Testing"
 		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
@@ -226,7 +226,7 @@ Below is the list of all available advanced settings for each argument type:
 | Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
 | Any     | No advanced configuration for this type.                                                                                                  |
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -280,21 +280,23 @@ There are two ways to create an action script:
 
 You can either create a new action script in:
 
-- [Python](/docs/getting_started/scripts_quickstart/python): Windmill provides a Python 3.11 environment.
-- [Typescript](/docs/getting_started/scripts_quickstart/typescript): Windmill uses Deno as the TypeScript runtime.
-- [Go](/docs/getting_started/scripts_quickstart/go).
-- [Bash](/docs/getting_started/scripts_quickstart/bash).
+- [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx): Windmill provides a Python 3.11 environment.
+- [Typescript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx): Windmill uses Deno as the TypeScript runtime.
+- [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx).
+- [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx).
 - Any language [running any docker container](../advanced/7_docker/index.mdx) through Windmill's bash support.
 
-There are special kinds of scripts:
+There are special kinds of scripts, [SQL and query languages](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx):
 
-- [Postgres](/docs/getting_started/scripts_quickstart/sql)
-- [MySQL](/docs/getting_started/scripts_quickstart/sql)
-- GraphQL
-- Rest
+- Postgres
+- MySQL
+- MS SQL
 - BigQuery
 - Snowflake
-- Powershell
+
+- [Rest](../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx)
+- [GrapQL](../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx)
+- [Powershell](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx)
 
 These are essentially Typescript template to easily write queries to a database.
 
@@ -347,7 +349,7 @@ The header is composed of:
 - Format: format the script. Can be triggerd on save (CTRL+S).
 - Script: view hub or workspace script code.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Script Editor"
@@ -406,7 +408,7 @@ Clicking on a field will set the mode to "Append". Clicking on the "Connect" but
 The test this step section allows to test the step on its own. You can set the input and run the script.
 The result and logs are displayed on the left-hand side.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instant Preview & Testing"
 		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
@@ -419,7 +421,7 @@ The result and logs are displayed on the left-hand side.
 
 The advanced section allows to configure the following:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Retries"
@@ -446,7 +448,7 @@ The advanced section allows to configure the following:
 	/>
 	<DocCard
 		color="teal"
-		title="Approval Steps in Flows"
+		title="Suspend & Approval / Prompts"
 		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
 		href="/docs/flows/flow_approval"
 	/>
@@ -466,7 +468,7 @@ The advanced section allows to configure the following:
 		color="teal"
 		title="Shared Directory"
 		description="The Shared Directory allows steps within a flow to share data by storing it in a designated folder"
-		href="/docs/core_concepts/persistent_storage#shared-directory"
+		href="/docs/core_concepts/persistent_storage/within_windmill#shared-directory"
 	/>
 	<DocCard
 		color="teal"

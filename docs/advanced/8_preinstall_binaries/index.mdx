@@ -60,12 +60,14 @@ CMD ["windmill"]
 All examples above can be used in your [`docker-compose.yml`](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) by specifying the build context.
 
 Replace:
+
 ```
   windmill_worker:
     image: ${WM_IMAGE}
 ```
 
 With the following:
+
 ```
   windmill_worker:
     build:
@@ -75,6 +77,7 @@ With the following:
 ```
 
 Note that you can pass environment variables from your `.env` file via the args above and use them in your `Dockerfile`:
+
 ```dockerfile
 ARG WM_IMAGE
 FROM ${WM_IMAGE}
@@ -82,16 +85,20 @@ FROM ${WM_IMAGE}
 [...]
 ```
 
-
 ## Init Scripts
 
 Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-  <img src={require("./init_scripts.png").default} alt="Init Scripts Infographics" title="Init Scripts Infographics" width="70%" />
+	<img
+		src={require('./init_scripts.png.webp').default}
+		alt="Init Scripts Infographics"
+		title="Init Scripts Infographics"
+		width="70%"
+	/>
 </div>
 
-<br/>
+<br />
 
 Any scripts are set from the [Worker Management UI](../../misc/11_worker_group_management_ui/index.mdx), at the worker group level. Any script content specified in `INIT_SCRIPT` will be executed at the beginning when each worker of the worker group starts.
 
@@ -99,19 +106,19 @@ When adjustments are made in the [Worker Management UI](../../misc/11_worker_gro
 
 The execution of Init Scripts is inspectable in the superadmin workspace, with `Kind = All` filter. The path of those executions are `init_script_{worker_name}`.
 
-![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png)
+![Worker Group edit config](../../core_concepts/9_worker_groups/worker_group_ui.png.webp)
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/2o28HMF1Cnk?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/2o28HMF1Cnk?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 ### Example: Installing Playwright (via pip)
 
@@ -124,12 +131,12 @@ playwright install-deps
 
 More at:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 	<DocCard
 		title="Worker Groups Management UI"
 		description="On Enterpris Edition, worker groups can be managed through Windmill UI."

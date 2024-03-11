@@ -38,7 +38,7 @@ Below is a simplified spec of JSON Schema. See [here for its full spec](https://
 
 Where the `properties` field contains a dictionary of arguments, and `required` is the list of all the mandatory arguments.
 
-The property names need to match the arguments declared by the main function, in our example `your_name` and `your_nickname`. There is a lot you can do with [arguments, types, and validation](#json-schema), but to keep it short:
+The property names need to match the arguments declared by the main function, in our example `your_name` and `your_nickname`. There is a lot you can do with arguments, types, and validation, but to keep it short:
 
 - Arguments can specify a type `integer`, `number`, `string`, `boolean`, `object`, `array` or `any`. The user's input will be validated against that type.
 - One can further constraint the type by having the string following a RegEx or pattern, or the object to be of a specific [Resource Type](../../core_concepts/3_resources_and_types/index.mdx).
@@ -52,32 +52,33 @@ Scripts in Windmill have input parameters defined by a JSON Schema, where each p
 
 In Python:
 
-| Python     | JSON Schema                      |
-| ---------- | -------------------------------- |
-| `str`      | `string`                         |
-| `float`    | `number`                         |
-| `str`      | `string`                         |
-| `float`    | `number`                         |
-| `int`      | `integer`                        |
-| `bool`     | `boolean`                        |
-| `dict`     | `object`                         |
-| `list`     | `any[]`                          |
-| `bytes`    | `string, encodingFormat: base64` |
-| `datetime` | `str, format: date-time`         |
-| `_`        | `any`                            |
+| Python              | JSON Schema                      |
+| ------------------- | -------------------------------- |
+| `str`               | `string`                         |
+| `float`             | `number`                         |
+| `Literal["a", "b"]` | `string` with enums: "a", "b"    |
+| `int`               | `integer`                        |
+| `bool`              | `boolean`                        |
+| `dict`              | `object`                         |
+| `list`              | `any[]`                          |
+| `List[str]`         | `string[]`                       |
+| `bytes`             | `string, encodingFormat: base64` |
+| `datetime`          | `str, format: date-time`         |
+| `_`                 | `any`                            |
 
-In Deno:
+In Deno/Bun/REST:
 
-| Deno                 | JSON Schema |
-| -------------------- | ----------- |
-| `string`             | `string`    |
-| `object`             | `object`    |
-| `boolean`            | `boolean`   |
-| `bigint`             | `int`       |
-| `number`             | `number`    |
-| `string[]`           | `string[]`  |
-| `("foo" \| "bar")[]` | `enum[]`    |
-| ...                  | ...         |
+| Deno                 | JSON Schema                   |
+| -------------------- | ----------------------------- |
+| `string`             | `string`                      |
+| `"a" \| "b"`         | `string` with enums: "a", "b" |
+| `object`             | `object`                      |
+| `boolean`            | `boolean`                     |
+| `bigint`             | `int`                         |
+| `number`             | `number`                      |
+| `string[]`           | `string[]`                    |
+| `("foo" \| "bar")[]` | `enum[]`                      |
+| ...                  | ...                           |
 
 However in Deno there also some special types that are specific to Windmill.
 They are as follows:

@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Resources and Resource Types
 
@@ -19,8 +21,8 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 
 :::
 
-<div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="text-xl mb-2 font-semibold"></div>
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="List of integrations"
 		description="Windmill provides a framework to easily add integrations."
@@ -37,10 +39,13 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 ## Create a Resource
 
 To create a resource using an existing type, go to the
-[Resources](https://app.windmill.dev/resources) page and click "Add a
-resource/API".
 
-![Add a resource](./add_resource.png)
+<a href="https://app.windmill.dev/resources" rel="nofollow">
+	Resources
+</a>
+page and click "Add a resource/API".
+
+![Add a resource](./add_resource.png.webp)
 
 Just like most objects in Windmill, Resources have a path that define their
 permissions - see [ownership path prefix](../16_roles_and_permissions/index.mdx).
@@ -49,7 +54,7 @@ Each **Resource** has a **Resource Type**, that defines what fields that
 resource contains. Select one from the list and check the schema to see what
 fields are present.
 
-![Add resource example](./add_sf_resource.png)
+![Add resource example](./add_sf_resource.png.webp)
 
 Resources commonly need to access secrets or re-use
 [Variables](../2_variables_and_secrets/index.mdx), for example passwords or API
@@ -72,23 +77,32 @@ a link, for example:
 
 ## Create a Resource Type
 
-Windmill comes preloaded with some common Resource Types, such as databases, apps, SMTP, etc. You can see the full list on [Windmill Hub](https://hub.windmill.dev/resources). You
-can also add custom Resource Types by clicking "Add a resource type" on the
-[Resources](https://app.windmill.dev/resources) page.
+Windmill comes preloaded with some common Resource Types, such as databases, apps, SMTP, etc. You can see the full list on [Windmill Hub](https://hub.windmill.dev/resources).
+You can also add custom Resource Types by clicking "Add a resource type" on the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page.
 
-![Create resource type](./add_resource_type.png)
+![Create resource type](./add_resource_type.png.webp)
 
 Use the "Add Property" button to add a field to the resource type. You can
 specify constraints for the field (a type, making it mandatory, specifying a
 default, etc). You can also view the schema by toggling the "As JSON" option:
 
-![Resource type schema view](./resource_type_json.png)
+![Resource type schema view](./resource_type_json.png.webp)
+
+### Share Resource Type on Hub
+
+You can contribute to the [Windmill Hub](https://hub.windmill.dev/) by sharing your Resource Type. To do so, add a Resource Type on the [Resources section](https://hub.windmill.dev/resources) of the Hub.
+
+You will be asked to fill Name, Integration (the corresponding service it interacts with) and Schema (the JSON Schema of the Resource Type).
+
+Verified Resource Types on the Hub are directly added to the list of available Resource Types on each new Windmill instance synced with the Hub.
+
+![Share resource type](./new_resource_type_hub.png)
 
 ## States
 
 States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
 
-In Windmill, states are considered as resources, but they are excluded from the Workspace tab for clarity.
+In Windmill, states are considered as resources (rich objects in JSON), but they are excluded from the Workspace tab for clarity.
 They are displayed on the Resources menu, under a dedicated tab.
 
 A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script.
@@ -158,19 +172,123 @@ _Python_
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
 </div>
 
+### States Path
+
+States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the script, script within a flow or schedule. The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
+
+```rust
+    let state_path = {
+        let trigger = if schedule_path.is_some() {
+            username.to_string()
+        } else {
+            "user".to_string()
+        };
+
+        if let Some(flow_path) = flow_path.clone() {
+            format!(
+                "{flow_path}/{}_{trigger}",
+                step_id.clone().unwrap_or_else(|| "nostep".to_string())
+            )
+        } else if let Some(script_path) = path.clone() {
+            let script_path = if script_path.ends_with("/") {
+                "noname".to_string()
+            } else {
+                script_path
+            };
+            format!("{script_path}/{trigger}")
+        } else {
+            format!("u/{username}/tmp_state")
+        }
+    };
+```
+
+For example, if a script using states is used within a flow that is scheduled, the state will take a new path as: `folder/flow_path/script_path/schedule_path`, or more concretely: `u/username/u/username/flow_name/u/username/script_name/u/username/schedule_name`.
+
 ## Using Resources
+
+Resources can be used [passed as script parameters](#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within code.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+### Passing resources as parameters to scripts (preferred)
+
+Resources can be passed using the [auto-generated UI](../6_auto_generated_uis/index.mdx).
+
+Provided you have the right permissions and the resource type exists in the workspace, you can access resource types from scripts, flows and apps using the Windmill client or [TypedDict](https://mypy.readthedocs.io/en/stable/typed_dict.html) in Python.
+
+From the code editor's toolbar, click on the `+ Type` button and pick the right resource type. For example, to access the `u/user/my_postgresql` resource of the `posgtgresql` Resource Type we would create a script:
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+type Postgresql = object;
+// OR one can fully type it
+type Postgresql = {
+	host: string;
+	port: number;
+	user: string;
+	dbname: string;
+	sslmode: string;
+	password: string;
+	root_certificate_pem: string;
+};
+
+export async function main(postgres: Postgresql) {
+	// Use Resource...
+}
+```
+
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from typing import TypedDict
+
+class postgresql(TypedDict):
+    host: str
+    port: int
+    user: str
+    dbname: str
+    sslmode: str
+    password: str
+    root_certificate_pem: str
+
+def main(selected_postgres: postgresql):
+	# Use Resource...
+```
+
+</TabItem>
+</Tabs>
+
+<br />
+
+And then select the Resource in the arguments section on the right:
+
+![Select resource](../3_resources_and_types/select_resource.png.webp)
+
+:::tip
+
+You can also edit the Resource or even create a new one right from the Code
+editor.
+
+:::
 
 All details on the [Add Resources and Variables to Code Editor](../../code_editor/add_variables_resources.mdx) page:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Add Resources and Variables to Code Editor"
 		description="You can directly access Variables and Resources from the Code Editor."
@@ -206,6 +324,15 @@ Bash:
 curl -s -H "Authorization: Bearer $WM_TOKEN" \
   "$BASE_INTERNAL_URL/api/w/$WM_WORKSPACE/resources/get/u/user/foo" \
     | jq -r .value
+```
+
+PowerShell:
+
+```powershell
+$Headers = @{
+  "Authorization" = "Bearer $Env:WM_TOKEN"
+}
+Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_WORKSPACE/resources/get/u/user/foo"
 ```
 
 ![Fetch resource](./fetch_resource.png.webp)

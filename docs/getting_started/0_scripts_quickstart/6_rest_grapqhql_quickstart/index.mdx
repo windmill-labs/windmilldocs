@@ -21,7 +21,7 @@ In this quick start guide, we will write our first script in [Rest](https://rest
 
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Editor"
 		description="All the details on scripts."
@@ -57,11 +57,11 @@ export async function main() {
 
 ## Settings
 
-![New script](./create_script_rest.png)
+![New script](./create_script_rest.png.webp)
 
 As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
-- **Path** is the Script's unique identifier that consist of the
+- **Path** is the Script's unique identifier that consists of the
   [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
   The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
 - **Summary** (optional) is a short, human-readable summary of the Script. It
@@ -77,9 +77,9 @@ This menu also has additional settings, such as:
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU acceleration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
-- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with Python and TypeScript.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Settings"
 		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
@@ -94,11 +94,11 @@ Now click on the code editor on the left side.
 Windmill provides an online editor to work on your Scripts. The left-side is
 the editor itself. The right-side [previews the UI](../../../core_concepts/6_auto_generated_uis/index.mdx) that Windmill will
 generate from the Script's signature - this will be visible to the users of the
-Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
+Script. You can preview that UI, provide input values.
 
 ![Editor for GraphQL](./editor_graphql.png 'Code Editor GrapQL')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."
@@ -157,7 +157,7 @@ If the endpoint is and HTTPS endpoint exposing custom certificate, the fetch wil
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instant Preview & Testing"
 		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
@@ -214,7 +214,7 @@ To trigger each GraphQL script, an input named 'api' will be required. This is a
 
 [Resources](../../../core_concepts/3_resources_and_types/index.mdx) are rich objects in JSON that allow to store configuration and credentials. They can be saved, named, and shared within Windmill to control and streamline the execution of GraphQL scripts.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Resources and Resource Types"
 		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
@@ -245,9 +245,9 @@ From the Settings menu, the "Generated UI" tab lets you customize the script's a
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for TypeScript](./customize_graphql.png)
+![Advanced settings for TypeScript](./customize_graphql.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
@@ -265,18 +265,18 @@ The UI is generated from the Script's main function signature, but you can add a
 We're done! Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
 to load the script. You'll see the user input form we defined earlier.
 
-Note that Scripts are versioned in Windmill, and
-each script version is uniquely [identified by a hash](../../../script_editor/versioning.mdx)
+Note that Scripts are [versioned](../../../script_editor/versioning.mdx) in Windmill, and
+each script version is uniquely identified by a hash.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run hello world in GraphQL](./run_graphql.png)
+![Run hello world in GraphQL](./run_graphql.png.webp)
 
-You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Triggering Scripts"
 		description="Trigger flows on-demand, by schedule or on external events."
@@ -299,7 +299,7 @@ This script is a minimal working example, but there's a few more steps that can 
 
 Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
@@ -309,7 +309,7 @@ Scripts are immutable and there is an hash for each deployment of a given script
 
 For each script, a UI is autogenerated from the jsonchema inferred from the script signature, and can be customized further as standalone or embedded into rich UIs using the [App builder](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -324,7 +324,7 @@ For each script, a UI is autogenerated from the jsonchema inferred from the scri
 
 In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.mdx) are generated for each deployment.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Webhooks"
 		description="Trigger scripts and flows from webhooks."

@@ -40,7 +40,7 @@ wmill.set_variable("u/user/foo", value)
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { getVariable, setVariable } from "npm:windmill-client@1";
+import { getVariable, setVariable } from 'npm:windmill-client@1';
 
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
@@ -50,7 +50,7 @@ setVariable('u/user/foo', value);
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { getVariable, setVariable } from "windmill-client"
+import { getVariable, setVariable } from 'windmill-client';
 
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
@@ -59,7 +59,6 @@ setVariable('u/user/foo', value);
 </TabItem>
 </Tabs>
 
-
 Note that there is a similar API for getting and setting [Resources](../3_resources_and_types/index.mdx)
 which are simply Variables that can contain any JSON values, not just a string
 and that are labeled with a [Resource Type](../3_resources_and_types/index.mdx#create-a-resource-type) to be automatically
@@ -67,7 +66,7 @@ discriminated in the auto-generated form to be of the proper type (e.g. a
 parameter in TypeScript of type `pg: Postgresql` is only going to
 offer a selection over the resources of type postgresql in the auto-generated UI).
 
-There is also a concept of [state](..//3_resources_and_types/index.mdx#state) to share values
+There is also a concept of [state](..//3_resources_and_types/index.mdx#states) to share values
 across script executions.
 
 ## Contextual variables
@@ -126,7 +125,7 @@ A variable can be made **secret**. In this case, its value will not be visible o
 
 ## Accessing a variable from a script
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Add Resources and Variables to Code Editor"
 		description="You can directly access Variables and Resources from the Code Editor."
@@ -186,4 +185,13 @@ curl -s -H "Authorization: Bearer $WM_TOKEN" \
     | jq -r .value
 ```
 
-The last example is in bash and showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as environment variable to the job.
+PowerShell:
+
+```powershell
+$Headers = @{
+  "Authorization" = "Bearer $Env:WM_TOKEN"
+}
+Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_WORKSPACE/variables/get/u/user/foo"
+```
+
+The last examples in bash and PowerShell showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as an environment variable to the job.

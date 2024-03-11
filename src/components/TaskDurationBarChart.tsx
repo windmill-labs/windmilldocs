@@ -73,9 +73,9 @@ export default function BarChart({
 				stacked: true,
 				max: 120,
 				title: {
-                    display: true,
-                    text: xTitle,
-                }
+					display: true,
+					text: xTitle
+				}
 			},
 			y: {
 				stacked: true
@@ -133,7 +133,6 @@ export default function BarChart({
 
 					if (passedTime > Math.max(...sums)) {
 						chart.data.datasets = datasets_data;
-						console.log('chart.data.datasets', chart.data.datasets);
 						chart.update();
 						clearInterval(interval);
 					} else {

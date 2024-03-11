@@ -33,7 +33,7 @@ export async function main() {
 
 <br />
 
-![Try Catch](./try_catch.png)
+![Try Catch](./try_catch.png.webp)
 
 ## Flows' Error Handlers
 
@@ -49,7 +49,7 @@ If defined, the error handler will take as input the result of the step that err
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Error Handler"
 		description="Configure a script to handle errors."
@@ -61,7 +61,7 @@ If defined, the error handler will take as input the result of the step that err
 
 There are other tricks to do Error handling in flows, see:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Error Handling in Flows"
 		description="There are four ways to handle errors in Windmill flows."
@@ -71,7 +71,7 @@ There are other tricks to do Error handling in flows, see:
 
 ## Schedules' Error Handlers
 
-Add a special script or flow to execute in case of an error in your [scheduled](../1_scheduling/index.md) script or flow.
+Add a special script or flow to execute in case of an error in your [scheduled](../1_scheduling/index.mdx) script or flow.
 
 You can pick the Slack pre-set schedule error handler or define your own.
 
@@ -82,9 +82,9 @@ You can pick the Slack pre-set schedule error handler or define your own.
 />
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Scheduling"
+		title="Schedules"
 		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
 		href="/docs/core_concepts/scheduling"
 	/>
@@ -92,9 +92,11 @@ You can pick the Slack pre-set schedule error handler or define your own.
 
 ## Workspace Error Handler
 
+Define a script or flow to be executed automatically in case of error in the workspace.
+
 ### Workspace Error Handler on Slack
 
-On [Cloud, Self-Host Pro & Enterprise Editions](../../misc/7_plans_details/index.mdx), you can [connect workspace to Slack](../../integrations/slack.mdx) and enable an automated error handler on a given channel.
+On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connect workspace to Slack](../../integrations/slack.mdx) and enable an automated error handler on a given channel.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}

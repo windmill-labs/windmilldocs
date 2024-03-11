@@ -54,7 +54,7 @@ export default function LogoClouds() {
 		<div className="py-24 sm:py-32">
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900">
-					Trusted by 500+ organizations, including:
+					Trusted by 1000+ organizations, including:
 				</h2>
 				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-0 lg:max-w-none lg:grid-cols-6">
 					{logos.map((logo) => (
@@ -62,6 +62,7 @@ export default function LogoClouds() {
 							key={logo.name}
 							href={logo.anchor ? `#${logo.anchor}` : logo.url}
 							target={logo.anchor ? '_self' : '_blank'}
+							title={String(logo.name)}
 						>
 							<img
 								className={classNames(
@@ -72,6 +73,7 @@ export default function LogoClouds() {
 								alt={logo.name}
 								width={158}
 								height={48}
+								loading="lazy"
 							/>
 						</a>
 					))}

@@ -14,13 +14,13 @@ In some cases where your task requires a complex set of dependencies or is imple
 
 As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
 
-![script 1](../../../advanced/7_docker/as_script.png)
+![script 1](../../../advanced/7_docker/as_script.png.webp)
 
 <br />
 
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Editor"
 		description="All the details on scripts."
@@ -56,11 +56,76 @@ docker pull $IMAGE
 docker run --rm $IMAGE $COMMAND
 ```
 
+### Kubernetes
+
+If you use kubernetes and would like to run your docker file directly on the kubernetes host, use the following script:
+
+```
+# shellcheck shell=bash
+# Bash script that calls docker as a client to the host daemon
+# See documentation: https://www.windmill.dev/docs/advanced/docker
+msg="${1:-world}"
+
+IMAGE="docker/whalesay:latest"
+COMMAND=(sh -c "cowsay $msg")
+
+APISERVER=https://kubernetes.default.svc
+SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
+NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
+TOKEN=$(cat ${SERVICEACCOUNT}/token)
+CACERT=${SERVICEACCOUNT}/ca.crt
+
+kubectl config set-cluster local --server="${APISERVER}" --certificate-authority="${CACERT}"
+kubectl config set-credentials local --token="${TOKEN}"
+kubectl config set-context local --cluster=local --user=local --namespace="${NAMESPACE}"
+kubectl config use-context local
+
+kubectl run task -it --rm --restart=Never --image="$IMAGE" -- "${COMMAND[@]}"
+```
+
+and use the following additional privileges
+
+```yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: windmill
+  name: pod-management
+rules:
+  - apiGroups: ['']
+    resources: ['pods']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
+  - apiGroups: ['']
+    resources: ['pods/log']
+    verbs: ['get', 'list', 'watch']
+  - apiGroups: ['']
+    resources: ['pods/attach']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
+  - apiGroups: ['']
+    resources: ['events']
+    verbs: ['get', 'list', 'watch']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-management
+  namespace: windmill
+subjects:
+  - kind: ServiceAccount
+    name: windmill-chart
+    namespace: windmill
+roleRef:
+  kind: Role
+  name: pod-management
+  apiGroup: rbac.authorization.k8s.io
+```
+
 ## Setup
 
 To set-up Docker, see:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Docker Set-Up"
 		description="Windmill supports running any Docker container through its Bash support."
@@ -75,11 +140,11 @@ first step of script creation: Metadata.
 
 ## Settings
 
-![New script](../4_bash_quickstart/create_script_bash.png)
+![New script](../4_bash_quickstart/create_script_bash.png.webp)
 
 As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
-- **Path** is the Script's unique identifier that consist of the
+- **Path** is the Script's unique identifier that consists of the
   [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
   The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
 - **Summary** (optional) is a short, human-readable summary of the Script. It
@@ -95,9 +160,9 @@ This menu also has additional settings, such as:
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
-- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with Python and TypeScript.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Settings"
 		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
@@ -114,9 +179,9 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for Bash](../4_bash_quickstart/editor_bash.png)
+![Editor for Bash](../4_bash_quickstart/editor_bash.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."
@@ -177,7 +242,7 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instant Preview & Testing"
 		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
@@ -193,12 +258,12 @@ From the Settings menu, the "Generated UI" tab lets you customize the script's a
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Bash](../4_bash_quickstart/customize_bash.png)
+![Advanced settings for Bash](../4_bash_quickstart/customize_bash.png.webp)
 
-We're done! Save your script. Note that Scripts are versioned in Windmill, and
-each script version is uniquely [identified by a hash](../../../script_editor/versioning.mdx)
+We're done! Save your script. Note that Scripts are [versioned](../../../script_editor/versioning.mdx) in Windmill, and
+each script version is uniquely identified by a hash.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
@@ -220,17 +285,21 @@ Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run Hello in Bash](../4_bash_quickstart/run_bash.png)
+![Run Hello in Bash](../4_bash_quickstart/run_bash.png.webp)
 
-You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Triggering Scripts"
 		description="Trigger flows on-demand, by schedule or on external events."
 		href="/docs/getting_started/trigger_scripts"
 	/>
 </div>
+
+## JSON result
+
+The last line returned by the script will be the string result. To use a json result instead, output your result in `./result.json` and it will be automatically picked-up and considered as the JSON result for Bash and Powershell scripts.
 
 ## What's next?
 
@@ -247,7 +316,7 @@ This script is a minimal working example, but there's a few more steps that can 
 
 Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
@@ -257,7 +326,7 @@ Scripts are immutable and there is an hash for each deployment of a given script
 
 For each script, a UI is autogenerated from the jsonchema inferred from the script signature, and can be customized further as standalone or embedded into rich UIs using the [App builder](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -272,7 +341,7 @@ For each script, a UI is autogenerated from the jsonchema inferred from the scri
 
 In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.mdx) are generated for each deployment.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Webhooks"
 		description="Trigger scripts and flows from webhooks."

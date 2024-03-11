@@ -5,14 +5,14 @@ import DocCard from '@site/src/components/DocCard';
 Windmill automatically generates user interfaces (UIs) for scripts and flows based on their parameters.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/auto_generated_uis.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/auto_generated_uis.mp4"
 />
 
-<br/>
+<br />
 
 :::info Windmill App Editor
 
@@ -28,7 +28,7 @@ In the [UI customization interface](../../script_editor/customize_ui.mdx), you c
 
 ![Customize inputs](./customize_inputs.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Customize UI"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
@@ -36,26 +36,24 @@ In the [UI customization interface](../../script_editor/customize_ui.mdx), you c
 	/>
 </div>
 
-
-
 ## Test code
 
 This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.mdx) & [flow](../../getting_started/6_flows_quickstart/index.mdx) editors to [test your code](../23_instant_preview/index.mdx).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/ui_from_script_editor.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/ui_from_script_editor.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Instant Preview & Testing"
-    	description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-    	href="/docs/core_concepts/instant_preview"
-    />
+		title="Instant Preview & Testing"
+		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
 </div>
 
 ## Build App
@@ -63,29 +61,29 @@ This feature can be directly used in the [script](../../getting_started/0_script
 You can generate a dedicated [app](../../apps/0_app_editor/index.mdx) to execute your script or flow.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/cowsay_app.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/cowsay_app.mp4"
 />
 
-<br/>
+<br />
 
 This is the recommend way to share scripts and flows with [operators](../16_roles_and_permissions/index.mdx), with the second option being of sharing the script and [variables](../2_variables_and_secrets/index.mdx) it depends on (but operators won't be able to load variable directly from the UI/api, only use them within the scripts they have access to).
 
 The apps will be permissioned on behalf of the [admin/author](../16_roles_and_permissions/index.mdx), the user is still identified at the time of execution from the [Runs](../5_monitor_past_and_future_runs/index.mdx) and [Audit Logs](../14_audit_logs/index.mdx) menus.
 
-![Script execution Runs menu](./script_exec_runs.png "View from the run menu")
+![Script execution Runs menu](./script_exec_runs.png.webp 'View from the run menu')
 
 > View from the [Runs](../5_monitor_past_and_future_runs/index.mdx) menu.
 
-<br/>
+<br />
 
 At last, this is an easy way to get an app for your scripts and flows to be customized with [Styling](../../apps/4_app_configuration_settings/4_app_styling.mdx) and [Components](../../apps/4_app_configuration_settings/1_app_component_library.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Instant Preview & Testing"
-    	description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-    	href="/docs/core_concepts/instant_preview"
-    />
+		title="Instant Preview & Testing"
+		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
 </div>

@@ -8,7 +8,7 @@ The Windmill VS Code extension allows you to build scripts and flows in the comf
 
 The extension can be used in particular from a [repository synchronized to a Windmill instance](../../advanced/3_cli/sync.mdx) to [develop scripts & flows locally](../../advanced/4_local_development/index.mdx) while keeping them synced to your workspace.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Command-Line Interface - Sync"
 		description="Sync with a Windmill workspace from Windmill CLI."
@@ -32,11 +32,11 @@ Windmill has its own IDE for creating [scripts](../../script_editor/index.mdx) a
 
 The Windmill UI allows you to edit directly the deployed scripts & flows, which is great for maintenance and quick prototyping.
 
-However in many production settings it is more common to version everything from git and to that end we have a CLI to sync a workspace to a local directory and the inverse operation (deploy local directory to a workspace). With this extension, you can efficiently edit scripts & flows directly from there.
+However in many production settings it is more common to version everything from Git and to that end we have a CLI to sync a workspace to a local directory and the inverse operation (deploy local directory to a workspace). With this extension, you can efficiently edit scripts & flows directly from there.
 
 To run scripts locally, see [Run Locally](../../advanced/4_local_development/run_locally.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Local Development"
 		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
@@ -58,7 +58,7 @@ To run scripts locally, see [Run Locally](../../advanced/4_local_development/run
 
 1. First of all, have your workspace synced locally with [Windmill CLI](../../advanced/3_cli/index.mdx).
 
-![Local workspace](../../../blog/2023-11-20-vscode/local_workspace.png)
+![Local workspace](../../../blog/2023-11-20-vscode/local_workspace.png.webp)
 
 > [Example repo](https://github.com/windmill-labs/windmill-sync-example) opened in VS Code. We see 2 flows and 1 script, the flows are their own folders, each step in a flow is a seperate file in their respective language. Scripts have their metadata in a seperate file.
 
@@ -79,7 +79,7 @@ The preview & run will work for any script meeting the specific language require
 The extension will split your screen and display a panel. That panel will update automatically based on the edited document on the left.
 
 - When editing a script (or a flow step), you see the script [preview UI](../../core_concepts/6_auto_generated_uis/index.mdx) with the [auto-inference of the parameters](../../core_concepts/13_json_schema_and_parsing/index.md).
-- When editing a flow YAML, you it contains the flow builder and the flow [test UI](../../flows/18_test_flows.mdx).
+- When editing a flow YAML, you see the flow builder and the flow [test UI](../../flows/18_test_flows.mdx).
 
 In particular:
 
@@ -109,6 +109,14 @@ In particular:
 	loop
 	src="/videos/yaml_to_ui.mp4"
 />
+
+## Infer lockfile or Use current lockfile
+
+With this toggle, you can choose to use the metadata lockfile instead of inferring them directly from the script.
+
+![Toggle Lockfile](./toggle_lockfile.png 'Toggle Lockfile')
+
+To learn more about lockfile, see [Local Development](../../advanced/4_local_development/index.mdx).
 
 ## Commands
 

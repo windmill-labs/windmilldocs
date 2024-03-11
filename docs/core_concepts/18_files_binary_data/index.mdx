@@ -1,11 +1,61 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Handling Files and Binary Data
 
 In Windmill, JSON is the primary data format used for representing information.
-When working with binary data, such as files, they are represented as Base64 encoded strings.
-Those Base64 strings can not be distinguished from normal strings.
-Hence, the interpretation those Base64 encoded strings it either done depending on the context,
+Binary data, such as files, are not easy to handle. Windmill provides two options.
+
+1. Have a dedicated storage for binary data: S3 or Azure Blob. Windmill has a first class integration with S3 buckets or Azure Blob containers.
+2. If the above is not an option, there's always the possibility to store the binary as base64 encoded string.
+
+## Windmill integration with S3 or Azure Blob Storage
+
+The recommended way to store binary data is to upload it to S3 leveraging [Windmill's native S3 integrations](../11_persistent_storage/large_data_files.mdx).
+
+:::info
+
+Windmill's integration with S3 and Azure Blob Storage works exactly the same and the features described below works in both cases. The only difference is that you need to select an `azure_blob` resource when setting up the S3 storage in the Workspace settings.
+
+:::
+
+By [setting a S3 resource for the workspace](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
+
+S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
+
+```json
+{
+	"s3": "path/to/file"
+}
+```
+
+When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
+
+![S3 file upload](../11_persistent_storage/file_upload.png)
+
+![S3 bucket browsing](../11_persistent_storage/bucket_browsing.png)
+
+When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
+
+![S3 file download](../11_persistent_storage/file_download.png)
+
+Windmill provides helpers in its SDKs to consume and produce S3 file seamlessly.
+
+All details on S3 Integration, and how to [read](../11_persistent_storage/large_data_files.mdx#read-a-file-from-s3-within-a-script) and [write](../11_persistent_storage/large_data_files.mdx#create-a-file-in-s3-within-a-script) files to S3 as well as [Windmill embedded integration with Polars and DuckDB](../11_persistent_storage/large_data_files.mdx#windmill-embedded-integration-with-polars-and-duckdb-for-data-pipelines) for data pipelines, can be found in the [Persistent Storage section](../11_persistent_storage/large_data_files.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Persistent Storage - S3 Integration"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage."
+		href="/docs/core_concepts/persistent_storage/large_data_files#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage"
+	/>
+</div>
+
+## Base64 encoded strings
+
+Base64 strings can also be used, but the main difficulty is that those Base64 strings can not be distinguished from normal strings.
+Hence, the interpretation ofthose Base64 encoded strings is either done depending on the context,
 or by pre-fixing those strings with the [`<data specifier:>`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types).
 
 In explicit contexts, when the JSON schema specifies that a property represents Base64-encoded data:
@@ -31,7 +81,7 @@ Base64 encoded strings are used in:
 - Download Button: the source to be downloaded must be in Base64 format.
 - File inputs to run scripts must be typed into the [JSON](../13_json_schema_and_parsing/index.md) `string, encodingFormat: base64` (python: `bytes`, Deno: `wmill.Base64`).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="File Input Component"
 		description="The file input allows users to drop files into the app."

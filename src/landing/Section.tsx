@@ -52,7 +52,7 @@ export default function Section({
 					<div className="flex justify-between items-center w-full">
 						<h1
 							className={classNames(
-								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br leading-8',
+								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br leading-8 !text-4xl',
 								colors.gradient
 							)}
 						>
@@ -76,7 +76,7 @@ export default function Section({
 				) : (
 					<>
 						<FeatureCardTabs tabs={tabs} color={color} />
-						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}{' '}
+						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}
 					</>
 				)}
 			</div>

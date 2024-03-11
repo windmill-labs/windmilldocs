@@ -17,6 +17,7 @@ export default function DevModeSwitch({ color = 'blue' }) {
 	return (
 		<div className="my-4 flex flex-row gap-2 items-center transition-all" id={id}>
 			<Switch
+				title="Toggle Developer Mode"
 				checked={developerMode}
 				onChange={() => {
 					const el = document.getElementById(id);

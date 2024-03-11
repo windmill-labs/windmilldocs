@@ -1,4 +1,3 @@
-
 import DocCard from '@site/src/components/DocCard';
 
 # Button
@@ -13,19 +12,19 @@ The runnable parameters are defined:
 
 The following section details Button component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        color="orange"
-        title="App Editor Documentation"
-        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
-        href="/docs/apps/app_editor"
-    />
-    <DocCard
-        color="orange"
-        title="Apps Quickstart"
-        description="Learn how to build your first app in a matter of minutes."
-        href="/docs/getting_started/apps_quickstart"
-    />
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App Editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
 </div>
 
 ## Button configuration
@@ -52,20 +51,20 @@ The button component has a special parameter called `On Success`. This parameter
 - **Set the tab of a Tabs component**: the button sets the tab of a Tabs component after the runnable is executed.
 - **Display a toast**: the button displays a toast after the runnable is executed.
 
-### **Go to an URL configuration:**
+### Go to an URL configuration
 
 | Name    |  Type   | Connectable | Templatable |    Default    | Description                                    |
 | ------- | :-----: | :---------: | :---------: | :-----------: | ---------------------------------------------- |
 | URL     | string  |    true     |    false    | /apps/get/foo | The URL to redirect the user to.               |
 | New Tab | boolean |    false    |    false    |     true      | Whether the URL should be opened in a new tab. |
 
-### **Set the tab of a Tabs component configuration:**
+### Set the tab of a Tabs component configuration
 
-| Name    |               Type                | Connectable | Templatable | Default | Description                                                                             |
-| ------- | :-------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------------------------------- |
+| Name    |                Type                 | Connectable | Templatable | Default | Description                                                                             |
+| ------- | :---------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------------------------------- |
 | Set Tab | Array`<{id: string, index:number}>` |    false    |    false    |   []    | The tabs to set. The id is the id of the Tabs component and the index is the tab index. |
 
-### **Display a toast configuration:**
+### Display a toast configuration
 
 | Name    |  Type  | Connectable | Templatable |   Default   | Description                          |
 | ------- | :----: | :---------: | :---------: | :---------: | ------------------------------------ |
@@ -77,3 +76,4 @@ The button component has a special parameter called `On Success`. This parameter
 | ------- | :-----: | -------------------------------- |
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
+| jobId   | string  | The job id of the runnable.      |

@@ -23,7 +23,7 @@ In this quick start guide, we will write our first script in Bash and PowerShell
 
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Editor"
 		description="All the details on scripts."
@@ -65,7 +65,7 @@ fi
 </TabItem>
 <TabItem value="powershell" label="PowerShell" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-```ts
+```powershell
 param($url = "default value")
 
 $status_code = (Invoke-WebRequest -Uri $url -Method Get).StatusCode
@@ -87,11 +87,11 @@ first step of script creation: Metadata.
 
 ## Settings
 
-![New script](./create_script_bash.png)
+![New script](./create_script_bash.png.webp)
 
 As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
-- **Path** is the Script's unique identifier that consist of the
+- **Path** is the Script's unique identifier that consists of the
   [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
   The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
 - **Summary** (optional) is a short, human-readable summary of the Script. It
@@ -107,9 +107,9 @@ This menu also has additional settings, such as:
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU acceleration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
-- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on enterprise edition and for the Bun language.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with Python and TypeScript.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Settings"
 		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
@@ -126,9 +126,9 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for Bash](./editor_bash.png)
+![Editor for Bash](./editor_bash.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."
@@ -156,26 +156,28 @@ dflt="${2:-default value}"
 echo "Hello $msg"
 ```
 
-In Bash, the arguments are inferred from the arguments requiring a $1, $2, $3. Default arguments can be specified using the syntax above: `dflt="${2:-default value}"`.
+In Bash, the arguments are inferred from the arguments requiring a \$1, \$2, \$3. Default arguments can be specified using the syntax above: `dflt="${2:-default value}"`.
 
-The command `echo` allows you to return the result, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
+The last line of the output, here `echo "Hello $msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
 ### PowerShell
 
-As we picked `PowerShell` for this example, Windmill provided some Bash
+As we picked `PowerShell` for this example, Windmill provided some PowerShell
 boilerplate. Let's take a look:
 
-```bash
+```powershell
 param($Msg, $Dflt = "default value", [int]$Nb = 3)
+
+# Import-Module MyModule
 
 # the last line of the stdout is the return value
 Write-Output "Hello $Msg"
 ```
 
-In PowerShell, the arguments are inferred from the arguments requiring a "$" preceding its name.
+In PowerShell, the arguments are inferred from the param instruction. It has to be first in the script.
 Default arguments can be specified using the syntax above: `$argument_name = "Its default value"`.
 
-The command `Write-Output` allows you to return the result, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
+The last line of the output, here `Write-Output "Hello $Msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
 ## Instant Preview & Testing
 
@@ -211,7 +213,7 @@ $argument_name = "Its default value"
 </TabItem>
 </Tabs>
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instant Preview & Testing"
 		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
@@ -227,9 +229,9 @@ From the Settings menu, the "Generated UI" tab lets you customize the script's a
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Bash](./customize_bash.png)
+![Advanced settings for Bash](./customize_bash.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Script Kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
@@ -247,18 +249,18 @@ The UI is generated from the Script's main function signature, but you can add a
 We're done! Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
 to load the script. You'll see the user input form we defined earlier.
 
-Note that Scripts are versioned in Windmill, and
-each script version is uniquely [identified by a hash](../../../script_editor/versioning.mdx)
+Note that Scripts are [versioned](../../../script_editor/versioning.mdx) in Windmill, and
+each script version is uniquely identified by a hash.
 
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run Hello in Bash](./run_bash.png)
+![Run Hello in Bash](./run_bash.png.webp)
 
-You can also chose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Triggering Scripts"
 		description="Trigger flows on-demand, by schedule or on external events."
@@ -266,13 +268,17 @@ You can also chose to [run the script from the CLI](../../../advanced/3_cli/inde
 	/>
 </div>
 
+## JSON result
+
+The last line returned by the script will be the string result. To use a json result instead, output your result in `./result.json` and it will be automatically picked-up and considered as the JSON result for Bash and Powershell scripts.
+
 ## Run Docker Containers
 
 In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script.
 
 Windmill supports running any docker container through its Bash support. As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Run Docker Containers"
 		description="In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script."
@@ -295,7 +301,7 @@ This script is a minimal working example, but there's a few more steps that can 
 
 Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
@@ -305,7 +311,7 @@ Scripts are immutable and there is an hash for each deployment of a given script
 
 For each script, a UI is autogenerated from the jsonchema inferred from the script signature, and can be customized further as standalone or embedded into rich UIs using the [App builder](../../7_apps_quickstart/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -320,7 +326,7 @@ For each script, a UI is autogenerated from the jsonchema inferred from the scri
 
 In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.mdx) are generated for each deployment.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Webhooks"
 		description="Trigger scripts and flows from webhooks."

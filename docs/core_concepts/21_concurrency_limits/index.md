@@ -6,6 +6,8 @@ The Concurrency Limit operates globally and across flow runs. It involves two ke
 
 When jobs reach the concurrency limit, they are automatically queued for execution at the next available optimal slot given the time window.
 
+Concurrency limit is a [Cloud and Pro & Enterprise Self-Hosted](/pricing) only.
+
 ## Concurrency limit of Script
 
 Concurrency limit can be set from the Settings menu. Pick "Concurrency" and define a time window and max number of executions of the flow within that time window.
@@ -16,7 +18,7 @@ Concurrency limit can be set from the Settings menu. Pick "Concurrency" and defi
 
 From the Flow Settings menu, pick "Concurrency" and define a time window and max number of executions of the flow within that time window.
 
-![Concurrency limit of flow](../../assets/flows/concurrency_flow.png "Concurrency limit of flow")
+![Concurrency limit of flow](../../assets/flows/concurrency_flow.png.webp "Concurrency limit of flow")
 
 ## Concurrency limit of scripts within flow
 

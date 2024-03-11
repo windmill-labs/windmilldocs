@@ -15,6 +15,7 @@ import LandingHeader from '../landing/LandingHeader';
 const DeveloperModeContext = createContext();
 import LayoutProvider from '@theme/Layout/Provider';
 import LogoClouds from '../landing/LogoClouds';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import TestimonialsSection from '../landing/TestimonialsSection';
 
@@ -77,12 +78,13 @@ export default function Home() {
 		<LayoutProvider>
 			<main>
 				<Head>
-					<title>Windmill | Open source platform to build internal tools with scripts</title>
+					<title>Windmill | Open-source developer platform and workflow engine</title>
 					<meta name="title" content="Internal tools with scripts." />
 					<meta
 						name="description"
 						content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
 					/>
+					<link rel="icon" href="/img/logo.svg" />
 				</Head>
 				<HomepageHeader />
 			</main>

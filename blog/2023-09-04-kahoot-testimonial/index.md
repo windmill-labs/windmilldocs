@@ -26,7 +26,7 @@ This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvend
 
 <br/>
 
-![Windmill Kahoot!](./wm_kahoot.png)
+![Windmill Kahoot!](./wm_kahoot.png.webp)
 
 I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot!](https://kahoot.com/). While the brand Kahoot! traditionally focuses on B2C, we target Enterprise clients.
 
@@ -34,7 +34,7 @@ I began working with Windmill at the start of the year. It currently supports in
 
 ## Choosing Windmill for Flexibility
 
-Our team faced some challenges such as constrains on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations and not truly enjoying a comfortable solution. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale workflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in [git / version control](/docs/advanced/deploy_gh_gl) systems.
+Our team faced some challenges such as constraints on the tech stack. Some tools, such as [Stripe Billing](https://stripe.com/en-fr/billing), prove most effective when your business rules align precisely with their predefined criteria. However, we encountered challenges, including a maximum billing period of one year and the absence of a straightforward method for implementing Consumer Price Index increases. While it's possible to find workarounds, this essentially involves accommodating the limitations and not truly enjoying a comfortable solution. On the other hand, tools like <a href="https://zapier.com/" rel="nofollow">Zapier</a> offer simplicity in their initial use, yet they are more tailored for marketing teams and can become frustrating to iterate upon and build large scale workflows. Easy things are hard (line items -  I'm looking at you), and you do not have the code in [git / version control](/docs/advanced/version_control) systems.
 
 Since we had our own use cases, we needed a flexible solution to create our internal tools.
 

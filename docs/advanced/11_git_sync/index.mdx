@@ -1,0 +1,109 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Git Sync
+
+From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
+
+:::tip Version Control
+
+For all details on Version Control in Windmill, see [Version Control](../../advanced/13_version_control/index.mdx).
+
+:::
+
+This video shows how to set up a Git repository for a workspace (Git Sync - workspace mode).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/tmYcrfc_mAc?vq=hd1080"
+	title="Git Sync"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+## Git Sync - Workspace mode
+
+All scripts, flows and apps located in the workspace will be pushed to the Git repository. You can filter Git Sync on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path) so that only the scripts, flows and apps with a matching path will be pushed to the Git repository. By default, everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced (with rule `f/**`).
+
+On each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx#deployed-version), only the updated script/flow/app will be pushed to the remote Git repository.
+
+This feature is [Cloud & Enterprise Self-Hosted](/pricing) only.
+
+Note that you can explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
+
+### Pull workspace locally
+
+For the Git repo to be representative of the entire workspace, it is recommended to set it up using the [Windmill CLI](../3_cli/index.mdx) before turning this option on.
+
+Use [Windmill CLI](../3_cli/index.mdx) to pull the workspace locally:
+
+```bash
+wmill sync pull
+```
+
+![Pull workpsace](./pull_workspace.png 'Pull workspace')
+
+### Push workspace to GitHub
+
+Create a Git repository (in the example, on GitHub).
+
+Run the following commands from the git repo folder to push the initial workspace content to the remote:
+
+```bash
+git init
+git remote add origin https://github.com/username/reponame.git
+git add .
+git commit -m 'Initial commit'
+git push -u origin main
+```
+
+You now have your Windmill workspace on a GitHub repository. See the following section for an automated sync.
+
+### Setup in Windmill & GitHub token
+
+In Windmill, create a [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) resource pointing to the GitHub repository and containing a [token](https://github.com/settings/tokens) (with Read-and-write on "Contents"). You URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`.
+
+Add this resource to the workspace settings, in "Git Sync" tab and `Save Git sync settings`.
+
+![Git Sync Setup](./git_sync_setup.png 'Git Sync Setup')
+
+And that's it! Now, all scripts, flows apps, resources, variables, schedules and resource types located in the workspace and `f/` [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be pushed to the Git repository.
+
+You can filter on type if you don't want some items (e.g. variables) to be pushed to the Git repository.
+
+Additionally, you can filter on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path), meaning only scripts, flows and apps with their path matching one of those filters will be synced to the Git repositories below. The filters allow '*'' and '**' characters, with '*'' matching any character allowed in paths until the next slash (/) and '**' matching anything including slashes. By default everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced.
+
+## Git Sync - Item mode: Deploy to Prod using a Git Workflow
+
+This feature can be used alongside GiHub Actions to adopt a robust development process for your Windmill scripts, flows and apps,
+with for example a Staging Workspace making automatically PRs on a repo that pushes to a Prod workspace upon merge.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
+	title="Deploy to a Prod Workspace using a Git Workflow"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+More details at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to Prod using a Git Workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
+	/>
+	<DocCard
+		title="Local Development"
+		description="Develop locally, push to git and deploy automatically to windmill"
+		href="/docs/advanced/local_development"
+	/>
+</div>

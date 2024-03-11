@@ -94,7 +94,7 @@ We use the same system message for all the different languages supported by Wind
 You write code as queried by the user. Only output code. Wrap the code like that:
 
 ```language
-{code}
+\{code\}
 ```
 
 Put explanations directly in the code as comments.
@@ -106,12 +106,12 @@ If you do not speak fluently regex, this expression looks for three back ticks f
 For the user message, we use the following template (here for Python):
 
 ```
-Write a function in python called "main". The function should {description}.
+Write a function in python called "main". The function should \{description\}.
 Specify the parameter types. Do not call the main function.
 ```
 
-The {description} placeholder gets replaced by the user's instructions.
-In addition, we simply instruct the model to fit Windmill's execution model: a main function with typed parameters which it use to infer the script's inputs.
+The \{description\} placeholder gets replaced by the user's instructions.
+In addition, we simply instruct the model to fit Windmill's execution model: a main function with typed parameters used to infer the script's inputs.
 
 ### Handling resource types
 
@@ -161,7 +161,7 @@ To achieve this, we include all the resource types within the user message, prov
 Below is the updated template for Python with sample resource types:
 
 ```
-Write a function in python called "main". The function should {description}.
+Write a function in python called "main". The function should \{description\}.
 Specify the parameter types. Do not call the main function.
 
 You have access to the following resource types.
@@ -229,7 +229,7 @@ insert into users (first_name, last_name) values ($1, $2);
 Below is the corresponding prompt template:
 
 ```
-Write SQL code for PostgreSQL that should {description}.
+Write SQL code for PostgreSQL that should \{description\}.
 Arguments can be obtained directly in the statement with `$1::{type}`, `$2::{type}`, etc...
 Name the parameters by adding comments before the command like that:
 `-- $1 name1` or `-- $2 name = default` (one per row, do not include the type)
@@ -246,7 +246,7 @@ To achieve this, we query the schema of the selected database, and we include it
 Below is the updated template, accompanied by part of the schema from a Windmill instance database as an example:
 
 ```
-Write SQL code for PostgreSQL that should {description}.
+Write SQL code for PostgreSQL that should \{description\}.
 Arguments can be obtained directly in the statement with `$1::{type}`, `$2::{type}`, etc...
 Name the parameters by adding comments before the command like that:
 `-- $1 name1` or `-- $2 name = default` (one per row, do not include the type)
@@ -295,7 +295,7 @@ We continue to use the same system message to guide the AI but we use a differen
 ````
 Here's my python3 code:
 ```python
-{code}
+\{code\}
 ```
 
 Additional information:
@@ -306,7 +306,7 @@ If you need them, you have to define the TypedDict exactly as specified
 Only use the ones you need. If the TypedDict name conflicts with the imported object,
 rename the imported object NOT THE TYPE.
 
-My instructions: {description}
+My instructions: \{description\}
 ````
 
 We integrated this feature into the script builder by simply changing the "AI Gen" button to "AI Edit" button when code is selected.
@@ -333,7 +333,7 @@ For bug fixing, we pass the complete code and the error message, but no user ins
 ````
 Here's my python3 code:
 ```python
-{code}
+\{code\}
 ```
 Additional information:
 We have to export a "main" function and specify the parameter types but do not call it.
@@ -353,7 +353,7 @@ We instruct GPT-4 to include an explanation in a specific format which we then e
 ````
 You fix the code shared by the user. Only output code. Wrap the code like that:
 ```language
-{code}
+\{code\}
 ```
 Explain the error and the fix in the following format:
 explanation: "Here's the explanation"

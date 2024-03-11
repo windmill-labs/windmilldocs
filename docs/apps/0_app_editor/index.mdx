@@ -5,7 +5,7 @@ import { Timer } from 'lucide-react';
 
 The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Apps Quickstart"
@@ -39,11 +39,11 @@ _Connecting components_:<br/> 3. [Outputs](#outputs)<br/> 4. [Runnables panel](#
 
 The topbar helps you in your app editing.
 
-![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png)
+![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png.webp)
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2">
+<div className="grid grid-cols-2 gap-2">
 	<DocCard
 		color="orange"
 		title="Toolbar"
@@ -66,7 +66,7 @@ The canvas at the center of the editor is where you design and see the overall U
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2">
+<div className="grid grid-cols-2 gap-2">
 	<DocCard
 		color="orange"
 		title="Canvas"
@@ -90,7 +90,7 @@ The strength of Windmill's app editor is the ability to connect everything toget
 - background runnables can be that are run in the background on app refresh on when an input changes
 - frontend scripts can be used to manipulate the client app state
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Connecting Components"
@@ -108,11 +108,11 @@ In Windmill's app editor:
 
 On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png)
+![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png.webp)
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Runnable Editor"
@@ -130,7 +130,7 @@ On the left panel of the editor, you can see the list of outputs of the app. The
 - **Component Outputs**: These outputs correspond to the outputs of the individual components.
 - **Background Runnables**: These outputs represent the outputs of the background runnables.
 
-![App Outputs](../../assets/apps/0_app_editor/app-outputs.png)
+![App Outputs](../../assets/apps/0_app_editor/app-outputs.png.webp)
 
 You can perform the following actions with the outputs:
 
@@ -141,7 +141,7 @@ You can perform the following actions with the outputs:
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Outputs"
@@ -166,7 +166,7 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
 		title="Component Library"
@@ -187,7 +187,7 @@ Styling on the app editor can be managed at the component and app-level, with pr
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
 		title="Styling"
@@ -198,17 +198,23 @@ Styling on the app editor can be managed at the component and app-level, with pr
 
 ## Other app features
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		title="Public Apps"
+		description="Apps can be accessed as a standalone app by anyone who has the secret URL."
+		href="/docs/apps/public_apps"
+		color="orange"
+	/>
+	<DocCard
+		title="Schedule App Reports"
+		description="Send a PDF or PNG preview of any app at a given schedule."
+		href="/docs/apps/schedule_reports"
+		color="orange"
+	/>
 	<DocCard
 		title="Group of Components"
 		description="Components can be grouped within containers."
 		href="/docs/apps/app_configuration_settings/components_groups"
-		color="orange"
-	/>
-	<DocCard
-		title="Public Apps"
-		description="Apps can be accessed as a standalone app by anyone who has the secret URL"
-		href="/docs/apps/public_apps"
 		color="orange"
 	/>
 	<DocCard

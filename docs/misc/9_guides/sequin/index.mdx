@@ -3,7 +3,7 @@ title: Build on APIs with SQL using Sequin
 ---
 
 import DocCard from '@site/src/components/DocCard';
-import { SiPostgresql } from 'react-icons/si/index';
+import { SiPostgresql } from 'react-icons/si';
 
 # Use SQL to build on external APIs using Sequin
 
@@ -13,7 +13,7 @@ Sequin runs a real-time sync process that pulls data from external APIs into you
 
 You can use Sequin to build Windmill apps on top of third-party services using Windmill's PostgreSQL [resource](../../../core_concepts/3_resources_and_types/index.mdx). This means all your scripts can be written in SQL, even if they’re reading data from [Salesforce](https://www.salesforce.com/) or writing data to [HubSpot](https://www.salesforce.com/). You can `join` your API data with your internal data. And because your API data is cached in Postgres, you don't need to worry about rate limits or pagination.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Resources and Resource Types"
 		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
@@ -53,7 +53,7 @@ For more details on setting up a Sequin sync, [see this guide](https://docs.sequ
 
 ## Create a Windmill Resource
 
-Windmill provides integrations with many different apps and services with [resources](../../../core_concepts/3_resources_and_types/index.mdx). Each Resource has a Resource Type (PostgreSQL, MySQL, BigQuery, Snowflake) that defines the schema that the resource of this type needs to implement.
+Windmill provides integrations with many different apps and services with [resources](../../../core_concepts/3_resources_and_types/index.mdx). Each Resource has a Resource Type (PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake) that defines the schema that the resource of this type needs to implement.
 
 Sequin uses a [Postgres Proxy](https://docs.sequin.io/writes#configuration) to interface with your Sequin-synced tables. The Proxy lets Sequin capture inserts, updates, and deletes you make in your database and commit them to the API.
 
@@ -68,7 +68,7 @@ Using the Postgres Resource in Windmill
 
 Now, Sequin is syncing your API data to Postgres. You've also connected Windmill to Postgres via Sequin's Proxy. To query this data in your Windmill app, go back to your Windmill dashboard and find “Home”:
 
-**Step 1**: From the [Home](https://app.windmill.dev/) page, click on the "+ Script" button.
+**Step 1**: From the <a href="https://app.windmill.dev/" rel="nofollow">Home page</a>, click on the "+ Script" button.
 
 **Step 2**: Name the Script, give it a summary, and select your “PostgreSQL” as language.
 
@@ -88,7 +88,7 @@ SELECT product_name from airtable.product_inventory WHERE type = $1::TEXT
 
 The type is an argument with a default value of “Bag” but you can always pass a different value from the input field right below the “Test” button.
 
-![Sequin 3](./sequin_3.png)
+![Sequin 3](./sequin_3.png.webp)
 
 ## Writing back to the API
 
@@ -107,7 +107,7 @@ values ($1::TEXT, $2::TEXT, $3::TEXT);
 
 Provide argument values and click on the "Test" button in the top right to execute the insert query.
 
-![Sequin 4](./sequin_4.png)
+![Sequin 4](./sequin_4.png.webp)
 
 ## Errors
 
@@ -117,20 +117,20 @@ Let’s say you make a mutation to a Salesforce Contact with an invalid email. S
 
 As an example, Windmill has a Submit button with an **onFailure** property. You can display an error message to the user if the script throws an error:
 
-![Sequin 5](./sequin_5.png)
+![Sequin 5](./sequin_5.png.webp)
 
 By setting "Append Error" to true, Windmill will append the error returned by Salesforce to the toast notification:
 
-![Sequin 6](./sequin_6.png)
+![Sequin 6](./sequin_6.png.webp)
 
 ## Next steps
 
 With Sequin, you can build Windmill apps on top of sources like Salesforce, Airtable, and HubSpot. To learn more, check out our docs on [building SQL scripts](../../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) and read more about [how Sequin works](https://docs.sequin.io/).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="SQL Quickstart"
-		description="Write your first Windmill script in PostgreSQL, MySQL, BigQuery or Snowflake SQL."
+		description="Write your first Windmill script in PostgreSQL, MySQL, MS SQL, BigQuery or Snowflake SQL."
 		href="/docs/getting_started/scripts_quickstart/sql"
 		Icon={SiPostgresql}
 	/>

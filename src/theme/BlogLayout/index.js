@@ -2,25 +2,47 @@ import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import BlogSidebar from '@theme/BlogSidebar';
-//import Footer from './../../landing/Footer';
+import { twMerge } from 'tailwind-merge';
+import { useLocation } from '@docusaurus/router';
+import Head from '@docusaurus/Head';
 
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
 	const hasSidebar = sidebar && sidebar.items.length > 0;
-
 	const isBlogPostPageList = Boolean(toc);
+	const location = useLocation();
+
+	const isChangelogHomepage = location?.pathname?.endsWith('/changelog');
+	const isChangelog = location?.pathname?.includes('/changelog');
+	const title = 'Changelog | Windmill';
+	const description = 'See the latest changes to Windmill';
+	const image = '../../img/changelog.png';
 
 	return (
 		<Layout {...layoutProps}>
+			{isChangelogHomepage && (
+				<Head>
+					<title>{title}</title>
+					<meta name="title" content={title} />
+					<meta property="og:title" content={title} />
+					<meta property="og:description" content={description} />
+					<meta property="og:image" content={image} />
+					<meta property="site_name" content="Windmill" />
+					<meta property="og:type" content="changelog" />
+				</Head>
+			)}
+
 			{!isBlogPostPageList && (
-				<div className="max-w-7xl w-full mx-auto">
+				<div className={twMerge('w-full mx-auto', isChangelog ? 'max-w-6xl' : 'max-w-7xl ')}>
 					<div className="">
 						<div className="relative pt-16 pb-8 overflow-hidden">
 							<h1 className="tracking-tight container leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-blue-900 dark:from-blue-300 dark:to-blue-500">
-								Blog
+								{isChangelog ? 'Changelog' : 'Blog'}
 							</h1>
 							<p className="mt-4 text-lg leading-8 container">
-								Discover the latest news, updates, and articles from the team and community.
+								{isChangelog
+									? "See what's new with Windmill."
+									: 'Discover the latest news, updates, and articles from the team and community.'}
 							</p>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -53,17 +75,25 @@ export default function BlogLayout(props) {
 					</div>
 				</div>
 			)}
-			<div className="container max-w-7xl w-full mx-auto margin-vert--lg bg-transparent">
+			<div
+				className={twMerge(
+					' w-full mx-auto margin-vert--lg bg-transparent',
+					isChangelog ? 'max-w-6xl  px-4' : 'max-w-7xl container'
+				)}
+			>
 				<div className="row">
 					<BlogSidebar sidebar={sidebar} />
 					{toc && <div className="col col--2"></div>}
-
 					<main
-						className={clsx('col mt-12', {
-							'col--7': hasSidebar,
-							'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
-							'max-w-3xl mx-auto': !hasSidebar && isBlogPostPageList
-						})}
+						className={clsx(
+							'col',
+							{
+								'col--7': hasSidebar,
+								'w-full mx-auto': !hasSidebar && !isBlogPostPageList,
+								'max-w-3xl mx-auto': !hasSidebar && isBlogPostPageList
+							},
+							isChangelog ? 'mt-0' : 'mt-12'
+						)}
 						itemScope
 						itemType="http://schema.org/Blog"
 					>

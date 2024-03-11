@@ -18,6 +18,16 @@ If you're looking for a way to self-host Windmill using AWS, see [Self-Host Wind
 
 <br/><br/>
 
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
+
 :::tip
 
 Find some pre-set interactions with AWS on the [Hub](https://hub.windmill.dev/integrations/aws_ecr).

@@ -2,7 +2,7 @@
 
 The app toolbar is located at the top of the app editor. It enables you to adjust app settings.
 
-![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png)
+![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png.webp)
 
 ## App Summary
 
@@ -57,7 +57,7 @@ Hub Compatible JSON: View the JSON / YAML representation of the app in a format 
 
 The app inputs menu displays a list of all the inputs of each component. A toggle allows you to display only resources inputs, enabling you to easily configure your third-party resources for an app imported from the Hub, for example:
 
-![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png.webp 'App Inputs Configuration')
+![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png 'App Inputs Configuration')
 
 ### Diff
 

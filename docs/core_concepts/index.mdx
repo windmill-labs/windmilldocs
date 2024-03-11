@@ -6,177 +6,183 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 
 ## Windmill Features
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Architecture"
+		description="Schema of Windmill architecture"
+		href="/docs/misc/architecture"
+	/>
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/core_concepts/auto_generated_uis"
 	/>
 	<DocCard
-    	title="Windmill AI"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation"
-    />
-	<DocCard
 		title="JSON Schema and Parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
 		href="/docs/core_concepts/json_schema_and_parsing"
-    />
-    <DocCard
-    	title="Dependency Management & Imports"
-    	description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
-    	href="/docs/advanced/imports"
-    />
+	/>
 	<DocCard
-    	title="Instant Preview & Testing"
-    	description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-    	href="/docs/core_concepts/instant_preview"
-    />
+		title="Instant Preview & Testing"
+		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+		href="/docs/core_concepts/instant_preview"
+	/>
 	<DocCard
-    	title="Persistent Storage"
-    	description="Ensure that your data is safely stored and easily accessible whenever required."
-    	href="/docs/core_concepts/persistent_storage"
-    />
+		title="Dependency Management & Imports"
+		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
+		href="/docs/advanced/imports"
+	/>
 	<DocCard
-    	title="Roles and Permissions"
-    	description="Control access and manage permissions within your instance and workspaces."
-    	href="/docs/core_concepts/roles_and_permissions"
-    />
+		title="Workflows as Code"
+		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		href="/docs/core_concepts/workflows_as_code"
+	/>
 	<DocCard
-    	title="Authentification"
-    	description="Windmill provides flexible authentication options to ensure secure access to the platform."
-    	href="/docs/core_concepts/authentification"
-    />
+		title="Draft and Deploy"
+		description="Develop and cooperate in a structured way."
+		href="/docs/core_concepts/draft_and_deploy"
+	/>
 	<DocCard
-    	title="Error Handling"
-    	description="There are 5 ways to do error handling in Windmill."
-    	href="/docs/core_concepts/error_handling"
-    />
+		title="Persistent Storage & Databases"
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
+	/>
 	<DocCard
-    	title="Collaboration in Windmill"
-    	description="Collaboration in Windmill is simplified through various features and workflows."
-    	href="/docs/core_concepts/collaboration"
-    />
-    <DocCard
-    	title="Scheduling"
-    	description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-    	href="/docs/core_concepts/scheduling"
-    />
-    <DocCard
-    	title="Monitor Past and Future Runs"
-    	description="Get an aggregated view of past and future runs on your workspace."
-    	href="/docs/core_concepts/monitor_past_and_future_runs"
-    />
-    <DocCard
-    	title="Webhooks"
-    	description="Trigger scripts and flows from webhooks."
-    	href="/docs/core_concepts/webhooks"
-    />
-    <DocCard
-    	title="Variables and Secrets"
-    	description="Variables and Secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
-    	href="/docs/core_concepts/variables_and_secrets"
-    />
-    <DocCard
-    	title="Resources and Resource Types"
-    	description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
-    	href="/docs/core_concepts/resources_and_types"
-    />
-    <DocCard
-    	title="Groups and Folders"
-    	description="Groups and Folders enable efficient permission management by grouping users with similar access levels."
-    	href="/docs/core_concepts/groups_and_folders"
-    />
-    <DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Data Pipelines"
+		description="Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines."
+		href="/docs/core_concepts/data_pipelines"
+	/>
 	<DocCard
-    	title="Jobs"
-    	description="A job represents a past, present or future `task` or `work` to be executed by a worker."
-    	href="/docs/core_concepts/jobs"
-    />
+		title="Roles and Permissions"
+		description="Control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
 	<DocCard
-    	title="Concurrency Limits"
-    	description="The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows."
-    	href="/docs/core_concepts/concurrency_limits"
-    />
+		title="Authentification"
+		description="Windmill provides flexible authentication options to ensure secure access to the platform."
+		href="/docs/core_concepts/authentification"
+	/>
 	<DocCard
-		title="Caching in Windmill"
+		title="Error Handling"
+		description="There are 5 ways to do error handling in Windmill."
+		href="/docs/core_concepts/error_handling"
+	/>
+	<DocCard
+		title="Monitor Past and Future Runs"
+		description="Get an aggregated view of past and future runs on your workspace."
+		href="/docs/core_concepts/monitor_past_and_future_runs"
+	/>
+	<DocCard
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+	/>
+	<DocCard
+		title="Webhooks"
+		description="Trigger scripts and flows from webhooks."
+		href="/docs/core_concepts/webhooks"
+	/>
+	<DocCard
+		title="Variables and Secrets"
+		description="Variables and Secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
+		href="/docs/core_concepts/variables_and_secrets"
+	/>
+	<DocCard
+		title="Resources and Resource Types"
+		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		href="/docs/core_concepts/resources_and_types"
+	/>
+	<DocCard
+		title="Groups and Folders"
+		description="Groups and Folders enable efficient permission management by grouping users with similar access levels."
+		href="/docs/core_concepts/groups_and_folders"
+	/>
+	<DocCard
+		title="Workers and Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
+	<DocCard
+		title="Workspace Secret Encryption"
+		description="When updating the encryption key of a workspace, all secrets will be re-encrypted with the new key and the previous key will be replaced by the new one."
+		href="/docs/core_concepts/workspace_secret_encryption"
+	/>
+	<DocCard
+		title="Caching"
 		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
 		href="/docs/core_concepts/caching"
 	/>
-	 <DocCard
-    	title="Draft and Deploy"
-    	description="Develop and cooperate in a structured way."
-    	href="/docs/core_concepts/draft_and_deploy"
-    />
 	<DocCard
-    	title="Handling Files and Binary Data"
-    	description="In Windmill, JSON is the primary data format used for representing information. When working with binary data, such as files, they are represented as Base64 encoded strings."
-    	href="/docs/core_concepts/files_binary_data"
-    />
+		title="Handling Files and Binary Data"
+		description="In Windmill, JSON is the primary data format used for representing information. When working with binary data, such as files, they are represented as Base64 encoded strings."
+		href="/docs/core_concepts/files_binary_data"
+	/>
 	<DocCard
-    	title="Rich Display Rendering"
-    	description="The result renderer in Windmill supports rich display rendering, allowing you to customize the display format of your results."
-    	href="/docs/core_concepts/rich_display_rendering"
-    />
+		title="Rich Display Rendering"
+		description="The result renderer in Windmill supports rich display rendering, allowing you to customize the display format of your results."
+		href="/docs/core_concepts/rich_display_rendering"
+	/>
+	<DocCard
+		title="Jobs"
+		description="A job represents a past, present or future `task` or `work` to be executed by a worker."
+		href="/docs/core_concepts/jobs"
+	/>
+	<DocCard
+		title="Collaboration in Windmill"
+		description="Collaboration in Windmill is simplified through various features and workflows."
+		href="/docs/core_concepts/collaboration"
+	/>
+	<DocCard
+		title="Windmill AI"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation"
+	/>
 </div>
 
-## Enterprise & Team Features
+## Windmill for Developers
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="text-xl mb-2 font-semibold"></div>
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Support & SLA"
-    	description="Our SLAs are designed to provide timely assistance and address any issues."
-    	href="/docs/misc/support_and_sla"
-    />
-	<DocCard
-    	title="Audit Logs"
-    	description="Windmill provides audit logs for every operation and action that has side-effects."
-    	href="/docs/core_concepts/audit_logs"
-    />
-		<DocCard
-    	title="Dedicated Workers / High Throughput"
-    	description="Dedicated Workers are workers that are dedicated to a particular script."
-    	href="/docs/core_concepts/dedicated_workers"
-    />
-	<DocCard
-    	title="Worker Groups Management UI"
-    	description="Manage Worker Groups through Windmill UI."
-    	href="/docs/misc/worker_group_management_ui"
-    />
-	<DocCard
-    	title="Deploy to Staging/Prod Web UI"
-    	description="Deploy items to another staging/prod workspace."
-    	href="/docs/core_concepts/staging_prod"
-    />
-	<DocCard
-		title="Content Search"
-		description="Search any scripts, flows, resources, apps for a specific string similar to GitHub search."
-		href="/docs/core_concepts/content_search"
+		title="Command-Line Interface"
+		description="Interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
 	/>
 	<DocCard
-		title="CSS Editor"
-		description="The Global CSS Editor is designed to give styling and theming across your entire app."
-		href="/docs/apps/css_editor"
+		title="Local Development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
 	/>
 	<DocCard
-    	title="Multiplayer"
-    	description="Collaborate on scripts simultaneously."
-    	href="/docs/core_concepts/multiplayer"
-    />
+		title="Version Control in Windmill"
+		description="Sync your workspace to a git repository."
+		href="/docs/advanced/version_control"
+	/>
 	<DocCard
-    	title="SAML & SCIM"
-    	description="Configure Okta for both SAML and SCIM."
-    	href="/docs/misc/saml_and_scim"
-    />
+		title="Deploy to prod"
+		description="Deploy to prod using a staging workspace"
+		href="/docs/advanced/deploy_to_prod"
+	/>
+	<DocCard
+		title="Preinstall Binaries"
+		description="Workers in Windmill can preinstall binaries. This allows them to execute these binaries in subprocesses or directly within bash."
+		href="/docs/advanced/preinstall_binaries"
+	/>
+	<DocCard
+		title="React App Import"
+		description="Import your own Apps in React."
+		href="/docs/react_vue_svelte_apps/react"
+	/>
+	<DocCard
+		title="Run Docker Containers"
+		description="Windmill supports running any docker container through its bash integration."
+		href="/docs/advanced/docker"
+	/>
 </div>
 
 ## Code Editor-Specific Features
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Parameter Inference"
 		description="Windmill ensures that the parameters passed to scripts, flows, and resources match the expected format and type."
@@ -194,28 +200,27 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 	/>
 </div>
 
-
 ## Script-Specific Features
 
 All details on Scripts can be found in the [Script section](../script_editor/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
 		title="Script Kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
 		href="/docs/script_editor/script_kinds"
 	/>
-    <DocCard
+	<DocCard
 		title="Customize UI"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
 		href="/docs/script_editor/customize_ui"
-    />
-    <DocCard
+	/>
+	<DocCard
 		title="Versioning"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
 		href="/docs/script_editor/versioning"
 	/>
-    <DocCard
+	<DocCard
 		title="Worker Group Tag"
 		description="Scripts can be assigned custom worker groups for efficient execution on different machines with varying specifications."
 		href="/docs/script_editor/worker_group_tag"
@@ -224,13 +229,18 @@ All details on Scripts can be found in the [Script section](../script_editor/ind
 		title="Concurrency Limit"
 		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
 		href="/docs/script_editor/concurrency_limit"
-    />
-    <DocCard
+	/>
+	<DocCard
+		title="Running Services with Perpetual Scripts"
+		description="Perpetual scripts restart upon ending unless canceled."
+		href="/docs/script_editor/perpetual_scripts"
+	/>
+	<DocCard
 		title="Multiplayer"
 		description="The Multiplayer feature allows you to collaborate with team members on scripts simultaneously."
 		href="/docs/script_editor/multiplayer"
 	/>
-    <DocCard
+	<DocCard
 		title="Write Scripts on VS Code"
 		description="The Windmill VS Code extension allows you to run your scripts and preview the output within VS Code."
 		href="/docs/script_editor/vs_code_scripts"
@@ -241,7 +251,7 @@ All details on Scripts can be found in the [Script section](../script_editor/ind
 
 All details on Flows can be found in the [Flows section](../flows/1_flow_editor.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Triggering Flows"
@@ -281,7 +291,7 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	<DocCard
 		color="teal"
 		title="Trigger Scripts"
-		description="Trigger flows upon a given event with a dedicated trigger script."
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
 	<DocCard
@@ -298,15 +308,27 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Cache for Steps"
-		description="Re-use a step's previous results."
-		href="/docs/flows/cache"
+		title="Custom Timeout for Step"
+		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
+		href="/docs/flows/early_stop"
 	/>
 	<DocCard
 		color="teal"
-		title="Step Mocking"
-		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
-		href="/docs/flows/step_mocking"
+		title="Priority for Steps"
+		description="Prioritize a flow step in the execution queue."
+		href="/docs/flows/priority"
+	/>
+	<DocCard
+		color="teal"
+		title="Lifetime / Delete after Use"
+		description="The logs, arguments and results of this flow step will be completely deleted from Windmill once the flow is complete."
+		href="/docs/flows/lifetime"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
 	/>
 	<DocCard
 		color="teal"
@@ -316,13 +338,13 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Return Early for Flows"
-		description="Define a node at which the flow will return at for sync endpoints."
+		title="Early Return"
+		description="Define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously."
 		href="/docs/flows/early_return"
 	/>
 	<DocCard
 		color="teal"
-		title="Approval Steps in Flows"
+		title="Suspend & Approval / Prompts"
 		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
 		href="/docs/flows/flow_approval"
 	/>
@@ -334,19 +356,19 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Custom Timeout for Step"
-		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
-		href="/docs/flows/early_stop"
+		title="Step Mocking"
+		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
+		href="/docs/flows/step_mocking"
 	/>
 </div>
 
-<div class="grid grid-cols-2 gap-6 mb-4"></div>
+<div className="grid grid-cols-2 gap-6 mb-4"></div>
 
 ## App-Specific Features
 
 All details on Apps can be found in the [Apps section](../apps/0_app_editor/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="List of Components"
 		description="Use prebuilt interface elements to display data, and manipulate or interact with it based on user actions."
@@ -357,12 +379,6 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		title="Link your App to scripts and flows"
 		description="Run any script or flow for your UI."
 		href="/docs/apps/app-runnable-panel"
-		color="orange"
-	/>
-	<DocCard
-		title="Group of Components"
-		description="Components can be grouped within containers."
-		href="/docs/apps/app_configuration_settings/components_groups"
 		color="orange"
 	/>
 	<DocCard
@@ -378,9 +394,104 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		color="orange"
 	/>
 	<DocCard
+		title="Schedule App Reports"
+		description="Send a PDF or PNG preview of any app at a given schedule."
+		href="/docs/apps/schedule_reports"
 		color="orange"
+	/>
+	<DocCard
+		title="Group of Components"
+		description="Components can be grouped within containers."
+		href="/docs/apps/app_configuration_settings/components_groups"
+		color="orange"
+	/>
+	<DocCard		
 		title="Import Custom React Components"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
 		href="/docs/apps/react_components"
+		color="orange"
+	/>
+	<DocCard
+		title="Workspace Default App"
+		description="If configured, users who are operators in this workspace will be redirected to this app automatically when logging into this workspace."
+		href="/docs/apps/default_app"
+		color="orange"
+	/>
+</div>
+
+## Enterprise & Cloud Features
+
+All details & features on [Pricing page](/pricing).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Support & SLA"
+		description="Our SLAs are designed to provide timely assistance and address any issues."
+		href="/docs/misc/support_and_sla"
+	/>
+	<DocCard
+		title="Audit Logs"
+		description="Windmill provides audit logs for every operation and action that has side-effects."
+		href="/docs/core_concepts/audit_logs"
+	/>
+	<DocCard
+		title="Deploy to Staging/Prod Web UI"
+		description="Deploy items to another staging/prod workspace."
+		href="/docs/core_concepts/staging_prod"
+	/>
+	<DocCard
+		title="Git Sync"
+		description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
+		href="/docs/advanced/git_sync"
+	/>
+	<DocCard
+		title="Worker Groups Management UI"
+		description="Manage Worker Groups through Windmill UI."
+		href="/docs/misc/worker_group_management_ui"
+	/>
+	<DocCard
+		title="Concurrency Limits"
+		description="The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows."
+		href="/docs/core_concepts/concurrency_limits"
+	/>
+	<DocCard
+		title="S3 Distributed Dependency Cache"
+		description="Leverage a global S3 cache to speed up Python dependency handling by storing and reusing pre-installed package."
+		href="/docs/misc/s3_cache"
+	/>
+	<DocCard
+		title="OpenID Connect (OIDC)"
+		description="Use Windmill's OIDC provider to authenticate from scripts to cloud providers and other APIs."
+		href="/docs/core_concepts/oidc"
+	/>
+	<DocCard
+		title="SAML & SCIM"
+		description="Configure Okta for both SAML and SCIM."
+		href="/docs/misc/saml_and_scim"
+	/>
+	<DocCard
+		title="Dedicated Workers / High Throughput"
+		description="Dedicated Workers are workers that are dedicated to a particular script."
+		href="/docs/core_concepts/dedicated_workers"
+	/>
+	<DocCard
+		title="Agent Workers"
+		description="Agent Workers are a 4th mode of execution of the Windmill binary, but instead of using MODE=worker, we use here MODE=agent."
+		href="/docs/core_concepts/agent_workers"
+	/>
+	<DocCard
+		title="Content Search"
+		description="Search any scripts, flows, resources, apps for a specific string similar to GitHub search."
+		href="/docs/core_concepts/content_search"
+	/>
+	<DocCard
+		title="CSS Editor"
+		description="The Global CSS Editor is designed to give styling and theming across your entire app."
+		href="/docs/apps/css_editor"
+	/>
+	<DocCard
+		title="Multiplayer"
+		description="Collaborate on scripts simultaneously."
+		href="/docs/core_concepts/multiplayer"
 	/>
 </div>

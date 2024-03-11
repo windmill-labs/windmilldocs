@@ -7,17 +7,19 @@ import {
 	SiLinkedin,
 	SiMatrix,
 	SiMysql,
+	SiMicrosoftsqlserver,
 	SiOpenai,
 	SiTelegram,
 	SiToggl,
 	SiBigquery
-} from 'react-icons/si/index';
+} from 'react-icons/si';
 
 const integrations = [
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'MySQL', src: 'third_party_logos/mysql.svg', Icon: SiMysql },
+	{ name: 'MS SQL', src: 'third_party_logos/msssql.svg', Icon: SiMicrosoftsqlserver },
 	{ name: 'BigQuery', src: 'third_party_logos/bigquery.svg' },
-	{ name: 'Snowflake', src: 'third_party_logos/snowflake.svg'},
+	{ name: 'Snowflake', src: 'third_party_logos/snowflake.svg' },
 	{ name: 'GitHub', src: 'third_party_logos/github.svg', Icon: SiGithub },
 	{ name: 'GitLab', src: 'third_party_logos/gitlab.svg' },
 	{ name: 'Supabase', src: 'third_party_logos/supabase.svg' },
@@ -26,7 +28,7 @@ const integrations = [
 	{ name: 'Appwrite', src: 'third_party_logos/appwrite.svg' },
 	{ name: 'AWS', src: 'third_party_logos/aws.svg' },
 	{ name: 'ClickHouse', src: 'third_party_logos/clickhouse.svg' },
-	{ name: 'Cloudflare-r2', src: 'third_party_logos/cloudflare.svg'},
+	{ name: 'Cloudflare-r2', src: 'third_party_logos/cloudflare.svg' },
 	{ name: 'Datadog', src: 'third_party_logos/datadog.svg' },
 	{ name: 'Discord', src: 'third_party_logos/discord.svg' },
 	{ name: 'FaunaDB', src: 'third_party_logos/faunadb.svg' },
@@ -36,7 +38,7 @@ const integrations = [
 	{ name: 'Gmail', src: 'third_party_logos/gmail.svg' },
 	{ name: 'Gsheets', src: 'third_party_logos/gsheets.svg' },
 	{ name: 'HubSpot', src: 'third_party_logos/hubspot.svg' },
-	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg'},
+	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg' },
 	{ name: 'Mailchimp', src: 'third_party_logos/mailchimp.svg' },
 	{ name: 'Mastodon', src: 'third_party_logos/mastodon.svg' },
 	{ name: 'Matrix', src: 'third_party_logos/matrix.svg', Icon: SiMatrix },
@@ -54,7 +56,7 @@ const integrations = [
 	{ name: 'SurrealDB', src: 'third_party_logos/surrealdb.svg' },
 	{ name: 'Telegram', src: 'third_party_logos/telegram.svg', Icon: SiTelegram },
 	{ name: 'Toggl', src: 'third_party_logos/toggl.svg', Icon: SiToggl },
-	{ name: 'Upstash', src: 'third_party_logos/upstash.svg' },	
+	{ name: 'Upstash', src: 'third_party_logos/upstash.svg' }
 ];
 
 export default function IntergrationList() {
@@ -67,34 +69,38 @@ export default function IntergrationList() {
 
 				<span className={classNames('text-lg max-w-3xl', 'text-gray-600 dark:text-gray-200')}>
 					We have a growing list of integrations with third party services available on the Hub.
-					<br/>
+					<br />
 					Connect your apps and services to automate your workflows.
 				</span>
+
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-12 gap-4">
-                {integrations.map((item) => (
-                    <a
-                        key={item.name}
-                        className={classNames(
-                            'col-span-1 flex justify-center rounded-xl border dark:border-gray-800 cursor-pointer transition-all',
-                            ' hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
-                        )}
-                        href={
-							(item.name === 'PostgreSQL' || item.name === 'MySQL' || item.name === 'BigQuery' || item.name === 'Snowflake') ?
-                            '/docs/getting_started/scripts_quickstart/sql' :
-                            `/docs/integrations/${item.name
-                                .toLowerCase()
-                                .replace(/\s/g, '')}`
-                        }
-                        target="_blank"
-                    >
-                        {item.Icon ? (
-                            <item.Icon className="w-10 h-full text-gray-900 dark:text-white" />
-                        ) : (
-                            <img src={item.src} alt={item.name} className="w-auto h-8 m-4" loading="lazy" />
-                        )}
-                    </a>
-                ))}
-            </div>
+					{integrations.map((item) => (
+						<a
+							key={item.name}
+							className={classNames(
+								'col-span-1 flex justify-center rounded-xl border dark:border-gray-800 cursor-pointer transition-all',
+								' hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
+							)}
+							href={
+								item.name === 'PostgreSQL' ||
+								item.name === 'MySQL' ||
+								item.name === 'BigQuery' ||
+								item.name === 'MS SQL' ||
+								item.name === 'Snowflake'
+									? '/docs/getting_started/scripts_quickstart/sql'
+									: `/docs/integrations/${item.name.toLowerCase().replace(/\s/g, '')}`
+							}
+							target="_blank"
+							title={item.name}
+						>
+							{item.Icon ? (
+								<item.Icon className="w-10 h-full text-gray-900 dark:text-white" />
+							) : (
+								<img src={item.src} alt={item.name} className="w-auto h-8 m-4" loading="lazy" />
+							)}
+						</a>
+					))}
+				</div>
 				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/resources"

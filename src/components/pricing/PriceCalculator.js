@@ -5,83 +5,103 @@ import classNames from 'classnames';
 import Slider from './Slider';
 
 const plans = [
-	{
-		name: 'Core package',
-		description: 'Your own hosted dedicated Windmill cluster without restrictions',
-		price: 600
-	}
+    {
+        name: 'Core package',
+        description: 'Your own hosted dedicated Windmill cluster without restrictions or maintenance.',
+        price: 600
+    }
 ];
 
-function calculatePrice(monthlyPrice, period) {
-	if (period === 'annually') {
-		return monthlyPrice * 10;
-	}
-	return monthlyPrice;
+function calculatePrice(monthlyPrice, period, tierId) {
+    if (period === 'annually') {
+        if (tierId === 'tier-team') {
+            return monthlyPrice * 12; // For 'tier-team', multiply by 12
+        }
+        return monthlyPrice * 10; // Default annual calculation
+    }
+    return monthlyPrice; // Monthly pricing remains unchanged
 }
 
 const priceFormatter = new Intl.NumberFormat('en-US', {
-	style: 'currency',
-	currency: 'USD',
-	minimumFractionDigits: 0,
-	maximumFractionDigits: 0
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
 });
 
 export default function PriceCalculator({ period, tier }) {
-	const [selected, setSelected] = useState(plans[0]);
-	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
-	const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
+    const [selected, setSelected] = useState(plans[0]);
+    const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
+    const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
 
-	function computeTotalPrice() {
-		let total = tier.id === 'tier-enterprise' ? calculatePrice(selected.price, period.value) : 0;
-
-		if (tier.price.seat) {
-			total += calculatePrice(tier.price.seat.monthly, period.value) * seats;
+    function computeTotalPrice() {
+		let total = 0;
+	
+		if (tier.id === 'tier-team') {
+			// For 'tier-team', calculate the base price, adjusting for the period
+			total = calculatePrice(tier.minPrice, period.value, tier.id);
+	
+			// Calculate seat price, assuming the first seat's cost is included in the base price for 'tier-team' only
+			if (tier.price.seat) {
+				// Adjust the total calculation by adding seat costs only for additional seats beyond the first
+				let additionalSeats = Math.max(0, seats - 1);
+				total += calculatePrice(tier.price.seat.monthly, period.value, tier.id) * additionalSeats;
+			}
+		} else {
+			// For other tiers, calculate base price and add costs for seats directly without subtracting
+			if (tier.id === 'tier-enterprise') {
+				total = calculatePrice(selected.price, period.value, tier.id);
+			}
+	
+			// Add full seat price for all seats without adjusting for the first seat
+			if (tier.price.seat) {
+				total += calculatePrice(tier.price.seat.monthly, period.value, tier.id) * seats;
+			}
 		}
-
+	
+		// Add price for vCPUs if applicable, this part remains unchanged
 		if (tier.price.vCPU) {
-			total += calculatePrice(tier.price.vCPU.monthly, period.value) * vCPUs;
+			total += calculatePrice(tier.price.vCPU.monthly, period.value, tier.id) * vCPUs;
 		}
-
 		return total;
-	}
+	}	
 
-	return (
+    return (
 		<div className="mt-16 grow flex flex-col justify-start">
 			<div className="flex justify-between items-center">
 				<h4>Price</h4>
-
+	
 				<div>
 					<span className="text-2xl text-gray-900 font-semibold dark:text-white">
 						{priceFormatter.format(computeTotalPrice())}
 					</span>
 					<span className="text-md text-gray-500">
 						{period.value === 'annually' ? '/yr' : '/mo'}
-						{tier.id === 'tier-enterprise' || tier.id === 'tier-enterprise-selfhost'}
 					</span>
-				</div>
-			</div>
+                </div>
+            </div>
 
-			<p className="mt-4 flex items-baseline gap-x-1">
-				<ul class="flex flex-col gap-2 w-full">
-					{Object.keys(tier.price).map((key) => (
-						<li key={key} className="flex flex-col ">
-							<div className="flex justify-between w-full items-center">
-								<div>
-									<span className="text-sm text-gray-600 dark:text-gray-200">
-										{key === 'vCPU' ? vCPUs : seats}
-									</span>
-									<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-										{' '}
-										{key}s:
-									</span>
-								</div>
-								<div>
-									<span className="text-sm text-gray-900 font-semibold dark:text-white">
-										${calculatePrice(tier.price[key].monthly, period.value)}
-									</span>
-									<span className="text-sm text-gray-400">
-										{period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
-									</span>
+            <p className="mt-4 flex items-baseline gap-x-1">
+                <ul className="flex flex-col gap-2 w-full">
+                    {Object.keys(tier.price).map((key) => (
+                        <li key={key} className="flex flex-col ">
+                            <div className="flex justify-between w-full items-center">
+                                <div>
+                                    <span className="text-sm text-gray-600 dark:text-gray-200">
+                                        {key === 'vCPU' ? vCPUs.toLocaleString() : seats.toLocaleString()}
+                                    </span>
+                                    <span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
+                                        {' '}
+                                        {key}s:
+                                    </span>
+                                </div>
+                                <div>
+                                    <span className="text-sm text-gray-900 font-semibold dark:text-white">
+                                        ${calculatePrice(tier.price[key].monthly, period.value, tier.id)}
+                                    </span>
+                                    <span className="text-sm text-gray-400">
+                                        {period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
+                                    </span>
 								</div>
 							</div>
 
@@ -150,7 +170,7 @@ export default function PriceCalculator({ period, tier }) {
 
 											<span
 												className={classNames(
-													active ? 'border' : 'border-2',
+													'border',
 													checked ? 'border-blue-600' : 'border-transparent',
 													'pointer-events-none absolute -inset-px rounded-lg'
 												)}
@@ -171,17 +191,18 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								seats * 10 * (period.value === 'annually' ? 12 : 1)
-							}k executions of 100ms per `}</span>
+								seats * 10 * (period.value === 'annually' ? 12 : 1
+								).toLocaleString()}k executions of 100ms per `}
+							</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}
@@ -192,17 +213,16 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions of 100ms per `}</span>
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}
@@ -213,17 +233,16 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions of 100ms per `}</span>
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}
@@ -234,17 +253,16 @@ export default function PriceCalculator({ period, tier }) {
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
 							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1)
-							}M executions of 100ms per `}</span>
+								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()}M executions of 100ms per `}</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
 					<div className="flex flex-row gap-1">
 						<span className="whitespace-nowrap text-sm">
-							{seats} {seats > 1 ? 'users' : 'user'}
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
 						</span>
 						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">{seats * 2} operators</span>
+						<span className="whitespace-nowrap text-sm">{(seats * 2).toLocaleString()} operators</span>
 					</div>
 				</div>
 			) : null}

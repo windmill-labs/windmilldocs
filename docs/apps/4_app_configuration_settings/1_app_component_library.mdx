@@ -8,7 +8,7 @@ The app components library is located on the right-hand side of the app editor. 
 
 The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](/docs/misc/getting_help/).
 
-Even though the list of components is never as up to date as on [Windmill Cloud](https://app.windmill.dev/user/login), here is the list of the available components:
+Even though the list of components is never as up to date as on <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a>, here is the list of the available components:
 
 ## Components properties
 
@@ -113,6 +113,24 @@ The layout components are used to organize the components in the app canvas.
 	alt="stepper"
 />
 
+### [Carousel List](./carousel.mdx)
+
+The Carousel List component enables duplication of cards or rows with consistent structure in a carousel, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/carousel_component.mp4"
+	alt="carousel list component"
+/>
+
+### [Decision Tree](./decision_tree.mdx)
+
+This app component allows you to create a decision tree controlled by a flow-like structure. Each node in the tree represents a decision point with a dedicated subgrid and can lead to one or more subsequent nodes based on specified conditions.
+
+![Decision Tree](../../assets/apps/4_app_component_library/decision-tree.png.webp)
+
 ## Tabs
 
 ### [Tabs](./tabs.mdx)
@@ -174,7 +192,7 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Form](./form_input.mdx)
 
-![Form Input API](../../assets/apps/4_app_component_library/form_input.png.webp)
+![Form](../../assets/apps/4_app_component_library/form_input.png.webp)
 
 ### [Text Input](./text_input.mdx)
 
@@ -258,7 +276,19 @@ The layout components are used to organize the components in the app canvas.
 	src="/videos/aggrid_table.mp4"
 	alt="aggrid table"
 />
-<br />
+<br/>
+
+### [Database Studio](./database_studio.mdx)
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Fd_0EffVDtw?vq=hd1080"
+	title="Database Studio"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
 
 ## Display
 
@@ -326,7 +356,7 @@ The layout components are used to organize the components in the app canvas.
 
 ## Groups
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		title="Group of Components"
 		description="Components can be grouped within containers."

@@ -19,10 +19,10 @@ import {
 	Voicemail,
 	BedIcon,
 	Calendar,
-	Bot,
 	LucideWebhook,
 	BookOpen,
-	CylinderIcon
+	CylinderIcon,
+	Sparkles
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -108,7 +108,7 @@ const tabs = [
 			{
 				title: 'Windmill AI',
 				description: 'Generate flows from prompts.',
-				icon: Bot,
+				icon: Sparkles,
 				caption: (
 					<div>
 						Generate flows from prompts with{' '}
@@ -492,8 +492,7 @@ const cards = [
 
 	{
 		title: 'Suspend and resume',
-		subtitle:
-			'Automatically resume workflows with secret webhooks.',
+		subtitle: 'Automatically resume workflows with secret webhooks.',
 		Icon: CheckCircle2,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/flows/flow_approval'
@@ -501,8 +500,7 @@ const cards = [
 
 	{
 		title: 'Data Pipelines',
-		subtitle:
-			'Integration with Polars, DuckDB and S3 for data pipelines.',
+		subtitle: 'Integration with Polars, DuckDB and S3 for data pipelines.',
 		Icon: CylinderIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/core_concepts/data_pipelines'
@@ -576,7 +574,7 @@ const examples = [
 						Zendesk
 					</mark>
 				</a>{' '}
-				, use a for lopp to translate each one with{' '}
+				, use a for loop to translate each one with{' '}
 				<a
 					href="https://hub.windmill.dev/integrations/openai"
 					target="_blank"
@@ -646,6 +644,7 @@ export default function FlowSection() {
 							</span>
 							<Switch
 								checked={chart === 'short'}
+								title="Switch between short and long running tasks"
 								onChange={() => {
 									setChart(chart === 'long' ? 'short' : 'long');
 								}}
@@ -794,6 +793,7 @@ export default function FlowSection() {
 										]
 									]}
 									shouldAnimate={true}
+									xTitle="Duration (in seconds)"
 								/>
 							)}
 						</div>

@@ -8,10 +8,10 @@ Each script has metadata associated with it, enabling it to be defined and confi
 
 ## Path
 
-**Path** is the Script's unique identifier that consist of the [script's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
+**Path** is the Script's unique identifier that consists of the [script's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
 The owner can be either a user, or a group of users ([folder](../core_concepts/8_groups_and_folders/index.mdx#folders)).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Roles and Permissions"
 		description="Control access and manage permissions within your instance and workspaces."
@@ -28,6 +28,14 @@ The owner can be either a user, or a group of users ([folder](../core_concepts/8
 
 Summary (optional) is a short, human-readable summary of the Script. It will be displayed as a title across Windmill. If omitted, the UI will use the `path` by default.
 
+It can be pre-filled automatically using [Windmill AI](../core_concepts/22_ai_generation/index.mdx):
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/summary_compilot.mp4"
+/>
+
 ## Language
 
 Language of the script. Windmill supports TypeScript, Python, Go, Bash and SQL.
@@ -40,7 +48,7 @@ This is where you can give instructions to users on how to run your Script. It s
 
 The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Concurrency Limit"
 		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
@@ -48,11 +56,35 @@ The Concurrency Limit feature allows you to define concurrency limits for script
 	/>
 </div>
 
+## Perpetual Scripts
+
+Perpetual scripts restart upon ending unless canceled.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Running Services with Perpetual Scripts"
+		description="Perpetual scripts restart upon ending unless canceled."
+		href="/docs/script_editor/perpetual_scripts"
+	/>
+</div>
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/5uw3JWiIFp0?vq=hd1080"
+	title="Running Services with Perpetual Scripts"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
 ## Worker group tag
 
 Worker group tagIf you want to run some scripts on a GPU machine.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Worker Groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."

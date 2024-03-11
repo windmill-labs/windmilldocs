@@ -1,0 +1,80 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Database Studio
+
+This component allows you to create a database studio. The database studio is a web-based database management tool. It allows you to display and edit the content of a database. It uses [Ag Grid](./aggrid_table.mdx) to display the table.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Fd_0EffVDtw?vq=hd1080"
+	title="Database Studio"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+For simple data display, check out the [Table](./table.mdx) component or the [Ag Grid](./aggrid_table.mdx) component.
+
+## Features
+
+- Display the content of a table.
+- Edit the content of a table by directly editing the cells (only when the cell is editable).
+- Add a new row: The form is automatically generated based on the column definitions, and the default values are automatically set. The form opens in a drawer.
+- Delete a row: The delete button is displayed on the right of the row. The delete button is only displayed if the `Allow delete` property is set to true.
+
+## Configuration
+
+The component can be configured with the following properties:
+
+- `resource`: The [PostgreSQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#postgresql) / [MySQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#mysql) / [MS SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#ms-sql) / [Snowflake](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#snowflake) / [BigQuery](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#bigquery) resource to use.
+- `table`: The table to use. Once the resource is selected, the list will be populated with the tables available in the database.
+
+Once a resource is selected, you can explore the schema: It will open a drawer the schema of the database.
+
+## Column definition
+
+When the table is selected, the column definitions will automatically synchronize with the columns of the table.
+
+The column can be configured with the following properties:
+
+- `Skip for select and update`: By default, all columns are included in the select and update queries. If you want to exclude a column from the select and update queries, you can set this property to true. You cannot skip a primary key.
+
+- `Hide from insert`: By default, all columns are used to generate the submit form. If you want to exclude a column from the submit form, you can set this property to true. If the column is not nullable or doesn't have a default value, a default value will be required.
+
+- `Default input`: By default, all columns are used to generate the submit form. If you want to exclude a column from the submit form, you can set this property to true. If the column is not nullable or doesn't have a default value, a default value will be required.
+
+- `Editable value`: Whether the value is editable. Is overriden by the `All editable` property on the table.
+
+Furthermore, each column exposes the same configuration as the Ag Chart column definition.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ag Grid column definition"
+		description="In this guide, learn how to configure the column definitions"
+		href="/docs/misc/guides/aggrid_table#column-definition"
+	/>
+	<DocCard
+		title="Ag Grid"
+		description="Learn how to use the Ag Grid table"
+		href="/docs/apps/app_configuration_settings/aggrid_table"
+	/>
+</div>
+
+## Table configuration
+
+The database studio uses the same configuration as the Ag Chart, expect for the following property.
+
+| Name         |  Type   | Connectable | Templatable | Default | Description                     |
+| ------------ | :-----: | :---------: | :---------: | :-----: | ------------------------------- |
+| Allow delete | boolean |    true     |    false    |  false  | Whether row deletion is enabled |
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ag Grid"
+		description="Learn how to use the Ag Grid table"
+		href="/docs/apps/app_configuration_settings/aggrid_table"
+	/>
+</div>

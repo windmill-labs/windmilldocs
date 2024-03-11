@@ -1,23 +1,10 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-
-// @ts-check
-
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
 	// By default, Docusaurus generates a sidebar from the docs folder structure
 	tutorialSidebar: [
 		{
 			type: 'category',
-			label: 'Getting Started',
+			label: 'About Windmill',
 			items: [
 				'intro',
 				{
@@ -26,63 +13,215 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Scripts Quickstarts',
-					link: {
-						type: 'doc',
-						id: 'getting_started/scripts_quickstart/index'
-					},
+					label: 'Tutorials',
 					collapsed: false,
 					items: [
 						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/typescript_quickstart/index',
-							label: 'TypeScript'
+							type: 'category',
+							label: 'Scripts',
+							link: {
+								type: 'doc',
+								id: 'getting_started/scripts_quickstart/index'
+							},
+							items: [
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/typescript_quickstart/index',
+									label: 'TypeScript'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/python_quickstart/index',
+									label: 'Python'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/bash_quickstart/index',
+									label: 'Bash / PowerShell'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/docker_quickstart/index',
+									label: 'Docker'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/go_quickstart/index',
+									label: 'Go'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/sql_quickstart/index',
+									label: 'SQL & Query languages'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
+									label: 'Rest / GraphQL'
+								}
+							]
 						},
 						{
 							type: 'doc',
-							id: 'getting_started/scripts_quickstart/python_quickstart/index',
-							label: 'Python'
+							id: 'getting_started/flows_quickstart/index',
+							label: 'Flows'
 						},
 						{
 							type: 'doc',
-							id: 'getting_started/scripts_quickstart/bash_quickstart/index',
-							label: 'Bash / PowerShell'
+							id: 'getting_started/apps_quickstart/index',
+							label: 'Apps'
 						},
 						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/docker_quickstart/index',
-							label: 'Docker'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/go_quickstart/index',
-							label: 'Go'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/sql_quickstart/index',
-							label: 'PgSQL / MySQL / BigQuery / Snowflake'
-						},
-						{
-							type: 'doc',
-							id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
-							label: 'Rest / GraphQL'
+							type: 'category',
+							label: 'Guides',
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/guides/app_send_email_smtp/index',
+									label: 'App that Sends Email with SMTP'
+								},
+								{
+									type: 'doc',
+									id: 'misc/guides/aggrid_table/index',
+									label: 'AgGrid Table'
+								},
+								'misc/guides/table/index',
+								'misc/guides/sequin/index'
+							]
 						}
 					]
 				},
-				'getting_started/flows_quickstart/index',
-				'getting_started/apps_quickstart/index',
-				'getting_started/trigger_scripts/index',
-				'getting_started/trigger_flows/index'
+				{
+					type: 'category',
+					label: 'Examples',
+					collapsed: true,
+					items: [
+						{
+							type: 'doc',
+							id: 'getting_started/trigger_scripts/index',
+							label: 'Triggering Scripts'
+						},
+						{
+							type: 'doc',
+							id: 'getting_started/trigger_flows/index',
+							label: 'Triggering Flows'
+						},
+						'misc/guides/airplane/index'
+					]
+				},
+				{
+					type: 'category',
+					label: 'Compare',
+					collapsed: true,
+					items: [
+						'compared_to/peers',
+						{
+							type: 'doc',
+							id: 'compared_to/airplane',
+							label: 'Airplane'
+						},
+						{
+							type: 'doc',
+							id: 'compared_to/retool',
+							label: 'Retool'
+						},
+						{
+							type: 'doc',
+							id: 'compared_to/prefect',
+							label: 'Prefect'
+						},
+						{
+							type: 'category',
+							label: 'Benchmarks',
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/index',
+									label: 'vs Airflow vs Prefect vs Temporal'
+								},
+								'misc/benchmarks/aws_lambda/index'
+							]
+						}
+					]
+				},
+				'misc/contributing/index'
 			]
 		},
 		{
 			type: 'category',
-			label: 'Editors Manual',
+			label: 'Core Concepts',
+			items: [
+				{
+					type: 'doc',
+					id: 'core_concepts/index',
+					label: 'List of Core Concepts'
+				},
+				'misc/architecture/index',
+				'core_concepts/auto_generated_uis/index',
+				'core_concepts/json_schema_and_parsing/index',
+				'core_concepts/instant_preview/index',
+				'advanced/imports/index',
+				'core_concepts/workflows_as_code/index',
+				'core_concepts/draft_and_deploy/index',
+				{
+					type: 'category',
+					label: 'Persistent Storage & Databases',
+					link: {
+						type: 'doc',
+						id: 'core_concepts/persistent_storage/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/within_windmill',
+							label: 'Within Windmill (not recommended)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/large_data_files',
+							label: 'Object Storage for Large Data (S3)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/structured_databases',
+							label: 'Big Structured SQL Data (Postgres)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/key_value_stores',
+							label: 'NoSQL and Document Databases'
+						}
+					]
+				},
+				'core_concepts/data_pipelines/index',
+				'core_concepts/roles_and_permissions/index',
+				'core_concepts/authentification/index',
+				'core_concepts/error_handling/index',
+				'core_concepts/monitor_past_and_future_runs/index',
+				'core_concepts/scheduling/index',
+				'core_concepts/webhooks/index',
+				'core_concepts/variables_and_secrets/index',
+				'core_concepts/resources_and_types/index',
+				'core_concepts/groups_and_folders/index',
+				'core_concepts/worker_groups/index',
+				'core_concepts/workspace_secret_encryption/index',
+				'core_concepts/caching/index',
+				'core_concepts/files_binary_data/index',
+				'core_concepts/rich_display_rendering/index',
+				'core_concepts/jobs/index',
+				'core_concepts/collaboration/index',
+				'core_concepts/ai_generation/index'
+			],
+			collapsed: true
+		},
+		{
+			type: 'category',
+			label: 'Windmill Editors Suite',
 			items: [
 				{
 					type: 'category',
 					label: 'Script Editor',
+					collapsed: true,
 					link: {
 						type: 'doc',
 						id: 'script_editor/index'
@@ -94,12 +233,12 @@ const sidebars = {
 						'script_editor/versioning',
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
+						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
 						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
 						'script_editor/vs_code_scripts'
-					],
-					collapsed: true
+					]
 				},
 				{
 					type: 'category',
@@ -121,13 +260,15 @@ const sidebars = {
 						'flows/flow_trigger',
 						'flows/retries',
 						'flows/concurrency_limit',
+						'flows/custom_timeout',
+						'flows/priority',
+						'flows/lifetime',
 						'flows/cache',
-						'flows/step_mocking',
 						'flows/early_stop',
 						'flows/early_return',
 						'flows/flow_approval',
 						'flows/sleep',
-						'flows/custom_timeout'
+						'flows/step_mocking'
 					],
 					collapsed: true
 				},
@@ -148,7 +289,8 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: ['apps/app-runnable-panel', 'apps/outputs']
+							items: ['apps/app-runnable-panel', 'apps/outputs'],
+							collapsed: false
 						},
 						{
 							type: 'category',
@@ -159,12 +301,17 @@ const sidebars = {
 							},
 							items: [
 								'apps/app_configuration_settings/aggrid_table',
+								'apps/app_configuration_settings/agcharts',
+								'apps/app_configuration_settings/alert',
 								'apps/app_configuration_settings/button',
+								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',
 								'apps/app_configuration_settings/currency_input',
+								'apps/app_configuration_settings/database_studio',
 								'apps/app_configuration_settings/date_input',
+								'apps/app_configuration_settings/decision_tree',
 								'apps/app_configuration_settings/divider_x',
 								'apps/app_configuration_settings/divider_y',
 								'apps/app_configuration_settings/download_button',
@@ -172,6 +319,7 @@ const sidebars = {
 								'apps/app_configuration_settings/dropdown_menu',
 								'apps/app_configuration_settings/email_input',
 								'apps/app_configuration_settings/file_input',
+								'apps/app_configuration_settings/s3fileinput',
 								'apps/app_configuration_settings/flow_status',
 								'apps/app_configuration_settings/form_input',
 								'apps/app_configuration_settings/horizontal_split_panes',
@@ -198,6 +346,7 @@ const sidebars = {
 								'apps/app_configuration_settings/select',
 								'apps/app_configuration_settings/sidebar_tabs',
 								'apps/app_configuration_settings/slider',
+								'apps/app_configuration_settings/date_slider',
 								'apps/app_configuration_settings/statistic_card',
 								'apps/app_configuration_settings/stepper',
 								'apps/app_configuration_settings/submit_form',
@@ -213,11 +362,19 @@ const sidebars = {
 						},
 						'apps/app_configuration_settings/app_component_configuration',
 						'apps/app_configuration_settings/app_styling',
-						'apps/app_debugging',
 						'apps/app_deployment',
+						'apps/app_debugging',
+						'apps/troubleshoot_panel/index',
+						{
+							type: 'doc',
+							id: 'apps/download_files',
+							label: 'Download Files'
+						},
 						'apps/public_apps',
+						'apps/schedule_reports',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
+						'apps/default_app/index',
 						'apps/app_e-commerce'
 					],
 
@@ -242,46 +399,34 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Core Concepts',
-
+			label: 'Hosting and Advanced',
 			items: [
 				{
-					type: 'doc',
-					id: 'core_concepts/index',
-					label: 'List of Core Concepts'
+					type: 'category',
+					label: 'Self Host',
+					link: {
+						type: 'doc',
+						id: 'advanced/self_host/index'
+					},
+					items: ['advanced/self_host/aws_ecs']
 				},
-				'core_concepts/auto_generated_uis/index',
-				'core_concepts/ai_generation/index',
-				'core_concepts/json_schema_and_parsing/index',
-				'core_concepts/instant_preview/index',
-				'advanced/imports/index',
-				'core_concepts/draft_and_deploy/index',
-				'core_concepts/persistent_storage/index',
-				'core_concepts/data_pipelines/index',
-				'core_concepts/roles_and_permissions/index',
-				'core_concepts/authentification/index',
-				'core_concepts/error_handling/index',
-				'core_concepts/collaboration/index',
-				'core_concepts/monitor_past_and_future_runs/index',
-				'core_concepts/scheduling/index',
-				'core_concepts/webhooks/index',
-				'core_concepts/variables_and_secrets/index',
-				'core_concepts/resources_and_types/index',
-				'core_concepts/groups_and_folders/index',
-				'core_concepts/worker_groups/index',
-				'core_concepts/concurrency_limits/index',
-				'core_concepts/caching/index',
-				'core_concepts/files_binary_data/index',
-				'core_concepts/rich_display_rendering/index',
-				'core_concepts/jobs/index'
-			],
-			collapsed: false
-		},
-		{
-			type: 'category',
-			label: 'Developer',
-			items: [
-				'advanced/self_host/index',
+				{
+					type: 'category',
+					label: 'Local Development',
+					collapsed: true,
+					link: {
+						type: 'doc',
+						id: 'advanced/local_development/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'cli_local_dev/vscode-extension/index',
+							label: 'VS Code Extension'
+						},
+						'advanced/local_development/run_locally'
+					]
+				},
 				{
 					type: 'category',
 					label: 'Command Line Interface (CLI)',
@@ -294,32 +439,40 @@ const sidebars = {
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
 						'advanced/cli/user',
+						'advanced/cli/script',
 						'advanced/cli/flow',
 						'advanced/cli/app',
 						'advanced/cli/resource',
 						'advanced/cli/variable',
-						'advanced/cli/folder',
-						'advanced/cli/script'
+						'advanced/cli/folder'
 					]
 				},
 				{
 					type: 'category',
-					label: 'Local Development',
-					collapsed: false,
+					label: 'Version Control in Windmill',
 					link: {
 						type: 'doc',
-						id: 'advanced/local_development/index'
+						id: 'advanced/version_control/index'
 					},
 					items: [
 						{
 							type: 'doc',
-							id: 'cli_local_dev/vscode-extension/index',
-							label: 'VS Code'
+							id: 'advanced/git_sync/index',
+							label: 'Git Sync'
 						},
-						'advanced/local_development/run_locally'
+						'advanced/git_sync/cli_sync'
 					]
 				},
-				'advanced/deploy_gh_gl/index',
+				{
+					type: 'category',
+					label: 'Deploy to Prod',
+					link: {
+						type: 'doc',
+						id: 'advanced/deploy_to_prod/index'
+					},
+					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					collapsed: true
+				},
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
@@ -334,36 +487,13 @@ const sidebars = {
 						'react_vue_svelte_apps/svelte'
 					]
 				},
+				'advanced/browser_automation/index',
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/python_client',
-				'advanced/clients/ts_client'
-			]
-		},
-
-		{
-			type: 'category',
-			label: 'Enterprise Features',
-			items: [
-				'misc/plans_details/index',
-				'misc/support_and_sla/index',
-				'core_concepts/audit_logs/index',
-				'core_concepts/dedicated_workers/index',
-				'misc/worker_group_management_ui/index',
-				'core_concepts/staging_prod/index',
-				'misc/s3_cache/index',
-				'core_concepts/content_search/index',
-				'apps/css_editor',
-				'core_concepts/multiplayer/index',
-				'misc/saml_and_scim/index',
-				'misc/react_sdk/index'
-			]
-		},
-		{
-			type: 'category',
-			label: 'Integrations',
-			items: [
+				'advanced/clients/ts_client',
+				'misc/share_on_hub/index',
 				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
@@ -383,16 +513,6 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/aws',
 							label: 'AWS'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/aws-s3',
-							label: 'AWS S3'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/s3',
-							label: 'S3 APIs'
 						},
 						{
 							type: 'doc',
@@ -456,6 +576,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/git_repository',
+							label: 'Git Repository'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/github',
 							label: 'GitHub'
 						},
@@ -501,8 +626,18 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/microsoft-azure-blob',
+							label: 'Microsoft Azure Blob'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/mongodb',
 							label: 'MongoDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mssql',
+							label: 'MS SQL'
 						},
 						{
 							type: 'doc',
@@ -581,6 +716,16 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/s3',
+							label: 'S3 APIs'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/aws-s3',
+							label: 'AWS S3'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/telegram',
 							label: 'Telegram'
 						},
@@ -599,68 +744,26 @@ const sidebars = {
 				}
 			]
 		},
+
 		{
 			type: 'category',
-			label: 'Windmill Compared to',
+			label: 'Enterprise Features',
 			items: [
-				'compared_to/peers',
-				{
-					type: 'doc',
-					id: 'compared_to/airplane',
-					label: 'Airplane'
-				},
-				{
-					type: 'doc',
-					id: 'compared_to/retool',
-					label: 'Retool'
-				},
-				{
-					type: 'doc',
-					id: 'compared_to/prefect',
-					label: 'Prefect'
-				},
-				{
-					type: 'category',
-					label: 'Benchmarks',
-					link: {
-						type: 'doc',
-						id: 'misc/benchmarks/index'
-					},
-					items: [
-						{
-							type: 'doc',
-							id: 'misc/benchmarks/competitors/index',
-							label: 'vs Airflow vs Prefect vs Temporal'
-						},
-						'misc/benchmarks/aws_lambda/index'
-					]
-				},
-			]
-		},
-		{
-			type: 'category',
-			label: 'Miscellaneous',
-			items: [
-				'misc/architecture/index',
-				'misc/changelog/index',
-				'misc/contributing/index',
-				'misc/getting_help/index',
-				{
-					type: 'category',
-					label: 'Guides',
-					link: {
-						type: 'doc',
-						id: 'misc/guides/index'
-					},
-					items: [
-						'misc/guides/aggrid_table/index',
-						'misc/guides/table/index',
-						'misc/guides/sequin/index'
-					]
-				},
-				'misc/note_of_intent/index',
-				'misc/share_on_hub/index',
-				'misc/white_labelling/index'
+				'misc/plans_details/index',
+				'misc/support_and_sla/index',
+				'core_concepts/audit_logs/index',
+				'misc/worker_group_management_ui/index',
+				'core_concepts/concurrency_limits/index',
+				'misc/s3_cache/index',
+				'core_concepts/oidc/index',
+				'misc/saml_and_scim/index',
+				'core_concepts/dedicated_workers/index',
+				'core_concepts/agent_workers/index',
+				'core_concepts/content_search/index',
+				'apps/css_editor',
+				'core_concepts/multiplayer/index',
+				'misc/white_labelling/index',
+				'misc/react_sdk/index'
 			]
 		}
 	]

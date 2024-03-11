@@ -21,18 +21,32 @@ Please note that your version of Deno should be recent (greater than 1.32). If n
 2. Install wmill CLI using the following command in your terminal:
 
 ```bash
-deno install --unstable -A https://deno.land/x/wmill/main.ts
+deno install -q -A https://deno.land/x/wmill/main.ts
 ```
 
 Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example:
 
+Linux:
+
 ```bash
-export PATH="/Users/yourusername/.deno/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
+```
+
+Mac:
+
+```bash
+export PATH="/Users/<username>/.deno/bin:$PATH"
 ```
 
 :::tip
 
-In an enterprise setting with custom certificates, you can edit the wmill binary to ignore CA issues:
+In an enterprise setting with custom certificates, you can set the following env variable to use system certificate store:
+
+```
+export DENO_TLS_CA_STORE=system
+```
+
+Alternatively, you can edit the wmill binary to ignore CA issues:
 
 ```
 sed -i 's/deno run/deno run --unsafely-ignore-certificate-errors/' ~/.deno/bin/wmill

@@ -1,4 +1,3 @@
-
 import DocCard from '@site/src/components/DocCard';
 
 # Drawer
@@ -6,31 +5,31 @@ import DocCard from '@site/src/components/DocCard';
 The drawer is container called by a button. Once you click on the button, a side tab will appear on which you can display other components.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/drawer.mp4"
-    alt="drawer component"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/drawer.mp4"
+	alt="drawer component"
 />
-<br/>
+<br />
 
-To add a component to a container, you can either click on `Insert` while you selected the opened drawer, or your can move an existing component by copy/pasting it.
+To add a component to a container, you can either click on `Insert` while you selected the opened drawer, or you can move an existing component by copy/pasting it.
 
 The following section details Drawer component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        color="orange"
-        title="App Editor Documentation"
-        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
-        href="/docs/apps/app_editor"
-    />
-    <DocCard
-        color="orange"
-        title="Apps Quickstart"
-        description="Learn how to build your first app in a matter of minutes."
-        href="/docs/getting_started/apps_quickstart"
-    />
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App Editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps Quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
 </div>
 
 ## Drawer configuration
@@ -44,3 +43,10 @@ The following section details Drawer component's specific settings. For more det
 | Size           |            xs, sm, md , lg, xl            |    false    |    false    |      xs      | The button size.                                                          |
 | Fill container |                  boolean                  |    false    |    false    |    false     | Whether the button should fill the container.                             |
 | Disabled       |                  boolean                  |    false    |    false    |    false     | Whether the button should be disabled.                                    |
+
+## Component controls
+
+| Name  | Parameters | Description       | Example    |
+| ----- | :--------: | ----------------- | ---------- |
+| open  | id: string | Open the drawer.  | open('a')  |
+| close | id: string | Close the drawer. | close('a') |

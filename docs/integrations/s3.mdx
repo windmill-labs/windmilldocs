@@ -1,0 +1,69 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
+
+# S3 APIs integrations
+
+Windmill provides a unique [resource type](https://hub.windmill.dev/resource_types/42/) for any API following the typical S3 schema.
+
+:::info Windmill S3 integration
+
+You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+<br/>
+
+See [Object Storage for Large Data](../core_concepts/11_persistent_storage/large_data_files.mdx) for more details.
+
+:::
+
+## Add an S3 Resource
+
+Here are the required details:
+
+![S3 resource type](../assets/integrations/add-s3.png.webp)
+
+| Property  | Type    | Description               | Default | Required |
+| --------- | ------- | ------------------------- | ------- | -------- |
+| bucket    | string  | S3 bucket name            |         | true     |
+| region    | string  | S3 region for the bucket  |         | true     |
+| useSSL    | boolean | Use SSL for connections   | true    | false    |
+| endPoint  | string  | S3 endpoint               |         | true     |
+| accessKey | string  | AWS access key            |         | false    |
+| pathStyle | boolean | Use path-style addressing | false   | false    |
+| secretKey | string  | AWS secret key            |         | false    |
+
+<br/>
+
+For guidelines on where to find such details on a given platform, please go to the [AWS S3](./aws-s3.md) or [Cloudflare R2](./cloudflare-r2.md) pages.
+
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/add_resources_variables.mp4"
+/>
+
+<br/>
+
+:::tip
+
+Find some pre-set interactions with S3 on the [Hub](https://hub.windmill.dev/integrations/s3).
+
+Feel free to create your own S3 scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+
+:::
+
+## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
+
+Once you've created an S3 or Azure Blob resource in Windmill, you can use Windmill's native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data.
+
+![S3 Integration Infographic](../core_concepts/11_persistent_storage/s3_infographics.png "S3 Integration Infographic")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Object Storage for Large Data: S3, R2, MinIO, Azure Blob"
+		description="Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data."
+		href="/docs/core_concepts/persistent_storage/large_data_files"
+	/>
+</div>

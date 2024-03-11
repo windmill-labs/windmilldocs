@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Get Started with Windmill
+# Getting Started
 
 Windmill is an [open-source](https://github.com/windmill-labs/windmill) platform to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go, Bash, SQL or any docker image) and low code builders.
 
@@ -12,7 +12,7 @@ You can choose to self-host Windmill on your own infra.
 
 Run it at scale on kubernetes using our [helm charts](https://github.com/windmill-labs/windmill-helm-charts) or use a docker-compose for smaller setups.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Self Host Windmill"
 		description="Self host Windmill in 2 minutes."
@@ -28,14 +28,38 @@ You can sign-up using your GitHub, GitLab, Google, Microsoft Single Sign-On. No 
 
 Any user will be provided with 1,000 monthly executions from our [Community Plan](/pricing) and added to the Demo workspace. From there, users can create workspaces for free and create scripts, workflows and UIs.
 
-And if you feel like it, [upgrade](../../misc/7_plans_details/index.mdx) for unlimited executions.
+And if you feel like it, [upgrade](/pricing) for unlimited executions.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		target="_blank"
 		title="Windmill Cloud"
 		description="Use Windmill's Cloud App (no credit card required)."
 		href="https://app.windmill.dev/"
+	/>
+</div>
+
+### Local Development
+
+Windmill has its [own integrated development environment](../../code_editor/index.mdx), but you can also develop and run scripts locally, both with self-hosted and cloud instances.
+
+From a [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) to a solid setup for [deploying to production](../../advanced/12_deploy_to_prod/index.mdx) using [Git sync](../../advanced/11_git_sync/index.mdx), Windmill offers several ways to interact locally with the platform.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local Development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+	<DocCard
+		title="VS Code Extension"
+		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+	<DocCard
+		title="Deploy to Prod"
+		description="Deploy to prod using a staging workspace"
+		href="/docs/advanced/deploy_to_prod"
 	/>
 </div>
 
@@ -46,6 +70,6 @@ Windmill is a feature-rich developer platform to build endpoints, cron jobs, wor
 However the 3 core layers of Windmill, namely Scripts, Flows and Apps are complementary. Scripts are the smallest "unit" of abstraction and workflows and UIs rely on them.
 
 - Have a look at our quickstarts (on [Scripts](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Flows](../6_flows_quickstart/index.mdx) or [Apps](../7_apps_quickstart/index.mdx)) that give an introduction on how to build your first ones.
-- Check how to [trigger scripts](../8_trigger_scripts/index.mdx) and [flows](../9_trigger_flows/index.mdx) to get an idea of what you could do with Windmill.
+- Check how to [trigger scripts](../8_trigger_scripts/index.mdx) and [trigger flows](../9_trigger_flows/index.mdx) to get an idea of what you could do with Windmill.
 - Play with Windmill: [Cloud App](#use-windmill-cloud) or [Self-Hosting](#self-host-windmill). Our cloud Demo workspace showcases some speaking examples.
 - Browse [Windmill Hub](https://hub.windmill.dev/) and explore templates shared by the community.

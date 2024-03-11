@@ -26,7 +26,7 @@ Windmill itself just requires 3 elements:
 There are 3 optional parts:
 
 - Windmill LSP to provide intellisense on the [Monaco web Editor](../../code_editor/index.mdx).
-- Windmill [Multiplayer](../../core_concepts/7_multiplayer/index.md) ([EE only](../../misc/7_plans_details/index.mdx)) to provide real time collaboration.
+- Windmill [Multiplayer](../../core_concepts/7_multiplayer/index.md) ([Cloud & Enterprise Selfhosted only](/pricing)) to provide real time collaboration.
 - A reverse proxy (caddy in our [Docker compose](#docker)) to the Windmill server, LSP and multiplayer in order to expose a single port to the outside world.
 
 The docker-compose [below](#docker) use the 6 parts and we recommend doing TLS termination outside of the provided caddy.
@@ -37,7 +37,7 @@ For instances with specific cloud providers requirements:
 
 - [AWS, GCP, Azure](#aws-gcp-azure-neon)
 - [Fly.io](#flyio)
-- [Hetzner, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...](#hetzner-digital-ocean-linode-scaleway-vultr-ovh)
+- [Hetzner, Fargate, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...](#hetzner-fargate-digital-ocean-linode-scaleway-vultr-ovh-)
 
 If you have no specific requirements, see [Docker](#docker).
 
@@ -57,17 +57,22 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 `WHITELIST_ENVS = "AWS_EXECUTION_ENV,AWS_CONTAINER_CREDENTIALS_RELATIVE_URI,AWS_DEFAULT_REGION,AWS_REGION"`
 :::
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workers and Worker Groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
 		href="/docs/core_concepts/worker_groups"
 	/>
+	<DocCard
+		title="Windmill on AWS ECS"
+		description="Windmill can also be deployed on AWS ECS"
+		href="/docs/advanced/self_host/aws_ecs"
+	/>
 </div>
 
 ### Fly.io
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Fly.io"
 		description="Fly.io Community-Contributed Guide."
@@ -76,7 +81,7 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 	/>
 </div>
 
-### Hetzner, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...
+### Hetzner, Fargate, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...
 
 Windmill works with those providers using the [Docker containers](#docker) and specific guides are in progress.
 
@@ -134,13 +139,21 @@ To setup an external database, you need to set DATABASE_URL in the .env file to 
 
 :::tip
 
-In some exotic setups, you will need to set the initial role manually. You can do so by running the following command:
+In setups where you do not have access to the PG superuser (Azure PostgreSQL, GCP Postgresql, etc), you will need to set the initial role manually. You can do so by running the following command:
 
 ```bash
 curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-superuser.sql -o init-db-as-superuser.sql
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
 
+Make sure that the user used in the DATABASE_URL passed to windmill has the role `windmill_admin` and `windmill_user`:
+
+```sql
+GRANT windmill_admin TO <user used in database_url>;
+GRANT windmill_user TO <user used in database_url>;
+```
+
+If you cannot use BYPASSRLS (for instance on Azure PostgreSQL), on EE, pass `MIGRATION_NO_BYPASSRLS=true` to your servers, otherwise see this [workaround](https://github.com/windmill-labs/windmill/issues/2345#issuecomment-1739777068)
 :::
 
 ### Set number of replicas accordingly in docker-compose
@@ -149,11 +162,33 @@ In the docker-compose, set the number of windmill_worker and windmill_worker_nat
 
 ### Enterprise Edition
 
-To use the [enterprise edition](../../misc/7_plans_details/index.mdx), you need pass the license key in the instance settings (Superadmin settings -> Instance settings)
+To use the [enterprise edition](/pricing), you need pass the license key in the instance settings (Superadmin settings -> Instance settings).
 
 You can then set the number of replicas of the multiplayer container to 1 in the docker-compose.
 
-You will be provided a license key when you purchase the enterprise edition. Contact us at contact@windmill.dev to get a trial license key. Pricing is at [https://windmill.dev/pricing](https://windmill.dev/pricing). You will benefit from support, SLA and all the [additional features](../../misc/7_plans_details/index.mdx) of the enterprise edition.
+You will be provided a license key when you purchase the enterprise edition. Contact us at contact@windmill.dev to get a trial license key. Pricing is at [https://windmill.dev/pricing](https://windmill.dev/pricing). You will benefit from support, SLA and all the [additional features](/pricing) of the enterprise edition.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/YAoLXwayjT8?vq=hd1080"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+More details at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Upgrade to Enterprise Edition"
+		description="Docs on how to upgrade to the Enterprise Edition of a Self-Hosted Windmill instance."
+		href="/docs/misc/plans_details#self-host"
+	/>
+</div>
 
 ### Configuring Domain and Reverse Proxy
 
@@ -182,73 +217,187 @@ For all the above, see the commented lines in the caddy section of the docker-co
 #### Traefik configuration
 
 <details>
-  <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Code below:</summary>
+  <summary>Here is a template of a docker-compose to expose Windmill to Traefik. Make sure to replace the `traefik` network with whatever network you have it running on. Code below:</summary>
+
+You may need to adapt this depending on if you have Traefik running or on your configuration. This also assumes you have a `letsencryptresolver` or change the name to your certificate resolver if you want to use the `websecure` entrypoint.
 
 ```yaml
 version: '3.7'
 
 services:
-windmill_server:
-  image: ghcr.io/windmill-labs/windmill:main
-  deploy:
-    replicas: 1
-  restart: unless-stopped
-  expose:
-    - 8000
-  networks:
-    - pg_network
-    - web
-  environment:
-    DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-    MODE: server
-  labels:
-    - 'traefik.enable=true'
-    - 'traefik.docker.network=web'
-    - 'traefik.http.routers.windmill.tls=true'
-    - 'traefik.http.routers.windmill.service=windmill'
-    - 'traefik.http.routers.windmill.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/`)'
-    - 'traefik.http.routers.windmill.tls.certresolver=lets-encrypt'
-    - 'traefik.http.services.windmill.loadbalancer.server.port=8000'
+  db:
+    deploy:
+      # To use an external database, set replicas to 0 and set DATABASE_URL to the external database url in the .env file
+      replicas: 1
+    image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    networks:
+      - windmill
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: windmill
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-windmill_worker:
-  image: ghcr.io/windmill-labs/windmill:main
-  deploy:
-    # Rules of thumb, use 1 replica per vCPU. Make sure your postgres can handle 5*worker_replicas + 50*server_replicas max connections.
-    replicas: 3
-  restart: unless-stopped
-  networks:
-    - pg_network
-    - web
-  environment:
-    DATABASE_URL: postgres://${PG_USER:-postgres}:${PG_PASS:-secretpgpassword}@${PG_HOST:-postgres}:${PG_PORT:-5432}/${PG_DATABASE:-postgres}?sslmode=disable
-    MODE: worker
-  volumes:
-    - worker_dependency_cache:/tmp/windmill/cache
-    - /var/run/docker.sock:/var/run/docker.sock
+  windmill_server:
+    image: ${WM_IMAGE}
+    pull_policy: always
+    deploy:
+      replicas: 1
+    restart: unless-stopped
+    expose:
+      - 8000
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=server
+    networks:
+      - windmill
+      - traefik
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.windmill_server.loadbalancer.server.port=8000
+      #http
+      - traefik.http.routers.windmill_server_http.entrypoints=web
+      - traefik.http.routers.windmill_server_http.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_server_http.service=windmill_server
+      # https
+      - traefik.http.routers.windmill_server_https.entrypoints=websecure
+      - traefik.http.routers.windmill_server_https.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_server_https.service=windmill_server
+      - traefik.http.routers.windmill_server_https.tls=true
+      - traefik.http.routers.windmill_server_https.tls.certresolver=letsencryptresolver
 
-lsp:
-  image: ghcr.io/windmill-labs/windmill-lsp:latest
-  restart: unless-stopped
-  labels:
-    - 'traefik.enable=true'
-    - 'traefik.docker.network=web'
-    - 'traefik.http.routers.windmill_lsp.tls=true'
-    - 'traefik.http.routers.windmill_lsp.service=windmill_lsp'
-    - 'traefik.http.routers.windmill_lsp.rule=Host(`windmill.your-hostname-here.com`) && PathPrefix(`/ws`)'
-    - 'traefik.http.routers.windmill_lsp.tls.certresolver=lets-encrypt'
-    - 'traefik.http.services.windmill_lsp.loadbalancer.server.port=3001'
-  expose:
-    - 3001
+  windmill_worker:
+    image: ${WM_IMAGE}
+    pull_policy: always
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2048M
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=worker
+      - WORKER_GROUP=default
+    networks:
+      - windmill
+    depends_on:
+      db:
+        condition: service_healthy
+    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+    volumes:
+      # mount the docker socket to allow to run docker containers from within the workers
+      - /var/run/docker.sock:/var/run/docker.sock
+      - worker_dependency_cache:/tmp/windmill/cache
+
+  ## This worker is specialized for "native" jobs. Native jobs run in-process and thus are much more lightweight than other jobs
+  windmill_worker_native:
+    # Use ghcr.io/windmill-labs/windmill-ee:main for the ee
+    image: ${WM_IMAGE}
+    pull_policy: always
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 128M
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - MODE=worker
+      - WORKER_GROUP=native
+    networks:
+      - windmill
+    depends_on:
+      db:
+        condition: service_healthy
+
+  ## This worker is specialized for reports or scraping jobs. It is assigned the "reports" worker group which has an init script that installs chromium and can be targeted by using the "chromium" worker tag.
+  #  windmill_worker_reports:
+  #    image: ${WM_IMAGE}
+  #    pull_policy: always
+  #    deploy:
+  #      replicas: 1
+  #      resources:
+  #        limits:
+  #          cpus: "1"
+  #          memory: 2048M
+  #    restart: unless-stopped
+  #    environment:
+  #      - DATABASE_URL=${DATABASE_URL}
+  #      - MODE=worker
+  #      - WORKER_GROUP=reports
+  #    networks:
+  #      - windmill
+  #    depends_on:
+  #      db:
+  #        condition: service_healthy
+  #    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+  #    volumes:
+  #      # mount the docker socket to allow to run docker containers from within the workers
+  #      - /var/run/docker.sock:/var/run/docker.sock
+  #      - worker_dependency_cache:/tmp/windmill/cache
+
+  lsp:
+    image: ghcr.io/windmill-labs/windmill-lsp:latest
+    pull_policy: always
+    restart: unless-stopped
+    networks:
+      - windmill
+      - traefik
+    expose:
+      - 3001
+    volumes:
+      - lsp_cache:/root/.cache
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.windmill_lsp.loadbalancer.server.port=3001
+      #http
+      - traefik.http.routers.windmill_lsp_http.entrypoints=web
+      - traefik.http.routers.windmill_lsp_http.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_http.service=windmill_lsp
+      # https
+      - traefik.http.routers.windmill_lsp_https.entrypoints=websecure
+      - traefik.http.routers.windmill_lsp_https.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_https.service=windmill_lsp
+      - traefik.http.routers.windmill_lsp_https.tls=true
+      - traefik.http.routers.windmill_lsp_https.tls.certresolver=letsencryptresolver
+
+  multiplayer:
+    image: ghcr.io/windmill-labs/windmill-multiplayer:latest
+    deploy:
+      replicas: 0 # Set to 1 to enable multiplayer, only available on Enterprise Edition
+    restart: unless-stopped
+    networks:
+      - windmill
+    expose:
+      - 3002
 
 volumes:
-worker_dependency_cache:
+  db_data: null
+  worker_dependency_cache: null
+  lsp_cache: null
 
 networks:
-pg_network:
-  name: pg_network
-web:
-  name: web
-  external: true
+  windmill:
+    name: windmill
+  traefik:
+    name: traefik
+    external: true
 ```
 
 </details>
@@ -332,19 +481,21 @@ Detailed instructions in the official [repository][helm].
 
 ### Enterprise deployment with Helm
 
-The [Enterprise edition](../../misc/7_plans_details/index.mdx) of Windmill uses different base images and supports
-additional features. One important feature is better caching for dependencies in a
-super cache supported by S3.
+The [Enterprise edition](/pricing) of Windmill uses different base images and supports
+additional features.
 
-You need:
+See the [Helm Chart repository README][helm] for more details.
 
-- an Enterprise license key
-- an AWS account and S3 bucket
-- AWS credentials or IAM roles prepared for access from the Windmill worker pods.
-  <br />
+To unlock EE, set in your values.yaml:
 
-See the [Helm Chart repository README][helm] for more details. The exact setup
-for S3 access will vary according to your environment.
+```
+enterprise:
+	enable: true
+```
+
+You will want to disable the postgresql provided with the helm chart and set the database_url to your own managed postgresql.
+
+For high-scale deployments (> 20 workers), we recommend using the [global S3 cache](../../misc/13_s3_cache/index.md). You will need an object storage compatible with the s3 protocol.
 
 ## Run Windmill without using a Postgres superuser
 
@@ -479,7 +630,7 @@ You'll be offered to "Test SMTP settings" & send a blank e-mail to a given addre
 
 #### Manually add user to instance
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Authentification - Manually add user to instance"
 		description="As a superadmin of the instance, you have the ability to manually add users to the Windmill instance."
@@ -489,7 +640,7 @@ You'll be offered to "Test SMTP settings" & send a blank e-mail to a given addre
 
 #### Manually add user to workspace
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Authentification - Manually add user to workspace"
 		description="As an admin of the workspace, you have the ability to manually add users to the Windmill workspace."
@@ -514,7 +665,7 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Authentification - Set up auto-invite"
 		description="You can send auto-invites to the workspace to users from your domain."
@@ -526,13 +677,34 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.mdx) are shared with all workspaces.
 
-If you skipped the instance setup or need to sync resource types, you can go to the admins workspace and run the _Synchronize Hub Resource types with instance_ script, or [schedule](../../core_concepts/1_scheduling/index.md) it.
+If you skipped the instance setup or need to sync resource types, you can go to the admins workspace and run the _Synchronize Hub Resource types with instance_ script, or [schedule](../../core_concepts/1_scheduling/index.mdx) it.
 
 ![Sync resource types](./sync_resource_types.gif 'Sync resource types with Hub')
 
 <br />
 
 For more advanced setups, see [Helm Chart](#helm-chart).
+
+## Self-signed certificates
+
+Detailed [guide](https://www.lfanew.com/posts/windmill-ca-trust/) for using Windmill with self-signed certificates
+
+TL;DR: below
+
+### Mount CA Certificates in Windmill:
+
+1. Ensure CA certificate is base64 encoded and has .crt extension.
+2. Create a directory for CA certificates.
+3. Modify docker-compose.yml to mount this directory to /usr/local/share/ca-certificates in read-only mode.
+4. Use INIT_SCRIPT in the worker config to run update-ca-certificates in worker containers.
+
+### Establish Deno’s Trust:
+
+Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml for Windmill workers.
+
+### Configure Python (requests & httpx) Trust:
+
+Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with the same value in the worker’s environment variables.
 
 <!-- Resources -->
 

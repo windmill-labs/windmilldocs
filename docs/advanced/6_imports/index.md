@@ -4,7 +4,7 @@ Windmill's strength lies in its ability to run scripts without having to deal wi
 
 Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its dependencies. If no version is specified, the latest version is used. Windmill's workers cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
 
-On the [enterprise edition](../../misc/7_plans_details/index.mdx), Windmill's caches can be configured to sync their cache with a central s3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
+On the [enterprise edition](/pricing), Windmill's caches can be configured to sync their cache with a central s3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
 
 :::info
 
@@ -41,24 +41,39 @@ import { toWords } from 'number-to-words@1';
 import { getVariable } from 'windmill-client@1.147.3';
 ```
 
-### Private npm registry
+### Private npm registry & Private npm packages
 
-If you are using a private artifactory, you can set the env variable `NPM_CONFIG_REGISTRY` for the worker to the url of your artifactory. If the private registry is exposing custom certificates,`DENO_CERT` and `DENO_TLS_CA_STORE` env variables can be used as well (see [Deno documentaion](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables) for more info on those options).
+![Private NPM registry](private_registry.png)
+
+On EE, go to `Instance settings -> Core -> NPM Config Registry`.
+
+Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
+
+#### Private npm packages requiring token
+
+:::caution
+
+Currently, deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
+
+:::
+
+If a token is required, append `:_authToken=<your url>` to the URL.
+
+Combining the two, you can import private packages from npm
+
+```
+https://registry.npmjs.org/:_authToken=npm_bKZp1kOKzWsNPUvx2LpyUzIJqi2uaw23eqw
+```
+
+If the private registry is exposing custom certificates,`DENO_CERT` and `DENO_TLS_CA_STORE` env variables can be used as well (see [Deno documentaion](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables) for more info on those options).
 
 ```dockerfile
 windmill_worker:
   ...
   environment:
     ...
-    - NPM_CONFIG_REGISTRY=https://registry.yarnpkg.com.
     - DENO_CERT=/custom-certs/root-ca.crt
 ```
-
-:::info
-
-Bun runtime on Windmill does not support custom NPM registries.
-
-:::
 
 ## Imports in Python
 
@@ -71,7 +86,7 @@ of having to maintain a separate requirements file.
 We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
 You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48)
 
-## Pinning dependencies
+## Pinning dependencies and Requirements
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the inferred imports. One needs to head the Script with the following comment:
@@ -102,7 +117,7 @@ def main(...):
 
 ### Private PyPi repository
 
-In addition to that, environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate. 
+In addition to that, environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate.
 This is useful for private repositories.
 
 In a docker-compose file, you would add following lines:
@@ -125,9 +140,19 @@ script and hence there is no need for any additional steps.
 
 e.g:
 
-```
+```go
 import (
 	"rsc.io/quote"
     wmill "github.com/windmill-labs/windmill-go-client"
 )
+```
+
+## Imports in PowerShell
+
+For PowerShell, imports are parsed when the script is run and modules are automatically installed if they are not found in the cache.
+
+e.g.:
+
+```powershell
+Import-Module -Name MyModule
 ```

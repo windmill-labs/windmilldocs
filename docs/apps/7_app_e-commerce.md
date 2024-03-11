@@ -20,7 +20,7 @@ It showcases a variety of features that are available in the Windmill app builde
 
 :::tip
 
-This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be used on our [Demo workspace](https://app.windmill.dev/user/login) with the proper Supabase integration.
+This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be used on our <a href="https://app.windmill.dev/" rel="nofollow">Demo Workspace</a> with the proper Supabase integration.
 
 :::
 
@@ -349,7 +349,7 @@ For instance, let's create a new table and use the following inline script to di
 return state.cart ? state.cart.map((id) => j.result.find((x) => x.id === id)) : [];
 ```
 
-The `add to cart` action needs to trigger a refresh of the table. We can do this by selecting the id of the table in the `Recompute others` configuration of the action. See [Recompute others](/docs/apps/3_app-runnable-panel.mdx#recompute-others) for more details.
+The `add to cart` action needs to trigger a refresh of the table. We can do this by selecting the id of the table in the `Recompute others` configuration of the action. See [Recompute others](/docs/apps/3_app-runnable-panel.mdx#recompute-on-any-input-change) for more details.
 
 We also need a action to remove a product from the cart. We can use the following frontend script to do this.
 

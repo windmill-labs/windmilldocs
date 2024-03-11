@@ -11,7 +11,7 @@ From the [Settings](./settings.mdx) of a script, the "Metadata" tab lets you def
 
 Actions - or Common Scripts - are the basic building blocks for the flows.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Scripts Quickstart"
 		description="Start writing scripts in Python, TypeScript, Go, Bash and Sql."
@@ -31,14 +31,14 @@ state and a schedule to watch for changes on a
 external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Trigger Scripts"
-		description="Triggers are special actions that run periodically given a schedule."
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
 	<DocCard
-		title="Scheduling"
+		title="Schedules"
 		description="Windmill provides the same set of features as CRON, but with a user interface and control panels."
 		href="/docs/core_concepts/scheduling"
 	/>
@@ -52,9 +52,9 @@ and resume/cancel endpoints. Most common scenario for Approval Scripts is to
 send an external notification with an URL that can be used to resume or cancel a
 flow.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Approval Steps in Flows"
+		title="Suspend & Approval / Prompts"
 		description="Flows can be suspended until resumed or cancelled event(s) are received."
 		href="/docs/flows/flow_approval"
 	/>
@@ -67,7 +67,7 @@ does not return an exception itself, the Flow is considered to be "recovered"
 and will have a success status. So in most cases, you will have to rethrow an
 error to have it be listed as a failed flow.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Error Handler"
 		description="The error handler is a special flow step that is executed when an error occurs in the flow."

@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 In Windmill, Scripts are the basis of all major features (they are the steps of [flows](../getting_started/6_flows_quickstart/index.mdx), [linked to apps components](../apps/3_app-runnable-panel.mdx), or can be [run as standalone](../getting_started/8_trigger_scripts/index.mdx)).
 
 A Script can be written in:
-[TypeScript (Deno)](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx),
+[TypeScript (Deno & Bun)](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx),
 [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx),
 [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx),
 [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) or
@@ -19,9 +19,9 @@ specification and the [code content](../code_editor/index.mdx).
 
 Python and Go Scripts also have an
 auto-generated lockfile that ensure that executions of the same Script always
-use the exact same set of versioned dependencies. The code must always have a
+use the exact same set of versioned dependencies. To fit Windmill's execution model, the code must always have a
 main function, which is its entrypoint when executed as an individual serverless
-endpoint or a [Flow](../flows/1_flow_editor.mdx) module:
+endpoint or a [Flow](../flows/1_flow_editor.mdx) module and typed parameters used to infer the script's inputs and [auto-generated UI](../core_concepts/6_auto_generated_uis/index.mdx):
 
 <Tabs className="unique-tabs">
 <TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -57,7 +57,7 @@ There is no main needed for Bash. The body is executed and the args are passed d
 </TabItem>
 </Tabs>
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Scripts Quickstart"
 		description="Start writing scripts in Python, TypeScript, Go, Bash and Sql."
@@ -80,9 +80,11 @@ There is no main needed for Bash. The body is executed and the args are passed d
 	/>
 </div>
 
+## Script Editor Features
+
 The Script Editor is made of the following features:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Settings"
 		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
@@ -114,6 +116,11 @@ The Script Editor is made of the following features:
 		href="/docs/script_editor/concurrency_limit"
 	/>
 	<DocCard
+		title="Running Services with Perpetual Scripts"
+		description="Perpetual scripts restart upon ending unless canceled."
+		href="/docs/script_editor/perpetual_scripts"
+	/>
+	<DocCard
 		title="Custom Environment Variables"
 		description="In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts."
 		href="/docs/script_editor/custom_environment_variables"
@@ -135,9 +142,27 @@ The Script Editor is made of the following features:
 	/>
 </div>
 
+## Workflows as Code
+
+One way to write distributed programs that execute distinct jobs is to use [flows](../flows/1_flow_editor.mdx) that chain scripts together.
+
+Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as workflows as code.
+
+![Workflows as Code](../core_concepts/31_workflows_as_code/python_editor.png 'Workflows as Code')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workflows as Code"
+		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+</div>
+
+## Code Editor Features
+
 For features specific to the [Code Editor](../code_editor/index.mdx), check:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Code Editor"
 		description="The code editor is Windmill's integrated development environment."

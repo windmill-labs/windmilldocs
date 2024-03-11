@@ -5,6 +5,17 @@ import { Link } from 'react-router-dom';
 
 const faqs = [
 	{
+		question: 'Which organizations can subscribe to the Pro plan?',
+		answer: (
+			<span>
+				The Pro plan is only available in Self-hosted for: <br />- Businesses with less than 10
+				employees and $250k revenues<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits
+				of workers & users) <br />
+				Reach out to contact@windmill.dev to inquiry about exceptions.
+			</span>
+		)
+	},
+	{
 		question: 'What is an operator?',
 		answer: (
 			<span>
@@ -48,32 +59,28 @@ const faqs = [
 		)
 	},
 	{
-		question: 'What is a worker?',
+		question: 'How is the use of the number of vCPUs estimated?',
 		answer: (
 			<span>
-				<Link
-					to="/docs/core_concepts/worker_groups"
-					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
-				>
-					Workers
-				</Link>{' '}
-				are autonomous processes that run one script at a time using the entire cpu and memory available
-				to them. Workers serve as the backbone of Windmill as they are responsible for
-				executing code.<br/><br/> Each worker on Windmill can run up to 26 millions jobs a month, where
-				each job lasts approximatively 100ms. Workers can be horizontally scaled up or down
-				depending on needs without any overhead.
-			</span>
-		)
-	},
-	{
-		question: 'What is a "native" worker?',
-		answer: (
-			<span>
-				A "native" worker is a normal worker that listens solely for "native" jobs: PostgreSQL,
-				MySQL, BigQuery, Snowflake, REST which are implemented in windmill natively in our Rust
-				backend and thus those jobs have minimal memory footprint and are mostly IO bounds so
-				require little vCPUs. In a typical deployment, native workers have limits of 0.1 vCPU and
-				200Mb instead of the usual 1vCPU and 2Gb.
+				Even though Windmill's <a
+				href='/docs/misc/architecture'
+				className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				target="_blank">architecture</a>{' '}
+				relies on <a
+				href='/docs/core_concepts/worker_groups'
+				className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				target="_blank">workers</a>, Pricing is vCPU based.
+
+				For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with 4 vCPU would count as 4 vCPU.
+				But if it only runs for 1h every day, you would divide that by 24.
+
+				<br/><br/>
+
+				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
+
+				<br/><br/>
+
+				Our compute pricing should be linear to the compute cost from your cloud provider.
 			</span>
 		)
 	},
@@ -81,28 +88,17 @@ const faqs = [
 		question: 'How is the use of the number of vCPUs and seats reported to Windmill?',
 		answer: (
 			<span>
-				Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing
-				the data exported by Windmill through the provided export button at the end of the subscription period.
+				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription.
 				<br/><br/>
 				We only count the vCPUs reported by your workers as being used.
 				So you can simply set limits in the
-				{' '}<Link
-					to="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
+				{' '}<a
+					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank" rel="noopener noreferrer"
 				>
 					docker-compose
-				</Link>{' '}and you will never be overcharged
-			</span>
-		)
-	},
-	{
-		question: 'Which organizations can subscribe to the Pro plan?',
-		answer: (
-			<span>
-				The Pro plan is only available in Self-hosted for: <br />- Businesses with less than 10
-				employees <br />- Startups at seed stage <br />- Non-profits & Universities (higher limits
-				of workers & users) <br />
-				Reach out to contact@windmill.dev to inquiry about exceptions.
+				</a>{' '}and you will never be overcharged
 			</span>
 		)
 	},

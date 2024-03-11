@@ -5,12 +5,13 @@ import { Timer, TerminalSquare } from 'lucide-react';
 
 Windmill's Flow Editor allows you to build flows with a low-code builder.
 
-:::info Workflows
+Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
 
-A workflow is a series of connected tasks, events, or processes that occur automatically to achieve a specific goal. These tasks are organized as a sequence of actions or steps: [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) in the case of Windmill.
-:::
+The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+In Windmill, each step is code with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Flows Quickstart"
@@ -20,9 +21,9 @@ A workflow is a series of connected tasks, events, or processes that occur autom
 	/>
 	<DocCard
 		color="teal"
-		title="CLI and Local Development"
-		description="Create scripts and flows without low-code builders."
-		href="/docs/cli_local_dev"
+		title="Local Development"
+		description="Develop locally, push to git and deploy automatically to windmill"
+		href="/docs/advanced/local_development"
 		Icon={TerminalSquare}
 	/>
 	<DocCard
@@ -39,11 +40,21 @@ A workflow is a series of connected tasks, events, or processes that occur autom
 	/>
 </div>
 
-<br />
+<br/>
+
+Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workflows as Code"
+		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+</div>
 
 The Flow Editor has the following features which are the subject of specific pages:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Triggering Flows"
@@ -95,7 +106,7 @@ The Flow Editor has the following features which are the subject of specific pag
 	<DocCard
 		color="teal"
 		title="Trigger Scripts"
-		description="Trigger flows upon a given event with a dedicated trigger script."
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
 	<DocCard
@@ -112,15 +123,27 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Cache for Steps"
-		description="Re-use a step's previous results."
-		href="/docs/flows/cache"
+		title="Custom Timeout for Step"
+		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
+		href="/docs/flows/early_stop"
 	/>
 	<DocCard
 		color="teal"
-		title="Step Mocking"
-		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
-		href="/docs/flows/step_mocking"
+		title="Priority for Steps"
+		description="Prioritize a flow step in the execution queue."
+		href="/docs/flows/priority"
+	/>
+	<DocCard
+		color="teal"
+		title="Lifetime / Delete after Use"
+		description="The logs, arguments and results of this flow step will be completely deleted from Windmill once the flow is complete."
+		href="/docs/flows/lifetime"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache for Steps"
+		description="Re-use a step's previous results."
+		href="/docs/flows/cache"
 	/>
 	<DocCard
 		color="teal"
@@ -130,13 +153,13 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Return Early for Flows"
-		description="Define a node at which the flow will return at for sync endpoints."
+		title="Early Return"
+		description="Define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously."
 		href="/docs/flows/early_return"
 	/>
 	<DocCard
 		color="teal"
-		title="Approval Steps in Flows"
+		title="Suspend & Approval / Prompts"
 		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
 		href="/docs/flows/flow_approval"
 	/>
@@ -148,16 +171,16 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Custom Timeout for Step"
-		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
-		href="/docs/flows/early_stop"
+		title="Step Mocking"
+		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
+		href="/docs/flows/step_mocking"
 	/>
 </div>
 
-<br/>
+<br />
 
 ![Example of a flow](../assets/flows/flow_example.png.webp)
 
 > _Example of a [flow](https://hub.windmill.dev/flows/38/automatically-populate-crm-contact-details-from-simple-email) in Windmill._
 
-<br/>
+<br />

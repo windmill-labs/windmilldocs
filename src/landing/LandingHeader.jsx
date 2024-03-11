@@ -4,22 +4,33 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import { useColorMode } from '@docusaurus/theme-common';
-import { SiDiscord } from 'react-icons/si';
+import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 import SearchBarWrapper from '../theme/SearchBar';
+import Banner from './Banner';
 
 const resources = [
 	{
-		name: 'Team',
-		description: 'The team behind Windmill.',
-		href: '/team'
+		name: 'OpenAPI',
+		description: 'Explore our API specs.',
+		href: 'https://app.windmill.dev/openapi.html',
+		newtab: true
 	},
-
+	{
+		name: 'Changelog',
+		description: 'See the latest changes to Windmill.',
+		href: '/changelog'
+	},
 	{
 		name: 'Blog',
 		description: 'Stay up to date with our latest news and articles.',
 		href: '/blog'
+	},
+	{
+		name: 'Team',
+		description: 'The team behind Windmill.',
+		href: '/team'
 	},
 	{
 		name: 'Jobs',
@@ -47,6 +58,7 @@ export default function LandingHeader() {
 
 	return (
 		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
+			<Banner />
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<a
@@ -94,12 +106,6 @@ export default function LandingHeader() {
 						>
 							Hub
 						</a>
-						<a
-							href="https://app.windmill.dev/openapi.html"
-							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
-						>
-							OpenAPI
-						</a>
 
 						<Popover className="relative">
 							{({ open }) => (
@@ -136,7 +142,9 @@ export default function LandingHeader() {
 														<a
 															key={resource.name}
 															href={resource.href}
-															className="-m-3 block rounded-md p-3 hover:bg-gray-100 dark:hover:bg-gray-700 !no-underline"
+															className="-m-3 block rounded-md p-3 hover:bg-gray-50 dark:hover:bg-gray-700 !no-underline"
+															target={resource.newtab ? '_blank' : undefined}
+															rel={resource.newtab ? 'noopener noreferrer' : undefined}
 														>
 															<p className="font-medium text-gray-900 dark:text-gray-100">
 																{resource.name}
@@ -161,13 +169,26 @@ export default function LandingHeader() {
 						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a
+							href="https://github.com/windmill-labs/windmill"
+							data-analytics='"github"'
+							onClick={() => window.plausible('github')}
+							className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+							target="_blank"
+						>
+							<SiGithub className="h-5 w-5 dark:text-white text-gray-800" />
+						</a>
+
+						<a
 							href="https://discord.com/invite/V7PM2YHsPB"
 							data-analytics='"discord"'
 							onClick={() => window.plausible('discord')}
 							className=" rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+							title="Join our Discord community"
+							target="_blank"
 						>
 							<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
 						</a>
+
 						<a
 							href="https://www.windmill.dev/book-demo"
 							data-analytics='"schedule-demo"'
@@ -242,6 +263,30 @@ export default function LandingHeader() {
 										</a>
 									))}
 								</div>
+								<div className="mt-6 flex justify-center items-center space-x-4 mb-4">
+									<a
+										href="https://github.com/windmill-labs/windmill"
+										data-analytics='"github"'
+										onClick={() => window.plausible('github')}
+										className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<SiGithub className="h-5 w-5 dark:text-white text-gray-800" />
+									</a>
+
+									<a
+										href="https://discord.com/invite/V7PM2YHsPB"
+										data-analytics='"discord"'
+										onClick={() => window.plausible('discord')}
+										className="rounded-full hover:bg-indigo-200 dark:hover:bg-indigo-400 p-2"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<SiDiscord className="h-5 w-5 dark:text-white text-gray-800" />
+									</a>
+								</div>
+
 								<div className="mt-6">
 									<a
 										href="https://www.windmill.dev/book-demo"

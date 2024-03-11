@@ -46,14 +46,14 @@ Also, you can give succinctly a Name, a Summary and a Description to your flow. 
 
 ### Schedule
 
-On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.md)\* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.mdx) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
+On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/index.mdx)\* to trigger your flow. Flows can be [triggered](../9_trigger_flows/index.mdx) by any schedules, their [webhooks](../../core_concepts/4_webhooks/index.mdx) or their UI but they only have only one primary schedule with which they share the same path. This menu is where you set the primary schedule with CRON. The default schedule is none.
 
 ![Flows schedule](./flows_schedule.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Scheduling"
+		title="Schedules"
 		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
 		href="/docs/core_concepts/scheduling"
 	/>
@@ -61,20 +61,20 @@ On another tab, you can configure a [Schedule](../../core_concepts/1_scheduling/
 
 ### Shared Directory
 
-Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/index.mdx#shared-directory).
+Last tab of the settings menu is the [Shared Directory](../../core_concepts/11_persistent_storage/within_windmill.mdx#shared-directory).
 
 By default, flows on Windmill are based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
 
 For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Get more details on the [Persistent Storage dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
+Get more details on the [Persistent Storage & Databases dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
 
 ![Flows shared directory](./flows_shared_directory.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
@@ -84,7 +84,7 @@ Get more details on the [Persistent Storage dedicated page](../../core_concepts/
 
 When a worker group is defined at the flow level, any steps inside the flow will run on that worker group, regardless of the steps' worker group. If no worker group is defined, the flow controls will be executed by the default worker group 'flow' and the steps will be executed in their respective worker group.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Workers and Worker Groups"
@@ -107,9 +107,9 @@ Inputs are either:
   - using the id associated with the step
   - clicking on the plug logo that will let you pick flow inputs or previous steps' results (after testing flow or step)
 
-![Static & Dynamic Inputs](./static_and_dynamic_inputs.png)
+![Static & Dynamic Inputs](./static_and_dynamic_inputs.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Architecture and Data Exchange"
@@ -140,7 +140,7 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 
 ![Flows for loops](./for_loops.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="For loops"
@@ -158,7 +158,7 @@ Your flow can be deepened with [additional features](../../flows/1_flow_editor.m
 
 ![Flow branching](flow_branches.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Branches"
@@ -173,7 +173,7 @@ At each step, Windmill allows you to [customize the number of retries](../../flo
 
 ![Flows retries](./flows_retries.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Retries"
@@ -197,10 +197,10 @@ Request approvals can be sent by email, Slack, anything. Then you can **automati
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Approval Steps in Flows"
+		title="Suspend & Approval / Prompts"
 		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
 		href="/docs/flows/flow_approval"
 	/>
@@ -214,13 +214,13 @@ There are several ways to trigger a flow with Windmill.
 
 1. The most direct one is from the [autogenerated UI provided by Windmill](../../core_concepts/6_auto_generated_uis/index.mdx). It is the one you will see from the flow editor.
 2. A similar but more customized way is to use Windmill Apps using the [App editor](../7_apps_quickstart/index.mdx).
-3. We saw above that you can trigger flows using [schedules](../../core_concepts/1_scheduling/index.md) that you can check from the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. One special way to use scheduling is to combine it with [trigger scripts](../../flows/10_flow_trigger.mdx).
+3. We saw above that you can trigger flows using [schedules](../../core_concepts/1_scheduling/index.mdx) that you can check from the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page. One special way to use scheduling is to combine it with [trigger scripts](../../flows/10_flow_trigger.mdx).
 4. [Execute flows from the CLI](../../advanced/3_cli/index.mdx) to trigger your flows from your terminal.
 5. [Trigger the flow from another flow](../9_trigger_flows/index.mdx#trigger-a-flow-from-another-flow).
 6. Using [trigger scripts](../../flows/10_flow_trigger.mdx) to trigger only if a condition has been met.
 7. [Webhooks](../../core_concepts/4_webhooks/index.mdx). Each Flow created in the app gets autogenerated webhooks. You can see them once you flow is saved. You can even [trigger flows without leaving Slack](/blog/handler-slack-commands)!
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Triggering Flows"
@@ -242,7 +242,7 @@ You don't have to explore all flows editor possibilities at once. At each step, 
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Testing Flows"
@@ -251,6 +251,20 @@ You don't have to explore all flows editor possibilities at once. At each step, 
 	/>
 </div>
 
-When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, [create and app from it](../../core_concepts/6_auto_generated_uis/index.mdx#automatically-generated-apps), or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
+When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, [create and app from it](../../core_concepts/6_auto_generated_uis/index.mdx), or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
 
 Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.
+
+## Flow as Code
+
+Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program within a [Python](../0_scripts_quickstart/2_python_quickstart/index.mdx) or [TypeScript](../0_scripts_quickstart/1_typescript_quickstart/index.mdx) script. This is known as workflows as code.
+
+![Flow as code](../../core_concepts/31_workflows_as_code/python_editor.png)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workflows as Code"
+		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+</div>
