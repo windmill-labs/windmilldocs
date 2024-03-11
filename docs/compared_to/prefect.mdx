@@ -75,29 +75,33 @@ We could also mention [storage of configuration](../core_concepts/3_resources_an
 
 ![Prefect features](../assets/compared_to/prefect_features.png.webp 'Prefect features')
 
-The difference between Prefect and Windmill lies in the method of building flows.
-
 Prefect is heavily code-based. Everything is and can only be defined in Python. The steps and their configurations are defined by code:
 
 ![Prefect flow](../assets/compared_to/flow_prefect.png.webp 'Prefect flow')
 
-> [Flow](#benchmark-1) _Given a GitHub repository, logs the number of stargazers and contributors for that repo_ on Prefect.
+> [Flow](#benchmark-1) "_Given a GitHub repository, logs the number of stargazers and contributors for that repo_" on Prefect.
 
 <br />
 
-In Windmill, the steps are also code-based but built from scripts ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) ...). Users can write the code directly, choose a script from the workspace, the community library [WindmillHub](https://hub.windmill.dev/), or have it [generated with AI](#windmill-ai). Each script can be saved with [permissions](../core_concepts/16_roles_and_permissions/index.mdx) set from the workspace.
+Windmill offers both low-code and code-based solutions.
+
+![Windmill compared to Prefect](../assets/compared_to/windmill_compared_prefect.png 'Windmill compared to Prefect')
+
+### Flow Editor
+
+In Windmill's [Flow Editor](../flows/1_flow_editor.mdx), the steps are also code-based but built from scripts ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) ...). Users can write the code directly, choose a script from the workspace, the community library [WindmillHub](https://hub.windmill.dev/), or have it [generated with AI](#windmill-ai). Each script can be saved with [permissions](../core_concepts/16_roles_and_permissions/index.mdx) set from the workspace.
 
 The structuring of the flow and the configurations for each step are defined from a User Interface. With a _code when you need_ mindset, the user can navigate the flow editor in low-code.
 
 ![Windmill flow](../assets/compared_to/flow_windmill.png.webp 'Windmill flow')
 
-> [Flow](#benchmark-1) _Given a GitHub repository, logs the number of stargazers and contributors for that repo_ on Windmill.
+> [Flow](#benchmark-1) "_Given a GitHub repository, logs the number of stargazers and contributors for that repo_" on Windmill.
 
 <br />
 
 In particular, Windmill [generates automatically UIs](../core_concepts/6_auto_generated_uis/index.mdx) for flows and steps and lets users [test](../core_concepts/23_instant_preview/index.mdx) flows, steps or flow until a given step, from the UI.
 
-Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. In particular, Windmill has a VS Code extension to edit from your code editor scripts and workflows-as-code.
+Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. In particular, Windmill has a [VS Code extension](../cli_local_dev/1_vscode-extension/index.mdx) to edit from your code editor scripts flows YAML.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -107,7 +111,13 @@ Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx
 	/>
 </div>
 
-![Windmill compared to Prefect](../assets/compared_to/windmill_compared_prefect.png.webp 'Windmill compared to Prefect')
+### Workflows as Code
+
+[Flows](#flow-editor) are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as [workflows as code](../core_concepts/31_workflows_as_code/index.mdx).
+
+![Script in python executing workflow as code](../core_concepts/31_workflows_as_code/python_editor.png "Script in python executing workflow as code")
+
+Windmill supports defining workflows as code in a single script in both [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) using intuitive and lightweight syntax.
 
 ## Triggers
 
