@@ -113,6 +113,26 @@ const tabs = [
 		id: 'admin-panel',
 		data: [
 			{
+				title: 'Database Studio',
+				description: 'From a SQL resource, display, edit, add rows, delete rows ... and connect to other components.',
+				icon: Database,
+				caption: (
+					<div>
+						<a
+							href="/docs/apps/app_configuration_settings/database_studio"
+							target="_blank"
+						>
+							From a SQL resource
+						</a>
+						, display, edit, add rows, delete rows ... and connect to other components.
+					</div>
+				),
+				video: {
+					videoSrc: '/videos/db_studio.mp4',
+					altText: 'Database Studio'
+				}
+			},
+			{
 				title: 'Build complex admin panel with table & actions',
 				description: 'Build complex apps from atomic components.',
 				icon: FormInput,
@@ -158,33 +178,6 @@ const tabs = [
 					videoSrc: '/videos/bi-charts.mp4',
 					altText: 'BI charts',
 					videoLength: '14'
-				}
-			}
-		]
-	},
-	{
-		label: 'Database Studio',
-		icon: Database,
-		id: 'db-studio',
-		data: [
-			{
-				title: 'Database Studio',
-				description: 'From a SQL resource, display, edit, add rows, delete rows ... and connect to other components.',
-				icon: Database,
-				caption: (
-					<div>
-						<a
-							href="/docs/apps/app_configuration_settings/database_studio"
-							target="_blank"
-						>
-							From a SQL resource
-						</a>
-						, display, edit, add rows, delete rows ... and connect to other components.
-					</div>
-				),
-				video: {
-					videoSrc: '/videos/db_studio.mp4',
-					altText: 'Database Studio'
 				}
 			}
 		]
