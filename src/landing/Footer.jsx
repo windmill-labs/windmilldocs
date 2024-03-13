@@ -37,10 +37,11 @@ const navigation = {
 		}
 	],
 	solutions: [
-		{ name: 'Windmill AI', href: '/windmill_ai' },
+		{ name: 'S3', href: '/integrations/s3' },
 		{ name: 'Supabase', href: '/integrations/supabase' },
 		{ name: 'Slack', href: '/integrations/slack' },
-		{ name: 'Stripe', href: '/integrations/stripe' }
+		{ name: 'Windmill AI', href: '/windmill_ai' },
+		{ name: 'More Integrations', href: '/integrations/' },
 	]
 };
 
