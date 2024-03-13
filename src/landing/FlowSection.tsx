@@ -8,7 +8,6 @@ import {
 	FormInput,
 	WebhookIcon,
 	Terminal,
-	RotateCcw,
 	Webhook,
 	OctagonIcon,
 	CheckCircle2,
@@ -22,7 +21,8 @@ import {
 	LucideWebhook,
 	BookOpen,
 	CylinderIcon,
-	Sparkles
+	Sparkles,
+	Code
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
@@ -122,6 +122,21 @@ const tabs = [
 					videoSrc: '/videos/flow_ai.mp4',
 					altText: 'Windmill AI for flows'
 				}
+			},
+			{
+				title: 'Workflows as Code',
+				description: 'Automate tasks and their flow with only code.',
+				icon: Code,
+				caption: (
+					<div>
+						For a developer-first approach, use{' '}
+						<a href="/docs/core_concepts/workflows_as_code" target="_blank">
+							Workflows as Code
+						</a>{' '}
+						to automate tasks and their flow within a script.
+					</div>
+				),
+				imageSrc: '/images/workflow_as_code.png',
 			}
 		]
 	},
@@ -474,11 +489,11 @@ const cards = [
 		href: '/docs/misc/benchmarks/competitors'
 	},
 	{
-		title: 'Retries and errors',
-		subtitle: 'Retry failed steps, or handle errors.',
-		Icon: RotateCcw,
+		title: 'Workflows as Code',
+		subtitle: 'Automate tasks and their flow within a script.',
+		Icon: Code,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/flows/retries'
+		href: '/docs/core_concepts/workflows_as_code'
 	},
 
 	{
