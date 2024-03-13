@@ -17,18 +17,15 @@ export default function HeroAI() {
 					</h1>
 					<h2 className="mt-6 text-lg leading-8  font-normal">
 						Windmill is a low-code platform for building endpoints, flows, and apps from simple
-						scripts. The presence of code at the heart of Windmill offers unlimited possibilities so
-						as not to rely solely on pre-built integrations.
+						scripts. Its design, centered around code, enables vast flexibility beyond just using pre-made integrations.
 					</h2>
 					<h2 className="mt-6 text-lg leading-8  font-normal">
-						With the integration of AI models within Windmill, your willpower alongside a few prompts can create the
-						internal tools you want in just a few seconds.
+						With the integration of AI models within Windmill, a few prompts can create powerful
+						internal tools in just a few seconds.
 					</h2>
-					<h2 className="mt-6 text-lg leading-8  font-normal">
-						The AI generates code that matches Windmill's specifications, especially the interaction
-						with external APIs.
+					<h2 className="mt-6 text-lg leading-8 font-normal">
+						You can also <a href="/integrations/openai" className="text-purple-600 dark:text-purple-400 font-bold">use OpenAI directly within scripts</a> and interact with its API.
 					</h2>
-
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
 							href="https://app.windmill.dev/user/login"
