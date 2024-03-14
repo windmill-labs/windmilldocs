@@ -213,6 +213,18 @@ export default function Solution({
 							</div>
 							{extraBlock}
 						</div>
+						<div className="flex flex-row gap-2">
+							<a
+								type="button"
+								tag="no_follow"
+								href="https://app.windmill.dev/user/login"
+								target="_blank"
+								className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+							>
+								Build your own scripts for {name}
+								<ArrowRight className="" aria-hidden="true" />
+							</a>
+						</div>
 					</div>
 				</LandingSection>
 				<Footer />

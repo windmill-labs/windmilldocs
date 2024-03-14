@@ -119,6 +119,41 @@ Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx
 
 Windmill supports defining workflows as code in a single script in both [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) using intuitive and lightweight syntax.
 
+Here is an example of a workflow as code with Prefect (from their <a href="https://docs.prefect.io/latest/concepts/tasks/" rel="nofollow">documentation</a>):
+
+```python
+from prefect import flow, task
+
+@task
+def my_first_task(msg):
+    print(f"Hello, {msg}")
+
+@task
+def my_second_task(msg):
+    my_first_task.fn(msg)
+
+@flow
+def my_flow():
+    my_second_task("Trillian")
+```
+
+and the same example with [Windmill](../core_concepts/31_workflows_as_code/index.mdx) (in Python):
+
+```python
+from wmill import task
+
+@task
+def my_first_task(msg):
+    print(f"Hello, {msg}")
+
+@task
+def my_second_task(msg):
+    my_first_task(msg)
+
+def main():
+   my_second_task("Trillian")
+```
+
 ## Triggers
 
 Prefect uses a deployment system from the terminal to trigger and schedule its flows.
