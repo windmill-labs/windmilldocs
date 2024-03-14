@@ -2,7 +2,6 @@ import React from 'react';
 import './CardStyles.css';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
-import { Terminal } from 'lucide-react';
 
 interface CardProps {
 	Icon: React.ComponentType;

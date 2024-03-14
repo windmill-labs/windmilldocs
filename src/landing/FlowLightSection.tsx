@@ -1,73 +1,43 @@
 import React from 'react';
-import {
-	Code,
-	FormInput,
-	Github,
-	Key,
-	WebhookIcon,
-	Database,
-	Play,
-	Terminal,
-	CalendarClock,
-	FormInputIcon,
-	FileCode,
-	AlignLeftIcon,
-	CurlyBracesIcon,
-	FileLock2,
-	Lock,
-	DownloadIcon,
-	MessageSquareIcon,
-	Box,
-	Gitlab,
-	BoxesIcon,
-	Sparkles,
-	PlayCircle
-} from 'lucide-react';
-import {
-	SiGnubash,
-	SiGo,
-	SiPython,
-	SiTypescript,
-	SiVisualstudiocode,
-	SiGraphql
-} from 'react-icons/si';
 
 import LandingSection from './LandingSection';
 
-import polyGlott from '/illustrations/approval.json';
-import smartIde from '/illustrations/performance.json';
-import secrets from '/illustrations/triggers.json';
-import thirdparty from '/illustrations/triggers.json';
-import LightFeatureCard from './LightFeatureCard';
+import approval from '/illustrations/approval.json';
+import performance from '/illustrations/performance.json';
+import triggers from '/illustrations/triggers.json';
+import CardSection from './cards-v2/CardSection';
 
 const features = [
 	{
-		title: 'Polyglott',
+		title: 'Approval',
 		description:
-			'Windmill supports a wide range of languages: Python, Node, Deno, Bun, Go, PostgresQL, bash and more. Dependencies are automatically managed. An UI is auto-generated for your scripts.',
-		lottieData: polyGlott,
+			'Suspend the execution of a flow and request confirmation from given users before resuming.',
+		lottieData: approval,
+		span: 'col-span-1'
+	},
+
+	{
+		title: 'Data pipeline',
+		description: 'Orchestrate pipelines & ETLs with observability and control at any step.',
 		span: 'col-span-1'
 	},
 	{
-		title: 'Windmill Smart IDE',
+		title: 'Triggers',
 		description:
-			'From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
-		lottieData: smartIde,
+			'Trigger flows from webhooks, schedules, CLI, Slack, and more. Easily integrate with your existing tools.',
 		span: 'col-span-1'
 	},
 	{
-		title: 'Secret Management',
-		description:
-			'Easily share secrets and other sensitive data with your team. Without compromising security.',
-		lottieData: secrets,
+		title: 'Performance',
+		description: 'The fastest workflow engine',
+		lottieData: performance,
 		span: 'col-span-1'
 	},
 	{
-		title: 'Third-party integrations',
+		title: 'Workflows as Code',
 		description:
-			'Connect to APIs using rich objects that you can pick manually before each run or fetch directly within code. Dozens of pre-made integrations on WindmillHub or add your own in minutes.',
-		lottieData: thirdparty,
-		span: 'col-span-1'
+			'Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program.			',
+		span: 'col-span-2'
 	}
 ] as {
 	title: string;
@@ -79,26 +49,22 @@ const features = [
 	lottieData?: unknown;
 }[];
 
+const colors = {
+	titleColor: 'text-emerald-950 dark:text-emerald-300',
+	textColor: 'text-gray-600 dark:text-gray-100',
+	linkColor: 'text-emerald-500 dark:text-emerald-300'
+};
+
 export default function FlowsLightSections() {
 	return (
 		<LandingSection bgClass="">
-			<div className="w-full gap-8 flex flex-col">
-				<div className="text-4xl font-medium text-green-900">Flows</div>
-				<div className="text-lg text-gray-600">Code to production in minutes</div>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					{features.map((feature, index) => (
-						<LightFeatureCard
-							key={index}
-							feature={feature}
-							animationDelay={(index + 1) * 32}
-							span={feature.span}
-							height={feature.height}
-							noAnimation={feature.noAnimation}
-							lottieData={feature?.lottieData}
-						/>
-					))}
-				</div>
-			</div>
+			<CardSection
+				colors={colors}
+				title="Build complex flows without complexity"
+				description="Build complex Flows from atomic scripts, either from your workspace or the Hub."
+				features={features}
+				defaultImage="/illustrations/fond-flows.png"
+			/>
 		</LandingSection>
 	);
 }
