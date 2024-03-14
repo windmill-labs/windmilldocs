@@ -50,7 +50,7 @@ const features = [
 }[];
 
 const colors = {
-	titleColor: 'text-orange-950 dark:text-orange-300',
+	titleColor: 'text-orange-900 dark:text-orange-300',
 	textColor: 'text-gray-600 dark:text-gray-100',
 	linkColor: 'text-orange-500 dark:text-orange-300'
 };

@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { useLottie } from 'lottie-react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, CircleIcon, LucideIcon } from 'lucide-react';
 
 type FeatureCardProps = {
 	feature: { title: string; description: string; images: string[] };
@@ -12,6 +11,8 @@ type FeatureCardProps = {
 	lottieData: unknown;
 	defaultImage: string;
 	linkColor: string;
+	Icon: LucideIcon;
+	url: string;
 };
 
 export default function LightFeatureCard({
@@ -21,7 +22,9 @@ export default function LightFeatureCard({
 	noAnimation = false,
 	lottieData = undefined,
 	defaultImage,
-	linkColor
+	linkColor,
+	Icon = CircleIcon,
+	url
 }: FeatureCardProps) {
 	const options = {
 		animationData: lottieData,
@@ -31,24 +34,29 @@ export default function LightFeatureCard({
 
 	// MAKE IT animate only when hovered
 	const { View, play } = useLottie(options);
-	const animation = noAnimation ? {} : { opacity: 0, y: animationDelay };
 	return (
-		<motion.div
-			className={` bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative grid ${
+		<a
+			className={`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative grid ${
 				span === 'col-span-1' ? 'grid-cols-1' : 'grid-cols-2'
-			} gap-16`}
-			initial={animation}
-			whileInView={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5, ease: 'easeIn' }}
+			} gap-16 hover:bg-opacity-50 transition-all group`}
 			onMouseOver={() => {
 				play();
 			}}
+			href={url}
+			target="_blank"
 		>
 			<div>
-				<div className="font-medium text-xl mb-6">{feature.title}</div>
-				<div className="text-md mb-4 ">{feature.description}</div>
+				<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
+					<Icon size={20} />
+					{feature.title}
+				</div>
+				<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-lg">
+					{feature.description}
+				</div>
 
-				<div className={`text-sm ${linkColor} flex flex-row items-center gap-2`}>
+				<div
+					className={`text-sm ${linkColor} flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
+				>
 					Learn more
 					<ArrowRight size={24} />
 				</div>
@@ -61,6 +69,6 @@ export default function LightFeatureCard({
 					<img src={defaultImage} alt={feature.title} />
 				</div>
 			)}
-		</motion.div>
+		</a>
 	);
 }

@@ -8,7 +8,7 @@ export default function CardSection({ features, colors, title, description, defa
 	return (
 		<div className="w-full gap-4 flex flex-col">
 			<div
-				className={`${colors.titleColor} text-5xl max-w-2xl mx-auto font-medium mb-2 text-center pt-8`}
+				className={`${colors.titleColor} text-4xl max-w-2xl mx-auto font-semibold mb-2 text-center pt-8`}
 			>
 				{title}
 			</div>
@@ -51,6 +51,8 @@ export default function CardSection({ features, colors, title, description, defa
 						lottieData={feature?.lottieData}
 						defaultImage={defaultImage}
 						linkColor={colors.linkColor}
+						Icon={feature?.Icon}
+						url={feature?.url}
 					/>
 				))}
 			</div>
