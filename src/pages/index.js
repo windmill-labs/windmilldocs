@@ -14,6 +14,7 @@ import TestimonialsSection from '../landing/TestimonialsSection';
 import ScriptLightSection from '../landing/ScriptLightSection';
 import AppLightSection from '../landing/AppLightSection';
 import FlowLightSection from '../landing/FlowLightSection';
+import TutorialSection from '../landing/TutorialSection';
 
 function HomepageHeader() {
 	return (
@@ -22,6 +23,8 @@ function HomepageHeader() {
 			<Hero />
 			<LogoClouds />
 			<HeroExample />
+
+			<TutorialSection />
 			<ScriptLightSection />
 			<FlowLightSection />
 			<AppLightSection />

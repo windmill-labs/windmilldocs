@@ -6,6 +6,7 @@ import approval from '/illustrations/approval.json';
 import performance from '/illustrations/performance.json';
 import triggers from '/illustrations/triggers.json';
 import CardSection from './cards-v2/CardSection';
+import { ArrowDownUp, CheckCircle, Gauge, TerminalSquare } from 'lucide-react';
 
 const features = [
 	{
@@ -13,31 +14,39 @@ const features = [
 		description:
 			'Suspend the execution of a flow and request confirmation from given users before resuming.',
 		lottieData: approval,
-		span: 'col-span-1'
+		span: 'col-span-1',
+		url: '/docs/flows/flow_approval',
+		Icon: CheckCircle
 	},
 
 	{
-		title: 'Data pipeline',
+		title: 'Data pipelines',
 		description: 'Orchestrate pipelines & ETLs with observability and control at any step.',
-		span: 'col-span-1'
+		span: 'col-span-1',
+		url: '/docs/core_concepts/data_pipelines',
+		Icon: ArrowDownUp
 	},
 	{
 		title: 'Triggers',
 		description:
 			'Trigger flows from webhooks, schedules, CLI, Slack, and more. Easily integrate with your existing tools.',
-		span: 'col-span-1'
+		span: 'col-span-1',
+		url: '/docs/getting_started/trigger_flows#triggers-from-external-events'
 	},
 	{
 		title: 'Performance',
 		description: 'The fastest workflow engine',
 		lottieData: performance,
-		span: 'col-span-1'
+		span: 'col-span-1',
+		url: '/docs/misc/benchmarks/competitors',
+		Icon: Gauge
 	},
 	{
 		title: 'Workflows as Code',
 		description:
 			'Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program.			',
-		span: 'col-span-2'
+		span: 'col-span-2',
+		Icon: TerminalSquare
 	}
 ] as {
 	title: string;
