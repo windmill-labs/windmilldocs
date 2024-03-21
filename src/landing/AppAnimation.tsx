@@ -7,6 +7,7 @@ import AnimText from './animations/AnimText';
 import Window from './animations/Window';
 import { ChevronRight } from 'lucide-react';
 import useTypewriter from './animations/useTypedText';
+import useAnimateScroll from './animations/useAnimateScroll';
 
 export default function AppAnimation({ active }) {
 	const [step, setStep] = React.useState(0);
@@ -20,6 +21,7 @@ export default function AppAnimation({ active }) {
 	const steps = [
 		{
 			duration: 0,
+			scroll: 200,
 			callback: () => {
 				setScriptStep(1);
 			}
@@ -74,19 +76,7 @@ export default function AppAnimation({ active }) {
 		}
 	];
 
-	useEffect(() => {
-		if (!active) {
-			return;
-		}
-
-		let timeout = 0;
-		steps.forEach((step, index) => {
-			timeout += step.duration;
-			setTimeout(() => {
-				step.callback();
-			}, timeout);
-		});
-	}, []);
+	useAnimateScroll(active, steps, 4000);
 
 	const { currentText, play } = useTypewriter({
 		sourceText: `import Stripe from 'stripe';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -6,13 +6,14 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import AnimText from './animations/AnimText';
 import Window from './animations/Window';
 import { ChevronRight } from 'lucide-react';
-import useTypewriter from './animations/useTypedText';
+import useAnimateScroll from './animations/useAnimateScroll';
 
 export default function ScriptAnimation({ active }) {
 	const [step, setStep] = React.useState(0);
 	const [bgColor, setBgColor] = React.useState('black');
 	const [scriptStep, setScriptStep] = React.useState(0);
-	const [code, setCode] = React.useState(`import Stripe from 'stripe';
+
+	const initialCode = `import Stripe from 'stripe';
 			
 type StripeResource = { token: string }
 	
@@ -31,7 +32,9 @@ export async function main(
 	} catch (error) {
 		console.error('Error creating refund:', error);
 	};
-}`);
+}`;
+
+	const [code, setCode] = React.useState(initialCode);
 
 	const [scriptMessage, setScriptMessage] = React.useState(
 		'Iterate direclty with VS Code, sync with Github.'
@@ -39,7 +42,8 @@ export async function main(
 
 	const steps = [
 		{
-			duration: 2000,
+			duration: 3000,
+			scroll: 500,
 			callback: () => {
 				setCode(`import Stripe from 'stripe';
 
@@ -62,64 +66,69 @@ export async function main(
 		console.error('Error creating refund:', error);
 	};
 }`);
+			},
+			rollback: () => {
+				setCode(initialCode);
 			}
 		},
 		{
 			duration: 500,
+			scroll: 700,
 			callback: () => {
+				setScriptStep(2);
+			},
+			rollback: () => {
+				setScriptStep(0);
+			}
+		},
+		{
+			duration: 500,
+			scroll: 900,
+			callback: () => {
+				setScriptStep(3);
+			},
+			rollback: () => {
 				setScriptStep(2);
 			}
 		},
 		{
-			duration: 500,
-			callback: () => {
-				setScriptStep(3);
-			}
-		},
-		{
 			duration: 3000,
+			scroll: 1100,
 			callback: () => {
+				console.log('test');
 				setBgColor('gray');
 
 				setTimeout(() => {
 					setBgColor('black');
 				}, 200);
+			},
+			rollback: () => {
+				setBgColor('black');
 			}
 		},
 		{
+			scroll: 1500,
 			duration: 1000,
 			callback: () => {
 				setScriptStep(4);
+			},
+			rollback: () => {
+				setScriptStep(3);
 			}
 		},
 		{
+			scroll: 1800,
 			duration: 4000,
 			callback: () => {
 				setStep(1);
-			}
-		},
-		{
-			duration: 5000,
-			callback: () => {
+			},
+			rollback: () => {
 				setStep(0);
-				setScriptStep(0);
 			}
 		}
 	];
 
-	useEffect(() => {
-		if (!active) {
-			return;
-		}
-
-		let timeout = 0;
-		steps.forEach((step, index) => {
-			timeout += step.duration;
-			setTimeout(() => {
-				step.callback();
-			}, timeout);
-		});
-	}, [active]);
+	const { progress } = useAnimateScroll(active, steps);
 
 	return (
 		<div className="bg-gradient-to-br from-blue-200 to-sky-400 dark:from-blue-700 dark:to-sky-600 w-full rounded-lg p-6 shadow-inner overflow-hidden h-[550px]">
@@ -132,17 +141,18 @@ export async function main(
 									<ChevronRight className="h-4 w-4" />
 									<div>folder</div>
 								</div>
-								<span className="ml-8">script_path.ts</span>
+								<span className="ml-8">refund_stripe.ts</span>
+								<span className="ml-8">notify_users.py</span>
 							</div>
 							<SyntaxHighlighter
 								language="javascript"
 								style={dark}
-								className="rounded-none text-sm !bg-gray-800 col-span-3  h-full"
+								className="rounded-none text-sm !bg-gray-800 col-span-2  h-full"
 								showLineNumbers
 							>
 								{code}
 							</SyntaxHighlighter>
-							<div className="col-span-1 flex flex-col h-full w-full">
+							<div className="col-span-2 flex flex-col h-full w-full">
 								<form className="p-2 h-64">
 									<motion.button
 										className="text-white rounded-md w-full h-8 text-md"
@@ -153,19 +163,25 @@ export async function main(
 									</motion.button>
 									<label className="text-sm font-semibold">resource</label>
 									<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
-										2
+										u/user/stripe_resource
 									</div>
 									<label className="text-sm font-semibold">charge</label>
 									<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
-										ch_1NirD82eZ
+										ch_1NirD82eZvKYlo2CIvbtLWuY
 									</div>
 									<label className="text-sm font-semibold">amount</label>
 									<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
 										299
 									</div>
 								</form>
-								<div className="border-t border-gray-950 p-2 text-sm text-gray-300 ">
-									Refund created:
+								<div className="border-t border-gray-950 p-2 text-xs text-gray-300 h-20 ">
+									<span>job 018e5751 on worker 2</span>
+									<span>--- BUN INSTALL --- bun install v1.0.29</span>
+									<span>Saved lockfile + stripe@14.21.0 18 packages installed [518.00ms]</span>
+								</div>
+								<div className="border-t border-gray-950 p-2 text-sm text-gray-300 flex flex-col">
+									Result:
+									<div>Refund created: 42325t24</div>
 								</div>
 							</div>
 						</div>
@@ -223,7 +239,10 @@ export async function main(
 													initial={{ opacity: 0 }}
 												>
 													<label className="text-sm font-semibold">amount</label>
-													<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
+													<div
+														id="amount"
+														className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2"
+													>
 														{scriptStep >= 3 && <AnimText texts={['299']} delay={1} />}
 													</div>
 												</motion.div>
@@ -246,7 +265,9 @@ export async function main(
 										</div>
 										<div className="border-t border-gray-950 p-2 text-sm text-gray-300 flex flex-col">
 											Result
-											{scriptStep >= 4 && <AnimText texts={['Refund created: ']} delay={1} />}
+											{scriptStep >= 4 && (
+												<AnimText texts={['Refund created: 42325t24']} delay={1} />
+											)}
 										</div>
 									</div>
 								</div>

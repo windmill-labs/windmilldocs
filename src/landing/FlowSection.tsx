@@ -136,7 +136,7 @@ const tabs = [
 						to automate tasks and their flow within a script.
 					</div>
 				),
-				imageSrc: '/images/workflow_as_code.png',
+				imageSrc: '/images/workflow_as_code.png'
 			}
 		]
 	},

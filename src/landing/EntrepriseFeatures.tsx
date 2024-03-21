@@ -11,7 +11,7 @@ const features = [
 		icon: Github
 	},
 	{
-		name: 'Self-hostable',
+		name: 'Easy to self-host',
 		description: 'Easy to self-host and deploy on bare EC2 instances, kubernetes and even fargate.',
 		href: '/docs/advanced/self_host',
 		icon: Server
