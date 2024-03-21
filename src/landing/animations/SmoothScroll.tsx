@@ -8,7 +8,7 @@ const HorizontalScrollCarousel = ({ children }) => {
 		target: targetRef
 	});
 
-	const x = useTransform(scrollYProgress, [0, 1], [0, 5000]);
+	const x = useTransform(scrollYProgress, [0, 1], [0, 6500]);
 
 	return (
 		<ScrollContext.Provider value={x}>

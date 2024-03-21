@@ -7,12 +7,12 @@ const ProgressBar = ({
 	active,
 	onClick,
 	onComplete,
-	duration = 1, // Default duration set to 10 seconds
+	title,
 	easing = 'easeInOut', // Default easing
 	barWidth = 'full', // Using Tailwind's "full" to denote 100% width
 	barHeight = '2', // Corresponds to h-6 in Tailwind, adjust as necessary
 	progressColor = 'bg-blue-600', // Tailwind class for progress bar color
-	baseColor = 'bg-gray-800' // Tailwind class for the base bar color,
+	baseColor = 'dark:bg-gray-800 bg-gray-100' // Tailwind class for the base bar color,
 }) => {
 	const transition = {
 		ease: easing
@@ -22,26 +22,30 @@ const ProgressBar = ({
 		enter: { width: 0 },
 		animate: {
 			width: percents + '%', // Animate width based on percents prop
-			transition
+			transition,
+			duration: 2
 		}
 	};
 
 	return (
-		<div
-			className={`w-${barWidth} h-${barHeight} ${baseColor} relative rounded-lg overflow-hidden cursor-pointer hover:opacity-50 transition-all`}
-			onClick={onClick}
-		>
-			<motion.div
-				className={`absolute top-0 left-0 h-${barHeight} ${progressColor} rounded-lg`}
-				variants={variants}
-				initial="enter"
-				animate={active ? 'animate' : 'enter'}
-				onAnimationComplete={() => {
-					if (active && onComplete) {
-						onComplete();
-					}
-				}}
-			></motion.div>
+		<div className="flex flex-col gap-1">
+			<div className="text-sm">{title}</div>
+			<div
+				className={`w-${barWidth} h-${barHeight} ${baseColor} relative rounded-lg overflow-hidden cursor-pointer hover:opacity-50 transition-all h-2`}
+				onClick={onClick}
+			>
+				<motion.div
+					className={`absolute top-0 left-0 h-${barHeight} ${progressColor} rounded-lg`}
+					variants={variants}
+					initial="enter"
+					animate={active ? 'animate' : 'enter'}
+					onAnimationComplete={() => {
+						if (active && onComplete) {
+							onComplete();
+						}
+					}}
+				></motion.div>
+			</div>
 		</div>
 	);
 };
@@ -56,31 +60,26 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				const latestAsNumber = latest;
 				setProgress(latestAsNumber);
 
-				if (latestAsNumber >= 4000 && currentIndex === -1) {
-					setStep(2);
+				let newStep = 0;
+				if (latestAsNumber < 2000) {
+					newStep = 0;
+				} else if (latestAsNumber >= 2000 && latestAsNumber < 4000) {
+					newStep = 1;
+				} else if (latestAsNumber >= 4000) {
+					newStep = 2;
 				}
 
-				if (latestAsNumber < 4000 && currentIndex === -1) {
-					setStep(1);
-				}
-
-				if (latestAsNumber >= 2000 && currentIndex === -1) {
-					setStep(1);
-				}
-
-				if (latestAsNumber < 2000 && currentIndex === -1) {
-					setStep(0);
-				}
+				setStep(newStep);
 			}),
 		[]
 	);
 
-	const scriptFull = 2000;
-	const flowFull = 2000;
-	const appFull = 1000;
+	const scriptFull = 2000; // step 0
+	const flowFull = 2000; // step 1
+	const appFull = 2000; // step 2
 
 	return (
-		<div className="grid grid-cols-3 gap-4 w-full h-2 my-4">
+		<div className="grid grid-cols-3 gap-4 w-full  my-4">
 			<ProgressBar
 				percents={Math.round((progress * 100) / scriptFull)}
 				active={true}
@@ -90,6 +89,8 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				onComplete={() => {
 					//setStep(1);
 				}}
+				title={'Scripts'}
+				progressColor="dark:bg-blue-600 bg-blue-400"
 			/>
 			<ProgressBar
 				percents={Math.round(((progress - scriptFull) * 100) / flowFull)}
@@ -100,7 +101,8 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				onComplete={() => {
 					//setStep(1)
 				}}
-				progressColor="bg-green-600"
+				progressColor="dark:bg-green-600 bg-green-400"
+				title={'Flows'}
 			/>
 			<ProgressBar
 				percents={Math.round(((progress - scriptFull - flowFull) * 100) / appFull)}
@@ -111,7 +113,8 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				onComplete={() => {
 					//setStep(1)
 				}}
-				progressColor="bg-orange-600"
+				progressColor="dark:bg-orange-600 bg-orange-400"
+				title={'Apps'}
 			/>
 		</div>
 	);

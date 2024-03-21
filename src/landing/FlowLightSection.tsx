@@ -27,15 +27,15 @@ const features = [
 		Icon: ArrowDownUp
 	},
 	{
-		title: 'Triggers',
+		title: 'Advanced Features',
 		description:
-			'Trigger flows from webhooks, schedules, CLI, Slack, and more. Easily integrate with your existing tools.',
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 		span: 'col-span-1',
 		url: '/docs/getting_started/trigger_flows#triggers-from-external-events'
 	},
 	{
 		title: 'Performance',
-		description: 'The fastest workflow engine',
+		description: 'The fastest and extremely scalable workflow engine.',
 		lottieData: performance,
 		span: 'col-span-1',
 		url: '/docs/misc/benchmarks/competitors',
