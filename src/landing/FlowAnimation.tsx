@@ -101,6 +101,7 @@ export default function FlowAnimation({ active }) {
 	const [bgColor, setBgColor] = React.useState('black');
 	const [scriptStep, setScriptStep] = React.useState(0);
 	const nodeTypes = useMemo(() => ({ textUpdater: Node }), []);
+
 	const steps = [
 		{
 			scroll: 500,
@@ -138,6 +139,7 @@ export default function FlowAnimation({ active }) {
 						i === 1 ? { ...node, data: { ...node.data, color: 'bg-green-600' } } : node
 					)
 				);
+				setScriptStep(6);
 			},
 			rollback: () => {
 				setInitialNodes((nodes) =>
@@ -146,6 +148,7 @@ export default function FlowAnimation({ active }) {
 						i === 1 ? { ...node, data: { ...node.data, color: undefined } } : node
 					)
 				);
+				setScriptStep(5);
 			}
 		},
 		{
@@ -157,6 +160,7 @@ export default function FlowAnimation({ active }) {
 						i === 4 ? { ...node, data: { ...node.data, color: 'bg-green-600' } } : node
 					)
 				);
+				setScriptStep(7);
 			},
 			rollback: () => {
 				setInitialNodes((nodes) =>
@@ -165,6 +169,7 @@ export default function FlowAnimation({ active }) {
 						i === 4 ? { ...node, data: { ...node.data, color: undefined } } : node
 					)
 				);
+				setScriptStep(6);
 			}
 		},
 		{
@@ -176,6 +181,7 @@ export default function FlowAnimation({ active }) {
 						i === 6 ? { ...node, data: { ...node.data, color: 'bg-green-600' } } : node
 					)
 				);
+				setScriptStep(8);
 			},
 			rollback: () => {
 				setInitialNodes((nodes) =>
@@ -184,6 +190,7 @@ export default function FlowAnimation({ active }) {
 						i === 6 ? { ...node, data: { ...node.data, color: undefined } } : node
 					)
 				);
+				setScriptStep(7);
 			}
 		}
 	];
@@ -335,7 +342,34 @@ export async function main(
 								zoomOnScroll={false}
 							/>
 						</div>
-						<div className="flex flex-col p-8 col-span-1">test</div>
+						<div className="flex flex-col p-8 col-span-1 gap-8">
+							<div className="border h-40 border-gray-950 bg-gray-900 p-2">
+								<div className="flex flex-row justify-between items-center text-sm ">
+									Logs
+									{scriptStep >= 8 && (
+										<div className="bg-green-600 text-white rounded-md px-2 py-0.5 text-xs">
+											Success
+										</div>
+									)}
+								</div>
+
+								{scriptStep >= 8 && <div> Email sent </div>}
+							</div>
+							<div className="border h-52 border-gray-950 bg-gray-900 relative">
+								{scriptStep >= 6 && (
+									<div className="absolute top-2 left-2 flex flex-row items-center gap-2">
+										<div className="h-2 w-10 bg-blue-500"></div>
+										<div className="text-sm text-gray-300">Run one branch - 0.2s</div>
+									</div>
+								)}
+								{scriptStep >= 7 && (
+									<div className="absolute top-8 left-8 flex flex-row items-center gap-2">
+										<div className="h-2 w-10 bg-blue-500"></div>
+										<div className="text-sm text-gray-300">Send email - 0.2s</div>
+									</div>
+								)}
+							</div>
+						</div>
 					</motion.div>
 				</div>
 			</Window>

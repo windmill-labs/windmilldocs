@@ -17,9 +17,7 @@ type FeatureCardProps = {
 
 export default function LightFeatureCard({
 	feature,
-	animationDelay,
 	span,
-	noAnimation = false,
 	lottieData = undefined,
 	defaultImage,
 	linkColor,

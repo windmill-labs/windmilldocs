@@ -89,7 +89,7 @@ export async function main(
 		},
 		{
 			duration: 3000,
-			scroll: 1100,
+			scroll: 1300,
 			callback: () => {
 				console.log('test');
 				setBgColor('gray');
@@ -103,7 +103,7 @@ export async function main(
 			}
 		},
 		{
-			scroll: 1400,
+			scroll: 1500,
 			duration: 1000,
 			callback: () => {
 				setScriptStep(4);
