@@ -9,7 +9,7 @@ image: ./windmill_alone.png
 
 # How Windmill uses Windmill
 
-The good thing of being a devtool company is that your developers use their own tools on a daily basis (it would be more complicated to get them motivated them with accounting software).
+The good thing of being a devtool company is that your developers use their own tools on a daily basis (it would be more complicated to get them motivated with accounting software).
 
 To showcase some examples of what can be done with Windmill, here are a few use cases of Windmill by the Windmill team (knowing that we are always surprised by how much further our clients go than us on our own product).
 
@@ -19,7 +19,7 @@ To showcase some examples of what can be done with Windmill, here are a few use 
 
 [Stripe](https://stripe.com/) is a powerful tool and trusted by thousands of customers. But it must be said that sometimes we don't understand why some simple things are so complicated to do from Stripe without having to resort to tricks.
 
-We try to build a self-serve product with [transparent pricing](/pricing) and very [clear steps for upgrading](/docs/misc/plans_details). We have created several automations on Stripe to automatically generate an Enterprise Edition license key upon each subscription, send it by email to the customer, and inform our dedicated channels on Discord. Similarly, we are kept informed when a trial is converted, a plan is upgraded, or when it churns (in theory only, of course).
+We try to build a self-serve product with [transparent pricing](/pricing) and very [clear steps for upgrading](/docs/misc/plans_details). We have created several automations on Stripe to automatically generate an Enterprise Edition license key upon each subscription, send it by email to the customer, and inform our dedicated channels on Discord. We are also informed when a trial is converted or when it churns (in theory only, of course). We have similar automations for the Team plans on the Cloud, adjusting workspaces based on Stripe subscription status. Additionally, a [schedule](/docs/core_concepts/scheduling) is used to report Team plan usage to Stripe.
 
 ![Stripe billing](./stripe_billing.png "Stripe billing")
 
