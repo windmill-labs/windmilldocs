@@ -5,14 +5,13 @@ export default function useAnimateScroll(
 	active: boolean,
 	steps: any[],
 	maxQuantity: number,
-	offset = 0,
-	animationType: 'scroll' | 'time' = 'scroll'
+	offset = 0
 ) {
 	const x = useContext(ScrollContext);
 	const triggeredStepsRef = useRef([]);
 	const lastScrollRef = useRef(0);
 	const [progress, setProgress] = useState(0);
-	const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+	const debounceTimerRef = useRef(null);
 
 	function debounce(func: () => void, delay: number) {
 		if (debounceTimerRef.current !== null) {
@@ -25,7 +24,7 @@ export default function useAnimateScroll(
 		if (!active) return;
 
 		const handler = () => {
-			const latestAsNumber = x.getPrevious() - offset;
+			const latestAsNumber = x.getPrevious() - offset; // Assuming x.value is your latest scroll position
 			setProgress(latestAsNumber);
 
 			// Determine scroll direction
@@ -57,7 +56,7 @@ export default function useAnimateScroll(
 			}
 		};
 
-		const debouncedHandler = () => debounce(handler, 50);
+		const debouncedHandler = () => debounce(handler, 20);
 
 		x.onChange(debouncedHandler);
 	}, [active, steps, x, offset]); // Only re-run effect if these values change
@@ -65,8 +64,8 @@ export default function useAnimateScroll(
 	return { progress };
 }
 
-const scriptScrollCount = 2000;
-const flowScrollCount = 2000;
-const appScrollCount = 1000;
+const scriptScrollCount = 4000;
+const flowScrollCount = 4000;
+const appScrollCount = 2000;
 
 export { scriptScrollCount, flowScrollCount, appScrollCount };

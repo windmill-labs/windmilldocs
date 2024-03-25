@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import AnimText from './animations/AnimText';
@@ -231,7 +231,8 @@ export async function main(
 		variant1: {
 			top: 360,
 			left: 300,
-			text: 'The flow editor builds a YAML file that you can sync with your codebase.',
+			// Explain thaht the flow is stored as a YAML file, that you can sync with git
+			text: 'Your flow is stored as a YAML file that you can sync with git.',
 			displayArrow: false
 		},
 		variant5: {
@@ -401,6 +402,22 @@ export async function main(
 						</div>
 					</motion.div>
 				</div>
+
+				{variants?.[`variant${scriptStep}`] && (
+					<motion.div
+						animate={`variant${scriptStep}`}
+						variants={variants}
+						className={twMerge(
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56 text-gray-950',
+							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
+						)}
+					>
+						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-white transform rotate-45 "></div>
+						)}
+						{variants?.[`variant${scriptStep}`]?.text}
+					</motion.div>
+				)}
 			</Window>
 
 			<Window shouldRender={step === 1} name="VS Code" icon="/third_party_logos/vscode.svg">
@@ -500,6 +517,21 @@ schema:
 						</div>
 					</div>
 				</div>
+				{variants?.[`variant${scriptStep}`] && (
+					<motion.div
+						animate={`variant${scriptStep}`}
+						variants={variants}
+						className={twMerge(
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56 text-gray-950',
+							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
+						)}
+					>
+						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-white transform rotate-45 "></div>
+						)}
+						{variants?.[`variant${scriptStep}`]?.text}
+					</motion.div>
+				)}
 			</Window>
 		</div>
 	);

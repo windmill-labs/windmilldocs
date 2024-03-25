@@ -58,7 +58,7 @@ export default function TutorialSection() {
 					<AnimationCarousel items={items} currentIndex={step} />
 				</div>
 			</SmoothScroll>
-			<LandingSection bgClass="-mt-48 md:-mt-72 flex flex-col">
+			<LandingSection bgClass="flex flex-col">
 				<div className="grid grid-cols-2 w-full gap-8 ">
 					<LightFeatureCard
 						feature={{

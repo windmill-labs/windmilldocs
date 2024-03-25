@@ -23,8 +23,7 @@ const ProgressBar = ({
 		enter: { width: 0 },
 		animate: {
 			width: percents + '%', // Animate width based on percents prop
-			transition,
-			duration: 2
+			transition
 		}
 	};
 
