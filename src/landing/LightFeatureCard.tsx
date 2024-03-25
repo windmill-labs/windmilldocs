@@ -13,6 +13,7 @@ type FeatureCardProps = {
 	linkColor: string;
 	Icon: LucideIcon;
 	url: string;
+	autoplay?: boolean;
 };
 
 export default function LightFeatureCard({
@@ -22,12 +23,13 @@ export default function LightFeatureCard({
 	defaultImage,
 	linkColor,
 	Icon = CircleIcon,
-	url
+	url,
+	autoplay = false
 }: FeatureCardProps) {
 	const options = {
 		animationData: lottieData,
-		loop: false,
-		autoplay: false
+		loop: true,
+		autoplay: autoplay
 	};
 
 	const { View, play } = useLottie(options);

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { motion } from 'framer-motion';
 import SyntaxHighlighter from 'react-syntax-highlighter';
@@ -6,7 +6,7 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import AnimText from './animations/AnimText';
 import Window from './animations/Window';
 import { ChevronRight, GitBranch, Mail } from 'lucide-react';
-import { SiGmail, SiSlack, SiStripe, SiYaml } from 'react-icons/si';
+import { SiSlack, SiYaml } from 'react-icons/si';
 import useAnimateScroll, {
 	flowScrollCount,
 	scriptScrollCount
@@ -118,7 +118,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 20,
+			scroll: 25,
 			callback: () => {
 				setStep(0);
 				setScriptStep(2);
@@ -129,7 +129,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 30,
+			scroll: 40,
 			callback: () => {
 				setScriptStep(5);
 			},
@@ -138,7 +138,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 40,
+			scroll: 55,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -159,7 +159,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 50,
+			scroll: 70,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -180,7 +180,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 60,
+			scroll: 85,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>

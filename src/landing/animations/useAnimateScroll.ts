@@ -57,7 +57,7 @@ export default function useAnimateScroll(
 			}
 		};
 
-		const debouncedHandler = () => debounce(handler, 20);
+		const debouncedHandler = () => debounce(handler, 50);
 
 		x.onChange(debouncedHandler);
 	}, [active, steps, x, offset]); // Only re-run effect if these values change

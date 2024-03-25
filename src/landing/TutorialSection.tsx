@@ -92,6 +92,7 @@ export default function TutorialSection() {
 						Icon={Server}
 						noAnimation={true}
 						lottieData={deployAtScale}
+						autoplay
 					/>
 					<LightFeatureCard
 						feature={{
