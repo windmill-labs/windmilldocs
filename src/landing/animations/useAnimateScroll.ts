@@ -12,12 +12,20 @@ export default function useAnimateScroll(
 	const triggeredStepsRef = useRef([]);
 	const lastScrollRef = useRef(0);
 	const [progress, setProgress] = useState(0);
+	const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+	function debounce(func: () => void, delay: number) {
+		if (debounceTimerRef.current !== null) {
+			clearTimeout(debounceTimerRef.current);
+		}
+		debounceTimerRef.current = setTimeout(func, delay);
+	}
 
 	useEffect(() => {
 		if (!active) return;
 
-		const handler = (latest) => {
-			const latestAsNumber = latest - offset;
+		const handler = () => {
+			const latestAsNumber = x.getPrevious() - offset;
 			setProgress(latestAsNumber);
 
 			// Determine scroll direction
@@ -49,7 +57,9 @@ export default function useAnimateScroll(
 			}
 		};
 
-		x.onChange(handler);
+		const debouncedHandler = () => debounce(handler, 20);
+
+		x.onChange(debouncedHandler);
 	}, [active, steps, x, offset]); // Only re-run effect if these values change
 
 	return { progress };

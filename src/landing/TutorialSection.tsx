@@ -8,6 +8,7 @@ import SmoothScroll from './animations/SmoothScroll';
 import ProgressBars from './animations/ProgressBars';
 import LandingSection from './LandingSection';
 import LightFeatureCard from './LightFeatureCard';
+import deployAtScale from '/illustrations/deploy_at_scale.json';
 
 export default function TutorialSection() {
 	const [step, setStep] = React.useState(-1);
@@ -90,7 +91,7 @@ export default function TutorialSection() {
 						linkColor="text-blue-400"
 						Icon={Server}
 						noAnimation={true}
-						lottieData={undefined}
+						lottieData={deployAtScale}
 					/>
 					<LightFeatureCard
 						feature={{
