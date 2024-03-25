@@ -50,7 +50,7 @@ const ProgressBar = ({
 		</div>
 	);
 };
-export default function ProgressBars({ setStep, currentIndex }) {
+export default function ProgressBars({ setStep }) {
 	const x = useContext(ScrollContext);
 
 	const [progress, setProgress] = React.useState(0);
@@ -62,11 +62,14 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				setProgress(latestAsNumber);
 
 				let newStep = 0;
-				if (latestAsNumber < 2000) {
+				if (latestAsNumber < scriptScrollCount) {
 					newStep = 0;
-				} else if (latestAsNumber >= 2000 && latestAsNumber < 4000) {
+				} else if (
+					latestAsNumber >= scriptScrollCount &&
+					latestAsNumber < scriptScrollCount + flowScrollCount
+				) {
 					newStep = 1;
-				} else if (latestAsNumber >= 4000) {
+				} else if (latestAsNumber >= scriptScrollCount + flowScrollCount) {
 					newStep = 2;
 				}
 

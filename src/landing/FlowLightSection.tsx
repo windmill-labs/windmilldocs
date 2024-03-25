@@ -1,10 +1,10 @@
 import React from 'react';
-
 import LandingSection from './LandingSection';
 
+// @ts-ignore
 import approval from '/illustrations/approval.json';
+// @ts-ignore
 import performance from '/illustrations/performance.json';
-import triggers from '/illustrations/triggers.json';
 import CardSection from './cards-v2/CardSection';
 import { ArrowDownUp, CheckCircle, Gauge, TerminalSquare } from 'lucide-react';
 
@@ -16,7 +16,9 @@ const features = [
 		lottieData: approval,
 		span: 'col-span-1',
 		url: '/docs/flows/flow_approval',
-		Icon: CheckCircle
+		Icon: CheckCircle,
+		autoplay: true,
+		loop: false
 	},
 
 	{
@@ -56,6 +58,8 @@ const features = [
 	height: number;
 	noAnimation?: boolean;
 	lottieData?: unknown;
+	Icon: any;
+	autoplay?: boolean;
 }[];
 
 const colors = {

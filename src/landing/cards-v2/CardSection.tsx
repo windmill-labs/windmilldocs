@@ -50,6 +50,8 @@ export default function CardSection({ features, colors, title, description, defa
 						linkColor={colors.linkColor}
 						Icon={feature?.Icon}
 						url={feature?.url}
+						autoplay={feature?.autoplay}
+						loop={feature?.loop}
 					/>
 				))}
 			</div>

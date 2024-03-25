@@ -241,7 +241,7 @@ export async function main(
 						animate={`variant${scriptStep}`}
 						variants={variants}
 						className={twMerge(
-							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56',
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56 text-gray-950',
 							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
 						)}
 					>
@@ -320,7 +320,7 @@ export async function main(
 						animate={`variant${scriptStep}`}
 						variants={variants}
 						className={twMerge(
-							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56',
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56 text-gray-950',
 							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
 						)}
 					>

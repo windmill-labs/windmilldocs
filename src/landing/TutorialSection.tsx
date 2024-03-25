@@ -3,17 +3,16 @@ import ScriptAnimation from './ScriptAnimation';
 import AnimationCarousel from './animations/AnimationCarousel';
 import FlowAnimation from './FlowAnimation';
 import AppAnimation from './AppAnimation';
-import { Activity, GitCommit, GitCompareArrows, RotateCcw, Server } from 'lucide-react';
+import { Activity, GitCompareArrows, Server } from 'lucide-react';
 import SmoothScroll from './animations/SmoothScroll';
 import ProgressBars from './animations/ProgressBars';
 import LandingSection from './LandingSection';
 import LightFeatureCard from './LightFeatureCard';
+// @ts-ignore
 import deployAtScale from '/illustrations/deploy_at_scale.json';
 
 export default function TutorialSection() {
 	const [step, setStep] = React.useState(-1);
-
-	const [text, setText] = React.useState('Develop, iterate, and test quickly');
 
 	useEffect(() => {
 		setStep(0);
@@ -23,7 +22,7 @@ export default function TutorialSection() {
 		{
 			key: 'scripts',
 			content: (
-				<div className="w-[1000px] flex flex-row items-start">
+				<div className="flex flex-row items-start">
 					<ScriptAnimation active={step === 0} />
 				</div>
 			)
@@ -31,7 +30,7 @@ export default function TutorialSection() {
 		{
 			key: 'flows',
 			content: (
-				<div className="w-[1000px] flex flex-row items-start">
+				<div className="flex flex-row items-start">
 					<FlowAnimation active={step === 1} />
 				</div>
 			)
@@ -39,7 +38,7 @@ export default function TutorialSection() {
 		{
 			key: 'apps',
 			content: (
-				<div className="w-[1000px] flex flex-row items-start">
+				<div className=" flex flex-row items-start">
 					<AppAnimation active={step === 2} />
 				</div>
 			)
@@ -51,9 +50,11 @@ export default function TutorialSection() {
 			<SmoothScroll>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-16">
 					<div className="flex flex-row justify-between">
-						<div className="font-light text-2xl mb-4 max-w-xl">{text}</div>
+						<div className="font-light text-2xl mb-4 max-w-xl">
+							{'Develop, iterate, and test quickly'}
+						</div>
 					</div>
-					<ProgressBars setStep={setStep} currentIndex={step} />
+					<ProgressBars setStep={setStep} />
 					<AnimationCarousel items={items} currentIndex={step} />
 				</div>
 			</SmoothScroll>

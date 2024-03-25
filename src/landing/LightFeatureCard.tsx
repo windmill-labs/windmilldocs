@@ -14,6 +14,7 @@ type FeatureCardProps = {
 	Icon: LucideIcon;
 	url: string;
 	autoplay?: boolean;
+	loop?: boolean;
 };
 
 export default function LightFeatureCard({
@@ -24,11 +25,12 @@ export default function LightFeatureCard({
 	linkColor,
 	Icon = CircleIcon,
 	url,
-	autoplay = false
+	autoplay = false,
+	loop = true
 }: FeatureCardProps) {
 	const options = {
 		animationData: lottieData,
-		loop: true,
+		loop: loop,
 		autoplay: autoplay
 	};
 
