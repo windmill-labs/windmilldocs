@@ -46,7 +46,7 @@ export default function CardSection({ features, colors, title, description, defa
 						height={feature.height}
 						noAnimation={feature?.noAnimation}
 						lottieData={feature?.lottieData}
-						defaultImage={defaultImage}
+						defaultImage={feature.defaultImage ?? defaultImage}
 						linkColor={colors.linkColor}
 						Icon={feature?.Icon}
 						url={feature?.url}

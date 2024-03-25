@@ -9,12 +9,13 @@ type FeatureCardProps = {
 	height: number;
 	noAnimation: boolean;
 	lottieData: unknown;
-	defaultImage: string;
+	defaultImage?: string;
 	linkColor: string;
 	Icon: LucideIcon;
 	url: string;
 	autoplay?: boolean;
 	loop?: boolean;
+	video?: string;
 };
 
 export default function LightFeatureCard({
@@ -25,6 +26,7 @@ export default function LightFeatureCard({
 	linkColor,
 	Icon = CircleIcon,
 	url,
+	video,
 	autoplay = false,
 	loop = true
 }: FeatureCardProps) {
@@ -65,10 +67,16 @@ export default function LightFeatureCard({
 
 			{lottieData ? (
 				<div className="rounded-lg overflow-hidden h-full w-full">{View}</div>
-			) : (
+			) : defaultImage ? (
 				<div className="rounded-lg overflow-hidden h-full w-full">
 					<img src={defaultImage} alt={feature.title} />
 				</div>
+			) : video ? (
+				<video className="rounded-lg overflow-hidden h-full w-full" autoPlay loop muted>
+					<source src={video} type="video/mp4" />
+				</video>
+			) : (
+				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col items-center justify-center"></div>
 			)}
 		</a>
 	);

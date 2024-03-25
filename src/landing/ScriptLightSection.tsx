@@ -1,8 +1,12 @@
 import React from 'react';
 import LandingSection from './LandingSection';
+// @ts-ignore
 import polyGlott from '/illustrations/polyglot.json';
+// @ts-ignore
 import secrets from '/illustrations/secrets.json';
+// @ts-ignore
 import triggers from '/illustrations/triggers.json';
+// @ts-ignore
 import devfriendly from '/illustrations/devfriendly.json';
 import CardSection from './cards-v2/CardSection';
 import { FileCode, Lock, LucideIcon, TerminalSquare } from 'lucide-react';

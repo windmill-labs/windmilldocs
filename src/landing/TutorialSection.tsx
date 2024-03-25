@@ -99,18 +99,18 @@ export default function TutorialSection() {
 						feature={{
 							title: 'Monitor',
 							description:
-								'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet purus nec orci.',
+								'Each workspace has a dedicated Runs menu that allows you to visualise all past and future runs.',
 							images: []
 						}}
 						url=""
 						span="col-span-2"
-						defaultImage="/illustrations/fond-scripts.png"
 						height={400}
 						animationDelay={8}
 						linkColor="text-blue-400"
 						Icon={Activity}
 						noAnimation={true}
 						lottieData={undefined}
+						video="/videos/runs-menu.mp4"
 					/>
 				</div>
 			</LandingSection>

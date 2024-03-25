@@ -33,7 +33,8 @@ const features = [
 		description:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 		span: 'col-span-1',
-		url: '/docs/getting_started/trigger_flows#triggers-from-external-events'
+		url: '/docs/getting_started/trigger_flows#triggers-from-external-events',
+		defaultImage: '/illustrations/flows.png'
 	},
 	{
 		title: 'Performance',
