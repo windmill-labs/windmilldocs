@@ -6,7 +6,7 @@ import approval from '/illustrations/approval.json';
 // @ts-ignore
 import performance from '/illustrations/performance.json';
 import CardSection from './cards-v2/CardSection';
-import { ArrowDownUp, CheckCircle, Gauge, TerminalSquare } from 'lucide-react';
+import { ArrowDownUp, CheckCircle, Gauge, TerminalSquare, LucideIcon } from 'lucide-react';
 
 const features = [
 	{
@@ -14,33 +14,34 @@ const features = [
 		description:
 			'Suspend the execution of a flow and request confirmation from given users before resuming.',
 		lottieData: approval,
-		span: 'col-span-1',
 		url: '/docs/flows/flow_approval',
 		Icon: CheckCircle,
 		autoplay: true,
-		loop: false
+		loop: false,
+		vertical: true
 	},
 
 	{
 		title: 'Data pipelines',
 		description: 'Orchestrate pipelines & ETLs with observability and control at any step.',
-		span: 'col-span-1',
+
 		url: '/docs/core_concepts/data_pipelines',
-		Icon: ArrowDownUp
+		Icon: ArrowDownUp,
+		vertical: true
 	},
 	{
 		title: 'Advanced Features',
 		description:
 			'Build powerful flows with advanced features like triggers, error handling, retries, loops and branches',
-		span: 'col-span-1',
 		url: '/docs/getting_started/trigger_flows#triggers-from-external-events',
-		defaultImage: '/illustrations/flows.png'
+		defaultImage: '/illustrations/flows.png',
+		vertical: true
 	},
 	{
 		title: 'Performance',
 		description: 'The fastest and extremely scalable workflow engine.',
 		lottieData: performance,
-		span: 'col-span-1',
+		vertical: true,
 		url: '/docs/misc/benchmarks/competitors',
 		Icon: Gauge
 	},
@@ -48,19 +49,19 @@ const features = [
 		title: 'Workflows as Code',
 		description:
 			'Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program.			',
-		span: 'col-span-2',
+
 		Icon: TerminalSquare
 	}
 ] as {
 	title: string;
 	description: string;
 	images: string[];
-	span: string;
 	height: number;
 	noAnimation?: boolean;
 	lottieData?: unknown;
-	Icon: any;
-	autoplay?: boolean;
+	Icon: LucideIcon;
+	url?: string;
+	vertical?: boolean;
 }[];
 
 const colors = {

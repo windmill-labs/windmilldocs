@@ -78,7 +78,7 @@ export default function AppAnimation({ active }) {
 	];
 
 	const variants = {
-		variant0: { top: 180, left: 675, text: 'Build complex app from atomic components.' },
+		variant0: { top: 180, left: 675, text: 'Build complex app from 50+ atomic components.' },
 
 		variant2: {
 			top: 260,
@@ -114,7 +114,9 @@ export default function AppAnimation({ active }) {
 						<img src="/img/windmill.svg" alt="windmill" className="h-6 w-6" />
 					</div>
 					<div className="grid grid-cols-12 w-full h-full divide-x divide-gray-100">
-						<div className="col-span-9  text-gray-500 text-sm">
+						<div className="col-span-2 p-2">Stripe Refunds</div>
+
+						<div className="col-span-7 text-gray-500 text-sm">
 							<div className="grid grid-rows-3 divide-y h-full divide-gray-100">
 								<div className="row-span-2  relative	overflow-hidden">
 									<div className="absolute z-50 px-8 pt-8">

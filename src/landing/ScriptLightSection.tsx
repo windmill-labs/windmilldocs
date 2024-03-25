@@ -13,7 +13,7 @@ import { FileCode, Lock, LucideIcon, TerminalSquare } from 'lucide-react';
 
 const features = [
 	{
-		title: 'Polyglott',
+		title: 'Polyglot',
 		description:
 			'Windmill supports a wide range of languages: Python, Node, Deno, Bun, Go, PostgresQL, bash and more. Dependencies are automatically managed. An UI is auto-generated for your scripts.',
 		lottieData: polyGlott,
@@ -27,17 +27,19 @@ const features = [
 		description:
 			'Easily share secrets and other sensitive data with your team. Without compromising security.',
 		lottieData: secrets,
-		span: 'col-span-1',
+		span: 'col-span-2 md:col-span-1',
 		Icon: Lock,
-		url: '/docs/core_concepts/variables_and_secrets#secrets'
+		url: '/docs/core_concepts/variables_and_secrets#secrets',
+		vertical: true
 	},
 
 	{
 		title: 'Triggers',
 		description: 'Trigger scripts from webhooks, schedules, CLI, Slack, and more. ',
 		lottieData: triggers,
-		span: 'col-span-1',
-		url: '/docs/getting_started/trigger_scripts'
+		span: 'col-span-2 md:col-span-1',
+		url: '/docs/getting_started/trigger_scripts',
+		vertical: true
 	},
 	{
 		title: 'Web IDE of Local developement',

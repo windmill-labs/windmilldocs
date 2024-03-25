@@ -3,7 +3,7 @@ import ScriptAnimation from './ScriptAnimation';
 import AnimationCarousel from './animations/AnimationCarousel';
 import FlowAnimation from './FlowAnimation';
 import AppAnimation from './AppAnimation';
-import { Activity, GitCompareArrows, Server } from 'lucide-react';
+import { Activity, GitCompareArrows, Server, MoveDown, MoveRight } from 'lucide-react';
 import SmoothScroll from './animations/SmoothScroll';
 import ProgressBars from './animations/ProgressBars';
 import LandingSection from './LandingSection';
@@ -46,9 +46,9 @@ export default function TutorialSection() {
 	];
 
 	return (
-		<div className="flex flex-col gap-8">
+		<div className="flex flex-col gap-8 ">
 			<SmoothScroll>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-16">
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-64">
 					<div className="flex flex-row justify-between">
 						<div className="font-light text-2xl mb-4 max-w-xl">
 							{'Develop, iterate, and test quickly'}
@@ -58,17 +58,20 @@ export default function TutorialSection() {
 					<AnimationCarousel items={items} currentIndex={step} />
 				</div>
 			</SmoothScroll>
-			<LandingSection bgClass="flex flex-col">
-				<div className="grid grid-cols-2 w-full gap-8 ">
+			<div className="mx-auto w-[700px] h-[128px] flex items-start flex-row">
+				<MoveDown className=" text-gray-100 w-[128px] h-[100px] flex items-start flex-row" />
+			</div>
+			<LandingSection bgClass="flex flex-col !py-0 w-full">
+				<div className="grid grid-cols-11 w-full relative gap-4">
 					<LightFeatureCard
 						feature={{
 							title: 'Review',
 							description:
-								'Review your code and collaborate with your team to ensure quality and consistency.',
+								'Use the built-in diff editor, use Github pull requests or Gitlab merge requests to review changes.',
 							images: []
 						}}
 						url=""
-						span="col-span-1"
+						spanOverride="col-span-12 md:col-span-5"
 						defaultImage="/illustrations/diff.png"
 						height={400}
 						animationDelay={8}
@@ -76,16 +79,20 @@ export default function TutorialSection() {
 						Icon={GitCompareArrows}
 						noAnimation={true}
 						lottieData={undefined}
+						vertical={true}
 					/>
+					<div className="col-span-1 my-auto">
+						<MoveRight className=" text-gray-100 w-full h-24 " />
+					</div>
 					<LightFeatureCard
 						feature={{
 							title: 'Deploy at scale',
 							description:
-								'Review your code and collaborate with your team to ensure quality and consistency.',
+								'Run your scripts on our infrastructure, or deploy them to your own servers.',
 							images: []
 						}}
 						url=""
-						span="col-span-1"
+						spanOverride="col-span-12 md:col-span-5"
 						defaultImage="/illustrations/fond-scripts.png"
 						height={400}
 						animationDelay={8}
@@ -94,7 +101,11 @@ export default function TutorialSection() {
 						noAnimation={true}
 						lottieData={deployAtScale}
 						autoplay
+						vertical={true}
 					/>
+					<div className="col-start-8 col-end-11">
+						<MoveDown className=" text-gray-100 h-24 w-24 mx-auto" />
+					</div>
 					<LightFeatureCard
 						feature={{
 							title: 'Monitor',
@@ -103,14 +114,15 @@ export default function TutorialSection() {
 							images: []
 						}}
 						url=""
-						span="col-span-2"
 						height={400}
 						animationDelay={8}
+						spanOverride="col-span-12 grid-cols-1 md:grid-cols-2"
 						linkColor="text-blue-400"
 						Icon={Activity}
 						noAnimation={true}
 						lottieData={undefined}
 						defaultImage="/illustrations/fond-scripts.png"
+						vertical={false}
 					/>
 				</div>
 			</LandingSection>

@@ -15,9 +15,9 @@ export default function Window({ name, icon, children, shouldRender, lightMode }
 		<AnimatePresence mode="popLayout" initial={false}>
 			{shouldRender && (
 				<motion.div
-					initial={{ opacity: 0, y: '-20px' }}
+					initial={{ opacity: 0, y: '-100px' }}
 					animate={{ opacity: 1, y: 0 }}
-					exit={{ opacity: 0, y: '20px' }}
+					exit={{ opacity: 0, y: '100px' }}
 					transition={{ delay: 0.2 }}
 					className={twMerge(
 						'border w-full h-[500px] shadow-2xl rounded-lg border-gray-950 overflow-hidden relative',

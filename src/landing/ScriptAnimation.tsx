@@ -40,8 +40,9 @@ export async function main(
 
 	const steps = [
 		{
-			scroll: 10,
+			scroll: 20,
 			callback: () => {
+				setScriptStep(2);
 				setCode(`import Stripe from 'stripe';
 
 type StripeResource = { token: string }
@@ -66,20 +67,12 @@ export async function main(
 			},
 			rollback: () => {
 				setCode(initialCode);
-			}
-		},
-		{
-			scroll: 20,
-			callback: () => {
-				setScriptStep(2);
-			},
-			rollback: () => {
 				setScriptStep(0);
 			}
 		},
+
 		{
-			duration: 500,
-			scroll: 30,
+			scroll: 40,
 			callback: () => {
 				setScriptStep(3);
 			},
@@ -88,7 +81,7 @@ export async function main(
 			}
 		},
 		{
-			scroll: 40,
+			scroll: 50,
 			callback: () => {
 				setBgColor('gray');
 
@@ -101,7 +94,7 @@ export async function main(
 			}
 		},
 		{
-			scroll: 50,
+			scroll: 60,
 			callback: () => {
 				setScriptStep(4);
 			},
@@ -110,7 +103,7 @@ export async function main(
 			}
 		},
 		{
-			scroll: 60,
+			scroll: 70,
 			callback: () => {
 				setScriptStep(5);
 			},
@@ -131,7 +124,7 @@ export async function main(
 		}
 	];
 
-	useAnimateScroll(active, steps, scriptScrollCount, 0, 'time');
+	useAnimateScroll(active, steps, scriptScrollCount, 0);
 
 	const variants = {
 		variant0: { top: 250, left: 100, text: 'Iterate using our Web IDE' },
@@ -140,7 +133,7 @@ export async function main(
 		variant6: {
 			top: 360,
 			left: 300,
-			text: 'Iterate using VS Code, test with integrated extension and deploy with the CLI.',
+			text: 'Alternately, you can also use VS Code, test your scripts with our extension',
 			displayArrow: false
 		}
 	};

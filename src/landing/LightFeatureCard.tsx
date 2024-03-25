@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLottie } from 'lottie-react';
 import { ArrowRight, CircleIcon, LucideIcon } from 'lucide-react';
+import { twMerge } from 'tailwind-merge';
 
 type FeatureCardProps = {
 	feature: { title: string; description: string; images: string[] };
 	animationDelay: number;
-	span: string;
 	height: number;
 	noAnimation: boolean;
 	lottieData: unknown;
@@ -16,32 +16,37 @@ type FeatureCardProps = {
 	autoplay?: boolean;
 	loop?: boolean;
 	video?: string;
+	vertical?: boolean;
+	spanOverride?: string | undefined;
 };
 
 export default function LightFeatureCard({
 	feature,
-	span,
 	lottieData = undefined,
 	defaultImage,
 	linkColor,
 	Icon = CircleIcon,
 	url,
 	video,
+	spanOverride,
 	autoplay = false,
-	loop = true
+	loop = true,
+	vertical = false
 }: FeatureCardProps) {
 	const options = {
 		animationData: lottieData,
 		loop: loop,
 		autoplay: autoplay
 	};
+	const span = !vertical ? 'col-span-2' : 'col-span-2 md:col-span-1';
 
 	const { View, play } = useLottie(options);
 	return (
 		<a
-			className={`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden col-span-2 md:${span}  group cursor-pointer p-8 relative grid ${
-				span === 'col-span-1' ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'
-			} gap-16 hover:bg-opacity-50 transition-all group cursor-pointer`}
+			className={twMerge(
+				`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span}  group cursor-pointer p-8 relative grid gap-16 hover:bg-opacity-50 transition-all group `,
+				spanOverride ?? (vertical ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2')
+			)}
 			onMouseOver={() => {
 				play();
 			}}
