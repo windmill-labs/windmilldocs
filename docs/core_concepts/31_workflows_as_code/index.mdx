@@ -30,8 +30,8 @@ import numpy as np
 #wmill>=1.286.2
 
 
-##You can specify tag to run the task on a specific type of worker
-@task(tag="highmem")
+@task()
+# You can specify tag to run the task on a specific type of worker, e.g. @task(tag="custom_tag")
 def heavy_compute(n: int):
     df = pd.DataFrame(np.random.randn(100, 4), columns=list('ABCD'))
     return df.sum().sum()

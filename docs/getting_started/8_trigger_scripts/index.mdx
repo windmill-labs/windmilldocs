@@ -2,19 +2,22 @@ import DocCard from '@site/src/components/DocCard';
 
 # Triggering Scripts
 
-Scripts can be triggered in 6 ways.
+Scripts can be triggered in 9 ways.
 
 On-demand triggers:
 
 - [Auto-generated UIs](/docs/getting_started/trigger_scripts#auto-generated-uis)
 - [Customized UIs with the App Editor](#customized-uis-with-the-app-editor)
 - [Trigger Scripts from Flows](#trigger-scripts-from-flows)
+- [Workflows as Code](#workflows-as-code)
 - [Schedule the Execution of a Script](#schedule-the-execution-of-a-script)
 - [Trigger Scripts from CLI (Command Line Interface)](#cli-command-line-interface)
+- [Trigger from API](#trigger-from-api)
 
 Triggers from external events:
 
 - [Trigger Scripts from Webhooks](#webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack) or [Emails](#webhooks-trigger-scripts-from-emails)
+- [Scheduling + Trigger Scripts](#scheduling--trigger-scripts)
 
 :::info Scripts in Windmill
 
@@ -106,6 +109,20 @@ Flows are basically sequences of scripts that execute one after another or [in p
 	/>
 </div>
 
+### Workflows as Code
+
+Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program within a [Python](../0_scripts_quickstart/2_python_quickstart/index.mdx) or [TypeScript](../0_scripts_quickstart/1_typescript_quickstart/index.mdx) script. This is known as workflows as code.
+
+![Flow as code](../../core_concepts/31_workflows_as_code/python_editor.png)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workflows as Code"
+		description="Automate tasks and their flow with only code."
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+</div>
+
 ### Schedule the Execution of a Script
 
 Windmill allows you to schedule scripts using a user-friendly interface and control panel, **similar to [cron](https://crontab.guru/)** but with more features.
@@ -149,6 +166,22 @@ The `wmill` CLI allows you to interact with Windmill instances right from your t
 		title="Command-Line Interface"
 		description="Interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
+	/>
+</div>
+
+### Trigger from API
+
+Windmill provides a RESTful API that allows you to interact with your Windmill instance programmatically.
+
+In particular, the operation [run script by path](https://app.windmill.dev/openapi.html#/operations/runScriptByPath) is designed to trigger a script by its path, passing the required arguments.
+
+It's an efficient way to run a script from another script.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="OpenAPI"
+		description="Interact with Windmill."
+		href="https://app.windmill.dev/openapi.html"
 	/>
 </div>
 
@@ -211,5 +244,22 @@ Windmill leverages [Mailchimp Mandrill](https://mailchimp.com/en/features/transa
 		title="Mailchimp Mandrill Integration"
 		description="Learn how to integrate Mailchimp Mandrill with Windmill."
 		href="/docs/integrations/mailchimp_mandrill"
+	/>
+</div>
+
+### Scheduling + Trigger Scripts
+
+A particular use case for schedules are [Trigger Scripts](../../flows/10_flow_trigger.mdx).
+
+Trigger scripts are used in [Flows](../../flows/1_flow_editor.mdx) and are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+
+You could set your script in a flow after a Trigger script to have it run only when new data is available.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Trigger Scripts"
+		color="teal"
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
+		href="/docs/flows/flow_trigger"
 	/>
 </div>
