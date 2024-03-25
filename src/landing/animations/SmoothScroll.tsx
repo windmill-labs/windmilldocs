@@ -10,11 +10,12 @@ const HorizontalScrollCarousel = ({ children }) => {
 		target: targetRef
 	});
 
-	const x = useTransform(
-		scrollYProgress,
-		[0, 1],
-		[0, scriptScrollCount + flowScrollCount + appScrollCount]
-	);
+	const calculateAdjustedRange = () => {
+		const totalScrollCount = scriptScrollCount + flowScrollCount + appScrollCount;
+		return [0, totalScrollCount];
+	};
+
+	const x = useTransform(scrollYProgress, [0, 1], calculateAdjustedRange());
 
 	return (
 		<ScrollContext.Provider value={x}>
