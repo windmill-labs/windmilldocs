@@ -84,7 +84,7 @@ export default function FlowAnimation({ active }) {
 			id: '5',
 			type: 'textUpdater',
 			position: { x: xOffset, y: initialY + deltaY * 3 },
-			data: { label: 'Send email', control: false, icon: SiSlack }
+			data: { label: 'Send email', control: false, icon: Mail }
 		},
 		{
 			id: '6',

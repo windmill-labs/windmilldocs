@@ -90,7 +90,6 @@ export async function main(
 		{
 			scroll: 40,
 			callback: () => {
-				console.log('test');
 				setBgColor('gray');
 
 				setTimeout(() => {
