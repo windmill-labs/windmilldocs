@@ -20,7 +20,7 @@ export default function Window({ name, icon, children, shouldRender, lightMode }
 					exit={{ opacity: 0, y: '20px' }}
 					transition={{ delay: 0.2 }}
 					className={twMerge(
-						'border w-full h-[500px] shadow-2xl rounded-lg border-gray-950 overflow-hidden',
+						'border w-full h-[500px] shadow-2xl rounded-lg border-gray-950 overflow-hidden relative',
 						lightMode ? 'bg-white' : 'bg-gray-900'
 					)}
 				>

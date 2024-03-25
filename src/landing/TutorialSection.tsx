@@ -51,22 +51,12 @@ export default function TutorialSection() {
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-16">
 					<div className="flex flex-row justify-between">
 						<div className="font-light text-2xl mb-4 max-w-xl">{text}</div>
-						<button
-							className="dark:text-white text-gray-900 rounded-md text-sm dark:bg-gray-800 bg-gray-100 px-2 h-8 flex flex-row items-center gap-2"
-							onClick={() => {
-								setStep(0);
-							}}
-						>
-							<RotateCcw className="h-4 w-4" />
-							Restart
-						</button>
 					</div>
 					<ProgressBars setStep={setStep} currentIndex={step} />
-
 					<AnimationCarousel items={items} currentIndex={step} />
 				</div>
 			</SmoothScroll>
-			<LandingSection bgClass="-mt-72 flex flex-col">
+			<LandingSection bgClass="-mt-48 md:-mt-72 flex flex-col">
 				<div className="grid grid-cols-2 w-full gap-8 ">
 					<LightFeatureCard
 						feature={{

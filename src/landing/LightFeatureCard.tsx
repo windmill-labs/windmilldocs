@@ -30,12 +30,11 @@ export default function LightFeatureCard({
 		autoplay: false
 	};
 
-	// MAKE IT animate only when hovered
 	const { View, play } = useLottie(options);
 	return (
 		<a
-			className={`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative grid ${
-				span === 'col-span-1' ? 'grid-cols-1' : 'grid-cols-2'
+			className={`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden col-span-2 md:${span}  group cursor-pointer p-8 relative grid ${
+				span === 'col-span-1' ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'
 			} gap-16 hover:bg-opacity-50 transition-all group cursor-pointer`}
 			onMouseOver={() => {
 				play();

@@ -13,6 +13,7 @@ export default function CardSection({ features, colors, title, description, defa
 			<span className={`text-lg ${colors.textColor} max-w-2xl mb-8  font-normal`}>
 				{description}
 			</span>
+
 			<div
 				className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full"
 				onMouseMove={(e) => {

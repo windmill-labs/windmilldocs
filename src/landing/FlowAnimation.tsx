@@ -6,8 +6,11 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import AnimText from './animations/AnimText';
 import Window from './animations/Window';
 import { ChevronRight, GitBranch, Mail } from 'lucide-react';
-import { SiGmail, SiSlack, SiStripe } from 'react-icons/si';
-import useAnimateScroll from './animations/useAnimateScroll';
+import { SiGmail, SiSlack, SiStripe, SiYaml } from 'react-icons/si';
+import useAnimateScroll, {
+	flowScrollCount,
+	scriptScrollCount
+} from './animations/useAnimateScroll';
 import ReactFlow, { Handle, Position } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { twMerge } from 'tailwind-merge';
@@ -18,7 +21,7 @@ function Node({ data }) {
 			<Handle type="target" position={Position.Top} />
 			<div
 				className={twMerge(
-					'h-8 w-48  rounded-md flex items-center gap-4 justify-start px-4',
+					'h-8 w-48  rounded-md flex items-center gap-4 justify-start px-4 text-white',
 					data.color ? data.color : data.control ? 'bg-gray-950' : 'bg-gray-900'
 				)}
 			>
@@ -81,13 +84,13 @@ export default function FlowAnimation({ active }) {
 			id: '5',
 			type: 'textUpdater',
 			position: { x: xOffset, y: initialY + deltaY * 3 },
-			data: { label: 'Send email', control: false, icon: Mail }
+			data: { label: 'Send email', control: false, icon: SiSlack }
 		},
 		{
 			id: '6',
 			type: 'textUpdater',
 			position: { x: 200 + xOffset, y: initialY + deltaY * 3 },
-			data: { label: 'Send email', control: false, icon: Mail }
+			data: { label: 'Notify on slack', control: false, icon: SiSlack }
 		},
 		{
 			id: '7',
@@ -104,34 +107,38 @@ export default function FlowAnimation({ active }) {
 
 	const steps = [
 		{
-			scroll: 500,
+			scroll: 10,
 			callback: () => {
 				setStep(1);
+				setScriptStep(1);
 			},
 			rollback: () => {
 				setStep(0);
-			}
-		},
-		{
-			scroll: 1000,
-			callback: () => {
-				setStep(0);
-			},
-			rollback: () => {
-				setStep(1);
-			}
-		},
-		{
-			scroll: 1500,
-			callback: () => {
-				setScriptStep(5);
-			},
-			rollback: () => {
 				setScriptStep(0);
 			}
 		},
 		{
-			scroll: 1700,
+			scroll: 20,
+			callback: () => {
+				setStep(0);
+				setScriptStep(2);
+			},
+			rollback: () => {
+				setStep(1);
+				setScriptStep(1);
+			}
+		},
+		{
+			scroll: 30,
+			callback: () => {
+				setScriptStep(5);
+			},
+			rollback: () => {
+				setScriptStep(2);
+			}
+		},
+		{
+			scroll: 40,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -152,7 +159,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 1800,
+			scroll: 50,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -173,7 +180,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 1900,
+			scroll: 60,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -195,7 +202,7 @@ export default function FlowAnimation({ active }) {
 		}
 	];
 
-	useAnimateScroll(active, steps, 2000);
+	useAnimateScroll(active, steps, flowScrollCount, scriptScrollCount);
 
 	const currentText = `import Stripe from 'stripe';
 			
@@ -219,6 +226,28 @@ export async function main(
 	};
 }`;
 
+	const variants = {
+		variant0: { top: 250, left: 100, text: 'Build complex flows with the Flow editor.' },
+		variant1: {
+			top: 360,
+			left: 300,
+			text: 'The flow editor builds a YAML file that you can sync with your codebase.',
+			displayArrow: false
+		},
+		variant5: {
+			top: 360,
+			left: 300,
+			text: 'Test your flow with a live debugger and see the results in real-time.',
+			displayArrow: false
+		},
+		variant6: {
+			top: 360,
+			left: 450,
+			text: 'Easily monitor the execution of each step in your flow.',
+			displayArrow: false
+		}
+	};
+
 	return (
 		<div className=" bg-gradient-to-br from-green-200 to-emerald-400 dark:from-green-500 dark:to-emerald-600 w-full rounded-lg p-6 shadow-inner overflow-hidden h-[550px]">
 			<Window shouldRender={step === 0} name="Firefox" icon="/third_party_logos/firefox.svg">
@@ -228,7 +257,7 @@ export async function main(
 					</div>
 					<div className={twMerge('flex flex-col w-full ', scriptStep >= 5 ? 'opacity-45' : '')}>
 						<div className="text-sm p-1 border-b border-gray-950 flex flex-row items-center justify-between w-full h-10">
-							<div>Path: f/folder/your_flow</div>
+							<div className="text-white">Path: f/folder/your_flow</div>
 							<div className="flex flex-row gap-1 items-center">
 								<button className="text-white rounded-md w-full text-lg bg-black px-2 py-0.5 h-full whitespace-nowrap">
 									Test flow
@@ -277,11 +306,11 @@ export async function main(
 											</motion.button>
 										</div>
 
-										<label className="text-sm font-semibold">resource</label>
+										<label className="text-sm font-semibold text-white">Resource</label>
 										<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
 											u/user/stripe_resource
 										</div>
-										<label className="text-sm font-semibold">charge</label>
+										<label className="text-sm font-semibold text-white">Charge</label>
 										<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
 											CHE_1NirD82eZvKYlo2CIvbtLWuY
 										</div>
@@ -344,7 +373,7 @@ export async function main(
 						</div>
 						<div className="flex flex-col p-8 col-span-1 gap-8">
 							<div className="border h-40 border-gray-950 bg-gray-900 p-2">
-								<div className="flex flex-row justify-between items-center text-sm ">
+								<div className="flex flex-row justify-between items-center text-sm text-gray-300">
 									Logs
 									{scriptStep >= 8 && (
 										<div className="bg-green-600 text-white rounded-md px-2 py-0.5 text-xs">
@@ -353,7 +382,7 @@ export async function main(
 									)}
 								</div>
 
-								{scriptStep >= 8 && <div> Email sent </div>}
+								{scriptStep >= 8 && <div className="text-gray-300"> Email sent </div>}
 							</div>
 							<div className="border h-52 border-gray-950 bg-gray-900 relative">
 								{scriptStep >= 6 && (
@@ -372,21 +401,39 @@ export async function main(
 						</div>
 					</motion.div>
 				</div>
+				{variants?.[`variant${scriptStep}`] && (
+					<motion.div
+						animate={`variant${scriptStep}`}
+						variants={variants}
+						className={twMerge(
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56',
+							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
+						)}
+					>
+						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-white transform rotate-45 "></div>
+						)}
+						{variants?.[`variant${scriptStep}`]?.text}
+					</motion.div>
+				)}
 			</Window>
 
 			<Window shouldRender={step === 1} name="VS Code" icon="/third_party_logos/vscode.svg">
-				<div className="grid grid-cols-10 h-full">
+				<div className="grid grid-cols-12 h-full">
 					<div className="col-span-2 flex flex-col !bg-gray-800 border-r p-2 text-sm border-gray-950">
-						<div className="flex flex-row items-center gap-1">
+						<div className="flex flex-row items-center gap-1 text-white">
 							<ChevronRight className="h-4 w-4" />
 							<div>folder</div>
 						</div>
-						<span className="ml-8">your_flow.yaml</span>
+						<div className="ml-8 flex flex-row gap-2 items-center text-white">
+							<SiYaml className="h-8 w-8" />
+							your_flow.yaml
+						</div>
 					</div>
 					<SyntaxHighlighter
 						language="javascript"
 						style={dark}
-						className="rounded-none text-sm !bg-gray-800 col-span-3 h-full overflow-hidden"
+						className="rounded-none text-sm !bg-gray-800 col-span-5 h-full overflow-hidden"
 						showLineNumbers
 					>
 						{`summary: ""
@@ -468,6 +515,21 @@ schema:
 						</div>
 					</div>
 				</div>
+				{variants?.[`variant${scriptStep}`] && (
+					<motion.div
+						animate={`variant${scriptStep}`}
+						variants={variants}
+						className={twMerge(
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56',
+							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
+						)}
+					>
+						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-white transform rotate-45 "></div>
+						)}
+						{variants?.[`variant${scriptStep}`]?.text}
+					</motion.div>
+				)}
 			</Window>
 		</div>
 	);

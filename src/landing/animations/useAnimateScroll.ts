@@ -1,7 +1,13 @@
 import React, { useEffect, useContext, useRef, useState } from 'react';
 import ScrollContext from './ScrollContext';
 
-export default function useAnimateScroll(active: boolean, steps: any[], offset = 0) {
+export default function useAnimateScroll(
+	active: boolean,
+	steps: any[],
+	maxQuantity: number,
+	offset = 0,
+	animationType: 'scroll' | 'time' = 'scroll'
+) {
 	const x = useContext(ScrollContext);
 	const triggeredStepsRef = useRef([]);
 	const lastScrollRef = useRef(0);
@@ -23,7 +29,8 @@ export default function useAnimateScroll(active: boolean, steps: any[], offset =
 			if (scrollingDown) {
 				// Handle scrolling down (trigger callbacks)
 				steps.forEach((step, index) => {
-					if (latestAsNumber >= step.scroll && !triggeredStepsRef.current.includes(index)) {
+					const stepScroll = (step.scroll * maxQuantity) / 100;
+					if (latestAsNumber >= stepScroll && !triggeredStepsRef.current.includes(index)) {
 						step.callback();
 						triggeredStepsRef.current.push(index);
 					}
@@ -32,7 +39,9 @@ export default function useAnimateScroll(active: boolean, steps: any[], offset =
 				// Handle scrolling up (trigger rollbacks)
 				for (let i = steps.length - 1; i >= 0; i--) {
 					const step = steps[i];
-					if (latestAsNumber < step.scroll && triggeredStepsRef.current.includes(i)) {
+					const stepScroll = (step.scroll * maxQuantity) / 100;
+
+					if (latestAsNumber < stepScroll && triggeredStepsRef.current.includes(i)) {
 						if (step.rollback) step.rollback();
 						triggeredStepsRef.current = triggeredStepsRef.current.filter((index) => index !== i);
 					}
@@ -45,3 +54,9 @@ export default function useAnimateScroll(active: boolean, steps: any[], offset =
 
 	return { progress };
 }
+
+const scriptScrollCount = 2000;
+const flowScrollCount = 2000;
+const appScrollCount = 1000;
+
+export { scriptScrollCount, flowScrollCount, appScrollCount };

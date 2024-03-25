@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ScrollContext from './ScrollContext';
+import { appScrollCount, flowScrollCount, scriptScrollCount } from './useAnimateScroll';
 
 const ProgressBar = ({
 	percents,
@@ -74,14 +75,10 @@ export default function ProgressBars({ setStep, currentIndex }) {
 		[]
 	);
 
-	const scriptFull = 2000; // step 0
-	const flowFull = 2000; // step 1
-	const appFull = 2000; // step 2
-
 	return (
 		<div className="grid grid-cols-3 gap-4 w-full  my-4">
 			<ProgressBar
-				percents={Math.round((progress * 100) / scriptFull)}
+				percents={Math.round((progress * 100) / scriptScrollCount)}
 				active={true}
 				onClick={() => {
 					//setStep(0)
@@ -93,8 +90,8 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				progressColor="dark:bg-blue-600 bg-blue-400"
 			/>
 			<ProgressBar
-				percents={Math.round(((progress - scriptFull) * 100) / flowFull)}
-				active={progress > scriptFull}
+				percents={Math.round(((progress - scriptScrollCount) * 100) / flowScrollCount)}
+				active={progress > scriptScrollCount}
 				onClick={() => {
 					//setStep(0)
 				}}
@@ -105,8 +102,10 @@ export default function ProgressBars({ setStep, currentIndex }) {
 				title={'Flows'}
 			/>
 			<ProgressBar
-				percents={Math.round(((progress - scriptFull - flowFull) * 100) / appFull)}
-				active={progress > scriptFull + flowFull}
+				percents={Math.round(
+					((progress - scriptScrollCount - flowScrollCount) * 100) / appScrollCount
+				)}
+				active={progress > scriptScrollCount + flowScrollCount}
 				onClick={() => {
 					//setStep(0)
 				}}

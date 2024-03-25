@@ -1,6 +1,7 @@
-import { motion, useTransform, useScroll } from 'framer-motion';
-import React, { Children, useRef } from 'react';
+import { useTransform, useScroll } from 'framer-motion';
+import React, { useRef } from 'react';
 import ScrollContext from './ScrollContext';
+import { flowScrollCount, scriptScrollCount, appScrollCount } from './useAnimateScroll';
 
 const HorizontalScrollCarousel = ({ children }) => {
 	const targetRef = useRef(null);
@@ -8,7 +9,11 @@ const HorizontalScrollCarousel = ({ children }) => {
 		target: targetRef
 	});
 
-	const x = useTransform(scrollYProgress, [0, 1], [0, 6500]);
+	const x = useTransform(
+		scrollYProgress,
+		[0, 1],
+		[0, scriptScrollCount + flowScrollCount + appScrollCount]
+	);
 
 	return (
 		<ScrollContext.Provider value={x}>

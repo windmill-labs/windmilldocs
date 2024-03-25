@@ -6,7 +6,9 @@ import { dark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import AnimText from './animations/AnimText';
 import Window from './animations/Window';
 import { ChevronRight } from 'lucide-react';
-import useAnimateScroll from './animations/useAnimateScroll';
+import useAnimateScroll, { scriptScrollCount } from './animations/useAnimateScroll';
+import { SiPython, SiTypescript } from 'react-icons/si';
+import { twMerge } from 'tailwind-merge';
 
 export default function ScriptAnimation({ active }) {
 	const [step, setStep] = React.useState(0);
@@ -38,8 +40,7 @@ export async function main(
 
 	const steps = [
 		{
-			duration: 3000,
-			scroll: 500,
+			scroll: 10,
 			callback: () => {
 				setCode(`import Stripe from 'stripe';
 
@@ -68,8 +69,7 @@ export async function main(
 			}
 		},
 		{
-			duration: 500,
-			scroll: 700,
+			scroll: 20,
 			callback: () => {
 				setScriptStep(2);
 			},
@@ -79,7 +79,7 @@ export async function main(
 		},
 		{
 			duration: 500,
-			scroll: 900,
+			scroll: 30,
 			callback: () => {
 				setScriptStep(3);
 			},
@@ -88,8 +88,7 @@ export async function main(
 			}
 		},
 		{
-			duration: 3000,
-			scroll: 1300,
+			scroll: 40,
 			callback: () => {
 				console.log('test');
 				setBgColor('gray');
@@ -103,8 +102,7 @@ export async function main(
 			}
 		},
 		{
-			scroll: 1500,
-			duration: 1000,
+			scroll: 50,
 			callback: () => {
 				setScriptStep(4);
 			},
@@ -113,8 +111,7 @@ export async function main(
 			}
 		},
 		{
-			scroll: 1600,
-			duration: 1000,
+			scroll: 60,
 			callback: () => {
 				setScriptStep(5);
 			},
@@ -123,18 +120,31 @@ export async function main(
 			}
 		},
 		{
-			scroll: 1800,
-			duration: 4000,
+			scroll: 80,
 			callback: () => {
 				setStep(1);
+				setScriptStep(6);
 			},
 			rollback: () => {
 				setStep(0);
+				setScriptStep(5);
 			}
 		}
 	];
 
-	useAnimateScroll(active, steps);
+	useAnimateScroll(active, steps, scriptScrollCount, 0, 'time');
+
+	const variants = {
+		variant0: { top: 250, left: 100, text: 'Iterate using our Web IDE' },
+		variant2: { top: 290, left: 690, text: 'An UI is automatically generated' },
+		variant3: { top: 120, left: 690, text: 'Easily test your script' },
+		variant6: {
+			top: 360,
+			left: 300,
+			text: 'Iterate using VS Code, test with integrated extension and deploy with the CLI.',
+			displayArrow: false
+		}
+	};
 
 	return (
 		<div className="bg-gradient-to-br from-blue-200 to-sky-400 dark:from-blue-700 dark:to-sky-600 w-full rounded-lg p-6 shadow-inner overflow-hidden h-[550px]">
@@ -145,7 +155,7 @@ export async function main(
 					</div>
 					<div className="flex flex-col w-full">
 						<div className="text-sm p-1 border-b border-gray-950 flex flex-row items-center justify-between w-full h-10">
-							<div>Path: f/folder/your_script</div>
+							<div className="text-white">Path: f/folder/your_script</div>
 							<div className="flex flex-row gap-1 items-center">
 								<button className="text-white rounded-md w-full text-md bg-black px-2 py-1 h-full">
 									Deploy
@@ -171,11 +181,11 @@ export async function main(
 									>
 										Test
 									</motion.button>
-									<label className="text-sm font-semibold">resource</label>
+									<label className="text-sm font-semibold text-white">Resource</label>
 									<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-sm flex items-center px-2">
 										u/user/stripe_resource
 									</div>
-									<label className="text-sm font-semibold">charge</label>
+									<label className="text-sm font-semibold text-white">Charge</label>
 									<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-sm flex items-center px-2">
 										ch_1NirD82eZvKYlo2CIvbtLWuY
 									</div>
@@ -185,7 +195,7 @@ export async function main(
 											transition={{ duration: 0.1 }}
 											initial={{ opacity: 0 }}
 										>
-											<label className="text-sm font-semibold">amount</label>
+											<label className="text-sm font-semibold text-white">Amount</label>
 											<div
 												id="amount"
 												className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-sm flex items-center px-2"
@@ -195,7 +205,7 @@ export async function main(
 										</motion.div>
 									)}
 								</form>
-								<div className="border-t border-gray-950 p-2 text-sm h-24 flex flex-col">
+								<div className="border-t border-gray-950 p-2 text-sm h-24 flex flex-col text-white">
 									Logs:
 									{scriptStep >= 4 && (
 										<motion.div
@@ -208,7 +218,7 @@ export async function main(
 										</motion.div>
 									)}
 								</div>
-								<div className="border-t border-gray-950 p-2 text-sm flex flex-col h-20">
+								<div className="border-t border-gray-950 p-2 text-sm flex flex-col h-20 text-white">
 									Result:
 									<AnimatePresence>
 										{scriptStep >= 5 && (
@@ -226,16 +236,38 @@ export async function main(
 						</div>
 					</div>
 				</div>
+
+				{variants?.[`variant${scriptStep}`] && (
+					<motion.div
+						animate={`variant${scriptStep}`}
+						variants={variants}
+						className={twMerge(
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56',
+							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
+						)}
+					>
+						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-white transform rotate-45 "></div>
+						)}
+						{variants?.[`variant${scriptStep}`]?.text}
+					</motion.div>
+				)}
 			</Window>
 			<Window shouldRender={step === 1} name="VS Code" icon="/third_party_logos/vscode.svg">
 				<div className="grid grid-cols-5 h-full">
 					<div className=" col-span-1 flex flex-col !bg-gray-800 border-r p-2 text-sm border-gray-950">
 						<div className="flex flex-row items-center gap-1">
 							<ChevronRight className="h-4 w-4" />
-							<div>folder</div>
+							<div className="text-white">folder</div>
 						</div>
-						<span className="ml-8">refund_stripe.ts</span>
-						<span className="ml-8">notify_users.py</span>
+						<div className="ml-8 flex flex-row gap-2 items-center text-white">
+							<SiTypescript className="h-4 w-4" />
+							refund_stripe.ts
+						</div>
+						<div className="ml-8 flex flex-row gap-2 items-center text-white">
+							<SiPython className="h-4 w-4" />
+							notify_users.py
+						</div>
 					</div>
 					<SyntaxHighlighter
 						language="javascript"
@@ -254,22 +286,22 @@ export async function main(
 							>
 								Test
 							</motion.button>
-							<label className="text-sm font-semibold">resource</label>
+							<label className="text-sm font-semibold text-white">Resource</label>
 							<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
 								u/user/stripe_resource
 							</div>
-							<label className="text-sm font-semibold">charge</label>
+							<label className="text-sm font-semibold text-white">Charge</label>
 							<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
 								ch_1NirD82eZvKYlo2CIvbtLWuY
 							</div>
-							<label className="text-sm font-semibold">amount</label>
+							<label className="text-sm font-semibold text-white">Amount</label>
 							<div className="w-full h-8 rounded-md bg-gray-800 text-gray-300 text-xs flex items-center px-2">
 								299
 							</div>
 						</form>
-						<div className="border-t border-gray-950 p-2 text-xs text-gray-300 h-20 ">
-							<span>job 018e5751 on worker 2</span>
-							<span>Refund created: 42325t24</span>
+						<div className="border-t border-gray-950 p-2 text-sm  text-gray-300 h-20 ">
+							<div>job 018e5751 on worker 2</div>
+							<div>Refund created: 42325t24</div>
 						</div>
 						<div className="border-t border-gray-950 p-2 text-sm text-gray-300 flex flex-col">
 							Result:
@@ -284,6 +316,21 @@ export async function main(
 						</div>
 					</div>
 				</div>
+				{variants?.[`variant${scriptStep}`] && (
+					<motion.div
+						animate={`variant${scriptStep}`}
+						variants={variants}
+						className={twMerge(
+							'absolute bg-white shadow-xl z-50 p-4 text-md rounded-lg border w-56',
+							variants?.[`variant${scriptStep}`]?.displayArrow === false ? '!w-96' : ''
+						)}
+					>
+						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-white transform rotate-45 "></div>
+						)}
+						{variants?.[`variant${scriptStep}`]?.text}
+					</motion.div>
+				)}
 			</Window>
 		</div>
 	);
