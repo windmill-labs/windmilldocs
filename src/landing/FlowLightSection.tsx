@@ -31,7 +31,7 @@ const features = [
 	{
 		title: 'Advanced Features',
 		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+			'Build powerful flows with advanced features like triggers, error handling, retries, loops and branches',
 		span: 'col-span-1',
 		url: '/docs/getting_started/trigger_flows#triggers-from-external-events',
 		defaultImage: '/illustrations/flows.png'
