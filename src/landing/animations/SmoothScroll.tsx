@@ -5,8 +5,8 @@ import { flowScrollCount, scriptScrollCount, appScrollCount } from './useAnimate
 
 const HorizontalScrollCarousel = ({ children }) => {
 	const targetRef = useRef(null);
+
 	const { scrollYProgress } = useScroll({
-		layoutEffect: false,
 		target: targetRef
 	});
 

@@ -12,7 +12,7 @@ type WindowProps = {
 
 export default function Window({ name, icon, children, shouldRender, lightMode }: WindowProps) {
 	return (
-		<AnimatePresence mode="popLayout" initial={false}>
+		<AnimatePresence mode="popLayout" initial={true}>
 			{shouldRender && (
 				<motion.div
 					initial={{ opacity: 0, y: '-20px' }}
