@@ -110,7 +110,7 @@ export default function TutorialSection() {
 						Icon={Activity}
 						noAnimation={true}
 						lottieData={undefined}
-						video="/videos/runs-menu.mp4"
+						defaultImage="/illustrations/fond-scripts.png"
 					/>
 				</div>
 			</LandingSection>
