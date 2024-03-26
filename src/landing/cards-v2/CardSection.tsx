@@ -42,8 +42,6 @@ export default function CardSection({ features, colors, title, description, defa
 						key={index}
 						feature={feature}
 						animationDelay={(index + 1) * 32}
-						span={feature.span}
-						height={feature.height}
 						noAnimation={feature?.noAnimation}
 						lottieData={feature?.lottieData}
 						defaultImage={feature.defaultImage ?? defaultImage}

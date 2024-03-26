@@ -92,3 +92,23 @@ export default function LightFeatureCard({
 		</a>
 	);
 }
+
+export function Lottie({ lottieData, autoplay = true, loop = false }) {
+	const options = {
+		animationData: lottieData,
+		loop: loop,
+		autoplay: autoplay
+	};
+
+	const { View, play } = useLottie(options);
+	return (
+		<div
+			className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end"
+			onMouseOver={() => {
+				play();
+			}}
+		>
+			{View}
+		</div>
+	);
+}
