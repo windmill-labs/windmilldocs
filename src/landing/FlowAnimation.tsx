@@ -159,6 +159,7 @@ schema:
 
 	const [code, setCode] = React.useState(yaml);
 
+	// 10, 15, 25, 30, 40, 50, 55, 70, 85
 	const steps = [
 		{
 			scroll: 10,
@@ -398,6 +399,8 @@ export async function main(
 										panOnDrag={false}
 										zoomOnScroll={false}
 										defaultViewport={{ x: 0, y: 0, zoom: 0.6 }}
+										panOnScroll={false}
+										preventScrolling={false}
 									/>
 								</div>
 							</div>
@@ -491,6 +494,8 @@ export async function main(
 								panOnDrag={false}
 								zoomOnScroll={false}
 								defaultViewport={{ x: 0, y: 0, zoom: 0.6 }}
+								panOnScroll={false}
+								preventScrolling={false}
 							/>
 						</div>
 						<div className="flex flex-col p-8 col-span-1 gap-8">
@@ -586,7 +591,7 @@ export async function main(
 								: 'python'
 						}
 						style={dark}
-						className="rounded-none text-md !bg-gray-800 col-span-5 h-full overflow-hidden"
+						className="rounded-none text-sm !bg-gray-800 col-span-5 h-full overflow-hidden"
 						showLineNumbers
 					>
 						{code}
@@ -605,6 +610,8 @@ export async function main(
 								panOnDrag={false}
 								zoomOnScroll={false}
 								defaultViewport={{ x: 0, y: 0, zoom: 0.6 }}
+								panOnScroll={false}
+								preventScrolling={false}
 							/>
 						</div>
 					</div>

@@ -21,11 +21,9 @@ const HorizontalScrollCarousel = ({ children }) => {
 		<ScrollContext.Provider value={x}>
 			<section
 				ref={targetRef}
-				className="relative max-w-7xl px-6 lg:px-8 mx-auto w-full h-[10000px] "
+				className="relative max-w-7xl px-6 lg:px-8 mx-auto w-full h-[15000px] "
 			>
-				<div className="sticky top-0 flex h-[1000px] mt items-center overflow-hidden">
-					{children}
-				</div>
+				<div className="sticky top-0 flex h-screen mt items-center overflow-hidden">{children}</div>
 			</section>
 		</ScrollContext.Provider>
 	);

@@ -28,6 +28,7 @@ export default function AppAnimation({ active }) {
 
 	const [selectedComponent, setSelectedComponent] = React.useState(null);
 
+	// 10, 15, 30, 45, 60, 72, 90
 	const steps = [
 		{
 			scroll: 10,
@@ -103,7 +104,7 @@ export default function AppAnimation({ active }) {
 	];
 
 	const variants = {
-		variant0: { top: 180, left: 675, text: 'Build complex app from 50+ atomic components.' },
+		variant0: { top: 180, left: 675, text: 'Build complex apps from 50+ atomic components.' },
 		variant1: { top: 150, left: 720, text: 'Easily configure the properties.' },
 
 		variant2: {
@@ -125,7 +126,7 @@ export default function AppAnimation({ active }) {
 		variant5: {
 			top: 360,
 			left: 300,
-			text: 'Build complex app with our 50+ atomic components, and add code only when needed.',
+			text: 'Build complex apps with our 50+ atomic components, and add code only when needed.',
 			displayArrow: false
 		}
 	};
@@ -361,6 +362,14 @@ export async function main() {
 									<Plug className="h-4 w-4" />
 									{scriptStep >= 4 ? 'Disconnect' : 'Connect to button result'}
 								</button>
+								<div className="font-semibold">Expression</div>
+
+								<input
+									disabled
+									type="text"
+									className="w-full h-8 rounded-md bg-white text-md border-gray-200 my-2 px-2"
+									value={scriptStep >= 4 ? 'button.result' : ''}
+								/>
 							</div>
 						)}
 					</div>

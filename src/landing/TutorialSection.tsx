@@ -7,21 +7,22 @@ import {
 	Activity,
 	GitCompareArrows,
 	Server,
-	MoveDown,
-	MoveRight,
 	ArrowRight,
-	CornerLeftDown,
-	CornerDownLeft
+	ChevronRight,
+	ChevronLeft,
+	SkipForward,
+	SkipBack
 } from 'lucide-react';
 import SmoothScroll from './animations/SmoothScroll';
 import ProgressBars from './animations/ProgressBars';
-import LandingSection from './LandingSection';
-import LightFeatureCard, { Lottie } from './LightFeatureCard';
+import { Lottie } from './LightFeatureCard';
 // @ts-ignore
 import deployAtScale from '/illustrations/deploy_at_scale.json';
+import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 
 export default function TutorialSection() {
 	const [step, setStep] = React.useState(-1);
+	const containerRef = React.useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		setStep(0);
@@ -54,33 +55,108 @@ export default function TutorialSection() {
 		}
 	];
 
+	function nextStep() {
+		window.scrollBy({
+			top: 200,
+			behavior: 'smooth'
+		});
+	}
+
+	function prevStep() {
+		window.scrollBy({
+			top: -200,
+			behavior: 'smooth'
+		});
+	}
+
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			if (event.key === 'ArrowRight') {
+				nextStep();
+			} else if (event.key === 'ArrowLeft') {
+				prevStep();
+			}
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [step]);
+
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col " ref={containerRef}>
 			<SmoothScroll>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-64">
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
 					<div className="flex flex-row justify-between">
 						<div className="font-light text-2xl mb-4 max-w-xl">
 							{'Develop, iterate, and test quickly'}
 						</div>
 					</div>
-					<ProgressBars setStep={setStep} />
+					<ProgressBars
+						setStep={setStep}
+						handleClick={(i: number) => {
+							containerRef.current.scrollIntoView({ behavior: 'instant' });
+
+							window.scrollBy({
+								top: i * 4650,
+								behavior: 'instant'
+							});
+						}}
+					/>
+
 					<AnimationCarousel items={items} currentIndex={step} />
+
+					<div className="flex flex-row items-center justify-between mt-8">
+						<div className="flex flex-row items-center gap-1">
+							<button
+								onClick={() => {
+									// scroll to the bottom of the container using the ref
+									containerRef.current.scrollIntoView({ behavior: 'smooth' });
+								}}
+								className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
+							>
+								<SkipBack size={12} />
+								Restart
+							</button>
+							<button
+								onClick={() => {
+									containerRef.current.scrollIntoView({ behavior: 'instant' });
+
+									window.scrollBy({
+										top: 14800,
+										behavior: 'smooth'
+									});
+								}}
+								className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
+							>
+								Skip animation
+								<SkipForward size={12} />
+							</button>
+						</div>
+
+						<div className="flex flex-row items-center gap-1">
+							<button
+								className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
+								onClick={() => prevStep()}
+							>
+								<ChevronLeft size={20} />
+							</button>
+							<button
+								className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
+								onClick={() => nextStep()}
+							>
+								<ChevronRight size={20} />
+							</button>
+						</div>
+					</div>
 				</div>
 			</SmoothScroll>
 
-			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
-				<div className="h-16 w-full flex ">
-					<div className="w-full h-full mx-16 grid grid-col-12">
-						<div className="col-start-1 col-end-2 flex justify-end items-end relative">
-							<CornerLeftDown size={40} className="text-gray-100 dark:text-gray-700" />
-						</div>
-						<div className="col-start-2 col-end-11 relative h-full flex justify-center flex-col ">
-							<div className="w-full border-gray-200 dark:border-gray-700 border-dashed border"></div>
-						</div>
-						<div className="col-start-11 col-end-12 flex justify-start items-start relative">
-							<CornerDownLeft size={40} className="text-gray-100 dark:text-gray-700 mt-1.5" />
-						</div>
-					</div>
+			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col -mt-16">
+				<div className="h-20 w-full flex justify-center my-2 py-2">
+					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
 				</div>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
 					<a
@@ -110,19 +186,10 @@ export default function TutorialSection() {
 						</div>
 					</div>
 				</div>
-				<div className="h-16 w-full flex ">
-					<div className="w-full h-full mx-16 grid grid-col-12">
-						<div className="col-start-1 col-end-2 flex justify-end items-end relative">
-							<CornerLeftDown size={40} className="text-gray-100 dark:text-gray-700" />
-						</div>
-						<div className="col-start-2 col-end-11 relative h-full flex justify-center flex-col ">
-							<div className="w-full border-gray-200 dark:border-gray-700 border-dashed border"></div>
-						</div>
-						<div className="col-start-11 col-end-12 flex justify-start items-start relative">
-							<CornerDownLeft size={40} className="text-gray-100 dark:text-gray-700 mt-1.5" />
-						</div>
-					</div>
+				<div className="h-20 w-full flex justify-center my-2 py-2">
+					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
 				</div>
+
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
 					<a
 						href="/docs/advanced/deploy_to_prod"
@@ -147,18 +214,8 @@ export default function TutorialSection() {
 						<Lottie lottieData={deployAtScale} autoplay loop />
 					</div>
 				</div>
-				<div className="h-16 w-full flex ">
-					<div className="w-full h-full mx-16 grid grid-col-12">
-						<div className="col-start-1 col-end-2 flex justify-end items-end relative">
-							<CornerLeftDown size={40} className="text-gray-100 dark:text-gray-700" />
-						</div>
-						<div className="col-start-2 col-end-11 relative h-full flex justify-center flex-col ">
-							<div className="w-full border-gray-200 dark:border-gray-700 border-dashed border"></div>
-						</div>
-						<div className="col-start-11 col-end-12 flex justify-start items-start relative">
-							<CornerDownLeft size={40} className="text-gray-100 dark:text-gray-700 mt-1.5" />
-						</div>
-					</div>
+				<div className="h-20 w-full flex justify-center my-2 py-2">
+					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
 				</div>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
 					<a className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer">

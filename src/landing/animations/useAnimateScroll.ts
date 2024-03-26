@@ -64,8 +64,8 @@ export default function useAnimateScroll(
 	return { progress };
 }
 
-const scriptScrollCount = 6000;
-const flowScrollCount = 6000;
-const appScrollCount = 6000;
+const scriptScrollCount = 5000;
+const flowScrollCount = 5000;
+const appScrollCount = 5000;
 
 export { scriptScrollCount, flowScrollCount, appScrollCount };

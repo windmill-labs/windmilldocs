@@ -38,6 +38,7 @@ export async function main(
 
 	const [code, setCode] = React.useState(initialCode);
 
+	//20, 40, 50, 60, 70, 80
 	const steps = [
 		{
 			scroll: 20,

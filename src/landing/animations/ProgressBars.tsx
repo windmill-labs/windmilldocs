@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ScrollContext from './ScrollContext';
 import { appScrollCount, flowScrollCount, scriptScrollCount } from './useAnimateScroll';
+import { twMerge } from 'tailwind-merge';
 
 const ProgressBar = ({
 	percents,
@@ -9,14 +10,15 @@ const ProgressBar = ({
 	onClick,
 	onComplete,
 	title,
-	easing = 'easeInOut', // Default easing
+	steps,
+	barColor,
 	barWidth = 'full', // Using Tailwind's "full" to denote 100% width
 	barHeight = '2', // Corresponds to h-6 in Tailwind, adjust as necessary
 	progressColor = 'bg-blue-600', // Tailwind class for progress bar color
 	baseColor = 'dark:bg-gray-800 bg-gray-100' // Tailwind class for the base bar color,
 }) => {
 	const transition = {
-		ease: easing
+		ease: 'linear'
 	};
 
 	const variants = {
@@ -45,11 +47,18 @@ const ProgressBar = ({
 						}
 					}}
 				></motion.div>
+				{steps.map((percent) => (
+					<div
+						key={percent}
+						className={twMerge('dark:bg-gray-100 h-2 w-[1px] absolute', barColor)}
+						style={{ left: `calc(${percent}% - 2px)` }} // Adjust for the marker's width
+					></div>
+				))}
 			</div>
 		</div>
 	);
 };
-export default function ProgressBars({ setStep }) {
+export default function ProgressBars({ setStep, handleClick }) {
 	const x = useContext(ScrollContext);
 
 	const [progress, setProgress] = React.useState(0);
@@ -83,25 +92,29 @@ export default function ProgressBars({ setStep }) {
 				percents={Math.round((progress * 100) / scriptScrollCount)}
 				active={true}
 				onClick={() => {
-					//setStep(0)
+					handleClick(0);
 				}}
 				onComplete={() => {
 					//setStep(1);
 				}}
 				title={'Scripts'}
 				progressColor="dark:bg-blue-600 bg-blue-400"
+				steps={[20, 40, 50, 60, 70, 80]}
+				barColor="bg-blue-700"
 			/>
 			<ProgressBar
 				percents={Math.round(((progress - scriptScrollCount) * 100) / flowScrollCount)}
 				active={progress > scriptScrollCount}
 				onClick={() => {
-					//setStep(0)
+					handleClick(1);
 				}}
 				onComplete={() => {
 					//setStep(1)
 				}}
 				progressColor="dark:bg-green-600 bg-green-400"
 				title={'Flows'}
+				steps={[10, 15, 25, 30, 40, 50, 55, 70, 85]}
+				barColor="bg-green-700"
 			/>
 			<ProgressBar
 				percents={Math.round(
@@ -109,13 +122,15 @@ export default function ProgressBars({ setStep }) {
 				)}
 				active={progress > scriptScrollCount + flowScrollCount}
 				onClick={() => {
-					//setStep(0)
+					handleClick(2);
 				}}
 				onComplete={() => {
 					//setStep(1)
 				}}
 				progressColor="dark:bg-orange-600 bg-orange-400"
 				title={'Apps'}
+				steps={[10, 15, 30, 45, 60, 72, 90]}
+				barColor="bg-orange-700"
 			/>
 		</div>
 	);
