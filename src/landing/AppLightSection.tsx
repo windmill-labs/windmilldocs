@@ -7,19 +7,11 @@ const features = [
 	{
 		title: 'Drag and Drop Interface',
 		description:
-			'Easily assemble apps with a user-friendly drag and drop interface, streamlining app development without deep coding.',
-		Icon: Hand
-	},
-
-	{
-		title: 'Beautiful Components',
-		description:
-			'Use over 50 built-in components for fast and efficient app development, covering a wide range of functionalities.',
-
-		Icon: Puzzle,
-		vertical: true,
+			'Easily assemble apps with a user-friendly drag and drop interface, streamlining app development without deep coding. Use over 50 built-in components for fast and efficient app development, covering a wide range of functionalities.',
+		Icon: Hand,
 		defaultImage: '/illustrations/components.png'
 	},
+
 	{
 		title: 'High-Performance Apps',
 		description:
@@ -33,14 +25,15 @@ const features = [
 		description:
 			'Style components and define global themes with CSS or Tailwind, ensuring cohesive and brand-aligned designs effortlessly.',
 		Icon: Palette,
-		defaultImage: '/illustrations/styling.png'
+		defaultImage: '/illustrations/13.png',
+		vertical: true
 	},
 	{
 		title: 'Developer Friendly',
 		description:
 			'Run scripts in Python, Go, Bash, SQL, and TypeScript directly within the app editor.',
 		Icon: Code,
-		defaultImage: '/illustrations/developer_friendly.png'
+		defaultImage: '/illustrations/14.png'
 	}
 ] as {
 	title: string;
@@ -52,6 +45,7 @@ const features = [
 	lottieData?: unknown;
 	Icon: LucideIcon;
 	vertical?: boolean;
+	defaultImage: string;
 }[];
 
 const colors = {

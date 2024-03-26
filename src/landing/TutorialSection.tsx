@@ -178,7 +178,7 @@ export default function TutorialSection() {
 					</a>
 					<div className="col-span-3">
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-							<img src={'/illustrations/diff.png'} alt={'Review'} />
+							<img src={'/illustrations/11.png'} alt={'Review'} />
 						</div>
 					</div>
 				</div>
