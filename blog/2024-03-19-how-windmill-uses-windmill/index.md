@@ -47,6 +47,8 @@ We created a flow to:
 2. Through an [approval step](/docs/flows/flow_approval), return all the channels and let the user choose which channels to send the message to.
 3. Send the message to each selected channel.
 
+![Approval](./approval.png "Approval")
+
 ![Slack message](./slack_message.png "Slack message")
 
 The whole flow can be found on [Windmill Hub](https://hub.windmill.dev/flows/53/list-slack-channels-and-send-shared-message-to-selected-channels).
