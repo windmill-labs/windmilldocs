@@ -7,7 +7,7 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
-import Banner from './Banner';
+// import Banner from './Banner';
 
 const products = [
 	{
@@ -75,7 +75,6 @@ export default function LandingHeader() {
 
 	return (
 		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
-			<Banner />
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<a
@@ -103,7 +102,7 @@ export default function LandingHeader() {
 						</Popover.Button>
 					</div>
 					<Popover.Group as="nav" className="hidden space-x-10 md:flex">
-					<Popover className="relative">
+						<Popover className="relative">
 							{({ open }) => (
 								<>
 									<Popover.Button
@@ -235,7 +234,6 @@ export default function LandingHeader() {
 					</Popover.Group>
 
 					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
-
 						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a

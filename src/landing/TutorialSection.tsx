@@ -83,12 +83,16 @@ export default function TutorialSection() {
 					</div>
 				</div>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<div className="col-span-2">
-						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
+					<a
+						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
+						target="_blank"
+						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
+					>
+						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2 ">
 							<GitCompareArrows size={20} />
 							Review
 						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-lg">
+						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
 							{
 								'Use the built-in diff editor, use Github pull requests or Gitlab merge requests to review changes.'
 							}
@@ -99,7 +103,7 @@ export default function TutorialSection() {
 							Learn more
 							<ArrowRight size={24} />
 						</div>
-					</div>
+					</a>
 					<div className="col-span-3">
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
 							<img src={'/illustrations/diff.png'} alt={'Review'} />
@@ -120,12 +124,12 @@ export default function TutorialSection() {
 					</div>
 				</div>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<div className="col-span-2">
+					<a className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer">
 						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
 							<Server size={20} />
 							Deploy at scale
 						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-lg">
+						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
 							{'Run your scripts on our infrastructure, or deploy them to your own servers.'}
 						</div>
 						<div
@@ -134,7 +138,7 @@ export default function TutorialSection() {
 							Learn more
 							<ArrowRight size={24} />
 						</div>
-					</div>
+					</a>
 					<div className="col-span-3">
 						<Lottie lottieData={deployAtScale} autoplay loop />
 					</div>
@@ -153,15 +157,13 @@ export default function TutorialSection() {
 					</div>
 				</div>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<div className="col-span-2">
+					<a className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer">
 						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
 							<Activity size={20} />
 							Monitor
 						</div>
-						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-lg">
-							{
-								'Use the built-in diff editor, use Github pull requests or Gitlab merge requests to review changes.'
-							}
+						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
+							{'Keep track of your scripts, flows, and apps with detailed logs and metrics.'}
 						</div>
 						<div
 							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
@@ -169,7 +171,7 @@ export default function TutorialSection() {
 							Learn more
 							<ArrowRight size={24} />
 						</div>
-					</div>
+					</a>
 					<div className="col-span-3">
 						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
 							<img src={'/illustrations/diff.png'} alt={'Review'} />
