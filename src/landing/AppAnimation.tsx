@@ -30,7 +30,7 @@ export default function AppAnimation({ active }) {
 
 	const steps = [
 		{
-			scroll: 0,
+			scroll: 10,
 			callback: () => {
 				setScriptStep(1);
 				setSelectedComponent('button');
@@ -157,7 +157,7 @@ export default function AppAnimation({ active }) {
 							</div>
 							<div className="border-y px-2 my-1 bg-gray-50 text-gray-500">Table</div>
 							<div className="border-b px-2 text-xs pb-1 text-gray-500">
-								<div>result: undefined</div>
+								<div>result: {scriptStep >= 5 ? '[...]' : 'undefined'}</div>
 							</div>
 						</div>
 

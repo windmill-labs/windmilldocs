@@ -124,7 +124,11 @@ export default function TutorialSection() {
 					</div>
 				</div>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
-					<a className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer">
+					<a
+						href="/docs/advanced/deploy_to_prod"
+						target="_blank"
+						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
+					>
 						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
 							<Server size={20} />
 							Deploy at scale
