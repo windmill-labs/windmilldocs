@@ -98,7 +98,7 @@ const faqs = [
 					target="_blank" rel="noopener noreferrer"
 				>
 					docker-compose
-				</a>{' '}and you will never be overcharged
+				</a>{' '}and you will never be overcharged.
 			</span>
 		)
 	},

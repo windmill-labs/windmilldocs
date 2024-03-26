@@ -305,9 +305,9 @@ You can then write your prepared statement.
 Arguments need to be passed in the given format:
 
 ```sql
--- ? name1 (text) = default arg
--- ? name2 (int)
-INSERT INTO demo VALUES (?, ?)
+-- :name1 (text) = default arg
+-- :name2 (int)
+INSERT INTO demo VALUES (:name1, :name2)
 ```
 
 "name1", "name2" being the names of the arguments, and "default arg" the optional default value.
