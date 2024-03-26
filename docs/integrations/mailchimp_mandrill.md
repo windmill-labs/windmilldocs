@@ -24,7 +24,7 @@ The present tutorial explains how to use Mailchimp to trigger Windmill [scripts]
 
 Combined with a token created in Windmill, these webhooks can be interacted with using standard web technologies, making them compatible with a broad range of external systems and services, including Mailchimp Mandrill for email-triggered executions.
 
-![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png.webp)
+![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png)
 
 > Each script or flow has webhook endpoints. Bearer token must be passed as either an Authorization: Bearer &lt;TOKEN&gt; header, or as a token query parameter: https://&lt;instance&gt;/&lt;route&gt;?token=&lt;TOKEN&gt;
 
