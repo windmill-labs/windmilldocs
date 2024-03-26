@@ -18,7 +18,8 @@ const ProgressBar = ({
 	baseColor = 'dark:bg-gray-800 bg-gray-100' // Tailwind class for the base bar color,
 }) => {
 	const transition = {
-		ease: 'linear'
+		ease: 'linear',
+		duration: 0.05
 	};
 
 	const variants = {
@@ -41,11 +42,6 @@ const ProgressBar = ({
 					variants={variants}
 					initial="enter"
 					animate={active ? 'animate' : 'enter'}
-					onAnimationComplete={() => {
-						if (active && onComplete) {
-							onComplete();
-						}
-					}}
 				></motion.div>
 				{steps.map((percent) => (
 					<div

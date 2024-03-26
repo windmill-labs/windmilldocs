@@ -362,13 +362,28 @@ export async function main() {
 									<Plug className="h-4 w-4" />
 									{scriptStep >= 4 ? 'Disconnect' : 'Connect to button result'}
 								</button>
-								<div className="font-semibold">Expression</div>
+								<div className="font-semibold mt-2">Expression</div>
 
 								<input
 									disabled
 									type="text"
 									className="w-full h-8 rounded-md bg-white text-md border-gray-200 my-2 px-2"
 									value={scriptStep >= 4 ? 'button.result' : ''}
+								/>
+
+								<div className="font-semibold">Search</div>
+								<input
+									type="checkbox"
+									className="h-4 w-4 rounded-md bg-white  text-md border-gray-200 my-2 px-2 "
+									disabled
+									checked={true}
+								/>
+								<div className="font-semibold">Download button</div>
+								<input
+									type="checkbox"
+									className="h-4 w-4 rounded-md bg-white  text-md border-gray-200 my-2 px-2 "
+									disabled
+									checked={false}
 								/>
 							</div>
 						)}

@@ -154,7 +154,7 @@ export default function TutorialSection() {
 				</div>
 			</SmoothScroll>
 
-			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col -mt-16">
+			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col ">
 				<div className="h-20 w-full flex justify-center my-2 py-2">
 					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
 				</div>

@@ -58,10 +58,11 @@ const features = [
 	{
 		title: 'Workflows as Code',
 		description:
-			'Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program.			',
+			'Build, version, and manage your workflows as code with the Windmill SDK. Use your favorite IDE, version control system, and CI/CD pipeline to manage your workflows.',
 
 		Icon: TerminalSquare,
-		defaultImage: '/illustrations/workflow_as_code.png'
+		defaultImage: '/illustrations/workflow_as_code.png',
+		url: '/docs/core_concepts/workflows_as_code'
 	}
 ] as {
 	title: string;

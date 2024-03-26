@@ -9,9 +9,11 @@ const features = [
 		description:
 			'Easily assemble apps with a user-friendly drag and drop interface, streamlining app development without deep coding. Use over 50 built-in components for fast and efficient app development, covering a wide range of functionalities.',
 		Icon: Hand,
-		defaultImage: '/illustrations/components.png'
+		defaultImage: '/illustrations/components.png',
+		url: '/docs/apps/app_configuration_settings/app_component_library'
 	},
 
+	/*
 	{
 		title: 'High-Performance Apps',
 		description:
@@ -20,20 +22,24 @@ const features = [
 		vertical: true,
 		defaultImage: '/illustrations/app_performance.png'
 	},
+	*/
 	{
 		title: 'Styling and Theming',
 		description:
 			'Style components and define global themes with CSS or Tailwind, ensuring cohesive and brand-aligned designs effortlessly.',
 		Icon: Palette,
 		defaultImage: '/illustrations/13.png',
-		vertical: true
+		vertical: true,
+		url: '/docs/apps/app_configuration_settings/app_styling'
 	},
 	{
 		title: 'Developer Friendly',
 		description:
 			'Run scripts in Python, Go, Bash, SQL, and TypeScript directly within the app editor.',
 		Icon: Code,
-		defaultImage: '/illustrations/14.png'
+		defaultImage: '/illustrations/14.png',
+		url: '/docs/apps/app-runnable-panel',
+		vertical: true
 	}
 ] as {
 	title: string;
@@ -46,6 +52,7 @@ const features = [
 	Icon: LucideIcon;
 	vertical?: boolean;
 	defaultImage: string;
+	url: string;
 }[];
 
 const colors = {
