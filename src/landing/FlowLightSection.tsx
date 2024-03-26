@@ -34,7 +34,8 @@ const features = [
 
 		url: '/docs/core_concepts/data_pipelines',
 		Icon: ArrowDownUp,
-		vertical: true
+		vertical: true,
+		defaultImage: '/illustrations/data_pipelines.png'
 	},
 	{
 		title: 'Advanced Features',
