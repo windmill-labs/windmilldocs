@@ -58,11 +58,14 @@ export default function TutorialSection() {
 					<AnimationCarousel items={items} currentIndex={step} />
 				</div>
 			</SmoothScroll>
-			<div className="mx-auto w-[700px] h-[128px] flex items-start flex-row">
-				<MoveDown className=" text-gray-100 w-[128px] h-[100px] flex items-start flex-row" />
-			</div>
+
 			<LandingSection bgClass="flex flex-col !py-0 w-full">
 				<div className="grid grid-cols-11 w-full relative gap-4">
+					<div className="col-start-1 col-end-5">
+						<MoveDown className=" text-gray-100 h-20 w-20 mx-auto" />
+					</div>
+					<div className="col-start-6 col-end-11"></div>
+
 					<LightFeatureCard
 						feature={{
 							title: 'Review',
@@ -73,7 +76,6 @@ export default function TutorialSection() {
 						url=""
 						spanOverride="col-span-12 md:col-span-5"
 						defaultImage="/illustrations/diff.png"
-						height={400}
 						animationDelay={8}
 						linkColor="text-blue-400"
 						Icon={GitCompareArrows}
@@ -82,7 +84,7 @@ export default function TutorialSection() {
 						vertical={true}
 					/>
 					<div className="col-span-1 my-auto">
-						<MoveRight className=" text-gray-100 w-full h-24 " />
+						<MoveRight className=" text-gray-100 h-20 w-20 " />
 					</div>
 					<LightFeatureCard
 						feature={{
@@ -94,7 +96,6 @@ export default function TutorialSection() {
 						url=""
 						spanOverride="col-span-12 md:col-span-5"
 						defaultImage="/illustrations/fond-scripts.png"
-						height={400}
 						animationDelay={8}
 						linkColor="text-blue-400"
 						Icon={Server}
@@ -104,7 +105,7 @@ export default function TutorialSection() {
 						vertical={true}
 					/>
 					<div className="col-start-8 col-end-11">
-						<MoveDown className=" text-gray-100 h-24 w-24 mx-auto" />
+						<MoveDown className=" text-gray-100 h-20 w-20 mx-auto" />
 					</div>
 					<LightFeatureCard
 						feature={{

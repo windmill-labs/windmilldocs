@@ -6,7 +6,14 @@ import approval from '/illustrations/approval.json';
 // @ts-ignore
 import performance from '/illustrations/performance.json';
 import CardSection from './cards-v2/CardSection';
-import { ArrowDownUp, CheckCircle, Gauge, TerminalSquare, LucideIcon } from 'lucide-react';
+import {
+	ArrowDownUp,
+	CheckCircle,
+	Gauge,
+	TerminalSquare,
+	LucideIcon,
+	Settings
+} from 'lucide-react';
 
 const features = [
 	{
@@ -35,7 +42,8 @@ const features = [
 			'Build powerful flows with advanced features like triggers, error handling, retries, loops and branches',
 		url: '/docs/getting_started/trigger_flows#triggers-from-external-events',
 		defaultImage: '/illustrations/flows.png',
-		vertical: true
+		vertical: true,
+		Icon: Settings
 	},
 	{
 		title: 'Performance',
@@ -43,14 +51,17 @@ const features = [
 		lottieData: performance,
 		vertical: true,
 		url: '/docs/misc/benchmarks/competitors',
-		Icon: Gauge
+		Icon: Gauge,
+		autoplay: true,
+		loop: false
 	},
 	{
 		title: 'Workflows as Code',
 		description:
 			'Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program.			',
 
-		Icon: TerminalSquare
+		Icon: TerminalSquare,
+		defaultImage: '/illustrations/workflow_as_code.png'
 	}
 ] as {
 	title: string;

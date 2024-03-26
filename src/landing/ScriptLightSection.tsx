@@ -9,7 +9,7 @@ import triggers from '/illustrations/triggers.json';
 // @ts-ignore
 import devfriendly from '/illustrations/devfriendly.json';
 import CardSection from './cards-v2/CardSection';
-import { FileCode, Lock, LucideIcon, TerminalSquare } from 'lucide-react';
+import { FileCode, Lock, LucideIcon, TerminalSquare, TextCursorInput } from 'lucide-react';
 
 const features = [
 	{
@@ -39,10 +39,11 @@ const features = [
 		lottieData: triggers,
 		span: 'col-span-2 md:col-span-1',
 		url: '/docs/getting_started/trigger_scripts',
-		vertical: true
+		vertical: true,
+		Icon: TextCursorInput
 	},
 	{
-		title: 'Web IDE of Local developement',
+		title: 'Web IDE or Local developement',
 		description:
 			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI, sync them with Git. Iterate quickly with our VS Code Extension. From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
 		lottieData: devfriendly,

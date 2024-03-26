@@ -17,26 +17,30 @@ const features = [
 			'Use over 50 built-in components for fast and efficient app development, covering a wide range of functionalities.',
 
 		Icon: Puzzle,
-		vertical: true
+		vertical: true,
+		defaultImage: '/illustrations/components.png'
 	},
 	{
 		title: 'High-Performance Apps',
 		description:
 			'Experience responsive and efficient apps, thanks to a reactive engine that handles complex operations smoothly.',
 		Icon: Gauge,
-		vertical: true
+		vertical: true,
+		defaultImage: '/illustrations/app_performance.png'
 	},
 	{
 		title: 'Styling and Theming',
 		description:
 			'Style components and define global themes with CSS or Tailwind, ensuring cohesive and brand-aligned designs effortlessly.',
-		Icon: Palette
+		Icon: Palette,
+		defaultImage: '/illustrations/styling.png'
 	},
 	{
 		title: 'Developer Friendly',
 		description:
 			'Run scripts in Python, Go, Bash, SQL, and TypeScript directly within the app editor.',
-		Icon: Code
+		Icon: Code,
+		defaultImage: '/illustrations/developer_friendly.png'
 	}
 ] as {
 	title: string;

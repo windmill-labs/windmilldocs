@@ -1,9 +1,16 @@
 import React from 'react';
-
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { light } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Window from './animations/Window';
-import { BarChart, Calendar, MousePointerSquare, PanelLeftOpen, Table, Type } from 'lucide-react';
+import {
+	BarChart,
+	Calendar,
+	MousePointerSquare,
+	PanelLeftOpen,
+	Plug,
+	Table,
+	Type
+} from 'lucide-react';
 import useAnimateScroll, {
 	appScrollCount,
 	flowScrollCount,
@@ -19,18 +26,22 @@ export default function AppAnimation({ active }) {
 	const [buttonName, setButtonName] = React.useState('Press me');
 	const [clicked, setClicked] = React.useState(false);
 
+	const [selectedComponent, setSelectedComponent] = React.useState(null);
+
 	const steps = [
 		{
-			scroll: 20,
+			scroll: 0,
 			callback: () => {
 				setScriptStep(1);
+				setSelectedComponent('button');
 			},
 			rollback: () => {
 				setScriptStep(0);
+				setSelectedComponent(null);
 			}
 		},
 		{
-			scroll: 25,
+			scroll: 15,
 			callback: () => {
 				setButtonName('Load Refunds');
 			},
@@ -39,7 +50,7 @@ export default function AppAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 35,
+			scroll: 30,
 			callback: () => {
 				setScriptStep(2);
 			},
@@ -47,17 +58,31 @@ export default function AppAnimation({ active }) {
 				setScriptStep(1);
 			}
 		},
+
 		{
-			scroll: 50,
+			scroll: 45,
 			callback: () => {
 				setScriptStep(3);
+				setSelectedComponent('table');
 			},
 			rollback: () => {
 				setScriptStep(2);
+				setSelectedComponent('button');
 			}
 		},
 		{
 			scroll: 60,
+			callback: () => {
+				setScriptStep(4);
+				setSelectedComponent('button');
+			},
+			rollback: () => {
+				setScriptStep(3);
+				setSelectedComponent('table');
+			}
+		},
+		{
+			scroll: 72,
 			callback: () => {
 				setClicked(true);
 				setTimeout(() => {
@@ -67,18 +92,19 @@ export default function AppAnimation({ active }) {
 			rollback: () => {}
 		},
 		{
-			scroll: 80,
+			scroll: 90,
 			callback: () => {
-				setScriptStep(4);
+				setScriptStep(5);
 			},
 			rollback: () => {
-				setScriptStep(3);
+				setScriptStep(4);
 			}
 		}
 	];
 
 	const variants = {
 		variant0: { top: 180, left: 675, text: 'Build complex app from 50+ atomic components.' },
+		variant1: { top: 150, left: 720, text: 'Easily configure the properties.' },
 
 		variant2: {
 			top: 260,
@@ -87,14 +113,19 @@ export default function AppAnimation({ active }) {
 			displayArrow: false
 		},
 		variant3: {
-			top: 110,
-			left: 35,
-			text: 'Test your app directly, and iterate quickly.'
+			top: 120,
+			left: 720,
+			text: 'Connect result from one component to another, and build complex logic.'
 		},
 		variant4: {
+			top: 120,
+			left: 180,
+			text: 'Test your app directly, and iterate quickly.'
+		},
+		variant5: {
 			top: 360,
 			left: 300,
-			text: 'Connect result from one component to another, and build complex logic.',
+			text: 'Build complex app with our 50+ atomic components, and add code only when needed.',
 			displayArrow: false
 		}
 	};
@@ -114,7 +145,21 @@ export default function AppAnimation({ active }) {
 						<img src="/img/windmill.svg" alt="windmill" className="h-6 w-6" />
 					</div>
 					<div className="grid grid-cols-12 w-full h-full divide-x divide-gray-100">
-						<div className="col-span-2 p-2">Stripe Refunds</div>
+						<div className="col-span-2 py-2 ">
+							<div className=" text-gray-500 px-2 ">Outputs</div>
+							<div className="border-y px-2 my-1 bg-gray-50 text-gray-500">Context</div>
+							<div className="border-b px-2 text-xs pb-1 text-gray-500">
+								<div>email: admin@windmill.dev</div>
+							</div>
+							<div className="border-y px-2 my-1 bg-gray-50 text-gray-500">Button</div>
+							<div className="border-b px-2 text-xs pb-1 text-gray-500">
+								<div>result: [...]</div>
+							</div>
+							<div className="border-y px-2 my-1 bg-gray-50 text-gray-500">Table</div>
+							<div className="border-b px-2 text-xs pb-1 text-gray-500">
+								<div>result: undefined</div>
+							</div>
+						</div>
 
 						<div className="col-span-7 text-gray-500 text-sm">
 							<div className="grid grid-rows-3 divide-y h-full divide-gray-100">
@@ -123,14 +168,19 @@ export default function AppAnimation({ active }) {
 										{scriptStep >= 1 && (
 											<button
 												className={twMerge(
-													'relative bg-blue-500 text-lg text-white px-2 py-1 outline outline-2 outline-offset-2 outline-indigo-500',
-													clicked ? 'opacity-50' : ''
+													'relative bg-blue-500 text-lg text-white px-2 py-1',
+													clicked ? 'opacity-50' : '',
+													selectedComponent === 'button'
+														? 'outline outline-2 outline-offset-2 outline-indigo-500'
+														: ''
 												)}
 											>
 												{buttonName}
-												<div className="absolute z-50 -top-5 -left-1 h-4 text-xs text-white flex items-center justify-center bg-indigo-500 px-2 !opacity-100">
-													A
-												</div>
+												{selectedComponent === 'button' && (
+													<div className="absolute z-50 -top-5 -left-1 h-4 text-xs text-white flex items-center justify-center bg-indigo-500 px-2 !opacity-100">
+														Button
+													</div>
+												)}
 											</button>
 										)}
 									</div>
@@ -141,59 +191,73 @@ export default function AppAnimation({ active }) {
 											value="Filter..."
 											disabled
 										/>
-										<table className=" !border-gray-200 !text-gray-400">
-											<thead className="!border-gray-200 !bg-white !text-gray-400">
-												<tr>
-													<th className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-														Charge
-													</th>
-													<th className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-														Amount
-													</th>
-												</tr>
-											</thead>
-											<tbody className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-												{scriptStep >= 4 ? (
-													<>
-														<tr>
-															<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-																ch_1NirD82eZ
-															</td>
-															<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-																299
-															</td>
-														</tr>
-														<tr>
-															<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-																ch_1NirD82eZ
-															</td>
-															<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-																299
-															</td>
-														</tr>
-														<tr>
-															<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-																ch_1NirD82eZ
-															</td>
-															<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
-																299
-															</td>
-														</tr>
-													</>
-												) : (
-													<tr className="!border-gray-200 !bg-white  font-normal">
-														<td colSpan={2} className="!text-gray-600 !border-gray-200">
-															No refunds found. Click 'Load Refunds' to load
-														</td>
+										<div
+											className={twMerge(
+												'relative',
+												selectedComponent === 'table'
+													? 'outline outline-2 outline-offset-2 outline-indigo-500'
+													: ''
+											)}
+										>
+											{selectedComponent === 'table' && (
+												<div className="absolute z-50 -top-5 -left-1 h-4 text-xs text-white flex items-center justify-center bg-indigo-500 px-2 !opacity-100">
+													Table
+												</div>
+											)}
+											<table className=" !border-gray-200 !text-gray-400">
+												<thead className="!border-gray-200 !bg-white !text-gray-400">
+													<tr>
+														<th className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+															Charge
+														</th>
+														<th className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+															Amount
+														</th>
 													</tr>
-												)}
-											</tbody>
-										</table>
+												</thead>
+												<tbody className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+													{scriptStep >= 5 ? (
+														<>
+															<tr>
+																<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+																	ch_1NirD82eZ
+																</td>
+																<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+																	299
+																</td>
+															</tr>
+															<tr>
+																<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+																	ch_2TpG09eZ
+																</td>
+																<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+																	456
+																</td>
+															</tr>
+															<tr>
+																<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+																	ch_3Tlkj6rt
+																</td>
+																<td className="!border-gray-200 !bg-white !text-gray-600 font-normal">
+																	167
+																</td>
+															</tr>
+														</>
+													) : (
+														<tr className="!border-gray-200 !bg-white  font-normal">
+															<td colSpan={2} className="!text-gray-600 !border-gray-200">
+																No refunds found. Click 'Load Refunds' to load
+															</td>
+														</tr>
+													)}
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 								<div className="row-span-1">
-									<div className="grid grid-cols-4 w-full h-full divide-x divide-gray-100">
-										<div className="col-span-1 h-full flex flex-col p-2">
+									<div className="grid grid-cols-6 w-full h-full divide-x divide-gray-100">
+										<div className="col-span-2 h-full flex flex-col p-2">
 											{scriptStep >= 2 && (
 												<div className="border-2 border-gray-200 rounded-sm p-2 text-md flex flex-row gap-2 items-center justify-center outline outline-2 outline-offset-2 outline-indigo-500">
 													<SiTypescript className="h-4 w-4" />
@@ -205,7 +269,7 @@ export default function AppAnimation({ active }) {
 											<SyntaxHighlighter
 												language="javascript"
 												style={light}
-												className="rounded-none text-sm col-span-3 !font-light !bg-white"
+												className="rounded-none text-sm col-span-4 !font-light !bg-white"
 												showLineNumbers
 											>
 												{`import Stripe from 'stripe';
@@ -222,7 +286,7 @@ export async function main() {
 						</div>
 						{scriptStep === 0 && (
 							<div className="col-span-3 p-2 text-gray-500 text-sm">
-								<div className="text-md">Components</div>
+								<div>Components</div>
 								<input
 									type="text"
 									className="w-full h-8 rounded-md bg-white text-gray-300 text-md border-gray-200 my-2 px-2"
@@ -258,7 +322,7 @@ export async function main() {
 								</div>
 							</div>
 						)}
-						{scriptStep >= 1 && (
+						{scriptStep >= 1 && scriptStep < 3 && (
 							<div className="col-span-3 p-2 text-gray-500 text-sm w-full">
 								<div className="font-semibold">Runnable</div>
 								<div className="mb-4">{scriptStep >= 2 && <div>Load refunds </div>}</div>
@@ -285,6 +349,20 @@ export async function main() {
 								/>
 							</div>
 						)}
+						{scriptStep >= 3 && (
+							<div className="col-span-3 p-2 text-gray-500 text-sm w-full">
+								<div className="font-semibold">Table input</div>
+								<button
+									className={twMerge(
+										'border border-gray-200 rounded-md p-2 text-md w-full flex flex-row gap-2 items-center',
+										scriptStep >= 4 ? 'border-red-500 text-red-500' : ''
+									)}
+								>
+									<Plug className="h-4 w-4" />
+									{scriptStep >= 4 ? 'Disconnect' : 'Connect to button result'}
+								</button>
+							</div>
+						)}
 					</div>
 				</div>
 				{variants?.[`variant${scriptStep}`] && (
@@ -297,7 +375,7 @@ export async function main() {
 						)}
 					>
 						{variants?.[`variant${scriptStep}`]?.displayArrow !== false && (
-							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-gray-950 transform rotate-45 border-gray-950"></div>
+							<div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-2 w-3 h-3 bg-gray-950 transform rotate-45 border border-gray-950"></div>
 						)}
 						{variants?.[`variant${scriptStep}`]?.text}
 					</motion.div>

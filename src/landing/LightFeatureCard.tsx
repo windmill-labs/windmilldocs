@@ -6,7 +6,6 @@ import { twMerge } from 'tailwind-merge';
 type FeatureCardProps = {
 	feature: { title: string; description: string; images: string[] };
 	animationDelay: number;
-	height: number;
 	noAnimation: boolean;
 	lottieData: unknown;
 	defaultImage?: string;
@@ -44,7 +43,7 @@ export default function LightFeatureCard({
 	return (
 		<a
 			className={twMerge(
-				`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span}  group cursor-pointer p-8 relative grid gap-16 hover:bg-opacity-50 transition-all group `,
+				`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative grid gap-16 hover:bg-opacity-50 transition-all group `,
 				spanOverride ?? (vertical ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2')
 			)}
 			onMouseOver={() => {
@@ -71,13 +70,20 @@ export default function LightFeatureCard({
 			</div>
 
 			{lottieData ? (
-				<div className="rounded-lg overflow-hidden h-full w-full">{View}</div>
+				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
+					{View}
+				</div>
 			) : defaultImage ? (
-				<div className="rounded-lg overflow-hidden h-full w-full">
+				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
 					<img src={defaultImage} alt={feature.title} />
 				</div>
 			) : video ? (
-				<video className="rounded-lg overflow-hidden h-full w-full" autoPlay loop muted>
+				<video
+					className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end"
+					autoPlay
+					loop
+					muted
+				>
 					<source src={video} type="video/mp4" />
 				</video>
 			) : (

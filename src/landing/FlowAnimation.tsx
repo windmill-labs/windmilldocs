@@ -112,10 +112,56 @@ export default function FlowAnimation({ active }) {
 	const [bgColor, setBgColor] = React.useState('black');
 	const [step, setStep] = React.useState(-1);
 	const nodeTypes = useMemo(() => ({ textUpdater: Node }), []);
+	const [selectedFile, setSelectedFile] = React.useState('your_flow.yaml');
+
+	const yaml = `summary: ""
+value:
+	modules:
+		- id: a
+			value:
+				type: rawscript
+		content: >-
+			!inline
+			refund_stripe.ts
+			language: bun
+			input_transforms:
+		resource:
+			type: static
+			value: u/user/stripe_resource
+		charge:
+			type: static
+			value: flow_input.charge
+		amount:
+			type: static
+			value: flow_input.amount
+		tag: ""
+		- id: b
+			value:
+				type: rawscript
+				content: |-
+					# import wmill
+
+
+					def main(x: str):
+							return x
+				language: python3
+				input_transforms:
+					x:
+						type: javascript
+						expr: results.a
+				tag: null
+schema:
+	$schema: https://json-schema.org/draft/2020-12/schema
+	properties: {}
+	required: []
+	type: object
+`;
+
+	const [code, setCode] = React.useState(yaml);
 
 	const steps = [
 		{
-			scroll: 5,
+			scroll: 10,
 			callback: () => {
 				// select the first node
 				setInitialNodes((nodes) =>
@@ -136,7 +182,7 @@ export default function FlowAnimation({ active }) {
 			}
 		},
 		{
-			scroll: 10,
+			scroll: 15,
 			callback: () => {
 				setWindowIndex(1);
 				setStep(1);
@@ -148,6 +194,17 @@ export default function FlowAnimation({ active }) {
 		},
 		{
 			scroll: 25,
+			callback: () => {
+				setCode(currentText);
+				setSelectedFile('refund_stripe.ts');
+			},
+			rollback: () => {
+				setSelectedFile('your_flow.yaml');
+				setCode(yaml);
+			}
+		},
+		{
+			scroll: 30,
 			callback: () => {
 				setWindowIndex(0);
 				setStep(2);
@@ -492,85 +549,47 @@ export async function main(
 
 			<Window shouldRender={windowIndex === 1} name="VS Code" icon="/third_party_logos/vscode.svg">
 				<div className="grid grid-cols-12 h-full">
-					<div className="col-span-2 flex flex-col !bg-gray-800 border-r p-2 text-sm border-gray-950">
-						<div className="flex flex-row items-center gap-1 text-white">
+					<div className="col-span-2 flex flex-col !bg-gray-800 border-r text-sm border-gray-950">
+						<div className="flex flex-row items-center gap-1 text-white px-2 py-1">
 							<ChevronRight className="h-4 w-4" />
 							<div>folder</div>
 						</div>
-						<div className="ml-8 flex flex-row gap-2 items-center text-white">your_flow.yaml</div>
-						<div className="ml-8 flex flex-row gap-2 items-center text-white">refund_stripe.ts</div>
-						<div className="ml-8 flex flex-row gap-2 items-center text-white">send_email.py</div>
-						<div className="ml-8 flex flex-row gap-2 items-center text-white">
+						<div
+							className={twMerge(
+								'pl-8 flex flex-row gap-2 items-center text-white py-1',
+								selectedFile === 'your_flow.yaml' ? 'bg-gray-950' : ''
+							)}
+						>
+							your_flow.yaml
+						</div>
+						<div
+							className={twMerge(
+								'pl-8 flex flex-row gap-2 items-center text-white py-1',
+								selectedFile === 'refund_stripe.ts' ? 'bg-gray-950' : ''
+							)}
+						>
+							refund_stripe.ts
+						</div>
+						<div className="pl-8 flex flex-row gap-2 items-center text-white py-1">
+							send_email.py
+						</div>
+						<div className="pl-8 flex flex-row gap-2 items-center text-white py-1">
 							notify_on_slack.ts
 						</div>
 					</div>
 					<SyntaxHighlighter
-						language="javascript"
+						language={
+							selectedFile === 'your_flow.yaml'
+								? 'yaml'
+								: selectedFile === 'refund_stripe.ts'
+								? 'typescript'
+								: 'python'
+						}
 						style={dark}
-						className="rounded-none text-sm !bg-gray-800 col-span-5 h-full overflow-hidden"
+						className="rounded-none text-md !bg-gray-800 col-span-5 h-full overflow-hidden"
 						showLineNumbers
 					>
-						{`summary: ""
-value:
-  modules:
-    - id: a
-      value:
-        type: rawscript
-        content: |
-			import Stripe from 'stripe';
-
-			type StripeResource = { token: string }
-				
-			export async function main(
-				resource: StripeResource, 
-				charge: string,
-				amount: number
-			) {
-				const stripe = new Stripe(resource.token);
-			
-				try {
-					const refund = await stripe.refunds.create({
-						charge, amount
-					});
-			
-					console.log('Refund created:', refund);
-				} catch (error) {
-					console.error('Error creating refund:', error);
-				};
-			}
-        language: bun
-        input_transforms:
-					resource:
-            type: static
-						value: u/user/stripe_resource
-					charge:
-						type: static
-						value: flow_input.charge
-					amount:
-						type: static
-						value: flow_input.amount
-        tag: ""
-    - id: b
-      value:
-        type: rawscript
-        content: |-
-          # import wmill
-
-
-          def main(x: str):
-              return x
-        language: python3
-        input_transforms:
-          x:
-            type: javascript
-            expr: results.a
-        tag: null
-schema:
-  $schema: https://json-schema.org/draft/2020-12/schema
-  properties: {}
-  required: []
-  type: object
-`}
+						{code}
 					</SyntaxHighlighter>
 					<div className="col-span-5 !bg-gray-800 w-full border-l border-gray-900 relative h-full">
 						<div className="flex justify-center items-center w-full h-full">
