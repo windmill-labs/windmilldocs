@@ -1,5 +1,5 @@
 ---
-slug: workflow-as-code
+slug: workflows-as-code
 version: v1.284.0
 title: Workflows as Code
 tags: ['Scripts', 'Flow Editor']

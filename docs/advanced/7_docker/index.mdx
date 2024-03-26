@@ -141,6 +141,11 @@ NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
 TOKEN=$(cat ${SERVICEACCOUNT}/token)
 CACERT=${SERVICEACCOUNT}/ca.crt
 
+KUBECONFIG_TMP_DIR="$(mktemp -d)"
+export KUBECONFIG="${KUBECONFIG_TMP_DIR}/kubeconfig"
+
+trap "rm -rfv ${KUBECONFIG_TMP_DIR}" EXIT
+
 kubectl config set-cluster local --server="${APISERVER}" --certificate-authority="${CACERT}"
 kubectl config set-credentials local --token="${TOKEN}"
 kubectl config set-context local --cluster=local --user=local --namespace="${NAMESPACE}"

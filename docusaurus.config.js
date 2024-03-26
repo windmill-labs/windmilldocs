@@ -56,7 +56,8 @@ const config = {
 				id: 'changelog',
 				routeBasePath: 'changelog',
 				path: './changelog',
-				blogSidebarCount: 0
+				blogSidebarCount: 0,
+				postsPerPage: 'ALL'
 			}
 		]
 	],

@@ -12,6 +12,16 @@ Windmill comes with a [native integration with S3 and Azure Blob](#connect-your-
 
 ## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
 
+:::note Enterprise Edition Feature
+
+S3 storage is limited to 20 files in Windmill Community Edition.
+
+<br/>
+
+Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
+
+:::
+
 Once you've created an [S3 or Azure Blob resource](#use-amazon-s3-r2-minio-and-azure-blob-directly) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
 ![S3 storage workspace settings](./workspace_settings.png)
@@ -187,6 +197,14 @@ Certain file types, typically parquet files, can be directly rendered by Windmil
 :::
 
 For more info on how to use files and S3 files in Windmill, see [Handling files and binary data](/docs/core_concepts/files_binary_data).
+
+### Log Management with S3
+
+To optimize log storage and performance, Windmill leverages S3 for log management. This approach minimizes database load by treating the database as a temporary buffer for up to 5000 characters of logs per job.
+
+For jobs with extensive logging needs, Windmill [Enterprise Edition](/pricing) users benefit from seamless log streaming to S3. This ensures logs, regardless of size, are stored efficiently without overwhelming local resources.
+
+This allows the handling of large-scale logs with minimal database impact, supporting more efficient and scalable workflows.
 
 ## Windmill embedded integration with Polars and DuckDB for data pipelines
 
