@@ -8,6 +8,8 @@ import { Archive, Blocks, Sparkles } from 'lucide-react';
 import Head from '@docusaurus/Head';
 import { twMerge } from 'tailwind-merge';
 import { useLocation } from '@docusaurus/router';
+import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw';
 
 export default function BlogPostItemContainer({ children, className }) {
 	const { frontMatter, assets, isBlogPostPage, metadata } = useBlogPost();
@@ -133,7 +135,12 @@ export default function BlogPostItemContainer({ children, className }) {
 					) : (
 						''
 					)}
-					<p className="text-base dark:text-gray-200 text-gray-600">{metadata.description}</p>
+					<ReactMarkdown
+						className="text-base dark:text-gray-200 text-gray-600"
+						rehypePlugins={[rehypeRaw]}
+						>
+						{metadata.description}
+					</ReactMarkdown>
 
 					{frontMatter?.improvements?.length > 0 && (
 						<div className="mt-6">

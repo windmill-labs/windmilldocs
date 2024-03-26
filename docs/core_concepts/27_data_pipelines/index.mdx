@@ -532,6 +532,10 @@ a file, and the following steps consume this file to run the queries. We were ab
 
 :::
 
+## Limit of the number of executions per second
+
+Windmill's core is its queue of jobs which is implemented in Postgres using the `UPDATE SKIP LOCKED` pattern. It can scale comfortably to 5k requests per second (RPS) on a normal Postgres database during benchmarks.
+
 ## Persistent Storage & Databases
 
 For more details on storage in Windmill, see:

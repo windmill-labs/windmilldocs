@@ -3,9 +3,9 @@
 	"version": "1.0.0",
 	"private": true,
 	"engines": {
-		"node": ">=18.0",
-		"yarn": "^1.22.5"
+		"node": ">=18.0"
 	},
+	"packageManager": "npm@9.6.7",
 	"scripts": {
 		"docusaurus": "docusaurus",
 		"start": "docusaurus start",
