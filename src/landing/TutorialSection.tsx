@@ -21,12 +21,8 @@ import deployAtScale from '/illustrations/deploy_at_scale.json';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 
 export default function TutorialSection() {
-	const [step, setStep] = React.useState(-1);
+	const [step, setStep] = React.useState(0);
 	const containerRef = React.useRef<HTMLDivElement>(null);
-
-	useEffect(() => {
-		setStep(0);
-	}, []);
 
 	const items = [
 		{

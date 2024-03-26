@@ -75,6 +75,7 @@ const features = [
 	Icon: LucideIcon;
 	url?: string;
 	vertical?: boolean;
+	defaultImage?: string;
 }[];
 
 const colors = {
