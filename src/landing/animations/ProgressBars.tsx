@@ -121,7 +121,7 @@ export default function ProgressBars({ setStep, handleClick }) {
 				}}
 				progressColor="dark:bg-orange-600 bg-orange-400"
 				title={'Apps'}
-				steps={[10, 15, 30, 45, 60, 72, 90]}
+				steps={[10, 15, 30, 45, 60, 72, 90, 99]}
 				barColor="bg-orange-700"
 			/>
 		</div>

@@ -100,6 +100,11 @@ export default function AppAnimation({ active }) {
 			rollback: () => {
 				setScriptStep(4);
 			}
+		},
+		{
+			scroll: 99,
+			callback: () => {},
+			rollback: () => {}
 		}
 	];
 

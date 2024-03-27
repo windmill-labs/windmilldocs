@@ -11,7 +11,8 @@ import {
 	ChevronRight,
 	ChevronLeft,
 	SkipForward,
-	RotateCcw
+	RotateCcw,
+	Play
 } from 'lucide-react';
 import SmoothScroll from './animations/SmoothScroll';
 import ProgressBars from './animations/ProgressBars';
@@ -58,7 +59,7 @@ export default function TutorialSection() {
 	const steps = {
 		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
 		flows: { total: px * 2, steps: [10, 15, 25, 30, 40, 50, 55, 70, 85] },
-		apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90] }
+		apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90, 99] }
 	};
 
 	function nextStep() {
@@ -182,8 +183,18 @@ export default function TutorialSection() {
 							<div className="relative">
 								{animationEnabled === false && (
 									<div className="absolute top-0 left-0 w-full h-full flex flex-row items-center justify-center z-50">
-										<div className="text-2xl text-gray-900 bg-gray-50 p-8 dark:bg-gray-900 dark:text-white rounded-md">
+										<div className="text-xl text-gray-900 bg-gray-50 p-8 dark:bg-gray-900 dark:text-white rounded-md flex flex-col gap-2 items-center">
 											Animation disabled
+											<button
+												onClick={() => {
+													setAnimationEnabled(true);
+													containerRef.current.scrollIntoView({ behavior: 'smooth' });
+												}}
+												className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
+											>
+												Enable animation
+												<Play size={14} />
+											</button>
 										</div>
 									</div>
 								)}

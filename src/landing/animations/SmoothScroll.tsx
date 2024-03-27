@@ -18,7 +18,7 @@ export default function SmoothScrol({ children, onReachEnd, animationEnabled }) 
 
 	useEffect(() => {
 		const unsubscribe = scrollYProgress.onChange((value) => {
-			if (value >= 0.99 && !hasReachedEnd) {
+			if (value >= 0.999 && !hasReachedEnd) {
 				setHasReachedEnd(true);
 				onReachEnd();
 				window.scrollTo({

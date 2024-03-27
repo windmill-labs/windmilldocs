@@ -56,7 +56,7 @@ export default function HeroExample() {
 					<iframe
 						width="100%"
 						height="100%"
-						src="https://www.youtube.com/embed/z54TLqpRlxo?vq=hd1080"
+						src="https://www.youtube.com/embed/pJh2fdstV-A?vq=hd1080"
 						title="YouTube video player"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 						allowFullScreen={true}
