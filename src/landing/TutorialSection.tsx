@@ -20,7 +20,7 @@ import { Lottie } from './LightFeatureCard';
 import deployAtScale from '/illustrations/deploy_at_scale.json';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 import { twMerge } from 'tailwind-merge';
-
+import BrowserOnly from '@docusaurus/BrowserOnly';
 export default function TutorialSection() {
 	const [step, setStep] = React.useState(0);
 	const containerRef = React.useRef<HTMLDivElement>(null);
@@ -123,112 +123,116 @@ export default function TutorialSection() {
 
 	return (
 		<div className="flex flex-col " ref={containerRef}>
-			<SmoothScroll
-				onReachEnd={() => {
-					setAnimationEnabled(false);
-				}}
-				animationEnabled={animationEnabled}
-			>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
-					<div className="flex flex-row justify-between items-center">
-						<div className="font-light text-2xl mb-4 max-w-xl">
-							{'Develop and iterate with instant feedback'}
-						</div>
-						<div className="flex flex-row items-center gap-2">
-							{animationEnabled ? (
-								<>
-									<button
-										onClick={() => {
-											containerRef.current.scrollIntoView({ behavior: 'smooth' });
-										}}
-										className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-									>
-										<RotateCcw size={14} />
-										Restart
-									</button>
-									<button
-										onClick={() => {
+			<BrowserOnly>
+				{() => (
+					<SmoothScroll
+						onReachEnd={() => {
+							setAnimationEnabled(false);
+						}}
+						animationEnabled={animationEnabled}
+					>
+						<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
+							<div className="flex flex-row justify-between items-center">
+								<div className="font-light text-2xl mb-4 max-w-xl">
+									{'Develop and iterate with instant feedback'}
+								</div>
+								<div className="flex flex-row items-center gap-2">
+									{animationEnabled ? (
+										<>
+											<button
+												onClick={() => {
+													containerRef.current.scrollIntoView({ behavior: 'smooth' });
+												}}
+												className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
+											>
+												<RotateCcw size={14} />
+												Restart
+											</button>
+											<button
+												onClick={() => {
+													containerRef.current.scrollIntoView({ behavior: 'instant' });
+
+													const delta = 250;
+
+													window.scrollBy({
+														top: px * 3 + delta,
+														behavior: 'smooth'
+													});
+												}}
+												className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
+											>
+												Skip animation
+												<SkipForward size={14} />
+											</button>
+										</>
+									) : (
+										<button
+											onClick={() => {
+												setAnimationEnabled(true);
+												containerRef.current.scrollIntoView({ behavior: 'smooth' });
+											}}
+											className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
+										>
+											Enable animation
+											<SkipForward size={14} />
+										</button>
+									)}
+								</div>
+							</div>
+							<div className="relative">
+								{animationEnabled === false && (
+									<div className="absolute top-0 left-0 w-full h-full flex flex-row items-center justify-center z-50">
+										<div className="text-2xl text-gray-900 bg-gray-50 p-8 dark:bg-gray-900 dark:text-white rounded-md">
+											Animation disabled
+										</div>
+									</div>
+								)}
+								<div
+									className={twMerge(
+										animationEnabled === false
+											? 'opacity-10 cursor-not-allowed pointer-events-none z-40'
+											: 'opacity-100'
+									)}
+								>
+									<ProgressBars
+										setStep={setStep}
+										handleClick={(i: number) => {
 											containerRef.current.scrollIntoView({ behavior: 'instant' });
 
-											const delta = 250;
-
 											window.scrollBy({
-												top: px * 3 + delta,
-												behavior: 'smooth'
+												top: i * px,
+												behavior: 'instant'
 											});
 										}}
-										className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-									>
-										Skip animation
-										<SkipForward size={14} />
-									</button>
-								</>
-							) : (
-								<button
-									onClick={() => {
-										setAnimationEnabled(true);
-										containerRef.current.scrollIntoView({ behavior: 'smooth' });
-									}}
-									className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
-								>
-									Enable animation
-									<SkipForward size={14} />
-								</button>
-							)}
-						</div>
-					</div>
-					<div className="relative">
-						{animationEnabled === false && (
-							<div className="absolute top-0 left-0 w-full h-full flex flex-row items-center justify-center z-50">
-								<div className="text-2xl text-gray-900 bg-gray-50 p-8 dark:bg-gray-900 dark:text-white rounded-md">
-									Animation disabled
-								</div>
-							</div>
-						)}
-						<div
-							className={twMerge(
-								animationEnabled === false
-									? 'opacity-10 cursor-not-allowed pointer-events-none z-40'
-									: 'opacity-100'
-							)}
-						>
-							<ProgressBars
-								setStep={setStep}
-								handleClick={(i: number) => {
-									containerRef.current.scrollIntoView({ behavior: 'instant' });
+									/>
 
-									window.scrollBy({
-										top: i * px,
-										behavior: 'instant'
-									});
-								}}
-							/>
+									<AnimationCarousel items={items} currentIndex={step} />
 
-							<AnimationCarousel items={items} currentIndex={step} />
-
-							<div className="flex flex-row items-center justify-between mt-8">
-								<div className="text-gray-500 dark:text-gray-300 text-sm">
-									Scroll or use the arrow keys to navigate
-								</div>
-								<div className="flex flex-row items-center gap-1">
-									<button
-										className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
-										onClick={() => prevStep()}
-									>
-										<ChevronLeft size={20} />
-									</button>
-									<button
-										className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
-										onClick={() => nextStep()}
-									>
-										<ChevronRight size={20} />
-									</button>
+									<div className="flex flex-row items-center justify-between mt-8">
+										<div className="text-gray-500 dark:text-gray-300 text-sm">
+											Scroll or use the arrow keys to navigate
+										</div>
+										<div className="flex flex-row items-center gap-1">
+											<button
+												className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
+												onClick={() => prevStep()}
+											>
+												<ChevronLeft size={20} />
+											</button>
+											<button
+												className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
+												onClick={() => nextStep()}
+											>
+												<ChevronRight size={20} />
+											</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
-			</SmoothScroll>
+					</SmoothScroll>
+				)}
+			</BrowserOnly>
 
 			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
 				<div className="h-20 w-full flex justify-center my-2 py-2">
