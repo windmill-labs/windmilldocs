@@ -11,7 +11,7 @@ import {
 	ChevronRight,
 	ChevronLeft,
 	SkipForward,
-	SkipBack
+	RotateCcw
 } from 'lucide-react';
 import SmoothScroll from './animations/SmoothScroll';
 import ProgressBars from './animations/ProgressBars';
@@ -84,10 +84,36 @@ export default function TutorialSection() {
 	return (
 		<div className="flex flex-col " ref={containerRef}>
 			<SmoothScroll>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-16">
 					<div className="flex flex-row justify-between">
 						<div className="font-light text-2xl mb-4 max-w-xl">
-							{'Develop, iterate, and test quickly'}
+							{'Develop and iterate with instant feedback'}
+						</div>
+						<div className="flex flex-row items-center gap-2">
+							<button
+								onClick={() => {
+									// scroll to the bottom of the container using the ref
+									containerRef.current.scrollIntoView({ behavior: 'smooth' });
+								}}
+								className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
+							>
+								<RotateCcw size={14} />
+								Restart
+							</button>
+							<button
+								onClick={() => {
+									containerRef.current.scrollIntoView({ behavior: 'instant' });
+
+									window.scrollBy({
+										top: 14800,
+										behavior: 'smooth'
+									});
+								}}
+								className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
+							>
+								Skip animation
+								<SkipForward size={14} />
+							</button>
 						</div>
 					</div>
 					<ProgressBars
@@ -105,33 +131,7 @@ export default function TutorialSection() {
 					<AnimationCarousel items={items} currentIndex={step} />
 
 					<div className="flex flex-row items-center justify-between mt-8">
-						<div className="flex flex-row items-center gap-1">
-							<button
-								onClick={() => {
-									// scroll to the bottom of the container using the ref
-									containerRef.current.scrollIntoView({ behavior: 'smooth' });
-								}}
-								className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
-							>
-								<SkipBack size={12} />
-								Restart
-							</button>
-							<button
-								onClick={() => {
-									containerRef.current.scrollIntoView({ behavior: 'instant' });
-
-									window.scrollBy({
-										top: 14800,
-										behavior: 'smooth'
-									});
-								}}
-								className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
-							>
-								Skip animation
-								<SkipForward size={12} />
-							</button>
-						</div>
-
+						<div className="text-gray-500 text-sm">Scroll or use the arrow keys to navigate</div>
 						<div className="flex flex-row items-center gap-1">
 							<button
 								className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"

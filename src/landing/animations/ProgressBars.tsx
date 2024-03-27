@@ -31,11 +31,13 @@ const ProgressBar = ({
 	};
 
 	return (
-		<div className="flex flex-col gap-1">
-			<div className="text-sm">{title}</div>
+		<div
+			className="flex flex-col gap-1 hover:opacity-50 cursor-pointer transition-all"
+			onClick={onClick}
+		>
+			<div className="text-md font-normal">{title}</div>
 			<div
-				className={`w-${barWidth} h-${barHeight} ${baseColor} relative rounded-lg overflow-hidden cursor-pointer hover:opacity-50 transition-all h-2`}
-				onClick={onClick}
+				className={`w-${barWidth} h-${barHeight} ${baseColor} relative rounded-lg overflow-hidden  h-2`}
 			>
 				<motion.div
 					className={`absolute top-0 left-0 h-${barHeight} ${progressColor} rounded-lg`}

@@ -477,7 +477,7 @@ export async function main(
 
 					<motion.div
 						initial={{ width: 0 }}
-						animate={{ width: step >= 5 ? '95%' : '0%' }}
+						animate={{ width: step >= 5 ? '100%' : '0%' }}
 						transition={{ duration: 0.5 }}
 						className="absolute bottom-0 top-0 right-0 z-50 bg-gray-800 border-l shadow-lg border-gray-950 grid grid-cols-2 divide-x divide-gray-950"
 					>

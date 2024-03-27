@@ -66,7 +66,7 @@ export default function FlowsLightSections() {
 		<LandingSection bgClass="">
 			<CardSection
 				colors={colors}
-				title="Build super fast and powerful apps using drag-and-drop"
+				title="Build fast apps using drag and drop"
 				description="Create apps with a user-friendly drag-and-drop interface, streamlining app development without deep coding."
 				features={features}
 				defaultImage="/illustrations/fond-apps.png"
