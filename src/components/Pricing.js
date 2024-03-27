@@ -387,7 +387,7 @@ const sections = [
 					Community: true,
 					Team: true
 				},
-				link: '/blog/launch-week-1/data-pipeline-orchestrator'
+				link: '/docs/core_concepts/persistent_storage/large_data_files'
 			},
 			{
 				name: 'Commercial licence',
