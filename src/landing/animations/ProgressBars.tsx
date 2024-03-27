@@ -89,9 +89,7 @@ export default function ProgressBars({ setStep, handleClick }) {
 			<ProgressBar
 				percents={Math.round((progress * 100) / scriptScrollCount)}
 				active={true}
-				onClick={() => {
-					handleClick(0);
-				}}
+				onClick={() => handleClick(0)}
 				onComplete={() => {
 					//setStep(1);
 				}}
@@ -103,9 +101,7 @@ export default function ProgressBars({ setStep, handleClick }) {
 			<ProgressBar
 				percents={Math.round(((progress - scriptScrollCount) * 100) / flowScrollCount)}
 				active={progress > scriptScrollCount}
-				onClick={() => {
-					handleClick(1);
-				}}
+				onClick={() => handleClick(1)}
 				onComplete={() => {
 					//setStep(1)
 				}}
@@ -119,9 +115,7 @@ export default function ProgressBars({ setStep, handleClick }) {
 					((progress - scriptScrollCount - flowScrollCount) * 100) / appScrollCount
 				)}
 				active={progress > scriptScrollCount + flowScrollCount}
-				onClick={() => {
-					handleClick(2);
-				}}
+				onClick={() => handleClick(2)}
 				onComplete={() => {
 					//setStep(1)
 				}}

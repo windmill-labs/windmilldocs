@@ -23,6 +23,7 @@ import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 export default function TutorialSection() {
 	const [step, setStep] = React.useState(0);
 	const containerRef = React.useRef<HTMLDivElement>(null);
+	const [skipped, setSkipped] = React.useState(false);
 
 	const items = [
 		{
@@ -51,19 +52,55 @@ export default function TutorialSection() {
 		}
 	];
 
+	const px = 4600;
+
+	const steps = {
+		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
+		flows: { total: px * 2, steps: [10, 15, 25, 30, 40, 50, 55, 70, 85] },
+		apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90] }
+	};
+
 	function nextStep() {
-		window.scrollBy({
-			top: 200,
-			behavior: 'smooth'
-		});
+		const top = containerRef.current.getBoundingClientRect().y * -1;
+
+		for (const section of Object.values(steps)) {
+			if (top < section.total) {
+				const res = smoothScrollToNextStep(top, section);
+
+				if (res === 'next') {
+					window.scrollBy({
+						top: section.total - top,
+						behavior: 'smooth'
+					});
+				}
+
+				break;
+			}
+		}
 	}
 
-	function prevStep() {
+	function smoothScrollToNextStep(
+		top: number,
+		{ steps, total }: { total: number; steps: number[] }
+	) {
+		const percentage = (100 * (top % px)) / px + 1;
+		const nextStepPercentage = steps.find((step: number) => step > percentage);
+
+		if (nextStepPercentage === undefined) {
+			return 'next';
+		}
+
+		const scrollAmount = (nextStepPercentage * px) / 100 + (total - px);
+
 		window.scrollBy({
-			top: -200,
+			top: scrollAmount - top,
 			behavior: 'smooth'
 		});
+
+		return 'done';
 	}
+
+	function prevStep() {}
 
 	useEffect(() => {
 		const handleKeyDown = (event) => {
@@ -83,16 +120,30 @@ export default function TutorialSection() {
 
 	return (
 		<div className="flex flex-col " ref={containerRef}>
-			<SmoothScroll>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl mt-16">
-					<div className="flex flex-row justify-between">
+			<SmoothScroll
+				skipped={skipped}
+				skipDown={() => {
+					containerRef.current.scrollIntoView({ behavior: 'instant' });
+
+					const delta = 250;
+
+					window.scrollBy({
+						top: px * 3 + delta,
+						behavior: 'smooth'
+					});
+				}}
+				skipUp={() => {
+					containerRef.current.scrollIntoView({ behavior: 'smooth' });
+				}}
+			>
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
+					<div className="flex flex-row justify-between items-center">
 						<div className="font-light text-2xl mb-4 max-w-xl">
 							{'Develop and iterate with instant feedback'}
 						</div>
 						<div className="flex flex-row items-center gap-2">
 							<button
 								onClick={() => {
-									// scroll to the bottom of the container using the ref
 									containerRef.current.scrollIntoView({ behavior: 'smooth' });
 								}}
 								className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
@@ -104,10 +155,14 @@ export default function TutorialSection() {
 								onClick={() => {
 									containerRef.current.scrollIntoView({ behavior: 'instant' });
 
+									const delta = 250;
+
 									window.scrollBy({
-										top: 14800,
+										top: px * 3 + delta,
 										behavior: 'smooth'
 									});
+
+									setSkipped(true);
 								}}
 								className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-md hover:bg-opacity-50 flex flex-row gap-2 items-center"
 							>
@@ -122,7 +177,7 @@ export default function TutorialSection() {
 							containerRef.current.scrollIntoView({ behavior: 'instant' });
 
 							window.scrollBy({
-								top: i * 4650,
+								top: i * px,
 								behavior: 'instant'
 							});
 						}}
@@ -131,7 +186,9 @@ export default function TutorialSection() {
 					<AnimationCarousel items={items} currentIndex={step} />
 
 					<div className="flex flex-row items-center justify-between mt-8">
-						<div className="text-gray-500 text-sm">Scroll or use the arrow keys to navigate</div>
+						<div className="text-gray-500 dark:text-gray-300 text-sm">
+							Scroll or use the arrow keys to navigate
+						</div>
 						<div className="flex flex-row items-center gap-1">
 							<button
 								className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
@@ -150,7 +207,7 @@ export default function TutorialSection() {
 				</div>
 			</SmoothScroll>
 
-			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col ">
+			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
 				<div className="h-20 w-full flex justify-center my-2 py-2">
 					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
 				</div>
