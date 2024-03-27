@@ -30,6 +30,11 @@ export default function SmoothScrol({ children, onReachEnd, animationEnabled }) 
 					top: targetRef.current.offsetTop,
 					behavior: 'instant'
 				});
+
+				window.scrollTo({
+					top: targetRef.current.offsetTop + 250,
+					behavior: 'smooth'
+				});
 			}
 		});
 		return () => unsubscribe();
