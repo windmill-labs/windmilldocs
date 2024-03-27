@@ -3,29 +3,44 @@ import React, { useEffect, useRef, useState } from 'react';
 import ScrollContext from './ScrollContext';
 import { flowScrollCount, scriptScrollCount, appScrollCount } from './useAnimateScroll';
 
-export default function SmoothScrol({ children, skipped, skipDown, skipUp }) {
+export default function SmoothScrol({ children, onReachEnd, animationEnabled }) {
 	const targetRef = useRef(null);
 	const [hasReachedEnd, setHasReachedEnd] = useState(false);
 	const { scrollYProgress } = useScroll({
 		target: targetRef
 	});
 
-	const calculateAdjustedRange = () => {
-		const totalScrollCount = scriptScrollCount + flowScrollCount + appScrollCount;
-
-		return [0, totalScrollCount];
-	};
-
-	const x = useTransform(scrollYProgress, [0, 1], calculateAdjustedRange());
+	useEffect(() => {
+		if (animationEnabled && hasReachedEnd) {
+			setHasReachedEnd(false);
+		}
+	}, [animationEnabled, hasReachedEnd]);
 
 	useEffect(() => {
 		const unsubscribe = scrollYProgress.onChange((value) => {
-			if (value >= 0.95 && !hasReachedEnd) {
+			if (value >= 0.99 && !hasReachedEnd) {
 				setHasReachedEnd(true);
+				onReachEnd();
+				window.scrollTo({
+					top: 0,
+					behavior: 'instant'
+				});
+
+				window.scrollTo({
+					top: targetRef.current.offsetTop,
+					behavior: 'instant'
+				});
 			}
 		});
 		return () => unsubscribe();
 	}, [scrollYProgress, hasReachedEnd]);
+
+	const calculateAdjustedRange = () => {
+		const totalScrollCount = scriptScrollCount + flowScrollCount + appScrollCount;
+		return [0, totalScrollCount];
+	};
+
+	const x = useTransform(scrollYProgress, [0, 1], calculateAdjustedRange());
 
 	return (
 		<ScrollContext.Provider value={x}>
@@ -33,7 +48,7 @@ export default function SmoothScrol({ children, skipped, skipDown, skipUp }) {
 				ref={targetRef}
 				className="relative max-w-7xl px-6 lg:px-8 mx-auto w-full"
 				style={{
-					height: 15000
+					height: hasReachedEnd ? '100vh' : 15000
 				}}
 			>
 				<div
