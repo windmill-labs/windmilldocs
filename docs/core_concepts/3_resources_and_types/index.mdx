@@ -6,11 +6,11 @@ import TabItem from '@theme/TabItem';
 
 Resources are rich objects in JSON that allow to store configuration and credentials.
 
-In Windmill, Resources represent connections to third party systems. Resources are a good way to define a
-connection to a frequently used third party system such as a database. Think of
+In Windmill, Resources represent connections to third-party systems. Resources are a good way to define a
+connection to a frequently used third-party system such as a database. Think of
 Resources as a structured way to store configuration and credentials, and access them from scripts.
 
-Each Resource has a **Resource Type** (**RT** for short) - for example [MySQL](https://hub.windmill.dev/resource_types/111/mysql),
+Each Resource has a **Resource Type** (RT for short) - for example [MySQL](https://hub.windmill.dev/resource_types/111/mysql),
 [MongoDB](https://hub.windmill.dev/resource_types/22/mongodb), [OpenAI](https://hub.windmill.dev/resource_types/61/openai), etc. - that defines the schema that the resource of this type
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
@@ -38,30 +38,27 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 
 ## Create a Resource
 
-To create a resource using an existing type, go to the
+To create a resource using an existing type, go to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources </a> page and click "Add a resource/API".
 
-<a href="https://app.windmill.dev/resources" rel="nofollow">
-	Resources
-</a>
-page and click "Add a resource/API".
+![Add a resource](./add_resource.png.webp "Add a resource")
 
-![Add a resource](./add_resource.png.webp)
-
-Just like most objects in Windmill, Resources have a path that define their
+Just like most objects in Windmill, Resources have a path that defines their
 permissions - see [ownership path prefix](../16_roles_and_permissions/index.mdx).
 
 Each **Resource** has a **Resource Type**, that defines what fields that
 resource contains. Select one from the list and check the schema to see what
 fields are present.
 
-![Add resource example](./add_sf_resource.png.webp)
-
 Resources commonly need to access secrets or re-use
-[Variables](../2_variables_and_secrets/index.mdx), for example passwords or API
+[Variables](../2_variables_and_secrets/index.mdx), for example, passwords or API
 tokens. To insert a Variable into a Resource, use **Insert variable** (the `$`
 sign button) and select a Variable. The name of a Variable will look like
 `$VAR:<NAME_OF_VAR>`. When resources are called from a Script, the Variable
 reference will be replaced by its value.
+
+Resources can be assigned a description. It supports markdown.
+
+![Resource description](./resource_description.png "Resource description")
 
 :::tip
 
