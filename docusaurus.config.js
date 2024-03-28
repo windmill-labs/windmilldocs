@@ -174,6 +174,7 @@ const config = {
 					}
 				]
 			},
+			/*
 			announcementBar: {
 				id: 'airplane_migration',
 				content:
@@ -182,6 +183,7 @@ const config = {
 				textColor: '#fff',
 				isCloseable: true
 			},
+			*/
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme,

@@ -63,15 +63,13 @@ export default function IntergrationList() {
 	return (
 		<LandingSection bgClass="">
 			<div className="w-full gap-8 flex flex-col">
-				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
-					Integrations
-				</h1>
-
-				<span className={classNames('text-lg max-w-3xl', 'text-gray-600 dark:text-gray-200')}>
-					We have a growing list of integrations with third party services available on the Hub.
-					<br />
-					Connect your apps and services to automate your workflows.
-				</span>
+				<div className="w-full gap-4 flex flex-col">
+					<div className={`text-4xl max-w-2xl font-semibold mb-2  pt-8`}>Integrations</div>
+					<span className={`text-lg  max-w-2xl mb-8  font-normal`}>
+						We have a growing list of integrations with third party services available on the Hub.
+						Connect your apps and services to automate your workflows.
+					</span>
+				</div>
 
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-12 gap-4">
 					{integrations.map((item) => (
