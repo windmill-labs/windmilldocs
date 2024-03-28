@@ -13,7 +13,7 @@ import {
 	Brush,
 	Database
 } from 'lucide-react';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
 
 import Section from './Section';
 

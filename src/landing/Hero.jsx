@@ -19,7 +19,7 @@ export default function Hero() {
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
 						Turn scripts into auto-generated UIs, APIs and cron jobs. <br /> Compose them as
 						workflows or data pipelines. <br />
-						Build complex, data-intensive UIs with ease.
+						Build complex, data-intensive apps with ease.
 						<br /> <br />
 						Write and deploy software 10x faster, and run it with the highest reliability and
 						observabilty on the{' '}

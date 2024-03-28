@@ -1,6 +1,7 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 export default function LogoClouds() {
 	const { colorMode } = useColorMode();
@@ -56,7 +57,7 @@ export default function LogoClouds() {
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900">
 					Trusted by 1000+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-0 lg:max-w-none lg:grid-cols-6">
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
@@ -74,6 +75,7 @@ export default function LogoClouds() {
 								width={158}
 								height={48}
 								loading="lazy"
+								style={{ filter: 'grayscale(1)' }}
 							/>
 						</a>
 					))}
