@@ -25,7 +25,10 @@ import BrowserOnly from '@docusaurus/BrowserOnly';
 export default function TutorialSection() {
 	const [step, setStep] = React.useState(0);
 	const containerRef = React.useRef<HTMLDivElement>(null);
-	const [animationEnabled, setAnimationEnabled] = React.useState(true);
+	const [animationEnabled, setAnimationEnabled] = React.useState(
+		// enabled on desktop, disabled on mobile
+		typeof window !== 'undefined' ? window.innerWidth > 768 : false
+	);
 
 	const items = [
 		{
@@ -77,7 +80,6 @@ export default function TutorialSection() {
 						behavior: 'smooth'
 					});
 				}
-
 				break;
 			}
 		}
@@ -87,7 +89,7 @@ export default function TutorialSection() {
 		top: number,
 		{ steps, total }: { total: number; steps: number[] }
 	) {
-		const percentage = (100 * (top % px)) / px + 1;
+		const percentage = (100 * (top % px)) / px;
 		const nextStepPercentage = steps.find((step: number) => step > percentage);
 
 		if (nextStepPercentage === undefined) {
