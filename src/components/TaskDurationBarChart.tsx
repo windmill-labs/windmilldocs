@@ -147,7 +147,13 @@ export default function BarChart({
 
 	return (
 		<div ref={ref}>
-			<Bar options={options} data={data} id="canvas-id" />
+			<Bar
+				options={options}
+				data={data}
+				id="canvas-id"
+				width={ref?.current?.clientWidth ?? 0}
+				height="360"
+			/>
 		</div>
 	);
 }

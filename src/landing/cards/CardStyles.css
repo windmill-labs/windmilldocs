@@ -91,12 +91,13 @@
 }
 
 .card-footer {
-	background-color: #f3f6f8;
+	background: linear-gradient(180deg, transparent 0%, #f3f6f8 100%);
+
 	color: #394251;
 }
 
 .dark .card-footer {
-	background-color: black;
+	background: linear-gradient(180deg, transparent 0%, black 100%);
 	color: white;
 }
 

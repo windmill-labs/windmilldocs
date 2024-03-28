@@ -91,7 +91,7 @@ export default function ProgressBars({ setStep, handleClick }) {
 				onClick={() => handleClick(1)}
 				progressColor="dark:bg-green-600 bg-green-400"
 				title={'Flows'}
-				steps={[10, 15, 25, 30, 40, 50, 55, 70, 85]}
+				steps={[10, 20, 30, 40, 50, 60, 75, 80, 90]}
 				barColor="bg-green-700"
 			/>
 			<ProgressBar
