@@ -19,7 +19,7 @@ const faqs = [
 	{
 		question: 'What are the benefits of code versus no-code platforms',
 		answer: (
-			<p>
+			<div>
 				Code when used the right way and in the right quantity has several benefits versus other
 				ways to develop business apps:
 				<ul className="list-disc mx-12">
@@ -35,7 +35,7 @@ const faqs = [
 				Windmill makes it easy to rely on the right amount of code, no more, no less. Indeed, there
 				are part of building business apps that are painful and not worth a developer's time:
 				building UI, workflows, permissions. Windmill removes those time sinks.
-			</p>
+			</div>
 		)
 	}
 ];
@@ -67,7 +67,7 @@ export default function FAQ() {
 										</Disclosure.Button>
 									</dt>
 									<Disclosure.Panel as="dd" className="mt-6 pr-12">
-										<p className="font-light text-lg">{faq.answer}</p>
+										<div className="font-light text-lg">{faq.answer}</div>
 									</Disclosure.Panel>
 								</>
 							)}

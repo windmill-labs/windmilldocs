@@ -4,7 +4,6 @@ import Footer from '../landing/Footer';
 import Head from '@docusaurus/Head';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 import GlobalContextProvider from '../components/GlobalContextProvider';
 
 export default function CustomPage() {
@@ -16,14 +15,10 @@ export default function CustomPage() {
 					<meta name="title" content="Custom Page Title" />
 					<meta name="description" content="Custom page description." />
 				</Head>
-				<BrowserOnly fallback={<div>Loading...</div>}>
-					{() => (
-						<GlobalContextProvider>
-							<LandingHeader />
-							<FlowSection />
-						</GlobalContextProvider>
-					)}
-				</BrowserOnly>
+				<GlobalContextProvider>
+					<LandingHeader />
+					<FlowSection />
+				</GlobalContextProvider>
 				<Footer />
 			</main>
 		</LayoutProvider>

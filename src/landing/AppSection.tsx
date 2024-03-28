@@ -114,14 +114,12 @@ const tabs = [
 		data: [
 			{
 				title: 'Database Studio',
-				description: 'From a SQL resource, display, edit, add rows, delete rows ... and connect to other components.',
+				description:
+					'From a SQL resource, display, edit, add rows, delete rows ... and connect to other components.',
 				icon: Database,
 				caption: (
 					<div>
-						<a
-							href="/docs/apps/app_configuration_settings/database_studio"
-							target="_blank"
-						>
+						<a href="/docs/apps/app_configuration_settings/database_studio" target="_blank">
 							From a SQL resource
 						</a>
 						, display, edit, add rows, delete rows ... and connect to other components.
@@ -232,7 +230,7 @@ const tabs = [
 				}
 			}
 		]
-	},
+	}
 ];
 
 const examples = [

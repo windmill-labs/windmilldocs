@@ -159,7 +159,7 @@ schema:
 
 	const [code, setCode] = React.useState(yaml);
 
-	// 10, 15, 25, 30, 40, 50, 55, 70, 85
+	// 10, 20, 30, 40, 50, 60, 75, 80, 90
 	const steps = [
 		{
 			scroll: 10,
@@ -183,7 +183,7 @@ schema:
 			}
 		},
 		{
-			scroll: 15,
+			scroll: 20,
 			callback: () => {
 				setWindowIndex(1);
 				setStep(1);
@@ -194,7 +194,7 @@ schema:
 			}
 		},
 		{
-			scroll: 25,
+			scroll: 30,
 			callback: () => {
 				setCode(currentText);
 				setSelectedFile('refund_stripe.ts');
@@ -205,7 +205,7 @@ schema:
 			}
 		},
 		{
-			scroll: 30,
+			scroll: 40,
 			callback: () => {
 				setWindowIndex(0);
 				setStep(2);
@@ -216,7 +216,7 @@ schema:
 			}
 		},
 		{
-			scroll: 40,
+			scroll: 50,
 			callback: () => {
 				setStep(5);
 				setInitialNodes((nodes) =>
@@ -235,7 +235,7 @@ schema:
 			}
 		},
 		{
-			scroll: 50,
+			scroll: 60,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -254,7 +254,7 @@ schema:
 			}
 		},
 		{
-			scroll: 55,
+			scroll: 75,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -275,7 +275,7 @@ schema:
 			}
 		},
 		{
-			scroll: 70,
+			scroll: 80,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>
@@ -296,7 +296,7 @@ schema:
 			}
 		},
 		{
-			scroll: 85,
+			scroll: 90,
 			callback: () => {
 				// modify the first node by adding the key color with value green
 				setInitialNodes((nodes) =>

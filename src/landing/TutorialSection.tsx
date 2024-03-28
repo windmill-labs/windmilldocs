@@ -61,7 +61,7 @@ export default function TutorialSection() {
 
 	const steps = {
 		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
-		flows: { total: px * 2, steps: [10, 15, 25, 30, 40, 50, 55, 70, 85] },
+		flows: { total: px * 2, steps: [10, 20, 30, 40, 50, 60, 75, 80, 90] },
 		apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90, 99] }
 	};
 
@@ -262,9 +262,7 @@ export default function TutorialSection() {
 							Review
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{
-								'Use the built-in diff editor, use Github pull requests or Gitlab merge requests to review changes.'
-							}
+							{'Use the built-in diff viewer, Github PRs or Gitlab MRs to review changes'}
 						</div>
 						<div
 							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
@@ -294,7 +292,9 @@ export default function TutorialSection() {
 							Deploy at scale
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{'Run your scripts on our infrastructure, or deploy them to your own servers.'}
+							{
+								'Deploy with ease on our infrastructure or your own infrastructure, on bare VMs with docker-compose, ecs, or large Kubernetes clusters with up to 1000 workers and even remote agents.'
+							}
 						</div>
 						<div
 							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}

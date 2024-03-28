@@ -8,6 +8,7 @@ import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
 // import Banner from './Banner';
+import Link from '@docusaurus/Link';
 
 const products = [
 	{
@@ -77,8 +78,8 @@ export default function LandingHeader() {
 		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
-					<a
-						href="/"
+					<Link
+						to="/"
 						className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
 						onMouseEnter={() => setHoverLogo(true)}
 						onMouseLeave={() => setHoverLogo(false)}
@@ -94,7 +95,7 @@ export default function LandingHeader() {
 						<div className="font-semibold text-xl text-blue-500 dark:text-white subpixel-antialiased ">
 							Windmill
 						</div>
-					</a>
+					</Link>
 					<div className="-my-2 -mr-2 md:hidden">
 						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 							<span className="sr-only">Open menu</span>
@@ -134,9 +135,9 @@ export default function LandingHeader() {
 											<div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
 												<div className="relative grid gap-6 bg-white dark:bg-gray-800 px-5 py-6 sm:gap-8 sm:p-8">
 													{products.map((product) => (
-														<a
+														<Link
 															key={product.name}
-															href={product.href}
+															to={product.href}
 															className="-m-3 block rounded-md p-3 hover:bg-gray-50 dark:hover:bg-gray-700 !no-underline"
 															target={product.newtab ? '_blank' : undefined}
 															rel={product.newtab ? 'noopener noreferrer' : undefined}
@@ -147,7 +148,7 @@ export default function LandingHeader() {
 															<p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
 																{product.description}
 															</p>
-														</a>
+														</Link>
 													))}
 												</div>
 											</div>
@@ -156,19 +157,19 @@ export default function LandingHeader() {
 								</>
 							)}
 						</Popover>
-						<a
-							href="/docs/intro"
-							onClick={() => window.plausible('read-docs')}
+						<Link
+							to="/docs/intro"
+							onClick={() => window.plausible?.('read-docs')}
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>
 							Docs
-						</a>
-						<a
-							href="/pricing"
+						</Link>
+						<Link
+							to="/pricing"
 							className="font-medium text-gray-500 hover:text-gray-900 !no-underline dark:text-gray-200 dark:hover:text-gray-300"
 						>
 							Pricing
-						</a>
+						</Link>
 
 						<a
 							href="https://hub.windmill.dev"

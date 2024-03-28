@@ -2,8 +2,7 @@ import React from 'react';
 import LandingSection from './LandingSection';
 // @ts-ignore
 import polyGlott from '/illustrations/polyglot.json';
-// @ts-ignore
-import secrets from '/illustrations/secrets.json';
+
 // @ts-ignore
 import triggers from '/illustrations/triggers.json';
 // @ts-ignore
@@ -26,7 +25,8 @@ const features = [
 		title: 'Secret Management',
 		description:
 			'Easily share secrets and other sensitive data with your team. Without compromising security.',
-		lottieData: secrets,
+		defaultImage: '/illustrations/secrets.png',
+
 		span: 'col-span-2 md:col-span-1',
 		Icon: Lock,
 		url: '/docs/core_concepts/variables_and_secrets#secrets',
