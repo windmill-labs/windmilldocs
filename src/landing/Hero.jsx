@@ -2,6 +2,7 @@ import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
 import HomescreenSvg from '../../static/homescreen.svg';
+import Link from '@docusaurus/Link';
 
 export default function Hero() {
 	return (
@@ -39,13 +40,13 @@ export default function Hero() {
 							Try Windmill Cloud
 						</a>
 
-						<a
+						<Link
 							href="docs/advanced/self_host"
-							onClick={() => window.plausible('self-host')}
+							onClick={() => window.plausible?.('self-host')}
 							className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200 text !no-underline"
 						>
 							Self-host in 3 mins <span aria-hidden="true">→</span>
-						</a>
+						</Link>
 					</div>
 					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
 						Backed by
