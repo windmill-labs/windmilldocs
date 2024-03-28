@@ -37,8 +37,6 @@ At last, Windmill's [live debugger](/docs/core_concepts/instant_preview) helped 
 
 Below are some use cases that we have built on Windmill.
 
-@Romaric, would be cool to have one screenshot or video for at least one of those use cases.
-
 ### Billing engine
 
 Windmill is the backend for all our billing. We rolled out all our customers on our new pricing structure, usage-based, and the computation is done with Windmill. Specifically, at a given frequency, we have a Windmill flow that pings all of our clients to retrieve all of their metrics. Then the data is sent into [Chargebee](https://www.chargebee.com/) from Windmill. This is a business-critical process and is quite complex since it requires managing numerous API calls.
