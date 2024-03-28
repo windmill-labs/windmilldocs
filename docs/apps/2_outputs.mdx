@@ -19,6 +19,8 @@ You can search for an output by typing in the search bar. It searches in the out
 
 ![Search outputs](../assets/apps/2_app_outputs/search_output.png 'Search outputs')
 
+## Context and state
+
 ### App context
 
 The app context contains the following outputs:
@@ -32,7 +34,7 @@ The app context contains the following outputs:
 
 The app state is a client-side store that can be used to store data. The app state can be manipulated by frontend scripts.
 
-### Component outputs
+## Component outputs
 
 Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded by clicking on the `{...}` button. Next to the button, you can see the number of outputs.
 
@@ -50,7 +52,7 @@ For example, the [Table component](./4_app_configuration_settings/table.mdx) has
 
 The outputs are used to quickly visualize the current state of the app.
 
-### Containers
+## Containers
 
 Some components are "containers" and can contain other components.
 
@@ -67,11 +69,11 @@ The components contained in a container have their outputs displayed in the cont
 	/>
 </div>
 
-### Background runnables outputs
+## Background runnables outputs
 
 A [background runnable](./3_app-runnable-panel.mdx#background-runnables) is a script or flow that runs in the background and can be used to perform actions that are not related to the UI.
 
-### Connecting inputs
+## Connecting inputs
 
 Inputs can be connected to any outputs. When connecting, you can click on the output to connect the input to it. The data source will change to [eval](./3_app-runnable-panel.mdx#evals). Note that you can select nested outputs, objects and arrays.
 
@@ -96,7 +98,17 @@ Alternatively, refer to the component directly through an [eval](./3_app-runnabl
 
 ![App outputs](../assets/apps/2_app_outputs/connecting_eval.png 'Connecting through eval')
 
-### Editing the id of a component
+### Forcing the value of a component
+
+You can use a [frontend script helper](./3_app-runnable-panel.mdx#frontend-scripts-helpers): [setValue](./3_app-runnable-panel.mdx#setvalue) that is meant to manually set or force the value of a component. This can be convenient in cases where connecting components is not the easiest pattern.
+
+```js
+setValue(id: string, value: any)
+```
+
+Note that it's a bad idea to mix dynamic default value and setValue together.
+
+## Editing the id of a component
 
 You can edit the id of a component by clicking on the id. Component id can only contain letters and numbers.
 
