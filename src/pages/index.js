@@ -47,10 +47,10 @@ export default function Home() {
 			<main>
 				<Head>
 					<title>Windmill | Open-source developer platform and workflow engine</title>
-					<meta name="title" content="Internal tools with scripts." />
+					<meta name="title" content="Open-source developer platform and workflow engine" />
 					<meta
 						name="description"
-						content="Open source low code framework to turn scripts into workflows and internal apps with auto-generated UIs in minutes"
+						content="Turn scripts into auto-generated UIs, APIs and cron jobs. Compose them as workflows or data pipelines. Build complex, data-intensive apps with ease. Write and deploy software 10x faster, and run it with the highest reliability and observabilty on the fastest self-hostable job orchestrator"
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
