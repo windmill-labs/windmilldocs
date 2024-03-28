@@ -79,11 +79,7 @@ export default function Hero() {
 				</div>
 				<div>
 					<div className="flex  justify-center !rounded-2xl overflow-hidden dark:bg-[#2e344033] bg-[#fbfbfb]">
-						<img
-							src="homescreen.svg"
-							className="scaled-svg"
-							style={{ width: '90%', height: '90%' }}
-						/>
+						<HomescreenSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
 					</div>
 				</div>
 			</div>
