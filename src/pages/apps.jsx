@@ -16,14 +16,10 @@ export default function CustomPage() {
 					<meta name="title" content="Custom Page Title" />
 					<meta name="description" content="Custom page description." />
 				</Head>
-				<BrowserOnly fallback={<div>Loading...</div>}>
-					{() => (
-						<GlobalContextProvider>
-							<LandingHeader />
-							<AppSection />
-						</GlobalContextProvider>
-					)}
-				</BrowserOnly>
+				<GlobalContextProvider>
+					<LandingHeader />
+					<AppSection />
+				</GlobalContextProvider>
 				<Footer />
 			</main>
 		</LayoutProvider>

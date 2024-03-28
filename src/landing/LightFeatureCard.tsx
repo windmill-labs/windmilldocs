@@ -2,6 +2,7 @@ import React from 'react';
 import { useLottie } from 'lottie-react';
 import { ArrowRight, CircleIcon, LucideIcon } from 'lucide-react';
 import { twMerge } from 'tailwind-merge';
+import FlowChart from './FlowChart';
 
 type FeatureCardProps = {
 	feature: { title: string; description: string; images: string[] };
@@ -52,42 +53,46 @@ export default function LightFeatureCard({
 			href={url}
 			target="_blank"
 		>
-			<div>
-				<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2">
-					<Icon size={20} />
+			<div className="group-hover:ml-2 transition-all">
+				<div className="font-medium text-xl mb-6 flex flex-row items-center ">
+					<Icon size={20} className="mr-2" />
 					{feature.title}
 				</div>
-				<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-lg">
-					{feature.description}
-				</div>
+				<div className="text-md mb-4  max-w-lg">{feature.description}</div>
 
-				<div
-					className={`text-sm ${linkColor} flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
-				>
+				<div className={`text-sm ${linkColor} flex flex-row items-center gap-2  `}>
 					Learn more
 					<ArrowRight size={24} />
 				</div>
 			</div>
 
-			{lottieData ? (
-				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-					{View}
+			{feature.title === 'Performance' ? (
+				<div className="col-span-2">
+					<FlowChart />
 				</div>
-			) : defaultImage ? (
-				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
-					<img src={defaultImage} alt={feature.title} />
-				</div>
-			) : video ? (
-				<video
-					className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end"
-					autoPlay
-					loop
-					muted
-				>
-					<source src={video} type="video/mp4" />
-				</video>
 			) : (
-				<div className="rounded-lg overflow-hidden h-full w-full flex flex-col items-center justify-center"></div>
+				<>
+					{lottieData ? (
+						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
+							{View}
+						</div>
+					) : defaultImage ? (
+						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
+							<img src={defaultImage} alt={feature.title} />
+						</div>
+					) : video ? (
+						<video
+							className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end"
+							autoPlay
+							loop
+							muted
+						>
+							<source src={video} type="video/mp4" />
+						</video>
+					) : (
+						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col items-center justify-center"></div>
+					)}
+				</>
 			)}
 		</a>
 	);

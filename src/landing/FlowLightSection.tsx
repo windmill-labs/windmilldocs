@@ -24,7 +24,7 @@ const features = [
 		url: '/docs/flows/flow_approval',
 		Icon: CheckCircle,
 		autoplay: true,
-		loop: false,
+		loop: true,
 		vertical: true
 	},
 
@@ -47,23 +47,23 @@ const features = [
 		Icon: Settings
 	},
 	{
-		title: 'Performance',
-		description: 'The fastest and extremely scalable workflow engine.',
-		lottieData: performance,
-		vertical: true,
-		url: '/docs/misc/benchmarks/competitors',
-		Icon: Gauge,
-		autoplay: true,
-		loop: false
-	},
-	{
 		title: 'Workflows as Code',
 		description:
 			'Build, version, and manage your workflows as code with the Windmill SDK. Use your favorite IDE, version control system, and CI/CD pipeline to manage your workflows.',
 
 		Icon: TerminalSquare,
 		defaultImage: '/illustrations/workflow_as_code.png',
-		url: '/docs/core_concepts/workflows_as_code'
+		url: '/docs/core_concepts/workflows_as_code',
+		vertical: true
+	},
+	{
+		title: 'Performance',
+		description: 'The fastest and extremely scalable workflow engine.',
+		lottieData: performance,
+		url: '/docs/misc/benchmarks/competitors',
+		Icon: Gauge,
+		autoplay: true,
+		loop: false
 	}
 ] as {
 	title: string;
