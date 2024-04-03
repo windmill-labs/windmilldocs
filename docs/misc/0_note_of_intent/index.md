@@ -56,7 +56,7 @@ Windmill embeds:
   [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
   - [retries](../../flows/14_retries.md) with fixed and exponential backoff
   - [error handling](../../flows/8_error_handling.mdx)
-  - [for loops](../../flows/12_flow_loops.md) over list triggering one flow per item
+  - [For Loops](../../flows/12_flow_loops.md) over list triggering one flow per item
   - [branching](../../flows/13_flow_branches.md) to one subflow given a predicate or all sub-flows
   - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
     sleep for a pre-determined amount of time or waiting to be reactivated by an

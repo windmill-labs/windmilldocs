@@ -179,7 +179,7 @@ _Python_
 
 ### States Path
 
-States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the script, script within a flow or schedule. The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
+States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the [script](../../script_editor/index.mdx), script within a [flow](../../flows/1_flow_editor.mdx) or [schedule](../1_scheduling/index.mdx). The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
 
 ```rust
     let state_path = {
@@ -208,6 +208,48 @@ States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that i
 ```
 
 For example, if a script using states is used within a flow that is scheduled, the state will take a new path as: `folder/flow_path/script_path/schedule_path`, or more concretely: `u/username/u/username/flow_name/u/username/script_name/u/username/schedule_name`.
+
+### Custom Flow States
+
+Custom flow states are a way to store data across steps in a [flow](../../flows/1_flow_editor.mdx). You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally. That state will be stored in the flow state itself and thus has the same lifetime as the flow [job](../20_jobs/index.mdx) itself.
+
+It's a powerful escape hatch when [passing data as output/input](../../flows/16_architecture.mdx) is not feasible and using [getResource/setResource](#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) has the issue of cluttering the workspace and inconvenient UX.
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as wmill from "windmill-client@1.297.0"
+
+export async function main(x: string) {
+  await wmill.setFlowUserState("FOO", 42)
+  return await wmill.getFlowUserState("FOO")
+
+}
+```
+
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+#extra_requirements:
+#wmill==1.297.0
+
+def main(x: str):
+    wmill.set_flow_user_state("foobar", 43)
+    return wmill.get_flow_user_state("foobar")
+```
+
+</TabItem>
+</Tabs>
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_state.mp4"
+/>
+
 
 ## Using Resources
 

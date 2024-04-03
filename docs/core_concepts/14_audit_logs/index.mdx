@@ -26,29 +26,6 @@ Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Ex
 	/>
 </div>
 
-## Retention Policy
-
-The retention policy for audit logs varies depending on your team's [plan](/pricing):
-
-- Community plan: Audit logs are redacted.
-- Team plan (cloud): Audit logs are retained for 7 days.
-- Enterprise plan (cloud): Audit logs are retained for 60 days.
-- Enterprise plan (cloud): Audit logs are stored in Postgres and also emitted as logs, which are stored in the cloud for a year with the possibility of extending the retention period.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Plans & How to Upgrade"
-		description="Details on each Windmill Plan"
-		href="/pricing"
-	/>
-</div>
-
-## Configure Retention Period
-
-On [Enterprise Edition](/pricing), you can set a custom retention period for the audit logs. The retention period can be configured in the instance settings, in the "Core" tab.
-
-![Set Retention Period](./set_retention_policy.png "Set Retention Period")
-
 ## Viewing Jobs metadata from the Audit Logs
 
 You can retrieve the job ID from the job and then access all the job metadata, including the job arguments by fetching the information from the job itself which is stored for as long as the configured retention period.

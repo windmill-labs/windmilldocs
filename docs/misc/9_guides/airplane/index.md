@@ -313,7 +313,7 @@ Windmill provides a very similar comprehensive roles and permissions system that
 
 Windmill embeds a native way to create workflows, in the form of [DAGs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (Directed Acyclic Graphs) that represent [dependencies between steps](https://www.windmill.dev/docs/flows/architecture) in the [OpenFlow](https://www.windmill.dev/docs/openflow) format.
 
-The Windmill [Flow Editor](https://www.windmill.dev/docs/flows/flow_editor) is designed as a low-code builder that allows orchestrating scripts (fetched from the workspace or [WindmillHub](https://hub.windmill.dev/), or written directly inline) with [branches](https://www.windmill.dev/docs/flows/flow_branches) or [for loops](https://www.windmill.dev/docs/flows/flow_loops), and adding configurations to each step or at the flow-level ([human-in-the-loop](https://www.windmill.dev/docs/flows/flow_approval), [retries](https://www.windmill.dev/docs/flows/retries), [cache](https://www.windmill.dev/docs/flows/cache), [concurrency limits](https://www.windmill.dev/docs/flows/concurrency_limit), [error handling](https://www.windmill.dev/docs/flows/flow_error_handler), etc.).
+The Windmill [Flow Editor](https://www.windmill.dev/docs/flows/flow_editor) is designed as a low-code builder that allows orchestrating scripts (fetched from the workspace or [WindmillHub](https://hub.windmill.dev/), or written directly inline) with [branches](https://www.windmill.dev/docs/flows/flow_branches) or [For Loops](https://www.windmill.dev/docs/flows/flow_loops), and adding configurations to each step or at the flow-level ([human-in-the-loop](https://www.windmill.dev/docs/flows/flow_approval), [retries](https://www.windmill.dev/docs/flows/retries), [cache](https://www.windmill.dev/docs/flows/cache), [concurrency limits](https://www.windmill.dev/docs/flows/concurrency_limit), [error handling](https://www.windmill.dev/docs/flows/flow_error_handler), etc.).
 
 From that, can orchestrate any script together, from a simple [SQL query](https://www.windmill.dev/docs/getting_started/scripts_quickstart/sql) to [sending Slack](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack) or [Email](https://hub.windmill.dev/scripts/smtp/1318/send-email-smtp) messages, or any type of code [interacting with APIs](https://www.windmill.dev/docs/integrations/integrations_on_windmill).
 
@@ -369,7 +369,7 @@ You can then have a [Windmill equivalent of prompts](/docs/flows/flow_approval#p
 <div class="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Suspend & Approval / Prompts"
-		description="Flows can be suspended until resumed or cancelled event(s) are received"
+		description="Flows can be suspended until resumed or canceled event(s) are received"
 		href="/docs/flows/flow_approval"
 	/>
 </div>

@@ -2,7 +2,7 @@
 
 The Windmill React SDK provides a suite of tools and components to integrate Windmill applications (scripts editor, flows editor, app editor and its deployed apps) into React-based projects.
 
-This feature is available only for [White Label Edition](/pricing).
+This feature is available only for [White Label Edition](../8_white_labelling/index.mdx).
 
 ## Installation
 

@@ -20,12 +20,6 @@ const people = [
 		linkedinUrl: 'https://www.linkedin.com/in/faton-ramadani-4b65ab191/'
 	},
 	{
-		name: 'Guillaume Bouvignies',
-		role: 'Lead Backend Engineer',
-		imageUrl: '/team/guillaume-bouvignies.jpg',
-		linkedinUrl: 'https://www.linkedin.com/in/guillaumebouvignies/'
-	},
-	{
 		name: 'Henri Courdent',
 		role: 'Founding Ops Staff',
 		imageUrl: '/team/henri-courdent.jpg.webp',
@@ -33,9 +27,15 @@ const people = [
 	},
 	{
 		name: 'Hugo Casademont',
-		role: 'LLM Research Engineer',
+		role: 'Software Engineer',
 		imageUrl: '/team/hugo-casademont.jpg.webp',
 		linkedinUrl: 'https://www.linkedin.com/in/hugo-casademont/'
+	},
+	{
+		name: 'Amélia Delaunay',
+		role: 'Product Designer',
+		imageUrl: '/team/amelia-delaunay.jpg',
+		linkedinUrl: 'https://www.linkedin.com/in/aeldd/'
 	}
 ];
 
