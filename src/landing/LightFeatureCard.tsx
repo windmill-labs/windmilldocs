@@ -18,11 +18,13 @@ type FeatureCardProps = {
 	video?: string;
 	vertical?: boolean;
 	spanOverride?: string | undefined;
+	Component?: React.FC;
 };
 
 export default function LightFeatureCard({
 	feature,
 	lottieData = undefined,
+	Component = undefined,
 	defaultImage,
 	linkColor,
 	Icon = CircleIcon,
@@ -72,7 +74,9 @@ export default function LightFeatureCard({
 				</div>
 			) : (
 				<>
-					{lottieData ? (
+					{Component ? (
+						<Component />
+					) : lottieData ? (
 						<div
 							className={twMerge(
 								'rounded-lg overflow-hidden h-full w-full flex flex-col justify-end',

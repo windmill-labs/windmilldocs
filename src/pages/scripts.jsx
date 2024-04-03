@@ -15,7 +15,10 @@ const hubExamples = [
 		title: (
 			<div>
 				Send Message to a{' '}
-				<span className="px-2 py-1 text-white bg-indigo-800 rounded-md">Slack</span> Channel
+				<span className="px-2 py-1 bg-indigo-200 text-indigo-800 rounded-md dark:bg-indigo-800 dark:text-white">
+					Slack
+				</span>{' '}
+				Channel
 			</div>
 		),
 		description: ''
