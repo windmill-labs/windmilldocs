@@ -4,7 +4,7 @@ export default function CallToAction() {
 	return (
 		<div className="w-full py-16">
 			<div className="">
-				<div className="relative isolate overflow-hidden bg-gray-900 dark:bg-white px-6 py-24 text-center shadow-2xl rounded-3xl sm:px-16">
+				<div className="relative isolate overflow-hidden bg-gray-900 dark:bg-white px-6 py-24 text-center rounded-3xl sm:px-16">
 					<h2 className="mx-auto max-w-4xl text-4xl font-bold tracking-tight text-white dark:text-gray-900">
 						Build endpoints, workflows & ETLs, UIs with code only where it matters
 					</h2>

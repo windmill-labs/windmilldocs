@@ -1,24 +1,35 @@
 import React from 'react';
-import FlowSection from '../landing/FlowSection';
+import FlowLightSection from '../landing/FlowLightSection';
 import Footer from '../landing/Footer';
 import Head from '@docusaurus/Head';
 import LandingHeader from '../landing/LandingHeader';
 import LayoutProvider from '@theme/Layout/Provider';
-import GlobalContextProvider from '../components/GlobalContextProvider';
+import CallToAction from '../landing/CallToAction';
+import LogoClouds from '../landing/LogoClouds';
+import RadialBlur from '../landing/RadialBlur';
 
-export default function CustomPage() {
+export default function FlowPage() {
 	return (
 		<LayoutProvider>
 			<main>
 				<Head>
-					<title>Custom Page | Windmill</title>
-					<meta name="title" content="Custom Page Title" />
-					<meta name="description" content="Custom page description." />
+					<title>Flows | Windmill</title>
+					<meta name="title" content="Build complex flows without complexity" />
+					<meta
+						name="description"
+						content="Build complex Flows from atomic scripts, either from your workspace or the Hub."
+					/>
 				</Head>
-				<GlobalContextProvider>
-					<LandingHeader />
-					<FlowSection />
-				</GlobalContextProvider>
+				<RadialBlur color="green" />
+				<LandingHeader />
+
+				<div className="mt-16">
+					<FlowLightSection />
+				</div>
+				<LogoClouds />
+				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
+					<CallToAction />
+				</div>
 				<Footer />
 			</main>
 		</LayoutProvider>

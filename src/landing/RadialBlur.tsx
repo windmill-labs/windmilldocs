@@ -1,8 +1,25 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 
-export default function RadialBlur() {
+export default function RadialBlur({ color }) {
 	const { colorMode } = useColorMode();
+
+	const colorMap = {
+		blue: {
+			light: '#bfdbfe',
+			dark: '#3b82f6'
+		},
+		orange: {
+			light: '#fed7aa',
+			dark: '#f59e0b'
+		},
+		green: {
+			light: '#bbf7d0',
+			dark: '#10b981'
+		}
+	};
+
+	const c = colorMap[color ?? 'blue'][colorMode];
 
 	return (
 		<svg
@@ -27,12 +44,8 @@ export default function RadialBlur() {
 					gradientUnits="userSpaceOnUse"
 					gradientTransform="translate(512 512) rotate(90) scale(512)"
 				>
-					<stop stopColor={colorMode === 'dark' ? '#3b82f6' : '#bfdbfe'} />
-					<stop
-						offset={1}
-						stopColor={colorMode === 'dark' ? '#3b82f6' : '#bfdbfe'}
-						stopOpacity={0}
-					/>
+					<stop stopColor={c} />
+					<stop offset={1} stopColor={c} stopOpacity={0} />
 				</radialGradient>
 			</defs>
 		</svg>
