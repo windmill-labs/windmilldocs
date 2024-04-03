@@ -4,7 +4,16 @@ import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Code, Workflow, HeartPulseIcon, FileEditIcon, Wand2, ZapIcon, Plug, Braces } from 'lucide-react';
+import {
+	Code,
+	Workflow,
+	HeartPulseIcon,
+	FileEditIcon,
+	Wand2,
+	ZapIcon,
+	Plug,
+	Braces
+} from 'lucide-react';
 import HeroAI from '../landing/HeroAI';
 
 import Section from './../landing/Section';
@@ -154,11 +163,13 @@ const flowTabs = [
 						When adding a for loop or a branch
 						<a href="/docs/flows/flow_loops" target="_blank">
 							for loop
-						</a>{' '} or a {' '}
+						</a>{' '}
+						or a{' '}
 						<a href="/docs/flows/flow_branches" target="_blank">
 							branch
 						</a>
-						, the AI assistant will suggest iterator expressions based on the previous steps` results or from a prompt.
+						, the AI assistant will suggest iterator expressions based on the previous steps`
+						results or from a prompt.
 					</div>
 				),
 				video: {

@@ -10,7 +10,6 @@ export default function LandingSection({
 			initial={{ opacity: 0, y: 64 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5, ease: 'easeInOut' }}
-			viewport={{ once: true, amount: 0.2 }}
 			className={`w-full h-full py-16 overflow-x-hidden ${bgClass}`}
 		>
 			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">

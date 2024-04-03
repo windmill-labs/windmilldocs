@@ -18,11 +18,13 @@ type FeatureCardProps = {
 	video?: string;
 	vertical?: boolean;
 	spanOverride?: string | undefined;
+	Component?: React.FC;
 };
 
 export default function LightFeatureCard({
 	feature,
 	lottieData = undefined,
+	Component = undefined,
 	defaultImage,
 	linkColor,
 	Icon = CircleIcon,
@@ -54,7 +56,7 @@ export default function LightFeatureCard({
 			target="_blank"
 		>
 			<div className="group-hover:ml-2 transition-all">
-				<div className="font-medium text-xl mb-6 flex flex-row items-center ">
+				<div className="font-normal text-xl mb-6 flex flex-row items-center ">
 					<Icon size={20} className="mr-2" />
 					{feature.title}
 				</div>
@@ -72,8 +74,17 @@ export default function LightFeatureCard({
 				</div>
 			) : (
 				<>
-					{lottieData ? (
-						<div className="rounded-lg overflow-hidden h-full w-full flex flex-col justify-end">
+					{Component ? (
+						<Component />
+					) : lottieData ? (
+						<div
+							className={twMerge(
+								'rounded-lg overflow-hidden h-full w-full flex flex-col justify-end',
+								feature.title === 'Approval'
+									? 'bg-emerald-700 dark:bg-emerald-900'
+									: 'bg-blue-200 dark:bg-blue-800'
+							)}
+						>
 							{View}
 						</div>
 					) : defaultImage ? (

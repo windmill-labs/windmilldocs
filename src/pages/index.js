@@ -27,6 +27,7 @@ function HomepageHeader() {
 			<div className="hidden sm:block">
 				<TutorialSection />
 			</div>
+
 			<ScriptLightSection />
 			<FlowLightSection />
 			<AppLightSection />
