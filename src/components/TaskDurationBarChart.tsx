@@ -123,7 +123,7 @@ export default function BarChart({
 							label: 'Loading',
 							data: chartData,
 							fill: false,
-							backgroundColor: 'rgba(13,148,136, 1)',
+							backgroundColor: '#059669',
 							borderColor: ['rgb(0, 0, 0, 0)'],
 							borderWidth: 1
 						}

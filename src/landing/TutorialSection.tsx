@@ -136,7 +136,7 @@ export default function TutorialSection() {
 					>
 						<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl">
 							<div className="flex flex-row justify-between items-center">
-								<div className="font-light text-2xl mb-4 max-w-xl">
+								<div className="font-light text-4xl mb-4 max-w-2xl">
 									{'Develop and iterate with instant feedback'}
 								</div>
 								<div className="flex flex-row items-center gap-2">
