@@ -60,7 +60,7 @@ export default function EnterpriseFeatures() {
 						{features.map((feature) => (
 							<div
 								key={feature.name}
-								className="flex flex-col p-8 bg-gray-50 dark:bg-gray-900 rounded-lg min-h-60"
+								className="flex flex-col p-6 bg-gray-50 dark:bg-gray-900 rounded-lg min-h-60 hover:bg-opacity-50 cursor-pointer"
 							>
 								<dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
 									<feature.icon className="h-5 w-5 flex-none text-blue-600" aria-hidden="true" />

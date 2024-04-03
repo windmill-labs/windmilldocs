@@ -8,20 +8,16 @@ import CallToAction from '../landing/CallToAction';
 import LogoClouds from '../landing/LogoClouds';
 import RadialBlur from '../landing/RadialBlur';
 import HubExamples from '../landing/HubExamples';
-import UseCases from '../landing/UseCases';
 
 const hubExamples = [
 	{
 		title: (
 			<div>
 				Send Message to a{' '}
-				<span className="px-2 py-1 bg-indigo-200 text-indigo-800 rounded-md dark:bg-indigo-800 dark:text-white">
-					Slack
-				</span>{' '}
-				Channel
+				<span className="px-2 py-1 rounded-md bg-indigo-800 text-white">Slack</span> Channel
 			</div>
 		),
-		description: ''
+		link: 'https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack'
 	},
 	{
 		title: (
@@ -32,22 +28,15 @@ const hubExamples = [
 
 		link: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
 	},
-	{
-		title: (
-			<div>
-				Selects documents in a{' '}
-				<span className="px-2 py-1 text-white bg-green-800 rounded-md">MongoDB</span> collection or
-				view and returns a cursor to the selected documents.
-			</div>
-		)
-	},
+
 	{
 		title: (
 			<div>
 				Fetch data from a{' '}
 				<span className="px-2 py-1 text-white bg-emerald-800 rounded-md">Google Sheet</span>
 			</div>
-		)
+		),
+		link: 'https://hub.windmill.dev/scripts/gsheets/1229/get-spreadsheet-gsheets'
 	},
 	{
 		title: (
@@ -55,25 +44,19 @@ const hubExamples = [
 				Create a completion using{' '}
 				<span className="px-2 py-1 text-white bg-black rounded-md">OpenAI</span>
 			</div>
-		)
+		),
+		link: 'https://hub.windmill.dev/scripts/openai/1452/create-completion-openai'
 	},
-	{
-		title: (
-			<div>
-				Upload a file to a{' '}
-				<span className="px-2 py-1 text-white bg-yellow-800 rounded-md">Google Drive</span>
-			</div>
-		)
-	},
+
 	{
 		title: (
 			<div>
 				Trigger every time a new customer is added to your{' '}
 				<span className="px-2 py-1 text-white bg-indigo-800 rounded-md">Stripe</span>
 			</div>
-		)
+		),
+		link: 'https://hub.windmill.dev/scripts/stripe/1463/get-recently-added-customers-stripe'
 	},
-	// add twilio
 	{
 		title: (
 			<div>
@@ -81,11 +64,10 @@ const hubExamples = [
 				<span className="px-2 py-1 text-white bg-red-800 rounded-md">Twilio</span> phone number is
 				completed.
 			</div>
-		)
+		),
+		link: 'https://hub.windmill.dev/scripts/twilio/2248/new-call-twilio'
 	}
 ];
-
-const useCases = [];
 
 export default function ScriptPage() {
 	return (
@@ -101,7 +83,6 @@ export default function ScriptPage() {
 				<div className="mt-20">
 					<ScriptLightSection />
 				</div>
-				<UseCases cases={[]} />
 				<HubExamples examples={hubExamples} />
 				<LogoClouds />
 				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">

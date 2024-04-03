@@ -46,7 +46,6 @@ const integrations = [
 	{ name: 'MongoDB', src: 'third_party_logos/mongodb.svg' },
 	{ name: 'Neon', src: 'third_party_logos/neon.svg' },
 	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
-	{ name: 'OpenAI', src: 'third_party_logos/openai.svg', Icon: SiOpenai },
 	{ name: 'Redis', src: 'third_party_logos/redis.svg' },
 	{ name: 'Rss', src: 'third_party_logos/rss.svg' },
 	{ name: 'S3', src: 'third_party_logos/s3.svg' },
