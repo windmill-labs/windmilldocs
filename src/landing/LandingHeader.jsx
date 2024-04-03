@@ -46,11 +46,6 @@ const resources = [
 		href: '/blog'
 	},
 	{
-		name: 'Team',
-		description: 'The team behind Windmill.',
-		href: '/team'
-	},
-	{
 		name: 'Jobs',
 		description: 'See our current job openings and apply for a position.',
 		href: 'https://www.ycombinator.com/companies/windmill/jobs'
