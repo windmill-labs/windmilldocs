@@ -110,11 +110,6 @@ export default function About() {
 									</li>
 								))}
 							</ul>
-							<img
-								src="/images/windmill_team.png.webp"
-								alt="Windmill Team"
-								className="mx-auto block w-4/5 rounded-lg"
-							/>
 						</div>
 					</>
 				</LandingSection>
