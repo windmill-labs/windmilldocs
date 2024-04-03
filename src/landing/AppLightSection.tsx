@@ -49,7 +49,8 @@ import {
 	Type,
 	UploadCloud,
 	Lock,
-	Image
+	Image,
+	Puzzle
 } from 'lucide-react';
 
 import { motion } from 'framer-motion';
@@ -566,7 +567,7 @@ export const components = [
 	}
 ];
 
-export default function FlowsLightSections() {
+export default function AppsLightSections() {
 	return (
 		<LandingSection bgClass="">
 			<div className="!flex !flex-col gap-8">
@@ -581,12 +582,13 @@ export default function FlowsLightSections() {
 					className={twMerge(
 						`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden col-span-12 group cursor-pointer p-8 relative grid gap-4 hover:bg-opacity-50 transition-all group `
 					)}
-					href={'url'}
+					href={'/docs/apps/app_configuration_settings/app_component_library'}
 					target="_blank"
 				>
 					<div className="group-hover:ml-2 transition-all">
 						<div className="font-normal text-xl mb-6 flex flex-row items-center ">
-							{'Over 50 built-in components'}
+							<Puzzle size={20} className="mr-2" />
+							{'50 built-in components'}
 						</div>
 						<div className="text-md mb-4  max-w-lg">
 							{

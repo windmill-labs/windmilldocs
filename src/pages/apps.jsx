@@ -8,7 +8,7 @@ import CallToAction from '../landing/CallToAction';
 import LogoClouds from '../landing/LogoClouds';
 import RadialBlur from '../landing/RadialBlur';
 
-export default function FlowPage() {
+export default function AppsPage() {
 	return (
 		<LayoutProvider>
 			<main>

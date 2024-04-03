@@ -10,8 +10,8 @@ export default function RadialBlur({ color }) {
 			dark: '#3b82f6'
 		},
 		orange: {
-			light: '#fed7aa',
-			dark: '#f59e0b'
+			light: '#fb923c',
+			dark: '#7c2d12'
 		},
 		green: {
 			light: '#bbf7d0',
