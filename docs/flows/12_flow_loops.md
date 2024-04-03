@@ -1,6 +1,6 @@
-# For loops
+# For Loops
 
-For loops is a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
+For Loops is a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -18,16 +18,16 @@ For loops is a special type of steps that allows you to iterate over a list of i
 Clicking on the `For loop` step on the mini-map, it will open the `For loop` step editor.
 There are 4 configuration options:
 
- ### Iterator expression
- 
- The [JavaScript expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators) that will be evaluated to get the list of items to iterate over. You can also [connect with a previous result](./16_architecture.mdx) that contain several items, it will iterate over all of them.
+### Iterator expression
 
- It can be pre-filled automatically by [Windmill AI](../core_concepts/22_ai_generation/index.mdx) from flow context:
+The [JavaScript expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators) that will be evaluated to get the list of items to iterate over. You can also [connect with a previous result](./16_architecture.mdx) that contain several items, it will iterate over all of them.
 
- <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/iterator_prefill.mp4"
+It can be pre-filled automatically by [Windmill AI](../core_concepts/22_ai_generation/index.mdx) from flow context:
+
+<video
+className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+controls
+src="/videos/iterator_prefill.mp4"
 />
 
 ### Skip failure

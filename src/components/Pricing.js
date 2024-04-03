@@ -269,8 +269,9 @@ const pricing = {
 			description:
 				'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
 			features: [
-				{ text: 'Embed the entire Windmill app' },
-				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK' }
+				{ text: 'Embed the entire Windmill app.' },
+				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
+				{ text: 'Private Hub.' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -390,6 +391,17 @@ const sections = [
 				link: '/docs/core_concepts/persistent_storage/large_data_files'
 			},
 			{
+				name: 'Private Hub',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
+				link: '/docs/core_concepts/private_hub'
+			},
+			{
 				name: 'Commercial licence',
 				tiers: {
 					'Free and Open-source': false,
@@ -475,15 +487,15 @@ const sections = [
 				link: '/docs/core_concepts/audit_logs'
 			},
 			{
-				name: 'Retention period of jobs',
+				name: 'Retention period of jobs runs details',
 				tiers: {
 					'Free and Open-source': '<= 30 days',
 					Pro: 'Unlimited',
 					Enterprise: 'Unlimited',
-					Community: true,
+					Community: '60 days',
 					Team: '60 days'
 				},
-				link: '/docs/core_concepts/audit_logs'
+				link: '/docs/core_concepts/jobs#retention-policy'
 			},
 			{
 				name: 'Workspace Error Handler',

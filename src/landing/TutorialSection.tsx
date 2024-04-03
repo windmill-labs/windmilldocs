@@ -262,7 +262,7 @@ export default function TutorialSection() {
 							Review
 						</div>
 						<div className="text-md mb-4 group-hover:ml-2 transition-all max-w-sm">
-							{'Use the built-in diff viewer, Github PRs or Gitlab MRs to review changes'}
+							{'Use the built-in diff viewer, GitHub PRs or GitLab MRs to review changes.'}
 						</div>
 						<div
 							className={`text-sm text-blue-500 dark:text-blue-300 flex flex-row items-center gap-2 group-hover:ml-2 transition-all`}
