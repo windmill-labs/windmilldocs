@@ -2,8 +2,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Slack Integration
 
-Learn how to integrate Slack with Windmill. There are two ways to build
-interactions between the two: run code on Windmill by a Slack command or use the
+[Slack](https://slack.com/) is an instant messaging and collaboration platform.
+
+There are two ways to build interactions between Slack and Windmill: run code on Windmill by a Slack command or use the
 Slack API directly from Windmill. In this guide, we'll cover both approaches.
 
 <video
@@ -55,6 +56,8 @@ At the time of writing, Slack cautions that Windmill is not an approved app. We
 are working on getting the app approved but you can safely ignore it for now.
 
 :::
+
+You can connect multiple Windmill workspaces to the same Slack workspace. Only one Windmill workspace can accept the `/windmill` [commands](#using-commands-on-slack) from a given Slack workspace. This feature is mostly useful for the [error handler](#error-handlers).
 
 ### Using commands on Slack
 

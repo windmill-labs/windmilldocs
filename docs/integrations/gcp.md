@@ -1,6 +1,8 @@
 # Google Cloud Platform Integration
 
-To integrate [GCP](https://cloud.google.com/gcp) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[GCP](https://cloud.google.com/gcp) is a suite of cloud computing services for building and deploying applications.
+
+To integrate GCP to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Google Cloud Platform Resource](../assets/integrations/add-gcp.png.webp)
 

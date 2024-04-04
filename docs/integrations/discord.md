@@ -1,5 +1,7 @@
 # Discord Integration
 
+[Discord](https://discord.com/) is a voice, video, and text communication platform.
+
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
@@ -10,7 +12,7 @@
 />
 <br/>
 
-To integrate [Discord](https://discord.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate Discord to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 | Property    | Type   | Description             | Default | Required | Where to Find                                                                               |
 | ----------- | ------ | ----------------------- | ------- | -------- | ------------------------------------------------------------------------------------------- |
@@ -20,6 +22,14 @@ To integrate [Discord](https://discord.com/) to Windmill, you need to save the f
 
 Windmill also defined a [resource type](https://hub.windmill.dev/resource_types/104/discord_bot_configuration) for Discord bots. An example is given by our [Documentation Discord bot using Supabase and OpenAI's GPT to help support teams](/blog/knowledge-base-discord-bot) tutorial.
 
+
+:::tip Windmill Discord
+
+Windmill has its own Discord server for its community, questions and collaborations.
+
+Join following [this link](https://discord.com/invite/V7PM2YHsPB).
+
+:::
 
 <br/>
 

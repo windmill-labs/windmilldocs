@@ -54,7 +54,7 @@ const tabs = [
 					<div>
 						Quickly start building complex apps using our{' '}
 						<a href="/docs/apps/app_configuration_settings/app_component_library" target="_blank">
-							50 built-in components
+							60+ built-in components
 						</a>
 						.
 					</div>

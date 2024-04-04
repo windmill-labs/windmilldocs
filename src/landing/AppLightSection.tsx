@@ -573,7 +573,7 @@ export default function AppsLightSections() {
 			<div className="!flex !flex-col gap-8">
 				<CardSection
 					colors={colors}
-					title="Build fast apps using drag and drop"
+					title="Build fast apps using drag-and-drop"
 					description="Create apps with a user-friendly drag-and-drop interface, streamlining app development without deep coding."
 					features={features}
 					defaultImage="/illustrations/fond-apps.png"
@@ -588,11 +588,11 @@ export default function AppsLightSections() {
 					<div className="group-hover:ml-2 transition-all">
 						<div className="font-normal text-xl mb-6 flex flex-row items-center ">
 							<Puzzle size={20} className="mr-2" />
-							{'50 built-in components'}
+							{'60+ built-in components'}
 						</div>
 						<div className="text-md mb-4  max-w-lg">
 							{
-								'Use over 50 built-in components for fast and efficient app development, covering a wide range of functionalities.'
+								'Use over 60 built-in components for fast and efficient app development, covering a wide range of functionalities.'
 							}
 						</div>
 
@@ -605,14 +605,14 @@ export default function AppsLightSections() {
 					<div className="col-span-2">
 						<div className="relative w-full bg-orange-900 rounded-lg p-6 h-96">
 							<div className="border-orange-600 border-2 relative rounded-lg p-4 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] overflow-hidden overflow-y-scroll">
-								<div className="flex flex-row flex-wrap gap-8 justify-center">
+								<div className="grid grid-cols-8 gap-4">
 									{components.map((item, index) => (
 										<a
 											href={item.documentationLink}
-											className="w-48 h-28 rounded-md border flex justify-center items-center gap-2 flex-col bg-white hover:bg-gray-50 !text-gray-900"
+											className="col-span-1 h-28 rounded-md border flex justify-center items-center gap-2 flex-col bg-white hover:bg-gray-50 !text-gray-900"
 										>
-											<item.Icon size={40} />
-											<div className="text-lg">{item.name}</div>
+											<item.Icon size={32} />
+											<div className="text-xs text-center">{item.name}</div>
 										</a>
 									))}
 								</div>
