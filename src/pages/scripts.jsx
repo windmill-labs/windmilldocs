@@ -96,7 +96,7 @@ export default function ScriptPage() {
 							<img
 								src="/images/script_example.png"
 								alt="Scripts"
-								className="min-w-min md:w-full origin-top-left md:scale-100"
+								className="w-full object-cover object-left-top"
 							/>
 						</Window>
 					</div>

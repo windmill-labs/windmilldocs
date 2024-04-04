@@ -38,7 +38,7 @@ export default function AppsPage() {
 							<img
 								src="/images/app_example.png"
 								alt="Apps"
-								className="w-full overflow-hidden object-cover h-full"
+								className="w-full object-cover object-left-top"
 							/>
 						</Window>
 					</div>

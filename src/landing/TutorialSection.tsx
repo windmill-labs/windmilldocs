@@ -182,6 +182,7 @@ export default function TutorialSection() {
 									)}
 								</div>
 							</div>
+
 							<div className="relative">
 								{animationEnabled === false && (
 									<div className="absolute top-0 left-0 w-full h-full flex flex-row items-center justify-center z-50">
@@ -243,19 +244,19 @@ export default function TutorialSection() {
 								</div>
 							</div>
 						</div>
+						<div className="h-20 w-full flex justify-center my-2 py-2">
+							<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
+						</div>
 					</SmoothScroll>
 				)}
 			</BrowserOnly>
 
 			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
-				<div className="h-20 w-full flex justify-center my-2 py-2">
-					<ArrowLongDownIcon className="text-gray-200 dark:text-gray-700" />
-				</div>
-				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8">
+				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8 mt-24">
 					<a
 						href="/docs/core_concepts/draft_and_deploy#diff-viewer"
 						target="_blank"
-						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer"
+						className="col-span-2 group text-black dark:text-white !no-underline hover:text-black hover:dark:text-white cursor-pointer "
 					>
 						<div className="font-medium text-xl mb-6 group-hover:ml-2 transition-all flex flex-row items-center gap-2 ">
 							<GitCompareArrows size={20} />

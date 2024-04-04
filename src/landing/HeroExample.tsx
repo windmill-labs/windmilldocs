@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import LandingSection from './LandingSection';
-import { Code, FastForward, LayoutDashboard, List, Play, PlayCircle } from 'lucide-react';
+import {
+	Code,
+	ExternalLink,
+	FastForward,
+	LayoutDashboard,
+	List,
+	Play,
+	PlayCircle
+} from 'lucide-react';
 import { VolumeX } from 'lucide-react';
 
 const tabs = [
@@ -65,10 +73,14 @@ export default function HeroExample() {
 					</div>
 				</div>
 			</LandingSection>
-			<div className="absolute top-0 right-0 transform translate-y-1/2 h-full ">
-				<div className="w-48 rounded-l-md p-4 z-50 bg-white shadow-lg border-gray-100 flex flex-col gap-2">
+		</div>
+	);
+}
+
+/**
+ * 	<div className="absolute top-0 right-0 transform translate-y-1/2 h-full ">
+				<div className="w-48 rounded-l-md p-4 z-50  shadow-lg border-gray-100 flex flex-col gap-2">
 					<div className="flex flex-row gap-1 items-center jus">
-						<FastForward size={20} className="text-blue-500" />
 						<div className="text-sm font-medium text-gray-900 ">{"Don't have time?"}</div>
 					</div>
 					<div className="text-xs text-gray-900 ">{'Check out our 2 min tour!'}</div>
@@ -78,11 +90,9 @@ export default function HeroExample() {
 						rel="noreferrer"
 						className="text-xs font-medium !text-white bg-blue-500 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1.5 hover:bg-opacity-80 transition-all"
 					>
-						<Play size={16} className="text-white" />
 						{'Watch Now'}
+						<ExternalLink size={16} className="text-white" />
 					</a>
 				</div>
 			</div>
-		</div>
-	);
-}
+ */

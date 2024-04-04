@@ -81,7 +81,7 @@ export default function FlowPage() {
 							<img
 								src="/images/flow_example.png"
 								alt="Flows"
-								className="min-w-min scale-75 md:w-full origin-top-left md:scale-100"
+								className="w-full object-cover object-left-top"
 							/>
 						</Window>
 					</div>
