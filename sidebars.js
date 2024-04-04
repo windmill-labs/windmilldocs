@@ -667,6 +667,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/raycast',
+							label: 'Raycast'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/redis',
 							label: 'Redis'
 						},

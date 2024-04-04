@@ -1,6 +1,8 @@
 # Nextcloud Integration
 
-To integrate [Nextcloud](https://nextcloud.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[Nextcloud](https://nextcloud.com/) is a suite of client-server software for creating and using file hosting services.
+
+To integrate Nextcloud to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Nextcloud Resource](../assets/integrations/add-nextcloud.png.webp)
 

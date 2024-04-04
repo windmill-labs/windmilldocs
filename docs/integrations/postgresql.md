@@ -1,5 +1,7 @@
 # PostgreSQL Integration
 
+[PostgreSQL](https://www.postgresql.org/) is an open-source object-relational database management system.
+
 Windmill provides a framework to support PostgreSQL databases, either with native SQL scripts or through TypeScript for raw queries.
 
 ![Integration between PostgreSQL and Windmill](../assets/integrations/psql-0-header.png.webp 'Connect a PostgreSQL instance with Windmill')

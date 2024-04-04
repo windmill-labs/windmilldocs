@@ -1,6 +1,8 @@
 # Telegram Integration
 
-To integrate [Telegram](https://telegram.org/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[Telegram](https://telegram.org/) is a cloud-based instant messaging and voice over IP service.
+
+To integrate Telegram to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Stripe Resource](../assets/integrations/add-telegram.png.webp)
 

@@ -1,6 +1,8 @@
 # Cloudflare Integration
 
-[Cloudflare](https://www.cloudflare.com/products/r2/)'s API follows the same schema as any S3 compatible API.
+[Cloudflare R2](https://www.cloudflare.com/products/r2/) is a cloud object storage service for data-intensive applications.
+
+Cloudflare's API follows the same schema as any S3 compatible API.
 
 :::info Windmill S3 integration
 
