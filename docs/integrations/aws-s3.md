@@ -1,5 +1,7 @@
 # Amazon S3 Integration
 
+[Amazon S3](https://aws.amazon.com/s3/) is a cloud storage service.
+
 Windmill provides a unique [resource type](https://hub.windmill.dev/resource_types/42/) for any API following the typical S3 schema.
 
 :::info Windmill S3 integration
@@ -21,7 +23,7 @@ If you're looking for a way to self-host Windmill using AWS, see [Self-Host Wind
 
 ## Add an S3 Resource
 
-[Amazon S3](https://aws.amazon.com/s3/)'s API follows the same schema as any S3 compatible API.
+Amazon S3's API follows the same schema as any S3 compatible API.
 
 To integrate Amazon S3 to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 

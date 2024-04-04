@@ -1,6 +1,8 @@
 # Funkwhale Integration
 
-To integrate [Funkwhale](https://funkwhale.audio/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[Funkwhale](https://funkwhale.audio/) is an open-source music streaming and sharing platform.
+
+To integrate Funkwhale to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Funkwhale Resource](../assets/integrations/add-funkwhale.png.webp)
 

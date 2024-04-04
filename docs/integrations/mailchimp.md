@@ -1,12 +1,14 @@
 # Mailchimp Integration
 
+[Mailchimp](https://mailchimp.com/) is an all-in-one marketing platform for small businesses.
+
 :::info Using emails to trigger scripts & flows
 
 To trigger scripts and flows by emails using Mailchimp, refer to the [Mailchimp Mandrill Integration](./mailchimp_mandrill.md) for seamless integration.
 
 :::
 
-To integrate [Mailchimp](https://mailchimp.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate Mailchimp to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add Mailchimp Resource](../assets/integrations/add-mailchimp.png.webp)
 
