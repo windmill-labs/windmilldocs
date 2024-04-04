@@ -1,6 +1,26 @@
 import React from 'react';
+import { useColorMode } from '@docusaurus/theme-common';
 
-export default function CallToAction() {
+export default function CallToAction({ color }) {
+	const { colorMode } = useColorMode();
+
+	const colorMap = {
+		blue: {
+			light: '#bfdbfe',
+			dark: '#3b82f6'
+		},
+		orange: {
+			light: '#fb923c',
+			dark: '#7c2d12'
+		},
+		green: {
+			light: '#bbf7d0',
+			dark: '#10b981'
+		}
+	};
+
+	const c = colorMap[color ?? 'blue'][colorMode];
+
 	return (
 		<div className="w-full py-16">
 			<div className="">
@@ -52,8 +72,8 @@ export default function CallToAction() {
 								gradientUnits="userSpaceOnUse"
 								gradientTransform="translate(512 512) rotate(90) scale(512)"
 							>
-								<stop stopColor="#3b82f6" />
-								<stop offset={1} stopColor="#3b82f6" stopOpacity={0} />
+								<stop stopColor={c} />
+								<stop offset={1} stopColor={c} stopOpacity={0} />
 							</radialGradient>
 						</defs>
 					</svg>

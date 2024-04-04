@@ -87,7 +87,7 @@ export default function Footer() {
 				<div className="flex justify-between items-center flex-col md:flex-row gap-8">
 					<div className="flex items-center">
 						<img className="h-16 mr-3" src="/img/windmill.svg" alt="Windmill Labs" />
-						<p className="text-sm leading-6 text-gray-600 dark:text-gray-400">
+						<p className="text-xs leading-2 text-gray-800 dark:text-gray-200 text-opacity-60">
 							Made with passion in <br />
 							San Francisco and Paris.
 						</p>
@@ -99,7 +99,7 @@ export default function Footer() {
 							alt="SOC Compliance badge"
 							loading="lazy"
 						/>
-						<p className="text-xs text-left leading-6 text-gray-400 ml-2">
+						<p className="text-xs text-left leading-6 text-gray-800 dark:text-gray-200 text-opacity-60 ml-2">
 							Windmill Labs is SOC 2 Type II compliant.
 						</p>
 					</div>
@@ -134,7 +134,7 @@ export default function Footer() {
 						</a>
 					</div>
 				</div>
-				<p className="text-left text-xs leading-4 tracking-tight text-black hover:text-black dark:text-white text-opacity-60 hover:text-opacity-100">
+				<p className="text-left text-xs leading-4 tracking-tight text-gray-800 dark:text-gray-200 text-opacity-60 hover:text-opacity-100">
 					&copy; 2024 Windmill Labs, Inc. All rights reserved. 1111B S Governors Ave, Dover, DE
 					19904, USA
 				</p>

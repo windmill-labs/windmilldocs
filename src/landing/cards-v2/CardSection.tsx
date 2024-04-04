@@ -54,6 +54,7 @@ export default function CardSection({ features, colors, title, description, defa
 						loop={feature?.loop}
 						vertical={feature?.vertical}
 						Component={feature?.Component}
+						code={feature?.code}
 					/>
 				))}
 			</div>
