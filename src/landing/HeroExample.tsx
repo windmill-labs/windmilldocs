@@ -50,7 +50,7 @@ export default function HeroExample() {
 	return (
 		<div className="relative">
 			<LandingSection bgClass="">
-				<div className="w-full gap-8 flex flex-col">
+				<div className="w-full gap-6 flex flex-col">
 					<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-slate-500 to-slate-800 dark:from-slate-100 dark:to-slate-500 ">
 						Give your scripts Superpowers
 					</h1>
@@ -62,6 +62,21 @@ export default function HeroExample() {
 						infra or ours, with permissioning and monitoring included. Fully open-source and easy to
 						deploy on small and large infra. Any dependency with zero-config.
 					</p>
+					<div className="flex flex-row justify-end w-full gap-4 items-center">
+						<div className="flex flex-col gap-1">
+							<div className="text-sm font-medium ">{'Short on time?'}</div>
+							<div className="text-xs">{'Check out our 2-minute tour!'}</div>
+						</div>
+						<a
+							href="https://www.youtube.com/watch?v=IOvzHJ2BHl8"
+							target="_blank"
+							rel="noreferrer"
+							className="h-8 text-xs font-medium !text-white bg-blue-600 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1 px-2 hover:bg-opacity-80 transition-all"
+						>
+							{'Watch Now'}
+							<ExternalLink size={16} className="text-white" />
+						</a>
+					</div>
 					<div className="video-container">
 						<iframe
 							src="https://www.youtube.com/embed/IOvzHJ2BHl8"
@@ -76,23 +91,3 @@ export default function HeroExample() {
 		</div>
 	);
 }
-
-/**
- * 	<div className="absolute top-0 right-0 transform translate-y-1/2 h-full ">
-				<div className="w-48 rounded-l-md p-4 z-50  shadow-lg border-gray-100 flex flex-col gap-2">
-					<div className="flex flex-row gap-1 items-center jus">
-						<div className="text-sm font-medium text-gray-900 ">{"Don't have time?"}</div>
-					</div>
-					<div className="text-xs text-gray-900 ">{'Check out our 2 min tour!'}</div>
-					<a
-						href="https://www.youtube.com/watch?v=IOvzHJ2BHl8"
-						target="_blank"
-						rel="noreferrer"
-						className="text-xs font-medium !text-white bg-blue-500 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1.5 hover:bg-opacity-80 transition-all"
-					>
-						{'Watch Now'}
-						<ExternalLink size={16} className="text-white" />
-					</a>
-				</div>
-			</div>
- */
