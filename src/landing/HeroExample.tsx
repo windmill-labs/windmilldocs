@@ -54,9 +54,7 @@ export default function HeroExample() {
 				</p>
 				<div className="video-container">
 					<iframe
-						width="100%"
-						height="100%"
-						src="https://www.youtube.com/embed/pJh2fdstV-A?vq=hd1080"
+						src="https://www.youtube.com/embed/IOvzHJ2BHl8"
 						title="YouTube video player"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 						allowFullScreen={true}

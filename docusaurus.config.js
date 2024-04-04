@@ -126,7 +126,7 @@ const config = {
 					{
 						to: 'https://app.windmill.dev',
 						position: 'left',
-						label: 'Cloud App'
+						label: 'Cloud'
 					},
 					{
 						to: 'https://hub.windmill.dev',

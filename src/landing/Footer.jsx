@@ -32,7 +32,6 @@ const navigation = [
 	},
 	{
 		items: [
-			{ name: 'Team', href: '/team' },
 			{ name: 'Careers', href: '/careers' },
 			{ name: 'Brand', href: '/brand' }
 		],

@@ -88,20 +88,20 @@ const tabs = [
 			},
 			{
 				title: 'For Loops',
-				description: 'Create for loops to iterate over a list of items.',
+				description: 'Create For Loops to iterate over a list of items.',
 				icon: Repeat,
 				caption: (
 					<div>
 						Create{' '}
 						<a href="/docs/flows/flow_loops" target="_blank">
-							for loops
+							For Loops
 						</a>{' '}
 						to iterate over a list of items.
 					</div>
 				),
 				video: {
 					videoSrc: '/videos/flow-loop.mp4',
-					altText: 'Flows for loops',
+					altText: 'Flows For Loops',
 					videoLength: '18'
 				}
 			},
