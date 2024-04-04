@@ -7,6 +7,7 @@ import LayoutProvider from '@theme/Layout/Provider';
 import CallToAction from '../landing/CallToAction';
 import LogoClouds from '../landing/LogoClouds';
 import RadialBlur from '../landing/RadialBlur';
+import Window from '../landing/animations/Window';
 
 export default function AppsPage() {
 	return (
@@ -22,12 +23,32 @@ export default function AppsPage() {
 				</Head>
 				<RadialBlur color="orange" />
 				<LandingHeader />
+				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+					<div
+						className={`text-orange-900 dark:text-orange-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
+					>
+						{'Develop and iterate with instant feedback'}
+					</div>
+					<div className="bg-gradient-to-br from-orange-200 to-orange-400 dark:from-orange-700 dark:to-orange-600 w-full rounded-lg p-6 shadow-inner overflow-hidden  h-[550px]">
+						<Window
+							shouldRender={true}
+							name="Apps | Windmill"
+							icon="/third_party_logos/firefox.svg"
+						>
+							<img
+								src="/images/script_example.png"
+								alt="Apps"
+								className="min-w-min scale-75 md:w-full origin-top-left md:scale-100"
+							/>
+						</Window>
+					</div>
+				</div>
 				<div className="mt-16">
 					<AppLightSection />
 				</div>
 				<LogoClouds />
 				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
-					<CallToAction />
+					<CallToAction color="orange" />
 				</div>
 				<Footer />
 			</main>

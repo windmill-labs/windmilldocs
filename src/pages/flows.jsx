@@ -8,6 +8,7 @@ import CallToAction from '../landing/CallToAction';
 import LogoClouds from '../landing/LogoClouds';
 import RadialBlur from '../landing/RadialBlur';
 import HubExamples from '../landing/HubExamples';
+import Window from '../landing/animations/Window';
 
 const hubExamples = [
 	{
@@ -62,8 +63,29 @@ export default function FlowPage() {
 					/>
 				</Head>
 				<RadialBlur color="green" />
+
 				<LandingHeader />
 
+				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+					<div
+						className={`text-emerald-900 dark:text-emerald-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
+					>
+						{'Develop and iterate with instant feedback'}
+					</div>
+					<div className="bg-gradient-to-br from-emerald-200 to-emerald-400 dark:from-emerald-500 dark:to-emerald-600 w-full rounded-lg p-6 shadow-inner overflow-hidden h-[550px]">
+						<Window
+							shouldRender={true}
+							name="Flows | Windmill"
+							icon="/third_party_logos/firefox.svg"
+						>
+							<img
+								src="/images/flow_example.png"
+								alt="Flows"
+								className="min-w-min scale-75 md:w-full origin-top-left md:scale-100"
+							/>
+						</Window>
+					</div>
+				</div>
 				<div className="mt-16">
 					<FlowLightSection />
 				</div>
@@ -74,7 +96,7 @@ export default function FlowPage() {
 				/>
 				<LogoClouds />
 				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
-					<CallToAction />
+					<CallToAction color="green" />
 				</div>
 				<Footer />
 			</main>

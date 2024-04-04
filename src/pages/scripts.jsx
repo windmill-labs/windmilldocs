@@ -8,6 +8,7 @@ import CallToAction from '../landing/CallToAction';
 import LogoClouds from '../landing/LogoClouds';
 import RadialBlur from '../landing/RadialBlur';
 import HubExamples from '../landing/HubExamples';
+import Window from '../landing/animations/Window';
 
 const hubExamples = [
 	{
@@ -80,7 +81,28 @@ export default function ScriptPage() {
 				</Head>
 				<LandingHeader />
 				<RadialBlur />
-				<div className="mt-20">
+				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+					<div
+						className={`text-blue-900 dark:text-blue-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
+					>
+						{'Develop and iterate with instant feedback'}
+					</div>
+					<div className="bg-gradient-to-br from-blue-200 to-sky-400 dark:from-blue-700 dark:to-sky-600 w-full rounded-lg p-6 shadow-inner overflow-hidden h-full">
+						<Window
+							shouldRender={true}
+							name="Scripts | Windmill"
+							icon="/third_party_logos/firefox.svg"
+						>
+							<img
+								src="/images/script_example.png"
+								alt="Scripts"
+								className="min-w-min md:w-full origin-top-left md:scale-100"
+							/>
+						</Window>
+					</div>
+				</div>
+
+				<div className="">
 					<ScriptLightSection />
 				</div>
 				<HubExamples examples={hubExamples} />
