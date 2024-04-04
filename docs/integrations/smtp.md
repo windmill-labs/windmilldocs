@@ -1,5 +1,7 @@
 # SMTP Integration
 
+[SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) (Simple Mail Transfer Protocol) is an internet standard for electronic mail transmission.
+
 To integrate SMTP to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add SMTP Resource](../assets/integrations/add-smtp.png.webp)

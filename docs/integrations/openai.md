@@ -1,5 +1,7 @@
 # OpenAI Integration
 
+[OpenAI](https://openai.com/) is an Artificial Inteligence service provider.
+
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     autoPlay
@@ -17,7 +19,7 @@ If you're interested in AI-based programming check [Windmill AI](../code_editor/
 
 :::
 
-To integrate [OpenAI](https://openai.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate OpenAI to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 | Property        | Type   | Description                                                                                                   | Default | Required | Where to Find                                                         |
 | --------------- | ------ | ------------------------------------------------------------------------------------------------------------- | ------- | -------- | --------------------------------------------------------------------- |

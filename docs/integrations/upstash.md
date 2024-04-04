@@ -1,5 +1,7 @@
 # Upstash Integration
 
+[Upstash](https://upstash.com/) is a serverless and low-latency Redis-compatible data store for modern applications.
+
 Upstash follows the same connection method as [MongoDB](./mongodb.md), providing the database name, TLS settings, server information, and credentials for authentication.
 
 ![Add Mongodb](../assets/integrations/add_mongodb.png.webp)

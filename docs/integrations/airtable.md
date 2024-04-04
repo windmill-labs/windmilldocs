@@ -1,6 +1,8 @@
 # Airtable Integration
 
-There are two resources associated with [Airtable](https://www.airtable.com/). Both are required to use Airtable's API from Windmill.
+[Airtable](https://www.airtable.com/) is a cloud collaboration platform for organizing and managing data.
+
+There are two resources associated with Airtable. Both are required to use Airtable's API from Windmill.
 
 ## Airtable Account
 

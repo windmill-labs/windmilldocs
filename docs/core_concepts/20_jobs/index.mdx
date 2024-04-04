@@ -103,3 +103,25 @@ that he is a member of.
 Jobs take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible.
 
 If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
+
+## Retention Policy
+
+The retention policy for jobs runs details varies depending on your team's [plan](/pricing):
+
+- Community plan (cloud): Jobs runs details are retained for 60 days.
+- Team plan (cloud): Jobs runs details are retained for 60 days.
+- Enterprise plan (cloud): Unlimited retention period.
+- Open Source (self-host): Jobs runs details are retained for maximum 30 days.
+- Enterprise plan (self-host): Unlimited retention period.
+
+You can set a custom retention period for the jobs runs details. The retention period can be configured in the instance settings, in the "Core" tab.
+
+![Set Retention Period](./set_retention_policy.png "Set Retention Period")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans & How to Upgrade"
+		description="Details on each Windmill Plan"
+		href="/pricing"
+	/>
+</div>

@@ -7,10 +7,12 @@ export default function CardSection({ features, colors, title, description, defa
 	const b = 246;
 	return (
 		<div className="w-full gap-4 flex flex-col">
-			<div className={`${colors.titleColor} text-4xl max-w-2xl font-semibold mb-2  pt-8`}>
+			<div
+				className={`${colors.titleColor} text-5xl max-w-2xl font-normal tracking-tight leading-12 mb-2  pt-8`}
+			>
 				{title}
 			</div>
-			<span className={`text-lg ${colors.textColor} max-w-2xl mb-8  font-normal`}>
+			<span className={`text-lg ${colors.textColor} max-w-2xl mb-12 font-normal`}>
 				{description}
 			</span>
 
@@ -51,6 +53,8 @@ export default function CardSection({ features, colors, title, description, defa
 						autoplay={feature?.autoplay}
 						loop={feature?.loop}
 						vertical={feature?.vertical}
+						Component={feature?.Component}
+						code={feature?.code}
 					/>
 				))}
 			</div>

@@ -256,6 +256,7 @@ const sidebars = {
 						'flows/error_handling',
 						'flows/flow_branches',
 						'flows/flow_loops',
+						'flows/while_loops',
 						'flows/flow_error_handler',
 						'flows/flow_trigger',
 						'flows/retries',
@@ -666,6 +667,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/raycast',
+							label: 'Raycast'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/redis',
 							label: 'Redis'
 						},
@@ -762,6 +768,7 @@ const sidebars = {
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
+				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index'
 			]

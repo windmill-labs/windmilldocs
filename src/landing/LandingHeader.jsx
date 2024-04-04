@@ -46,11 +46,6 @@ const resources = [
 		href: '/blog'
 	},
 	{
-		name: 'Team',
-		description: 'The team behind Windmill.',
-		href: '/team'
-	},
-	{
 		name: 'Jobs',
 		description: 'See our current job openings and apply for a position.',
 		href: 'https://www.ycombinator.com/companies/windmill/jobs'
@@ -75,7 +70,7 @@ export default function LandingHeader() {
 	const [hoverLogo, setHoverLogo] = React.useState(false);
 
 	return (
-		<div className="w-full fixed z-[1000] backdrop-blur-sm bg-white/80 dark:bg-gray-950/80 shadow-sm">
+		<div className="w-full fixed z-[1000]  bg-white dark:bg-gray-950 shadow-sm">
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<Link

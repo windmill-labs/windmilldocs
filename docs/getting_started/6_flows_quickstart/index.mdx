@@ -134,18 +134,39 @@ Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), yo
 
 Your flow can be deepened with [additional features](../../flows/1_flow_editor.mdx), below are some major ones.
 
-### For loops
+### For Loops
 
-[For loops](../../flows/12_flow_loops.md) are a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
+[For Loops](../../flows/12_flow_loops.md) are a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
 
-![Flows for loops](./for_loops.png.webp)
+![Flows For Loops](./for_loops.png.webp)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="For loops"
+		title="For Loops"
 		description="Iterate a series of tasks."
 		href="/docs/flows/flow_loops"
+	/>
+</div>
+
+### While Loops
+
+While loops execute a sequence of code indefinitely until the user cancels or a step set to [Early Stop](../../flows/2_early_stop.md) stops.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/while_early_stop.mp4"
+/>
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+<DocCard
+		color="teal"
+		title="While Loops"
+		description="While loops execute a sequence of code indefinitely until the user cancels or a step set to Early Stop stops."
+		href="/docs/flows/while_loops"
 	/>
 </div>
 

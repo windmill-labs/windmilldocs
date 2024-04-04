@@ -40,7 +40,7 @@ const features = [
 	{
 		title: 'Advanced Features',
 		description:
-			'Build powerful flows with advanced features like triggers, error handling, retries, loops and branches',
+			'Build powerful flows with advanced features like triggers, error handling, retries, loops and branches.',
 		url: '/docs/getting_started/trigger_flows#triggers-from-external-events',
 		defaultImage: '/illustrations/flows.png',
 		vertical: true,
@@ -51,8 +51,41 @@ const features = [
 		description:
 			'Build, version, and manage your workflows as code with the Windmill SDK. Use your favorite IDE, version control system, and CI/CD pipeline to manage your workflows.',
 
+		code: `from wmill import task
+
+import pandas as pd
+import numpy as np
+
+# The pin is important since task is a decorator available only from 1.286.2
+
+#extra_requirements:
+#wmill>=1.286.2
+
+
+@task()
+# You can specify tag to run the task on a specific type of worker, e.g. @task(tag="custom_tag")
+def heavy_compute(n: int):
+    df = pd.DataFrame(np.random.randn(100, 4), columns=list('ABCD'))
+    return df.sum().sum()
+
+
+@task
+def send_result(res: int, email: str):
+    # logs of the subtask are available in the main task logs
+    print(f"Sending result {res} to {email}")
+    return "OK"
+
+def main(n: int):
+    l = []
+
+    # to run things in parallel, simply use multiprocessing Pool map instead: https://docs.python.org/3/library/multiprocessing.html
+    for i in range(n):
+        l.append(heavy_compute(i))
+    print(l)
+    return send_result(sum(l), "example@example.com")
+`,
 		Icon: TerminalSquare,
-		defaultImage: '/illustrations/workflow_as_code.png',
+
 		url: '/docs/core_concepts/workflows_as_code',
 		vertical: true
 	},

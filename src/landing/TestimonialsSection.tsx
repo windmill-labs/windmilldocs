@@ -109,7 +109,9 @@ const testimonials = [
 				<strong>
 					<span className="text-blue-500">windmill.dev</span>
 				</strong>{' '}
-				a couple of weeks ago and couldn't be happier. Honestly the product is simply better than Airplane. I looked at Windmill.dev a 18 months ago when I adopted Airplane, and it was less mature - but it was open source and I wish I'd given that more weight.
+				a couple of weeks ago and couldn't be happier. Honestly the product is simply better than
+				Airplane. I looked at Windmill.dev a 18 months ago when I adopted Airplane, and it was less
+				mature - but it was open source and I wish I'd given that more weight.
 			</span>
 		),
 		author: {
@@ -133,7 +135,7 @@ const testimonials = [
 		author: {
 			handle: 'x',
 			backlink: 'https://twitter.com/moritzhaarmann/status/1731580514136469659',
-			name: 'Moritz Haarmann, former Director of Engineering at adidas',
+			name: 'Moritz Haarmann, former Director of Engineering at Adidas',
 			date: 'December 4th 2023'
 		}
 	},
