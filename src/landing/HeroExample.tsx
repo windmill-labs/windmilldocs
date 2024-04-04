@@ -71,10 +71,10 @@ export default function HeroExample() {
 							href="https://www.youtube.com/watch?v=IOvzHJ2BHl8"
 							target="_blank"
 							rel="noreferrer"
-							className="h-8 text-xs font-medium !text-white bg-blue-600 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1 px-2 hover:bg-opacity-80 transition-all"
+							className="h-8 text-xs font-medium  bg-blue-100 !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1 px-3 hover:bg-opacity-80 transition-all"
 						>
 							{'Watch Now'}
-							<ExternalLink size={16} className="text-white" />
+							<ExternalLink size={16} className="!text-blue-600" />
 						</a>
 					</div>
 					<div className="video-container">
