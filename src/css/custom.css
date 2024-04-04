@@ -29,7 +29,7 @@ body * {
 :root {
 	--ifm-navbar-background-color: white;
 	--ifm-background-color: white;
-	--ifm-font-family-base: 'Inter', 'sans-serif';
+	--ifm-font-family-base: 'Inter', 'Arial';
 	--doc-sidebar-width: 320px !important;
 	--ifm-color-primary: rgb(59, 130, 246);
 	--ifm-color-primary-dark: rgb(37, 102, 206);
