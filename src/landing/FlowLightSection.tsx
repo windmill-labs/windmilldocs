@@ -56,12 +56,6 @@ const features = [
 import pandas as pd
 import numpy as np
 
-# The pin is important since task is a decorator available only from 1.286.2
-
-#extra_requirements:
-#wmill>=1.286.2
-
-
 @task()
 # You can specify tag to run the task on a specific type of worker, e.g. @task(tag="custom_tag")
 def heavy_compute(n: int):
