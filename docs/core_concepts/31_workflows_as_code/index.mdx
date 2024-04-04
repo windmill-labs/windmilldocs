@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 [Flows](../../flows/1_flow_editor.mdx) are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.
 
-![Script in python executing workflow as code](./python_editor.png "Script in python executing workflow as code")
+![Script in python executing workflow as code](./python_editor.png 'Script in python executing workflow as code')
 
 One way of doing this is to use the [API of Windmill](https://app.windmill.dev/openapi.html) itself, to run jobs imperatively, using run_script and run_flow (their sync or async counterparts). This is a powerful way to define workflows, but it can be complex and verbose.
 
@@ -23,12 +23,6 @@ from wmill import task
 
 import pandas as pd
 import numpy as np
-
-# The pin is important since task is a decorator available only from 1.286.2
-
-#extra_requirements:
-#wmill>=1.286.2
-
 
 @task()
 # You can specify tag to run the task on a specific type of worker, e.g. @task(tag="custom_tag")
