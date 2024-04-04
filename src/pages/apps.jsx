@@ -36,9 +36,9 @@ export default function AppsPage() {
 							icon="/third_party_logos/firefox.svg"
 						>
 							<img
-								src="/images/apps_example.png"
+								src="/images/app_example.png"
 								alt="Apps"
-								className="min-w-min scale-75 md:w-full origin-top-left md:scale-100"
+								className="w-full overflow-hidden object-cover h-full"
 							/>
 						</Window>
 					</div>
