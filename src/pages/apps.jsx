@@ -36,7 +36,7 @@ export default function AppsPage() {
 							icon="/third_party_logos/firefox.svg"
 						>
 							<img
-								src="/images/script_example.png"
+								src="/images/apps_example.png"
 								alt="Apps"
 								className="min-w-min scale-75 md:w-full origin-top-left md:scale-100"
 							/>
