@@ -1,5 +1,7 @@
 # Microsoft Azure Blob Integration
 
+[Microsoft Azure Blob](https://azure.microsoft.com/products/storage/blobs) is Microsoft's cloud storage service, an alternative to S3.
+
 :::info Windmill for data pipelines
 
 You can link a Windmill workspace to an Azure Blob storage account and use it as source and/or target of your processing steps seamlessly, without any boilerplate.

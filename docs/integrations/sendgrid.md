@@ -1,6 +1,8 @@
 # SendGrid Integration
 
-To integrate [SendGrid](https://sendgrid.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[SendGrid](https://sendgrid.com/) is an email API and delivery service.
+
+To integrate SendGrid to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add SendGrid Resource](../assets/integrations/add-sendgrid.png.webp)
 

@@ -1,6 +1,8 @@
 # AWS Integration
 
-To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[AWS](https://aws.amazon.com/) is a cloud computing platform offering various services like computing, storage and databases.
+
+To integrate AWS to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 :::info Self Host
 

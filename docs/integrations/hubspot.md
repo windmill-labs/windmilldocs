@@ -1,6 +1,8 @@
 # HubSpot Integration
 
-To integrate [HubSpot](https://www.hubspot.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[HubSpot](https://www.hubspot.com/) is an inbound marketing, sales, and customer service platform.
+
+To integrate HubSpot to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add HubSpot Resource](../assets/integrations/add-hubspot.png.webp)
 
