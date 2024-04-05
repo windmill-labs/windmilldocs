@@ -51,7 +51,7 @@ export default function SmoothScrol({ children, onReachEnd, animationEnabled }) 
 		<ScrollContext.Provider value={x}>
 			<section
 				ref={targetRef}
-				className="relative max-w-7xl px-6 lg:px-8 mx-auto w-full"
+				className="relative max-w-7xl px-4 lg:px-8 mx-auto w-full"
 				style={{
 					height: hasReachedEnd ? '100vh' : 15000
 				}}
