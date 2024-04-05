@@ -105,8 +105,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'getting_started/trigger_flows/index',
 							label: 'Triggering Flows'
-						},
-						'misc/guides/airplane/index'
+						}
 					]
 				},
 				{
@@ -115,11 +114,6 @@ const sidebars = {
 					collapsed: true,
 					items: [
 						'compared_to/peers',
-						{
-							type: 'doc',
-							id: 'compared_to/airplane',
-							label: 'Airplane'
-						},
 						{
 							type: 'doc',
 							id: 'compared_to/retool',
