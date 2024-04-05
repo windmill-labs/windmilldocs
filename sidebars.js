@@ -105,8 +105,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'getting_started/trigger_flows/index',
 							label: 'Triggering Flows'
-						},
-						'misc/guides/airplane/index'
+						}
 					]
 				},
 				{
