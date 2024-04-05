@@ -28,7 +28,7 @@ body * {
 :root {
 	--ifm-navbar-background-color: white;
 	--ifm-background-color: white;
-	--ifm-font-family-base: 'Inter', 'Inter';
+	--ifm-font-family-base: 'Inter', 'Arial';
 	--doc-sidebar-width: 320px !important;
 	--ifm-color-primary: rgb(59, 130, 246);
 	--ifm-color-primary-dark: rgb(37, 102, 206);
@@ -447,15 +447,15 @@ div.testimonials a:hover .wm-name {
 }
 
 .custom-link {
-    color: inherit;
-    text-decoration: underline dashed;
-    text-decoration-thickness: 0.5px;
+	color: inherit;
+	text-decoration: underline dashed;
+	text-decoration-thickness: 0.5px;
 }
 
 .custom-link:hover {
-    color: rgb(42, 77, 173);
-    text-decoration: underline dashed;
-    text-decoration-thickness: 0.5px;
+	color: rgb(42, 77, 173);
+	text-decoration: underline dashed;
+	text-decoration-thickness: 0.5px;
 }
 
 .reset table {
@@ -481,29 +481,29 @@ div.testimonials a:hover .wm-name {
 }
 
 .tooltip-icon {
-    position: relative;
-    cursor: pointer;
+	position: relative;
+	cursor: pointer;
 }
 
 .tooltip-text {
-    visibility: hidden;
-    width: 300px;
-    background-color: #0f172a;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
+	visibility: hidden;
+	width: 300px;
+	background-color: #0f172a;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -60px;
 
-    opacity: 0;
-    transition: opacity 0.3s;
+	opacity: 0;
+	transition: opacity 0.3s;
 }
 
 .tooltip-icon:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }

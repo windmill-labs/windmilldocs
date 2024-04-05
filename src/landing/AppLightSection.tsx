@@ -605,11 +605,11 @@ export default function AppsLightSections() {
 					<div className="col-span-2">
 						<div className="relative w-full bg-orange-900 rounded-lg p-6 h-96">
 							<div className="border-orange-600 border-2 relative rounded-lg p-4 h-full w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] overflow-hidden overflow-y-scroll">
-								<div className="grid grid-cols-8 gap-4">
+								<div className="grid grid-cols-2 md:grid-cols-8 gap-4">
 									{components.map((item, index) => (
 										<a
 											href={item.documentationLink}
-											className="col-span-1 h-28 rounded-md border flex justify-center items-center gap-2 flex-col bg-white hover:bg-gray-50 !text-gray-900"
+											className="col-span-1  h-28 rounded-md border flex justify-center items-center gap-2 flex-col bg-white hover:bg-gray-50 !text-gray-900"
 										>
 											<item.Icon size={32} />
 											<div className="text-xs text-center">{item.name}</div>
