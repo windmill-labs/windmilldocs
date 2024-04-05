@@ -117,11 +117,6 @@ const sidebars = {
 						'compared_to/peers',
 						{
 							type: 'doc',
-							id: 'compared_to/airplane',
-							label: 'Airplane'
-						},
-						{
-							type: 'doc',
 							id: 'compared_to/retool',
 							label: 'Retool'
 						},
