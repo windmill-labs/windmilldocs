@@ -1,7 +1,8 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
+import { twMerge } from 'tailwind-merge';
 
-export default function RadialBlur({ color }) {
+export default function RadialBlur({ color, fullWidth }) {
 	const { colorMode } = useColorMode();
 
 	const colorMap = {
@@ -25,7 +26,10 @@ export default function RadialBlur({ color }) {
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 1024 1024"
-			className="absolute -top-[256px] left-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2 -translate-y-1/2"
+			className={twMerge(
+				'absolute -top-[256px] left-1/2 -z-10 h-[64rem] -translate-x-1/2 -translate-y-1/2 ',
+				fullWidth ? 'w-full' : 'w-[64rem]'
+			)}
 			aria-hidden="true"
 		>
 			<circle

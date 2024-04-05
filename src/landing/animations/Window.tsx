@@ -8,9 +8,17 @@ type WindowProps = {
 	children: React.ReactNode;
 	shouldRender: boolean;
 	lightMode?: boolean;
+	className?: string;
 };
 
-export default function Window({ name, icon, children, shouldRender, lightMode }: WindowProps) {
+export default function Window({
+	name,
+	icon,
+	children,
+	shouldRender,
+	lightMode,
+	className
+}: WindowProps) {
 	return (
 		<AnimatePresence mode="popLayout" initial={false}>
 			{shouldRender && (
@@ -21,7 +29,8 @@ export default function Window({ name, icon, children, shouldRender, lightMode }
 					transition={{ delay: 0.2 }}
 					className={twMerge(
 						'border w-full h-[500px] shadow-2xl rounded-lg border-gray-950 overflow-hidden relative',
-						lightMode ? 'bg-white' : 'bg-gray-900'
+						lightMode ? 'bg-white' : 'bg-gray-900',
+						className
 					)}
 				>
 					<div className="h-8 w-full border-b border-gray-950 bg-gray-900 px-2 py-1 flex flex-row items-center overflow-hidden text-gray-300 text-xs font-semibold gap-2">

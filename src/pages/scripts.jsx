@@ -80,8 +80,8 @@ export default function ScriptPage() {
 					<meta name="description" content="Custom page description." />
 				</Head>
 				<LandingHeader />
-				<RadialBlur />
-				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+				<RadialBlur fullWidth />
+				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
 					<div
 						className={`text-blue-900 dark:text-blue-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
 					>
@@ -96,7 +96,7 @@ export default function ScriptPage() {
 							<img
 								src="/images/script_example.png"
 								alt="Scripts"
-								className="w-full object-cover object-left-top"
+								className="w-full object-cover object-left-top h-full"
 							/>
 						</Window>
 					</div>
@@ -107,7 +107,7 @@ export default function ScriptPage() {
 				</div>
 				<HubExamples examples={hubExamples} />
 				<LogoClouds />
-				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
+				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full ">
 					<CallToAction />
 				</div>
 				<Footer />
