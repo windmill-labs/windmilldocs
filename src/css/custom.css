@@ -14,7 +14,6 @@
 
 @layer base {
 	@font-face {
-		font-display: swap;
 		font-family: 'Inter';
 		src: url('/Inter-Variable.ttf');
 		font-weight: 100 900;
