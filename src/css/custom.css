@@ -233,7 +233,7 @@ a {
 	@apply mx-auto max-w-md px-4;
 	@apply text-center;
 	@apply sm:max-w-3xl lg:max-w-7xl;
-	@apply sm:px-6 lg:px-8;
+	@apply sm:px-4 lg:px-8;
 	@apply mb-12;
 }
 

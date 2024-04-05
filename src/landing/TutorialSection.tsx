@@ -57,7 +57,7 @@ export default function TutorialSection() {
 		}
 	];
 
-	const px = 4600;
+	const px = 4700;
 
 	const steps = {
 		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
@@ -89,7 +89,7 @@ export default function TutorialSection() {
 		top: number,
 		{ steps, total }: { total: number; steps: number[] }
 	) {
-		const percentage = (100 * (top % px)) / px;
+		const percentage = (100 * (top % px)) / px + 1;
 		const nextStepPercentage = steps.find((step: number) => step > percentage);
 
 		if (nextStepPercentage === undefined) {
@@ -106,7 +106,74 @@ export default function TutorialSection() {
 		return 'done';
 	}
 
-	function prevStep() {}
+	function findHighestUnderX(arr: number[], x: number) {
+		return arr.reduce((prev, curr) => (curr > prev && curr < x ? curr : prev), 0);
+	}
+
+	function smoothScrollToPreviousStep(
+		top: number,
+		{ steps, total }: { total: number; steps: number[] }
+	) {
+		const percentage = (100 * (top % px)) / px - 1;
+		const nextStepPercentage = findHighestUnderX(steps, percentage);
+
+		if (nextStepPercentage === 0) {
+			return 'previous';
+		}
+
+		const scrollAmount = (nextStepPercentage * px) / 100 + (total - px);
+
+		window.scrollBy({
+			top: scrollAmount - top,
+			behavior: 'smooth'
+		});
+
+		return 'done';
+	}
+
+	function prevStep() {
+		const top = containerRef.current.getBoundingClientRect().y * -1;
+		let foundSection = false;
+
+		for (const [sectionName, section] of Object.entries(steps)) {
+			if (top <= section.total) {
+				const res = smoothScrollToPreviousStep(top, section);
+
+				if (res === 'previous' && sectionName !== 'scripts') {
+					const previousSectionName =
+						Object.keys(steps)[Object.keys(steps).indexOf(sectionName) - 1];
+					const previousSection = steps[previousSectionName];
+
+					if (!previousSection) {
+						return;
+					}
+
+					const lastStepPercentage = previousSection.steps[previousSection.steps.length - 1];
+					const scrollAmount = (lastStepPercentage * px) / 100 + (previousSection.total - px);
+
+					window.scrollBy({
+						top: scrollAmount - top,
+						behavior: 'smooth'
+					});
+				}
+				foundSection = true;
+				break;
+			}
+		}
+
+		if (!foundSection) {
+			// If we're at the very bottom, go to the last step of the last section
+			const lastSectionName = Object.keys(steps)[Object.keys(steps).length - 1];
+			const lastSection = steps[lastSectionName];
+			const lastStepPercentage = lastSection.steps[lastSection.steps.length - 1];
+			const scrollAmount = (lastStepPercentage * px) / 100 + (lastSection.total - px);
+
+			window.scrollBy({
+				top: scrollAmount - top,
+				behavior: 'smooth'
+			});
+		}
+	}
 
 	useEffect(() => {
 		const handleKeyDown = (event) => {
@@ -125,7 +192,7 @@ export default function TutorialSection() {
 	}, [step]);
 
 	return (
-		<div className="flex flex-col " ref={containerRef}>
+		<div className="flex flex-col" ref={containerRef}>
 			<BrowserOnly>
 				{() => (
 					<SmoothScroll
@@ -222,10 +289,8 @@ export default function TutorialSection() {
 
 									<AnimationCarousel items={items} currentIndex={step} />
 
-									<div className="flex flex-row items-center justify-between mt-8">
-										<div className="text-gray-500 dark:text-gray-300 text-sm">
-											Scroll or use the arrow keys to navigate
-										</div>
+									<div className="flex flex-row items-center justify-end gap-4 mt-8">
+										<div className=" text-md">Scroll or use the arrow keys to navigate</div>
 										<div className="flex flex-row items-center gap-1">
 											<button
 												className="text-xs bg-gray-100 dark:bg-gray-800 p-1 rounded-md hover:bg-opacity-50 flex flex-row items-center gap-1"
@@ -251,7 +316,7 @@ export default function TutorialSection() {
 				)}
 			</BrowserOnly>
 
-			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
+			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full flex-col">
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-8 rounded-xl grid grid-cols-1 md:grid-cols-5 gap-8 mt-24">
 					<a
 						href="/docs/core_concepts/draft_and_deploy#diff-viewer"

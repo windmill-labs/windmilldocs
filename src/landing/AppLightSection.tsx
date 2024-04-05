@@ -95,11 +95,11 @@ function DragAndDropAnimation() {
 					style={{ position: 'absolute', zIndex: 1000 }}
 				>
 					<div className="bg-white">
-						<Hand fill="white" />
+						<Hand className="text-gray-900 dark:white" />
 					</div>
 				</motion.div>
 				<div className="absolute top-40">
-					<div className="divide-y flex flex-col border rounded-md overflow-hidden">
+					<div className="divide-y flex flex-col border rounded-md overflow-hidden text-gray-900">
 						<div className="divide-x flex flex-row">
 							<div className="py-1 px-2 bg-gray-50 w-40">Product Name</div>
 							<div className="py-1 px-2 bg-gray-50 w-24">Price</div>
@@ -256,19 +256,9 @@ export const components = [
 		Icon: PlusSquare,
 		documentationLink: `${documentationBaseUrl}/modal_form`
 	},
-	{
-		name: 'Pie Chart',
-		Icon: PieChart,
-		documentationLink: `${documentationBaseUrl}/pie_chart`
-	},
 
 	{ name: 'ChartJs', Icon: PieChart, documentationLink: `${documentationBaseUrl}/chartjs` },
 
-	{
-		name: 'Bar/Line Chart',
-		Icon: BarChart4,
-		documentationLink: `${documentationBaseUrl}/bar_line_chart`
-	},
 	{
 		name: 'AgCharts',
 		Icon: BarChart4,
@@ -302,18 +292,6 @@ export const components = [
 		name: 'Plotly',
 		Icon: PieChart,
 		documentationLink: `${documentationBaseUrl}/plotly`
-	},
-
-	{
-		name: 'Timeseries',
-		Icon: GripHorizontal,
-		documentationLink: `${documentationBaseUrl}/timeseries`
-	},
-
-	{
-		name: 'Scatter Chart',
-		Icon: GripHorizontal,
-		documentationLink: `${documentationBaseUrl}/scatter_chart`
 	},
 
 	{

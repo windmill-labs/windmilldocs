@@ -62,11 +62,11 @@ export default function FlowPage() {
 						content="Build complex Flows from atomic scripts, either from your workspace or the Hub."
 					/>
 				</Head>
-				<RadialBlur color="green" />
+				<RadialBlur color="green" fullWidth />
 
 				<LandingHeader />
 
-				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
 					<div
 						className={`text-emerald-900 dark:text-emerald-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
 					>
@@ -81,7 +81,7 @@ export default function FlowPage() {
 							<img
 								src="/images/flow_example.png"
 								alt="Flows"
-								className="w-full object-cover object-left-top"
+								className="w-full object-cover object-left-top h-full"
 							/>
 						</Window>
 					</div>
@@ -95,7 +95,7 @@ export default function FlowPage() {
 					title={'Hub Flows'}
 				/>
 				<LogoClouds />
-				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
+				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full ">
 					<CallToAction color="green" />
 				</div>
 				<Footer />
