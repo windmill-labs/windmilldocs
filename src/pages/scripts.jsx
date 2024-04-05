@@ -80,7 +80,7 @@ export default function ScriptPage() {
 					<meta name="description" content="Custom page description." />
 				</Head>
 				<LandingHeader />
-				<RadialBlur />
+				<RadialBlur fullWidth />
 				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
 					<div
 						className={`text-blue-900 dark:text-blue-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}

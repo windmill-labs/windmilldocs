@@ -85,19 +85,19 @@ export default function TutorialSection() {
 						<div className="flex flex-row items-start my-2 gap-2 w-full">
 							<div
 								onClick={() => setCurrentIndex(0)}
-								className="cursor-pointer px-2 py-1 bg-blue-600 hover:bg-opacity-50 rounded-md"
+								className="cursor-pointer px-2 py-1 border-b-2 border-blue-600 hover:bg-opacity-50 "
 							>
 								Scripts
 							</div>
 							<div
 								onClick={() => setCurrentIndex(1)}
-								className="cursor-pointer px-2 py-1 bg-emerald-600 hover:bg-opacity-50 rounded-md"
+								className="cursor-pointer px-2 py-1 border-b-2 border-emerald-600  hover:bg-opacity-50"
 							>
 								Flows
 							</div>
 							<div
 								onClick={() => setCurrentIndex(2)}
-								className="cursor-pointer px-2 py-1 bg-orange-600 hover:bg-opacity-50 rounded-md"
+								className="cursor-pointer px-2 py-1 border-b-2 border-orange-600 hover:bg-opacity-50 "
 							>
 								Apps
 							</div>

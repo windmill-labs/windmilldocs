@@ -24,7 +24,6 @@ function HomepageHeader() {
 			<Hero />
 			<LogoClouds />
 			<HeroExample />
-
 			<div className="hidden sm:block">
 				<TutorialSection />
 			</div>

@@ -99,7 +99,7 @@ function DragAndDropAnimation() {
 					</div>
 				</motion.div>
 				<div className="absolute top-40">
-					<div className="divide-y flex flex-col border rounded-md overflow-hidden text-gray-900 dark:text-white">
+					<div className="divide-y flex flex-col border rounded-md overflow-hidden text-gray-900">
 						<div className="divide-x flex flex-row">
 							<div className="py-1 px-2 bg-gray-50 w-40">Product Name</div>
 							<div className="py-1 px-2 bg-gray-50 w-24">Price</div>

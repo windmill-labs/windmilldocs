@@ -62,7 +62,7 @@ export default function FlowPage() {
 						content="Build complex Flows from atomic scripts, either from your workspace or the Hub."
 					/>
 				</Head>
-				<RadialBlur color="green" />
+				<RadialBlur color="green" fullWidth />
 
 				<LandingHeader />
 

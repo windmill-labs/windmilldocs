@@ -21,7 +21,7 @@ export default function AppsPage() {
 						content="Build complex Flows from atomic scripts, either from your workspace or the Hub."
 					/>
 				</Head>
-				<RadialBlur color="orange" />
+				<RadialBlur color="orange" fullWidth />
 				<LandingHeader />
 				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
 					<div
