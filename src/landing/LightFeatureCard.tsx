@@ -49,7 +49,7 @@ export default function LightFeatureCard({
 	return (
 		<a
 			className={twMerge(
-				`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-8 relative grid gap-4 hover:bg-opacity-50 transition-all h-max `,
+				`text-black dark:text-white !no-underline hover:text-black hover:dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg overflow-hidden ${span} group cursor-pointer p-4 md:p-8 relative grid gap-4 hover:bg-opacity-50 transition-all h-max `,
 				spanOverride ?? (vertical ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2')
 			)}
 			onMouseOver={() => {

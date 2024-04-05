@@ -12,7 +12,7 @@ export default function LandingSection({
 			transition={{ duration: 0.5, ease: 'easeInOut' }}
 			className={`w-full h-full py-16 overflow-x-hidden ${bgClass}`}
 		>
-			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
+			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full ">
 				{children}
 			</div>
 		</motion.div>

@@ -23,7 +23,7 @@ export default function AppsPage() {
 				</Head>
 				<RadialBlur color="orange" />
 				<LandingHeader />
-				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
 					<div
 						className={`text-orange-900 dark:text-orange-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
 					>
@@ -38,7 +38,7 @@ export default function AppsPage() {
 							<img
 								src="/images/app_example.png"
 								alt="Apps"
-								className="w-full object-cover object-left-top"
+								className="w-full object-cover object-left-top h-full "
 							/>
 						</Window>
 					</div>
@@ -47,7 +47,7 @@ export default function AppsPage() {
 					<AppLightSection />
 				</div>
 				<LogoClouds />
-				<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full ">
+				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full ">
 					<CallToAction color="orange" />
 				</div>
 				<Footer />
