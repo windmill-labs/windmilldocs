@@ -8,6 +8,7 @@ import { Lottie } from './LightFeatureCard';
 import deployAtScale from '/illustrations/deploy_at_scale.json';
 import { ArrowLongDownIcon } from '@heroicons/react/20/solid';
 import Window from './animations/Window';
+import { twMerge } from 'tailwind-merge';
 
 export default function TutorialSection() {
 	const containerRef = React.useRef<HTMLDivElement>(null);
@@ -79,30 +80,43 @@ export default function TutorialSection() {
 			>
 				<div className="dark:bg-gray-900 bg-gray-50 w-full p-4 rounded-xl">
 					<div className="flex flex-col justify-between items-center">
-						<div className="font-light text-4xl mb-4 max-w-2xl">
+						<div className="font-light text-2xl mb-4 max-w-2xl">
 							{'Develop and iterate with instant feedback'}
 						</div>
 						<div className="flex flex-row items-start my-2 gap-2 w-full">
 							<div
 								onClick={() => setCurrentIndex(0)}
-								className="cursor-pointer px-2 py-1 border-b-2 border-blue-600 hover:bg-opacity-50 "
+								className={twMerge(
+									'cursor-pointer px-2 py-1 border-b-2  hover:bg-opacity-50 ',
+									currentIndex === 0 ? ' border-blue-600' : 'border-blue-800'
+								)}
 							>
 								Scripts
 							</div>
 							<div
 								onClick={() => setCurrentIndex(1)}
-								className="cursor-pointer px-2 py-1 border-b-2 border-emerald-600  hover:bg-opacity-50"
+								className={twMerge(
+									'cursor-pointer px-2 py-1 border-b-2  hover:bg-opacity-50 ',
+									currentIndex === 1 ? ' border-emerald-600' : 'border-emerald-800'
+								)}
 							>
 								Flows
 							</div>
 							<div
 								onClick={() => setCurrentIndex(2)}
-								className="cursor-pointer px-2 py-1 border-b-2 border-orange-600 hover:bg-opacity-50 "
+								className={twMerge(
+									'cursor-pointer px-2 py-1 border-b-2  hover:bg-opacity-50 ',
+									currentIndex === 2 ? ' border-orange-600' : 'border-orange-800'
+								)}
 							>
 								Apps
 							</div>
 						</div>
-						<AnimationCarousel items={items} currentIndex={currentIndex} itemWidth={320} />
+						<AnimationCarousel
+							items={items}
+							currentIndex={currentIndex}
+							itemWidth={containerRef?.current?.clientWidth}
+						/>
 						<div className="text-opacity-50 text-sm">Animation available on desktop</div>
 					</div>
 				</div>
