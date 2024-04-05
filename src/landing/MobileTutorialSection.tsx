@@ -15,63 +15,6 @@ export default function TutorialSection() {
 
 	const [currentIndex, setCurrentIndex] = React.useState(0);
 
-	const items = [
-		{
-			key: 'scripts',
-			content: (
-				<div className="flex flex-row items-start">
-					<div className="bg-gradient-to-br from-blue-200 to-sky-400 dark:from-blue-700 dark:to-sky-600 w-full rounded-lg p-2 shadow-inner overflow-hidden h-full">
-						<Window
-							shouldRender={true}
-							name="Scripts | Windmill"
-							icon="/third_party_logos/firefox.svg"
-						>
-							<img
-								src="/images/script_example.png"
-								alt="Scripts"
-								className="w-full object-cover object-left-top h-full "
-							/>
-						</Window>
-					</div>
-				</div>
-			)
-		},
-		{
-			key: 'flows',
-			content: (
-				<div className="bg-gradient-to-br from-emerald-200 to-emerald-400 dark:from-emerald-500 dark:to-emerald-600 w-full rounded-lg p-2 shadow-inner overflow-hidden ">
-					<Window shouldRender={true} name="Flows | Windmill" icon="/third_party_logos/firefox.svg">
-						<img
-							src="/images/flow_example.png"
-							alt="Flows"
-							className="w-full object-cover object-left-top h-full "
-						/>
-					</Window>
-				</div>
-			)
-		},
-		{
-			key: 'apps',
-			content: (
-				<div className=" flex flex-row items-start">
-					<div className="bg-gradient-to-br from-orange-200 to-orange-400 dark:from-orange-700 dark:to-orange-600 w-full rounded-lg p-2 shadow-inner overflow-hidden ">
-						<Window
-							shouldRender={true}
-							name="Apps | Windmill"
-							icon="/third_party_logos/firefox.svg"
-						>
-							<img
-								src="/images/app_example.png"
-								alt="Apps"
-								className="w-full object-cover object-left-top h-full "
-							/>
-						</Window>
-					</div>
-				</div>
-			)
-		}
-	];
-
 	return (
 		<>
 			<div
@@ -112,11 +55,50 @@ export default function TutorialSection() {
 								Apps
 							</div>
 						</div>
-						<AnimationCarousel
-							items={items}
-							currentIndex={currentIndex}
-							itemWidth={containerRef?.current?.clientWidth}
-						/>
+
+						{currentIndex === 0 && (
+							<div className="flex flex-row items-start ">
+								<div className="bg-gradient-to-br from-blue-200 to-sky-400 dark:from-blue-700 dark:to-sky-600 w-full rounded-lg p-2 shadow-inner overflow-hidden h-full">
+									<Window
+										shouldRender={true}
+										name="Scripts | Windmill"
+										icon="/third_party_logos/firefox.svg"
+										className="h-min"
+									>
+										<img src="/images/script_example.png" alt="Scripts" />
+									</Window>
+								</div>
+							</div>
+						)}
+						{currentIndex === 1 && (
+							<div className="flex flex-row items-start ">
+								<div className="bg-gradient-to-br from-emerald-200 to-emerald-400 dark:from-emerald-500 dark:to-emerald-600 w-full rounded-lg p-2 shadow-inner overflow-hidden ">
+									<Window
+										shouldRender={true}
+										name="Flows | Windmill"
+										icon="/third_party_logos/firefox.svg"
+										className="h-min"
+									>
+										<img src="/images/flow_example.png" alt="Flows" />
+									</Window>
+								</div>
+							</div>
+						)}
+						{currentIndex === 2 && (
+							<div className="flex flex-row items-start ">
+								<div className="bg-gradient-to-br from-orange-200 to-orange-400 dark:from-orange-700 dark:to-orange-600 w-full rounded-lg p-2 shadow-inner overflow-hidden ">
+									<Window
+										shouldRender={true}
+										name="Apps | Windmill"
+										icon="/third_party_logos/firefox.svg"
+										className="h-min"
+									>
+										<img src="/images/app_example.png" alt="Apps" />
+									</Window>
+								</div>
+							</div>
+						)}
+
 						<div className="text-opacity-50 text-sm">Animation available on desktop</div>
 					</div>
 				</div>
