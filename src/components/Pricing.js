@@ -617,15 +617,16 @@ const sections = [
 		name: 'Performance',
 		attributes: [
 			{
-				name: 'Worker Group Management UI (including Init Scripts)',
+				name: 'Worker Group Management UI (incl. Init Scripts)',
 				tiers: {
 					'Free and Open-source': false,
 					Pro: true,
 					Enterprise: true,
-					Community: true,
-					Team: true
+					Community: false,
+					Team: false
 				},
-				link: '/docs/core_concepts/worker_groups'
+				link: '/docs/core_concepts/worker_groups',
+				tooltip: 'Only available on self-hosting and enterprise edition on private clusters.'
 			},
 			{
 				name: 'Script-specific Workers (dedicated) / High Throughput',
@@ -1256,7 +1257,7 @@ export default function Pricing() {
 																	)}
 																	{attribute.tooltip && (
 																		<span className="ml-2 tooltip-icon">
-																			ⓘ<span className="tooltip-text">{attribute.tooltip}</span>
+																			<span style={{ fontSize: '75%' }}>ⓘ</span><span className="tooltip-text">{attribute.tooltip}</span>
 																		</span>
 																	)}
 																</div>

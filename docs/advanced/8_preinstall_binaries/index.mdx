@@ -87,7 +87,10 @@ FROM ${WM_IMAGE}
 
 ## Init Scripts
 
-Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+Init scripts provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience.
+Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+
+Init scripts are available only on [self-hosting and enterprise edition](/pricing) on private clusters.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
 	<img
