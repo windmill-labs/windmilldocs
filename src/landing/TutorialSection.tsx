@@ -57,7 +57,7 @@ export default function TutorialSection() {
 		}
 	];
 
-	const px = 4600;
+	const px = 4700;
 
 	const steps = {
 		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
@@ -192,7 +192,7 @@ export default function TutorialSection() {
 	}, [step]);
 
 	return (
-		<div className="flex flex-col " ref={containerRef}>
+		<div className="flex flex-col" ref={containerRef}>
 			<BrowserOnly>
 				{() => (
 					<SmoothScroll
