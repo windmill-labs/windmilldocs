@@ -57,7 +57,7 @@ export default function TutorialSection() {
 		}
 	];
 
-	const px = 4700;
+	const px = (15000 - window.innerHeight) / 3;
 
 	const steps = {
 		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
@@ -73,10 +73,8 @@ export default function TutorialSection() {
 				const res = smoothScrollToNextStep(top, section);
 
 				if (res === 'next') {
-					const delta = section.total === px * 3 ? 250 : 0;
-
 					window.scrollBy({
-						top: section.total - top + delta,
+						top: section.total - top + 50,
 						behavior: 'smooth'
 					});
 				}
