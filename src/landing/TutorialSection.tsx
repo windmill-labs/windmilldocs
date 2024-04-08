@@ -57,26 +57,27 @@ export default function TutorialSection() {
 		}
 	];
 
-	const px = 4700;
+	const [px, setPx] = React.useState(0);
 
-	const steps = {
-		scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
-		flows: { total: px * 2, steps: [10, 20, 30, 40, 50, 60, 75, 80, 90] },
-		apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90, 99] }
-	};
+	useEffect(() => {
+		setPx((15000 - window.innerHeight) / 3);
+	}, []);
 
 	function nextStep() {
 		const top = containerRef.current.getBoundingClientRect().y * -1;
+		const steps = {
+			scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
+			flows: { total: px * 2, steps: [10, 20, 30, 40, 50, 60, 75, 80, 90] },
+			apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90, 99] }
+		};
 
 		for (const section of Object.values(steps)) {
 			if (top < section.total) {
 				const res = smoothScrollToNextStep(top, section);
 
 				if (res === 'next') {
-					const delta = section.total === px * 3 ? 250 : 0;
-
 					window.scrollBy({
-						top: section.total - top + delta,
+						top: section.total - top + 50,
 						behavior: 'smooth'
 					});
 				}
@@ -134,6 +135,11 @@ export default function TutorialSection() {
 	function prevStep() {
 		const top = containerRef.current.getBoundingClientRect().y * -1;
 		let foundSection = false;
+		const steps = {
+			scripts: { total: px, steps: [20, 40, 50, 60, 70, 80] },
+			flows: { total: px * 2, steps: [10, 20, 30, 40, 50, 60, 75, 80, 90] },
+			apps: { total: px * 3, steps: [10, 15, 30, 45, 60, 72, 90, 99] }
+		};
 
 		for (const [sectionName, section] of Object.entries(steps)) {
 			if (top <= section.total) {
@@ -176,6 +182,8 @@ export default function TutorialSection() {
 	}
 
 	useEffect(() => {
+		setPx((15000 - window.innerHeight) / 3);
+
 		const handleKeyDown = (event) => {
 			if (event.key === 'ArrowRight') {
 				nextStep();
@@ -189,7 +197,7 @@ export default function TutorialSection() {
 		return () => {
 			document.removeEventListener('keydown', handleKeyDown);
 		};
-	}, [step]);
+	}, [step, px]);
 
 	return (
 		<div className="flex flex-col" ref={containerRef}>
@@ -281,7 +289,7 @@ export default function TutorialSection() {
 											containerRef.current.scrollIntoView({ behavior: 'instant' });
 
 											window.scrollBy({
-												top: i * px,
+												top: i * px + 50,
 												behavior: 'instant'
 											});
 										}}
