@@ -446,7 +446,7 @@ Note that it's a bad idea to mix dynamic default value and setValue together.
 
 ### validate
 
-Validate a specific field of a form
+Validate a specific field of a form.
 
 ```js
 validate(id: string, key: string)
@@ -454,7 +454,7 @@ validate(id: string, key: string)
 
 ### validateAll
 
-Validate all fields of a form
+Validate all fields of a form.
 
 ```js
 validateAll(id: string, key: string)
@@ -462,7 +462,7 @@ validateAll(id: string, key: string)
 
 ### invalidate
 
-Invalidate a specific field of a form
+Invalidate a specific field of a form.
 
 ```js
 invalidate(id: string, key: string, error: string)
@@ -471,6 +471,43 @@ invalidate(id: string, key: string, error: string)
 Parameters:
 
 `id` string
+
+### recompute
+
+Recompute a component.
+
+```js
+recompute(id: string)
+```
+
+Parameters:
+
+`id` string
+
+### clearFiles
+
+Clear the files of a file input.
+
+```js
+clearFiles(id: string)
+```
+
+Parameters:
+
+`id` string
+
+### showToast
+
+Sends a toast notification.
+
+```js
+recompute(message: string, error: boolean)
+```
+
+Parameters:
+
+`message` string
+`error` boolean
 
 ## Policy
 
