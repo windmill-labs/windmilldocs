@@ -93,6 +93,17 @@ the `/windmill` command in your Slack workspace to trigger the Script. Try it
 out with `/windmill foo` and you should get back `ROGER foo`. Go ahead and
 customize the Script to your needs.
 
+In addition to response_url, the script/flow can use the following parameters, simply by having them as inputs with the proper name:
+
+```
+channel_id
+user_name
+user_id
+command
+trigger_id
+api_app_id
+```
+
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png.webp)
 
 You won't be able to have Slack interact with your [resources](../core_concepts/3_resources_and_types/index.mdx) and [variables](../core_concepts/2_variables_and_secrets/index.mdx) before adding them to the `slack` [group](../core_concepts/8_groups_and_folders/index.mdx#groups) that was automatically created by Windmill after you set up your Slack workspace on Windmill. Tutorial below.
