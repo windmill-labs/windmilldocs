@@ -6,7 +6,7 @@ tags:
     'Git',
   ]
 image: ./blog_thumbnail.png
-description: blablabla
+description: It's a situation familiar to everyone. You're cruising along with your Git workflow, feeling like an expert, and suddenly - BAM! An error message pops up, looking as though it's in a foreign language.
 ---
 
 # Resolving the "Fatal: Not a Git Repository" Error
