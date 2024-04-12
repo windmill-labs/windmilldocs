@@ -40,6 +40,23 @@ The following section details AgGrid Table component's specific settings. For mo
 | :-------------: | :---------: | :---------: | :-----: | --------------- |
 | `Array<Object>` |    true     |    false    |         | The table data. |
 
+## Controls
+
+[getAgGrid](../3_app-runnable-panel.mdx#getaggrid): Use the `getAgGrid` function to get the ag-grid instance of a table.
+
+[setSelectedIndex](../3_app-runnable-panel.mdx#setselectedindex): Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+
+## Table Actions
+
+`AgGrid Table` can define actions that will be displayed in each row of the table. An action is a component that cannot be moved.
+
+Available components are:
+- [Button](./button.mdx)
+- [Toggle](./toggle.mdx)
+- [Select](./select.mdx)
+
+![AgGrid Actions](../../assets/apps/4_app_component_library/aggrid_actions.png "AgGrid Actions")
+
 ## AgGrid Table configuration
 
 | Name                        |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
@@ -58,10 +75,10 @@ The following section details AgGrid Table component's specific settings. For mo
 
 | Name             |  Type   | Description                                     |
 | ---------------- | :-----: | ----------------------------------------------- |
-| result           | Object  | The AgGrid table data.                          |
+| result           | object  | The AgGrid table data.                          |
 | loading          | boolean | The loading state of the AgGrid table component |
-| selectedRow      | Object  | The selected row                                |
+| selectedRow      | object  | The selected row                                |
 | selectedRowIndex | number  | The selected row index                          |
-| selectedRows     |  Array  | The selected rows                               |
+| selectedRows     |  array  | The selected rows                               |
 | page             | number  | The current page                                |
-| newChanges       | Object  | The latest updated row                          |
+| newChanges       | object  | The latest updated row                          |
