@@ -284,7 +284,13 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: ['apps/app-runnable-panel', 'apps/outputs'],
+							items: [
+								{
+									type: 'doc',
+									id: 'apps/app-runnable-panel',
+									label: 'Runnable Editor (Scripts & Flows)'
+								},
+								'apps/outputs'],
 							collapsed: false
 						},
 						{

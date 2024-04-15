@@ -267,7 +267,7 @@ const pricing = {
 			price: {},
 
 			description:
-				'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
+				'Windmill offers white labeling capabilities, allowing you to embed and customize the Windmill platform to align with your brand.',
 			features: [
 				{ text: 'Embed the entire Windmill app.' },
 				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
@@ -792,6 +792,17 @@ const sections = [
 					Team: true
 				},
 				link: '/docs/apps/default_app'
+			},
+			{
+				name: 'Importing Custom React Components',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/apps/react_components'
 			}
 		]
 	}
