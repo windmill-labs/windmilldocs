@@ -31,6 +31,11 @@ const files = [
         source:
         '/third_party_logos/hubspot.svg',
         url: '/integrations/hubspot',
+    },{
+        title: 'Notion',
+        source:
+        '/third_party_logos/notion.svg',
+        url: '/integrations/notion',
     },
     {
         title: 'OpenAI',

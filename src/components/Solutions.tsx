@@ -91,12 +91,14 @@ export default function Solution({
 	color,
 	extraBlock,
 	website,
+	docs
 }: {
 	data: any;
 	name: string;
 	color: string;
 	extraBlock?: React.ReactNode;
 	website: string;
+	docs: string;
 }) {
 	return (
 		<LayoutProvider>
@@ -146,9 +148,11 @@ export default function Solution({
 										</a>
 										<a
 											type="button"
-											href={`/docs/integrations/${name.toLowerCase()}`}
+											href={`${
+												typeof docs !== 'undefined' ? `/docs/integrations/${docs.toLowerCase()}` : `/docs/integrations/${name.toLowerCase()}`
+											}`}
 											target="_blank"
-											className="flex items-center gap-2 rounded-md bg-blue-50 px-4 py-2 text-sm font-semibold text-gray-900 hover:text-gray-900 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+											className="flex items-center gap-2 rounded-md bg-blue-50 px-4 py-2 text-sm font-semibold text-gray-900 hover:text-gray-900 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 										>
 											Documentation
 											<ArrowRight className="" aria-hidden="true" />

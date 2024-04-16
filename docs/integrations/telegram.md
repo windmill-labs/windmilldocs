@@ -4,7 +4,7 @@
 
 To integrate Telegram to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Stripe Resource](../assets/integrations/add-telegram.png.webp)
+![Add Telegram Resource](../assets/integrations/add-telegram.png.webp "Add Telegram Resource")
 
 | Property | Type   | Description   | Required | Where to find                                                                                                                                                                                                                                                                                                                                                                                                              |
 | -------- | ------ | ------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
