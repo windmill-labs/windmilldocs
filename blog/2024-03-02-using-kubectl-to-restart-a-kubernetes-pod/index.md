@@ -11,9 +11,9 @@ image: ./k8s.png
 
 ![Restarting a Kubernetes Pod with Kubectl](./k8s.png "Restarting a Kubernetes Pod with Kubectl")
 
-In the Kubernetes world, the smallest API object we deal with is the pod. Think of it as the basic building block of Kubernetes. A pod represents a running application process within a cluster and contains one or more containers along with shared resources like storage and network. 
+In the [Kubernetes](https://kubernetes.io/) world, the smallest API object we deal with is the [pod](https://kubernetes.io/docs/concepts/workloads/pods/). Think of it as the basic building block of Kubernetes. A pod represents a running application process within a cluster and contains one or more containers along with shared resources like storage and network. 
 
-The status of a pod provides a snapshot of its current lifecycle stage. There are five stages in total. But what happens when something goes awry with your pod? Perhaps a bug causes an unexpected termination. In such cases, you'll need to restart your Kubernetes pod. This guide will show you how to do just that using kubectl.
+The status of a pod provides a snapshot of its current lifecycle stage. There are five stages in total. But what happens when something goes awry with your pod? Perhaps a bug causes an unexpected termination. In such cases, you'll need to restart your Kubernetes pod. This guide will show you how to do just that using [kubectl](https://kubernetes.io/docs/reference/kubectl/).
 
 ## Why Would You Need to Restart a Pod?
 
@@ -80,6 +80,8 @@ This command gets the YAML statement of currently running pods and pipes the out
 
 In this guide, we've introduced you to Kubernetes pods and why you might need to restart them. Generally, the most recommended way to ensure no application downtime is to use `kubectl rollout restart deployment <deployment_name> -n <namespace>`. 
 
-Windmill runs on Kubernetes and [workers](/docs/core_concepts/worker_groups) can be easily scaled up and down to meet needs. Windmill is an open-source developer platform and workflow engine to build internal tools. It can turn scripts into auto-generated UIs, APIs, and cron jobs. It supports coding in Typescript, Python, Go, Bash, SQL, or any Docker image. You can even [self-host](/docs/advanced/self_host) Windmill within your own environment.
+Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and workflow engine to build internal tools. It can turn scripts into auto-generated UIs, APIs, and cron jobs. It supports coding in Typescript, Python, Go, Bash, SQL, or any Docker image. You can [self-host](/docs/advanced/self_host) Windmill within your own environment.
 
-The helm chart can be found on [GitHub](https://github.com/windmill-labs/windmill-helm-charts).
+Windmill runs on Kubernetes and [workers](/docs/core_concepts/worker_groups) can be easily scaled up and down to meet performance needs.
+
+The Helm chart can be found on [GitHub](https://github.com/windmill-labs/windmill-helm-charts).
