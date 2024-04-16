@@ -10,11 +10,15 @@ To create a token, on Notion go to the [My integrations](https://www.notion.so/m
 
 Do not forget to "Connect to" Windmill the page (and therefore subpages) for which you want Windmill to have access to.
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/notion_integration.mp4"
-/>
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/J4bUqscEGsU?vq=hd1080"
+	title="Notion Integration"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
 
 <br/>
 
