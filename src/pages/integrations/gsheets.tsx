@@ -14,6 +14,7 @@ export default function GSheets() {
 	const color = '#00A55A';
 	const name = 'Google Sheets';
 	const website = 'https://www.google.com/sheets/about/';
+	const docs = "gsheets";
 
 	const data = {
 		title: `APIs, workflows and UIs with ${name}`,
@@ -43,7 +44,7 @@ export default function GSheets() {
 				</p>
 			</div>
 		),
-		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from WindmillHub community library. Windmill supports scripts in TypeScript, Python, Go, Bash and SQL.`,
+		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from Windmill Hub community library. Windmill supports scripts in TypeScript, Python, Go, Bash and SQL.`,
 		hubIntegrations: [
             {
               title: 'Get Values',
@@ -85,5 +86,5 @@ export default function GSheets() {
           
 	};
 
-	return <Solution data={data} name={name} color={color} website={website}  />;
+	return <Solution data={data} name={name} color={color} website={website} docs={docs}  />;
 }

@@ -657,6 +657,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/notion',
+							label: 'Notion'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/openai',
 							label: 'OpenAI'
 						},

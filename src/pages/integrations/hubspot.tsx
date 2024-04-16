@@ -27,7 +27,7 @@ export default function Hubspot() {
 							<span style={{ color }}>{name}</span>
 						</strong>
 					</a>{' '}
-					is a comprehensive inbound marketing, sales, and CRM platform.
+					is an inbound marketing, sales, and CRM platform.
 				</p>
 				<p>
 					Connecting <a href="/">
@@ -43,7 +43,7 @@ export default function Hubspot() {
 				</p>
 			</div>
 		),
-		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from WindmillHub community library. Windmill supports scripts in TypeScript, Python, Go, Bash and SQL.`,
+		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from Windmill Hub community library. Windmill supports scripts in TypeScript, Python, Go, Bash and SQL.`,
 		hubIntegrations: [
 			{
 				title: 'Create Contact',
