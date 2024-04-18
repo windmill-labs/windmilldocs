@@ -32,7 +32,7 @@ export default function Discord() {
 				<p>
 					Connecting <a href="/">
 						<strong>
-							<span style={{ color: '##3b82f6' }}>Windmill</span>
+							<span style={{ color: '#3b82f6' }}>Windmill</span>
 						</strong>
 					</a>{' '} to <span> {name}</span> takes a few seconds and lets you build
 					internal tools from it and integrate with any other platform.

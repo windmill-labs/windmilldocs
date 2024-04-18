@@ -14,6 +14,7 @@ const navigation = [
 	},
 	{
 		items: [
+			{ name: 'GitHub', href: '/integrations/github' },
 			{ name: 'S3', href: '/integrations/s3' },
 			{ name: 'Supabase', href: '/integrations/supabase' },
 			{ name: 'Slack', href: '/integrations/slack' },

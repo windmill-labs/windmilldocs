@@ -55,7 +55,7 @@ All details on S3 Integration, and how to [read](../11_persistent_storage/large_
 ## Base64 encoded strings
 
 Base64 strings can also be used, but the main difficulty is that those Base64 strings can not be distinguished from normal strings.
-Hence, the interpretation ofthose Base64 encoded strings is either done depending on the context,
+Hence, the interpretation of those Base64 encoded strings is either done depending on the context,
 or by pre-fixing those strings with the [`<data specifier:>`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types).
 
 In explicit contexts, when the JSON schema specifies that a property represents Base64-encoded data:
@@ -67,8 +67,8 @@ foo:
 ```
 
 If necessary, Windmill automatically converts it to the corresponding binary type in the corresponding
-language as defined in the schema.
-In python, it will be converted to the `bytes` type. In Typescript, they are simply represented as strings.
+language as defined in the [schema](../13_json_schema_and_parsing/index.md).
+In Python, it will be converted to the `bytes` type (for example `def main (input_file: bytes):`). In TypeScript, they are simply represented as strings.
 
 In ambiguous situations (file ino) where the context does not provide clear indications,
 it is necessary to precede the binary data with the `data:base64` [encoding declaration](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs).

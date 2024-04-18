@@ -21,6 +21,12 @@ const files = [
         maxWidth: '30%',
     },
     {
+        title: 'GitHub',
+        source:
+        '/third_party_logos/github.svg',
+        url: '/integrations/github',
+    },
+    {
         title: 'Google Sheets',
         source:
         '/third_party_logos/gsheets.svg',
