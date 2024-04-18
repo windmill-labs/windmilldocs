@@ -194,7 +194,7 @@ export default function Solution({
 										>
 											<dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
 												<integration.icon
-													className="h-5 w-5 flex-none text-blue-600"
+													className="h-5 w-5 flex-none text-blue-600 dark:text-blue-400"
 													aria-hidden="true"
 												/>
 												{integration.title}
@@ -205,7 +205,7 @@ export default function Solution({
 													<a
 														href={integration.link}
 														target="_blank"
-														className="text-base font-semibold leading-7 text-blue-600"
+														className="text-base font-semibold leading-7 text-blue-600 dark:text-blue-400"
 													>
 														View on the Hub <span aria-hidden="true">→</span>
 													</a>
