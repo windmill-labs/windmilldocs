@@ -90,7 +90,7 @@ def main(length: int) -> str:
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -136,7 +136,7 @@ def main(page: str = "Nicolas Bourbaki"):
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -178,7 +178,7 @@ def main(address: str) -> dict:
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -228,7 +228,7 @@ def main(
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -331,7 +331,7 @@ def main(url: str) -> dict:
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -387,7 +387,7 @@ def main(pdf: bytes) -> dict:
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -441,7 +441,7 @@ def main(csv_bytes: bytes) -> str:
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -500,7 +500,7 @@ def main(image_base64: str):
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -566,7 +566,7 @@ def main(image_base64: str):
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
@@ -675,7 +675,7 @@ def main(
       target="_blank"
       className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Try this script on Windmill
+      <span className="text-white">Try this script on Windmill</span>
     </a>
     <a
       type="button"
