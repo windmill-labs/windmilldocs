@@ -105,8 +105,7 @@ export default function Solution({
 			<main>
 				<Helmet>
 					<title>{name} | Windmill</title>
-					<meta name={data.title} content={data.subtitle} />
-					<meta name={data.title} content={data.subtitle} />
+					<meta name="description" content={data.subtitle} />
 				</Helmet>
 				<LandingHeader />
 
