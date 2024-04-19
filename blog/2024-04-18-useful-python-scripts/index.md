@@ -11,7 +11,7 @@ image: ./python_scripts.png
 
 ![Useful Python Scripts](./python_scripts.png "Useful Python Scripts")
 
-Developers often rely on an assortment of Python scripts to manage and integrate different components of their projects. These scripts serve as essential tools, linking various processes within a project's architecture. While scripts usually aren't overly complicated, managing them can become a repetitive and time-consuming task.
+Developers often rely on an assortment of [Python](https://www.python.org/) scripts to manage and integrate different components of their projects. These scripts serve as essential tools, linking various processes within a project's architecture. While scripts usually aren't overly complicated, managing them can become a repetitive and time-consuming task.
 
 To make things easier, consider automating your scripts. This approach eliminates the need for you to manually run scripts. Instead, you can schedule them to run automatically at certain times or when specific things happen. This not only saves you time but also helps reduce the hassle of repetitive tasks.
 

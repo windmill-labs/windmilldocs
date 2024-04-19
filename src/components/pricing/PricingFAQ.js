@@ -27,7 +27,7 @@ const faqs = [
 				>
 					operator
 				</Link>{' '}
-				is a user that can only execute script, flows and apps, but not create and edit them. This
+				is a user who can only execute scripts, flows and apps, but not create and edit them. This
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />

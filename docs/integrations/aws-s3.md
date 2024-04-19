@@ -70,3 +70,15 @@ See [Object Storage for Large Data](../core_concepts/11_persistent_storage/large
     id="main-video"
     src="/videos/s3_objects_in_bucket.mp4"
 />
+
+## S3/Azure for Python Cache & Large Logs
+
+For large logs storage (and display) and cache for distributed Python jobs, you can connect your instance to a bucket.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="S3/Azure for Python Cache & Large Logs"
+		description="For large logs storage and cache for distributed Python jobs, you can connect your instance to a bucket."
+		href="/docs/core_concepts/jobs#s3azure-for-python-cache--large-logs"
+	/>
+</div>
