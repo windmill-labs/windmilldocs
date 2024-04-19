@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Amazon S3 Integration
 
 [Amazon S3](https://aws.amazon.com/s3/) is a cloud storage service.
@@ -57,16 +59,28 @@ Feel free to create your own S3 scripts on [Windmill](../getting_started/00_how_
 
 :::
 
-
 ## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
 
-You can link a Windmill workspace to an S3 bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+Once you've created an S3 or Azure Blob resource in Windmill, you can use Windmill's native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data.
 
-See [Object Storage for Large Data](../core_concepts/11_persistent_storage/large_data_files.mdx) for more details.
+![S3 Integration Infographic](../core_concepts/11_persistent_storage/s3_infographics.png "S3 Integration Infographic")
 
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="/videos/s3_objects_in_bucket.mp4"
-/>
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Object Storage for Large Data: S3, R2, MinIO, Azure Blob"
+		description="Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data."
+		href="/docs/core_concepts/persistent_storage/large_data_files"
+	/>
+</div>
+
+## S3/Azure for Python Cache & Large Logs
+
+For large logs storage (and display) and cache for distributed Python jobs, you can connect your instance to a bucket.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="S3/Azure for Python Cache & Large Logs"
+		description="For large logs storage and cache for distributed Python jobs, you can connect your instance to a bucket."
+		href="/docs/core_concepts/jobs#s3azure-for-python-cache--large-logs"
+	/>
+</div>
