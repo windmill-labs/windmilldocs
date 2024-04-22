@@ -5,6 +5,7 @@ import BlogSidebar from '@theme/BlogSidebar';
 import { twMerge } from 'tailwind-merge';
 import { useLocation } from '@docusaurus/router';
 import Head from '@docusaurus/Head';
+import Footer from '../../landing/Footer';
 
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
@@ -102,6 +103,7 @@ export default function BlogLayout(props) {
 					{toc && <div className="col col--2">{toc}</div>}
 				</div>
 			</div>
+			<Footer />
 		</Layout>
 	);
 }
