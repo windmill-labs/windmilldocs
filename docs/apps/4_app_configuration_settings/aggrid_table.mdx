@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # AgGrid Table
 
-The AgGrid table component allows you to display an agnostic grid table.
+The AgGrid table component allows you to display an [Ag Grid](https://ag-grid.com/) table.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -40,6 +40,36 @@ The following section details AgGrid Table component's specific settings. For mo
 | :-------------: | :---------: | :---------: | :-----: | --------------- |
 | `Array<Object>` |    true     |    false    |         | The table data. |
 
+The array can be static (hardcoded) or dynamic through an [eval](../3_app-runnable-panel.mdx#eval) function or a compute ([inline script](../3_app-runnable-panel.mdx)).
+
+Example of static input:
+
+```json
+[
+  {
+	"id": 1,
+	"name": "John Doe",
+	"age": 25
+  },
+  {
+	"id": 2,
+	"name": "Jane Doe",
+	"age": 30
+  }
+]
+```
+
+Example of compute input:
+
+```js
+export async function main() {
+  const res = await fetch("https://api.sampleapis.com/recipes/recipes", {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.json();
+}
+```
+
 ## Controls
 
 [getAgGrid](../3_app-runnable-panel.mdx#getaggrid): Use the `getAgGrid` function to get the ag-grid instance of a table.
@@ -57,7 +87,7 @@ Available components are:
 
 ![AgGrid Actions](../../assets/apps/4_app_component_library/aggrid_actions.png "AgGrid Actions")
 
-## AgGrid Table configuration
+## AgGrid Table Configuration
 
 | Name                        |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
 | --------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
@@ -82,3 +112,35 @@ Available components are:
 | selectedRows     |  array  | The selected rows                               |
 | page             | number  | The current page                                |
 | newChanges       | object  | The latest updated row                          |
+
+## AgGrid Infinite Table
+
+The AgGrid Infinite Table component allows you to display an Ag Grid table with infinite scrolling.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/infinite_table.mp4"
+	alt="aggrid infinite table"
+/>
+<br />
+
+With this [SQL syntax](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx), you can create a query that fetches data from the database and lets the component manage:
+- `limit`: Specifies the number of rows to display on a single page or to fetch from the server in one go (here, infinite).
+- `isDesc`: Specifies the order of the rows (ascending or descending).
+- `offset`: Specifies the number of rows to skip before starting to return rows.
+- `search`: A search bar added to the component.
+- `orderBy`: Specifies the column by which the data should be sorted.
+
+```sql
+-- $1 limit
+-- $2 offset
+-- $3 search
+SELECT * FROM products WHERE title ILIKE '%' || $3 || '%'LIMIT $1::INT OFFSET $2::INT;
+```
+
+![AgGrid Infinite Table](../../assets/apps/4_app_component_library/aggrid_infinite.png "AgGrid Infinite Table")
+
+### AgGrid Infinite EE
+
+The AgGrid Infinite EE component allows you to display an Ag Grid table with infinite scrolling and the rest of [AgGrid Enterprise](https://ag-grid.com/license-pricing/) features.

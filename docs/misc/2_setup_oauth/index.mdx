@@ -60,7 +60,7 @@ In the "Authentication" tab, set the redirect URI to `BASE_URL/user/login_callba
 `BASE_URL/auth/logout` where BASE_URL is what you configured as core BASE_URL.
 Also set "Accounts in any organizational directory (Any Microsoft Entra ID tenant -
 Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)", you can restrict the
-emails directly in windmill using the "allowed_domains" setting.
+emails directly in Windmill using the "allowed_domains" setting.
 
 Superadmin Settings -> Instance Settings -> SSO -> Toggle "microsoft" -> set client id, org and client secret.
 
@@ -142,7 +142,7 @@ You can use other custom OAuths as resources using the "Add OAuth" button in: Su
 
 ### Slack
 
-Create a new slack app at `https://api.slack.com/apps?new_app=1`
+Create a new Slack app at `https://api.slack.com/apps?new_app=1`
 
 Pick "From an app manifest", then YAML.
 
@@ -155,7 +155,7 @@ display_information:
   name: Windmill
   description: windmill.dev slackbot and oauth integration
   background_color: '#3b82f6'
-  long_description: The Windmill app allows to use command to run jobs inside Windmill as well as receiving message as the Windmill app. The windmill app pairs a slack workspace with a windmill workspace. It must be installed from within the settings of a windmill workspace.
+  long_description: The Windmill app allows to use command to run jobs inside Windmill as well as receiving message as the Windmill app. The Windmill app pairs a Slack workspace with a Windmill workspace. It must be installed from within the settings of a Windmill workspace.
 features:
   app_home:
     home_tab_enabled: true
@@ -167,7 +167,7 @@ features:
   slash_commands:
     - command: /windmill
       url: <YOUR INSTANCE URL>/api/oauth/slack_command
-      description: Trigger the script set in your workspace settings for slack
+      description: Trigger the script set in your workspace settings for Slack
       usage_hint: the text that will be passed to the script
       should_escape: false
 oauth_config:

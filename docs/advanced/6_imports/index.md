@@ -102,7 +102,7 @@ def main(...):
   ...
 ```
 
-To combine both the inference of windmill and being able to pin dependencies, use `extra_requirements`:
+To combine both the inference of Windmill and being able to pin dependencies, use `extra_requirements`:
 
 ```python
 #extra_requirements:

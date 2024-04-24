@@ -30,6 +30,8 @@ You might also be interested in Audit Logs:
 The Runs menu in each workspace provides a time series view where you can monitor different time slots.
 The green (respectively, red) dots being the tasks that succeeded (respectively, failed).
 
+You can filer the view per datetime or toggle "Jobs from Schedules" to disable the display of [scheduled](../1_scheduling/index.mdx) runs.
+
 ![Time series](./1-runs-menu.png 'Time series')
 
 > All past and future runs of the workspace are visible from the menu.
@@ -57,7 +59,7 @@ View of a scheduled run:
 You can adjust the level of details by picking playing with filters on:
 
 - **Datetime**
-- **Metadata**: [Path](../16_roles_and_permissions/index.mdx#path) / User / Folder
+- **Metadata**: [Path](../16_roles_and_permissions/index.mdx#path) / [User](../16_roles_and_permissions/index.mdx#users) / [Folder](../8_groups_and_folders/index.mdx) / Labels
 - **Kind**: All / Runs / Previews / Dependencies
 - **Status**: All / Success / Failure
 - **Skipped flows**
@@ -69,3 +71,19 @@ Example of filters in use:
 ![Filters](./4-filters.png 'Filters')
 
 > Here were filtered successful runs from August 2023 which returned `{"baseNumber": 11}`.
+
+## Jobs Labels
+
+Labels allow to add static or dynamic tags to [jobs](../20_jobs/index.mdx) with property "wm_labels" followed by an array of strings.
+
+```js
+export async function main() {
+  return {
+    "wm_labels": ["showcase_labels", "another_label"]
+  }
+}
+```
+
+Jobs can be filtered by labels in the Runs menu to monitor specific groups of jobs.
+
+![Run labels](./runs_labels.png 'Run labels')

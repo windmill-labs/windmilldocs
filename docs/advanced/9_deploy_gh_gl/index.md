@@ -131,7 +131,7 @@ on:
   push:
     branches:
       - 'main'
-    # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
+    # if the Windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to Windmill when there's no change
     # paths:
     #   - wm/**
 
