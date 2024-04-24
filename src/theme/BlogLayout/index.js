@@ -102,7 +102,17 @@ export default function BlogLayout(props) {
 					</main>
 					{toc && <div className="col col--2">{toc}</div>}
 				</div>
+				<div className="mt-4 text-lg leading-8 container">
+					<a
+						href={isChangelog ? '/changelog/archive' : '/blog/archive'}
+						target="_blank"
+						className="text-sm"
+					>
+						{isChangelog ? 'Changelog archive' : 'Blog archive'}
+					</a>
+				</div>
 			</div>
+
 			<Footer />
 		</Layout>
 	);
