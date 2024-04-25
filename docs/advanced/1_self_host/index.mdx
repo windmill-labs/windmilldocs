@@ -146,7 +146,7 @@ curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-su
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
 
-Make sure that the user used in the DATABASE_URL passed to windmill has the role `windmill_admin` and `windmill_user`:
+Make sure that the user used in the DATABASE_URL passed to Windmill has the role `windmill_admin` and `windmill_user`:
 
 ```sql
 GRANT windmill_admin TO <user used in database_url>;
