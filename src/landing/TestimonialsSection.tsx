@@ -169,7 +169,8 @@ const clientTestimonials = [
 			position: 'Co-Founder & CTO',
 			dark: '/images/brands/logo-original-dark-transparent.png',
 			light: '/images/brands/logo-original-light-transparent.png',
-			anchor: 'photoroom'
+			anchor: 'photoroom',
+			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQEgFugU1CsFxA/profile-displayphoto-shrink_400_400/0/1709041891469?e=1719446400&v=beta&t=oJBEWO8a4xQSmO0MGqryGgdSmj3e6KKRjxhs2IVXMs0',
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
@@ -182,7 +183,8 @@ const clientTestimonials = [
 			position: 'Software Engineer',
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
-			anchor: 'kahoot'
+			anchor: 'kahoot',
+			profile_picture: 'https://media.licdn.com/dms/image/C4E03AQHGq8BtXdRm_Q/profile-displayphoto-shrink_200_200/0/1516320962101?e=1719446400&v=beta&t=yxGBFspRGNpOqcL_2uEkBRqK6Op1AzadqmUyXb3D2lI'
 		},
 		company_url: 'https://motimateapp.com',
 		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
@@ -195,7 +197,8 @@ const clientTestimonials = [
 			position: 'Chief Technology Officer',
 			dark: '/images/brands/Bloomcredit-Dark.svg',
 			light: '/images/brands/Bloomcredit-Light.svg',
-			anchor: 'bloomcredit'
+			anchor: 'bloomcredit',
+			profile_picture: 'https://media.licdn.com/dms/image/C4E03AQGsYhBLnQ307A/profile-displayphoto-shrink_200_200/0/1626408831967?e=1719446400&v=beta&t=eRmvNTEh7i8PLxgiQM-CoOiaMRzZG0uAr3eilcMrfrc'
 		},
 		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
 		company_url: 'https://bloomcredit.io',
@@ -209,7 +212,8 @@ const clientTestimonials = [
 			position: 'Co-Founder & CEO',
 			dark: '/images/brands/Qovery-dark.png',
 			light: '/images/brands/Qovery-light.svg',
-			anchor: 'qovery'
+			anchor: 'qovery',
+			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_200_200/0/1693895616954?e=1719446400&v=beta&t=N_v3VJUZvoyLAgW2Egs63YpgJOzIPy_WF_D2hd9GB0I'
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
@@ -230,12 +234,7 @@ const clientTestimonials = [
 ];
 
 export default function Example() {
-	const [showAll, setShowAll] = useState(true);
 	const { colorMode } = useColorMode();
-
-	const toggleTestimonials = () => {
-		setShowAll(!showAll);
-	};
 
 	return (
 		<LandingSection bgClass="">
@@ -250,56 +249,66 @@ export default function Example() {
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
-					<div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
-						{clientTestimonials.map((testimonial, index) => (
-							<div
-								key={testimonial.author.name + index}
-								className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
-								id={testimonial.author.anchor}
-							>
-								<div className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm">
-									<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
-										<p>{testimonial.text}</p>
-									</div>
-									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4 ">
-										{testimonial.linkedIn ? (
-											<a className="w-full" href={testimonial.linkedIn} target="_blank">
-												<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
-													{testimonial.author.name}
-												</p>
-												<div className="text-sm dark:text-gray-50 text-gray-500">
-													{[testimonial.author.position, testimonial.author.company]
-														.filter(Boolean)
-														.join(' @ ')}
-												</div>
-											</a>
-										) : (
-											<>
-												<p className="text-sm font-bold dark:text-gray-50 text-gray-900 w-full ">
-													{testimonial.author.name}
-												</p>
-												<div className="text-sm dark:text-gray-50 text-gray-500">
-													{[testimonial.author.position, testimonial.author.company]
-														.filter(Boolean)
-														.join(' @ ')}
-												</div>
-											</>
-										)}
+  <div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
+    {clientTestimonials.map((testimonial, index) => (
+      <div
+        key={testimonial.author.name + index}
+        className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
+        id={testimonial.author.anchor}
+      >
+        <div className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm">
+          <div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
+            <p>{testimonial.text}</p>
+          </div>
+          <div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4">
+            {testimonial.author.profile_picture ? (
+              <a href={testimonial.linkedIn ? testimonial.linkedIn : "#"} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={testimonial.author.profile_picture}
+                  alt={testimonial.author.name}
+                  className="w-12 h-12 rounded-full border-2 border-blue-500 flex-shrink-0"
+                />
+              </a>
+            ) : null}
+            {testimonial.linkedIn ? (
+              <a className="flex-grow" href={testimonial.linkedIn} target="_blank" rel="noopener noreferrer">
+                <p className="text-sm font-bold dark:text-gray-50 text-gray-900">
+                  {testimonial.author.name}
+                </p>
+                <div className="text-sm dark:text-gray-50 text-gray-500">
+                  {[testimonial.author.position, testimonial.author.company]
+                    .filter(Boolean)
+                    .join(' @ ')}
+                </div>
+              </a>
+            ) : (
+              <>
+                <p className="text-sm font-bold dark:text-gray-50 text-gray-900 w-full">
+                  {testimonial.author.name}
+                </p>
+                <div className="text-sm dark:text-gray-50 text-gray-500">
+                  {[testimonial.author.position, testimonial.author.company]
+                    .filter(Boolean)
+                    .join(' @ ')}
+                </div>
+              </>
+            )}
 
-										<a
-											className="flex-shrink-0 cursor-pointer"
-											href={testimonial.company_url}
-											target="_blank"
-											title={testimonial.author.company}
-										>
-											<img
-												width={100}
-												height={32}
-												src={
-													colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light
-												}
-												alt=""
-											/>
+            <a
+              className="flex-shrink-0 cursor-pointer"
+              href={testimonial.company_url}
+              target="_blank"
+              title={testimonial.author.company}
+              rel="noopener noreferrer"
+            >
+              <img
+                width={100}
+                height={32}
+                src={
+                  colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light
+                }
+                alt=""
+              />
 										</a>
 									</div>
 								</div>
@@ -309,37 +318,31 @@ export default function Example() {
 
 					<div className="flex flex-row gap-2 items-center mb-4 h-8">
 						<div className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">Community</div>
-						<button
-							onClick={toggleTestimonials}
-							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-1 text-xs font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
-						>
-							{showAll ? 'Show Less' : 'Show All'}
-						</button>
 					</div>
 
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
-						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial, index) => (
-							<div
-								key={testimonial.author.handle + index}
-								className="sm:inline-block sm:w-full mb-4 testimonials"
-							>
-								<a
-									href={testimonial.author.backlink}
-									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-6 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
-									target="_blank"
-								>
-									<div className="dark:text-gray-50 text-gray-900">
-										<p>{testimonial.body}</p>
-									</div>
-									<div
-										className={`font-semibold dark:text-gray-50 text-gray-900 mt-2 ${testimonial.author.handle}-name`}
-									>
-										{testimonial.author.name}
-									</div>
-									<div className="text-xs text-gray-400 mt-1">{testimonial.author.date}</div>
-								</a>
+					{testimonials.map((testimonial, index) => (
+						<div
+						key={testimonial.author.handle + index}
+						className="sm:inline-block sm:w-full mb-4 testimonials"
+						>
+						<a
+							href={testimonial.linkedIn}
+							className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-6 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
+							target="_blank"
+						>
+							<div className="dark:text-gray-50 text-gray-900">
+							<p>{testimonial.body}</p>
 							</div>
-						))}
+							<div
+							className={`font-semibold dark:text-gray-50 text-gray-900 mt-2 ${testimonial.author.handle}-name`}
+							>
+							{testimonial.author.name}
+							</div>
+							<div className="text-xs text-gray-400 mt-1">{testimonial.author.date}</div>
+						</a>
+						</div>
+					))}
 					</div>
 				</div>
 			</div>
