@@ -15,7 +15,7 @@ Once Deno/Bun is installed, you can import the `windmill` module directly from t
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import * as wmill from 'npm:windmill-client';
+import * as wmill from 'npm:windmill-client@1.318.0';
 ```
 
 </TabItem>
@@ -36,7 +36,7 @@ The TypeScript client provides several functions that you can use to interact wi
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import * as wmill from 'npm:windmill-client';
+import * as wmill from 'npm:windmill-client@1.318.0';
 
 export async function main() {
 	let x = await wmill.getResource('u/user/name');
@@ -58,3 +58,5 @@ export async function main() {
 </Tabs>
 
 In the example above, the `getResource` function is used to retrieve a resource with the path `'u/user/name'` from the Windmill platform. The returned resource can be further processed or used as needed in your application.
+
+For more details and documentation on the client, you can visit [jsr.io/@windill/windmill](https://jsr.io/@windmill/windmill), although jsr.io is not supported for actual package imports yet.
