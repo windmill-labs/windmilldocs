@@ -57,12 +57,12 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the [runs page
   script editors. Even when code is executed as a preview, you keep a trace of
   its execution.
 
-- **Dependencies Jobs**: Scripts written in Python generate a lock file when
+- **Dependencies Jobs**: Scripts written in Python generate a lockfile when
   they are saved/created. This lockfile ensures that an execution of the same
   hash will always use the same versions. The process of generating this
   lockfile is also a job in itself so you can easily inspect the issues
   generating the lockfile if any. See
-  [Dependency Management](../../advanced/6_imports/index.md) for more information.
+  [Dependency Management](../../advanced/6_imports/index.mdx) for more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
   every step. The execution of the steps are in-themselves jobs. It is defined
