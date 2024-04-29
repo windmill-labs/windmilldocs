@@ -6,7 +6,7 @@ Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
 Having a Windmill instance synchronized to folders & git repositories allows for
-local development through the [VS Codeextension](../../cli_local_dev/1_vscode-extension/index.mdx).
+local development through the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -45,7 +45,7 @@ updating the remote equivalents.
 Stateful syncing is currently the default but will soon require the --stateful flag
 
 Stateful syncing is best used when your Git repo and Windmill workspace might diverge (because of not using [Git Sync](../11_git_sync/index.mdx))
-and you want to keep track of the state the last time you pulled to check for merge conflicts.The CLI will automatically
+and you want to keep track of the state the last time you pulled to check for merge conflicts. The CLI will automatically
 maintain state for you and ensure modifications that happen concurrently on the remote and locally stay in sync.
 
 ### Pulling
