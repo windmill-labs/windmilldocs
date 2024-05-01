@@ -63,7 +63,7 @@ export default function EnterpriseFeatures() {
 								className="flex flex-col p-6 bg-gray-50 dark:bg-gray-900 rounded-lg min-h-60 hover:bg-opacity-50 cursor-pointer"
 							>
 								<dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
-									<feature.icon className="h-5 w-5 flex-none text-blue-600" aria-hidden="true" />
+									<feature.icon className="h-5 w-5 flex-none text-blue-600 dark:text-blue-400" aria-hidden="true" />
 									{feature.name}
 								</dt>
 								<dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600 dark:text-gray-200">
@@ -72,7 +72,7 @@ export default function EnterpriseFeatures() {
 										<p className="mt-6">
 											<a
 												href={feature.href}
-												className="text-base font-semibold leading-7 text-blue-600"
+												className="text-base font-semibold leading-7 text-blue-600 dark:text-blue-400"
 											>
 												Learn more <span aria-hidden="true">→</span>
 											</a>

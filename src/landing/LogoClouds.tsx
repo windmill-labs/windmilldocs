@@ -9,8 +9,8 @@ export default function LogoClouds() {
 	const logos = [
 		{
 			url: 'https://www.photoroom.com',
-			dark: '/images/brands/logo-mono-white-transparent.png',
-			light: '/images/brands/logo-mono-black-transparent.png',
+			dark: '/images/brands/Photoroom-Dark.svg',
+			light: '/images/brands/Photoroom-Light.svg',
 			name: 'Photoroom',
 			anchor: 'photoroom'
 		},

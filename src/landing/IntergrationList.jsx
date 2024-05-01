@@ -68,7 +68,7 @@ export default function IntergrationList() {
 						Integrations
 					</div>
 					<span className={`text-lg max-w-2xl mb-8  font-normal`}>
-						Incorporte Windmill into any workflow with our 100+ integrations
+						Incorporate Windmill into any workflow with our 100+ integrations or build your own directly in the platform.
 					</span>
 				</div>
 

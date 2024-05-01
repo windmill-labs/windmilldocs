@@ -104,7 +104,7 @@ export default function Solution({
 		<LayoutProvider>
 			<main>
 				<Helmet>
-					<title>{name} | Windmill</title>
+					<title>APIs, workflows and UIs with {name} | Windmill</title>
 					<meta name="description" content={data.subtitle} />
 				</Helmet>
 				<LandingHeader />
