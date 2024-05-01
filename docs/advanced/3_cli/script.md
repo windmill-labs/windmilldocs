@@ -63,7 +63,7 @@ wmill script bootstrap --summary 'Great script' --description 'This script does 
 
 ## (Re-)Generating a script metadata file
 
-The wmill script generate-metadata command is used to read all the files that have been edited and gracefully update the metadata file accordingly, inferring the script schema from the script content and generating the locks. Only the schema and the locks part of the metadata file will be updated. If a change was made to other fields like description or summary, it will be kept.
+The wmill script generate-metadata command is used to read all the files that have been edited and gracefully update the metadata file and lockfile accordingly, inferring the script schema from the script content and generating the locks. Only the schema and the locks part of the metadata file will be updated. If a change was made to other fields like description or summary, it will be kept.
 
 You can also generate metadata for a single script with `wmill script generate-metadata <path>`:
 
