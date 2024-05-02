@@ -62,21 +62,6 @@ export default function HeroExample() {
 						infra or ours, with permissioning and monitoring included. Fully open-source and easy to
 						deploy on small and large infra. Any dependency with zero-config.
 					</p>
-					<div className="flex flex-row justify-end w-full gap-4 items-center">
-						<div className="flex flex-col gap-1">
-							<div className="text-sm font-medium ">{'Short on time?'}</div>
-							<div className="text-xs">{'Check out our 2-minute tour!'}</div>
-						</div>
-						<a
-							href="https://www.youtube.com/watch?v=IOvzHJ2BHl8"
-							target="_blank"
-							rel="noreferrer"
-							className="h-8 text-xs font-medium  bg-blue-100 !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1 px-3 hover:bg-opacity-80 transition-all"
-						>
-							{'Watch Now'}
-							<ExternalLink size={16} className="!text-blue-600" />
-						</a>
-					</div>
 					<div className="video-container">
 						<iframe
 							src="https://www.youtube.com/embed/IOvzHJ2BHl8"
@@ -85,6 +70,21 @@ export default function HeroExample() {
 							allowFullScreen={true}
 							className="rounded-xl"
 						></iframe>
+					</div>
+					<div className="flex flex-row justify-end w-full gap-4 items-center">
+						<div className="flex flex-col gap-1">
+							<div className="text-sm font-medium ">{'Short on time?'}</div>
+							<div className="text-xs">{'Check out our 2-minute tour!'}</div>
+						</div>
+						<a
+							href="https://www.youtube.com/watch?v=pJh2fdstV-A"
+							target="_blank"
+							rel="noreferrer"
+							className="h-8 text-xs font-medium  bg-blue-100 !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline flex flex-row gap-1 items-center rounded-md justify-center py-1 px-3 hover:bg-opacity-80 transition-all"
+						>
+							{'Watch Now'}
+							<ExternalLink size={16} className="!text-blue-600" />
+						</a>
 					</div>
 				</div>
 			</LandingSection>
