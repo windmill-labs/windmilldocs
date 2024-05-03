@@ -1,6 +1,6 @@
 import React from 'react';
 import LandingSection from './LandingSection';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowRight } from 'lucide-react';
 import classNames from 'classnames';
 import {
 	SiGithub,
@@ -15,6 +15,7 @@ import {
 } from 'react-icons/si';
 
 const integrations = [
+	{ name: 'OpenAI', src: 'third_party_logos/openai.svg', Icon: SiOpenai },
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'MySQL', src: 'third_party_logos/mysql.svg', Icon: SiMysql },
 	{ name: 'MS SQL', src: 'third_party_logos/msssql.svg', Icon: SiMicrosoftsqlserver },
@@ -45,7 +46,6 @@ const integrations = [
 	{ name: 'MongoDB', src: 'third_party_logos/mongodb.svg' },
 	{ name: 'Neon', src: 'third_party_logos/neon.svg' },
 	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
-	{ name: 'OpenAI', src: 'third_party_logos/openai.svg', Icon: SiOpenai },
 	{ name: 'Redis', src: 'third_party_logos/redis.svg' },
 	{ name: 'Rss', src: 'third_party_logos/rss.svg' },
 	{ name: 'S3', src: 'third_party_logos/s3.svg' },
@@ -62,24 +62,23 @@ const integrations = [
 export default function IntergrationList() {
 	return (
 		<LandingSection bgClass="">
-			<div className="w-full gap-8 flex flex-col">
-				<h1 className="tracking-tight leading-tight text-left font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-blue-600">
-					Integrations
-				</h1>
+			<div className="w-full gap-4 flex flex-col">
+				<div className="w-full gap-4 flex flex-col">
+					<div className={`text-5xl max-w-2xl font-normal tracking-tight leading-12 mb-2  pt-8`}>
+						Integrations
+					</div>
+					<span className={`text-lg max-w-2xl mb-8  font-normal`}>
+						Incorporate Windmill into any workflow with our 100+ integrations or build your own directly in the platform.
+					</span>
+				</div>
 
-				<span className={classNames('text-lg max-w-3xl', 'text-gray-600 dark:text-gray-200')}>
-					We have a growing list of integrations with third party services available on the Hub.
-					<br />
-					Connect your apps and services to automate your workflows.
-				</span>
-
-				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-12 gap-4">
+				<div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-2 bg-gray-50 dark:bg-gray-900 p-8 rounded-lg">
 					{integrations.map((item) => (
 						<a
 							key={item.name}
 							className={classNames(
-								'col-span-1 flex justify-center rounded-xl border dark:border-gray-800 cursor-pointer transition-all',
-								' hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800'
+								'col-span-1 flex justify-center rounded-lg shadow-sm dark:border-gray-800 cursor-pointer transition-all',
+								' hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800 bg-white'
 							)}
 							href={
 								item.name === 'PostgreSQL' ||
@@ -96,20 +95,18 @@ export default function IntergrationList() {
 							{item.Icon ? (
 								<item.Icon className="w-10 h-full text-gray-900 dark:text-white" />
 							) : (
-								<img src={item.src} alt={item.name} className="w-auto h-8 m-4" loading="lazy" />
+								<img src={item.src} alt={item.name} className="w-auto h-8 m-4 " loading="lazy" />
 							)}
 						</a>
 					))}
-				</div>
-				<div className="flex">
 					<a
 						href="https://hub.windmill.dev/resources"
 						type="button"
 						target="_blank"
-						className="!no-underline hover:text-white inline-flex items-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+						className={`text-sm flex flex-row items-center gap-2 col-span-full mt-4 !no-underline text-gray-900 dark:text-white`}
 					>
 						Explore all integrations on the Hub
-						<ExternalLink className="ml-2 h-5" />
+						<ArrowRight size={24} />
 					</a>
 				</div>
 			</div>

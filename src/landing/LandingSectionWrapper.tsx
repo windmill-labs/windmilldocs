@@ -70,7 +70,7 @@ export default function LandingSectionWrapper({
 				/>
 			</div>
 
-			<div className="max-w-7xl px-6 lg:px-8 mx-auto flex justify-center items-center h-full">
+			<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center items-center h-full">
 				{children}
 			</div>
 		</div>

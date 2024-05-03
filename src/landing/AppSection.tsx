@@ -10,9 +10,10 @@ import {
 	Puzzle,
 	Palette,
 	ToyBrick,
-	Brush
+	Brush,
+	Database
 } from 'lucide-react';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
 
 import Section from './Section';
 
@@ -21,7 +22,7 @@ import { SiGo, SiPostgresql, SiPython, SiSvelte, SiTypescript, SiVuedotjs } from
 
 const tabs = [
 	{
-		label: 'App editor',
+		label: 'App Editor',
 		icon: Code,
 		id: 'app-editor',
 		data: [
@@ -53,7 +54,7 @@ const tabs = [
 					<div>
 						Quickly start building complex apps using our{' '}
 						<a href="/docs/apps/app_configuration_settings/app_component_library" target="_blank">
-							50 built-in components
+							60+ built-in components
 						</a>
 						.
 					</div>
@@ -112,7 +113,25 @@ const tabs = [
 		id: 'admin-panel',
 		data: [
 			{
-				title: 'Build complex admin panel with table, action',
+				title: 'Database Studio',
+				description:
+					'From a SQL resource, display, edit, add rows, delete rows ... and connect to other components.',
+				icon: Database,
+				caption: (
+					<div>
+						<a href="/docs/apps/app_configuration_settings/database_studio" target="_blank">
+							From a SQL resource
+						</a>
+						, display, edit, add rows, delete rows ... and connect to other components.
+					</div>
+				),
+				video: {
+					videoSrc: '/videos/db_studio.mp4',
+					altText: 'Database Studio'
+				}
+			},
+			{
+				title: 'Build complex admin panel with table & actions',
 				description: 'Build complex apps from atomic components.',
 				icon: FormInput,
 				caption: (

@@ -58,6 +58,35 @@ Depending on the type of chart, you can configure the following properties:
 
 ![agcharts-rangebar](../../assets/apps/4_app_component_library/agcharts-rangebar.png.webp)
 
+## Dynamically Configure AgGrid
+
+You can use scripts and [connect them](../2_connecting_components/index.mdx) to the dataset, settings or Column Definitions of your AgGrid component to dynamically configure it.
+
+For example, you can control the cellStyle, or whether it's editable.
+
+```py
+def main():
+    return [
+        {
+            "field": "id",
+            "flex": 1,
+            "cellStyle": {"color": "blue", "background-color": "lightblue"},
+        },
+        {"field": "name", "editable": True, "flex": 1},
+        {"field": "age", "flex": 1},
+    ]
+```
+
+For example, you can control the cellStyle, whether it's editable. Here the first column has a lightblue bg, and the second one is editable.
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="modal-layout"
+	src="/videos/dynamic_aggrid.mp4"
+	alt="Dynamic AgGrid"
+/>
+
 ## AgCharts EE
 
-You have to provide a valid license key to use AgCharts EE. You can find more information about AgCharts EE [here]https://charts.ag-grid.com/javascript/licensing/).
+You have to provide a valid license key to use AgCharts EE (Enterprise Edition). You can find more information about AgCharts EE [here](https://charts.ag-grid.com/javascript/licensing/).

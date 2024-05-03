@@ -1,6 +1,8 @@
 # ClickHouse Integration
 
-To integrate [ClickHouse](https://clickhouse.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[ClickHouse](https://clickhouse.com/) is an open-source column-oriented database management system.
+
+To integrate ClickHouse to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add ClickHouse Resource](../assets/integrations/add-clickhouse.png.webp)
 

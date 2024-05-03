@@ -1,6 +1,7 @@
 import React from 'react';
 import { useColorMode } from '@docusaurus/theme-common';
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 export default function LogoClouds() {
 	const { colorMode } = useColorMode();
@@ -8,8 +9,8 @@ export default function LogoClouds() {
 	const logos = [
 		{
 			url: 'https://www.photoroom.com',
-			dark: '/images/brands/logo-mono-white-transparent.png',
-			light: '/images/brands/logo-mono-black-transparent.png',
+			dark: '/images/brands/Photoroom-Dark.svg',
+			light: '/images/brands/Photoroom-Light.svg',
 			name: 'Photoroom',
 			anchor: 'photoroom'
 		},
@@ -52,11 +53,11 @@ export default function LogoClouds() {
 
 	return (
 		<div className="py-24 sm:py-32">
-			<div className="mx-auto max-w-7xl px-6 lg:px-8">
-				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900">
+			<div className="mx-auto max-w-7xl px-4 lg:px-8">
+				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
 					Trusted by 1000+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-0 lg:max-w-none lg:grid-cols-6">
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
@@ -67,7 +68,8 @@ export default function LogoClouds() {
 							<img
 								className={classNames(
 									'col-span-3 max-h-12 w-full object-contain lg:col-span-1 ',
-									logo.gap ? 'py-2' : ''
+									logo.gap ? 'py-2' : '',
+									'grayscale transition-all hover:grayscale-0'
 								)}
 								src={colorMode === 'light' ? logo.light : logo.dark}
 								alt={logo.name}

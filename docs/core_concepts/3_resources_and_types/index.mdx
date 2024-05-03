@@ -6,11 +6,11 @@ import TabItem from '@theme/TabItem';
 
 Resources are rich objects in JSON that allow to store configuration and credentials.
 
-In Windmill, Resources represent connections to third party systems. Resources are a good way to define a
-connection to a frequently used third party system such as a database. Think of
+In Windmill, Resources represent connections to third-party systems. Resources are a good way to define a
+connection to a frequently used third-party system such as a database. Think of
 Resources as a structured way to store configuration and credentials, and access them from scripts.
 
-Each Resource has a **Resource Type** (**RT** for short) - for example [MySQL](https://hub.windmill.dev/resource_types/111/mysql),
+Each Resource has a **Resource Type** (RT for short) - for example [MySQL](https://hub.windmill.dev/resource_types/111/mysql),
 [MongoDB](https://hub.windmill.dev/resource_types/22/mongodb), [OpenAI](https://hub.windmill.dev/resource_types/61/openai), etc. - that defines the schema that the resource of this type
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
@@ -38,30 +38,27 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 
 ## Create a Resource
 
-To create a resource using an existing type, go to the
+To create a resource using an existing type, go to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources </a> page and click "Add a resource/API".
 
-<a href="https://app.windmill.dev/resources" rel="nofollow">
-	Resources
-</a>
-page and click "Add a resource/API".
+![Add a resource](./add_resource.png.webp "Add a resource")
 
-![Add a resource](./add_resource.png.webp)
-
-Just like most objects in Windmill, Resources have a path that define their
+Just like most objects in Windmill, Resources have a path that defines their
 permissions - see [ownership path prefix](../16_roles_and_permissions/index.mdx).
 
 Each **Resource** has a **Resource Type**, that defines what fields that
 resource contains. Select one from the list and check the schema to see what
 fields are present.
 
-![Add resource example](./add_sf_resource.png.webp)
-
 Resources commonly need to access secrets or re-use
-[Variables](../2_variables_and_secrets/index.mdx), for example passwords or API
+[Variables](../2_variables_and_secrets/index.mdx), for example, passwords or API
 tokens. To insert a Variable into a Resource, use **Insert variable** (the `$`
 sign button) and select a Variable. The name of a Variable will look like
 `$VAR:<NAME_OF_VAR>`. When resources are called from a Script, the Variable
 reference will be replaced by its value.
+
+Resources can be assigned a description. It supports markdown.
+
+![Resource description](./resource_description.png "Resource description")
 
 :::tip
 
@@ -156,7 +153,7 @@ _TypeScript_
   called in - if any - and the path of the Script.
 - `setState(value: any)` which sets the new state.
 
-> Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Deno/Bun.
+> Please note it requires [importing](../../advanced/6_imports/index.mdx) the wmill client library from Deno/Bun.
 
 <br />
 
@@ -168,13 +165,13 @@ _Python_
   called in - if any - and the path of the Script.
 - `set_state(value: Any)` which sets the new state.
 
-> Please note it requires [importing](../../advanced/6_imports/index.md) the wmill client library from Python.
+> Please note it requires [importing](../../advanced/6_imports/index.mdx) the wmill client library from Python.
 
 <br />
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
@@ -182,7 +179,7 @@ _Python_
 
 ### States Path
 
-States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the script, script within a flow or schedule. The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
+States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the [script](../../script_editor/index.mdx), script within a [flow](../../flows/1_flow_editor.mdx) or [schedule](../1_scheduling/index.mdx). The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
 
 ```rust
     let state_path = {
@@ -211,6 +208,48 @@ States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that i
 ```
 
 For example, if a script using states is used within a flow that is scheduled, the state will take a new path as: `folder/flow_path/script_path/schedule_path`, or more concretely: `u/username/u/username/flow_name/u/username/script_name/u/username/schedule_name`.
+
+### Custom Flow States
+
+Custom flow states are a way to store data across steps in a [flow](../../flows/1_flow_editor.mdx). You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally. That state will be stored in the flow state itself and thus has the same lifetime as the flow [job](../20_jobs/index.mdx) itself.
+
+It's a powerful escape hatch when [passing data as output/input](../../flows/16_architecture.mdx) is not feasible and using [getResource/setResource](#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) has the issue of cluttering the workspace and inconvenient UX.
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as wmill from "windmill-client@1.297.0"
+
+export async function main(x: string) {
+  await wmill.setFlowUserState("FOO", 42)
+  return await wmill.getFlowUserState("FOO")
+
+}
+```
+
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+#extra_requirements:
+#wmill==1.297.0
+
+def main(x: str):
+    wmill.set_flow_user_state("foobar", 43)
+    return wmill.get_flow_user_state("foobar")
+```
+
+</TabItem>
+</Tabs>
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_state.mp4"
+/>
+
 
 ## Using Resources
 

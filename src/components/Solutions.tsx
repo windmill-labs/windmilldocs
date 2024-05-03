@@ -91,20 +91,21 @@ export default function Solution({
 	color,
 	extraBlock,
 	website,
+	docs
 }: {
 	data: any;
 	name: string;
 	color: string;
 	extraBlock?: React.ReactNode;
 	website: string;
+	docs: string;
 }) {
 	return (
 		<LayoutProvider>
 			<main>
 				<Helmet>
-					<title>{name} | Windmill</title>
-					<meta name={data.title} content={data.subtitle} />
-					<meta name={data.title} content={data.subtitle} />
+					<title>APIs, workflows and UIs with {name} | Windmill</title>
+					<meta name="description" content={data.subtitle} />
 				</Helmet>
 				<LandingHeader />
 
@@ -146,9 +147,11 @@ export default function Solution({
 										</a>
 										<a
 											type="button"
-											href={`/docs/integrations/${name.toLowerCase()}`}
+											href={`${
+												typeof docs !== 'undefined' ? `/docs/integrations/${docs.toLowerCase()}` : `/docs/integrations/${name.toLowerCase()}`
+											}`}
 											target="_blank"
-											className="flex items-center gap-2 rounded-md bg-blue-50 px-4 py-2 text-sm font-semibold text-gray-900 hover:text-gray-900 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+											className="flex items-center gap-2 rounded-md bg-blue-50 px-4 py-2 text-sm font-semibold text-gray-900 hover:text-gray-900 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
 										>
 											Documentation
 											<ArrowRight className="" aria-hidden="true" />
@@ -190,7 +193,7 @@ export default function Solution({
 										>
 											<dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
 												<integration.icon
-													className="h-5 w-5 flex-none text-blue-600"
+													className="h-5 w-5 flex-none text-blue-600 dark:text-blue-400"
 													aria-hidden="true"
 												/>
 												{integration.title}
@@ -201,7 +204,7 @@ export default function Solution({
 													<a
 														href={integration.link}
 														target="_blank"
-														className="text-base font-semibold leading-7 text-blue-600"
+														className="text-base font-semibold leading-7 text-blue-600 dark:text-blue-400"
 													>
 														View on the Hub <span aria-hidden="true">→</span>
 													</a>
@@ -212,6 +215,18 @@ export default function Solution({
 								</dl>
 							</div>
 							{extraBlock}
+						</div>
+						<div className="flex flex-row gap-2">
+							<a
+								type="button"
+								tag="no_follow"
+								href="https://app.windmill.dev/user/login"
+								target="_blank"
+								className="flex items-center gap-2 rounded-md bg-[#4285F4] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+							>
+								Build your own scripts for {name}
+								<ArrowRight className="" aria-hidden="true" />
+							</a>
 						</div>
 					</div>
 				</LandingSection>

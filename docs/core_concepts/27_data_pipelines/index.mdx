@@ -11,10 +11,10 @@ In essence, an ETL (Extract, Transform, Load) process is a Directed Acyclic Grap
 
 Windmill streamlines the creation of data pipelines that are not only fast and reliable but also straightforward to construct:
 
-- **Developer Experience**: Windmill's design facilitates the swift assembly of data flows, allowing for step-by-step data processing in a visually intuitive and manageable manner.
-- **Control and Efficiency**: It offers the ability to manage parallelism across steps and set concurrency limits to accommodate external resources that may be sensitive to overload or have rate limits.
-- **Flexibility in Execution**: Flows in Windmill can be restarted from any point, enhancing the process of pipeline development and debugging by making it more flexible and efficient.
-- **Simplified Monitoring**: Built-in error and recovery handling mechanisms simplify monitoring, ensuring that managing your data pipelines is both effective and straightforward.
+- **Developer Experience**: Windmill's design facilitates the swift assembly of data [flows](../../flows/1_flow_editor.mdx), allowing for step-by-step data processing in a visually intuitive and manageable manner.
+- **Control and Efficiency**: It offers the ability to manage [parallelism](../../flows/13_flow_branches.md#branch-all) across steps and set [concurrency limits](../../flows/6_concurrency_limit.mdx) to accommodate external resources that may be sensitive to overload or have rate limits.
+- **Flexibility in Execution**: Flows in Windmill can be [restarted](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch) from any point, enhancing the process of pipeline development and debugging by making it more flexible and efficient.
+- **Simplified Monitoring**: Built-in [error and recovery handling](../10_error_handling/index.mdx) mechanisms simplify monitoring, ensuring that managing your data pipelines is both effective and straightforward.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -59,6 +59,14 @@ The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill 
 
 From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
 Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
+
+S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
+
+```json
+{
+	"s3": "path/to/file"
+}
+```
 
 ![Windmill code editor](../../../blog/2023-11-24-data-pipeline-orchestrator/s3_object_code_editor.png 'Windmill code editor')
 
@@ -122,8 +130,6 @@ export async function main(input_file: S3Object) {
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
-#requirements:
-#wmill>=1.251.7
 import wmill
 from wmill import S3Object
 
@@ -189,8 +195,6 @@ export async function main(s3_file_path: string) {
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
-#requirements:
-#wmill>=1.251.7
 import wmill
 from wmill import S3Object
 
@@ -324,10 +328,9 @@ def main(input_file: S3Object):
 
 :::info
 
-Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](/docs/core_concepts/persistent_storage#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
+Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
 
 :::
-
 
 ### Canonical data pipeline in Windmill w/ Polars and DuckDB
 
@@ -527,13 +530,17 @@ a file, and the following steps consume this file to run the queries. We were ab
 
 :::
 
-## Learn more
+## Limit of the number of executions per second
+
+Windmill's core is its queue of jobs which is implemented in Postgres using the `UPDATE SKIP LOCKED` pattern. It can scale comfortably to 5k requests per second (RPS) on a normal Postgres database during benchmarks.
+
+## Persistent Storage & Databases
 
 For more details on storage in Windmill, see:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage"
+		title="Persistent Storage & Databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>

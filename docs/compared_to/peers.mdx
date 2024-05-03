@@ -21,7 +21,7 @@ examples: _Zapier_ or _Make_
 ## Code-based workflow engines
 
 On the opposite side, you could choose to go on solely code-based solutions. They give a solid foundation for building your workflows and clean up your code.
-However, these solutions are less intuitive as they are **complex to set up and operate**. Also, they do not allow to share scripts easily or build UIs. Last, they all suffer from slow cold-start and poor latency whereas windmill is always blazing fast.
+However, these solutions are less intuitive as they are **complex to set up and operate**. Also, they do not allow to share scripts easily or build UIs. Last, they all suffer from slow cold-start and poor latency whereas Windmill is always blazing fast.
 
 examples: _Temporal_, _Airflow_, _Prefect_ & _Dagster_
 
@@ -32,7 +32,7 @@ Airflow and Temporal are the golden standards. They are very good, battle-tested
 
 <br />
 
-Those frameworks are a great source of inspiration for us but we bring a more principled and more opinionated approach so that one can focus on writing scripts rather than becoming a workflow engine expert. The goal of Windmill is to bring the benefits of those workflow engines in a more accessible package that is fit not just for data engineers but for hybrid teams made of data scientist, ops, and software engineers with standard scripts in Python/Typescript/Go/Bash and low-code builder for the graph itself the common denominator, without any sacrifice on performance (and actually we run workflows faster than those frameworks, more on that in [1]), features, scalability/reliability and by improving the debuggability and developer experience of those.
+Those frameworks are a great source of inspiration for us but we bring a more principled and more opinionated approach so that one can focus on writing scripts rather than becoming a workflow engine expert. The goal of Windmill is to bring the benefits of those workflow engines in a more accessible package that is fit not just for data engineers but for hybrid teams made of data scientist, ops, and software engineers with standard scripts in Python/Typescript/Go/Bash and low-code builder for the graph itself the common denominator, without any sacrifice on performance (and actually we run workflows faster than those frameworks, more on that in [1]), features, scalability/reliability and by improving the debuggability and developer experience of those. It is also possible to define [workflows-as-code](../core_concepts/31_workflows_as_code/index.mdx), in the same way as Prefect or Airflow (writing a program that defines the jobs and their dependencies, and then execute that program).
 
 <br />
 
@@ -93,22 +93,6 @@ n8n has no UI builder and is source-available but not open-source. n8n only supp
 ## Workflow builder: Pipedream
 
 Pipedream has no UI builder and is not open-source (although their library of integrations is). Pipedream itself is neither open-source, nor self-hostable. Furthermore, it is centered around integrations to external services.
-
-## Most comparable players
-
-Those ones have comparable set of features, they have the **flexibility of code** and are time-saving for developers.
-Yet, they may show limited workflow engines, they are not open-source and have no open APIs and are not made for scalability.
-
-examples: _Airplane_ and _Superblocks_
-
-<div className="text-xl mb-2 font-semibold"></div>
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Windmill compared to Airplane"
-		description="Windmill provides smoother developer experience than Airplane."
-		href="/docs/compared_to/airplane"
-	/>
-</div>
 
 ## and ... Windmill
 

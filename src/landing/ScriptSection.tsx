@@ -30,7 +30,7 @@ import {
 	SiVisualstudiocode,
 	SiGraphql
 } from 'react-icons/si';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
 
 import Section from './Section';
 

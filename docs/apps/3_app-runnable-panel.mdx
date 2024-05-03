@@ -62,6 +62,31 @@ They can be either attached to a component or detached.
 
 Frontend scripts are JavaScripts that are executed on the browser.
 
+They come with [frontend script helpers](#frontend-scripts-helpers) that are functions and global objects to help you interact with the app.
+
+Frontend scripts can read outputs and ctx of the rest of the app with for example:
+
+```js
+// read outputs and ctx
+console.log(ctx.email)
+
+// access a global state store
+if (!state.foo) { state.foo = 0 }
+state.foo += 1
+
+// for reactivity to work, you need to assign a value and not modify it in place
+// e.g: state.foo.push(1) will not work but 'state.foo = [...state.foo, 1]' will.
+// you may also just reassign as next statement 'state.foo = state.foo'
+
+// you can also navigate (goto), recompute a script (recompute), or set a tab (setTab)
+// Inputs and display components support settings their value directly
+setValue('a', "Bar") 
+
+// Tables support setting their selected index (setSelectedIndex)
+
+return state.foo
+```
+
 ### Background runnables
 
 Background runnables are scripts that are executed in the background. They are executed on the server.
@@ -201,8 +226,13 @@ Inputs of runnables that are either connected to an output or [evaluated](#evals
 
 Runnables can "Recompute" and "Recompute others":
 
-- Recompute: Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
-- Recompute others: Button and Form components can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
+#### Recompute
+
+Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
+
+#### Recompute others
+
+[Button](./4_app_configuration_settings/button.mdx) & [Form](./4_app_configuration_settings/submit_form.mdx) components and [background scripts](#background-runnables) can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
 
 ### Manual Dependencies
 
@@ -411,13 +441,17 @@ setSelectedIndex(id: string, index: number)
 
 ### setValue
 
-The `setValue` function is meant to set or force the value of a component. This can be convenient in cases where connection is not the easiest pattern.
+The `setValue` function is meant to manually set or force the value of a component. This can be convenient in cases where [connecting components](./2_connecting_components/index.mdx) is not the easiest pattern.
+
+```js
+setValue(id: string, value: any)
+```
 
 Note that it's a bad idea to mix dynamic default value and setValue together.
 
 ### validate
 
-Validate a specific field of a form
+Make a specific field of a form in a Validate state.
 
 ```js
 validate(id: string, key: string)
@@ -425,7 +459,7 @@ validate(id: string, key: string)
 
 ### validateAll
 
-Validate all fields of a form
+Make all fields of a form in a Validate state.
 
 ```js
 validateAll(id: string, key: string)
@@ -433,7 +467,7 @@ validateAll(id: string, key: string)
 
 ### invalidate
 
-Invalidate a specific field of a form
+Invalidate a specific field of a form.
 
 ```js
 invalidate(id: string, key: string, error: string)
@@ -442,6 +476,43 @@ invalidate(id: string, key: string, error: string)
 Parameters:
 
 `id` string
+
+### recompute
+
+Recompute a component.
+
+```js
+recompute(id: string)
+```
+
+Parameters:
+
+`id` string
+
+### clearFiles
+
+Clear the files of a file input.
+
+```js
+clearFiles(id: string)
+```
+
+Parameters:
+
+`id` string
+
+### showToast
+
+Sends a toast notification.
+
+```js
+recompute(message: string, error: boolean)
+```
+
+Parameters:
+
+`message` string
+`error` boolean
 
 ## Policy
 

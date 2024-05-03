@@ -9,8 +9,9 @@ const faqs = [
 		answer: (
 			<span>
 				The Pro plan is only available in Self-hosted for: <br />- Businesses with less than 10
-				employees and $250k revenues<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits
-				of workers & users) <br />
+				employees and $250k revenues
+				<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits of workers
+				& users) <br />
 				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
 		)
@@ -26,9 +27,10 @@ const faqs = [
 				>
 					operator
 				</Link>{' '}
-				is a user that can only execute script, flows and apps, but not create and edit them.
-				This is enforced by both a simplified frontend and a restricted API.
-				<br/><br/>
+				is a user who can only execute scripts, flows and apps, but not create and edit them. This
+				is enforced by both a simplified frontend and a restricted API.
+				<br />
+				<br />
 				Operators are 1/2 price of normal users (or 1/2 seats).
 			</span>
 		)
@@ -46,15 +48,17 @@ const faqs = [
 				</Link>{' '}
 				whose duration is less than 1s. For any additional seconds of computation, an additional
 				computation is accounted for.
-				<br/><br/>
-				The number of executions of a flow corresponds to the sum of
-				the executions of each step as seconds, considered as one script execution of that same time
-				(time in sleep or doing state transition are not accounted). For apps, a backend script
-				execution is considered as a script execution. As apps frontend scripts execute on browsers,
-				they are not taken into account.
-				<br/><br/>
-				Jobs are executed on one powerful virtual CPU with 2Gb of
-				memory. Most jobs will take less than 200ms to execute.
+				<br />
+				<br />
+				The number of executions of a flow corresponds to the sum of the executions of each step as
+				seconds, considered as one script execution of that same time (time in sleep or doing state
+				transition are not accounted). For apps, a backend script execution is considered as a
+				script execution. As apps frontend scripts execute on browsers, they are not taken into
+				account.
+				<br />
+				<br />
+				Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less
+				than 200ms to execute.
 			</span>
 		)
 	},
@@ -62,24 +66,31 @@ const faqs = [
 		question: 'How is the use of the number of vCPUs estimated?',
 		answer: (
 			<span>
-				Even though Windmill's <a
-				href='/docs/misc/architecture'
-				className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
-				target="_blank">architecture</a>{' '}
-				relies on <a
-				href='/docs/core_concepts/worker_groups'
-				className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
-				target="_blank">workers</a>, Pricing is vCPU based.
-
-				For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with 4 vCPU would count as 4 vCPU.
-				But if it only runs for 1h every day, you would divide that by 24.
-
-				<br/><br/>
-
-				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
-
-				<br/><br/>
-
+				Even though Windmill's{' '}
+				<a
+					href="/docs/misc/architecture"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank"
+				>
+					architecture
+				</a>{' '}
+				relies on{' '}
+				<a
+					href="/docs/core_concepts/worker_groups"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank"
+				>
+					workers
+				</a>
+				, Pricing is vCPU based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with
+				4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by
+				24.
+				<br />
+				<br />
+				The number of vCPUs considered is the number of production vCPUs, not of development
+				staging, if you have separate instances.
+				<br />
+				<br />
 				Our compute pricing should be linear to the compute cost from your cloud provider.
 			</span>
 		)
@@ -88,17 +99,21 @@ const faqs = [
 		question: 'How is the use of the number of vCPUs and seats reported to Windmill?',
 		answer: (
 			<span>
-				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription.
-				<br/><br/>
-				We only count the vCPUs reported by your workers as being used.
-				So you can simply set limits in the
-				{' '}<a
+				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs
+				and seats for your subscription.
+				<br />
+				<br />
+				We only count the vCPUs reported by your workers as being used. So you can simply set limits
+				in the{' '}
+				<a
 					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
-					target="_blank" rel="noopener noreferrer"
+					target="_blank"
+					rel="noopener noreferrer"
 				>
 					docker-compose
-				</a>{' '}and you will never be overcharged
+				</a>{' '}
+				and you will never be overcharged.
 			</span>
 		)
 	},

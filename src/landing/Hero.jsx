@@ -2,31 +2,31 @@ import React from 'react';
 import GithubStarCount from './GithubStarCount';
 import RadialBlur from './RadialBlur';
 import HomescreenSvg from '../../static/homescreen.svg';
+import Link from '@docusaurus/Link';
 
 export default function Hero() {
 	return (
 		<div className="relative rounded-none mx-auto max-w-screen-2xl overflow-hidden 2xl:rounded-3xl pt-32">
 			<RadialBlur />
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-2  max-w-7xl px-8 mx-auto py-16 ">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-7xl px-8 mx-auto py-16">
 				<div>
 					<div className="flex flex-row items-end gap-8">
 						<GithubStarCount />
 					</div>
-					<h1 className="mt-4 !text-4xl !tracking-tight !font-bold sm:!text-6xl">
-						Open-source developer platform and workflow engine
+					<h1 className="mt-4 !text-4xl text-slate-750 !tracking-tight !font-semibold sm:!text-6xl">
+						Open-source <span className="text-blue-500 dark:text-blue-450">developer</span> platform and workflow engine
 					</h1>
 					<div className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-100">
-						Turn scripts into auto-generated UIs, APIs and cron jobs. <br /> Compose them as
-						workflows or data pipelines. <br />
-						Build complex, data-intensive UIs with ease.
-						<br /> <br />
+						Turn scripts into auto-generated UIs, APIs and cron jobs. <br />
+						Compose them as workflows or data pipelines. <br />
+						Build complex, data-intensive apps with ease.
+						<br /><br />
 						Write and deploy software 10x faster, and run it with the highest reliability and
-						observabilty on the{' '}
-						<a className="underline" href="/docs/misc/benchmarks/competitors">
+						observability on the{' '}
+						<a className="underline decoration-1 underline-offset-2 text-slate-700 hover:text-slate-900 dark:text-slate-300 hover:text-slate-500" href="/docs/misc/benchmarks/competitors">
 							fastest self-hostable job orchestrator
-						</a>
-						.
+						</a>.
 					</div>
 					<div className="mt-10 flex items-center gap-x-6">
 						<a
@@ -39,13 +39,13 @@ export default function Hero() {
 							Try Windmill Cloud
 						</a>
 
-						<a
+						<Link
 							href="docs/advanced/self_host"
-							onClick={() => window.plausible('self-host')}
+							onClick={() => window.plausible?.('self-host')}
 							className="text-base font-semibold leading-7 text-gray-900 dark:text-gray-200 text !no-underline"
 						>
 							Self-host in 3 mins <span aria-hidden="true">→</span>
-						</a>
+						</Link>
 					</div>
 					<div className="w-full font-medium text-slate-400 text-left mt-16 flex-container">
 						Backed by

@@ -267,10 +267,11 @@ const pricing = {
 			price: {},
 
 			description:
-				'Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand.',
+				'Windmill offers white labeling capabilities, allowing you to embed and customize the Windmill platform to align with your brand.',
 			features: [
-				{ text: 'Embed the entire Windmill app' },
-				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK' }
+				{ text: 'Embed the entire Windmill app.' },
+				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
+				{ text: 'Private Hub.' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -387,7 +388,18 @@ const sections = [
 					Community: true,
 					Team: true
 				},
-				link: '/blog/launch-week-1/data-pipeline-orchestrator'
+				link: '/docs/core_concepts/persistent_storage/large_data_files'
+			},
+			{
+				name: 'Private Hub',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: false
+				},
+				link: '/docs/core_concepts/private_hub'
 			},
 			{
 				name: 'Commercial licence',
@@ -475,15 +487,15 @@ const sections = [
 				link: '/docs/core_concepts/audit_logs'
 			},
 			{
-				name: 'Retention period of jobs',
+				name: 'Retention period of jobs runs details',
 				tiers: {
 					'Free and Open-source': '<= 30 days',
 					Pro: 'Unlimited',
 					Enterprise: 'Unlimited',
-					Community: true,
+					Community: '60 days',
 					Team: '60 days'
 				},
-				link: '/docs/core_concepts/audit_logs'
+				link: '/docs/core_concepts/jobs#retention-policy'
 			},
 			{
 				name: 'Workspace Error Handler',
@@ -605,15 +617,16 @@ const sections = [
 		name: 'Performance',
 		attributes: [
 			{
-				name: 'Worker Group Management UI (including Init Scripts)',
+				name: 'Worker Group Management UI (incl. Init Scripts)',
 				tiers: {
 					'Free and Open-source': false,
 					Pro: true,
 					Enterprise: true,
-					Community: true,
-					Team: true
+					Community: false,
+					Team: false
 				},
-				link: '/docs/core_concepts/worker_groups'
+				link: '/docs/core_concepts/worker_groups',
+				tooltip: 'Only available on self-hosting and enterprise edition on private clusters.'
 			},
 			{
 				name: 'Script-specific Workers (dedicated) / High Throughput',
@@ -779,6 +792,17 @@ const sections = [
 					Team: true
 				},
 				link: '/docs/apps/default_app'
+			},
+			{
+				name: 'Importing Custom React Components',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: true,
+					Enterprise: true,
+					Community: true,
+					Team: true
+				},
+				link: '/docs/apps/react_components'
 			}
 		]
 	}
@@ -893,15 +917,19 @@ export default function Pricing() {
 								<h3
 									id={tier.id}
 									className={classNames(
-										tier.mostPopular ? 'text-blue-600' 
-										: tier.enterprise_edition ? 'text-teal-600' 
-										: '', 
+										tier.mostPopular
+											? 'text-blue-600'
+											: tier.enterprise_edition
+											? 'text-teal-600'
+											: '',
 										'text-2xl font-semibold leading-8'
 									)}
 								>
 									{tier.name}
 								</h3>
-								{period.value === 'annually' && Object.keys(tier.price).length > 0 && tier.id !== 'tier-team' ? (
+								{period.value === 'annually' &&
+								Object.keys(tier.price).length > 0 &&
+								tier.id !== 'tier-team' ? (
 									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
 										16% Discount
 									</p>
@@ -911,13 +939,13 @@ export default function Pricing() {
 								<p className="mt-6 flex items-baseline gap-x-1">
 									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-											$
-											{period.value === 'annually'
-												? tier.id === 'tier-team'
-													? (tier.minPrice * 12).toLocaleString('en-US')
-													: (tier.minPrice * 10).toLocaleString('en-US')
-												: tier.minPrice.toLocaleString('en-US')}
-										</span>
+										$
+										{period.value === 'annually'
+											? tier.id === 'tier-team'
+												? (tier.minPrice * 12).toLocaleString('en-US')
+												: (tier.minPrice * 10).toLocaleString('en-US')
+											: tier.minPrice.toLocaleString('en-US')}
+									</span>
 									<span className="text-sm font-semibold leading-6 text-gray-600">
 										{period.value === 'annually' ? '/yr' : '/mo'}
 									</span>
@@ -930,15 +958,15 @@ export default function Pricing() {
 								</p>
 							)}
 
-							<p className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
+							<div className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
 								{tier.description}
-							</p>
+							</div>
 
 							{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
 								<a
 									aria-describedby={tier.id}
 									href={tier.href}
-									target='_blank'
+									target="_blank"
 									className={classNames(
 										'text-gray-900 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:text-white',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
@@ -949,7 +977,7 @@ export default function Pricing() {
 							) : (
 								<a
 									href={tier.href}
-									target='_blank'
+									target="_blank"
 									aria-describedby={tier.id}
 									className={classNames(
 										tier.mostPopular
@@ -1038,9 +1066,9 @@ export default function Pricing() {
 											>
 												{pricingItem.name}
 											</h3>
-											<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-200">
+											<div className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-200">
 												{pricingItem.description}
-											</p>
+											</div>
 										</div>
 
 										<div className="mt-10 space-y-10">
@@ -1188,9 +1216,9 @@ export default function Pricing() {
 											>
 												{pricingItem.name}
 											</p>
-											<p className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-100">
+											<div className="mt-1 text-sm leading-6 text-gray-600 dark:text-gray-100">
 												{pricingItem.description}
-											</p>
+											</div>
 										</div>
 									</div>
 								))}
@@ -1240,7 +1268,7 @@ export default function Pricing() {
 																	)}
 																	{attribute.tooltip && (
 																		<span className="ml-2 tooltip-icon">
-																			ⓘ<span className="tooltip-text">{attribute.tooltip}</span>
+																			<span style={{ fontSize: '75%' }}>ⓘ</span><span className="tooltip-text">{attribute.tooltip}</span>
 																		</span>
 																	)}
 																</div>

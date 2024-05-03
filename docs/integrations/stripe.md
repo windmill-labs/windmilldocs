@@ -1,8 +1,10 @@
 # Stripe Integration
 
-To integrate [Stripe](https://stripe.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[Stripe](https://stripe.com/) is a payment processing platform.
 
-![Add Stripe Resource](../assets/integrations/add-stripe.png.webp)
+To integrate Stripe to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+
+![Add Stripe Resource](../assets/integrations/add-stripe.png.webp "Add Stripe Resource")
 
 | Property | Type   | Description | Required | Where to find                                            |
 | -------- | ------ | ----------- | -------- | -------------------------------------------------------- |

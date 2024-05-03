@@ -2,7 +2,6 @@ import React from 'react';
 import './CardStyles.css';
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
-import { Terminal } from 'lucide-react';
 
 interface CardProps {
 	Icon: React.ComponentType;
@@ -35,13 +34,13 @@ const Card: React.FC<CardProps> = ({
 }) => {
 	return (
 		<a
-			className={classNames('card shadow-none transition-all', gridArea)}
+			className={classNames('card shadow-none transition-all !no-underline', gridArea)}
 			href={href}
 			target={newTab ? '_blank' : '_self'}
 			rel={newTab ? 'noopener noreferrer' : ''}
 		>
-			<div className="card-content">
-				<div className="card-image fade-to-white">
+			<div className="card-content h-full">
+				<div className="card-image w-full">
 					{image && <img src={image} alt="Card" className="object-cover h-full w-full" />}
 					{imageSlider && (
 						<div className="slider">
@@ -77,13 +76,11 @@ const Card: React.FC<CardProps> = ({
 						</div>
 					)}
 				</div>
-				<div className="card-footer  grow pt-4 pb-8 rounded-b-2xl px-8 overflow-hidden">
+				<div className="card-footer absolute bottom-0 left-0 right-0 grow pt-4 pb-8 rounded-b-2xl px-8 overflow-hidden">
 					<div className="flex flex-row gap-4">
-						<div className="">
-							{/* @ts-ignore */}
-							<Icon className="w-6 h-6" />
-						</div>
-						<div className="">
+						{/* @ts-ignore */}
+						<Icon className="w-6 h-6" />
+						<div>
 							<div className="text-md font-bold mb-2">{title}</div>
 							<div className="text-sm">{subtitle}</div>
 						</div>

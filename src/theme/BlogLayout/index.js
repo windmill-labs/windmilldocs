@@ -5,6 +5,7 @@ import BlogSidebar from '@theme/BlogSidebar';
 import { twMerge } from 'tailwind-merge';
 import { useLocation } from '@docusaurus/router';
 import Head from '@docusaurus/Head';
+import Footer from '../../landing/Footer';
 
 export default function BlogLayout(props) {
 	const { sidebar, toc, children, ...layoutProps } = props;
@@ -101,7 +102,18 @@ export default function BlogLayout(props) {
 					</main>
 					{toc && <div className="col col--2">{toc}</div>}
 				</div>
+				<div className="mt-4 text-lg leading-8 container">
+					<a
+						href={isChangelog ? '/changelog/archive' : '/blog/archive'}
+						target="_blank"
+						className="text-sm"
+					>
+						{isChangelog ? 'Changelog archive' : 'Blog archive'}
+					</a>
+				</div>
 			</div>
+
+			<Footer />
 		</Layout>
 	);
 }

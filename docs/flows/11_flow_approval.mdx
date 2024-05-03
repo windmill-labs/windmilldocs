@@ -4,8 +4,8 @@ import TabItem from '@theme/TabItem';
 
 # Suspend & Approval / Prompts
 
-Flows can be suspended until resumed or cancelled event(s) are received. This
-feature is most useful to implement approval steps but can be used for other
+Flows can be suspended until resumed or canceled event(s) are received. This
+feature is most useful for implementing approval steps but can be used for other
 purposes as well.
 
 <video
@@ -113,23 +113,6 @@ This is a way to introduce human-in-the-loop workflows and condition branches on
 A prompt is simply an approval step that can be self-approved. To do this, include the resume url in the returned payload of the step. The UX will automatically adapt and show the prompt to the operator when running the flow. e.g:
 
 <Tabs className="unique-tabs">
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from "npm:windmill-client@^1.158.2"
-
-export async function main() {
-    const resumeUrls = await wmill.getResumeUrls("approver1")
-
-    return {
-        resume: resumeUrls['resume']
-        default_args: {}, // optional
-        enums: {} // optional
-    }
-}
-```
-
-</TabItem>
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
@@ -139,7 +122,26 @@ export async function main() {
     const resumeUrls = await wmill.getResumeUrls("approver1")
 
     return {
-        resume: resumeUrls['resume']
+        resume: resumeUrls['resume'],
+        default_args: {}, // optional
+        enums: {} // optional
+    }
+}
+```
+
+Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7120/approval-prompt-windmill).
+
+</TabItem>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from "npm:windmill-client@^1.158.2"
+
+export async function main() {
+    const resumeUrls = await wmill.getResumeUrls("approver1")
+
+    return {
+        resume: resumeUrls['resume'],
         default_args: {}, // optional
         enums: {} // optional
     }
@@ -155,7 +157,7 @@ import wmill
 def main():
     urls = wmill.get_resume_urls()
     return {
-        "resume": urls["resume"]
+        "resume": urls["resume"],
         "default_args": {}, # optional
         "enums": {} # optional
     }
@@ -199,6 +201,8 @@ export async function main() {
 }
 ```
 
+Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7121/default-arguments-in-approval-steps-windmill).
+
 ### Dynamics enums
 
 As one of the return key of this step, return an object `enums` that contains the default arguments of the form arguments. e.g:
@@ -221,6 +225,55 @@ export async function main() {
 	};
 }
 ```
+
+Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7122/dynamics-enums-in-approval-step-windmill).
+
+### Description
+
+You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.md) (including markdown).
+
+```ts
+import * as wmill from "windmill-client@^1.158.2"
+
+export async function main(approver?: string) {
+  const urls = await wmill.getResumeUrls(approver)
+  // send the urls to their intended recipients
+
+
+  // if the resumeUrls are part of the response, they will be available to any persons having access
+  // to the run page and allowed to be approved from there, even from non owners of the flow
+  // self-approval is disablable in the suspend options
+  return {
+        ...urls,
+        default_args: {},
+        enums: {},
+        description: {
+      render_all: [
+        {
+          markdown: "# We have located the secret vault with thousands of H100"
+        },
+        {
+          map: { lat: -30, lon: 10, markers: [{lat: -30, lon: 0, title: "It's here"}]}
+        },
+        "Just kidding"
+      ]
+    }
+        // supports all formats from rich display rendering such as simple strings,
+        // but also markdown, html, images, tables, maps, render_all, etc...
+        // https://www.windmill.dev/docs/core_concepts/rich_display_rendering
+  }
+}
+```
+
+![Description](../assets/flows/description.png 'Description')
+
+### Hide cancel button on approval page
+
+By enabling this option, the cancel button will not be displayed on the approval page to force more complex patterns using forms with enums processed in ulterior steps.
+
+![Hide cancel approval settings](../assets/flows/hide_cancel_approval.png 'Hide cancel approval settings')
+
+![Hide cancel approval page](../assets/flows/hide_cancel_approval_page.png 'Hide cancel approval page')
 
 ## Permissions
 

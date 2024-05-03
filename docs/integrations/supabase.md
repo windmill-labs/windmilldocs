@@ -1,6 +1,8 @@
 # Supabase Integration
 
-Learn how to connect to your [Supabase](https://supabase.com/) project from Windmill Scripts, Flows and Apps.
+[Supabase](https://supabase.com/) is an open-source Firebase alternative.
+
+Learn how to connect to your Supabase project from Windmill Scripts, Flows and Apps.
 
 ![Integrattion between Supabase and Windmill](../assets/integrations/sb-0-header.png.webp 'Connect a Supabase project with Windmill')
 

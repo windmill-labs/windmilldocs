@@ -6,15 +6,7 @@ The Windmill VS Code extension allows you to build scripts and flows in the comf
 
 ![VS Code Extension](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code Extension')
 
-The extension can be used in particular from a [repository synchronized to a Windmill instance](../../advanced/3_cli/sync.mdx) to [develop scripts & flows locally](../../advanced/4_local_development/index.mdx) while keeping them synced to your workspace.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Command-Line Interface - Sync"
-		description="Sync with a Windmill workspace from Windmill CLI."
-		href="/docs/advanced/cli"
-	/>
-</div>
+The extension can be used in particular from a repository synchronized to a Windmill instance to [develop scripts & flows locally](../../advanced/4_local_development/index.mdx) while keeping them synced to your workspace.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -56,7 +48,7 @@ To run scripts locally, see [Run Locally](../../advanced/4_local_development/run
 
 ## Installation
 
-1. First of all, have your workspace synced locally with [Windmill CLI](../../advanced/3_cli/index.mdx).
+First of all, have your workspace synced locally with [Windmill CLI](../../advanced/3_cli/index.mdx).
 
 ![Local workspace](../../../blog/2023-11-20-vscode/local_workspace.png.webp)
 
@@ -74,6 +66,18 @@ In the settings menu, set the remote url, workspace name and [token](../../core_
 
 3. From any script file, use `> Windmill: Run preview in the current editor` or Ctrl+Enter and Shift+Enter to generate the UI preview (provided that the script meets the [few rules](../../core_concepts/13_json_schema_and_parsing/index.md#json-schema-in-windmill) required by Windmill).
 
+All details to set up the workspace folder:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Setting up the workspace folder"
+		description="Developing Windmill scripts and flows from your favorite IDE is made easy by using Windmill CLI."
+		href="/docs/advanced/local_development#setting-up-the-workspace-folder"
+	/>
+</div>
+
+## Actions
+
 The preview & run will work for any script meeting the specific language requirements (main function, imports) and being named with the dedicated file extension (.py, .go etc.). For scripts in Bun, name the file \[name\].bun.ts, ".ts" being by default Deno.
 
 The extension will split your screen and display a panel. That panel will update automatically based on the edited document on the left.
@@ -83,34 +87,40 @@ The extension will split your screen and display a panel. That panel will update
 
 In particular:
 
-## Test scripts, flows and flows steps from VS Code
+### Test scripts, flows and flows steps
+
+Once you have your scripts and flows locally (either pulled from a remote workspace or created from scratch), you can test them directly from VS Code.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	autoPlay
-	loop
+	controls
 	src="/videos/vs_code_tour.mp4"
 />
 
-## Editing the YAML definition of a flow instantly updates the rendered graph
+### Update UI from YAML
+
+Editing the YAML definition of a flow instantly updates the rendered graph
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	autoPlay
-	loop
+	controls
 	src="/videos/ui_to_yaml.mp4"
 />
 
-## Editing the flow from the UI immediately modifies the YAML definition
+### Update YAML from UI
+
+Editing the flow from the UI immediately modifies the YAML definition
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	autoPlay
-	loop
+	controls
 	src="/videos/yaml_to_ui.mp4"
 />
 
-## Infer lockfile or Use current lockfile
+### Infer lockfile or Use current lockfile
 
 With this toggle, you can choose to use the metadata lockfile instead of inferring them directly from the script.
 
@@ -127,8 +137,8 @@ Access these commands through the Command Palette (Ctrl/Cmd+Shift+P):
 | **Windmill: Show Preview**                           | This command launches a preview of your script in a new tab.                                                                                                                                        |
 | **Windmill: Run preview**                            | Runs the current script and provides a preview within the VS Code environment. This feature lets you preview your work without leaving your code editor.                                            |
 | **Windmill: Configure remote, workspace, and token** | Opens a setup wizard to configure your environment. This includes settings for the remote URL, workspace, and user token. You only need to do this once or when changing your environment settings. |
-| **Windmill: Switch windmill workspace**              | Allows you to switch between different workspaces.                                                                                                                                                  |
-| **Windmill: add a windmill workspace**               | Adds a new workspace to your configuration.                                                                                                                                                         |
+| **Windmill: Switch Windmill workspace**              | Allows you to switch between different workspaces.                                                                                                                                                  |
+| **Windmill: Add a Windmill workspace**               | Adds a new workspace to your configuration.                                                                                                                                                         |
 
 ## Settings
 

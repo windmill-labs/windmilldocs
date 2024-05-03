@@ -146,7 +146,7 @@ curl https://raw.githubusercontent.com/windmill-labs/windmill/main/init-db-as-su
 psql <DATABASE_URL> -f init-db-as-superuser.sql
 ```
 
-Make sure that the user used in the DATABASE_URL passed to windmill has the role `windmill_admin` and `windmill_user`:
+Make sure that the user used in the DATABASE_URL passed to Windmill has the role `windmill_admin` and `windmill_user`:
 
 ```sql
 GRANT windmill_admin TO <user used in database_url>;
@@ -537,7 +537,7 @@ GRANT USAGE ON SCHEMA public TO windmill_user;
 
 ### Complete New Windmill Set-Up
 
-In the Admin Workspace execute the New User Setup App. This will import the default [resources types](../../core_concepts/3_resources_and_types/index.mdx) from [WindmillHub](https://hub.windmill.dev/) and update the default user credentials
+In the Admin Workspace execute the New User Setup App. This will import the default [resources types](../../core_concepts/3_resources_and_types/index.mdx) from [WindmillHub](https://hub.windmill.dev/) and update the default user credentials.
 
 ### Authentication and user management
 
@@ -675,19 +675,29 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 ### Admins Workspace
 
-What distinguishes the admin workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.mdx) are shared with all workspaces.
+What distinguishes the [admin](../../core_concepts/16_roles_and_permissions/index.mdx) workspace from other workspaces is that its [resource types](../../core_concepts/3_resources_and_types/index.mdx) are shared with all workspaces.
 
 If you skipped the instance setup or need to sync resource types, you can go to the admins workspace and run the _Synchronize Hub Resource types with instance_ script, or [schedule](../../core_concepts/1_scheduling/index.mdx) it.
 
 ![Sync resource types](./sync_resource_types.gif 'Sync resource types with Hub')
 
-<br />
+### Rename Workspace
+
+On self-hosted instances, workspaces can have names and IDs updated from the workspace settings.
+
+If you update the ID of a workspace, make sure to also update your [webhook calls](../../core_concepts/4_webhooks/index.mdx) and your [CLI sync](../../advanced/3_cli/sync.mdx) configuration.
+
+Workspace name and ID can be updated only for [admin](../../core_concepts/16_roles_and_permissions/index.mdx).
+
+![Change workspace ID](./change_workspace_id.png 'Change workspace ID')
+
+<br/>
 
 For more advanced setups, see [Helm Chart](#helm-chart).
 
 ## Self-signed certificates
 
-Detailed [guide](https://www.lfanew.com/posts/windmill-ca-trust/) for using Windmill with self-signed certificates
+Detailed guide for using Windmill with self-signed certificates [here](https://www.lfanew.com/posts/windmill-ca-trust/).
 
 TL;DR: below
 

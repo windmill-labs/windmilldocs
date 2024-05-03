@@ -41,6 +41,8 @@ Scripts consist of 2 parts:
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
 
+Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
+
 [This](https://hub.windmill.dev/scripts/%22%22/1530/do-sentiment-analysis-with-nltk-%22%22) is a simple example of a script built in Python with Windmill:
 
 ```py
@@ -257,7 +259,7 @@ The UI is generated from the Script's main function signature, but you can add a
 	/>
 </div>
 
-## Workflow as Code
+## Workflows as Code
 
 One way to write distributed programs that execute distinct jobs is to use [flows](../../../flows/1_flow_editor.mdx) that chain scripts together.
 
@@ -270,7 +272,7 @@ All details at:
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workflows as Code"
-		description="Write a program that defines the jobs and their dependencies, and then execute that program within a script"
+		description="Automate tasks and their flow with only code."
 		href="/docs/core_concepts/workflows_as_code"
 	/>
 </div>

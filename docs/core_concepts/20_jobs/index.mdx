@@ -57,12 +57,12 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the [runs page
   script editors. Even when code is executed as a preview, you keep a trace of
   its execution.
 
-- **Dependencies Jobs**: Scripts written in Python generate a lock file when
+- **Dependencies Jobs**: Scripts written in Python generate a lockfile when
   they are saved/created. This lockfile ensures that an execution of the same
   hash will always use the same versions. The process of generating this
   lockfile is also a job in itself so you can easily inspect the issues
   generating the lockfile if any. See
-  [Dependency Management](../../advanced/6_imports/index.md) for more information.
+  [Dependency Management](../../advanced/6_imports/index.mdx) for more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
   every step. The execution of the steps are in-themselves jobs. It is defined
@@ -103,3 +103,33 @@ that he is a member of.
 Jobs take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible.
 
 If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
+
+## Retention Policy
+
+The retention policy for jobs runs details varies depending on your team's [plan](/pricing):
+
+- Community plan (cloud): Jobs runs details are retained for 60 days.
+- Team plan (cloud): Jobs runs details are retained for 60 days.
+- Enterprise plan (cloud): Unlimited retention period.
+- Open Source (self-host): Jobs runs details are retained for maximum 30 days.
+- Enterprise plan (self-host): Unlimited retention period.
+
+You can set a custom retention period for the jobs runs details. The retention period can be configured in the instance settings, in the "Core" tab.
+
+![Set Retention Period](./set_retention_policy.png "Set Retention Period")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans & How to Upgrade"
+		description="Details on each Windmill Plan"
+		href="/pricing"
+	/>
+</div>
+
+## S3/Azure for Python Cache & Large Logs
+
+For large logs storage (and display) and cache for distributed Python jobs, you can connect your instance to a bucket.
+
+![S3/Azure for Python Cache & Large Logs](./s3_azure_cache.png "S3/Azure for Python Cache & Large Logs")
+
+This feature has no overlap with the [Workspace s3 integration](../11_persistent_storage/large_data_files.mdx).

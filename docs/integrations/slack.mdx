@@ -2,8 +2,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Slack Integration
 
-Learn how to integrate Slack with Windmill. There are two ways to build
-interactions between the two: run code on Windmill by a Slack command or use the
+[Slack](https://slack.com/) is an instant messaging and collaboration platform.
+
+There are two ways to build interactions between Slack and Windmill: run code on Windmill by a Slack command or use the
 Slack API directly from Windmill. In this guide, we'll cover both approaches.
 
 <video
@@ -56,11 +57,13 @@ are working on getting the app approved but you can safely ignore it for now.
 
 :::
 
+You can connect multiple Windmill workspaces to the same Slack workspace. Only one Windmill workspace can accept the `/windmill` [commands](#using-commands-on-slack) from a given Slack workspace. This feature is mostly useful for the [error handler](#error-handlers).
+
 ### Using commands on Slack
 
 Once you allow access, you will be redirected to the Slack settings in Windmill.
 We'll create a command handler Script first, so let's click "Create a script to
-handle slack command".
+handle Slack command".
 
 You will be navigated to the Script editor. Give your script a name
 (e.g. `slack_command_handler`), a short summary (e.g. "Slack command handler"). You'll get to [this](https://hub.windmill.dev/scripts/slack/1405/example-of-responding-to-a-slack-command-slack) template:
@@ -89,6 +92,17 @@ Congratulations! You've just created a Slack command handler. Now you can use
 the `/windmill` command in your Slack workspace to trigger the Script. Try it
 out with `/windmill foo` and you should get back `ROGER foo`. Go ahead and
 customize the Script to your needs.
+
+In addition to response_url, the script/flow can use the following parameters, simply by having them as inputs with the proper name:
+
+```
+channel_id
+user_name
+user_id
+command
+trigger_id
+api_app_id
+```
 
 ![Use the Windmill command](../assets/integrations/slack-5-slack-command.png.webp)
 

@@ -11,6 +11,8 @@ If you're looking for a way to:
 
 :::
 
+Importing Custom React Components is a [Cloud and Self-Hosted-Enterprise-Only](/pricing) feature
+
 Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
 There are 3 main benefits of using your own components:

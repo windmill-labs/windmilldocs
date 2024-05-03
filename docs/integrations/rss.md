@@ -1,6 +1,8 @@
 # RSS Integration
 
-To integrate [RSS](https://rss.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[RSS](https://rss.com/) is a web feed that allows users and applications to access updates to websites.
+
+To integrate RSS to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 ![Add RSS Resource](../assets/integrations/add-rss.png.webp)
 

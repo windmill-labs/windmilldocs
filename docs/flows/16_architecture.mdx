@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Architecture and Data Exchange
 
@@ -73,16 +75,76 @@ You can connect step inputs automatically using [Windmill AI](../core_concepts/2
 	src="/videos/step_input_copilot.mp4"
 />
 
-## States
+## Custom Flow States
 
-A [state](../core_concepts/3_resources_and_types/index.mdx#states) is an object stored as a resource of the resource type `state` which is meant to persist across distinct
-executions of the same Script. This is what enables Flows to watch for changes in most event watching scenarios.
+A [state](../core_concepts/3_resources_and_types/index.mdx#states) is an object stored as a [resource](../core_concepts/3_resources_and_types/index.mdx) of the resource type `state` which is meant to persist across distinct
+executions of the same Script. This is what enables Flows to watch for changes in most [event-watching scenarios](./10_flow_trigger.mdx).
+
+Custom flow states are a way to store data across steps in a flow. You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally. That state will be stored in the flow state itself and thus has the same lifetime as the flow [job](../core_concepts/20_jobs/index.mdx) itself.
+
+It's a powerful escape hatch when passing data as output/input is not feasible and using [getResource/setResource](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) has the issue of cluttering the workspace and inconvenient UX.
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as wmill from "windmill-client@1.297.0"
+
+export async function main(x: string) {
+  await wmill.setFlowUserState("FOO", 42)
+  return await wmill.getFlowUserState("FOO")
+
+}
+```
+
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+#extra_requirements:
+#wmill==1.297.0
+
+def main(x: str):
+    wmill.set_flow_user_state("foobar", 43)
+    return wmill.get_flow_user_state("foobar")
+```
+
+</TabItem>
+</Tabs>
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_state.mp4"
+/>
+
+<br/>
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="States"
-		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
-		href="/docs/core_concepts/resources_and_types#states"
+		title="Custom Flow States"
+		description="You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally."
+		href="/docs/core_concepts/resources_and_types#custom-flow-states"
 		color="teal"
+	/>
+</div>
+
+## Shared Directory
+
+By default, flows on Windmill are based on a result basis (see above). A step will take as input the results of previous steps. And this works fine for lightweight automation.
+
+For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
+
+Get more details on the [Persistent Storage & Databases dedicated page](../core_concepts/11_persistent_storage/index.mdx).
+
+![Flows shared directory](../getting_started/6_flows_quickstart/flows_shared_directory.png.webp)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Persistent Storage & Databases"
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
 	/>
 </div>

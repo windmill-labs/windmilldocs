@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Triggering Flows
 
-Flows can be triggered in 7 ways.
+Flows can be triggered in 8 ways.
 
 On-demand triggers:
 
@@ -15,7 +15,7 @@ On-demand triggers:
 Triggers from external events:
 
 - [Scheduling + Trigger Scripts](#scheduling--trigger-scripts)
-- [Trigger Flows from Webhooks](#webhooks), including from [Slack](#webhooks-trigger-flows-from-slack) or [Emails](#webhooks-trigger-flows-from-emails)
+- [API](#trigger-from-api) and [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-flows-from-slack) or [Emails](#webhooks-trigger-flows-from-emails)
 
 ## On-demand Triggers
 
@@ -143,20 +143,17 @@ Windmill supports inner flows. This allows you to call a flow from another workf
 
 ## Triggers from External Events
 
-### Scheduling + Trigger Scripts
+### Trigger from API
 
-A particular use case for schedules are [Trigger Scripts](../../flows/10_flow_trigger.mdx).
+Windmill provides a RESTful API that allows you to interact with your Windmill instance programmatically.
 
-Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
-
-By default, adding a trigger will set the schedule to 15 minutes.
+In particular, the operation [run flow by path](https://app.windmill.dev/openapi.html#/operations/runFlowByPath) and [run flow by path and wait until completion](https://app.windmill.dev/openapi.html#/operations/runWaitResultFlowByPath) are designed to trigger a flow by its path, passing the required arguments.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Trigger Scripts"
-		color="teal"
-		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
-		href="/docs/flows/flow_trigger"
+		title="OpenAPI"
+		description="Interact with Windmill."
+		href="https://app.windmill.dev/openapi.html"
 	/>
 </div>
 
@@ -217,6 +214,23 @@ Windmill leverages [Mailchimp Mandrill](https://mailchimp.com/en/features/transa
 		title="Mailchimp Mandrill Integration"
 		description="Learn how to integrate Mailchimp Mandrill with Windmill."
 		href="/docs/integrations/mailchimp_mandrill"
+	/>
+</div>
+
+### Scheduling + Trigger Scripts
+
+A particular use case for schedules are [Trigger Scripts](../../flows/10_flow_trigger.mdx).
+
+Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+
+By default, adding a trigger will set the schedule to 15 minutes.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Trigger Scripts"
+		color="teal"
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
+		href="/docs/flows/flow_trigger"
 	/>
 </div>
 

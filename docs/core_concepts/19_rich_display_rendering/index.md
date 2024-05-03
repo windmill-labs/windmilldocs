@@ -23,6 +23,11 @@ If the result is an object/dict with a single key (except for `approval`, which 
 | svg        | Render the value as an SVG image                            | `return { "svg": "<svg>...</svg>" }`                                                                                 |
 | markdown   | Render the value as Markdown                                | `return { "markdown": "## Hello World" }` or `return { "md": "## Hello World" }`                                     |
 | render_all | Render all the results                                      | `return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }`           |
+| map | Render a map with a given location                                 | `return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}`           |
+
+![Rich display HTML](./rich_display_html.png "Rich display HTML")
+
+![Rich display map](./rich_display_map.png "Rich display map")
 
 **Regarding the tables**: If the result is a list whose first element is also a list, it will display the result as a table. If the result is a dict/object where every value is an array, it will also be displayed as a table, with the key as the column name.
 

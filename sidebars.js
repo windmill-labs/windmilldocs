@@ -1,16 +1,3 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-
-// @ts-check
-
 /** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
 const sidebars = {
 	// By default, Docusaurus generates a sidebar from the docs folder structure
@@ -118,8 +105,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'getting_started/trigger_flows/index',
 							label: 'Triggering Flows'
-						},
-						'misc/guides/airplane/index'
+						}
 					]
 				},
 				{
@@ -130,11 +116,6 @@ const sidebars = {
 						'compared_to/peers',
 						{
 							type: 'doc',
-							id: 'compared_to/airplane',
-							label: 'Airplane'
-						},
-						{
-							type: 'doc',
 							id: 'compared_to/retool',
 							label: 'Retool'
 						},
@@ -142,6 +123,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'compared_to/prefect',
 							label: 'Prefect'
+						},
+						{
+							type: 'doc',
+							id: 'misc/note_of_intent/index',
+							label: 'Note of Intent'
 						},
 						{
 							type: 'category',
@@ -176,7 +162,36 @@ const sidebars = {
 				'advanced/imports/index',
 				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
-				'core_concepts/persistent_storage/index',
+				{
+					type: 'category',
+					label: 'Persistent Storage & Databases',
+					link: {
+						type: 'doc',
+						id: 'core_concepts/persistent_storage/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/within_windmill',
+							label: 'Within Windmill (not recommended)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/large_data_files',
+							label: 'Object Storage for Large Data (S3)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/structured_databases',
+							label: 'Big Structured SQL Data (Postgres)'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/persistent_storage/key_value_stores',
+							label: 'NoSQL and Document Databases'
+						}
+					]
+				},
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
@@ -240,6 +255,7 @@ const sidebars = {
 						'flows/error_handling',
 						'flows/flow_branches',
 						'flows/flow_loops',
+						'flows/while_loops',
 						'flows/flow_error_handler',
 						'flows/flow_trigger',
 						'flows/retries',
@@ -273,7 +289,13 @@ const sidebars = {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
 							},
-							items: ['apps/app-runnable-panel', 'apps/outputs'],
+							items: [
+								{
+									type: 'doc',
+									id: 'apps/app-runnable-panel',
+									label: 'Runnable Editor (Scripts & Flows)'
+								},
+								'apps/outputs'],
 							collapsed: false
 						},
 						{
@@ -500,11 +522,6 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'integrations/aws-s3',
-							label: 'AWS S3'
-						},
-						{
-							type: 'doc',
 							id: 'integrations/bigquery',
 							label: 'BigQuery'
 						},
@@ -645,6 +662,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/notion',
+							label: 'Notion'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/openai',
 							label: 'OpenAI'
 						},
@@ -652,6 +674,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/postgresql',
 							label: 'PostgreSQL'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/raycast',
+							label: 'Raycast'
 						},
 						{
 							type: 'doc',
@@ -710,6 +737,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/aws-s3',
+							label: 'AWS S3'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/telegram',
 							label: 'Telegram'
 						},
@@ -746,6 +778,7 @@ const sidebars = {
 				'core_concepts/content_search/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
+				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index'
 			]
