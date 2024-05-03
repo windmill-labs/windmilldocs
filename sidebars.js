@@ -125,6 +125,11 @@ const sidebars = {
 							label: 'Prefect'
 						},
 						{
+							type: 'doc',
+							id: 'misc/note_of_intent/index',
+							label: 'Note of Intent'
+						},
+						{
 							type: 'category',
 							label: 'Benchmarks',
 							items: [
