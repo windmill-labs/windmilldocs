@@ -9,7 +9,8 @@ const sidebars = {
 				'intro',
 				{
 					type: 'doc',
-					id: 'getting_started/how_to_use_windmill/index'
+					id: 'getting_started/how_to_use_windmill/index',
+					label: 'Getting Started',
 				},
 				{
 					type: 'category',

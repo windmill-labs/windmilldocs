@@ -1,6 +1,6 @@
 # JSON Schema and Parsing
 
-JSON Schema is a key component in Windmill for defining the structure and validation rules of JSON data. Windmill uses the JSON Schema standard ([2020-12 version](https://json-schema.org/draft/2020-12/schema)) for specifying the schema.
+Windmill leverages the JSON Schema to define the structure and validation rules for JSON data, adhering to the [JSON Schema standard (version 2020-12)](https://json-schema.org/draft/2020-12/schema) for schema definition.
 
 ## JSON Schema Specification
 
@@ -14,9 +14,9 @@ A JSON Schema defines the properties, types, and constraints of a JSON object. I
 
 ## JSON Schema in Windmill
 
-In Windmill, JSON Schema is used in various contexts, such as defining the input specification for scripts and flows, and specifying resource types.
+In Windmill, the JSON Schema is used in various contexts, such as defining the input specification for scripts and flows, and specifying resource types.
 
-Below is a simplified spec of JSON Schema. See [here for its full spec](https://json-schema.org/). Windmill is compatible with the [2020-12 version](https://json-schema.org/draft/2020-12/schema). It is not compatible with its most advanced features yet.
+Below is a simplified spec of a JSON Schema. See [here for its full spec](https://json-schema.org/). Windmill is compatible with the [2020-12 version](https://json-schema.org/draft/2020-12/schema). It is not compatible with its most advanced features yet.
 
 ```json
 {

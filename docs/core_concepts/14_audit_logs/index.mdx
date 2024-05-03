@@ -6,7 +6,7 @@ Windmill provides audit logs for every operation and action that has side-effect
 
 As a user, you can only see your own audit logs unless you are an admin.
 
-Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Execute), and specific Operation.
+Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Execute), and specific Operation. The [Runs menu](../5_monitor_past_and_future_runs/index.mdx) is another feature that allows you to visualise all past and future runs.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -23,6 +23,24 @@ Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Ex
 		title="Runs Menu"
 		description="The Runs menu is another feature that allows you to visualise all past and future runs."
 		href="/docs/core_concepts/monitor_past_and_future_runs"
+	/>
+</div>
+
+## Retention Policy
+
+For self-hosted Windmill instances, you can set the retention period via instance settings, accessible in the top right corner of the workspace settings. Instance settings are accessible only to superadmins. Audit logs are maintained in Postgres and output to the FileSystem as logs.
+
+On Windmill's cloud service, audit log retention varies by plan:
+
+- Community plan: Audit logs are redacted.
+- Team plan (cloud): Retained for 7 days.
+- Enterprise plan (cloud): Kept for 60 days, with logs stored in Postgres and the cloud for up to a year, extendable upon request.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans & How to Upgrade"
+		description="Details on each Windmill Plan"
+		href="/pricing"
 	/>
 </div>
 

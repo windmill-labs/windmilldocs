@@ -121,7 +121,7 @@ with:
   build UIs.
 - _Retool_ for building admin panels, and its other open-source
   alternatives: _Tooljet_, _Appsmith_.
-- _Airplane_ and _Superblocks_ have comparable set of features, but not
+- _Airplane_ (†) and _Superblocks_ have comparable set of features, but not
   open-source nor self-hostable, limited workflow engines, not made for
   scalability and have no open APIs.
 

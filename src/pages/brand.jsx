@@ -47,7 +47,7 @@ export default function About() {
                             </p>
                             <p>
                                 As a solution for building endpoints, workflows, and UIs, Windmill presents itself as an open-source alternative to
-                                Retool, Airplane, Superblocks, n8n, Prefect, Airflow, or Temporal.
+                                Retool, Superblocks, n8n, Prefect, Airflow, or Temporal.
                             </p>
                             <p>
                                 Windmill was founded in 2022 and is based between San Francisco and Paris.
