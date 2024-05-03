@@ -1,6 +1,6 @@
 # JSON Schema and Parsing
 
-Windmill leverages the JSON Schema to outline the structure and validation rules for JSON data, adhering to the [JSON Schema standard (version 2020-12)](https://json-schema.org/draft/2020-12/schema) for schema definition.
+Windmill leverages the JSON Schema to define the structure and validation rules for JSON data, adhering to the [JSON Schema standard (version 2020-12)](https://json-schema.org/draft/2020-12/schema) for schema definition.
 
 ## JSON Schema Specification
 
