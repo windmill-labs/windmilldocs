@@ -227,6 +227,7 @@ export default function TutorialSection() {
 												Restart
 											</button>
 											<button
+												id="skip-animation"
 												onClick={() => {
 													containerRef.current.scrollIntoView({ behavior: 'instant' });
 

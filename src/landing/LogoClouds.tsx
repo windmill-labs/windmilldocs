@@ -61,9 +61,27 @@ export default function LogoClouds() {
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
-							href={logo.anchor ? `#${logo.anchor}` : logo.url}
-							target={logo.anchor ? '_self' : '_blank'}
 							title={String(logo.name)}
+							onClick={() => {
+								if (logo.anchor) {
+									// find buttom with id skip-animation
+									const skipAnimation = document.getElementById('skip-animation');
+
+									// if button is found, click it
+									if (skipAnimation) {
+										skipAnimation.click();
+									}
+
+									setTimeout(() => {
+										const anchor = document.getElementById(logo.anchor);
+										if (anchor) {
+											anchor.scrollIntoView({ behavior: 'smooth' });
+										}
+									}, 500);
+								} else {
+									window.open(logo.url, '_blank');
+								}
+							}}
 						>
 							<img
 								className={classNames(
