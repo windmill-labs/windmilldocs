@@ -57,7 +57,7 @@ export default function LogoClouds() {
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
 					Trusted by 1000+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
+				<div className="cursor-pointer mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
@@ -72,12 +72,15 @@ export default function LogoClouds() {
 										skipAnimation.click();
 									}
 
-									setTimeout(() => {
-										const anchor = document.getElementById(logo.anchor);
-										if (anchor) {
-											anchor.scrollIntoView({ behavior: 'smooth' });
-										}
-									}, 500);
+									setTimeout(
+										() => {
+											const anchor = document.getElementById(logo.anchor);
+											if (anchor) {
+												anchor.scrollIntoView({ behavior: 'smooth' });
+											}
+										},
+										skipAnimation ? 1000 : 0
+									);
 								} else {
 									window.open(logo.url, '_blank');
 								}
