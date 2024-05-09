@@ -777,6 +777,7 @@ const sidebars = {
 				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',
+				'core_concepts/codebases_and_bundles/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
 				'core_concepts/private_hub/index',

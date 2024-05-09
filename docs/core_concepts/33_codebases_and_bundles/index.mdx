@@ -1,0 +1,34 @@
+# Codebases & Bundles
+
+:::note
+
+Codebases is Beta, only work with typescript and is an enterprise feature for the time being
+
+:::
+
+The traditional way to handle codebases on Windmill is two-fold:
+
+- Using [relative imports](../../advanced/6_imports/index.md#relative-imports) to import scripts from the same workspace
+- Deploy a private/public packages and import them in your scripts [using the package manager](../../advanced/6_imports/index.md#private-npm-registry--private-npm-packages)
+
+However, that can be inconvenient when working with large codebases loally.
+
+To that end, there is a new mode of deployment that relies on the same mechanism than similar services like lambda or cloud functions: A bundle is build locally and deployed to Windmill.
+
+This bundle contains all the code and dependencies needed to run the script.
+
+On the latest version of the Windmill CLI, it is done automatically on `wmill sync push` for script that falls in the patterns of includes and excludes as defined below.
+
+## wmill.yaml
+
+```yaml
+
+---
+codebases:
+  - relative_path: ../codebase
+    includes:
+      - '**'
+    excludes: []
+```
+
+Windmill keep track of the hash of the codebase and will only rebuild the bundle if the codebase or script has changed.
