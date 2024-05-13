@@ -8,28 +8,30 @@ This feature is useful if you want to display an image, a GIF, a file, or specif
 
 If the result is an object/dict with a single key (except for `approval`, which needs 3), you can leverage the following rich results:
 
-| Type       | Description                                                 | Example                                                                                                              |
-| ---------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| json       | Render the value as a JSON                                  | `return { "json": { "a": 1 } }`                                                                                      |
-| table-col  | Render the value as a column in a table                     | `return { "table-col": { "foo": [42, 8], "bar": [38, 12] }}`                                                         |
-| table-row  | Render the value as a row in a table                        | `return { "table-row": [ "foo", "bar" ]}`                                                                            |
-| html       | Render the value as HTML                                    | `return { "html": "<div>...</div>" }`                                                                                |
-| png        | Render the value as a PNG image                             | `return { "png": { "content": encode(image) } }` or `return { "png": encode(image) }`                                |
-| file       | Render an option to download the file                       | `return { "file": { "content": encode(file), "filename": "data.txt" } }`                                             |
-| jpeg       | Render the value as a JPEG image                            | `return { "jpeg": { "content": encode(image) } }` or `return { "jpeg": encode(image) }`                              |
-| gif        | Render the value as a GIF image                             | `return { "gif": { "content": encode(image) } }` or `return { "gif": encode(image) }`                                |
-| error      | Render the value as an error message                        | `return { "error": { "name": "418", "message": "I'm a teapot" }}`                                                    |
-| approval   | Render an approval and buttons to Resume or Cancel the step | `return { "resume": "https://example.com", "cancel": "https://example.com", "approvalPage": "https://example.com" }` |
-| svg        | Render the value as an SVG image                            | `return { "svg": "<svg>...</svg>" }`                                                                                 |
-| markdown   | Render the value as Markdown                                | `return { "markdown": "## Hello World" }` or `return { "md": "## Hello World" }`                                     |
-| render_all | Render all the results                                      | `return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }`           |
-| map | Render a map with a given location                                 | `return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}`           |
+| Type             | Description                                                 | Example                                                                                                              |
+| ----------       | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| json             | Render the value as a JSON                                  | `return { "json": { "a": 1 } }`                                                                                      |
+| table-col        | Render the value as a column-wise table                     | `return { "table-col": { "foo": [42, 8], "bar": [38, 12] } }`                                                        |
+| table-row        | Render the value as a row-wise table                        | `return { "table-row": [ [ "foo", "bar" ], [ 42, 38 ], [ 8, 12 ] ] }`                                                |
+| table-row-object | Render the value as a row-wise table but where each row is an object (optionally the first row can be an array of strings to enforce column order) | `return { "table-row-object": [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }` or  `return { "table-row-object": [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] } to enforce column order` |
+| html             | Render the value as HTML                                    | `return { "html": "<div>...</div>" }`                                                                                |
+| png              | Render the value as a PNG image                             | `return { "png": { "content": encode(image) } }` or `return { "png": encode(image) }`                                |
+| file             | Render an option to download the file                       | `return { "file": { "content": encode(file), "filename": "data.txt" } }`                                             |
+| jpeg             | Render the value as a JPEG image                            | `return { "jpeg": { "content": encode(image) } }` or `return { "jpeg": encode(image) }`                              |
+| gif              | Render the value as a GIF image                             | `return { "gif": { "content": encode(image) } }` or `return { "gif": encode(image) }`                                |
+| error            | Render the value as an error message                        | `return { "error": { "name": "418", "message": "I'm a teapot" }}`                                                    |
+| approval         | Render an approval and buttons to Resume or Cancel the step | `return { "resume": "https://example.com", "cancel": "https://example.com", "approvalPage": "https://example.com" }` |
+| svg              | Render the value as an SVG image                            | `return { "svg": "<svg>...</svg>" }`                                                                                 |
+| markdown         | Render the value as Markdown                                | `return { "markdown": "## Hello World" }` or `return { "md": "## Hello World" }`                                     |
+| render_all       | Render all the results                                      | `return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }`           |
+| map              | Render a map with a given location                                 | `return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}`           |
+
+**Note for tables**: If the result matches the table format (either `table-col`, `table-row`, or `table-row-object`), it will be displayed as a table even if the the data is not nested under the key `table-*`.
 
 ![Rich display HTML](./rich_display_html.png "Rich display HTML")
 
 ![Rich display map](./rich_display_map.png "Rich display map")
 
-**Regarding the tables**: If the result is a list whose first element is also a list, it will display the result as a table. If the result is a dict/object where every value is an array, it will also be displayed as a table, with the key as the column name.
 
 For example:
 
