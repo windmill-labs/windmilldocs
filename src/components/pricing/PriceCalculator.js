@@ -158,6 +158,7 @@ export default function PriceCalculator({ period, tier }) {
 														<span className="block sm:inline">{plan.description}</span>
 													</RadioGroup.Description>
 													<RadioGroup.Description as="div" className="flex w-full justify-end">
+														+
 														<span className="text-sm text-gray-900 font-semibold dark:text-white">
 															${calculatePrice(plan.price, period.value)}
 														</span>
