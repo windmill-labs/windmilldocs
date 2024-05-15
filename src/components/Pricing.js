@@ -610,6 +610,17 @@ const sections = [
 					Team: false
 				},
 				link: '/docs/misc/s3_cache'
+			},
+			{
+				name: 'Codebases & Bundles',
+				tiers: {
+					'Free and Open-source': false,
+					Pro: false,
+					Enterprise: true,
+					Community: false,
+					Team: true
+				},
+				link: '/docs/core_concepts/codebases_and_bundles'
 			}
 		]
 	},
