@@ -618,7 +618,7 @@ const sections = [
 					Pro: false,
 					Enterprise: true,
 					Community: false,
-					Team: false
+					Team: true
 				},
 				link: '/docs/core_concepts/codebases_and_bundles'
 			}
