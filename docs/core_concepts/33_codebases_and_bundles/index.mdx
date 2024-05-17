@@ -21,11 +21,11 @@ To that end, there is a new mode of deployment that relies on the same mechanism
 
 This bundle contains all the code and dependencies needed to run the script.
 
-On the latest version of the Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined below.
+On the latest version of the [Windmill CLI](../../advanced/3_cli/index.mdx), it is done automatically on [`wmill sync push`](../../advanced/3_cli/sync.mdx) for any script that falls in the patterns of includes and excludes as defined below.
 
 ## wmill.yaml
 
-Here are the changes needed in your [`wmill.yaml`](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml):
+Here are the changes needed in your [`wmill.yaml`](https://github.com/windmill-labs/windmill-codebase-example/blob/main/windmill/wmill.yaml):
 
 ```yaml
 ---
@@ -40,9 +40,9 @@ Windmill keeps track of the hash of the codebase and will only rebuild the bundl
 
 ## Instance S3 Integration
 
-The bundles requires the [instance-wide s3 integration](../20_jobs/index.mdx#s3azure-for-python-cache--large-logs) which is where the bundle resides.
+The bundles requires the [instance-wide S3 integration](../20_jobs/index.mdx#s3azure-for-python-cache--large-logs) which is where the bundle resides.
 
-## Vscode Extension
+## VS Code Extension
 
 This mode of deployment automatically works with the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) to run preview by recognizing the `codebases` configuration in wmill.yaml and bundling scripts on the fly using the same esbuild.
 
@@ -51,5 +51,17 @@ This mode of deployment automatically works with the [VS Code extension](../../c
 		title="VS Code Extension"
 		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
+## Example Repository
+
+An example repository with codebases and bundles can be found on [GitHub](https://github.com/windmill-labs/windmill-codebase-example).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="windmill-codebase-example"
+		description="Demo repository showcasing codebases and bundles."
+		href="https://github.com/windmill-labs/windmill-codebase-example"
 	/>
 </div>
