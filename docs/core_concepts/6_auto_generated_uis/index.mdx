@@ -24,6 +24,9 @@ By analyzing the parameters of the main function, Windmill generates an input sp
 
 You don't need to directly interact with the JSON Schema associated with the Script or Flow. It is the result of the analysis of the script parameters of the main function and the optional UI customization.
 
+The parsing of the main function will be used to generate an UI for scripts, or scripts used as flow steps (useful to [link steps together](../../flows/16_architecture.mdx)).
+The auto-generated UI of a flow is made from [Flow Input](../../flows/3_editor_components.mdx#flow-inputs).
+
 In the [UI customization interface](../../script_editor/customize_ui.mdx), you can refine information that couldn't be inferred directly from the parameters, such as specifying string enums or restricting lists to numbers. You can also add helpful descriptions to each field.
 
 ![Customize inputs](./customize_inputs.png.webp)

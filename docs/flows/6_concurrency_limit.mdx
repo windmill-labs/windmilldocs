@@ -8,9 +8,14 @@ import DocCard from '@site/src/components/DocCard';
 
 The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows. Its primary goal is to prevent exceeding the API Limit of the targeted API, eliminating the need for complex workarounds using worker groups.
 
-When jobs reach the concurrency limit, they are automatically queued for execution at the next available optimal slot given the time window.
+Concurrency limit is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only.
 
-Concurrency limit is a [Cloud plans and Enterprise Self-Hosted edition](/pricing)-only feature.
+Concurrency limit can be set from the Settings menu. When jobs reach the concurrency limit, they are automatically queued for execution at the next available optimal slot given the time window.
+
+The Concurrency Limit operates globally and across flow runs. It involves three key parameters:
+- [Max number of executions within the time window](../core_concepts/21_concurrency_limits/index.md#max-number-of-executions-within-the-time-window)
+- [Time window in seconds](../core_concepts/21_concurrency_limits/index.md#time-window-in-seconds)
+- [Custom concurrency key](../core_concepts/21_concurrency_limits/index.md#custom-concurrency-key)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

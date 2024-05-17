@@ -36,6 +36,14 @@ You can filter the view per datetime, toggle "CRON schedules" to disable the dis
 
 > All past and future runs of the workspace are visible from the menu.
 
+<br/>
+
+The graph can represent jobs on their Duration (default) or by Concurrency, meaning the number of concurrent jobs at a given time.
+
+![Aggregated view by concurrency](aggregated_concurrency.png "Aggregated view by concurrency")
+
+> Graphical view by concurrent jobs.
+
 ## Details per Run
 
 Clicking on each run in the menu opens a run page where you can view the run's state, inputs, and success/failure reasons.
@@ -59,7 +67,7 @@ View of a scheduled run:
 You can adjust the level of details by picking playing with filters on:
 
 - **Datetime**
-- **Metadata**: [Path](../16_roles_and_permissions/index.mdx#path) / [User](../16_roles_and_permissions/index.mdx#users) / [Folder](../8_groups_and_folders/index.mdx) / Labels
+- **Metadata**: [Path](../16_roles_and_permissions/index.mdx#path) / [User](../16_roles_and_permissions/index.mdx#users) / [Folder](../8_groups_and_folders/index.mdx) / [Concurrency key](../21_concurrency_limits/index.md#custom-concurrency-key) / [Labels](#jobs-labels)
 - **Kind**: All / Runs / Previews / Dependencies
 - **Status**: All / Success / Failure
 - **Skipped flows**

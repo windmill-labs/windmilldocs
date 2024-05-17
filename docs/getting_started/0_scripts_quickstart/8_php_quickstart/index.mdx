@@ -1,23 +1,15 @@
 ---
-title: 'Python Quickstart'
-slug: '/getting_started/scripts_quickstart/python'
+title: 'PHP Quickstart'
+slug: '/getting_started/scripts_quickstart/php'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# Python Quickstart
+# PHP Quickstart
 
-In this quick start guide, we will write our first script in Python. Windmill provides a Python `3.11` environment.
+In this quick start guide, we will write our first script in php.
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	controls
-	id="main-video"
-	src="/videos/python_quickstart.mp4"
-/>
-
-<br />
+![Editor for php](./editor_php.png "Script in php")
 
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
@@ -36,33 +28,41 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code): for Python scripts, it must have at least a main function.
+- [Code](#code): for php scripts, it must have at least a main function.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.md) of its inputs (inferred from its signature).
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
 
-Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
+Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your php script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
-[This](https://hub.windmill.dev/scripts/%22%22/1530/do-sentiment-analysis-with-nltk-%22%22) is a simple example of a script built in Python with Windmill:
+This is a simple example of a script built in php with Windmill:
 
-```py
-#import wmill
-import nltk
-from nltk.sentiment import SentimentIntensityAnalyzer
-nltk.download("vader_lexicon")
+```
+<?php
 
-def main(text: str = "Wow, NLTK is really powerful!"):
-    return SentimentIntensityAnalyzer().polarity_scores(text)
+// remove the first // of the following lines to specify packages to install using composer
+// // require:
+// // monolog/monolog@3.6.0
+// // stripe/stripe-php
+
+function main(
+	// Postgresql $a,
+  // array $b,
+  // object $c,
+	int $d = 123,
+	string $e = "default value",
+	float $f = 3.5,
+  bool $g = true,
+) {
+	return $d;
+}
 ```
 
-In this quick start guide, we'll create a script that greets the operator running it.
-
-From the Home page, click `+Script`. This will take you to the
-first step of script creation: Metadata.
+From the Home page, click `+Script`. This will take you to the first step of script creation: Metadata.
 
 ## Settings
 
-![New script](./create_script_python.png.webp)
+![New script](./create_script_php.png "New script")
 
 As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
@@ -82,7 +82,7 @@ This menu also has additional settings, such as:
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
-- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with Python and TypeScript.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with php and TypeScript.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -92,7 +92,7 @@ This menu also has additional settings, such as:
 	/>
 </div>
 
-Now click on the code editor on the left side, and let's build our Hello World!
+Now click on the code editor on the left side.
 
 ## Code
 
@@ -101,7 +101,7 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for python](./editor_python.png.webp)
+![Editor for php](./editor_php.png "Editor for php")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -116,50 +116,28 @@ Script. You can preview that UI, provide input values, and [test your script](#i
 	/>
 </div>
 
-As we picked `python` for this example, Windmill provided some python
+As we picked `php` for this example, Windmill provided some php
 boilerplate. Let's take a look:
 
-```python
-import os
-import wmill
+```php
+<?php
 
-# You can import any PyPi package.
-# See here for more info: https://www.windmill.dev/docs/advanced/imports#python
+// remove the first // of the following lines to specify packages to install using composer
+// // require:
+// // monolog/monolog@3.6.0
+// // stripe/stripe-php
 
-# you can use typed resources by doing a type alias to dict
-#postgresql = dict
-
-def main(
-    no_default: str,
-    #db: postgresql,
-    name="Nicolas Bourbaki",
-    age=42,
-    obj: dict = {"even": "dicts"},
-    l: list = ["or", "lists!"],
-    file_: bytes = bytes(0),
-):
-
-    print(f"Hello World and a warm welcome especially to {name}")
-    print("and its acolytes..", age, obj, l, len(file_))
-
-    # retrieve variables, resources, states using the wmill client
-    try:
-        secret = wmill.get_variable("f/examples/secret")
-    except:
-        secret = "No secret yet at f/examples/secret !"
-    print(f"The variable at `f/examples/secret`: {secret}")
-
-    # Get last state of this script execution by the same trigger/user
-    last_state = wmill.get_state()
-    new_state = {"foo": 42} if last_state is None else last_state
-    new_state["foo"] += 1
-    wmill.set_state(new_state)
-
-    # fetch context variables
-    user = os.environ.get("WM_USERNAME")
-
-    # return value is converted to JSON
-    return {"splitted": name.split(), "user": user, "state": new_state}
+function main(
+	// Postgresql $a,
+  // array $b,
+  // object $c,
+	int $d = 123,
+	string $e = "default value",
+	float $f = 3.5,
+  bool $g = true,
+) {
+	return $d;
+}
 ```
 
 In Windmill, scripts need to have a `main` function that will be the script's
@@ -180,31 +158,27 @@ entrypoint. There are a few important things to note about the `main`.
 	/>
 </div>
 
-The last import line imports the Windmill client, which is needed for example to access
-[variables](../../../core_concepts/2_variables_and_secrets/index.mdx) or
-[resources](../../../core_concepts/3_resources_and_types/index.mdx).
+Packages can be installed using composer. Just uncomment the `require` lines and add the packages you need. Windmill will install them for you:
 
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
-		href="/docs/advanced/imports"
-	/>
-	<DocCard
-		title="Python Client"
-		description="The Python client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your script jobs."
-		href="/docs/advanced/clients/python_client"
-	/>
-</div>
+```php
+<?php
 
-Back to our Hello World. We can clean up unused import statements, change the
-main to take in the user's name. Let's also return the `name`, maybe we can use
-this later if we use this Script within a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) and need to pass its result on.
+// require:
+// monolog/monolog@3.6.0
+// stripe/stripe-php
 
-```py
-def main(name: str):
-  print("Hello world. Oh, it's you {}? Greetings!".format(name))
-  return name
+function main(
+	// Postgresql $a,
+  // array $b,
+  // object $c,
+	int $d = 123,
+	string $e = "default value",
+	float $f = 3.5,
+  bool $g = true,
+) {
+	return $d;
+}
+
 ```
 
 ## Instant Preview & Testing
@@ -224,8 +198,8 @@ You can change how the UI behaves by changing the main signature. For example,
 if you add a default for the `name` argument, the UI won't consider this field
 as required anymore.
 
-```py
-def main(name: str = "you"):
+```php
+function main(string $e = "default value")
 ```
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -244,7 +218,7 @@ From the Settings menu, the "Generated UI" tab lets you customize the script's a
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Python](./customize_python.png.webp)
+![Advanced settings for php](./customize_php.png "Advanced settings for php")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -256,24 +230,6 @@ The UI is generated from the Script's main function signature, but you can add a
 		title="Customize UI"
 		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
 		href="/docs/script_editor/customize_ui"
-	/>
-</div>
-
-## Workflows as Code
-
-One way to write distributed programs that execute distinct jobs is to use [flows](../../../flows/1_flow_editor.mdx) that chain scripts together.
-
-Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as [workflows as code](../../../core_concepts/31_workflows_as_code/index.mdx).
-
-![Flow as code in Python](../../../core_concepts/31_workflows_as_code/python_editor.png "Flow as code in Python")
-
-All details at:
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Workflows as Code"
-		description="Automate tasks and their flow with only code."
-		href="/docs/core_concepts/workflows_as_code"
 	/>
 </div>
 
@@ -289,7 +245,7 @@ Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run hello world in Python](./run_python.png.webp)
+![Run in php](./run_php.png "Run in php")
 
 You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 

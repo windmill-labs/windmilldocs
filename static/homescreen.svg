@@ -146,7 +146,7 @@
         fill="#CFDEFF" />
     <a xlink:href="/docs/script_editor" target="_blank" class="cursor-pointer">
         <title>Scripts</title>
-        <desc>Windmill supports scripts in Python, TypeScript, Go, Bash and Sql.</desc>
+        <desc>Windmill supports scripts in Python, TypeScript, Go, PHP, Bash and Sql.</desc>
         <rect width="1825.29" height="965.68" rx="40" transform="matrix(0.866025 0.5 -0.866025 0.5 1086.3 1739)"
             fill="#FFFDFD" class="hover-change-color" />
     </a>

@@ -128,7 +128,11 @@ export async function main(example_input: number = 3) {
 ```
 
 Rest scripts are in fact [TypeScript](../1_typescript_quickstart/index.mdx) fetches. They support all the normal signatures of normal TypeScript but only [stdlib](https://en.wikibooks.org/wiki/C_Programming/stdlib.h) javascript and the fetch operations.
-[Imports](../../../advanced/6_imports/index.mdx) are not allowed.
+[Imports](../../../advanced/6_imports/index.mdx) are not allowed. Only the full [wmill API](../../../advanced/2_clients/ts_client.mdx) is supported, just use:
+
+```ts
+import * as wmill from './windmill.ts'
+```
 
 Fetches can also be done through a regular TypeScript in Windmill, but opting for dedicated Rest scripts
 benefits from a highly efficient runtime.
