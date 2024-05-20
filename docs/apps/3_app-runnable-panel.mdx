@@ -68,11 +68,13 @@ Frontend scripts can read outputs and ctx of the rest of the app with for exampl
 
 ```js
 // read outputs and ctx
-console.log(ctx.email)
+console.log(ctx.email);
 
 // access a global state store
-if (!state.foo) { state.foo = 0 }
-state.foo += 1
+if (!state.foo) {
+	state.foo = 0;
+}
+state.foo += 1;
 
 // for reactivity to work, you need to assign a value and not modify it in place
 // e.g: state.foo.push(1) will not work but 'state.foo = [...state.foo, 1]' will.
@@ -80,11 +82,11 @@ state.foo += 1
 
 // you can also navigate (goto), recompute a script (recompute), or set a tab (setTab)
 // Inputs and display components support settings their value directly
-setValue('a', "Bar") 
+setValue('a', 'Bar');
 
 // Tables support setting their selected index (setSelectedIndex)
 
-return state.foo
+return state.foo;
 ```
 
 ### Background runnables
@@ -506,7 +508,7 @@ Parameters:
 Sends a toast notification.
 
 ```js
-recompute(message: string, error: boolean)
+showToast(message: string, error: boolean)
 ```
 
 Parameters:
