@@ -43,7 +43,7 @@ export default function Content() {
 				</p>
 			</div>
 		),
-		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from Windmill Hub community library. Windmill supports scripts in TypeScript, Python, Go, Bash and SQL.`,
+		integrations_sub_title: `Write any script, flow or app targeting ${name} API, or pick them from Windmill Hub community library. Windmill supports scripts in TypeScript, Python, Go, PHP, Bash and SQL.`,
 		hubIntegrations: [
 			{
 				title: 'Send Message to Channel',

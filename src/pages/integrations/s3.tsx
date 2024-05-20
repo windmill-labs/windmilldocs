@@ -43,7 +43,7 @@ export default function S3() {
 				</p>
 			</div>
 		),
-		integrations_sub_title: `Write any script, flow or app targeting ${name} API, in TypeScript, Python, Go, Bash and SQL. Windmill has a built-in S3 integration to interact with S3 directly from your scripts.`,
+		integrations_sub_title: `Write any script, flow or app targeting ${name} API, in TypeScript, Python, Go, PHP, Bash and SQL. Windmill has a built-in S3 integration to interact with S3 directly from your scripts.`,
 		hubIntegrations: [
             {
               title: 'Read a file from S3',

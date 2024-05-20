@@ -24,7 +24,7 @@ restricted forms.
 
 Windmill is different:
 
-- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, Bash, SQL) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Prefect and n8n.
+- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, PHP, Bash, SQL) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Prefect and n8n.
 - It empowers semi-technical users to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
   environments, secrets managements, etc).
@@ -65,7 +65,7 @@ Windmill embeds:
     urls known only by the approvers
 - a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.mdx)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
-  Python, Go, Bash and SQL or trigger the Scripts and Flows of the workspace
+  Python, Go, PHP, Bash and SQL or trigger the Scripts and Flows of the workspace
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),

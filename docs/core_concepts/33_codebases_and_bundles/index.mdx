@@ -15,13 +15,23 @@ The traditional way to handle codebases on Windmill is two-fold:
 
 However, that can be inconvenient when working with large codebases.
 
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Egu8NOrgKDw"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
 ## Bundles
 
 To that end, there is a new mode of deployment that relies on the same mechanism as similar services like Lambda or cloud functions: a bundle is built locally by the CLI using [esbuild](https://esbuild.github.io/) and deployed to Windmill.
 
 This bundle contains all the code and dependencies needed to run the script.
 
-On the latest version of the [Windmill CLI](../../advanced/3_cli/index.mdx), it is done automatically on [`wmill sync push`](../../advanced/3_cli/sync.mdx) for any script that falls in the patterns of includes and excludes as defined below.
+On the latest version of the Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined by the [wmill.yaml](#wmillyaml).
 
 ## wmill.yaml
 

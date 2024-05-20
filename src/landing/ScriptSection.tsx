@@ -236,7 +236,7 @@ const tabs = [
 		data: [
 			{
 				title: 'Web IDE & Assistants',
-				description: 'LSP support for Typescript, Python, Go, Bash and SQL scripts.',
+				description: 'LSP support for Typescript, Python, Go, PHP, Bash and SQL scripts.',
 				icon: AlignLeftIcon,
 				imageSrc: '/images/code_editor_script.png',
 				altText: 'Web IDE',

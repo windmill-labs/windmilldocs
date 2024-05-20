@@ -52,6 +52,11 @@ const sidebars = {
 								},
 								{
 									type: 'doc',
+									id: 'getting_started/scripts_quickstart/php_quickstart/index',
+									label: 'PHP'
+								},
+								{
+									type: 'doc',
 									id: 'getting_started/scripts_quickstart/sql_quickstart/index',
 									label: 'SQL & Query languages'
 								},

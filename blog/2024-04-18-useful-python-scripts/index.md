@@ -19,7 +19,7 @@ In this blog post, we will explore ten Python scripts that stand out due to thei
 
 ## Use Windmill to create, run and monitor Python Scripts
 
-Windmill is an open-source developer platform and workflow engine designed to build comprehensive internal tools (endpoints, workflows, UIs). It supports coding in Typescript, Python, Go, Bash, SQL, or any Docker image, alongside intuitive low-code builders, including:
+Windmill is an open-source developer platform and workflow engine designed to build comprehensive internal tools (endpoints, workflows, UIs). It supports coding in TypeScript, Python, Go, PHP, Bash, SQL, or any Docker image, alongside intuitive low-code builders, including:
 
 - An [execution runtime](/docs/script_editor) for scalable, low-latency function execution across a worker fleet.
 - An [orchestrator](/docs/flows/flow_editor) for assembling these functions into efficient, low-latency flows, using either a low-code builder or YAML.
@@ -691,6 +691,6 @@ def main(
 
 In this article, we have highlighted ten straightforward Python scripts that are designed to streamline a variety of manual tasks. These scripts were chosen not only for their straightforwardness and practicality but also for the significant impact they offer relative to their simplicity.
 
-[Windmill](https://www.windmill.dev/) enables you to manage and execute your scripts with unmatched ease and security. With Windmill, you're equipped to effortlessly manage and deploy scripts written in a wide variety of languages including Python, TypeScript, Go, Bash, and SQL, as well as compose intricate multi-step [workflows](/docs/flows/flow_editor).
+[Windmill](https://www.windmill.dev/) enables you to manage and execute your scripts with unmatched ease and security. With Windmill, you're equipped to effortlessly manage and deploy scripts written in a wide variety of languages including Python, TypeScript, Go, PHP, Bash, and SQL, as well as compose intricate multi-step [workflows](/docs/flows/flow_editor).
 You can [schedule](/docs/core_concepts/scheduling) and get [webhooks](/docs/core_concepts/webhooks) for scripts and flows and give them custom UIs in [Apps](/docs/apps/app_editor).
 Windmill's local and cloud execution options empower you to utilize your development environment for crafting and testing scripts before they go live.
