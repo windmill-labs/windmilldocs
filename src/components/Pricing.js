@@ -295,23 +295,23 @@ const sections = [
 				tooltip: 'Each vCPU can run up to ~26M jobs per month'
 			},
 			{
-				name: 'Maximum number of seats',
-				tiers: {
-					'Free and Open-source': 'Unlimited',
-					Pro: '10',
-					Enterprise: 'Unlimited',
-					Community: 'Unlimited',
-					Team: '10'
-				}
-			},
-			{
 				name: 'Number of workspaces',
 				tiers: {
 					'Free and Open-source': '3',
 					Pro: 'Unlimited',
 					Enterprise: 'Unlimited',
 					Community: 'Unlimited',
-					Team: '1'
+					Team: 'Plan is at workspace level'
+				}
+			},
+			{
+				name: 'Maximum number of seats',
+				tiers: {
+					'Free and Open-source': 'Unlimited',
+					Pro: '10',
+					Enterprise: 'Unlimited',
+					Community: 'Unlimited unless abuse',
+					Team: '10'
 				}
 			},
 			{
@@ -601,7 +601,7 @@ const sections = [
 				link: '/docs/core_concepts/oidc'
 			},
 			{
-				name: 'Distributed dependency cache backed by S3',
+				name: 'Distributed Dependency Cache backed by S3',
 				tiers: {
 					'Free and Open-source': false,
 					Pro: false,
