@@ -66,7 +66,7 @@ export default function S3() {
             {
               title: 'Upload text in bucket',
               link: 'https://hub.windmill.dev/scripts/s3/1320/upload-text-in-bucket-s3',
-              description: 'Upload text content at a given path in an s3 resource.',
+              description: 'Upload text content at a given path in an S3 resource.',
               icon: Upload
             },
             {

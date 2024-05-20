@@ -88,7 +88,7 @@ If you have a `package.json` or `requirements.txt` file in the same directory as
 1. After update the of the script `f/scripts/hallowed_script.py`, re-generate its schema and its locks:
 
 ```bash
-wmill script update-metadata f/scripts/hallowed_script.py
+wmill script generate-metadata f/scripts/hallowed_script.py
 ```
 
 ## Showing a script
