@@ -12,7 +12,7 @@ Windmill comes with a [native integration with S3 and Azure Blob](#connect-your-
 
 ## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
 
-Using s3 with Windmill is not limited. What is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with s3 that is a major convenience layer to enable users to read and write from s3 without having to have access to the credentials.
+Using S3 with Windmill is not limited. What is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with S3 that is a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
 
 Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
 
@@ -196,7 +196,7 @@ For jobs with extensive logging needs, Windmill [Enterprise Edition](/pricing) u
 
 This allows the handling of large-scale logs with minimal database impact, supporting more efficient and scalable workflows.
 
-For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../20_jobs/index.mdx#s3azure-for-python-cache--large-logs). This feature is at the Instance-level, and has no overlap with the Workspace s3 integration.
+For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../20_jobs/index.mdx#s3azure-for-python-cache--large-logs). This feature is at the Instance-level, and has no overlap with the Workspace S3 integration.
 
 ## Windmill embedded integration with Polars and DuckDB for data pipelines
 
@@ -220,7 +220,7 @@ import s3fs
 def main(input_file: S3Object):
     bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
 
-    # this will default to the workspace s3 resource
+    # this will default to the workspace S3 resource
     storage_options = wmill.polars_connection_settings().storage_options
     # this will use the designated resource
     # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
@@ -268,12 +268,12 @@ def main(input_file: S3Object):
     # see https://duckdb.org/docs/api/python/dbapi
     conn = duckdb.connect()
 
-    # this will default to the workspace s3 resource
+    # this will default to the workspace S3 resource
     args = wmill.duckdb_connection_settings().connection_settings_str
     # this will use the designated resource
     # args = wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>").connection_settings_str
 
-    # connect duck db to the S3 bucket - this will default to the workspace s3 resource
+    # connect duck db to the S3 bucket - this will default to the workspace S3 resource
     conn.execute(args)
 
     input_uri = "s3://{}/{}".format(bucket, input_file["s3"])

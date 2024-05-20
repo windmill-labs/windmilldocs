@@ -236,7 +236,7 @@ import s3fs
 def main(input_file: S3Object):
     bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
 
-    # this will default to the workspace s3 resource
+    # this will default to the workspace S3 resource
     storage_options = wmill.polars_connection_settings().storage_options
     # this will use the designated resource
     # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
@@ -284,12 +284,12 @@ def main(input_file: S3Object):
     # see https://duckdb.org/docs/api/python/dbapi
     conn = duckdb.connect()
 
-    # this will default to the workspace s3 resource
+    # this will default to the workspace S3 resource
     args = wmill.duckdb_connection_settings().connection_settings_str
     # this will use the designated resource
     # args = wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>").connection_settings_str
 
-    # connect duck db to the S3 bucket - this will default to the workspace s3 resource
+    # connect duck db to the S3 bucket - this will default to the workspace S3 resource
     conn.execute(args)
 
     input_uri = "s3://{}/{}".format(bucket, input_file["s3"])

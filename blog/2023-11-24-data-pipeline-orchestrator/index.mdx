@@ -119,7 +119,7 @@ In Windmill, you can just do:
 
 ```
 conn = duckdb.connect()
-# path/to/resource arg is optional and by default the workspace s3 resource will be used
+# path/to/resource arg is optional and by default the workspace S3 resource will be used
 conn.execute(wmill.duckdb_connection_settings("/path/to/resource")["connection_settings_str"])
 
 conn.sql("SELECT * FROM read_parquet(s3://windmill_bucket/file.parquet)")
@@ -147,7 +147,7 @@ with s3.open("s3://windmill_bucket/file.parquet", mode="rb") as f:
 becomes in Windmill:
 
 ```python
-# /path/to/resource arg is optional and by default the workspace s3 resource will be used
+# /path/to/resource arg is optional and by default the workspace S3 resource will be used
 s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings("/path/to/resource")["s3fs_args"])
 with s3.open("s3://windmill_bucket/file.parquet", mode="rb") as f:
     dataframe = pl.read_parquet(f)
