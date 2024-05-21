@@ -54,10 +54,6 @@ You can pin a resource to an SQL query by adding a `-- database resource_path` l
 
 :::
 
-### Amazon Redshift
-
-Redshift is compatible with Windmill's PostgreSQL resources and scripts. To add a Redshift resource, just follow the same steps as for [PostgreSQL](#postgresql).
-
 ### PostgreSQL
 
 To be able to connect to a [PostgreSQL](https://www.postgresql.org/) instance ([Supabase](../../../integrations/supabase.md), [Neon.tech](../../../integrations/neon.md), etc.), we'll need to define a Resource with the `PostgreSQL` Resource Type first.
@@ -275,6 +271,33 @@ Here's a step-by-step guide on where to find each detail.
 
 You can directly "Test connection" if needed.
 
+### Amazon Redshift
+
+To connect to an Amazon Redshift instance, we need to add the corresponding resource. Redshift is compatible with Windmill's PostgreSQL resources and scripts, so we'll start by adding a new PostgrSQL resource type.
+
+![Select PostgreSQL Resource Type](../../../assets/integrations/psql-1-resources.png.webp)
+
+Get the required values from the AWS console under CLUSTERS > your Redshift cluster.
+
+![AWS Redshift Cluster Screen](../../../assets/integrations/redshift-aws-console.png)
+
+Find the value named 'endpoint' it should look like this:
+
+```
+default-workgroup.475893240789.us-east-1.redshift-serverless.amazonaws.com:5439/dev
+```
+From there you can deduce your host, port and database name:
+
+- host: default-workgroup.475893240789.us-east-1.redshift-serverless.amazonaws.com
+- port: 5439
+- dbname: dev
+
+Now you can fill those values in Windmill, fill also the user and password for the db and press "Test connection" to check that it's working.
+
+![Fill in the required values](../../../assets/integrations/redshift-resource-filled.png)
+
+Once it's working press save and you have succesfully added your Redshift instance as a PostgreSQL resource!
+
 ## Create Script
 
 Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
@@ -283,10 +306,6 @@ click on the "+Script" button. Name the Script, give it a summary, and select yo
 ![Script creation first step](../../../assets/integrations/sql_new_script.png.webp)
 
 You can also give more details to your script, in the [settings section](../../../script_editor/settings.mdx), you can also get back to that later at any point.
-
-### Amazon Redshift
-
-To create a script for Redshift, select the PostgreSQL language and follow the instructions of a [PostgreSQL script](#postgresql-1)
 
 ### PostgreSQL
 
@@ -422,6 +441,11 @@ Database resource can be specified from the UI or directly within script with a 
 You can then write your prepared statement.
 
 ![Snowflake statement](./snowflake_statement.png.webp)
+
+### Amazon Redshift
+
+To create a script for Redshift, select the PostgreSQL language and follow the instructions of a [PostgreSQL script](#postgresql-1)
+
 
 ## Raw Queries
 
