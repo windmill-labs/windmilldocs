@@ -503,8 +503,9 @@ const sidebars = {
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
-				'advanced/clients/python_client',
+				'advanced/dependencies_in_typescript/index',
 				'advanced/clients/ts_client',
+				'advanced/clients/python_client',
 				'misc/share_on_hub/index',
 				'integrations/integrations_on_windmill',
 				{

@@ -50,7 +50,7 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 ## Deno or Bun relative imports for sharing common logic
 
 Similarly to Python, it is possible to import directly from other TypeScript
-Scripts. One can simply follow the path layout. For instance,
+scripts. One can simply follow the path layout. For instance,
 `import { foo } from "/f/<foldername>/script_name.ts"`. A more verbose example
 below:
 

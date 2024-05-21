@@ -37,11 +37,11 @@ import { toWords } from 'number-to-words@1';
 import { getVariable } from 'windmill-client@1.147.3';
 ```
 
-### Private npm registry & Private npm packages
+### Private npm Registry & Private npm Packages
 
 ![Private NPM registry](private_registry.png)
 
-On EE, go to `Instance settings -> Core -> NPM Config Registry`.
+On [Enterprise Edition](/pricing), go to `Instance settings -> Core -> NPM Config Registry`.
 
 Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
 
@@ -49,7 +49,7 @@ Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with y
 
 :::caution
 
-Currently, deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
+Currently, Deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
 
 :::
 
