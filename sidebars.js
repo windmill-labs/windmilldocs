@@ -694,6 +694,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/redshift',
+							label: 'Redshift'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/rss',
 							label: 'RSS'
 						},
