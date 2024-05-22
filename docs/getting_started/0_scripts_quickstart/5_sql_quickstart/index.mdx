@@ -444,20 +444,8 @@ You can then write your prepared statement.
 
 ### Amazon Redshift
 
-Arguments need to be passed in the given format:
-
-```sql
--- $1 name1 = default arg
--- $2 name2
-INSERT INTO demo VALUES ($1::TEXT, $2::INT);
-```
-
-"name1", "name2" being the names of the arguments, and "default arg" the optional default value.
-
-Database resource can be specified from the UI or directly within script with a line `-- database resource_path`.
-
-
-For more details and a video tutorial on creating a script for Redshift, check the instructions for [PostgreSQL scripts](#postgresql-1).
+Since Redshift is compatible with Windmill's PostgreSQL, you can follow the same instructions as for [PostgreSQL scripts](#postgresql-1). Just make sure to select your Redshift instance as a resource.
+Just remeber when using a a Redshift resource, you should write valid Redshift, and not Postgres. [Learn about the differences here](https://docs.aws.amazon.com/redshift/latest/dg/c_redshift-and-postgres-sql.html).
 
 
 ## Raw Queries
