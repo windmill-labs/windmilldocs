@@ -141,7 +141,7 @@ Editing a script is as simple as editing its content. The code can be edited fre
 
 The lockfile can be generated with [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file).
 
-Any lockfile will be overriden by the closest package.json from a parent or current folder if there is one.
+When doing `wmill script generate-metadata`, if a package.json is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -160,7 +160,17 @@ Any lockfile will be overriden by the closest package.json from a parent or curr
 
 Although Windmill can [automatically resolve imports](#automatically-resolved-imports). It is possible to override the dependencies by providing a `package.json` file in the same directory as the script as you would do in a standard Node.js project, building and maintaining a package.json to declare dependencies.
 
-Any lockfile will be overriden by the closest package.json from a parent or current folder if there is one.
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/AycoBCQyjUU"
+	title="Perpetual Scripts"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a package.json is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
 
 You can write those package.json manually or through a standar `npm install <X>`.
 
@@ -187,7 +197,7 @@ windmill_folder
 
 The Windmill [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
 
-With this toggle, you can choose to use the metadata lockfile instead of inferring them directly from the script.
+With this toggle, you can choose to use the metadata lockfile (derived from package.json after `wmill script generate-metadata`) instead of inferring them directly from the script.
 
 ![Toggle Lockfile](../../cli_local_dev/1_vscode-extension/toggle_lockfile.png 'Toggle Lockfile')
 

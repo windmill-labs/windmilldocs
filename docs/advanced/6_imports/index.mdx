@@ -8,70 +8,17 @@ When a script is deployed through its UI, Windmill generates a lockfile to ensur
 
 On the [enterprise edition](/pricing), Windmill's caches can be configured to sync their cache with a central S3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
 
-## Imports in Typescript
+## Imports in TypeScript
 
-There are two options for runtimes in TypeScript:
+See our dedicated page on [Dependencies in TypeScript](../14_dependencies_in_typescript/index.mdx).
 
-- [Deno](#deno)
-- [Bun](#bun) (compatible 1:1 with Node.js)
-
-### Deno
-
-The dependencies and their versions are contained in the script and hence there is no need for any additional steps. The resolution is done by [deno](https://deno.com/runtime).
-
-e.g:
-
-```ts
-import { toWords } from 'npm:number-to-words@1';
-import * as wmill from 'https://deno.land/x/windmill@v1.84.1/mod.ts';
-```
-
-### Bun
-
-The dependencies and their versions are contained in the script and hence there is no need for any additional steps. The TypeScript runtime is Bun, which is 100% compatible with Node.js without any code modifications.
-
-e.g:
-
-```ts
-import { toWords } from 'number-to-words@1';
-import { getVariable } from 'windmill-client@1.147.3';
-```
-
-### Private npm Registry & Private npm Packages
-
-You can use private npm registries and private npm packages in your TypeScript scripts.
-
-![Private NPM registry](private_registry.png)
-
-On [Enterprise Edition](/pricing), go to `Instance settings -> Core -> NPM Config Registry`.
-
-Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
-
-#### Private npm packages requiring token
-
-:::caution
-
-Currently, Deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
-
-:::
-
-If a token is required, append `:_authToken=<your url>` to the URL.
-
-Combining the two, you can import private packages from npm
-
-```
-https://registry.npmjs.org/:_authToken=npm_bKZp1kOKzWsNPUvx2LpyUzIJqi2uaw23eqw
-```
-
-If the private registry is exposing custom certificates,`DENO_CERT` and `DENO_TLS_CA_STORE` env variables can be used as well (see [Deno documentaion](https://docs.deno.com/runtime/manual/getting_started/setup_your_environment#environment-variables) for more info on those options).
-
-```dockerfile
-windmill_worker:
-  ...
-  environment:
-    ...
-    - DENO_CERT=/custom-certs/root-ca.crt
-```
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+</div>
 
 ## Imports in Python
 
