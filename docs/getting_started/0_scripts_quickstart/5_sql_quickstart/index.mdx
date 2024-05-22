@@ -444,8 +444,17 @@ You can then write your prepared statement.
 
 ### Amazon Redshift
 
-Since Redshift is compatible with Windmill's PostgreSQL, you can follow the same instructions as for [PostgreSQL scripts](#postgresql-1). Just make sure to select your Redshift instance as a resource.
-Just remeber when using a a Redshift resource, you should write valid Redshift, and not Postgres. [Learn about the differences here](https://docs.aws.amazon.com/redshift/latest/dg/c_redshift-and-postgres-sql.html).
+Since Redshift is compatible with Windmill's PostgreSQL, you can follow the same instructions as for [PostgreSQL scripts](#postgresql-1). Make sure to select your Redshift instance as a resource.
+
+Remeber when using a a Redshift resource, you should write valid Redshift, and not PostgreSQL. For example the `RETURNING *` syntax is not supported, so you may want to change the default script to something like:
+
+```sql
+-- $1 name1 = default arg
+-- $2 name2
+INSERT INTO demo VALUES ($1::TEXT, $2::INT)
+```
+
+Learn more about [the differences here](https://docs.aws.amazon.com/redshift/latest/dg/c_redshift-and-postgres-sql.html).
 
 
 ## Raw Queries
