@@ -36,7 +36,9 @@ import * as wmill from "npm:windmill-client@1.335.0";
 
 ### Web IDE
 
-When a script is deployed through its Web IDE, Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its [dependencies](../6_imports/index.mdx). If no version is specified, the latest version is used. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+
+At runtime, a deployed script always uses the same version of its dependencies.
 
 At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lockfile is automatically recomputed from the imports in the scripts and the imports used by the relative imports. The computation of that lockfile is done by a dependency jobs that you can find in the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
 
@@ -90,22 +92,19 @@ You can write those package.json manually or through a standar `npm install <X>`
 Several package.json files can therefore coexist, each having authority over the scripts closest to it:
 
 ```
-windmill_folder
-	package.json
-
-	f/foo
-		package.json
-		script1.ts
-		# script1.ts will use the dependencies from windmill_folder/f/foo/package.json
-		
-		/bar
-			package.json
-			script2.ts
-			# script2.ts will use the dependencies from windmill_folder/f/foo/bar/package.json
-	
-	f/baz
-		script3.ts
-		# script3.ts will use the dependencies from windmill_folder/package.json
+└── windmill_folder/
+    ├── package.json
+    ├── f/foo/
+    │   ├── package.json
+    │   ├── script1.ts
+    │   ├── # script1.ts will use the dependencies from windmill_folder/f/foo/package.json
+    │   └── /bar/
+    │       ├── package.json
+    │       ├── script2.ts
+    │       └── # script2.ts will use the dependencies from windmill_folder/f/foo/bar/package.json
+    └── f/baz/
+        ├── script3.ts
+        └── # script3.ts will use the dependencies from windmill_folder/package.json
 ```
 
 The Windmill [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
@@ -140,7 +139,7 @@ To work with large custom codebases, there is another mode of deployment that re
 
 This bundle contains all the code and dependencies needed to run the script.
 
-On the latest version of the Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined by the [wmill.yaml](../../core_concepts/33_codebases_and_bundles/index.mdx#wmillyaml).
+Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined by the [wmill.yaml](../../core_concepts/33_codebases_and_bundles/index.mdx#wmillyaml).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -154,9 +153,11 @@ On the latest version of the Windmill CLI, it is done automatically on `wmill sy
 
 Two tricks can be used: [Relative Imports](#relative-imports) and [Private npm Registry & Private npm Packages](#private-npm-registry--private-npm-packages). Both are compatible with the methods described above.
 
-### Relative Imports
+### Sharing Common Logic with Relative Imports when not using Bundles
 
-It is common to want to share common logic between your scripts. This can be done easily using [relative imports](../5_sharing_common_logic/index.md) in both Python and Deno.
+If you want to share common logic with Relative Imports when not using [Bundles](#bundle-per-script-built-by-cli), this can be done easily using [relative imports](../5_sharing_common_logic/index.md) in both Bun and Deno.
+
+This applies for all methods above, except absolute imports do not work for [codebases and bundles](#bundle-per-script-built-by-cli).
 
 Note that in both the webeditor and with the CLI, your scripts do not necessarily need to have a main function. If they don't, they are assumed to be shared logic and not runnable scripts.
 
@@ -195,6 +196,8 @@ Note that path in Windmill can have as many depth as needed, so you can have pat
 ### Private npm Registry & Private npm Packages
 
 You can use private npm registries and private npm packages in your TypeScript scripts.
+
+This applies to all methods above. Only, if using Codebases & Bundles locally, there is nothing to configure in Windmill, because the bundle is built locally using your locally-installed modules (which support traditional npm packages and private npm packages).
 
 ![Private NPM registry](../6_imports/private_registry.png "Private NPM registry")
 
