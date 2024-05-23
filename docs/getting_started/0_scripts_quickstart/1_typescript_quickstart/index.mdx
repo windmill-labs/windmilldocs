@@ -19,6 +19,21 @@ In this quick start guide, we will write our first script in TypeScript. Windmil
 
 <br />
 
+This tutorial covers how to create a simple "Hello World" script in TypeScript through Windmill web IDE, with the standard mode of handling dependencies in TypeScript (Lockfile per script inferred from imports). See the dedicated pages to [Develop Scripts Locally](../../../advanced/4_local_development/index.mdx) and other methods of [handling dependencies in TypeScript](../../../advanced/14_dependencies_in_typescript/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local Development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+</div>
+
 Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_trigger_scripts/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -44,18 +59,21 @@ When stored in a code repository, those 2 parts are stored separately at `<path>
 [This](https://hub.windmill.dev/scripts/slack/1284/send-message-to-channel-slack) is a simple example of a script built in TypeScript with Windmill:
 
 ```ts
-import { WebClient } from 'https://deno.land/x/slack_web_api@1.0.0/mod.ts';
+import { WebClient } from '@slack/web-api';
 
 type Slack = {
-	token: string;
+  token: string;
 };
-export async function main(text: string, channel: string, slack: Slack) {
-	const web = new WebClient(slack.token);
 
-	await web.chat.postMessage({
-		channel,
-		text
-	});
+export async function main(slack: Slack, channel: string, message: string): Promise<void> {
+  // Initialize the Slack WebClient with the token from the Slack resource
+  const web = new WebClient(slack.token);
+
+  // Use the chat.postMessage method from the Slack WebClient to send a message
+  await web.chat.postMessage({
+    channel: channel,
+    text: message,
+  });
 }
 ```
 
@@ -133,22 +151,22 @@ boilerplate. Let's take a look:
 ```typescript
 // Ctrl/CMD+. to cache dependencies on imports hover.
 
-// import { toWords } from "npm:number-to-words@1"
-// import * as wmill from "https://deno.land/x/windmill@v1.147.3/mod.ts"
+// Deno uses "npm:" prefix to import from npm (https://deno.land/manual@v1.36.3/node/npm_specifiers)
+// import * as wmill from "npm:windmill-client@1.335.0"
 
 // fill the type, or use the +Resource type to get a type-safe reference to a resource
 // type Postgresql = object
 
 export async function main(
-	a: number,
-	b: 'my' | 'enum',
-	//c: Postgresql,
-	d = 'inferred type string from default arg',
-	e = { nested: 'object' }
-	//e: wmill.Base64
+  a: number,
+  b: "my" | "enum",
+  //c: Postgresql,
+  d = "inferred type string from default arg",
+  e = { nested: "object" },
+  //e: wmill.Base64
 ) {
-	// let x = await wmill.getVariable('u/user/foo')
-	return { foo: a };
+  // let x = await wmill.getVariable('u/user/foo')
+  return { foo: a };
 }
 ```
 
@@ -171,7 +189,7 @@ entrypoint. There are a few important things to note about the `main`.
 </div>
 
 Also take a look at the [import](../../../advanced/6_imports/index.mdx) statement lines that are commented out.
-In Typescript, dependencies and their versions are contained in the script and hence there is no need for any additional steps.
+In [TypeScript, dependencies](../../../advanced/14_dependencies_in_typescript/index.mdx) and their versions are contained in the script and hence there is no need for any additional steps.
 The resolution is done by [deno](https://deno.com/runtime).
 You can use npm imports directly in Windmill. The last import line imports the Windmill
 client, that is needed for example, to access
@@ -182,13 +200,13 @@ into that here.
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
+		description="Windmill's strength lies in its ability to run scripts without having to manage a package.json directly."
 		href="/docs/advanced/imports"
 	/>
 	<DocCard
-		title="TypeScript Client"
-		description="The TypeScript client for Windmill allows you to interact with the Windmill platform using TypeScript in Deno / Bun runtime."
-		href="/docs/advanced/clients/ts_client"
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
 	/>
 </div>
 
@@ -246,7 +264,7 @@ entrypoint. There are a few important things to note about the `main`.
 </div>
 
 Also take a look at the [import](../../../advanced/6_imports/index.mdx) statement lines that are commented out.
-In Typescript, The dependencies and their versions are contained in the script and hence there is no need for any additional steps.
+In [TypeScript, dependencies](../../../advanced/14_dependencies_in_typescript/index.mdx) and their versions are contained in the script and hence there is no need for any additional steps.
 The TypeScript runtime is Bun, which is 100% compatible with Node.js without any code modifications.
 You can use npm imports directly in Windmill. The last import line imports the Windmill
 client, that is needed for example, to access
@@ -257,12 +275,12 @@ into that here.
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Dependency Management & Imports"
-		description="Windmill's strength lies in its ability to run scripts without having to deal with separate dependency files."
+		description="Windmill's strength lies in its ability to run scripts without having to manage a package.json directly."
 		href="/docs/advanced/imports"
 	/>
 	<DocCard
 		title="TypeScript Client"
-		description="The TypeScript client for Windmill allows you to interact with the Windmill platform using TypeScript in Deno / Bun runtime."
+		description="The TypeScript client for Windmill allows you to interact with the Windmill platform using TypeScript in Bun / Deno runtime."
 		href="/docs/advanced/clients/ts_client"
 	/>
 </div>

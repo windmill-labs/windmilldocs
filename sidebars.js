@@ -215,7 +215,270 @@ const sidebars = {
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
 				'core_concepts/collaboration/index',
-				'core_concepts/ai_generation/index'
+				'core_concepts/ai_generation/index',
+				'integrations/integrations_on_windmill',
+				{
+					type: 'category',
+					label: 'List of Integrations',
+					items: [
+						{
+							type: 'doc',
+							id: 'integrations/airtable',
+							label: 'Airtable'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/appwrite',
+							label: 'Appwrite'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/aws',
+							label: 'AWS'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/bigquery',
+							label: 'BigQuery'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/clickhouse',
+							label: 'ClickHouse'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/cloudflare-r2',
+							label: 'Cloudflare R2'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/datadog',
+							label: 'Datadog'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/discord',
+							label: 'Discord'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/faunadb',
+							label: 'FaunaDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/funkwhale',
+							label: 'Funkwhale'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gcal',
+							label: 'Google Calendar'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gcp',
+							label: 'Google Cloud Platform'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gdrive',
+							label: 'Google Drive'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gmail',
+							label: 'Gmail'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gsheets',
+							label: 'Google Sheets'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/git_repository',
+							label: 'Git Repository'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/github',
+							label: 'GitHub'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/gitlab',
+							label: 'GitLab'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/hubspot',
+							label: 'HubSpot'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/linkding',
+							label: 'Linkding'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/linkedin',
+							label: 'LinkedIn'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mailchimp',
+							label: 'Mailchimp'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mailchimp_mandrill',
+							label: 'Mailchimp Mandrill'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mastodon',
+							label: 'Mastodon'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/matrix',
+							label: 'Matrix'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/microsoft-azure-blob',
+							label: 'Microsoft Azure Blob'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mongodb',
+							label: 'MongoDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mssql',
+							label: 'MS SQL'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mysql',
+							label: 'MySQL'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/neon',
+							label: 'Neon.tech'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/nextcloud',
+							label: 'Nextcloud'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/notion',
+							label: 'Notion'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/openai',
+							label: 'OpenAI'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/postgresql',
+							label: 'PostgreSQL'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/raycast',
+							label: 'Raycast'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/redis',
+							label: 'Redis'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/redshift',
+							label: 'Redshift'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/rss',
+							label: 'RSS'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/sendgrid',
+							label: 'SendGrid'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/slack',
+							label: 'Slack'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/smtp',
+							label: 'SMTP'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/snowflake',
+							label: 'Snowflake'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/square',
+							label: 'Square'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/stripe',
+							label: 'Stripe'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/supabase',
+							label: 'Supabase'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/surrealdb',
+							label: 'SurrealDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/s3',
+							label: 'S3 APIs'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/aws-s3',
+							label: 'AWS S3'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/telegram',
+							label: 'Telegram'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/toggl',
+							label: 'Toggl'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/upstash',
+							label: 'Upstash'
+						}
+					],
+					collapsed: true
+				}
 			],
 			collapsed: true
 		},
@@ -503,272 +766,10 @@ const sidebars = {
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
-				'advanced/clients/python_client',
+				'advanced/dependencies_in_typescript/index',
 				'advanced/clients/ts_client',
-				'misc/share_on_hub/index',
-				'integrations/integrations_on_windmill',
-				{
-					type: 'category',
-					label: 'List of Integrations',
-					items: [
-						{
-							type: 'doc',
-							id: 'integrations/airtable',
-							label: 'Airtable'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/appwrite',
-							label: 'Appwrite'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/aws',
-							label: 'AWS'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/bigquery',
-							label: 'BigQuery'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/clickhouse',
-							label: 'ClickHouse'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/cloudflare-r2',
-							label: 'Cloudflare R2'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/datadog',
-							label: 'Datadog'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/discord',
-							label: 'Discord'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/faunadb',
-							label: 'FaunaDB'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/funkwhale',
-							label: 'Funkwhale'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gcal',
-							label: 'Google Calendar'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gcp',
-							label: 'Google Cloud Platform'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gdrive',
-							label: 'Google Drive'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gmail',
-							label: 'Gmail'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gsheets',
-							label: 'Google Sheets'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/git_repository',
-							label: 'Git Repository'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/github',
-							label: 'GitHub'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/gitlab',
-							label: 'GitLab'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/hubspot',
-							label: 'HubSpot'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/linkding',
-							label: 'Linkding'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/linkedin',
-							label: 'LinkedIn'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/mailchimp',
-							label: 'Mailchimp'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/mailchimp_mandrill',
-							label: 'Mailchimp Mandrill'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/mastodon',
-							label: 'Mastodon'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/matrix',
-							label: 'Matrix'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/microsoft-azure-blob',
-							label: 'Microsoft Azure Blob'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/mongodb',
-							label: 'MongoDB'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/mssql',
-							label: 'MS SQL'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/mysql',
-							label: 'MySQL'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/neon',
-							label: 'Neon.tech'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/nextcloud',
-							label: 'Nextcloud'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/notion',
-							label: 'Notion'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/openai',
-							label: 'OpenAI'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/postgresql',
-							label: 'PostgreSQL'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/raycast',
-							label: 'Raycast'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/redis',
-							label: 'Redis'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/redshift',
-							label: 'Redshift'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/rss',
-							label: 'RSS'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/sendgrid',
-							label: 'SendGrid'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/slack',
-							label: 'Slack'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/smtp',
-							label: 'SMTP'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/snowflake',
-							label: 'Snowflake'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/square',
-							label: 'Square'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/stripe',
-							label: 'Stripe'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/supabase',
-							label: 'Supabase'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/surrealdb',
-							label: 'SurrealDB'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/s3',
-							label: 'S3 APIs'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/aws-s3',
-							label: 'AWS S3'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/telegram',
-							label: 'Telegram'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/toggl',
-							label: 'Toggl'
-						},
-						{
-							type: 'doc',
-							id: 'integrations/upstash',
-							label: 'Upstash'
-						}
-					],
-					collapsed: true
-				}
+				'advanced/clients/python_client',
+				'misc/share_on_hub/index'				
 			]
 		},
 

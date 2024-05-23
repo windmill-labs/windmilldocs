@@ -49,10 +49,16 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 
 ## Deno or Bun relative imports for sharing common logic
 
-Similarly to Python, it is possible to import directly from other TypeScript
-Scripts. One can simply follow the path layout. For instance,
-`import { foo } from "/f/<foldername>/script_name.ts"`. A more verbose example
-below:
+Similarly to Python, it is possible to import directly from other TypeScript scripts. One can simply follow the path layout. For instance,
+`import { foo } from "/f/<foldername>/script_name.ts"`. A more verbose example below:
+
+```typescript
+import { main as foo, util } from '../my_script_path.ts';
+```
+
+Relative imports syntax is much preferred as it will work on [local editors](../4_local_development/index.mdx).
+
+You may also use absolute imports (but won't work on local editors):
 
 ```typescript
 import { main as foo, util } from '/f/common/my_script_path.ts';
@@ -61,12 +67,6 @@ export async function main() {
 	await foo();
 	util();
 }
-```
-
-You may also use simple relative imports:
-
-```typescript
-import { main as foo, util } from '../my_script_path.ts';
 ```
 
 Note that path in Windmill can have as many depth as needed, so you can have paths like this `f/folder/subfolder/my_script_path.ts` and relative imports will work at any level. Hence, it will work exactly the same as on local.
