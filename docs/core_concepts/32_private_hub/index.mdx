@@ -12,4 +12,16 @@ On [Enterprise Edition](/pricing) and [Whitelabelling](/pricing), you can have y
 
 The private Hub can be partially or totally synced with the public one. This means that you can have your own private scripts, flows, apps and resource types and also have access to the public ones.
 
+You can configure your Private Hub using Docker by following the instructions in the [Private Hub repository](https://github.com/windmill-labs/windmillhub-ee-public).
+We also provide [values in our Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml) for including the Private Hub in a Kubernetes cluster.
+
+Once your Private Hub is up and running, you need to change the hub base url field in the core instance settings to your Private Hub url.
+
+:::warning
+Authentication on the Hub is performed via the Windmill instance.
+The Hub and Windmill instances must have the same root domain name for authentication to work.
+For example, if the Windmill instance is available on windmill.example.com, the Hub must be accessible on a similar sub-domain such as hub.example.com.
+You'll also need to set the COOKIE_DOMAIN environment variable of the Windmill instance (server) to the root domain name (e.g. example.com).
+:::
+
 If you are interested in having your own Private Hub, please [contact us](mailto:contact@windmill.dev).
