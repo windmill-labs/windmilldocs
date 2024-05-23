@@ -105,9 +105,11 @@ Import-Module -Name MyModule
 ## Dependencies on Local Development
 
 When created and edited through the UI (Windmill App), the lockfile is automatically generated. On [local development](../4_local_development/index.mdx), each script gets:
-- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script
-- a metadata file (`script_path.yaml`) that contains the metadata of the script
+- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
+- a metadata file (`script_path.yaml`) that contains the metadata of the script,
 - a lockfile (`script_path.lock`) that contains the dependencies of the script.
+
+You can get those 3 files for each script by pulling your workspace with command [`wmill sync pull`](../3_cli/sync.mdx).
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 

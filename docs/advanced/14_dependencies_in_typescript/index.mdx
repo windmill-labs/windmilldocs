@@ -2,27 +2,40 @@ import DocCard from '@site/src/components/DocCard';
 
 # Dependencies in TypeScript
 
-In Windmill [standard mode](#lockfile-per-script-inferred-from-imports-standard), dependencies in TypeScript are handled directly within their scripts without the need to manage separate dependency files.
+In Windmill [standard mode](#lockfile-per-script-inferred-from-imports-standard), dependencies in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) are handled directly within their scripts without the need to manage separate dependency files.
 For TypeScript, there are two runtime options available: [Bun](https://bun.sh/) and [Deno](https://deno.land/).
 Both of these runtimes allow you to include dependencies directly in the script, and Windmill automatically handles the resolution and caching of these dependencies to ensure fast and consistent execution.
 
-There are however methods to customize the way dependencies are handled for your TypeScript scripts.
+There are however methods to have more control on your dependencies:
+- Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
+- Overriding dependencies [providing a package.json](#lockfile-per-script-inferred-from-a-packagejson).
+- [Bundling](#bundle-per-script-built-by-cli) per script with CLI, more powerful and local only.
+
+Moreover, there are two other tricks, compatible with the methodologies mentioned above:
+- [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles) when not using Bundles.
+- [Private npm Registry & Private npm Packages](#private-npm-registry--private-npm-packages).
 
 ## Lockfile per script inferred from imports (Standard)
 
-In Windmill, you can to run scripts without having to manage a package.json directly. This is achieved by automatically parsing the [imports](../6_imports/index.mdx) and resolving the dependencies.
+In Windmill, you can run scripts without having to [manage a package.json](#lockfile-per-script-inferred-from-a-packagejson) directly. This is achieved by automatically parsing the [imports](../6_imports/index.mdx) and resolving the dependencies.
 
 When using Bun as the runtime for TypeScript in Windmill, dependencies are resolved directly from the script imports and their imports when using [sharing common logic](../5_sharing_common_logic/index.md). The TypeScript runtime Bun ensures 100% compatibility with Node.js without requiring any code modifications.
 
 ```ts
-import { toWords } from 'number-to-words@1';
+// unpinned import
+import { toWords } from 'number-to-words';
+
+// versioned import
 import * as wmill from 'windmill-client@1.147.3';
 ```
 
 Similarly, for TypeScript scripts using Deno as the runtime, the dependencies and their versions are specified directly in the script, and the resolution is managed by Deno. This method allows for direct use of npm imports and Windmill client imports without requiring any additional configuration for dependency management.
 
 ```ts
-import { toWords } from 'npm:number-to-words@1';
+// unpinned import
+import { toWords } from 'npm:number-to-words';
+
+// versioned import
 import * as wmill from "npm:windmill-client@1.335.0";
 ```
 
@@ -36,7 +49,7 @@ import * as wmill from "npm:windmill-client@1.335.0";
 
 ### Web IDE
 
-When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../script_editor/versioning.mdx) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
 
 At runtime, a deployed script always uses the same version of its dependencies.
 
@@ -45,8 +58,8 @@ At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lock
 ### CLI
 
 On [local development](../4_local_development/index.mdx), each script gets:
-- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script
-- a metadata file (`script_path.yaml`) that contains the metadata of the script
+- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
+- a metadata file (`script_path.yaml`) that contains the metadata of the script,
 - a lockfile (`script_path.lock`) that contains the dependencies of the script.
 
 You can get those 3 files for each script by pulling your workspace with command [`wmill sync pull`](../3_cli/sync.mdx).
@@ -139,7 +152,7 @@ To work with large custom codebases, there is another mode of deployment that re
 
 This bundle contains all the code and dependencies needed to run the script.
 
-Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined by the [wmill.yaml](../../core_concepts/33_codebases_and_bundles/index.mdx#wmillyaml).
+Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined by the [wmill.yaml](../../core_concepts/33_codebases_and_bundles/index.mdx#wmillyaml) (in the codebase field).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -164,7 +177,7 @@ Note that in both the webeditor and with the CLI, your scripts do not necessaril
 It works extremely well in combination with [Developing scripts locally](../4_local_development/index.mdx) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
 
 It is possible to import directly from other TypeScript scripts. One can simply follow the path layout. For instance,
-`import { foo } from "/f/<foldername>/script_name.ts"`. A more verbose example below:
+`import { foo } from "../script_name.ts"`. A more verbose example below:
 
 ```typescript
 import { main as foo, util } from '../my_script_path.ts';
@@ -175,7 +188,7 @@ Relative imports syntax is much preferred as it will work on [local editors](../
 You may also use absolute imports (but won't work on local editors):
 
 ```typescript
-import { main as foo, util } from '/f/common/my_script_path.ts';
+import { main as foo, util } from '/f/<foldername>/script_name.ts';
 
 export async function main() {
 	await foo();
