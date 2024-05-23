@@ -165,7 +165,24 @@ const sidebars = {
 				'core_concepts/auto_generated_uis/index',
 				'core_concepts/json_schema_and_parsing/index',
 				'core_concepts/instant_preview/index',
-				'advanced/imports/index',
+				{
+					type: 'category',
+					label: 'Dependency Management & Imports',
+					link: {
+						type: 'doc',
+						id: 'advanced/imports/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'advanced/dependencies_in_typescript/index'
+						},
+						{
+							type: 'doc',
+							id: 'advanced/dependencies_in_python/index'
+						},
+					]
+				},
 				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
 				{
@@ -766,7 +783,6 @@ const sidebars = {
 				'advanced/docker/index',
 				'misc/setup_oauth/index',
 				'advanced/sharing_common_logic/index',
-				'advanced/dependencies_in_typescript/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
 				'misc/share_on_hub/index'				

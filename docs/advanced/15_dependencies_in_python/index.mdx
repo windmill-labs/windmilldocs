@@ -1,0 +1,249 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Dependencies in Python
+
+In Windmill [standard mode](#lockfile-per-script-inferred-from-imports-standard), dependencies in [Python](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) are handled directly within their scripts without the need to manage separate dependency files.
+From the import lines, Windmill automatically handles the resolution and caching of the script dependencies to ensure fast and consistent execution.
+
+There are however methods to have more control on your dependencies:
+- Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
+- Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-packagejson).
+
+Moreover, there are two other tricks, compatible with the methodologies mentioned above:
+- [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports).
+- [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements).
+- [Private PyPi Repository](#private-npm-registry--private-npm-packages).
+
+To learn more about how dependencies from other languages are handled, see [Dependency Management & Imports](../../advanced/6_imports/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependency Management & Imports"
+		description="Windmill's strength lies in its ability to run scripts without having to manage a requirements.txt directly."
+		href="/docs/advanced/imports"
+	/>
+</div>
+
+## Lockfile per Script inferred from Imports (Standard)
+
+In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-packagejson) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
+
+In Python, the imports are automatically parsed on saving of the script and a list of imports is generated.
+A dependency job is then spawned to associate that list of PyPi packages with a lockfile, which will lock
+the versions. This ensures that the same version of a Python script is always
+executed with the same versions of its dependencies. It also avoids the hassle
+of having to maintain a separate requirements file.
+
+We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
+You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Python Client"
+		description="The Python client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your script jobs."
+		href="/docs/advanced/clients/python_client"
+	/>
+</div>
+
+### Web IDE
+
+When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../script_editor/versioning.mdx) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can [use a version pin](#pinning-dependencies-and-requirements) if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+
+At runtime, a deployed script always uses the same version of its dependencies.
+
+At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lockfile is automatically recomputed from the imports in the scripts and the imports used by the [relative imports](#sharing-common-logic-with-relative-imports). The computation of that lockfile is done by a dependency jobs that you can find in the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
+
+### CLI
+
+On [local development](../4_local_development/index.mdx), each script gets:
+- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
+- a metadata file (`script_path.yaml`) that contains the metadata of the script,
+- a lockfile (`script_path.lock`) that contains the dependencies of the script.
+
+You can get those 3 files for each script by pulling your workspace with command [`wmill sync pull`](../3_cli/sync.mdx).
+
+Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
+
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated as files. The CLI asks the Windmill servers to run dependency job, using either the [requirements.txt (if present)](#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command Line Interface (CLI)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+	<DocCard
+		title="Local Development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
+## Lockfile per Script inferred from a requirements.txt
+
+Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports). It is possible to override the dependencies by providing a `requirements.txt` file in the same directory as the script as you would do in a standard Python project, building and maintaining a requirements.txt to declare dependencies.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/AycoBCQyjUU"
+	title="Perpetual Scripts"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a requirements.txt is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
+
+You can write those requirements.txt manually or through a standar `pip install package_name`.
+
+Several requirements.txt files can therefore coexist, each having authority over the scripts closest to it:
+
+```
+└── windmill_folder/
+    ├── requirements.txt
+    ├── f/foo/
+    │   ├── requirements.txt
+    │   ├── script1.py
+    │   ├── # script1.py will use the dependencies from windmill_folder/f/foo/requirements.txt
+    │   └── /bar/
+    │       ├── requirements.txt
+    │       ├── script2.py
+    │       └── # script2.py will use the dependencies from windmill_folder/f/foo/bar/requirements.txt
+    └── f/baz/
+        ├── script3.py
+        └── # script3.py will use the dependencies from windmill_folder/requirements.txt
+```
+
+The Windmill [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
+
+With this toggle, you can choose to use the metadata lockfile (derived from requirements.txt after `wmill script generate-metadata`) instead of inferring them directly from the script.
+
+![Toggle Lockfile](../../cli_local_dev/1_vscode-extension/toggle_lockfile.png 'Toggle Lockfile')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local Development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+	/>
+  <DocCard
+		title="Command Line Interface (CLI)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+	<DocCard
+		title="VS Code Extension"
+		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
+## Other
+
+Other tricks can be used: [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports), [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements) and [Private PyPi Repository](#private-pypi-repository). All are compatible with the methods described above.
+
+### Sharing Common Logic with Relative Imports
+
+If you want to share common logic with Relative Imports, this can be done easily using [relative imports](../5_sharing_common_logic/index.mdx) in both Python and TypeScript.
+
+It is possible to import directly from other Python scripts. One can simply
+follow the path layout. For instance,
+`import foo from f.<foldername>.script_name`. A more complete example below:
+
+```python
+# u/user/common_logic
+
+def foo():
+  print('Common logic!')
+```
+
+And in another Script:
+
+```python
+# u/user/custom_script
+
+from u.user.common_logic import foo
+
+def main():
+  return foo()
+```
+
+It works with Scripts contained in folders, and for scripts contained in
+user-spaces, e.g: `f.<foldername>.script_path` or `u.<username>.script_path`.
+
+You can also do relative imports to the current script. For instance.
+
+```python
+# if common_logic is a script in the same folder or user-space
+from .common_logic import foo
+# otherwise if you need to access the folder 'folder'
+from ..folder.common_logic import foo
+```
+
+Beware that you can only import scripts that you have view rights on at time of execution.
+
+The folder layout is identical with the one that works with the CLI for syncing
+scripts locally and on Windmill. See [Developing scripts locally](../4_local_development/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Sharing Common Logic"
+		description="It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and TypeScript."
+		href="/docs/advanced/sharing_common_logic"
+	/>
+</div>
+
+### Pinning Dependencies and Requirements
+
+If the imports are not properly analyzed, there exists an escape hatch to
+override the inferred imports. One needs to head the Script with the following comment:
+
+```python
+#requirements:
+#dependency
+#version_pinned_dependency==0.4
+
+import dependency
+
+def main(...):
+  ...
+```
+
+To add extra dependencies or pin the version of some dependencies
+
+To combine both the inference of Windmill and being able to pin dependencies, use `extra_requirements`:
+
+```python
+#extra_requirements:
+#dependency==0.4
+
+import pandas
+import dependency
+
+def main(...):
+  ...
+```
+
+### Private PyPi Repository
+
+Environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate.
+This is useful for private repositories.
+
+In a docker-compose file, you would add following lines:
+
+```dockerfile
+windmill_worker:
+  ...
+  environment:
+    ...
+    - PIP_TRUSTED_HOST=pypi.org
+    - PIP_INDEX_CERT=/custom-certs/root-ca.crt
+```
+
+"Pip Index Url" and "Pip Extra Index Url" are filled through Windmill UI, in Instance Settings under [Enterprise Edition](/pricing).
+
+![Private PyPi Repository](./private_pip.png 'Private PyPi Repository')
