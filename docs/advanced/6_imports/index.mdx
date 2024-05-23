@@ -29,7 +29,7 @@ executed with the same versions of its dependencies. It also avoids the hassle
 of having to maintain a separate requirements file.
 
 We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
-You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48)
+You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48).
 
 ## Pinning dependencies and Requirements
 
@@ -138,14 +138,14 @@ Locally, the lockfile is respected. It "wins" over the dependencies pinned via t
 
 ## Relative Imports
 
-To import other scripts from your workspace, see [Sharing common logic](../5_sharing_common_logic/index.md).
+To import other scripts from your workspace, see [Sharing common logic](../5_sharing_common_logic/index.mdx).
 
 To import from a custom codebase, see [Codebases & Bundles](../../core_concepts/33_codebases_and_bundles/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Sharing Common Logic"
-		description="It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and Deno."
+		description="It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and TypeScript."
 		href="/docs/advanced/sharing_common_logic"
 	/>
 	<DocCard
