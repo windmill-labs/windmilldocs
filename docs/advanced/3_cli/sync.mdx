@@ -117,6 +117,33 @@ excludes: [] # excludes patterns here
 defaultTs: 'bun' # deno is the default, set it to bun if you primarily use bun to avoid needing the .bun.ts extension
 ```
 
+All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/conf.ts#L3):
+
+```ts
+export interface SyncOptions {
+  stateful?: boolean;
+  raw?: boolean;
+  yes?: boolean;
+  skipPull?: boolean;
+  failConflicts?: boolean;
+  plainSecrets?: boolean;
+  json?: boolean;
+  skipVariables?: boolean;
+  skipResources?: boolean;
+  skipSecrets?: boolean;
+  includeSchedules?: boolean;
+  includeUsers?: boolean;
+  includeGroups?: boolean;
+  includeSettings?: boolean;
+  message?: string;
+  includes?: string[];
+  extraIncludes?: string[];
+  excludes?: string[];
+  defaultTs?: "bun" | "deno";
+  codebases?: Codebase[];
+}
+```
+
 ## Example Repo for Syncing with Windmill in Git
 
 We provide an example repo for syncing with Windmill:
