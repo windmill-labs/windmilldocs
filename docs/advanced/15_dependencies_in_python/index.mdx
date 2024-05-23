@@ -213,6 +213,8 @@ def main(...):
   ...
 ```
 
+To add extra dependencies or pin the version of some dependencies
+
 To combine both the inference of Windmill and being able to pin dependencies, use `extra_requirements`:
 
 ```python
@@ -238,8 +240,10 @@ windmill_worker:
   ...
   environment:
     ...
-    - PIP_INDEX_URL=https://pypi.org/simple
-    - PIP_EXTRA_INDEX_URL=https://pypi.org/simple
     - PIP_TRUSTED_HOST=pypi.org
     - PIP_INDEX_CERT=/custom-certs/root-ca.crt
 ```
+
+"Pip Index Url" and "Pip Extra Index Url" are filled through Windmill UI, in Instance Settings under [Enterprise Edition](/pricing).
+
+![Private PyPi Repository](./private_pip.png 'Private PyPi Repository')
