@@ -83,7 +83,7 @@ Note that you can explicitly exclude (or include) specific files or folders to b
 
 When doing `wmill script generate-metadata`, if a `package.json` or `requirements.txt` is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
 
-Below is a video on how to override Windmill inferred dependencies by [providing custom package.json](../14_dependencies_in_typescript/index.mdx#overriden-by-a-packagejson-using-the-cli-cli--local-only) or requirements.txt.
+Below is a video on how to override Windmill inferred dependencies by [providing custom package.json](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) or requirements.txt.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
