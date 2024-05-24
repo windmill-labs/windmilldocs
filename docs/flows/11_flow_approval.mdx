@@ -164,6 +164,29 @@ def main():
 ```
 
 </TabItem>
+<TabItem value="go" label="Go" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```go
+package inner
+
+import (
+	wmill "github.com/windmill-labs/windmill-go-client"
+)
+
+func main() (map[string]interface{}, error) {
+	urls, err := wmill.GetResumeUrls("approver1")
+	if err != nil {
+		return nil, err
+	}
+	return map[string]interface{}{
+		"resume":      urls.Resume,
+		"default_args": make(map[string]interface{}), // optional
+		"enums":       make(map[string]interface{}), // optional
+	}, nil
+}
+```
+
+</TabItem>
 </Tabs>
 
 In the video below, you can see a user creating an approval step within a flow including the resume url in the returned payload of the step.
