@@ -19,22 +19,22 @@ You can search for an output by typing in the search bar. It searches in the out
 
 ![Search outputs](../assets/apps/2_app_outputs/search_output.png 'Search outputs')
 
-## Context and state
+## Context and State
 
-### App context
+### App Context
 
 The app context contains the following outputs:
 
-- email: the email of the current user
-- username: the username of the current user
-- query: the query parameters of the URL
-- hash: the hash parameters of the URL
+- `email`: the email of the current user.
+- `username`: the username of the current user.
+- `query`: the query parameters of the URL.
+- `hash`: the hash parameters of the URL.
 
 ### State
 
 The app state is a client-side store that can be used to store data. The app state can be manipulated by frontend scripts.
 
-## Component outputs
+## Component Outputs
 
 Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded by clicking on the `{...}` button. Next to the button, you can see the number of outputs.
 
@@ -69,11 +69,11 @@ The components contained in a container have their outputs displayed in the cont
 	/>
 </div>
 
-## Background runnables outputs
+## Background Runnables Outputs
 
 A [background runnable](./3_app-runnable-panel.mdx#background-runnables) is a script or flow that runs in the background and can be used to perform actions that are not related to the UI.
 
-## Connecting inputs
+## Connecting Inputs
 
 Inputs can be connected to any outputs. When connecting, you can click on the output to connect the input to it. The data source will change to [eval](./3_app-runnable-panel.mdx#evals). Note that you can select nested outputs, objects and arrays.
 
@@ -98,7 +98,7 @@ Alternatively, refer to the component directly through an [eval](./3_app-runnabl
 
 ![App outputs](../assets/apps/2_app_outputs/connecting_eval.png 'Connecting through eval')
 
-### Forcing the value of a component
+### Forcing the Value of a Component
 
 You can use a [frontend script helper](./3_app-runnable-panel.mdx#frontend-scripts-helpers): [setValue](./3_app-runnable-panel.mdx#setvalue) that is meant to manually set or force the value of a component. This can be convenient in cases where connecting components is not the easiest pattern.
 
@@ -108,7 +108,17 @@ setValue(id: string, value: any)
 
 Note that it's a bad idea to mix dynamic default value and setValue together.
 
-## Editing the id of a component
+### Connecting Runnables Inputs to Resources
+
+Apps are [executed on behalf of publishers](./3_app-runnable-panel.mdx#policy) and by default cannot access viewer's [resources](../core_concepts/3_resources_and_types/index.mdx).
+
+If the resource passed here as a reference does not come from a static [Resource Select](./4_app_configuration_settings/resource_select.mdx) component (which will be whitelisted by the auto-generated policy), you need to toggle "Resources from users allowed".
+
+The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](./2_connecting_components/index.mdx) is an [eval](#evals).
+
+![Static resource select only / Resources from users allowed](../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
+
+## Editing the id of a Component
 
 You can edit the id of a component by clicking on the id. Component id can only contain letters and numbers.
 

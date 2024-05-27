@@ -11,24 +11,27 @@ The strength of Windmill's app editor is the ability to connect everything toget
 
 On the bottom of the app editor, you can find the runnable editor. The runnable editor is a [code editor](../code_editor/index.mdx) that allows to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
-![App Runnables panel](../assets/apps/0_app_editor/app-runnable-panel.png.webp)
+![App Runnables panel](../assets/apps/0_app_editor/app-sections.png "App Runnables panel")
 
 The panel is structured as follows:
 
-- **Runnable list**: A list of all the runnables. Click on a runnable to select it.
-- **Runnable editor**: The editor of the selected runnable.
+- **Runnables list**: a list of all the runnables. Click on a runnable to select it.
+- **Runnable editor**: the editor of the selected runnable.
 
 When a runnable is selected, the runnable editor is displayed. It is composed of:
 
 - **Header**: The header of the runnable editor. It contains:
 
-  - An editable name.
+  - Editable name.
   - The status of the runnable can either be valid, invalid depending on the LSP response.
+  - [Cache](../core_concepts/24_caching/index.md) button.
+  - [Windmill AI](../core_concepts/22_ai_generation/index.mdx) button.
   - A delete button.
+  - Expand to [Script Editor](../script_editor/index.mdx) button.
   - A format button: Formats the code of the runnable. It's also triggered when you save the runnable.
   - A run button: Runs the runnable.
 
-- **Runnable editor**: The code editor of the runnable.
+- **Runnable editor**: The [code editor](../code_editor/index.mdx) of the runnable.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -43,15 +46,15 @@ When a runnable is selected, the runnable editor is displayed. It is composed of
 
 There are 5 types of runnables:
 
-- **Inline scripts**: Scripts that are defined on the app editor, linked to a component.
-- **Workspace/Hub**: Runnables (scripts; flows) linked to a component, but defined in the workspace or the [Hub](https://hub.windmill.dev/).
-- **Background runnables**: Runnables that are not linked to a component, but run in the background.
-- **Frontend scripts**: Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
-- **Evals**: Evals are used to connect data sources to other components or parameters. They are only evaluated on changes to the outputs that have been identified.
+- [Inline scripts](#inline-scripts): Scripts that are defined on the app editor, linked to a component.
+- Workspace/Hub: Runnables (scripts, flows) linked to a component, but defined in the workspace or the [Hub](https://hub.windmill.dev/).
+- [Background runnables](#background-runnables): Runnables that are not linked to a component, but run in the background.
+- [Frontend scripts](#frontend-scripts): Scripts that can be used to manipulate the client app state. They can either be linked to a component or be a background runnable. If they are a background runnable, they are not executed unless manually set to run when the app starts or reloads.
+- [Evals](#evals): Evals are used to connect data sources to other components or parameters. They are only evaluated on changes to the outputs that have been identified.
 
 They provide interactivity to your app.
 
-![Types of runnables](../assets/apps/0_app_editor/app_scripts.png)
+![Types of runnables](../assets/apps/0_app_editor/app_scripts.png "Types of runnables")
 
 ### Inline scripts
 
@@ -64,7 +67,7 @@ Frontend scripts are JavaScripts that are executed on the browser.
 
 They come with [frontend script helpers](#frontend-scripts-helpers) that are functions and global objects to help you interact with the app.
 
-Frontend scripts can read outputs and ctx of the rest of the app with for example:
+Frontend scripts can read outputs and [ctx](./2_outputs.mdx#app-context) of the rest of the app with for example:
 
 ```js
 // read outputs and ctx
@@ -92,7 +95,7 @@ return state.foo;
 ### Background runnables
 
 Background runnables are scripts that are executed in the background. They are executed on the server.
-They can be triggered on app refresh or when their input changes. They are not attached to any component but their result can be shared among many components.
+They can be triggered on app refresh or when their input changes. They are not attached to any component but their result can be [shared among many components](./2_connecting_components/index.mdx).
 
 See Background runnables configurations at [Runnable Execution](#runnable-execution).
 
@@ -120,23 +123,33 @@ It allows Windmill to suggest dependencies for frontend scripts.
 
 <br />
 
-Evals are only evaluated on changes to the outputs that have been identified.
+#### Re-evaluated on changes to
 
-Clicking on the dedicated link, evals can be "transformed to a frontend script".
+Evals are by default evaluated on changes to the outputs that have been identified. The auto-evaluation can be toggled off.
 
-![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp)
+This option is available only when "[Recompute on any input changes](#recompute-on-any-input-change)" is enabled.
+
+![Re-evaluated on changes to](../assets/apps/0_app_editor/re_evaluated_on_change.png "Re-evaluated on changes to")
+
+> This [background script](#background-runnables)'s input `message` will be re-evaluated on any change to the value of component `b` (a [Text Input](./4_app_configuration_settings/text_input.mdx)).
+
+#### Transform to a frontend script
+
+Clicking on the dedicated link, evals can be "transformed to a [frontend script](#frontend-scripts)".
+
+![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp "App Runnables panel")
 
 ## Creating a Runnable
 
 There are several ways to create runnables:
 
-- Create an inline script and attach it to a component.
+- Create an [inline script](#inline-scripts) from a component.
 - Select a script or a flow from the list of detached inline scripts, workspace scripts and flows, or Hub scripts.
-- Create a background runnable.
+- Create a [background runnable](#background-runnables).
 
 When you create an inline script attached to a component or a background script, the first thing you need to do is to choose the language of the script.
 
-![Types of runnables](../assets/apps/0_app_editor/app_scripts.png)
+![Types of runnables](../assets/apps/0_app_editor/app_scripts.png "Types of runnables")
 
 The outputs of your script [can be used](./2_connecting_components/index.mdx) by other scripts or components:
 
@@ -157,16 +170,25 @@ The outputs of your script [can be used](./2_connecting_components/index.mdx) by
 	/>
 </div>
 
+A component can have runnables attached to it. Depending on the component type, the runnables are executed at different times:
+
+- **Data source**: A runnable or another component's result is [used as the runnable's data source](./2_connecting_components/index.mdx). It [executes on app start and app refresh](#run-on-start-and-app-refresh). For instance, if the component is a table, the runnable's result is used as the table's data source.
+- **Event handler**: The runnable executes when the event is triggered. For instance, if the component is a [button](./4_app_configuration_settings/button.mdx), the runnable executes when the button is clicked.
+- **Validations**: Only the [Stepper](./4_app_configuration_settings/stepper.mdx) component has validations. The runnable executes when the step of the stepper changes.
+
 ## Runnable Configuration
 
 The runnable configuration consists of:
 
-- Hide refresh button: Some components have a refresh button. This can be hidden by checking this box.
-- Transformer: A transformer is a function that alters the output of the runnable, often used to format the output.
-- List of triggers: Configure whether the script runs on app start, app refresh, or whenever an input changes.
-- Runnable Inputs: The runnable inputs are [inferred from the inputs](../core_concepts/13_json_schema_and_parsing/index.md) of the flow or script parameters this component is attached to.
+- Transformer: a [transformer](#transformer) is a function that alters the output of the runnable, often used to format the output.
+- [Triggers](#configure-triggers):
+  - [Run on start and app refresh](#run-on-start-and-app-refresh).
+  - [Recompute on any input changes](#recompute-on-any-input-change).
+- Hide refresh button: some components have a refresh button. This can be hidden by checking this box.
+- Inputs: the runnable inputs are [inferred from the inputs](../core_concepts/13_json_schema_and_parsing/index.md) of the flow or script parameters this component is attached to.
+- [Trigger runnables on success](#trigger-runnables-on-success): trigger other components to recompute.
 
-![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png.webp)
+![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png.webp "App Runnables panel")
 
 ### Transformer
 
@@ -198,13 +220,7 @@ Here is an example of a transformer used with a [background script](#background-
 	alt="Transformer background script"
 />
 
-## Runnable Execution
-
-A component can have runnables attached to it. Depending on the component type, the runnables are executed at different times:
-
-- **Data source**: The runnable's result is used as the component's data source. It executes on app start and app refresh. For instance, if the component is a table, the runnable's result is used as the table's data source.
-- **Event handler**: The runnable executes when the event is triggered. For instance, if the component is a button, the runnable executes when the button is clicked.
-- **Validations**: Only the `Stepper` component has validations. The runnable executes when the step of the stepper changes.
+<br/>
 
 ### Configure Triggers
 
@@ -212,39 +228,55 @@ A component can have runnables attached to it. Depending on the component type, 
 
 Two types of runnables can be configured to run on app start and app refresh:
 
-- **Background runnables**: Runnables that are run in the background and aren't attached to a component.
-- **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
+- [Background runnables](#background-runnables).
+- [Component runnables used as data sources](./2_connecting_components/index.mdx): Runnables attached to a component and used as the component's data source.
 
-### Recompute on Any Input Change
+You may want to disable this so that the background runnable is only triggered by [changes to other values](#recompute-on-any-input-change) or triggered by [another computation](#trigger-runnables-on-success) on a button.
+
+![Run on Start and App Refresh](../assets/apps/0_app_editor/app_refresh.png "Run on Start and App Refresh")
+
+#### Recompute on Any Input Change
 
 Runnables can be configured to recompute whenever an input changes. This is useful for recomputing a component's runnable when an input changes.
 
 Two types of runnables can be configured to recompute on any input change:
 
-- **Backend background runnables**: Background runnable that are executed on the server.
-- **Component runnables used as data sources**: Runnables attached to a component and used as the component's data source.
+- [Background runnables](#background-runnables).
+- [Component runnables used as data sources](./2_connecting_components/index.mdx): Runnables attached to a component and used as the component's data source.
 
 Inputs of runnables that are either connected to an output or [evaluated](#evals) can trigger a recompute. These are displayed in the `Change on value` section.
 
-Runnables can "Recompute" and "Recompute others":
+When "Recompute on Any Input Change" is enabled, it can be disabled at the input level, toggling off "[Re-evaluated on changes to](#re-evaluated-on-changes-to)".
 
-#### Recompute
+![Recompute on Any Input Change](../assets/apps/0_app_editor/any_input_change.png "Recompute on Any Input Change")
 
-Other component can trigger a component to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded. See Recompute Others for more information.
+#### Trigger runnables on success
 
-#### Recompute others
+[Button](./4_app_configuration_settings/button.mdx) & [Form](./4_app_configuration_settings/submit_form.mdx) components and [background scripts](#background-runnables) can trigger other components to recompute. For example, a button can trigger a [table](./4_app_configuration_settings/table.mdx) to recompute. When the button is clicked, the table is reloaded.
 
-[Button](./4_app_configuration_settings/button.mdx) & [Form](./4_app_configuration_settings/submit_form.mdx) components and [background scripts](#background-runnables) can trigger other components to recompute. For example, a button can trigger a table to recompute. When the button is clicked, the table is reloaded.
+![Trigger runnables on success](../assets/apps/0_app_editor/trigger_on_success.png "Trigger runnables on success")
+
+### Static resource select only / Resources from users allowed
+
+Apps are [executed on behalf of publishers](#policy) and by default cannot access viewer's [resources](../core_concepts/3_resources_and_types/index.mdx).
+
+If the resource passed here as a reference does not come from a static [Resource Select](./4_app_configuration_settings/resource_select.mdx) component (which will be whitelisted by the auto-generated policy), you need to toggle "Resources from users allowed".
+
+The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](./2_connecting_components/index.mdx) is an [eval](#evals).
+
+![Static resource select only / Resources from users allowed](../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
 
 ### Manual Dependencies
 
-Frontend scripts don't have any inputs. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
+[Frontend scripts](#frontend-scripts) don't have any inputs. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
 
-Manual dependencies are found in the `Change on value` section and can be removed by clicking on the `x` button.
+Manual dependencies are added clicking on `Add dependency` button and can be removed by clicking on the `x` button.
+
+![Manual Dependencies](../assets/apps/0_app_editor/manual_dependencies.png "Manual Dependencies")
 
 ## Cache app inline scripts
 
-Caching an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
+[Caching](../core_concepts/24_caching/index.md) an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full"
@@ -276,7 +308,7 @@ We expose a few functions and global objects to help you interact with the app f
 
 ### ctx
 
-You can access the context object with the `ctx` global variable.
+You can access the [context object](./2_outputs.mdx#app-context) with the `ctx` global variable.
 
 ```js
 console.log(ctx.email);
@@ -519,6 +551,8 @@ Parameters:
 ## Policy
 
 A viewer of the app will execute the runnables of the app on behalf of the publisher avoiding the risk that a resource or script would not be available to the viewer. To guarantee tight security, a policy is computed at time of saving of the app which only allow the scripts/flows referred to in the app to be called on behalf of. Furthermore, static parameters are not overridable. Hence, users will only be able to use the app as intended by the publisher without risk for leaking resources not used in the app.
+
+To understand how to handle resources in apps, see [Static resource select only / Resources from users allowed](#static-resource-select-only--resources-from-users-allowed).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

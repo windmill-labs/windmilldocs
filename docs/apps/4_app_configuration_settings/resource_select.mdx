@@ -37,3 +37,22 @@ The following section details Resource Select component's specific settings. For
 | Name   |  Type  | Description                                |
 | ------ | :----: | ------------------------------------------ |
 | result | string | The selected resource (in `$res:` format). |
+
+## Connecting Runnables Inputs to Resources
+
+Apps are [executed on behalf of publishers](../3_app-runnable-panel.mdx#policy) and by default cannot access viewer's [resources](../../core_concepts/3_resources_and_types/index.mdx).
+
+If the resource passed here as a reference does not come from a static Resource Select component (which will be whitelisted by the auto-generated policy), you need to toggle "Resources from users allowed".
+
+The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](../2_connecting_components/index.mdx) is an [eval](../3_app-runnable-panel.mdx#evals).
+
+![Static resource select only / Resources from users allowed](../../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Runnable Editor"
+		description="Learn how to create and configure Apps runnables."
+		href="/docs/apps/app-runnable-panel"
+	/>
+</div>
