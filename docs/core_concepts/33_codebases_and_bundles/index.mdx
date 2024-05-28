@@ -10,8 +10,16 @@ Codebases is Beta, only works with TypeScript and is an [Enterprise](/pricing) f
 
 The traditional way to handle codebases on Windmill is two-fold:
 
-- Using [relative imports](../../advanced/5_sharing_common_logic/index.mdx) to import scripts from the same workspace.
-- Deploy a private/public packages and import them in your scripts [using the package manager](../../advanced/6_imports/index.mdx#private-npm-registry--private-npm-packages).
+- Using [relative imports](../../advanced/14_dependencies_in_typescript/index.mdx#sharing-common-logic-with-relative-imports-when-not-using-bundles) to import scripts from the same workspace.
+- Deploy a private/public packages and import them in your scripts [using the package manager](../../advanced/14_dependencies_in_typescript/index.mdx#private-npm-registry--private-npm-packages).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+</div>
 
 However, that can be inconvenient when working with large codebases.
 
