@@ -70,7 +70,7 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Priority Support with 48h response time</span>
+					text: <span>Support with 48h response time by email</span>
 				},
 				{ text: 'Max 10 users with SSO' }
 			]
