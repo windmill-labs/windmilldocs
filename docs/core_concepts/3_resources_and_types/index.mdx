@@ -95,6 +95,34 @@ Verified Resource Types on the Hub are directly added to the list of available R
 
 ![Share resource type](./new_resource_type_hub.png)
 
+### Sync Resource Types with WindmillHub
+
+When creating a [self-hosted](../../advanced/1_self_host/index.mdx) instance, you are offered to set a [schedule](../1_scheduling/index.mdx) to regularly sync all resource types from [WindmillHub](https://hub.windmill.dev/). This will ensure that all the approved resource types are available in your instance. On Windmill cloud, it is done regularly by the Windmill team. Ask us if you need a specific [resource type from Hub](https://hub.windmill.dev/resources) to be added.
+
+The script executed from the admin workspace is:
+
+```ts
+import wmill from "https://deno.land/x/wmill@v1.180.0/main.ts";
+
+export async function main() {
+  Deno.env.set("HOME", ".")
+  await run(
+    "workspace",
+    "add",
+    "__automation",
+    "admins",
+    Deno.env.get("BASE_INTERNAL_URL") + "/",
+    "--token",
+    Deno.env.get("WM_TOKEN") ?? ''
+  );
+  await run("hub", "pull");
+}
+
+async function run(...cmd: string[]) {
+  await wmill.parse(cmd);
+}
+```
+
 ## States
 
 States are used by scripts to keep data persistent between runs of the same script by the same trigger (schedule or user).
@@ -245,7 +273,7 @@ def main(x: str):
 </Tabs>
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_state.mp4"
 />
@@ -256,7 +284,7 @@ def main(x: str):
 Resources can be used [passed as script parameters](#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within code.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/add_resources_variables.mp4"
 />

@@ -68,5 +68,5 @@ Here is an anonymized version of our client-facing dashboard:
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+    className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>

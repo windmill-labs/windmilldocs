@@ -335,6 +335,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/linear',
+							label: 'Linear'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/linkding',
 							label: 'Linkding'
 						},

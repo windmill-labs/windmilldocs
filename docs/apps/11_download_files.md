@@ -7,7 +7,7 @@ Within your Windmill apps, you might want users to download files. There are two
 The [download button](./4_app_configuration_settings/download_button.mdx) component allows you to download a file. The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../core_concepts/18_files_binary_data/index.mdx):
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/download_base64.mp4"
 	alt="Download Button Base64"
@@ -50,7 +50,7 @@ downloadDataAsFile(result, 'name.file');
 Here is an example of downloading a file from a [button](./4_app_configuration_settings/button.mdx) in a [table](./4_app_configuration_settings/table.mdx).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/add_transformer_on_demand.mp4"
 	alt="Transformer table"
@@ -61,7 +61,7 @@ Here is an example of downloading a file from a [button](./4_app_configuration_s
 And here is another example of a [background script](./3_app-runnable-panel.mdx#background-runnables) and a transformer automatically downloading a file upon input change (here the selected row of a [table](./4_app_configuration_settings/table.mdx)).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/transformer_background.mp4"
 	alt="Transformer background script"

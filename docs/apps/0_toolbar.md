@@ -70,7 +70,7 @@ Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.md
 The app builder enables you to examine recent runs to [identify potential bugs](./5_app_debugging.md).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/debug_app.mp4"
 />
