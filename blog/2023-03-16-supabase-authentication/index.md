@@ -382,7 +382,7 @@ and `refresh_token`. Every script that is dependent on the token will be execute
 login script, meaning the data will be fetched and the "Data" tab will be displayed.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	id="backend-video"
 	src="/videos/supabase-auth/try-be-app.mp4"
@@ -548,7 +548,7 @@ client from the state and use it to query the data. When the data is loaded, you
 navigated to the "Data" tab.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	id="backend-video"
 	src="/videos/supabase-auth/try-fe-app.mp4"

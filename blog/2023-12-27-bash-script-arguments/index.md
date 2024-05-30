@@ -171,7 +171,7 @@ For [Bash scripts in Windmill](/docs/getting_started/scripts_quickstart/bash#cod
 5. **Output Handling**: The last line of stdout is considered the return value, which can be particularly useful if the script is used in a Windmill workflow or application, where you might want to pass the result on.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	id="bash_quickstart"
 	src="/videos/bash_quickstart.mp4"

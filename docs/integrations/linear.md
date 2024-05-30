@@ -1,15 +1,14 @@
-# Mastodon Integration
+# Linear Integration
 
-[Mastodon](https://mastodon.social/) is an open-source, decentralized social network.
+[Linear](https://linear.app/) is a project management tool for software development teams.
 
-To integrate Mastodon to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate Linear to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
-![Add Mastodon Resource](../assets/integrations/add-mastodon.png.webp)
+![Add Linear Resource](../assets/integrations/add-linear.png "Add Linear Resource")
 
 | Property | Type   | Description                                                             | Default | Required | Where to Find                                                                                      |
 | -------- | ------ | ----------------------------------------------------------------------- | ------- | -------- | -------------------------------------------------------------------------------------------------- |
-| baseUrl  | string | The URL of the Mastodon instance (e.g., "https://mastodon.example.com") |         | true     | Provided by your Mastodon hosting provider or Mastodon instance URL for self-hosted instances      |
-| token    | string | An access token to act as a logged-in user                              |         | false    | Mastodon > Preferences > Development > Your Applications > New Application > Generate access token |
+| apiKey    | string | The API key for the Linear API.                              |   https://linear.app/settings/api      | false    |  |
 
 <br/><br/>
 
@@ -25,8 +24,8 @@ Your resource can be used [passed as parameters](../core_concepts/3_resources_an
 
 :::tip
 
-Find some pre-set interactions with Mastodon on the [Hub](https://hub.windmill.dev/integrations/mastodon).
+Find some pre-set interactions with Linear on the [Hub](https://hub.windmill.dev/integrations/linear).
 
-Feel free to create your own Mastodon scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+Feel free to create your own Linear scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
 
 :::

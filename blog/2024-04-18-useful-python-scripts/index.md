@@ -28,7 +28,7 @@ Windmill is an open-source developer platform and workflow engine designed to bu
 To run Python scripts in Windmill, you first need access to Windmill (free on our [Cloud App](https://app.windmill.dev/user/login), free and unlimited [self-hosting](/docs/advanced/self_host)) then just click on `+ Script`. It can also be done on local development with [Windmill CLI](/docs/advanced/cli/script#creating-a-new-script).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	id="Add Python script"

@@ -74,7 +74,7 @@ The features are:
 - Download as JSON.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/rich_table_display.mp4"
 />

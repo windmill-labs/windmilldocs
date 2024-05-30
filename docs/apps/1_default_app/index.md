@@ -11,7 +11,7 @@ Set up the app from workspace settings:
 Operators will have it open right when logging into the workspace:
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/default_app_operator.mp4"
 />
