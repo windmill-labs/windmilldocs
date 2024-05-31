@@ -56,7 +56,7 @@ The predicate expression is the JavaScript expression that will be evaluated to 
 It can be set with a prompt using [Windmill AI](../core_concepts/22_ai_generation/index.mdx):
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/branch_predicate_copilot.mp4"
 />

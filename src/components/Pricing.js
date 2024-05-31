@@ -70,11 +70,7 @@ const pricing = {
 					)
 				},
 				{
-					text: (
-						<span>
-							Priority Support 24/7 with 48h response time and automation engineer assistance
-						</span>
-					)
+					text: <span>Support with 48h response time by email</span>
 				},
 				{ text: 'Max 10 users with SSO' }
 			]
@@ -193,11 +189,7 @@ const pricing = {
 					text: <span>10 seats maximum</span>
 				},
 				{
-					text: (
-						<span>
-							Priority Support 24/7 with 48h response time and automation engineer assistance
-						</span>
-					)
+					text: <span>Priority Support on Discord</span>
 				}
 			],
 			mostPopular: true,
@@ -248,7 +240,8 @@ const pricing = {
 				{
 					text: (
 						<span>
-							SLA & Priority Support 24/7 with 3h response time and automation engineer assistance
+							SLA & Priority Support 24/7 with 3h response time, automation engineer assistance and
+							dedicated slack channel
 						</span>
 					)
 				},
@@ -453,10 +446,11 @@ const sections = [
 				name: 'Support level',
 				tiers: {
 					'Free and Open-source': 'Community support on Discord',
-					Pro: '24/7 Priority Support with 48h Response & Engineer Assistance',
-					Enterprise: '24/7 Priority Support with 3h Response & Engineer Assistance',
+					Pro: 'Priority support on Discord',
+					Enterprise:
+						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated slack channel',
 					Community: 'Community support on Discord',
-					Team: '24/7 Priority Support with 48h Response & Engineer Assistance'
+					Team: 'Priority support on Discord'
 				},
 				link: '/docs/misc/support_and_sla'
 			},
@@ -1279,7 +1273,8 @@ export default function Pricing() {
 																	)}
 																	{attribute.tooltip && (
 																		<span className="ml-2 tooltip-icon">
-																			<span style={{ fontSize: '75%' }}>ⓘ</span><span className="tooltip-text">{attribute.tooltip}</span>
+																			<span style={{ fontSize: '75%' }}>ⓘ</span>
+																			<span className="tooltip-text">{attribute.tooltip}</span>
 																		</span>
 																	)}
 																</div>

@@ -11,7 +11,7 @@ Getting leads emails from trials or newsletters signups is great. But it takes f
 <!--truncate-->
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	controls
