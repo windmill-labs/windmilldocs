@@ -96,6 +96,16 @@ A path is either inside a user space `u/<user>/<path>` or inside a folder `f/<fo
 - a User: that user will be by default given read, write and archive access on the item (`u/henri/amazed_postgresql`).
 - a Folder: the item will be available to the users having access to the folder, with its own levels of permissions (`f/data_team/amazed_postgresql`).
 
+### Extra Permissions
+
+For each item (script, flow, app, resource, variable, schedule), you can define extra permissions clicking on the `⋮` icon, then `Share`.
+
+Extra permissions can be given to a user or a group, with the possibility to give them the role of Viewer, or Writer.
+
+![Extra Permissions](./share.png 'Extra Permissions')
+
+![Share Menu](./share_menu.png 'Share Menu')
+
 ### Example of Permissions
 
 For example here a new SQL Resource is being given access to a user `username` with view, write and archive access:
@@ -109,6 +119,10 @@ Here the new SQL Resource is being given access to a folder `data_team`...
 ... folder that can give Admin, Writer or Viewer accesses to users or [groups](../8_groups_and_folders/index.mdx#groups).
 
 ![Add Users to Folder](./add_users.png.webp 'Folder having its own levels of permission')
+
+Also, [extra permission](#extra-permissions) was given to Ruben as viewer.
+
+![Extra Permissions Example](./extra_example.png 'Extra Permissions Example')
 
 <br />
 
