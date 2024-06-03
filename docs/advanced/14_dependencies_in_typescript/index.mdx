@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 In Windmill [standard mode](#lockfile-per-script-inferred-from-imports-standard), dependencies in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) are handled directly within their scripts without the need to manage separate dependency files.
 For TypeScript, there are two runtime options available: [Bun](https://bun.sh/) and [Deno](https://deno.land/).
-Both of these runtimes allow you to include dependencies directly in the script, and Windmill automatically handles the resolution and caching of these dependencies to ensure fast and consistent execution.
+Both of these runtimes allow you to include dependencies directly in the script, and Windmill automatically handles the resolution and caching of these dependencies to ensure fast and consistent execution (this is standard mode).
 
 There are however methods to have more control on your dependencies:
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
@@ -22,6 +22,11 @@ To learn more about how dependencies from other languages are handled, see [Depe
 		title="Dependency Management & Imports"
 		description="Windmill's strength lies in its ability to run scripts without having to manage a package.json directly."
 		href="/docs/advanced/imports"
+	/>
+	<DocCard
+		title="Dependencies in Python"
+		description="How to manage dependencies in Python scripts."
+		href="/docs/advanced/dependencies_in_python"
 	/>
 </div>
 
@@ -59,7 +64,7 @@ import * as wmill from "npm:windmill-client@1.335.0";
 
 ### Web IDE
 
-When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../script_editor/versioning.mdx) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../script_editor/versioning.mdx) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) or if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
 
 At runtime, a deployed script always uses the same version of its dependencies.
 
