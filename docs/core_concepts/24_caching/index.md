@@ -6,7 +6,7 @@ When you configure caching, Windmill stores the result in a cache for the durati
 
 This feature can significantly improve the performance of your scripts & flows, especially for steps that are computationally demanding or dependent on external resources, such as APIs or databases.
 
-## Cache scripts
+## Cache Scripts
 
 Caching a script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 
@@ -26,7 +26,7 @@ You can enable caching for a script directly in the script Settings. Here's how 
 
 In the above example, the result of step the script will be cached for 180 seconds (4 minutes). If `u/henri/slow_function___base_11` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-## Cache flows
+## Cache Flows
 
 Caching a flow means caching the results of that script for a certain duration. If the flow is triggered with the same flow inputs during the given duration, it will return the cached result.
 
@@ -45,7 +45,7 @@ You can enable caching for a flow directly in the flow settings. Here's how you 
 
 In the above example, the result of step the flow will be cached for 60 seconds. If `u/henri/example_flow_quickstart_no_slack` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-## Cache flow steps
+## Cache Flow Steps
 
 Caching a flow step means caching the results of that step for a certain duration. If the step is triggered with the same inputs during the given duration, it will return the cached result.
 
@@ -73,7 +73,7 @@ In the above example, the result of step `a` will be cached for 86400 seconds (1
 
 :::
 
-## Cache app inline scripts
+## Cache App Inline Scripts
 
 Caching an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 
@@ -91,9 +91,3 @@ You can enable caching for an app inline script directly its editor settings. He
 2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
 
 In the above example, the result of step the script will be cached for 5 minutes. If `Inline Script 0` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
-
-## Conclusion
-
-Caching is a powerful tool that can optimize your workflows in Windmill. By caching the results, you can eliminate unnecessary computation and accelerate your workflows.
-
-However, it's essential to use caching judiciously: while it can greatly enhance efficiency, overusing the cache or using it for unsuitable scripts or flows can result in outdated results or unwarranted memory usage. Always consider the nature of your step and the data it processes when deciding whether to enable caching.
