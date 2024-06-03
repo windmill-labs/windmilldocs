@@ -146,6 +146,10 @@ def main(input_file: S3Object):
 
 ![Read S3 file](../18_files_binary_data/s3_file_input.png)
 
+:::info
+Certain file types, typically parquet files, can be [directly rendered by Windmill](../19_rich_display_rendering/index.md)
+:::
+
 ### Create a file in S3 within a script
 
 <Tabs className="unique-tabs">
@@ -210,9 +214,44 @@ def main(s3_file_path: str):
 
 ![Write to S3 file](../18_files_binary_data/s3_file_output.png)
 
-:::info
-Certain file types, typically parquet files, can be directly rendered by Windmill
-:::
+### Secondary S3 Storage
+
+With all Windmill S3 Integration features, read and write from a storage that is not your main storage by specifying it in the s3 object as "secondary_storage" with the name of it.
+
+From the workspace settings, in tab "S3 Storage", just click on "Add secondary storage", give it a name, and pick a resource from type "S3", "Azure Blob", "AWS OIDC" or "Azure Workload Identity". You can save as many additional storages as you want as long as you give them a different name.
+
+Then from script, you can specify the secondary storage with an object with properties `s3` (path to the file) and `storage` (name of the secondary storage).
+
+```ts
+const file = {s3: 'folder/hello.txt', storage: 'storage_1'}
+```
+
+Here is an example of the [Create](#create-a-file-in-s3-within-a-script) then [Read](#read-a-file-from-s3-within-a-script)  a file from S3 within a script with secondary storage named "storage_1":
+
+```ts
+import * as wmill from 'windmill-client';
+
+export async function main() {
+  await wmill.writeS3File({ s3: "data.csv", storage: "storage_1" }, "fooo\n1")
+
+  const res = await wmill.loadS3File({ s3: "data.csv", storage: "storage_1" })
+
+  const text = new TextDecoder().decode(res)
+
+  console.log(text)
+  return { s3: "data.csv", storage: "storage_1" }
+}
+```
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/-nJs6E_1E8Y"
+	title="Perpetual Scripts"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
 ### Windmill embedded integration with Polars and DuckDB for data pipelines
 

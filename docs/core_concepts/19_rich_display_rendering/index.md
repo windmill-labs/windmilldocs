@@ -26,6 +26,8 @@ If the result is an object/dict with a single key (except for `approval`, which 
 | render_all       | Render all the results                                      | `return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }`           |
 | map              | Render a map with a given location                                 | `return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}`           |
 
+Windmill can also render S3 parquet files, see [Workspace S3 Integration](../11_persistent_storage/large_data_files.mdx).
+
 **Note for tables**: If the result matches the table format (either `table-col`, `table-row`, or `table-row-object`), it will be displayed as a table even if the the data is not nested under the key `table-*`.
 
 ![Rich display HTML](./rich_display_html.png "Rich display HTML")
