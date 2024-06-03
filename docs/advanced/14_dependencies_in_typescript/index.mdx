@@ -68,7 +68,7 @@ When a script is deployed through the Web IDE, Windmill generates a lockfile to 
 
 At runtime, a deployed script always uses the same version of its dependencies.
 
-At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lockfile is automatically recomputed from the imports in the scripts and the imports used by the [relative imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles). The computation of that lockfile is done by a dependency jobs that you can find in the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
+At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lockfile is automatically recomputed from the imports in the script and the imports used by the [relative imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles). The computation of that lockfile is done by a dependency jobs that you can find in the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
 
 ### CLI
 
@@ -81,7 +81,7 @@ You can get those 3 files for each script by pulling your workspace with command
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 
-Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated as files. The CLI asks the Windmill servers to run dependency job, using either the [package.json (if present)](#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [package.json (if present)](#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
 When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
