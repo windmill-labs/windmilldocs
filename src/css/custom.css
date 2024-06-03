@@ -512,3 +512,7 @@ div.testimonials a:hover .wm-name {
 	visibility: visible;
 	opacity: 1;
 }
+
+.markdown img {
+    border-radius: 2px;
+}

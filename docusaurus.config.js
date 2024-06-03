@@ -19,6 +19,13 @@ const config = {
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
 
+	stylesheets: [
+		{
+		  href: './src/css/custom.css',
+		  type: 'text/css',
+		},
+	  ],
+
 	customFields: {
 		inkeepCredentials: {
 			apiKey: '8ce4bf9ddc2ef8bc9ec53f133fd864292678e2d2e41872a0',
