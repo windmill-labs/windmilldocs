@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid';
 
@@ -34,12 +33,12 @@ const pricing = {
 			features: [
 				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
 				{ text: 'Community support on Discord' },
-				{ text: 'Max 10 users with SSO' }
+				{ text: 'Max 50 users with SSO' }
 			]
 		},
 		{
 			name: 'Pro',
-			id: 'tiertest',
+			id: 'tierpro',
 			href: 'mailto:contact@windmill.dev',
 			description: 'Only for small businesses and nonprofits.',
 			minPrice: 48,
@@ -47,15 +46,12 @@ const pricing = {
 			price: {
 				vCPU: {
 					monthly: 20,
-					description:
-						'1 vCPU can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 vCPU can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 10
 				},
 				seat: {
 					monthly: 8,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 10
@@ -70,8 +66,13 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Support with 48h response time by email</span>
+					text: (
+						<span>
+							Only for <a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">small businesses and nonprofits</a>
+						</span>
+					)
 				},
+				{ text: 'Support with 48h response time by email' },
 				{ text: 'Max 10 users with SSO' }
 			]
 		},
@@ -82,15 +83,12 @@ const pricing = {
 			price: {
 				vCPU: {
 					monthly: 50,
-					description:
-						'1vCPU is usually assigned to 1 worker (or 10 native workers) and each worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
 				},
 				seat: {
 					monthly: 20,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 1000
@@ -112,7 +110,7 @@ const pricing = {
 						{ text: 'SAML support including groups synchronization' }
 					]
 				},
-				{ text: 'Unlimited SSO users' },
+				{ text: 'Uncapped SSO (requires seats)' },
 				{
 					text: <span>Commercial licence</span>
 				},
@@ -159,7 +157,6 @@ const pricing = {
 			price: {
 				seat: {
 					monthly: 10,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 10
@@ -197,21 +194,18 @@ const pricing = {
 		},
 		{
 			name: 'Enterprise',
-			id: 'tier-enterprise',
+			id: 'tier-enterprise-cloud',
 			href: 'mailto:contact@windmill.dev',
 			enterprise_edition: true,
 			price: {
 				vCPU: {
 					monthly: 100,
-					description:
-						'1vCPU is usually assigned to 1 worker (or 10 native workers) and each worker can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
 				},
 				seat: {
 					monthly: 40,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 1000
@@ -269,7 +263,7 @@ const pricing = {
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
 		}
-	]
+	],
 };
 
 const sections = [
@@ -279,129 +273,129 @@ const sections = [
 			{
 				name: 'Executions per month',
 				tiers: {
-					'Free and Open-source': 'Unlimited',
-					Pro: 'Unlimited',
-					Enterprise: 'Unlimited',
-					Community: '1,000',
-					Team: '10k per user'
+					'tier-free-selfhost': 'Unlimited',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': '1,000',
+					'tier-team': '10k per user'
 				},
 				tooltip: 'Each vCPU can run up to ~26M jobs per month'
 			},
 			{
 				name: 'Number of workspaces',
 				tiers: {
-					'Free and Open-source': '3',
-					Pro: 'Unlimited',
-					Enterprise: 'Unlimited',
-					Community: 'Unlimited',
-					Team: 'Plan is at workspace level'
+					'tier-free-selfhost': '3',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited',
+					'tier-team': 'Plan is at workspace level'
 				}
 			},
 			{
 				name: 'Maximum number of seats',
 				tiers: {
-					'Free and Open-source': 'Unlimited',
-					Pro: '10',
-					Enterprise: 'Unlimited',
-					Community: 'Unlimited unless abuse',
-					Team: '10'
+					'tier-free-selfhost': '50',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited unless abuse',
+					'tier-team': '10'
 				}
 			},
 			{
 				name: 'Variables, resources, scripts, apps, flows',
 				tiers: {
-					'Free and Open-source': 'Unlimited',
-					Pro: 'Unlimited',
-					Enterprise: 'Unlimited',
-					Community: 'Unlimited unless abuse',
-					Team: 'Unlimited'
+					'tier-free-selfhost': 'Unlimited',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited unless abuse',
+					'tier-team': 'Unlimited'
 				}
 			},
 			{
 				name: 'Groups, folders and granular permissions',
 				tiers: {
-					'Free and Open-source': 'Maximum 4 groups',
-					Pro: 'Unlimited',
-					Enterprise: 'Unlimited',
-					Community: 'Unlimited',
-					Team: 'Unlimited'
+					'tier-free-selfhost': 'Maximum 4 groups',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited',
+					'tier-team': 'Unlimited'
 				},
 				link: '/docs/core_concepts/roles_and_permissions'
 			},
 			{
 				name: 'All open source features',
 				tiers: {
-					'Free and Open-source': true,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts'
 			},
 			{
 				name: 'Public apps',
 				tiers: {
-					'Free and Open-source': true,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/apps/public_apps'
 			},
 			{
 				name: 'Multiplayer on WebIDE',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/multiplayer'
 			},
 			{
 				name: 'Content Search',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/content_search'
 			},
 			{
 				name: 'S3 integration (>50mb upload)',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/persistent_storage/large_data_files'
 			},
 			{
 				name: 'Private Hub',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
 				},
 				link: '/docs/core_concepts/private_hub'
 			},
 			{
 				name: 'Commercial licence',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
 				}
 			}
 		]
@@ -412,56 +406,55 @@ const sections = [
 			{
 				name: 'Number of users with SSO',
 				tiers: {
-					'Free and Open-source': '10',
-					Pro: '10',
-					Enterprise: 'Unlimited',
-					Community: 'Unlimited',
-					Team: '10'
+					'tier-free-selfhost': '10',
+					'tier-enterprise-selfhost': 'Uncapped (requires seats)',
+					'tier-enterprise-cloud': 'Uncapped (requires seats)',
+					'tier-free': '10',
+					'tier-team': '10 (requires seats)'
 				},
 				link: '/docs/core_concepts/authentification'
 			},
 			{
 				name: 'Workspace Secret Custom Encryption',
 				tiers: {
-					'Free and Open-source': true,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: false
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': false
 				},
 				link: '/docs/core_concepts/workspace_secret_encryption'
 			},
 			{
 				name: 'SAML & SCIM support including groups synchronization',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
 				},
 				link: '/docs/misc/saml_and_scim'
 			},
 			{
 				name: 'Support level',
 				tiers: {
-					'Free and Open-source': 'Community support on Discord',
-					Pro: 'Priority support on Discord',
-					Enterprise:
+					'tier-free-selfhost': 'Community support on Discord',
+					'tier-enterprise-selfhost':
 						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated slack channel',
-					Community: 'Community support on Discord',
-					Team: 'Priority support on Discord'
+					'tier-free': 'Community support on Discord',
+					'tier-team': 'Priority support on Discord'
 				},
 				link: '/docs/misc/support_and_sla'
 			},
 			{
 				name: 'Design partners for roadmap',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
 				}
 			}
 		]
@@ -472,44 +465,44 @@ const sections = [
 			{
 				name: 'Audit logs',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: 'Unlimited',
-					Community: true,
-					Team: 'Retained for 7 days'
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': true,
+					'tier-team': 'Retained for 7 days'
 				},
 				link: '/docs/core_concepts/audit_logs'
 			},
 			{
 				name: 'Retention period of jobs runs details',
 				tiers: {
-					'Free and Open-source': '<= 30 days',
-					Pro: 'Unlimited',
-					Enterprise: 'Unlimited',
-					Community: '60 days',
-					Team: '60 days'
+					'tier-free-selfhost': '<= 30 days',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': '60 days',
+					'tier-team': '60 days'
 				},
 				link: '/docs/core_concepts/jobs#retention-policy'
 			},
 			{
 				name: 'Workspace Error Handler',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/error_handling'
 			},
 			{
 				name: 'Prometheus Metrics',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				}
 			}
 		]
@@ -520,11 +513,11 @@ const sections = [
 			{
 				name: 'Deployment on Fargate / Docker / Kubernetes',
 				tiers: {
-					'Free and Open-source': true,
-					Pro: true,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
 				},
 				link: '/docs/advanced/self_host',
 				tooltip: 'Self-hosted only'
@@ -532,87 +525,88 @@ const sections = [
 			{
 				name: 'Isolated & dedicated workers and database',
 				tiers: {
-					'Free and Open-source': true,
-					Pro: true,
-					Enterprise: true,
-					Community: false,
-					Team: false
-				}
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': false,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				tooltip: 'Cloud only'
 			},
 			{
 				name: 'Deploy from GitHub',
 				tiers: {
-					'Free and Open-source': true,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/advanced/deploy_to_prod'
 			},
 			{
 				name: 'Sync Windmill to a Git Repository (Git Sync)',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/advanced/git_sync'
 			},
 			{
 				name: 'Deploy to Staging/Prod Web UI',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/staging_prod'
 			},
 			{
 				name: 'Agent Workers',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/agent_workers'
 			},
 			{
 				name: 'OpenID Connect (OIDC)',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/oidc'
 			},
 			{
 				name: 'Distributed Dependency Cache backed by S3',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
 				},
 				link: '/docs/misc/s3_cache'
 			},
 			{
 				name: 'Codebases & Bundles',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: false,
-					Enterprise: true,
-					Community: false,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/codebases_and_bundles'
 			}
@@ -624,34 +618,34 @@ const sections = [
 			{
 				name: 'Worker Group Management UI (incl. Init Scripts)',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
 				},
 				link: '/docs/core_concepts/worker_groups',
-				tooltip: 'Only available on self-hosting and enterprise edition on private clusters.'
+				tooltip: 'Only available on self-hosting and enterprise edition on private clusters'
 			},
 			{
 				name: 'Script-specific Workers (dedicated) / High Throughput',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/dedicated_workers'
 			},
 			{
 				name: 'Concurrency limits',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/concurrency_limits'
 			}
@@ -663,22 +657,22 @@ const sections = [
 			{
 				name: 'Restart deployed flows from any node',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/blog/launch-week-1/restartable-flows'
 			},
 			{
 				name: 'Priority for Steps',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: false,
-					Team: false
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
 				},
 				link: '/docs/flows/priority',
 				tooltip: 'Self-hosted only'
@@ -686,66 +680,66 @@ const sections = [
 			{
 				name: 'Lifetime / Delete after Use',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/flows/lifetime'
 			},
 			{
 				name: 'Approval steps - Adding forms',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/flows/flow_approval#form'
 			},
 			{
 				name: 'Approval steps - Adding prompts (self-approval)',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/flows/flow_approval#prompts'
 			},
 			{
 				name: 'Approval steps - Require approvers to be logged in',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/flows/flow_approval#require-approvers-to-be-logged-in'
 			},
 			{
 				name: 'Approval steps - Disable self-approval',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/flows/flow_approval#require-approvers-to-be-members-of-a-group'
 			},
 			{
 				name: 'Approval steps - Require approvers to be members of a group',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/flows/flow_approval#require-approvers-to-be-members-of-a-group'
 			}
@@ -757,55 +751,55 @@ const sections = [
 			{
 				name: 'Global CSS',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/apps/css_editor'
 			},
 			{
 				name: 'Send schedule reports of Apps (png or pdf) through Slack, Discord or Email',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/apps/schedule_reports'
 			},
 			{
 				name: 'License key for AgCharts and AgGrid',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			},
 			{
 				name: 'Workspace Default App',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/apps/default_app'
 			},
 			{
 				name: 'Importing Custom React Components',
 				tiers: {
-					'Free and Open-source': false,
-					Pro: true,
-					Enterprise: true,
-					Community: true,
-					Team: true
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
 				},
 				link: '/docs/apps/react_components'
 			}
@@ -1111,7 +1105,7 @@ export default function Pricing() {
 																					href={attribute.link}
 																					target="_blank"
 																					rel="noopener noreferrer"
-																					className="custom-link"
+																					className="custom-link text-gray-600 dark:text-gray-200"
 																				>
 																					{attribute.name}
 																				</a>
@@ -1125,7 +1119,7 @@ export default function Pricing() {
 																			)}
 																		</dt>
 																		<dd className="flex items-center justify-end sm:justify-center sm:px-4">
-																			{typeof attribute.tiers[pricingItem.name] === 'string' ? (
+																			{typeof attribute.tiers[pricingItem.id] === 'string' ? (
 																				<span
 																					className={
 																						pricingItem.mostPopular
@@ -1135,11 +1129,11 @@ export default function Pricing() {
 																							: 'text-gray-900 dark:text-white'
 																					}
 																				>
-																					{attribute.tiers[pricingItem.name]}
+																					{attribute.tiers[pricingItem.id]}
 																				</span>
 																			) : (
 																				<>
-																					{attribute.tiers[pricingItem.name] === true ? (
+																					{attribute.tiers[pricingItem.id] === true ? (
 																						<CheckIcon
 																							className="mx-auto h-5 w-5 text-teal-600"
 																							aria-hidden="true"
@@ -1152,7 +1146,7 @@ export default function Pricing() {
 																					)}
 
 																					<span className="sr-only">
-																						{attribute.tiers[pricingItem.name] === true
+																						{attribute.tiers[pricingItem.id] === true
 																							? 'Yes'
 																							: 'No'}
 																					</span>
@@ -1243,7 +1237,7 @@ export default function Pricing() {
 														</th>
 														{getPricingArray(true).map((pricingItem) => (
 															<th key={pricingItem.id} scope="col">
-																<span className="sr-only">{pricingItem.name} tier</span>
+																<span className="sr-only">{pricingItem.id} tier</span>
 															</th>
 														))}
 													</tr>
@@ -1254,7 +1248,7 @@ export default function Pricing() {
 															<th
 																scope="row"
 																className={twMerge(
-																	'py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white',
+																	'py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-600 dark:text-gray-200',
 																	frequency.value === 'cloud' ? 'w-1/4' : 'w-1/3'
 																)}
 															>
@@ -1264,7 +1258,7 @@ export default function Pricing() {
 																			href={attribute.link}
 																			target="_blank"
 																			rel="noopener noreferrer"
-																			className="custom-link"
+																			className="custom-link text-gray-600 dark:text-gray-200"
 																		>
 																			{attribute.name}
 																		</a>
@@ -1291,7 +1285,7 @@ export default function Pricing() {
 																	)}
 																>
 																	<span className="relative h-full w-full py-3 ">
-																		{typeof attribute.tiers[pricingItem.name] === 'string' ? (
+																		{typeof attribute.tiers[pricingItem.id] === 'string' ? (
 																			<span
 																				className={classNames(
 																					pricingItem.mostPopular
@@ -1302,11 +1296,11 @@ export default function Pricing() {
 																					'text-sm leading-6'
 																				)}
 																			>
-																				{attribute.tiers[pricingItem.name]}
+																				{attribute.tiers[pricingItem.id]}
 																			</span>
 																		) : (
 																			<>
-																				{attribute.tiers[pricingItem.name] === true ? (
+																				{attribute.tiers[pricingItem.id] === true ? (
 																					<CheckIcon
 																						className="mx-auto h-5 w-5 text-teal-600"
 																						aria-hidden="true"
@@ -1319,7 +1313,7 @@ export default function Pricing() {
 																				)}
 
 																				<span className="sr-only">
-																					{attribute.tiers[pricingItem.name] === true
+																					{attribute.tiers[pricingItem.id] === true
 																						? 'Yes'
 																						: 'No'}
 																				</span>

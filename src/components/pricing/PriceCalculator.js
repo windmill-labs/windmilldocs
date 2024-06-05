@@ -49,7 +49,7 @@ export default function PriceCalculator({ period, tier }) {
 			}
 		} else {
 			// For other tiers, calculate base price and add costs for seats directly without subtracting
-			if (tier.id === 'tier-enterprise') {
+			if (tier.id === 'tier-enterprise-cloud') {
 				total = calculatePrice(selected.price, period.value, tier.id);
 			}
 
@@ -89,11 +89,16 @@ export default function PriceCalculator({ period, tier }) {
 								<div>
 									<span className="text-sm text-gray-600 dark:text-gray-200">
 										{key === 'vCPU' ? vCPUs.toLocaleString() : seats.toLocaleString()}
-									</span>
-									<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-										{' '}
-										{key}s:
-									</span>
+									</span>{' '}
+									{key === 'vCPU' ? (
+										<a href="#vcpu-reporting" className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200 custom-link decoration-gray-600 dark:decoration-gray-200 decoration-0.1 custom-link-offset-1.5">
+											{key}s
+										</a>
+									) : (
+										<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
+											{key}s
+										</span>
+									)}
 								</div>
 								<div>
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
@@ -104,7 +109,6 @@ export default function PriceCalculator({ period, tier }) {
 									</span>
 								</div>
 							</div>
-
 							<Slider
 								min={tier.price[key].min}
 								max={tier.price[key].max}
@@ -124,7 +128,7 @@ export default function PriceCalculator({ period, tier }) {
 					))}
 				</ul>
 			</div>
-			{tier.id === 'tier-enterprise' ? (
+			{tier.id === 'tier-enterprise-cloud' ? (
 				<div className="mt-8">
 					<RadioGroup value={selected} onChange={setSelected}>
 						<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
@@ -191,10 +195,35 @@ export default function PriceCalculator({ period, tier }) {
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 mt-1">
+						<span>
+							{`~${(seats * 10 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}k `}
+							<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">executions</a>
+							{` of 100ms per `}
+						</span>
+						<span>{period.value === 'annually' ? 'year' : 'month'}</span>
+					</div>
+					</div>
+					<div className="flex flex-row gap-1">
+						<span className="whitespace-nowrap text-sm">
+							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
+						</span>
+						<b className="text-sm">OR</b>
+						<span className="whitespace-nowrap text-sm">
+							 {(seats * 2).toLocaleString()} <a href="#operator" class="custom-link text-black dark:text-white">operators</a>
+						</span>
+					</div>
+				</div>
+			) : null}
+
+			{tier.id === 'tier-enterprise-cloud' ? (
+				<div className="mt-8 flex flex-col gap-1">
+					<h5 className="font-semibold">Summary</h5>
+					<div className="mt-2 flex items-baseline gap-x-1">
+						<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
 							<span>
-								{`~${
-									seats * 10 * (period.value === 'annually' ? 12 : 1).toLocaleString()
-								}k executions of 100ms per `}
+								{`~${(vCPUs * 26 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}M `}
+								<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">executions</a>
+								{` of 100ms per `}
 							</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
@@ -205,30 +234,7 @@ export default function PriceCalculator({ period, tier }) {
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">
-							{(seats * 2).toLocaleString()} operators
-						</span>
-					</div>
-				</div>
-			) : null}
-
-			{tier.id === 'tier-enterprise' ? (
-				<div className="mt-8 flex flex-col gap-1">
-					<h5 className="font-semibold">Summary</h5>
-					<div className="mt-2 flex items-baseline gap-x-1">
-						<div className="text-sm text-gray-600 mt-1">
-							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()
-							}M executions of 100ms per `}</span>
-							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
-						</div>
-					</div>
-					<div className="flex flex-row gap-1">
-						<span className="whitespace-nowrap text-sm">
-							{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
-						</span>
-						<b className="text-sm">OR</b>
-						<span className="whitespace-nowrap text-sm">
-							{(seats * 2).toLocaleString()} operators
+							 {(seats * 2).toLocaleString()} <a href="#operator" class="custom-link text-black dark:text-white">operators</a>
 						</span>
 					</div>
 				</div>
@@ -238,10 +244,12 @@ export default function PriceCalculator({ period, tier }) {
 				<div className="mt-8 flex flex-col gap-1">
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
-						<div className="text-sm text-gray-600 mt-1">
-							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()
-							}M executions of 100ms per `}</span>
+						<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
+							<span>
+								{`~${(vCPUs * 26 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}M `}
+								<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">executions</a>
+								{` of 100ms per `}
+							</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -251,20 +259,22 @@ export default function PriceCalculator({ period, tier }) {
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">
-							{(seats * 2).toLocaleString()} operators
+							 {(seats * 2).toLocaleString()} <a href="#operator" class="custom-link text-black dark:text-white">operators</a>
 						</span>
 					</div>
 				</div>
 			) : null}
 
-			{tier.id === 'tiertest' ? (
+			{tier.id === 'tierpro' ? (
 				<div className="mt-8 flex flex-col gap-1">
 					<h5 className="font-semibold">Summary</h5>
 					<div className="mt-2 flex items-baseline gap-x-1">
-						<div className="text-sm text-gray-600 mt-1">
-							<span>{`~${
-								vCPUs * 26 * (period.value === 'annually' ? 12 : 1).toLocaleString()
-							}M executions of 100ms per `}</span>
+						<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
+							<span>
+								{`~${(vCPUs * 26 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}M `}
+								<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">executions</a>
+								{` of 100ms per `}
+							</span>
 							<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 						</div>
 					</div>
@@ -274,7 +284,7 @@ export default function PriceCalculator({ period, tier }) {
 						</span>
 						<b className="text-sm">OR</b>
 						<span className="whitespace-nowrap text-sm">
-							{(seats * 2).toLocaleString()} operators
+							 {(seats * 2).toLocaleString()} <a href="#operator" class="custom-link text-black dark:text-white">operators</a>
 						</span>
 					</div>
 				</div>
