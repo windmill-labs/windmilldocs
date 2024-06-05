@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const faqs = [
 	{
-		id: 'subscribe-pro-plan',
+		id: 'pro-plan',
 		question: 'Which organizations can subscribe to the Pro plan?',
 		answer: (
 			<span>
@@ -66,8 +66,8 @@ const faqs = [
 		)
 	},
 	{
-		id: 'vcpu-estimation',
-		question: 'How is the use of the number of vCPUs estimated?',
+		id: 'vcpu-reporting',
+		question: 'How is the use of the number of vCPUs estimated and reported to Windmill?',
 		answer: (
 			<span>
 				Even though Windmill's{' '}
@@ -86,30 +86,16 @@ const faqs = [
 				>
 					workers
 				</a>
-				, Pricing is vCPU based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with
-				4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by
-				24.
+				, Pricing is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with
+				4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by 24.
+				Each vCPU can run up to ~26M jobs per month.
 				<br />
 				<br />
-				The number of vCPUs considered is the number of production vCPUs, not of development
-				staging, if you have separate instances.
+				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs for your subscription.
 				<br />
 				<br />
-				Our compute pricing should be linear to the compute cost from your cloud provider.
-			</span>
-		)
-	},
-	{
-		id: 'vcpu-reporting',
-		question: 'How is the use of the number of vCPUs and seats reported to Windmill?',
-		answer: (
-			<span>
-				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs
-				and seats for your subscription.
-				<br />
-				<br />
-				We only count the vCPUs reported by your workers as being used on your prod instance. So you
-				can simply set limits in the{' '}
+				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
+				So you can simply set limits in the{' '}
 				<a
 					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
@@ -119,6 +105,9 @@ const faqs = [
 					docker-compose
 				</a>{' '}
 				and you will never be overcharged.
+				<br />
+				<br />
+				Our compute pricing should be linear to the compute cost from your cloud provider.
 			</span>
 		)
 	},

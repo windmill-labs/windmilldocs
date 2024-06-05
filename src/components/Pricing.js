@@ -46,15 +46,12 @@ const pricing = {
 			price: {
 				vCPU: {
 					monthly: 20,
-					description:
-						'1 vCPU can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 vCPU can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 10
 				},
 				seat: {
 					monthly: 8,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 10
@@ -69,8 +66,13 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Support with 48h response time by email</span>
+					text: (
+						<span>
+							Only for <a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">small businesses and nonprofits</a>
+						</span>
+					)
 				},
+				{ text: 'Support with 48h response time by email' },
 				{ text: 'Max 10 users with SSO' }
 			]
 		},
@@ -81,15 +83,12 @@ const pricing = {
 			price: {
 				vCPU: {
 					monthly: 50,
-					description:
-						'1vCPU is usually assigned to 1 worker (or 10 native workers) and each worker can execute about 26mio executions per month. (on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
 				},
 				seat: {
 					monthly: 20,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 1000
@@ -158,7 +157,6 @@ const pricing = {
 			price: {
 				seat: {
 					monthly: 10,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 10
@@ -202,15 +200,12 @@ const pricing = {
 			price: {
 				vCPU: {
 					monthly: 100,
-					description:
-						'1vCPU is usually assigned to 1 worker (or 10 native workers) and each worker can execute about 26 mio executions per month. ( on average a script takes 100ms to execute, so 1 worker can execute 5 requests per second, 5  60  60  24  30 = 13mio)',
 					default: 2,
 					min: 2,
 					max: 100
 				},
 				seat: {
 					monthly: 40,
-					description: 'A developer can create scripts and flows',
 					default: 1,
 					min: 1,
 					max: 1000
@@ -1110,7 +1105,7 @@ export default function Pricing() {
 																					href={attribute.link}
 																					target="_blank"
 																					rel="noopener noreferrer"
-																					className="custom-link"
+																					className="custom-link text-gray-600 dark:text-gray-200"
 																				>
 																					{attribute.name}
 																				</a>
@@ -1253,7 +1248,7 @@ export default function Pricing() {
 															<th
 																scope="row"
 																className={twMerge(
-																	'py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-900 dark:text-white',
+																	'py-3 pr-4 text-left text-sm font-normal leading-6 text-gray-600 dark:text-gray-200',
 																	frequency.value === 'cloud' ? 'w-1/4' : 'w-1/3'
 																)}
 															>
@@ -1263,7 +1258,7 @@ export default function Pricing() {
 																			href={attribute.link}
 																			target="_blank"
 																			rel="noopener noreferrer"
-																			className="custom-link"
+																			className="custom-link text-gray-600 dark:text-gray-200"
 																		>
 																			{attribute.name}
 																		</a>
