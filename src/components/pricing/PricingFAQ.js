@@ -103,7 +103,7 @@ const faqs = [
 				and seats for your subscription.
 				<br />
 				<br />
-				We only count the vCPUs reported by your workers as being used. So you can simply set limits
+				We only count the vCPUs reported by your workers as being used on your prod instance. So you can simply set limits
 				in the{' '}
 				<a
 					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
