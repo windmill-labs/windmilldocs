@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Plans & How to Upgrade
 
-Windmill provides a range of pricing plans for both Cloud and Self-hosted deployments, catering to diverse needs. These plans are designed to accommodate individual users, small teams, and enterprise-level organizations, offering additional features, resources, enhanced capabilities, and premium support beyond the free tier.
+Windmill provides a range of pricing plans for both Cloud and Self-hosted deployments. These plans are designed to accommodate individual users, small teams, and enterprise-level organizations, offering additional features, resources, enhanced capabilities, and premium support beyond the free tier. All details on the [Pricing page](/pricing).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -82,7 +82,7 @@ Team plans work at the workspace-level.
 - Once you contact us, we will provide you with a secure payment link.
 - Upon payment, you will get access to a dedicated Windmill instance on the cloud.
 
-- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing) where you can update plan usage and adjust the number of seats.
+- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-billing-portal) where you can update plan usage and adjust the number of seats.
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
@@ -111,9 +111,9 @@ Team plans work at the workspace-level.
   - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
 
 - If not done earlier, you can create your first workspace, but your instance will not have access to Enterprise features until the license key is passed.
-- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the Instance Settings. The first key will be valid for a month (duration of trial). You can also contact us immediately if preferred. At the end of the subscription period (or trial), you will receive another license key valid for a year. The key will then self-update as long as they are in good standing.
+- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the Instance Settings. The key will self-update every day as long as the subscription is active. A key is valid for 35 days.
 
-- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
+- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](#windmill-billing-portal).
 - Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
@@ -121,7 +121,7 @@ Team plans work at the workspace-level.
 	- [S3 / Azure Blob storage integration](../../core_concepts/11_persistent_storage/large_data_files.mdx) within a Windmill workspace to manage large data files.
 	- [Git Sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
-- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
+- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-billing-portal).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -133,40 +133,22 @@ Team plans work at the workspace-level.
 
 #### Using the License Key (Self-Host)
 
-To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
+To enable the license key, switch from the `windmill` image to the `windmill-ee` image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
 
 ![Use license key](./add_license_key.png 'Use license key')
 
-## Frequently Asked Questions (FAQ)
+## Windmill Billing Portal
 
-- **What is an operator?**
+As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill Billing Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & vCPUs) from the portal.
 
-  An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user who can only execute scripts, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of developers (or 1/2 seats).
+You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
 
-- **What is an execution?**
+![Portal](./portal.png 'Portal')
 
-  The single credit-unit is called a "execution". An execution corresponds to a single [job](../../core_concepts/20_jobs/index.mdx) whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for.
-
-  The number of executions of a flow corresponds to the sum of the executions of each step as seconds, considered as one script execution of that same time (time in sleep or doing state transition are not accounted). For apps, a backend script execution is considered as a script execution. As apps frontend scripts execute on browsers, they are not taken into account.
-
-  Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
-
-- **How is the use of the number of vCPUs and seats reported to Windmill?**
-
-  Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used.
-
-  The vCPUs reported is the sum of the vCPUs used by all your workers. 5 workers with 0.2vCPUs each will count as 1vCPU. 2 workers with 4vCPU each will count as 8vCPUs. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or ecs/kubernetes limits and you will never be overcharged.
-
-- **What is your Technical Support SLA?**
-
-  We provide [support](../12_support_and_sla/index.mdx) with different response times based on issue priorities. Our support team is available 24/7, and the SLA is consistent for both Cloud and Self-hosted deployments.
-
-- **What is your Security level on APIs?**
-
-  Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
-
-- **Could the application keep running if Windmill as a company is shut down?**
-
-  Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection. If Windmill shuts down, license keys will be extended indefinitely.
-
-For any further inquiries or assistance regarding the Enterprise Edition upgrade process, please [contact us](../6_getting_help/index.mdx).
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Windmill Billing Portal"
+		description="Access detailed usage information and invoices."
+		href="https://portal.windmill.dev/"
+	/>
+</div>

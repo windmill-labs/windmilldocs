@@ -112,6 +112,22 @@ const faqs = [
 		)
 	},
 	{
+		id: 'portal',
+		question: "How can I update my subscription?",
+		answer: (
+			<span>
+				As an Enterprise user, you will have access to detailed usage information and invoices through the{' '}
+				<Link
+					to="/docs/misc/plans_details#windmill-billing-portal"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					Windmill Billing Portal
+				</Link>{'. '}
+				You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
+			</span>
+		)
+	},
+	{
 		id: 'sla',
 		question: "What is Windmill's Technical Support SLA?",
 		answer: (
@@ -125,6 +141,15 @@ const faqs = [
 				</Link>{' '}
 				with different response times based on issue priorities. Our support team is available 24/7,
 				and the SLA is consistent for both Cloud and Self-hosted deployments.
+			</span>
+		)
+	},
+	{
+		id: 'security',
+		question: "What is Windmill's security level on APIs?",
+		answer: (
+			<span>
+				Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
 			</span>
 		)
 	},
