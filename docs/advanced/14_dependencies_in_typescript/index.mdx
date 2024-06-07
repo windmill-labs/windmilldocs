@@ -7,11 +7,13 @@ For TypeScript, there are two runtime options available: [Bun](https://bun.sh/) 
 Both of these runtimes allow you to include dependencies directly in the script, and Windmill automatically handles the resolution and caching of these dependencies to ensure fast and consistent execution (this is standard mode).
 
 There are however methods to have more control on your dependencies:
+
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
 - Overriding dependencies [providing a package.json](#lockfile-per-script-inferred-from-a-packagejson).
 - [Bundling](#bundle-per-script-built-by-cli) per script with CLI, more powerful and local only.
 
 Moreover, there are two other tricks, compatible with the methodologies mentioned above:
+
 - [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles) when not using Bundles.
 - [Private npm Registry & Private npm Packages](#private-npm-registry--private-npm-packages).
 
@@ -51,7 +53,7 @@ Similarly, for TypeScript scripts using Deno as the runtime, the dependencies an
 import { toWords } from 'npm:number-to-words';
 
 // versioned import
-import * as wmill from "npm:windmill-client@1.335.0";
+import * as wmill from 'npm:windmill-client@1.335.0';
 ```
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -73,6 +75,7 @@ At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lock
 ### CLI
 
 On [local development](../4_local_development/index.mdx), each script gets:
+
 - a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
 - a metadata file (`script_path.yaml`) that contains the metadata of the script,
 - a lockfile (`script_path.lock`) that contains the dependencies of the script.
@@ -111,7 +114,7 @@ Although Windmill can [automatically resolve imports](#lockfile-per-script-infer
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a package.json is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
 
@@ -147,7 +150,7 @@ With this toggle, you can choose to use the metadata lockfile (derived from pack
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>
-  <DocCard
+	<DocCard
 		title="Command Line Interface (CLI)"
 		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
@@ -179,7 +182,7 @@ Windmill CLI, it is done automatically on `wmill sync push` for any script that 
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -210,9 +213,9 @@ It is possible to import directly from other TypeScript scripts. One can simply 
 import { main as foo, util } from '../my_script_path.ts';
 ```
 
-Relative imports syntax is much preferred as it will work on [local editors](../4_local_development/index.mdx).
+Relative imports syntax is much preferred as it will work on [local editors](../4_local_development/index.mdx) without further configuration.
 
-You may also use absolute imports (but won't work on local editors):
+You may also use absolute imports:
 
 ```typescript
 import { main as foo, util } from '/f/<foldername>/script_name.ts';
@@ -220,6 +223,18 @@ import { main as foo, util } from '/f/<foldername>/script_name.ts';
 export async function main() {
 	await foo();
 	util();
+}
+```
+
+but to make it work with your local editor, you will need the following configuration in tsconfig.json
+
+```json
+{
+	"compilerOptions": {
+		"paths": {
+			"/*": ["./*"]
+		}
+	}
 }
 ```
 
@@ -239,7 +254,7 @@ You can use private npm registries and private npm packages in your TypeScript s
 
 This applies to all methods above. Only, if using Codebases & Bundles locally, there is nothing to configure in Windmill, because the bundle is built locally using your locally-installed modules (which support traditional npm packages and private npm packages).
 
-![Private NPM registry](../6_imports/private_registry.png "Private NPM registry")
+![Private NPM registry](../6_imports/private_registry.png 'Private NPM registry')
 
 On [Enterprise Edition](/pricing), go to `Instance settings -> Core -> NPM Config Registry`.
 
