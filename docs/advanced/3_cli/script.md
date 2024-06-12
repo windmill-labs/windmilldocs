@@ -79,6 +79,12 @@ wmill script generate-metadata [--lock-only] [--schema-only] [<path>]
 
 Note that you can explicitly exclude (or include) specific files or folders to be taken into account by this command, with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
+[Flows](./flow.md) inline script lockfiles can be also updated locally in the same way as `wmill script generate-metadata --lock-only` but for flows' inline scripts:
+
+```bash
+wmill flow generate-locks
+```
+
 ### package.json & requirements.txt
 
 When doing `wmill script generate-metadata`, if a `package.json` or `requirements.txt` is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
