@@ -8,6 +8,67 @@ When a script is deployed through its UI, Windmill generates a lockfile to ensur
 
 On the [enterprise edition](/pricing), Windmill's caches can be configured to sync their cache with a central S3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
 
+![Dependency Management & Imports](./dependency_management.png "Dependency Management & Imports")
+
+## Lockfile per Script inferred from Imports (Standard)
+
+In Windmill, you can run scripts without having to [manage a package.json](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) / [requirements.txt](../15_dependencies_in_python/index.mdx#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the imports and resolving the dependencies. This method works for all languages in Windmill.
+
+When using Bun or Deno as the runtime for TypeScript in Windmill, dependencies are resolved directly from the script imports and their imports when using [sharing common logic](../5_sharing_common_logic/index.mdx). The TypeScript runtime Bun ensures 100% compatibility with Node.js without requiring any code modifications.
+
+Here is what it would give for Bun:
+
+```ts
+// unpinned import
+import { toWords } from 'number-to-words';
+
+// versioned import
+import * as wmill from 'windmill-client@1.147.3';
+```
+and for Python:
+
+```python
+import os
+
+# etc.
+```
+
+### Web IDE
+
+When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../script_editor/versioning.mdx) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) or if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+
+At runtime, a deployed script always uses the same version of its dependencies.
+
+At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lockfile is automatically recomputed from the imports in the script and the imports used by the [relative imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles). The computation of that lockfile is done by a dependency jobs that you can find in the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
+
+### CLI
+
+On [local development](../4_local_development/index.mdx), each script gets:
+
+- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
+- a metadata file (`script_path.yaml`) that contains the metadata of the script,
+- a lockfile (`script_path.lock`) that contains the dependencies of the script.
+
+You can get those 3 files for each script by pulling your workspace with command [`wmill sync pull`](../3_cli/sync.mdx).
+
+Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
+
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [package.json (if present)](#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command Line Interface (CLI)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+	<DocCard
+		title="Local Development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
 ## Imports in TypeScript
 
 See our dedicated page on [Dependencies in TypeScript](../14_dependencies_in_typescript/index.mdx).
