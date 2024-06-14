@@ -684,7 +684,7 @@ export default function FlowSection() {
 					<div
 						className={classNames(
 							colorMode === 'dark' ? 'bg-black' : 'bg-gray-50',
-							'w-full p-8 bg-opacity-40 rounded-xl '
+							'w-full p-8 bg-opacity-40 rounded-xl h-full'
 						)}
 					>
 						<div className="grid">
