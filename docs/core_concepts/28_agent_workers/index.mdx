@@ -29,15 +29,22 @@ One such role that can be defined could be as follows:
 
 ```sql
 CREATE USER agent with PASSWORD 'changeme';
-GRANT SELECT, UPDATE, DELETE ON queue to agent;
+GRANT ALL ON queue to agent;
+GRANT INSERT on audit to agent;
+GRANT ALL on sequence audit_id_seq to agent;
 GRANT SELECT, INSERT, UPDATE ON completed_job to agent;
 GRANT SELECT on config to agent;
 GRANT SELECT on global_settings to agent;
 GRANT SELECT, INSERT, UPDATE on worker_ping to agent;
 GRANT ALL on concurrency_counter to agent;
 GRANT SELECT, INSERT on pip_resolution_cache to agent;
+GRANT SELECT, INSERT, UPDATE on job_logs to agent;
+GRANT SELECT, INSERT, UPDATE on outstanding_wait_time to agent;
+GRANT SELECT, UPDATE on script to agent;
+GRANT SELECT, UPDATE, INSERT on dependency_map to agent;
 
 CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
+CREATE POLICY agent ON script TO agent USING (tag = '<x>' OR tag = '<y>');
 CREATE POLICY agent ON completed_job TO agent USING (true);
 CREATE POLICY agent
    ON audit
