@@ -9,9 +9,9 @@ import { useColorMode } from '@docusaurus/theme-common';
 import Head from '@docusaurus/Head';
 
 
-const InteractiveImage = ({ id, src, style, url }) => {
+const InteractiveImage = ({ id, src, style, url, darkMode = true }) => {
 	const { colorMode } = useColorMode();
-	const darkSrc = src.replace(/\.(png|jpg|jpeg|svg)$/, '_dark.$1');
+	const darkSrc = darkMode ? src.replace(/\.(png|jpg|jpeg|svg)$/, '_dark.$1') : src;
 
 	const handleImageError = (e) => {
 		e.target.src = src;
@@ -35,34 +35,34 @@ const InteractiveImage = ({ id, src, style, url }) => {
 
 const interactiveImages = [
 	{
-	  id: 'Flows',
-	  src: '/integrations/visual_elements/flow.png',
-	  url: '/docs/flows/flow_editor',
-	  style: { top: '124px', left: '67px', width: '234px', height: '292px' }
+		id: 'Flows',
+		src: '/integrations/visual_elements/flow.png',
+		url: '/docs/flows/flow_editor',
+		style: { top: '124px', left: '67px', width: '234px', height: '292px' }
 	},
 	{
-	  id: 'Apps',
-	  src: '/integrations/visual_elements/app.png',
-	  url: '/docs/apps/app_editor',
-	  style: { top: '67px', left: '246px', width: '393px', height: '180px' }
+		id: 'Apps',
+		src: '/integrations/visual_elements/app.png',
+		url: '/docs/apps/app_editor',
+		style: { top: '67px', left: '246px', width: '393px', height: '180px' }
 	},
 	{
-	  id: 'Runs',
-	  src: '/integrations/visual_elements/runs.png',
-	  url: '/docs/core_concepts/monitor_past_and_future_runs',
-	  style: { top: '362px', left: '293px', width: '260px', height: '160px' }
+		id: 'Runs',
+		src: '/integrations/visual_elements/runs.png',
+		url: '/docs/core_concepts/monitor_past_and_future_runs',
+		style: { top: '362px', left: '293px', width: '260px', height: '160px' }
 	},
 	{
-	  id: 'Schedules',
-	  src: '/integrations/visual_elements/schedule.png',
-	  url: '/docs/core_concepts/scheduling',
-	  style: { top: '224px', left: '314px', width: '160px', height: '92px' }
+		id: 'Schedules',
+		src: '/integrations/visual_elements/schedule.png',
+		url: '/docs/core_concepts/scheduling',
+		style: { top: '224px', left: '314px', width: '160px', height: '92px' }
 	},
 	{
-	  id: 'Webhooks',
-	  src: '/integrations/visual_elements/webhook.png',
-	  url: '/docs/core_concepts/webhooks',
-	  style: { top: '284px', left: '426px', width: '176px', height: '73px' }
+		id: 'Webhooks',
+		src: '/integrations/visual_elements/webhook.png',
+		url: '/docs/core_concepts/webhooks',
+		style: { top: '284px', left: '426px', width: '176px', height: '73px' }
 	},
 	{
 		id: 'GitHub',
@@ -74,14 +74,16 @@ const interactiveImages = [
 		id: 'GitLab',
 		src: '/third_party_logos/gitlab.svg',
 		url: '/docs/advanced/git_sync',
-		style: { top: '447px', left: '148px', width: '65px', height: '65px' }
+		style: { top: '447px', left: '148px', width: '65px', height: '65px' },
+		darkMode: false
 	},
 	{
 		id: 'VSCode',
 		src: '/third_party_logos/vscode.svg',
 		url: '/docs/cli_local_dev/vscode-extension',
-		style: { top: '455px', left: '220px', width: '42px', height: '42px' }
-	}
+		style: { top: '455px', left: '220px', width: '42px', height: '42px' },
+		darkMode: false
+	}	
   ];  
 
 
@@ -159,17 +161,18 @@ export default function Solution({
 									</div>
 								</div>
 								<div className="w-full">
-						<div className="interactive-image-container" style={{ position: 'relative', width: '663px', height: '551px' }}>
-							{interactiveImages.map(image => (
+							<div className="interactive-image-container" style={{ position: 'relative', width: '663px', height: '551px' }}>
+						{interactiveImages.map(image => (
 							<InteractiveImage 
 								key={image.id} 
 								id={image.id} 
 								src={image.src} 
 								style={image.style} 
 								url={image.url} 
+								darkMode={image.darkMode}
 							/>
-							))}
-						</div>
+						))}
+					</div>
 						</div>
 							</div>
 						</div>
