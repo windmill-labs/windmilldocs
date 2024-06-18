@@ -69,7 +69,7 @@ foo:
 ```
 
 If necessary, Windmill automatically converts it to the corresponding binary type in the corresponding
-language as defined in the [schema](../13_json_schema_and_parsing/index.md).
+language as defined in the [schema](../13_json_schema_and_parsing/index.mdx).
 In Python, it will be converted to the `bytes` type (for example `def main (input_file: bytes):`). In TypeScript, they are simply represented as strings.
 
 In ambiguous situations (file ino) where the context does not provide clear indications,
@@ -81,7 +81,7 @@ Base64 encoded strings are used in:
 
 - File Input component in the app editor: files uploaded are converted and returned as a Base64 encoded string.
 - Download Button: the source to be downloaded must be in Base64 format.
-- File inputs to run scripts must be typed into the [JSON](../13_json_schema_and_parsing/index.md) `string, encodingFormat: base64` (python: `bytes`, Deno: `wmill.Base64`).
+- File inputs to run scripts must be typed into the [JSON](../13_json_schema_and_parsing/index.mdx) `string, encodingFormat: base64` (python: `bytes`, Deno: `wmill.Base64`).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

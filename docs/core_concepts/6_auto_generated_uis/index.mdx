@@ -20,7 +20,7 @@ You might also be interested by Windmill's [App editor](../../getting_started/7_
 
 :::
 
-By analyzing the parameters of the main function, Windmill generates an input specification for the script or flow in the [JSON Schema](../13_json_schema_and_parsing/index.md) format. Windmill then renders the UI for the Script or Flow from that specification.
+By analyzing the parameters of the main function, Windmill generates an input specification for the script or flow in the [JSON Schema](../13_json_schema_and_parsing/index.mdx) format. Windmill then renders the UI for the Script or Flow from that specification.
 
 You don't need to directly interact with the JSON Schema associated with the Script or Flow. It is the result of the analysis of the script parameters of the main function and the optional UI customization.
 
@@ -29,19 +29,61 @@ The auto-generated UI of a flow is made from [Flow Input](../../flows/3_editor_c
 
 In the [UI customization interface](../../script_editor/customize_ui.mdx), you can refine information that couldn't be inferred directly from the parameters, such as specifying string enums or restricting lists to numbers. You can also add helpful descriptions to each field.
 
-![Customize inputs](./customize_inputs.png.webp)
+![Customize inputs](./customize_inputs.png)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Customize UI"
-		description="Some arguments' types can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		title="Generated UI"
+		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
 		href="/docs/script_editor/customize_ui"
 	/>
 </div>
 
-## Test code
+## Advanced Settings
 
-This feature can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.mdx) & [flow](../../getting_started/6_flows_quickstart/index.mdx) editors to [test your code](../23_instant_preview/index.mdx).
+Scripts' main function or flow input arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../6_auto_generated_uis/index.mdx) and JSON Schema.
+
+Here is an example on how to define a [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) list as an enum of strings using the `Generated UI` menu.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/advanced_parameters_enum.mp4"
+/>
+
+<br/>
+
+Each argument has the following settings:
+- **Name**: the name of the argument.
+- **Type**: the type of the argument: Integer, Number, String, Boolean, Array, Object, or Any.
+- **Description**: the description of the argument.
+- **Custom Title**: will be displayed in the UI instead of the field name.
+- **Placeholder**: will be displayed in the input field when the field is empty. If not set, the default value (directly set from the script code) will be used. The placeholder is disabled depending on the field type, format, etc.
+- **Field settings**: advanced settings depending on the type of the field.
+
+Below is the list of advanced settings for each type of field:
+
+| Type    | Advanced Configuration                                                                                                                    |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Integer | Min and Max. Currency. Currency locale.                                                                                                   |
+| Number  | Min and Max. Currency. Currency locale.                                                                                                                              |
+| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                 |
+| Boolean | No advanced configuration for this type.                                                                                                  |
+| Object  | Advanced settings are [Resource Types](../3_resources_and_types/index.mdx).                                                 |
+| Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
+| Any     | No advanced configuration for this type.                                                                                          |
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Generated UI"
+		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		href="/docs/script_editor/customize_ui"
+	/>
+</div>
+
+## Test Code
+
+In Windmill Web IDE or [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx), auto-generated UIs can be directly used in the [script](../../getting_started/0_scripts_quickstart/index.mdx) & [flow](../../getting_started/6_flows_quickstart/index.mdx) editors to [test your code](../23_instant_preview/index.mdx).
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"

@@ -82,7 +82,7 @@ Team plans work at the workspace-level.
 - Once you contact us, we will provide you with a secure payment link.
 - Upon payment, you will get access to a dedicated Windmill instance on the cloud.
 
-- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-billing-portal) where you can update plan usage and adjust the number of seats.
+- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-customer-portal) where you can update plan usage and adjust the number of seats.
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
@@ -113,7 +113,7 @@ Team plans work at the workspace-level.
 - If not done earlier, you can create your first workspace, but your instance will not have access to Enterprise features until the license key is passed.
 - Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the Instance Settings. The key will self-update every day as long as the subscription is active. A key is valid for 35 days.
 
-- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](#windmill-billing-portal).
+- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](#windmill-customer-portal).
 - Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
@@ -121,7 +121,7 @@ Team plans work at the workspace-level.
 	- [S3 / Azure Blob storage integration](../../core_concepts/11_persistent_storage/large_data_files.mdx) within a Windmill workspace to manage large data files.
 	- [Git Sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
-- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-billing-portal).
+- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-customer-portal).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -137,9 +137,21 @@ To enable the license key, switch from the `windmill` image to the `windmill-ee`
 
 ![Use license key](./add_license_key.png 'Use license key')
 
-## Windmill Billing Portal
+## Windmill Customer Portal
 
-As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill Billing Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & vCPUs) from the portal.
+As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & vCPUs) from the portal.
+
+Access to the portal is made through either:
+- From your Instance Settings, in the "Core" tab. Where you can also renew your [license key](#self-host).
+- Through a direct link: [portal.windmill.dev](https://portal.windmill.dev/), filling in the email address used for the subscription, and then accessing a link sent by email.
+
+Email addresses can be added to the portal to allow multiple users to access it.
+
+![Custom link from the instance settings](./portal_link_instance.png 'Custom link from the instance settings')
+
+> Custom link from the instance settings.
+
+<br/>
 
 You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
 
@@ -151,7 +163,7 @@ This comparison is made only for your instance of Prod, for which you can find t
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Windmill Billing Portal"
+		title="Windmill Customer Portal"
 		description="Access detailed usage information and invoices."
 		href="https://portal.windmill.dev/"
 	/>

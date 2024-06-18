@@ -41,7 +41,7 @@ You can:
 
 ### Export
 
-View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsing/index.md) of the app.
+View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsing/index.mdx) of the app.
 
 ![App Export](../assets/apps/1_app_toolbar/app-export.png 'App Export')
 

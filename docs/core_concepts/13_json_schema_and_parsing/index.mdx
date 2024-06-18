@@ -1,3 +1,5 @@
+import DocCard from '@site/src/components/DocCard';
+
 # JSON Schema and Parsing
 
 Windmill leverages the JSON Schema to define the structure and validation rules for JSON data, adhering to the [JSON Schema standard (version 2020-12)](https://json-schema.org/draft/2020-12/schema) for schema definition.
@@ -41,7 +43,7 @@ Where the `properties` field contains a dictionary of arguments, and `required` 
 The property names need to match the arguments declared by the main function, in our example `your_name` and `your_nickname`. There is a lot you can do with arguments, types, and validation, but to keep it short:
 
 - Arguments can specify a type `integer`, `number`, `string`, `boolean`, `object`, `array` or `any`. The user's input will be validated against that type.
-- One can further constraint the type by having the string following a RegEx or pattern, or the object to be of a specific [Resource Type](../../core_concepts/3_resources_and_types/index.mdx).
+- One can further constraint the type by having the string following a RegEx or pattern, or the object to be of a specific [Resource Type](../3_resources_and_types/index.mdx).
 - Arguments can be made mandatory by adding them to the `required` list. In that case, the generated UI will check that user input provides required arguments.
 - Each argument can have a description and default fields, that will appear in the generated UI.
 - Some types have advanced settings.
@@ -111,15 +113,19 @@ def main(x: my_resource_type):
 
 :::
 
-The JSON Schema of a script's arguments is visible and can be modified from the `Customize` menu.
+The JSON Schema of a script's arguments is visible and can be modified from the [`Generated UI`](../6_auto_generated_uis/index.mdx) menu.
 
-![Json schema script](./schema_script.gif 'Json schema script')
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/schema_script.mp4"
+/>
 
 ### Flows Parameters and JSON Schema
 
-Flows in Windmill have input parameters defined by a JSON Schema. Each argument of the `Flow Input` section corresponds to a field in the JSON Schema. The parameters and their types are validated against the JSON Schema during flow execution.
+Flows in Windmill have input parameters defined by a JSON Schema. Each argument of the [`Flow Input`](../../flows/3_editor_components.mdx#flow-inputs) section corresponds to a field in the JSON Schema. The parameters and their types are validated against the JSON Schema during flow execution.
 
-The JSON Schema of a script's arguments can be modified in the "Customize Inputs" section of the `Flow Input` menu. The schema is visible from the `Export / OpenFlow` section, in particular the "Input Schema" tab.
+The JSON Schema of a script's arguments can be modified in the `Flow Input` menu. The schema is visible from the `Export / OpenFlow` section, in particular the "Input Schema" tab.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -143,9 +149,9 @@ Resource types in Windmill are associated with JSON Schemas. A resource type def
 
 ## Advanced Settings
 
-Some arguments' types can be given advanced settings that will affect the inputs' [auto-generated UI](../../core_concepts/6_auto_generated_uis/index.mdx) and JSON Schema.
+main function's arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../6_auto_generated_uis/index.mdx) and JSON Schema.
 
-Here is an example on how to define a python list as an enum of strings using the `Customize` menu.
+Here is an example on how to define a [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) list as an enum of strings using the `Generated UI` menu.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -155,14 +161,31 @@ Here is an example on how to define a python list as an enum of strings using th
 
 <br/>
 
-Below is the list of all available advanced settings for each argument type:
+
+Each argument has the following settings:
+- **Name**: the name of the argument (defined in the main Function).
+- **Type**: the type of the argument (defined in the main Function): Integer, Number, String, Boolean, Array, Object, or Any.
+- **Description**: the description of the argument.
+- **Custom Title**: will be displayed in the UI instead of the field name.
+- **Placeholder**: will be displayed in the input field when the field is empty. If not set, the default value (directly set from the script code) will be used. The placeholder is disabled depending on the field type, format, etc.
+- **Field settings**: advanced settings depending on the type of the field.
+
+Below is the list of advanced settings for each type of field:
 
 | Type    | Advanced Configuration                                                                                                                    |
 | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Integer | No advanced configuration for this type.                                                                                                  |
-| Number  | Min and Max.                                                                                                                              |
-| String  | - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                  |
+| Integer | Min and Max. Currency. Currency locale.                                                                                                   |
+| Number  | Min and Max. Currency. Currency locale.                                                                                                                              |
+| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                 |
 | Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource Types](../3_resources_and_types/index.mdx).                                                               |
+| Object  | Advanced settings are [Resource Types](../3_resources_and_types/index.mdx).                                                 |
 | Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
-| Any     | No advanced configuration for this type.                                                                                                  |
+| Any     | No advanced configuration for this type.                                                                                          |
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Generated UI"
+		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		href="/docs/script_editor/customize_ui"
+	/>
+</div>

@@ -45,7 +45,7 @@ Windmill embeds:
   itself and generate lockfiles and input specs
   - the _[lockfile](../../advanced/6_imports/index.mdx)_ allows the script being deployed to maintain exactly the same
     set of versioned dependencies forever
-  - the _[input spec](../../core_concepts/13_json_schema_and_parsing/index.md)_ (which is actually a JSON schema) is used to generate a
+  - the _[input spec](../../core_concepts/13_json_schema_and_parsing/index.mdx)_ (which is actually a JSON schema) is used to generate a
     minimal UI automatically for both using the script as a standalone compute
     or as a step of a Flow
 - a powerful **web IDE** to write Scripts with autocompletion and syntax
