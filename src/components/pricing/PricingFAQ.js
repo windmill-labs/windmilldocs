@@ -118,10 +118,10 @@ const faqs = [
 			<span>
 				As an Enterprise user, you will have access to detailed usage information and invoices through the{' '}
 				<Link
-					to="/docs/misc/plans_details#windmill-billing-portal"
+					to="/docs/misc/plans_details#windmill-customer-portal"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
-					Windmill Billing Portal
+					Windmill Customer Portal
 				</Link>{'. '}
 				You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
 			</span>

@@ -18,12 +18,14 @@ A Schedule consists of a **Script or Flow**, its **arguments**, a **CRON express
 
 Cron is a powerful and versatile tool that enables users to automate tasks by scheduling them to run at specific intervals or times. From automating routine system maintenance to sending periodic email reports, cron plays an indispensable role in streamlining processes and improving productivity for developers, system administrators, and even casual users.
 
-However, as with any powerful tool, using cron comes with its own set of challenges and potential issues. Common problems associated with the use of cron include:
+However, as with any powerful tool, using outside Windmill cron comes with its own set of challenges and potential issues. Common problems associated with the use of cron include:
 
 - **Runs History**: to maintain a record of script runs and log outputs through cron, you must manually incorporate that logic.
 - **Error Handling**: in the event of a failed run, self-crafted logic is required for notifications (Slack, emails).
 - **Manual Runs**: executing a cron job manually, outside of its schedule, proves difficult and can lead to inconsistencies due to potential environment differences.
 - **No UI**: navigating cron jobs is challenging without a centralized hub, particularly for larger engineering teams. This comes with induced issues: 1. **Handling permissions and Errors** among users and editors and 2. **Server downtime**: when the server hosting the job experiences downtime, monitoring and alerting is problematic.
+
+Windmill addresses these issues with schedules that can be defined with pre-set configuration for scripts and flows.
 
 :::info A bit of Context: How Windmill Works
 
