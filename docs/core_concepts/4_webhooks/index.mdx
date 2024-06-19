@@ -276,6 +276,25 @@ curl -X POST                               \
     ".../mywebhook?payload=<URL_SAFE_BASE64_ENCODED_JSON>"
 ```
 
+### Cloud Events 1.0
+
+Windmill's webhooks aim to be compatible with the [Cloud Events 1.0](https://cloudevents.io/) specification. The envelope metadata will be parsed into a special argument `WEBHOOK__METADATA__` for scripts and flows.
+
+![Webhook metadata argument](./webhook_metadata.png)
+
+Nothing extra needs to be done on Windmill's side, if a request has the cloudevent content header it will automatically be handled according to the specification. When using webhook producers that allow it, you can select to use the cloud events schema. For example with Azure Event Grid:
+
+![Event Grid Cloud Event Subscription](./event_grid_cloud_event_subscription.png)
+
+
+:::caution
+
+Windmill does not support batching cloud events yet. This means that requests with the content type set to `'application/cloudevents-batch+json'` will return an error response.
+
+:::
+
+Learn more about what Cloud Events are [here](https://cloudevents.io/).
+
 ## Workspace Webhook
 
 Connect your Windmill workspace to an external service to sync or get notified about any change.
