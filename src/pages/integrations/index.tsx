@@ -127,7 +127,7 @@ export default function About() {
                                     type="button"
                                     href={`/docs/integrations/integrations_on_windmill`}
                                     target="_blank"
-                                    className="flex items-center justify-center mx-auto gap-2 rounded-md bg-blue-50 px-2 py-1 text-xs font-semibold text-gray-900 hover:text-gray-900 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 max-w-xs">
+                                    className="flex items-center justify-center mx-auto gap-2 rounded-md bg-blue-50 dark:bg-slate-700 dark:text-gray-100 px-2 py-1 text-xs font-semibold text-gray-900 hover:text-gray-900 hover:bg-blue-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 max-w-xs">
                                     All Integrations on Documentation
                                 </a>
 						</div>               
