@@ -2,11 +2,29 @@ import DocCard from '@site/src/components/DocCard';
 
 # Sharing Common Logic
 
-It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and TypeScript.
+It is common to want to share common logic between your scripts. This can be done easily using relative imports in both [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx).
 
-Note that in both the webeditor and with the CLI, your scripts do not necessarily need to have a main function. If they don't, they are assumed to be shared logic and not runnable scripts.
+Note that in both the webeditor and with the [CLI](../3_cli/index.mdx), your scripts do not necessarily need to have a main function. If they don't, they are assumed to be shared logic and not runnable scripts.
 
-It works extremely well in combination with [Developing scripts locally](../4_local_development/index.mdx) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
+It works extremely well in combination with [Developing scripts locally](../4_local_development/index.mdx) and you can easily sync your scripts with the CLI.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+	<DocCard
+		title="Dependencies in Python"
+		description="How to manage dependencies in Python scripts."
+		href="/docs/advanced/dependencies_in_python"
+	/>
+	<DocCard
+		title="Dependency Management & Imports"
+		description="Windmill's strength lies in its ability to run scripts without having to manage a package.json directly."
+		href="/docs/advanced/imports"
+	/>
+</div>
 
 ## Python relative imports for sharing common logic
 
@@ -110,3 +128,24 @@ You can reuse bash scripts by fetching them "raw" and source them. The url is as
 ```
 curl -H "Authorization: Bearer <Token>" <INSTANCE>/api/w/<workspace>/scripts/raw/p/<path>.sh
 ```
+
+## Tracking Relative Imports on Local Development
+
+On [local development](../4_local_development/index.mdx), Windmill automatically tracks relative imports in Bun and Python such that if you update a common dependency and update its imports, it will now re-trigger deployment and [lockfile](../6_imports/index.mdx) computation of all the scripts that depend on it (it was working for Python but not Bun before).
+
+When doing `wmill sync pull`, the wmill-lock.yaml will now automatically be updated, avoiding re-triggering lockfile computation for all files, only the ones that have changed from last sync.
+
+Windmill can also track such imports in inline scripts of flows and will surgically update the inline lockfiles of those flows if the relative imports change.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local Development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+	/>
+	<DocCard
+		title="Command Line Interface (CLI)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+</div>

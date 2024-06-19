@@ -345,6 +345,17 @@ const sections = [
 				link: '/docs/apps/public_apps'
 			},
 			{
+				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/getting_started/scripts_quickstart/sql'
+			},
+			{
 				name: 'Multiplayer on WebIDE',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -356,7 +367,7 @@ const sections = [
 				link: '/docs/core_concepts/multiplayer'
 			},
 			{
-				name: 'Content Search',
+				name: 'Content search',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -415,13 +426,13 @@ const sections = [
 				link: '/docs/core_concepts/authentification'
 			},
 			{
-				name: 'Workspace Secret Custom Encryption',
+				name: 'Workspace secret custom encryption',
 				tiers: {
 					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
 					'tier-enterprise-cloud': true,
 					'tier-free': true,
-					'tier-team': false
+					'tier-team': true
 				},
 				link: '/docs/core_concepts/workspace_secret_encryption'
 			},
@@ -440,8 +451,8 @@ const sections = [
 				name: 'Support level',
 				tiers: {
 					'tier-free-selfhost': 'Community support on Discord',
-					'tier-enterprise-selfhost':
-						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated slack channel',
+					'tier-enterprise-selfhost': '24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
+					'tier-enterprise-cloud': '24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
 					'tier-free': 'Community support on Discord',
 					'tier-team': 'Priority support on Discord'
 				},
@@ -485,7 +496,7 @@ const sections = [
 				link: '/docs/core_concepts/jobs#retention-policy'
 			},
 			{
-				name: 'Workspace Error Handler',
+				name: 'Workspace error handler',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -496,13 +507,13 @@ const sections = [
 				link: '/docs/core_concepts/error_handling'
 			},
 			{
-				name: 'Prometheus Metrics',
+				name: 'Prometheus metrics',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
 					'tier-enterprise-cloud': true,
-					'tier-free': true,
-					'tier-team': true
+					'tier-free': false,
+					'tier-team': false
 				}
 			}
 		]
@@ -545,7 +556,7 @@ const sections = [
 				link: '/docs/advanced/deploy_to_prod'
 			},
 			{
-				name: 'Sync Windmill to a Git Repository (Git Sync)',
+				name: 'Sync Windmill to a git repository (Git sync)',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -556,7 +567,7 @@ const sections = [
 				link: '/docs/advanced/git_sync'
 			},
 			{
-				name: 'Deploy to Staging/Prod Web UI',
+				name: 'Deploy to staging/prod web UI',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -567,7 +578,7 @@ const sections = [
 				link: '/docs/core_concepts/staging_prod'
 			},
 			{
-				name: 'Agent Workers',
+				name: 'Agent workers',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -589,7 +600,7 @@ const sections = [
 				link: '/docs/core_concepts/oidc'
 			},
 			{
-				name: 'Distributed Dependency Cache backed by S3',
+				name: 'Distributed dependency cache backed by S3',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -600,7 +611,7 @@ const sections = [
 				link: '/docs/misc/s3_cache'
 			},
 			{
-				name: 'Codebases & Bundles',
+				name: 'Codebases & bundles',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -616,7 +627,7 @@ const sections = [
 		name: 'Performance',
 		attributes: [
 			{
-				name: 'Worker Group Management UI (incl. Init Scripts)',
+				name: 'Worker group management UI (incl. Init scripts)',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -628,7 +639,7 @@ const sections = [
 				tooltip: 'Only available on self-hosting and enterprise edition on private clusters'
 			},
 			{
-				name: 'Script-specific Workers (dedicated) / High Throughput',
+				name: 'Script-specific workers (dedicated) / High throughput',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -666,7 +677,7 @@ const sections = [
 				link: '/blog/launch-week-1/restartable-flows'
 			},
 			{
-				name: 'Priority for Steps',
+				name: 'Priority for steps',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -678,7 +689,7 @@ const sections = [
 				tooltip: 'Self-hosted only'
 			},
 			{
-				name: 'Lifetime / Delete after Use',
+				name: 'Lifetime / Delete after use',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -760,7 +771,7 @@ const sections = [
 				link: '/docs/apps/css_editor'
 			},
 			{
-				name: 'Send schedule reports of Apps (png or pdf) through Slack, Discord or Email',
+				name: 'Send schedule reports of Apps (png or pdf) through Slack, Discord or e-mail',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -782,7 +793,7 @@ const sections = [
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			},
 			{
-				name: 'Workspace Default App',
+				name: 'Workspace dDefault App',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -793,7 +804,7 @@ const sections = [
 				link: '/docs/apps/default_app'
 			},
 			{
-				name: 'Importing Custom React Components',
+				name: 'Importing custom React components',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,

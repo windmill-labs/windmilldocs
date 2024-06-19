@@ -76,6 +76,14 @@ wmill flow run <remote_path> [options]
 
 ![CLI arguments](../../assets/cli/cli_arguments.png "CLI arguments")
 
+## Update flow inline scripts lockfile
+
+Flows inline script [lockfiles](../6_imports/index.mdx) can be also updated locally in the same way as [`wmill script generate-metadata --lock-only`](./script.md#re-generating-a-script-metadata-file) but for flows' inline scripts:
+
+```bash
+wmill flow generate-locks
+```
+
 ## Flow specification
 
 You can find the definition of the flow file structure [here](/docs/openflow/index.mdx).
