@@ -60,8 +60,6 @@ where $SCRIPT_PATH is the path of the Script in the workspace, including the pre
 
 These links are available in the "Result/Sync" tab.
 
-Sync get endpoints support adding args directly, use `include_query=a,b,c&a=foo&b=bar&c=foobar` to have a: "foo", b: "bar", c: "foobar", passed as args.
-
 :::info
 
 For scripts, there is an additional **synchronous** webhook available that accepts a `GET` request. The payload must be passed as the query arg `payload` and encoded in JSON first, then in an URL safe base64, e.g: `encodeURIComponent(btoa(JSON.stringify({a: 2})))`. This endpoint has the same URL as the Result/Sync POST Path URLs.
@@ -165,9 +163,21 @@ encountered issues), by checking the [Runs menu][runs] on the app.
 
 ### Request headers
 
-It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_header`, separated with `,`. e.g: `/api/w/admins/jobs/run_wait_result/p/u/user/undisputed_script?include_header=X-Sign,foo`
+It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_header`, separated with `,`. e.g:
+
+```
+/api/w/workspace/jobs/run_wait_result/p/u/user/new_script?include_header=X-Sign,foo
+```
 
 or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
+
+### Query args
+
+It is possible to pass query args to the job. To do so, either specify in the query args the headers to process at `include_query`, separated with `,`. e.g for a [sync](#synchronous) get request (works for all endpoints):
+```
+/api/w/workspace/jobs/run_wait_result/p/u/user/new_script?include_query=a,b,c&a=foo&b=bar&c=foobar
+```
+to have a: "foo", b: "bar", c: "foobar", passed as args.
 
 ### Non Object payload / body
 
