@@ -129,7 +129,7 @@ const faqs = [
 	},
 	{
 		id: 'sla',
-		question: "What is Windmill's Technical Support SLA?",
+		question: "What is Windmill's technical support SLA?",
 		answer: (
 			<span>
 				We provide{' '}
@@ -150,6 +150,36 @@ const faqs = [
 		answer: (
 			<span>
 				Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
+			</span>
+		)
+	},
+	{
+		id: 'partnership',
+		question: 'Can I get services and workshops from Windmill or partners?',
+		answer: (
+			<span>
+				Windmill is a company that develops a product. Our mission is to build the best possible product so that our users can create the most value out of it.
+
+				We provide {' '}
+				<Link
+					to="/docs/misc/support_and_sla"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					priority support
+				</Link>{' '}
+				to our Enterprise customers. This support includes the implementation of feature requests, prioritized bug resolutions, and recommendations on use cases.
+				<br /><br />
+				However, we do not carry out the implementation of these use cases ourselves (e.g. building a specific app). While we are able to offer some workshops at the beginning of your Windmill journey, it is not possible to do so repeatedly and systematically.
+				<br /><br />
+				For these reasons, we recommend that all Windmill users that require end-to-end use case development and exhaustive training engage with
+				{' '}
+				<Link
+					to="/docs/misc/partners"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					Windmill certified partners
+				</Link>{'. '}
+				These partners are trained and certified by Windmill to provide the best possible service to our users.
 			</span>
 		)
 	},
