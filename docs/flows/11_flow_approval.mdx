@@ -5,8 +5,7 @@ import TabItem from '@theme/TabItem';
 # Suspend & Approval / Prompts
 
 Flows can be suspended until resumed or canceled event(s) are received. This
-feature is most useful for implementing approval steps but can be used for other
-purposes as well.
+feature is most useful for implementing approval steps.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -38,7 +37,7 @@ An event can be:
 - a cancel
 - a pre-set number of approval that is met.
 
-For the moment we receive the approval steps in the form of an HTTP request. For each event, a single URL is generated. It is not unique to each user to whom it is sent.
+The approval steps are received in the form of an HTTP request. For each event, a single URL is generated. It is not unique to each user to whom it is sent.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -59,7 +58,7 @@ When adding a step to a flow, pick `Approval`, and write a new approval script o
 
 ![Adding approval step](../assets/flows/approval-step.png 'Adding approval step')
 
-Use `wmill.getResumeUrls()` in Typescript or `wmill.get_resume_urls()` in Python from the wmill client to generate secret URLs.
+Use `wmill.getResumeUrls()` in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or `wmill.get_resume_urls()` in [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) from the [wmill client](../advanced/2_clients/ts_client.mdx) to generate secret URLs.
 
 ## Core
 
@@ -202,7 +201,7 @@ Then another user ([operator](../core_concepts/16_roles_and_permissions/index.md
 
 ### Default args
 
-As one of the return key of this step, return an object `default_args` that contains the default arguments of the form arguments. e.g:
+As one of the return key of this step, return an object `default_args` that contains the default arguments of the form argument. e.g:
 
 ```ts
 //this assumes the Form tab has a string field named "foo" and a checkbox named "bar"
@@ -228,7 +227,7 @@ Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/712
 
 ### Dynamics enums
 
-As one of the return key of this step, return an object `enums` that contains the default arguments of the form arguments. e.g:
+As one of the return key of this step, return an object `enums` that contains the default options of the form argument. e.g:
 
 ```ts
 //this assumes the Form tab has a string field named "foo"
@@ -407,10 +406,4 @@ You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_man
 
 <br />
 
-:::tip Find it on Windmill Hub
-
-![The branch is executed](../assets/flows/branch-executed.png.webp)
-
 This flow can be found and forked on [Windmill Hub](https://hub.windmill.dev/flows/49/).
-
-:::
