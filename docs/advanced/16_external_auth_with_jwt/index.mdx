@@ -1,6 +1,7 @@
 # External auth with JWT
 
-Instead of using the built-in authentication and authorization mechanisms, you can generate your own JWT tokens for your already authenticated users and pass them to Windmill.
+Instead of using the built-in authentication and authorization mechanisms, you can generate your own JWT tokens with the desired permissions for your already authenticated users and pass them to Windmill.
+This way, you control what permissions your users have without having to create them in Windmill.
 
 We use the RS256 algorithm for the JWT tokens, so you will need to generate a public and private key pair.
 You public key in PEM format has to be passed to Windmill in the `JWT_EXT_PUBLIC_KEY` environment variable to all servers and workers.
