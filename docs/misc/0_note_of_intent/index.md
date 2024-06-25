@@ -89,7 +89,7 @@ Examples of what can be built with Windmill include:
 
 - **Scripts** that are deployed automatically into UIs, webhook endpoints and scheduled jobs.
 - **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching.
-- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our Typescript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
+- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our TypeScript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
 - **Powerful apps and dashboards** that are internal or external-facing, using either a low-code builder similar to Retool or full react views / svelte. In either case, those apps do a mix of frontend logic and calling the scripts and flows directly.
 
 You can find plenty of examples and inspirations on the

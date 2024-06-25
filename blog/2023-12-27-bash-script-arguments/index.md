@@ -179,6 +179,6 @@ For [Bash scripts in Windmill](/docs/getting_started/scripts_quickstart/bash#cod
 
 <br/>
 
-Windmill is an open-source developer platform and workflow engine to build internal tools. It helps you transform scripts into auto-generated UIs, APIs and cron jobs. Windmill also supports coding in Typescript, Python, Go, PHP, Bash, SQL, or any Docker image.
+Windmill is an open-source developer platform and workflow engine to build internal tools. It helps you transform scripts into auto-generated UIs, APIs and cron jobs. Windmill also supports coding in TypeScript, Python, Go, PHP, Bash, SQL, or any Docker image.
 
 To explore Windmill and make your shell scripts user-friendly for your team, even those unfamiliar with the command line, refer to the [documentation](https://www.windmill.dev/docs/).

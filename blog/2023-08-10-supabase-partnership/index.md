@@ -20,7 +20,7 @@ This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/
 
 ## Windmill for internal tools
 
-Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in Typescript, Python, Go, PHP, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
+Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in TypeScript, Python, Go, PHP, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
 
 - an **execution runtime** to execute functions at scale with low-latency and no overhead on a fleet of workers
 - an **orchestrator** to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
@@ -30,7 +30,7 @@ Examples of what can be built with Windmill include:
 
 - **Scripts** that are deployed automatically into UIs, webhook endpoints and scheduled jobs.
 - **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching.
-- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our Typescript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
+- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our TypeScript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
 - **Powerful apps and dashboards** that are internal or external-facing, using either a low-code builder similar to Retool or full react views / svelte. In either case, those apps do a mix of frontend logic and calling the scripts and flows directly.
 
 There exists already quite a few [internal tool builders](/docs/compared_to/peers), with all their differences. Windmill focus on executing real code, extremely fast, reliably at scale, best/fastest workflow engine and best frontend builder.

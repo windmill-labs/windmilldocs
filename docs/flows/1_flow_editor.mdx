@@ -5,7 +5,9 @@ import { Timer, TerminalSquare } from 'lucide-react';
 
 Windmill's Flow Editor allows you to build flows with a low-code builder.
 
-Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
+Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent job specifications.
+A workflow engine is a distributed system that takes a workflow and orchestrates it to completion on workers while respecting among others all the dependency constraints of each job.
+There exists a great variety of workflows and many software are domain-specific workflow engines and workflow specs (if you are a software engineer, you probably already wrote one without realizing it).
 
 The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
 
