@@ -107,7 +107,6 @@ const config = {
 	],
 	scripts: [
 		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' },
-		{ src: '/js/custom-script.js', async: true },
 		{
 			src: 'https://assets.positional-bucket.com/positional.min.js',
 			defer: true
