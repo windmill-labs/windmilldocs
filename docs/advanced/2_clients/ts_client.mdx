@@ -1,9 +1,20 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
 
 # TypeScript Client
 
 The TypeScript client for Windmill allows you to interact with the Windmill platform using TypeScript in [Bun](https://bun.sh/) / [Deno](https://deno.land/) runtime. This client provides a set of functions and utilities to access Windmill resources and perform various operations.
+
+The TypeScript Windmill SDK can be found at https://app.windmill.dev/tsdocs/modules.html
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="TypeScript Windmill SDK"
+		description="TypeScript SDK for Windmill"
+		href="https://app.windmill.dev/tsdocs/modules.html"
+	/>
+</div>
 
 ## Installation
 
@@ -58,5 +69,3 @@ export async function main() {
 </Tabs>
 
 In the example above, the `getResource` function is used to retrieve a resource with the path `'u/user/name'` from the Windmill platform. The returned resource can be further processed or used as needed in your application.
-
-For more details and documentation on the client, you can visit [jsr.io/@windmill/windmill](https://jsr.io/@windmill/windmill), although jsr.io is not supported for actual package imports yet.
