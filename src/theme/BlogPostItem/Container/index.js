@@ -8,7 +8,7 @@ import { Archive, Blocks, Sparkles } from 'lucide-react';
 import Head from '@docusaurus/Head';
 import { twMerge } from 'tailwind-merge';
 import { useLocation } from '@docusaurus/router';
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
 export default function BlogPostItemContainer({ children, className }) {
@@ -118,11 +118,13 @@ export default function BlogPostItemContainer({ children, className }) {
 					</div>
 
 					{image ? (
-						<img
-							className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
-							src={image}
-							alt=""
-						/>
+						<div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg border my-8">
+							<img
+								className="absolute top-0 left-0 w-full h-full object-cover"
+								src={image}
+								alt=""
+							/>
+						</div>
 					) : video ? (
 						<video
 							src={video}
@@ -138,7 +140,7 @@ export default function BlogPostItemContainer({ children, className }) {
 					<ReactMarkdown
 						className="text-base dark:text-gray-200 text-gray-600"
 						rehypePlugins={[rehypeRaw]}
-						>
+					>
 						{metadata.description}
 					</ReactMarkdown>
 
