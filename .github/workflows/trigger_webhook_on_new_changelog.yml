@@ -1,0 +1,40 @@
+name: Trigger Webhook on New Folders in Changelog
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'changelog/**'
+
+jobs:
+  trigger-webhook:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Check for new folders
+      id: folders_check
+      run: |
+        git fetch --prune --unshallow
+        NEW_FOLDERS=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^changelog/' | xargs -I{} dirname {} | uniq)
+        if [ -n "$NEW_FOLDERS" ]; then
+          echo "::set-output name=new_folder::true"
+        else
+          echo "::set-output name=new_folder::false"
+        fi
+
+    - name: Trigger Webhook
+      if: steps.folders_check.outputs.new_folder == 'true'
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://app.windmill.dev/api/w/windmill-labs/jobs/run/f/u/henri/test_githubactions'
+        method: 'POST'
+        contentType: 'application/json'
+        customHeaders: |
+          {
+            "Authorization": "Bearer ${{ secrets.WEBHOOK_NEW_CHANGELOG }}",
+            "Content-Type": "application/json"
+          }
+        data: '{}'
