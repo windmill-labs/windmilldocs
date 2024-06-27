@@ -268,7 +268,7 @@ There are two ways to create an action script:
 You can either create a new action script in:
 
 - [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx): Windmill provides a Python 3.11 environment.
-- [Typescript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx): Windmill uses Deno as the TypeScript runtime.
+- [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx): Windmill uses Deno as the TypeScript runtime.
 - [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx).
 - [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx).
 - Any language [running any docker container](../advanced/7_docker/index.mdx) through Windmill's bash support.
@@ -285,7 +285,7 @@ There are special kinds of scripts, [SQL and query languages](../getting_started
 - [GrapQL](../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx)
 - [Powershell](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx)
 
-These are essentially Typescript template to easily write queries to a database.
+These are essentially TypeScript template to easily write queries to a database.
 
 ### Triggering an action script from the Hub
 
@@ -322,7 +322,7 @@ The header is composed of:
   2. [Concurrency limit](./6_concurrency_limit.mdx): set concurrency limits to prevent exceeding the API Limit of the targeted API.
   3. [Cache](./4_cache.mdx): cache the results of a step for a specified time.
   4. [Early stop/Break](./2_early_stop.md): if defined, at the end of the step, the predicate expression will be evaluated to decide if the flow should stop early. Skipped flows are just a label useful to not see them in the runs page. If stop early is run within a forloop, it will just break the for-loop and have it stop at that iteration instead of stopping the whole flow.
-  5. [Suspend](./11_flow_approval.mdx): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful for implementing approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in Typescript, or `wmill.get_resume_urls()` in Python.
+  5. [Suspend](./11_flow_approval.mdx): if defined, at the end of the step, the flow will be suspended until it receives external requests to be resumed or canceled. This is most useful for implementing approval steps but can be used flexibly for other purpose. To get the resume urls, use `wmill.getResumeUrls()` in TypeScript, or `wmill.get_resume_urls()` in Python.
   6. [Sleep](./15_sleep.md): if defined, at the end of the step, the flow will sleep for a number of seconds before scheduling the next job (if any, no effect if the step is the last one). Sleeping is passive and does not consume any resources.
   7. [Mock](./5_step_mocking.md): when a step is mocked, it will immediately return the mocked value without performing any computation.
 

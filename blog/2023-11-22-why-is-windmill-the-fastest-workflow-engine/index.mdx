@@ -134,7 +134,7 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 
 There are tons of workflow engines, but not many of them are self-hostable and generic enough to support arbitrary workloads of jobs defined in code,
 and even those have restrictions:
-Some like Airflow and Prefect support only one runtime (Python). Windmill on the other hand supports Typescript/Javascript, Python, Go, PHP, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql, MS SQL. And its design makes it easy to add more upon request.
+Some like Airflow and Prefect support only one runtime (Python). Windmill on the other hand supports TypeScript/Javascript, Python, Go, PHP, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql, MS SQL. And its design makes it easy to add more upon request.
 Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to. Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
 
 One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
@@ -166,7 +166,7 @@ First some definitions, a workflow is a directed acyclic graph [DAG](https://en.
 A workflow engine is a distributed system that takes a workflow and orchestrates it to completion on workers while respecting among others all the dependency constraints of each job.
 There exists a great variety of workflows and many software are domain-specific workflow engines and workflow specs (if you are a software engineer, you probably already wrote one without realizing it).
 
-What will interest us here are workflows that can run arbitrary code in at least one major programming language (Python/Typescript/Go/Bash). Those are the most generic but also the most complex and the most difficult to optimize.
+What will interest us here are workflows that can run arbitrary code in at least one major programming language (Python/TypeScript/Go/Bash). Those are the most generic but also the most complex and the most difficult to optimize.
 Every node is a piece of code that takes as input arguments and data from other steps (or the flow inputs), do some side effects (http requests, computation, write to disk/s3) and then returns some data for other steps to consume.
 
 5 Major benefits of workflow engines:
@@ -320,7 +320,7 @@ In event streaming cases, the logic itself takes about 1ms and hence the cold st
 
 Fortunately, we implemented recently [dedicated workers for scripts](/blog/launch-week-dedicated-workers), which spawn a python process once at the start of the worker and then execute the script logic in a while loop, taking the job inputs in stdin and returning the output to sdout.
 
-We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At first, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or Typescript. This completely obliterates the cold starts and makes Windmill flows capable of handling even-streaming use cases and going up to 1000 steps per second on each worker.
+We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At first, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or TypeScript. This completely obliterates the cold starts and makes Windmill flows capable of handling even-streaming use cases and going up to 1000 steps per second on each worker.
 
 The dedicated worker for flows will pull any job relative to that flow and then route it to the proper dedicated process. Still executing only one job at a time but in pre-warmed processes.
 

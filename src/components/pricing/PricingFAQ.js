@@ -66,6 +66,26 @@ const faqs = [
 		)
 	},
 	{
+		id: 'number-of-vcpus',
+		question: 'How many vCPUs do I need?',
+		answer: (
+			<span>
+				The number of vCPUs will depend on the workload and the jobs Windmill will need to run. Each {' '}
+				<a
+					href="/docs/core_concepts/worker_groups"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank"
+				>
+					worker
+				</a>{' '} only executes one job at a time, by design to use the full resource of the worker, and you can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4 vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
+				<br /><br/>
+				As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. The vCPU numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes.
+				<br/><br/>
+				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate your needs in practice.
+			</span>
+		)
+	},
+	{
 		id: 'vcpu-reporting',
 		question: 'How is the use of the number of vCPUs estimated and reported to Windmill?',
 		answer: (

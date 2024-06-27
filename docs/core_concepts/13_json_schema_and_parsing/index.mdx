@@ -52,7 +52,7 @@ The property names need to match the arguments declared by the main function, in
 
 Scripts in Windmill have input parameters defined by a JSON Schema, where each parameter in the main function of a script corresponds to a field in the JSON Schema. This one-to-one correspondence ensures that the name of the argument becomes the name of the property, and most primitive types in Python and TypeScript have a corresponding primitive type in JSON and JSON Schema. During script execution, the parameters and their types are validated against the JSON Schema, ensuring that the input adheres to the expected format.
 
-In Python:
+In [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx):
 
 | Python              | JSON Schema                      |
 | ------------------- | -------------------------------- |
@@ -68,7 +68,7 @@ In Python:
 | `datetime`          | `str, format: date-time`         |
 | `_`                 | `any`                            |
 
-In Deno/Bun/REST:
+In [Deno/Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)/[REST](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx):
 
 | Deno                 | JSON Schema                   |
 | -------------------- | ----------------------------- |
@@ -80,9 +80,8 @@ In Deno/Bun/REST:
 | `number`             | `number`                      |
 | `string[]`           | `string[]`                    |
 | `("foo" \| "bar")[]` | `enum[]`                      |
-| ...                  | ...                           |
 
-However in Deno there also some special types that are specific to Windmill.
+However in TypeScript there also some special types that are specific to Windmill.
 They are as follows:
 
 | Windmill         | JSON Schema                                  |
@@ -120,6 +119,22 @@ The JSON Schema of a script's arguments is visible and can be modified from the 
     controls
     src="/videos/schema_script.mp4"
 />
+
+### oneOf
+
+There is a special type called `oneOf` that can be used to have the user pick between two objects through [auto-generated UI](../6_auto_generated_uis/index.mdx). Within a [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), it can be used as:
+
+```ts
+ example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string } 
+```
+
+And it will render:
+
+![oneOf Script](./one_of_script.png "oneOf Script")
+
+For flows, oneOf can be added as a [flow input](../../flows/3_editor_components.mdx#flow-inputs).
+
+![oneOf Flow](./one_of_flow.png "oneOf Flow")
 
 ### Flows Parameters and JSON Schema
 

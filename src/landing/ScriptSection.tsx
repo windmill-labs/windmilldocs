@@ -89,7 +89,7 @@ const tabs = [
 		id: 'script',
 		data: [
 			{
-				title: 'Typescript',
+				title: 'TypeScript',
 				description: '',
 				icon: SiTypescript,
 				caption: (
@@ -102,7 +102,7 @@ const tabs = [
 					</div>
 				),
 				svg: '/images/typescript-code.svg',
-				altText: 'Write scripts in Typescript'
+				altText: 'Write scripts in TypeScript'
 			},
 			{
 				title: 'Python',
@@ -236,7 +236,7 @@ const tabs = [
 		data: [
 			{
 				title: 'Web IDE & Assistants',
-				description: 'LSP support for Typescript, Python, Go, PHP, Bash and SQL scripts.',
+				description: 'LSP support for TypeScript, Python, Go, PHP, Bash and SQL scripts.',
 				icon: AlignLeftIcon,
 				imageSrc: '/images/code_editor_script.png',
 				altText: 'Web IDE',
