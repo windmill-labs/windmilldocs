@@ -21,10 +21,10 @@ const config = {
 
 	stylesheets: [
 		{
-		  href: './src/css/custom.css',
-		  type: 'text/css',
-		},
-	  ],
+			href: './src/css/custom.css',
+			type: 'text/css'
+		}
+	],
 
 	customFields: {
 		inkeepCredentials: {
@@ -95,8 +95,22 @@ const config = {
 			})
 		]
 	],
+	headTags: [
+		{
+			tagName: 'script',
+			attributes: {
+				type: 'text/javascript'
+			},
+			innerHTML:
+				'window.__positional_config = { customerId: "9e217c49-0a4b-4513-8a9e-0c79ce3eb787" };'
+		}
+	],
 	scripts: [
-		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' }
+		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' },
+		{
+			src: 'https://assets.positional-bucket.com/positional.min.js',
+			defer: true
+		}
 	],
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */

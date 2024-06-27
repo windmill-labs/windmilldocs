@@ -10,7 +10,7 @@ const sidebars = {
 				{
 					type: 'doc',
 					id: 'getting_started/how_to_use_windmill/index',
-					label: 'Getting Started',
+					label: 'Getting Started'
 				},
 				{
 					type: 'category',
@@ -180,7 +180,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'advanced/dependencies_in_python/index'
-						},
+						}
 					]
 				},
 				'core_concepts/workflows_as_code/index',
@@ -586,7 +586,8 @@ const sidebars = {
 									id: 'apps/app-runnable-panel',
 									label: 'Runnable Editor (Scripts & Flows)'
 								},
-								'apps/outputs'],
+								'apps/outputs'
+							],
 							collapsed: false
 						},
 						{
@@ -790,7 +791,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
-				'misc/share_on_hub/index'				
+				'misc/share_on_hub/index'
 			]
 		},
 
@@ -815,7 +816,8 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index',
-				'misc/partners/index'
+				'misc/partners/index',
+				'advanced/external_auth_with_jwt/index'
 			]
 		}
 	]
