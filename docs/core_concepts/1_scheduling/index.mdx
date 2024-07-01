@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 Windmill provides the same set of features as CRON, but with a user interface and control panels. It allows you to define Schedules for Scripts and Flows. Once a schedule is defined, the script will automatically run at the set frequency. Think of it as an easy-to-use scheduler similar to CRON that you can share with other users.
 
-A Schedule consists of a **Script or Flow**, its **arguments**, a **CRON expression** that controls the execution frequency and an **Error Handler** to deal with failed scheduled executions.
+A Schedule consists of a Script or Flow, its arguments, a CRON expression that controls the execution frequency and optional Error and Recovery Handlers to deal with failed scheduled executions.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -47,7 +47,7 @@ From your workspace, navigate to the dedicated `Schedules` menu and select `New 
 
 ![Schedules menu](./6-schedules-menu.png.webp 'Schedules menu')
 
-1. Configure the **schedule frequency** using cron syntax or the simplified builder.
+1. Configure the **schedule frequency** using cron syntax, the simplified builder or a prompt with [Windmill AI](../22_ai_generation/index.mdx).
 
 2. Select a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
 
