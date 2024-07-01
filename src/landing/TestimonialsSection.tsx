@@ -170,7 +170,7 @@ const clientTestimonials = [
 			dark: '/images/brands/logo-original-dark-transparent.png',
 			light: '/images/brands/logo-original-light-transparent.png',
 			anchor: 'photoroom',
-			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQEgFugU1CsFxA/profile-displayphoto-shrink_400_400/0/1709041891469?e=1719446400&v=beta&t=oJBEWO8a4xQSmO0MGqryGgdSmj3e6KKRjxhs2IVXMs0',
+			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQEgFugU1CsFxA/profile-displayphoto-shrink_200_200/0/1709041891469?e=2147483647&v=beta&t=uH8qfqTTK2YmNCedLtJ7rURtXbtKegLF1QLtaOQKEDM',
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
@@ -184,7 +184,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Kahoot_Logo-dark.svg',
 			light: '/images/brands/Kahoot_Logo.svg',
 			anchor: 'kahoot',
-			profile_picture: 'https://media.licdn.com/dms/image/C4E03AQHGq8BtXdRm_Q/profile-displayphoto-shrink_200_200/0/1516320962101?e=1719446400&v=beta&t=yxGBFspRGNpOqcL_2uEkBRqK6Op1AzadqmUyXb3D2lI'
+			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
 		},
 		company_url: 'https://motimateapp.com',
 		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
@@ -198,7 +198,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Bloomcredit-Dark.svg',
 			light: '/images/brands/Bloomcredit-Light.svg',
 			anchor: 'bloomcredit',
-			profile_picture: 'https://media.licdn.com/dms/image/C4E03AQGsYhBLnQ307A/profile-displayphoto-shrink_200_200/0/1626408831967?e=1719446400&v=beta&t=eRmvNTEh7i8PLxgiQM-CoOiaMRzZG0uAr3eilcMrfrc'
+			profile_picture: 'https://bloomcredit.io/wp-content/uploads/2023/01/person-c.png'
 		},
 		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
 		company_url: 'https://bloomcredit.io',
@@ -213,7 +213,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Qovery-dark.png',
 			light: '/images/brands/Qovery-light.svg',
 			anchor: 'qovery',
-			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_200_200/0/1693895616954?e=1719446400&v=beta&t=N_v3VJUZvoyLAgW2Egs63YpgJOzIPy_WF_D2hd9GB0I'
+			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_400_400/0/1693895615653?e=2147483647&v=beta&t=nxGuC4K8eXsJ2YAq1wqG-m8mEkhj8gugGqhccdckJZc'
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',

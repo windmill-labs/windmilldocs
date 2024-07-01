@@ -130,7 +130,7 @@ In Windmill, [schedules](/docs/core_concepts/scheduling) allow you to plan the r
 A Windmill schedule consists of several key components :
    - Script or Flow: The task to be executed.
    - Arguments: The inputs required for the script or flow.
-   - CRON expression: Defines the frequency of execution (a low-code helper or a prompt with [Windmill AI](/docs/core_concepts/ai_generation#cron-schedules-from-prompt) are available from Windmill).
+   - CRON expression: Defines the frequency of execution. Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). The [syntax differs](/docs/core_concepts/scheduling#cron-syntax) a bit from Unix. A low-code helper or a prompt with [Windmill AI](/docs/core_concepts/ai_generation#cron-schedules-from-prompt) are available from Windmill.
    - Error Handler: Optional script to handle execution failures.
    - Recovery Handler: Optional script to handle recovery from errors.
 
