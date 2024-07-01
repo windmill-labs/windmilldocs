@@ -119,7 +119,11 @@ const sidebars = {
 					label: 'Compare',
 					collapsed: true,
 					items: [
-						'compared_to/peers',
+						{
+							type: 'doc',
+							id: 'compared_to/peers',
+							label: 'Our Competitors'
+						},
 						{
 							type: 'doc',
 							id: 'compared_to/retool',

@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 Windmill provides the same set of features as CRON, but with a user interface and control panels. It allows you to define Schedules for Scripts and Flows. Once a schedule is defined, the script will automatically run at the set frequency. Think of it as an easy-to-use scheduler similar to CRON that you can share with other users.
 
-A Schedule consists of a **Script or Flow**, its **arguments**, a **CRON expression** that controls the execution frequency and an **Error Handler** to deal with failed scheduled executions.
+A Schedule consists of a Script or Flow, its arguments, a CRON expression that controls the execution frequency and optional Error and Recovery Handlers to deal with failed scheduled executions.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -47,7 +47,7 @@ From your workspace, navigate to the dedicated `Schedules` menu and select `New 
 
 ![Schedules menu](./6-schedules-menu.png.webp 'Schedules menu')
 
-1. Configure the **schedule frequency** using cron syntax or the simplified builder.
+1. Configure the **schedule frequency** using cron syntax, the simplified builder or a prompt with [Windmill AI](../22_ai_generation/index.mdx).
 
 2. Select a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
 
@@ -105,7 +105,7 @@ and either schedule in [cron](https://crontab.guru) or in Basic mode that will a
 
 Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set!
 
-![Save and schedule](./4-inputs-toggle.png.webp 'Save and schedule')
+![Save and schedule](./4-inputs-toggle.png 'Save and schedule')
 
 ## Schedule App Reports
 
@@ -133,6 +133,23 @@ More at:
 		color="orange"
 	/>
 </div>
+
+## Cron Syntax
+
+Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). This library differs slightly from the Unix library.
+
+Although the syntaxes are similar, there are some notable differences:
+
+| Feature                   | Unix cron               | zslayton's `cron` library                        |
+|---------------------------|-------------------------|--------------------------------------------|
+| **Day of Week Index**        | Sunday = 0 through Saturday = 6 | Shifted by one (Sunday = 1 through Saturday = 7, 0 = Sunday) |
+| **Seconds Field**         | Not included            | Included as the first field                |
+| **Year Field**            | Not included            | Optional, can specify specific years       |
+| **Month Representation**  | Numeric and short names | Numeric, short names, and name ranges      |
+| **List and Range in Fields** | Supports lists and ranges | Supports lists, ranges, and combinations |
+| **Step Values**           | Supported (e.g., `*/2`) | Supported, including complex patterns like `2018/2` |
+
+Anyway, the simplified builder and [Windmill AI](../22_ai_generation/index.mdx) will help you to create the cron expression.
 
 ## Control Permissions and Errors
 
@@ -202,7 +219,7 @@ The process is very simple but it will allow you to schedule tasks with confiden
 
 Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.mdx) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go, PHP, Bash or SQL - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
 
-## Schedule to run later
+## Schedule to Run Later
 
 From a script or flow's Run page (after being [deployed](../0_draft_and_deploy/index.mdx)), you can "Schedule to run later" to schedule the execution to a given time without being recurring.
 

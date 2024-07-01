@@ -40,9 +40,10 @@ const navigation = [
 	},
 	{
 		items: [
-			{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' },
-			{ name: 'GitHub Issues', href: 'https://github.com/windmill-labs/windmill/issues' },
 			{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' },
+			{ name: 'GitHub Issues', href: 'https://github.com/windmill-labs/windmill/issues' },
+			{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' },
+			{ name: 'Questions', href: 'https://questions.windmill.dev/' },
 		],
 		title: 'Help & Support'
 	},
