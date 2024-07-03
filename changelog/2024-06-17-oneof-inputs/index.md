@@ -10,5 +10,5 @@ features:
     'OneOf support in flow inputs and their auto-generated UIs.',
   ]
 docs: /docs/core_concepts/json_schema_and_parsing#oneof
-image: ./one_of_changelog.png
+video: /videos/oneof.mp4
 ---
