@@ -3,6 +3,9 @@ import { RadioGroup } from '@headlessui/react';
 import React from 'react';
 import classNames from 'classnames';
 import Slider from './Slider';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDown } from 'lucide-react';
+
 
 const plans = [
 	{
@@ -242,7 +245,44 @@ export default function PriceCalculator({ period, tier }) {
 
 			{tier.id === 'tier-enterprise-selfhost' ? (
 				<div className="mt-8 flex flex-col gap-1">
+					<div className="flex justify-between items-center">
 					<h5 className="font-semibold">Summary</h5>
+					<Menu as="div" className="relative inline-block text-left">
+					<div>
+						<MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 dark:bg-slate-800 dark:text-slate-200 shadow-sm hover:bg-gray-50">
+						Need Approval?
+						<ChevronDown className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
+						</MenuButton>
+					</div>
+					<MenuItems
+						transition
+						className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+					>
+						<div className="py-1">
+						<MenuItem>
+							{({ focus }) => (
+								<a
+									href="https://drive.google.com/uc?export=download&id=1MkyLAwZ_ROpPRcj1VHf9yr9DjBQW6KqU"
+									className={classNames(focus ? 'bg-gray-100 dark:bg-slate-700' : 'text-gray-900 dark:text-slate-200', 'block px-4 py-2 text-sm')}
+								>
+									Download Presentation
+								</a>
+							)}
+						</MenuItem>
+						<MenuItem>
+							{({ focus }) => (
+								<a
+									href=""
+									className={classNames(focus ? 'bg-gray-100 dark:bg-slate-700' : 'text-gray-900 dark:text-slate-200', 'block px-4 py-2 text-sm')}
+								>
+									Download Quote
+								</a>
+							)}
+						</MenuItem>
+						</div>
+					</MenuItems>
+					</Menu>
+					</div>
 					<div className="mt-2 flex items-baseline gap-x-1">
 						<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
 							<span>

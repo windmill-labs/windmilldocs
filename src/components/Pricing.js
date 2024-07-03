@@ -793,7 +793,7 @@ const sections = [
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			},
 			{
-				name: 'Workspace dDefault App',
+				name: 'Workspace Default App',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
