@@ -41,10 +41,18 @@ GRANT SELECT, INSERT on pip_resolution_cache to agent;
 GRANT SELECT, INSERT, UPDATE on job_logs to agent;
 GRANT SELECT, INSERT, UPDATE on outstanding_wait_time to agent;
 GRANT SELECT, UPDATE on script to agent;
+GRANT SELECT; UPDATE, INSERT on deployment_metadata to agent;
 GRANT SELECT, UPDATE, INSERT on dependency_map to agent;
+GRANT SELECT, UPDATE on flow to agent;
+GRANT SELECT, UPDATE on flow_version to agent;
+GRANT SELECT, UPDATE on schedule to agent;
 
 CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
 CREATE POLICY agent ON script TO agent USING (tag = '<x>' OR tag = '<y>');
+CREATE POLICY agent ON flow TO agent USING (tag = '<x>' OR tag = '<y>');
+-- adapt below (and above) policies to your needs (e.g. based on workspace/path etc...)
+CREATE POLICY agent ON flow_version TO agent USING (true);
+CREATE POLICY agent ON schedule TO agent USING (true);
 CREATE POLICY agent ON completed_job TO agent USING (true);
 CREATE POLICY agent
    ON audit
