@@ -523,8 +523,7 @@ const sidebars = {
 					items: [
 						'script_editor/settings',
 						'script_editor/script_kinds',
-						'script_editor/customize_ui',
-						'script_editor/versioning',
+						'script_editor/customize_ui',			
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
 						'script_editor/perpetual_scripts',
@@ -762,7 +761,12 @@ const sidebars = {
 							id: 'advanced/git_sync/index',
 							label: 'Git Sync'
 						},
-						'advanced/git_sync/cli_sync'
+						'advanced/git_sync/cli_sync',
+						{
+							type: 'doc',
+							id: 'core_concepts/versioning/index',
+							label: 'Versioning with UI'
+						},
 					]
 				},
 				{
