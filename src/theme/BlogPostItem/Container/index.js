@@ -126,14 +126,16 @@ export default function BlogPostItemContainer({ children, className }) {
 							/>
 						</div>
 					) : video ? (
-						<video
-							src={video}
-							className="rounded-lg shadow-lg border h-96 w-full object-cover my-8"
-							autoPlay
-							muted
-							loop
-							disableRemotePlayback
-						/>
+						<div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg border my-8">
+							<video
+								src={video}
+								className="absolute top-0 left-0 w-full h-full object-cover"
+								autoPlay
+								muted
+								loop
+								disableRemotePlayback
+							/>
+						</div>
 					) : (
 						''
 					)}
