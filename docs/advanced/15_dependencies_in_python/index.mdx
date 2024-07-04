@@ -7,12 +7,12 @@ From the import lines, Windmill automatically handles the resolution and caching
 
 There are however methods to have more control on your dependencies:
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
-- Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-packagejson).
+- Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt).
 
 Moreover, there are two other tricks, compatible with the methodologies mentioned above:
 - [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports).
 - [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements).
-- [Private PyPi Repository](#private-npm-registry--private-npm-packages).
+- [Private PyPi Repository](#private-pypi-repository).
 
 To learn more about how dependencies from other languages are handled, see [Dependency Management & Imports](../../advanced/6_imports/index.mdx).
 
@@ -33,7 +33,7 @@ To learn more about how dependencies from other languages are handled, see [Depe
 
 ## Lockfile per Script inferred from Imports (Standard)
 
-In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-packagejson) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
+In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
 
 In Python, the imports are automatically parsed on saving of the script and a list of imports is generated.
 A dependency job is then spawned to associate that list of PyPi packages with a lockfile, which will lock
@@ -71,7 +71,7 @@ You can get those 3 files for each script by pulling your workspace with command
 
 Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
 
-Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [requirements.txt (if present)](#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [requirements.txt (if present)](#lockfile-per-script-inferred-from-a-requirementstxt) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
 When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -89,7 +89,7 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 
 ## Lockfile per Script inferred from a requirements.txt
 
-Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports). It is possible to override the dependencies by providing a `requirements.txt` file in the same directory as the script as you would do in a standard Python project, building and maintaining a requirements.txt to declare dependencies.
+Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports-standard). It is possible to override the dependencies by providing a `requirements.txt` file in the same directory as the script as you would do in a standard Python project, building and maintaining a requirements.txt to declare dependencies.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}

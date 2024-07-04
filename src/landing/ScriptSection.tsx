@@ -71,7 +71,7 @@ const cards = [
 		subtitle: 'Every deployed script has a unique and permanent hash.',
 		Icon: Lock,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/script_editor/versioning#script-hashes'
+		href: '/docs/core_concepts/versioning#script-hashes'
 	},
 	{
 		title: 'Instant preview and execution',
