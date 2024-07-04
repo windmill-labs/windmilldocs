@@ -1,5 +1,5 @@
 ---
-slug: user-resources-in-apps
+slug: secondary-storage
 version: v1.340.0
 title: Secondary Storage
 tags: ['Persistent Storage']
