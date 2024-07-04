@@ -118,7 +118,7 @@ For Python for example, you can compile the `.proto` with:
 protoc --python_out=./ ./helloworld.proto
 ```
 
-This will generate a Python file corresponding to your service definition in Python. You can then add this file to a Python package of your choice, and publish it to a private Pypi repository (like [pypiserver](https://pypi.org/project/pypiserver/)). You can then ([configure Windmill to use this repository](/docs/advanced/imports#private-pypi-repository)) and you will be able to pull the pre-compiled service definition from any [Python script](/docs/getting_started/scripts_quickstart/python) in Windmill.
+This will generate a Python file corresponding to your service definition in Python. You can then add this file to a Python package of your choice, and publish it to a private Pypi repository (like [pypiserver](https://pypi.org/project/pypiserver/)). You can then ([configure Windmill to use this repository](/docs/advanced/dependencies_in_python#private-pypi-repository)) and you will be able to pull the pre-compiled service definition from any [Python script](/docs/getting_started/scripts_quickstart/python) in Windmill.
 
 The same can be done for JavaScript. To compile the `.proto`, simply run:
 
@@ -126,4 +126,4 @@ The same can be done for JavaScript. To compile the `.proto`, simply run:
 grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=grpc_js:./ helloworld.proto
 ```
 
-And then upload the content as a NPM package to a private NPM registry (like [verdaccio](https://verdaccio.org/)) and ([configure Windmill to pull package from it](/docs/advanced/imports#private-npm-registry--private-npm-packages)).
+And then upload the content as a NPM package to a private NPM registry (like [verdaccio](https://verdaccio.org/)) and ([configure Windmill to pull package from it](/docs/advanced/dependencies_in_typescript#private-npm-registry--private-npm-packages)).
