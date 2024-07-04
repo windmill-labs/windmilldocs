@@ -92,7 +92,7 @@ function DragAndDropAnimation() {
 						repeatType: 'loop',
 						ease: 'easeInOut'
 					}}
-					style={{ position: 'absolute', zIndex: 1000 }}
+					style={{ position: 'absolute', zIndex: 999 }}
 				>
 					<div className="bg-white">
 						<Hand className="text-gray-900 dark:white" />
