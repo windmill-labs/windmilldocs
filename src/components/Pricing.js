@@ -68,7 +68,10 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Only for <a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">small businesses and nonprofits</a>
+							Only for{' '}
+							<a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">
+								small businesses and nonprofits
+							</a>
 						</span>
 					)
 				},
@@ -263,7 +266,7 @@ const pricing = {
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
 		}
-	],
+	]
 };
 
 const sections = [
@@ -451,8 +454,10 @@ const sections = [
 				name: 'Support level',
 				tiers: {
 					'tier-free-selfhost': 'Community support on Discord',
-					'tier-enterprise-selfhost': '24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
-					'tier-enterprise-cloud': '24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
+					'tier-enterprise-selfhost':
+						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
+					'tier-enterprise-cloud':
+						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
 					'tier-free': 'Community support on Discord',
 					'tier-team': 'Priority support on Discord'
 				},
@@ -793,7 +798,7 @@ const sections = [
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			},
 			{
-				name: 'Workspace dDefault App',
+				name: 'Workspace Default App',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -920,7 +925,7 @@ export default function Pricing() {
 									: tier.enterprise_edition
 									? 'ring-1 ring-teal-600'
 									: 'ring-1 ring-gray-200 dark:ring-gray-600',
-								'rounded-xl p-6 xl:p-8'
+								'rounded-xl p-6 xl:p-8 flex flex-col'
 							)}
 						>
 							<div className="flex items-center justify-between gap-x-4">
@@ -1008,35 +1013,37 @@ export default function Pricing() {
 							>
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							</ul>
-							{Object.keys(tier.price).length > 0 ? (
-								<PriceCalculator tier={tier} period={period} />
-							) : null}
-							{index === 1 && frequency.value === 'selfhost' && (
-								<a
-									href="https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f"
-									className={classNames(
-										tier.mostPopular ? 'additional-class-for-most-popular' : '',
-										'!text-blue-600 shadow-sm hover:text-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-lg font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-									)}
-									target="_blank"
-								>
-									Try it for a month
-								</a>
-							)}
-							{index === 2 && frequency.value === 'selfhost' && (
-								<a
-									href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
-									className={classNames(
-										tier.mostPopular ? 'additional-class-for-most-popular' : '',
-										'!text-teal-600 shadow-sm hover:text-teal-800 hover:bg-teal-100 dark:hover:bg-teal-900',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-lg font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-									)}
-									target="_blank"
-								>
-									Try it for a month
-								</a>
-							)}
+							<div class="flex flex-col justify-between flex-1">
+								{Object.keys(tier.price).length > 0 ? (
+									<PriceCalculator tier={tier} period={period} />
+								) : null}
+								{index === 1 && frequency.value === 'selfhost' && (
+									<a
+										href="https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f"
+										className={classNames(
+											tier.mostPopular ? 'additional-class-for-most-popular' : '',
+											'border-blue-600 border text-blue-600 shadow-sm hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950',
+											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+										)}
+										target="_blank"
+									>
+										Try it for a month
+									</a>
+								)}
+								{index === 2 && frequency.value === 'selfhost' && (
+									<a
+										href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
+										className={classNames(
+											tier.mostPopular ? 'additional-class-for-most-popular' : '',
+											'border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
+											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+										)}
+										target="_blank"
+									>
+										Try it for a month
+									</a>
+								)}
+							</div>
 						</div>
 					))}
 				</div>
@@ -1324,9 +1331,7 @@ export default function Pricing() {
 																				)}
 
 																				<span className="sr-only">
-																					{attribute.tiers[pricingItem.id] === true
-																						? 'Yes'
-																						: 'No'}
+																					{attribute.tiers[pricingItem.id] === true ? 'Yes' : 'No'}
 																				</span>
 																			</>
 																		)}
