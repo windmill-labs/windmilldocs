@@ -31,6 +31,7 @@ The following section details Resource Select component's specific settings. For
 | Items       |  [resource](../../core_concepts/3_resources_and_types/index.mdx)  |    true     |    false    |         | The Windmill resource.                                          |
 | Placeholder | [variable](../../core_concepts/2_variables_and_secrets/index.mdx) |    false    |    false    |         | The variable that will be displayed by default.                 |
 | Full Width  |                              boolean                              |    false    |    false    |  true   | Set the width of the options popup to 100% of the select width. |
+| Disabled    |                              boolean                              |    false    |    false    |  false  | The state of the resource select.                               |
 
 ## Outputs
 
@@ -46,7 +47,7 @@ If the resource passed here as a reference does not come from a static Resource 
 
 The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](../2_connecting_components/index.mdx) is an [eval](../3_app-runnable-panel.mdx#evals).
 
-![Static resource select only / Resources from users allowed](../../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
+![Static resource select only / Resources from users allowed](../../assets/apps/0_app_editor/resources_from_users.png 'Static resource select only / Resources from users allowed')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -56,3 +57,9 @@ The toggle "Static resource select only / Resources from users allowed" can be f
 		href="/docs/apps/app-runnable-panel"
 	/>
 </div>
+
+## Event handler
+
+The resource select component has the following event handler:
+
+- `onSelect`: Trigger one or more runnables when the user selects a resource.

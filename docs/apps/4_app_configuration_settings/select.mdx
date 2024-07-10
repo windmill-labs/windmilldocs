@@ -25,14 +25,22 @@ The following section details Select component's specific settings. For more det
 
 ## Select configuration
 
-| Name          |  Type   | Connectable | Templatable | Default | Description                     |
-| ------------- | :-----: | :---------: | :---------: | :-----: | ------------------------------- |
-| items         |  Array  |    true     |    false    |         | The select items.               |
-| create        | boolean |    false    |    false    |  false  | If users can create values.     |
-| default value | boolean |    true     |    false    |         | The default value of the input. |
+| Name            |  Type   | Connectable | Templatable | Default | Description                               |
+| --------------- | :-----: | :---------: | :---------: | :-----: | ----------------------------------------- |
+| items           |  Array  |    true     |    false    |         | The select items.                         |
+| create          | boolean |    false    |    false    |  false  | If users can create values.               |
+| default value   | boolean |    true     |    false    |         | The default value of the input.           |
+| Preselect first | boolean |    false    |    false    |  false  | If the first item should be preselected.  |
+| Full width      | boolean |    false    |    false    |  false  | If the select should take the full width. |
 
 ## Outputs
 
 | Name   |  Type  | Description        |
 | ------ | :----: | ------------------ |
 | result | string | The selected item. |
+
+## Event handler
+
+The select component has the following event handler:
+
+- `onSelect`: Trigger one or more runnables when the user selects an item.

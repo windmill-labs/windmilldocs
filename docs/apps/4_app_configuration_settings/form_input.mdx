@@ -72,10 +72,12 @@ Invalidate a specific field of a form
 
 ## Form configuration
 
-| Name         |  Type   | Connectable | Templatable | Default | Description                                                                  |
-| ------------ | :-----: | :---------: | :---------: | :-----: | ---------------------------------------------------------------------------- |
-| Display Type | boolean |    true     |    false    |  false  | This will display the type and/or the format on the field next to the label. |
-| Large Gap    | boolean |    true     |    false    |  false  | This will add a large gap between the field elements.                        |
+| Name           |  Type   | Connectable | Templatable | Default | Description                                                                                                                |
+| -------------- | :-----: | :---------: | :---------: | :-----: | -------------------------------------------------------------------------------------------------------------------------- |
+| Display Type   | boolean |    true     |    false    |  false  | This will display the type and/or the format on the field next to the label.                                               |
+| Large Gap      | boolean |    true     |    false    |  false  | This will add a large gap between the field elements.                                                                      |
+| Default values | object  |    true     |    false    |   {}    | This enables setting default form values dynamically using an object: keys are field names, and values are the defaults.   |
+| Default enums  | object  |    true     |    false    |   {}    | This enables setting form enum values dynamically using an object: keys are field names, and values are arrays of strings. |
 
 Each argument can be configured (name, description, type, default value, advanced parameters).
 

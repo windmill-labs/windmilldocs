@@ -46,16 +46,16 @@ Example of static input:
 
 ```json
 [
-  {
-	"id": 1,
-	"name": "John Doe",
-	"age": 25
-  },
-  {
-	"id": 2,
-	"name": "Jane Doe",
-	"age": 30
-  }
+	{
+		"id": 1,
+		"name": "John Doe",
+		"age": 25
+	},
+	{
+		"id": 2,
+		"name": "Jane Doe",
+		"age": 30
+	}
 ]
 ```
 
@@ -63,10 +63,10 @@ Example of compute input:
 
 ```js
 export async function main() {
-  const res = await fetch("https://api.sampleapis.com/recipes/recipes", {
-    headers: { "Content-Type": "application/json" },
-  });
-  return res.json();
+	const res = await fetch('https://api.sampleapis.com/recipes/recipes', {
+		headers: { 'Content-Type': 'application/json' }
+	});
+	return res.json();
 }
 ```
 
@@ -81,11 +81,12 @@ export async function main() {
 `AgGrid Table` can define actions that will be displayed in each row of the table. An action is a component that cannot be moved.
 
 Available components are:
+
 - [Button](./button.mdx)
 - [Toggle](./toggle.mdx)
 - [Select](./select.mdx)
 
-![AgGrid Actions](../../assets/apps/4_app_component_library/aggrid_actions.png "AgGrid Actions")
+![AgGrid Actions](../../assets/apps/4_app_component_library/aggrid_actions.png 'AgGrid Actions')
 
 ## AgGrid Table configuration
 
@@ -98,20 +99,27 @@ Available components are:
 | Row Multiselect With Click  | boolean |    false    |    false    |     true      | If multiple selectable, allow multiselect with click.                                                           |
 | Pagination                  | boolean |    false    |    false    |     false     | Whether you want pages on your table.                                                                           |
 | Select First Row By Default | boolean |    false    |    false    |     false     | Whether you want the first row to be selected by default.                                                       |
-| Extra Config                | object  |    true     |    false    |      `{}`     | Extra configuration for the AgGrid table.                                                                       |
-| Compactness                 | select  |    true     |    false    |     normal    | Change the row height (normal, compact, comfortable).                                                           |
+| Extra Config                | object  |    true     |    false    |     `{}`      | Extra configuration for the AgGrid table.                                                                       |
+| Compactness                 | select  |    true     |    false    |    normal     | Change the row height (normal, compact, comfortable).                                                           |
+| Wrap Actions                | boolean |    false    |    false    |     false     | Wrap the actions in the table.                                                                                  |
+| Footer                      | boolean |    false    |    false    |     false     | Show the footer of the table.                                                                                   |
+| Custom Actions Header       | string  |    true     |    false    |               | Custom header for the actions.                                                                                  |
 
 ## Outputs
 
-| Name             |  Type   | Description                                     |
-| ---------------- | :-----: | ----------------------------------------------- |
-| result           | object  | The AgGrid table data.                          |
-| loading          | boolean | The loading state of the AgGrid table component |
-| selectedRow      | object  | The selected row                                |
-| selectedRowIndex | number  | The selected row index                          |
-| selectedRows     |  array  | The selected rows                               |
-| page             | number  | The current page                                |
-| newChanges       | object  | The latest updated row                          |
+| Name             |  Type   | Description                                                            |
+| ---------------- | :-----: | ---------------------------------------------------------------------- |
+| result           | object  | The AgGrid table data.                                                 |
+| loading          | boolean | The loading state of the AgGrid table component                        |
+| selectedRow      | object  | The selected row                                                       |
+| selectedRowIndex | number  | The selected row index                                                 |
+| selectedRows     |  array  | The selected rows                                                      |
+| page             | number  | The current page                                                       |
+| newChanges       | object  | The latest updated row                                                 |
+| ready            | boolean | The AgGrid table component is ready                                    |
+| inputs           | object  | The outputs of each action organised by action id and array of outputs |
+| filters          | object  | The filters applied to the table                                       |
+| displayRowCount  | number  | The number of rows displayed on the table                              |
 
 ## AgGrid Infinite Table
 
@@ -126,6 +134,7 @@ The AgGrid Infinite Table component allows you to display an Ag Grid table with 
 <br />
 
 With this [SQL syntax](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx), you can create a query that fetches data from the database and lets the component manage:
+
 - `limit`: Specifies the number of rows to display on a single page or to fetch from the server in one go (here, infinite).
 - `isDesc`: Specifies the order of the rows (ascending or descending).
 - `offset`: Specifies the number of rows to skip before starting to return rows.
@@ -139,7 +148,7 @@ With this [SQL syntax](../../getting_started/0_scripts_quickstart/5_sql_quicksta
 SELECT * FROM products WHERE title ILIKE '%' || $3 || '%'LIMIT $1::INT OFFSET $2::INT;
 ```
 
-![AgGrid Infinite Table](../../assets/apps/4_app_component_library/aggrid_infinite.png "AgGrid Infinite Table")
+![AgGrid Infinite Table](../../assets/apps/4_app_component_library/aggrid_infinite.png 'AgGrid Infinite Table')
 
 ### AgGrid Infinite EE
 

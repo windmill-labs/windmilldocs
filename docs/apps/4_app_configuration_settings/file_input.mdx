@@ -34,9 +34,18 @@ The following section details File Input component's specific settings. For more
 | Accepted File Types |  array  |    false    |    false    |       "image/\*" ; "application/pdf"        | The types of files you accept to be submitted.                 |
 | Allow Multiple      | boolean |    false    |    false    |                    false                    | If allowed, the user will be able to select more than one file |
 | Text                | string  |    false    |    false    | Drag and drop files or click to select them | The text displayed on the file input.                          |
+| Include Mime Type   | boolean |    false    |    false    |                    false                    | If enabled, the mime type of the file will be included.        |
+| Submitted File Text | string  |    false    |    false    |                Selected file                | The text displayed when a file is submitted.                   |
+| Disabled            | boolean |    false    |    false    |                    false                    | The state of the file input.                                   |
 
 ## Outputs
 
 | Name   | Type  | Description                                                                                                                |
 | ------ | :---: | -------------------------------------------------------------------------------------------------------------------------- |
 | result | array | An array of objects with a `name` and `data` key. <br></br> `data` is the base64-encoded contents of the uploaded file(s). |
+
+## Event handler
+
+The file component has the following event handler:
+
+- `onFileChange`: Trigger one or more runnables when the user uploads a file.
