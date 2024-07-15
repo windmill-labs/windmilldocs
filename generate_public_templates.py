@@ -10,7 +10,7 @@ def build_template(script, obj, name):
 title: {obj["summary"]}
 ---
 
-[See on Github](https://github.com/windmill-labs/windmill/blob/main/starter/scripts/u/bot/{name}.py)
+[See on GitHub](https://github.com/windmill-labs/windmill/blob/main/starter/scripts/u/bot/{name}.py)
 
 ## Description
 

@@ -11,7 +11,8 @@ export default function GithubStarTable({ repos }) {
       return {
         name: data.full_name,
         stars: formatNumber(data.stargazers_count),
-        url: data.html_url
+        url: data.html_url,
+        sectionId: data.name.toLowerCase()
       };
     };
 
@@ -35,15 +36,15 @@ export default function GithubStarTable({ repos }) {
         <tr>
           <th>Repository</th>
           <th>Stars</th>
-          <th>GitHub Link</th>
+          <th>Section</th>
         </tr>
       </thead>
       <tbody>
         {repoData.map((repo, index) => (
           <tr key={index}>
-            <td>{repo.name}</td>
+            <td><a href={repo.url} target="_blank" rel="noopener noreferrer">{repo.name}</a></td>
             <td>{repo.stars}</td>
-            <td><a href={repo.url} target="_blank" rel="noopener noreferrer">Visit</a></td>
+            <td><a href={`#${repo.sectionId}`}>See</a></td>
           </tr>
         ))}
       </tbody>

@@ -18,7 +18,7 @@ This is a testimonial written by Wei Chih, Independent Journalist for a newsroom
 
 ## What before Windmill?
 
-We are a local newsroom in Singapore looking for leveraging technologies to empower our business. However, as a small team, we don’t have dedicated development resources, the best we can do is to find libraries on Github and assemble them into something that fits our need.
+We are a local newsroom in Singapore looking for leveraging technologies to empower our business. However, as a small team, we don’t have dedicated development resources, the best we can do is to find libraries on GitHub and assemble them into something that fits our need.
 
 As a result, those libraries are often **provided in different languages**. We need Python to run scrapers, and need JavaScript to connect to certain SDKs, so it’s hard for us to use platforms such as n8n.io.
 

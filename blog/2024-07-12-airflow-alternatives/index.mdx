@@ -10,10 +10,9 @@ title: 8 Alternatives to Airflow (Strengths and Use Cases)
 import UseCasesSvg from '../../static/use_cases.svg';
 import GithubStarTable from '../../src/components/CompareGithub.tsx';
 
-
 # 8 Alternatives to Airflow - Strengths and Use Cases
 
-[Apache Airflow](https://airflow.apache.org/) is a data orchestration tool. It is used to build, schedule, and monitor workflows. Open source since its inception as a project at Airbnb in 2014, Airflow has an active community and is a leading authority in the field of job orchestration.
+[Apache Airflow](https://airflow.apache.org/) is a data orchestration tool. It is used to build, schedule, and monitor workflows. Open source since its inception as a project at [Airbnb in 2014](https://airflow.apache.org/docs/apache-airflow/stable/project.html), Airflow has an active community and is a leading authority in the field of job orchestration.
 
 However, if you have reached this page, it's because Airflow has limitations and modern platforms are better equipped to handle Airflow's tasks, offering a simpler and more complete experience.
 
@@ -29,7 +28,7 @@ Before we begin, the first thing is to categorize the major aspects we will disc
 
 The rest of the criteria will come from our testing of each platform and user reviews.
 
-![Compara table](./compare_airflow.png "Compara table")
+![Comparative table](./compare_airflow.png "Comparative table")
 
 Repos and stars:
 
@@ -37,15 +36,15 @@ Repos and stars:
 
 ## Airflow
 
-Apache Airflow is a versatile data orchestration tool that excels in automating, scheduling, and monitoring complex workflows. Designed to structure tasks as [directed acyclic graphs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAGs), it enables workflow management, ensuring dependencies are respected and tasks are executed in sequence. The tool is designed to manage data pipelines. According to a [survey conducted by Airflow](https://airflow.apache.org/blog/airflow-survey-2022/), 54% of its users are Data Engineers and 12% are Developers.
+Apache Airflow is a data orchestration tool that excels in automating, scheduling, and monitoring complex workflows. Designed to structure tasks as [directed acyclic graphs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAGs), it enables workflow management, ensuring dependencies are respected and tasks are executed in sequence. The tool is designed to manage data pipelines. According to a [survey conducted by Airflow](https://airflow.apache.org/blog/airflow-survey-2022/), 54% of its users are Data Engineers and 12% are Developers.
 
-Airflow is widely used ([forked 13.8k times](https://github.com/apache/airflow) at the time of writing) across various industries thanks to its robust API and developed ecosystem (documentation, tutorials). This is where Airflow's strength lies: the status quo. You will more easily find engineers with specific experience in the software, or users who have encountered the same problem as you.
+Airflow is widely used ([forked 13.8k times](https://github.com/apache/airflow) at the time of writing) across various industries thanks to its broad ecosystem (documentation, tutorials). This is where Airflow's strength lies: the status quo. You will more easily find engineers with specific experience in the software, or users who have encountered the same problem as you.
 
 However, Airflow is a complex tool, particularly in a production environment, it will require a minimum knowledge of devops and engineering systems. Its Python-first approach limits its versatility, and its user experience might make you feel like you are using a tool made in 2005, complicating the management of your workflow versions, permissions, or security.
 
 In terms of performance, Airflow is by far the slowest tool we have [benchmarked](/docs/misc/benchmarks/competitors), taking 56 seconds to complete 40 lightweight tasks.
 
-At last, it's a community-driven project, so you'll have the advantages and disadvantages: the same support as everyone else, no prioritisation of your issues.
+At last, it's a community-driven project, so you'll have the advantages and disadvantages: the same community support as everyone else, no prioritisation of your issues.
 
 Airflow is a great tool, but with the advent of more modern solutions (see below), the main reason to use Airflow is due to legacy issues and sunk costs.
 
@@ -56,9 +55,9 @@ Airflow is a great tool, but with the advent of more modern solutions (see below
 
 ### Luigi
 
-[Luigi](https://github.com/spotify/luigi) is very similar to Airflow. It is project developed by Spotify and open sourced in [2012](https://github.com/spotify/luigi?tab=readme-ov-file#authors). It is a Python module that helps build complex pipelines of batch jobs. It handles dependency resolution, workflow management, and visualization. Luigi uses DAGs and allows for the visualization of your data pipelines.
+[Luigi](https://github.com/spotify/luigi) is very similar to Airflow. It is a project developed by Spotify and open sourced in [2012](https://github.com/spotify/luigi?tab=readme-ov-file#authors). It is a Python module that helps build complex pipelines of batch jobs. It handles dependency resolution, workflow management, and visualization. Luigi uses DAGs and allows for the visualization of your data workflows.
 
-Luigi enables you to create workflows, define tasks, and manage their dependencies, then execute the tasks via a central scheduler before monitoring everything through a web-based interface.
+Luigi enables you to create workflows, define tasks, and manage their dependencies, then execute the tasks via a central scheduler before monitoring your ETLs through a web-based interface.
 
 There's no need to go too far; for similar strengths, Luigi has more weaknesses Airflow: a less active community, a narrower ecosystem, a more cumbersome UX, and performance issues.
 
@@ -71,7 +70,7 @@ There's no need to go too far; for similar strengths, Luigi has more weaknesses 
 
 The main advantage of Prefect over Airflow is the intuitiveness of the platform: Prefect is devilishly simple and onboarding is easily accomplished. Besides that, you can expect the [same features](https://www.prefect.io/prefect-vs-airflow) as Airflow (cron-based scheduling, retries, etc.)
 
-Prefect also goes further than Airflow in monitoring your tasks, but it's important to note that Prefect's [monitoring](/docs/compared_to/prefect#observability-and-monitoring) is done through a cloud platform that requires subscription. Many of the features necessary for its proper functioning are only available under [Prefect Cloud](https://docs.prefect.io/latest/cloud/):
+Prefect also goes further than Airflow in monitoring your tasks, but it's important to note that Prefect's [monitoring](/docs/compared_to/prefect#observability-and-monitoring) is done through a [cloud platform](https://docs.prefect.io/latest/cloud/) that requires subscription. Many of the features necessary for its proper functioning are only available under Prefect Cloud:
 
 ![Prefect cloud features](../../docs/assets/compared_to/prefect_cloud_features.png 'Prefect cloud features')
 
@@ -82,28 +81,27 @@ To learn more about Prefect, you can check out our [comparison between Prefect a
 ![Prefect picture](https://docs.prefect.io/2.10.12/img/ui/flow-run-page.png)
 [Source](https://docs.prefect.io/2.10.12/img/ui/flow-run-page.png)
 
-
 ### Dagster
 
 [Dagster](https://github.com/dagster-io/dagster) is an open-source data orchestrator designed for building, running, and observing data pipelines. Unlike Airflow, which primarily focuses on scheduling and executing predefined workflows, Dagster introduces a stronger emphasis on development workflows, testing, and maintenance of data pipelines. This is achieved through a [type system](https://docs.dagster.io/concepts/types) that validates data as it moves between tasks, improving reliability and error handling.
 
-Dagster distinguishes itself from Airflow by embracing a declarative, asset-based approach to orchestration, focusing on the outputs like tables and models, rather than just tasks
+Dagster distinguishes itself from Airflow by embracing a declarative, [asset-based](https://docs.dagster.io/concepts/assets/software-defined-assets) approach to orchestration, focusing on the outputs like tables and models, rather than just tasks
 
-For developers, Dagster offers a smooth experience, facilitating easy transitions between different environments and managing data assets more effectively. Additionally, Dagster is optimized for cloud and container environments, enabling more efficient dependency isolation and infrastructure management compared to Airflow's often cumbersome setup. At last, Dagster uses a stable gRPC interface for operational stability, allowing configurations through containers that encapsulate jobs and assets, enhancing scalability and maintainability. In contrast, Airflow directly evaluates Python files, which can lead to scalability and stability issues as workflow complexity increases.
+For developers, Dagster offers a smooth experience, facilitating easy transitions between different environments and managing data assets more effectively. Additionally, Dagster is optimized for cloud and container environments, enabling more efficient dependency isolation and infrastructure management compared to Airflow's often cumbersome setup.
 
-If we were to compare Dagster with Prefect, perhaps Dagster is a bit more focused on Data Engineers, while Prefect is also suitable for developers. Lastly, we have [read](https://www.reddit.com/r/dataengineering/comments/1cxyvqk/airflow_vs_dagster_vs_prefect_vs/) several times that the community finds Prefect's documentation to be lagging behind that of Dagster. If you want to compare Dagster to Prefect, you can check out this article from [Dagster](https://dagster.io/vs/dagster-vs-prefect), or this one from [Prefect](https://www.prefect.io/prefect-vs-dagster).
+If we were to compare Dagster with [Prefect](#prefect), perhaps Dagster is a bit more focused on Data Engineers, while Prefect is also suitable for developers. Lastly, we have [read](https://www.reddit.com/r/dataengineering/comments/1cxyvqk/airflow_vs_dagster_vs_prefect_vs/) several times that the community finds Prefect's documentation to be lagging behind that of Dagster. If you want to compare Dagster to Prefect, you can check out this article from [Dagster](https://dagster.io/vs/dagster-vs-prefect), or this one from [Prefect](https://www.prefect.io/prefect-vs-dagster).
 
 ![Dagster picture](https://docs.dagster.io/_next/image?url=%2Fimages%2Fconcepts%2Fwebserver%2Fglobal-asset-lineage.png&w=3840&q=75)
 [Source](https://docs.dagster.io/_next/image?url=%2Fimages%2Fconcepts%2Fwebserver%2Fglobal-asset-lineage.png&w=3840&q=75)
 
 ### Temporal
 
-With [Temporal](https://github.com/temporalio/temporal), you move into the realm of developers, moving away from the domain strictly reserved for data engineers. Temporal is a runtime that aims to ensure the durable execution of your application code, notably through fault tolerance (Temporal promises to "reduce failure by 10-100x").
+With [Temporal](https://github.com/temporalio/temporal), you move into the realm of developers, moving away from the domain strictly reserved for data engineering. Temporal is a runtime that aims to ensure the durable execution of your application code, notably through fault tolerance (Temporal promises to "reduce failure by 10-100x").
 
 Compared to Airflow and the tools mentioned above, Temporal's major differentiation is that it targets developers. This is primarily reflected in:
 - Polyglot: you are no longer limited to Python (supports Go, Java, Python, TypeScript, php, .NET).
-- More versatility in use cases, but this means you may sometimes need to code the specifics of your tools (data connectors, notifications, etc.) that you would have had with Dagster or Prefect.
-- The simplicity of using a single tool, and avoiding the multiplication of specialized tools with their own onboarding, etc.
+- More versatility in use cases. Can be used for data pipelines or daily operations, even though it means you may sometimes need to code the specifics of your tools (data connectors, notifications, etc.) that you would have had with [Dagster](#dagster) or [Prefect](#prefect).
+- The simplicity of using a single tool, and avoiding the multiplication of specialized tools with their own set-up and onboarding.
 
 Managing deployments is significantly [easier](https://community.temporal.io/t/what-are-the-pros-and-cons-of-temporal-with-respect-to-prefect/5671/3) for Temporal Workflows compared to Airflow DAGs. In Temporal, Workflows and Activities are packaged within the Worker, there can be multiple of those. This allows for greater flexibility and isolation between projects. In contrast, Airflow supports only one type of worker. Consequently, if multiple projects use the same Airflow deployment, they cannot have conflicting dependencies, as this would lead to issues.
 
@@ -131,16 +129,16 @@ Asked if it's an orchestrator, Kedro replies:
 
 ### Windmill
 
-Windmill is an [open-source](https://github.com/windmill-labs/windmill) workflow engine and developer platform designed to build internal tools, including endpoints, workflows, and UIs. It supports coding in multiple languages such as TypeScript, Python, Go, Bash, SQL, or any Docker image, alongside low-code builders.
+Windmill is an [open-source](https://github.com/windmill-labs/windmill) workflow engine and developer platform designed to build internal tools, including endpoints, workflows, and UIs. It supports coding in [multiple languages](/docs/getting_started/scripts_quickstart) such as TypeScript, Python, Go, Bash, SQL, or any Docker image, alongside low-code builders.
 
 Windmill was designed by developers for developers, ranging from semi-technical (low code builders) to senior/staff software engineers with high standards for production-grade yet flexible and customizable with code. Windmill was built to address the challenge of turning high-value code containing business logic, data transformation, and internal API calls into scalable microservices and tools without the usual heavy lifting.
 
-On the other hand, the support of [Python](/docs/getting_started/scripts_quickstart/python) as a primary language and the integration of your workspace with [object storage](/docs/core_concepts/persistent_storage/large_data_files) (in particular, S3) make Windmill an excellent fit for data engineers, particularly for building [data pipelines](/docs/core_concepts/data_pipelines).
+On the other hand, the support of [Python](/docs/getting_started/scripts_quickstart/python) as a primary language and the integration of a workspace with [object storage](/docs/core_concepts/persistent_storage/large_data_files) (in particular, S3) make Windmill an excellent fit for data engineers, particularly for building [data pipelines](/docs/core_concepts/data_pipelines).
 
-Windmill has three editors, all compatible, each independently functioning:
+Windmill has three editors (or products), all compatible, each independently functioning:
 1. The [Script Editor](/docs/script_editor) is an integrated development environment that allows you to write code in various languages like TypeScript, Python, Go, Bash, SQL, or even run any Docker container through Windmill's Bash support.
 2. The [Flow Editor](/docs/flows/flow_editor) is a low-code builder that enables you to create workflows represented as directed acyclic graphs (DAGs), orchestrating the execution of steps across different workers while respecting dependency constraints.
-3. The [App Editor](/docs/apps/app_editor) is a tool for creating customized, user-friendly interfaces using a drag-and-drop editor, allowing you to build data-centric dashboards.
+3. The [App Editor](/docs/apps/app_editor) is a tool for creating customized, user interfaces using a drag-and-drop editor, allowing you to build data-centric dashboards.
 
 These editors can be mixed together in Windmill, as scripts created in the Script Editor can be used as steps in flows built with the Flow Editor, and both scripts and flows can be integrated into apps created with the App Editor, providing a comprehensive platform for building internal tools, endpoints, and workflows.
 
@@ -148,19 +146,21 @@ These editors can be mixed together in Windmill, as scripts created in the Scrip
     <UseCasesSvg className="scaled-svg" style={{ width: '90%', height: '90%' }} />
 </div>
 
+> Click on each item to learn more.
+
 <br/>
 
 Compared to Airflow and the solutions mentioned here, Windmill stands out in the following ways:
-- **Comprehensiveness**: Windmill supports multiple languages and serves as an all-in-one platform for iteration, triggers (schedules, webhooks etc.), and deployments.
-- **Developer Experience**: Windmill offers features like writing scripts locally, testing them step by step, or running full flows in the web UI.
-- **Enterprise-ready**: It includes secret management, permission sharing, transitions between multiple environments, and horizontal scalability.
-- **Performance**: Windmill is the fastest workflow engine for both short and rapid tasks. See this benchmark for the methodology.
+- **Comprehensiveness**: Windmill supports multiple languages and serves as an all-in-one platform for [iteration](/docs/core_concepts/instant_preview), [triggers](/docs/getting_started/trigger_scripts) (job scheduling, webhooks etc.), and [deployments](/docs/advanced/deploy_to_prod).
+- **Developer Experience**: Windmill offers features like [local development](/docs/advanced/local_development), testing flows step by step, or running full flows in the web UI.
+- **Enterprise-ready**: It includes [secret management](/docs/core_concepts/variables_and_secrets), [permission](/docs/core_concepts/roles_and_permissions) sharing, transitions between [multiple environments](/docs/advanced/deploy_gh_gl), and [horizontal scalability](/docs/core_concepts/worker_groups).
+- **Performance**: Windmill is the fastest workflow engine for both short and rapid tasks. See this [benchmark](/docs/misc/benchmarks/competitors) for the methodology.
 
 ![Windmill product](./product.png "Windmill product")
 
 ### Mage AI
 
-[Mage](https://github.com/mage-ai/mage-ai) is a newcomer that recently emerged in [2020](https://m.mage.ai/mage-vs-airbyte-93fba4dc09cb), founded by former engineers from Airbnb. Mage shares the same promise as Prefect or Dagster: to be a modern solution aiming to replace Airflow (they mention Airflow 5 times on their landing page alone).
+[Mage](https://github.com/mage-ai/mage-ai) is a newcomer that recently emerged in [2020](https://m.mage.ai/mage-vs-airbyte-93fba4dc09cb), founded by former engineers from Airbnb (what a coincidence). Mage shares the same promise as [Prefect](#prefect) or [Dagster](#dagster): to be a modern solution aiming to replace Airflow (they mention Airflow 5 times on their landing page alone).
 
 Mage focuses on simplicity with a pretty and intuitive UI, and on speed with real-time processing.
 
@@ -171,10 +171,10 @@ Mage will be a suitable tool for data scientists and data engineers who prioriti
 
 ### Kestra
 
-At last, you can take a look at [Kestra](https://github.com/kestra-io/kestra), the youngest of these alternatives to Airflow. Created in 2021 (by Emmanuel Darras, the founder of Ankama), Kestra is an event-driven orchestration platform to manage business-critical workflows declaratively in code.
-Kestra has a declarative YAML syntax and all operations are driven through its API.
+At last, you can take a look at [Kestra](https://github.com/kestra-io/kestra), the youngest of these alternatives to Airflow. Founded in 2021, Kestra is an event-driven orchestration platform to manage business-critical workflows declaratively in code.
+Kestra has a declarative [YAML syntax](https://kestra.io/features/declarative-data-orchestration) and all operations are driven through its API.
 
-For more details on the comparison with Airflow, check out this [article](https://kestra.io/vs/airflow) written by Kestra.
+For more details on the comparison with Airflow, check out this [article](https://kestra.io/vs/airflow) published by Kestra.
 
 ![Kestra product](https://imgopt.infoq.com/fit-in/3000x4000/filters:quality(85)/filters:no_upscale()/news/2022/03/kestra-orchestration-platform/en/resources/1kestra1-1648653030094.jpg)
 [Source](https://imgopt.infoq.com/fit-in/3000x4000/filters:quality(85)/filters:no_upscale()/news/2022/03/kestra-orchestration-platform/en/resources/1kestra1-1648653030094.jpg)
@@ -183,10 +183,10 @@ For more details on the comparison with Airflow, check out this [article](https:
 
 Let's not beat around the bush: there are more modern and more efficient tools than Airflow. The only reasons to stick with Airflow are legacy, or a form of purism (its more efficient alternatives are maintained by private companies, although they are all open source).
 
-To find the right tool, it's important to identify your needs: what skills are available internally (incl. mastered languages), [performance at scale](/docs/misc/benchmarks/competitors), whether you want to do just data pipelines or also build a stack of internal tools around, whether you are ready to support onboarding on a complex product, and whether you might need support (and a company accountable to you).
+To find the right tool, it's important to identify your needs: what skills are available internally (incl. mastered languages), [performance at scale](/docs/misc/benchmarks/competitors), whether you want to do just data processing or also build a stack of internal tools around, whether you are ready to handle onboarding on a complex product, and whether you might need support (and a provider accountable to you if you are stuck).
 
-The advantage is that all these alternatives are open source and easily self-hostable, to get your own idea for free, and without receiving emails from overly wilful salespeople.
+The good thing is that all these alternatives are open source and easily self-hostable, so you can make up your own mind for free, and without receiving emails from overly wilful salespeople.
 
-Finally, your internal infrastructure constraints will be an important criterion, for example, Prefect, Dagster, and Kestra might be used for the same purposes, but they have different infrastructures. I suggest you take a look at the documentation for each software to find out more.
+At last, your internal infrastructure constraints will be an important criterion, for example, Prefect, Dagster, and Kestra might be used for the same purposes, but they have different infrastructures. I suggest you take a look at the documentation for each software to find out more.
 
-Please note that one of these alternatives (Windmill) has presented this article to you. Please contact us if you find any inaccuracies or would like to contribute. Feel free to make a PR on [windmilldocs](https://github.com/windmill-labs/windmilldocs) (open source to the end).
+Please note that one of the solutions shown (Windmill) presented you with this article, with all that that implies in terms of subjectivity. Please [contact us](/docs/misc/getting_help) if you find any inaccuracies or would like to contribute. Feel free to make a PR on [windmilldocs](https://github.com/windmill-labs/windmilldocs) (open source to the end).

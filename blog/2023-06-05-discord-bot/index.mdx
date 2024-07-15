@@ -154,21 +154,21 @@ From Windmill, pick `+ Flow`, and either import YAML or JSON from the [Hub](http
 
 ### Scraping the Windmill documentation
 
-We could have written the script that fetches from Github, but since it's generic task, there is already a community-contributed script that does exactly that on the [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/).
+We could have written the script that fetches from GitHub, but since it's generic task, there is already a community-contributed script that does exactly that on the [Windmill Hub](https://hub.windmill.dev/scripts/github/1568/).
 
-Direclty from Windmill, we picked the script that fetches the content of a repository from Github and forked it.
+Direclty from Windmill, we picked the script that fetches the content of a repository from GitHub and forked it.
 
 We modified it to only extract content from markdown files. As we are using [Docusaurus](https://docusaurus.io/docs), we also need to transform the path of the file to get the correct URL.
 
 <details>
-  <summary>Code: Extract content from Github (TypeScript)</summary>
+  <summary>Code: Extract content from GitHub (TypeScript)</summary>
 
 ```ts
 import { Octokit } from 'https://cdn.skypack.dev/@octokit/rest';
 
 type FileContent = { content: string; link: string };
 
-type Github = {
+type GitHub = {
 	token: string;
 };
 
@@ -268,7 +268,7 @@ Notice that the script takes a special parameter `gh_auth` which is a Windmill r
 
 ### Create the embeddings
 
-Using the [OpenAI API](https://platform.openai.com/docs/api-reference), we can create embeddings for each of the documents. Simirarly to the Github script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/).
+Using the [OpenAI API](https://platform.openai.com/docs/api-reference), we can create embeddings for each of the documents. Simirarly to the GitHub script, there is an other script on the Windmill Hub for it: [Create embedding](https://hub.windmill.dev/scripts/openai/1454/).
 
 This script requires setting up an [OpenAI integration](/docs/integrations/openai).
 

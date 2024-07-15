@@ -439,7 +439,7 @@ For 40 lightweights tasks run sequentially:
 
 ## Temporal setup
 
-We set up Temporal version 2.19.0 using the [docker-compose.yml from the official Github repository](https://github.com/temporalio/docker-compose).
+We set up Temporal version 2.19.0 using the [docker-compose.yml from the official GitHub repository](https://github.com/temporalio/docker-compose).
 
 The flow was defined using the following Python file. We executed it on the EC2 instance, using Python 3.10.12.
 
@@ -595,7 +595,7 @@ For 40 lightweights tasks run sequentially:
 
 ## Windmill setup
 
-We set up Windmill version 1.204.1 using the [docker-compose.yml from the official Github repository](https://github.com/windmill-labs/windmill). We made some adjustments to it to have a similar setup compared to the other orchestrator. We set the number of workers to only one and removed the native workers since they would have been useless.
+We set up Windmill version 1.204.1 using the [docker-compose.yml from the official GitHub repository](https://github.com/windmill-labs/windmill). We made some adjustments to it to have a similar setup compared to the other orchestrator. We set the number of workers to only one and removed the native workers since they would have been useless.
 
 We executed the Windmill benchmarks in both "normal" and "[dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx)" mode. To implement the 2 flows in Windmill, we first created a script simply computing the Fibonacci numbers:
 
