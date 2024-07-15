@@ -11,7 +11,7 @@ The strength of Windmill's app editor is the ability to connect everything toget
 
 On the bottom of the app editor, you can find the runnable editor. The runnable editor is a [code editor](../code_editor/index.mdx) that allows to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
-![App Runnables panel](../assets/apps/0_app_editor/app-sections.png "App Runnables panel")
+![App Runnables panel](../assets/apps/0_app_editor/app-sections.png 'App Runnables panel')
 
 The panel is structured as follows:
 
@@ -54,7 +54,7 @@ There are 5 types of runnables:
 
 They provide interactivity to your app.
 
-![Types of runnables](../assets/apps/0_app_editor/app_scripts.png "Types of runnables")
+![Types of runnables](../assets/apps/0_app_editor/app_scripts.png 'Types of runnables')
 
 ### Inline scripts
 
@@ -129,7 +129,7 @@ Evals are by default evaluated on changes to the outputs that have been identifi
 
 This option is available only when "[Recompute on any input changes](#recompute-on-any-input-change)" is enabled.
 
-![Re-evaluated on changes to](../assets/apps/0_app_editor/re_evaluated_on_change.png "Re-evaluated on changes to")
+![Re-evaluated on changes to](../assets/apps/0_app_editor/re_evaluated_on_change.png 'Re-evaluated on changes to')
 
 > This [background script](#background-runnables)'s input `message` will be re-evaluated on any change to the value of component `b` (a [Text Input](./4_app_configuration_settings/text_input.mdx)).
 
@@ -137,7 +137,7 @@ This option is available only when "[Recompute on any input changes](#recompute-
 
 Clicking on the dedicated link, evals can be "transformed to a [frontend script](#frontend-scripts)".
 
-![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp "App Runnables panel")
+![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp 'App Runnables panel')
 
 ## Creating a Runnable
 
@@ -149,7 +149,7 @@ There are several ways to create runnables:
 
 When you create an inline script attached to a component or a background script, the first thing you need to do is to choose the language of the script.
 
-![Types of runnables](../assets/apps/0_app_editor/app_scripts.png "Types of runnables")
+![Types of runnables](../assets/apps/0_app_editor/app_scripts.png 'Types of runnables')
 
 The outputs of your script [can be used](./2_connecting_components/index.mdx) by other scripts or components:
 
@@ -188,7 +188,7 @@ The runnable configuration consists of:
 - Inputs: the runnable inputs are [inferred from the inputs](../core_concepts/13_json_schema_and_parsing/index.mdx) of the flow or script parameters this component is attached to.
 - [Trigger runnables on success](#trigger-runnables-on-success): trigger other components to recompute.
 
-![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png.webp "App Runnables panel")
+![App Runnables panel](../assets/apps/0_app_editor/runnable_configuration.png.webp 'App Runnables panel')
 
 ### Transformer
 
@@ -220,7 +220,7 @@ Here is an example of a transformer used with a [background script](#background-
 	alt="Transformer background script"
 />
 
-<br/>
+<br />
 
 ### Configure Triggers
 
@@ -233,7 +233,7 @@ Two types of runnables can be configured to run on app start and app refresh:
 
 You may want to disable this so that the background runnable is only triggered by [changes to other values](#recompute-on-any-input-change) or triggered by [another computation](#trigger-runnables-on-success) on a button.
 
-![Run on Start and App Refresh](../assets/apps/0_app_editor/app_refresh.png "Run on Start and App Refresh")
+![Run on Start and App Refresh](../assets/apps/0_app_editor/app_refresh.png 'Run on Start and App Refresh')
 
 #### Recompute on Any Input Change
 
@@ -248,13 +248,13 @@ Inputs of runnables that are either connected to an output or [evaluated](#evals
 
 When "Recompute on Any Input Change" is enabled, it can be disabled at the input level, toggling off "[Re-evaluated on changes to](#re-evaluated-on-changes-to)".
 
-![Recompute on Any Input Change](../assets/apps/0_app_editor/any_input_change.png "Recompute on Any Input Change")
+![Recompute on Any Input Change](../assets/apps/0_app_editor/any_input_change.png 'Recompute on Any Input Change')
 
 #### Trigger runnables on success
 
 [Button](./4_app_configuration_settings/button.mdx) & [Form](./4_app_configuration_settings/submit_form.mdx) components and [background scripts](#background-runnables) can trigger other components to recompute. For example, a button can trigger a [table](./4_app_configuration_settings/table.mdx) to recompute. When the button is clicked, the table is reloaded.
 
-![Trigger runnables on success](../assets/apps/0_app_editor/trigger_on_success.png "Trigger runnables on success")
+![Trigger runnables on success](../assets/apps/0_app_editor/trigger_on_success.png 'Trigger runnables on success')
 
 ### Static resource select only / Resources from users allowed
 
@@ -264,7 +264,7 @@ If the resource passed here as a reference does not come from a static [Resource
 
 The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](./2_connecting_components/index.mdx) is an [eval](#evals).
 
-![Static resource select only / Resources from users allowed](../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
+![Static resource select only / Resources from users allowed](../assets/apps/0_app_editor/resources_from_users.png 'Static resource select only / Resources from users allowed')
 
 ### Manual Dependencies
 
@@ -272,7 +272,7 @@ The toggle "Static resource select only / Resources from users allowed" can be f
 
 Manual dependencies are added clicking on `Add dependency` button and can be removed by clicking on the `x` button.
 
-![Manual Dependencies](../assets/apps/0_app_editor/manual_dependencies.png "Manual Dependencies")
+![Manual Dependencies](../assets/apps/0_app_editor/manual_dependencies.png 'Manual Dependencies')
 
 ## Cache App Inline Scripts
 
@@ -547,6 +547,23 @@ Parameters:
 
 `message` string
 `error` boolean
+
+### waitJob
+
+Wait for a job to finish.
+
+```js
+waitJob(jobId: string).then(() => {
+	// do something
+})
+
+```
+
+Parameters:
+
+`jobId` string
+
+Note that the helper returns a promise.
 
 ## Policy
 
