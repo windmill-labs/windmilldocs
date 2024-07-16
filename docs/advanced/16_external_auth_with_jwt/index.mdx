@@ -14,7 +14,7 @@ The payload has to contain the following fields:
 - `is_operator`: a boolean indicating if the user is an operator (run-only)
 - `workspace_id`: the workspace id
 - `groups`: an array of strings containing the groups the user belongs to, it should usually always contain `all` (group of all users)
-- `folders`: an array of arrays containing the folder name, a boolean indicating if the user can read the folder and a boolean indicating if the user can write to the folder.
+- `folders`: an array of arrays containing 3 values: the name of the folder, a boolean indicating whether the user can write to the folder and a boolean indicating whether the user is the owner of the folder (can manage folder permissions)
 
 While you don't need to create the user on Windmill, you should create the workspaces, folders, and groups with the [appropriate permissions in the Windmill UI](https://www.windmill.dev/docs/core_concepts/roles_and_permissions).
 
