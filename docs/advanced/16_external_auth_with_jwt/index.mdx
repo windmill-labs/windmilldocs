@@ -14,7 +14,7 @@ The payload has to contain the following fields:
 - `is_operator`: a boolean indicating if the user is an operator (run-only)
 - `workspace_id`: the workspace id
 - `folders`: an array of arrays containing 3 values: the name of the folder, a boolean indicating whether the user can write to the folder and a boolean indicating whether the user is the owner of the folder (can manage folder permissions)
-- `groups`: an array of strings containing the groups to which the user belongs. When using JWT external authentication, **group permissions are not checked** and can be left empty most of the time because the user's permissions depend directly on the folders you have specified. The only place where groups could still be useful is in apps, where the user's groups are passed on as context. 
+- `groups`: an array of strings containing the groups to which the user belongs. When using JWT external authentication, **group permissions on folders are not checked** because the user's permissions depend directly on the folder permissions specified in the JWT.
 
 While you don't need to create the user on Windmill, you should create the workspaces, folders, and groups with the [appropriate permissions in the Windmill UI](https://www.windmill.dev/docs/core_concepts/roles_and_permissions).
 
