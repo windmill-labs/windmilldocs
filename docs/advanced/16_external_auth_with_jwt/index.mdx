@@ -3,11 +3,13 @@
 Instead of using the built-in authentication and authorization mechanisms, you can generate your own JWT tokens with the desired permissions for your already authenticated users and pass them to Windmill.
 This way, you control what permissions your users have without having to create them in Windmill.
 
-We use the RS256 algorithm for the JWT tokens, so you will need to generate a public and private key pair.
-You public key in PEM format has to be passed to Windmill in the `JWT_EXT_PUBLIC_KEY` environment variable to all servers and workers.
-Then for each user, you will generate a JWT token and pass it to Windmill. You will have to prefix the token with `jwt_ext_` to let Windmill know that this is an external token.
+For JWT verification, the first option is to pass as an environment variable called `JWT_EXT_PUBLIC_KEY` the public key in PEM format (RS256).
+The second option is to pass as `JWT_EXT_JWKS_URL` the url of the JWKs endpoint to retrieve the public keys from which the JWTs will be matched on the `kid` field.
+In the latter case, the instance will refresh its cache of public keys every 15 minutes.
+The environment variable in both cases has to be passed to all servers and workers.
 
-The payload has to contain the following fields:
+The JWT token should be prefixed with `jwt_ext_` to let Windmill know that this is an external token and passed in the `Authorization` header as a bearer token.
+The JWT payload has to contain the following fields:
 - `username`: the username of the user (for logs)
 - `email`: the email of the user (for logs)
 - `is_admin`: a boolean indicating if the user is an admin
@@ -16,7 +18,7 @@ The payload has to contain the following fields:
 - `folders`: an array of arrays containing 3 values: the name of the folder, a boolean indicating whether the user can write to the folder and a boolean indicating whether the user is the owner of the folder (can manage folder permissions)
 - `groups`: an array of strings containing the groups to which the user belongs. When using JWT external authentication, **group permissions on folders are not checked** because the user's permissions depend directly on the folder permissions specified in the JWT.
 
-While you don't need to create the user on Windmill, you should create the workspaces, folders, and groups with the [appropriate permissions in the Windmill UI](https://www.windmill.dev/docs/core_concepts/roles_and_permissions).
+While you don't need to create the user on Windmill, you should create the workspaces and folders.
 
 Here's an example TypeScript code that generates the JWT token with the required payload and token prefix:
 
@@ -26,6 +28,7 @@ import { createSigner } from 'fast-jwt'
 const YOUR_PRIVATE_KEY = `-----BEGIN RSA PRIVATE KEY-----...-----END RSA PRIVATE KEY-----`
 
 async function generateJWT(
+  kid: string,
   username: string,
   email: string,
   is_admin= false,
@@ -35,6 +38,7 @@ async function generateJWT(
   groups: string[] = [],
 ) {
   const signer = createSigner({
+    kid,
     algorithm: 'RS256',
     key: YOUR_PRIVATE_KEY,
     expiresIn: '1h'
