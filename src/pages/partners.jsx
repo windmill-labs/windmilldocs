@@ -88,7 +88,7 @@ export default function About() {
             <div className="space-y-12 text-center pt-32 pb-16">
               <div className="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
                 <h1 className="!text-4xl font-bold tracking-tight sm:!text-5xl mb-8 text-blue-600">Windmill Certified Partners</h1>
-                <p className="text-lg">Windmill Certified Partners are third-parties such as consultancies that are Windmill experts and help other organizations implement specific use cases end-to-end.</p>
+                <p className="text-lg">Windmill Certified Partners are third-parties such as consultancies that are Windmill experts and help other organizations implement specific use cases end-to-end. All details on <a href="/docs/misc/partners" target="_blank">docs</a>.</p>
               </div>
             </div>
           </>
@@ -99,7 +99,7 @@ export default function About() {
             <p>Any organization is welcome to apply to Windmill's partnership program.</p>
             <p>Anyone can provide services to organizations that are using Windmill, but certified partners benefit from greater visibility and trust from customers.</p>
             <p>Windmill being a broad product, we will define certifications for skills that partners can apply to. For each of those skills they apply to, partners will be tested.</p>
-            <p>More details on <a href="/docs/misc/partners" target="_blank">docs</a>.</p>
+            <p>More details on <a href="/docs/misc/partners#how-to-become-a-certified-partner" target="_blank">docs</a>.</p>
           </div>
         </section>
         <div className="bg-gray-50 py-12 md:py-20">
