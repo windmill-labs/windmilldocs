@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Auto-Generated UIs
 
@@ -132,3 +134,81 @@ At last, this is an easy way to get an app for your scripts and flows to be cust
 		href="/docs/core_concepts/instant_preview"
 	/>
 </div>
+
+## Special types
+
+There are special [types](../13_json_schema_and_parsing/index.mdx) that lead to a custom behavior in the auto-generated UIs.
+
+### oneOf
+
+There is a special type called `oneOf` that can be used to have the user pick between two objects through auto-generated UI. Within a [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), it can be used as:
+
+```ts
+ example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string } 
+```
+
+And it will render:
+
+![oneOf Script](./one_of_script.png "oneOf Script")
+
+For flows, oneOf can be added as a [flow input](../../flows/3_editor_components.mdx#flow-inputs).
+
+![oneOf Flow](./one_of_flow.png "oneOf Flow")
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/oneof.mp4"
+/>
+
+### Dynamic Select
+
+Dynamic Select is an helper function within-scripts that allows you to create a select field with dynamic options.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+export type DynSelect_foo = string
+
+export async function main(x: DynSelect_foo, y: number) {
+  console.log(x)
+  return x
+}
+
+export async function foo(text: string, y: number) {
+  return [
+    { value: '1', label: 'Foo' + text + y },
+    { value: '2', label: 'Bar' },
+    { value: '3', label: 'Foobar' }
+  ]
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+DynSelect_foo = str
+
+def main(x: DynSelect_foo, y: int):
+    return x
+
+def foo(text: str, y: int):
+  if text == "bar":
+    return [{"value": "barbarbar", "label": "barbarbar"}]
+  return [
+    { "value": '1', "label": 'One' + str(y) },
+    { "value": '2', "label": 'Twooo' },
+    { "value": '3', "label": 'Tres' }
+  ]
+```
+
+</TabItem>
+</Tabs>
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/dynamic_select.mp4"
+/>

@@ -120,28 +120,6 @@ The JSON Schema of a script's arguments is visible and can be modified from the 
     src="/videos/schema_script.mp4"
 />
 
-### oneOf
-
-There is a special type called `oneOf` that can be used to have the user pick between two objects through [auto-generated UI](../6_auto_generated_uis/index.mdx). Within a [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), it can be used as:
-
-```ts
- example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string } 
-```
-
-And it will render:
-
-![oneOf Script](./one_of_script.png "oneOf Script")
-
-For flows, oneOf can be added as a [flow input](../../flows/3_editor_components.mdx#flow-inputs).
-
-![oneOf Flow](./one_of_flow.png "oneOf Flow")
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/oneof.mp4"
-/>
-
 ### Flows Parameters and JSON Schema
 
 Flows in Windmill have input parameters defined by a JSON Schema. Each argument of the [`Flow Input`](../../flows/3_editor_components.mdx#flow-inputs) section corresponds to a field in the JSON Schema. The parameters and their types are validated against the JSON Schema during flow execution.
