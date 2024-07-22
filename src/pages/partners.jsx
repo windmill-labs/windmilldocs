@@ -10,12 +10,12 @@ import { EnvelopeIcon, LinkIcon } from '@heroicons/react/20/solid';
 const roles = {
     "Common Tree": {
       name: "Common Tree",
-      colors: "bg-blue-50 text-blue-700 ring-blue-600",
+      colors: "bg-blue-50 text-blue-700",
       link: "/docs/misc/partners#common-tree-mandatory-for-all-partners"
     },
     "App Editor": {
       name: "App Editor",
-      colors: "bg-orange-50 text-orange-700 hover:text-orange-800 ring-orange-600",
+      colors: "bg-orange-50 text-orange-700 hover:text-orange-800",
       link: "/docs/misc/partners#build-and-maintain-complex-apps"
     }
   };  
@@ -43,7 +43,7 @@ function PartnersCatalog() {
                 <dd className="text-sm text-gray-500">{person.description}</dd>
                 <dd className="mt-3">
                     {person.roles.map(role => (
-                    <a key={role} href={roles[role].link} className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset mx-0.5 ${roles[role].colors}`}>
+                    <a key={role} href={roles[role].link} className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium mx-0.5 ${roles[role].colors}`}>
                         {role}
                     </a>
                     ))}
