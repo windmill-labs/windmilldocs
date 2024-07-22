@@ -34,7 +34,8 @@ const navigation = [
 	{
 		items: [
 			{ name: 'Jobs', href: 'https://www.ycombinator.com/companies/windmill/jobs' },
-			{ name: 'Brand', href: '/brand' }
+			{ name: 'Brand', href: '/brand' },
+			{ name: 'Partners', href: '/partners' }
 		],
 		title: 'Company'
 	},
@@ -43,7 +44,7 @@ const navigation = [
 			{ name: 'OpenAPI', href: 'https://app.windmill.dev/openapi.html#/' },
 			{ name: 'GitHub Issues', href: 'https://github.com/windmill-labs/windmill/issues' },
 			{ name: 'Discord', href: 'https://discord.gg/aT3NhuxSK4' },
-			{ name: 'Questions', href: 'https://questions.windmill.dev/' },
+			{ name: 'Questions', href: 'https://questions.windmill.dev/' }
 		],
 		title: 'Help & Support'
 	},
