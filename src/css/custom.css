@@ -426,6 +426,10 @@ div.testimonials a:hover .wm-name {
 	filter: brightness(80%);
 }
 
+.hover-change-color-use-cases:hover {
+	fill: #2A3444;
+}
+
 .interactive-image {
 	cursor: pointer;
 	transition: filter 0.3s;

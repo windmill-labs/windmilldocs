@@ -153,7 +153,8 @@ const sidebars = {
 						}
 					]
 				},
-				'misc/contributing/index'
+				'misc/contributing/index',
+				'misc/getting_help/index',
 			]
 		},
 		{

@@ -77,7 +77,7 @@ export default function Notion() {
                 icon: Tag
             },
             {
-                title: "Notify of new Github repo Stars",
+                title: "Notify of new GitHub repo Stars",
                 link: "https://hub.windmill.dev/scripts/github/1208/notify-of-new-github-repo-stars-github",
                 description: "Trigger script that lists GitHub repo starrers in descending order.",
                 icon: Star

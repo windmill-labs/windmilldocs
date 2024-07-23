@@ -28,8 +28,7 @@ Windmill is different:
 - It empowers semi-technical users to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
   environments, secrets managements, etc).
-- It is compatible with senior/staff software engineers **high standards for
-  production-grade** yet flexible yet customizable with code.
+- It is compatible with senior/staff software engineers with high standards for production-grade yet flexible and customizable with code
 
 Windmill embeds:
 

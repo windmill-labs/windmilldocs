@@ -20,7 +20,7 @@ This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/
 
 ## Windmill for internal tools
 
-Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in TypeScript, Python, Go, PHP, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
+Windmill is an [open-source](https://github.com/windmill-labs/windmill), blazing fast and scalable alternative to Retool, Airplane, Superblocks, n8n, Airflow, Prefect, Temporal to build all your internal tools (endpoints, workflows, UIs) through the combination of code (in TypeScript, Python, Go, PHP, Bash, SQL or any docker image) and low code builders. It embeds all-in-one:
 
 - an **execution runtime** to execute functions at scale with low-latency and no overhead on a fleet of workers
 - an **orchestrator** to compose functions into powerful flows at low-latency built with a low-code builder (or yaml if that's your thing)
