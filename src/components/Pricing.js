@@ -996,9 +996,9 @@ export default function Pricing() {
 									aria-describedby={tier.id}
 									className={classNames(
 										tier.mostPopular
-											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-600 '
+											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
 											: tier.enterprise_edition
-											? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700 '
+											? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
 											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
 										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 									)}
@@ -1022,7 +1022,7 @@ export default function Pricing() {
 										href="https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f"
 										className={classNames(
 											tier.mostPopular ? 'additional-class-for-most-popular' : '',
-											'bg-blue-300 text-slate-700 shadow-sm hover:text-slate-900 hover:bg-gray-200 dark:bg-slate-700 dark:text-white dark:hover:text-slate-200 dark:hover:bg-slate-600',
+											'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700',
 											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 										)}
 										target="_blank"
@@ -1035,7 +1035,7 @@ export default function Pricing() {
 										href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
 										className={classNames(
 											tier.mostPopular ? 'additional-class-for-most-popular' : '',
-											'bg-gray-100 text-slate-700 shadow-sm hover:text-slate-900 hover:bg-gray-200 dark:bg-slate-700 dark:text-white dark:hover:text-slate-200 dark:hover:bg-slate-600',
+											'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700',
 											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
 										)}
 										target="_blank"
