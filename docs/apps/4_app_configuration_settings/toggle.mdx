@@ -25,13 +25,21 @@ The following section details Toggle component's specific settings. For more det
 
 ## Toggle configuration
 
-| Name          |  Type   | Connectable | Templatable | Default | Description                      |
-| ------------- | :-----: | :---------: | :---------: | :-----: | -------------------------------- |
-| label         | string  |    true     |    false    |  Label  | The toggle label.                |
-| default value | boolean |    true     |    false    |         | The default value of the toggle. |
+| Name          |  Type   | Connectable | Templatable | Default | Description                            |
+| ------------- | :-----: | :---------: | :---------: | :-----: | -------------------------------------- |
+| label         | string  |    true     |    false    |  Label  | The toggle label.                      |
+| default value | boolean |    true     |    false    |         | The default value of the toggle.       |
+| Disabled      | boolean |    false    |    false    |  false  | Whether the toggle should be disabled. |
 
 ## Outputs
 
 | Name   |  Type   | Description              |
 | ------ | :-----: | ------------------------ |
 | result | boolean | The state of the toggle. |
+
+## Event handlers
+
+The toggle component has the following event handlers:
+
+- `onSuccess`: Trigger one or more runnables when the user toggles the switch and the value is `true`.
+- `onToggle`: Trigger one or more runnables when the user toggles the switch.

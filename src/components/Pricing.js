@@ -1022,7 +1022,7 @@ export default function Pricing() {
 										href="https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f"
 										className={classNames(
 											tier.mostPopular ? 'additional-class-for-most-popular' : '',
-											'border-blue-600 border text-blue-600 shadow-sm hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950',
+											'bg-blue-300 text-slate-700 shadow-sm hover:text-slate-900 hover:bg-gray-200 dark:bg-slate-700 dark:text-white dark:hover:text-slate-200 dark:hover:bg-slate-600',
 											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 										)}
 										target="_blank"
@@ -1035,7 +1035,7 @@ export default function Pricing() {
 										href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
 										className={classNames(
 											tier.mostPopular ? 'additional-class-for-most-popular' : '',
-											'border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
+											'bg-gray-100 text-slate-700 shadow-sm hover:text-slate-900 hover:bg-gray-200 dark:bg-slate-700 dark:text-white dark:hover:text-slate-200 dark:hover:bg-slate-600',
 											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
 										)}
 										target="_blank"
