@@ -18,11 +18,11 @@ const plans = [
 function calculatePrice(monthlyPrice, period, tierId) {
 	if (period === 'annually') {
 		if (tierId === 'tier-team') {
-			return monthlyPrice * 12; // For 'tier-team', multiply by 12
+			return monthlyPrice * 12;
 		}
-		return monthlyPrice * 10; // Default annual calculation
+		return monthlyPrice * 10;
 	}
-	return monthlyPrice; // Monthly pricing remains unchanged
+	return monthlyPrice;
 }
 
 const priceFormatter = new Intl.NumberFormat('en-US', {
@@ -42,28 +42,22 @@ export default function PriceCalculator({ period, tier }) {
 		let total = 0;
 
 		if (tier.id === 'tier-team') {
-			// For 'tier-team', calculate the base price, adjusting for the period
 			total = calculatePrice(tier.minPrice, period.value, tier.id);
 
-			// Calculate seat price, assuming the first seat's cost is included in the base price for 'tier-team' only
 			if (tier.price.seat) {
-				// Adjust the total calculation by adding seat costs only for additional seats beyond the first
 				let additionalSeats = Math.max(0, seats - 1);
 				total += calculatePrice(tier.price.seat.monthly, period.value, tier.id) * additionalSeats;
 			}
 		} else {
-			// For other tiers, calculate base price and add costs for seats directly without subtracting
 			if (tier.id === 'tier-enterprise-cloud') {
 				total = calculatePrice(selected.price, period.value, tier.id);
 			}
 
-			// Add full seat price for all seats without adjusting for the first seat
 			if (tier.price.seat) {
 				total += calculatePrice(tier.price.seat.monthly, period.value, tier.id) * seats;
 			}
 		}
 
-		// Add price for vCPUs if applicable, this part remains unchanged
 		if (tier.price.vCPU) {
 			total += calculatePrice(tier.price.vCPU.monthly, period.value, tier.id) * vCPUs;
 		}
@@ -268,7 +262,7 @@ export default function PriceCalculator({ period, tier }) {
 						<a
 							onClick={() => setShowQuoteForm(true)}
 							className={classNames(
-								'cursor-pointer border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
+								'text-sm cursor-pointer border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
 								'!no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
 							)}
 						>
@@ -311,7 +305,7 @@ export default function PriceCalculator({ period, tier }) {
 						<a
 							onClick={() => setShowQuoteForm(true)}
 							className={classNames(
-								'cursor-pointer border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
+								'text-sm cursor-pointer border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
 								'!no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
 							)}
 						>

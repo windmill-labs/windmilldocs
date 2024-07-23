@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # JSON Schema and Parsing
 
@@ -67,10 +69,12 @@ In [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index
 | `bytes`             | `string, encodingFormat: base64` |
 | `datetime`          | `str, format: date-time`         |
 | `_`                 | `any`                            |
+| [DynSelect_foo](#dynamic-select)| `dynselect-<name>`   |
 
-In [Deno/Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)/[REST](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx):
 
-| Deno                 | JSON Schema                   |
+In [Deno, Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [REST](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx):
+
+| TypeScript           | JSON Schema                   |
 | -------------------- | ----------------------------- |
 | `string`             | `string`                      |
 | `"a" \| "b"`         | `string` with enums: "a", "b" |
@@ -80,6 +84,8 @@ In [Deno/Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart
 | `number`             | `number`                      |
 | `string[]`           | `string[]`                    |
 | `("foo" \| "bar")[]` | `enum[]`                      |
+| [oneOf](#oneof)      | `object`                      |
+| [DynSelect_foo](#dynamic-select)| `dynselect-<name>` |
 
 However in TypeScript there also some special types that are specific to Windmill.
 They are as follows:
@@ -118,28 +124,6 @@ The JSON Schema of a script's arguments is visible and can be modified from the 
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
     controls
     src="/videos/schema_script.mp4"
-/>
-
-### oneOf
-
-There is a special type called `oneOf` that can be used to have the user pick between two objects through [auto-generated UI](../6_auto_generated_uis/index.mdx). Within a [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), it can be used as:
-
-```ts
- example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string } 
-```
-
-And it will render:
-
-![oneOf Script](./one_of_script.png "oneOf Script")
-
-For flows, oneOf can be added as a [flow input](../../flows/3_editor_components.mdx#flow-inputs).
-
-![oneOf Flow](./one_of_flow.png "oneOf Flow")
-
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/oneof.mp4"
 />
 
 ### Flows Parameters and JSON Schema
@@ -210,3 +194,108 @@ Below is the list of advanced settings for each type of field:
 		href="/docs/script_editor/customize_ui"
 	/>
 </div>
+
+## Special Types
+
+There are special types that lead to a custom behavior in the [auto-generated UIs](../6_auto_generated_uis/index.mdx).
+
+### oneOf
+
+`oneOf` is a type that can be used to have the user pick between two objects through [auto-generated UI](../6_auto_generated_uis/index.mdx). Within a [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), it can be used with the following syntax:
+
+```ts
+example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string } 
+```
+
+And the auto-generated UI will render:
+
+![oneOf Script](./one_of_script.png "oneOf Script")
+
+For flows, `oneOf` can be added as a [flow input](../../flows/3_editor_components.mdx#flow-inputs).
+
+![oneOf Flow](./one_of_flow.png "oneOf Flow")
+
+The result of the user's selection will be the selected object. With the example above if user picks Option 2 and enters a custom value:
+
+```
+{
+    "label": "Option 2",
+    "other_attribute": "Value that the user entered"
+}
+```
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/oneof.mp4"
+/>
+
+<br/>
+
+`oneOf` input can also be filled with [CLI](../../advanced/3_cli/index.mdx) or [webhooks](../4_webhooks/index.mdx), for example with `wmill` CLI:
+
+```bash
+wmill script run u/user/path -d '{"example_oneof":{"label":"Option 2","attribute":"Value that the user entered"}}'
+```
+
+### Dynamic Select
+
+Dynamic Select is an helper function within [scripts](../../script_editor/index.mdx) that allows you to create a select field with dynamic options.
+
+You must export the string type as `DynSelect_<name>` and the function as `<name>` :
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+export type DynSelect_foo = string
+
+export async function foo(x: string, y: number) {
+  if (x === "bar") {
+    return [{ value: "barbar", label: "barbarbar" }];
+  }
+  return [
+    { value: '1', label: 'Foo' + x + y },
+    { value: '2', label: 'Bar' },
+    { value: '3', label: 'Foobar' }
+  ]
+}
+
+export async function main(y: number, x: string, xy: DynSelect_foo) {
+  console.log(xy)
+  return xy
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+DynSelect_foo = str
+
+def foo(x: str, y: int):
+  if x == "bar":
+    return [{"value": "barbar", "label": "barbarbar"}]
+  return [
+    { "value": '1', "label": 'Foo' + x + str(y) },
+    { "value": '2', "label": 'Bar' },
+    { "value": '3', "label": 'Foobar' }
+  ]
+
+def main(x: str, y: int, xy: DynSelect_foo):
+	print(xy)
+	return xy
+```
+
+</TabItem>
+</Tabs>
+
+The select options recompute dynamically based on the other arguments, in this case `x` and `y`.
+
+You can also do your own filtering and sorting of the options. In the example above, if `x` is "bar", the options will be filtered to only one option.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/dynamic_select.mp4"
+/>
