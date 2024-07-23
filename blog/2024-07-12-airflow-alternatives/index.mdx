@@ -21,7 +21,7 @@ This article aims to list 8 open-source alternatives to Airflow: [Luigi](#luigi)
 These job orchestration tools will be ranked in order of decreasing GitHub stars. This ranking method is far from perfect, but a mathematical criterion is a welcome addition to the subjective world of comparison.
 
 Before we begin, the first thing is to categorize the major aspects we will discuss:
-- **Target users**: for which professions the platform was designed.
+- **Target users**: the audience for which the platform was designed.
 - **Ecosystem**: nonprofit project or platform monetized by a private company.
 - **Use cases**: typical cases for which the platform is a good fit.
 - **Performance**: a few months ago at Windmill, we conducted a [performance benchmark](/blog/launch-week-1/fastest-workflow-engine) for some of these tools.
@@ -36,11 +36,12 @@ Repos and stars:
 
 ## Airflow
 
-Apache Airflow is a data orchestration tool that excels in automating, scheduling, and monitoring complex workflows. Designed to structure tasks as [directed acyclic graphs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAGs), it enables workflow management, ensuring dependencies are respected and tasks are executed in sequence. The tool is designed to manage data pipelines. According to a [survey conducted by Airflow](https://airflow.apache.org/blog/airflow-survey-2022/), 54% of its users are Data Engineers and 12% are Developers.
+Apache Airflow is a data orchestration tool that is commonly used for automating, scheduling, and monitoring complex workflows. Designed to structure tasks as [directed acyclic graphs](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAGs), it enables workflow management, ensuring dependencies are respected and tasks are executed in sequence. The tool is designed to manage data pipelines. According to a [survey conducted by Airflow](https://airflow.apache.org/blog/airflow-survey-2022/), 54% of its users are Data Engineers and 12% are Developers.
 
 Airflow is widely used ([forked 13.8k times](https://github.com/apache/airflow) at the time of writing) across various industries thanks to its broad ecosystem (documentation, tutorials). This is where Airflow's strength lies: the status quo. You will more easily find engineers with specific experience in the software, or users who have encountered the same problem as you.
 
 However, Airflow is a complex tool, particularly in a production environment, it will require a minimum knowledge of devops and engineering systems. Its Python-first approach limits its versatility, and its user experience might make you feel like you are using a tool made in 2005, complicating the management of your workflow versions, permissions, or security.
+For example [XComs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html), that Airflow uses to share data between tasks, is inconvenient and tricky to manoeuvre.
 
 In terms of performance, Airflow is by far the slowest tool we have [benchmarked](/docs/misc/benchmarks/competitors), taking 56 seconds to complete 40 lightweight tasks.
 
