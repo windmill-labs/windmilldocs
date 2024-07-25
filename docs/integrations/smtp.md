@@ -25,6 +25,10 @@ Your resource can be used [passed as parameters](../core_concepts/3_resources_an
 
 <br/>
 
+> Example of a Supabase resource being used in two different manners from a script in Windmill.
+
+<br/>
+
 :::tip
 
 Find some pre-set interactions with SMTP on the [Hub](https://hub.windmill.dev/integrations/smtp).
