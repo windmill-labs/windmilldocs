@@ -87,7 +87,7 @@ const faqs = [
 	},
 	{
 		id: 'vcpu-reporting',
-		question: 'How is the use of the number of vCPUs estimated and reported to Windmill?',
+		question: 'How is the use of the number of seats & vCPUs estimated and reported to Windmill?',
 		answer: (
 			<span>
 				Even though Windmill's{' '}
@@ -106,12 +106,23 @@ const faqs = [
 				>
 					workers
 				</a>
-				, Pricing is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with
+				, pricing is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with
 				4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by 24.
 				Each vCPU can run up to ~26M jobs per month.
 				<br />
 				<br />
-				Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs for your subscription.
+				Windmill employs{' '}
+				<a
+					href="/docs/misc/plans_details#usage-checks"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank"
+				>
+					lightweight telemetry
+				</a>{' '}
+				to automatically track and report the usage of vCPUs for your subscription.
+				<br />
+				<br />
+				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are active on the platform in the last 30 days, according to the audit logs.
 				<br />
 				<br />
 				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
