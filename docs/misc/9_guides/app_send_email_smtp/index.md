@@ -4,7 +4,7 @@ Watch this video on how building a Windmill [App](../../../apps/0_app_editor/ind
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/5ntRI4oNx7g?vq=hd1080"
+	src="https://www.youtube.com/embed/5ntRI4oNx7g"
 	title="Small tutorial on how to build a Windmill App that uses a SMTP resource to send an email connecting components (Button & Text Input)"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -63,7 +63,7 @@ Here is an anonymized version of our client-facing dashboard:
 
 <iframe
     style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/NsAhQZi2FTg?vq=hd1080"
+    src="https://www.youtube.com/embed/NsAhQZi2FTg"
     title="YouTube video player"
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

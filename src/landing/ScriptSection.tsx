@@ -281,7 +281,8 @@ const tabs = [
 					'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
 				icon: BoxesIcon,
 				video: {
-					videoSrc: '/videos/add_resources_variables.mp4',
+					videoSrc: 'https://www.youtube.com/embed/ggJQtzvqaqA',
+					videoLength: '26',
 					altText: 'Add Resources and Variables to Code'
 				},
 				altText: 'Add Resources and Variables to Code',
@@ -434,7 +435,7 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI',
 					videoLength: '26',
 					altText: 'Execute using CLI'
 				},

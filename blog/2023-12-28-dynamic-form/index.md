@@ -23,7 +23,7 @@ The tutorial video below shows the creation of a dynamic form collecting consume
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/MTGZTO1AduM?vq=hd1080"
+	src="https://www.youtube.com/embed/MTGZTO1AduM"
 	title="Dynamic Form Tutorial"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
