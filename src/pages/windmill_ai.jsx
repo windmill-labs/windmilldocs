@@ -107,7 +107,7 @@ const flowTabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/y-pV6CShdZA',
 					altText: 'Sequence Flows'
 				}
 			},
@@ -130,7 +130,7 @@ const flowTabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg',
 					altText: 'Trigger Flows'
 				}
 			},

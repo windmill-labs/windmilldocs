@@ -27,7 +27,7 @@ If that's not sufficient you can even [build your own app in React](../react_vue
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/LO83BKAe6zg?vq=hd1080"
+	src="https://www.youtube.com/embed/LO83BKAe6zg"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
