@@ -62,18 +62,18 @@ When stored in a code repository, those 2 parts are stored separately at `<path>
 import { WebClient } from '@slack/web-api';
 
 type Slack = {
-  token: string;
+	token: string;
 };
 
 export async function main(slack: Slack, channel: string, message: string): Promise<void> {
-  // Initialize the Slack WebClient with the token from the Slack resource
-  const web = new WebClient(slack.token);
+	// Initialize the Slack WebClient with the token from the Slack resource
+	const web = new WebClient(slack.token);
 
-  // Use the chat.postMessage method from the Slack WebClient to send a message
-  await web.chat.postMessage({
-    channel: channel,
-    text: message,
-  });
+	// Use the chat.postMessage method from the Slack WebClient to send a message
+	await web.chat.postMessage({
+		channel: channel,
+		text: message
+	});
 }
 ```
 
@@ -158,15 +158,15 @@ boilerplate. Let's take a look:
 // type Postgresql = object
 
 export async function main(
-  a: number,
-  b: "my" | "enum",
-  //c: Postgresql,
-  d = "inferred type string from default arg",
-  e = { nested: "object" },
-  //e: wmill.Base64
+	a: number,
+	b: 'my' | 'enum',
+	//c: Postgresql,
+	d = 'inferred type string from default arg',
+	e = { nested: 'object' }
+	//e: wmill.Base64
 ) {
-  // let x = await wmill.getVariable('u/user/foo')
-  return { foo: a };
+	// let x = await wmill.getVariable('u/user/foo')
+	return { foo: a };
 }
 ```
 
@@ -291,9 +291,27 @@ export async function main(name: string) {
 }
 ```
 
-### Node.js
+## Modes
 
-Windmill provides a true NodeJS compatibility mode using Bun. This means that you can run your existing NodeJS code without any modifications.
+### Pre-bundling and nobundling
+
+Windmill pre-bundles your script at deployment time using [Bun bundler](https://bun.sh/docs/bundler). This improve memory usage and speed up the execution time of your script. If you would like to disable this feature, you can add the following comment at the top of your script:
+
+```ts
+//nobundling
+```
+
+### Native
+
+Windmill provides a runtime that is more lightweight but supports less features and allow to run scripts in a more lightweight manner with direct bindings to v8. To enable, you can add the following comment at the top of your script:
+
+```ts
+//native
+```
+
+### NodeJS
+
+Windmill provides a true NodeJS compatibility mode. This means that you can run your existing NodeJS code without any modifications.
 
 The only thing you need to do is to select [TypeScript (Bun)](#bun) as the runtime and as the first line, use:
 
@@ -306,6 +324,16 @@ The only thing you need to do is to select [TypeScript (Bun)](#bun) as the runti
 This method is an escape hatch for using another runtime (NodeJS), but it is slower than Deno and Bun since it resorts to Bun under the hood.
 
 This feature is exclusive to [Cloud plans and Self-Hosted Enterprise edition](/pricing).
+
+### Npm
+
+Similarly, you can use `npm install` instead of `bun install` to install dependencies. This is useful as an escape hatch for cases not supported by bun:
+
+```ts
+//npm
+```
+
+This is also exclusive to [Cloud plans and Self-Hosted Enterprise edition](/pricing).
 
 ## Instant Preview & Testing
 
@@ -365,7 +393,7 @@ One way to write distributed programs that execute distinct jobs is to use [flow
 
 Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as [workflows as code](../../../core_concepts/31_workflows_as_code/index.mdx).
 
-![Flow as code in TypeScript](./flow_as_code_ts.png "Flow as code in TypeScript")
+![Flow as code in TypeScript](./flow_as_code_ts.png 'Flow as code in TypeScript')
 
 All details at:
 
