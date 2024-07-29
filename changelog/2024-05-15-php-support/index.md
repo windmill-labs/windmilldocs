@@ -2,7 +2,7 @@
 slug: php-support
 version: v1.330.0
 title: PHP Support
-tags: ['Scripts']
+tags: ['Script Editor']
 image: ./php_changelog.png
 description: PHP is now supported as a primary language along TypeScript, Python, Go, Bash, or SQL languages.
 features:
