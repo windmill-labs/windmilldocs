@@ -2,7 +2,7 @@
 slug: useful-python-scripts
 title: 10 Useful Python Scripts
 authors: [edwindmiller]
-tags: ['Scripts', 'Python']
+tags: ['Script Editor', 'Python']
 description: 'A few examples of Python scripts and cool libraries that improve day-to-day life.'
 image: ./python_scripts.png
 ---

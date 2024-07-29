@@ -222,7 +222,7 @@ export async function main(name: string) {
 
 ### Pre-bundling and nobundling
 
-Windmill pre-bundles your script at deployment time using [Bun bundler](https://bun.sh/docs/bundler). This improve memory usage and speed up the execution time of your script. If you would like to disable this feature, you can add the following comment at the top of your script:
+Windmill [pre-bundles](/changelog/pre-bundle-bun-scripts) your script at deployment time using [Bun bundler](https://bun.sh/docs/bundler). This improve memory usage and speed up the execution time of your script. If you would like to disable this feature, you can add the following comment at the top of your script:
 
 ```ts
 //nobundling
