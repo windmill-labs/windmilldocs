@@ -641,6 +641,7 @@ const sidebars = {
 								'apps/app_configuration_settings/pdf',
 								'apps/app_configuration_settings/plotly',
 								'apps/app_configuration_settings/range',
+								'apps/app_configuration_settings/recompute_all',
 								'apps/app_configuration_settings/resource_select',
 								'apps/app_configuration_settings/rich_result',
 								'apps/app_configuration_settings/rich_text_editor',
@@ -661,6 +662,7 @@ const sidebars = {
 								'apps/app_configuration_settings/textarea',
 								'apps/app_configuration_settings/time_input',
 								'apps/app_configuration_settings/toggle',
+								'apps/app_configuration_settings/topbar',
 								'apps/app_configuration_settings/vega_lite',
 								'apps/app_configuration_settings/vertical_split_panes'
 							]
