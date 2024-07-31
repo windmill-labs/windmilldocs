@@ -1,12 +1,12 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Log Display
+# Rich Result by Job Id
 
-The Log Display component allows you to display the logs of a Runnable by providing its [Job](../../core_concepts/20_jobs/index.mdx) id.
+The Rich Result by Job Id component allows you to display the result of a Runnable by providing its [Job](../../core_concepts/20_jobs/index.mdx) id.
 
-![Log Display](../../assets/apps/4_app_component_library/log_display.png)
+![Rich Result by Job Id](../../assets/apps/4_app_component_library/rich_result_by_job_id.png "Rich Result by Job Id")
 
-The following section details Log Display component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Rich Result by Job Id component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -23,11 +23,11 @@ The following section details Log Display component's specific settings. For mor
 	/>
 </div>
 
-## Log Display configuration
+## Rich Result by Job Id configuration
 
 | Name        | Type | Connectable | Templatable | Default | Description                 |
 | ----------- | :--: | :---------: | :---------: | :-----: | --------------------------- |
-| Job Id |  string  |    true     |      false       |         | The [job id](../../core_concepts/20_jobs/index.mdx) of the run to display logs. |
+| Job Id |  string  |    true     |      false       |         | The [job id](../../core_concepts/20_jobs/index.mdx) of the run to display results. |
 
 ## Outputs
 
@@ -35,4 +35,4 @@ The following section details Log Display component's specific settings. For mor
 | ------- | :-----: | ----------------------------------- |
 | result  |     string    | The result of the runnable.   |
 | loading | boolean | The loading state of the component. |
-| Job Id |  string  | The [job id](../../core_concepts/20_jobs/index.mdx) of the run to display logs. |
+| Job Id |  string  | The [job id](../../core_concepts/20_jobs/index.mdx) of the run to display results. |

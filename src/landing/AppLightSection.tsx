@@ -247,7 +247,7 @@ export const components = [
 	},
 
 	{
-		name: 'Submit form',
+		name: 'Submit Form',
 		Icon: FormInput,
 		documentationLink: `${documentationBaseUrl}/submit_form`
 	},
@@ -504,13 +504,13 @@ export const components = [
 	},
 
 	{
-		name: 'Conditional tabs',
+		name: 'Conditional Tabs',
 		Icon: Split,
 		documentationLink: `${documentationBaseUrl}/conditional_tabs`
 	},
 
 	{
-		name: 'Statistic card',
+		name: 'Statistic Card',
 		Icon: FileBarChart,
 		documentationLink: `${documentationBaseUrl}/statistic_card`
 	},

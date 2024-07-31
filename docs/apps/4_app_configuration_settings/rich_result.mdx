@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Rich Result
 
-The Rich Result component allows you to display the result of a Runnable. It tries to display the result in a human-readable way.
+The Rich Result component allows you to display the result of a Runnable.
 
 ![Rich Result](../../assets/apps/4_app_component_library/rich_result.png.webp)
 
@@ -28,6 +28,14 @@ The following section details Rich Result component's specific settings. For mor
 | Name        | Type | Connectable | Templatable |    Default    | Description                         |
 | ----------- | :--: | :---------: | :---------: | :-----------: | ----------------------------------- |
 | Data Source |      |    true     |             | `{"foo": 42}` | The data source to display results. |
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [setValue](../3_app-runnable-panel.mdx#setvalue) | id: string, value: any | Manually set or force the value of a component. | `setValue(id: 'a', value: 17)` |
 
 ## Outputs
 

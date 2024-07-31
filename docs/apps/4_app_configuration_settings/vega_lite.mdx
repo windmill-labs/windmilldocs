@@ -23,11 +23,19 @@ The following section details Vega Lite component's specific settings. For more 
 	/>
 </div>
 
-## Vega Lite Input
+## Data Source
 
 |  Type  | Connectable | Templatable | Default | Description                |
 | :----: | :---------: | :---------: | :-----: | -------------------------- |
 | object |    true     |    false    |         | The Vega Lite chart config |
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [recompute](../3_app-runnable-panel.mdx#recompute) | id: string | Recompute a component. | recompute('a'); |
 
 ## Vega Lite configuration
 
