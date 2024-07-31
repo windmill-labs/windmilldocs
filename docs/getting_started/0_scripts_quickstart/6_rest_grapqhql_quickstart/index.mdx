@@ -126,25 +126,36 @@ Script. You can preview that UI, provide input values.
 As we picked `Rest` for this example, Windmill provided some boilerplate. Let's take a look:
 
 ```ts
-// Fetch-only script, no imports allowed but benefits from a dedicated highly efficient runtime
+//native
+//you can add proxy support using //proxy http(s)://host:port
+
+// native scripts are bun scripts that are executed on native workers and can be parallelized
+// only fetch is allowed, but imports will work as long as they also use only fetch and the standard lib
+
+//import * as wmill from "windmill-client"
 
 export async function main(example_input: number = 3) {
-	// "3" is the default value of example_input, it can be overriden with code or using the UI
-	const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${example_input}`, {
-		headers: { 'Content-Type': 'application/json' }
-	});
-	return res.json();
+  // "3" is the default value of example_input, it can be overriden with code or using the UI
+  const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${example_input}`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  return res.json();
 }
+
 ```
 
-Rest scripts are in fact [TypeScript](../1_typescript_quickstart/index.mdx) fetches. They support all the normal signatures of normal TypeScript but only [stdlib](https://en.wikibooks.org/wiki/C_Programming/stdlib.h) javascript and the fetch operations.
-[Imports](../../../advanced/6_imports/index.mdx) are not allowed. Only the full [wmill API](../../../advanced/2_clients/ts_client.mdx) is supported, just use:
+Rest scripts are in fact [Bun TypeScript](../1_typescript_quickstart/index.mdx) fetches.
+They support all the normal signatures of normal TypeScript but only [stdlib](https://en.wikibooks.org/wiki/C_Programming/stdlib.h) JavaScript, and the fetch operations (including fetch operations from npm packages and relative imports).
+For example, the full [wmill API](../../../advanced/2_clients/ts_client.mdx) is supported, just use:
 
 ```ts
 import * as wmill from './windmill.ts'
 ```
 
-Fetches can also be done through a regular TypeScript in Windmill, but opting for dedicated Rest scripts
+The `// native` header line will help Windmill automatically convert between 'nativets' and 'bun' scripts based on the presence of this header so you can always just pick TypeScript (Bun) and decide at the end if you want to accelerate it with 'native' if possible.
+The REST button simply prefills a Bun script with a `//native` header. 
+
+Fetches can also be done through a regular TypeScript in Windmill (without the `//native` header), but opting for dedicated Rest scripts
 benefits from a highly efficient runtime.
 
 Replace the `<jsonplaceholder>` URL with the API endpoint of your choice and customize the headers object according to your fetch requirements.
