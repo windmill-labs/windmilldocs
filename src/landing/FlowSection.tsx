@@ -378,7 +378,7 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/I9owHiLUrKw?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/I9owHiLUrKw',
 					videoLength: '26',
 					altText: 'Windmill for data pipelines'
 				},
@@ -462,7 +462,7 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI',
 					videoLength: '26',
 					altText: 'Execute using CLI'
 				},

@@ -2,7 +2,7 @@
 
 <iframe
     style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
+    src="https://www.youtube.com/embed/w2HVTlR2QDI"
     title="YouTube video player"
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -2,7 +2,7 @@
 slug: markdown-support-descriptions
 version: v1.298.0
 title: Markdown support in descriptions
-tags: ['Scripts', 'Flow Editor', 'Resources']
+tags: ['Script Editor', 'Flow Editor', 'Resources']
 image: ./flow_settings_metadata_markdown.png
 description: We now support GH flavored markdown for description of scripts, flows, resources.
 features:

@@ -33,7 +33,7 @@ const pricing = {
 			features: [
 				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
 				{ text: 'Community support on Discord' },
-				{ text: 'Max 50 users with SSO' }
+				{ text: 'Max 10 users with SSO' }
 			]
 		},
 		{
