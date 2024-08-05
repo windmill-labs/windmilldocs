@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Conditional Tabs
 
-Conditional tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
+Conditional Tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -10,7 +10,7 @@ Conditional tabs are tabs that are displayed only if a condition is met. The con
 	controls
 	id="conditional-tabs-video"
 	src="/videos/conditional-tabs.mp4"
-	alt="Conditional tabs component"
+	alt="Conditional Tabs component"
 />
 <br />
 
@@ -31,6 +31,14 @@ The following section details Conditional Tabs component's specific settings. Fo
 	/>
 </div>
 
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [setTab](../3_app-runnable-panel.mdx#settab) | id: string, index:number | Set the current tab. | setTab('a',1) |
+
 ## Conditional Tabs configuration
 
 | Name       |   Type    | Connectable | Templatable | Default | Description                            |
@@ -43,12 +51,6 @@ The following section details Conditional Tabs component's specific settings. Fo
 | ---------------------- | :-------: | ----------------------------------- |
 | conditions             | boolean[] | The conditions evaluation           |
 | selectedConditionIndex |  number   | The index of the selected condition |
-
-## Component controls
-
-| Name   |        Parameters        | Description          | Example       |
-| ------ | :----------------------: | -------------------- | ------------- |
-| setTab | id: string, index:number | Set the current tab. | setTab('a',1) |
 
 ## Event handler
 
