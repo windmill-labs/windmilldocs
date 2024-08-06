@@ -107,6 +107,7 @@ Using [Docker](https://www.docker.com/) and [Caddy](https://caddyserver.com/), W
 ([`docker-compose.yml`][windmill-docker-compose], [`Caddyfile`][windmill-caddyfile]) and a [.env][windmill-env] in a single command.
 
 [Caddy][caddy] is the reverse proxy that will redirect traffic to both Windmill (port 8000) and the LSP (the monaco assistant) service (port 3001) and multiplayer service (port 3002).
+It also redirects TCP traffic on port 25 to Windmill (port 2525) for email triggers. 
 Postgres holds the entire state of Windmill, the rest is fully stateless, Windmill-LSP provides editor intellisense.
 
 Make sure Docker is started:

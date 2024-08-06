@@ -154,7 +154,7 @@ const sidebars = {
 					]
 				},
 				'misc/contributing/index',
-				'misc/getting_help/index',
+				'misc/getting_help/index'
 			]
 		},
 		{
@@ -524,7 +524,7 @@ const sidebars = {
 					items: [
 						'script_editor/settings',
 						'script_editor/script_kinds',
-						'script_editor/customize_ui',			
+						'script_editor/customize_ui',
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
 						'script_editor/perpetual_scripts',
@@ -718,7 +718,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/self_host/aws_ecs']
+					items: ['advanced/self_host/aws_ecs', 'advanced/email_triggers/index']
 				},
 				{
 					type: 'category',
@@ -775,7 +775,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/versioning/index',
 							label: 'Versioning with UI'
-						},
+						}
 					]
 				},
 				{
