@@ -79,7 +79,7 @@ const faqs = [
 					worker
 				</a>{' '} only executes one job at a time, by design to use the full resource of the worker, and you can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4 vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
 				<br /><br/>
-				As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. The vCPU numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes. We set a quota of 2Gb memory per vCPU.
+				As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. The vCPU numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes. There is also a global quota for memory limit. This quota is set to 2Gb * vCPU paid. Which mean if you have paid for 4vCPU, their aggregate memory limit must be below 8Gb. You can not set any limits for vCPUs and rely solely on memory quotas if you prefer.
 				<br/><br/>
 				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate your needs in practice.
 			</span>
@@ -122,7 +122,7 @@ const faqs = [
 				to automatically track and report the usage of vCPUs for your subscription.
 				<br />
 				<br />
-				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are active on the platform in the last 30 days, according to the audit logs.
+				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the audit logs. User count is across all instances (dev, prod) but Windmill only counts once the same user.
 				<br />
 				<br />
 				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
