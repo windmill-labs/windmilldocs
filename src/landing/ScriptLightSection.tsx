@@ -35,7 +35,7 @@ const features = [
 
 	{
 		title: 'Triggers',
-		description: 'Trigger scripts from webhooks, schedules, CLI, Slack, and more. ',
+		description: 'Trigger scripts from webhooks, schedules, CLI, Slack, emails and more.',
 		lottieData: triggers,
 		span: 'col-span-2 md:col-span-1',
 		url: '/docs/getting_started/trigger_scripts',
