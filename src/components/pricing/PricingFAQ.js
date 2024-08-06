@@ -79,7 +79,7 @@ const faqs = [
 					worker
 				</a>{' '} only executes one job at a time, by design to use the full resource of the worker, and you can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4 vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
 				<br /><br/>
-				As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. The vCPU numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes. We set a quota of 2Gb memory per vCPU.
+				As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. The vCPU numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes. There is also a global quota for memory limit. This quota is set to 2Gb * vCPU paid. Which mean if you have paid for 4vCPU, their aggregate memory limit must be below 8Gb. You can not set any limits for vCPUs and rely solely on memory quotas if you prefer.
 				<br/><br/>
 				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate your needs in practice.
 			</span>
