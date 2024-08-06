@@ -122,7 +122,7 @@ const faqs = [
 				to automatically track and report the usage of vCPUs for your subscription.
 				<br />
 				<br />
-				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the audit logs.
+				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the audit logs. User count is across all instances (dev, prod) but Windmill only counts once the same user.
 				<br />
 				<br />
 				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
