@@ -12,9 +12,12 @@ In addition, you will need to create one or two records in your DNS provider dep
 If port 25 is exposed on the same IP as the Windmill instance (e.g. Docker Compose with Caddy):
   - An MX record from `<email domain>` to `<instance domain>`
 
-If port 25 is exposed through a different IP (e.g. Kubernetes):
+If port 25 is exposed separately through a different IP (e.g. Kubernetes):
   - An A/CNAME record that points to the IP of the windmill instance with port 25 exposed (for example `mail_server.<instance domain>` but you can choose any domain you want)
   - An MX record from `<email domain>` to the record defined above (`mail_server.<instance domain>` if following the example)
+
+If the port 25 is exposed separately through a different domain name (e.g. Kubernetes AWS network load balancer)
+  - An MX record from `<email domain>` to the domain name
 
 You can choose any email domain, we suggest using `mail.<instance domain>`.
 Once you have defined the DNS settings, set the email domain in the instance settings under the "Core" tab.
@@ -23,5 +26,10 @@ You will now find the specific email address to use in the webhooks panels for e
 The email address take the form `<workspace>+<path>+<token>@mail.<instance domain>`.
 Your script will receive two arguments: 
 - `raw_email`: the raw email as string
-- `parsed_email`: the parsed email which should make it easier to extract the information you need ([format](https://docs.rs/mail-parser/latest/mail_parser/struct.Message.html))
-
+- `parsed_email` the parsed email with the following attributes:
+  - `headers` a dictionary with the email headers (e.g. `from`, `to`, `subject`, `date`)
+  - `text_body` the text body of the email (or textified html body if none)
+  - `html_body` the html body of the email (or htmlified text body if none)
+  - `attachments` list of attachments with the following attributes:
+    - `headers` a dictionary with the attachment headers
+    - `body` the attachment data (base64 encoded if binary)
