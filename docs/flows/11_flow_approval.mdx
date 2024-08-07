@@ -323,6 +323,28 @@ You can also dynamically set the group by connecting it to another node's output
 
 ![Approval group dynamic](../assets/flows/approval-group-dynamic.png 'Approval group dynamic')
 
+### Get the users who approved the flow
+
+The input `approvers` is an array of the users who approved the flow.
+
+To get the list of users, just have the step after the approval step return the `approvers` key. For example by taking an input [connected](./16_architecture.mdx) to the `approvers` key.
+
+The step could be as simple as:
+
+```ts
+export async function main(list_of_approvers) {
+  return list_of_approvers
+}
+```
+
+With input list_of_approvers taking as JavaScript expression `approvers`.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/list_of_approvers.mp4"
+/>
+
 ## Tutorial: A Slack Approval Step Conditioning Flow Branches
 
 The answer to the arguments of an approval page can be used as an input to condition branches in human-in-the-loop workflows.
