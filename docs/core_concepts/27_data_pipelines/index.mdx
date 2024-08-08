@@ -214,6 +214,18 @@ def main(s3_file_path: str):
 
 ![Write to S3 file](../18_files_binary_data/s3_file_output.png)
 
+Even though the whole file is downloadable, the backend only sends the rows that the frontend needs for the preview. This means that you can manipulate objects of infinite size, and the backend will only return what is necessary.
+
+You can even display several S3 files through an array of S3 objects:
+
+```ts
+export async function main() {
+  return [{s3: "path/to/file_1"}, {s3: "path/to/file_2", {s3: "path/to/file_3"}}];
+}
+```
+
+![S3 list of files download](../19_rich_display_rendering/s3_array.png "S3 list of files download")
+
 ### Secondary S3 Storage
 
 With all Windmill S3 Integration features, read and write from a storage that is not your main storage by specifying it in the s3 object as "secondary_storage" with the name of it.
