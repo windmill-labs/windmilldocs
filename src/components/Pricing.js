@@ -261,7 +261,8 @@ const pricing = {
 			features: [
 				{ text: 'Embed the entire Windmill app.' },
 				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
-				{ text: 'Private Hub.' }
+				{ text: 'Private Hub.' },
+				{ text: 'External auth with JWT.' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -449,6 +450,17 @@ const sections = [
 					'tier-team': false
 				},
 				link: '/docs/misc/saml_and_scim'
+			},
+			{
+				name: 'External auth with JWT',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/external_auth_with_jwt'
 			},
 			{
 				name: 'Support level',

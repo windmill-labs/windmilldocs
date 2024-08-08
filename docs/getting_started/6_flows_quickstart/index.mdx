@@ -22,6 +22,8 @@ Have in mind that in Windmill, Scripts are at the basis of Flows and Apps. To su
 
 Those workflows can run for-loops, branches (parralellizable) suspend themselves until a timeout or receiving events such as webhooks or approvals. They can be scheduled very frequently and check for new external items to process (what we call "Trigger" script).
 
+The result of a flow is the result of the last step executed, unless [error](../../flows/8_error_handling.mdx) was returned before or [Early Return](../../flows/19_early_return.mdx) is set.
+
 The overhead and coldstart between each step is about 20ms, which is [faster than any other orchestration engine](/blog/launch-week-1/fastest-workflow-engine), by a large margin.
 
 To create your first workflow, you could also pick one from our [Hub](https://hub.windmill.dev/flows) and fork it. Here, we're going to build our own flow from scratch, step by step.

@@ -824,6 +824,7 @@ const sidebars = {
 				'misc/s3_cache/index',
 				'core_concepts/oidc/index',
 				'misc/saml_and_scim/index',
+				'advanced/external_auth_with_jwt/index',
 				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',
@@ -833,8 +834,7 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index',
-				'misc/partners/index',
-				'advanced/external_auth_with_jwt/index'
+				'misc/partners/index'
 			]
 		}
 	]

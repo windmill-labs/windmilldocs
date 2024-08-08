@@ -34,7 +34,7 @@ You'll need to land on Airtable's <a href="https://airtable.com/create/tokens" r
 
 Now specify Airtable which databse and table you want to interact with:
 
-- **Database ID** can be found on the the URL of the page. It starts with "app" and ends before the next "/". e.g. appcy7pfdzgJIhto.
+- **Database ID** can be found on the URL of the page. It starts with "app" and ends before the next "/". e.g. appcy7pfdzgJIhto.
 - **Table name** is the name of the tab. By default it is called "Table 1".
 
 | Property  | Type   | Description                                    | Required | Where to find                              |
