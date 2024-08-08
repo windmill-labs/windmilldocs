@@ -30,17 +30,18 @@ If the result is an object/dict with a single key (except for `resume`, which ne
 
 There are various ways to display results as tables within Windmill. [Rich Table Display](#rich-table-display) automatically renders results as an interactive table, or you can force a table view with specific keys.
 
-If the result matches the table format (either `table-col`, `table-row`, or `table-row-object`), it will be [displayed as a table](#rich-table-display) even if the data is not nested under the key `table-*`.
+If the result matches the table format (either `table-col`, `table-row`, or `table-row-object`), it will be automatically detected and [displayed as a table](#rich-table-display) even if the data is not nested under the key `table-*`.
+
+There are 3 table shapes that are supported:
+- [table-row-object](#table-row-object) (list of objects)
+- [table-col](#table-column) (list of columns)
+- [table-row](#table-row) (list of values)
 
 ### Rich Table Display
 
-The rich table display does not require a specific key and will be enabled for [scripts](../../script_editor/index.mdx) or [flows](../../flows/1_flow_editor.mdx) when:
+The rich table display does not require a specific key and will be enabled for [scripts](../../script_editor/index.mdx) or [flows](../../flows/1_flow_editor.mdx) when the result is an array of objects.
 
-- The result is an array of objects.
-
-or
-
-- The result has a '[table-col](#table-column)' key.
+You can also force table display with a key ([table-col](#table-column), [table-row](#table-row), [table-row-object](#table-row-object)).
 
 ![Default](./default.png 'Rich Table Display')
 
