@@ -252,7 +252,7 @@ Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/712
 
 ### Description
 
-You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.md) (including markdown).
+You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.mdx) (including markdown).
 
 ```ts
 import * as wmill from "windmill-client@^1.158.2"
@@ -296,6 +296,21 @@ By enabling this option, the cancel button will not be displayed on the approval
 ![Hide cancel approval settings](../assets/flows/hide_cancel_approval.png 'Hide cancel approval settings')
 
 ![Hide cancel approval page](../assets/flows/hide_cancel_approval_page.png 'Hide cancel approval page')
+
+Alternatively, adding the cancel url as a result of the stpep will also render a cancel button, providing the operator with an option to cancel the step. e.g:
+
+```ts
+import * as wmill from "windmill-client"
+        
+export async function main() {
+    const urls = await wmill.getResumeUrls("approver1")
+
+    return {
+        resume: urls['resume'],
+        cancel: urls['cancel'],
+    }
+}
+```
 
 ## Permissions
 

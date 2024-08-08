@@ -1,0 +1,304 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Rich Display Rendering
+
+Windmill processes some outputs (from scripts or flows) intelligently to provide rich display rendering, allowing you to customize the display format of your results.
+
+Some formats are recognised automatically [Rich Table Display](#rich-table-display), while others can be forced through your code. By leveraging specific formats, you can display images, files, tables, HTML, JSON, and more.
+
+This feature is useful if you want to display an image, a GIF, a file, or specify the filename for a rich result.
+
+If the result is an object/dict with a single key (except for `approval`, which needs 3), you can leverage the following rich results:
+
+| Type             | Description                                                 | Example                                                                                                              |
+| ----------       | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| [json](#json)             | Render the value as a JSON.                                  | `return { "json": { "a": 1 } }`                                                                                      |
+| [table-col](#table-column)        | Render the value as a column-wise table.                     | `return { "table-col": { "foo": [42, 8], "bar": [38, 12] } }`                                                        |
+| [table-row](#table-row)        | Render the value as a row-wise table.                        | `return { "table-row": [ [ "foo", "bar" ], [ 42, 38 ], [ 8, 12 ] ] }`                                                |
+| [table-row-object](#table-row-object) | Render the value as a row-wise table but where each row is an object. | `return { "table-row-object": [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }` or  `return { "table-row-object": [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }` |
+| [s3](#s3)               | Render S3 files as a downloadable file and a bucket explorer, when Windmill is [connected to a S3 storage](../11_persistent_storage/large_data_files.mdx).                                  | `return { "s3": "path_to_file"}`           |
+| [html](#html)             | Render the value as HTML.                                    | `return { "html": "<div>...</div>" }`                                                                                |
+| [markdown](#markdown)         | Render the value as Markdown.                                | `return { "markdown": "## Hello World\nNice to meet you" }` or `return { "md": "## Hello World\nNice to meet you" }`                                     |
+| [file](#file)             | Render an option to download a file.                       | `return { "file": { "content": encode(file), "filename": "data.txt" } }`                                             |
+| [png](#png)              | Render the value as a PNG image.                             | `return { "png": { "content": base64Image } }` or `return { "png": base64Image }`                                |
+| [jpeg](#jpeg)             | Render the value as a JPEG image.                            | `return { "jpeg": { "content": base64Image } }` or `return { "jpeg": base64Image }`                              |
+| [gif](#gif)              | Render the value as a GIF image.                             | `return { "gif": { "content": base64Image } }` or `return { "gif": base64Image }`                                |
+| [svg](#svg)              | Render the value as an SVG image.                            | `return { "svg": "<svg>...</svg>" }`                                                                                 |
+| [error](#error)            | Render the value as an error message.                        | `return { "error": { "name": "418", "message": "I'm a teapot" }}`                                                    |
+| [resume](#resume)           | Render an approval and buttons to Resume or Cancel the step. | `return { "resume": "https://example.com", "cancel": "https://example.com", "approvalPage": "https://example.com" }` |
+| [map](#map)              | Render a map with a given location.                                 | `return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}`           |
+| [render_all](#render-all)       | Render all the results.                                      | `return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }`           |
+
+## JSON
+
+The `json` key allows returning the results in a JSON format.
+
+```ts
+return { "json": { "a": 1 } }
+```
+
+![Rich display JSON](./json.png "Rich display JSON")
+
+## Tables
+
+There are various ways to display results as tables within Windmill. [Rich Table Display](#rich-table-display) automatically renders results as an interactive table, or you can force a table view with specific keys.
+
+If the result matches the table format (either `table-col`, `table-row`, or `table-row-object`), it will be displayed as a table even if the data is not nested under the key `table-*`.
+
+### Rich Table Display
+
+The rich table display will be enabled for [scripts](../../script_editor/index.mdx) or [flows](../../flows/1_flow_editor.mdx) when:
+
+- The result is an array of objects.
+- The result has a 'table-col' key.
+
+![Default](./default.png 'Rich Table Display')
+
+#### Interactions
+
+The rich display renderer also supports interactions. Interactions are a way to display a result and allow the user to interact with it. For example, you can display a table and allow the user to sort it by clicking on the column headers.
+
+The features are:
+
+- Search.
+- Hide/show columns.
+- Sort by column (ascending/descending): Only enabled if the column is sortable, i.e. if the column is a number or a string.
+- Pagination.
+- Download as CSV. If the user selected rows, it will download the selected rows as CSV. If no rows are selected, it will download the entire table as CSV.
+- Download as JSON.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/rich_table_display.mp4"
+/>
+
+#### Example
+
+Try with this [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx):
+
+```py
+import requests
+from typing import Any, Dict
+
+
+def main() -> Dict[str, Any]:
+
+    url = "https://jsonplaceholder.typicode.com/posts"
+    response = requests.get(url)
+    data = response.json()
+    return data
+```
+
+![Rich Table Display](./rich_table_display.png "Rich Table Display")
+
+### Table Column
+
+The `table-col` key allows returning the value as a column-wise table.
+
+```ts
+return { "table-col": { "foo": [42, 8], "bar": [38, 12] } }
+```
+
+![Rich display Table Column](./table-col.png "Rich display Table Column")
+
+### Table Row
+
+The `table-row` key allows returning the value as a row-wise table.
+
+```ts
+return { "table-row": [ [ "foo", "bar" ], [ 42, 38 ], [ 8, 12 ] ] }
+```
+
+![Rich display Table Row](./table-row.png "Rich display Table Row")
+
+### Table Row Object
+
+The `table-row` key allows returning the value as a row-wise table but where each row is an object (optionally the first row can be an array of strings to enforce column order).	
+
+```ts
+return { "table-row-object": [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }
+```
+
+![Rich display Table Row Object 1](./table-row-object-1.png "Table Row Object 1")
+
+or
+
+```ts
+return { "table-row-object": [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }
+```
+
+![Rich display Table Row Object 2](./table-row-object-2.png "Table Row Object 2")
+
+## S3
+
+The `s3` key renders S3 files as a downloadable file and a bucket explorer, when Windmill is [connected to a S3 storage](../11_persistent_storage/large_data_files.mdx).
+
+```ts
+return { "s3": "path/to/file" }
+```
+
+If the files returned are CSV or parquet files, Windmill will display a [table preview](#rich-table-display).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/-nJs6E_1E8Y"
+	title="Perpetual Scripts"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+Learn more at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Object Storage for Large Data: S3, R2, MinIO, Azure Blob"
+		description="Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data."
+		href="/docs/core_concepts/persistent_storage/large_data_files"
+	/>
+</div>
+
+## HTML
+
+The `html` key allows returning the value as HTML.
+
+```ts
+return { "html": "<div>...</div>" }
+```
+
+![Rich display HTML](./html.png "Rich display HTML")
+
+## Markdown
+
+The `markdown` key allows returning the value as Markdown.
+
+```ts
+return { "markdown": "## Hello World\nNice to meet you" }
+```
+
+or
+
+```ts
+return { "md": "## Hello World\nNice to meet you" }
+```
+
+![Rich display Markdown](./markdown.png "Rich display Markdown")
+
+## File
+
+The `file` key allows returning an option to download a file.
+
+```ts
+return { "file": { "content": encode(file), "filename": "data.txt" } }
+```
+
+![Rich display File](./file.png "Rich display File")
+
+## PNG
+
+The `png` key allows returning the value as a PNG image.
+
+The picture must be encoded in base64.
+
+```ts
+return { "png": { "content": base64Image } }
+```
+
+or
+
+```ts
+return { "png": base64Image }
+```
+
+![Rich display PNG](./png.png "Rich display PNG")
+
+## JPEG
+
+The `jpeg` key allows returning the value as a JPEG image.
+
+The picture must be encoded in base64.
+
+```ts
+return { "jpeg": { "content": base64Image } }
+```
+
+or
+
+```ts
+return { "jpeg": base64Image }
+```
+
+![Rich display JPEG](./jpeg.png "Rich display JPEG")
+
+## GIF
+
+The `gif` key allows returning the value as a GIF.
+
+The gif must be encoded in base64.
+
+```ts
+return { "gif": { "content": base64Image } }
+```
+
+or
+
+```ts
+return { "gif": base64Image }
+```
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/gif.mp4"
+/>
+
+## SVG
+
+The `svg` key allows returning the value as an SVG image.
+
+```ts
+return { "svg": "<svg>...</svg>" }
+```
+
+![Rich display SVG](./svg.png "Rich display SVG")
+
+## Error
+
+The `error` key allows returning the value as an error message.
+
+```ts
+return { "error": { "name": "418", "message": "I'm a teapot" }}
+```
+
+![Rich display Error](./error.png "Rich display Error")
+
+## Resume
+
+The `resume` key allows returning an [approval](../../flows/11_flow_approval.mdx) and buttons to Resume or Cancel the step.
+
+```ts
+return { "resume": "https://example.com", "cancel": "https://example.com", "approvalPage": "https://example.com" }
+```
+
+![Rich display Resume](./approval.png "Rich display Resume")
+
+## Map
+
+The `map` key allows returning a map with a given location.
+
+```ts
+return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}
+```
+![Rich display map](./rich_display_map.png "Rich display map")
+
+## Render All
+
+The `render_all` key allows returning all results with their specific format.
+
+```ts
+return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }
+```
+![Rich display Render All](./render_all.png "Rich display Render All")
