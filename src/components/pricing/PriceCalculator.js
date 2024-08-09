@@ -91,19 +91,24 @@ export default function PriceCalculator({ period, tier }) {
 				<div className="mt-4 flex items-baseline gap-x-1">
 					<ul className="flex flex-col gap-2 w-full">
 						{Object.keys(tier.price).map((key) => (
-							<li key={key} className="flex flex-col ">
+							<li key={key} className="flex flex-col">
 								<div className="flex justify-between w-full items-center">
 									<div>
 										<span className="text-sm text-gray-600 dark:text-gray-200">
 											{key === 'vCPU' ? vCPUs.toLocaleString() : seats.toLocaleString()}
 										</span>{' '}
 										{key === 'vCPU' ? (
-											<a
-												href="#vcpu-reporting"
-												className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200 custom-link decoration-gray-600 dark:decoration-gray-200 decoration-0.1 custom-link-offset-1.5"
-											>
-												{key}s
-											</a>
+											<>
+												<a
+													href="#vcpu-reporting"
+													className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200 custom-link decoration-gray-600 dark:decoration-gray-200 decoration-0.1 custom-link-offset-1.5"
+												>
+													{key}s
+												</a>{' '}
+												<span className="text-sm text-gray-600 dark:text-gray-200">
+													({period.value === 'annually' ? vCPUs * 24 : vCPUs * 2} GB of memory)
+												</span>
+											</>
 										) : (
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
 												{key}s
