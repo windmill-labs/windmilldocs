@@ -106,7 +106,7 @@ export default function PriceCalculator({ period, tier }) {
 													{key}s
 												</a>{' '}
 												<span className="text-sm text-gray-600 dark:text-gray-200">
-													({period.value === 'annually' ? vCPUs * 24 : vCPUs * 2} GB of memory)
+													({vCPUs * 2} GB of memory)
 												</span>
 											</>
 										) : (
