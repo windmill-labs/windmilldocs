@@ -136,7 +136,7 @@ If the result matches the table format, it will be displayed as a table even if 
 List of columns is not mandatory but it allows [forcing their order](#example).
 
 ```ts
-return { "table-row-object": [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }
+return [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ]
 ```
 
 ![Rich display Table Row Object 1](./table-row-object-1.png "Table Row Object 1")
@@ -144,7 +144,7 @@ return { "table-row-object": [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 }
 or
 
 ```ts
-return { "table-row-object": [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }
+return [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ]
 ```
 
 ![Rich display Table Row Object 2](./table-row-object-2.png "Table Row Object 2")
