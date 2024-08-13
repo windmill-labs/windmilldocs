@@ -252,7 +252,7 @@ Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/712
 
 ### Description
 
-You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.md) (including markdown).
+You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.mdx) (including markdown).
 
 ```ts
 import * as wmill from "windmill-client@^1.158.2"
@@ -297,6 +297,21 @@ By enabling this option, the cancel button will not be displayed on the approval
 
 ![Hide cancel approval page](../assets/flows/hide_cancel_approval_page.png 'Hide cancel approval page')
 
+Alternatively, adding the cancel url as a result of the stpep will also render a cancel button, providing the operator with an option to cancel the step. e.g:
+
+```ts
+import * as wmill from "windmill-client"
+        
+export async function main() {
+    const urls = await wmill.getResumeUrls("approver1")
+
+    return {
+        resume: urls['resume'],
+        cancel: urls['cancel'],
+    }
+}
+```
+
 ## Permissions
 
 Customizing permissions of approval steps is a [Cloud & Enterprise Self-Hosted](/pricing) only feature.
@@ -322,6 +337,28 @@ By enabling this option, only logged in users who are members of the specified [
 You can also dynamically set the group by connecting it to another node's output.
 
 ![Approval group dynamic](../assets/flows/approval-group-dynamic.png 'Approval group dynamic')
+
+### Get the users who approved the flow
+
+The input `approvers` is an array of the users who approved the flow.
+
+To get the list of users, just have the step after the approval step return the `approvers` key. For example by taking an input [connected](./16_architecture.mdx) to the `approvers` key.
+
+The step could be as simple as:
+
+```ts
+export async function main(list_of_approvers) {
+  return list_of_approvers
+}
+```
+
+With input list_of_approvers taking as JavaScript expression `approvers`.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/list_of_approvers.mp4"
+/>
 
 ## Tutorial: A Slack Approval Step Conditioning Flow Branches
 

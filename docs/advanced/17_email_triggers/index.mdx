@@ -1,26 +1,35 @@
 # Email triggers
  
-Scripts and flows can be triggered by email messages sent to a specific email address. 
+Scripts and flows can be triggered by sending an email to a specific address. 
 Here is how to set it up:
 
-First, make sure that the port 25 is exposed either on your instance public IP or a separate IP and that it redirects to the windmill app on port 2525.
+First, make sure that port 25 is exposed either on your instance public IP or a separate IP and that it redirects to the windmill app on port 2525.
 The Caddyfile already contains the necessary configuration for this. 
-For kubernetes, you will find example configurations for some providers on the [Windmill helm charts repository](https://github.com/windmill-labs/windmill-helm-charts)
+For kubernetes, you will find example configurations for some providers on the [Windmill helm charts repository](https://github.com/windmill-labs/windmill-helm-charts?tab=readme-ov-file#kubernetes-hosting-tips)
 
 In addition, you will need to create one or two records in your DNS provider depending on your setup.
 
-If the port 25 is exposed on the same IP as the Windmill instance (e.g. Docker Compose with Caddy):
-  - An MX record from `mail.<instance domain>` to `<instance domain>`
+If port 25 is exposed on the same IP as the Windmill instance (e.g. Docker Compose with Caddy):
+  - An MX record from `<email domain>` to `<instance domain>`
 
-If the port 25 is exposed through a different IP (e.g. Kubernetes):
-  - An A/CNAME record that points to the IP of the windmill instance with port 25 exposed (for example `mail_server.<instance domain>`)
-  - An MX record from `mail.<instance domain>` to the record defined above (`mail_server.<instance domain>` if following the example)
+If port 25 is exposed separately through a different IP (e.g. Kubernetes):
+  - An A/CNAME record that points to the IP of the windmill instance with port 25 exposed (for example `mail_server.<instance domain>` but you can choose any domain you want)
+  - An MX record from `<email domain>` to the record defined above (`mail_server.<instance domain>` if following the example)
 
-By default, we assume that the email domain will be the windmill instance domain prefixed with `mail.` (which your MX record should point to).
-This is however configurable in the instance settings under the 'Core' tab.
-Once this is done, you can find the email address to use in the Webhooks panels on scripts and flows. 
-The email address will be in the form `<workspace>+<path>+<token>@mail.<instance domain>`.
+If the port 25 is exposed separately through a different domain name (e.g. Kubernetes AWS network load balancer)
+  - An MX record from `<email domain>` to the domain name
+
+You can choose any email domain, we suggest using `mail.<instance domain>`.
+Once you have defined the DNS settings, set the email domain in the instance settings under the "Core" tab.
+
+You will now find the specific email address to use in the webhooks panels for each script and flow. 
+The email address takes the form `<path/hash>+<workspace+path/hash+token base32 encoded>@<email domain>`.
 Your script will receive two arguments: 
-- `raw_email`: the raw email as string
-- `parsed_email`: the parsed email which should make it easier to extract the information you need ([format](https://docs.rs/mail-parser/latest/mail_parser/struct.Message.html))
-
+- `raw_email`: the raw email as a string
+- `parsed_email` the parsed email with the following attributes:
+  - `headers` a dictionary with the email headers (e.g. `from`, `to`, `subject`, `date`)
+  - `text_body` the text body of the email (or textified html body if none)
+  - `html_body` the html body of the email (or htmlified text body if none)
+  - `attachments` list of attachments with the following attributes:
+    - `headers` a dictionary with the attachment headers
+    - `body` the attachment data (base64 encoded if binary)
