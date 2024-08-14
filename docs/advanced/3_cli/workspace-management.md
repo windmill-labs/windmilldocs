@@ -71,7 +71,7 @@ wmill workspace add MyWorkspace workspace123 https://example.com/myworkspace
 wmill workspace add --create --create-workspace-name MyWorkspace2 --create-username john.doe
 ```
 
-## Switch Workspaces
+## Switch workspaces
 
 The wmill workspace switch command allows you to switch to another workspace. It requires specifying the target workspace as a positional argument and performs the necessary operations to switch to that workspace. Here is the documentation for the wmill workspace switch command:
 
@@ -93,7 +93,7 @@ wmill workspace switch <workspace_name>
  wmill workspace switch MyWorkspace
 ```
 
-## Selected Workspace
+## Selected workspace
 
 The currently selected workspace will be used for all operations. This workspace
 is <ins>underlined</ins> in the [list of workspaces](#list-workspaces).
@@ -139,3 +139,31 @@ The wmill workspace whoami command allows you to display the currently active us
 ```bash
 wmill workspace whoami
 ```
+
+## Cloning an instance
+
+### Pulling an instance
+
+To pull instance users, groups, settings and configs (=worker groups+SMTP) from the instance use `wmill instance pull`.
+
+You can skip any of those using `--skip-XXX`.
+
+You can also pull all workspaces at the same time by adding the `--include-workspaces` option. It will setup for each a local workspace (including a folder in the current directory) with a prefix specific to the instance (based on the name you've given to the instance).
+
+### Pushing an instance
+
+To push to an instance use `wmill instance push`. It takes the same options as pulling an instance.
+
+When using `--include-workspaces`, you will also have to select the instance prefix of the local workspaces you want to push (make sure you're in its parent folder).
+
+### Managing encryption keys
+
+#### Encryption key during instance sync
+
+The workspace encryption key is migrated along with the workspace. During the push process, you will be prompted to decide whether to re-encrypt the secrets of the workspace on the remote instance. In the case of instance migration, it is recommended to select "no" as the secrets are already encrypted with the correct key.
+
+#### Encryption key during workspace sync
+
+When synchronizing workspaces, the `--include-key` option should be used to ensure the encryption key is also included in the sync process. This is essential for maintaining the security and integrity of encrypted data as it moves between environments.
+
+This option prompts you to confirm if the encryption key should be replaced or retained. Make an informed choice based on whether the destination environment requires a new key or should continue using the existing key.
