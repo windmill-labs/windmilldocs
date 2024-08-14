@@ -140,30 +140,16 @@ The wmill workspace whoami command allows you to display the currently active us
 wmill workspace whoami
 ```
 
-## Cloning an instance
+## Managing encryption keys
 
-### Pulling an instance
+All [secrets](../../core_concepts/2_variables_and_secrets/index.mdx#secrets) of a workspace are [encrypted](../../core_concepts/30_workspace_secret_encryption/index.mdx) with a symmetric key unique to that workspace. This key is generated when the workspace is created and is stored in the database in the workspace_settings.
 
-To pull instance users, groups, settings and configs (=worker groups+SMTP) from the instance use `wmill instance pull`.
+### Encryption key during instance sync
 
-You can skip any of those using `--skip-XXX`.
+The workspace encryption key is migrated along with the workspace. During the [push process](./sync.mdx#pushing-an-instance), you will be prompted to decide whether to re-encrypt the secrets of the workspace on the remote instance. In the case of instance migration, it is recommended to select "no" as the secrets are already encrypted with the correct key.
 
-You can also pull all workspaces at the same time by adding the `--include-workspaces` option. It will setup for each a local workspace (including a folder in the current directory) with a prefix specific to the instance (based on the name you've given to the instance).
+### Encryption key during workspace sync
 
-### Pushing an instance
-
-To push to an instance use `wmill instance push`. It takes the same options as pulling an instance.
-
-When using `--include-workspaces`, you will also have to select the instance prefix of the local workspaces you want to push (make sure you're in its parent folder).
-
-### Managing encryption keys
-
-#### Encryption key during instance sync
-
-The workspace encryption key is migrated along with the workspace. During the push process, you will be prompted to decide whether to re-encrypt the secrets of the workspace on the remote instance. In the case of instance migration, it is recommended to select "no" as the secrets are already encrypted with the correct key.
-
-#### Encryption key during workspace sync
-
-When synchronizing workspaces, the `--include-key` option should be used to ensure the encryption key is also included in the sync process. This is essential for maintaining the security and integrity of encrypted data as it moves between environments.
+When [synchronizing workspaces](./sync.mdx), the `--include-key` option should be used to ensure the encryption key is also included in the sync process. This is essential for maintaining the security and integrity of encrypted data as it moves between environments.
 
 This option prompts you to confirm if the encryption key should be replaced or retained. Make an informed choice based on whether the destination environment requires a new key or should continue using the existing key.
