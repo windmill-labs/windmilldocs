@@ -427,6 +427,25 @@ Default e-mail is `admin@windmill.dev` and the password is `changeme`.
 
 :::
 
+
+### Set up limits for workers and memory
+
+From your docker-compose, you can set limits for consumption of [workers](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L51) and [memory](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L52):
+
+```yaml
+windmill_worker:
+  image: ${WM_IMAGE}
+  pull_policy: always
+  deploy:
+    replicas: 3
+    resources:
+      limits:
+        cpus: "1"
+        memory: 2048M
+```
+
+It is useful on [Enterprise Edition](/pricing) to avoid exceeding the terms of your subscription.
+
 ### Update
 
 To update to a newer version of Windmill, all you have to do is run:

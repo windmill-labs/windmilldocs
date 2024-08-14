@@ -46,7 +46,7 @@ Here are the steps to follow:
 
 2. [Sign up to Mailchimp](https://mailchimp.com/signup/) (we used the free trial at first).
 
-3. Go the the [inbound menu of Mailchimp Mandrill](https://mandrillapp.com/inbound).
+3. Go to the [inbound menu of Mailchimp Mandrill](https://mandrillapp.com/inbound).
 
 4. Add a domain or sub-domain. For example `webhooks.domain.com`.
 

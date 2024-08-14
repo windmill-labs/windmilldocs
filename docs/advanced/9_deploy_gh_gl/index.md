@@ -159,7 +159,7 @@ jobs:
           deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts sync push --yes --skip-variables --skip-secrets --skip-resources
 ```
 
-The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it. You could also use the `--stateful` sync format, not to ignore variables, secrets and resources to avoid committing secrets to the repository. Feel free to adapt this to your use case.
+The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it.
 
 ### Windmill GitHub Sync setup
 

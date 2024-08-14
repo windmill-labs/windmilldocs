@@ -15,10 +15,17 @@ If the port 25 is exposed through a different IP (e.g. Kubernetes):
   - An A/CNAME record that points to the IP of the Windmill instance with port 25 exposed (for example `mail_server.<instance domain>`).
   - An MX record from `mail.<instance domain>` to the record defined above (`mail_server.<instance domain>` if following the example).
 
-By default, we assume that the email domain will be the Windmill instance domain prefixed with `mail.` (which your MX record should point to).
-This is however configurable in the instance settings under the 'Core' tab.
-Once this is done, you can find the email address to use in the [Webhooks](../../core_concepts/4_webhooks/index.mdx) panels on scripts and flows. 
-The email address will be in the form `<workspace>+<path>+<token>@mail.<instance domain>`.
-Your script will receive two arguments:
-- `raw_email`: the raw email as string.
-- `parsed_email`: the parsed email which should make it easier to extract the information you need ([format](https://docs.rs/mail-parser/latest/mail_parser/struct.Message.html)).
+You can choose any email domain, we suggest using `mail.<instance domain>`.
+Once you have defined the DNS settings, set the email domain in the instance settings under the "Core" tab.
+
+You will now find the specific email address to use in the webhooks panels for each script and flow. 
+The email address takes the form `<path/hash>+<workspace+path/hash+token base32 encoded>@<email domain>`.
+Your script will receive two arguments: 
+- `raw_email`: the raw email as a string
+- `parsed_email` the parsed email with the following attributes:
+  - `headers` a dictionary with the email headers (e.g. `from`, `to`, `subject`, `date`)
+  - `text_body` the text body of the email (or textified html body if none)
+  - `html_body` the html body of the email (or htmlified text body if none)
+  - `attachments` list of attachments with the following attributes:
+    - `headers` a dictionary with the attachment headers
+    - `body` the attachment data (base64 encoded if binary)

@@ -11,7 +11,7 @@ There exists a great variety of workflows and many software are domain-specific 
 
 The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
 
-In Windmill, each step is code with a main function in TypeScript, Python, Go, PHP, Bash or raw queries to databases.
+In Windmill, each step is code with a main function in TypeScript, Python, Go, PHP, Bash or raw queries to databases. The result of a flow is the result of the last step executed, unless [error](./8_error_handling.mdx) was returned before or [Early Return](./19_early_return.mdx) is set.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
