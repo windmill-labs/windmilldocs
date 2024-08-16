@@ -70,18 +70,31 @@ const faqs = [
 		question: 'How many vCPUs do I need?',
 		answer: (
 			<span>
-				The number of vCPUs will depend on the workload and the jobs Windmill will need to run. Each {' '}
+				The number of vCPUs will depend on the workload and the jobs Windmill will need to run. Each{' '}
 				<a
 					href="/docs/core_concepts/worker_groups"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 					target="_blank"
 				>
 					worker
-				</a>{' '} only executes one job at a time, by design to use the full resource of the worker, and you can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4 vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
-				<br /><br/>
-				As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. The vCPU numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes. There is also a global quota for memory limit. This quota is set to 2Gb * vCPU paid. Which mean if you have paid for 4vCPU, their aggregate memory limit must be below 8Gb. You can not set any limits for vCPUs and rely solely on memory quotas if you prefer.
-				<br/><br/>
-				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate your needs in practice.
+				</a>{' '}
+				only executes one job at a time, by design to use the full resource of the worker, and you
+				can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4
+				vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26
+				million jobs per month per worker if each one lasts 100ms. However, it completely depends on
+				the nature of the jobs, their number and duration.
+				<br />
+				<br />
+				As a note, keep in mind that the number of vCPUs considered is the number of production
+				vCPUs of your workers, not of development staging, if you have separate instances. The vCPU
+				numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes.
+				There is also a global quota for memory limit. This quota is set to 2Gb * vCPU paid. Which
+				mean if you have paid for 4vCPU, their aggregate memory limit must be below 8Gb. You can not
+				set any limits for vCPUs and rely solely on memory quotas if you prefer.
+				<br />
+				<br />
+				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate
+				your needs in practice.
 			</span>
 		)
 	},
@@ -106,9 +119,13 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with
-				4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by 24.
-				Each vCPU can run up to ~26M jobs per month.
+				, pricing is vCPU-memory-based. For example,24 workers with 0.5 vCPU each is 1 vCPU. 1
+				worker with 4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would
+				divide that by 24. The number of vCPUs is the aggregate limits of all the workers in your
+				production instances. Note that every vCPU paid gives you a quota of 2Gb of memory limits
+				(the quota is an aggregate sum, not a limit for each individual worker). You may not set
+				vCPU limits and rely solely on memory quotas if you prefer. Each worker can run up to ~26M
+				jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}
@@ -122,11 +139,14 @@ const faqs = [
 				to automatically track and report the usage of vCPUs for your subscription.
 				<br />
 				<br />
-				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the audit logs. User count is across all instances (dev, prod) but Windmill only counts once the same user.
+				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are
+				active (from logging in to running or deploying a script) on the platform in the last 30
+				days, according to the audit logs. User count is across all instances (dev, prod) but
+				Windmill only counts once the same user.
 				<br />
 				<br />
-				The number of vCPUs considered is the number of production vCPUs, not of development staging, if you have separate instances.
-				So you can simply set limits in the{' '}
+				The number of vCPUs considered is the number of production vCPUs, not of development
+				staging, if you have separate instances. So you can simply set limits in the{' '}
 				<a
 					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
@@ -144,17 +164,20 @@ const faqs = [
 	},
 	{
 		id: 'portal',
-		question: "How can I update my subscription?",
+		question: 'How can I update my subscription?',
 		answer: (
 			<span>
-				As an Enterprise user, you will have access to detailed usage information and invoices through the{' '}
+				As an Enterprise user, you will have access to detailed usage information and invoices
+				through the{' '}
 				<Link
 					to="/docs/misc/plans_details#windmill-customer-portal"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					Windmill Customer Portal
-				</Link>{'. '}
-				You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
+				</Link>
+				{'. '}
+				You can also enable/disable any time automatic renewal and automatic debit (therefore
+				payment by invoice).
 			</span>
 		)
 	},
@@ -189,28 +212,34 @@ const faqs = [
 		question: 'Can I get services and workshops from Windmill or partners?',
 		answer: (
 			<span>
-				Windmill is a company that develops a product. Our mission is to build the best possible product so that our users can create the most value out of it.
-
-				We provide {' '}
+				Windmill is a company that develops a product. Our mission is to build the best possible
+				product so that our users can create the most value out of it. We provide{' '}
 				<Link
 					to="/docs/misc/support_and_sla"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					priority support
 				</Link>{' '}
-				to our Enterprise customers. This support includes the implementation of feature requests, prioritized bug resolutions, and recommendations on use cases.
-				<br /><br />
-				However, we do not carry out the implementation of these use cases ourselves (e.g. building a specific app). While we are able to offer some workshops at the beginning of your Windmill journey, it is not possible to do so repeatedly and systematically.
-				<br /><br />
-				For these reasons, we recommend that all Windmill users that require end-to-end use case development and exhaustive training engage with
-				{' '}
+				to our Enterprise customers. This support includes the implementation of feature requests,
+				prioritized bug resolutions, and recommendations on use cases.
+				<br />
+				<br />
+				However, we do not carry out the implementation of these use cases ourselves (e.g. building
+				a specific app). While we are able to offer some workshops at the beginning of your Windmill
+				journey, it is not possible to do so repeatedly and systematically.
+				<br />
+				<br />
+				For these reasons, we recommend that all Windmill users that require end-to-end use case
+				development and exhaustive training engage with{' '}
 				<Link
 					to="/docs/misc/partners"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					Windmill certified partners
-				</Link>{'. '}
-				These partners are trained and certified by Windmill to provide the best possible service to our users.
+				</Link>
+				{'. '}
+				These partners are trained and certified by Windmill to provide the best possible service to
+				our users.
 			</span>
 		)
 	},
