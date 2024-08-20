@@ -174,9 +174,11 @@ or use the env variable: `INCLUDE_HEADERS` with the same format so that all requ
 ### Query args
 
 It is possible to pass query args to the job. To do so, either specify in the query args the headers to process at `include_query`, separated with `,`. e.g for a [sync](#synchronous) get request (works for all endpoints):
+
 ```
 /api/w/workspace/jobs/run_wait_result/p/u/user/new_script?include_query=a,b,c&a=foo&b=bar&c=foobar
 ```
+
 to have a: "foo", b: "bar", c: "foobar", passed as args.
 
 ### Non Object payload / body
@@ -192,6 +194,25 @@ and your script can process it as:
 ```python
 def main(body: List[int]):
     print(body)
+```
+
+### Wrapping body, handling arbitrary payload
+
+You can also force the payload to be wrapped in an object at the key `body` by passing the query arg `wrap_body=true`. This is useful when the payload is not not known in advance and you want to handle it in your script. e.g:
+
+Python:
+
+```python
+def main(body: Any):
+	print(body)
+```
+
+Typescript:
+
+```typescript
+export async function main(body: any) {
+	console.log(body);
+}
 ```
 
 ### Raw payload / body
@@ -296,7 +317,6 @@ Nothing extra needs to be done on Windmill's side, if a request has the cloudeve
 
 ![Event Grid Cloud Event Subscription](./event_grid_cloud_event_subscription.png)
 
-
 :::caution
 
 Windmill does not support batching cloud events yet. This means that requests with the content type set to `'application/cloudevents-batch+json'` will return an error response.
@@ -311,7 +331,7 @@ Connect your Windmill workspace to an external service to sync or get notified a
 
 From workspace settings, go to the "Webhooks" tab and fill an URL under "URL to send requests to".
 
-![Workspace Webhook](./workspace_webhook.png "Workspace Webhook")
+![Workspace Webhook](./workspace_webhook.png 'Workspace Webhook')
 
 <!-- Resources -->
 
