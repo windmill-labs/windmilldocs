@@ -3,7 +3,7 @@ slug: continue-on-disapproval
 version: v1.380.0
 title: Continue on disapproval/timeout
 tags: ['Flow Editor']
-description: On approval steps, a new toggle to continue flow execution on disapproval of approval step. If set, instead of failing the flow and bubbling up the error.
+description: On approval steps, a new toggle to continue flow execution on disapproval of approval step. If set, instead of failing the flow will bubble up the error and continue.
 features:
   [
     'New toggle to continue flow execution after disapproval.',
