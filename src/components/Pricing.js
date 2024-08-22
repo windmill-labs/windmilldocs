@@ -349,6 +349,17 @@ const sections = [
 				link: '/docs/apps/public_apps'
 			},
 			{
+				name: 'Email Triggers',
+				tiers: {
+					'tier-free-selfhost': 'Max 100 emails per day',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited',
+					'tier-team': 'Unlimited'
+				},
+				link: '/docs/advanced/email_triggers'
+			},
+			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
 				tiers: {
 					'tier-free-selfhost': false,
