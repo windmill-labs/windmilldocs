@@ -232,6 +232,7 @@ const sidebars = {
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
+				'advanced/email_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/rich_display_rendering/index',
@@ -718,7 +719,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/self_host/aws_ecs', 'advanced/email_triggers/index']
+					items: ['advanced/self_host/aws_ecs']
 				},
 				{
 					type: 'category',
