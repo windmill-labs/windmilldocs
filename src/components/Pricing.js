@@ -628,17 +628,6 @@ const sections = [
 				link: '/docs/core_concepts/oidc'
 			},
 			{
-				name: 'Distributed dependency cache backed by S3',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/misc/s3_cache'
-			},
-			{
 				name: 'Codebases & bundles',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -648,6 +637,28 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/codebases_and_bundles'
+			},
+			{
+				name: 'Private PyPi repositories & npm registries and packages',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/dependencies_in_typescript#private-npm-registry--private-npm-packages'
+			},
+			{
+				name: 'Distributed dependency cache backed by S3',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/s3_cache'
 			}
 		]
 	},
