@@ -77,6 +77,18 @@ Set a custom timeout after which the flow will be automatically canceled if no a
 
 ![Approval Timeout](../assets/flows/approvals-timeout.png 'Approval Timeout')
 
+### Continue on disapproval/timeout
+
+If set, instead of failing the flow and bubbling up the error, continue to the next step which would allow to put a [branchone](./13_flow_branches.md) right after to handle both cases separately. If any disapproval/timeout event is received, the resume payload will be similar to every error result in Winmdill, an object containing an `error` field which you can use to distinguish between approvals and disapproval/timeouts.
+
+![Continue on disapproval/timeout](../assets/flows/continue_on_disapproval.png 'Continue on disapproval/timeout')
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/continue_on_disapproval.mp4"
+/>
+
 ## Form
 
 You can add an arbitrary schema form to be provided and displayed on the approval page. Users opening the approval page would then be offered to fill arguments you can use in the flow.

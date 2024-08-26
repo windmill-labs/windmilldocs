@@ -188,6 +188,7 @@ const sidebars = {
 						}
 					]
 				},
+				'core_concepts/rich_display_rendering/index',
 				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
 				{
@@ -232,10 +233,11 @@ const sidebars = {
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
+				'advanced/email_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
-				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
+				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'integrations/integrations_on_windmill',
@@ -718,7 +720,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/self_host/aws_ecs', 'advanced/email_triggers/index']
+					items: ['advanced/self_host/aws_ecs']
 				},
 				{
 					type: 'category',
