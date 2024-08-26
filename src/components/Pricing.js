@@ -261,7 +261,8 @@ const pricing = {
 			features: [
 				{ text: 'Embed the entire Windmill app.' },
 				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
-				{ text: 'Private Hub.' }
+				{ text: 'Private Hub.' },
+				{ text: 'External auth with JWT.' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -346,6 +347,17 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/apps/public_apps'
+			},
+			{
+				name: 'Email Triggers',
+				tiers: {
+					'tier-free-selfhost': 'Max 100 emails per day',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited',
+					'tier-team': 'Unlimited'
+				},
+				link: '/docs/advanced/email_triggers'
 			},
 			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
@@ -449,6 +461,17 @@ const sections = [
 					'tier-team': false
 				},
 				link: '/docs/misc/saml_and_scim'
+			},
+			{
+				name: 'External auth with JWT',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/external_auth_with_jwt'
 			},
 			{
 				name: 'Support level',
@@ -605,17 +628,6 @@ const sections = [
 				link: '/docs/core_concepts/oidc'
 			},
 			{
-				name: 'Distributed dependency cache backed by S3',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/misc/s3_cache'
-			},
-			{
 				name: 'Codebases & bundles',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -625,6 +637,28 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/codebases_and_bundles'
+			},
+			{
+				name: 'Private PyPi repositories & npm registries and packages',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/advanced/dependencies_in_typescript#private-npm-registry--private-npm-packages'
+			},
+			{
+				name: 'Distributed dependency cache backed by S3',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/s3_cache'
 			}
 		]
 	},

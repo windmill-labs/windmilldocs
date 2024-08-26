@@ -114,7 +114,7 @@ Team plans work at the workspace-level.
 - Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the Instance Settings. The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
 
 - To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](#windmill-customer-portal).
-- Windmill employs lightweight telemetry to automatically [track and report](#usage-check) the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
+- Windmill employs lightweight telemetry to automatically [track and report](#usage-checks) the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
@@ -174,7 +174,7 @@ This comparison is made only for your instance of Prod, for which you can find t
 Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
 
 How the data is calculated:
-- Seats: number of users (1 developer, or 2 operators) who are active on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx).
+- Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
 - vCPUs: number of vCPUs used by the production [workers](../../core_concepts/9_worker_groups/index.mdx) and set within the container [limits](../../core_concepts/9_worker_groups/index.mdx#workers-and-vcpus).
 - Memory: like the vCPUs, we aggregate the limits of all production containers and for each vCPU you pay for, you get a quota of 2GB.
 

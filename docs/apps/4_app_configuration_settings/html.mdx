@@ -23,11 +23,19 @@ The following section details HTML component's specific settings. For more detai
 	/>
 </div>
 
-## HTML Input
+## Data source
 
 |  Type  | Connectable | Templatable |                                          Default                                          | Description                |
 | :----: | :---------: | :---------: | :---------------------------------------------------------------------------------------: | -------------------------- |
 | string |    true     |    true     | `<img src="****"><h1 class="absolute top-4 left-2 text-white">Hello ${ctx.username}</h1>` | The HTML content to render |
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [recompute](../3_app-runnable-panel.mdx#recompute) | id: string | Recompute a component. | recompute('a'); |
 
 ## Outputs
 

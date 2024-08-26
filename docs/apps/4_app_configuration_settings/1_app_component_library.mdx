@@ -197,14 +197,14 @@ Tabs components allow you to host other components in several tabs. Each tab is 
 
 ### [Conditional Tabs](./conditional_tabs.mdx)
 
-Conditional tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
+Conditional Tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	id="conditional-tabs-video"
 	src="/videos/conditional-tabs.mp4"
-	alt="Conditional tabs component"
+	alt="Conditional Tabs component"
 />
 
 ### [Sidebar Tabs](./sidebar_tabs.mdx)
@@ -227,7 +227,7 @@ The component triggers a runnable when clicked.
 
 ![Button API](../../assets/apps/4_app_component_library/button.png.webp)
 
-### [Submit](./submit_form.mdx)
+### [Submit Form](./submit_form.mdx)
 
 The submit form component allows you to create a submit form linked to a runnable. It has a submit button that triggers a runnable when clicked.
 
@@ -239,7 +239,7 @@ The submit form component allows you to create a submit form linked to a runnabl
 
 ### [Modal Form](./modal_form.mdx)
 
-The modal form component allows you to create a form linked to a script or flow. It is a Submit form component but with a dedicated modal opened when triggered. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
+The modal form component allows you to create a form linked to a script or flow. It is a Submit Form component but with a dedicated modal opened when triggered. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
 
 ![Form Modal Button](../../assets/apps/4_app_component_library/form-modal-button.png.webp)
 ![Form Modal API](../../assets/apps/4_app_component_library/form-modal.png.webp)
@@ -311,6 +311,12 @@ The slider component allows you to get a number from the user.
 
 ![Slider API](../../assets/apps/4_app_component_library/slider.png.webp)
 
+### [Date Slider](./date_slider.mdx)
+
+The slider component allows you to get a date from a range of dates.
+
+![Date Slider API](../../assets/apps/4_app_component_library/date_slider.png.webp)
+
 ### [Range](./range.mdx)
 
 The slider component allows you to get a range of numbers from the user.
@@ -335,11 +341,23 @@ The Date & Time Input component allows the user to fill in a date and time.
 
 ![Date & Time Input](../../assets/apps/4_app_component_library/date_time_input.png "Date & Time Input")
 
+### [Date Select](./date_select.mdx)
+
+The Date Select component allows the user to fill in a date by picking a day, month and year.
+
+![Date Select](../../assets/apps/4_app_component_library/date_select.png "Date Select")
+
 ### [File Input](./file_input.mdx)
 
 The file input allows users to drop files into the app.
 
 ![File Input API](../../assets/apps/4_app_component_library/file_input.png.webp)
+
+### [S3 File Uploader](./s3fileinput.mdx)
+
+The S3 File Uploader component allows you to upload files to an S3 bucket.
+
+![s3fileupload](../../assets/apps/4_app_component_library/s3fileupload.png.webp)
 
 ### [Toggle](./toggle.mdx)
 
@@ -359,11 +377,11 @@ The Resource Select component allows you to have users pick [resources](../../co
 
 ![Resource Select](../../assets/apps/4_app_component_library/resource_select.png.webp)
 
-### [MultiSelect](./multiselect.mdx)
+### [Multi Select](./multiselect.mdx)
 
-The multiselect component allows you to get multiple strings from the user.
+The Multi Select component allows you to get multiple strings from the user.
 
-![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png.webp)
+![Multi Select API](../../assets/apps/4_app_component_library/multiselect.png.webp)
 
 ### [Select Tab](./select_tab.mdx)
 
@@ -378,18 +396,6 @@ The Select Step is standalone tab component that behaves like a select component
 ![Select Step](../../assets/apps/4_app_component_library/step_select.png.webp)
 
 ## Tables
-
-### [TanStack Table (Depreciated)](./table.mdx)
-
-The table component allows you to display a table.
-
-:::note Depreciated
-
-integrationsand will be removed in the future. Please use the [AgGrid Table](./aggrid_table.mdx) or [Database Studio](./database_studio.mdx) components instead.
-
-:::
-
-![Table API](../../assets/apps/4_app_component_library/table.png.webp)
 
 ### [AgGrid Table](./aggrid_table.mdx)
 
@@ -408,6 +414,18 @@ The AgGrid table component allows you to display an Ag Grid table.
 This component allows you to create a database studio. The database studio is a web-based database management tool. It allows you to display and edit the content of a database. It uses Ag Grid to display the table.
 
 ![Database Studio](../../assets/apps/4_app_component_library/db_studio.png "Database Studio")
+
+### [TanStack Table (Depreciated)](./table.mdx)
+
+The table component allows you to display a table.
+
+:::note Depreciated
+
+integrationsand will be removed in the future. Please use the [AgGrid Table](./aggrid_table.mdx) or [Database Studio](./database_studio.mdx) components instead.
+
+:::
+
+![Table API](../../assets/apps/4_app_component_library/table.png.webp)
 
 ## Display
 
@@ -441,6 +459,12 @@ The HTML component allows you to display HTML content.
 
 ![HTML](../../assets/apps/4_app_component_library/html.png.webp)
 
+### [Markdown](./markdown.mdx)
+
+The Markdown component allows you to display Markdown content.
+
+![Markdown component](../../assets/apps/4_app_component_library/markdown.png "Markdown component")
+
 ### [PDF](./pdf.mdx)
 
 The PDF component allows you to display a PDF file.
@@ -449,21 +473,53 @@ The PDF component allows you to display a PDF file.
 
 ### [Rich Result](./rich_result.mdx)
 
-The Rich Result component allows you to display the result of a Runnable. It tries to display the result in a human-readable way.
+The Rich Result component allows you to display the result of a Runnable.
 
 ![Rich Result](../../assets/apps/4_app_component_library/rich_result.png.webp)
 
-### [Log](./log_display.mdx)
+### [Log by Job Id](./log_display.mdx)
 
-The Log Display component allows you to display the log of a Runnable.
+The Log Display component allows you to display the log of a Runnable by providing its Job id.
 
-![Log Display](../../assets/apps/4_app_component_library/log_display.png.webp)
+![Log Display](../../assets/apps/4_app_component_library/log_display.png)
 
-### [Flow Status](./flow_status.mdx)
+### [Flow Status by Job Id](./flow_status.mdx)
 
-The Flow Status component allows you to display the status of a flow.
+The Flow Status component allows you to display the status of a flow by providing its Job id.
 
-![Flow Status](../../assets/apps/4_app_component_library/flow_status.png.webp)
+![Flow Status](../../assets/apps/4_app_component_library/flow_status.png)
+
+### [Rich Result by Job Id](./rich_result_by_job_id.mdx)
+
+The Rich Result by Job Id component allows you to display the result of a Runnable by providing its Job id.
+
+![Rich Result by Job Id](../../assets/apps/4_app_component_library/rich_result_by_job_id.png "Rich Result by Job Id")
+
+### [Statistic Card](./statistic_card.mdx)
+
+The statistic card component is a panel meant to display a value and progress.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/stat_card.mp4"
+/>
+
+### [Dropdown Menu](./dropdown_menu.mdx)
+
+The Dropdown Menu component is meant to embed one of several [Button](#button) components and display them in a dropdown menu.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/dropdown_menu.mp4"
+/>
+
+### [Alert](./alert.mdx)
+
+The alert component allows you to display a message in 4 different styles: `info`, `success`, `warning`, and `error`.
+
+![Alert API](../../assets/apps/4_app_component_library/alert.png.webp "Alert API")
 
 ## Charts
 
@@ -497,6 +553,12 @@ The Vega Lite component allows you to display a Vega Lite chart.
 
 ![Vega Lite API](../../assets/apps/4_app_component_library/vega-lite.png.webp)
 
+### [AgCharts](./agcharts.mdx)
+
+The Ag Charts component allows you to display a chart using the [Ag Charts](https://charts.ag-grid.com/) library.
+
+![agcharts](../../assets/apps/4_app_component_library/agcharts.png.webp)
+
 ## Groups
 
 Components can be grouped within containers:
@@ -507,5 +569,18 @@ Components can be grouped within containers:
 		description="Components can be grouped within containers."
 		href="/docs/apps/app_configuration_settings/components_groups"
 		color="orange"
+	/>
+</div>
+
+## Custom Components
+
+For more control and standardization with your existing stack, you might want to import your own components in React.
+
+<div className="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Import Custom React Components"
+		description="Define components in React or Vanilla JS that interact with the rest of your app."
+		href="/docs/apps/react_components"
 	/>
 </div>

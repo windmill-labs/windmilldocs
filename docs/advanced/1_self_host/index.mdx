@@ -13,7 +13,7 @@ For larger and production use-cases, use our [Helm chart](#helm-chart) to deploy
 
 ![Self-hosted Windmill](./self_hosted_windmill.png 'Self-hosted Windmill')
 
-> Example of self-hosted Windmill on [localhost](#docker).
+> Example of a self-hosted Windmill instance on [localhost](#docker).
 
 <br />
 
@@ -107,6 +107,7 @@ Using [Docker](https://www.docker.com/) and [Caddy](https://caddyserver.com/), W
 ([`docker-compose.yml`][windmill-docker-compose], [`Caddyfile`][windmill-caddyfile]) and a [.env][windmill-env] in a single command.
 
 [Caddy][caddy] is the reverse proxy that will redirect traffic to both Windmill (port 8000) and the LSP (the monaco assistant) service (port 3001) and multiplayer service (port 3002).
+It also redirects TCP traffic on port 25 to Windmill (port 2525) for email triggers. 
 Postgres holds the entire state of Windmill, the rest is fully stateless, Windmill-LSP provides editor intellisense.
 
 Make sure Docker is started:
@@ -425,6 +426,25 @@ docker compose up -d
 Default e-mail is `admin@windmill.dev` and the password is `changeme`.
 
 :::
+
+
+### Set up limits for workers and memory
+
+From your docker-compose, you can set limits for consumption of [workers](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L51) and [memory](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L52):
+
+```yaml
+windmill_worker:
+  image: ${WM_IMAGE}
+  pull_policy: always
+  deploy:
+    replicas: 3
+    resources:
+      limits:
+        cpus: "1"
+        memory: 2048M
+```
+
+It is useful on [Enterprise Edition](/pricing) to avoid exceeding the terms of your subscription.
 
 ### Update
 

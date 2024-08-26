@@ -72,9 +72,10 @@ export async function main() {
 
 ## Controls
 
-[getAgGrid](../3_app-runnable-panel.mdx#getaggrid): Use the `getAgGrid` function to get the ag-grid instance of a table.
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
 
-[setSelectedIndex](../3_app-runnable-panel.mdx#setselectedindex): Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+- [getAgGrid](../3_app-runnable-panel.mdx#getaggrid): Use the `getAgGrid` function to get the ag-grid instance of a table.
+- [setSelectedIndex](../3_app-runnable-panel.mdx#setselectedindex): Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
 
 ## Table actions
 
@@ -92,7 +93,7 @@ Available components are:
 
 | Name                        |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
 | --------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
-| Column Defs                 | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
+| [Column Defs](#column-defs)                 | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
 | Flex                        | boolean |    false    |    false    |     true      | Allows you to distribute available space among multiple elements to control their relative sizes and positions. |
 | All Editable                | boolean |    false    |    false    |     false     | Whether you want all columns to be editable.                                                                    |
 | Multiple Selectable         | boolean |    false    |    false    |     false     | Make multiple rows selectable at once.                                                                          |
@@ -120,6 +121,23 @@ Available components are:
 | inputs           | object  | The outputs of each action organised by action id and array of outputs |
 | filters          | object  | The filters applied to the table                                       |
 | displayRowCount  | number  | The number of rows displayed on the table                              |
+
+## Column Defs
+
+The `Column Defs` input allows you to define the columns of the table. The columns are defined as an array of objects, where each object represents a column. The object has the following properties:
+
+| Name             |  Type   | Description                                                              |
+| ---------------- | :-----: | ------------------------------------------------------------------------ |
+| field            | string  | The name of the field to display.  				   				        |
+| headerName       | string  | The name to display (if different from the name of field).      		    |
+| editable         | boolean | Whether the column values can be edited by user.	                        |
+| minWidth         | number  | The minimum width of the column.	                                        |
+| flex             | number  | Dynamically allocates remaining space of column based on its flex values.|
+| hide             | boolean | Whether the column is hidden.	                                        |
+| valueFormatter   | string  | The function to format the value of the column (Currencies, Date, Percentage, Uppercase etc.)	                        |
+| sort             | string  | The order of the column (asc or desc).	                                |
+| filter           | boolean | Whether the values of column can be filtered.	                        |
+| cellRendererType | string  | The type of cell renderer to use (link, image, button etc.)	            |
 
 ## AgGrid Infinite Table
 

@@ -17,8 +17,6 @@ To add a component to a list, you can either click on `Insert` while you select 
 
 Editing or moving a component will apply changes to all cards or rows.
 
-![Editing a list card](../../assets/apps/4_app_component_library/editing_list.gif 'Editing a list card')
-
 To customize the settings of components within each time, you can use `iter.index` and `iter.value`.
 
 - `iter.index` will retrieve the index number of each card (0, 1, 2 etc.).
@@ -61,6 +59,40 @@ The following section details List component's specific settings. For more detai
 		title="Apps Quickstart"
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
+	/>
+</div>
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+**recompute**
+
+Use the `recompute` function to recompute a component.
+
+Syntax:
+
+```js
+recompute(id: string)
+```
+
+Parameters:
+
+`id` string
+The id of the component to recompute.
+
+Example:
+
+```js
+recompute('a');
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="Runnable Editor"
+		description="Learn how to create and configure Apps runnables."
+		href="/docs/apps/app-runnable-panel"
 	/>
 </div>
 

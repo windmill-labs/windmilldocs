@@ -47,6 +47,33 @@ function downloadDataAsFile(dataUrl, fileName) {
 downloadDataAsFile(result, 'name.file');
 ```
 
+or if the result is just regular JSON:
+```js
+// Function to download the data as a file
+function downloadDataAsFile(dataUrl, fileName) {
+  // Create an anchor element
+  const anchor = document.createElement('a');
+
+  // Set the href to the data URL
+  anchor.href = dataUrl;
+
+  // Set the download attribute to the desired file name
+  anchor.download = fileName;
+
+  // Append the anchor to the body (required for Firefox)
+  document.body.appendChild(anchor);
+
+  // Trigger the download by simulating a click on the anchor
+  anchor.click();
+
+  // Remove the anchor from the body
+  document.body.removeChild(anchor);
+}
+
+// Call the function with your data URL and a file name
+downloadDataAsFile(result, 'selected_row.md');
+```
+
 Here is an example of downloading a file from a [button](./4_app_configuration_settings/button.mdx) in a [table](./4_app_configuration_settings/table.mdx).
 
 <video

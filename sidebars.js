@@ -154,7 +154,7 @@ const sidebars = {
 					]
 				},
 				'misc/contributing/index',
-				'misc/getting_help/index',
+				'misc/getting_help/index'
 			]
 		},
 		{
@@ -188,6 +188,7 @@ const sidebars = {
 						}
 					]
 				},
+				'core_concepts/rich_display_rendering/index',
 				'core_concepts/workflows_as_code/index',
 				'core_concepts/draft_and_deploy/index',
 				{
@@ -232,10 +233,11 @@ const sidebars = {
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
+				'advanced/email_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
-				'core_concepts/rich_display_rendering/index',
 				'core_concepts/jobs/index',
+				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'integrations/integrations_on_windmill',
@@ -524,7 +526,7 @@ const sidebars = {
 					items: [
 						'script_editor/settings',
 						'script_editor/script_kinds',
-						'script_editor/customize_ui',			
+						'script_editor/customize_ui',
 						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
 						'script_editor/perpetual_scripts',
@@ -614,6 +616,7 @@ const sidebars = {
 								'apps/app_configuration_settings/database_studio',
 								'apps/app_configuration_settings/date_input',
 								'apps/app_configuration_settings/datetime_input',
+								'apps/app_configuration_settings/date_select',
 								'apps/app_configuration_settings/decision_tree',
 								'apps/app_configuration_settings/divider_x',
 								'apps/app_configuration_settings/divider_y',
@@ -632,6 +635,7 @@ const sidebars = {
 								'apps/app_configuration_settings/list',
 								'apps/app_configuration_settings/log_display',
 								'apps/app_configuration_settings/map',
+								'apps/app_configuration_settings/markdown',
 								'apps/app_configuration_settings/modal_form',
 								'apps/app_configuration_settings/modal',
 								'apps/app_configuration_settings/multiselect',
@@ -644,6 +648,7 @@ const sidebars = {
 								'apps/app_configuration_settings/recompute_all',
 								'apps/app_configuration_settings/resource_select',
 								'apps/app_configuration_settings/rich_result',
+								'apps/app_configuration_settings/rich_result_by_job_id',
 								'apps/app_configuration_settings/rich_text_editor',
 								'apps/app_configuration_settings/select_step',
 								'apps/app_configuration_settings/select_tab',
@@ -772,7 +777,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/versioning/index',
 							label: 'Versioning with UI'
-						},
+						}
 					]
 				},
 				{
@@ -821,6 +826,7 @@ const sidebars = {
 				'misc/s3_cache/index',
 				'core_concepts/oidc/index',
 				'misc/saml_and_scim/index',
+				'advanced/external_auth_with_jwt/index',
 				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
 				'core_concepts/content_search/index',

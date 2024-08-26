@@ -2,9 +2,11 @@ import DocCard from '@site/src/components/DocCard';
 
 # Flow Status
 
-The Flow Status component allows you to display the status of a flow.
+The Flow Status component allows you to display the status of a flow by providing its [Job](../../core_concepts/20_jobs/index.mdx) id.
 
-![Flow Status](../../assets/apps/4_app_component_library/flow_status.png.webp)
+The [Flow Editor](../../flows/1_flow_editor.mdx) run mode will be displayed (flow graph, logs, status, cancel, approve if [approval step](../../flows/11_flow_approval.mdx) etc.) in the app.
+
+![Flow Status](../../assets/apps/4_app_component_library/flow_status.png "Flow Status")
 
 The following section details Flow Status component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
@@ -27,11 +29,12 @@ The following section details Flow Status component's specific settings. For mor
 
 | Name        | Type | Connectable | Templatable | Default | Description                 |
 | ----------- | :--: | :---------: | :---------: | :-----: | --------------------------- |
-| Data Source |      |    true     |             |         | The flow to display status. |
+| Job Id |  string  |    true     |      false       |         | The [job id](../../core_concepts/20_jobs/index.mdx) of the flow run to display status. |
 
 ## Outputs
 
 | Name    |  Type   | Description                         |
 | ------- | :-----: | ----------------------------------- |
-| result  |         | The result of the runnable.         |
+| result  |     string    | The result of the runnable.   |
 | loading | boolean | The loading state of the component. |
+| Job Id |  string  | The [job id](../../core_concepts/20_jobs/index.mdx) of the flow run to display status. |
