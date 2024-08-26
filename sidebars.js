@@ -837,8 +837,7 @@ const sidebars = {
 				'misc/white_labelling/index',
 				'misc/react_sdk/index',
 				'misc/partners/index',
-				'advanced/external_auth_with_jwt/index',
-				'core_concepts/full_text_search/index'
+				'advanced/external_auth_with_jwt/index'
 			]
 		}
 	]

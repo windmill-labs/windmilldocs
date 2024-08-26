@@ -1,24 +1,49 @@
-# Full text search
+import DocCard from '@site/src/components/DocCard';
 
-Full text search is a  [Cloud plans and Self-Hosted Enterprise](/pricing) opt-in feature. It is integrated in the search palette which is available in all versions of Windmill. Learn how to set it up for your instance: [Setup](#setup)
+# Search Bar
 
-## The search palette
+Every workspace has a Search Bar to navigate through it.
 
-Click on the search icon, or use the shortcut (Ctrl+k) to open the palette. From here you can select from the options with the mouse or browse with the arrow keys.
+![Search bar](./search_bar.png "Search bar")
 
-### Quick access
+It can be triggered with shortcut `Ctrl + K` & `⌘k` on Mac, or with Search button from sidebar. From here you can select from the options with the mouse or browse with the arrow keys.
 
-The default view lets you quickly access Windmill's main features. Go to the Home page, open a script, an app, or a flow, all without leaving your keyboard.
+![Search button](./search_button.png "Search button")
 
-![Quick Access Menu](./search_quick_access.png)
+Only [Superadmins, Admins & Developers](../16_roles_and_permissions/index.mdx#roles-in-windmill) (not Operators) have access to this feature.
 
-### Searching jobs
+It can go to several pages:
+- Home
+- [Runs](../5_monitor_past_and_future_runs/index.mdx)
+- [Variables](../2_variables_and_secrets/index.mdx)
+- [Resources](../3_resources_and_types/index.mdx)
+- [Schedules](../1_scheduling/index.mdx)
+
+<video
+  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+  autoPlay
+  loop
+  controls
+  src="/videos/search_bar.mp4"
+/>
+
+## Prefix keys
+
+With a special prefix key, you can search accros:
+- [Completed runs](#searching-runs) (arguments, results) with with key `>`.
+- [Content](#content-search) of scripts, flows and apps with key `#` (without [Enterprise Edition](/pricing), content search will only search among 10 scripts, 3 flows, 3 apps and 3 resources).
+- [Logs](#searching-logs) with key `!`.
+
+![Search accross runs](./run_search.png "Search accross runs")
+> Search accross runs with key `>`.
+
+### Searching runs
 
 You can search through completed runs by selecting the option on the search menu, or by prefixing your search with `>`.
 
 ![Full text job search](./search_jobs.png)
 
-Queries are parsed by tantivy's [QueryParser](https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html), which lets you build relatively complex and useful queries. For example, you can try searching:
+Queries are parsed by Tantivy's [QueryParser](https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html), which lets you build relatively complex and useful queries. For example, you can try searching:
 
 ```
 > script_path:u/user/searchable_flow AND success:false
@@ -27,7 +52,6 @@ Queries are parsed by tantivy's [QueryParser](https://docs.rs/tantivy/latest/tan
 to get the jobs corresponding to said path that also failed.
 
 Learn more about the query syntax: [Tantivy QueryParser docs](https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html)
-
 
 #### Searchable fields for jobs
 
@@ -62,16 +86,21 @@ The fields that are indexed and that you can use with the `my_field:some_text` s
 | created_at       | DATE |
 | started_at       | DATE |
 
+### Content search
+
+By using the `#` prefix, you can use windmill's [Content Search](../26_content_search/index.mdx) and search through scripts, flows, and apps.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Content Search"
+		description="Search any scripts, flows, resources, apps for a specific string similar to GitHub search."
+		href="/docs/core_concepts/content_search"
+	/>
+</div>
 
 ### Searching logs
 
 Searching through Windmill's service logs as well as audit logs is comming soon.
-
-### Content Search
-
-By using the `#` prefix, you can use windmill's [Content Search](/docs/core_concepts/content_search) and search through scripts, flows, and apps.
-
-![Content Search](./content_search.png)
 
 ## Setup
 
