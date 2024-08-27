@@ -25,7 +25,7 @@ const people = [
     name: 'José Governo Pais Neto',
     description: 'José Governo, CFA, CQF is from Brazil. José worked in an asset management firm where he used Windmill to build complex dashboard applications for his clients.',
     roles: ['Common Tree', 'App Editor'],
-    email: 'zegoverno@hey.com',
+    email: 'jose@zenfin.tech',
     profile: 'https://www.linkedin.com/in/jose-governo/',
     imageUrl: 'https://media.licdn.com/dms/image/C4D03AQE2yXYlSoBQmg/profile-displayphoto-shrink_800_800/0/1594600574101?e=2147483647&v=beta&t=c2VZb77tUdnBRzlGVTuY23qDvGlUHy1xqy_zn1TNr40',
 },
