@@ -67,7 +67,9 @@ def main() -> List[Dict[str, str]]:
 
 ![Rich Table Display](./rich_table_display.png "Rich Table Display")
 
-As you can see, the columns are not properly ordered. You can force column order with [Table Row Object](#table-row-object).
+#### Force Column Order
+
+As you can see in the example above, the columns are not properly ordered. You can force column order with [Table Row Object](#table-row-object).
 
 For example, with columns ordered:
 
@@ -90,6 +92,37 @@ def main() -> List[Dict[str, str]]:
 ```
 
 ![Rich Table Display Ordered](./rich_table_display_ordered.png "Rich Table Display Ordered")
+
+Additionaly, you can force column orders with a variable, for example `columns` in
+
+```ts
+export async function main(values: string[]) {
+  let columns = ["column1","column2","column3"]
+  return [columns, ...values]
+}
+```
+
+Here is a more dense example:
+
+```ts
+export async function main(): Promise<Array<{ "Pokemon name": string, "Type": string, "Main strength": string } | string[]>> {
+  const pokemonData = [
+    { "Pokemon name": "Pikachu", "Type": "Electric", "Main strength": "Speed" },
+    { "Pokemon name": "Charizard", "Type": "Fire/Flying", "Main strength": "Attack" },
+    { "Pokemon name": "Bulbasaur", "Type": "Grass/Poison", "Main strength": "Defense" },
+    { "Pokemon name": "Squirtle", "Type": "Water", "Main strength": "Defense" },
+    { "Pokemon name": "Jigglypuff", "Type": "Normal/Fairy", "Main strength": "HP" }
+  ];
+
+  const columns: string[] = ["Pokemon name", "Main strength", "Type"];
+
+  return [columns, ...pokemonData];
+}
+```
+
+![Columns not ordered](./columns_not_ordered.png "Columns not ordered")
+
+![Columns ordered](./columns_ordered.png "Columns ordered")
 
 ### Table Column
 
@@ -133,7 +166,7 @@ The `table-row-object` key allows returning the value as a row-wise table but wh
 
 If the result matches the table format, it will be displayed as a table even if the data is not nested under the key `table-row-object`.
 
-List of columns is not mandatory but it allows [forcing their order](#example).
+List of columns is not mandatory but it allows [forcing their order](#force-column-order).
 
 ```ts
 return [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ]
