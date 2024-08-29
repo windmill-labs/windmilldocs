@@ -836,7 +836,8 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index',
-				'misc/partners/index'
+				'misc/partners/index',
+				'advanced/external_auth_with_jwt/index'
 			]
 		}
 	]
