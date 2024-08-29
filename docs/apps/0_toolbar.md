@@ -47,7 +47,7 @@ You can hide it with this button or shortcut `⌘ + L` / `CTRL + L`.
 
 ### Hide the right panel
 
-The left panel is the [Component library](./4_app_configuration_settings/1_app_component_library.mdx) and [Component settings](./4_app_configuration_settings/) panel.
+The left panel is the [Component library](./4_app_configuration_settings/1_app_component_library.mdx) and [Component settings](./4_app_configuration_settings/3_app_component_configuration.mdx) panel.
 
 You can hide it with this button or shortcut `⌘ + U` / `CTRL + U`.
 
