@@ -225,7 +225,7 @@ const pricing = {
 					)
 				},
 				{
-					text: <span>Audit logs 60 days retention</span>
+					text: <span>Audit logs unlimited retention</span>
 				},
 				{
 					text: <span>Isolated & dedicated workers and database</span>

@@ -703,7 +703,12 @@ const sidebars = {
 						'code_editor/parameter_inference',
 						'code_editor/add_variables_resources',
 						'code_editor/assistants',
-						'code_editor/ai_generation'
+						'code_editor/ai_generation',
+						{
+							type: 'doc',
+							id: 'code_editor/settings',
+							label: 'Settings'
+						},
 					],
 					collapsed: true
 				}
