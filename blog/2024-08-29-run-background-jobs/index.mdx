@@ -561,7 +561,8 @@ In Windmill, each script can be triggered manually, in a flow or in reaction to 
 
 Scripts can be run asynchronously and flows can even [return early](/docs/flows/early_return) a result for sync endpoints while the rest of the flow is still running. This is particularly useful for long-running tasks that don't require immediate results.
 
-Windmill has been designed to be the easiest platform to deploy end-to-end. It can be [self-hosted](/docs/advanced/self_host) in minutes. As for scalability, Windmill uses a [worker system](/docs/core_concepts/worker_groups) to fetch and execute jobs from a queue, ensuring efficient distribution and execution of all jobs. Workers can be scaled horizontally to handle a large volume of tasks. You can allocate specific workers to handle specific jobs, making Windmill the [fastest self-hostable open-source workflow engine](/blog/launch-week-1/fastest-workflow-engine).
+Windmill has been designed to be the easiest platform to deploy end-to-end. It can be [self-hosted](/docs/advanced/self_host) in minutes. As	import { forbiddenIds } from '$lib/components/flows/idUtils'
+ for scalability, Windmill uses a [worker system](/docs/core_concepts/worker_groups) to fetch and execute jobs from a queue, ensuring efficient distribution and execution of all jobs. Workers can be scaled horizontally to handle a large volume of tasks. You can allocate specific workers to handle specific jobs, making Windmill the [fastest self-hostable open-source workflow engine](/blog/launch-week-1/fastest-workflow-engine).
 
 All jobs are [monitored](/docs/core_concepts/monitor_past_and_future_runs) and [logged](https://www.windmill.dev/docs/core_concepts/audit_logs). With a robust [permission model](/docs/core_concepts/roles_and_permissions) for job execution, background jobs are run with appropriate access levels and security constraints.
 
@@ -585,7 +586,9 @@ Windmill also allows you to create a flow that runs the data processing task wit
 These jobs can then be [monitored](/docs/core_concepts/monitor_past_and_future_runs), providing clear visibility into task execution and performance.
 :::
 
-<!--Temporal, Inngest: Ruben -->
+### Durable Execution Engines: Temporal, Inngest
+
+Temporal and Inngest are durable execution engines. Windmill is built on top of its own ... TODO
 
 ## Conclusion
 
