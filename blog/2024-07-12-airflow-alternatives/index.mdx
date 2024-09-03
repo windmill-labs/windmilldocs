@@ -53,8 +53,8 @@ At last, it's a community-driven project, so you'll have the advantages and disa
 
 Airflow is a great tool, but with the advent of more modern solutions (see below), the main reason to use Airflow is due to legacy issues and sunk costs.
 
-![Airflow picture](https://airflow.apache.org/docs/apache-airflow/stable/_images/demo_grid_view.png)
-[Source](https://airflow.apache.org/docs/apache-airflow/stable/_images/demo_grid_view.png)
+![Airflow dashboard](https://airflow.apache.org/docs/apache-airflow/stable/_images/demo_grid_view.png "Airflow dashboard")
+> Airflow dashboard ([source](https://airflow.apache.org/docs/apache-airflow/stable/_images/demo_grid_view.png))
 
 ## Alternatives
 
@@ -66,8 +66,8 @@ Luigi enables you to create workflows, define tasks, and manage their dependenci
 
 There's no need to go too far; for similar strengths, Luigi has more weaknesses Airflow: a less active community, a narrower ecosystem, a more cumbersome UX, and performance issues.
 
-![Airflow picture](https://raw.githubusercontent.com/spotify/luigi/master/doc/visualiser_front_page.png)
-[Source](https://raw.githubusercontent.com/spotify/luigi/master/doc/visualiser_front_page.png)
+![Luigi dashboard](https://raw.githubusercontent.com/spotify/luigi/master/doc/visualiser_front_page.png "Luigi dashboard")
+> Luigi dashboard ([source](https://raw.githubusercontent.com/spotify/luigi/master/doc/visualiser_front_page.png))
 
 ### Prefect
 
@@ -83,8 +83,8 @@ In terms of performance, Prefect is the second slowest job orchestrator we have 
 
 To learn more about Prefect, you can check out our [comparison between Prefect and Windmill](/docs/compared_to/prefect).
 
-![Prefect picture](https://docs.prefect.io/2.10.12/img/ui/flow-run-page.png)
-[Source](https://docs.prefect.io/2.10.12/img/ui/flow-run-page.png)
+![Prefect Flow runs](https://docs.prefect.io/2.10.12/img/ui/flow-run-page.png "Prefect Flow runs")
+> Prefect Flow runs ([source](https://docs.prefect.io/2.10.12/img/ui/flow-run-page.png))
 
 ### Dagster
 
@@ -96,8 +96,8 @@ For developers, Dagster offers a smooth experience, facilitating easy transition
 
 If we were to compare Dagster with [Prefect](#prefect), perhaps Dagster is a bit more focused on Data Engineers, while Prefect is also suitable for developers. Lastly, we have [read](https://www.reddit.com/r/dataengineering/comments/1cxyvqk/airflow_vs_dagster_vs_prefect_vs/) several times that the community finds Prefect's documentation to be lagging behind that of Dagster. If you want to compare Dagster to Prefect, you can check out this article from [Dagster](https://dagster.io/vs/dagster-vs-prefect), or this one from [Prefect](https://www.prefect.io/prefect-vs-dagster).
 
-![Dagster picture](https://docs.dagster.io/_next/image?url=%2Fimages%2Fconcepts%2Fwebserver%2Fglobal-asset-lineage.png&w=3840&q=75)
-[Source](https://docs.dagster.io/_next/image?url=%2Fimages%2Fconcepts%2Fwebserver%2Fglobal-asset-lineage.png&w=3840&q=75)
+![Dagster Global Asset Lineage](https://docs.dagster.io/_next/image?url=%2Fimages%2Fconcepts%2Fwebserver%2Fglobal-asset-lineage.png&w=3840&q=75 "Dagster Global Asset Lineage")
+> Dagster Global Asset Lineage ([source](https://docs.dagster.io/_next/image?url=%2Fimages%2Fconcepts%2Fwebserver%2Fglobal-asset-lineage.png&w=3840&q=75))
 
 ### Temporal
 
@@ -114,8 +114,8 @@ One notable thing about Temporal is that it is a for-profit company (compared to
 
 In terms of performance, Temporal performs very well according to [benchmarks](/docs/misc/benchmarks/competitors) conducted by Windmill. Temporal ranks as the second fastest workflow engine, behind Windmill's [dedicated worker](/docs/core_concepts/worker_groups#dedicated-workers--high-throughput) mode.
 
-![Temporal picture](https://learn.temporal.io/assets/images/select-workflow-execution-in-ui-501d8ad72ecdd8d5a8ae1dddf7852591.png)
-[Source](https://learn.temporal.io/assets/images/select-workflow-execution-in-ui-501d8ad72ecdd8d5a8ae1dddf7852591.png)
+![Temporal recent workflows](https://learn.temporal.io/assets/images/select-workflow-execution-in-ui-501d8ad72ecdd8d5a8ae1dddf7852591.png "Temporal recent workflows")
+> Temporal recent workflows ([source](https://learn.temporal.io/assets/images/select-workflow-execution-in-ui-501d8ad72ecdd8d5a8ae1dddf7852591.png))
 
 ### Kedro
 
@@ -129,8 +129,8 @@ Asked if it's an orchestrator, Kedro replies:
 
 > "Orchestrators like Airflow, Luigi, Prefect, Dagster, Flyte, and Kubeflow focus on running, scheduling, and monitoring pipelines. Meanwhile, Kedro is all about the process of authoring pipelines. So, if you're looking for a solution that takes care of questions like "What time will this task run?" or "How do I manage my compute?", Kedro might not be what you need." <br/>[...]<br/> Kedro provides a set of deployment guidelines for using orchestrators as deployment targets. If you're looking for a partner to help you production-ready data science code, Kedro is the perfect solution for you."
 
-![Kedro picture](https://raw.githubusercontent.com/kedro-org/kedro-viz/main/.github/img/banner.png)
-[Source](https://raw.githubusercontent.com/kedro-org/kedro-viz/main/.github/img/banner.png)
+![Kedro graphs](https://raw.githubusercontent.com/kedro-org/kedro-viz/main/.github/img/banner.png "Kedro graphs")
+> Kedro graphs ([source](https://raw.githubusercontent.com/kedro-org/kedro-viz/main/.github/img/banner.png))
 
 ### Windmill
 
@@ -163,6 +163,8 @@ Compared to Airflow and the solutions mentioned here, Windmill stands out in the
 
 ![Windmill product](./product.png "Windmill product")
 
+> Windmill product ([source](/))
+
 ### Mage AI
 
 [Mage](https://github.com/mage-ai/mage-ai) is a newcomer that recently emerged in [2020](https://m.mage.ai/mage-vs-airbyte-93fba4dc09cb), founded by former engineers from Airbnb (what a coincidence). Mage shares the same promise as [Prefect](#prefect) or [Dagster](#dagster): to be a modern solution aiming to replace Airflow (they mention Airflow 5 times on their landing page alone).
@@ -171,8 +173,8 @@ Mage focuses on simplicity with a pretty and intuitive UI, and on speed with rea
 
 Mage will be a suitable tool for data scientists and data engineers who prioritize ease of use to focus on managing data pipelines.
 
-![Mage product](https://www.mage.ai/images/pages/home/screenshots/v5/Preview.png)
-[Source](https://www.mage.ai/images/pages/home/screenshots/v5/Preview.png)
+![Mage AI analytics](https://www.mage.ai/images/pages/home/screenshots/v5/Preview.png "Mage AI analytics")
+> Mage AI analytics ([source](https://www.mage.ai/images/pages/home/screenshots/v5/Preview.png))
 
 ### Kestra
 
@@ -181,8 +183,8 @@ Kestra has a declarative [YAML syntax](https://kestra.io/features/declarative-da
 
 For more details on the comparison with Airflow, check out this [article](https://kestra.io/vs/airflow) published by Kestra.
 
-![Kestra product](https://imgopt.infoq.com/fit-in/3000x4000/filters:quality(85)/filters:no_upscale()/news/2022/03/kestra-orchestration-platform/en/resources/1kestra1-1648653030094.jpg)
-[Source](https://imgopt.infoq.com/fit-in/3000x4000/filters:quality(85)/filters:no_upscale()/news/2022/03/kestra-orchestration-platform/en/resources/1kestra1-1648653030094.jpg)
+![Kestra executions dashboard](https://imgopt.infoq.com/fit-in/3000x4000/filters:quality(85)/filters:no_upscale()/news/2022/03/kestra-orchestration-platform/en/resources/1kestra1-1648653030094.jpg "Kestra executions dashboard")
+> Kestra executions dashboard ([source](https://imgopt.infoq.com/fit-in/3000x4000/filters:quality(85)/filters:no_upscale()/news/2022/03/kestra-orchestration-platform/en/resources/1kestra1-1648653030094.jpg))
 
 ## Conclusion
 
