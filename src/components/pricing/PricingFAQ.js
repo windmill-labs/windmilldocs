@@ -119,13 +119,13 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is vCPU-memory-based. For example,24 workers with 0.5 vCPU each is 1 vCPU. 1
+				, pricing is vCPU-memory-based. For example, 2 workers with 0.5 vCPU each is 1 vCPU. 1
 				worker with 4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would
 				divide that by 24. The number of vCPUs is the aggregate limits of all the workers in your
 				production instances. Note that every vCPU paid gives you a quota of 2Gb of memory limits
 				(the quota is an aggregate sum, not a limit for each individual worker). You may not set
-				vCPU limits and rely solely on memory quotas if you prefer. Each worker can run up to ~26M
-				jobs per month (at 100ms per job).
+				vCPU limits and rely solely on memory quotas if you prefer and we actually recommend it.
+				Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}
