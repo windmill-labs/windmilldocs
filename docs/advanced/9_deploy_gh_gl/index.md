@@ -131,7 +131,7 @@ on:
   push:
     branches:
       - 'main'
-    # if the Windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to Windmill when there's no change
+    # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
     # paths:
     #   - wm/**
 
@@ -147,16 +147,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
+      - uses: actions/setup-node@v4
         with:
-          deno-version: vx.x.x
+          node-version: 20
+
+      # We check the commit to make sure it doesn't start with [WM] which commits coming from Windmill Git Sync do.\
+      # If that's the case, then we stop the workflow as we want to avoid overwriting changes that are out-of-sync
+      # (for instance if one were to deploy in quick succession)
+      - name: Check commit message
+        id: check_message
+        run: |
+          COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
+          if [[ "$COMMIT_MESSAGE" =~ ^\[WM\] ]]; then
+            echo "Commit message starts with '[WM]', skipping push to Windmill to avoid overwriting deploy that immediately follows it"
+            echo "skip=skip" >> $GITHUB_OUTPUT
+          fi
 
       # (push will pull first to detect conflicts and only push actual changes)
       - name: Push changes
+        if: steps.check_message.outputs.skip != 'skip'
         run: |
-          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts workspace add __automation ${{ env.WMILL_WORKSPACE }} ${{ env.WMILL_URL }} --token ${{ secrets.WMILL_TOKEN }}
-          deno run --unstable -A  https://deno.land/x/wmill@v1.246.13/main.ts sync push --yes --skip-variables --skip-secrets --skip-resources
+          npm install -g windmill-cli@1.393.3
+          wmill sync push --yes --skip-variables --skip-secrets --skip-resources --workspace ${{ env.WMILL_WORKSPACE }} --token ${{ secrets.WMILL_TOKEN }} --base-url ${{ env.WMILL_URL }}
 ```
 
 The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it.
