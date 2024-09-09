@@ -66,9 +66,13 @@ For scripts, there is an additional **synchronous** webhook available that accep
 
 :::
 
-:::caution
+:::caution Custom timeout for sync endpoints
 
 Be cautious with potentially long-running jobs in **synchronous** mode.
+
+<br/>
+
+You can set a [max timeout for sync endpoints](../../advanced/18_instance_settings/index.mdx#max-timeout-for-sync-endpoints) at the instance-level.
 
 :::
 
@@ -181,7 +185,7 @@ It is possible to pass query args to the job. To do so, either specify in the qu
 
 to have a: "foo", b: "bar", c: "foobar", passed as args.
 
-### Non Object payload / body
+### Non object payload / body
 
 If the payload is not an object, it will be wrapped in an object with the key `body` and the value will be the payload/body itself. e.g:
 
@@ -219,7 +223,7 @@ export async function main(body: any) {
 
 Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
 
-### Custom Response Code
+### Custom response code
 
 For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code. For example, if a script or flow returns:
 
@@ -244,7 +248,7 @@ with a status code `201`.
 
 Note that if the status code is invalid (w.r.t [RFC9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes)), the endpoint will return an error.
 
-### Custom Content Type
+### Custom content type
 
 Similarly to the above, for all sync run jobs endpoints, if the response contains a key `windmill_content_type`, the associated value will be used as the content type header of the response. For example, if a script or flow returns:
 
@@ -307,7 +311,7 @@ curl -X POST                               \
     ".../mywebhook?payload=<URL_SAFE_BASE64_ENCODED_JSON>"
 ```
 
-### Cloud Events 1.0
+### Cloud events 1.0
 
 Windmill's webhooks aim to be compatible with the [Cloud Events 1.0](https://cloudevents.io/) specification. The envelope metadata will be parsed into a special argument `WEBHOOK__METADATA__` for scripts and flows.
 

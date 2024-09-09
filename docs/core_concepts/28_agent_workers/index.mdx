@@ -18,7 +18,7 @@ In this settings, workers will still require a connection to be passed with `DAT
 - emit audit logs in the database
 - insert the finished job in the completed_job table.
 
-All other operations are done by the intermerdiary of the api servers that the remote workers will connect to using http and the BASE_URL defined in the instance settings (overridable by passing `BASE_INTERNAL_URL=<https://private_instance_url:8000>` to the worker`).
+All other operations are done by the intermerdiary of the api servers that the remote workers will connect to using http and the BASE_URL defined in the [instance settings](../../advanced/18_instance_settings/index.mdx#base-url) (overridable by passing `BASE_INTERNAL_URL=<https://private_instance_url:8000>` to the worker`).
 
 ## (Optional) Restrict the role used by the worker to the strict minimum
 

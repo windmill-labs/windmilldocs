@@ -1,6 +1,8 @@
 # SAML & SCIM
 
-This guide provides guidance on configuring Okta or Microsoft Azure for both SAML (Security Assertion Markup Language) and SCIM (System for Cross-domain Identity Management).
+This guide provides guidance on configuring SAML (Security Assertion Markup Language) and SCIM (System for Cross-domain Identity Management) on Windmill for both Okta and Microsoft Azure.
+
+This feature is available under [Enterprise Edition](/pricing). Configuration is set from [Instance Settings](../../advanced/18_instance_settings/index.mdx#scimsaml)
 
 ## SAML
 
@@ -11,6 +13,7 @@ SCIM connector is `<instance_url>/api/scim`
 Application username format is `Email`
 
 ![Instance Settings UI](instance_settings.png)
+
 In the Instance Settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
 
 ### Okta
@@ -20,6 +23,7 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 ![Okta settings](./okta.png.webp)
 
 ![Instance Settings UI](instance_settings.png)
+
 In the Instance Settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
 
 ![Okta Metadata URL](./okta2.png.webp)
@@ -65,6 +69,7 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 ![Okta SCIM](okta-scim1.png.webp)
 
 ![Instance Settings UI](instance_settings.png)
+
 In the Instance Settings UI, set the SCIM token containing the secret value that you will share to Okta.
 
 ![Okta SCIM](okta-scim.png.webp)

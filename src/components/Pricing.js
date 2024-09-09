@@ -441,6 +441,17 @@ const sections = [
 				link: '/docs/core_concepts/authentification'
 			},
 			{
+				name: 'Custom OAuth',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/setup_oauth#custom-oauth-1'
+			},
+			{
 				name: 'Workspace secret custom encryption',
 				tiers: {
 					'tier-free-selfhost': true,
@@ -678,7 +689,7 @@ const sections = [
 				tooltip: 'Only available on self-hosting and enterprise edition on private clusters'
 			},
 			{
-				name: 'Critical Alert Channels',
+				name: 'Critical alert channels',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
