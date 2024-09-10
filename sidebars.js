@@ -721,12 +721,16 @@ const sidebars = {
 			items: [
 				{
 					type: 'category',
+					collapsed: false,
 					label: 'Self Host',
 					link: {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/self_host/aws_ecs']
+					items: [
+						'advanced/instance_settings/index',
+						'advanced/self_host/aws_ecs'
+					]
 				},
 				{
 					type: 'category',

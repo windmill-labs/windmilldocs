@@ -6,9 +6,9 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Windmill can be deployed on an ECS cluster. Below are the detailed steps to get a Windmill stack up and running. The number of servers and workers, as well as the instance sizes, should be tuned to your own usecases.
+Windmill can be deployed on an ECS ([Elastic Container Service](https://aws.amazon.com/ecs/)) cluster. Below are the detailed steps to get a Windmill stack up and running. The number of servers and [workers](../../core_concepts/9_worker_groups/index.mdx), as well as the instance sizes, should be tuned to your own usecases.
 
-To give a brief overview, we will first create a VPC and an associated security group. This VPC will contain the Database, the instances powering the ECS cluster, and the windmill containers. Then we will create a database on RDS, and finally the ECS cluster.
+To give a brief overview, we will first create a VPC and an associated security group. This VPC will contain the Database, the instances powering the ECS cluster, and the Windmill containers. Then we will create a database on RDS, and finally the ECS cluster.
 Once the ECS cluster is running, we will define the tasks definitions and the associated services. Note again that the architecture of your Windmill stack very well depends on how you're planning to use Windmill. For this tutorial, we will create a Windmill stack of this shape: 2 Windmill servers, 2 "multi-purpose" Windmill workers and 1 "native" worker. Windmill LSP and Multiplayer will also be deployed.
 
 :::tip

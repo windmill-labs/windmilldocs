@@ -1,8 +1,8 @@
 ---
 slug: critical-alert-channels
 version: v1.389.0
-title: Critical Alret Channels
-tags: ['Workers', 'Security']
+title: Critical alert channels
+tags: ['Workers', 'Security', 'Enterprise Edition']
 description: Get a notification everytime a job is re-run after a crash.
 features:
   [

@@ -114,7 +114,7 @@ The retention policy for jobs runs details varies depending on your team's [plan
 - Open Source (self-host): Jobs runs details are retained for maximum 30 days.
 - Enterprise plan (self-host): Unlimited retention period.
 
-You can set a custom retention period for the jobs runs details. The retention period can be configured in the instance settings, in the "Core" tab.
+You can set a custom retention period for the jobs runs details. The retention period can be configured in the [instance settings](../../advanced/18_instance_settings/index.mdx#retention-period-in-secs), in the "Core" tab.
 
 ![Set Retention Period](./set_retention_policy.png "Set Retention Period")
 
@@ -133,3 +133,27 @@ For large logs storage (and display) and cache for distributed Python jobs, you 
 ![S3/Azure for Python Cache & Large Logs](./s3_azure_cache.png "S3/Azure for Python Cache & Large Logs")
 
 This feature has no overlap with the [Workspace S3 integration](../11_persistent_storage/large_data_files.mdx).
+
+You can choose to use either S3 or Azure Blob Storage. For each you will find a button to test settings from a server or from a worker.
+
+### S3
+
+| Name         | Type       | Description                                                                   |
+| ------------ | ---------- | ----------------------------------------------------------------------------- |
+| Bucket       | string     | Name of your S3 bucket.                                                       |
+| Region       | string     | If left empty, will be derived automatically from $AWS_REGION.   			    |
+| Access key ID       | string     | If left empty, will be derived automatically from $AWS_ACCESS_KEY_ID, pod or ec2 profile.   	    |
+| Secret key       | string     | If left empty, will be derived automatically from $AWS_SECRET_KEY, pod or ec2 profile.   	    |
+| Endpoint       | string     | Only needed for non AWS S3 providers like R2 or MinIo.   	    |
+| Allow http       | boolean     | Disable if using https only policy.   	    |
+
+### Azure Blob
+
+| Name           | Type       | Description                                                                   |
+| -------------- | ---------- | ----------------------------------------------------------------------------- |
+| Account name   | string     | The name of your Azure Storage account. It uniquely identifies your Azure Storage account within Azure and is required to authenticate with Azure Blob Storage. |
+| Container name | string     | The name of the specific blob container within your storage account. Blob containers are used to organize blobs, similar to a directory structure. |
+| Access key     | string     | The primary or secondary access key for the storage account. This key is used to authenticate and provide access to Azure Blob Storage. |
+| Tenant ID      | string     | (optional) The unique identifier (GUID) for your Azure Active Directory (AAD) tenant. Required if using Azure Active Directory for authentication. |
+| Client ID      | string     | (optional) The unique identifier (GUID) for your application registered in Azure AD. Required if using service principal authentication via Azure AD. |
+| Endpoint       | string     | (optional) The specific endpoint for Azure Blob Storage, typically used when interacting with non-Azure Blob providers like Azurite or other emulators. For Azure Blob Storage, this is auto-generated and not usually needed. |
