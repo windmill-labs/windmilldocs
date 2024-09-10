@@ -19,19 +19,68 @@ The Flow Builder has the following major components we will detail below:
 
 ## Toolbar
 
-![Flow Toolbar](../assets/flows/flow_toolbar.png.webp)
+![Flow Toolbar](../assets/flows/flow_toolbar.png)
 
 The toolbar allows you to export the flow, configure the flow settings, and test the flow.
 Here are the different options available in the toolbar:
 
-- **Summary**: shortcut to edit the flow summary.
+- **Summary**: shortcut to edit the flow [summary](#summary).
 - **Previous/Next**: undo actions.
 - **[Path](../core_concepts/16_roles_and_permissions/index.mdx#path)**: define the permissions of the flow.
-- **JSON**: export the flow as a JSON file.
+- **`⋮` menu**:
+	- **Deployment History**: view the [deployment](../core_concepts/0_draft_and_deploy/index.mdx#deployment-history) history of the flow.
+	- **Export**: view the flow as JSON or YAML.
+	- **Edit in YAML**: edit the flow in YAML.
+- **Tutorial button**: follow the tutorials, reset them or skip them.
+- **Diff**: view the diff between the current and the last [version](../core_concepts/0_draft_and_deploy/index.mdx) of the flow.
+- **AI Builder**: [build flow with AI](./17_ai_flows.mdx).
 - **Test flow**: open the flow [test](../core_concepts/23_instant_preview/index.mdx) slider.
 - **Test up to**: open the flow [test](../core_concepts/23_instant_preview/index.mdx) slider.
-- **Draft**: save the flow as [draft](../core_concepts/0_draft_and_deploy/index.mdx).
-- **Draft**: [deploy](../core_concepts/0_draft_and_deploy/index.mdx) the flow.
+- **Draft**: save the flow as [draft](../core_concepts/0_draft_and_deploy/index.mdx) (you can do it with shortcut `Ctrl + S` / `⌘ S`).
+- **Deploy**: [deploy](../core_concepts/0_draft_and_deploy/index.mdx) the flow.
+
+### Export flow
+
+The flow can be exported as JSON or YAML. The export will include the flow metadata, settings, and steps.
+
+![Flow Export](../misc/1_share_on_hub/export_flow.png.webp "Flow Export")
+
+### Edit in YAML
+
+You can edit directly the yaml of flows within the flow editor.
+
+In particular, you can:
+- Edit flow metadata.
+- Edit steps ids.
+- Edit steps features.
+- Edit steps code.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/edit_flow_yaml.mp4"
+/>
+
+### Tutorials
+
+The tutorial button allows you to follow the tutorials, reset them or skip them.
+
+The current tutorials on the Flow Editor are:
+- Simple flow tutorial
+- [For loops](./12_flow_loops.md) tutorial
+- [Branch one](./13_flow_branches.md#branch-one) tutorial
+- [Branch all](./13_flow_branches.md#branch-all) tutorial
+- [Error handler](./7_flow_error_handler.md) tutorial
+
+### Diff
+
+The diff button allows you to view the diff between the current and the latest [version](../core_concepts/0_draft_and_deploy/index.mdx) of the flow.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/diff_viewer.mp4"
+/>
 
 ## Settings
 

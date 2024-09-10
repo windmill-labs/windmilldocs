@@ -678,6 +678,17 @@ const sections = [
 				tooltip: 'Only available on self-hosting and enterprise edition on private clusters'
 			},
 			{
+				name: 'Critical Alert Channels',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/critical_alert_channels'
+			},
+			{
 				name: 'Script-specific workers (dedicated) / High throughput',
 				tiers: {
 					'tier-free-selfhost': false,
