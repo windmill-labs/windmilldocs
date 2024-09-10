@@ -12,16 +12,10 @@
 
 <br/>
 
-To install the wmill CLI, follow these steps:
-
-1. Make sure you have [Deno](https://deno.com/) installed. If not, you can install it by following the instructions [here](https://deno.com/manual@v1.34.0/getting_started/installation).
-
-Please note that your version of Deno should be recent (greater than 1.32). If not, you can update Deno by running `deno upgrade`.
-
-2. Install wmill CLI using the following command in your terminal:
+To install the wmill CLI:
 
 ```bash
-deno install -q -A https://deno.land/x/wmill/main.ts
+npm install -g windmill-cli
 ```
 
 Your terminal might also ask you to update your PATH environment variable to include the newly installed executable `wmill`. Example:

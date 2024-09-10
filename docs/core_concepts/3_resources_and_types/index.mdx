@@ -15,7 +15,7 @@ Each Resource has a **Resource Type** (RT for short) - for example [MySQL](https
 needs to implement. Schemas implement the
 [JSON Schema specification](https://json-schema.org/).
 
-![Recap Resources and Types](./recap_resources_and_types.png "Recap Resources and Types")
+![Recap Resources and Types](./recap_resources_and_types.png 'Recap Resources and Types')
 
 :::tip
 
@@ -41,7 +41,7 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 
 To create a resource using an existing type, go to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources </a> page and click "Add a resource/API".
 
-![Add a resource](./add_resource.png.webp "Add a resource")
+![Add a resource](./add_resource.png.webp 'Add a resource')
 
 Just like most objects in Windmill, Resources have a path that defines their
 permissions - see [ownership path prefix](../16_roles_and_permissions/index.mdx).
@@ -59,7 +59,7 @@ reference will be replaced by its value.
 
 Resources can be assigned a description. It supports markdown.
 
-![Resource description](./resource_description.png "Resource description")
+![Resource description](./resource_description.png 'Resource description')
 
 :::tip
 
@@ -100,27 +100,13 @@ Verified Resource Types on the Hub are directly added to the list of available R
 
 When creating a [self-hosted](../../advanced/1_self_host/index.mdx) instance, you are offered to set a [schedule](../1_scheduling/index.mdx) to regularly sync all resource types from [WindmillHub](https://hub.windmill.dev/). This will ensure that all the approved resource types are available in your instance. On Windmill cloud, it is done regularly by the Windmill team. Ask us if you need a specific [resource type from Hub](https://hub.windmill.dev/resources) to be added.
 
-The script executed from the admin workspace is:
+The bun script executed from the admin workspace is:
 
 ```ts
-import wmill from "https://deno.land/x/wmill@v1.180.0/main.ts";
+import { hubPull } from "windmill-cli@1.393.2"
 
 export async function main() {
-  Deno.env.set("HOME", ".")
-  await run(
-    "workspace",
-    "add",
-    "__automation",
-    "admins",
-    Deno.env.get("BASE_INTERNAL_URL") + "/",
-    "--token",
-    Deno.env.get("WM_TOKEN") ?? ''
-  );
-  await run("hub", "pull");
-}
-
-async function run(...cmd: string[]) {
-  await wmill.parse(cmd);
+  await hubPull({ workspace: "admins", token: process.env["WM_TOKEN"], baseUrl: process.env.WM_BASE_URL })
 }
 ```
 
@@ -248,12 +234,11 @@ It's a powerful escape hatch when [passing data as output/input](../../flows/16_
 <TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```typescript
-import * as wmill from "windmill-client@1.297.0"
+import * as wmill from 'windmill-client@1.297.0';
 
 export async function main(x: string) {
-  await wmill.setFlowUserState("FOO", 42)
-  return await wmill.getFlowUserState("FOO")
-
+	await wmill.setFlowUserState('FOO', 42);
+	return await wmill.getFlowUserState('FOO');
 }
 ```
 
@@ -278,7 +263,6 @@ def main(x: str):
 	controls
 	src="/videos/flow_state.mp4"
 />
-
 
 ## Using Resources
 
@@ -417,7 +401,7 @@ If the resource passed here as a reference does not come from a static [Resource
 
 The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](../../apps/2_connecting_components/index.mdx) is an [eval](../../apps/3_app-runnable-panel.mdx#evals).
 
-![Static resource select only / Resources from users allowed](../../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
+![Static resource select only / Resources from users allowed](../../assets/apps/0_app_editor/resources_from_users.png 'Static resource select only / Resources from users allowed')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
