@@ -27,7 +27,6 @@ const pricing = {
 			href: '/docs/advanced/self_host',
 			price: {},
 			description: 'Unlimited users & executions.',
-			mostPopular: false,
 			customMessage: 'Learn more',
 			minPrice: 0,
 			features: [
@@ -37,50 +36,9 @@ const pricing = {
 			]
 		},
 		{
-			name: 'Pro',
-			id: 'tierpro',
-			href: 'mailto:contact@windmill.dev',
-			description: 'Only for small businesses and nonprofits.',
-			minPrice: 48,
-			mostPopular: true,
-			price: {
-				vCPU: {
-					monthly: 20,
-					default: 2,
-					min: 2,
-					max: 10
-				},
-				seat: {
-					monthly: 8,
-					default: 1,
-					min: 1,
-					max: 10
-				}
-			},
-			features: [
-				{
-					text: (
-						<span>
-							Subset of <b className="text-teal-600">Enterprise</b> Plugins
-						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							Only for{' '}
-							<a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">
-								small businesses and nonprofits
-							</a>
-						</span>
-					)
-				},
-				{ text: 'Support with 48h response time by email' },
-				{ text: 'Max 10 users with SSO' }
-			]
-		},
-		{
 			name: 'Enterprise',
+			name_nonprofit: 'Enterprise - Nonprofit',
+			name_smb: 'Pro',
 			id: 'tier-enterprise-selfhost',
 			href: 'mailto:contact@windmill.dev',
 			price: {
@@ -97,8 +55,40 @@ const pricing = {
 					max: 1000
 				}
 			},
+			price_nonprofit: {
+				vCPU: {
+					monthly: 20,
+					default: 2,
+					min: 2,
+					max: 100
+				},
+				seat: {
+					monthly: 8,
+					default: 1,
+					min: 1,
+					max: 1000
+				}
+			},
+			price_smb: {
+				vCPU: {
+					monthly: 20,
+					default: 2,
+					min: 2,
+					max: 10
+				},
+				seat: {
+					monthly: 8,
+					default: 1,
+					min: 1,
+					max: 10
+				}
+			},
 			minPrice: 120,
+			minPrice_smb: 48,
+			minPrice_nonprofit: 48,
 			description: 'Dedicated support and infrastructure.',
+			description_nonprofit: '60% discount for nonprofits & universities, no limits.',
+			description_smb: 'For individuals and small businesses. Find criteria here.',
 			enterprise_edition: true,
 			features: [
 				{
@@ -125,6 +115,27 @@ const pricing = {
 				{
 					text: <span>Design partners for roadmap</span>
 				}
+			],
+			features_smb: [
+				{
+					text: (
+						<span>
+							Subset of <b className="text-teal-600">Enterprise</b> Plugins
+						</span>
+					)
+				},
+				{
+					text: (
+						<span>
+							Only for{' '}
+							<a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">
+								small businesses and nonprofits
+							</a>
+						</span>
+					)
+				},
+				{ text: 'Support with 48h response time by email' },
+				{ text: 'Max 10 users with SSO' }
 			]
 		}
 	],
@@ -150,8 +161,6 @@ const pricing = {
 					text: <span>Community support on Discord</span>
 				}
 			],
-
-			mostPopular: false
 		},
 		{
 			name: 'Team',
@@ -192,7 +201,6 @@ const pricing = {
 					text: <span>Priority Support on Discord</span>
 				}
 			],
-			mostPopular: true,
 			customMessage: 'Sign in and upgrade your workspace'
 		},
 		{
@@ -246,8 +254,7 @@ const pricing = {
 				{
 					text: <span>Design partners for roadmap</span>
 				}
-			],
-			mostPopular: false
+			]
 		}
 	],
 	whitelabel: [
@@ -883,6 +890,14 @@ export default function Pricing() {
 	const [frequency, setFrequency] = useState(types[1]);
 	const [period, setPeriod] = useState(periods[0]);
 
+	const buttonOptions = ['SMB', 'Nonprofit', 'Enterprise'];
+
+	const [selectedOption, setSelectedOption] = useState('Enterprise');
+
+	const handleOptionChange = (option) => {
+		setSelectedOption(option);
+	};
+
 	const getPricingArray = (removePro) => {
 		switch (frequency.value) {
 			case 'cloud':
@@ -967,37 +982,47 @@ export default function Pricing() {
 					className={classNames(
 						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
 						{
-							'lg:grid-cols-3': frequency.value === 'cloud' || frequency.value === 'selfhost',
-							'lg:grid-cols-1': frequency.value === 'whitelabel'
+						  'lg:grid-cols-3': frequency.value === 'cloud',
+						  'lg:grid-cols-2': frequency.value === 'selfhost',
+						  'lg:grid-cols-1': frequency.value === 'whitelabel'
 						}
-					)}
+					  )}					  
 				>
 					{pricing[frequency.value].map((tier, index) => (
 						<div
 							key={tier.id}
 							className={classNames(
-								tier.mostPopular
-									? 'ring-1 ring-blue-600'
-									: tier.enterprise_edition
-									? 'ring-1 ring-teal-600'
-									: 'ring-1 ring-gray-200 dark:ring-gray-600',
-								'rounded-xl p-6 xl:p-8 flex flex-col'
+							tier.id === 'tier-team'
+								? 'ring-1 ring-blue-600'
+								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								? 'ring-1 ring-blue-600'
+								: tier.enterprise_edition
+								? 'ring-1 ring-teal-600'
+								: 'ring-1 ring-gray-200 dark:ring-gray-600',
+							'rounded-xl p-6 xl:p-8 flex flex-col'
 							)}
 						>
 							<div className="flex items-center justify-between gap-x-4">
-								<h3
-									id={tier.id}
-									className={classNames(
-										tier.mostPopular
-											? 'text-blue-600'
-											: tier.enterprise_edition
-											? 'text-teal-600'
-											: '',
-										'text-2xl font-semibold leading-8'
-									)}
-								>
-									{tier.name}
-								</h3>
+							<h3
+							id={tier.id}
+							className={classNames(
+								tier.id === 'tier-team'
+								? 'text-blue-600'
+								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								? 'text-blue-600'
+								: tier.enterprise_edition
+								? 'text-teal-600'
+								: '',
+								'text-2xl font-semibold leading-8'
+							)}
+							>
+							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
+								? tier.name_nonprofit // Display name for Nonprofit
+								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								? tier.name_smb // Display name for SMB
+								: tier.name // Default name
+							}
+							</h3>
 								{period.value === 'annually' &&
 								Object.keys(tier.price).length > 0 &&
 								tier.id !== 'tier-team' ? (
@@ -1007,20 +1032,59 @@ export default function Pricing() {
 								) : null}
 							</div>
 							{tier.minPrice !== undefined ? (
-								<p className="mt-6 flex items-baseline gap-x-1">
+								<p className="mt-6 flex items-baseline justify-between gap-x-1">
+									<span className="flex items-baseline gap-x-1">
 									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
 									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
 										$
 										{period.value === 'annually'
-											? tier.id === 'tier-team'
-												? (tier.minPrice * 12).toLocaleString('en-US')
-												: (tier.minPrice * 10).toLocaleString('en-US')
-											: tier.minPrice.toLocaleString('en-US')}
+										? tier.id === 'tier-team'
+											? (tier.minPrice * 12).toLocaleString('en-US') // Team tier calculation
+											: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
+											? (tier.minPrice_smb * 10).toLocaleString('en-US') // Annual price for SMB
+											: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
+											? (tier.minPrice_nonprofit * 10).toLocaleString('en-US') // Annual price for Nonprofit
+											: (tier.minPrice * 10).toLocaleString('en-US') // Annual price for others
+										: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
+										? tier.minPrice_smb.toLocaleString('en-US') // Monthly price for SMB
+										: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
+										? tier.minPrice_nonprofit.toLocaleString('en-US') // Monthly price for Nonprofit
+										: tier.minPrice.toLocaleString('en-US')}
 									</span>
 									<span className="text-sm font-semibold leading-6 text-gray-600">
 										{period.value === 'annually' ? '/yr' : '/mo'}
 									</span>
-								</p>
+									</span>
+									{tier.id === 'tier-enterprise-selfhost' && (
+									<span className="isolate inline-flex rounded-md">
+									{buttonOptions.map((option) => (
+									  <button
+										key={option}
+										type="button"
+										onClick={() => handleOptionChange(option)}
+										className={classNames(
+										  'relative inline-flex items-center',
+										  // Smaller size for default (mobile/smaller screens)
+										  'px-2 py-1 text-xs font-semibold', 
+										  // Larger size for bigger screens
+										  'sm:px-3 sm:py-2 sm:text-sm', // Apply larger size on screens larger than "sm"
+										  option === selectedOption
+											? 'bg-gray-500 text-white'
+											: 'bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-gray-300',
+										  'ring-1 ring-inset ring-white dark:ring-zinc-800 hover:bg-gray-100 dark:hover:bg-gray-600 focus:z-10',
+										  option === 'SMB'
+											? 'rounded-l-md'
+											: option === 'Enterprise'
+											? 'rounded-r-md -ml-px'
+											: '-ml-px'
+										)}
+									  >
+										{option}
+									  </button>
+									))}
+								  </span>
+								)}
+							  	</p>
 							) : (
 								<p className="mt-6 flex items-baseline gap-x-1 invisible">
 									<span className="text-sm font-semibold leading-6 text-gray-600">Lorem</span>
@@ -1030,7 +1094,12 @@ export default function Pricing() {
 							)}
 
 							<div className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
-								{tier.description}
+							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
+								? tier.description_nonprofit // Display the nonprofit description
+								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								? tier.description_smb // Display the SMB description
+								: tier.description // Default description
+							}
 							</div>
 
 							{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
@@ -1047,57 +1116,56 @@ export default function Pricing() {
 								</a>
 							) : (
 								<a
-									href={tier.href}
-									target="_blank"
-									aria-describedby={tier.id}
-									className={classNames(
-										tier.mostPopular
-											? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-											: tier.enterprise_edition
-											? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
-											: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-									)}
+								href={tier.href}
+								target="_blank"
+								aria-describedby={tier.id}
+								className={classNames(
+									tier.id === 'tier-team'
+									? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+									: tier.enterprise_edition
+									? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
+									: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
+									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+								)}
 								>
-									{tier.customMessage ? tier.customMessage : 'Get in touch'}
+								{tier.customMessage ? tier.customMessage : 'Get in touch'}
 								</a>
 							)}
 							<ul
-								role="list"
-								className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
-								style={{ marginBottom: '4rem' }}
+							role="list"
+							className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
+							style={{ marginBottom: '4rem' }}
 							>
+							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB' ? (
+								<FeatureList features={tier.features_smb} level={1} id={tier.id} />
+							) : (
 								<FeatureList features={tier.features} level={1} id={tier.id} />
+							)}
 							</ul>
 							<div class="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
-									<PriceCalculator tier={tier} period={period} />
+									<PriceCalculator tier={tier} period={period} selectedOption={selectedOption} />
 								) : null}
-								{index === 1 && frequency.value === 'selfhost' && (
-									<a
-										href="https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f"
-										className={classNames(
-											tier.mostPopular ? 'additional-class-for-most-popular' : '',
-											'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700',
-											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-										)}
-										target="_blank"
-									>
-										Try it for a month
-									</a>
-								)}
-								{index === 2 && frequency.value === 'selfhost' && (
-									<a
-										href="https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT"
-										className={classNames(
-											tier.mostPopular ? 'additional-class-for-most-popular' : '',
-											'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700',
-											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-										)}
-										target="_blank"
-									>
-										Try it for a month
-									</a>
+								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
+								<a
+									href={
+									selectedOption === 'SMB'
+										? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+										: selectedOption === 'Nonprofit'
+										? 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT?prefilled_promo_code=nonprofit'
+										: 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT'
+									}
+									className={classNames(
+									tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
+									'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700',
+									'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+									)}
+									target="_blank"
+								>
+									Try it for a month
+								</a>
 								)}
 							</div>
 						</div>
@@ -1119,7 +1187,7 @@ export default function Pricing() {
 									<div key={pricingItem.id} className="border-t border-gray-900/10">
 										<div
 											className={classNames(
-												pricingItem.mostPopular
+												pricingItem.id === 'tier-team'
 													? 'border-blue-600'
 													: pricingItem.enterprise_edition
 													? 'border-teal-600'
@@ -1129,7 +1197,7 @@ export default function Pricing() {
 										>
 											<h3
 												className={classNames(
-													pricingItem.mostPopular
+													pricingItem.id === 'tier-team'
 														? 'text-blue-600'
 														: pricingItem.enterprise_edition
 														? 'text-teal-600'
@@ -1159,7 +1227,7 @@ export default function Pricing() {
 
 														<div
 															className={classNames(
-																pricingItem.mostPopular
+																pricingItem.id === 'tier-team'
 																	? 'ring-1 ring-blue-600'
 																	: pricingItem.enterprise_edition
 																	? 'ring-2 ring-teal-600'
@@ -1196,7 +1264,7 @@ export default function Pricing() {
 																			{typeof attribute.tiers[pricingItem.id] === 'string' ? (
 																				<span
 																					className={
-																						pricingItem.mostPopular
+																						pricingItem.id === 'tier-team'
 																							? 'font-semibold text-blue-600'
 																							: pricingItem.enterprise_edition
 																							? 'font-semibold text-teal-600'
@@ -1236,7 +1304,7 @@ export default function Pricing() {
 														<div
 															aria-hidden="true"
 															className={classNames(
-																pricingItem.mostPopular
+																pricingItem.id === 'tier-team'
 																	? 'ring-1 ring-blue-600'
 																	: pricingItem.enterprise_edition
 																	? 'ring-2 ring-teal-600'
@@ -1269,7 +1337,7 @@ export default function Pricing() {
 									<div key={pricingItem.id}>
 										<div
 											className={classNames(
-												pricingItem.mostPopular
+												pricingItem.id === 'tier-team'
 													? 'border-blue-600'
 													: pricingItem.enterprise_edition
 													? 'border-teal-600'
@@ -1279,7 +1347,7 @@ export default function Pricing() {
 										>
 											<p
 												className={classNames(
-													pricingItem.mostPopular
+													pricingItem.id === 'tier-team'
 														? 'text-blue-600'
 														: pricingItem.enterprise_edition
 														? 'text-teal-600'
@@ -1362,7 +1430,7 @@ export default function Pricing() {
 																		{typeof attribute.tiers[pricingItem.id] === 'string' ? (
 																			<span
 																				className={classNames(
-																					pricingItem.mostPopular
+																					pricingItem.id === 'tier-team'
 																						? 'font-semibold text-blue-600'
 																						: pricingItem.enterprise_edition
 																						? 'font-semibold text-teal-600'
@@ -1410,7 +1478,7 @@ export default function Pricing() {
 													<div
 														key={pricingItem.id}
 														className={classNames(
-															pricingItem.mostPopular
+															pricingItem.id === 'tier-team'
 																? 'ring-1 ring-blue-600'
 																: pricingItem.enterprise_edition
 																? 'ring-1 ring-teal-600'
