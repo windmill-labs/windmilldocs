@@ -113,22 +113,24 @@ export function QuoteForm({
 							/>
 						</label>
 						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Plan</span>
-							{plan === 'cloud_ee'
-								? 'Cloud EE'
-								: selectedOption === 'SMB' && plan === 'selfhosted_ee'
-								? 'Pro'
-								: selectedOption === 'Nonprofit' && plan === 'selfhosted_ee'
-								? 'Enterprise - Nonprofit'
-								: 'Self-Hosted EE'}
+						<span className="font-medium text-gray-800 dark:text-gray-200">Plan</span>
+						{plan === 'cloud_ee'
+							? 'Cloud EE'
+							: selectedOption === 'SMB' && plan === 'selfhosted_ee'
+							? 'Pro'
+							: selectedOption === 'Nonprofit' && plan === 'selfhosted_ee'
+							? 'Enterprise - Nonprofit'
+							: 'Self-Hosted EE'}
 						</div>
+
 						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">vCPUs</span>
-							{vCPUs}
+						<span className="font-medium text-gray-800 dark:text-gray-200">vCPUs</span>
+						{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(vCPUs, 10) : vCPUs}
 						</div>
+
 						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Seats</span>
-							{seats}
+						<span className="font-medium text-gray-800 dark:text-gray-200">Seats</span>
+						{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(seats, 10) : seats}
 						</div>
 						<div className="flex flex-row justify-between">
 							<span className="font-medium text-gray-800 dark:text-gray-200">Frequency</span>
