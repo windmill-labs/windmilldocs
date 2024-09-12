@@ -588,7 +588,9 @@ These jobs can then be [monitored](/docs/core_concepts/monitor_past_and_future_r
 
 ### Durable Execution Engines: Temporal, Inngest
 
-Temporal and Inngest are durable execution engines. Windmill is built on top of its own ... TODO
+Temporal and Inngest are durable execution engines. A durable execution engine ensures the reliable and fault-tolerant execution of long-running workflows by persisting their state, allowing them to resume after failures. It orchestrates complex tasks across distributed systems, handling retries, compensations, and progress tracking automatically. This enables to build resilient, scalable systems without manually managing state or recovery from failures. However, a durable execution engines is NOT a workflow engine which is a higher level of abstraction that runs ... Workflows, or more specifically Direct Acyclic Graphs where each node is ran as a step. Windmill is built on top of a durable execution engine - its own - and durable execution engines are excellent ways of building your own custom workflow engines. If you have constraints and specific needs such as embedding that logic deep in your own product, then indeed, using those as building blocks for building your own workflow engines is a great idea. 
+
+If on the other hand you need a workflow engine, then you might end up reinventing the wheel by using those to rebuild your own version of a workflow engine. In addition, Windmill is not just a Workflow engine but an end-to-end developer platform with observability, high-scale capabilities, worker managements, ability to be fully air-gapped baked in.
 
 ## Conclusion
 
