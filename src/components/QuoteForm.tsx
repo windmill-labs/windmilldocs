@@ -8,7 +8,8 @@ export function QuoteForm({
 	frequency,
 	plan,
 	open,
-	setOpen
+	setOpen,
+	selectedOption
 }: {
 	vCPUs: number;
 	seats: number;
@@ -16,13 +17,26 @@ export function QuoteForm({
 	plan: 'selfhosted_ee' | 'cloud_ee';
 	open: boolean;
 	setOpen: (open: boolean) => void;
+	selectedOption: string;
 }) {
 	const [companyName, setCompanyName] = useState('');
 	const [email, setEmail] = useState('');
 	const [loading, setLoading] = useState(false);
+
+	// Function to generate quote
 	async function generateQuote() {
 		setLoading(true);
 		try {
+			// Modify plan if conditions are met
+			let apiPlan = plan;
+
+				if (selectedOption === 'SMB' && plan === 'selfhosted_ee') {
+				apiPlan = 'selfhosted_pro';
+				} else if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') {
+				apiPlan = 'nonprofit_ee';
+				}
+
+			// API request
 			const response = await fetch(
 				`https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/p/f/bd/public/generate_quote_public?token=ylmZm3yfDfLGPVjvn1N3g3vtOlV8AOnD`,
 				{
@@ -36,7 +50,7 @@ export function QuoteForm({
 						seats: seats,
 						vcpus: vCPUs,
 						company_name: companyName,
-						plan,
+						plan: apiPlan, // Pass the modified plan
 						email
 					})
 				}
@@ -100,7 +114,13 @@ export function QuoteForm({
 						</label>
 						<div className="flex flex-row justify-between">
 							<span className="font-medium text-gray-800 dark:text-gray-200">Plan</span>
-							{plan === 'cloud_ee' ? 'Cloud EE' : 'Self-hosted EE'}
+							{plan === 'cloud_ee'
+								? 'Cloud EE'
+								: selectedOption === 'SMB' && plan === 'selfhosted_ee'
+								? 'Pro'
+								: selectedOption === 'Nonprofit' && plan === 'selfhosted_ee'
+								? 'Enterprise - Nonprofit'
+								: 'Self-Hosted EE'}
 						</div>
 						<div className="flex flex-row justify-between">
 							<span className="font-medium text-gray-800 dark:text-gray-200">vCPUs</span>
@@ -119,7 +139,7 @@ export function QuoteForm({
 							href="https://drive.google.com/uc?export=download&id=1tbBMNSGcdu3e5BAFf8CIEXlbEKppbtLm"
 							className="text-blue underline text-sm"
 						>
-							Also need a presentation? Here it is
+							Also need a presentation?
 						</a>
 
 						<button

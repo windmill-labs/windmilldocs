@@ -88,7 +88,7 @@ const pricing = {
 			minPrice_nonprofit: 48,
 			description: 'Dedicated support and infrastructure.',
 			description_nonprofit: '60% discount for nonprofits & universities, no limits.',
-			description_smb: 'For individuals and small businesses. Find criteria here.',
+			description_smb: 'For individuals and small businesses. Find criteria <a href="#pro-plan">here</a>.',
 			enterprise_edition: true,
 			features: [
 				{
@@ -120,22 +120,16 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Subset of <b className="text-teal-600">Enterprise</b> Plugins
+							Subset of Windmill <b className="text-teal-600">Enterprise</b> Edition Plugins. Limits are:
 						</span>
-					)
-				},
-				{
-					text: (
-						<span>
-							Only for{' '}
-							<a href="#pro-plan" class="custom-link text-gray-600 dark:text-gray-200">
-								small businesses and nonprofits
-							</a>
-						</span>
-					)
+					),
+					features: [
+						{ text: 'No Audit logs' },
+						{ text: 'No Distributed dependency cache backed by S3' },
+						{ text: 'Max 10 users with SSO'}
+					]
 				},
 				{ text: 'Support with 48h response time by email' },
-				{ text: 'Max 10 users with SSO' }
 			]
 		}
 	],
@@ -1094,12 +1088,16 @@ export default function Pricing() {
 							)}
 
 							<div className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
-							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
-								? tier.description_nonprofit // Display the nonprofit description
-								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-								? tier.description_smb // Display the SMB description
-								: tier.description // Default description
-							}
+							<span
+								dangerouslySetInnerHTML={{
+								__html:
+									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
+									? tier.description_nonprofit // Display the nonprofit description with links
+									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									? tier.description_smb // Display the SMB description with links
+									: tier.description, // Default description with links
+								}}
+							/>
 							</div>
 
 							{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
@@ -1144,30 +1142,33 @@ export default function Pricing() {
 								<FeatureList features={tier.features} level={1} id={tier.id} />
 							)}
 							</ul>
-							<div class="flex flex-col justify-between flex-1">
+							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
 									<PriceCalculator tier={tier} period={period} selectedOption={selectedOption} />
 								) : null}
+
 								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
-								<a
+									<a
 									href={
-									selectedOption === 'SMB'
+										selectedOption === 'SMB'
 										? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
 										: selectedOption === 'Nonprofit'
 										? 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT?prefilled_promo_code=nonprofit'
 										: 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT'
 									}
 									className={classNames(
-									tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
-									'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700',
-									'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
+										tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
+										selectedOption === 'SMB'
+										? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
+										: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+										'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
 									)}
 									target="_blank"
-								>
+									>
 									Try it for a month
-								</a>
+									</a>
 								)}
-							</div>
+								</div>
 						</div>
 					))}
 				</div>

@@ -82,9 +82,11 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				vCPUs={vCPUs}
 				seats={seats}
 				open={showQuoteForm}
+
 				setOpen={setShowQuoteForm}
 				plan={tier.id === 'tier-enterprise-cloud' ? 'cloud_ee' : 'selfhosted_ee'}
 				frequency={period.value === 'annually' ? 'yearly' : 'monthly'}
+				selectedOption={selectedOption}
 			/>
 			<div className="grow flex flex-col justify-start">
 				<div className="flex justify-between items-center">
@@ -320,13 +322,16 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							</div>
 						</div>
 						<a
-							onClick={() => setShowQuoteForm(true)}
-							className={classNames(
-								'text-sm cursor-pointer border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
-								'!no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-							)}
+						onClick={() => setShowQuoteForm(true)}
+						className={classNames(
+							'border',
+							selectedOption === 'SMB'
+							? 'text-blue-600 dark:text-blue-500 border-blue-600 dark:border-blue-500 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 focus-visible:outline-blue-600'
+							: 'text-teal-600 border-teal-600 hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950 focus-visible:outline-teal-600',
+							'text-sm cursor-pointer shadow-sm !no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+						)}
 						>
-							Download quote
+						Download quote
 						</a>
 					</>
 				) : null}
