@@ -201,7 +201,7 @@ const faqs = [
 	},
 	{
 		id: 'security',
-		question: "What is Windmill's security level on APIs?",
+		question: "What is Windmill's security level on cloud?",
 		answer: (
 			<span>
 				Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.

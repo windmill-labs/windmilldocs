@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import React from 'react';
 import classNames from 'classnames';
@@ -12,6 +12,11 @@ const plans = [
 		price: 600
 	}
 ];
+
+// Utility function to clamp values between min and max
+function clamp(value, min, max) {
+	return Math.max(min, Math.min(max, value));
+  }
 
 function calculatePrice(monthlyPrice, period, tierId) {
 	if (period === 'annually') {
@@ -35,45 +40,55 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
 	const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
 	const [showQuoteForm, setShowQuoteForm] = useState(false);
-
+  
 	// Get the appropriate pricing based on selectedOption and tier.id
 	function getPriceByOption() {
-		if (tier.id === 'tier-enterprise-selfhost') {
-			if (selectedOption === 'SMB' && tier.price_smb) {
-				return tier.price_smb;
-			} else if (selectedOption === 'Nonprofit' && tier.price_nonprofit) {
-				return tier.price_nonprofit;
-			}
+	  if (tier.id === 'tier-enterprise-selfhost') {
+		if (selectedOption === 'SMB' && tier.price_smb) {
+		  return tier.price_smb;
+		} else if (selectedOption === 'Nonprofit' && tier.price_nonprofit) {
+		  return tier.price_nonprofit;
 		}
-		return tier.price; // Default price if no special option is selected
+	  }
+	  return tier.price; // Default price if no special option is selected
 	}
-
+  
 	const pricing = getPriceByOption();
-
+  
+	// This effect ensures that seat and vCPU values are clamped to the new tier's limits
+	useEffect(() => {
+	  if (pricing.seat && seats > pricing.seat.max) {
+		setSeats(pricing.seat.max);
+	  }
+	  if (pricing.vCPU && vCPUs > pricing.vCPU.max) {
+		setvCPUs(pricing.vCPU.max);
+	  }
+	}, [pricing, seats, vCPUs]);
+  
 	function computeTotalPrice() {
-		let total = 0;
-
-		if (tier.id === 'tier-team') {
-			total = calculatePrice(tier.minPrice, period.value, tier.id);
-
-			if (pricing.seat) {
-				let additionalSeats = Math.max(0, seats - 1);
-				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * additionalSeats;
-			}
-		} else {
-			if (tier.id === 'tier-enterprise-cloud') {
-				total = calculatePrice(selected.price, period.value, tier.id);
-			}
-
-			if (pricing.seat) {
-				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * seats;
-			}
+	  let total = 0;
+  
+	  if (tier.id === 'tier-team') {
+		total = calculatePrice(tier.minPrice, period.value, tier.id);
+  
+		if (pricing.seat) {
+		  let additionalSeats = Math.max(0, seats - 1);
+		  total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * additionalSeats;
 		}
-
-		if (pricing.vCPU) {
-			total += calculatePrice(pricing.vCPU.monthly, period.value, tier.id) * vCPUs;
+	  } else {
+		if (tier.id === 'tier-enterprise-cloud') {
+		  total = calculatePrice(selected.price, period.value, tier.id);
 		}
-		return total;
+  
+		if (pricing.seat) {
+		  total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * seats;
+		}
+	  }
+  
+	  if (pricing.vCPU) {
+		total += calculatePrice(pricing.vCPU.monthly, period.value, tier.id) * vCPUs;
+	  }
+	  return total;
 	}
 
 	return (
@@ -103,57 +118,61 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				</div>
 
 				<div className="mt-4 flex items-baseline gap-x-1">
-					<ul className="flex flex-col gap-2 w-full">
-						{Object.keys(pricing).map((key) => (
-							<li key={key} className="flex flex-col">
-								<div className="flex justify-between w-full items-center">
-									<div>
+								<ul className="flex flex-col gap-2 w-full">
+								{Object.keys(pricing).map((key) => (
+									<li key={key} className="flex flex-col">
+									<div className="flex justify-between w-full items-center">
+										<div>
 										<span className="text-sm text-gray-600 dark:text-gray-200">
 											{key === 'vCPU' ? vCPUs.toLocaleString() : seats.toLocaleString()}
 										</span>{' '}
 										{key === 'vCPU' ? (
 											<>
-												<a
-													href="#vcpu-reporting"
-													className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200 custom-link decoration-gray-600 dark:decoration-gray-200 decoration-0.1 custom-link-offset-1.5"
-												>
-													{key}s
-												</a>{' '}
-												<span className="text-sm text-gray-600 dark:text-gray-200">
-													({vCPUs * 2} GB of memory)
-												</span>
+											<a
+												href="#vcpu-reporting"
+												className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200 custom-link decoration-gray-600 dark:decoration-gray-200 decoration-0.1 custom-link-offset-1.5"
+											>
+												{key}s
+											</a>{' '}
+											<span className="text-sm text-gray-600 dark:text-gray-200">
+												({vCPUs * 2} GB of memory)
+											</span>
 											</>
 										) : (
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-												{key}s
+											{key}s
 											</span>
 										)}
-									</div>
-									<div>
+										</div>
+										<div>
 										<span className="text-sm text-gray-900 font-semibold dark:text-white">
 											${calculatePrice(pricing[key].monthly, period.value, tier.id)}
-										</span>
+										</span>{' '}
 										<span className="text-sm text-gray-400">
-											{period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
-										</span>
+										{period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
+									</span>
 									</div>
 								</div>
 								<Slider
 									min={pricing[key].min}
 									max={pricing[key].max}
 									step={1}
-									defaultValue={pricing[key].default}
+									defaultValue={clamp(
+									key === 'vCPU' ? vCPUs : seats,
+									pricing[key].min,
+									pricing[key].max
+									)}
 									onChange={(value) => {
-										if (key === 'vCPU') {
-											setvCPUs(value);
-										}
+									if (key === 'vCPU') {
+										setvCPUs(clamp(value, pricing[key].min, pricing[key].max));
+									}
 
-										if (key === 'seat') {
-											setSeats(value);
-										}
+									if (key === 'seat') {
+										setSeats(clamp(value, pricing[key].min, pricing[key].max));
+									}
 									}}
 								/>
-							</li>
+								</li>
 						))}
 					</ul>
 				</div>

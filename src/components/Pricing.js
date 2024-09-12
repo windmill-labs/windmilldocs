@@ -27,7 +27,7 @@ const pricing = {
 			href: '/docs/advanced/self_host',
 			price: {},
 			description: 'Unlimited users & executions.',
-			customMessage: 'Learn more',
+			customMessage: 'Self-host in minutes',
 			minPrice: 0,
 			features: [
 				{ text: 'Easy deployment on Fargate / Docker / Kubernetes' },
@@ -86,15 +86,15 @@ const pricing = {
 			minPrice: 120,
 			minPrice_smb: 48,
 			minPrice_nonprofit: 48,
-			description: 'Dedicated support and infrastructure.',
+			description: 'For advanced needs in observability, security and performance.',
 			description_nonprofit: '60% discount for nonprofits & universities, no limits.',
-			description_smb: 'For individuals and small businesses. Find criteria <a href="#pro-plan">here</a>.',
+			description_smb: 'For individuals and small businesses. Find if your qualify <a href="#pro-plan">here</a>.',
 			enterprise_edition: true,
 			features: [
 				{
 					text: (
 						<span>
-							Windmill <b className="text-teal-600">Enterprise</b> Edition Plugins:
+							Windmill <b className="text-teal-600">Enterprise</b> Edition features (see table below), including:
 						</span>
 					),
 					features: [
@@ -135,11 +135,12 @@ const pricing = {
 	],
 	cloud: [
 		{
-			name: 'Community',
+			name: 'Free',
 			id: 'tier-free',
 			href: 'https://app.windmill.dev/user/login',
 			price: {},
 			minPrice: 0,
+			customMessage: 'No credit card required',
 			description: 'Discover the platform with no commitment and no credit card required.',
 			features: [
 				{
@@ -1017,13 +1018,21 @@ export default function Pricing() {
 								: tier.name // Default name
 							}
 							</h3>
-								{period.value === 'annually' &&
+							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' && period.value === 'annually' ? (
+								<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+									60% nonprofit + 16% annual discount
+								</p>
+							) : tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' ? (
+								<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+									60% nonprofit discount
+								</p>
+							) : period.value === 'annually' &&
 								Object.keys(tier.price).length > 0 &&
 								tier.id !== 'tier-team' ? (
 									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
-										16% Discount
+										16% annual discount
 									</p>
-								) : null}
+							) : null}
 							</div>
 							{tier.minPrice !== undefined ? (
 								<p className="mt-6 flex items-baseline justify-between gap-x-1">
@@ -1100,20 +1109,7 @@ export default function Pricing() {
 							/>
 							</div>
 
-							{index === 0 && (frequency.value === 'selfhost' || frequency.value === 'cloud') ? (
-								<a
-									aria-describedby={tier.id}
-									href={tier.href}
-									target="_blank"
-									className={classNames(
-										'text-gray-900 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:text-white',
-										'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
-									)}
-								>
-									No credit card required
-								</a>
-							) : (
-								<a
+							<a
 								href={tier.href}
 								target="_blank"
 								aria-describedby={tier.id}
@@ -1124,13 +1120,12 @@ export default function Pricing() {
 									? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
 									: tier.enterprise_edition
 									? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
-									: 'text-blue-600 ring-1 ring-inset ring-blue-200 hover:ring-blue-300',
+									: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
 									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
 								)}
 								>
 								{tier.customMessage ? tier.customMessage : 'Get in touch'}
 								</a>
-							)}
 							<ul
 							role="list"
 							className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"

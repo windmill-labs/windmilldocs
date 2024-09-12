@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function exponentialScale(value, min, max) {
     if (value <= min) return min;
@@ -18,7 +18,12 @@ function inverseExponentialScale(value, min, max) {
 export default function Slider({ min, max, step, defaultValue, onChange }) {
     const [value, setValue] = useState(defaultValue);
     const isExponential = max > 99;
-    
+
+    useEffect(() => {
+        // When defaultValue, min, or max changes, reset the slider value if it exceeds the new max
+        setValue((prevValue) => clamp(prevValue, min, max));
+    }, [defaultValue, min, max]);
+
     const handleChange = (event) => {
         let newValue = parseFloat(event.target.value);
         if (isExponential) {
@@ -51,4 +56,9 @@ export default function Slider({ min, max, step, defaultValue, onChange }) {
             />
         </div>
     );
+}
+
+// Utility function to clamp a value between min and max
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
 }
