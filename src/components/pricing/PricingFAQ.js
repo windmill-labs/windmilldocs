@@ -9,11 +9,12 @@ const faqs = [
 		question: 'Which organizations can subscribe to the Pro plan?',
 		answer: (
 			<span>
-				The Pro plan is only available in Self-hosted for: <br />- Businesses with less than 10
-				employees and $250k revenues
-				<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits of workers
-				& users) <br />
-				Reach out to contact@windmill.dev to inquiry about exceptions.
+				The Pro plan is only available in Self-hosted for:
+				<br />- Individuals
+				<br />- Businesses with less than 10 employees and $250k revenues
+				<br />- Startups at seed stage <br />
+				Reach out to contact@windmill.dev to inquiry about exceptions.<br />
+				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
 			</span>
 		)
 	},
