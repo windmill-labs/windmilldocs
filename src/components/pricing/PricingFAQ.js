@@ -9,11 +9,12 @@ const faqs = [
 		question: 'Which organizations can subscribe to the Pro plan?',
 		answer: (
 			<span>
-				The Pro plan is only available in Self-hosted for: <br />- Businesses with less than 10
-				employees and $250k revenues
-				<br />- Startups at seed stage <br />- Non-profits & Universities (higher limits of workers
-				& users) <br />
-				Reach out to contact@windmill.dev to inquiry about exceptions.
+				The Pro plan is only available in Self-hosted for:
+				<br />- Individuals
+				<br />- Businesses with less than 10 employees and $250k revenues
+				<br />- Startups at seed stage <br />
+				Reach out to contact@windmill.dev to inquiry about exceptions.<br />
+				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
 			</span>
 		)
 	},
@@ -119,13 +120,13 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is vCPU-memory-based. For example,24 workers with 0.5 vCPU each is 1 vCPU. 1
-				worker with 4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would
-				divide that by 24. The number of vCPUs is the aggregate limits of all the workers in your
-				production instances. Note that every vCPU paid gives you a quota of 2Gb of memory limits
-				(the quota is an aggregate sum, not a limit for each individual worker). You may not set
-				vCPU limits and rely solely on memory quotas if you prefer. Each worker can run up to ~26M
-				jobs per month (at 100ms per job).
+				, pricing is vCPU-memory-based. For example, 2 workers with 0.5 vCPU each is 1 vCPU. 1
+				worker with 4 vCPU would count as 4 vCPU. But if it only is provisionned for 1h every day,
+				you would divide that by 24. The number of vCPUs is the aggregate limits of all the workers
+				in your production instances. Note that every vCPU paid gives you a quota of 2Gb of memory
+				limits (the quota is an aggregate sum, not a limit for each individual worker). You may not
+				set vCPU limits and rely solely on memory quotas if you prefer and we actually recommend it.
+				Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}
@@ -200,7 +201,7 @@ const faqs = [
 	},
 	{
 		id: 'security',
-		question: "What is Windmill's security level on APIs?",
+		question: "What is Windmill's security level on cloud?",
 		answer: (
 			<span>
 				Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.

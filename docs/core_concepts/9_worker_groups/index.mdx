@@ -16,6 +16,8 @@ By default, every worker is the same and interchangeable. However, there are oft
 
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
+![Workers page](./workers_page.png 'Workers page')
+
 In the [Community Edition](/pricing), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -200,6 +202,26 @@ Last, if the tags contain `$args[argName]` (e.g: `foo-$args[foobar])` then the t
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
 
+## Alerts
+
+You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+
+![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
+
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+
+You need to configre [Critical alert channels](../37_critical_alert_channels/index.mdx) to receive notifications.
+
+![Workers alerts](./workers_alerts.png 'Workers alerts')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical alert channels"
+		description="Get a notification everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alert_channels"
+	/>
+</div>
+
 ## Create Worker Group config
 
 <img
@@ -272,6 +294,20 @@ Dedicated Workers / High Throughput is a [Cloud plans & Self-Hosted Enterprise E
 		title="Dedicated Workers / High Throughput"
 		description="Dedicated Workers are workers that are dedicated to a particular script."
 		href="/docs/core_concepts/dedicated_workers"
+	/>
+</div>
+
+## Service Logs
+
+View logs from any workers or servers directly within the service logs section of the search modal.
+
+![Service Logs](../36_service_logs/service_logs.png "Service Logs")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Service Logs"
+		description="View logs from any worker or servers directly within the service logs section of the search modal."
+		href="/docs/core_concepts/service_logs"
 	/>
 </div>
 

@@ -36,7 +36,9 @@ All details on the [Pricing page](/pricing).
 
 Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [S3 integration](/blog/launch-week-1/data-pipeline-orchestrator), [Git Sync](../../advanced/11_git_sync/index.mdx), [Worker Groups Management UI](../../core_concepts/9_worker_groups/index.mdx)).
 
-The Pro plan contains the main Enterprise features. It is exclusively available to non-profits and companies with fewer than 10 employees and $250k in revenue.
+The Pro plan contains the main Enterprise features. It is exclusively available to individuals and companies with fewer than 10 employees and $250k in revenue.
+
+Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
 
 We share our pricing grid and the features of each plan on the [Pricing page](/pricing) in the most transparent way possible.
 
@@ -106,12 +108,12 @@ Team plans work at the workspace-level.
 - The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
 - You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
 
-- To have your instance switch from Community Edition to Enterprise Edition, you'll need to change the Windmill image:
+- To have your instance switch from Free Edition to Enterprise Edition, you'll need to change the Windmill image:
   - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
   - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
 
 - If not done earlier, you can create your first workspace, but your instance will not have access to Enterprise features until the license key is passed.
-- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the Instance Settings. The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
+- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the [Instance Settings](../../advanced/18_instance_settings/index.mdx#license-key). The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
 
 - To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](#windmill-customer-portal).
 - Windmill employs lightweight telemetry to automatically [track and report](#usage-checks) the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
@@ -133,7 +135,7 @@ Team plans work at the workspace-level.
 
 #### Using the License Key (Self-Host)
 
-To enable the license key, switch from the `windmill` image to the `windmill-ee` image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
+To enable the license key, switch from the `windmill` image to the `windmill-ee` image in both the server and workers. From the [Instance Settings](../../advanced/18_instance_settings/index.mdx#license-key), pass the license key, "Test key" and save settings.
 
 ![Use license key](./add_license_key.png 'Use license key')
 
@@ -142,7 +144,7 @@ To enable the license key, switch from the `windmill` image to the `windmill-ee`
 As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & vCPUs) from the portal.
 
 Access to the portal is made through either:
-- From your Instance Settings, in the "Core" tab. Where you can also renew your [license key](#self-host).
+- From your [Instance Settings](../../advanced/18_instance_settings/index.mdx#license-key), in the "Core" tab. Where you can also renew your [license key](#self-host).
 - Through a direct link: [portal.windmill.dev](https://portal.windmill.dev/), filling in the email address used for the subscription, and then accessing a link sent by email.
 
 Email addresses can be added to the portal to allow multiple users to access it.

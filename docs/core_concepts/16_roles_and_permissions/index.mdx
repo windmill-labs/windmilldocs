@@ -41,20 +41,29 @@ admin of such workspace and he can invite others to join his workspace.
 
 Users can be given different levels of permissions:
 
-1. **Superadmin**: The superadmin role has the highest level of access and can manage the entire Windmill instance. Only superadmins can access the dedicated 'admins' workspace. Also by default, superadmins have access to all workspaces as admins of those workspaces. When an admin does an action as a user of a workspace he is not a member of and as such as no username in, their email is used in lieu of the username. Windmill can be configured to remove the ability for non-superadmins to create workspace using the: CREATE_WORKSPACE_REQUIRE_SUPERADMIN env variable.
+### Superadmin
 
-2. **Admin**:
+The superadmin role has the highest level of access and can manage the entire Windmill instance. Only superadmins can access the dedicated 'admins' workspace. Also by default, superadmins have access to all workspaces as admins of those workspaces. When an admin does an action as a user of a workspace he is not a member of and as such as no username in, their email is used in lieu of the username. Windmill can be configured to remove the ability for non-superadmins to create workspace using the: CREATE_WORKSPACE_REQUIRE_SUPERADMIN env variable.
 
-   - At the [workspace](#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
-   - At the [folder](../8_groups_and_folders/index.mdx#folders) level, an admin of a folder has read, write and archive access to all the elements inside the folders ([scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.mdx), [apps](../../getting_started/7_apps_quickstart/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.mdx)) and can manage the permissions as well as add new admins.
+### Admin
 
-3. **Developer**: Developers can execute and view scripts, flows, and apps within a workspace. Developers see the full interface of Windmill and contrary to the Operators, they have the ability to create and edit scripts, flows and apps. Developers have read and write access to the entities they create or have been [granted access to by others](../8_groups_and_folders/index.mdx).
+At the [workspace](#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
 
-4. **Operator**: Operators have limited access within a workspace. They can only execute and view scripts, flows, and apps that they have visibility on, and only those that are within their allowed path or [folders](../8_groups_and_folders/index.mdx). Operators do not have the ability to create or modify entities.
+At the [folder](../8_groups_and_folders/index.mdx#folders) level, an admin of a folder has read, write and archive access to all the elements inside the folders ([scripts](../../getting_started/0_scripts_quickstart/index.mdx), [flows](../../getting_started/6_flows_quickstart/index.mdx), [apps](../../getting_started/7_apps_quickstart/index.mdx), [resources](../3_resources_and_types/index.mdx), [schedules](../1_scheduling/index.mdx)) and can manage the permissions as well as add new admins.
+
+### Developer
+
+Developers can execute and view scripts, flows, and apps within a workspace. Developers see the full interface of Windmill and contrary to the Operators, they have the ability to create and edit scripts, flows and apps. Developers have read and write access to the entities they create or have been [granted access to by others](../8_groups_and_folders/index.mdx).
+
+### Operator
+
+Operators have limited access within a workspace. They can only execute and view scripts, flows, and apps that they have visibility on, and only those that are within their allowed path or [folders](../8_groups_and_folders/index.mdx). Operators do not have the ability to create or modify entities.
    The recommended way to share scripts and flows with operators is through [auto-generated apps](../6_auto_generated_uis/index.mdx).
    With the second option being of sharing the script and [variables](../2_variables_and_secrets/index.mdx) it depends on (but operators won't be able to load variable directly from the UI/api, only use them within the scripts they have access to).
 
-5. **Anonymous app viewers**: Anonymous app viewers are individuals who can access and view Windmill apps without being a user but by knowing the [secret URL](../../apps/0_toolbar.md#deploy) that allows app viewing. They do not have any editing or privileges to execute scripts and flows. The apps that they see execute the scripts and flows that are part of the app but only on behalf of the app author. The anonymous user cannot execute any of the scripts and flows part of the apps outside of the inputs authorized by the app through a policy that is automatically generated by the app.
+### Anonymous app viewers
+
+Anonymous app viewers are individuals who can access and view Windmill apps without being a user but by knowing the [secret URL](../../apps/0_toolbar.md#deploy) that allows app viewing. They do not have any editing or privileges to execute scripts and flows. The apps that they see execute the scripts and flows that are part of the app but only on behalf of the app author. The anonymous user cannot execute any of the scripts and flows part of the apps outside of the inputs authorized by the app through a policy that is automatically generated by the app.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

@@ -163,11 +163,11 @@ In the docker-compose, set the number of windmill_worker and windmill_worker_nat
 
 ### Enterprise Edition
 
-To use the [enterprise edition](/pricing), you need pass the license key in the instance settings (Superadmin settings -> Instance settings).
+To use the [enterprise edition](/pricing), you need pass the license key in the [instance settings](../18_instance_settings/index.mdx#license-key).
 
 You can then set the number of replicas of the multiplayer container to 1 in the docker-compose.
 
-You will be provided a license key when you purchase the enterprise edition. Contact us at contact@windmill.dev to get a trial license key. Pricing is at [https://windmill.dev/pricing](https://windmill.dev/pricing). You will benefit from support, SLA and all the [additional features](/pricing) of the enterprise edition.
+You will be provided a license key when you purchase the enterprise edition or start a trial. Start a trial from the [Pricing](/pricing) page or contact us at contact@windmill.dev to get a trial license key. You will benefit from support, SLA and all the [additional features](/pricing) of the enterprise edition.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -193,7 +193,7 @@ More details at:
 
 ### Configuring Domain and Reverse Proxy
 
-To deploy Windmill to the `windmill.example.com` domain, make sure to set "Base Url" correctly in the Instance Settings (Superadmin Settings -> Instance Settings -> Base Url)
+To deploy Windmill to the `windmill.example.com` domain, make sure to set "Base Url" correctly in the [Instance Settings](../18_instance_settings/index.mdx#base-url).
 
 You can use any reverse proxy as long as they behave mostly like the default provided following caddy configuration:
 
@@ -622,6 +622,14 @@ Now, your Windmill instance should use the SMTP settings you've provided to send
 
 </details>
 
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Setup OAuth and SSO"
+		description="Windmill supports Single Sign-On for Microsoft, Google, GitHub, GitLab, Okta, and domain restriction."
+		href="/docs/misc/setup_oauth"
+	/>
+</div>
+
 #### Set up SMTP from the UI
 
 <iframe
@@ -636,17 +644,15 @@ Now, your Windmill instance should use the SMTP settings you've provided to send
 
 <br />
 
-From your self-hosted instance, click on your username and pick "Superadmin settings" and "SMTP" tab.
+From your self-hosted instance, click on your username and pick [Instance settings](../18_instance_settings/index.mdx#smtp) and "SMTP" tab.
 
-![Superadmin settings](./superadmin_settings.png 'Superadmin settings')
+![SMTP instance settings](../18_instance_settings/smtp.png 'SMTP instance settings')
 
 Fill your SMTP details.
 
 **Note**: If you're using Gmail, you'll need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en) to use as `SMTP_PASSWORD`. This is a unique password that Gmail provides for apps and services that want to connect to your account.
 
 You'll be offered to "Test SMTP settings" & send a blank e-mail to a given address.
-
-![Filled SMTP](./smtp_filled.png 'Filled SMTP')
 
 #### Manually add user to instance
 
@@ -717,7 +723,7 @@ For more advanced setups, see [Helm Chart](#helm-chart).
 
 ## Self-signed certificates
 
-Detailed guide for using Windmill with self-signed certificates [here](https://www.lfanew.com/posts/windmill-ca-trust/).
+Detailed guide for using Windmill with self-signed certificates [here](https://www.lfanew.com/posts/windmill-ca-trust/) ([archived version](https://web.archive.org/web/20240424144202/https://www.lfanew.com/posts/windmill-ca-trust/)).
 
 TL;DR: below
 
