@@ -1,4 +1,4 @@
-# Users Management
+# Users management
 
 ## Adding a user
 

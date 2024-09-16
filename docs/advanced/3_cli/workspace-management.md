@@ -1,4 +1,4 @@
-# Workspace Management
+# Workspace management
 
 Windmill CLI can be used on several workspaces from several instances.
 

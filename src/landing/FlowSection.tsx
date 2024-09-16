@@ -462,7 +462,7 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI',
+					videoSrc: 'https://www.youtube.com/embed/TXtmLrToxoI',
 					videoLength: '26',
 					altText: 'Execute using CLI'
 				},

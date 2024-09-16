@@ -22,7 +22,7 @@ slug: teracapital-case-study
 
 This is a testimonial written by [José Governo](https://www.linkedin.com/in/jose-governo/), Responsible for Quantitative Strategies and Data Engineering at [Tera Capital](https://www.teracapital.com.br/).
 
-![Tera Capital Case Study](./t4_use_case.png.webp "Tera Capital Case Study")
+![Tera Capital Case Study](./t4_use_case.png "Tera Capital Case Study")
 
 ## What before Windmill?
 
