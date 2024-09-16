@@ -32,7 +32,7 @@ export default function BlogPostItemContent({ children, className }) {
 						internal apps and composable steps of flows that automate repetitive workflows.
 						<br />
 						<br />
-						You can <a href="/docs/advanced/self_host/#deployment">self-host</a> Windmill using a{' '}
+						You can <a href="/docs/advanced/self_host/">self-host</a> Windmill using a{' '}
 						<code>docker compose up</code>, or go with the{' '}
 						<a href="https://app.windmill.dev/user/login" rel="nofollow">
 							cloud app
