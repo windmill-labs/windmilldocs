@@ -351,7 +351,7 @@ const sections = [
 				link: '/docs/apps/public_apps'
 			},
 			{
-				name: 'Email Triggers',
+				name: 'Email triggers',
 				tiers: {
 					'tier-free-selfhost': 'Max 100 emails per day',
 					'tier-enterprise-selfhost': 'Unlimited',
@@ -856,7 +856,7 @@ const sections = [
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			},
 			{
-				name: 'Workspace Default App',
+				name: 'Workspace default app',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
