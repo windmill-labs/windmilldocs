@@ -17,19 +17,19 @@ For larger and production use-cases, use our [Helm chart](#helm-chart) to deploy
 
 <br />
 
-Windmill itself just requires 3 elements:
+Windmill itself just requires 3 components:
 
 - A Postgres database, which contains the entire state of Windmill, including the job queue.
-- The Windmill container run in server mode (and replicated for high availability). It serves both the frontend and the API. It needs to connect to the database and is what is exposed publicly to serve the frontend. It does not need to communicate to the workers directly.
-- The Windmill container run in worker mode (and replicated to handle more job throughput). It needs to connect to the database and does not communicate to the servers.
+- The Windmill container running in server mode (and replicated for high availability). It serves both the frontend and the API. It needs to connect to the database and is what is exposed publicly to serve the frontend. It does not need to communicate to the workers directly.
+- The Windmill container running in worker mode (and replicated to handle more job throughput). It needs to connect to the database and does not communicate to the servers.
 
-There are 3 optional parts:
+There are 3 optional components:
 
 - Windmill LSP to provide intellisense on the [Monaco web Editor](../../code_editor/index.mdx).
 - Windmill [Multiplayer](../../core_concepts/7_multiplayer/index.md) ([Cloud & Enterprise Selfhosted only](/pricing)) to provide real time collaboration.
 - A reverse proxy (caddy in our [Docker compose](#docker)) to the Windmill server, LSP and multiplayer in order to expose a single port to the outside world.
 
-The docker-compose [below](#docker) use the 6 parts and we recommend doing TLS termination outside of the provided caddy.
+The docker-compose file [below](#docker) uses all six components, and we recommend handling TLS termination outside of the provided Caddy service..
 
 ## Cloud provider-specific guides
 
@@ -45,7 +45,7 @@ If you have no specific requirements, see [Docker](#docker).
 
 We recommend using the [Helm chart](#helm-chart) to deploy on managed [Kubernetes](https://kubernetes.io/). But for simplified setup, simply use the docker-compose (see [below](#docker)) on a single large instance and use a high number of replicas for the worker service.
 
-The rule of thumb is 1 worker per 1vCPU and 1/2GB of RAM. Cloud providers have managed load balancer services (ELB, GCLB, ALB) and managed database (RDS, Cloud SQL, Aurora, Postgres on Azure). We recommend disabling the db service in the docker-compose and using an external database by setting according the `DATABASE_URL` in the [.env][windmill-env] file handling environment variables.
+The rule of thumb is 1 worker per 1vCPU and 1-2 GB of RAM. Cloud providers have managed load balancer services (ELB, GCLB, ALB) and managed database (RDS, Cloud SQL, Aurora, Postgres on Azure). We recommend disabling the db service in docker-compose and using an external database by setting the `DATABASE_URL` in the [.env][windmill-env] file for handling environment variables.
 
 Windmill is compatible with [AWS Aurora](https://aws.amazon.com/rds/aurora/), [GCP Cloud SQL](https://cloud.google.com/sql), [Azure](https://azure.microsoft.com/en-us) and [Neon](https://neon.tech/) serverless database.
 
