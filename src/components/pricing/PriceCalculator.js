@@ -174,6 +174,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								/>
 								</li>
 						))}
+						{tier.id !== 'tier-team' && (
+						<span className="whitespace-nowrap text-sm">
+							<a href="#pricing-explained" className="custom-link text-gray-600 dark:text-gray-200">
+							Our pricing explained
+							</a>
+						</span>
+						)}
 					</ul>
 				</div>
 				{tier.id === 'tier-enterprise-cloud' ? (

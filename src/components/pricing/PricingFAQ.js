@@ -5,6 +5,23 @@ import { Link, useLocation } from 'react-router-dom';
 
 const faqs = [
 	{
+		id: 'pricing-explained',
+		question: "What is the logic behind Windmill's pricing?",
+		answer: (
+			<span>
+				Windmill's pricing is designed to align with the value we deliver to our customers. Our pricing model reflects the core value of Windmill, which is primarily related to the amount of compute resources used, and the number of users accessing the platform. We've structured our pricing to scale with your usage, ensuring you're paying for the actual value you derive from our platform.
+				<br /><br />
+				For compute resources, we use two metrics: vCPUs and memory, set as limits of your workers containers. For each vCPU paid, you add 2GB memory to your global quota. We aggregate the memory of each worker against this global quota. It is possible and even recommended not to use vCPU limits and rely solely on memory limits, which still needs to be under the global quota.
+				<br /><br />
+				For user access, we charge based on seats. A regular user counts as one seat, while an operator (who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base.
+				<br /><br />
+				Our billing is meant to be fair and transparent: we only count the vCPUs reported by the workers of your production instance, and with minute granularity if you use auto-scaling. This approach ensures that you're only charged for the resources actively contributing to your production environment. If you scale your workers up and down, the memory usage will be accounted against the global quota with a minute granularity. For instance, you can run 10 workers with 1 vCPU and 2GB for half a month at the same price as 5 workers with 1 vCPU and 2GB for the full month.
+				<br /><br />
+				This combined approach of charging for compute resources and user seats allows us to provide pricing that scales linearly with your usage and team size, closely aligning with the value you receive from Windmill.
+			</span>
+		)
+	},
+	{
 		id: 'pro-plan',
 		question: 'Which organizations can subscribe to the Pro plan?',
 		answer: (
