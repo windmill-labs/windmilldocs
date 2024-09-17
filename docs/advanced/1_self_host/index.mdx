@@ -21,7 +21,7 @@ Windmill itself just requires 3 components:
 
 - A Postgres database, which contains the entire state of Windmill, including the job queue.
 - The Windmill container running in server mode (and replicated for high availability). It serves both the frontend and the API. It needs to connect to the database and is what is exposed publicly to serve the frontend. It does not need to communicate to the workers directly.
-- The Windmill container runnning in worker mode (and replicated to handle more job throughput). It needs to connect to the database and does not communicate to the servers.
+- The Windmill container running in worker mode (and replicated to handle more job throughput). It needs to connect to the database and does not communicate to the servers.
 
 There are 3 optional components:
 
