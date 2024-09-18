@@ -10,7 +10,7 @@ Each worker on Windmill can run up to 26 million jobs a month, where each job la
 Workers pull [jobs](../20_jobs/index.mdx) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
 a job, it atomically sets its state to "running", runs it, streams its logs then
-once it is finished, the final result and logs are stored for as long as the retention period allows. Logs are optionally stored to s3.
+once it is finished, the final result and logs are stored for as long as the retention period allows. Logs are optionally stored to S3.
 
 By default, every worker is the same and interchangeable. However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically or have different pre-installed binaries. To that end, we introduce the concept of "worker groups".
 

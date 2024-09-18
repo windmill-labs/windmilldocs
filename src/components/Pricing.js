@@ -395,7 +395,7 @@ const sections = [
 				link: '/docs/core_concepts/content_search'
 			},
 			{
-				name: 'S3 integration (>50mb upload)',
+				name: 'Workspace object storage (>50mb upload)',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -403,7 +403,7 @@ const sections = [
 					'tier-free': true,
 					'tier-team': true
 				},
-				link: '/docs/core_concepts/persistent_storage/large_data_files'
+				link: '/docs/core_concepts/object_storage_in_windmill'
 			},
 			{
 				name: 'Private Hub',
@@ -534,7 +534,18 @@ const sections = [
 					'tier-free': '60 days',
 					'tier-team': '60 days'
 				},
-				link: '/docs/core_concepts/jobs#retention-policy'
+				link: '/docs/core_concepts/scheduling#schedule-error-handler'
+			},
+			{
+				name: 'Schedule error handler',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/core_concepts/error_handling'
 			},
 			{
 				name: 'Workspace error handler',

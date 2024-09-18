@@ -1,16 +1,12 @@
 # Service Logs
 
-View logs from any [workers](../9_worker_groups/index.mdx) or servers directly within the service logs section of the search modal.
+View logs from any [workers](../9_worker_groups/index.mdx) or servers directly within the service logs section of the [search modal](../35_search_bar/index.mdx).
 
 ![Service Logs](./service_logs.png "Service Logs")
 
-## Overview
+Windmill provides direct access to the logs emitted by containers, removing the need to manually retrieve them from Docker or other container platforms. This enables monitoring services without needing to leave the Windmill environment.
 
-Windmill now provides direct access to the logs emitted by containers, removing the need to manually retrieve them from Docker or other container platforms. This enables monitoring services without needing to leave the Windmill environment.
-
-You can view them from the [Workers](../9_worker_groups/index.mdx) page.
-
-### Key Features
+You can view them from the [Workers](../9_worker_groups/index.mdx) page, in particular:
 
 - **Real-Time Monitoring**: While logs are emitted continuously, there is a 1-minute latency before they appear in the interface.
 - **Visual Graphs**: You can easily track the number of logs and errors over time, displayed in a graphical interface:
@@ -27,5 +23,5 @@ Windmill provides a flexible solution for log storage depending on your setup:
 - **Standard Setup** (without [Enterprise Edition](/pricing)):
   Logs are stored locally on disk. For this to work, there must be a dedicated log disk, which is pre-configured in the Docker Compose setup.
   
-- **Enterprise Edition** (with [S3 Integration](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage)):
-  For users with the Enterprise Edition (EE), logs can be stored in S3 if S3 integration is configured. This option provides more scalable storage and is ideal for larger-scale deployments or where long-term log retention is important.
+- **Enterprise Edition** (with [Instance object storage](../38_object_storage_in_windmill/index.mdx#instance-object-storage)):
+  For users with the Enterprise Edition (EE), logs can be stored in S3 if instance object storage is configured. This option provides more scalable storage and is ideal for larger-scale deployments or where long-term log retention is important.

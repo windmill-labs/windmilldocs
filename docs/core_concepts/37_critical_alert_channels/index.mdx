@@ -1,12 +1,19 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Critical Alert Channels
+# Critical alert channels
 
 Get a notification everytime a job is re-run after a crash.
 
 This feature is available in the [Enterprise Edition](/pricing).
 
 If the node it which it runs halt suddenly (such as a power loss), then the [job](../20_jobs/index.mdx) will be restarted automatically. Windmill itself doesn't crash and other softer interruptions like a pod termination involve a grace period (300s) to let the job finish.
+
+Critical alerts are generated under the following conditions:
+
+- [Job](../20_jobs/index.mdx) is re-run after a crash.
+- [License key](../../misc/7_plans_details/index.mdx#using-the-license-key-self-host) does not renew.
+- [Workspace error handler](../10_error_handling/index.mdx#workspace-error-handler) fails.
+- Number of running workers in a group falls below a specified threshold (has to be configured in the [worker group](../9_worker_groups/index.mdx) config).
 
 You just need to [configure SMTP](../../advanced/1_self_host/index.mdx#set-up-smtp-from-the-ui) and setup a critical alert channel (aka email address) in the [instance settings](../../advanced/18_instance_settings/index.mdx#smtp) or connect your instance to Slack and fill in a channel name.
 
