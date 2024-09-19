@@ -10,11 +10,11 @@ Binary data, such as files, are not easy to handle. Windmill provides two option
 1. Have a dedicated storage for binary data: S3 or Azure Blob. Windmill has a first class integration with S3 buckets or Azure Blob containers.
 2. If the above is not an option, there's always the possibility to store the binary as base64 encoded string.
 
-## Windmill integration with S3 or Azure Blob Storage
+## Workspace object storage
 
-The recommended way to store binary data is to upload it to S3 leveraging [Windmill's native S3 integration](../11_persistent_storage/large_data_files.mdx).
+The recommended way to store binary data is to upload it to S3 or Azure Blob Storage leveraging [Windmill's workspace object storage](../38_object_storage_in_windmill/index.mdx).
 
-Using S3 with Windmill is not limited. What is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with S3 that is a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
+Instance and workspace object storage are different from using [S3 resources](../../integrations/s3.mdx) within scripts, flows, and apps, which is free and unlimited. What is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with S3 that is a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
 
 :::info
 
@@ -22,7 +22,7 @@ Windmill's integration with S3 and Azure Blob Storage works exactly the same and
 
 :::
 
-By [setting a S3 resource for the workspace](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
+By [setting a S3 resource for the workspace](../38_object_storage_in_windmill/index.mdx#workspace-object-storage), you can have an easy access to your bucket from the script editor. It becomes easy to consume S3 files as input, and write back to S3 anywhere in a script.
 
 S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
 
@@ -44,13 +44,13 @@ When a script outputs a S3 file, it can be downloaded or previewed directly in W
 
 Windmill provides helpers in its SDKs to consume and produce S3 file seamlessly.
 
-All details on S3 Integration, and how to [read](../11_persistent_storage/large_data_files.mdx#read-a-file-from-s3-within-a-script) and [write](../11_persistent_storage/large_data_files.mdx#create-a-file-in-s3-within-a-script) files to S3 as well as [Windmill embedded integration with Polars and DuckDB](../11_persistent_storage/large_data_files.mdx#windmill-embedded-integration-with-polars-and-duckdb-for-data-pipelines) for data pipelines, can be found in the [Persistent Storage section](../11_persistent_storage/large_data_files.mdx).
+All details on Workspace object storage, and how to [read](../38_object_storage_in_windmill/index.mdx#read-a-file-from-s3-within-a-script) and [write](../38_object_storage_in_windmill/index.mdx#create-a-file-in-s3-within-a-script) files to S3 as well as [Windmill embedded integration with Polars and DuckDB](../27_data_pipelines/index.mdx#windmill-embedded-integration-with-polars-and-duckdb-for-data-pipelines) for data pipelines, can be found in the [Object storage in Windmill](../38_object_storage_in_windmill/index.mdx) page.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage - S3 Integration"
-		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage."
-		href="/docs/core_concepts/persistent_storage/large_data_files#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage"
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
 	/>
 </div>
 

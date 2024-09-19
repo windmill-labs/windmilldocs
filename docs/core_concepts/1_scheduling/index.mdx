@@ -41,7 +41,7 @@ Cron jobs are one of many ways to [trigger workflows](../../getting_started/9_tr
 
 :::
 
-## Configure Schedules for Each Task ([Script][scripts], [Workflows][flows])
+## Configure schedules for each task ([Script][scripts], [Workflows][flows])
 
 From your workspace, navigate to the dedicated `Schedules` menu and select `New Schedule`.
 
@@ -79,7 +79,7 @@ If the Schedules menu allows you to control future executions of scripts and wor
 
 ![Run details](./11-run-details.png.webp 'Run details')
 
-## Configure Schedules from Flow Editor
+## Configure schedules from flow editor
 
 The same method can also be done from the [flow editor](../../getting_started/6_flows_quickstart/index.mdx).
 
@@ -107,7 +107,7 @@ Fill in the inputs, toggle the Schedule Enabled option, save, and you're all set
 
 ![Save and schedule](./4-inputs-toggle.png 'Save and schedule')
 
-## Schedule App Reports
+## Schedule app reports
 
 Send a PDF or PNG preview of any [app](../../apps/0_app_editor/index.mdx) at a given schedule.
 
@@ -134,7 +134,7 @@ More at:
 	/>
 </div>
 
-## Cron Syntax
+## Cron syntax
 
 Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). This library differs slightly from the Unix library.
 
@@ -151,9 +151,9 @@ Although the syntaxes are similar, there are some notable differences:
 
 Anyway, the simplified builder and [Windmill AI](../22_ai_generation/index.mdx) will help you to create the cron expression.
 
-## Control Permissions and Errors
+## Control permissions and errors
 
-### Schedule Error Handler
+### Schedule error handler
 
 From the schedule configuration, add a special script or flow to execute in case of an error.
 
@@ -169,7 +169,11 @@ You can pick the Slack pre-set schedule error handler.
 	src="/videos/schedule_error_handler.mp4"
 />
 
-### Schedule Recovery Handler
+<br/>
+
+Schedule Error hander is an [Enterprise Edition](/pricing) feature.
+
+### Schedule recovery handler
 
 From the schedule configuration, add a special script or flow to execute in case of of recovery from Error.
 
@@ -217,9 +221,13 @@ From the settings menu, change the owner to a [folder](../../core_concepts/8_gro
 
 The process is very simple but it will allow you to schedule tasks with confidence and get an aggregated view on them.
 
-Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.mdx) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go, PHP, Bash or SQL - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled jobs.
+Not only can you build scheduled jobs [from Windmill](../../getting_started/00_how_to_use_windmill/index.mdx) but also you can import all your existing scripts - as Windmill supports TypeScript, Python, Go, PHP, Bash or SQL - [as did one of our esteemed users](/blog/stantt-case-study) for their own scheduled [jobs](../20_jobs/index.mdx).
 
-## Schedule to Run Later
+### Failure to re-schedule
+
+If a scheduled job fails to re-schedule, it will trigger a [workspace error handler](../10_error_handling/index.mdx#workspace-error-handler).
+
+## Schedule to run later
 
 From a script or flow's page (after being [deployed](../0_draft_and_deploy/index.mdx)), you can "Schedule to run later" to schedule the execution to a given time without being recurring, therefore executing only once.
 

@@ -43,18 +43,18 @@ export default function S3() {
 				</p>
 			</div>
 		),
-		integrations_sub_title: `Write any script, flow or app targeting ${name} API, in TypeScript, Python, Go, PHP, Bash and SQL. Windmill has a built-in S3 integration to interact with S3 directly from your scripts.`,
+		integrations_sub_title: `Write any script, flow or app targeting ${name} API, in TypeScript, Python, Go, PHP, Bash and SQL. Windmill has a built-in workspace object storage to interact with S3 directly from your scripts.`,
 		hubIntegrations: [
             {
               title: 'Read a file from S3',
               link: 'https://hub.windmill.dev/scripts/s3/7111/read-a-file-from-s3-within-a-script-s3',
-              description: 'Use Windmill embedded S3 integration to read a S3 file and explore bucket directly within script.',
+              description: 'Use Windmill embedded workspace object storage integration to read a S3 file and explore bucket directly within script.',
               icon: Eye
             },
             {
               title: 'Create file',
               link: 'https://hub.windmill.dev/scripts/s3/7117/create-a-file-in-s3-(bun)-s3',
-              description: 'Create a file in S3 and explore bucket thans to Windmill S3 integration.',
+              description: 'Create a file in S3 and explore bucket thans to Windmill workspace object storage.',
               icon: PlusCircle
             },
             {

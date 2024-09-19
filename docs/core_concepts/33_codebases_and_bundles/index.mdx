@@ -1,10 +1,10 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Codebases & Bundles
+# Codebases & bundles
 
 :::note
 
-Codebases is Beta, only works with TypeScript and is an [Enterprise](/pricing) feature for the time being.
+Codebases & bundles is Beta, only works with TypeScript and is an [Enterprise](/pricing) feature for the time being.
 
 :::
 
@@ -56,23 +56,23 @@ codebases:
 
 Windmill keeps track of the hash of the codebase and will only rebuild the bundle if the codebase or script has changed.
 
-## Instance S3 Integration
+## Instance object storage
 
-The bundles requires the [instance-wide S3 integration](../20_jobs/index.mdx#s3azure-for-python-cache--large-logs) which is where the bundle resides.
+The bundles requires [instance-wide object storage](../38_object_storage_in_windmill/index.mdx#instance-object-storage) which is where the bundle resides.
 
-## VS Code Extension
+## VS Code extension
 
 This mode of deployment automatically works with the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) to run preview by recognizing the `codebases` configuration in wmill.yaml and bundling scripts on the fly using the same esbuild.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="VS Code Extension"
+		title="VS Code extension"
 		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
 
-## Example Repository
+## Example repository
 
 An example repository with codebases and bundles can be found on [GitHub](https://github.com/windmill-labs/windmill-codebase-example).
 

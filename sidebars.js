@@ -212,20 +212,21 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/large_data_files',
-							label: 'Object Storage for Large Data (S3)'
+							label: 'Large data (S3, R2, MinIO, Azure Blob)'
 						},
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/structured_databases',
-							label: 'Big Structured SQL Data (Postgres)'
+							label: 'Big structured SQL data (Postgres)'
 						},
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/key_value_stores',
-							label: 'NoSQL and Document Databases'
+							label: 'NoSQL & document databases'
 						}
 					]
 				},
+				'core_concepts/object_storage_in_windmill/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
