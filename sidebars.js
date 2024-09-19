@@ -64,6 +64,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
 									label: 'Rest / GraphQL'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/ansible_quickstart/index',
+									label: 'Ansible'
 								}
 							]
 						},
