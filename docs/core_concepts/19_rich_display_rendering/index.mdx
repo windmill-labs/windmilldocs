@@ -13,7 +13,7 @@ If the result is an object/dict with a single key (except for `resume`, which ne
 | [table-col](#table-column)        | Render the value as a column-wise table.                     | `return { "table-col": { "foo": [42, 8], "bar": [38, 12] } }`                                                        |
 | [table-row](#table-row)        | Render the value as a row-wise table.                        | `return { "table-row": [ [ "foo", "bar" ], [ 42, 38 ], [ 8, 12 ] ] }`                                                |
 | [table-row-object](#table-row-object) | Render the value as a row-wise table but where each row is an object. | `return { "table-row-object": [ { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }` or  `return { "table-row-object": [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ] }` |
-| [s3](#s3)               | Render S3 files as a downloadable file and a bucket explorer, when Windmill is [connected to a S3 storage](../11_persistent_storage/large_data_files.mdx).                                  | `return { "s3": "path_to_file"}`           |
+| [s3](#s3)               | Render S3 files as a downloadable file and a bucket explorer, when Windmill is [connected to a S3 storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).                                  | `return { "s3": "path_to_file"}`           |
 | [html](#html)             | Render the value as HTML.                                    | `return { "html": "<div>...</div>" }`                                                                                |
 | [markdown](#markdown)         | Render the value as Markdown.                                | `return { "markdown": "## Hello World\nNice to meet you" }` or `return { "md": "## Hello World\nNice to meet you" }`                                     |
 | [file](#file)             | Render an option to download a file.                       | `return { "file": { "content": encode(file), "filename": "data.txt" } }`                                             |
@@ -184,7 +184,7 @@ return [ ["foo", "bar" ], { "foo": 42, "bar": 38 }, { "foo": 8, "bar": 12 } ]
 
 ## S3
 
-The `s3` key renders S3 files as a downloadable file and a bucket explorer, when Windmill is [connected to a S3 storage](../11_persistent_storage/large_data_files.mdx).
+The `s3` key renders S3 files as a downloadable file and a bucket explorer, when Windmill is [connected to a S3 storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
 
 ```ts
 return { "s3": "path/to/file" }
@@ -210,9 +210,9 @@ Learn more at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Object Storage for Large Data: S3, R2, MinIO, Azure Blob"
-		description="Windmill comes with a native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data."
-		href="/docs/core_concepts/persistent_storage/large_data_files"
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
 	/>
 </div>
 

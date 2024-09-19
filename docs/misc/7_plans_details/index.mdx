@@ -34,7 +34,7 @@ All details on the [Pricing page](/pricing).
 
 ## Self-Hosted Plans
 
-Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [S3 integration](/blog/launch-week-1/data-pipeline-orchestrator), [Git Sync](../../advanced/11_git_sync/index.mdx), [Worker Groups Management UI](../../core_concepts/9_worker_groups/index.mdx)).
+Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [Workspace & instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx), [Git Sync](../../advanced/11_git_sync/index.mdx), [Worker Groups Management UI](../../core_concepts/9_worker_groups/index.mdx)).
 
 The Pro plan contains the main Enterprise features. It is [exclusively available](/pricing#pro-plan) to individuals and companies with fewer than 10 employees and $250k in revenue.
 
@@ -88,7 +88,8 @@ Team plans work at the workspace-level.
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
-	- [S3 / Azure Blob storage integration](../../core_concepts/11_persistent_storage/large_data_files.mdx) within a Windmill workspace to manage large data files.
+	- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
+	- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
 	- [Git Sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
 #### Self-host
@@ -120,7 +121,8 @@ Team plans work at the workspace-level.
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
-	- [S3 / Azure Blob storage integration](../../core_concepts/11_persistent_storage/large_data_files.mdx) within a Windmill workspace to manage large data files.
+	- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
+	- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
 	- [Git Sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-customer-portal).
