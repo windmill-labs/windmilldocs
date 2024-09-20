@@ -14,7 +14,7 @@ const features = [
 	{
 		title: 'Polyglot',
 		description:
-			'Windmill supports a wide range of languages: Python, Node, Deno, Bun, Go, PostgresQL, bash and more. Dependencies are automatically managed. An UI is auto-generated for your scripts.',
+			'Windmill supports a wide range of languages: Python, Node, Deno, Bun, Go, PostgresQL, Bash, Rust and more. Dependencies are automatically managed. An UI is auto-generated for your scripts.',
 		lottieData: polyGlott,
 		span: 'col-span-2',
 		Icon: FileCode,

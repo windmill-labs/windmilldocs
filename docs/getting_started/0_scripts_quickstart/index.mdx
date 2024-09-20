@@ -7,12 +7,13 @@ import {
 	SiPostgresql,
 	SiGraphql,
 	SiDocker,
-	SiPhp
+	SiPhp,
+	SiRust
 } from 'react-icons/si';
 
 # Scripts Quickstart
 
-Windmill supports scripts in Python, TypeScript, Go, PHP, Bash, PHP and Sql.
+Windmill supports scripts in TypeScript, Python, Go, PHP, Bash, SQL and Rust.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -34,22 +35,10 @@ Windmill supports scripts in Python, TypeScript, Go, PHP, Bash, PHP and Sql.
 		Icon={SiGnubash}
 	/>
 	<DocCard
-		title="Docker"
-		description="Windmill supports running any docker container through its Bash support."
-		href="/docs/getting_started/scripts_quickstart/docker"
-		Icon={SiDocker}
-	/>
-	<DocCard
 		title="Go"
 		description="Write your first Windmill script in Go."
 		href="/docs/getting_started/scripts_quickstart/go"
 		Icon={SiGo}
-	/>
-	<DocCard
-		title="PHP"
-		description="Write your first Windmill script in PHP."
-		href="/docs/getting_started/scripts_quickstart/php"
-		Icon={SiPhp}
 	/>
 	<DocCard
 		title="SQL & Query Languages"
@@ -58,9 +47,27 @@ Windmill supports scripts in Python, TypeScript, Go, PHP, Bash, PHP and Sql.
 		Icon={SiPostgresql}
 	/>
 	<DocCard
+		title="PHP"
+		description="Write your first Windmill script in PHP."
+		href="/docs/getting_started/scripts_quickstart/php"
+		Icon={SiPhp}
+	/>
+	<DocCard
+		title="Docker"
+		description="Windmill supports running any docker container through its Bash support."
+		href="/docs/getting_started/scripts_quickstart/docker"
+		Icon={SiDocker}
+	/>
+	<DocCard
 		title="Rest / GraphQL"
 		description="Write your first Windmill script in Rest / GraphQL."
 		href="/docs/getting_started/scripts_quickstart/rest_graphql"
 		Icon={SiGraphql}
+	/>
+	<DocCard
+		title="Rust"
+		description="Write your first Windmill script in Rust."
+		href="/docs/getting_started/scripts_quickstart/rust"
+		Icon={SiRust}
 	/>
 </div>

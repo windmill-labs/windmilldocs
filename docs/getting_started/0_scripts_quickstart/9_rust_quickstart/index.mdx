@@ -1,15 +1,15 @@
 ---
-title: 'PHP Quickstart'
-slug: '/getting_started/scripts_quickstart/php'
+title: 'Rust Quickstart'
+slug: '/getting_started/scripts_quickstart/rust'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# PHP Quickstart
+# Rust Quickstart
 
-In this quick start guide, we will write our first script in php.
+In this quick start guide, we will write our first script in [Rust](https://www.rust-lang.org/).
 
-![Editor for php](./editor_php.png "Script in php")
+![Editor for Rust](./editor_rust.png "Script in Rust")
 
 This tutorial covers how to create a simple script through Windmill web IDE. See the dedicated page to [Develop Scripts Locally](../../../advanced/4_local_development/index.mdx).
 
@@ -38,41 +38,18 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code): for php scripts, it must have at least a main function.
+- [Code](#code): for Rust scripts, it must have at least a main function.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
-When stored in a code repository, these 2 parts are stored separately at `<path>.php` and `<path>.script.yaml`
+When stored in a code repository, these 2 parts are stored separately at `<path>.rs` and `<path>.script.yaml`
 
-Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your php script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
-
-This is a simple example of a script built in php with Windmill:
-
-```
-<?php
-
-// remove the first // of the following lines to specify packages to install using composer
-// // require:
-// // monolog/monolog@3.6.0
-// // stripe/stripe-php
-
-function main(
-	// Postgresql $a,
-  // array $b,
-  // object $c,
-	int $d = 123,
-	string $e = "default value",
-	float $f = 3.5,
-  bool $g = true,
-) {
-	return $d;
-}
-```
+Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your Rust script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
 From the Home page, click `+Script`. This will take you to the first step of script creation: Metadata.
 
 ## Settings
 
-![New script](./create_script_php.png "New script")
+![New script](./create_script_rust.png "New script")
 
 As part of the settings menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
@@ -111,7 +88,7 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for php](./editor_php.png "Editor for php")
+![Editor for Rust](./editor_rust.png "Editor for Rust")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -126,27 +103,42 @@ Script. You can preview that UI, provide input values, and [test your script](#i
 	/>
 </div>
 
-As we picked `php` for this example, Windmill provided some php
+As we picked `rust` for this example, Windmill provided some rust
 boilerplate. Let's take a look:
 
-```php
-<?php
+```rust
+//! Add dependencies in the following partial Cargo.toml manifest
+//!
+//! ```cargo
+//! [dependencies]
+//! anyhow = "1.0.86"
+//! rand = "0.7.2"
+//! ```
+//!
+//! Note that serde is used by default with the `derive` feature.
+//! You can still reimport it if you need additional features.
 
-// remove the first // of the following lines to specify packages to install using composer
-// // require:
-// // monolog/monolog@3.6.0
-// // stripe/stripe-php
+use anyhow::anyhow;
+use rand::seq::SliceRandom;
+use serde::Serialize;
 
-function main(
-	// Postgresql $a,
-  // array $b,
-  // object $c,
-	int $d = 123,
-	string $e = "default value",
-	float $f = 3.5,
-  bool $g = true,
-) {
-	return $d;
+#[derive(Serialize, Debug)]
+struct Ret {
+    msg: String,
+    number: i8,
+}
+
+fn main(who_to_greet: String, numbers: Vec<i8>) -> anyhow::Result<Ret> {
+    println!(
+        "Person to greet: {} -  numbers to choose: {:?}",
+        who_to_greet, numbers
+    );
+    Ok(Ret {
+        msg: format!("Greetings {}!", who_to_greet),
+        number: *numbers
+            .choose(&mut rand::thread_rng())
+            .ok_or(anyhow!("There should be some numbers to choose from"))?,
+    })
 }
 ```
 
@@ -168,30 +160,18 @@ entrypoint. There are a few important things to note about the `main`.
 	/>
 </div>
 
-Packages can be installed using composer. Just uncomment the `require` lines and add the packages you need. Windmill will install them for you:
+Packages can be installed using cargo. Just add the dependencies you need in the partial Cargo.toml manifest and Windmill will install them for you:
 
-```php
-<?php
-
-// require:
-// monolog/monolog@3.6.0
-// stripe/stripe-php
-
-function main(
-	// Postgresql $a,
-  // array $b,
-  // object $c,
-	int $d = 123,
-	string $e = "default value",
-	float $f = 3.5,
-  bool $g = true,
-) {
-	return $d;
-}
-
+```rust
+//! ```cargo
+//! [dependencies]
+//! anyhow = "1.0.86"
+//! rand = "0.7.2"
+//! ```
 ```
 
 ## Instant Preview & Testing
+
 
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
@@ -202,33 +182,13 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 	src="/videos/auto_g_ui_landing.mp4"
 />
 
-<br />
-
-You can change how the UI behaves by changing the main signature. For example,
-if you add a default for the `name` argument, the UI won't consider this field
-as required anymore.
-
-```php
-function main(string $e = "default value")
-```
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Instant Preview & Testing"
-		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-		href="/docs/core_concepts/instant_preview"
-	/>
-</div>
-
-Now let's go to the last step: the "Generated UI" settings.
-
 ## Generated UI
 
 From the Settings menu, the "Generated UI" tab lets you customize the script's arguments.
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for php](./customize_php.png "Advanced settings for php")
+![Advanced settings for rust](./customize_rust.png "Advanced settings for rust")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -255,7 +215,7 @@ Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run in php](./run_php.png "Run in php")
+![Run in rust](./run_rust.png "Run in rust")
 
 You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
@@ -266,6 +226,10 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 		href="/docs/getting_started/trigger_scripts"
 	/>
 </div>
+
+## Caching
+
+Every bundle on Rust is cached on disk by default. Furtherfore if you use the [Distributed cache storage](../../../misc/13_s3_cache/index.mdx), it will be available to every other worker, allowing fast startup for every worker.
 
 ## What's next?
 

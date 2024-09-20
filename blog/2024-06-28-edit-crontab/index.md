@@ -166,7 +166,7 @@ In addition to scripts and flows, Windmill also allows [scheduling of app report
 
 ## What is Windmill?
 
-Windmill is a fast, [open-source](https://github.com/windmill-labs/windmill) workflow engine and developer platform. It's an alternative to the likes of Retool, Superblocks, n8n, Airflow, Prefect, and Temporal, designed to **build comprehensive internal tools** (endpoints, workflows, UIs). It supports coding in TypeScript, Python, Go, PHP, Bash, SQL, or any Docker image, alongside intuitive low-code builders, featuring:
+Windmill is a fast, [open-source](https://github.com/windmill-labs/windmill) workflow engine and developer platform. It's an alternative to the likes of Retool, Superblocks, n8n, Airflow, Prefect, and Temporal, designed to **build comprehensive internal tools** (endpoints, workflows, UIs). It supports coding in TypeScript, Python, Go, PHP, Bash, SQL and Rust, or any Docker image, alongside intuitive low-code builders, featuring:
 
 -  An [execution runtime](/docs/script_editor) for scalable, low-latency function execution across a worker fleet.
 -  An [orchestrator](/docs/flows/flow_editor) for assembling these functions into efficient, low-latency flows, using either a low-code builder or YAML.
