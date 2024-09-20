@@ -69,6 +69,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/rust_quickstart/index',
 									label: 'Rust'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/ansible_quickstart/index',
+									label: 'Ansible'
 								}
 							]
 						},
