@@ -1,0 +1,164 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Custom HTTP routes
+
+Windmill supports custom HTTP routes to trigger a script or flow. 
+They can only be created by workspace admins. 
+All properties of the route apart from the http path can be modified by any user with write access to the route.
+
+## How to use
+
+Create a new route on the HTTP routes page.
+Specify the path of the http route. You can use the `:param` syntax to define parameters.
+Parameters can be handler using a preprocessor, see [below](#preprocessor).
+You also need to select the method of the route (GET, POST, PUT, PATCH or DELETE).
+
+The full http route takes the following form:
+- Self-hosted Windmill: `{base_url}/api/r/{path}`
+- Windmill Cloud: `https://app.windmill.dev/api/r/{workspace_id}/{path}`
+
+Select the runnable that should be triggered by this route. To quickly get started, you can use the `create from template` button to generate a runnable template.
+
+The route also supports additional configuration options:
+- **Request type**: Whether the route should return the id (async) or the result (sync) of the runnable.
+- **Authentication**: Whether the route should require authentication. If authentication is required, the user needs to have read access to both the route and the runnable.
+
+
+## Preprocessor
+
+Scripts and flows can include a preprocessor to transform incoming requests before they are passed to the runnable.
+The preprocessor is only called when the runnable is triggered via an HTTP route, a webhook or an email trigger.
+This is useful for handling headers, query/path parameters, or modifying arguments before execution.
+Using a preprocessor also separates the handling of arguments according to whether they are called by a trigger (http, email or webhook) or from the UI, which can help you keep a simple schema form in the UI for the runnable.
+
+Preprocessors can only be written in TypeScript (Bun/Deno) or Python.
+
+### Script preprocessor
+
+In scripts, you need to export an additional `preprocessor` function. It takes a special argument called `wm_trigger` in addition to the request body arguments and should return the transformed arguments for the main function of the script.
+The `wm_trigger` contains the kind of the trigger (http, email or webhook) and an http object with the details of the request when the script is triggered via an HTTP route.
+
+Here are examples of a preprocessor function in TypeScript and Python:
+
+<Tabs>
+<TabItem value="TypeScript">
+```TypeScript
+export async function preprocessor(
+	wm_trigger: {
+		kind: 'http' | 'email' | 'webhook',
+		http?: {
+			route: string // The route path, e.g. "/users/:id"
+			path: string // The actual path called, e.g. "/users/123"
+			method: string
+			params: Record<string, string>
+			query: Record<string, string>
+			headers: Record<string, string>
+		}
+	},
+	/* your other args from the request body */ 
+) {
+	return {
+		// return the args to be passed to the main function
+	}
+}
+
+export async function main(/* main args */) {
+    // your code here
+}
+```
+</TabItem>
+
+<TabItem value="Python">
+```Python
+from typing import TypedDict, Literal
+
+class Http(TypedDict):
+	route: str # The route path, e.g. "/users/:id"
+	path: str # The actual path called, e.g. "/users/123"
+	method: str
+	params: dict[str, str]
+	query: dict[str, str]
+	headers: dict[str, str]
+
+class WmTrigger(TypedDict):
+    kind: Literal["http", "email", "webhook"]
+    http: Http | None
+
+def preprocessor(
+	wm_trigger: WmTrigger,
+	# your other args from the request body
+):
+	return {
+		# return the args to be passed to the main function
+	}
+
+def main(/* main args */):
+    # your code here
+```
+</TabItem>
+</Tabs>
+
+Once a preprocessor is created, you should see a new tab in the right panel of the editor that allows you to test the preprocessor with a sample request.
+
+![Test script preprocessor](./test_script_preprocessor.png 'Test script preprocessor')    
+
+### Flow preprocessor 
+
+For flows, the idea is similar but the preprocessor is a standalone step that returns only a `preprocessor` function.
+To create a preprocessor for a flow, click on the plus button above the `Input` step:
+
+![Add flow preprocessor](./add_flow_preprocessor.png 'Add flow preprocessor')    
+
+The flow preprocessor takes the same arguments as the script preprocessor and should return the transformed arguments for the flow:
+
+<Tabs>
+<TabItem value="TypeScript">
+```TypeScript
+export async function preprocessor(
+	wm_trigger: {
+		kind: 'http' | 'email' | 'webhook',
+		http?: {
+			route: string // The route path, e.g. "/users/:id"
+			path: string // The actual path called, e.g. "/users/123"
+			method: string
+			params: Record<string, string>
+			query: Record<string, string>
+			headers: Record<string, string>
+		}
+	},
+	/* your other args from the request body */ 
+) {
+	return {
+		// return the args to be passed to the flow
+	}
+}
+```
+</TabItem>
+
+<TabItem value="Python">
+```Python
+from typing import TypedDict, Literal
+
+class Http(TypedDict):
+	route: str # The route path, e.g. "/users/:id"
+	path: str # The actual path called, e.g. "/users/123"
+	method: str
+	params: dict[str, str]
+	query: dict[str, str]
+	headers: dict[str, str]
+
+class WmTrigger(TypedDict):
+    kind: Literal["http", "email", "webhook"]
+    http: Http | None
+
+def preprocessor(
+	wm_trigger: WmTrigger,
+	# your other args from the request body
+):
+	return {
+		# return the args to be passed to the flow
+	}
+```
+</TabItem>
+</Tabs>
