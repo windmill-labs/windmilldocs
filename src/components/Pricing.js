@@ -856,17 +856,6 @@ const sections = [
 				link: '/docs/apps/schedule_reports'
 			},
 			{
-				name: 'License key for AgCharts and AgGrid',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': true,
-					'tier-team': true
-				},
-				link: '/docs/apps/app_configuration_settings/aggrid_table'
-			},
-			{
 				name: 'Workspace default app',
 				tiers: {
 					'tier-free-selfhost': false,
