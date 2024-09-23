@@ -245,6 +245,7 @@ const sidebars = {
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
 				'advanced/email_triggers/index',
+				'core_concepts/http_routing/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/jobs/index',
@@ -720,7 +721,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'code_editor/settings',
 							label: 'Settings'
-						},
+						}
 					],
 					collapsed: true
 				}
@@ -738,10 +739,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: [
-						'advanced/instance_settings/index',
-						'advanced/self_host/aws_ecs'
-					]
+					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_ecs']
 				},
 				{
 					type: 'category',
