@@ -210,7 +210,7 @@ const clientTestimonials = [
 			name: 'Romaric Philogène',
 			company: 'Qovery',
 			position: 'Co-Founder & CEO',
-			dark: '/images/brands/Qovery-dark.png',
+			dark: '/images/brands/Qovery-dark.svg',
 			light: '/images/brands/Qovery-light.svg',
 			anchor: 'qovery',
 			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_400_400/0/1693895615653?e=2147483647&v=beta&t=nxGuC4K8eXsJ2YAq1wqG-m8mEkhj8gugGqhccdckJZc'
@@ -221,15 +221,17 @@ const clientTestimonials = [
 	},
 	{
 		author: {
-			name: 'Jim Hudson',
-			company: 'Deluxebase',
-			position: 'IT Coordinator',
-			dark: '/images/brands/Deluxebase.png',
-			light: '/images/brands/Deluxebase.png',
-			anchor: 'deluxebase'
+			name: 'Ben Packer',
+			company: 'United Auto Workers',
+			position: 'Software Engineer',
+			dark: '/images/brands/uaw_dark.svg',
+			light: '/images/brands/uaw.svg',
+			anchor: 'united auto workers',
+			profile_picture: 'https://media.licdn.com/dms/image/v2/C4D03AQGzZ5R0BHz7yg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1600310404802?e=2147483647&v=beta&t=guoo6kwwuEu24WJl1w_5nvJk9nTSDSoSosxBMmMLXBc'
 		},
-		company_url: 'https://www.deluxebase.com',
-		text: `At Deluxebase, we use Windmill to automate and streamline business processes, analyse figures, and synchronise data between our ERP and external services. Having everything in one place has greatly improved the efficiency of our team. The Windmill team are incredibly responsive, providing excellent support, feature request implementations, and almost instant bug fixes for the few we’ve come across!`
+		company_url: 'https://uaw.org/',
+		linkedIn: 'https://www.linkedin.com/in/benpaulryanpacker/',
+		text: `I've used Retool, Argo, Airflow, etc., and nothing comes close to Windmill. It's coherent and expertly designed for developers to interface with non-technical staff. It lets our small team move super fast and cover a huge surface area in a way that's maintainable, observable, and debuggable.<br/><br/>The responsiveness and speed of the Windmill team is also unheard of among SaaS providers. Feature requests have often been implemented within a day or week, and the one or two minor bug reports we've had have always been fixed within the day or even a few hours. Tthe team has treated us as partners and co-designers, and listened to our use cases and thought with us about the best way to approach a problem.<br/><br/>We now have 10+ apps, 15+ complex syncing schedules, and 75+ individual custom scripts and actions powered syncs between 7 different systems in daily use by dozens of organizers, and our use is expanding daily. Without Windmill, attempting this level of sophistication for a technical team of our size would not have been possible.`
 	}
 ];
 
@@ -257,9 +259,9 @@ export default function Example() {
         id={testimonial.author.anchor}
       >
         <div className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm">
-          <div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
-            <p>{testimonial.text}</p>
-          </div>
+		<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
+			<p dangerouslySetInnerHTML={{ __html: testimonial.text }} />
+		</div>
           <div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4">
             {testimonial.author.profile_picture ? (
               <a href={testimonial.linkedIn ? testimonial.linkedIn : "#"} target="_blank" rel="noopener noreferrer">
@@ -302,13 +304,14 @@ export default function Example() {
               rel="noopener noreferrer"
             >
               <img
-                width={100}
-                height={32}
-                src={
-                  colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light
-                }
-                alt=""
-              />
+				style={{
+					height: '42px',
+					width: 'auto',
+					maxWidth: '100px',
+				}}
+				src={colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light}
+				alt={testimonial.author.company}
+				/>
 										</a>
 									</div>
 								</div>
