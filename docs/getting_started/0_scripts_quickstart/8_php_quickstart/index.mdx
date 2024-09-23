@@ -41,7 +41,7 @@ Scripts consist of 2 parts:
 - [Code](#code): for php scripts, it must have at least a main function.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
-When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
+When stored in a code repository, these 2 parts are stored separately at `<path>.php` and `<path>.script.yaml`
 
 Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your php script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
@@ -92,7 +92,7 @@ This menu also has additional settings, such as:
 - **[Concurrency limits](../../../script_editor/concurrency_limit.mdx)** enable defining concurrency limits for scripts and inline scripts within flows to prevent exceeding the API Limit of the targeted API.
 - **[Worker group tag](../../../core_concepts/9_worker_groups/index.mdx)** to assign scripts to specific worker groups (such as nodes with GPU accelaration).
 - **[Cache](../../../core_concepts/24_caching/index.md)** to cache the results for each possible inputs for a given time.
-- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with php and TypeScript.
+- **[Dedicated Workers](../../../core_concepts/25_dedicated_workers/index.mdx)** to run the script on, to run the script at native speed. Only available on [Cloud plans and Self-Hosted Enterprise edition](/pricing) and with Python and TypeScript.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

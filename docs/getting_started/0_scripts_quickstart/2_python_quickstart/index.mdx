@@ -54,7 +54,7 @@ Scripts consist of 2 parts:
 - [Code](#code): for Python scripts, it must have at least a main function.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
-When stored in a code repository, these 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`
+When stored in a code repository, these 2 parts are stored separately at `<path>.py` and `<path>.script.yaml`
 
 Windmill automatically manages [dependencies](../../../advanced/15_dependencies_in_python/index.mdx) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
@@ -315,6 +315,10 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 		href="/docs/getting_started/trigger_scripts"
 	/>
 </div>
+
+## Caching
+
+Every dependency on Python is cached on disk by default. Furtherfore if you use the [Distributed cache storage](../../../misc/13_s3_cache/index.mdx), it will be available to every other worker, allowing fast startup for every worker.
 
 ## What's next?
 

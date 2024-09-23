@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Object Storage for Large Data: S3, R2, MinIO, Azure Blob
+# Large data: S3, R2, MinIO, Azure Blob
 
 This page is part of our section on [Persistent Storage & Databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
 
@@ -10,246 +10,23 @@ On heavier data objects & unstructured data storage, [Amazon S3](https://aws.ama
 
 Windmill comes with a [native integration with S3 and Azure Blob](#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), making it the recommended storage for large objects like files and binary data.
 
-## Connect your Windmill workspace to your S3 bucket or your Azure Blob storage
+## Workspace object storage
 
-Using S3 with Windmill is not limited. What is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with S3 that is a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
+Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials.
 
 Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
 
-Once you've created an [S3 or Azure Blob resource](#use-amazon-s3-r2-minio-and-azure-blob-directly) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
-
-![S3 storage workspace settings](./workspace_settings.png)
-
-From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
-Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
-
-S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
-
-```json
-{
-	"s3": "path/to/file"
-}
-```
-
-![S3 Integration Infographic](./s3_infographics.png 'S3 Integration Infographic')
-
-The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
-
-In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
-
-When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
-
-When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
-
-![S3 File Uploader](./file_upload.png)
-
-![S3 bucket browsing](./bucket_browsing.png)
-
-When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
-
-![S3 file download](../18_files_binary_data/s3_file_output.png)
-
-Even though the whole file is downloadable, the backend only sends the rows that the frontend needs for the preview. This means that you can manipulate objects of infinite size, and the backend will only return what is necessary.
-
-You can even display several S3 files through an array of S3 objects:
-
-```ts
-export async function main() {
-  return [{s3: "path/to/file_1"}, {s3: "path/to/file_2", {s3: "path/to/file_3"}}];
-}
-```
-
-![S3 list of files download](../19_rich_display_rendering/s3_array.png "S3 list of files download")
-
-### Read a file from S3 within a script
-
-<Tabs className="unique-tabs">
-
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'windmill-client';
-import { S3Object } from 'windmill-client';
-
-export async function main(input_file: S3Object) {
-	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
-
-	const decoder = new TextDecoder();
-	const file_content_str = decoder.decode(file_content);
-	console.log(file_content_str);
-
-	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
-	console.log(await fileContentBlob.text());
-}
-```
-
-</TabItem>
-
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
-
-export async function main(input_file: S3Object) {
-	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
-
-	const decoder = new TextDecoder();
-	const file_content_str = decoder.decode(file_content);
-	console.log(file_content_str);
-
-	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
-	console.log(await fileContentBlob.text());
-}
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-import wmill
-from wmill import S3Object
-
-def main(input_file: S3Object):
-    # Load the entire file_content as a bytes array
-    file_content = wmill.load_s3_file(input_file)
-    print(file_content.decode('utf-8'))
-
-    # Or load the file lazily as a Buffered reader:
-    with wmill.load_s3_file_reader(input_file) as file_reader:
-        print(file_reader.read())
-```
-
-</TabItem>
-</Tabs>
-
-![Read S3 file](../18_files_binary_data/s3_file_input.png)
-
-:::info
-Certain file types, typically parquet files, can be [directly rendered by Windmill](../19_rich_display_rendering/index.mdx).
-:::
-
-### Create a file in S3 within a script
-
-<Tabs className="unique-tabs">
-
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'windmill-client';
-import { S3Object } from 'windmill-client';
-
-export async function main(s3_file_path: string) {
-	const s3_file_output: S3Object = {
-		s3: s3_file_path
-	};
-
-	const file_content = 'Hello Windmill!';
-	// file_content can be either a string or ReadableStream<Uint8Array>
-	await wmill.writeS3File(s3_file_output, file_content);
-	return s3_file_output;
-}
-```
-
-</TabItem>
-
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
-
-export async function main(s3_file_path: string) {
-	const s3_file_output: S3Object = {
-		s3: s3_file_path
-	};
-
-	const file_content = 'Hello Windmill!';
-	// file_content can be either a string or ReadableStream<Uint8Array>
-	await wmill.writeS3File(s3_file_output, file_content);
-	return s3_file_output;
-}
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-import wmill
-from wmill import S3Object
-
-def main(s3_file_path: str):
-    s3_file_output = S3Object(s3=s3_file_path)
-
-    file_content = b"Hello Windmill!"
-	# file_content can be either bytes or a BufferedReader
-    file_content = wmill.write_s3_file(s3_file_output, file_content)
-    return s3_file_output
-```
-
-</TabItem>
-</Tabs>
-
-![Write to S3 file](../18_files_binary_data/s3_file_output.png)
-
-For more info on how to use files and S3 files in Windmill, see [Handling files and binary data](../18_files_binary_data/index.mdx).
-
-### Secondary S3 Storage
-
-With all Windmill S3 Integration features, read and write from a storage that is not your main storage by specifying it in the s3 object as "secondary_storage" with the name of it.
-
-From the workspace settings, in tab "S3 Storage", just click on "Add secondary storage", give it a name, and pick a resource from type "S3", "Azure Blob", "AWS OIDC" or "Azure Workload Identity". You can save as many additional storages as you want as long as you give them a different name.
-
-Then from script, you can specify the secondary storage with an object with properties `s3` (path to the file) and `storage` (name of the secondary storage).
-
-```ts
-const file = {s3: 'folder/hello.txt', storage: 'storage_1'}
-```
-
-Here is an example of the [Create](#create-a-file-in-s3-within-a-script) then [Read](#read-a-file-from-s3-within-a-script)  a file from S3 within a script with secondary storage named "storage_1":
-
-```ts
-import * as wmill from 'windmill-client';
-
-export async function main() {
-  await wmill.writeS3File({ s3: "data.csv", storage: "storage_1" }, "fooo\n1")
-
-  const res = await wmill.loadS3File({ s3: "data.csv", storage: "storage_1" })
-
-  const text = new TextDecoder().decode(res)
-
-  console.log(text)
-  return { s3: "data.csv", storage: "storage_1" }
-}
-```
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/-nJs6E_1E8Y"
-	title="Perpetual Scripts"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
-
-### Log Management with S3
-
-To optimize log storage and performance, Windmill leverages S3 for log management. This approach minimizes database load by treating the database as a temporary buffer for up to 5000 characters of logs per job.
-
-For jobs with extensive logging needs, Windmill [Enterprise Edition](/pricing) users benefit from seamless log streaming to S3. This ensures logs, regardless of size, are stored efficiently without overwhelming local resources.
-
-This allows the handling of large-scale logs with minimal database impact, supporting more efficient and scalable workflows.
-
-For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../20_jobs/index.mdx#s3azure-for-python-cache--large-logs). This feature is at the Instance-level, and has no overlap with the Workspace S3 integration.
-
-## Windmill embedded integration with Polars and DuckDB for data pipelines
+![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
+	/>
+</div>
+
+## Windmill integration with Polars and DuckDB for data pipelines
 
 ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
 
@@ -361,68 +138,28 @@ def main(input_file: S3Object):
 
 :::info
 
-Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../11_persistent_storage/large_data_files.mdx#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage).
+Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
 
 :::
 
 For more info on how Data Pipelines in Windmill, see [Data Pipelines](../27_data_pipelines/index.mdx).
 
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Data Pipelines"
+		description="Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines."
+		href="/docs/core_concepts/data_pipelines"
+	/>
+</div>
+
 ## Use Amazon S3, R2, MinIO and Azure Blob directly
 
 Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/). Azure Blob has a slightly different API than S3 but works with Windmill as well using its dedicated [resource type](https://hub.windmill.dev/resource_types/137/)
 
-### Amazon S3
-
-[Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) is a scalable and durable object storage service offered by Amazon Web Services (AWS), designed to provide developers and businesses with an effective way to store and retrieve any amount of data from anywhere on the web.
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/s3_objects_in_bucket.mp4"
-/>
-
-<br />
-
-1. [Sign-up to AWS](https://aws.amazon.com/resources/create-account/).
-
-2. [Create a bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) on S3.
-
-3. [Integrate it to Windmill](../../integrations/aws-s3.mdx) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
-
-Make sure the user associated with the resource has the [right policies allowed](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html) in AWS Identity and Access Management (IAM).
-
-:::tip
-
-You can find examples and premade S3 scripts on [Windmill Hub](https://hub.windmill.dev/integrations/s3).
-
-:::
-
-### Cloudflare R2
-
-[Cloudflare R2](https://www.cloudflare.com/products/r2/) is a cloud-based storage service that provides developers and businesses with a cost-effective and secure way to store and access their data.
-
-1. [Sign-up to Cloudflare](https://developers.cloudflare.com/fundamentals/account-and-billing/account-setup/create-account/)
-
-2. [Create a bucket](https://developers.cloudflare.com/r2/get-started/) on R2.
-
-3. [Integrate it to Windmill](../../integrations/cloudflare-r2.mdx) by filling the [resource type details](https://hub.windmill.dev/resource_types/42) for S3 APIs.
-
-### MinIO
-
-For best performance, [install MinIO locally](https://min.io/docs/minio/kubernetes/upstream/).
-
-[MinIO](https://min.io/) is an open-source, high-performance, and scalable object storage server that is compatible with Amazon S3 APIs, designed for building private and public cloud storage solutions.
-
-Then from Windmill, just [fill the S3 resource type](../../integrations/s3.mdx).
-
-### Azure Blob
-
-[Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) is Microsoft's alternative to S3. It serve the same purpose but has a slightly different API.
-
-1. Go to your Azure Portal and go to the "Storage account" application
-
-2. Either select an existing account of create a new one
-
-3. [Create a container](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal). Azure's containers are roughly the equivalent to S3 buckets. Note though that secret access key are per account, not per container.
-
-4. [Integrate it to Windmill](../../integrations/microsoft-azure-blob.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/137) for Azure Blob APIs.
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="S3 APIs integrations"
+		description="Use Amazon S3, Cloudflare R2, MinIO and Azure Blob directly within scripts and flows."
+		href="/docs/integrations/s3"
+	/>
+</div>

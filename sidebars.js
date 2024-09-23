@@ -64,6 +64,16 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/rest_grapqhql_quickstart/index',
 									label: 'Rest / GraphQL'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/rust_quickstart/index',
+									label: 'Rust'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/ansible_quickstart/index',
+									label: 'Ansible'
 								}
 							]
 						},
@@ -207,20 +217,21 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/large_data_files',
-							label: 'Object Storage for Large Data (S3)'
+							label: 'Large data (S3, R2, MinIO, Azure Blob)'
 						},
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/structured_databases',
-							label: 'Big Structured SQL Data (Postgres)'
+							label: 'Big structured SQL data (Postgres)'
 						},
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/key_value_stores',
-							label: 'NoSQL and Document Databases'
+							label: 'NoSQL & document databases'
 						}
 					]
 				},
+				'core_concepts/object_storage_in_windmill/index',
 				'core_concepts/data_pipelines/index',
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
@@ -234,6 +245,7 @@ const sidebars = {
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
 				'advanced/email_triggers/index',
+				'core_concepts/http_routing/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/jobs/index',
@@ -709,7 +721,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'code_editor/settings',
 							label: 'Settings'
-						},
+						}
 					],
 					collapsed: true
 				}
@@ -727,10 +739,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: [
-						'advanced/instance_settings/index',
-						'advanced/self_host/aws_ecs'
-					]
+					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_ecs']
 				},
 				{
 					type: 'category',

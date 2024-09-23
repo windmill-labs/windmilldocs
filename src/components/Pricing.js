@@ -351,7 +351,7 @@ const sections = [
 				link: '/docs/apps/public_apps'
 			},
 			{
-				name: 'Email Triggers',
+				name: 'Email triggers',
 				tiers: {
 					'tier-free-selfhost': 'Max 100 emails per day',
 					'tier-enterprise-selfhost': 'Unlimited',
@@ -395,7 +395,7 @@ const sections = [
 				link: '/docs/core_concepts/content_search'
 			},
 			{
-				name: 'S3 integration (>50mb upload)',
+				name: 'Workspace object storage (>50mb upload)',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -403,7 +403,7 @@ const sections = [
 					'tier-free': true,
 					'tier-team': true
 				},
-				link: '/docs/core_concepts/persistent_storage/large_data_files'
+				link: '/docs/core_concepts/object_storage_in_windmill'
 			},
 			{
 				name: 'Private Hub',
@@ -534,7 +534,18 @@ const sections = [
 					'tier-free': '60 days',
 					'tier-team': '60 days'
 				},
-				link: '/docs/core_concepts/jobs#retention-policy'
+				link: '/docs/core_concepts/scheduling#schedule-error-handler'
+			},
+			{
+				name: 'Schedule error handler',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/core_concepts/error_handling'
 			},
 			{
 				name: 'Workspace error handler',
@@ -856,7 +867,7 @@ const sections = [
 				link: '/docs/apps/app_configuration_settings/aggrid_table'
 			},
 			{
-				name: 'Workspace Default App',
+				name: 'Workspace default app',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,

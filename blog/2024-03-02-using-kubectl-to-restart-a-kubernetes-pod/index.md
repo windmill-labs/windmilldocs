@@ -80,7 +80,7 @@ This command gets the YAML statement of currently running pods and pipes the out
 
 In this guide, we've introduced you to Kubernetes pods and why you might need to restart them. Generally, the most recommended way to ensure no application downtime is to use `kubectl rollout restart deployment <deployment_name> -n <namespace>`. 
 
-Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and workflow engine to build internal tools. It can turn scripts into auto-generated UIs, APIs, and cron jobs. It supports coding in TypeScript, Python, Go, PHP, Bash, SQL, or any Docker image. You can [self-host](/docs/advanced/self_host) Windmill within your own environment.
+Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and workflow engine to build internal tools. It can turn scripts into auto-generated UIs, APIs, and cron jobs. It supports coding in TypeScript, Python, Go, PHP, Bash, SQL and Rust, or any Docker image. You can [self-host](/docs/advanced/self_host) Windmill within your own environment.
 
 Windmill runs on Kubernetes and [workers](/docs/core_concepts/worker_groups) can be easily scaled up and down to meet performance needs.
 

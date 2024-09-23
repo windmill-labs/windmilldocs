@@ -57,7 +57,7 @@ And for storage, you can now link a Windmill workspace to an S3 bucket and use i
 The very large majority of ETLs can be processed step-wise on single nodes and Windmill provides (one of) the best models for orchestrating non-sharded compute. Using this model, your ETLs will see a massive performance improvement, your infrastructure
 will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
 
-## Windmill integration with an external S3 storage
+## Windmill integration with an external object storage
 
 In Windmill, a data pipeline is implemented using a [flow](/docs/flows/flow_editor), and each step of the pipeline is a script. One of the key features of Windmill flows is to easily [pass a step result to its dependent steps](/docs/flows/architecture). But
 because those results are serialized to Windmill database and kept as long as the job is stored, this obviously won't work when the result is a dataset of millions of rows. The solution is to save the datasets to an external storage at the end of each script.
@@ -69,7 +69,7 @@ The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill 
 ![S3 workspace settings](./workspace_s3_settings.png 'S3 workspace settings')
 
 From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
-Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
+Same for the result of the script. If you return an `s3object` containing a [key](/docs/core_concepts/rich_display_rendering#s3) `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
 
 ![Windmill code editor](./s3_object_code_editor.png 'Windmill code editor')
 

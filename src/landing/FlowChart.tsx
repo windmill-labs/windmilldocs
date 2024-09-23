@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BookOpen } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
 import TaskDurationBarChart from '../components/TaskDurationBarChart';
-import LandingSectionWrapper from './LandingSectionWrapper';
 import { Switch } from '@headlessui/react';
 import classNames from 'classnames';
 
 export default function FlowChart() {
-	const [chart, setChart] = React.useState('short');
+	const [chart, setChart] = React.useState<'short' | 'long'>(undefined);
+
+	useEffect(() => {
+		setChart('short');
+	}, []);
+
 	const { colorMode } = useColorMode();
 
 	return (

@@ -34,9 +34,9 @@ All details on the [Pricing page](/pricing).
 
 ## Self-Hosted Plans
 
-Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [S3 integration](/blog/launch-week-1/data-pipeline-orchestrator), [Git Sync](../../advanced/11_git_sync/index.mdx), [Worker Groups Management UI](../../core_concepts/9_worker_groups/index.mdx)).
+Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [Workspace & instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx), [Git Sync](../../advanced/11_git_sync/index.mdx), [Worker Groups Management UI](../../core_concepts/9_worker_groups/index.mdx)).
 
-The Pro plan contains the main Enterprise features. It is exclusively available to individuals and companies with fewer than 10 employees and $250k in revenue.
+The Pro plan contains the main Enterprise features. It is [exclusively available](/pricing#pro-plan) to individuals and companies with fewer than 10 employees and $250k in revenue.
 
 Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
 
@@ -88,7 +88,8 @@ Team plans work at the workspace-level.
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
-	- [S3 / Azure Blob storage integration](../../core_concepts/11_persistent_storage/large_data_files.mdx) within a Windmill workspace to manage large data files.
+	- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
+	- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
 	- [Git Sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
 #### Self-host
@@ -113,14 +114,15 @@ Team plans work at the workspace-level.
   - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
 
 - If not done earlier, you can create your first workspace, but your instance will not have access to Enterprise features until the license key is passed.
-- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) to pass in the [Instance Settings](../../advanced/18_instance_settings/index.mdx#license-key). The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
+- Upon subscribing, you will receive a [license key](#using-the-license-key-self-host) to pass in the [Instance Settings](../../advanced/18_instance_settings/index.mdx#license-key). The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
 
 - To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](#windmill-customer-portal).
-- Windmill employs lightweight telemetry to automatically [track and report](#usage-checks) the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
+- Windmill employs lightweight [telemetry](#usage-checks) to automatically [track and report](#usage-checks) the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml).
 
 - To have a fully Enterprise Edition Windmill, we recommend also setting up:
 	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
-	- [S3 / Azure Blob storage integration](../../core_concepts/11_persistent_storage/large_data_files.mdx) within a Windmill workspace to manage large data files.
+	- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
+	- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
 	- [Git Sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
 - As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](#windmill-customer-portal).
@@ -173,7 +175,7 @@ This comparison is made only for your instance of Prod, for which you can find t
 
 ## Usage Checks
 
-Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
+Windmill employs lightweight [telemetry](/pricing#vcpu-reporting) to automatically track and report the usage of vCPUs and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.

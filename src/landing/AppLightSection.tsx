@@ -165,7 +165,7 @@ const features = [
 	{
 		title: 'Developer Friendly',
 		description:
-			'Run scripts in Python, Go, PHP, Bash, SQL, and TypeScript directly within the app editor.',
+			'Run scripts in Python, Go, PHP, Rust, Bash, SQL, and TypeScript directly within the app editor.',
 		Icon: Code,
 		defaultImage: '/illustrations/14.png',
 		url: '/docs/apps/app-runnable-panel',

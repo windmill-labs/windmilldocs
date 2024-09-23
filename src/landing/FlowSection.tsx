@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
 	Workflow,
@@ -618,8 +618,12 @@ const examples = [
 
 export default function FlowSection() {
 	const { developerMode } = useDeveloperMode();
-	const [chart, setChart] = React.useState('short');
+	const [chart, setChart] = React.useState<'short' | 'long'>(undefined);
 	const { colorMode } = useColorMode();
+
+	useEffect(() => {
+		setChart('short');
+	}, []);
 
 	return (
 		<>

@@ -152,7 +152,7 @@ export default function BarChart({
 				data={data}
 				id="canvas-id"
 				width={ref?.current?.clientWidth ?? 0}
-				height="360"
+				height={360}
 			/>
 		</div>
 	);
