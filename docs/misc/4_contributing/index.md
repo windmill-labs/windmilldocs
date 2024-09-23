@@ -1,8 +1,8 @@
 ---
-title: 'Contributor Guide'
+title: 'Contributor guide'
 ---
 
-# Contributor Guide
+# Contributor guide
 
 As an open-source platform, Windmill relies on the developer community for enhancements and support. Your work, from coding to writing docs, directly improves our platform. This guide outlines how you can get involved.
 

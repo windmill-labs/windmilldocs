@@ -1,4 +1,4 @@
-# LinkedIn Integration
+# LinkedIn integration
 
 [LinkedIn](https://www.linkedin.com/) is a professional networking and career development platform.
 

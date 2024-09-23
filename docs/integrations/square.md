@@ -1,4 +1,4 @@
-# Square Integration
+# Square integration
 
 [Square](https://www.squarespace.com/) is a payment and financial services provider.
 

@@ -1,4 +1,4 @@
-# Gmail Integration
+# Gmail integration
 
 [Gmail](https://mail.google.com/mail/) is a free email service provided by Google.
 

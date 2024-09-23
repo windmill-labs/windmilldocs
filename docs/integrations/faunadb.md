@@ -1,4 +1,4 @@
-# FaunaDB Integration
+# FaunaDB integration
 
 [FaunaDB](https://fauna.com/) is a serverless, document-oriented database for modern applications.
 

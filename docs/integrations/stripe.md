@@ -1,4 +1,4 @@
-# Stripe Integration
+# Stripe integration
 
 [Stripe](https://stripe.com/) is a payment processing platform.
 

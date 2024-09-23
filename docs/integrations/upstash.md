@@ -1,4 +1,4 @@
-# Upstash Integration
+# Upstash integration
 
 [Upstash](https://upstash.com/) is a serverless and low-latency Redis-compatible data store for modern applications.
 

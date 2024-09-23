@@ -1,4 +1,4 @@
-# Mailchimp Integration
+# Mailchimp integration
 
 [Mailchimp](https://mailchimp.com/) is an all-in-one marketing platform for small businesses.
 

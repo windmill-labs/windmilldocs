@@ -1,4 +1,4 @@
-# MS SQL Integration
+# MS SQL integration
 
 [MS SQL](https://www.microsoft.com/sql-server/sql-server-downloads) is a database management system.
 
@@ -6,4 +6,4 @@ Windmill provides a framework to support MS SQL databases, either with native SQ
 
 ![Integration between MS SQL and Windmill](../assets/integrations/windmill_and_mssql.png 'Connect a MS SQL instance with Windmill')
 
-Please refer to the [SQL Getting Started section](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).
+Please refer to the [SQL Getting started section](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).
