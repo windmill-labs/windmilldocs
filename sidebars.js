@@ -230,11 +230,6 @@ const sidebars = {
 				'core_concepts/webhooks/index',
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
-				{
-					type: 'doc',
-				  id: 'core_concepts/explicit_progress/index',
-					label: 'Get/Set Progress from Code'
-				},
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
@@ -825,6 +820,11 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
+				{
+					type: 'doc',
+				  id: 'advanced/explicit_progress/index',
+					label: 'Get/Set Progress from Code'
+				},
 				'misc/share_on_hub/index'
 			]
 		},
