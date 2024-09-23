@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Custom HTTP routes
 
 Windmill supports custom HTTP routes to trigger a script or flow. 
@@ -38,6 +41,8 @@ The `wm_trigger` contains the kind of the trigger (http, email or webhook) and a
 
 Here are examples of a preprocessor function in TypeScript and Python:
 
+<Tabs>
+<TabItem value="TypeScript">
 ```TypeScript
 export async function preprocessor(
 	wm_trigger: {
@@ -62,7 +67,9 @@ export async function main(/* main args */) {
     // your code here
 }
 ```
+</TabItem>
 
+<TabItem value="Python">
 ```Python
 from typing import TypedDict, Literal
 
@@ -89,6 +96,8 @@ def preprocessor(
 def main(/* main args */):
     # your code here
 ```
+</TabItem>
+</Tabs>
 
 Once a preprocessor is created, you should see a new tab in the right panel of the editor that allows you to test the preprocessor with a sample request.
 
@@ -103,6 +112,8 @@ To create a preprocessor for a flow, click on the plus button above the `Input` 
 
 The flow preprocessor takes the same arguments as the script preprocessor and should return the transformed arguments for the flow:
 
+<Tabs>
+<TabItem value="TypeScript">
 ```TypeScript
 export async function preprocessor(
 	wm_trigger: {
@@ -123,7 +134,9 @@ export async function preprocessor(
 	}
 }
 ```
+</TabItem>
 
+<TabItem value="Python">
 ```Python
 from typing import TypedDict, Literal
 
@@ -147,3 +160,5 @@ def preprocessor(
 		# return the args to be passed to the flow
 	}
 ```
+</TabItem>
+</Tabs>
