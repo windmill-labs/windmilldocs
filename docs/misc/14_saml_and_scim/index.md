@@ -2,7 +2,7 @@
 
 Setting up SAML and SCIM allows you to authenticate users using your identity provider.
 
-This feature is available under [Enterprise Edition](/pricing). Configuration is set from [Instance Settings](../../advanced/18_instance_settings/index.mdx#scimsaml)
+This feature is available under [Enterprise Edition](/pricing). Configuration is set from [Instance settings](../../advanced/18_instance_settings/index.mdx#scimsaml)
 
 ## SAML
 
@@ -12,9 +12,9 @@ ACS Url is `<instance_url>/api/saml/acs`
 SCIM connector is `<instance_url>/api/scim`
 Application username format is `Email`
 
-![Instance Settings UI](instance_settings.png)
+![Instance settings UI](instance_settings.png)
 
-In the Instance Settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
+In the Instance settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
 
 ### Okta
 
@@ -22,9 +22,9 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 
 ![Okta settings](./okta.png.webp)
 
-![Instance Settings UI](instance_settings.png)
+![Instance settings UI](instance_settings.png)
 
-In the Instance Settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
+In the Instance settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
 
 ![Okta Metadata URL](./okta2.png.webp)
 
@@ -48,9 +48,9 @@ Edit the configuration to set the Entity ID to `windmill` and the ACS url to `<i
 
 ![Azure SAML metadata](azure_saml_metadata.png)
 
-Copy the App Federation Metadata URL and paste it in the Instance Settings UI.
+Copy the App Federation Metadata URL and paste it in the Instance settings UI.
 
-![Instance Settings UI](instance_settings.png)
+![Instance settings UI](instance_settings.png)
 
 If for some reasons, the metadata URL cannot be used, you can copy the XML content and paste it in the field instead.
 
@@ -68,9 +68,9 @@ Configure Okta with the following settings (and replace cf.wimill.xyz with your 
 
 ![Okta SCIM](okta-scim1.png.webp)
 
-![Instance Settings UI](instance_settings.png)
+![Instance settings UI](instance_settings.png)
 
-In the Instance Settings UI, set the SCIM token containing the secret value that you will share to Okta.
+In the Instance settings UI, set the SCIM token containing the secret value that you will share to Okta.
 
 ![Okta SCIM](okta-scim.png.webp)
 
@@ -84,11 +84,11 @@ Choose the "Automatic" provisioning mode, and then for the Tenant URL, input the
 
 ![Azure SAML metadata](azure_saml_metadata.png)
 
-Copy the App Federation Metadata URL and paste it in the Instance Settings UI.
+Copy the App Federation Metadata URL and paste it in the Instance settings UI.
 
-![Instance Settings UI](instance_settings.png)
+![Instance settings UI](instance_settings.png)
 
-In the Instance Settings UI, set the SCIM token containing the secret value that you will share to Azure. You can click "Test" in Windmill's Instance Settings UI to validate the SAML metadata URL/Content.
+In the Instance settings UI, set the SCIM token containing the secret value that you will share to Azure. You can click "Test" in Windmill's Instance settings UI to validate the SAML metadata URL/Content.
 
 You can then click on the Test Connection button to validate Azure can connect to Windmill's SCIM endpoint. You can then choose to sync only the Users and Groups assigned to this application, or all users and groups. Note that if you choose the former, after you save, go to the application's page and click on the "Users and groups" button in the left menu bar. Only the users and groups present here will be synced to Windmill.
 

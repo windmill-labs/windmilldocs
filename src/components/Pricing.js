@@ -26,7 +26,7 @@ const pricing = {
 			id: 'tier-free-selfhost',
 			href: '/docs/advanced/self_host',
 			price: {},
-			description: 'Unlimited users & executions.',
+			description: 'Unlimited executions.',
 			customMessage: 'Self-host in minutes',
 			minPrice: 0,
 			features: [

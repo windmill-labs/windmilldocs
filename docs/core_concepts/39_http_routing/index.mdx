@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Custom HTTP routes
 
 Windmill supports custom HTTP routes to trigger a script or flow. 
-They can only be created by workspace admins. 
+They can only be created by [admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace). 
 All properties of the route apart from the http path can be modified by any user with write access to the route.
 
 ## How to use
@@ -39,7 +39,7 @@ Preprocessors can only be written in TypeScript (Bun/Deno) or Python.
 In scripts, you need to export an additional `preprocessor` function. It takes a special argument called `wm_trigger` in addition to the request body arguments and should return the transformed arguments for the main function of the script.
 The `wm_trigger` contains the kind of the trigger (http, email or webhook) and an http object with the details of the request when the script is triggered via an HTTP route.
 
-Here are examples of a preprocessor function in TypeScript and Python:
+Here are examples of a preprocessor function in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx):
 
 <Tabs>
 <TabItem value="TypeScript">
