@@ -1,4 +1,4 @@
-# SMTP Integration
+# SMTP integration
 
 [SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) (Simple Mail Transfer Protocol) is an internet standard for electronic mail transmission.
 

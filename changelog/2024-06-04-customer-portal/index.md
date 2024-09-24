@@ -11,7 +11,7 @@ features:
     'See info on subscription and usage.',
     'Update contact info from your portal.',
     'Update subscription and billing details.',
-    'Automatic license key renewal.',
+    'Automatic license key renewal.'
   ]
 docs: /docs/misc/plans_details#windmill-customer-portal
 ---

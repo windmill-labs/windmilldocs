@@ -1,4 +1,4 @@
-# Google Cloud Platform Integration
+# Google Cloud Platform integration
 
 [GCP](https://cloud.google.com/gcp) is a suite of cloud computing services for building and deploying applications.
 

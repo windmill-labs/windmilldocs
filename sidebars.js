@@ -10,7 +10,7 @@ const sidebars = {
 				{
 					type: 'doc',
 					id: 'getting_started/how_to_use_windmill/index',
-					label: 'Getting Started'
+					label: 'Getting started'
 				},
 				{
 					type: 'category',
@@ -94,7 +94,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'misc/guides/app_send_email_smtp/index',
-									label: 'App that Sends Email with SMTP'
+									label: 'App that sends email with SMTP'
 								},
 								{
 									type: 'doc',
@@ -115,12 +115,12 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'getting_started/trigger_scripts/index',
-							label: 'Triggering Scripts'
+							label: 'Triggering scripts'
 						},
 						{
 							type: 'doc',
 							id: 'getting_started/trigger_flows/index',
-							label: 'Triggering Flows'
+							label: 'Triggering flows'
 						}
 					]
 				},
@@ -829,6 +829,11 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
+				{
+					type: 'doc',
+				  id: 'advanced/explicit_progress/index',
+					label: 'Get/Set Progress from Code'
+				},
 				'misc/share_on_hub/index'
 			]
 		},

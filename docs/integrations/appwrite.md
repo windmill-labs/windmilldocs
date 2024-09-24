@@ -1,4 +1,4 @@
-# Appwrite Integration
+# Appwrite integration
 
 [Appwrite](https://appwrite.io/) is an end-to-end backend server for web and mobile apps.
 

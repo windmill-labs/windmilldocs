@@ -1,4 +1,4 @@
-# Linkding Integration
+# Linkding integration
 
 [Linkding](https://github.com/sissbruecker/linkding) is a self-hosted bookmark manager.
 

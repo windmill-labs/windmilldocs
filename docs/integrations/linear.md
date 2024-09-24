@@ -1,4 +1,4 @@
-# Linear Integration
+# Linear integration
 
 [Linear](https://linear.app/) is a project management tool for software development teams.
 

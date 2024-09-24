@@ -1,4 +1,4 @@
-# Funkwhale Integration
+# Funkwhale integration
 
 [Funkwhale](https://funkwhale.audio/) is an open-source music streaming and sharing platform.
 

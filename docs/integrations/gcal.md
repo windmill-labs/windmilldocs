@@ -1,4 +1,4 @@
-# Google Calendar Integration
+# Google Calendar integration
 
 [Google Calendar](https://calendar.google.com/)  is a time-management and scheduling web application.
 

@@ -1,4 +1,4 @@
-# Supabase Integration
+# Supabase integration
 
 [Supabase](https://supabase.com/) is an open-source Firebase alternative.
 

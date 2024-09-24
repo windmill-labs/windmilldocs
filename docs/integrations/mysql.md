@@ -1,4 +1,4 @@
-# MySQL Integration
+# MySQL integration
 
 [MySQL](https://www.mysql.com/) is an open-source relational database management system.
 
@@ -6,4 +6,4 @@ Windmill provides a framework to support MySQL databases, either with native SQL
 
 ![Integration between MySQL and Windmill](../assets/integrations/mysql_header.png 'Connect a MySQL instance with Windmill')
 
-Please refer to the [SQL Getting Started section](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).
+Please refer to the [SQL Getting started section](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx).

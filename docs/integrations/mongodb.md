@@ -1,4 +1,4 @@
-# MongoDB Integration
+# MongoDB integration
 
 [MongoDB](https://www.mongodb.com/) is a NoSQL document-oriented database.
 

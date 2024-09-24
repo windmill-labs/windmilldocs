@@ -98,13 +98,13 @@ relies on are permissioned correctly.
 A user can only run a script permissioned as either himself, one of the group
 that he is a member of.
 
-## Job inputs and Script parameters
+## Job inputs and script parameters
 
 Jobs take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible.
 
 If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
 
-## Retention Policy
+## Retention policy
 
 The retention policy for jobs runs details varies depending on your team's [plan](/pricing):
 

@@ -1,4 +1,4 @@
-# Notion Integration
+# Notion integration
 
 [Notion](https://www.notion.so/) is a productivity and note-taking web application.
 
