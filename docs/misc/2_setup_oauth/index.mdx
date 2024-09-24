@@ -10,7 +10,7 @@ On [self-hosted instances](../../advanced/1_self_host/index.mdx), OAuth configur
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Self Host Windmill"
+		title="Self-host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
 	/>
@@ -49,7 +49,7 @@ First, you need to create a Google OAuth Client:
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 
-[Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - 'SSO' - Toggle "Google" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - 'SSO' - Toggle "Google" and set client id, org and client secret.
 
 ### Microsoft
 
@@ -64,7 +64,7 @@ Also set "Accounts in any organizational directory (Any Microsoft Entra ID tenan
 Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)", you can restrict the
 emails directly in Windmill using the "allowed_domains" setting.
 
-[Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "microsoft" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "microsoft" and set client id, org and client secret.
 
 ### Okta
 
@@ -92,14 +92,14 @@ From your Admin page, setup Windmill using the service flow:
    - "Login initiated by" `App Only`
    - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
 
-[Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "okta" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "okta" and set client id, org and client secret.
 
 ### GitHub
 
 Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/github`
 Login: `https://<YOUR_INSTANCE>/user/login`
 
-[Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "github" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "github" and set client id, org and client secret.
 
 ### GitLab
 
@@ -108,7 +108,7 @@ Login: `https://<YOUR_INSTANCE>/user/login`
 
 GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
 
-[Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "gitlab" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "gitlab" and set client id, org and client secret.
 
 ### Jumpcloud
 
@@ -126,13 +126,13 @@ Attribute Mapping, Standard Scopes: Check Email
 
 Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud":
 
-[Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "jumpcloud" and set client id and client secret, and "Client Authentication Type" to "Client Secret Basic"
+[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "jumpcloud" and set client id and client secret, and "Client Authentication Type" to "Client Secret Basic"
 
 ![Jumpcloud](./jumpcloud.png.webp)
 
 ### Keycloak
 
-Setup your realm in Keycloak and set Keycloak in [Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' and Keycloak
+Setup your realm in Keycloak and set Keycloak in [Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' and Keycloak
 
 ### Authentik
 
@@ -147,7 +147,7 @@ To integrate Windmill with Authentik as an OAuth provider, follow these steps:
      - **Grant Types**: Authorization Code, Refresh Token
    - After saving the application, you will be provided with a **Client ID** and **Client Secret**.
 
-2. **Instance Settings in Windmill**:
+2. **Instance settings in Windmill**:
    - Go to Windmill's admin settings under 'SSO OAuth' - 'SSO'.
    - Toggle "authentik" and enter:
      - **Authentik URL**: `https://<AUTHENTIK_HOST>/application/o/authorize/`
@@ -168,7 +168,7 @@ To integrate Windmill with Authelia as an OAuth provider, follow these steps:
      - **Scopes**: OpenID, Email
    - After saving, you will be given a **Client ID** and **Client Secret**.
 
-2. **Instance Settings in Windmill**:
+2. **Instance settings in Windmill**:
    - Go to Windmill's admin settings under 'SSO OAuth' - 'SSO'.
    - Toggle "authelia" and enter:
      - **Authelia URL**: `https://<AUTHELIA_URL>/api/oidc/authorization`
@@ -187,7 +187,7 @@ To integrate Windmill with Kanidm as an OAuth provider, follow these steps:
      - **Post-Logout Redirect URI**: `https://<YOUR_INSTANCE>/user/login`
    - After saving the client, you will receive a **Client ID** and **Client Secret**.
 
-2. **Instance Settings in Windmill**:
+2. **Instance settings in Windmill**:
    - Go to Windmill's admin settings under 'SSO OAuth' - 'SSO'.
    - Toggle "kanidm" and enter:
      - **Kanidm URL**: `https://<KANIDM_URL>/ui/oauth2`
@@ -207,7 +207,7 @@ To integrate Windmill with Zitadel as an OAuth provider, follow these steps:
      - **Post-Logout Redirect URI**: `https://<YOUR_INSTANCE>/user/login`
    - Once created, Zitadel will provide a **Client ID** and **Client Secret**.
 
-2. **Instance Settings in Windmill**:
+2. **Instance settings in Windmill**:
    - Go to Windmill's admin settings under 'SSO OAuth' - 'SSO'.
    - Toggle "zitadel" and enter:
      - **Zitadel URL**: `https://<ZITADEL_URL>/oauth/v2/authorize`
@@ -217,7 +217,7 @@ To integrate Windmill with Zitadel as an OAuth provider, follow these steps:
 
 ### Custom OAuth
 
-You can use other custom SSO clients from the [Instance Settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' and provide a client id to 'Add custom SSO client'.
+You can use other custom SSO clients from the [Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' and provide a client id to 'Add custom SSO client'.
 
 ## OAuth
 
@@ -277,7 +277,7 @@ settings:
 
 ![Slack Manifest](./slack_manifest.png 'Slack Manifest')
 
-Then from your [Instance Settings](../../advanced/18_instance_settings/index.mdx), fill with Client ID and Client Secret.
+Then from your [Instance settings](../../advanced/18_instance_settings/index.mdx), fill with Client ID and Client Secret.
 
 ![Slack Fill](./slack_fill.png 'Slack Fill')
 
@@ -299,7 +299,7 @@ Now users should be able to connect to Slack through OAuth:
   - Authorization Callback URL: `https://<YOUR_INSTANCE>/oauth/callback/github`
 - Click "Register Application".
 - Copy the **Client ID** and **Client Secret** from the application details.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "github" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "github" and set the client id and client secret.
 
 ### GitLab
 
@@ -311,7 +311,7 @@ Now users should be able to connect to Slack through OAuth:
   - Scopes: Choose appropriate scopes like `api`, `read_user`, etc.
 - Click "Save Application".
 - Copy the **Application ID** and **Secret** from the application details.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gitlab" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gitlab" and set the client id and client secret.
 
 ### Bitbucket
 
@@ -322,7 +322,7 @@ Now users should be able to connect to Slack through OAuth:
   - Redirect URI: `https://<YOUR_INSTANCE>/oauth/callback/bitbucket`
   - Select appropriate scopes.
 - Copy the **Client ID** and **Client Secret** from the application details.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "bitbucket" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "bitbucket" and set the client id and client secret.
 
 ### Google Sheets
 
@@ -337,7 +337,7 @@ Now users should be able to connect to Slack through OAuth:
   - Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gsheets`
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gsheet" and set client id and client secret
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gsheet" and set client id and client secret
 
 The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your Google Account to set up the resources in Windmill.
 
@@ -346,42 +346,42 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
 - Follow the instructions for Google Sheets OAuth, but search for and enable **Google Drive API** in the API services.
 - Add the same Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gdrive`.
 - Use the created credentials in Windmill.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gdrive" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gdrive" and set the client id and client secret.
 
 ### Gmail
 
 - Follow the instructions for Google Sheets OAuth, but search for and enable **Gmail API** in the API services.
 - Add the same Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gmail`.
 - Use the created credentials in Windmill.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gmail" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gmail" and set the client id and client secret.
 
 ### Google Calendar (GCal)
 
 - Follow the instructions for Google Sheets OAuth, but search for and enable **Google Calendar API** in the API services.
 - Add the same Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gcal`.
 - Use the created credentials in Windmill.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gcal" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gcal" and set the client id and client secret.
 
 ### Google Forms (GForms)
 
 - Google Forms API may use Google Drive, so follow the Google Drive API OAuth instructions.
 - Add the same Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gforms`.
 - Use the created credentials in Windmill.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gforms" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gforms" and set the client id and client secret.
 
 ### Google Cloud (GCloud)
 
 - Follow the instructions for Google Sheets OAuth, but search for and enable **Google Cloud APIs** in the API services.
 - Add the same Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gcloud`.
 - Use the created credentials in Windmill.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gcloud" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gcloud" and set the client id and client secret.
 
 ### Google Workspace (GWorkspace)
 
 - Follow the instructions for Google Sheets OAuth, but ensure you enable **Admin SDK API** in the API services.
 - Add the same Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/gworkspace`.
 - Use the created credentials in Windmill.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gworkspace" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "gworkspace" and set the client id and client secret.
 
 ### Basecamp
 
@@ -391,7 +391,7 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
   - Name: Windmill
   - Redirect URI: `https://<YOUR_INSTANCE>/oauth/callback/basecamp`
 - Copy the **Client ID** and **Client Secret** from the application details.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "basecamp" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "basecamp" and set the client id and client secret.
 
 ### LinkedIn
 
@@ -401,7 +401,7 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
   - App Name: Windmill
   - Authorized Redirect URLs: `https://<YOUR_INSTANCE>/oauth/callback/linkedin`
 - Copy the **Client ID** and **Client Secret**.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "linkedin" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "linkedin" and set the client id and client secret.
 
 ### QuickBooks
 
@@ -411,7 +411,7 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
   - App Name: Windmill
   - Redirect URL: `https://<YOUR_INSTANCE>/oauth/callback/quickbooks`
 - Copy the **Client ID** and **Client Secret**.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "quickbooks" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "quickbooks" and set the client id and client secret.
 
 ### Visma
 
@@ -421,7 +421,7 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
   - Name: Windmill
   - Redirect URI: `https://<YOUR_INSTANCE>/oauth/callback/visma`
 - Copy the **Client ID** and **Client Secret**.
-- [Instance Settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "visma" and set the client id and client secret.
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "visma" and set the client id and client secret.
 
 ### Custom OAuth
 

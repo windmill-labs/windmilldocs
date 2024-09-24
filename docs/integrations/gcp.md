@@ -6,7 +6,7 @@ To integrate GCP to Windmill, you need to save the following elements as a [reso
 
 ![Add Google Cloud Platform Resource](../assets/integrations/add-gcp.png.webp)
 
-:::info Self Host
+:::info Self-host
 
 If you're looking for a way to self-host Windmill using GCP, see [Self-Host Windmill](../advanced/1_self_host/index.mdx).
 

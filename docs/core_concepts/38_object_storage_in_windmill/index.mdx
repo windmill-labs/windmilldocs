@@ -20,7 +20,7 @@ Once you've created an [S3 or Azure Blob resource](../../integrations/s3.mdx) in
 
 ![S3 storage workspace settings](../11_persistent_storage/workspace_settings.png)
 
-From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
+From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script [takes as input](#take-a-file-as-input) a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
 Same for the result of the script. If you return an `s3object` containing a [key](../19_rich_display_rendering/index.mdx#s3) `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
 
 S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
@@ -32,6 +32,8 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 ```
 
 ![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
+
+### Resources permissions
 
 The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
 
@@ -61,7 +63,19 @@ export async function main() {
 
 ![S3 list of files download](../19_rich_display_rendering/s3_array.png "S3 list of files download")
 
-### Read a file from S3 within a script
+### Read a file from S3 or object storage within a script
+
+`S3Object` is a type that represents a file in S3 or object storage.
+
+S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
+
+```json
+{
+	"s3": "path/to/file"
+}
+```
+
+You can read a file from S3 or object storage within a script using the `loadS3File` and `loadS3FileStream` functions from the [TypeScript client](../../advanced/2_clients/ts_client.mdx) and the `wmill.load_s3_file` and `wmill.load_s3_file_stream` functions from the [Python client](../../advanced/2_clients/python_client.md).
 
 <Tabs className="unique-tabs">
 
@@ -71,16 +85,21 @@ export async function main() {
 import * as wmill from 'windmill-client';
 import { S3Object } from 'windmill-client';
 
-export async function main(input_file: S3Object) {
+export async function main() {
+
+	const example_file: S3Object = {
+		s3: 'path/to/file'
+	};
+
 	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
+	const file_content = await wmill.loadS3File(example_file);
 
 	const decoder = new TextDecoder();
 	const file_content_str = decoder.decode(file_content);
 	console.log(file_content_str);
 
 	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
+	let fileContentBlob = await wmill.loadS3FileStream(example_file);
 	console.log(await fileContentBlob.text());
 }
 ```
@@ -91,18 +110,23 @@ export async function main(input_file: S3Object) {
 
 ```ts
 import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
+import { S3Object } from 'npm:windmill-client@1.253.7';
 
-export async function main(input_file: S3Object) {
+export async function main() {
+
+	const example_file: S3Object = {
+		s3: 'path/to/file'
+	};
+
 	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
+	const file_content = await wmill.loadS3File(example_file);
 
 	const decoder = new TextDecoder();
 	const file_content_str = decoder.decode(file_content);
 	console.log(file_content_str);
 
 	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
+	let fileContentBlob = await wmill.loadS3FileStream(example_file);
 	console.log(await fileContentBlob.text());
 }
 ```
@@ -115,13 +139,16 @@ export async function main(input_file: S3Object) {
 import wmill
 from wmill import S3Object
 
-def main(input_file: S3Object):
-    # Load the entire file_content as a bytes array
-    file_content = wmill.load_s3_file(input_file)
+def main():
+
+	example_file = S3Object(s3='path/to/file')
+
+	# Load the entire file_content as a bytes array
+    file_content = wmill.load_s3_file(example_file)
     print(file_content.decode('utf-8'))
 
     # Or load the file lazily as a Buffered reader:
-    with wmill.load_s3_file_reader(input_file) as file_reader:
+    with wmill.load_s3_file_reader(example_file) as file_reader:
         print(file_reader.read())
 ```
 
@@ -130,11 +157,81 @@ def main(input_file: S3Object):
 
 ![Read S3 file](../18_files_binary_data/s3_file_input.png)
 
-:::info
 Certain file types, typically parquet files, can be [directly rendered by Windmill](../19_rich_display_rendering/index.mdx).
-:::
 
-### Create a file in S3 within a script
+### Take a file as input
+
+Scripts can accept a S3Object as input.
+
+<Tabs className="unique-tabs">
+
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from 'windmill-client';
+import { S3Object } from 'windmill-client';
+
+export async function main(input_file: S3Object) {
+
+// rest of the code
+
+}
+```
+
+</TabItem>
+
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from 'npm:windmill-client@1.253.7';
+import { S3Object } from 'npm:windmill-client@1.253.7';
+
+export async function main(input_file: S3Object) {
+
+// rest of the code
+
+}
+```
+
+</TabItem>
+
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+from wmill import S3Object
+
+def main(input_file: S3Object):
+
+# Rest of the code
+```
+
+</TabItem>
+</Tabs>
+
+The [auto-generated UI](../6_auto_generated_uis/index.mdx) will display a file uploader:
+
+![S3 File Uploader](./s3_file_input.png "S3 File Uploader")
+
+or you can fill path manually if you enable 'Raw S3 object input':
+
+![S3 Raw Object Input](./s3_raw_object_input.png "S3 Raw Object Input")
+
+and access bucket explorer if [resource permissions](#resources-permissions) allow it:
+
+![S3 Bucket Explorer](./s3_bucket_explorer.png "S3 Bucket Explorer")
+
+That's also the recommended way to [pass](../../flows/16_architecture.mdx) S3 files as input to steps within [flows](../../flows/1_flow_editor.mdx).
+
+![S3 file input in flow](./s3_file_input_in_flow.png "S3 file input in flow")
+
+![S3 file input in flow 1](./s3_file_input_in_flow_1.png "S3 file input in flow 1")
+
+![S3 file input in flow 2](./s3_file_input_in_flow_2.png "S3 file input in flow 2")
+
+### Create a file from S3 or object storage within a script
+
+You can create a file from S3 or object storage within a script using the `writeS3File` function from the [TypeScript client](../../advanced/2_clients/ts_client.mdx) and the `wmill.write_s3_file` function from the [Python client](../../advanced/2_clients/python_client.md).
 
 <Tabs className="unique-tabs">
 
@@ -162,7 +259,7 @@ export async function main(s3_file_path: string) {
 
 ```ts
 import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
+import { S3Object } from 'npm:windmill-client@1.253.7';
 
 export async function main(s3_file_path: string) {
 	const s3_file_output: S3Object = {
@@ -200,7 +297,7 @@ def main(s3_file_path: str):
 
 For more info on how to use files and S3 files in Windmill, see [Handling files and binary data](../18_files_binary_data/index.mdx).
 
-### Secondary S3 Storage
+### Secondary storage
 
 Read and write from a storage that is not your main storage by specifying it in the S3 object as "secondary_storage" with the name of it.
 
@@ -212,7 +309,7 @@ Then from script, you can specify the secondary storage with an object with prop
 const file = {s3: 'folder/hello.txt', storage: 'storage_1'}
 ```
 
-Here is an example of the [Create](#create-a-file-in-s3-within-a-script) then [Read](#read-a-file-from-s3-within-a-script)  a file from S3 within a script with secondary storage named "storage_1":
+Here is an example of the [Create](#create-a-file-from-s3-or-object-storage-within-a-script) then [Read](#read-a-file-from-s3-or-object-storage-within-a-script)  a file from S3 within a script with secondary storage named "storage_1":
 
 ```ts
 import * as wmill from 'windmill-client';
@@ -259,7 +356,7 @@ Under [Enterprise Edition](/pricing), Instance object storage offers advanced fe
 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
 
-### Large logs management with S3
+### Large job logs management
 
 To optimize log storage and performance, Windmill leverages S3 for log management. This approach minimizes database load by treating the database as a temporary buffer for up to 5000 characters of logs per job.
 
@@ -267,7 +364,7 @@ For jobs with extensive logging needs, Windmill [Enterprise Edition](/pricing) u
 
 This allows the handling of large-scale logs with minimal database impact, supporting more efficient and scalable workflows.
 
-For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../20_jobs/index.mdx#large-logs-management-with-s3). This feature is at the Instance-level, and has no overlap with the Workspace object storage.
+For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../20_jobs/index.mdx#large-job-logs-management). This feature is at the Instance-level, and has no overlap with the Workspace object storage.
 
 ### Instance object storage distributed cache for Python, Rust, Go
 
@@ -294,7 +391,7 @@ The first time a dependency is seen by a worker, if it is not cached locally, th
 1. If it is not, install the dependency from pypi, then do a snapshot of installed dependency, tar it and push it to S3 (we call this a "piptar").
 2. If it is, simply pull the "piptar" and extract it in place of installing from pypi. It is much faster than installing from pypi because that S3 is much closer to your workers than pypi and because there is no installation step to be done, a simple tar extract is sufficient which takes no compute.
 
-### Log storage
+### Service logs storage
 
 [Logs are stored in S3](../36_service_logs/index.mdx) if S3 instance object storage is configured. This option provides more scalable storage and is ideal for larger-scale deployments or where long-term log retention is important.
 

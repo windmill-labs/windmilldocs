@@ -109,7 +109,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Examples',
+					label: 'Triggers',
 					collapsed: true,
 					items: [
 						{
@@ -734,7 +734,7 @@ const sidebars = {
 				{
 					type: 'category',
 					collapsed: false,
-					label: 'Self Host',
+					label: 'Self-host',
 					link: {
 						type: 'doc',
 						id: 'advanced/self_host/index'

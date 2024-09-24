@@ -51,14 +51,6 @@ because those results are serialized to Windmill database and kept as long as th
 
 In most cases, S3 is a well-suited storage and Windmill now provides a basic yet very useful [integration with external S3 storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) at the workspace level.
 
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Workspace object storage"
-		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
-		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
-	/>
-</div>
-
 The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
 
 ![S3 workspace settings](../../../blog/2023-11-24-data-pipeline-orchestrator/workspace_s3_settings.png 'S3 workspace settings')
@@ -85,193 +77,15 @@ Clicking on one of those buttons, a drawer will open displaying the content of t
 From there you always have the possibility to use the S3 client library of your choice to read and write to S3.
 That being said, Polars and DuckDB can read/write directly from/to files stored in S3 Windmill now ships with helpers to make the entire data processing mechanics very cohesive.
 
-### Read a file from S3 within a script
+Find all details at:
 
-<Tabs className="unique-tabs">
-
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'windmill-client';
-import { S3Object } from 'windmill-client';
-
-export async function main(input_file: S3Object) {
-	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
-
-	const decoder = new TextDecoder();
-	const file_content_str = decoder.decode(file_content);
-	console.log(file_content_str);
-
-	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
-	console.log(await fileContentBlob.text());
-}
-```
-
-</TabItem>
-
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
-
-export async function main(input_file: S3Object) {
-	// Load the entire file_content as a Uint8Array
-	const file_content = await wmill.loadS3File(input_file);
-
-	const decoder = new TextDecoder();
-	const file_content_str = decoder.decode(file_content);
-	console.log(file_content_str);
-
-	// Or load the file lazily as a Blob
-	let fileContentBlob = await wmill.loadS3FileStream(input_file);
-	console.log(await fileContentBlob.text());
-}
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-import wmill
-from wmill import S3Object
-
-def main(input_file: S3Object):
-    # Load the entire file_content as a bytes array
-    file_content = wmill.load_s3_file(input_file)
-    print(file_content.decode('utf-8'))
-
-    # Or load the file lazily as a Buffered reader:
-    with wmill.load_s3_file_reader(input_file) as file_reader:
-        print(file_reader.read())
-```
-
-</TabItem>
-</Tabs>
-
-![Read S3 file](../18_files_binary_data/s3_file_input.png)
-
-:::info
-Certain file types, typically parquet files, can be [directly rendered by Windmill](../19_rich_display_rendering/index.mdx)
-:::
-
-### Create a file in S3 within a script
-
-<Tabs className="unique-tabs">
-
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'windmill-client';
-import { S3Object } from 'windmill-client';
-
-export async function main(s3_file_path: string) {
-	const s3_file_output: S3Object = {
-		s3: s3_file_path
-	};
-
-	const file_content = 'Hello Windmill!';
-	// file_content can be either a string or ReadableStream<Uint8Array>
-	await wmill.writeS3File(s3_file_output, file_content);
-	return s3_file_output;
-}
-```
-
-</TabItem>
-
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from 'npm:windmill-client@1.253.7';
-import S3Object from 'npm:windmill-client@1.253.7';
-
-export async function main(s3_file_path: string) {
-	const s3_file_output: S3Object = {
-		s3: s3_file_path
-	};
-
-	const file_content = 'Hello Windmill!';
-	// file_content can be either a string or ReadableStream<Uint8Array>
-	await wmill.writeS3File(s3_file_output, file_content);
-	return s3_file_output;
-}
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-import wmill
-from wmill import S3Object
-
-def main(s3_file_path: str):
-    s3_file_output = S3Object(s3=s3_file_path)
-
-    file_content = b"Hello Windmill!"
-	# file_content can be either bytes or a BufferedReader
-    file_content = wmill.write_s3_file(s3_file_output, file_content)
-    return s3_file_output
-```
-
-</TabItem>
-</Tabs>
-
-![Write to S3 file](../18_files_binary_data/s3_file_output.png)
-
-Even though the whole file is downloadable, the backend only sends the rows that the frontend needs for the preview. This means that you can manipulate objects of infinite size, and the backend will only return what is necessary.
-
-You can even display several S3 files through an array of S3 objects:
-
-```ts
-export async function main() {
-  return [{s3: "path/to/file_1"}, {s3: "path/to/file_2", {s3: "path/to/file_3"}}];
-}
-```
-
-![S3 list of files download](../19_rich_display_rendering/s3_array.png "S3 list of files download")
-
-### Secondary S3 Storage
-
-Read and write from a storage that is not your main storage by specifying it in the S3 object as "secondary_storage" with the name of it.
-
-From the workspace settings, in tab "S3 Storage", just click on "Add secondary storage", give it a name, and pick a resource from type "S3", "Azure Blob", "AWS OIDC" or "Azure Workload Identity". You can save as many additional storages as you want as long as you give them a different name.
-
-Then from script, you can specify the secondary storage with an object with properties `s3` (path to the file) and `storage` (name of the secondary storage).
-
-```ts
-const file = {s3: 'folder/hello.txt', storage: 'storage_1'}
-```
-
-Here is an example of the [Create](#create-a-file-in-s3-within-a-script) then [Read](#read-a-file-from-s3-within-a-script)  a file from S3 within a script with secondary storage named "storage_1":
-
-```ts
-import * as wmill from 'windmill-client';
-
-export async function main() {
-  await wmill.writeS3File({ s3: "data.csv", storage: "storage_1" }, "fooo\n1")
-
-  const res = await wmill.loadS3File({ s3: "data.csv", storage: "storage_1" })
-
-  const text = new TextDecoder().decode(res)
-
-  console.log(text)
-  return { s3: "data.csv", storage: "storage_1" }
-}
-```
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/-nJs6E_1E8Y"
-	title="Perpetual Scripts"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
+	/>
+</div>
 
 ## Windmill integration with Polars and DuckDB for data pipelines
 

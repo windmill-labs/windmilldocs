@@ -149,8 +149,8 @@ def main(input_email):
 
 At last, you may be in a situation where you want to extract the relevant details for both forwarded and directly routed e-mails. Meaning:
 
-- if A directly sent e-mail, treat contact details of A ;
-- if A forwarded e-mail from B, treat contact details of B.
+- if A directly sent e-mail, treat contact details of A
+- if A forwarded e-mail from B, treat contact details of B
 
 Then you have two solutions:
 

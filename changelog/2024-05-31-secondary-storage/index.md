@@ -10,5 +10,5 @@ features:
     'Add additional storages from S3, Azure Blob, AWS OIDC or Azure Workload Identity.',
     'From script, specify the secondary storage with an object with properties `s3` (path to the file) and `storage` (name of the secondary storage).'
   ]
-docs: /docs/core_concepts/object_storage_in_windmill#secondary-s3-storage
+docs: /docs/core_concepts/object_storage_in_windmill#secondary-storage
 ---

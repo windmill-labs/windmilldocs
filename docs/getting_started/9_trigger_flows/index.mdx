@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Triggering flows
 
-Flows can be triggered in 8 ways.
+Flows can be triggered in the following ways.
 
 On-demand triggers:
 
@@ -14,8 +14,10 @@ On-demand triggers:
 
 Triggers from external events:
 
+- [API](#trigger-from-api) and [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-flows-from-slack)
+- [Emails](#emails)
+- [Custom HTTP routes](#custom-http-routes)
 - [Scheduling + Trigger Scripts](#scheduling--trigger-scripts)
-- [API](#trigger-from-api) and [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-flows-from-slack) or [Emails](#webhooks-trigger-flows-from-emails)
 
 ## On-demand Triggers
 
@@ -195,28 +197,6 @@ Windmill uses Slack to trigger scripts and flows by establishing Slackbots and c
 	/>
 </div>
 
-#### Webhooks: Trigger Flows from Emails
-
-One use case of webhooks is [triggering scripts via inbound emails using Mailchimp](../../integrations/mailchimp_mandrill.md).
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/trigger_mandrill.mp4"
-/>
-
-<br />
-
-You can leverage [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/)'s capabilities to initiate scripts and flows via email-triggered events. By parsing inbound emails and routing the content to Windmill through webhooks, scripts or flows are activated, enabling automation based on email content or just their arrival.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Mailchimp Mandrill Integration"
-		description="Learn how to integrate Mailchimp Mandrill with Windmill."
-		href="/docs/integrations/mailchimp_mandrill"
-	/>
-</div>
-
 ### Emails
 
 Scripts and flows can be triggered by email messages sent to a specific email address, leveraging [SMTP](https://www.cloudflare.com/learning/email-security/what-is-smtp/).
@@ -226,6 +206,18 @@ Scripts and flows can be triggered by email messages sent to a specific email ad
 		title="Email Triggers"
 		description="Scripts and flows can be triggered by email messages sent to a specific email address."
 		href="/docs/advanced/email_triggers"
+	/>
+</div>
+
+### Custom HTTP routes
+
+Windmill allows you to define custom HTTP routes for your scripts and flows.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Custom HTTP Routes"
+		description="Custom HTTP routes for your scripts and flows."
+		href="/docs/core_concepts/http_routing"
 	/>
 </div>
 
