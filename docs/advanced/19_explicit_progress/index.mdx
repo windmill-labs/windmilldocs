@@ -1,0 +1,76 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Set/Get Progress from Code
+
+By default, Windmill only tracks the start and completion of a job, without monitoring its intermediate progress.
+
+As a result, the displayed information is typically limited to 0% and 100% completion. While this is sufficient for most scripts and flows, which have relatively short execution times, there are scenarios where scripts are designed to run continuously for extended periods.
+
+In such cases, it is crucial to have a progress indicator that shows the current execution status.
+
+This feature enables users to set and retrieve progress directly from their scripts.
+The set_progress function allows scripts to report their progress as a percentage value between 0 and 99. Note that the progress value is clamped within this range, meaning that any value below 0 will be treated as 0, and any value above 99 will be treated as 99.
+
+
+:::note
+When previewing an individual job, a progress bar will appear after 5 seconds of execution (if the set_progress function is used) or immediately for flows.
+:::
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/explicit_progress_bar.mp4"
+/>
+<br/>
+
+Additionally, the set_progress function only allows incremental updates, meaning that the progress value can only be increased, not decreased. This ensures that the progress bar always moves forward and never reverses.
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import set_progress
+
+def main():
+
+	# ... First heavy task
+	set_progress(25)
+
+	# ... Second heavy task
+	set_progress(25)
+
+	# ... Third heavy task
+	set_progress(25)
+
+	# ... Fourth heavy task
+	set_progress(25)
+
+```
+
+</TabItem>
+<TabItem value="deno" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { setProgress } from 'windmill-client';
+
+export async function main() {
+
+	// ... First heavy task
+	setProgress(25)
+
+	// ... Second heavy task
+	setProgress(25)
+
+	// ... Third heavy task
+	setProgress(25)
+
+	// ... Fourth heavy task
+	setProgress(25)
+	// ..
+}
+```
+
+</TabItem>
+</Tabs>
+

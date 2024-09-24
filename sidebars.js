@@ -829,6 +829,11 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
+				{
+					type: 'doc',
+				  id: 'advanced/explicit_progress/index',
+					label: 'Get/Set Progress from Code'
+				},
 				'misc/share_on_hub/index'
 			]
 		},
