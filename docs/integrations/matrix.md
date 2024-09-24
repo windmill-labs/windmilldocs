@@ -1,4 +1,4 @@
-# Matrix Integration
+# Matrix integration
 
 [Matrix](https://matrix.org/) is an open standard for decentralized, real-time communication.
 

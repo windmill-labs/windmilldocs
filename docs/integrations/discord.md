@@ -1,4 +1,4 @@
-# Discord Integration
+# Discord integration
 
 [Discord](https://discord.com/) is a voice, video, and text communication platform.
 

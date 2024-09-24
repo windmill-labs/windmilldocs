@@ -1,6 +1,6 @@
 # SAML & SCIM
 
-This guide provides guidance on configuring SAML (Security Assertion Markup Language) and SCIM (System for Cross-domain Identity Management) on Windmill for both Okta and Microsoft Azure.
+Setting up SAML and SCIM allows you to authenticate users using your identity provider.
 
 This feature is available under [Enterprise Edition](/pricing). Configuration is set from [Instance Settings](../../advanced/18_instance_settings/index.mdx#scimsaml)
 

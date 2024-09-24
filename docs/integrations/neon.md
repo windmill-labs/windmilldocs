@@ -1,4 +1,4 @@
-# Neon.tech Integration
+# Neon.tech integration
 
 [Neon.tech](https://neon.tech/) is an open-source cloud database platform that provides fully managed PostgreSQL databases with high availability and scalability.
 

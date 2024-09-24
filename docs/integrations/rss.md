@@ -1,4 +1,4 @@
-# RSS Integration
+# RSS integration
 
 [RSS](https://rss.com/) is a web feed that allows users and applications to access updates to websites.
 

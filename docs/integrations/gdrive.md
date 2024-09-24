@@ -1,4 +1,4 @@
-# Google Drive Integration
+# Google Drive integration
 
 [Google Drive](https://drive.google.com/drive/my-drive) is cloud-based storage platform.
 

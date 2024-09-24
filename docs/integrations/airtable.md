@@ -1,4 +1,4 @@
-# Airtable Integration
+# Airtable integration
 
 [Airtable](https://www.airtable.com/) is a cloud collaboration platform for organizing and managing data.
 

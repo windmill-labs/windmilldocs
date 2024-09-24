@@ -1,4 +1,4 @@
-# Redis Integration
+# Redis integration
 
 [Redis](https://redis.io/) is an in-memory data structure store used as a database, cache, and message broker.
 

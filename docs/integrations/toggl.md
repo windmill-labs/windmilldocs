@@ -1,4 +1,4 @@
-# Toggl Integration
+# Toggl integration
 
 [Toggl](https://toggl.com/) is a time tracking software.
 

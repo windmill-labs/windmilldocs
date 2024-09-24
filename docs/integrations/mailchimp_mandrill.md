@@ -1,4 +1,4 @@
-# Mailchimp Mandrill Integration
+# Mailchimp Mandrill integration
 
 [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a delivery service for transactional emails from websites and application.
 

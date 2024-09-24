@@ -1,4 +1,4 @@
-# AWS Integration
+# AWS integration
 
 [AWS](https://aws.amazon.com/) is a cloud computing platform offering various services like computing, storage and databases.
 

@@ -1,4 +1,4 @@
-# SendGrid Integration
+# SendGrid integration
 
 [SendGrid](https://sendgrid.com/) is an email API and delivery service.
 

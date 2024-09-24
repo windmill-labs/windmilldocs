@@ -1,4 +1,4 @@
-# SurrealDB Integration
+# SurrealDB integration
 
 [SurrealDB](https://surrealdb.com/) is a cloud-hosted NoSQL database.
 

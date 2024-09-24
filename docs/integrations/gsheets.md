@@ -1,4 +1,4 @@
-# Google Sheets Integration
+# Google Sheets integration
 
 [Google Sheets](https://www.google.com/sheets/about/) is an online spreadsheet application.
 

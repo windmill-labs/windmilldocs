@@ -1,4 +1,4 @@
-# HubSpot Integration
+# HubSpot integration
 
 [HubSpot](https://www.hubspot.com/) is an inbound marketing, sales, and customer service platform.
 

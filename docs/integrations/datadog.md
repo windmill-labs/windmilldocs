@@ -1,4 +1,4 @@
-# Datadog Integration
+# Datadog integration
 
 [Datadog](https://www.datadoghq.com/) is a monitoring and analytics platform for cloud-scale infrastructure and applications.
 

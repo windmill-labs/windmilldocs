@@ -1,4 +1,4 @@
-# ClickHouse Integration
+# ClickHouse integration
 
 [ClickHouse](https://clickhouse.com/) is an open-source column-oriented database management system.
 

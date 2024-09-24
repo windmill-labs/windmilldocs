@@ -1,4 +1,4 @@
-# Mastodon Integration
+# Mastodon integration
 
 [Mastodon](https://mastodon.social/) is an open-source, decentralized social network.
 

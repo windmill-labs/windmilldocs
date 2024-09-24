@@ -1,4 +1,4 @@
-# Nextcloud Integration
+# Nextcloud integration
 
 [Nextcloud](https://nextcloud.com/) is a suite of client-server software for creating and using file hosting services.
 

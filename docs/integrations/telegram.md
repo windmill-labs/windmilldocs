@@ -1,4 +1,4 @@
-# Telegram Integration
+# Telegram integration
 
 [Telegram](https://telegram.org/) is a cloud-based instant messaging and voice over IP service.
 
