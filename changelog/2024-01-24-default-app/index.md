@@ -2,7 +2,7 @@
 slug: default-app
 version: v1.252.0
 title: Default App
-tags: ['App Editor', 'Enterprise & Cloud']
+tags: ['App Editor', 'Enterprise Edition']
 video: /videos/default_app_operator.mp4
 description: If configured, users who are operators in this workspace will be redirected to this app automatically when logging into this workspace.
 features:
