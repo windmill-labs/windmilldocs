@@ -40,6 +40,6 @@ build the website and push to the `gh-pages` branch.
 
 ```
 pdoc --template template --output-dir /tmp wmill --force\
- && sed -i -e "/^title: /s/title: .*/title: Python client/" /tmp/wmill/client.md\
+ && sed -i -e "/^title: /s/title: .*/title: Python Client/" /tmp/wmill/client.md\
  && mv /tmp/wmill/client.md src/pages/python.md
 ```
