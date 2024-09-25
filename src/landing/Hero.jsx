@@ -36,7 +36,7 @@ export default function Hero() {
 							className="rounded-md transition-all bg-blue-500 px-4 py-2 text-base font-semibold leading-7 text-white hover:bg-blue-800 hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 !no-underline"
 							rel="nofollow"
 						>
-							Try Windmill Cloud
+							Try Windmill cloud
 						</a>
 
 						<Link

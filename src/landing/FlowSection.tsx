@@ -87,21 +87,21 @@ const tabs = [
 				}
 			},
 			{
-				title: 'For Loops',
-				description: 'Create For Loops to iterate over a list of items.',
+				title: 'For loops',
+				description: 'Create For loops to iterate over a list of items.',
 				icon: Repeat,
 				caption: (
 					<div>
 						Create{' '}
 						<a href="/docs/flows/flow_loops" target="_blank">
-							For Loops
+							For loops
 						</a>{' '}
 						to iterate over a list of items.
 					</div>
 				),
 				video: {
 					videoSrc: '/videos/flow-loop.mp4',
-					altText: 'Flows For Loops',
+					altText: 'Flows For loops',
 					videoLength: '18'
 				}
 			},
@@ -124,14 +124,14 @@ const tabs = [
 				}
 			},
 			{
-				title: 'Workflows as Code',
+				title: 'Workflows as code',
 				description: 'Automate tasks and their flow with only code.',
 				icon: Code,
 				caption: (
 					<div>
 						For a developer-first approach, use{' '}
 						<a href="/docs/core_concepts/workflows_as_code" target="_blank">
-							Workflows as Code
+							Workflows as code
 						</a>{' '}
 						to automate tasks and their flow within a script.
 					</div>
@@ -195,12 +195,12 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Error Handling',
+		label: 'Error handling',
 		icon: Bug,
 		id: 'error-handling',
 		data: [
 			{
-				title: 'Error Handler',
+				title: 'Error handler',
 				description:
 					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
 				icon: Bug,
@@ -238,7 +238,7 @@ const tabs = [
 				}
 			},
 			{
-				title: 'Early Stop / Break',
+				title: 'Early stop / Break',
 				description:
 					'Define a predicate expression that determines whether the flow should stop early at the end of a step.',
 				icon: OctagonIcon,
@@ -253,11 +253,11 @@ const tabs = [
 				),
 				video: {
 					videoSrc: '/videos/early_stop.mp4',
-					altText: 'Early Stop / Break.'
+					altText: 'Early stop / Break.'
 				}
 			},
 			{
-				title: 'Custom Timeout for Step',
+				title: 'Custom timeout for step',
 				description:
 					'For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted.',
 				icon: TimerOffIcon,
@@ -273,7 +273,7 @@ const tabs = [
 				),
 				video: {
 					videoSrc: '/videos/custom_timeout.mp4',
-					altText: 'Custom Timeout for Step'
+					altText: 'Custom timeout for step'
 				}
 			}
 		]
@@ -322,7 +322,7 @@ const tabs = [
 				}
 			},
 			{
-				title: 'Step Mocking',
+				title: 'Step mocking',
 				description:
 					'When a step is mocked, it will immediately return the mocked value without performing any computation.',
 				icon: Voicemail,
@@ -338,11 +338,11 @@ const tabs = [
 				video: {
 					videoSrc: '/videos/step_mocking.mp4',
 					videoLength: '15',
-					altText: 'Step Mocking'
+					altText: 'Step mocking'
 				}
 			},
 			{
-				title: 'Concurrency Limits',
+				title: 'Concurrency limits',
 				description:
 					'Define concurrency limits for inline scripts to prevent exceeding the API Limit of the targeted API.',
 				icon: InfinityIcon,
@@ -360,7 +360,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Data Pipelines',
+		label: 'Data pipelines',
 		icon: CylinderIcon,
 		id: 'data-pipelines',
 		data: [
@@ -489,7 +489,7 @@ const cards = [
 		href: '/docs/misc/benchmarks/competitors'
 	},
 	{
-		title: 'Workflows as Code',
+		title: 'Workflows as code',
 		subtitle: 'Automate tasks and their flow within a script.',
 		Icon: Code,
 		gridArea: 'md:col-span-1 md:row-span-3',
@@ -514,7 +514,7 @@ const cards = [
 	},
 
 	{
-		title: 'Data Pipelines',
+		title: 'Data pipelines',
 		subtitle: 'Integration with Polars, DuckDB and S3 for data pipelines.',
 		Icon: CylinderIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',

@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Dedicated Workers / High Throughput
+# Dedicated workers / High throughput
 
 Dedicated Workers are [workers](../9_worker_groups/index.mdx) that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
@@ -17,7 +17,7 @@ This simple process allows one to reliably count on a small number of workers fo
 
 Dedicated workers allow you to remove completely the cold start for selected scripts. They are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script. They are as fast as running the same logic in a while-loop processing requests, that is how they are implemented actually, but keep the benefit of showing separate jobs per execution.
 
-Dedicated Workers / High Throughput are a [Cloud plans & Self-Hosted Enterprise](/pricing) feature.
+Dedicated workers / High throughput are a [Cloud plans & Self-Hosted Enterprise](/pricing) feature.
 
 Dedicated workers work with [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) scripts, they have the highest cold starts. Queries to databases such as PostgreSQL, MySQL, BigQuery, or bash and go scripts do not suffer from any cold starts and hence have the same benefits already without any compexity.
 
@@ -39,13 +39,13 @@ The worker group will restart (assuming the pods/restart are set to restart auto
 
 ![Dedicated Workers in Settings](./dedicated_workers.png 'Dedicated Workers in Settings')
 
-Each [run](../5_monitor_past_and_future_runs/index.mdx) will have a Worker Group Tag assigned to it. [Worker Group Tags](../9_worker_groups/index.mdx) allow to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
+Each [run](../5_monitor_past_and_future_runs/index.mdx) will have a Worker group tag assigned to it. [Worker group tags](../9_worker_groups/index.mdx) allow to assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
 ![Dedicated Workers Tag](./dedicated_worker_tag.png 'Dedicated Workers Tag')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workers and Worker Groups"
+		title="Workers and worker groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
 		href="/docs/core_concepts/worker_groups"
 	/>

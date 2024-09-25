@@ -2,7 +2,7 @@
 slug: ag-charts
 version: v1.239.0
 title: Ag Charts
-tags: ['App Editor', 'Postgres']
+tags: ['App editor', 'Postgres']
 image: ./ag-charts.png
 description: The Ag Charts component integrates the Ag Charts library, enabling the visualization of data through various chart types. This component is designed to offer a flexible and powerful way to display data graphically within the application.
 features:

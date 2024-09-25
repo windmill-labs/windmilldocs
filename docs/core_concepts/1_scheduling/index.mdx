@@ -21,7 +21,7 @@ Cron is a powerful and versatile tool that enables users to automate tasks by sc
 However, as with any powerful tool, using outside Windmill cron comes with its own set of challenges and potential issues. Common problems associated with the use of cron include:
 
 - **Runs History**: to maintain a record of script runs and log outputs through cron, you must manually incorporate that logic.
-- **Error Handling**: in the event of a failed run, self-crafted logic is required for notifications (Slack, emails).
+- **Error handling**: in the event of a failed run, self-crafted logic is required for notifications (Slack, emails).
 - **Manual Runs**: executing a cron job manually, outside of its schedule, proves difficult and can lead to inconsistencies due to potential environment differences.
 - **No UI**: navigating cron jobs is challenging without a centralized hub, particularly for larger engineering teams. This comes with induced issues: 1. **Handling permissions and Errors** among users and editors and 2. **Server downtime**: when the server hosting the job experiences downtime, monitoring and alerting is problematic.
 
@@ -37,7 +37,7 @@ Managing scripts, flows and apps on Windmill works at the [workspace](../16_role
 
 <br />
 
-Cron jobs are one of many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill (among [webhooks](../4_webhooks/index.mdx), [auto-generated UIs](../6_auto_generated_uis/index.mdx), [customized UIs][apps], [Command Line Interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
+Cron jobs are one of many ways to [trigger workflows](../../getting_started/9_trigger_flows/index.mdx) in Windmill (among [webhooks](../4_webhooks/index.mdx), [auto-generated UIs](../6_auto_generated_uis/index.mdx), [customized UIs][apps], [Command-line interface](../../advanced/3_cli/index.mdx), [Slackbots](/blog/handler-slack-commands) etc.)
 
 :::
 
@@ -53,7 +53,7 @@ From your workspace, navigate to the dedicated `Schedules` menu and select `New 
 
 3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flows].
 
-4. Optional: Add an [Error Handler](#schedule-error-handler).
+4. Optional: Add an [Error handler](#schedule-error-handler).
 
 5. Optional: Add a [Recovery Handler](#schedule-recovery-handler).
 
@@ -127,7 +127,7 @@ More at:
 
 <div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
-		title="Schedule App Reports"
+		title="Schedule app reports"
 		description="Send a PDF or PNG preview of any app at a given schedule."
 		href="/docs/apps/schedule_reports"
 		color="orange"
@@ -157,7 +157,7 @@ Anyway, the simplified builder and [Windmill AI](../22_ai_generation/index.mdx) 
 
 From the schedule configuration, add a special script or flow to execute in case of an error.
 
-![Schedule Error Handler](./14_schedule_error_handler.png.webp)
+![Schedule Error handler](./14_schedule_error_handler.png.webp)
 
 For example, this can be a script that sends an error notification to [Slack](https://hub.windmill.dev/scripts/slack/1284/) or [Discord](https://hub.windmill.dev/scripts/discord/1292/).
 
@@ -207,7 +207,7 @@ Given how [flows][flows] work on Windmill, it means that once the previous step 
 
 :::tip Error handler
 
-If you want to handle failure and receive another message in that case, add an [Error Handler](../../flows/7_flow_error_handler.md) to your workflow that will let you know if a failure happened at any step.
+If you want to handle failure and receive another message in that case, add an [Error handler](../../flows/7_flow_error_handler.md) to your workflow that will let you know if a failure happened at any step.
 
 :::
 
@@ -231,7 +231,7 @@ If a scheduled job fails to re-schedule, it will trigger a [workspace error hand
 
 From a script or flow's page (after being [deployed](../0_draft_and_deploy/index.mdx)), you can "Schedule to run later" to schedule the execution to a given time without being recurring, therefore executing only once.
 
-Go the the script or flow's page, click on the `Advanced` button, fill in the date and time, choose to "Override Worker Group Tag", or pick a specific [worker group tag](../9_worker_groups/index.mdx#set-tags-to-assign-specific-queues), and click on `Run`.
+Go the the script or flow's page, click on the `Advanced` button, fill in the date and time, choose to "Override Worker group tag", or pick a specific [worker group tag](../9_worker_groups/index.mdx#set-tags-to-assign-specific-queues), and click on `Run`.
 
 ![Schedule to run later](./16_schedule_to_run_later.png 'Schedule to run later')
 

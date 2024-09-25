@@ -2,9 +2,9 @@
 slug: map-support-renderer
 version: v1.298.0
 title: Map Support in Result Renderer
-tags: ['Script Editor', 'Flow Editor']
+tags: ['Script editor', 'Flow editor']
 image: ./map.png
-description: Map support in Rich Display Rendering.
+description: Map support in Rich display rendering.
 features:
   [
     'Display a map from lat and long.',

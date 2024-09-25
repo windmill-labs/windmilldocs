@@ -132,7 +132,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'compared_to/peers',
-							label: 'Our Competitors'
+							label: 'Our competitors'
 						},
 						{
 							type: 'doc',
@@ -147,7 +147,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/note_of_intent/index',
-							label: 'Note of Intent'
+							label: 'Note of intent'
 						},
 						{
 							type: 'category',
@@ -169,12 +169,12 @@ const sidebars = {
 		},
 		{
 			type: 'category',
-			label: 'Core Concepts',
+			label: 'Core concepts',
 			items: [
 				{
 					type: 'doc',
 					id: 'core_concepts/index',
-					label: 'List of Core Concepts'
+					label: 'List of core concepts'
 				},
 				'misc/architecture/index',
 				'core_concepts/auto_generated_uis/index',
@@ -182,7 +182,7 @@ const sidebars = {
 				'core_concepts/instant_preview/index',
 				{
 					type: 'category',
-					label: 'Dependency Management & Imports',
+					label: 'Dependency management & imports',
 					link: {
 						type: 'doc',
 						id: 'advanced/imports/index'
@@ -203,7 +203,7 @@ const sidebars = {
 				'core_concepts/draft_and_deploy/index',
 				{
 					type: 'category',
-					label: 'Persistent Storage & Databases',
+					label: 'Persistent storage & databases',
 					link: {
 						type: 'doc',
 						id: 'core_concepts/persistent_storage/index'
@@ -256,7 +256,7 @@ const sidebars = {
 				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
-					label: 'List of Integrations',
+					label: 'List of integrations',
 					items: [
 						{
 							type: 'doc',
@@ -530,7 +530,7 @@ const sidebars = {
 			items: [
 				{
 					type: 'category',
-					label: 'Script Editor',
+					label: 'Script editor',
 					collapsed: true,
 					link: {
 						type: 'doc',
@@ -551,7 +551,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Flow Editor',
+					label: 'Flow editor',
 					link: {
 						type: 'doc',
 						id: 'flows/flow_editor'
@@ -584,7 +584,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'App Editor',
+					label: 'App editor',
 					link: {
 						type: 'doc',
 						id: 'apps/app_editor/index'
@@ -594,7 +594,7 @@ const sidebars = {
 						'apps/canvas',
 						{
 							type: 'category',
-							label: 'Connecting Components',
+							label: 'Connecting components',
 							link: {
 								type: 'doc',
 								id: 'apps/connecting_components/index'
@@ -603,7 +603,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'apps/app-runnable-panel',
-									label: 'Runnable Editor (Scripts & Flows)'
+									label: 'Runnable editor (Scripts & Flows)'
 								},
 								'apps/outputs'
 							],
@@ -611,7 +611,7 @@ const sidebars = {
 						},
 						{
 							type: 'category',
-							label: 'Component Library',
+							label: 'Component library',
 							link: {
 								type: 'doc',
 								id: 'apps/app_configuration_settings/app_component_library'
@@ -707,7 +707,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Code Editor',
+					label: 'Code editor',
 					link: {
 						type: 'doc',
 						id: 'code_editor/index'
@@ -743,7 +743,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Local Development',
+					label: 'Local development',
 					collapsed: true,
 					link: {
 						type: 'doc',
@@ -753,14 +753,14 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'cli_local_dev/vscode-extension/index',
-							label: 'VS Code Extension'
+							label: 'VS Code extension'
 						},
 						'advanced/local_development/run_locally'
 					]
 				},
 				{
 					type: 'category',
-					label: 'Command Line Interface (CLI)',
+					label: 'Command-line interface (CLI)',
 					link: {
 						type: 'doc',
 						id: 'advanced/cli/index'
@@ -780,7 +780,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Version Control in Windmill',
+					label: 'Version control in Windmill',
 					link: {
 						type: 'doc',
 						id: 'advanced/version_control/index'
@@ -789,7 +789,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'advanced/git_sync/index',
-							label: 'Git Sync'
+							label: 'Git sync'
 						},
 						'advanced/git_sync/cli_sync',
 						{
@@ -801,7 +801,7 @@ const sidebars = {
 				},
 				{
 					type: 'category',
-					label: 'Deploy to Prod',
+					label: 'Deploy to prod',
 					link: {
 						type: 'doc',
 						id: 'advanced/deploy_to_prod/index'
@@ -812,7 +812,7 @@ const sidebars = {
 				'advanced/preinstall_binaries/index',
 				{
 					type: 'category',
-					label: 'React/Vue/Svelte Apps',
+					label: 'React/Vue/Svelte apps',
 					link: {
 						type: 'doc',
 						id: 'react_vue_svelte_apps/index'
@@ -829,11 +829,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
-				{
-					type: 'doc',
-				  id: 'advanced/explicit_progress/index',
-					label: 'Get/Set Progress from Code'
-				},
+				'advanced/explicit_progress/index',
 				'misc/share_on_hub/index'
 			]
 		},
@@ -861,8 +857,7 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index',
-				'misc/partners/index',
-				'advanced/external_auth_with_jwt/index'
+				'misc/partners/index'
 			]
 		}
 	]

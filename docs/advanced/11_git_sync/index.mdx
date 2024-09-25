@@ -1,21 +1,21 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Git Sync
+# Git sync
 
 From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
 
-:::tip Version Control
+:::tip Version control
 
-For all details on Version Control in Windmill, see [Version Control](../../advanced/13_version_control/index.mdx).
+For all details on Version control in Windmill, see [Version control](../../advanced/13_version_control/index.mdx).
 
 :::
 
-This video shows how to set up a Git repository for a workspace (Git Sync - workspace mode).
+This video shows how to set up a Git repository for a workspace (Git sync - workspace mode).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/tmYcrfc_mAc"
-	title="Git Sync"
+	title="Git sync"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -24,9 +24,9 @@ This video shows how to set up a Git repository for a workspace (Git Sync - work
 
 <br />
 
-## Git Sync - Workspace mode
+## Git sync - Workspace mode
 
-All scripts, flows and apps located in the workspace will be pushed to the Git repository. You can filter Git Sync on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path) so that only the scripts, flows and apps with a matching path will be pushed to the Git repository. By default, everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced (with rule `f/**`).
+All scripts, flows and apps located in the workspace will be pushed to the Git repository. You can filter Git sync on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path) so that only the scripts, flows and apps with a matching path will be pushed to the Git repository. By default, everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced (with rule `f/**`).
 
 On each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx#deployed-version), only the updated script/flow/app will be pushed to the remote Git repository.
 
@@ -66,9 +66,9 @@ You now have your Windmill workspace on a GitHub repository. See the following s
 
 In Windmill, create a [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) resource pointing to the GitHub repository and containing a [token](https://github.com/settings/tokens) (with Read-and-write on "Contents"). You URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`.
 
-Add this resource to the workspace settings, in "Git Sync" tab and `Save Git sync settings`.
+Add this resource to the workspace settings, in "Git sync" tab and `Save Git sync settings`.
 
-![Git Sync Setup](./git_sync_setup.png 'Git Sync Setup')
+![Git sync Setup](./git_sync_setup.png 'Git sync Setup')
 
 And that's it! Now, all scripts, flows apps, resources, variables, schedules and resource types located in the workspace and `f/` [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be pushed to the Git repository.
 
@@ -82,13 +82,13 @@ Additionally, you can filter on [path](../../core_concepts/16_roles_and_permissi
 In Microsoft Entra ID, create an application and a secret. 
 Create an `azure` resource on your Windmill instance with the application's `client_id`, `client_secret` and `tenant_id`.
 On Azure DevOps, add the application to the DevOps organization with the appropriate permissions. 
-In Git Sync settings of your Windmill instance, define a new repository with URL:
+In Git sync settings of your Windmill instance, define a new repository with URL:
 
 ```
 https://AZURE_DEVOPS_TOKEN(<path_to_the_azure_resource>)@dev.azure.com/<organization>/<project>/_git/<repository>
 ```
 
-## Git Sync - Item mode: Deploy to Prod using a Git Workflow
+## Git sync - Item mode: Deploy to prod using a git workflow
 
 This feature can be used alongside GiHub Actions to adopt a robust development process for your Windmill scripts, flows and apps,
 with for example a Staging Workspace making automatically PRs on a repo that pushes to a Prod workspace upon merge.
@@ -109,12 +109,12 @@ More details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to Prod using a Git Workflow"
+		title="Deploy to prod using a git workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>

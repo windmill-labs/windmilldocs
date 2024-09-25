@@ -2,7 +2,7 @@
 slug: rich-render
 version: v1.251.1
 title: Rich results render
-tags: ['Script Editor', 'Flow Editor']
+tags: ['Script editor', 'Flow editor']
 image: ./rich-render.png
 description: Added rich results render for arrays of objects and markdown in scripts and flows.
 features:

@@ -1,9 +1,9 @@
 import DocCard from '@site/src/components/DocCard';
 import { Timer, TerminalSquare } from 'lucide-react';
 
-# Flow Editor
+# Flow editor
 
-Windmill's Flow Editor allows you to build flows with a low-code builder.
+Windmill's Flow editor allows you to build flows with a low-code builder.
 
 Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent job specifications.
 A workflow engine is a distributed system that takes a workflow and orchestrates it to completion on workers while respecting among others all the dependency constraints of each job.
@@ -11,26 +11,26 @@ There exists a great variety of workflows and many software are domain-specific 
 
 The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
 
-In Windmill, each step is code with a main function in TypeScript, Python, Go, PHP, Bash or raw queries to databases. The result of a flow is the result of the last step executed, unless [error](./8_error_handling.mdx) was returned before or [Early Return](./19_early_return.mdx) is set.
+In Windmill, each step is code with a main function in TypeScript, Python, Go, PHP, Bash or raw queries to databases. The result of a flow is the result of the last step executed, unless [error](./8_error_handling.mdx) was returned before or [Early return](./19_early_return.mdx) is set.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Flows Quickstart"
+		title="Flows quickstart"
 		description="4-minute presentation of our Flow editor."
 		href="/docs/getting_started/flows_quickstart"
 		Icon={Timer}
 	/>
 	<DocCard
 		color="teal"
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 		Icon={TerminalSquare}
 	/>
 	<DocCard
 		color="teal"
-		title="Architecture and Data Exchange"
+		title="Architecture and data exchange"
 		description="A workflow is a JSON serializable value in the OpenFlow format."
 		href="/docs/flows/architecture"
 	/>
@@ -48,13 +48,13 @@ Another approach is to write a program that defines the jobs and their dependenc
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workflows as Code"
+		title="Workflows as code"
 		description="Automate tasks and their flow with only code."
 		href="/docs/core_concepts/workflows_as_code"
 	/>
 </div>
 
-The Flow Editor has the following features which are the subject of specific pages:
+The Flow editor has the following features which are the subject of specific pages:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -65,25 +65,25 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Testing Flows"
+		title="Testing flows"
 		description="Iterate quickly and get control on your flow testing."
 		href="/docs/flows/test_flows"
 	/>
 	<DocCard
 		color="teal"
-		title="AI-Generated Flows"
+		title="AI-generated flows"
 		description="Generate flows from prompts."
 		href="/docs/flows/ai_flows"
 	/>
 	<DocCard
 		color="teal"
-		title="Flow Editor Components"
+		title="Flow editor components"
 		description="Details on the flow editor's major components."
 		href="/docs/flows/editor_components"
 	/>
 	<DocCard
 		color="teal"
-		title="Error Handling in Flows"
+		title="Error handling in flows"
 		description="There are four ways to handle errors in Windmill flows."
 		href="/docs/flows/error_handling"
 	/>
@@ -95,25 +95,25 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="For Loops"
+		title="For loops"
 		description="Iterate a series of tasks."
 		href="/docs/flows/flow_loops"
 	/>
 	<DocCard
 		color="teal"
-		title="While Loops"
+		title="While loops"
 		description="While loops execute a sequence of code indefinitely until the user cancels or a step set to Early Stop stops."
 		href="/docs/flows/while_loops"
 	/>
 	<DocCard
 		color="teal"
-		title="Error Handler"
+		title="Error handler"
 		description="Configure a script to handle errors."
 		href="/docs/flows/flow_error_handler"
 	/>
 	<DocCard
 		color="teal"
-		title="Trigger Scripts"
+		title="Trigger scripts"
 		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
@@ -125,25 +125,25 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Concurrency Limits"
+		title="Concurrency limits"
 		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
 		href="/docs/flows/concurrency_limit"
 	/>
 	<DocCard
 		color="teal"
-		title="Custom Timeout for Step"
+		title="Custom timeout for step"
 		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
 		href="/docs/flows/early_stop"
 	/>
 	<DocCard
 		color="teal"
-		title="Priority for Steps"
+		title="Priority for steps"
 		description="Prioritize a flow step in the execution queue."
 		href="/docs/flows/priority"
 	/>
 	<DocCard
 		color="teal"
-		title="Lifetime / Delete after Use"
+		title="Lifetime / Delete after use"
 		description="The logs, arguments and results of this flow step will be completely deleted from Windmill once the flow is complete."
 		href="/docs/flows/lifetime"
 	/>
@@ -155,13 +155,13 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Early Stop / Break"
+		title="Early stop / Break"
 		description="Stop early a flow based on a step's result."
 		href="/docs/flows/early_stop"
 	/>
 	<DocCard
 		color="teal"
-		title="Early Return"
+		title="Early return"
 		description="Define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously."
 		href="/docs/flows/early_return"
 	/>
@@ -173,13 +173,13 @@ The Flow Editor has the following features which are the subject of specific pag
 	/>
 	<DocCard
 		color="teal"
-		title="Sleep / Delays in Flows"
+		title="Sleep / Delays in flows"
 		description="Executions within a flow can be suspended for a given time."
 		href="/docs/flows/sleep"
 	/>
 	<DocCard
 		color="teal"
-		title="Step Mocking"
+		title="Step mocking"
 		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
 		href="/docs/flows/step_mocking"
 	/>

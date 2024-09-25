@@ -131,7 +131,7 @@ A Windmill schedule consists of several key components :
    - Script or Flow: The task to be executed.
    - Arguments: The inputs required for the script or flow.
    - CRON expression: Defines the frequency of execution. Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). The [syntax differs](/docs/core_concepts/scheduling#cron-syntax) a bit from Unix. A low-code helper or a prompt with [Windmill AI](/docs/core_concepts/ai_generation#cron-schedules-from-prompt) are available from Windmill.
-   - Error Handler: Optional script to handle execution failures.
+   - Error handler: Optional script to handle execution failures.
    - Recovery Handler: Optional script to handle recovery from errors.
 
 ![Windmill Schedules](./schedules.png "Windmill Schedules")
@@ -150,7 +150,7 @@ Schedules can also be created with [Windmill API](https://app.windmill.dev/opena
 
 Windmill provides a centralized hub for navigating and monitoring scheduled jobs. All past & future scheduled runs can also be seen from the [Runs page](/docs/core_concepts/monitor_past_and_future_runs) alongside all workspace runs. You can check the arguments used, logs, and results.
 
-### Error Handling
+### Error handling
 
 Windmill's scheduling system includes built-in [error handling](/docs/core_concepts/scheduling#schedule-error-handler) capabilities. You can define specific scripts or flows to be executed in case of errors, allowing for automated error notifications and [recovery](/docs/core_concepts/scheduling#schedule-recovery-handler) processes.
 

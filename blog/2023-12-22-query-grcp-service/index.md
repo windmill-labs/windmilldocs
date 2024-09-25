@@ -106,7 +106,7 @@ The logic is quite simple. The script starts by writing the content of the proto
 }
 ```
 
-This canonical script can be used in Flows to easily query the service and process the result in a following step.
+This canonical script can be used in flows to easily query the service and process the result in a following step.
 
 ### Statically defined gRPC services
 

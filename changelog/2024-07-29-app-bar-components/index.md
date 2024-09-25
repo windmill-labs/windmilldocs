@@ -2,7 +2,7 @@
 slug: app-bar-components
 version: v1.369.0
 title: App bar as components
-tags: ['App Editor']
+tags: ['App editor']
 description: App header is now a component default for all apps, that can be moved, modified or deleted.
 features:
   [

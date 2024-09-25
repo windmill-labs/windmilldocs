@@ -72,6 +72,6 @@ echo 'ref: refs/heads/<branch_name>' > .git/HEAD
 
 Encountering the "fatal: not a git repository" error doesn't have to be a hair-pulling experience. Just remember that Git is trying to tell you that your current working directory isn't being tracked. Follow the steps outlined in this guide and you should be back on track in no time.
 
-Windmill has its how git workflow system for version control called [Git Sync](/docs/advanced/git_sync). This enables automatic committing and pushing of scripts, flows, and apps to the repository upon each deployment. This integration is crucial for version control and for ensuring that changes made within the Windmill IDE are reflected in your Git repository, thus supporting a smooth development workflow.
+Windmill has its how git workflow system for version control called [Git sync](/docs/advanced/git_sync). This enables automatic committing and pushing of scripts, flows, and apps to the repository upon each deployment. This integration is crucial for version control and for ensuring that changes made within the Windmill IDE are reflected in your Git repository, thus supporting a smooth development workflow.
 
 To start building your first scripts, workflows and UIs, [sign up for a free account](https://app.windmill.dev/user/login) or [self-host Windmill](/docs/advanced/self_host).

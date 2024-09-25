@@ -45,7 +45,7 @@ const features = [
 	{
 		title: 'Web IDE or Local developement',
 		description:
-			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI, sync them with Git. Iterate quickly with our VS Code Extension. From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
+			'Develop scripts locally with your favorite code editor, preview them locally and deploy them with the CLI, sync them with Git. Iterate quickly with our VS Code extension. From LSP support to AI code generation, Windmill provides a powerful IDE for your scripts.',
 		lottieData: devfriendly,
 		span: 'col-span-2',
 		Icon: TerminalSquare,

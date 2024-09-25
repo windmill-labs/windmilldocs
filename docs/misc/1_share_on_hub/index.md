@@ -17,7 +17,7 @@ Below you will find guides on how to contribute to the Hub, thank you for being 
 ## Scripts
 
 Currently [Windmill Hub][wm-hub] supports TypeScript (Deno and Bun), Python 3, Go or Bash scripts.
-You can add Common, Error Handler, Approval and Trigger Scripts by
+You can add Common, Error handler, Approval and Trigger scripts by
 going to the <a rel="nofollow" href="https://hub.windmill.dev/scripts/add">New Script</a> page. The
 Summary will be the title of the Script, Integration should have the name of
 the app it integrates with (if there is one), and Description should be a
@@ -28,7 +28,7 @@ Then you can do your magic and write your script for the community:
 ![Add new script](./add_new_script.png.webp "Add new script on Hub")
 
 Once approved by the Windmill Team, the Script will be available for
-everyone to use directly on Windmill Cloud or [Self-Hosted](../../advanced/1_self_host/index.mdx) instances synced with Hub.
+everyone to use directly on Windmill cloud or [Self-Hosted](../../advanced/1_self_host/index.mdx) instances synced with Hub.
 
 ![Pick a hub script](./pick_a_hub_script.png.webp)
 
@@ -81,7 +81,7 @@ Adding a Resource Type to the [Hub][wm-hub] will be available for every
 Windmill user, once it is approved by the Windmill Team.
 
 If it gets approved, the
-windmill-gh-action-deploy will deploy it in the starter workspace of Windmill Cloud. Being deployed on the
+windmill-gh-action-deploy will deploy it in the starter workspace of Windmill cloud. Being deployed on the
 starter workspace means that it will be available to all workspaces.
 
 ---
@@ -126,7 +126,7 @@ the new script on Windmill Hub.
 ## Trigger Script
 
 Trigger scripts are scripts whose purpose is to pull data from an external
-source and return all new items since last run. They are generally used in Flows
+source and return all new items since last run. They are generally used in flows
 that are scheduled very regularly to reduce latency to react to new events. When
 new items are returned by a trigger script, it will trigger the rest of the flow
 once per item. If no new items, the flow will be skipped.
@@ -143,11 +143,11 @@ Alternatively, trigger scripts can be added directly from the
 to the trigger script section on the Windmill Hub homepage and select "Submit a
 new trigger script".
 
-![Trigger Scripts](./hub-trigger-script.png.webp)
+![Trigger scripts](./hub-trigger-script.png.webp)
 
 Next, enter a short "Summary" describing what the trigger script does. Next
 enter the name of the app that the trigger script uses and add a description
 with further information. Finally, add the code for the trigger script into the
 editor and click save to publish the new trigger script on Windmill Hub.
 
-![Submit Trigger Scripts](./hub-submit-trigger-scripts.png.webp) -->
+![Submit Trigger scripts](./hub-submit-trigger-scripts.png.webp) -->

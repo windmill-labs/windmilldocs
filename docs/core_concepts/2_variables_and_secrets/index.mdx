@@ -2,8 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-
-# Variables and Secrets
+# Variables and secrets
 
 When writing scripts, you may want to reuse variables, or safely pass secrets to
 scripts. You can do that with Variables. Windmill has user-defined variables
@@ -121,7 +120,7 @@ are kept safe in three different ways:
 - Secrets cannot be viewed outside of scripts. Note that a user could still
   `print` a secret if they have access to it from a script.
 - Accessing secrets generates `variables.decrypt_secret` event that ends up in
-  the <a href="https://app.windmill.dev/audit_logs" rel="nofollow">Audit Logs</a>. It means that you can audit who accesses secrets. Additionally you can audit results, logs and
+  the <a href="https://app.windmill.dev/audit_logs" rel="nofollow">Audit logs</a>. It means that you can audit who accesses secrets. Additionally you can audit results, logs and
   script code for every script run.
 
 ## Add a Variable or Secret
@@ -141,8 +140,8 @@ A variable can be made secret. In this case, its value will not be visible outsi
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Add Resources and Variables to Code Editor"
-		description="You can directly access Variables and Resources from the Code Editor."
+		title="Add resources and variables to code editor"
+		description="You can directly access Variables and Resources from the Code editor."
 		href="/docs/code_editor/add_variables_resources"
 	/>
 </div>
@@ -210,7 +209,7 @@ Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_W
 
 The last examples in bash and PowerShell showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as an environment variable to the job.
 
-## Custom Environment Variables
+## Custom environment variables
 
 In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts. This feature is useful when a script needs an environment variable prior to the main function executing itself. For instance, some libraries in Go do some setup in the 'init' function that depends on environment variables.
 
@@ -218,7 +217,7 @@ To add a custom environment variable to a script in Windmill, you should follow 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Custom Environment Variables"
+		title="Custom environment variables"
 		description="In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts."
 		href="/docs/script_editor/custom_environment_variables"
 	/>

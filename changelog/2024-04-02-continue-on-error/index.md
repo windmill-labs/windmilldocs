@@ -2,7 +2,7 @@
 slug: continue-on-error
 version: v1.301.0
 title: Continue on error with error as step's return
-tags: ['Flow Editor']
+tags: ['Flow editor']
 image: ./continue_on_error2.png
 description: When enabled, the flow will continue to the next step after going through all the retries (if any) even if this step fails.
 features:

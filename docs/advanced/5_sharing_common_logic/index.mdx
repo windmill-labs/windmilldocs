@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Sharing Common Logic
+# Sharing common logic
 
 It is common to want to share common logic between your scripts. This can be done easily using relative imports in both [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx).
 
@@ -20,7 +20,7 @@ It works extremely well in combination with [Developing scripts locally](../4_lo
 		href="/docs/advanced/dependencies_in_python"
 	/>
 	<DocCard
-		title="Dependency Management & Imports"
+		title="Dependency management & imports"
 		description="Windmill's strength lies in its ability to run scripts without having to manage a package.json directly."
 		href="/docs/advanced/imports"
 	/>
@@ -129,7 +129,7 @@ You can reuse bash scripts by fetching them "raw" and source them. The url is as
 curl -H "Authorization: Bearer <Token>" <INSTANCE>/api/w/<workspace>/scripts/raw/p/<path>.sh
 ```
 
-## Tracking Relative Imports on Local Development
+## Tracking Relative Imports on Local development
 
 On [local development](../4_local_development/index.mdx), Windmill automatically tracks relative imports in Bun and Python such that if you update a common dependency and update its imports, it will now re-trigger deployment and [lockfile](../6_imports/index.mdx) computation of all the scripts that depend on it (it was working for Python but not Bun before).
 
@@ -139,12 +139,12 @@ Windmill can also track such imports in inline scripts of flows and will surgica
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>
 	<DocCard
-		title="Command Line Interface (CLI)"
+		title="Command-line interface (CLI)"
 		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
 	/>
