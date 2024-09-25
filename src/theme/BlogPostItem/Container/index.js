@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBaseUrlUtils } from '@docusaurus/useBaseUrl';
-import { useBlogPost } from '@docusaurus/theme-common/internal';
+import { useBlogPost } from '@docusaurus/plugin-content-blog/client';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import { ArrowRight, FileText } from 'lucide-react';
