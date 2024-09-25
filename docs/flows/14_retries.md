@@ -15,7 +15,7 @@ Steps within a flow can be re-tried in case of error. This feature is useful to 
 
 If defined, upon error this step will be retried with a delay and a maximum number of attempts as defined below. If both static and exponential delay is defined, the static delay attempts are tried before the exponential ones.
 
-Note that errors have a [specific shape](../core_concepts/19_rich_display_rendering.md#error).
+Note that errors have a [specific shape](../core_concepts/19_rich_display_rendering/index.mdx#error).
 
 From a single flow, this feature can for example help you with:
 
