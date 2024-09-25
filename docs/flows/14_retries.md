@@ -15,6 +15,8 @@ Steps within a flow can be re-tried in case of error. This feature is useful to 
 
 If defined, upon error this step will be retried with a delay and a maximum number of attempts as defined below. If both static and exponential delay is defined, the static delay attempts are tried before the exponential ones.
 
+Note that errors have a [specific shape](../core_concepts/19_rich_display_rendering.md#error).
+
 From a single flow, this feature can for example help you with:
 
 - **API requests**: Retry failed API calls due to temporary server issues or network timeouts every 5 minutes, for a maximum of 5 attempts, ensuring eventual data retrieval or synchronization with third-party services.
