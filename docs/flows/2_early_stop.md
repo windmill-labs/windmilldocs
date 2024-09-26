@@ -1,4 +1,4 @@
-# Early Stop / Break
+# Early stop / Break
 
 If defined, at the end or before a step, the predicate expression will be evaluated to decide if the flow should stop early.
 

@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Script Editor
+# Script editor
 
 In Windmill, Scripts are the basis of all major features (they are the steps of [flows](../getting_started/6_flows_quickstart/index.mdx), [linked to apps components](../apps/3_app-runnable-panel.mdx), or can be [run as standalone](../getting_started/8_trigger_scripts/index.mdx)).
 
@@ -59,12 +59,12 @@ There is no main needed for Bash. The body is executed and the args are passed d
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Scripts Quickstart"
+		title="Scripts quickstart"
 		description="Start writing scripts in Python, TypeScript, Go, PHP, Bash and Sql."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 	<DocCard
-		title="JSON Schema and Parsing"
+		title="JSON schema and parsing"
 		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
 		href="/docs/core_concepts/json_schema_and_parsing"
 	/>
@@ -82,9 +82,9 @@ There is no main needed for Bash. The body is executed and the args are passed d
 
 For scripts with numerous lines of code (+1,000), we recommend splitting the logic into [Flows](../flows/1_flow_editor.mdx) or [Sharing common logic](../advanced/5_sharing_common_logic/index.mdx).
 
-## Script Editor Features
+## Script editor features
 
-The Script Editor is made of the following features:
+The Script editor is made of the following features:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -93,7 +93,7 @@ The Script Editor is made of the following features:
 		href="/docs/script_editor/settings"
 	/>
 	<DocCard
-		title="Script Kinds"
+		title="Script kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
 		href="/docs/script_editor/script_kinds"
 	/>
@@ -108,7 +108,7 @@ The Script Editor is made of the following features:
 		href="/docs/core_concepts/versioning#script-versioning"
 	/>
 	<DocCard
-		title="Worker Group Tag"
+		title="Worker group tag"
 		description="Scripts can be assigned custom worker groups for efficient execution on different machines with varying specifications."
 		href="/docs/script_editor/worker_group_tag"
 	/>
@@ -118,17 +118,17 @@ The Script Editor is made of the following features:
 		href="/docs/script_editor/concurrency_limit"
 	/>
 	<DocCard
-		title="Running Services with Perpetual Scripts"
+		title="Running services with perpetual scripts"
 		description="Perpetual scripts restart upon ending unless canceled."
 		href="/docs/script_editor/perpetual_scripts"
 	/>
 	<DocCard
-		title="Custom Environment Variables"
+		title="Custom environment variables"
 		description="In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts."
 		href="/docs/script_editor/custom_environment_variables"
 	/>
 	<DocCard
-		title="Custom Response Code"
+		title="Custom response code"
 		description="For all sync run jobs endpoints, if the response contains a key `windmill_status_code` with a number value, that value will be used as the status code."
 		href="/docs/script_editor/custom_response_code"
 	/>
@@ -138,35 +138,35 @@ The Script Editor is made of the following features:
 		href="/docs/script_editor/multiplayer"
 	/>
 	<DocCard
-		title="Write Scripts on VS Code"
+		title="Run scripts in VS Code"
 		description="The Windmill VS Code extension allows you to run your scripts and preview the output within VS Code."
 		href="/docs/script_editor/vs_code_scripts"
 	/>
 </div>
 
-## Workflows as Code
+## Workflows as code
 
 One way to write distributed programs that execute distinct jobs is to use [flows](../flows/1_flow_editor.mdx) that chain scripts together.
 
 Another approach is to write a program that defines the jobs and their dependencies, and then execute that program directly in your script. This is known as workflows as code.
 
-![Workflows as Code](../core_concepts/31_workflows_as_code/python_editor.png 'Workflows as Code')
+![Workflows as code](../core_concepts/31_workflows_as_code/python_editor.png 'Workflows as code')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workflows as Code"
+		title="Workflows as code"
 		description="Automate tasks and their flow with only code."
 		href="/docs/core_concepts/workflows_as_code"
 	/>
 </div>
 
-## Code Editor Features
+## Code editor features
 
-For features specific to the [Code Editor](../code_editor/index.mdx), check:
+For features specific to the [Code editor](../code_editor/index.mdx), check:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Code Editor"
+		title="Code editor"
 		description="The code editor is Windmill's integrated development environment."
 		href="/docs/code_editor"
 	/>

@@ -1,3 +1,3 @@
-# Vue App Import
+# Vue app import
 
 Coming soon

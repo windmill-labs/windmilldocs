@@ -2,7 +2,7 @@
 slug: concurrency-limit-observability
 version: v1.331.0
 title: Concurrency Limit Observability
-tags: ['Concurrency limits', 'Script Editor', 'Flow Editor']
+tags: ['Concurrency limits', 'Script editor', 'Flow editor']
 image: ./concurrent_runs.png
 description: Obversability around concurrent jobs has been improved from the Runs menu.
 features:

@@ -1,3 +1,3 @@
-# Svelte App Import
+# Svelte app import
 
 Coming soon

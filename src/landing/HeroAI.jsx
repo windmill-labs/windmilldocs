@@ -39,7 +39,7 @@ export default function HeroAI() {
 							className="rounded-md transition-all px-4 py-2 text-base font-semibold leading-7 text-purple-600 hover:!text-purple-900 dark:text-purple-400 hover:!text-purple-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 !no-underline"
 							rel="nofollow"
 						>
-							Try Windmill Cloud
+							Try Windmill cloud
 						</a>
 
 						<a

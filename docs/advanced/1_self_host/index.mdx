@@ -59,7 +59,7 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workers and Worker Groups"
+		title="Workers and worker groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
 		href="/docs/core_concepts/worker_groups"
 	/>
@@ -191,7 +191,7 @@ More details at:
 	/>
 </div>
 
-### Configuring Domain and Reverse Proxy
+### Configuring domain and reverse proxy
 
 To deploy Windmill to the `windmill.example.com` domain, make sure to set "Base Url" correctly in the [Instance settings](../18_instance_settings/index.mdx#base-url).
 
@@ -559,14 +559,14 @@ Detailed guide for using Windmill with self-signed certificates [here](https://w
 
 TL;DR: below
 
-### Mount CA Certificates in Windmill:
+### Mount CA certificates in Windmill
 
 1. Ensure CA certificate is base64 encoded and has .crt extension.
 2. Create a directory for CA certificates.
 3. Modify docker-compose.yml to mount this directory to /usr/local/share/ca-certificates in read-only mode.
 4. Use INIT_SCRIPT in the worker config to run update-ca-certificates in worker containers.
 
-### Establish Deno’s Trust:
+### Establish Deno’s trust
 
 Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml for Windmill workers.
 

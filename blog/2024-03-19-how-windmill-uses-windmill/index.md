@@ -67,11 +67,11 @@ A very [similar flow is used for Discord](https://hub.windmill.dev/flows/54/list
 
 ![Discord thread](./discord_thread.png "Discord thread")
 
-## Git Sync
+## Git sync
 
 Like any team, we can make mistakes, and like most developers, we are used to GitHub for version control.
 
-That's why our internal workspace at Windmill is synced with a GitHub repository using the [Git Sync](/docs/advanced/git_sync) feature.
+That's why our internal workspace at Windmill is synced with a GitHub repository using the [Git sync](/docs/advanced/git_sync) feature.
 
 ![Git sync 1](./git_sync1.png "Git sync 1")
 

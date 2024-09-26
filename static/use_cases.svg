@@ -25,7 +25,7 @@
 <path d="M738.5 365.25L753.759 393.184C756.343 397.912 762.387 399.375 767.75 399.375C772.922 399.375 777.882 401.429 781.539 405.086C785.196 408.743 787.25 413.703 787.25 418.875C787.25 424.047 785.196 429.007 781.539 432.664C777.882 436.321 772.922 438.375 767.75 438.375" stroke="#475569" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
 <g filter="url(#filter1_d_3_172)">
 <a xlink:href="/docs/core_concepts/auto_generated_uis" target="_blank" class="cursor-pointer">
-    <title>Auto-Generated UIs</title>
+    <title>Auto-generated UIs</title>
     <desc>Windmill automatically generates user interfaces (UIs) for scripts and flows based on their parameters.
     </desc>
     <rect x="129" y="301" width="328" height="186" rx="10" fill="#1E293B" class="hover-change-color-use-cases"/>
@@ -81,7 +81,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M1245.5 321C1246.12 321 1246.61 321.499 1246.61 322.115V325.696L1250.39 323.81C1250.94 323.535 1251.61 323.758 1251.88 324.309C1252.16 324.86 1251.93 325.53 1251.38 325.805L1247.99 327.5L1251.38 329.195C1251.93 329.47 1252.16 330.14 1251.88 330.691C1251.61 331.242 1250.94 331.465 1250.39 331.19L1246.61 329.304V332.885C1246.61 333.501 1246.12 334 1245.5 334C1244.88 334 1244.39 333.501 1244.39 332.885V329.304L1240.61 331.19C1240.06 331.465 1239.39 331.242 1239.12 330.691C1238.84 330.14 1239.07 329.47 1239.62 329.195L1243.01 327.5L1239.62 325.805C1239.07 325.53 1238.84 324.86 1239.12 324.309C1239.39 323.758 1240.06 323.535 1240.61 323.81L1244.39 325.696V322.115C1244.39 321.499 1244.88 321 1245.5 321Z" fill="#334155"/>
 <g filter="url(#filter4_d_3_172)">
 <a xlink:href="/docs/apps/public_apps" target="_blank" class="cursor-pointer">
-    <title>Public Apps</title>
+    <title>Public apps</title>
     <desc>Windmill apps are custom-made user interfaces meant to interact with scripts and flows.
     </desc>
     <rect x="1464" y="670" width="328" height="186" rx="10" fill="#1E293B" class="hover-change-color-use-cases"/>
@@ -125,7 +125,7 @@
 <path d="M377 708H378V712H377V708Z" fill="white"/>
 <g filter="url(#filter7_d_3_172)">
 <a xlink:href="/docs/core_concepts/data_pipelines" target="_blank" class="cursor-pointer">
-    <title>Data Pipelines</title>
+    <title>Data pipelines</title>
     <desc>Windmill streamlines the creation of data pipelines that are not only fast and reliable but also straightforward to construct.
     </desc>
     <rect x="574" y="670" width="328" height="186" rx="10" fill="#1E293B" class="hover-change-color-use-cases"/>
@@ -143,7 +143,7 @@
 <path d="M773 763L761 770.794V755.206L773 763Z" fill="#64748B"/>
 <g filter="url(#filter8_d_3_172)">
 <a xlink:href="/docs/apps/app_editor" target="_blank" class="cursor-pointer">
-    <title>App Editor</title>
+    <title>App editor</title>
     <desc>The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
     </desc>
     <rect x="1019" y="670" width="328" height="186" rx="10" fill="#1E293B" class="hover-change-color-use-cases"/>
@@ -162,8 +162,8 @@
 <rect x="1464" y="301" width="328" height="186" rx="10" fill="#232831"/>
 <g filter="url(#filter9_d_3_172)">
 <a xlink:href="/docs/flows/flow_editor" target="_blank" class="cursor-pointer">
-    <title>Flow Editor</title>
-    <desc>Windmill's Flow Editor allows you to build flows with a low-code builder.
+    <title>Flow editor</title>
+    <desc>Windmill's Flow editor allows you to build flows with a low-code builder.
     </desc>
     <rect x="1464" y="301" width="328" height="186" rx="10" fill="#1E293B" class="hover-change-color-use-cases"/>
 </a>

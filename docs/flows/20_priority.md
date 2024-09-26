@@ -1,4 +1,4 @@
-# Priority for Steps
+# Priority for steps
 
 Prioritize a flow step in the execution queue.
 

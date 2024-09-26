@@ -47,7 +47,7 @@ const features = [
 		Icon: Settings
 	},
 	{
-		title: 'Workflows as Code',
+		title: 'Workflows as code',
 		description:
 			'Build, version, and manage your workflows as code with the Windmill SDK. Use your favorite IDE, version control system, and CI/CD pipeline to manage your workflows.',
 

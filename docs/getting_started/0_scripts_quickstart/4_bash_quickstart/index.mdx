@@ -1,5 +1,5 @@
 ---
-title: TypeScript Quickstart
+title: TypeScript quickstart
 slug: '/getting_started/scripts_quickstart/bash'
 ---
 
@@ -7,7 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Bash / PowerShell Quickstart
+# Bash / PowerShell quickstart
 
 In this quick start guide, we will write our first script in Bash and PowerShell.
 
@@ -25,7 +25,7 @@ This tutorial covers how to create a simple script through Windmill web IDE. See
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
 		href="/docs/advanced/local_development"
 	/>
@@ -35,7 +35,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Script Editor"
+		title="Script editor"
 		description="All the details on scripts."
 		href="/docs/script_editor"
 	/>
@@ -110,7 +110,7 @@ As part of the settings menu, each script has metadata associated with it, enabl
 - **Language** of the script.
 - **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
   to users on how to run your Script. It supports markdown.
-- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error Handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
 
 This menu also has additional settings, such as:
 
@@ -140,7 +140,7 @@ Script. You can preview that UI, provide input values, and [test your script](#i
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Code Editor"
+		title="Code editor"
 		description="The code editor is Windmill's integrated development environment."
 		href="/docs/code_editor"
 	/>
@@ -189,7 +189,7 @@ Default arguments can be specified using the syntax above: `$argument_name = "It
 
 The last line of the output, here `Write-Output "Hello $Msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
-## Instant Preview & Testing
+## Instant preview & testing
 
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
@@ -225,7 +225,7 @@ $argument_name = "Its default value"
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Instant Preview & Testing"
+		title="Instant preview & testing"
 		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
 		href="/docs/core_concepts/instant_preview"
 	/>
@@ -243,7 +243,7 @@ The UI is generated from the Script's main function signature, but you can add a
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Script Kinds"
+		title="Script kinds"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
 		href="/docs/script_editor/script_kinds"
 	/>
@@ -268,7 +268,7 @@ the left.
 
 ![Run Hello in Bash](./run_bash.png.webp)
 
-You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-line interface call.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -282,7 +282,7 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 
 The last line returned by the script will be the string result. To use a json result instead, output your result in `./result.json` and it will be automatically picked-up and considered as the JSON result for Bash and Powershell scripts.
 
-## Run Docker Containers
+## Run Docker containers
 
 In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script.
 
@@ -290,7 +290,7 @@ Windmill supports running any docker container through its Bash support. As a pr
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Run Docker Containers"
+		title="Run Docker containers"
 		description="In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script."
 		href="/docs/advanced/docker"
 	/>

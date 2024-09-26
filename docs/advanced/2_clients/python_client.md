@@ -1,4 +1,4 @@
-# Python Client
+# Python client
 
 The Python client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your script jobs. By authenticating with the `WM_TOKEN` reserved variable, you can utilize the Python client to access various functionalities offered by Windmill.
 

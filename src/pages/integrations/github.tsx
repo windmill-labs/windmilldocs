@@ -40,7 +40,7 @@ export default function Notion() {
                 <p>
 					Windmill also embeds GitHub with <a href="/windmill_ai">
 						<strong>
-							<span style={{ color: '#3b82f6' }}>Git Sync</span>
+							<span style={{ color: '#3b82f6' }}>Git sync</span>
 						</strong>
 					</a>{' '} to connect a Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy.
 				</p>

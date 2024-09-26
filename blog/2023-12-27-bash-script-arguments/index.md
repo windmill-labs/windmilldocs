@@ -2,7 +2,7 @@
 slug: bash-scripts-arguments
 title: Bash Scripts Arguments
 authors: [edwindmiller]
-tags: ['Script Editor', 'Bash']
+tags: ['Script editor', 'Bash']
 description: 'We go through different methods of passing arguments into your bash scripts, managing those arguments, and enhancing your scripts using some readily available tool.'
 image: ./bash_scripts.png
 ---

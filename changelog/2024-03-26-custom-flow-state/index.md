@@ -2,7 +2,7 @@
 slug: custom-flow-states
 version: v1.296.0
 title: Custom Flow States
-tags: ['Flow Editor']
+tags: ['Flow editor']
 image: ./custom_flow_states.png
 description: You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally.
 features:

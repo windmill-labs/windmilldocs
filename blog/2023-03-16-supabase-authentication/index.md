@@ -55,7 +55,7 @@ will have it's own page on the first tab. A successful login will return an acce
 can send authenticated requests to the database using said token on the second tab.
 
 The passing of credentials works a bit differently in the two approaches, so first, create a base
-"skeleton" app. Go to the <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a> Home page by click "App" in the top right corner.
+"skeleton" app. Go to the <a href="https://app.windmill.dev/" rel="nofollow">Windmill cloud</a> Home page by click "App" in the top right corner.
 Let's add our first component:
 
 1. Click on "Tabs" in the right-hand panel to add it to the canvas.

@@ -254,7 +254,7 @@ const pricing = {
 	],
 	whitelabel: [
 		{
-			name: 'White Labeling Windmill',
+			name: 'White labeling Windmill',
 			id: 'whitelabel',
 			price: {},
 
@@ -298,7 +298,7 @@ const sections = [
 				}
 			},
 			{
-				name: 'Maximum number of seats',
+				name: 'Maximum number of users',
 				tiers: {
 					'tier-free-selfhost': '50',
 					'tier-enterprise-selfhost': 'Unlimited',

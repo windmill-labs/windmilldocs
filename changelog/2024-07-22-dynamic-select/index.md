@@ -2,7 +2,7 @@
 slug: dynamic-select
 version: v1.366.0
 title: Dynamic Select
-tags: ['Script Editor']
+tags: ['Script editor']
 description: Dynamic Select is an helper function within scripts that allows you to create a select field with dynamic options.
 features:
   [

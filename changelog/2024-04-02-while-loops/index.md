@@ -1,8 +1,8 @@
 ---
 slug: while-loops
 version: v1.301.0
-title: While Loops
-tags: ['Flow Editor']
+title: While loops
+tags: ['Flow editor']
 video: /videos/while_loop_changelog.mp4
 description: While loops execute a sequence of code indefinitely until the user cancels or a step set to Early Stop stops.
 features:

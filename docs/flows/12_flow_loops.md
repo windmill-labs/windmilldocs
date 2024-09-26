@@ -1,6 +1,6 @@
-# For Loops
+# For loops
 
-For Loops is a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
+For loops is a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
