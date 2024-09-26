@@ -126,11 +126,7 @@ curl https://raw.githubusercontent.com/windmill-labs/windmill/main/.env -o .env
 docker compose up -d
 ```
 
-Go to [http://localhost](http://localhost) et voilà!
-
-Even if you setup oauth, login as `admin@windmill.dev` / `changeme` to setup the instance & accounts and give yourself super-admin privileges. Have them pre-filled at [http://localhost/user/login?email=admin@windmill.dev&password=changeme](http://localhost/user/login?email=admin@windmill.dev&password=changeme).
-
-From there, you can follow the setup app to replace the superadmin account and schedule a sync of resources (by default, everyday).
+Go to [http://localhost](http://localhost) et voilà. Then you can [login for the first time](#first-time-login).
 
 ### Use an external database
 
@@ -421,13 +417,6 @@ In practice, you want to run the Docker containers in the background so they don
 docker compose up -d
 ```
 
-:::tip
-
-Default e-mail is `admin@windmill.dev` and the password is `changeme`.
-
-:::
-
-
 ### Set up limits for workers and memory
 
 From your docker-compose, you can set limits for consumption of [workers](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L51) and [memory](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L52):
@@ -471,7 +460,11 @@ docker compose down --volumes
 docker volume rm -f windmill_db_data
 ```
 
-and then `docker compose up -d`.
+and then:
+
+```
+docker compose up -d
+```
 
 ## Helm chart
 
@@ -552,6 +545,24 @@ name `public` with your schema, in case you use a different one:
 GRANT USAGE ON SCHEMA public TO windmill_admin;
 GRANT USAGE ON SCHEMA public TO windmill_user;
 ```
+
+## First time login
+
+Once you have setup your environment for deployment and have access to the instance, you will be able to login with the default credentials `admin@windmill.dev` / `changeme` (even if you [setup OAuth](/docs/misc/2_setup_oauth/index.mdx)).
+
+![First time login](./first_time_login.png "First time login")
+
+Then you will be redirected to the [Instance settings](../18_instance_settings/index.mdx) page. You can always change the settings later.
+
+![Instance settings](./instance_settings.png "Instance settings")
+
+Then you can set up a new account that will override the default [superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin) account. This is also where you can setup Hub Sync to use on your workspace [Resource Types](../../core_concepts/3_resources_and_types/index.mdx) from [Windmill Hub](https://hub.windmill.dev/) ((by default, everyday)).
+
+![Setup account](./setup_account.png "Setup account")
+
+At last, you will get to create a new workspace.
+
+![Create workspace](./create_workspace.png "Create workspace")
 
 ## Self-signed certificates
 
