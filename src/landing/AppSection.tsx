@@ -22,7 +22,7 @@ import { SiGo, SiPostgresql, SiPython, SiSvelte, SiTypescript, SiVuedotjs } from
 
 const tabs = [
 	{
-		label: 'App Editor',
+		label: 'App editor',
 		icon: Code,
 		id: 'app-editor',
 		data: [

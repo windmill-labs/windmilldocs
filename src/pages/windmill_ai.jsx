@@ -21,7 +21,7 @@ import GlobalContextProvider from '../components/GlobalContextProvider';
 
 const tabs = [
 	{
-		label: 'Code Editor',
+		label: 'Code editor',
 		icon: Code,
 		id: 'code-editor',
 		data: [
@@ -88,7 +88,7 @@ const tabs = [
 
 const flowTabs = [
 	{
-		label: 'Flow Editor',
+		label: 'Flow editor',
 		icon: Workflow,
 		id: 'flow-editor',
 		data: [
@@ -154,7 +154,7 @@ const flowTabs = [
 				}
 			},
 			{
-				title: 'Predicate Expressions Copilot for Branches and For Loops',
+				title: 'Predicate Expressions Copilot for Branches and For loops',
 				description:
 					'When adding a for loop or a branch, the AI assistant will suggest iterator expressions based on the previous steps` results or from a prompt.',
 				icon: Braces,
@@ -174,7 +174,7 @@ const flowTabs = [
 				),
 				video: {
 					videoSrc: '/videos/branch_predicate_copilot.mp4',
-					altText: 'Predicate Expressions Copilot for Branches and For Loops'
+					altText: 'Predicate Expressions Copilot for Branches and For loops'
 				}
 			}
 		]

@@ -2,7 +2,7 @@
 slug: oneof-inputs
 version: v1.347.0
 title: OneOf Inputs
-tags: ['Script Editor', 'Flow Editor']
+tags: ['Script editor', 'Flow editor']
 description: Added new type of input `oneOf@, that displays an option between multiple objects.
 features:
   [

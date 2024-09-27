@@ -2,7 +2,7 @@
 slug: jobs-labels
 version: v1.316.0
 title: Jobs Labels
-tags: ['Runs', 'Script Editor', 'Flow Editor']
+tags: ['Runs', 'Script editor', 'Flow editor']
 image: ./runs_labels.png
 description: Labels allow to add static or dynamic tags to jobs with property "wm_labels" followed by an array of strings (e.g. `return {"wm_labels":["showcase_labels", "another_label"]}`
 features:

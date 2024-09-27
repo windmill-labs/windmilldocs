@@ -10,17 +10,17 @@ There are however methods to have more control on your dependencies:
 - Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt).
 
 Moreover, there are two other tricks, compatible with the methodologies mentioned above:
-- [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports).
+- [Sharing common logic with Relative Imports](#sharing-common-logic-with-relative-imports).
 - [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements).
 - [Private PyPi Repository](#private-pypi-repository).
 
-To learn more about how dependencies from other languages are handled, see [Dependency Management & Imports](../../advanced/6_imports/index.mdx).
+To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
-![Dependency Management & Imports](../6_imports/dependency_management.png "Dependency Management & Imports")
+![Dependency management & imports](../6_imports/dependency_management.png "Dependency management & imports")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Dependency Management & Imports"
+		title="Dependency management & imports"
 		description="Windmill's strength lies in its ability to run scripts without having to manage a requirements.txt directly."
 		href="/docs/advanced/imports"
 	/>
@@ -46,7 +46,7 @@ You can make a PR to add your dependency to the list of exceptions [here](https:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Python Client"
+		title="Python client"
 		description="The Python client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your script jobs."
 		href="/docs/advanced/clients/python_client"
 	/>
@@ -76,12 +76,12 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Command Line Interface (CLI)"
+		title="Command-line interface (CLI)"
 		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
 	/>
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>
@@ -125,7 +125,7 @@ Several requirements.txt files can therefore coexist, each having authority over
         └── # script3.py will use the dependencies from windmill_folder/requirements.txt
 ```
 
-The Windmill [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
+The Windmill [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) has a toggle "Infer lockfile" / "Use current lockfile".
 
 With this toggle, you can choose to use the metadata lockfile (derived from requirements.txt after `wmill script generate-metadata`) instead of inferring them directly from the script.
 
@@ -133,27 +133,27 @@ With this toggle, you can choose to use the metadata lockfile (derived from requ
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>
   <DocCard
-		title="Command Line Interface (CLI)"
+		title="Command-line interface (CLI)"
 		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
 	/>
 	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
 
 ## Other
 
-Other tricks can be used: [Sharing Common Logic with Relative Imports](#sharing-common-logic-with-relative-imports), [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements) and [Private PyPi Repository](#private-pypi-repository). All are compatible with the methods described above.
+Other tricks can be used: [Sharing common logic with Relative Imports](#sharing-common-logic-with-relative-imports), [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements) and [Private PyPi Repository](#private-pypi-repository). All are compatible with the methods described above.
 
-### Sharing Common Logic with Relative Imports
+### Sharing common logic with Relative Imports
 
 If you want to share common logic with Relative Imports, this can be done easily using [relative imports](../5_sharing_common_logic/index.mdx) in both Python and TypeScript.
 
@@ -198,7 +198,7 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Sharing Common Logic"
+		title="Sharing common logic"
 		description="It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and TypeScript."
 		href="/docs/advanced/sharing_common_logic"
 	/>

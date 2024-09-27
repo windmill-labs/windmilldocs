@@ -2,14 +2,14 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Architecture and Data Exchange
+# Architecture and data exchange
 
 In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.mdx) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
 1. Reference to a Script from the [Hub](https://hub.windmill.dev/).
 2. Reference to a Script in your [workspace](../core_concepts/16_roles_and_permissions/index.mdx#workspace).
 3. Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.mdx).
-4. [Trigger Scripts](./10_flow_trigger.mdx) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
+4. [Trigger scripts](./10_flow_trigger.mdx) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
 5. [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).
 6. [Branch](./13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order).
 7. [Branches to all](./13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array.
@@ -136,14 +136,14 @@ By default, flows on Windmill are based on a result basis (see above). A step wi
 
 For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Get more details on the [Persistent Storage & Databases dedicated page](../core_concepts/11_persistent_storage/index.mdx).
+Get more details on the [Persistent storage & databases dedicated page](../core_concepts/11_persistent_storage/index.mdx).
 
 ![Flows shared directory](../getting_started/6_flows_quickstart/flows_shared_directory.png.webp)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Persistent Storage & Databases"
+		title="Persistent storage & databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>

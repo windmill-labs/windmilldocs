@@ -95,7 +95,7 @@ Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.md
 
 ![Diff Viewer](../assets/apps/1_app_toolbar/diff_viewer.png 'Diff Viewer')
 
-## Debug Runs
+## Debug runs
 
 The app builder enables you to examine recent runs to [identify potential bugs](./5_app_debugging.md).
 

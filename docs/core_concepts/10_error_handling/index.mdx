@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Error Handling in Windmill
+# Error handling
 
 There are 5 ways to do error handling in Windmill.
 
@@ -37,7 +37,7 @@ export async function main() {
 
 ## Flows' error handlers
 
-The Error Handler is a special [flow](../../flows/1_flow_editor.mdx) step that is executed when an error occurs within a flow.
+The Error handler is a special [flow](../../flows/1_flow_editor.mdx) step that is executed when an error occurs within a flow.
 
 If defined, the error handler will take as input the result of the step that errored (which has its error in the 'error field').
 
@@ -51,7 +51,7 @@ If defined, the error handler will take as input the result of the step that err
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Error Handler"
+		title="Error handler"
 		description="Configure a script to handle errors."
 		href="/docs/flows/flow_error_handler"
 	/>
@@ -63,7 +63,7 @@ There are other tricks to do Error handling in flows, see:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Error Handling in Flows"
+		title="Error handling in flows"
 		description="There are four ways to handle errors in Windmill flows."
 		href="/docs/flows/error_handling"
 	/>
@@ -103,7 +103,7 @@ On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connec
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/6QPONDONd5k?vq=1080p"
-	title="Workspace Error Handler on Slack"
+	title="Workspace Error handler on Slack"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -116,9 +116,9 @@ On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connec
 
 You can also define a custom script or flow to be executed automatically in case of error in the workspace.
 
-From the workspace settings, on the "Error Handler" tab and pick a script or flow.
+From the workspace settings, on the "Error handler" tab and pick a script or flow.
 
-![Workspace Error Handler](./workspace_error_handler.png 'Workspace Error Handler')
+![Workspace Error handler](./workspace_error_handler.png 'Workspace Error handler')
 
 The following args will be passed to the error handler:
 

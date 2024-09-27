@@ -2,7 +2,7 @@
 slug: flow-yaml-editor
 version: v1.390.0
 title: Directly edit flow YAML
-tags: ['Flow Editor']
+tags: ['Flow editor']
 description: You can now edit directly the YAML of flows within the flow editor.
 docs: /docs/flows/editor_components#edit-in-yaml
 features:

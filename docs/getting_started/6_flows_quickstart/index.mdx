@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Flows Quickstart
+# Flows quickstart
 
 The present document will introduce you to [Flows](../../flows/1_flow_editor.mdx) and how to build your first one.
 
@@ -18,11 +18,11 @@ The present document will introduce you to [Flows](../../flows/1_flow_editor.mdx
 
 <br />
 
-Have in mind that in Windmill, Scripts are at the basis of Flows and Apps. To sum up roughly, workflows are state machines [represented as DAGs](../../flows/16_architecture.mdx) (Directed Acyclic Graphs) to compose scripts together. To learn more about scripts, check the [Script Quickstart](../0_scripts_quickstart/index.mdx). You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
+Have in mind that in Windmill, Scripts are at the basis of Flows and Apps. To sum up roughly, workflows are state machines [represented as DAGs](../../flows/16_architecture.mdx) (Directed Acyclic Graphs) to compose scripts together. To learn more about scripts, check the [Script quickstart](../0_scripts_quickstart/index.mdx). You will not necessarily have to re-build each script as you can reuse them from your workspace or from the [Hub](https://hub.windmill.dev/).
 
 Those workflows can run for-loops, branches (parralellizable) suspend themselves until a timeout or receiving events such as webhooks or approvals. They can be scheduled very frequently and check for new external items to process (what we call "Trigger" script).
 
-The result of a flow is the result of the last step executed, unless [error](../../flows/8_error_handling.mdx) was returned before or [Early Return](../../flows/19_early_return.mdx) is set.
+The result of a flow is the result of the last step executed, unless [error](../../flows/8_error_handling.mdx) was returned before or [Early return](../../flows/19_early_return.mdx) is set.
 
 The overhead and coldstart between each step is about 20ms, which is [faster than any other orchestration engine](/blog/launch-week-1/fastest-workflow-engine), by a large margin.
 
@@ -32,7 +32,7 @@ From [Windmill](../00_how_to_use_windmill/index.mdx), click on `+ Flow`, and let
 
 :::tip
 
-Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.
+Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow editor for more information.
 
 :::
 
@@ -48,7 +48,7 @@ Also, you can give succinctly a Name, a Summary and a Description to your flow. 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Roles and Permissions"
+		title="Roles and permissions"
 		description="Control access and manage permissions within your instance and workspaces."
 		href="/docs/core_concepts/roles_and_permissions"
 		color="teal"
@@ -78,14 +78,14 @@ By default, flows on Windmill are based on a [result basis](#how-data-is-exchang
 
 For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
 
-Get more details on the [Persistent Storage & Databases dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
+Get more details on the [Persistent storage & databases dedicated page](../../core_concepts/11_persistent_storage/index.mdx).
 
 ![Flows shared directory](./flows_shared_directory.png.webp)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Persistent Storage & Databases"
+		title="Persistent storage & databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
@@ -98,7 +98,7 @@ When a [worker group](../../core_concepts/9_worker_groups/index.mdx) is defined 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Workers and Worker Groups"
+		title="Workers and worker groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
 		href="/docs/core_concepts/worker_groups"
 	/>
@@ -123,7 +123,7 @@ Inputs are either:
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Architecture and Data Exchange"
+		title="Architecture and data exchange"
 		description="A workflow is a JSON serializable value in the OpenFlow format."
 		href="/docs/flows/architecture"
 	/>
@@ -145,22 +145,22 @@ Each script can be called from Workspace or [Hub](https://hub.windmill.dev/), yo
 
 Your flow can be deepened with [additional features](../../flows/1_flow_editor.mdx), below are some major ones.
 
-### For Loops
+### For loops
 
-[For Loops](../../flows/12_flow_loops.md) are a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
+[For loops](../../flows/12_flow_loops.md) are a special type of steps that allows you to iterate over a list of items, given by an iterator expression.
 
-![Flows For Loops](./for_loops.png.webp)
+![Flows For loops](./for_loops.png.webp)
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="For Loops"
+		title="For loops"
 		description="Iterate a series of tasks."
 		href="/docs/flows/flow_loops"
 	/>
 </div>
 
-### While Loops
+### While loops
 
 While loops execute a sequence of code indefinitely until the user cancels or a step set to [Early Stop](../../flows/2_early_stop.md) stops.
 
@@ -175,7 +175,7 @@ While loops execute a sequence of code indefinitely until the user cancels or a 
 <div className="grid grid-cols-2 gap-6 mb-4">
 <DocCard
 		color="teal"
-		title="While Loops"
+		title="While loops"
 		description="While loops execute a sequence of code indefinitely until the user cancels or a step set to Early Stop stops."
 		href="/docs/flows/while_loops"
 	/>
@@ -277,7 +277,7 @@ You don't have to explore all Flow editor possibilities at once. At each step, t
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Testing Flows"
+		title="Testing flows"
 		description="Iterate quickly and get control on your flow testing."
 		href="/docs/flows/test_flows"
 	/>
@@ -285,7 +285,7 @@ You don't have to explore all Flow editor possibilities at once. At each step, t
 
 When you're done, [deploy](../../core_concepts/0_draft_and_deploy/index.mdx) your flow, schedule it, [create and app from it](../../core_concepts/6_auto_generated_uis/index.mdx), or even [publish it to Hub](../../misc/1_share_on_hub/index.md).
 
-Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow Editor for more information.
+Follow our [detailed section](../../flows/1_flow_editor.mdx) on the Flow editor for more information.
 
 ## Flow as Code
 
@@ -295,7 +295,7 @@ Flows are not the only way to write distributed programs that execute distinct j
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workflows as Code"
+		title="Workflows as code"
 		description="Automate tasks and their flow with only code."
 		href="/docs/core_concepts/workflows_as_code"
 	/>

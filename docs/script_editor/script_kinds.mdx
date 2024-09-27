@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Script Kinds
+# Script kinds
 
 You can attach additional functionalities to Scripts by specializing them into
 specific Script kinds.
@@ -13,27 +13,27 @@ Actions - or Common Scripts - are the basic building blocks for the flows.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Scripts Quickstart"
+		title="Scripts quickstart"
 		description="Start writing scripts in Python, TypeScript, Go, PHP, Bash and Sql."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 	<DocCard
-		title="Flows Quickstart"
+		title="Flows quickstart"
 		description="Learn how to build flows."
 		href="/docs/getting_started/flows_quickstart"
 	/>
 </div>
 
-## Trigger Scripts
+## Trigger scripts
 
-These are used as the first step in Flows, most commonly with an internal
+These are used as the first step in flows, most commonly with an internal
 state and a schedule to watch for changes on a
 external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Trigger Scripts"
+		title="Trigger scripts"
 		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
@@ -60,7 +60,7 @@ flow.
 	/>
 </div>
 
-## Error Handlers
+## Error handlers
 
 Handle errors for Flows after all retries attempts have been exhausted. If it
 does not return an exception itself, the Flow is considered to be "recovered"
@@ -69,7 +69,7 @@ error to have it be listed as a failed flow.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Error Handler"
+		title="Error handler"
 		description="The error handler is a special flow step that is executed when an error occurs in the flow."
 		href="/docs/flows/flow_error_handler"
 	/>

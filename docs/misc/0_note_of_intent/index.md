@@ -1,4 +1,4 @@
-# Note of Intent
+# Note of intent
 
 All code is not made equal and can be split in 2 categories:
 
@@ -55,7 +55,7 @@ Windmill embeds:
   [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
   - [retries](../../flows/14_retries.md) with fixed and exponential backoff
   - [error handling](../../flows/8_error_handling.mdx)
-  - [For Loops](../../flows/12_flow_loops.md) over list triggering one flow per item
+  - [For loops](../../flows/12_flow_loops.md) over list triggering one flow per item
   - [branching](../../flows/13_flow_branches.md) to one subflow given a predicate or all sub-flows
   - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
     sleep for a pre-determined amount of time or waiting to be reactivated by an
@@ -77,7 +77,7 @@ Windmill embeds:
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
-- a **[CLI](../../advanced/3_cli/index.mdx)** and [Git Sync](../../advanced/11_git_sync/index.mdx) to automatically commit and push scripts, flows, and apps to a given repository.
+- a **[CLI](../../advanced/3_cli/index.mdx)** and [Git sync](../../advanced/11_git_sync/index.mdx) to automatically commit and push scripts, flows, and apps to a given repository.
 
 On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.

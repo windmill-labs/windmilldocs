@@ -17,7 +17,7 @@ const features = [
 		icon: Server
 	},
 	{
-		name: 'Audit Logs',
+		name: 'Audit logs',
 		description: 'See all past executions, and find the root cause of mishaps quickly.',
 		href: '/docs/core_concepts/audit_logs',
 		icon: Eye

@@ -1,10 +1,10 @@
 ---
 slug: explicit-progress
 version: v1.396.0
-title: Set/Get Progress from Code
-tags: []
-description: You can now set progress of script execution from within the script (python and typescript)
-docs: /docs/core_concepts/explicit_progress
+title: Set/Get progress from code
+tags: ['Code editor']
+description: You can now set progress of script execution from within the script (Python and TypeScript)
+docs: /docs/advanced/explicit_progress
 features:
   [
     'setProgress',

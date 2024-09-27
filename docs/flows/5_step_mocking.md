@@ -1,4 +1,4 @@
-# Step Mocking
+# Step mocking
 
 Step mocking allows faster iteration while building flows. When a step is mocked, it will immediately return the mocked value without performing any computation.
 

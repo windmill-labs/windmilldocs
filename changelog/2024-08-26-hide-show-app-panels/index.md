@@ -1,9 +1,9 @@
 ---
 slug: hide-show-app-panels
 version: v1.384.0
-title: Hide / Show App Editor Panels
-tags: ['App Editor']
-description: Hide panels on App Editor with buttons and shortcuts.
+title: Hide / Show App editor Panels
+tags: ['App editor']
+description: Hide panels on App editor with buttons and shortcuts.
 features:
   [
     'Hide Output panel (left) with shortcut `⌘ + B` / `CTRL + B`.',

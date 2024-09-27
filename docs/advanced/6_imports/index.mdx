@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Dependency Management & Imports
+# Dependency management & imports
 
 Windmill's strength lies in its ability to run scripts without having to manage dependency manifest files directly (package.json, requirements.txt, etc.). This is achieved by automatically parsing the imports and resolving the dependencies.
 
@@ -8,7 +8,7 @@ When a script is deployed through its UI, Windmill generates a lockfile to ensur
 
 On the [enterprise edition](/pricing), Windmill's caches can be configured to sync their cache with a central S3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
 
-![Dependency Management & Imports](./dependency_management.png "Dependency Management & Imports")
+![Dependency management & imports](./dependency_management.png "Dependency management & imports")
 
 ## Lockfile per Script inferred from Imports (Standard)
 
@@ -58,12 +58,12 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Command Line Interface (CLI)"
+		title="Command-line interface (CLI)"
 		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
 	/>
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>
@@ -117,7 +117,7 @@ e.g.:
 Import-Module -Name MyModule
 ```
 
-## Dependencies on Local Development
+## Dependencies on Local development
 
 When created and edited through the UI (Windmill App), the lockfile is automatically generated. On [local development](../4_local_development/index.mdx), each script gets:
 - a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
@@ -140,12 +140,12 @@ Locally, the lockfile is respected. It "wins" over the dependencies pinned via t
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to Prod using a Git Workflow"
+		title="Deploy to prod using a git workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop locally, push to git and deploy automatically to Windmill."
 		href="/docs/advanced/local_development"
 	/>
@@ -174,7 +174,7 @@ To import from a custom codebase, see [Codebases & bundles](../../core_concepts/
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Sharing Common Logic"
+		title="Sharing common logic"
 		description="It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and TypeScript."
 		href="/docs/advanced/sharing_common_logic"
 	/>

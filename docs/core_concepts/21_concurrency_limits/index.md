@@ -1,6 +1,6 @@
-# Concurrency Limits
+# Concurrency limits
 
-The Concurrency Limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows. Its primary goal is to prevent exceeding the API Limit of the targeted API, eliminating the need for complex workarounds using worker groups.
+The Concurrency limits feature allows you to define concurrency limits for scripts, flows and inline scripts within flows. Its primary goal is to prevent exceeding the API Limit of the targeted API, eliminating the need for complex workarounds using worker groups.
 
 Concurrency limit is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) only.
 

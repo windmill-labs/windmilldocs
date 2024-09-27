@@ -44,7 +44,7 @@ const cards = [
 		href: '/docs/advanced/local_development'
 	},
 	{
-		title: 'Deploy to Prod using a Git Workflow',
+		title: 'Deploy to prod using a git workflow',
 		subtitle:
 			'Windmill integration with Git repositories makes it possible to adopt a robust development process and version control.',
 		Icon: Github,
@@ -255,15 +255,15 @@ const tabs = [
 				)
 			},
 			{
-				title: 'Parameter Inference',
+				title: 'Parameter inference',
 				description:
 					'Windmill employs JSON Schema to validate and align the format and type of parameters across scripts, flows, and resources.',
 				icon: CurlyBracesIcon,
 				video: {
 					videoSrc: '/videos/parameter_inference.mp4',
-					altText: 'Parameter Inference'
+					altText: 'Parameter inference'
 				},
-				altText: 'Parameter Inference',
+				altText: 'Parameter inference',
 				caption: (
 					<div>
 						JSON Schema is used behind the scenes to construct a comprehensive specification of the
@@ -276,23 +276,23 @@ const tabs = [
 				)
 			},
 			{
-				title: 'Add Resources and Variables to Code',
+				title: 'Add resources and variables to code',
 				description:
-					'You can directly access Variables and Resources from the Code Editor by fetching it or using the auto-generated UI.',
+					'You can directly access Variables and Resources from the Code editor by fetching it or using the auto-generated UI.',
 				icon: BoxesIcon,
 				video: {
 					videoSrc: 'https://www.youtube.com/embed/ggJQtzvqaqA',
 					videoLength: '26',
-					altText: 'Add Resources and Variables to Code'
+					altText: 'Add resources and variables to code'
 				},
-				altText: 'Add Resources and Variables to Code',
+				altText: 'Add resources and variables to code',
 				caption: (
 					<div>
 						You can directly{' '}
 						<a href="/docs/code_editor/add_variables_resources" target="_blank">
 							access Variables and Resources
 						</a>{' '}
-						from the Code Editor by fetching it or using the auto-generated UI.
+						from the Code editor by fetching it or using the auto-generated UI.
 					</div>
 				)
 			},
@@ -302,7 +302,7 @@ const tabs = [
 				icon: Sparkles,
 				video: {
 					videoSrc: '/videos/ai_generation.mp4',
-					altText: 'Add Resources and Variables to Code'
+					altText: 'Add resources and variables to code'
 				},
 				altText: 'Windmill AI',
 				caption: (
