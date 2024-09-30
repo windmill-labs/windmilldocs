@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 There are 5 ways to do error handling in Windmill.
 
-## try/catch inside a Script
+## try/catch inside a script
 
 One way to handle errors in Windmill is by using the `try/catch` block within a Script. This method is not specific to Windmill and can be used in any programming language that supports exception handling.
 
@@ -35,7 +35,7 @@ export async function main() {
 
 ![Try Catch](./try_catch.png.webp)
 
-## Flows' Error handlers
+## Flows' error handlers
 
 The Error handler is a special [flow](../../flows/1_flow_editor.mdx) step that is executed when an error occurs within a flow.
 
@@ -57,7 +57,7 @@ If defined, the error handler will take as input the result of the step that err
 	/>
 </div>
 
-### Special Case: Error handling in flows
+### Error handling in flows
 
 There are other tricks to do Error handling in flows, see:
 
@@ -69,7 +69,7 @@ There are other tricks to do Error handling in flows, see:
 	/>
 </div>
 
-## Schedules Error handlers
+## Schedules error handlers
 
 Add a special script or flow to execute in case of an error in your [scheduled](../1_scheduling/index.mdx) script or flow.
 
@@ -92,11 +92,11 @@ You can pick the Slack pre-set schedule error handler or define your own.
 	/>
 </div>
 
-## Workspace Error handler
+## Workspace error handler
 
 Define a script or flow to be executed automatically in case of error in the workspace (e.g. a scheduled job fails to re-schedule).
 
-### Workspace Error handler on Slack
+### Workspace error handler on Slack
 
 On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connect workspace to Slack](../../integrations/slack.mdx) and enable an automated error handler on a given channel.
 
@@ -112,7 +112,7 @@ On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connec
 
 <br />
 
-### Custom Workspace Error handler
+### Custom workspace error handler
 
 You can also define a custom script or flow to be executed automatically in case of error in the workspace.
 
@@ -153,7 +153,7 @@ export async function main(
 }
 ```
 
-## Instance Error handler
+## Instance error handler
 
 You can define a script to be executed automatically in case of error in your instance (all workspaces).
 
@@ -189,3 +189,19 @@ export async function main(
 	return error;
 }
 ```
+
+## Special case: throw an error in a script
+
+Errors have a specific format to be [rendered](../19_rich_display_rendering/index.mdx#error) properly in Windmill.
+
+```ts
+return { "error": { "name": "418", "message": "I'm a teapot", "stack": "Error: I'm a teapot" }}
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Rich Display Rendering"
+		description="Windmill processes some outputs (from scripts or flows) intelligently to provide rich display rendering, allowing you to customize the display format of your results."
+		href="/docs/core_concepts/rich_display_rendering"
+	/>
+</div>

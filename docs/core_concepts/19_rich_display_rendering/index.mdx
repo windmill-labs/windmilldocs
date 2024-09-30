@@ -21,7 +21,7 @@ If the result is an object/dict with a single key (except for `resume`, which ne
 | [jpeg](#jpeg)             | Render the value as a JPEG image.                            | `return { "jpeg": { "content": base64Image } }` or `return { "jpeg": base64Image }`                              |
 | [gif](#gif)              | Render the value as a GIF image.                             | `return { "gif": { "content": base64Image } }` or `return { "gif": base64Image }`                                |
 | [svg](#svg)              | Render the value as an SVG image.                            | `return { "svg": "<svg>...</svg>" }`                                                                                 |
-| [error](#error)            | Render the value as an error message.                        | `return { "error": { "name": "418", "message": "I'm a teapot" }}`                                                    |
+| [error](#error)            | Render the value as an error message.                        | `return { "error": { "name": "418", "message": "I'm a teapot", "stack": "Error: I'm a teapot" }}`                                                    |
 | [resume](#resume)           | Render an approval and buttons to Resume or Cancel the step. | `return { "resume": "https://example.com", "cancel": "https://example.com", "approvalPage": "https://example.com" }` |
 | [map](#map)              | Render a map with a given location.                                 | `return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, title: "Home", radius: 5, color: "yellow", strokeWidth: 3, strokeColor: "Black"}]}}`           |
 | [render_all](#render-all)       | Render all the results.                                      | `return { "render_all": [ { "json": { "a": 1 } }, { "table-col": { "foo": [42, 8], "bar": [38, 12] }} ] }`           |
@@ -324,7 +324,7 @@ return { "svg": "<svg>...</svg>" }
 The `error` key allows returning the value as an error message.
 
 ```ts
-return { "error": { "name": "418", "message": "I'm a teapot" }}
+return { "error": { "name": "418", "message": "I'm a teapot", "stack": "Error: I'm a teapot" }}
 ```
 
 ![Rich display Error](./error.png "Rich display Error")
