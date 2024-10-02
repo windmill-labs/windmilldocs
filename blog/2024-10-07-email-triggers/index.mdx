@@ -21,7 +21,7 @@ The general flow of an email from sender to recipient is as follows:
 
 Note: The recipient's email client then retrieves the email from the recipient's SMTP server, typically using POP or IMAP.
 
-The usual flow involves two SMTP exchanges: sender_email_client <-> sender_smtp_server <-> recipient_smtp_server.
+The usual flow involves two SMTP exchanges: sender_email_client \<-> sender_smtp_server \<-> recipient_smtp_server.
 
 In this article, we will focus on implementing the receiving part of the SMTP server, specifically receiving emails from other SMTP servers. The protocol for receiving emails from either email clients or other SMTP servers is the same; the only difference lies in the port used and the security process, which we will cover later.
 
