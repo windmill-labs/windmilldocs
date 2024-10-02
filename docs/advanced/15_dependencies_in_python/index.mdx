@@ -207,14 +207,18 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 ### Pinning Dependencies and Requirements
 
 If the imports are not properly analyzed, there exists an escape hatch to
-override the inferred imports. One needs to head the Script with the following comment:
+override the inferred imports. One needs to head the Script with the `requirements` comment followed by dependencies.
+The standard pip [requirement specifiers](https://pip.pypa.io/en/stable/reference/requirement-specifiers/) are supported. Some examples:
 
 ```python
 #requirements:
-#dependency
-#version_pinned_dependency==0.4
+#dependency1[optional_module]
+#dependency2>=0.40
+#dependency3@git+https://github.com/myrepo/dependency3.git
 
-import dependency
+import dependency1
+import dependency2
+import dependency3
 
 def main(...):
   ...
