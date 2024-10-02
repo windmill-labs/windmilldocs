@@ -86,8 +86,8 @@ async fn handle_connection(stream: &mut TcpStream) {
 
 ## Implementing the SMTP exchange loop
 
-Once the sender (server or client) connects, it starts sending commands.
-You can find the full list of possible commands [here](https://datatracker.ietf.org/doc/html/rfc5321#section-4).
+Once the sender (server or client) connects, it begins sending commands.
+You can find the full list of possible commands in [RFC 5321](https://datatracker.ietf.org/doc/html/rfc5321#section-4).
 
 A simplified flow of commands could be:
 - Sender: EHLO
@@ -120,6 +120,11 @@ We have three states:
 
 We use `Framed` with `LinesCodec` from the [tokio-util](https://crates.io/crates/tokio-util) crate to split the stream by lines.
 We use regular expressions to parse the sender and receiver addresses.
+
+For each command, we check if it is valid and respond accordingly.
+If the command is valid, we send a response to the client with the appropriate code from [RFC 5321](https://datatracker.ietf.org/doc/html/rfc5321#section-4.2.2).
+The message following the code is customizable.
+If the command results in an error, such as an invalid command or attempting to send an email before specifying the recipient, we send the corresponding error code and message to the client.
 
 ```rust
 use tokio_util::codec::{Framed, LinesCodec, LinesCodecError};
@@ -233,7 +238,7 @@ async fn send_commands(
 
 ## STARTTLS
 
-As explained above, to secure the communication between SMTP servers, we should use [STARTTLS](https://www.ietf.org/rfc/rfc3207.txt).
+As explained above, to secure the communication between SMTP servers, we should use STARTTLS ([RFC 3207](https://www.ietf.org/rfc/rfc3207.txt)).
 This protocol allows an existing insecure connection to be upgraded to a TLS connection.
 
 The flow begins the same way as before but the server specifies that it supports TLS by sending the `250-STARTTLS` response to the `EHLO` command.
