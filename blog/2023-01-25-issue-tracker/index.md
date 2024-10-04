@@ -23,7 +23,7 @@ can find the second part [here](../2023-01-31-issue-tracker-p2/index.md).
 
 :::
 
-![Create an Issue Tracker App with Supabase and Windmill](./0-header.png.webp 'Integrate Supabase with Windmill in an issue tracker application')
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png 'Integrate Supabase with Windmill in an issue tracker application')
 
 :::tip
 

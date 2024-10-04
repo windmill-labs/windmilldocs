@@ -19,7 +19,7 @@ find it [here](../2023-01-25-issue-tracker/index.md).
 
 :::
 
-![Create an Issue Tracker App with Supabase and Windmill](./0-header.png.webp 'Integrate Supabase with Windmill in an issue tracker application')
+![Create an Issue Tracker App with Supabase and Windmill](./0-header.png 'Integrate Supabase with Windmill in an issue tracker application')
 
 :::tip
 
