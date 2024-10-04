@@ -18,7 +18,7 @@ rights. Some experience with [Windmill](/docs/intro) helps, but not required.
 
 :::
 
-![Integration between Supabase and Windmill](./0-header.png.webp 'Connect Supabase with Windmill')
+![Integration between Supabase and Windmill](./0-header.png 'Connect Supabase with Windmill')
 
 :::tip
 
