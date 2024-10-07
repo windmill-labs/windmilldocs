@@ -3,47 +3,70 @@ slug: smtp-server
 authors: [hugocasa]
 tags: ['smtp', 'email', 'rust', 'tcp', 'tls']
 description: 'In this article, we will implement a simple SMTP server in Rust for receiving emails.'
-image: ./smtp.webp
+image: ./smtp_rust.png
 title: Implementing an SMTP server in Rust
 ---
 
+import DocCard from '@site/src/components/DocCard';
+
 # Implementing an SMTP server in Rust
 
-In this article, we will implement a simple SMTP server in Rust for receiving emails.
-The code is a slightly modified version taken directly from the Windmill codebase, where it is used to trigger scripts and flows using emails. 
+In this article, we will implement a simple SMTP server in [Rust](https://www.rust-lang.org/) for receiving emails.
+The code is a slightly modified version taken directly from the [Windmill codebase](https://github.com/windmill-labs/windmill/pull/4163), where it is used to trigger scripts and flows using emails. 
+
+![Implementing an SMTP server in Rust](./smtp_rust.png "Implementing an SMTP server in Rust")
 
 ## What is SMTP
 
-SMTP (Simple Mail Transfer Protocol) defines the protocol for transmitting emails.
+SMTP ([Simple Mail Transfer Protocol](https://www.cloudflare.com/learning/email-security/what-is-smtp/)) defines the protocol for transmitting emails.
 The general flow of an email from sender to recipient is as follows: 
 - The sender's email client sends the email to its configured SMTP server (e.g., Apple Mail to smtp.gmail.com for a Gmail **sender's** address).
 - The sender's SMTP server then checks the recipient's email domain and sends the email to the corresponding SMTP server.
 
-Note: The recipient's email client then retrieves the email from the recipient's SMTP server, typically using POP or IMAP.
+Note: The recipient's email client then retrieves the email from the recipient's SMTP server, typically using [POP or IMAP](https://support.microsoft.com/en-us/office/what-are-imap-and-pop-ca2c5799-49f9-4079-aefe-ddca85d5b1c9).
 
-The usual flow involves two SMTP exchanges: sender_email_client \<-> sender_smtp_server \<-> recipient_smtp_server.
+The usual flow involves two SMTP exchanges:
 
-In this article, we will focus on implementing the receiving part of the SMTP server, specifically receiving emails from other SMTP servers. The protocol for receiving emails from either email clients or other SMTP servers is the same; the only difference lies in the port used and the security process, which we will cover later.
+`sender_email_client \<-> sender_smtp_server \<-> recipient_smtp_server`
+
+In this article, we will focus on implementing the receiving part of the SMTP server, specifically receiving emails from other SMTP servers. The protocol for receiving emails from either email clients or other SMTP servers is the same; the only difference lies in the port used and the security process, which we will [cover later](#conclusion).
 
 A receiving SMTP server listens on a port for incoming TCP connections. Once connected, the sender's SMTP server sends commands to the receiving SMTP server. Our server needs to interpret these commands and respond appropriately.
 
-Once the email content is received, we can process or store it as needed. In the context of Windmill, once we receive an email, we check the email address and trigger the appropriate runnable with the email content as an argument.
+Once the email content is received, we can process or store it as needed. [In the context of Windmill](#what-is-windmill), once we receive an email, we check the email address and trigger the appropriate runnable (script, flow) with the email content as an argument.
 
-When SMTP servers communicate, they typically do so on port 25, and by default, this connection is not encrypted. Therefore, we will also implement STARTTLS, which upgrades the connection to a secure TLS connection, ensuring that the email content is encrypted in transit.
+When SMTP servers communicate, they typically do so on [port 25](https://www.cloudflare.com/learning/email-security/smtp-port-25-587/), and by default, this connection is not encrypted. Therefore, we will also implement [STARTTLS](#starttls), which upgrades the connection to a secure TLS connection, ensuring that the email content is encrypted in transit.
 
 Note: Modern email clients (e.g., when sending an email from your computer) connect to SMTP servers on port 587 (or 465) directly over TLS.
 
+## What is Windmill
+
+For context, [Windmill](/) is an open-source workflow engine and developer platform. It's an alternative to the likes of Retool, Superblocks, n8n, Airflow, Prefect, and Temporal, designed to build comprehensive internal tools (endpoints, workflows, UIs).
+
+This article was written following the implementation of the [Email triggers](/docs/advanced/email_triggers) feature, which allows scripts and flows to be triggered by sending emails to a specific email address.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="What is Windmill"
+		description="Windmill is an open-source workflow engine and developer platform."
+		href="/docs/intro"
+	/>
+    <DocCard
+		title="Email triggers"
+		description="Scripts and flows can be triggered by email messages sent to a specific email address."
+		href="/docs/advanced/email_triggers"
+	/>
+</div>
 
 ## Listening for incoming connections
 
-We use [tokio](https://tokio.rs/) to listen for TCP connections on port 2525 (in production, it should be exposed on port 25, which we will discuss later). 
-We handle each incoming connection in a separate task using `tokio::spawn` to avoid blocking the listener thread.
+Let's use [tokio](https://tokio.rs/) to listen for TCP connections on port 2525 (in production, it should be exposed on port 25, which we will discuss later). 
+We handle each incoming connection in a separate task using [`tokio::spawn`](https://tokio.rs/tokio/tutorial/spawning) to avoid blocking the listener thread.
 
 ```rust
 use tokio::net::{TcpListener, TcpStream};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader, BufWriter};
 use std::net::SocketAddr;
-
 
 async fn listen() -> anyhow::Result<()> {
     let addr = SocketAddr::from(([127, 0, 0, 1], 2525));
@@ -90,6 +113,8 @@ Once the sender (server or client) connects, it begins sending commands.
 You can find the full list of possible commands in [RFC 5321](https://datatracker.ietf.org/doc/html/rfc5321#section-4).
 
 A simplified flow of commands could be:
+
+```
 - Sender: EHLO
 - Receiver: 250 OK
 - Sender: MAIL FROM: \<sender@mysenderdomain.com>
@@ -104,6 +129,7 @@ A simplified flow of commands could be:
 - Receiver: 250 OK
 - Sender: QUIT
 - Receiver: 221 Bye
+```
 
 The sequence of commands is straightforward: the client begins with a greeting, specifies the sender and recipient, and then transmits the email content.
 To transmit the email content, the client issues the DATA command. Everything sent after this command is considered part of the email content until a single dot `.` on a line by itself signals the end of the email.
@@ -112,7 +138,7 @@ Finally, the client sends the QUIT command to terminate the connection.
 
 The following code implements the SMTP exchange.
 It processes commands one by one, with commands separated by a line break `\r\n`.
-At the start, the state is `SmtpState::Command`, we then process the command and depending on the command, we store the received data if any and update the state.
+At the start, the state is `SmtpState::Command`, we then process the command and depending on it, we store the received data if any, and update the state.
 We have three states: 
 - `SmtpState::Command`: The state after the connection is established and the client is waiting for a command.
 - `SmtpState::Data`: The state after the DATA command has been received and the email content is being accumulated.
@@ -238,8 +264,8 @@ async fn send_commands(
 
 ## STARTTLS
 
-As explained above, to secure the communication between SMTP servers, we should use STARTTLS ([RFC 3207](https://www.ietf.org/rfc/rfc3207.txt)).
-This protocol allows an existing insecure connection to be upgraded to a TLS connection.
+As explained earlier, to secure the communication between SMTP servers, we should use STARTTLS ([RFC 3207](https://www.ietf.org/rfc/rfc3207.txt)).
+This protocol allows an existing insecure connection to be upgraded to a [TLS connection](https://www.cloudflare.com/learning/ssl/transport-layer-security-tls/).
 
 The flow begins the same way as before but the server specifies that it supports TLS by sending the `250-STARTTLS` response to the `EHLO` command.
 The client, recognizing that the server supports STARTTLS, sends the `STARTTLS` command.
@@ -376,7 +402,7 @@ fn generate_certificate() -> anyhow::Result<(String, String)> {
 
 ## Testing
 
-You can test that your server works by using `nc`:
+You can test that your server works by using [`nc`](https://linuxize.com/post/netcat-nc-command-with-examples/):
 
 ```bash
 nc localhost 2525
@@ -398,7 +424,7 @@ You can then send commands to the server and send emails.
 Although I haven't personally used it, [swaks](https://www.jetmore.org/john/code/swaks/) is a popular tool to test SMTP servers.
 
 The command line is useful for testing, but it’s often more practical to use a Python script.
-Here's a simple example using the `smtplib` library:
+Here's a simple example using the [`smtplib`](https://docs.python.org/3/library/smtplib.html) library:
 
 ```python
 smtp_server = "localhost"
@@ -448,8 +474,8 @@ For instance, we use [Caddy](https://caddyserver.com/) with a [Layer 4 extension
 You will also need to configure your DNS settings to point to your server.
 
 Your DNS configuration requires two entries:
-- An **A record** that points to your server's IP address (e.g. smtp.yourdomain.com)
-- An **MX record** from your domain (e.g. yourdomain.com in myaddress@yourdomain.com) to your server A record (e.g. smtp.yourdomain.com).
+- An `A record` that points to your server's IP address (e.g. smtp.yourdomain.com)
+- An `MX record` from your domain (e.g. yourdomain.com in myaddress@yourdomain.com) to your server A record (e.g. smtp.yourdomain.com).
 
 These settings will inform other SMTP servers where to send emails for your domain.
 
@@ -457,17 +483,14 @@ You can now test the server by sending an email from your personal email account
 
 ## Conclusion
 
-In this article, we've implemented a simple SMTP server in Rust that can securely receive emails over TLSf from other SMTP servers.
+We've implemented a simple SMTP server in Rust that can securely receive emails over TLS from other SMTP servers.
 This setup provides the core functionality for receiving emails, allowing you to handle them as needed. You can store the emails, access them via your own API, or implement any custom logic based on your specific requirements.
 You can also extend this setup to complete the SMTP server and enable it to send emails. For receiving emails directly from clients, you can reuse the same logic, simply adjusting the ports (e.g., port 587 or 465) and ensuring a secure connection from the start.
 To send emails, you'll need to implement the logic for initiating SMTP commands to other servers, which follows a similar process to receiving but in reverse, with your server acting as the sender.
 
 If you're interested in triggering scripts using email, check out [Windmill](https://windmill.dev).
 Windmill is an open-source platform and workflow engine for developers to execute jobs.
-It supports on-demand execution via an autogenerated UI, API calls, scheduling, event triggers (like email), and more.
+It supports on-demand execution via an auto-generated UI, API calls, scheduling, event triggers (like email), and more.
 We use code very similar to the one above to trigger Windmill scripts or flows using email.
 
 Thank you for reading! If you have any feedback or questions, feel free to contact us on our [Discord](https://discord.com/invite/V7PM2YHsPB).
-
-
-
