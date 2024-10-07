@@ -1,8 +1,8 @@
 ---
 slug: email-triggers
 version: v1.376.0
-title: Email Triggers
-tags: ['Script Editor', 'Flow Editor']
+title: Email triggers
+tags: ['Script editor', 'Flow editor']
 description: Scripts and flows can now be triggered by the delivery of an email.
 features:
   [

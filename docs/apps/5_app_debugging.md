@@ -1,4 +1,4 @@
-# Debug Runs
+# Debug runs
 
 On the toolbar, click the Debug runs to open the Debug run drawer.
 

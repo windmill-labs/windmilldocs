@@ -1,18 +1,18 @@
 ---
-title: Local Development
+title: Local development
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# Local Development
+# Local development
 
 Windmill has [its own integrated development environment](../../code_editor/index.mdx), but you can also develop and run scripts locally, both with [self-hosted](../1_self_host/index.mdx) and cloud instances.
 
 To simply create and edit scripts and flows locally, you can directly go to the [Develop Locally](#develop-locally) section.
 
-For a more complex setup involving Git, you can go to the [Local Development Recommended Setup](#local-development-recommended-setup).
+For a more complex setup involving Git, you can go to the [Local development Recommended Setup](#local-development-recommended-setup).
 
-## Local Development Recommended Setup
+## Local development Recommended Setup
 
 Local development involves two components:
 
@@ -23,13 +23,13 @@ In addition to the core functionalities just mentioned, some might want to add t
 
 The diagram below illustrates the full process. We're going to explain it quickly, and in the following sections we will decompose it.
 
-![Local Development](./local_development.png)
+![Local development](./local_development.png)
 
 It works as follows:
 
 - 2 different workspaces exist in Windmill: one for Staging and one for Prod, and a Git repository that has been set to sync the Windmill Staging workspace.
 - Some developers work from their favorite IDE. They can create new Windmill scripts and flows, edit existing ones, and push them to the Staging repository. Some developers can work directly in Windmill's web IDE. All of this happens in the Staging workspace.
-- Every time a script or a flow is deployed in the Staging workspace, Windmill will automatically commit the change to the Git repository using [Git Sync](../11_git_sync/index.mdx). It can either commit directly to a specific (i.e. `staging`) branch, or open PRs to this branch (one PR per script/flow).
+- Every time a script or a flow is deployed in the Staging workspace, Windmill will automatically commit the change to the Git repository using [Git sync](../11_git_sync/index.mdx). It can either commit directly to a specific (i.e. `staging`) branch, or open PRs to this branch (one PR per script/flow).
 - Within the Git repository, every time the `staging` branch is merged into the production branch (i.e. `main`), all the changes are pushed at once the Windmill Production workspace.
 
 To summarize, developers operate only in Windmill Staging workspace. Windmill Production workspace is updated only by the CI when the Git staging branch is merged into the production branch.
@@ -40,7 +40,7 @@ The second part is well covered in:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to Prod using a Git Workflow"
+		title="Deploy to prod using a git workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
@@ -230,7 +230,7 @@ More info [here](../../core_concepts/13_json_schema_and_parsing/index.mdx).
 
 </details>
 
-Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx).
+Flows can be more difficult to edit at the beginning because ones need to be familiar with the OpenFlow definitions to be able to write the YAML file. To help you with that, you can use our [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx).
 
 :::tip CLI Bootstrap
 
@@ -240,43 +240,43 @@ Windmill CLI also has a `bootstrap` command (both for `wmill script` and `wmill 
 
 Lastly, it is possible to execute scripts locally and even plug them to any unit testing framework. More info on the [Run locally documentation page](../4_local_development/run_locally.mdx).
 
-### VS Code Extension
+### VS Code extension
 
-The Windmill VS Code extension allows you to build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition.
+The Windmill VS Code extension allows you to build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
 
-![VS Code Extension](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code Extension')
+![VS Code extension](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code extension')
 
 ## Deploy from GitHub/GitLab with Staging/Prod
 
-Syncing directly from the CLI is great, but instead of using the CLI directly, you should combine it with your CI/CD and set up a full productive Git workflow with a Staging and Prod workspaces and [Git Sync](../11_git_sync/index.mdx). See more details here:
+Syncing directly from the CLI is great, but instead of using the CLI directly, you should combine it with your CI/CD and set up a full productive Git workflow with a Staging and Prod workspaces and [Git sync](../11_git_sync/index.mdx). See more details here:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to Prod using a Git Workflow"
+		title="Deploy to prod using a git workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>
 
-## Run Locally
+## Run locally
 
 Windmill has its [own integrated development environment](../../code_editor/index.mdx). But for iteration, integration with CI/CD and testing purposes you may need to run a script locally that also interacts with Windmill (for example, to retrieve resources). It will allow you to integrate Windmill with any testing framework.
 
-To setup a local development environment for Windmill, see the dedicated Local Development page (above).
+To setup a local development environment for Windmill, see the dedicated Local development page (above).
 
 To [run scripts locally](../4_local_development/run_locally.mdx), you will need to fill out the context variables that would otherwise be filled out by the Windmill runtime for you.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Run Locally"
+		title="Run locally"
 		description="Run scripts locally that interact with a Windmill instance."
 		href="/docs/advanced/local_development/run_locally"
 	/>

@@ -2,7 +2,7 @@
 slug: approval-steps-improvements
 version: v1.298.0
 title: Approval Steps Improvements
-tags: ['Flow Editor']
+tags: ['Flow editor']
 image: ./hide_cancel_approval_page.png
 description: Improved the experience with approval steps.
 features:

@@ -338,7 +338,7 @@ Ruby developers have access to several mature and reliable libraries for handlin
 
 #### Sidekiq
 
-[Sidekiq](https://github.com/sidekiq/sidekiq) is one of the most widely used background job processors in the Ruby community, known for its [efficiency and reliability](https://dansvetlov.me/sidekiq-internals/). It uses Redis as a job queue and supports features like [retries](https://github.com/sidekiq/sidekiq/wiki/Error-Handling), [scheduling](https://rubygems.org/gems/sidekiq-scheduler/versions/5.0.3?locale=en), and monitoring.
+[Sidekiq](https://github.com/sidekiq/sidekiq) is one of the most widely used background job processors in the Ruby community, known for its [efficiency and reliability](https://dansvetlov.me/sidekiq-internals/). It uses Redis as a job queue and supports features like [retries](https://github.com/sidekiq/sidekiq/wiki/Error-Handling), [scheduling](https://rubygems.org/gems/sidekiq-scheduler/versions/5.0.3), and monitoring.
 
 ```ruby
 class BackgroundJob
@@ -577,7 +577,7 @@ All jobs are [monitored](/docs/core_concepts/monitor_past_and_future_runs) and [
 
 <br/>
 
-Note that in the context of Windmill's [App Editor](/docs/apps/app_editor), there are specific "[background runnables](/docs/apps/app-runnable-panel#background-runnables)" which are scripts executed in the background on the server. These can be triggered on app refresh or when their [input](/docs/apps/connecting_components) changes, providing a flexible way to run background tasks in response to various events.
+Note that in the context of Windmill's [App editor](/docs/apps/app_editor), there are specific "[background runnables](/docs/apps/app-runnable-panel#background-runnables)" which are scripts executed in the background on the server. These can be triggered on app refresh or when their [input](/docs/apps/connecting_components) changes, providing a flexible way to run background tasks in response to various events.
 
 Windmill is extremely reliable, it is used for critical jobs by our customers and has never failed. Windmill takes care of all possible [errors](/docs/core_concepts/error_handling) (retry, error handler, recovery handler) and recovers from any failure: if the infrastructure on which the worker is installed suddenly crashes at any time (e.g. power loss), the flow can start again from the last step that was completed (idempotency within steps need to be implemeneted in the logic itelf of your steps).
 

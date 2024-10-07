@@ -2,7 +2,7 @@
 slug: vim-support
 version: v1.386.0
 title: Vim support for Monaco/webeditor
-tags: ['Code Editor']
+tags: ['Code editor']
 description: Code editor (in scripts, flows or apps) supports Vim mode (disabled by default).
 features:
   [

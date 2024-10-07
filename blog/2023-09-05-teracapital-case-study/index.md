@@ -5,7 +5,7 @@ tags:
     'Case study',
 	'Testimonial',
     'Admin Panel',
-    'App Editor',
+    'App editor',
     'Enterprise Plan',
   ]
 image: ./t4_use_case.png
@@ -47,7 +47,7 @@ Within two weeks, everything was set to go with Windmill. Although self-hosting 
 
 Today, 6 team members are directly using Windmill. Most of our Windmill's users are non-technical, but they can easily fork an app with our entire [identity in CSS](/docs/apps/app_configuration_settings/app_styling) and [use AI to write code](/docs/core_concepts/ai_generation).
 
-While we initially came to Windmill for its [App Editor](/docs/apps/app_editor), we ended up using [scripts](/docs/script_editor) and [flows](/docs/flows/flow_editor) to make our apps deeper and more complex.
+While we initially came to Windmill for its [App editor](/docs/apps/app_editor), we ended up using [scripts](/docs/script_editor) and [flows](/docs/flows/flow_editor) to make our apps deeper and more complex.
 
 In general, as clients, we are very satisfied with Windmill. We align with Windmill's mindset of using the littlest code as possible. Everything is well-structured and things do not break.
 
@@ -55,7 +55,7 @@ The enterprise services are very helpful. We have a dedicated Discord channel wi
 
 ## Focus on a client-facing admin panel
 
-Among our apps in Windmill, one of the most critical ones is a custom interface for our clients. They simply need to log in any time to https://www.teracapital.com.br/app using Supabase's authentication system to access a personalized, real-time and interactive dashboard of their investments.
+Among our apps in Windmill, one of the most critical ones is a custom interface for our clients. They simply need to log in any time to an url using Supabase's authentication system to access a personalized, real-time and interactive dashboard of their investments.
 
 Before Windmill, our clients used to receive a monthly PDF with data that was difficult to keep up to date. Now, we have improved our client-facing service without having to subscribe to countless Saas subscriptions.
 

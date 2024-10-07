@@ -269,7 +269,7 @@ export default function LandingHeader() {
 							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
 							rel="nofollow"
 						>
-							Windmill Cloud
+							Windmill cloud
 						</a>
 					</div>
 				</div>
@@ -365,7 +365,7 @@ export default function LandingHeader() {
 										className="!no-underline flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
 										rel="nofollow"
 									>
-										Windmill Cloud
+										Windmill cloud
 									</a>
 								</div>
 							</div>

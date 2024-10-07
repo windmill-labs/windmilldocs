@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LandingSection from './LandingSection';
 import { useColorMode } from '@docusaurus/theme-common';
 
-const testimonials = [
+const communityTestimonials = [
 	{
 		body: (
 			<span>
@@ -105,6 +105,23 @@ const testimonials = [
 	{
 		body: (
 			<span>
+				Stumbled upon{' '}
+				<strong>
+					<span className="text-blue-500">@WindmillDev</span>
+				</strong>{' '}
+				amazing open source project exactly what I needed. Team is cracked af Kind of a super advanced Zapier/ActivePieces with huge wiggle room for custom scripts. Just the right balance
+			</span>
+		),
+		author: {
+			handle: 'x',
+			backlink: 'https://x.com/b_arbaretier/status/1832412643082035457',
+			name: '@b_arbaretier on X',
+			date: 'September 7th 2024'
+		}
+	},
+	{
+		body: (
+			<span>
 				I migrated to{' '}
 				<strong>
 					<span className="text-blue-500">windmill.dev</span>
@@ -178,17 +195,17 @@ const clientTestimonials = [
 	},
 	{
 		author: {
-			name: 'Sindre Svendby',
-			company: 'Motimate - a Kahoot! company',
-			position: 'Software Engineer',
-			dark: '/images/brands/Kahoot_Logo-dark.svg',
-			light: '/images/brands/Kahoot_Logo.svg',
-			anchor: 'kahoot',
-			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
+			name: 'Lewis Ellis',
+			company: 'Pave',
+			position: 'Staff Platform Engineer',
+			dark: '/images/brands/pave-dark.svg',
+			light: '/images/brands/pave.svg',
+			anchor: 'pave',
+			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1517339626890?e=1733356800&v=beta&t=WDQokhSVjK8SrpyRb4FZhugMpNPuqN0Dtg5GilhsNDI'
 		},
-		company_url: 'https://motimateapp.com',
-		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
-		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
+		company_url: 'https://www.pave.com/',
+		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
+		text: `At Pave, we self-host Windmill Enterprise Edition to run 100+ scripts and 15+ crons. Our Windmill deployment interacts with half a dozen data stores to power all kinds of business-critical tasks and automations across several teams. It enables our engineering org to move quickly while keeping things secure and avoiding infrastructure sprawl. We expect to continue moving more workloads into Windmill over time, simplifying our systems in the process.<br/><br/>The Windmill team are also great partners to work with - incredibly responsive, and have developed new capabilities to support our usage patterns, enabling our Windmill scripts to more seamlessly tie into the rest of our codebase.`
 	},
 	{
 		author: {
@@ -204,7 +221,6 @@ const clientTestimonials = [
 		company_url: 'https://bloomcredit.io',
 		linkedIn: 'https://www.linkedin.com/in/mikeesler/'
 	},
-
 	{
 		author: {
 			name: 'Romaric Philogène',
@@ -221,12 +237,26 @@ const clientTestimonials = [
 	},
 	{
 		author: {
+			name: 'Sindre Svendby',
+			company: 'Motimate - a Kahoot! company',
+			position: 'Software Engineer',
+			dark: '/images/brands/Kahoot_Logo-dark.svg',
+			light: '/images/brands/Kahoot_Logo.svg',
+			anchor: 'kahoot',
+			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
+		},
+		company_url: 'https://motimateapp.com',
+		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
+		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
+	},
+	{
+		author: {
 			name: 'Ben Packer',
 			company: 'United Auto Workers',
 			position: 'Software Engineer',
 			dark: '/images/brands/uaw_dark.svg',
 			light: '/images/brands/uaw.svg',
-			anchor: 'united auto workers',
+			anchor: 'united-auto-workers',
 			profile_picture: 'https://media.licdn.com/dms/image/v2/C4D03AQGzZ5R0BHz7yg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1600310404802?e=2147483647&v=beta&t=guoo6kwwuEu24WJl1w_5nvJk9nTSDSoSosxBMmMLXBc'
 		},
 		company_url: 'https://uaw.org/',
@@ -324,15 +354,16 @@ export default function Example() {
 					</div>
 
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
-					{testimonials.map((testimonial, index) => (
+					{communityTestimonials.map((testimonial, index) => (
 						<div
 						key={testimonial.author.handle + index}
 						className="sm:inline-block sm:w-full mb-4 testimonials"
 						>
 						<a
-							href={testimonial.linkedIn}
+							href={testimonial.author.backlink}
 							className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-6 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
 							target="_blank"
+							rel="noopener noreferrer"
 						>
 							<div className="dark:text-gray-50 text-gray-900">
 							<p>{testimonial.body}</p>

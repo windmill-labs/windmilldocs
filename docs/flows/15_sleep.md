@@ -1,4 +1,4 @@
-# Sleeps / Delays in Flows
+# Sleeps / Delays in flows
 
 Executions within a flow can be suspended for a given time.
 

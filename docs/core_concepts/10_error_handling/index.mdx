@@ -1,10 +1,10 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Error Handling in Windmill
+# Error handling
 
 There are 5 ways to do error handling in Windmill.
 
-## try/catch inside a Script
+## try/catch inside a script
 
 One way to handle errors in Windmill is by using the `try/catch` block within a Script. This method is not specific to Windmill and can be used in any programming language that supports exception handling.
 
@@ -35,9 +35,9 @@ export async function main() {
 
 ![Try Catch](./try_catch.png.webp)
 
-## Flows' Error Handlers
+## Flows' error handlers
 
-The Error Handler is a special [flow](../../flows/1_flow_editor.mdx) step that is executed when an error occurs within a flow.
+The Error handler is a special [flow](../../flows/1_flow_editor.mdx) step that is executed when an error occurs within a flow.
 
 If defined, the error handler will take as input the result of the step that errored (which has its error in the 'error field').
 
@@ -51,25 +51,25 @@ If defined, the error handler will take as input the result of the step that err
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Error Handler"
+		title="Error handler"
 		description="Configure a script to handle errors."
 		href="/docs/flows/flow_error_handler"
 	/>
 </div>
 
-### Special Case: Error Handling in Flows
+### Error handling in flows
 
 There are other tricks to do Error handling in flows, see:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Error Handling in Flows"
+		title="Error handling in flows"
 		description="There are four ways to handle errors in Windmill flows."
 		href="/docs/flows/error_handling"
 	/>
 </div>
 
-## Schedules Error Handlers
+## Schedules error handlers
 
 Add a special script or flow to execute in case of an error in your [scheduled](../1_scheduling/index.mdx) script or flow.
 
@@ -92,18 +92,18 @@ You can pick the Slack pre-set schedule error handler or define your own.
 	/>
 </div>
 
-## Workspace Error Handler
+## Workspace error handler
 
 Define a script or flow to be executed automatically in case of error in the workspace (e.g. a scheduled job fails to re-schedule).
 
-### Workspace Error Handler on Slack
+### Workspace error handler on Slack
 
 On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connect workspace to Slack](../../integrations/slack.mdx) and enable an automated error handler on a given channel.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/6QPONDONd5k?vq=1080p"
-	title="Workspace Error Handler on Slack"
+	title="Workspace Error handler on Slack"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -112,13 +112,13 @@ On [Cloud plans and Self-Hosted & Enterprise Edition](/pricing), you can [connec
 
 <br />
 
-### Custom Workspace Error Handler
+### Custom workspace error handler
 
 You can also define a custom script or flow to be executed automatically in case of error in the workspace.
 
-From the workspace settings, on the "Error Handler" tab and pick a script or flow.
+From the workspace settings, on the "Error handler" tab and pick a script or flow.
 
-![Workspace Error Handler](./workspace_error_handler.png 'Workspace Error Handler')
+![Workspace Error handler](./workspace_error_handler.png 'Workspace Error handler')
 
 The following args will be passed to the error handler:
 
@@ -153,7 +153,7 @@ export async function main(
 }
 ```
 
-## Instance Error Handler
+## Instance error handler
 
 You can define a script to be executed automatically in case of error in your instance (all workspaces).
 
@@ -189,3 +189,19 @@ export async function main(
 	return error;
 }
 ```
+
+## Special case: throw an error in a script
+
+Errors have a specific format to be [rendered](../19_rich_display_rendering/index.mdx#error) properly in Windmill.
+
+```ts
+return { "error": { "name": "418", "message": "I'm a teapot", "stack": "Error: I'm a teapot" }}
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Rich Display Rendering"
+		description="Windmill processes some outputs (from scripts or flows) intelligently to provide rich display rendering, allowing you to customize the display format of your results."
+		href="/docs/core_concepts/rich_display_rendering"
+	/>
+</div>

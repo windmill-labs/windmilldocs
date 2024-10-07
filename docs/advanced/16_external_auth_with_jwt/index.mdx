@@ -19,6 +19,7 @@ The JWT payload has to contain the following fields:
 - `workspace_id`: the workspace id
 - `folders`: an array of arrays containing 3 values: the name of the folder, a boolean indicating whether the user can write to the folder and a boolean indicating whether the user is the owner of the folder (can manage folder permissions)
 - `groups`: an array of strings containing the groups to which the user belongs. When using JWT external authentication, **group permissions on folders are not checked** because the user's permissions depend directly on the folder permissions specified in the JWT.
+- `scopes`: an optional array of strings containing the scopes of the user/token. To limit the user's job listing permissions by specific tags, add a scope with the value `if_jobs:filter_tags:tag1,tag2`.
 
 While you don't need to create the user on Windmill, you should create the workspaces and folders.
 
@@ -38,6 +39,7 @@ async function generateJWT(
   workspace_id: string,
   folders: [string, boolean, boolean][] = [],
   groups: string[] = [],
+  scopes: string[] = []
 ) {
   const signer = createSigner({
     kid,
@@ -53,7 +55,8 @@ async function generateJWT(
     is_operator,
     folders,
     groups,
-    workspace_id
+    workspace_id,
+    scopes
   })
 
   return "jwt_ext_" + token

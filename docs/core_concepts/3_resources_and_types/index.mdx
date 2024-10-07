@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Resources and Resource Types
+# Resources and resource types
 
 Resources are rich objects in JSON that allow to store configuration and credentials.
 
@@ -37,7 +37,7 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 	/>
 </div>
 
-## Create a Resource
+## Create a resource
 
 To create a resource using an existing type, go to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources </a> page and click "Add a resource/API".
 
@@ -73,7 +73,7 @@ a link, for example:
 
 :::
 
-## Create a Resource Type
+## Create a resource type
 
 Windmill comes preloaded with some common Resource Types, such as databases, apps, SMTP, etc. You can see the full list on [Windmill Hub](https://hub.windmill.dev/resources).
 You can also add custom Resource Types by clicking "Add a resource type" on the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page.
@@ -86,7 +86,9 @@ default, etc). You can also view the schema by toggling the "As JSON" option:
 
 ![Resource type schema view](./resource_type_json.png.webp)
 
-### Share Resource Type on Hub
+The resources types created from the [Admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace) are shared across all workspaces.
+
+### Share resource type on Hub
 
 You can contribute to the [Windmill Hub](https://hub.windmill.dev/) by sharing your Resource Type. To do so, add a Resource Type on the [Resources section](https://hub.windmill.dev/resources) of the Hub.
 
@@ -96,19 +98,25 @@ Verified Resource Types on the Hub are directly added to the list of available R
 
 ![Share resource type](./new_resource_type_hub.png)
 
-### Sync Resource Types with WindmillHub
+### Sync resource types with WindmillHub
 
 When creating a [self-hosted](../../advanced/1_self_host/index.mdx) instance, you are offered to set a [schedule](../1_scheduling/index.mdx) to regularly sync all resource types from [WindmillHub](https://hub.windmill.dev/). This will ensure that all the approved resource types are available in your instance. On Windmill cloud, it is done regularly by the Windmill team. Ask us if you need a specific [resource type from Hub](https://hub.windmill.dev/resources) to be added.
 
-The bun script executed from the admin workspace is:
+The [Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) script executed from the admin workspace is:
 
 ```ts
-import { hubPull } from "windmill-cli@1.393.2"
+import * as wmill from "windmill-cli@1.393.2"
 
 export async function main() {
-  await hubPull({ workspace: "admins", token: process.env["WM_TOKEN"], baseUrl: process.env.WM_BASE_URL })
+  await wmill.hubPull({ workspace: "admins", token: process.env["WM_TOKEN"], baseUrl: globalThis.process.env["BASE_URL"] });
 }
 ```
+
+You can find this script on [WindmillHub](https://hub.windmill.dev/scripts/windmillhub/9069/synchronize-hub-resource-types-with-instance-windmillhub#approved).
+
+This script is probably already on your [Admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace), as it was suggested during Windmill [self-hosting setup](../../advanced/1_self_host/index.mdx). Having this script run on your Admins workspace will sync resources accross all workspaces of your instance.
+
+To avoid running it manually, we recommend [scheduling](../1_scheduling/index.mdx) this script regularly.
 
 ## States
 
@@ -186,13 +194,13 @@ _Python_
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Persistent Storage & Databases"
+		title="Persistent storage & databases"
 		description="Ensure that your data is safely stored and easily accessible whenever required."
 		href="/docs/core_concepts/persistent_storage"
 	/>
 </div>
 
-### States Path
+### States path
 
 States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that is unique to the [script](../../script_editor/index.mdx), script within a [flow](../../flows/1_flow_editor.mdx) or [schedule](../1_scheduling/index.mdx). The state path [is defined](https://github.com/windmill-labs/windmill/blob/19547e90c681db1566559c31a508eb093eb05968/backend/windmill-common/src/variables.rs#L150) as:
 
@@ -224,7 +232,7 @@ States are stored in a [path](../16_roles_and_permissions/index.mdx#path) that i
 
 For example, if a script using states is used within a flow that is scheduled, the state will take a new path as: `folder/flow_path/script_path/schedule_path`, or more concretely: `u/username/u/username/flow_name/u/username/script_name/u/username/schedule_name`.
 
-### Custom Flow States
+### Custom flow states
 
 Custom flow states are a way to store data across steps in a [flow](../../flows/1_flow_editor.mdx). You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally. That state will be stored in the flow state itself and thus has the same lifetime as the flow [job](../20_jobs/index.mdx) itself.
 
@@ -264,7 +272,7 @@ def main(x: str):
 	src="/videos/flow_state.mp4"
 />
 
-## Using Resources
+## Using resources
 
 Resources can be used [passed as script parameters](#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within code.
 
@@ -342,12 +350,12 @@ editor.
 
 :::
 
-All details on the [Add Resources and Variables to Code Editor](../../code_editor/add_variables_resources.mdx) page:
+All details on the [Add resources and variables to code editor](../../code_editor/add_variables_resources.mdx) page:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Add Resources and Variables to Code Editor"
-		description="You can directly access Variables and Resources from the Code Editor."
+		title="Add resources and variables to code editor"
+		description="You can directly access Variables and Resources from the Code editor."
 		href="/docs/code_editor/add_variables_resources"
 	/>
 </div>
@@ -406,12 +414,12 @@ The toggle "Static resource select only / Resources from users allowed" can be f
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Runnable Editor"
+		title="Runnable editor"
 		description="Learn how to create and configure Apps runnables."
 	/>
 </div>
 
-## Plain Text File Resources
+## Plain text file resources
 
 In certain scenarios it is useful to store data as a a text file, with a format such as `.json`, `.cfg`, etc. Windmill can store plain text files as a resource, which can then be used as arguments for scripts, or have special support in certain languages (e.g. Ansible).
 

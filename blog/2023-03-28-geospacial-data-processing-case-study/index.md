@@ -12,7 +12,7 @@ This is a testimonial written by [Pirmin Kalberer](https://github.com/pka), Mana
 
 <br/>
 
-![Sourcepole Windmill use case](./0-header.png.webp 'Sourcepole Windmill testimonial')
+![Sourcepole Windmill use case](./0-header.png 'Sourcepole Windmill testimonial')
 
 ## What before Windmill?
 

@@ -2,7 +2,7 @@
 slug: useful-python-scripts
 title: 10 Useful Python Scripts
 authors: [edwindmiller]
-tags: ['Script Editor', 'Python']
+tags: ['Script editor', 'Python']
 description: 'A few examples of Python scripts and cool libraries that improve day-to-day life.'
 image: ./python_scripts.png
 ---
@@ -56,7 +56,7 @@ Once your Python script is deployed in Windmill, it can be utilized in various w
 
 1. **Run and Schedule**: Scripts can be run as standalone tasks or [scheduled](/docs/core_concepts/scheduling) to execute at specified intervals. This is useful for automating tasks such as data collection, processing, and reporting.
    
-2. **Chained in Flows**: Scripts can be chained together with other scripts to create complex [workflows](/docs/flows/flow_editor). This allows you to build sophisticated automation sequences that can handle tasks spanning multiple operational domains.
+2. **Chained in flows**: Scripts can be chained together with other scripts to create complex [workflows](/docs/flows/flow_editor). This allows you to build sophisticated automation sequences that can handle tasks spanning multiple operational domains.
    
 3. **Integrated into Apps**: Deployed scripts can be integrated into user interfaces created with Windmill's [App Builder](/docs/apps/app_editor). This enables the development of interactive applications that leverage the backend logic contained within your scripts.
 
@@ -154,7 +154,7 @@ Finding addresses through programming proves useful in delivery logistics or for
 
 The [geocoder](https://geocoder.readthedocs.io/) library can return a latitude and longitude from an address.
 
-Then, these details can be used by Windmill (via the [Rich Display](/docs/core_concepts/rich_display_rendering) feature in scripts and flows, or via the [map](/docs/apps/app_configuration_settings/map) component of the App Editor) to display a map with one or more visible markers.
+Then, these details can be used by Windmill (via the [Rich Display](/docs/core_concepts/rich_display_rendering) feature in scripts and flows, or via the [map](/docs/apps/app_configuration_settings/map) component of the App editor) to display a map with one or more visible markers.
 
 ![Find location](./find_location.png "Find location")
 

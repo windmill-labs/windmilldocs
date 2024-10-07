@@ -63,9 +63,9 @@ export default function BlogPostItemContainer({ children, className }) {
 								key={tag + index}
 								className={
 									'inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium ' +
-									(tag.label === 'App Editor'
+									(tag.label === 'App editor'
 										? 'bg-orange-100 text-orange-800'
-										: tag.label === 'Flow Editor'
+										: tag.label === 'Flow editor'
 										? 'bg-emerald-100 text-emerald-800'
 										: tag.label === 'Enterprise Edition'
 										? 'bg-gray-50 text-blue-900'

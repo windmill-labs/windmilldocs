@@ -14,7 +14,7 @@ Although we support multiple database providers, Supabase is by far the most rec
 
 <br/>
 
-![Supabase Windmill](./0-header.png.webp)
+![Supabase Windmill](./0-header.png)
 
 This week, Supabase is celebrating their [8th Launch Week](https://supabase.com/launch-week). Today the team is launching their new Integrations Marketplace offering and asked us to exclusively preview this experience that allows you to connect your Supabase account with just a few clicks!
 

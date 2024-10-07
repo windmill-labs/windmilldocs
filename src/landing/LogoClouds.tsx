@@ -23,7 +23,7 @@ export default function LogoClouds() {
 		},
 		{
 			url: 'https://www.qovery.com/',
-			dark: '/images/brands/Qovery-dark.png',
+			dark: '/images/brands/Qovery-dark.svg',
 			light: '/images/brands/Qovery-light.svg',
 			name: 'Qovery',
 			anchor: 'qovery'
@@ -36,18 +36,17 @@ export default function LogoClouds() {
 			anchor: 'bloomcredit'
 		},
 		{
-			url: '/blog/teracapital-case-study',
-			dark: '/images/brands/teracapital-dark.svg',
-			light: '/images/brands/teracapital-light.svg',
-			name: 'Tera Capital',
-			gap: true
+			url: 'https://www.pave.com/',
+			dark: '/images/brands/pave-dark.svg',
+			light: '/images/brands/pave.svg',
+			name: 'Pave',
+			anchor: 'pave'
 		},
 		{
 			url: 'https://www.treatmyocd.com/',
 			dark: '/images/brands/nocd-logo-dark.svg',
 			light: '/images/brands/nocd-logo.svg',
-			name: 'Nocd',
-			gap: true
+			name: 'Nocd'
 		}
 	];
 
@@ -55,26 +54,24 @@ export default function LogoClouds() {
 		<div className="py-24 sm:py-32">
 			<div className="mx-auto max-w-7xl px-4 lg:px-8">
 				<h2 className="text-center text-lg font-semibold leading-8 text-gray-900/60">
-					Trusted by 1000+ organizations, including:
+					Trusted by 2000+ organizations, including:
 				</h2>
-				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-x-4 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
+				<div className="mx-auto mt-10 grid items-center max-w-lg grid-cols-3 gap-8 sm:max-w-xl sm:grid-cols-4 lg:mx-auto lg:max-w-6xl lg:grid-cols-6">
 					{logos.map((logo) => (
 						<a
 							key={logo.name}
 							href={logo.anchor ? `#${logo.anchor}` : logo.url}
 							target={logo.anchor ? '_self' : '_blank'}
 							title={String(logo.name)}
+							className="flex items-center justify-center"
 						>
 							<img
 								className={classNames(
-									'col-span-3 max-h-12 w-full object-contain lg:col-span-1 ',
-									logo.gap ? 'py-2' : '',
+									'w-full h-auto max-w-[150px] max-h-[75px] object-contain',
 									'grayscale transition-all hover:grayscale-0'
 								)}
 								src={colorMode === 'light' ? logo.light : logo.dark}
 								alt={logo.name}
-								width={158}
-								height={48}
 								loading="lazy"
 							/>
 						</a>

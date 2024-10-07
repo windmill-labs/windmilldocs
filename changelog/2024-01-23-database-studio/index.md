@@ -2,7 +2,7 @@
 slug: database-studio
 version: v1.251.1
 title: Database Studio
-tags: ['App Editor', 'Postgres']
+tags: ['App editor', 'Postgres']
 image: ./database-studio.png
 description: Introducing the Database Studio, a web-based database management tool that leverages Ag Grid for table display and interaction. In apps, interaction with database content made easy; from a SQL resource, display, edit, add rows, delete rows ... and connect to other components.
 features:
