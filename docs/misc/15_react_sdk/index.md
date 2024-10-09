@@ -95,7 +95,3 @@ function MyApp() {
 ```
 
 Replace YOUR_WORKSPACE and YOUR_APP_PATH with the corresponding values.
-
-### Example
-
-We have a private repository with a Next.js example. [Contact us](../6_getting_help/index.mdx) for access.
