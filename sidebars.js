@@ -857,7 +857,8 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/react_sdk/index',
-				'misc/partners/index'
+				'misc/partners/index',
+				'misc/windows_workers/index'
 			]
 		}
 	]
