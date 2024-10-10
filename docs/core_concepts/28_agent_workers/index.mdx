@@ -46,6 +46,7 @@ GRANT SELECT, UPDATE, INSERT on dependency_map to agent;
 GRANT SELECT, UPDATE on flow to agent;
 GRANT SELECT, UPDATE on flow_version to agent;
 GRANT SELECT, UPDATE on schedule to agent;
+GRANT SELECT (hostname, log_ts) ON log_file TO agent;
 
 CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
 CREATE POLICY agent ON script TO agent USING (tag = '<x>' OR tag = '<y>');
@@ -59,6 +60,7 @@ CREATE POLICY agent
    FOR INSERT
    TO agent
    WITH CHECK  (true);
+
 
 ```
 
