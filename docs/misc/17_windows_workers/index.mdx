@@ -1,0 +1,124 @@
+---
+title: Windows-Workers
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Windows Workers
+
+Windows Native Workers are a [Self-Hosted Enterprise](/pricing) Feature.
+
+You can use the Windows worker natively if you do not want to run Docker or WSL on Windows (e.g., for policy or security reasons).
+This feature supports the **Python**, **Bun**, and **PowerShell** executors.
+
+You can connect Windows workers to your existing Dockerized or cloud self-hosted PostgreSQL database and Windmill server.
+
+### Setting up Windmill Worker Executable
+
+1. **Set Up a Working Directory**:
+   - Create a directory from where you want to run the Windmill worker, e.g., `C:\Users\Alex\windmill`.
+
+2. **Download Windmill Executable**:
+   - Download the `windmill-ee.exe` file into the newly created directory from the [releases page](https://github.com/windmill-labs/windmill/releases).
+
+3. **Set Basic Environment Variables**:
+   - Set the following environment variables (replace the placeholders with your specific values):
+     ```powershell
+     # Replace these variables with your specific configuration
+     $env:MODE="worker"
+     $env:DATABASE_URL="postgres://postgres:changeme@172.12.0.1:5432/windmill?sslmode=disable"
+     $env:SKIP_MIGRATION="true"
+     ```
+     More environment variables and worker settings can be found [here](https://github.com/windmill-labs/windmill?tab=readme-ov-file#environment-variables).
+
+4. **Run windmill-ee.exe**:
+   ```powershell
+   PS C:\Users\Alex\windmill> .\windmill-ee.exe
+   ```
+   We recommend running Windmill as a service on your Windows environment using `sc` or `NSSM` to monitor the Windmill worker, start it at system boot, and manage the restart policy.
+
+After the basic setup, follow these steps for each language your worker should support.
+
+### Python Executor
+
+1. **Install Python**: [Download Python](https://python.org/downloads).
+   - **Note**: When installing, make sure to check the box to add Python to the `PATH`.
+
+2. **Verify Python Installation**:
+   - Open a new PowerShell window and type `python`. You should see output similar to the following:
+     ```powershell
+     PS C:\Users\Alex> python
+     Python 3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)] on win32
+     Type "help", "copyright", "credits" or "license" for more information.
+     >>> 
+     ```
+
+3. **Install `uv`**:
+   - Run the following command in PowerShell:
+     ```powershell
+     pip install uv
+     ```
+
+4. **Locate Python Installation**:
+   - Find where Python is installed by running:
+     ```powershell
+     where.exe python
+     ```
+     Example output:
+     ```plaintext
+     C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+     ```
+
+5. **Set Environment Variables**:
+   - Add the following environment variables (replace the placeholders with your specific values):
+     ```powershell
+     # Replace these variables with your specific configuration
+     $env:PYTHON_PATH="C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe"
+     ```
+
+### Bun Executor
+
+1. **Install Bun**: Follow the official [documentation](https://bun.sh/docs/installation) for Windows.
+2. **Locate Bun Installation**:
+   - Find where Bun is installed by running:
+     ```powershell
+     where.exe bun
+     ```
+     Example output:
+     ```plaintext
+     C:\Users\Alex\.bun\bin\bun.exe
+     ```
+
+3. **Set Environment Variables**:
+   - Add the following environment variables (replace the placeholders with your specific values):
+     ```powershell
+     # Replace these variables with your specific configuration
+     $env:BUN_PATH="C:\Users\Alex\.bun\bin\bun.exe"
+     ```
+
+### PowerShell Executor
+
+1. **Install PowerShell 7+ (stable)**: Ensure you have the latest stable release of PowerShell by following the [official documentation](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows).
+   - Start PowerShell 7 and verify you're running PowerShell 7 by checking `$PSVersionTable`:
+     ```powershell
+     $PSVersionTable
+     PSVersion 7.4.5
+     ```
+
+2. **Locate PowerShell 7 Installation**:
+   - Find where PowerShell 7 is installed by running:
+     ```powershell
+     where.exe pwsh.exe # Note: previous versions used powershell.exe
+     ```
+     Example output:
+     ```plaintext
+     C:\Program Files\PowerShell\7\pwsh.exe
+     ```
+
+3. **Set Environment Variables**:
+   - Add the following environment variables (replace the placeholders with your specific values):
+     ```powershell
+     # Replace these variables with your specific configuration
+     $env:POWERSHELL_PATH="C:\Program Files\PowerShell\7\pwsh.exe"
+     ```
+
