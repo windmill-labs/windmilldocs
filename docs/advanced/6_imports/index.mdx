@@ -107,6 +107,13 @@ import (
 )
 ```
 
+You can pin dependencies in Go using those annotations in the body of the script:
+
+```go
+// Pin dependencies partially in go.mod with a comment starting with "//require":
+//require rsc.io/quote v1.5.1
+```
+
 ## Imports in PowerShell
 
 For PowerShell, imports are parsed when the script is run and modules are automatically installed if they are not found in the cache.
