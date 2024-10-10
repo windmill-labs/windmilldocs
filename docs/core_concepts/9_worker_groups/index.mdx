@@ -321,6 +321,10 @@ Only tags for jobs that have been delayed by more than 3 seconds in the last 14 
 
 ![Queue Metrics](./queue_metrics.png 'Queue Metrics')
 
+### Queue Metric Alerts
+Enterprise Edition users can set up [Critical Alerts](../37_critical_alert_channels/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
+
+![Queue Metrics](./queue_metrics_alert.png 'Queue Metrics Alert')
 ## Workers and vCPUs
 
 Even though Windmill's architecture relies on workers, Windmill's [pricing](/pricing) is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with 4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by 24. Each vCPU can run up to ~26M jobs per month.
