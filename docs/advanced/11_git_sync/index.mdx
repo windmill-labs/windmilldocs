@@ -4,6 +4,8 @@ import DocCard from '@site/src/components/DocCard';
 
 From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
 
+You can use this feature to [Deploy to prod using a git workflow](#git-sync---item-mode-deploy-to-prod-using-a-git-workflow).
+
 :::tip Version control
 
 For all details on Version control in Windmill, see [Version control](../../advanced/13_version_control/index.mdx).
@@ -92,6 +94,8 @@ https://AZURE_DEVOPS_TOKEN(<path_to_the_azure_resource>)@dev.azure.com/<organiza
 
 This feature can be used alongside GiHub Actions to adopt a robust development process for your Windmill scripts, flows and apps,
 with for example a Staging Workspace making automatically PRs on a repo that pushes to a Prod workspace upon merge.
+
+![Local development Setup](../4_local_development/local_development.png 'Local development Setup')
 
 <iframe
 	style={{ aspectRatio: '16/9' }}

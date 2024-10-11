@@ -10,9 +10,13 @@ At the [workspace level](#workspace-object-storage), what is exclusive to the [E
 
 Additionally, for [instance integration](#instance-object-storage), the Enterprise version offers advanced features such as large-scale log management and distributed dependency caching.
 
+![Object storage in Windmill](./object_storage_in_windmill.png 'Object storage in Windmill')
+
 ## Workspace object storage
 
 Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials.
+
+![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
 
 Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
 
@@ -30,8 +34,6 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 	"s3": "path/to/file"
 }
 ```
-
-![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
 
 ### Resources permissions
 
@@ -352,7 +354,9 @@ Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) sect
 
 ## Instance object storage
 
-Under [Enterprise Edition](/pricing), Instance object storage offers advanced features to enhance performance and scalability at the [instance](../../advanced/18_instance_settings/index.mdx) level. This integration is separate from the [Workspace object storage](#workspace-object-storage) and provides solutions for large-scale log management and distributed dependency caching.
+Under [Enterprise Edition](/pricing), instance object storage offers advanced features to enhance performance and scalability at the [instance](../../advanced/18_instance_settings/index.mdx) level. This integration is separate from the [Workspace object storage](#workspace-object-storage) and provides solutions for large-scale log management and distributed dependency caching.
+
+![Instance object storage infographic](./instance_object_storage_infographic.png 'Instance object storage infographic')
 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
 
