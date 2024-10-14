@@ -41,17 +41,33 @@ Cron jobs are one of many ways to [trigger workflows](../../getting_started/9_tr
 
 :::
 
-## Configure schedules for each task ([Script][scripts], [Workflows][flows])
+## Set a schedule
 
-From your workspace, navigate to the dedicated `Schedules` menu and select `New Schedule`.
+Scripts and flows can have unique [primary schedules](#primary-schedule) and multiple [other schedules](#other-schedules).
+
+### Primary schedule
+
+Each script and flow can have a primary schedule that can be configured from the script or flow settings.
+
+There can only be one primary schedule per script or flow.
+
+From the script [settings](../../script_editor/settings.mdx), toggle on 'Schedule enabled' and [Deploy](../0_draft_and_deploy/index.mdx) the script.
+
+![Primary schedule](./primary_schedule.png 'Primary schedule')
+
+### Other schedules
+
+From your workspace, navigate to the dedicated `Schedules` menu and select `New Schedule`. You can also do that in the Other schedules section of a script.
+
+There can be multiple other schedules per script.
 
 ![Schedules menu](./6-schedules-menu.png.webp 'Schedules menu')
 
-1. Configure the **schedule frequency** using cron syntax, the simplified builder or a prompt with [Windmill AI](../22_ai_generation/index.mdx).
+1. Configure the schedule frequency using cron syntax, the simplified builder or a prompt with [Windmill AI](../22_ai_generation/index.mdx).
 
-2. Select a **runnable** ([script][scripts] or [flow][flows]) from your workspace.
+2. Select a runnable ([script][scripts] or [flow][flows]) from your workspace.
 
-3. Fill in the **arguments** that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flows].
+3. Fill in the arguments that will be used for the automation. The arguments are the ones of the given script or flow. If you want your arguments to be dynamic, you might want to use a [workflow][flows].
 
 4. Optional: Add an [Error handler](#schedule-error-handler).
 
