@@ -343,13 +343,10 @@ Syntax:
 goto(path: string, newTab?: boolean)
 ```
 
-Parameters:
-
-`path`
-The URL to navigate to.
-
-`newTab` (optional)
-Whether to open the URL in a new tab or not.
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `path`    | string | The URL to navigate to. |
+| `newTab` (optional) | boolean | Whether to open the URL in a new tab or not. |
 
 Example:
 
@@ -370,11 +367,10 @@ Syntax:
 setTab(id: string, index: string)
 ```
 
-Parameters:
-
-`id` string: The id of the component.
-
-`index` string: The index of the tab to set.
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the component. |
+| `index`   | string | The index of the tab to set. |
 
 Example:
 
@@ -391,6 +387,57 @@ Where 'a' is the id of the component and 1 is the index of the tab to set.
 />
 <br />
 
+### recompute
+
+Use the `recompute` function to recompute a component.
+
+Syntax:
+
+```js
+recompute(id: string)
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the component to recompute. |
+
+Example:
+
+
+```js
+recompute('a');
+```
+
+### getAgGrid
+
+Use the `getAgGrid` function to get the ag-grid instance of a table.
+
+Syntax:
+
+```js
+getAgGrid(id: string)
+```
+
+### setValue
+
+The `setValue` function is meant to manually set or force the value of a component. This can be convenient in cases where [connecting components](./2_connecting_components/index.mdx) is not the easiest pattern.
+
+```js
+setValue(id: string, value: any)
+```
+
+Note that it's a bad idea to mix dynamic default value and setValue together.
+
+
+### setSelectedIndex
+
+Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+
+Syntax:
+
+```js
+setSelectedIndex(id: string, index: number)
+```
 ### open
 
 Use the `open` function to open a modal or drawer.
@@ -401,10 +448,9 @@ Syntax:
 open(id: string)
 ```
 
-Parameters:
-
-`id` string
-The id of the modal or drawer component to open.
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the modal or drawer component to open. |
 
 Example:
 
@@ -422,10 +468,9 @@ Syntax:
 close(id: string)
 ```
 
-Parameters:
-
-`id` string
-The id of the modal or drawer component to close.
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the modal or drawer component to close. |
 
 Example:
 
@@ -433,71 +478,12 @@ Example:
 close('a');
 ```
 
-### recompute
-
-Use the `recompute` function to recompute a component.
-
-Syntax:
-
-```js
-recompute(id: string)
-```
-
-Parameters:
-
-`id` string
-The id of the component to recompute.
-
-Example:
-
-```js
-recompute('a');
-```
-
-### getAgGrid
-
-Use the `getAgGrid` function to get the ag-grid instance of a table.
-
-Syntax:
-
-```js
-getAgGrid(id: string)
-```
-
-### setSelectedIndex
-
-Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
-
-Syntax:
-
-```js
-setSelectedIndex(id: string, index: number)
-```
-
-### setValue
-
-The `setValue` function is meant to manually set or force the value of a component. This can be convenient in cases where [connecting components](./2_connecting_components/index.mdx) is not the easiest pattern.
-
-```js
-setValue(id: string, value: any)
-```
-
-Note that it's a bad idea to mix dynamic default value and setValue together.
-
 ### validate
 
 Make a specific field of a form in a Validate state.
 
 ```js
 validate(id: string, key: string)
-```
-
-### validateAll
-
-Make all fields of a form in a Validate state.
-
-```js
-validateAll(id: string, key: string)
 ```
 
 ### invalidate
@@ -508,21 +494,24 @@ Invalidate a specific field of a form.
 invalidate(id: string, key: string, error: string)
 ```
 
-Parameters:
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the form component. |
+| `key`     | string | The key of the field to invalidate. |
+| `error`   | string | The error message to display. |
 
-`id` string
+### validateAll
 
-### recompute
-
-Recompute a component.
+Make all fields of a form in a Validate state.
 
 ```js
-recompute(id: string)
+validateAll(id: string, key: string)
 ```
 
-Parameters:
-
-`id` string
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the form component. |
+| `key`     | string | The key of the field to validate. |
 
 ### clearFiles
 
@@ -532,9 +521,10 @@ Clear the files of a file input.
 clearFiles(id: string)
 ```
 
-Parameters:
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the file input component. |
 
-`id` string
 
 ### showToast
 
@@ -544,10 +534,10 @@ Sends a toast notification.
 showToast(message: string, error: boolean)
 ```
 
-Parameters:
-
-`message` string
-`error` boolean
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `message` | string | The message to display. |
+| `error`   | boolean | Whether the toast is an error toast or not. |
 
 ### waitJob
 
@@ -560,11 +550,36 @@ waitJob(jobId: string).then(() => {
 
 ```
 
-Parameters:
-
-`jobId` string
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `jobId`   | string | The id of the job to wait for. |
 
 Note that the helper returns a promise.
+
+### askNewResource
+
+Ask user [resource](../core_concepts/3_resources_and_types/index.mdx) on a [UserResourceComponent](./4_app_configuration_settings/resource_select.mdx).
+
+```js
+askNewResource(id: string): void
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id`      | string | The id of the component. |
+
+### downloadFile
+
+Download a file from a url, [base64 encoded string](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding), [dataUrl](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data) or [S3 object](../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage).
+
+```js
+downloadFile(input: string | { s3: string; storage?: string; }, fileName?: string): void
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `input`   | string | The url, base64 encoded string, dataUrl or S3 object. |
+| `fileName` (optional) | string | The name of the file to download. |
 
 ## Policy
 

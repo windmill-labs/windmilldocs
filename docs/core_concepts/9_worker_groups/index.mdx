@@ -48,13 +48,13 @@ Examples of configurations include:
 2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
 
-## Assign custom Worker Groups
+## Assign custom worker groups
 
 Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
 This feature is useful if you want to run some scripts on a GPU machine, or if you want to run some scripts on high-memory machine.
 
-### How to have a Worker join a Worker Group
+### How to have a worker join a worker group
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -97,7 +97,7 @@ Assign replicas, resource constraints, and that's it, the worker will automatica
 
 Worker only require a database URL and can thus be spawned in separate VPCs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
 
-### Set Tags to Assign Specific Queues
+### Set tags to assign specific queues
 
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
@@ -158,7 +158,7 @@ gpu(workspace+workspace2)
 
 Only 'workspace' and 'workspace2' will be able to use the `gpu` tags.
 
-### How to assign Worker tags to a Worker Group
+### How to assign worker tags to a worker group
 
 Use the edit/create config next to the worker group name in Windmill UI:
 
@@ -170,7 +170,7 @@ Use the edit/create config next to the worker group name in Windmill UI:
 WORKER_TAGS=tag1,tag2
 ```
 
-### How to assign a custom Worker Group to a script or flow
+### How to assign a custom worker group to a script or flow
 
 For scripts deployed on the script editor, select the corresponding worker group tag in the settings section.
 
@@ -222,7 +222,7 @@ You need to configre [Critical alert channels](../37_critical_alert_channels/ind
 	/>
 </div>
 
-## Create Worker Group config
+## Create worker group config
 
 <img
 	src={require('./wg_config_infographics.png').default}
@@ -255,7 +255,7 @@ Examples of configurations include:
 2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
 
-## Init Scripts
+## Init scripts
 
 [Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
@@ -311,9 +311,9 @@ View logs from any workers or servers directly within the service logs section o
 	/>
 </div>
 
-## Queue Metrics
+## Queue metrics
 
-You can visualize metrics for Delayed jobs per tag and Queue delay per tag.
+You can visualize metrics for delayed jobs per tag and queue delay per tag.
 
 Metrics are available under "Queue metrics" button on the Workers page.
 
@@ -321,8 +321,9 @@ Only tags for jobs that have been delayed by more than 3 seconds in the last 14 
 
 ![Queue Metrics](./queue_metrics.png 'Queue Metrics')
 
-### Queue Metric Alerts
-Enterprise Edition users can set up [Critical Alerts](../37_critical_alert_channels/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
+### Queue metric alerts
+
+[Enterprise Edition](/pricing) users can set up [Critical Alerts](../37_critical_alert_channels/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
 
 ![Queue Metrics](./queue_metrics_alert.png 'Queue Metrics Alert')
 ## Workers and vCPUs

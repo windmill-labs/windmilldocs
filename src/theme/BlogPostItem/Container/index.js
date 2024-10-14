@@ -165,7 +165,7 @@ export default function BlogPostItemContainer({ children, className }) {
 						<div className="mt-6">
 							<h4 className="text-lg font-medium text-gray-900 dark:text-white flex flex-row gap-1 items-center">
 								<Blocks className="inline-block w-6 h-6 mr-2" />
-								New Features
+								New features
 							</h4>
 							<ul className="mt-4 text-base dark:text-gray-200 text-gray-600 pl-8 flex flex-col gap-2">
 								{frontMatter?.features.map((newFeature, idx) => (
