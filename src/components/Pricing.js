@@ -586,6 +586,18 @@ const sections = [
 				tooltip: 'Self-hosted only'
 			},
 			{
+				name: 'Agent workers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/agent_workers',
+				tooltip: 'Self-hosted only'
+			},
+			{
 				name: 'Isolated & dedicated workers and database',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -630,17 +642,6 @@ const sections = [
 				link: '/docs/core_concepts/staging_prod'
 			},
 			{
-				name: 'Agent workers',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': true,
-					'tier-team': true
-				},
-				link: '/docs/core_concepts/agent_workers'
-			},
-			{
 				name: 'OpenID Connect (OIDC)',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -650,7 +651,7 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/oidc'
-			},
+			},	
 			{
 				name: 'Codebases & bundles',
 				tiers: {
@@ -1110,23 +1111,32 @@ export default function Pricing() {
 							</div>
 
 							<a
-								href={tier.href}
-								target="_blank"
-								aria-describedby={tier.id}
-								className={classNames(
-									tier.id === 'tier-team'
-									? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-									? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-									: tier.enterprise_edition
-									? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
-									: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
-									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-								)}
-								>
-								{tier.customMessage ? tier.customMessage : 'Get in touch'}
-								</a>
-							<ul
+							href={
+								tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+									: tier.href
+							}
+							target="_blank"
+							aria-describedby={tier.id}
+							className={classNames(
+								tier.id === 'tier-team'
+								? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+								: tier.enterprise_edition
+								? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
+								: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
+								'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+							)}
+						>
+							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								? 'Try it for a month'
+								: tier.customMessage 
+								? tier.customMessage 
+								: 'Get in touch'}
+						</a>
+
+						<ul
 							role="list"
 							className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
 							style={{ marginBottom: '4rem' }}

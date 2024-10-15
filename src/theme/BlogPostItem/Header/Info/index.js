@@ -35,9 +35,7 @@ function Date({ date, formattedDate }) {
 		</time>
 	);
 }
-function Spacer() {
-	return <>{' · '}</>;
-}
+
 export default function BlogPostItemHeaderInfo({ className }) {
 	const { metadata } = useBlogPost();
 	const { date, formattedDate, readingTime } = metadata;
@@ -46,7 +44,6 @@ export default function BlogPostItemHeaderInfo({ className }) {
 			<Date date={date} formattedDate={formattedDate} />
 			{typeof readingTime !== 'undefined' && (
 				<>
-					<Spacer />
 					<ReadingTime readingTime={readingTime} />
 				</>
 			)}
