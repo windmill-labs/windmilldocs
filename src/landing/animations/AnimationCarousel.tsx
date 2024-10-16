@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AnimationCarousel({ items, currentIndex, itemWidth = 1000 }) {
-	const initialOffsetX = -(currentIndex * itemWidth + currentIndex * 16);
+	const initialOffsetX = items.length === 1 ? 0 : -(currentIndex * itemWidth + currentIndex * 16);
 
 	return (
 		<div
