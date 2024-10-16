@@ -48,7 +48,7 @@ const initialEdges = [
 	{ id: '6-7', source: '6', target: '7' }
 ];
 
-export default function FlowAnimation({ active }) {
+export default function FlowAnimation({ active, only }) {
 	const [initialNodes, setInitialNodes] = React.useState<
 		Array<{
 			id: string;
@@ -110,7 +110,7 @@ export default function FlowAnimation({ active }) {
 
 	const [windowIndex, setWindowIndex] = React.useState(0);
 	const [bgColor, setBgColor] = React.useState('black');
-	const [step, setStep] = React.useState(-1);
+	const [step, setStep] = React.useState(only ? 0 : -1);
 	const nodeTypes = useMemo(() => ({ textUpdater: Node }), []);
 	const [selectedFile, setSelectedFile] = React.useState('your_flow.yaml');
 
@@ -170,6 +170,7 @@ schema:
 						i === 7 ? { ...node, data: { ...node.data, selected: true } } : node
 					)
 				);
+
 				setStep(0);
 			},
 			rollback: () => {
@@ -318,7 +319,7 @@ schema:
 		}
 	];
 
-	useAnimateScroll(active, steps, flowScrollCount, scriptScrollCount);
+	useAnimateScroll(active, steps, flowScrollCount, only ? 0 : scriptScrollCount);
 
 	const currentText = `import Stripe from 'stripe';
 			

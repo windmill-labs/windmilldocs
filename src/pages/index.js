@@ -25,7 +25,7 @@ function HomepageHeader() {
 			<LogoClouds />
 			<HeroExample />
 			<div className="hidden sm:block">
-				<TutorialSection />
+				<TutorialSection subIndex={undefined} />
 			</div>
 			<div className="block sm:hidden">
 				<MobileTutorialSection />
