@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
+import { Plus, Minus, Link as LinkIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const faqs = [
@@ -166,7 +166,7 @@ const faqs = [
 				The number of vCPUs considered is the number of production vCPUs, not of development
 				staging, if you have separate instances. So you can simply set limits in the{' '}
 				<a
-					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml"
+					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L50"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 					target="_blank"
 					rel="noopener noreferrer"
@@ -312,28 +312,36 @@ export default function FAQ() {
 				<dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
 					{faqs.map((faq) => (
 						<Disclosure as="div" key={faq.question} className="pt-6" id={faq.id}>
-							{({ open }) => (
-								<>
-									<dt>
-										<Disclosure.Button className="flex w-full items-start justify-between text-left text-gray-900 dark:text-white">
-											<span className="text-base font-semibold leading-7">{faq.question}</span>
-											<span className="ml-6 flex h-7 items-center">
-												{open ? (
-													<MinusSmallIcon className="h-6 w-6" aria-hidden="true" />
-												) : (
-													<PlusSmallIcon className="h-6 w-6" aria-hidden="true" />
-												)}
-											</span>
-										</Disclosure.Button>
-									</dt>
-									<Disclosure.Panel as="dd" className="mt-2 pr-12">
-										<p className="text-base leading-7 text-gray-600 dark:text-gray-200">
-											{faq.answer}
-										</p>
-									</Disclosure.Panel>
-								</>
-							)}
-						</Disclosure>
+						{({ open }) => (
+						  <>
+							<dt>
+							  <Disclosure.Button className="flex w-full items-start justify-between text-left text-gray-900 dark:text-white">
+								<span className="text-base font-semibold leading-7">{faq.question}</span>
+								<span className="ml-6 flex h-7 items-center">
+								  {open && (
+									<>
+									  <LinkIcon
+										className="h-5 w-5 text-gray-400 mr-2 cursor-pointer"
+										aria-hidden="true"
+										onClick={() => {
+										  window.location.hash = faq.id;
+										}}
+									  />
+									  <Minus className="h-6 w-6" aria-hidden="true" />
+									</>
+								  )}
+								  {!open && <Plus className="h-6 w-6" aria-hidden="true" />}
+								</span>
+							  </Disclosure.Button>
+							</dt>
+							<Disclosure.Panel as="dd" className="mt-2 pr-12">
+							  <p className="text-base leading-7 text-gray-600 dark:text-gray-200">
+								{faq.answer}
+							  </p>
+							</Disclosure.Panel>
+						  </>
+						)}
+					  </Disclosure>
 					))}
 				</dl>
 			</div>
