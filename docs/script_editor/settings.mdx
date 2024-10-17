@@ -2,13 +2,29 @@ import DocCard from '@site/src/components/DocCard';
 
 # Settings
 
-Each script has metadata associated with it, enabling it to be defined and configured in depth.
+Each script has settings associated with it, enabling it to be defined and configured in depth.
 
-![Script Metadata](../assets/code_editor/script_metadata.png 'Script Metadata')
+![Script settings](../../static/images/script_languages.png 'Script settings')
 
-## Path
+## Metadata
 
-**Path** is the Script's unique identifier that consists of the [script's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
+Metadata is used to define the script's path, summary, description, language and kind.
+
+### Summary
+
+Summary (optional) is a short, human-readable summary of the Script. It will be displayed as a title across Windmill. If omitted, the UI will use the `path` by default.
+
+It can be pre-filled automatically using [Windmill AI](../core_concepts/22_ai_generation/index.mdx):
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/summary_compilot.mp4"
+/>
+
+### Path
+
+Path is the Script's unique identifier that consists of the [script's owner](../core_concepts/16_roles_and_permissions/index.mdx#permissions-and-access-control), and the script's name.
 The owner can be either a user, or a group of users ([folder](../core_concepts/8_groups_and_folders/index.mdx#folders)).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -24,19 +40,11 @@ The owner can be either a user, or a group of users ([folder](../core_concepts/8
 	/>
 </div>
 
-## Summary
+### Description
 
-Summary (optional) is a short, human-readable summary of the Script. It will be displayed as a title across Windmill. If omitted, the UI will use the `path` by default.
+This is where you can give instructions to users on how to run your Script. It supports markdown.
 
-It can be pre-filled automatically using [Windmill AI](../core_concepts/22_ai_generation/index.mdx):
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/summary_compilot.mp4"
-/>
-
-## Language
+### Language
 
 Language of the script. Windmill supports:
 - [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Bun & Deno)
@@ -53,23 +61,63 @@ The setting applies to scripts, flows and apps and is global to all users within
 
 ![Configurable Default Languages](../assets/script_editor/configurable-languages.png 'Configurable Default Languages')
 
-## Description
+### Script kind
 
-This is where you can give instructions to users on how to run your Script. It supports markdown.
-
-## Concurrency limits
-
-The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows.
+You can attach additional functionalities to Scripts by specializing them into specific Script kinds (Actions, Trigger, Approval, Error handler).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Concurrency Limit"
-		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
+		title="Script kind"
+		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
+		href="/docs/script_editor/script_kinds"
+	/>
+</div>
+
+## Runtime
+
+Runtime settings allow you to configure how your script is executed.
+
+![Script runtime](../../static/images/script_runtime.png "Script runtime")
+
+### Concurrency limits
+
+The Concurrency limit feature allows you to define concurrency limits for scripts and inline scripts within flows.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Concurrency limit"
+		description="The Concurrency limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
 		href="/docs/script_editor/concurrency_limit"
 	/>
 </div>
 
-## Perpetual Scripts
+### Worker group tag
+
+Scripts can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.mdx) for efficient execution on different machines with varying specifications.
+
+For scripts saved on the script editor, select the corresponding worker group tag in the [settings](../script_editor/settings.mdx) section.
+
+![Worker group tag](../core_concepts/9_worker_groups/select_script_builder.png.webp)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Worker Groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
+</div>
+
+### Cache
+
+Caching a script step means caching the results for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
+
+### Timeout
+
+Add a custom timeout for this script, for a given duration.
+
+If enabled to execution will be stopped after the timeout.
+
+### Perpetual Scripts
 
 Perpetual scripts restart upon ending unless canceled.
 
@@ -93,14 +141,102 @@ Perpetual scripts restart upon ending unless canceled.
 
 <br />
 
-## Worker group tag
+### Dedicated workers
 
-Worker group tagIf you want to run some scripts on a GPU machine.
+In this mode, the script is meant to be run on [dedicated workers](../core_concepts/9_worker_groups/index.mdx) that run the script at native speed. Can reach >1500rps per dedicated worker. Only available on enterprise edition and for Python3, Deno and Bun. For other languages, the efficiency is already on par with deidcated workers since they do not spawn a full runtime.
+
+### Delete after use
+
+Delete [logs](../core_concepts/14_audit_logs/index.mdx), arguments and results after use.
+
+:::warning
+
+This settings ONLY applies to [synchronous webhooks](../core_concepts/4_webhooks/index.mdx#synchronous) or when the script is used within a [flow](../flows/1_flow_editor.mdx). If used individually, this script must be triggered using a synchronous endpoint to have the desired effect.
+<br/>
+The logs, arguments and results of the job will be completely deleted from Windmill once it is complete and the result has been returned.
+<br/>
+The deletion is irreversible.
+
+:::
+
+### Runs visibility
+
+When this option is enabled, manual [executions](../core_concepts/5_monitor_past_and_future_runs/index.mdx) of this script are invisible to users other than the user running it, including the [owner(s)](../core_concepts/16_roles_and_permissions/index.mdx). This setting can be overridden when this script is run manually from the advanced menu (available when the script is [deployed](../core_concepts/0_draft_and_deploy/index.mdx)).
+
+## Generated UI
+
+main function's arguments can be given advanced settings that will affect the inputs' [auto-generated UI](../core_concepts/6_auto_generated_uis/index.mdx) and [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.mdx).
+
+Here is an example on how to define a [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) list as an enum of strings using the `Generated UI` menu.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+	src="/videos/advanced_parameters_enum.mp4"
+/>
+
+<br/>
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Worker Groups"
-		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-		href="/docs/core_concepts/worker_groups"
+		title="Generated UI"
+		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		href="/docs/script_editor/customize_ui"
 	/>
 </div>
+
+## Triggers
+
+Triggers allow you to automate the execution of your scripts based on various events or conditions.
+
+![Script triggers](../../static/images/script_triggers.png "Script triggers")
+
+### Webhooks
+
+Each Script and Flow created in Windmill gets autogenerated webhooks. The webhooks depend on how they are triggered, and what their return values are.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Webhooks"
+		description="Each Script and Flow created in Windmill gets autogenerated webhooks."
+		href="/docs/core_concepts/webhooks"
+	/>
+</div>
+
+### Schedules
+
+Schedules let you run your script at specified intervals or times, perfect for recurring tasks or periodic data updates.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+	/>
+</div>
+
+### Routes
+
+Windmill supports custom HTTP routes to trigger a script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Custom HTTP routes"
+		description="Windmill supports custom HTTP routes to trigger a script or flow."
+		href="/docs/core_concepts/http_routing"
+	/>
+</div>
+
+### Email
+
+Scripts and flows can be triggered by email messages sent to a specific email address, leveraging SMTP.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Email triggers"
+		description="Scripts and flows can be triggered by email messages sent to a specific email address, leveraging SMTP."
+		href="/docs/advanced/email_triggers"
+	/>
+</div>
+

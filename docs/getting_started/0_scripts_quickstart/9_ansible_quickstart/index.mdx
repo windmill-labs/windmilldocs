@@ -7,9 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Ansible quickstart
 
-## Windmill Scripts
-
-In this quickstart guide, we will write our first script/playbook with ansible.
+In this quickstart guide, we will write our first script/playbook with [Ansible](https://www.ansible.com/).
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -48,14 +46,41 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code): For ansible this is a playbook file written in yaml.
+- [Code](#code-playbook): For ansible this is a playbook file written in yaml.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.playbook.yml` and `<path>.script.yaml`
 
-#### Create an Ansible playbook script
-
 ![Ansible in Windmill](./create_ansible_script.png)
+
+## Settings
+
+![New script](../../../../static/images/script_languages.png "New script")
+
+As part of the [settings](../../../script_editor/settings.mdx) menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
+
+- **Path** is the Script's unique identifier that consists of the
+  [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
+  The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
+- **Summary** (optional) is a short, human-readable summary of the Script. It
+  will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
+  default.
+- **Language** of the script.
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
+  to users on how to run your Script. It supports markdown.
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+
+This menu also has additional settings on [Runtime](../../../script_editor/settings.mdx#runtime), [Generated UI](#triggers) and [Triggers](../../../script_editor/settings.mdx#triggers).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Settings"
+		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
+		href="/docs/script_editor/settings"
+	/>
+</div>
+
+Now click on the code editor on the left side.
 
 ## Code (Playbook)
 

@@ -684,6 +684,17 @@ const sections = [
 					'tier-team': false
 				},
 				link: '/docs/misc/s3_cache'
+			},
+			{
+				name: 'Windows workers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/windows_workers'
 			}
 		]
 	},
