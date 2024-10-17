@@ -540,7 +540,6 @@ const sidebars = {
 						'script_editor/settings',
 						'script_editor/script_kinds',
 						'script_editor/customize_ui',
-						'script_editor/worker_group_tag',
 						'script_editor/concurrency_limit',
 						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
@@ -854,11 +853,11 @@ const sidebars = {
 				'core_concepts/codebases_and_bundles/index',
 				'apps/css_editor',
 				'core_concepts/multiplayer/index',
+				'misc/react_sdk/index',
+				'misc/windows_workers/index',
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
-				'misc/react_sdk/index',
-				'misc/partners/index',
-				'misc/windows_workers/index'
+				'misc/partners/index'
 			]
 		}
 	]
