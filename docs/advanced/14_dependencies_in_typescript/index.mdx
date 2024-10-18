@@ -19,7 +19,7 @@ Moreover, there are two other tricks, compatible with the methodologies mentione
 
 To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
-![Dependency management & imports](../6_imports/dependency_management.png "Dependency management & imports")
+![Dependency management & imports](../6_imports/dependency_management.png 'Dependency management & imports')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -209,13 +209,21 @@ Note that in both the webeditor and with the CLI, your scripts do not necessaril
 It works extremely well in combination with [Developing scripts locally](../4_local_development/index.mdx) and you can easily sync your scripts with the [CLI](../3_cli/index.mdx).
 
 It is possible to import directly from other TypeScript scripts. One can simply follow the path layout. For instance,
-`import { foo } from "../script_name.ts"`. A more verbose example below:
+`import { foo } from "./script_name.ts"`. A more verbose example below:
 
 ```typescript
-import { main as foo, util } from '../my_script_path.ts';
+import { main as foo, util } from './my_script_path.ts';
 ```
 
 Relative imports syntax is much preferred as it will work on [local editors](../4_local_development/index.mdx) without further configuration.
+
+In TypeScript Bun, you can drop the .ts extension so:
+
+```typescript
+import { main as foo, util } from './my_script_path';
+```
+
+would work too.
 
 You may also use absolute imports:
 
