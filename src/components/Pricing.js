@@ -716,6 +716,17 @@ const sections = [
 				tooltip: 'Only available on self-hosting and enterprise edition on private clusters'
 			},
 			{
+				name: 'Autoscaling',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/autoscaling'
+			},
+			{
 				name: 'Critical alert channels',
 				tiers: {
 					'tier-free-selfhost': false,
