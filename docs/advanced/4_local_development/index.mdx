@@ -12,7 +12,7 @@ To simply create and edit scripts and flows locally, you can directly go to the 
 
 For a more complex setup involving Git, you can go to the [Local development Recommended Setup](#local-development-recommended-setup).
 
-## Local development Recommended Setup
+## Local development recommended setup
 
 Local development involves two components:
 
@@ -48,11 +48,12 @@ The second part is well covered in:
 
 ## Develop locally
 
-Local development quickstart:
+You can develop locally by using [Windmill CLI](../3_cli/index.mdx) to clone a workspace and edit scripts and flows in your favorite IDE.
+
+Here is a quickstart video:
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	autoPlay
 	controls
 	id="Local development quickstart"
 	src="/videos/local_dev_quickstart.mp4"
@@ -66,9 +67,13 @@ All details and commands are available [below](#editing-and-creating-scripts-loc
 
 Developing Windmill scripts and flows from your favorite IDE is made easy by using Windmill CLI. Here we will go through the full process of cloning a Windmill workspace locally, creating and editing new scripts and flows, and pushing them back the Windmill workspace.
 
-:::tip
-Not familiar with Windmill CLI? Get started with it [here](../3_cli/installation.md).
-:::
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-line interface (CLI)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+</div>
 
 The first step is to clone an existing Windmill workspace into a local folder.
 
@@ -90,7 +95,7 @@ This will download the content of the workspace into your local folder. You will
 
 :::caution
 
-`wmill sync pull` will pull everything from the Windmill workspace, including resources and variables, even secrets. If you're planning to use Git as explained below, we recommend only pulling scripts, flows and apps, skipping the rest. It can be done with:
+[`wmill sync pull`](../3_cli/sync.mdx) will pull everything from the Windmill workspace, including resources and variables, even secrets. If you're planning to use Git as explained below, we recommend only pulling scripts, flows and apps, skipping the rest. It can be done with:
 
 ```bash
 wmill sync pull --skip-variables --skip-secrets --skip-resources
@@ -139,7 +144,7 @@ wmill flow bootstrap f/my_space/groundbreaking_flow
 wmill sync push
 ```
 
-Once the workspace folder is pulled, edits can be made using any IDE.
+Once the workspace folder is pulled, edits can be made using any IDE (including the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx)).
 
 When created and edited through the UI (Windmill App), the lockfile is automatically generated. On local development, each script gets:
 - a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
@@ -154,7 +159,7 @@ Editing a script is as simple as editing its content. The code can be edited fre
 
 Some fields of the metadata file can also be edited by hand, like the summary of the description fields. If you update the dependencies of your script, or the signature of the `main` method, the lockfile and/or the script schema will need to be updated. We do not recommend doing it by hand.
 
-[Windmill CLI](../3_cli/index.mdx) comes with a `wmill script generate-metadata` command that will read all the files that have been edited and gracefully update the metadata file and lockfile accordingly.
+[Windmill CLI](../3_cli/index.mdx) comes with a [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file) command that will read all the files that have been edited and gracefully update the metadata file and lockfile accordingly.
 This command is mainly used update the lockfile and schema inplace. Be re-assured, any manual update to other files like summary and description will be kept:
 
 _Generate metadata command:_
