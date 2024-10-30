@@ -29,6 +29,14 @@ const people = [
     profile: 'https://www.linkedin.com/in/jose-governo/',
     imageUrl: 'https://media.licdn.com/dms/image/C4D03AQE2yXYlSoBQmg/profile-displayphoto-shrink_800_800/0/1594600574101?e=2147483647&v=beta&t=c2VZb77tUdnBRzlGVTuY23qDvGlUHy1xqy_zn1TNr40',
 },
+{
+    name: 'Stephan Fitzpatrick',
+    description: 'Stephan Fitzpatrick, a veteran software and cloud consultant, leverages Windmill to build automation solutions for business clients, streamline his own operations, and even manage his home automation.',
+    roles: ['Common Tree'],
+    email: 'stephan@knowsuchagency.com',
+    profile: 'https://www.linkedin.com/in/fitzpatrickstephan/',
+    imageUrl: '/images/partners/stphftzptrk.jpg'
+}
 ];
 
 function PartnersCatalog() {
