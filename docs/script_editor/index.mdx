@@ -18,7 +18,7 @@ specification and the [code content](../code_editor/index.mdx).
 ![Script languages](../../static/images/script_languages.png 'Script languages')
 
 Python and Go Scripts also have an
-auto-generated lockfile that ensure that executions of the same Script always
+auto-generated [lockfile](../advanced/6_imports/index.mdx) that ensure that executions of the same Script always
 use the exact same set of versioned dependencies. To fit Windmill's execution model, the code must always have a
 main function, which is its entrypoint when executed as an individual serverless
 endpoint or a [Flow](../flows/1_flow_editor.mdx) module and typed parameters used to infer the script's inputs and [auto-generated UI](../core_concepts/6_auto_generated_uis/index.mdx):
@@ -93,7 +93,7 @@ The Script editor is made of the following features:
 		href="/docs/script_editor/settings"
 	/>
 	<DocCard
-		title="Script kinds"
+		title="Script kind"
 		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
 		href="/docs/script_editor/script_kinds"
 	/>
@@ -108,13 +108,8 @@ The Script editor is made of the following features:
 		href="/docs/core_concepts/versioning#script-versioning"
 	/>
 	<DocCard
-		title="Worker group tag"
-		description="Scripts can be assigned custom worker groups for efficient execution on different machines with varying specifications."
-		href="/docs/script_editor/worker_group_tag"
-	/>
-	<DocCard
-		title="Concurrency Limit"
-		description="The Concurrency Limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
+		title="Concurrency limit"
+		description="The Concurrency limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
 		href="/docs/script_editor/concurrency_limit"
 	/>
 	<DocCard

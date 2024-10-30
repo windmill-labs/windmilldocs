@@ -329,6 +329,20 @@ Windmill does not support batching cloud events yet. This means that requests wi
 
 Learn more about what Cloud Events are [here](https://cloudevents.io/).
 
+### Delete after use
+
+For a script, delete [logs](../14_audit_logs/index.mdx), arguments and results after use.
+
+:::warning
+
+This settings ONLY applies to [synchronous](#synchronous) webhooks. If used individually, this script must be triggered using a synchronous endpoint to have the desired effect.
+<br/>
+The logs, arguments and results of the job will be completely deleted from Windmill once it is complete and the result has been returned.
+<br/>
+The deletion is irreversible.
+
+:::
+
 ## Workspace Webhook
 
 Connect your Windmill workspace to an external service to sync or get notified about any change.

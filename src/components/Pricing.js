@@ -88,13 +88,15 @@ const pricing = {
 			minPrice_nonprofit: 48,
 			description: 'For advanced needs in observability, security and performance.',
 			description_nonprofit: '60% discount for nonprofits & universities, no limits.',
-			description_smb: 'For individuals and small businesses. Find if your qualify <a href="#pro-plan">here</a>.',
+			description_smb:
+				'For individuals and small businesses. Find if your qualify <a href="#pro-plan">here</a>.',
 			enterprise_edition: true,
 			features: [
 				{
 					text: (
 						<span>
-							Windmill <b className="text-teal-600">Enterprise</b> Edition features (see table below), including:
+							Windmill <b className="text-teal-600">Enterprise</b> Edition features (see table
+							below), including:
 						</span>
 					),
 					features: [
@@ -120,16 +122,17 @@ const pricing = {
 				{
 					text: (
 						<span>
-							Subset of Windmill <b className="text-teal-600">Enterprise</b> Edition Plugins. Limits are:
+							Subset of Windmill <b className="text-teal-600">Enterprise</b> Edition Plugins. Limits
+							are:
 						</span>
 					),
 					features: [
 						{ text: 'No Audit logs' },
 						{ text: 'No Distributed dependency cache backed by S3' },
-						{ text: 'Max 10 users with SSO'}
+						{ text: 'Max 10 users with SSO' }
 					]
 				},
-				{ text: 'Support with 48h response time by email' },
+				{ text: 'Support with 48h response time by email' }
 			]
 		}
 	],
@@ -155,7 +158,7 @@ const pricing = {
 				{
 					text: <span>Community support on Discord</span>
 				}
-			],
+			]
 		},
 		{
 			name: 'Team',
@@ -284,8 +287,7 @@ const sections = [
 					'tier-enterprise-cloud': 'Unlimited',
 					'tier-free': '1,000',
 					'tier-team': '10k per user'
-				},
-				tooltip: 'Each vCPU can run up to ~26M jobs per month'
+				}
 			},
 			{
 				name: 'Number of workspaces',
@@ -651,7 +653,7 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/oidc'
-			},	
+			},
 			{
 				name: 'Codebases & bundles',
 				tiers: {
@@ -684,6 +686,17 @@ const sections = [
 					'tier-team': false
 				},
 				link: '/docs/misc/s3_cache'
+			},
+			{
+				name: 'Windows workers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/windows_workers'
 			}
 		]
 	},
@@ -978,117 +991,120 @@ export default function Pricing() {
 					className={classNames(
 						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
 						{
-						  'lg:grid-cols-3': frequency.value === 'cloud',
-						  'lg:grid-cols-2': frequency.value === 'selfhost',
-						  'lg:grid-cols-1': frequency.value === 'whitelabel'
+							'lg:grid-cols-3': frequency.value === 'cloud',
+							'lg:grid-cols-2': frequency.value === 'selfhost',
+							'lg:grid-cols-1': frequency.value === 'whitelabel'
 						}
-					  )}					  
+					)}
 				>
 					{pricing[frequency.value].map((tier, index) => (
 						<div
 							key={tier.id}
 							className={classNames(
-							tier.id === 'tier-team'
-								? 'ring-1 ring-blue-600'
-								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-								? 'ring-1 ring-blue-600'
-								: tier.enterprise_edition
-								? 'ring-1 ring-teal-600'
-								: 'ring-1 ring-gray-200 dark:ring-gray-600',
-							'rounded-xl p-6 xl:p-8 flex flex-col'
+								tier.id === 'tier-team'
+									? 'ring-1 ring-blue-600'
+									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									? 'ring-1 ring-blue-600'
+									: tier.enterprise_edition
+									? 'ring-1 ring-teal-600'
+									: 'ring-1 ring-gray-200 dark:ring-gray-600',
+								'rounded-xl p-6 xl:p-8 flex flex-col'
 							)}
 						>
 							<div className="flex items-center justify-between gap-x-4">
-							<h3
-							id={tier.id}
-							className={classNames(
-								tier.id === 'tier-team'
-								? 'text-blue-600'
-								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-								? 'text-blue-600'
-								: tier.enterprise_edition
-								? 'text-teal-600'
-								: '',
-								'text-2xl font-semibold leading-8'
-							)}
-							>
-							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
-								? tier.name_nonprofit // Display name for Nonprofit
-								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-								? tier.name_smb // Display name for SMB
-								: tier.name // Default name
-							}
-							</h3>
-							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' && period.value === 'annually' ? (
-								<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
-									60% nonprofit + 16% annual discount
-								</p>
-							) : tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' ? (
-								<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
-									60% nonprofit discount
-								</p>
-							) : period.value === 'annually' &&
-								Object.keys(tier.price).length > 0 &&
-								tier.id !== 'tier-team' ? (
+								<h3
+									id={tier.id}
+									className={classNames(
+										tier.id === 'tier-team'
+											? 'text-blue-600'
+											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+											? 'text-blue-600'
+											: tier.enterprise_edition
+											? 'text-teal-600'
+											: '',
+										'text-2xl font-semibold leading-8'
+									)}
+								>
+									{
+										tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
+											? tier.name_nonprofit // Display name for Nonprofit
+											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+											? tier.name_smb // Display name for SMB
+											: tier.name // Default name
+									}
+								</h3>
+								{tier.id === 'tier-enterprise-selfhost' &&
+								selectedOption === 'Nonprofit' &&
+								period.value === 'annually' ? (
+									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+										60% nonprofit + 16% annual discount
+									</p>
+								) : tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit' ? (
+									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+										60% nonprofit discount
+									</p>
+								) : period.value === 'annually' &&
+								  Object.keys(tier.price).length > 0 &&
+								  tier.id !== 'tier-team' ? (
 									<p className="whitespace-nowrap rounded-full bg-sky-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
 										16% annual discount
 									</p>
-							) : null}
+								) : null}
 							</div>
 							{tier.minPrice !== undefined ? (
 								<p className="mt-6 flex items-baseline justify-between gap-x-1">
 									<span className="flex items-baseline gap-x-1">
-									<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
-									<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-										$
-										{period.value === 'annually'
-										? tier.id === 'tier-team'
-											? (tier.minPrice * 12).toLocaleString('en-US') // Team tier calculation
-											: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
-											? (tier.minPrice_smb * 10).toLocaleString('en-US') // Annual price for SMB
-											: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
-											? (tier.minPrice_nonprofit * 10).toLocaleString('en-US') // Annual price for Nonprofit
-											: (tier.minPrice * 10).toLocaleString('en-US') // Annual price for others
-										: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
-										? tier.minPrice_smb.toLocaleString('en-US') // Monthly price for SMB
-										: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
-										? tier.minPrice_nonprofit.toLocaleString('en-US') // Monthly price for Nonprofit
-										: tier.minPrice.toLocaleString('en-US')}
-									</span>
-									<span className="text-sm font-semibold leading-6 text-gray-600">
-										{period.value === 'annually' ? '/yr' : '/mo'}
-									</span>
+										<span className="text-sm font-semibold leading-6 text-gray-400">from</span>
+										<span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
+											$
+											{period.value === 'annually'
+												? tier.id === 'tier-team'
+													? (tier.minPrice * 12).toLocaleString('en-US') // Team tier calculation
+													: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
+													? (tier.minPrice_smb * 10).toLocaleString('en-US') // Annual price for SMB
+													: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
+													? (tier.minPrice_nonprofit * 10).toLocaleString('en-US') // Annual price for Nonprofit
+													: (tier.minPrice * 10).toLocaleString('en-US') // Annual price for others
+												: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
+												? tier.minPrice_smb.toLocaleString('en-US') // Monthly price for SMB
+												: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
+												? tier.minPrice_nonprofit.toLocaleString('en-US') // Monthly price for Nonprofit
+												: tier.minPrice.toLocaleString('en-US')}
+										</span>
+										<span className="text-sm font-semibold leading-6 text-gray-600">
+											{period.value === 'annually' ? '/yr' : '/mo'}
+										</span>
 									</span>
 									{tier.id === 'tier-enterprise-selfhost' && (
-									<span className="isolate inline-flex rounded-md">
-									{buttonOptions.map((option) => (
-									  <button
-										key={option}
-										type="button"
-										onClick={() => handleOptionChange(option)}
-										className={classNames(
-										  'relative inline-flex items-center',
-										  // Smaller size for default (mobile/smaller screens)
-										  'px-2 py-1 text-xs font-semibold', 
-										  // Larger size for bigger screens
-										  'sm:px-3 sm:py-2 sm:text-sm', // Apply larger size on screens larger than "sm"
-										  option === selectedOption
-											? 'bg-gray-500 text-white'
-											: 'bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-gray-300',
-										  'ring-1 ring-inset ring-white dark:ring-zinc-800 hover:bg-gray-100 dark:hover:bg-gray-600 focus:z-10',
-										  option === 'SMB'
-											? 'rounded-l-md'
-											: option === 'Enterprise'
-											? 'rounded-r-md -ml-px'
-											: '-ml-px'
-										)}
-									  >
-										{option}
-									  </button>
-									))}
-								  </span>
-								)}
-							  	</p>
+										<span className="isolate inline-flex rounded-md">
+											{buttonOptions.map((option) => (
+												<button
+													key={option}
+													type="button"
+													onClick={() => handleOptionChange(option)}
+													className={classNames(
+														'relative inline-flex items-center',
+														// Smaller size for default (mobile/smaller screens)
+														'px-2 py-1 text-xs font-semibold',
+														// Larger size for bigger screens
+														'sm:px-3 sm:py-2 sm:text-sm', // Apply larger size on screens larger than "sm"
+														option === selectedOption
+															? 'bg-gray-500 text-white'
+															: 'bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-gray-300',
+														'ring-1 ring-inset ring-white dark:ring-zinc-800 hover:bg-gray-100 dark:hover:bg-gray-600 focus:z-10',
+														option === 'SMB'
+															? 'rounded-l-md'
+															: option === 'Enterprise'
+															? 'rounded-r-md -ml-px'
+															: '-ml-px'
+													)}
+												>
+													{option}
+												</button>
+											))}
+										</span>
+									)}
+								</p>
 							) : (
 								<p className="mt-6 flex items-baseline gap-x-1 invisible">
 									<span className="text-sm font-semibold leading-6 text-gray-600">Lorem</span>
@@ -1098,54 +1114,54 @@ export default function Pricing() {
 							)}
 
 							<div className="mt-4 text-sm leading-6 text-gray-600 dark:text-gray-200">
-							<span
-								dangerouslySetInnerHTML={{
-								__html:
-									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
-									? tier.description_nonprofit // Display the nonprofit description with links
-									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-									? tier.description_smb // Display the SMB description with links
-									: tier.description, // Default description with links
-								}}
-							/>
+								<span
+									dangerouslySetInnerHTML={{
+										__html:
+											tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
+												? tier.description_nonprofit // Display the nonprofit description with links
+												: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+												? tier.description_smb // Display the SMB description with links
+												: tier.description // Default description with links
+									}}
+								/>
 							</div>
 
 							<a
-							href={
-								tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-									? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
-									: tier.href
-							}
-							target="_blank"
-							aria-describedby={tier.id}
-							className={classNames(
-								tier.id === 'tier-team'
-								? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-								: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-								? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-								: tier.enterprise_edition
-								? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
-								: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
-								'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
-							)}
-						>
-							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-								? 'Try it for a month'
-								: tier.customMessage 
-								? tier.customMessage 
-								: 'Get in touch'}
-						</a>
-
-						<ul
-							role="list"
-							className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
-							style={{ marginBottom: '4rem' }}
+								href={
+									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+										? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+										: tier.href
+								}
+								target="_blank"
+								aria-describedby={tier.id}
+								className={classNames(
+									tier.id === 'tier-team'
+										? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+										: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+										? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
+										: tier.enterprise_edition
+										? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
+										: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
+									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+								)}
 							>
-							{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB' ? (
-								<FeatureList features={tier.features_smb} level={1} id={tier.id} />
-							) : (
-								<FeatureList features={tier.features} level={1} id={tier.id} />
-							)}
+								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									? 'Try it for a month'
+									: tier.customMessage
+									? tier.customMessage
+									: 'Get in touch'}
+							</a>
+
+							<ul
+								role="list"
+								className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
+								style={{ marginBottom: '4rem' }}
+							>
+								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB' ? (
+									<FeatureList features={tier.features_smb} level={1} id={tier.id} />
+								) : (
+									<FeatureList features={tier.features} level={1} id={tier.id} />
+								)}
 							</ul>
 							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
@@ -1154,26 +1170,26 @@ export default function Pricing() {
 
 								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
 									<a
-									href={
-										selectedOption === 'SMB'
-										? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
-										: selectedOption === 'Nonprofit'
-										? 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT?prefilled_promo_code=nonprofit'
-										: 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT'
-									}
-									className={classNames(
-										tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
-										selectedOption === 'SMB'
-										? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
-										: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
-										'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-									)}
-									target="_blank"
+										href={
+											selectedOption === 'SMB'
+												? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+												: selectedOption === 'Nonprofit'
+												? 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT?prefilled_promo_code=nonprofit'
+												: 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT'
+										}
+										className={classNames(
+											tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
+											selectedOption === 'SMB'
+												? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
+												: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+										)}
+										target="_blank"
 									>
-									Try it for a month
+										Try it for a month
 									</a>
 								)}
-								</div>
+							</div>
 						</div>
 					))}
 				</div>

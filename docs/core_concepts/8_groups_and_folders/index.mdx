@@ -16,6 +16,20 @@ Recap of how permissions are given to an item (script, flow, resource, variable,
 	/>
 </div>
 
+## Folders
+
+Folders group various items, such as scripts, flows, resources, and schedules, together and assign [role](../16_roles_and_permissions/index.mdx#roles-in-windmill)-based access control permissions to groups and individual users.
+
+![Folders](./3-folders.png 'Folders')
+
+Folders should represent projects, and we recommend assigning permissions to groups. You should have as many top-level folders that you have different projects/permission scopes.
+
+### Subfolders
+
+You can have as many subfolders as you want but only the top-level folder will have permissions one can inherit from.
+
+To use subfolders, you just need to have '/' in the last part of the [path](../16_roles_and_permissions/index.mdx#path) of an item, like you would do on a filesystem.
+
 ## Groups
 
 Groups of users are a way to classify users together, allowing for shared permissions within the workspace. Users within the same group (also referred to as a role) will have homogenous permissions. Users can belong to multiple groups simultaneously.
@@ -27,12 +41,6 @@ Similar to users, groups can be assigned one of three permission levels for a sp
 - Viewer: read-only access.
 - Writer: read and write access.
 - Admin: read and write access, and can manage permissions and new admins.
-
-## Folders
-
-Folders group various **items**, such as scripts, flows, resources, and schedules, together and assign Role-based access control permissions to groups and individual users.
-
-![Folders](./3-folders.png 'Folders')
 
 ## Groups and folders together
 

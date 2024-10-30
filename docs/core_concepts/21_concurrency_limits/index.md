@@ -6,7 +6,7 @@ Concurrency limit is a [Cloud plans and Pro Enterprise Self-Hosted](/pricing) on
 
 Concurrency limit can be set from the Settings menu. When jobs reach the concurrency limit, they are automatically queued for execution at the next available optimal slot given the time window.
 
-The Concurrency Limit operates globally and across flow runs. It involves three key parameters:
+The Concurrency limit operates globally and across flow runs. It involves three key parameters:
 
 ## Max number of executions within the time window
 
@@ -28,7 +28,7 @@ Jobs can be filtered from the [Runs menu](../5_monitor_past_and_future_runs/inde
 
 [Concurrency limit of a script](../../script_editor/concurrency_limit.mdx) can be set from the Settings menu. Pick "Concurrency" and define a time window, max number of executions of the flow within that time window and optionally a custom concurrency key.
 
-![Concurrency Limit](../../assets/code_editor/concurrency_limit.png.webp)
+![Concurrency limit](../../assets/code_editor/concurrency_limit.png.webp)
 
 ### Concurrency limit of flow
 
@@ -38,8 +38,8 @@ From the Flow Settings menu, pick "Concurrency" and define a time window, a max 
 
 ### Concurrency limit of scripts within flow
 
-The Concurrency Limit operates globally and across flow runs. It involves two key parameters: "Maximum number of runs" and the "Per time window (seconds)."
+The Concurrency limit operates globally and across flow runs. It involves two key parameters: "Maximum number of runs" and the "Per time window (seconds)."
 
 Concurrency limit can be set for each step of a flow in the `Advanced` menu, on tab "Concurrency".
 
-![Concurrency Limit Scripts within Flow](../../assets/code_editor/concurrency_limit_flow.png.webp "Concurrency Limit Scripts within Flow")
+![Concurrency limit Scripts within Flow](../../assets/code_editor/concurrency_limit_flow.png.webp "Concurrency limit Scripts within Flow")

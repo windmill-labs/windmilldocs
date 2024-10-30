@@ -7,9 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Ansible quickstart
 
-## Windmill Scripts
-
-In this quickstart guide, we will write our first script/playbook with ansible.
+In this quickstart guide, we will write our first script/playbook with [Ansible](https://www.ansible.com/).
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -48,14 +46,41 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code): For ansible this is a playbook file written in yaml.
+- [Code](#code-playbook): For ansible this is a playbook file written in yaml.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.playbook.yml` and `<path>.script.yaml`
 
-#### Create an Ansible playbook script
-
 ![Ansible in Windmill](./create_ansible_script.png)
+
+## Settings
+
+![New script](../../../../static/images/script_languages.png "New script")
+
+As part of the [settings](../../../script_editor/settings.mdx) menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
+
+- **Path** is the Script's unique identifier that consists of the
+  [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
+  The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
+- **Summary** (optional) is a short, human-readable summary of the Script. It
+  will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
+  default.
+- **Language** of the script.
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
+  to users on how to run your Script. It supports markdown.
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+
+This menu also has additional settings on [Runtime](../../../script_editor/settings.mdx#runtime), [Generated UI](#triggers) and [Triggers](../../../script_editor/settings.mdx#triggers).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Settings"
+		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
+		href="/docs/script_editor/settings"
+	/>
+</div>
+
+Now click on the code editor on the left side.
 
 ## Code (Playbook)
 
@@ -72,7 +97,7 @@ inventory:
 
 # File resources will be written in the relative \`target\` location before
 # running the playbook
-file_resources:
+files:
   - resource: u/user/fabulous_jinja_template
     target:  ./config_template.j2
 
@@ -139,6 +164,16 @@ extra_vars:
 
 The type definition is inspired and tries to follow the [OpenAPI Data Types standard](https://swagger.io/docs/specification/data-models/data-types/). Note that not all features / types are supported, the best way to know what is supported is to test it out in the Web IDE.
 
+:::tip Argument defaults
+You can set a default value for your arguments by using a `default:` field, for example:
+```yml
+extra_vars:
+  my_string:
+    type: string
+    default: 'Fascinating String of Words'
+```
+:::
+
 To use windmill resources as types you can use the following type definition:
 
 ```yaml
@@ -150,7 +185,28 @@ extra_vars:
 
 ![Postgres Resource UI](./postgres_ui.png)
 
-Under the hood, Windmill will pass these variables using the `--extra-args` flag to Ansible, so you can expect the according behavior.
+Under the hood, Windmill will pass these variables using the `--extra-vars` flag to Ansible, so you can expect the according behavior.
+
+### Static resources and variables
+
+Resources and variables that are hardcoded to a particular script can also be defined in the `extra-vars` section. This is because they are similarly passed through the `--extra-vars` flag in the ansible playbook.
+
+This is what the syntax looks like:
+```yml
+extra_vars:
+  my_variable:
+    type: windmill_variable
+    variable: u/user/my_variable
+  my_resource:
+    type: windmill_resource
+    resource: u/user/my_resource
+```
+
+Under `resource` or `variable` you can statically link the path to the resource/variable. As you do, you will notice the UI update and hide the resource input as it is now static.
+
+:::tip About static and non-static variables
+Note that Variables defined this way can only be static. If you want to use non-static Variables, define a normal argument with `type: string` and from the UI fill it with one of your Variables or Secrets.
+:::
 
 ### Return Values
 
@@ -202,7 +258,7 @@ Then the UI will not prompt you for the inventory but will use this resource at 
 It sometimes happens that your Ansible playbook depends on some text file existing at a relative path to the playbook. This can be a configuration file, a template, some other file that you can't inline or otherwise is simpler to keep as a separate file. In this case, Windmill offers a feature to create these files at the specified path before running the playbook. The syntax will be the following:
 
 ```yaml
-file_resources:
+files:
   - resource: u/user/fabulous_jinja_template
     target:  ./config_template.j2
 ```
@@ -211,7 +267,22 @@ To create text file resource type and resources, refer to [creating plain text r
 
 In the example above, the resource `u/user/faboulous_jinja_template` is a special plain text file resource. The target `./config_template.j2` is the path relative to the playbook where the file will be created and where the playbook can access it.
 
-Now you can write your notebook assuming that this file will exist at the time of execution.
+Now you can write your playbook assuming that this file will exist at the time of execution.
+
+#### Variable inside files
+
+If you want to achieve a similar effect with a variable or a secret, you can use a similar syntax:
+
+```yaml
+files:
+  - resource: u/user/my_ssh_key
+    target:  ./id_rsa
+```
+
+And the content of the variable will be written to the file.
+
+This is useful when you want to store the data in a secret for example, like you would do for ssh keys.
+
 
 ### Dependencies
 
