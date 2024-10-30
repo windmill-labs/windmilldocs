@@ -46,65 +46,107 @@ const ProgressBar = ({
 		</div>
 	);
 };
-export default function ProgressBars({ setStep, handleClick }) {
-	const x = useContext(ScrollContext);
+export default function ProgressBars({ setStep, handleClick, subIndex }) {
+	const ctx = useContext(ScrollContext);
 
 	const [progress, setProgress] = React.useState(0);
 
-	useEffect(
-		() =>
-			x.onChange((latest) => {
-				const latestAsNumber = latest;
-				setProgress(latestAsNumber);
+	useEffect(() => {
+		ctx?.on('change', (latest) => {
+			const latestAsNumber = latest;
+			setProgress(latestAsNumber);
 
-				let newStep = 0;
-				if (latestAsNumber < scriptScrollCount) {
-					newStep = 0;
-				} else if (
-					latestAsNumber >= scriptScrollCount &&
-					latestAsNumber < scriptScrollCount + flowScrollCount
-				) {
-					newStep = 1;
-				} else if (latestAsNumber >= scriptScrollCount + flowScrollCount) {
-					newStep = 2;
-				}
+			let newStep = 0;
+			if (latestAsNumber < scriptScrollCount) {
+				newStep = 0;
+			} else if (
+				latestAsNumber >= scriptScrollCount &&
+				latestAsNumber < scriptScrollCount + flowScrollCount
+			) {
+				newStep = 1;
+			} else if (latestAsNumber >= scriptScrollCount + flowScrollCount) {
+				newStep = 2;
+			}
 
-				setStep(newStep);
-			}),
-		[]
-	);
+			setStep(newStep);
+		});
+	}, []);
 
-	return (
-		<div className="grid grid-cols-3 gap-4 w-full  my-4">
-			<ProgressBar
-				percents={Math.round((progress * 100) / scriptScrollCount)}
-				active={true}
-				onClick={() => handleClick(0)}
-				title={'Scripts'}
-				progressColor="dark:bg-blue-600 bg-blue-400"
-				steps={[20, 40, 50, 60, 70, 80]}
-				barColor="bg-blue-700"
-			/>
-			<ProgressBar
-				percents={Math.round(((progress - scriptScrollCount) * 100) / flowScrollCount)}
-				active={progress > scriptScrollCount}
-				onClick={() => handleClick(1)}
-				progressColor="dark:bg-green-600 bg-green-400"
-				title={'Flows'}
-				steps={[10, 20, 30, 40, 50, 60, 75, 80, 90]}
-				barColor="bg-green-700"
-			/>
-			<ProgressBar
-				percents={Math.round(
-					((progress - scriptScrollCount - flowScrollCount) * 100) / appScrollCount
-				)}
-				active={progress > scriptScrollCount + flowScrollCount}
-				onClick={() => handleClick(2)}
-				progressColor="dark:bg-orange-600 bg-orange-400"
-				title={'Apps'}
-				steps={[10, 15, 30, 45, 60, 72, 90, 99]}
-				barColor="bg-orange-700"
-			/>
-		</div>
-	);
+	if (subIndex === undefined) {
+		return (
+			<div className="grid grid-cols-3 gap-4 w-full  my-4">
+				<ProgressBar
+					percents={Math.round((progress * 100) / scriptScrollCount)}
+					active={true}
+					onClick={() => handleClick(0)}
+					title={'Scripts'}
+					progressColor="dark:bg-blue-600 bg-blue-400"
+					steps={[20, 40, 50, 60, 70, 80]}
+					barColor="bg-blue-700"
+				/>
+				<ProgressBar
+					percents={Math.round(((progress - scriptScrollCount) * 100) / flowScrollCount)}
+					active={progress > scriptScrollCount}
+					onClick={() => handleClick(1)}
+					progressColor="dark:bg-green-600 bg-green-400"
+					title={'Flows'}
+					steps={[10, 20, 30, 40, 50, 60, 75, 80, 90]}
+					barColor="bg-green-700"
+				/>
+				<ProgressBar
+					percents={Math.round(
+						((progress - scriptScrollCount - flowScrollCount) * 100) / appScrollCount
+					)}
+					active={progress > scriptScrollCount + flowScrollCount}
+					onClick={() => handleClick(2)}
+					progressColor="dark:bg-orange-600 bg-orange-400"
+					title={'Apps'}
+					steps={[10, 15, 30, 45, 60, 72, 90, 99]}
+					barColor="bg-orange-700"
+				/>
+			</div>
+		);
+	} else if (subIndex === 0) {
+		return (
+			<div className="grid grid-cols-1 gap-4 w-full  my-4">
+				<ProgressBar
+					percents={Math.round((progress * 100) / scriptScrollCount)}
+					active={true}
+					onClick={() => handleClick(0)}
+					title={'Scripts'}
+					progressColor="dark:bg-blue-600 bg-blue-400"
+					steps={[20, 40, 50, 60, 70, 80]}
+					barColor="bg-blue-700"
+				/>
+			</div>
+		);
+	} else if (subIndex === 1) {
+		return (
+			<div className="grid grid-cols-1 gap-4 w-full  my-4">
+				<ProgressBar
+					percents={Math.round((progress * 100) / flowScrollCount)}
+					active={true}
+					onClick={() => handleClick(1)}
+					progressColor="dark:bg-green-600 bg-green-400"
+					title={'Flows'}
+					steps={[10, 20, 30, 40, 50, 60, 75, 80, 90]}
+					barColor="bg-green-700"
+				/>
+			</div>
+		);
+	} else if (subIndex === 2) {
+		return (
+			<div className="grid grid-cols-1 gap-4 w-full  my-4">
+				<ProgressBar
+					percents={Math.round((progress * 100) / appScrollCount)}
+					active={true}
+					onClick={() => handleClick(2)}
+					progressColor="dark:bg-orange-600 bg-orange-400"
+					title={'Apps'}
+					steps={[10, 15, 30, 45, 60, 72, 90, 99]}
+					barColor="bg-orange-700"
+				/>
+			</div>
+		);
+	}
 }
