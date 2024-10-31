@@ -1,5 +1,6 @@
 import React from 'react';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
+
 import LandingSectionWrapper from './LandingSectionWrapper';
 import DevModeSwitch from './DevModeSwitch';
 import CardsContainer from '../landing/cards/Cards';
@@ -52,19 +53,18 @@ export default function Section({
 					<div className="flex justify-between items-center w-full">
 						<h1
 							className={classNames(
-								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br leading-8',
+								'font-bold !text-transparent !bg-clip-text !bg-gradient-to-br leading-8 !text-4xl',
 								colors.gradient
 							)}
 						>
 							{title}
 						</h1>
+						{shouldShowDevModeSwitch && <DevModeSwitch color={color} />}
 					</div>
 					<h2 className={`${colors.text} text-2xl font-semibold`}>{caption}</h2>
 				</div>
 
 				<span className={`text-lg ${colors.text} max-w-3xl mb-8`}>{description}</span>
-				
-				{shouldShowDevModeSwitch && <DevModeSwitch color={color} />}
 
 				{developerMode ? (
 					<CardsContainer
@@ -77,7 +77,7 @@ export default function Section({
 				) : (
 					<>
 						<FeatureCardTabs tabs={tabs} color={color} />
-						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}{' '}
+						{examples?.length > 0 && <SectionExamples examples={examples} kind={kind} />}
 					</>
 				)}
 			</div>

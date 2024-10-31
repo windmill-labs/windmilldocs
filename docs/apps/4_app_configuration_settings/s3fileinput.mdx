@@ -1,37 +1,43 @@
 import DocCard from '@site/src/components/DocCard';
 
-# S3 File upload
+# S3 File Uploader
 
-The S3 file upload component allows you to upload files to an S3 bucket.
+The S3 File Uploader component allows you to upload files to an S3 bucket.
 
 ![s3fileupload](../../assets/apps/4_app_component_library/s3fileupload.png.webp)
 
-The following section details S3 File upload component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details S3 File Uploader component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="App Editor Documentation"
+		title="App editor Documentation"
 		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
 		href="/docs/apps/app_editor"
 	/>
 	<DocCard
 		color="orange"
-		title="Apps Quickstart"
+		title="Apps quickstart"
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
 	/>
 </div>
 
-## Interactions
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [clearFiles](../3_app-runnable-panel.mdx#clearfiles) | id: string | Clear the files of a file input. | `clearFiles(id: 'a')` |
 
 ## Interactions
 
-The S3 File Upload component offers the following interactions:
+The S3 File Uploader component offers the following interactions:
 
 - Files are uploaded in chunks to the S3 bucket. The component emits the file path in the S3 bucket upon completion of the upload.
-- The upload can be cancelled by clicking on the 'Cancel' button.
-- All uploads can be cancelled simultaneously by clicking on the 'Cancel All' button.
+- The upload can be canceled by clicking on the 'Cancel' button.
+- All uploads can be canceled simultaneously by clicking on the 'Cancel All' button.
 - After completing all uploads, more files can be uploaded by clicking on the 'Upload More' button.
 - Uploaded files can be deleted by clicking on the 'Delete' button.
 
@@ -43,11 +49,18 @@ The S3 File Upload component offers the following interactions:
 | Accepted File Types |    array    |    false    |    false    | "image/\*" ; "application/pdf"                         | The types of files you accept to be submitted.                 |
 |   Allow Multiple    |   boolean   |    false    |    false    | false                                                  | If allowed, the user will be able to select more than one file |
 |        Text         |   string    |    false    |    false    | Drag and drop files or click to select them            | The text displayed on the file input.                          |
-|    Path template    |   string    |    false    |    false    | ${file.name}                                           | The path template to use to upload the file.                   |
+|    Path template    |   string    |    false    |    false    | $\{file.name\}                                         | The path template to use to upload the file.                   |
+|      Disabled       |   boolean   |    false    |    false    | false                                                  | The state of the file input.                                   |
 
 ## Outputs
 
 | Name    |  Type   | Description                                          |
 | ------- | :-----: | ---------------------------------------------------- |
 | result  |  Array  | An array containing the paths of the uploaded files. |
-| loading | boolean | The loading state of the S3 file upload component.   |
+| loading | boolean | The loading state of the S3 File Uploader component.   |
+
+## Event handler
+
+The modal component has the following event handler:
+
+- `onFileChange`: Trigger one or more runnables when the user uploads a file.

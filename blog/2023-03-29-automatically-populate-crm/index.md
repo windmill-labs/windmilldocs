@@ -11,7 +11,7 @@ Getting leads emails from trials or newsletters signups is great. But it takes f
 <!--truncate-->
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	controls
@@ -66,7 +66,7 @@ Getting rid of useless information meant for the username deleting numbers (numb
 I quickly faced an issue: **all emails are not structured the same way**. Most are `firstname.lastname@domain.com`, but some are `firstname@domain.com` or even `(first-letter-of-name)lastname@domain.com`. For all I know, a single Google search can not accurately cover all those cases. I decided to go with 2 Google searches and use the titles of their first 2 results. So for the first one I'll search https://www.google.com/search?q=username+domain.com and the second one I went for https://www.google.com/search?q=u+sername+domain.com.
 
 <details>
-  <summary>Here is my script (in Typescript) for the parser and common emails eraser (step a). Code below:</summary>
+  <summary>Here is my script (in TypeScript) for the parser and common emails eraser (step a). Code below:</summary>
 
 ```js
 export async function main(email: string) {

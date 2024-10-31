@@ -1,9 +1,9 @@
-# MongoDB Integration
+# MongoDB integration
+
+[MongoDB](https://www.mongodb.com/) is a NoSQL document-oriented database.
 
 This guide aims to show you how to create a connection from your Windmill
 instance to an external MongoDB Atlas database, then use it to make queries.
-
-<!--truncate-->
 
 :::info
 

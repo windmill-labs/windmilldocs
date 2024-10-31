@@ -55,7 +55,7 @@ will have it's own page on the first tab. A successful login will return an acce
 can send authenticated requests to the database using said token on the second tab.
 
 The passing of credentials works a bit differently in the two approaches, so first, create a base
-"skeleton" app. Go to the <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a> Home page by click "App" in the top right corner.
+"skeleton" app. Go to the <a href="https://app.windmill.dev/" rel="nofollow">Windmill cloud</a> Home page by click "App" in the top right corner.
 Let's add our first component:
 
 1. Click on "Tabs" in the right-hand panel to add it to the canvas.
@@ -382,7 +382,7 @@ and `refresh_token`. Every script that is dependent on the token will be execute
 login script, meaning the data will be fetched and the "Data" tab will be displayed.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	id="backend-video"
 	src="/videos/supabase-auth/try-be-app.mp4"
@@ -548,7 +548,7 @@ client from the state and use it to query the data. When the data is loaded, you
 navigated to the "Data" tab.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	id="backend-video"
 	src="/videos/supabase-auth/try-fe-app.mp4"

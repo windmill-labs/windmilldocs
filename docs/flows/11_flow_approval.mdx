@@ -4,19 +4,18 @@ import TabItem from '@theme/TabItem';
 
 # Suspend & Approval / Prompts
 
-Flows can be suspended until resumed or cancelled event(s) are received. This
-feature is most useful to implement approval steps but can be used for other
-purposes as well.
+Flows can be suspended until resumed or canceled event(s) are received. This
+feature is most useful for implementing approval steps.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    id="main-video"
-    src="/videos/flow-approval.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/flow-approval.mp4"
 />
 
-<br/>
+<br />
 
 An approval step will suspend the execution of a flow until it has been approved
 through the resume endpoints or the approval page by and solely by the recipients of
@@ -38,12 +37,12 @@ An event can be:
 - a cancel
 - a pre-set number of approval that is met.
 
-For the moment we receive the approval steps in the form of an HTTP request. For each event, a single URL is generated. It is not unique to each user to whom it is sent.
+The approval steps are received in the form of an HTTP request. For each event, a single URL is generated. It is not unique to each user to whom it is sent.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="WindmillHub | Approval"
-		description="Find a library of Approval Scripts on WindmillHub."
+		description="Find a library of Approval scripts on WindmillHub."
 		href="https://hub.windmill.dev/approvals"
 		color="teal"
 	/>
@@ -59,43 +58,64 @@ When adding a step to a flow, pick `Approval`, and write a new approval script o
 
 ![Adding approval step](../assets/flows/approval-step.png 'Adding approval step')
 
-Use `wmill.getResumeUrls()` in Typescript or `wmill.get_resume_urls()` in Python from the wmill client to generate secret URLs.
+Use `wmill.getResumeUrls()` in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) or `wmill.get_resume_urls()` in [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) from the [wmill client](../advanced/2_clients/ts_client.mdx) to generate secret URLs.
 
-The number of required approvals can be
-customized. This allows flexibility and security for cases where you either require
-approvals from all authorized people or only from one.
+## Core
 
-![Required approvals](../assets/flows/flow-number-of-approvals.png.webp 'Required approvals')
+### Number of approvals/events required for resuming flow
+
+The number of required approvals can be customized.
+This allows flexibility and security for cases where you either require approvals from all authorized people or only from one.
+
+![Required approvals](../assets/flows/flow-number-of-approvals.png 'Required approvals')
 
 Note that approval steps can be applied the same configurations as regular steps ([Retries](./14_retries.md), [Early stop/Break](./2_early_stop.md) or [Suspend](./15_sleep.md)).
 
-## Add a form to the approval page
+### Timeout
+
+Set a custom timeout after which the flow will be automatically canceled if no approval is received.
+
+![Approval Timeout](../assets/flows/approvals-timeout.png 'Approval Timeout')
+
+### Continue on disapproval/timeout
+
+If set, instead of failing the flow and bubbling up the error, continue to the next step which would allow to put a [branchone](./13_flow_branches.md) right after to handle both cases separately. If any disapproval/timeout event is received, the resume payload will be similar to every error result in Winmdill, an object containing an `error` field which you can use to distinguish between approvals and disapproval/timeouts.
+
+![Continue on disapproval/timeout](../assets/flows/continue_on_disapproval.png 'Continue on disapproval/timeout')
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/continue_on_disapproval.mp4"
+/>
+
+## Form
 
 You can add an arbitrary schema form to be provided and displayed on the approval page. Users opening the approval page would then be offered to fill arguments you can use in the flow.
 
 Adding a form to an approval step is a [Cloud & Enterprise Self-Hosted](/pricing) only feature.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/form_approval_page.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/form_approval_page.mp4"
 />
 
-<br/>
+<br />
 
 In the `Advanced` menu of a step, go to the "Suspend/Approval" tab and enable the `Add a form to the approval page` button.
 
 Add properties and define their Name, Description, Type, Default Value and Advanced settings.
 
-![Add argument](../assets/flows/add_argument.png.webp "Add argument")
+![Add argument](../assets/flows/add_argument.png.webp 'Add argument')
 
 That will the be displayed on the approval page.
 
-![Fill argument](../assets/flows/page_arguments.png.webp "Fill argument")
+![Fill argument](../assets/flows/page_arguments.png.webp 'Fill argument')
 
 You can use the arguments values [connecting](./16_architecture.mdx#input-transform) to `resume["argument_name"]` in further steps.
 
-![Use argument](../assets/flows/approval_argument.png.webp "Use argument")
+![Use argument](../assets/flows/approval_argument.png.webp 'Use argument')
 
 This is a way to introduce human-in-the-loop workflows and condition branches on approval steps inputs.
 
@@ -104,37 +124,41 @@ This is a way to introduce human-in-the-loop workflows and condition branches on
 A prompt is simply an approval step that can be self-approved. To do this, include the resume url in the returned payload of the step. The UX will automatically adapt and show the prompt to the operator when running the flow. e.g:
 
 <Tabs className="unique-tabs">
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```ts
-import * as wmill from "npm:windmill-client@^1.158.2"
-    
-export async function main() {
-    const resumeUrls = await wmill.getResumeUrls("approver1")
-
-    return {
-        resume: resumeUrls['resume']
-        default_args: {}, // optional
-        enums: {} // optional
-    }
-}
-```
-</TabItem>
 <TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
 import * as wmill from "windmill-client"
-        
+
 export async function main() {
     const resumeUrls = await wmill.getResumeUrls("approver1")
 
     return {
-        resume: resumeUrls['resume']
+        resume: resumeUrls['resume'],
         default_args: {}, // optional
         enums: {} // optional
     }
 }
 ```
+
+Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7120/approval-prompt-windmill).
+
+</TabItem>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import * as wmill from "npm:windmill-client@^1.158.2"
+
+export async function main() {
+    const resumeUrls = await wmill.getResumeUrls("approver1")
+
+    return {
+        resume: resumeUrls['resume'],
+        default_args: {}, // optional
+        enums: {} // optional
+    }
+}
+```
+
 </TabItem>
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
@@ -144,71 +168,209 @@ import wmill
 def main():
     urls = wmill.get_resume_urls()
     return {
-        "resume": urls["resume"]
+        "resume": urls["resume"],
         "default_args": {}, # optional
         "enums": {} # optional
     }
 ```
+
+</TabItem>
+<TabItem value="go" label="Go" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```go
+package inner
+
+import (
+	wmill "github.com/windmill-labs/windmill-go-client"
+)
+
+func main() (map[string]interface{}, error) {
+	urls, err := wmill.GetResumeUrls("approver1")
+	if err != nil {
+		return nil, err
+	}
+	return map[string]interface{}{
+		"resume":      urls.Resume,
+		"default_args": make(map[string]interface{}), // optional
+		"enums":       make(map[string]interface{}), // optional
+	}, nil
+}
+```
+
 </TabItem>
 </Tabs>
 
 In the video below, you can see a user creating an approval step within a flow including the resume url in the returned payload of the step.
-Then another user ([operator](../core_concepts/16_roles_and_permissions/index.mdx#roles-in-windmill), since is only "Viewer" in the [folder](../core_concepts/8_groups_and_folders/index.mdx) of the flow), runs the flow and sees the prompt automatically shown when running the flow.
+Then another user ([operator](../core_concepts/16_roles_and_permissions/index.mdx#operator), since is only "Viewer" in the [folder](../core_concepts/8_groups_and_folders/index.mdx) of the flow), runs the flow and sees the prompt automatically shown when running the flow.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/prompt_example.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/prompt_example.mp4"
 />
 
-<br/>
+<br />
 
 ### Default args
 
-As one of the return key of this step, return an object `default_args` that contains the default arguments of the form arguments. e.g:
+As one of the return key of this step, return an object `default_args` that contains the default arguments of the form argument. e.g:
 
 ```ts
 //this assumes the Form tab has a string field named "foo" and a checkbox named "bar"
 
-import * as wmill from "npm:windmill-client@^1.158.2"
+import * as wmill from 'npm:windmill-client@^1.158.2';
 
 export async function main() {
-    // if no argument is passed, if user is logged in, it will use the user's username
-    const resumeUrls = await wmill.getResumeUrls("approver1") 
+	// if no argument is passed, if user is logged in, it will use the user's username
+	const resumeUrls = await wmill.getResumeUrls('approver1');
 
-    // send the resumeUrls to the recipient or see Prompt section above
+	// send the resumeUrls to the recipient or see Prompt section above
 
-    return {
-        default_args: {
-            foo: "foo",
-            bar: true
-        }
-    }
+	return {
+		default_args: {
+			foo: 'foo',
+			bar: true
+		}
+	};
 }
 ```
 
+Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7121/default-arguments-in-approval-steps-windmill).
+
 ### Dynamics enums
 
-As one of the return key of this step, return an object `enums` that contains the default arguments of the form arguments. e.g:
+As one of the return key of this step, return an object `enums` that contains the default options of the form argument. e.g:
 
 ```ts
 //this assumes the Form tab has a string field named "foo"
 
-import * as wmill from "npm:windmill-client@^1.158.2"
+import * as wmill from 'npm:windmill-client@^1.158.2';
 
 export async function main() {
-    // if no argument is passed, if user is logged in, it will use the user's username
-    const resumeUrls = await wmill.getResumeUrls("approver1") 
+	// if no argument is passed, if user is logged in, it will use the user's username
+	const resumeUrls = await wmill.getResumeUrls('approver1');
 
-    // send the resumeUrls to the recipient or see Prompt section above
+	// send the resumeUrls to the recipient or see Prompt section above
+
+	return {
+		enums: {
+			foo: ['choice1', 'choice2']
+		}
+	};
+}
+```
+
+Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7122/dynamics-enums-in-approval-step-windmill).
+
+### Description
+
+You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.mdx) (including markdown).
+
+```ts
+import * as wmill from "windmill-client@^1.158.2"
+
+export async function main(approver?: string) {
+  const urls = await wmill.getResumeUrls(approver)
+  // send the urls to their intended recipients
+
+
+  // if the resumeUrls are part of the response, they will be available to any persons having access
+  // to the run page and allowed to be approved from there, even from non owners of the flow
+  // self-approval is disablable in the suspend options
+  return {
+        ...urls,
+        default_args: {},
+        enums: {},
+        description: {
+      render_all: [
+        {
+          markdown: "# We have located the secret vault with thousands of H100"
+        },
+        {
+          map: { lat: -30, lon: 10, markers: [{lat: -30, lon: 0, title: "It's here"}]}
+        },
+        "Just kidding"
+      ]
+    }
+        // supports all formats from rich display rendering such as simple strings,
+        // but also markdown, html, images, tables, maps, render_all, etc...
+        // https://www.windmill.dev/docs/core_concepts/rich_display_rendering
+  }
+}
+```
+
+![Description](../assets/flows/description.png 'Description')
+
+### Hide cancel button on approval page
+
+By enabling this option, the cancel button will not be displayed on the approval page to force more complex patterns using forms with enums processed in ulterior steps.
+
+![Hide cancel approval settings](../assets/flows/hide_cancel_approval.png 'Hide cancel approval settings')
+
+![Hide cancel approval page](../assets/flows/hide_cancel_approval_page.png 'Hide cancel approval page')
+
+Alternatively, adding the cancel url as a result of the stpep will also render a cancel button, providing the operator with an option to cancel the step. e.g:
+
+```ts
+import * as wmill from "windmill-client"
+        
+export async function main() {
+    const urls = await wmill.getResumeUrls("approver1")
 
     return {
-        enums: {
-            foo: ["choice1", "choice2"]
-        },
+        resume: urls['resume'],
+        cancel: urls['cancel'],
     }
 }
 ```
+
+## Permissions
+
+Customizing permissions of approval steps is a [Cloud & Enterprise Self-Hosted](/pricing) only feature.
+
+### Require approvers to be logged in
+
+By enabling this option, only users logged in to Windmill can approve the step.
+
+![Approval Logged In](../assets/flows/approval-logged-in.png 'Approval Logged In')
+
+### Disable self-approval
+
+The user who triggered the flow will not be allowed to approve it.
+
+![Disable self-approval](../assets/flows/disable-self-approval.png 'Disable self-approval')
+
+### Require approvers to be members of a group
+
+By enabling this option, only logged in users who are members of the specified [group](../core_concepts/8_groups_and_folders/index.mdx) can approve the step.
+
+![Require approvers to be members of a group](../assets/flows/approval-require-group.png 'Require approvers to be members of a group')
+
+You can also dynamically set the group by connecting it to another node's output.
+
+![Approval group dynamic](../assets/flows/approval-group-dynamic.png 'Approval group dynamic')
+
+### Get the users who approved the flow
+
+The input `approvers` is an array of the users who approved the flow.
+
+To get the list of users, just have the step after the approval step return the `approvers` key. For example by taking an input [connected](./16_architecture.mdx) to the `approvers` key.
+
+The step could be as simple as:
+
+```ts
+export async function main(list_of_approvers) {
+  return list_of_approvers
+}
+```
+
+With input list_of_approvers taking as JavaScript expression `approvers`.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/list_of_approvers.mp4"
+/>
 
 ## Tutorial: A Slack Approval Step Conditioning Flow Branches
 
@@ -217,12 +379,12 @@ The answer to the arguments of an approval page can be used as an input to condi
 Here is a basic example we will detail below.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/example_approval_branches.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/example_approval_branches.mp4"
 />
 
-<br/>
+<br />
 
 This flow:
 
@@ -236,7 +398,7 @@ An [automated trigger version](#automated-trigger-version) of this flow is avail
 
 :::
 
-For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.mdx#auto-generated-uis). Two input were used: "User email" and "Order number", both strings.
+For the sake of the example, we made this flow simple with a [manual trigger](../getting_started/9_trigger_flows/index.mdx). Two input were used: "User email" and "Order number", both strings.
 
 ![Flow inputs](../assets/flows/tuto_approval_input.png.webp)
 
@@ -266,7 +428,7 @@ Those are the keys you can use as predicate expressions for your [branches](./13
 
 > With [Branch one](./13_flow_branches.md#branch-one), the first branch whose predicate expression is `true` will execute.
 
-<br/>
+<br />
 
 The content of each branch is of little importance for this tutorial as it depends each operations and tech stack. For the example we used two Hub scripts: [Send Email](https://hub.windmill.dev/scripts/gmail/1291/) with [Gmail](../integrations/gmail.md) and [Send Message to Channel](https://hub.windmill.dev/scripts/slack/1284/) with [Slack](../integrations/slack.mdx).
 
@@ -275,7 +437,7 @@ The content of each branch is of little importance for this tutorial as it depen
 
 ![Gmail inputs](../assets/flows/tuto_approval_gmail.png.webp)
 
-<br/>
+<br />
 
 ![Slack inputs](../assets/flows/tuto_approval_slack2.png.webp)
 
@@ -286,17 +448,11 @@ The content of each branch is of little importance for this tutorial as it depen
 You could use the [Mailchimp Mandrill integration](../integrations/mailchimp_mandrill.md) to trigger this flow manually by an email reception.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full"
-    controls
-    src="/videos/automated_refund.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/automated_refund.mp4"
 />
 
-<br/>
-
-:::tip Find it on Windmill Hub
-
-![The branch is executed](../assets/flows/branch-executed.png.webp)
+<br />
 
 This flow can be found and forked on [Windmill Hub](https://hub.windmill.dev/flows/49/).
-
-:::

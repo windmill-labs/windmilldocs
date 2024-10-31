@@ -1,14 +1,14 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Run Docker Containers
+# Run Docker containers
 
 Windmill supports running any [Docker](https://www.docker.com/) container through its [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) support. As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
 
 Once Docker is set up, see:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Docker Quickstart"
+		title="Docker quickstart"
 		description="Learn to run a script using from Docker containers."
 		href="/docs/getting_started/scripts_quickstart/docker"
 	/>
@@ -77,7 +77,7 @@ It is just a bash script so it will behave exactly the same as a local command o
 
 Do not use the daemon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
 
-Like any bash script, it will return the last line of the stdout. So be sure to print the the return value from your command if you'd like to use it as a result.
+Like any bash script, it will return the last line of the stdout. So be sure to print the return value from your command if you'd like to use it as a result.
 
 As a script:
 
@@ -120,4 +120,74 @@ Digest: sha256:7144f7bab3d4c2648d7e59409f15ec52a18006a128c733fcff20d3a4a54ba44a
 Status: Downloaded newer image for alpine:latest
 Hello
 + exit 0
+```
+
+## Kubernetes
+
+If you use kubernetes and would like to run your docker file directly on the kubernetes host, use the following script:
+
+```
+# shellcheck shell=bash
+# Bash script that calls docker as a client to the host daemon
+# See documentation: https://www.windmill.dev/docs/advanced/docker
+msg="${1:-world}"
+
+IMAGE="docker/whalesay:latest"
+COMMAND=(sh -c "cowsay $msg")
+
+APISERVER=https://kubernetes.default.svc
+SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
+NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
+TOKEN=$(cat ${SERVICEACCOUNT}/token)
+CACERT=${SERVICEACCOUNT}/ca.crt
+
+KUBECONFIG_TMP_DIR="$(mktemp -d)"
+export KUBECONFIG="${KUBECONFIG_TMP_DIR}/kubeconfig"
+
+trap "rm -rfv ${KUBECONFIG_TMP_DIR}" EXIT
+
+kubectl config set-cluster local --server="${APISERVER}" --certificate-authority="${CACERT}"
+kubectl config set-credentials local --token="${TOKEN}"
+kubectl config set-context local --cluster=local --user=local --namespace="${NAMESPACE}"
+kubectl config use-context local
+
+kubectl run task -it --rm --restart=Never --image="$IMAGE" -- "${COMMAND[@]}"
+```
+
+and use the following additional privileges
+
+```yaml
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: windmill
+  name: pod-management
+rules:
+  - apiGroups: ['']
+    resources: ['pods']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
+  - apiGroups: ['']
+    resources: ['pods/log']
+    verbs: ['get', 'list', 'watch']
+  - apiGroups: ['']
+    resources: ['pods/attach']
+    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
+  - apiGroups: ['']
+    resources: ['events']
+    verbs: ['get', 'list', 'watch']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-management
+  namespace: windmill
+subjects:
+  - kind: ServiceAccount
+    name: windmill-chart
+    namespace: windmill
+roleRef:
+  kind: Role
+  name: pod-management
+  apiGroup: rbac.authorization.k8s.io
 ```

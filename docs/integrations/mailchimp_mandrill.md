@@ -1,6 +1,8 @@
-# Mailchimp Mandrill Integration
+# Mailchimp Mandrill integration
 
-Integrating [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.mdx) or [flows](../getting_started/9_trigger_flows/index.mdx) by e-mail.
+[Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a delivery service for transactional emails from websites and application.
+
+Integrating Mailchimp Mandrill is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.mdx) or [flows](../getting_started/9_trigger_flows/index.mdx) by e-mail.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -24,7 +26,7 @@ The present tutorial explains how to use Mailchimp to trigger Windmill [scripts]
 
 Combined with a token created in Windmill, these webhooks can be interacted with using standard web technologies, making them compatible with a broad range of external systems and services, including Mailchimp Mandrill for email-triggered executions.
 
-![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png.webp)
+![Webhook endpoints](../core_concepts/4_webhooks/webhook_endpoints.png)
 
 > Each script or flow has webhook endpoints. Bearer token must be passed as either an Authorization: Bearer &lt;TOKEN&gt; header, or as a token query parameter: https://&lt;instance&gt;/&lt;route&gt;?token=&lt;TOKEN&gt;
 
@@ -44,7 +46,7 @@ Here are the steps to follow:
 
 2. [Sign up to Mailchimp](https://mailchimp.com/signup/) (we used the free trial at first).
 
-3. Go the the [inbound menu of Mailchimp Mandrill](https://mandrillapp.com/inbound).
+3. Go to the [inbound menu of Mailchimp Mandrill](https://mandrillapp.com/inbound).
 
 4. Add a domain or sub-domain. For example `webhooks.domain.com`.
 
@@ -147,8 +149,8 @@ def main(input_email):
 
 At last, you may be in a situation where you want to extract the relevant details for both forwarded and directly routed e-mails. Meaning:
 
-- if A directly sent e-mail, treat contact details of A ;
-- if A forwarded e-mail from B, treat contact details of B.
+- if A directly sent e-mail, treat contact details of A
+- if A forwarded e-mail from B, treat contact details of B
 
 Then you have two solutions:
 

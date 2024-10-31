@@ -1,4 +1,6 @@
-# Redis Integration
+# Redis integration
+
+[Redis](https://redis.io/) is an in-memory data structure store used as a database, cache, and message broker.
 
 Redis follows the same connection method as [MongoDB](./mongodb.md), providing the database name, TLS settings, server information, and credentials for authentication.
 

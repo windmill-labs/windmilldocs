@@ -1,0 +1,88 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Cloudflare integration
+
+[Cloudflare R2](https://www.cloudflare.com/products/r2/) is a cloud object storage service for data-intensive applications.
+
+Instance and workspace object storage are different from using S3 resources within scripts, flows, and apps, which is free and unlimited. This is what is [described in this page](#add-an-s3-resource).
+
+At the [workspace level](../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage), what is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with S3 that is a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
+
+Additionally, for [instance integration](../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage), the Enterprise version offers advanced features such as large-scale log management and distributed dependency caching.
+
+Cloudflare's API follows the same schema as any S3 compatible API.
+
+## Add an S3 Resource
+
+To integrate Cloudflare to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+
+![S3 resource type](../assets/integrations/add-s3.png.webp)
+
+Here is [the information](https://developers.cloudflare.com/r2/api/s3/api/) on where to find the required details:
+
+| Property  | Type    | Description                  | Default | Required | Where to Find                                                        | Additional Details                                                                       |
+| --------- | ------- | ---------------------------- | ------- | -------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| bucket    | string  | S3 bucket name               |         | true     | R2 Dashboard                                                         | Name of the S3 bucket to access                                                          |
+| region    | string  | AWS region for the S3 bucket |         | true     | [R2 documentation](https://developers.cloudflare.com/r2/api/s3/api/) | The region is specific to R2 and is set when creating the bucket                         |
+| useSSL    | boolean | Use SSL for connections      | true    | false    | [R2 documentation](https://developers.cloudflare.com/r2/api/s3/api/) | SSL/TLS is required for Cloudflare R2                                                    |
+| endPoint  | string  | S3 endpoint                  |         | true     | [R2 documentation](https://developers.cloudflare.com/r2/api/s3/api/) | Endpoint URL will be in the format `https://[bucket-id].r2.storage.cloud.cloudflare.com` |
+| accessKey | string  | AWS access key               |         | false    | Not applicable for Cloudflare R2                                     | Access key ID is not required for R2                                                     |
+| pathStyle | boolean | Use path-style addressing    | false   | false    | Not applicable for Cloudflare R2                                     | Virtual-hosted-style URLs are always used in R2                                          |
+| secretKey | string  | AWS secret key               |         | false    | Not applicable for Cloudflare R2                                     | Secret access key is not required for R2                                                 |
+
+<br/><br/>
+
+Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ggJQtzvqaqA"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+> Example of a Supabase resource being used in two different manners from a script in Windmill.
+<br/>
+
+:::tip
+
+Find some pre-set interactions with S3 on the [Hub](https://hub.windmill.dev/integrations/s3).
+
+Feel free to create your own S3 scripts on [Windmill](../getting_started/00_how_to_use_windmill/index.mdx).
+
+:::
+
+## Workspace object storage
+
+Once you've created an S3 or Azure Blob resource in Windmill, you can use Windmill's native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data.
+
+![Workspace object storage Infographic](../core_concepts/11_persistent_storage/s3_infographics.png "Workspace object storage")
+
+The workspace object storage is exclusive to the [Enterprise](/pricing) edition. It is meant to be a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
+	/>
+</div>
+
+## Instance object storage
+
+Under [Enterprise Edition](/pricing), instance object storage offers advanced features to enhance performance and scalability at the [instance](../advanced/18_instance_settings/index.mdx) level. This integration is separate from the [Workspace object storage](#workspace-object-storage) and provides solutions for large-scale log management and distributed dependency caching.
+
+![S3/Azure for Python/Go cache & large logs](../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="S3/Azure Blob Instance Integration"
+		description="Connect your Windmill instance to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#instance-object-storage"
+	/>
+</div>

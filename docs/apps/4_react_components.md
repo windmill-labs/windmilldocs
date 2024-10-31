@@ -1,4 +1,4 @@
-# Import Custom React Components
+# Import custom React components
 
 Windmill already provides over [sixty components](./4_app_configuration_settings/1_app_component_library.mdx) for its users, accessible with a simple drag-and-drop. For more control and standardization with your existing stack, you might want to import your own components in React.
 
@@ -6,10 +6,12 @@ Windmill already provides over [sixty components](./4_app_configuration_settings
 
 If you're looking for a way to:
 
-- Import whole react apps to Windmill, see [React App Import](../react_vue_svelte_apps/react.md).
+- Import whole react apps to Windmill, see [React app import](../react_vue_svelte_apps/react.md).
 - Integrate Windmill applications into React-based project, see [Windmill React SDK](../misc/15_react_sdk/index.md).
 
 :::
+
+Importing Custom React Components is a [Cloud and Self-Hosted-Enterprise-Only](/pricing) feature
 
 Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
@@ -21,16 +23,16 @@ There are 3 main benefits of using your own components:
 
 If that's not sufficient you can even [build your own app in React](../react_vue_svelte_apps/react.md).
 
-## How to import react components to App Editor
+## How to import react components to App editor
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/LO83BKAe6zg?vq=hd1080"
+	src="https://www.youtube.com/embed/LO83BKAe6zg"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br/>

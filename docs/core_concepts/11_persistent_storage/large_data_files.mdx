@@ -1,0 +1,165 @@
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Large data: S3, R2, MinIO, Azure Blob
+
+This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
+
+On heavier data objects & unstructured data storage, [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) and its alternatives [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/) and [MinIO](https://min.io/) as well as [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
+
+Windmill comes with a [native integration with S3 and Azure Blob](#connect-your-windmill-workspace-to-your-s3-bucket-or-your-azure-blob-storage), making it the recommended storage for large objects like files and binary data.
+
+## Workspace object storage
+
+Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials.
+
+Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
+
+![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
+	/>
+</div>
+
+## Windmill integration with Polars and DuckDB for data pipelines
+
+ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
+
+<Tabs className="unique-tabs">
+<TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+#requirements:
+polars==0.20.2
+#s3fs==2023.12.0
+#wmill>=1.229.0
+
+import wmill
+from wmill import S3Object
+import polars as pl
+import s3fs
+
+
+def main(input_file: S3Object):
+    bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
+
+    # this will default to the workspace S3 resource
+    storage_options = wmill.polars_connection_settings().storage_options
+    # this will use the designated resource
+    # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
+
+    # input is a parquet file, we use read_parquet in lazy mode.
+    # Polars can read various file types, see
+    # https://pola-rs.github.io/polars/py-polars/html/reference/io.html
+    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
+    input_df = pl.read_parquet(input_uri, storage_options=storage_options).lazy()
+
+    # process the Polars dataframe. See Polars docs:
+    # for dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html
+    # for lazy dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html
+    output_df = input_df.collect()
+    print(output_df)
+
+    # To write back the result to S3, Polars needs an s3fs connection
+    s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings().s3fs_args)
+    output_file = "output/result.parquet"
+    output_uri = "s3://{}/{}".format(bucket, output_file)
+    with s3.open(output_uri, mode="wb") as output_s3:
+        # persist the output dataframe back to S3 and return it
+        output_df.write_parquet(output_s3)
+
+    return S3Object(s3=output_file)
+```
+
+</TabItem>
+<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+#requirements:
+wmill>=1.229.0
+#duckdb==0.9.1
+
+import wmill
+from wmill import S3Object
+import duckdb
+
+
+def main(input_file: S3Object):
+    bucket = wmill.get_resource("u/admin/windmill-cloud-demo")["bucket"]
+
+    # create a DuckDB database in memory
+    # see https://duckdb.org/docs/api/python/dbapi
+    conn = duckdb.connect()
+
+    # this will default to the workspace S3 resource
+    args = wmill.duckdb_connection_settings().connection_settings_str
+    # this will use the designated resource
+    # args = wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>").connection_settings_str
+
+    # connect duck db to the S3 bucket - this will default to the workspace S3 resource
+    conn.execute(args)
+
+    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
+    output_file = "output/result.parquet"
+    output_uri = "s3://{}/{}".format(bucket, output_file)
+
+    # Run queries directly on the parquet file
+    query_result = conn.sql(
+        """
+        SELECT * FROM read_parquet('{}')
+    """.format(
+            input_uri
+        )
+    )
+    query_result.show()
+
+    # Write the result of a query to a different parquet file on S3
+    conn.execute(
+        """
+        COPY (
+            SELECT COUNT(*) FROM read_parquet('{input_uri}')
+        ) TO '{output_uri}' (FORMAT 'parquet');
+    """.format(
+            input_uri=input_uri, output_uri=output_uri
+        )
+    )
+
+    conn.close()
+    return S3Object(s3=output_file)
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+
+Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
+
+:::
+
+For more info on how Data pipelines in Windmill, see [Data pipelines](../27_data_pipelines/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Data pipelines"
+		description="Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines."
+		href="/docs/core_concepts/data_pipelines"
+	/>
+</div>
+
+## Use Amazon S3, R2, MinIO and Azure Blob directly
+
+Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/). Azure Blob has a slightly different API than S3 but works with Windmill as well using its dedicated [resource type](https://hub.windmill.dev/resource_types/137/)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="S3 APIs integrations"
+		description="Use Amazon S3, Cloudflare R2, MinIO and Azure Blob directly within scripts and flows."
+		href="/docs/integrations/s3"
+	/>
+</div>

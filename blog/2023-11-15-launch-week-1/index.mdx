@@ -23,7 +23,7 @@ A summary will be updated progressively on this page.
 ### Flow Builder Copilot
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	src="/videos/ai_flows.mp4"
@@ -41,7 +41,7 @@ For less technical users, it's an opportunity to use Windmill while avoiding bac
 - Docs - [Windmill AI for Flows](/docs/core_concepts/ai_generation#windmill-ai-for-flows)
 - Docs - [Windmill AI Code Completion](/docs/core_concepts/ai_generation#windmill-ai-code-completion)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 1 - Flow Builder Copilot"
 		description="Generate workflows from prompts."
@@ -51,29 +51,29 @@ For less technical users, it's an opportunity to use Windmill while avoiding bac
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080"
+	src="https://www.youtube.com/embed/y-pV6CShdZA"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-### VS Code Extension
+### VS Code extension
 
-![VS Code Extension](../2023-11-20-vscode/vscode_extension.png 'VS Code Extension')
+![VS Code extension](../2023-11-20-vscode/vscode_extension.png 'VS Code extension')
 
 Second annoucement of the day is the Windmill [VS Code extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
 It unlocks fully the ability to iterate on your scripts and flows in the comfort of your VS Code editor. It integrates particularly well with the current github/gitlab sync: scripts', flow steps' code and flows' yaml definitions can be directly edited in VS Code while benefitting from the instant preview UI of windmill.
 
 - [Blog post](../2023-11-20-vscode/index.mdx)
-- Docs - [Windmill VS Code Extension](/docs/cli_local_dev/vscode-extension)
-- Docs - [Local Development](/docs/advanced/local_development)
+- Docs - [Windmill VS Code extension](/docs/cli_local_dev/vscode-extension)
+- Docs - [Local development](/docs/advanced/local_development)
 - Docs - [Windmill CLI](/docs/advanced/cli)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Launch Week Day 1 - VS Code Extension"
+		title="Launch Week Day 1 - VS Code extension"
 		description="Write scripts & flows in your code editor with a UI preview."
 		href="/blog/launch-week-1/vscode-extension"
 	/>
@@ -81,19 +81,19 @@ It unlocks fully the ability to iterate on your scripts and flows in the comfort
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/aSOF6AzyDr8?vq=hd1080"
+	src="https://www.youtube.com/embed/aSOF6AzyDr8"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 ## Day 2
 
-### Worker Groups Management UI & Hot Reloading
+### Worker groups management UI & Hot Reloading
 
-![Worker Groups Management UI & Hot Reloading](../2023-11-21-workers-group/worker_groups_configuration_thumbnail.png 'Worker Groups')
+![Worker groups management UI & Hot Reloading](../2023-11-21-workers-group/worker_groups_configuration_thumbnail.png 'Worker Groups')
 
 [Blog post](../2023-11-21-workers-group/index.mdx)
 
@@ -115,7 +115,7 @@ Examples of worker groups configurations include:
 
 Once the configurations are done from the Windmill UI, the workers take their configuration dynamically, without having to restart.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 2 - Worker Groups"
 		description="Define Worker Groups and configure them in the UI"
@@ -125,12 +125,12 @@ Once the configurations are done from the Windmill UI, the workers take their co
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+	src="https://www.youtube.com/embed/LbjgWKFQWJc"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 ### Dedicated Workers for scripts
@@ -139,11 +139,11 @@ Once the configurations are done from the Windmill UI, the workers take their co
 
 [Blog post](https://www.windmill.dev/blog/launch-week-dedicated-workers)
 
-Dedicated Workers for scripts enable to reach up to 1000rps per worker for a given script. It makes windmill faster than AWS Lambda and a good fit for even event-streaming use cases.
+Dedicated Workers for scripts enable to reach up to 1000rps per worker for a given script. It makes Windmill faster than AWS Lambda and a good fit for even event-streaming use cases.
 
 - Docs - [Dedicated Workers - High Throughput](/docs/core_concepts/dedicated_workers)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 2 - Dedicated Workers for scripts"
 		description="Assign workers dedciated to a script for maxmium performance by removing cold starts"
@@ -156,15 +156,15 @@ Dedicated Workers for scripts enable to reach up to 1000rps per worker for a giv
 ### Why is Windmill the fastest self-hostable workflow engine and job processing framework
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	src="/videos/windmill_fastest.mp4"
 />
 
-<br/>
+<br />
 
-Big claim today: We've benchmarked Windmill to be the fastest self-hostable generic workflow engine among Airflow, Prefect and even Temporal. For Airflow, there is a quite a margin, up to 10x faster! 
+Big claim today: We've benchmarked Windmill to be the fastest self-hostable generic workflow engine among Airflow, Prefect and even Temporal. For Airflow, there is a quite a margin, up to 10x faster!
 
 You've known Windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
 
@@ -177,7 +177,7 @@ Enjoy the reading.
 - [Blog post](../2023-11-22-why-is-windmill-the-fastest-workflow-engine/index.mdx)
 - Docs - [Benchmarks](/docs/misc/benchmarks/competitors)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 3 - Fastest self-hostable open-source workflow engine"
 		description="Why is Windmill the fastest self-hostable workflow engine and job processing framework"
@@ -187,13 +187,13 @@ Enjoy the reading.
 
 ## Day 4
 
-Day 4 of our Launch Week is dedicated to the [App Editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
+Day 4 of our Launch Week is dedicated to the [App editor](/docs/apps/app_editor). The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 
 ### Global Custom CSS
 
 ![Global custom CSS](../2023-11-23-3-global-css/global_css.png 'Global custom CSS')
 
-Custom styling is essential for aligning internal tools with your brand image. While [component-level CSS](/docs/apps/app_configuration_settings/app_styling#component-level) has always been possible in Windmill App Editor, we are excited to introduce global CSS.
+Custom styling is essential for aligning internal tools with your brand image. While [component-level CSS](/docs/apps/app_configuration_settings/app_styling#component-level) has always been possible in Windmill App editor, we are excited to introduce global CSS.
 
 CSS can now be defined globally: for an entire app and across all apps as themes.
 This CSS is editable from a new CSS editor, a centralized location for defining, managing, and applying CSS rules.
@@ -203,21 +203,21 @@ Not only that, but we also took care of doing an exhaustive hierarchy of classes
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/6_MjKgbdCFQ?vq=hd1080"
+	src="https://www.youtube.com/embed/6_MjKgbdCFQ"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-23-3-global-css/Index.mdx)
 - Docs - [Styling](/docs/apps/app_configuration_settings/app_styling)
-- Docs - [CSS Editor](/docs/apps/css_editor)
+- Docs - [CSS editor](/docs/apps/css_editor)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 4 - Global Custom CSS"
 		description="Introducing Custom CSS theming to share across your apps."
@@ -234,18 +234,18 @@ Windmill already provides over sixty components for its users. All components co
 We are proud to introduce component groups, which allow you to build your own meta-components, accessible via drag-and-drop from any app in your workspace. Saved components group keep the logic between each components, avoiding creating it over and over.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/save_component_group.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/save_component_group.mp4"
 />
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-23-2-components-groups/index.mdx)
 - Docs - [Groups of components](/docs/apps/app_configuration_settings/components_groups)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 4 - Groups of Components"
 		description="Introducing Components Groups to group and save components, therefore building your own meta components."
@@ -264,6 +264,7 @@ However, for components that are more specific you can now go even further and i
 Once imported to Windmill, custom React components will be able to interact with the rest of the app.
 
 There are 3 main benefits of using your own components:
+
 1. Reusing react components you've already written in other codebases.
 2. Controlling fully the component including theming, inputs and outputs allowing for more complex components and interactions.
 3. Embeding very complex components such as a code editor.
@@ -272,21 +273,21 @@ If that's not sufficient you can even build your own app in React.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/LO83BKAe6zg?vq=hd1080"
+	src="https://www.youtube.com/embed/LO83BKAe6zg"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](/blog/launch-week-1/react-components)
-- Docs - [Import Custom React Components](/docs/apps/react_components)
-- Docs - [React App Import](/docs/react_vue_svelte_apps/react)
+- Docs - [Import custom React components](/docs/apps/react_components)
+- Docs - [React app import](/docs/react_vue_svelte_apps/react)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 4 - Custom React Components & Apps"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
@@ -296,11 +297,11 @@ If that's not sufficient you can even build your own app in React.
 
 ## Day 5
 
-For the last day of our launch week today we focused on features that will help you in your ETLs, with restartable flows and S3 integration for data pipelines.
+For the last day of our launch week today we focused on features that will help you in your ETLs, with restartable flows and Workspace object storage for data pipelines.
 
-### Windmill for data pipelines - S3 Integration
+### Windmill for data pipelines - Workspace object storage
 
-![Windmill for data pipelines - S3 Integration](../2023-11-24-data-pipeline-orchestrator/data_pipelines.png.webp "Windmill for data pipelines - S3 Integration")
+![Windmill for data pipelines - Workspace object storage](../2023-11-24-data-pipeline-orchestrator/data_pipelines.png.webp 'Windmill for data pipelines - Workspace object storage')
 
 _Run your ETLs on-prem up to 5x faster using Windmill compared to Spark while simplifying your infra._
 
@@ -325,15 +326,15 @@ will be easier to manage and your pipeline will be easier to write, maintain, an
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-24-data-pipeline-orchestrator/index.mdx)
 - Docs - [Persistent Storage](/docs/core_concepts/persistent_storage)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 5 - Windmill for data pipelines"
 		description="Use Windmill to build, run, and monitor your data pipelines."
@@ -343,7 +344,7 @@ will be easier to manage and your pipeline will be easier to write, maintain, an
 
 ### Restartable Flows
 
-![Restartable flows](../2023-11-24-restartable-flows/restartable_flows.png.webp "Restartable flows")
+![Restartable flows](../2023-11-24-restartable-flows/restartable_flows.png.webp 'Restartable flows')
 
 The principle is simple: once the flow is executed (whether in test or deployed), you have the possibility to restart it from any node (step, iteration of a for loop, or branch).
 
@@ -360,15 +361,15 @@ This feature is part of the logic of the different ways to iterate over a flow (
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 - [Blog post](../2023-11-24-restartable-flows/index.mdx)
-- Docs - [Instant Preview & Testing](/docs/core_concepts/instant_preview)
+- Docs - [Instant preview & testing](/docs/core_concepts/instant_preview)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Launch Week Day 5 - Restartable Flows"
 		description="Re-start a flow from a specific node."
@@ -378,7 +379,7 @@ This feature is part of the logic of the different ways to iterate over a flow (
 
 ## Subscribe to follow our latest announcements
 
-If you want to follow our announcements, <a href="https://app.windmill.dev/" rel="nofollow">sign up to Windmill Cloud</a> or to our mailing list below:
+If you want to follow our announcements, <a href="https://app.windmill.dev/" rel="nofollow">sign up to Windmill cloud</a> or to our mailing list below:
 
 <iframe
 	src="https://cdn.forms-content.sg-form.com/7c42148e-8396-11ee-ba6a-4e3b45e8beb1"

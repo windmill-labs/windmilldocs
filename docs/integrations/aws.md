@@ -1,8 +1,10 @@
-# AWS Integration
+# AWS integration
 
-To integrate [AWS](https://aws.amazon.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[AWS](https://aws.amazon.com/) is a cloud computing platform offering various services like computing, storage and databases.
 
-:::info Self Host
+To integrate AWS to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+
+:::info Self-host
 
 If you're looking for a way to self-host Windmill using AWS, see [Self-Host Windmill](../advanced/1_self_host/index.mdx).
 
@@ -20,12 +22,19 @@ If you're looking for a way to self-host Windmill using AWS, see [Self-Host Wind
 
 Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/add_resources_variables.mp4"
-/>
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ggJQtzvqaqA"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
+<br/>
+
+> Example of a Supabase resource being used in two different manners from a script in Windmill.
 <br/>
 
 :::tip

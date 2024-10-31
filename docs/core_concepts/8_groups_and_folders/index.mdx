@@ -1,17 +1,34 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Groups and Folders
+# Groups and folders
 
-Groups and Folders are ways to manage permissions and organize items in a workspace. They are the privileged method to handle permissions in Windmill.
+Groups and folders are ways to manage permissions and organize items in a workspace. They are the privileged method to handle [permissions](../16_roles_and_permissions/index.mdx) in Windmill.
 
-<div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-6 mb-4">
+Recap of how permissions are given to an item (script, flow, resource, variable, schedule) in Windmill:
+
+![Recap Item Permissions](../16_roles_and_permissions/permissions.png "Recap Item Permissions")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Roles and Permissions"
+		title="Roles and permissions"
 		description="Windmill provides a roles and permissions system that allows you to control access and manage permissions within your instance and workspaces."
 		href="/docs/core_concepts/roles_and_permissions"
 	/>
 </div>
+
+## Folders
+
+Folders group various items, such as scripts, flows, resources, and schedules, together and assign [role](../16_roles_and_permissions/index.mdx#roles-in-windmill)-based access control permissions to groups and individual users.
+
+![Folders](./3-folders.png 'Folders')
+
+Folders should represent projects, and we recommend assigning permissions to groups. You should have as many top-level folders that you have different projects/permission scopes.
+
+### Subfolders
+
+You can have as many subfolders as you want but only the top-level folder will have permissions one can inherit from.
+
+To use subfolders, you just need to have '/' in the last part of the [path](../16_roles_and_permissions/index.mdx#path) of an item, like you would do on a filesystem.
 
 ## Groups
 
@@ -25,13 +42,7 @@ Similar to users, groups can be assigned one of three permission levels for a sp
 - Writer: read and write access.
 - Admin: read and write access, and can manage permissions and new admins.
 
-## Folders
-
-Folders group various **items**, such as scripts, flows, resources, and schedules, together and assign Role-based access control permissions to groups and individual users.
-
-![Folders](./3-folders.png 'Folders')
-
-## Groups and Folders together
+## Groups and folders together
 
 Groups and folders work together to organize permissions and access control within your workspace. Groups can be included within folders, but folders cannot be nested within groups.
 

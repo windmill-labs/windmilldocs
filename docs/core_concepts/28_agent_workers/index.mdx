@@ -1,8 +1,8 @@
-# Agent Workers
+# Agent workers
 
-Agent Workers are an Enterprise Feature.
+Agent workers are a [Self-Hosted Enterprise](/pricing) Feature.
 
-Agent Workers are a 4th mode of execution of the Windmill binary, but instead of using `MODE=worker`, we use here `MODE=agent`.
+Agent workers are a 4th mode of execution of the Windmill binary, but instead of using `MODE=worker`, we use here `MODE=agent`.
 It is most useful when workers are deployed remotely and they are in an unsecure environments and/or have a high latency to the Postgresql database.
 Note that agent workers can even be running without docker on Linux, Windows and Apple targets using the cross-compiled binaries of Windmill attached to each release.
 
@@ -18,7 +18,7 @@ In this settings, workers will still require a connection to be passed with `DAT
 - emit audit logs in the database
 - insert the finished job in the completed_job table.
 
-All other operations are done by the intermerdiary of the api servers that the remote workers will connect to using http and the BASE_URL defined in the instance settings (overridable by passing `BASE_INTERNAL_URL=<https://private_instance_url:8000>` to the worker`).
+All other operations are done by the intermerdiary of the api servers that the remote workers will connect to using http and the BASE_URL defined in the [instance settings](../../advanced/18_instance_settings/index.mdx#base-url) (overridable by passing `BASE_INTERNAL_URL=<https://private_instance_url:8000>` to the worker`).
 
 ## (Optional) Restrict the role used by the worker to the strict minimum
 
@@ -29,15 +29,38 @@ One such role that can be defined could be as follows:
 
 ```sql
 CREATE USER agent with PASSWORD 'changeme';
-GRANT SELECT, UPDATE, DELETE ON queue to agent;
+GRANT ALL ON queue to agent;
+GRANT INSERT on audit to agent;
+GRANT ALL on sequence audit_id_seq to agent;
 GRANT SELECT, INSERT, UPDATE ON completed_job to agent;
 GRANT SELECT on config to agent;
 GRANT SELECT on global_settings to agent;
 GRANT SELECT, INSERT, UPDATE on worker_ping to agent;
 GRANT ALL on concurrency_counter to agent;
+GRANT SELECT, INSERT, UPDATE on pip_resolution_cache to agent;
+GRANT SELECT, INSERT, UPDATE on job_logs to agent;
+GRANT SELECT, INSERT, UPDATE on outstanding_wait_time to agent;
+GRANT SELECT, UPDATE on script to agent;
+GRANT SELECT, UPDATE, INSERT on deployment_metadata to agent;
+GRANT SELECT, UPDATE, INSERT on dependency_map to agent;
+GRANT SELECT, UPDATE on flow to agent;
+GRANT SELECT, UPDATE on flow_version to agent;
+GRANT SELECT, UPDATE on schedule to agent;
+GRANT SELECT (hostname, log_ts) ON log_file TO agent;
 
 CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
+CREATE POLICY agent ON script TO agent USING (tag = '<x>' OR tag = '<y>');
+CREATE POLICY agent ON flow TO agent USING (tag = '<x>' OR tag = '<y>');
+-- adapt below (and above) policies to your needs (e.g. based on workspace/path etc...)
+CREATE POLICY agent ON flow_version TO agent USING (true);
+CREATE POLICY agent ON schedule TO agent USING (true);
 CREATE POLICY agent ON completed_job TO agent USING (true);
+CREATE POLICY agent
+   ON audit
+   FOR INSERT
+   TO agent
+   WITH CHECK  (true);
+
 
 ```
 

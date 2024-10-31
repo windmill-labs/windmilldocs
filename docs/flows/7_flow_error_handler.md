@@ -1,4 +1,4 @@
-# Error Handler
+# Error handler
 
 The error handler is a special flow step that is executed when an error occurs in the flow.
 
@@ -20,7 +20,7 @@ Steps are retried until they succeed, or until the maximum number of retries def
 You can write error handler scripts in:
 
 - [Python](/docs/getting_started/scripts_quickstart/python/)
-- [Typescript](/docs/getting_started/scripts_quickstart/typescript/)
+- [TypeScript](/docs/getting_started/scripts_quickstart/typescript/)
 - [Go](/docs/getting_started/scripts_quickstart/go/)
 
 On the Hub, two examples of error handlers are provided:
@@ -30,10 +30,10 @@ On the Hub, two examples of error handlers are provided:
 
 :::info Example
 
-For instance, when building a workflow to [automatically populate a CRM details from an email](https://www.windmill.dev/blog/automatically-populate-crm), it was decided to set an Error Handler to still add the email on the CRM in case of error and not lose the contact's email.
+For instance, when building a workflow to [automatically populate a CRM details from an email](https://www.windmill.dev/blog/automatically-populate-crm), it was decided to set an Error handler to still add the email on the CRM in case of error and not lose the contact's email.
 
 <br/>
 
-![Error Handler Example](../assets/flows/error_handler_example.png.webp)
+![Error handler Example](../assets/flows/error_handler_example.png.webp)
 
 :::

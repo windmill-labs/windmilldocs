@@ -2,7 +2,7 @@
 
 The app toolbar is located at the top of the app editor. It enables you to adjust app settings.
 
-![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png.webp)
+![App Menu](../assets/apps/1_app_toolbar/app-toolbar.png)
 
 ## App Summary
 
@@ -12,16 +12,46 @@ The app summary can be modified on the left side of the toolbar. It serves to de
 
 The undo/redo buttons facilitates undoing or redoing the most recent action.
 
-## Desktop/Mobile Mode
-
-You can switch the canvas' mode to `Mobile` or `Desktop` layout from the toolbar. This enables you to manually set the position and size of the components in both modes.
-
 ## Width
 
 You can set the canvas' width to:
 
 - Limited width: The max width is 1168px and the content stay centered instead of taking the full page width.
 - Max width: The width is of the app if the full width of its container.
+
+## Desktop/Mobile Mode
+
+You can switch the canvas' mode to `Mobile` or `Desktop` layout from the toolbar. This enables you to manually set the position and size of the components in both modes.
+
+## Hide / Show Buttons
+
+You can hide the panels you see by default with special buttons and shortcuts.
+
+![Hide buttons](../assets/apps/1_app_toolbar/hide_buttons.png 'Hide buttons')
+
+### Hide the left panel
+
+The left panel is the [Output panel](./2_outputs.mdx).
+
+You can hide it with this button or shortcut `⌘ + B` / `CTRL + B`.
+
+![Left panel](../assets/apps/1_app_toolbar/left_panel.png 'Left panel')
+
+### Hide the bottom panel
+
+The left panel is the [Runnable panel](./3_app-runnable-panel.mdx).
+
+You can hide it with this button or shortcut `⌘ + L` / `CTRL + L`.
+
+![Bottom panel](../assets/apps/1_app_toolbar/bottom_panel.png 'Bottom panel')
+
+### Hide the right panel
+
+The left panel is the [Component library](./4_app_configuration_settings/1_app_component_library.mdx) and [Component settings](./4_app_configuration_settings/3_app_component_configuration.mdx) panel.
+
+You can hide it with this button or shortcut `⌘ + U` / `CTRL + U`.
+
+![Right panel](../assets/apps/1_app_toolbar/right_panel.png 'Right panel')
 
 ## Menu `⋮`
 
@@ -41,7 +71,7 @@ You can:
 
 ### Export
 
-View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsing/index.md) of the app.
+View the [YAML or JSON representation](../core_concepts/13_json_schema_and_parsing/index.mdx) of the app.
 
 ![App Export](../assets/apps/1_app_toolbar/app-export.png 'App Export')
 
@@ -65,12 +95,12 @@ Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.md
 
 ![Diff Viewer](../assets/apps/1_app_toolbar/diff_viewer.png 'Diff Viewer')
 
-## Debug Runs
+## Debug runs
 
 The app builder enables you to examine recent runs to [identify potential bugs](./5_app_debugging.md).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/debug_app.mp4"
 />

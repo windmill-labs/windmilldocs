@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Script Kinds
+# Script kind
 
 You can attach additional functionalities to Scripts by specializing them into
 specific Script kinds.
@@ -11,29 +11,29 @@ From the [Settings](./settings.mdx) of a script, the "Metadata" tab lets you def
 
 Actions - or Common Scripts - are the basic building blocks for the flows.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Scripts Quickstart"
-		description="Start writing scripts in Python, TypeScript, Go, Bash and Sql."
+		title="Scripts quickstart"
+		description="Start writing scripts in Python, TypeScript, Go, PHP, Bash and Sql."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 	<DocCard
-		title="Flows Quickstart"
+		title="Flows quickstart"
 		description="Learn how to build flows."
 		href="/docs/getting_started/flows_quickstart"
 	/>
 </div>
 
-## Trigger Scripts
+## Trigger scripts
 
-These are used as the first step in Flows, most commonly with an internal
+These are used as the first step in flows, most commonly with an internal
 state and a schedule to watch for changes on a
 external system, and compare it to the previously saved state. If there are
 changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Trigger Scripts"
+		title="Trigger scripts"
 		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
 		href="/docs/flows/flow_trigger"
 	/>
@@ -44,32 +44,32 @@ changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 	/>
 </div>
 
-## Approval Scripts
+## Approval scripts
 
 Suspend a flow until it's approved. An Approval Script will interact with the
 Windmill API using any of the Windmill clients to retrieve a secret approval URL
-and resume/cancel endpoints. Most common scenario for Approval Scripts is to
+and resume/cancel endpoints. Most common scenario for Approval scripts is to
 send an external notification with an URL that can be used to resume or cancel a
 flow.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Approval Steps in Flows"
-		description="Flows can be suspended until resumed or cancelled event(s) are received."
+		title="Suspend & Approval / Prompts"
+		description="Flows can be suspended until resumed or canceled event(s) are received."
 		href="/docs/flows/flow_approval"
 	/>
 </div>
 
-## Error Handlers
+## Error handlers
 
 Handle errors for Flows after all retries attempts have been exhausted. If it
 does not return an exception itself, the Flow is considered to be "recovered"
 and will have a success status. So in most cases, you will have to rethrow an
 error to have it be listed as a failed flow.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Error Handler"
+		title="Error handler"
 		description="The error handler is a special flow step that is executed when an error occurs in the flow."
 		href="/docs/flows/flow_error_handler"
 	/>

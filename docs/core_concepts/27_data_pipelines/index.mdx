@@ -1,16 +1,18 @@
 import DocCard from '@site/src/components/DocCard';
 import BarChart from '@site/src/components/BarChart';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-# Data Pipelines
+# Data pipelines
 
-An ETL is nothing else than a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of jobs, each of them reading datasets as input, running computation, and producing new datasets (or updating them).
+In essence, an ETL (Extract, Transform, Load) process is a [Directed Acyclic Graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) (DAG) of jobs where each job reads data, performs computations, and outputs new or updated datasets.
 
-Windmill enables building fast, powerful, reliable, and easy-to-build data pipelines:
+Windmill streamlines the creation of data pipelines that are not only fast and reliable but also straightforward to construct:
 
-- The DX in Windmill allows you to quickly [assemble flows](../../flows/1_flow_editor.mdx) that can process data step by step in a visual and easy-to-manage way ;
-- You can control [parallelism](../../flows/13_flow_branches.md#branch-all) between individual steps, and set [concurrency limits](../../flows/6_concurrency_limit.mdx) in case external resources need are fragile or rate limited ;
-- [Windmill flows can be restarted from any step](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch), making the iteration process of building a pipeline (or debugging one) smooth and efficient ;
-- Monitoring is made easy with [error and recovery handlers](../10_error_handling/index.mdx).
+- **Developer Experience**: Windmill's design facilitates the swift assembly of data [flows](../../flows/1_flow_editor.mdx), allowing for step-by-step data processing in a visually intuitive and manageable manner.
+- **Control and Efficiency**: It offers the ability to manage [parallelism](../../flows/13_flow_branches.md#branch-all) across steps and set [concurrency limits](../../flows/6_concurrency_limit.mdx) to accommodate external resources that may be sensitive to overload or have rate limits.
+- **Flexibility in Execution**: Flows in Windmill can be [restarted](../../flows/18_test_flows.mdx#restart-from-step-iteration-or-branch) from any point, enhancing the process of pipeline development and debugging by making it more flexible and efficient.
+- **Simplified Monitoring**: Built-in [error and recovery handling](../10_error_handling/index.mdx) mechanisms simplify monitoring, ensuring that managing your data pipelines is both effective and straightforward.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -19,7 +21,7 @@ Windmill enables building fast, powerful, reliable, and easy-to-build data pipel
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
@@ -42,19 +44,27 @@ And for storage, you can now link a Windmill workspace to an S3 bucket and use i
 The very large majority of ETLs can be processed step-wise on single nodes and Windmill provides (one of) the [best models](../../misc/3_benchmarks/index.mdx) for orchestrating non-sharded compute. Using this model, your ETLs will see a massive performance improvement, your infrastructure
 will be easier to manage and your pipeline will be easier to write, maintain, and monitor.
 
-## Windmill integration with an external S3 storage
+## Windmill integration with an external object storage
 
 In Windmill, a data pipeline is implemented using a [flow](/docs/flows/flow_editor), and each step of the pipeline is a script. One of the key features of Windmill flows is to easily [pass a step result to its dependent steps](/docs/flows/architecture). But
 because those results are serialized to Windmill database and kept as long as the job is stored, this obviously won't work when the result is a dataset of millions of rows. The solution is to save the datasets to an external storage at the end of each script.
 
-In most cases, S3 is a well-suited storage and Windmill now provides a basic yet very useful integration with external S3 storage.
+In most cases, S3 is a well-suited storage and Windmill now provides a basic yet very useful [integration with external S3 storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) at the workspace level.
 
 The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
 
 ![S3 workspace settings](../../../blog/2023-11-24-data-pipeline-orchestrator/workspace_s3_settings.png 'S3 workspace settings')
 
 From now on, Windmill will be connected to this bucket and you'll have easy access to it from the code editor and the job run details. If a script takes as input a `s3object`, you will see in the input form on the right a button helping you choose the file directly from the bucket.
-Same for the result of the script. If you return an `s3object` containing a key `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
+Same for the result of the script. If you return an `s3object` containing a [key](../19_rich_display_rendering/index.mdx#s3) `s3` pointing to a file inside your bucket, in the result panel there will be a button to open the bucket explorer to visualize the file.
+
+S3 files in Windmill are just pointers to the S3 object using its key. As such, they are represented by a simple JSON:
+
+```json
+{
+	"s3": "path/to/file"
+}
+```
 
 ![Windmill code editor](../../../blog/2023-11-24-data-pipeline-orchestrator/s3_object_code_editor.png 'Windmill code editor')
 
@@ -66,6 +76,132 @@ Clicking on one of those buttons, a drawer will open displaying the content of t
 
 From there you always have the possibility to use the S3 client library of your choice to read and write to S3.
 That being said, Polars and DuckDB can read/write directly from/to files stored in S3 Windmill now ships with helpers to make the entire data processing mechanics very cohesive.
+
+Find all details at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workspace object storage"
+		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
+	/>
+</div>
+
+## Windmill integration with Polars and DuckDB for data pipelines
+
+ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
+
+<Tabs className="unique-tabs">
+<TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+#requirements:
+#polars==0.20.2
+#s3fs==2023.12.0
+#wmill>=1.229.0
+
+import wmill
+from wmill import S3Object
+import polars as pl
+import s3fs
+
+
+def main(input_file: S3Object):
+    bucket = wmill.get_resource("<PATH_TO_S3_RESOURCE>")["bucket"]
+
+    # this will default to the workspace S3 resource
+    storage_options = wmill.polars_connection_settings().storage_options
+    # this will use the designated resource
+    # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
+
+    # input is a parquet file, we use read_parquet in lazy mode.
+    # Polars can read various file types, see
+    # https://pola-rs.github.io/polars/py-polars/html/reference/io.html
+    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
+    input_df = pl.read_parquet(input_uri, storage_options=storage_options).lazy()
+
+    # process the Polars dataframe. See Polars docs:
+    # for dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html
+    # for lazy dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html
+    output_df = input_df.collect()
+    print(output_df)
+
+    # To write back the result to S3, Polars needs an s3fs connection
+    s3 = s3fs.S3FileSystem(**wmill.polars_connection_settings().s3fs_args)
+    output_file = "output/result.parquet"
+    output_uri = "s3://{}/{}".format(bucket, output_file)
+    with s3.open(output_uri, mode="wb") as output_s3:
+        # persist the output dataframe back to S3 and return it
+        output_df.write_parquet(output_s3)
+
+    return S3Object(s3=output_file)
+```
+
+</TabItem>
+<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+#requirements:
+#wmill>=1.229.0
+#duckdb==0.9.1
+
+import wmill
+from wmill import S3Object
+import duckdb
+
+
+def main(input_file: S3Object):
+    bucket = wmill.get_resource("u/admin/windmill-cloud-demo")["bucket"]
+
+    # create a DuckDB database in memory
+    # see https://duckdb.org/docs/api/python/dbapi
+    conn = duckdb.connect()
+
+    # this will default to the workspace S3 resource
+    args = wmill.duckdb_connection_settings().connection_settings_str
+    # this will use the designated resource
+    # args = wmill.duckdb_connection_settings("<PATH_TO_S3_RESOURCE>").connection_settings_str
+
+    # connect duck db to the S3 bucket - this will default to the workspace S3 resource
+    conn.execute(args)
+
+    input_uri = "s3://{}/{}".format(bucket, input_file["s3"])
+    output_file = "output/result.parquet"
+    output_uri = "s3://{}/{}".format(bucket, output_file)
+
+    # Run queries directly on the parquet file
+    query_result = conn.sql(
+        """
+        SELECT * FROM read_parquet('{}')
+    """.format(
+            input_uri
+        )
+    )
+    query_result.show()
+
+    # Write the result of a query to a different parquet file on S3
+    conn.execute(
+        """
+        COPY (
+            SELECT COUNT(*) FROM read_parquet('{input_uri}')
+        ) TO '{output_uri}' (FORMAT 'parquet');
+    """.format(
+            input_uri=input_uri, output_uri=output_uri
+        )
+    )
+
+    conn.close()
+    return S3Object(s3=output_file)
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+
+Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
+
+:::
 
 ### Canonical data pipeline in Windmill w/ Polars and DuckDB
 
@@ -252,7 +388,7 @@ A couple of notes before the results:
 	]}
 />
 
-<br/>
+<br />
 
 Polars is the fastest at computing the results, but consumes slightly more memory than Spark (it OOMed for the 25G benchmark). Polars in lazy mode, however, is a lot more memory efficient and can process more data, at the expense of computation time.
 Overall, both Polars and DuckDB behave very well in terms of memory consumption and computation time. The 10G benchmark contains tables with up to 60 million rows, and we were far from using the most powerful AWS instance. So, it is true that
@@ -265,14 +401,6 @@ a file, and the following steps consume this file to run the queries. We were ab
 
 :::
 
-## Learn more
+## Limit of the number of executions per second
 
-For more details on storage in Windmill, see:
-
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Persistent Storage"
-		description="Ensure that your data is safely stored and easily accessible whenever required."
-		href="/docs/core_concepts/persistent_storage"
-	/>
-</div>
+Windmill's core is its queue of jobs which is implemented in Postgres using the `UPDATE SKIP LOCKED` pattern. It can scale comfortably to 5k requests per second (RPS) on a normal Postgres database during benchmarks.

@@ -16,25 +16,25 @@ Every job has a unique UUID attached to it and as long as you have visibility
 over the execution of the script, you are able to inspect the execution logs,
 output and metadata in the dedicated details page of the job.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Workers and worker groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 	<DocCard
-		title="Dedicated Workers / High Throughput"
+		title="Dedicated workers / High throughput"
 		description="Dedicated Workers are workers that are dedicated to a particular script."
 		href="/docs/core_concepts/dedicated_workers"
 	/>
-  <DocCard
-		title="Worker Groups Management UI"
+	<DocCard
+		title="Worker groups management UI"
 		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
 		href="/docs/misc/worker_group_management_ui"
 	/>
 	<DocCard
-		title="Init Scripts"
-		description="Init Scripts are executed at the beginning when the worker starts."
+		title="Init scripts"
+		description="Init scripts are executed at the beginning when the worker starts."
 		href="/docs/advanced/preinstall_binaries#init-scripts"
 	/>
 </div>
@@ -57,12 +57,12 @@ There are 5 main kinds of jobs, that each have a dedicated tab in the [runs page
   script editors. Even when code is executed as a preview, you keep a trace of
   its execution.
 
-- **Dependencies Jobs**: Scripts written in Python generate a lock file when
+- **Dependencies Jobs**: Scripts written in Python generate a lockfile when
   they are saved/created. This lockfile ensures that an execution of the same
   hash will always use the same versions. The process of generating this
   lockfile is also a job in itself so you can easily inspect the issues
   generating the lockfile if any. See
-  [Dependency Management](../../advanced/6_imports/index.md) for more information.
+  [Dependency Management](../../advanced/6_imports/index.mdx) for more information.
 
 - **Flow Jobs**: A flow job is the "meta" job that orchestrates the execution of
   every step. The execution of the steps are in-themselves jobs. It is defined
@@ -98,8 +98,76 @@ relies on are permissioned correctly.
 A user can only run a script permissioned as either himself, one of the group
 that he is a member of.
 
-## Job inputs and Script parameters
+## Job inputs and script parameters
 
 Jobs take a JSON object as input which can be empty. That input is passed as the payload of the POST request that triggers the Script. The different key-value pairs of the objects are passed as the different parameters of the main function, with just a few language-specific transformations to more adequate types in the target language, if necessary (e.g base64/datetime encoding). Values can be nested JSON objects themselves, but we recommend trying to keep the input flat when possible.
 
 If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
+
+## Retention policy
+
+The retention policy for jobs runs details varies depending on your team's [plan](/pricing):
+
+- Community plan (cloud): Jobs runs details are retained for 60 days.
+- Team plan (cloud): Jobs runs details are retained for 60 days.
+- Enterprise plan (cloud): Unlimited retention period.
+- Open Source (self-host): Jobs runs details are retained for maximum 30 days.
+- Enterprise plan (self-host): Unlimited retention period.
+
+You can set a custom retention period for the jobs runs details. The retention period can be configured in the [instance settings](../../advanced/18_instance_settings/index.mdx#retention-period-in-secs), in the "Core" tab.
+
+![Set Retention Period](./set_retention_policy.png "Set Retention Period")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Plans & How to Upgrade"
+		description="Details on each Windmill Plan"
+		href="/pricing"
+	/>
+</div>
+
+## Large job logs management
+
+To optimize log storage and performance, Windmill leverages S3 for log management. This approach minimizes database load by treating the database as a temporary buffer for up to 5000 characters of logs per job.
+
+For jobs with extensive logging needs, Windmill [Enterprise Edition](/pricing) users benefit from seamless log streaming to S3. This ensures logs, regardless of size, are stored efficiently without overwhelming local resources.
+
+This allows the handling of large-scale logs with minimal database impact, supporting more efficient and scalable workflows.
+
+For large logs storage (and display) and cache for distributed Python jobs, you can [connect your instance to a bucket](../38_object_storage_in_windmill/index.mdx#instance-object-storage) from the [instance settings](../../advanced/18_instance_settings/index.mdx#s3azure-for-pythongo-cache--large-logs).
+
+![S3/Azure for Python Cache & Large Logs](./s3_azure_cache.png "S3/Azure for Python Cache & Large Logs")
+
+This feature has no overlap with the [Workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
+
+You can choose to use either S3 or Azure Blob Storage. For each you will find a button to test settings from a server or from a worker.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Instance object storage"
+		description="Connect instance to S3 for large-scale log management and distributed dependency caching."
+		href="/docs/core_concepts/object_storage_in_windmill"
+	/>
+</div>
+
+### S3
+
+| Name         | Type       | Description                                                                   |
+| ------------ | ---------- | ----------------------------------------------------------------------------- |
+| Bucket       | string     | Name of your S3 bucket.                                                       |
+| Region       | string     | If left empty, will be derived automatically from $AWS_REGION.   			    |
+| Access key ID       | string     | If left empty, will be derived automatically from $AWS_ACCESS_KEY_ID, pod or ec2 profile.   	    |
+| Secret key       | string     | If left empty, will be derived automatically from $AWS_SECRET_KEY, pod or ec2 profile.   	    |
+| Endpoint       | string     | Only needed for non AWS S3 providers like R2 or MinIo.   	    |
+| Allow http       | boolean     | Disable if using https only policy.   	    |
+
+### Azure Blob
+
+| Name           | Type       | Description                                                                   |
+| -------------- | ---------- | ----------------------------------------------------------------------------- |
+| Account name   | string     | The name of your Azure Storage account. It uniquely identifies your Azure Storage account within Azure and is required to authenticate with Azure Blob Storage. |
+| Container name | string     | The name of the specific blob container within your storage account. Blob containers are used to organize blobs, similar to a directory structure. |
+| Access key     | string     | The primary or secondary access key for the storage account. This key is used to authenticate and provide access to Azure Blob Storage. |
+| Tenant ID      | string     | (optional) The unique identifier (GUID) for your Azure Active Directory (AAD) tenant. Required if using Azure Active Directory for authentication. |
+| Client ID      | string     | (optional) The unique identifier (GUID) for your application registered in Azure AD. Required if using service principal authentication via Azure AD. |
+| Endpoint       | string     | (optional) The specific endpoint for Azure Blob Storage, typically used when interacting with non-Azure Blob providers like Azurite or other emulators. For Azure Blob Storage, this is auto-generated and not usually needed. |

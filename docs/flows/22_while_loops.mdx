@@ -1,0 +1,137 @@
+import DocCard from '@site/src/components/DocCard';
+
+# While loops
+
+While loops execute a sequence of code indefinitely until the user cancels or a step set to Early Stop stops.
+
+## How to stop a While loop
+
+The loop will continue to run until canceled, there are 3 ways to stop a while loop:
+- Cancel manually
+- Early Stop/Break for loop
+- Early Stop for Step
+
+### Cancel manually
+
+You can cancel flow manually from the flow page, it can be accessed when the flow is triggered manually or from the [Runs page](../core_concepts/5_monitor_past_and_future_runs/index.mdx).
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/cancel_while_manually.mp4"
+/>
+
+### Early stop / Break
+
+The Early Stop/Break feature allows you to define a predicate expression that determines whether the flow - or here, loop - should stop early at the end or before a step.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/while_early_stop.mp4"
+/>
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Early stop / Break"
+		description="Stop early a flow based on a step's result."
+		href="/docs/flows/early_stop"
+	/>
+</div>
+
+### Early Stop for Step
+
+For each step of the flow, an early stop can be defined. The result of the step will be compared to a previously defined predicate expression, and if the condition is met, the flow will stop after that step.
+
+<video
+    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+    controls
+    src="/videos/while_early_stop_step.mp4"
+/>
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Early Stop for Step"
+		description="For each step of the flow, an early stop can be defined."
+		href="/docs/flows/early_stop#early-stop-for-step"
+	/>
+</div>
+
+## Skip failure
+
+If set to `true`, the loop will continue to the next item even if the current item failed.
+
+## Test an iteration
+
+You can get a [test](../core_concepts/23_instant_preview/index.mdx) of the current iteration by clicking on the `Test an iteration` button.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/test_iteration.mp4"
+	description="Test an iteration"
+/>
+
+## Advanced Settings
+
+### Early stop / Break
+
+See [above](#early-stop--break).
+
+### Suspend/Approval/Prompt
+
+Flows can be suspended until resumed or canceled event(s) are received. This feature is most useful for implementing approval steps but can be used for other purposes as well.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Suspend & Approval / Prompts"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+</div>
+
+### Sleep
+
+Executions within a flow can be suspended for a given time.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Sleep / Delays in flows"
+		description="Executions within a flow can be suspended for a given time."
+		href="/docs/flows/sleep"
+	/>
+</div>
+
+### Mock
+
+Step mocking allows faster iteration while building flows. When a step is mocked, it will immediately return the mocked value without performing any computation.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Step mocking"
+		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
+		href="/docs/flows/step_mocking"
+	/>
+</div>
+
+### Lifetime
+
+The logs, arguments and results of this flow step will be completely deleted from Windmill once the flow is complete.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Lifetime / Delete after use"
+		description="The logs, arguments and results of this flow step will be completely deleted from Windmill once the flow is complete."
+		href="/docs/flows/lifetime"
+	/>
+</div>

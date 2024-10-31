@@ -1,4 +1,6 @@
-# Discord Integration
+# Discord integration
+
+[Discord](https://discord.com/) is a voice, video, and text communication platform.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -10,7 +12,7 @@
 />
 <br/>
 
-To integrate [Discord](https://discord.com/) to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate Discord to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 | Property    | Type   | Description             | Default | Required | Where to Find                                                                               |
 | ----------- | ------ | ----------------------- | ------- | -------- | ------------------------------------------------------------------------------------------- |
@@ -21,16 +23,31 @@ To integrate [Discord](https://discord.com/) to Windmill, you need to save the f
 Windmill also defined a [resource type](https://hub.windmill.dev/resource_types/104/discord_bot_configuration) for Discord bots. An example is given by our [Documentation Discord bot using Supabase and OpenAI's GPT to help support teams](/blog/knowledge-base-discord-bot) tutorial.
 
 
+:::tip Windmill Discord
+
+Windmill has its own Discord server for its community, questions and collaborations.
+
+Join following [this link](https://discord.com/invite/V7PM2YHsPB).
+
+:::
+
 <br/>
 
 Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/add_resources_variables.mp4"
-/>
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ggJQtzvqaqA"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
+<br/>
+
+> Example of a Supabase resource being used in two different manners from a script in Windmill.
 <br/>
 
 :::tip

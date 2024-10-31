@@ -8,7 +8,7 @@ description: 'Set shared configurations to your workers.'
 
 import DocCard from '@site/src/components/DocCard';
 
-# Launch Week Day 2 - Worker Groups Management UI & Hot Reloading
+# Launch Week Day 2 - Worker groups management UI & Hot Reloading
 
 <br />
 
@@ -48,16 +48,16 @@ Once the configurations are done in the Windmill UI, the workers take their conf
 ### How to have a Worker join a Worker Group
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/LbjgWKFQWJc"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
 Create a worker group in your [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) and simply pass the worker group as the env variable `WORKER_GROUP=<name_of_worker_group>` for it to automatically join its corresponding worker group.
 
@@ -102,7 +102,7 @@ When writing a script that should be executed on a specific worker group, you ha
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Worker Groups and Tags"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
@@ -117,24 +117,24 @@ This approach offers added convenience to pre-install binaries or set initial co
 
 <img
 	src={require('../../docs/advanced/8_preinstall_binaries/init_scripts.png').default}
-	alt="Init Script"
-	title="Init Script"
+	alt="Init script"
+	title="Init script"
 	width="75%"
 />
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Init Scripts"
-		description="Init Scripts are executed at the beginning when the worker starts."
+		title="Init scripts"
+		description="Init scripts are executed at the beginning when the worker starts."
 		href="/docs/advanced/preinstall_binaries#init-scripts"
 	/>
 </div>
 
-### Dedicate your worker to a specific script
+### Dedicate your worker to a specific script or flow
 
-[Dedicated Workers](/docs/core_concepts/dedicated_workers) are workers (groups) that are dedicated to a particular script.
+[Dedicated Workers](/docs/core_concepts/dedicated_workers) are workers (groups) that are dedicated to a particular script or flow.
 We've written another blog post dedicated to this [here](https://www.windmill.dev/blog/launch-week-dedicated-workers).
 
 ## How to create worker group configurations
@@ -152,30 +152,30 @@ You can then configure it directly from the UI and in particular set tags to lis
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+	src="https://www.youtube.com/embed/LbjgWKFQWJc"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 ## Learn more
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workers and Worker Groups"
+		title="Workers and worker groups"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
 		href="/docs/core_concepts/worker_groups"
 	/>
 	<DocCard
-		title="Worker Groups Management UI"
+		title="Worker groups management UI"
 		description="On Enterpris Edition, worker groups can be managed through Windmill UI."
 		href="/docs/misc/worker_group_management_ui"
 	/>
 	<DocCard
-		title="Init Scripts"
-		description="Init Scripts are executed at the beginning when the worker starts."
+		title="Init scripts"
+		description="Init scripts are executed at the beginning when the worker starts."
 		href="/docs/advanced/preinstall_binaries#init-scripts"
 	/>
 </div>

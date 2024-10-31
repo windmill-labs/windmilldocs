@@ -1,0 +1,69 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Workflows as code
+
+[Flows](../../flows/1_flow_editor.mdx) are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as workflows as code.
+
+![Script in python executing workflow as code](./python_editor.png 'Script in python executing workflow as code')
+
+One way of doing this is to use the [API of Windmill](https://app.windmill.dev/openapi.html) itself, to run jobs imperatively, using run_script and run_flow (their sync or async counterparts). This is a powerful way to define workflows, but it can be complex and verbose.
+
+It also requires to define the different jobs in different scripts. This is why Windmill supports defining workflows as code in a single script in both [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) using intuitive and lightweight syntax.
+
+The syntax is highlighted in the below examples, note that the subtask are indeed executed as distinct jobs, with their own logs, and their relationship with their parent task is recorded which allows for the timeline of each task to be displayed in the UI.
+
+To have some steps refer to other scripts and flows not in this file, use the normal functions `run_script` from the Windmill SDK. The script below is a normal script and does not need special consideration. As such, it will already work with all the features of normal script and can be [synced with the git](../../advanced/11_git_sync/index.mdx) and the [CLI](../../advanced/11_git_sync/cli_sync.mdx).
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+from wmill import task
+
+import pandas as pd
+import numpy as np
+
+@task()
+# You can specify tag to run the task on a specific type of worker, e.g. @task(tag="custom_tag")
+def heavy_compute(n: int):
+    df = pd.DataFrame(np.random.randn(100, 4), columns=list('ABCD'))
+    return df.sum().sum()
+
+
+@task
+def send_result(res: int, email: str):
+    # logs of the subtask are available in the main task logs
+    print(f"Sending result {res} to {email}")
+    return "OK"
+
+def main(n: int):
+    l = []
+
+    # to run things in parallel, simply use multiprocessing Pool map instead: https://docs.python.org/3/library/multiprocessing.html
+    for i in range(n):
+        l.append(heavy_compute(i))
+    print(l)
+    return send_result(sum(l), "example@example.com")
+
+```
+
+</TabItem>
+<TabItem value="deno" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import { task } from 'windmill-client';
+
+export async function hello(name: string) {
+	return 'Hello:' + name;
+}
+
+export async function main() {
+	//It's the function itself that needs to be wrapped with task, and it's always a promise even
+	await task(hello)('BAR');
+	return await task(hello)('FOO');
+}
+```
+
+</TabItem>
+</Tabs>

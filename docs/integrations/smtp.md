@@ -1,6 +1,10 @@
-# SMTP Integration
+# SMTP integration
 
-To integrate SMTP to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+[SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) (Simple Mail Transfer Protocol) is an internet standard for electronic mail transmission.
+
+Note that SMTP can be configured at the instance level to auto-invite users or send [critical alerts](../core_concepts/37_critical_alert_channels/index.mdx). See [Set up SMTP](../advanced/1_self_host/index.mdx#set-up-smtp-from-the-ui).
+
+To add a SMTP [resource](../core_concepts/3_resources_and_types/index.mdx) to Windmill, you need to save the following elements:
 
 ![Add SMTP Resource](../assets/integrations/add-smtp.png.webp)
 
@@ -15,12 +19,19 @@ To integrate SMTP to Windmill, you need to save the following elements as a [res
 
 Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/add_resources_variables.mp4"
-/>
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ggJQtzvqaqA"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
+<br/>
+
+> Example of a Supabase resource being used in two different manners from a script in Windmill.
 <br/>
 
 :::tip

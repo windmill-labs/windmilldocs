@@ -1,0 +1,50 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Markdown
+
+The Markdown component allows you to display Markdown content.
+
+![Markdown component](../../assets/apps/4_app_component_library/markdown.png "Markdown component")
+
+The following section details Markdown component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
+</div>
+
+## Markown Component configuration
+
+| Name        | Type | Connectable | Templatable | Default | Description                 |
+| ----------- | :--: | :---------: | :---------: | :-----: | --------------------------- |
+| Data Source | string |    true     |    true     | `# This is a header\n ## This is a subheader\nThis is a paragraph.\n* This is a list\n* With two items` | The Markdown content to render. |
+| Size | select |    true     |    false     | Default | See Tailwind documentation: https://tailwindcss.com/docs/typography-plugin (sm, Default, lg, xl, 2xl) |
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [recompute](../3_app-runnable-panel.mdx#recompute) | id: string | Recompute a component. | recompute('a'); |
+
+## Outputs
+
+| Name    |  Type   | Description                              |
+| ------- | :-----: | ---------------------------------------- |
+| result  | string  | The Markdown content.                    |
+| loading | boolean | The loading state of the Markdown component. |
+
+## Controls
+
+`recompute`: [frontend script helper](../3_app-runnable-panel.mdx#frontend-scripts-helpers) to recompute the component on demand or automatically.

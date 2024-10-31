@@ -1,35 +1,44 @@
-
 import DocCard from '@site/src/components/DocCard';
 
-# Multiselect
+# Multi Select
 
-The multiselect component allows you to get multiple strings from the user.
+The Multi Select component allows you to get multiple strings from the user.
 
-![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png.webp)
+![Multi Select API](../../assets/apps/4_app_component_library/multiselect.png.webp)
 
-The following section details Multiselect component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Multi Select component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        color="orange"
-        title="App Editor Documentation"
-        description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
-        href="/docs/apps/app_editor"
-    />
-    <DocCard
-        color="orange"
-        title="Apps Quickstart"
-        description="Learn how to build your first app in a matter of minutes."
-        href="/docs/getting_started/apps_quickstart"
-    />
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
 </div>
 
-## Multiselect configuration
+## Controls
 
-| Name        |  Type  | Connectable | Templatable |    Default    | Description                                 |
-| ----------- | :----: | :---------: | :---------: | :-----------: | ------------------------------------------- |
-| items       | string |    true     |    false    | "Foo" ; "Bar" | The select items.                           |
-| placeholder | string |    true     |    false    | Select items  | The text that will be displayed by default. |
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [setValue](../3_app-runnable-panel.mdx#setvalue) | id: string, value: any | Manually set or force the value of a component. | `setValue(id: 'a', value: 17)` |
+
+## Multi Select configuration
+
+| Name           |  Type   | Connectable | Templatable |    Default    | Description                                                                            |
+| -------------- | :-----: | :---------: | :---------: | :-----------: | -------------------------------------------------------------------------------------- |
+| items          | string  |    true     |    false    | "Foo" ; "Bar" | The select items.                                                                      |
+| placeholder    | string  |    true     |    false    | Select items  | The text that will be displayed by default.                                            |
+| User creatable | boolean |    false    |    false    |     false     | If users can create values.                                                            |
+| Allow overflow | boolean |    false    |    false    |     false     | If too many items, the box overflow its container instead of having an internal scroll |
 
 ## Outputs
 

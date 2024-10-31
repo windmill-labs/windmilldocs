@@ -1,23 +1,23 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Parameter Inference
+# Parameter inference
 
-Windmill ensures that the parameters passed to scripts, flows, and resources match the expected format and type. This mechanism relies heavily on [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.md), a standard used to define the structure and validation rules of JSON data.
+Windmill ensures that the parameters passed to scripts, flows, and resources match the expected format and type. This mechanism relies heavily on [JSON Schema](../core_concepts/13_json_schema_and_parsing/index.mdx), a standard used to define the structure and validation rules of JSON data.
 
 As you write your scripts or define flows and resource types in Windmill code editor, JSON Schema is used behind the scenes to construct a comprehensive specification of the expected input parameters. This specification not only defines the types of each parameter but also provides descriptions and sets out any constraints that might apply, such as which parameters are mandatory.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/parameter_inference.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/parameter_inference.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-    <DocCard
-        title="JSON Schema and Parsing"
-        description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
-        href="/docs/core_concepts/json_schema_and_parsing"
-    />
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="JSON schema and parsing"
+		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
+		href="/docs/core_concepts/json_schema_and_parsing"
+	/>
 </div>

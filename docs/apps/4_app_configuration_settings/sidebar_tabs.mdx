@@ -5,22 +5,30 @@ import DocCard from '@site/src/components/DocCard';
 The Sidebar Tabs component is basically a Tabs component whose `Tabs Kind` is "Sidebar".
 
 ![Sidebar Tabs](../../assets/apps/4_app_component_library/sidebar_tabs.gif)
-The following section details Sidebar Tabs component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Sidebar Tabs component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="App Editor Documentation"
+		title="App editor Documentation"
 		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
 		href="/docs/apps/app_editor"
 	/>
 	<DocCard
 		color="orange"
-		title="Apps Quickstart"
+		title="Apps quickstart"
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
 	/>
 </div>
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [setTab](../3_app-runnable-panel.mdx#settab) | id: string, index:number | Set the current tab. | setTab('a',1) |
 
 ## Outputs
 
@@ -28,8 +36,8 @@ The following section details Sidebar Tabs component's specific settings. For mo
 | ---------------- | :----: | ----------------------------------- |
 | selectedTabIndex | number | The index of the selected condition |
 
-## Component controls
+## Event handler
 
-| Name   |        Parameters        | Description          | Example       |
-| ------ | :----------------------: | -------------------- | ------------- |
-| setTab | id: string, index:number | Set the current tab. | setTab('a',1) |
+The sidebar tabs component has the following event handler:
+
+- `onTabChange`: Trigger a runnable when the user changes the tab.

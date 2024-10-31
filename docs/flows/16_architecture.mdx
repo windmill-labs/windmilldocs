@@ -1,33 +1,35 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-# Architecture and Data Exchange
+# Architecture and data exchange
 
 In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openflow/index.mdx) format that consists of an input spec (similar to [Scripts](../getting_started/0_scripts_quickstart/index.mdx)), and a linear sequence of steps, also referred to as modules. Each step consists of either:
 
 1. Reference to a Script from the [Hub](https://hub.windmill.dev/).
 2. Reference to a Script in your [workspace](../core_concepts/16_roles_and_permissions/index.mdx#workspace).
 3. Inlined Script in [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Deno), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) or [non-supported languages](../advanced/7_docker/index.mdx).
-4. [Trigger Scripts](./10_flow_trigger.mdx) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
+4. [Trigger scripts](./10_flow_trigger.mdx) which are a kind of Scripts that are meant to be first step of a scheduled Flow, that watch for external events and early exit the Flow if there is no new events.
 5. [For loop](./12_flow_loops.md) that iterates over elements and triggers the execution of an embedded flow for each element. The list is calculated dynamically as an [input transform](#input-transform).
 6. [Branch](./13_flow_branches.md#branch-one) to the first subflow that has a truthy predicate (evaluated in-order).
 7. [Branches to all](./13_flow_branches.md#branch-all) subflows and collect the results of each branch into an array.
 8. [Approval/Suspend steps](./11_flow_approval.mdx) which suspend the flow at no cost until it is resumed by getting an approval/resume signal.
 9. Inner flows.
 
-![Flow architecture](../assets/flows/flow_architecture.png.webp "Flow architecture")
+![Flow architecture](../assets/flows/flow_architecture.png.webp 'Flow architecture')
 
 ## Input Transform
 
 With the mechanism of input transforms, the input of any step can be the output of any previous step, hence every Flow is actually a [Directed Acyclic Graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) rather than simple sequences. You can refer to the result of any step using its ID.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    id="main-video"
-    src="/videos/flow-sequence.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	id="main-video"
+	src="/videos/flow-sequence.mp4"
 />
 
-<br/>
+<br />
 
 Every step has an input transform that maps from:
 
@@ -50,11 +52,14 @@ and a few more functions which are the following:
 Using JavaScript in this manner, for every parameter, is extremely flexible and
 allows Windmill to be extremely generic in the kind of modules it runs.
 
+### Connecting Flow Steps
+
 For each field, one has the option to write the JavaScript directly or to use
 the quick connect button if the field map one to one with a field of the
 `flow_input`, a field of the `previous_result` or of any steps.
 
 From the editor, you can directly get:
+
 - [Static inputs](./3_editor_components.mdx#static-inputs): you can find them on top of the side menu. This tab centralizes the static inputs of every steps. It is akin to a file containing all constants. Modifying a value here modify it in the step input directly.
 - Dynamic inputs:
   - using the id associated with the step
@@ -62,16 +67,84 @@ From the editor, you can directly get:
 
 ![Static & Dynamic Inputs](../getting_started/6_flows_quickstart/static_and_dynamic_inputs.png.webp)
 
-## States
+You can connect step inputs automatically using [Windmill AI](../core_concepts/22_ai_generation/index.mdx).
 
-A [state](../core_concepts/3_resources_and_types/index.mdx#states) is an object stored as a resource of the resource type `state` which is meant to persist across distinct
-executions of the same Script. This is what enables Flows to watch for changes in most event watching scenarios.
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/step_input_copilot.mp4"
+/>
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+## Custom Flow States
+
+A [state](../core_concepts/3_resources_and_types/index.mdx#states) is an object stored as a [resource](../core_concepts/3_resources_and_types/index.mdx) of the resource type `state` which is meant to persist across distinct
+executions of the same Script. This is what enables Flows to watch for changes in most [event-watching scenarios](./10_flow_trigger.mdx).
+
+Custom flow states are a way to store data across steps in a flow. You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally. That state will be stored in the flow state itself and thus has the same lifetime as the flow [job](../core_concepts/20_jobs/index.mdx) itself.
+
+It's a powerful escape hatch when passing data as output/input is not feasible and using [getResource/setResource](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) has the issue of cluttering the workspace and inconvenient UX.
+
+<Tabs className="unique-tabs">
+<TabItem value="TypeScript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as wmill from "windmill-client@1.297.0"
+
+export async function main(x: string) {
+  await wmill.setFlowUserState("FOO", 42)
+  return await wmill.getFlowUserState("FOO")
+
+}
+```
+
+</TabItem>
+<TabItem value="Python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+#extra_requirements:
+#wmill==1.297.0
+
+def main(x: str):
+    wmill.set_flow_user_state("foobar", 43)
+    return wmill.get_flow_user_state("foobar")
+```
+
+</TabItem>
+</Tabs>
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_state.mp4"
+/>
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    title="States"
-    description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
-    href="/docs/core_concepts/resources_and_types#states"
+		title="Custom Flow States"
+		description="You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally."
+		href="/docs/core_concepts/resources_and_types#custom-flow-states"
 		color="teal"
+	/>
+</div>
+
+## Shared Directory
+
+By default, flows on Windmill are based on a result basis (see above). A step will take as input the results of previous steps. And this works fine for lightweight automation.
+
+For heavier ETLs and any output that is not suitable for JSON, you might want to use the `Shared Directory` to share data between steps. Steps share a folder at `./shared` in which they can store heavier data and pass them to the next step.
+
+Get more details on the [Persistent storage & databases dedicated page](../core_concepts/11_persistent_storage/index.mdx).
+
+![Flows shared directory](../getting_started/6_flows_quickstart/flows_shared_directory.png.webp)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Persistent storage & databases"
+		description="Ensure that your data is safely stored and easily accessible whenever required."
+		href="/docs/core_concepts/persistent_storage"
 	/>
 </div>

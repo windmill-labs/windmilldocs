@@ -1,20 +1,24 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Triggering Scripts
+# Triggering scripts
 
-Scripts can be triggered in 6 ways.
+Scripts can be triggered in the following ways.
 
 On-demand triggers:
 
 - [Auto-generated UIs](/docs/getting_started/trigger_scripts#auto-generated-uis)
-- [Customized UIs with the App Editor](#customized-uis-with-the-app-editor)
-- [Trigger Scripts from Flows](#trigger-scripts-from-flows)
-- [Schedule the Execution of a Script](#schedule-the-execution-of-a-script)
-- [Trigger Scripts from CLI (Command Line Interface)](#cli-command-line-interface)
+- [Customized UIs with the App editor](#customized-uis-with-the-app-editor)
+- [Trigger scripts from Flows](#trigger-scripts-from-flows)
+- [Workflows as code](#workflows-as-code)
+- [Schedule](#schedule)
+- [Trigger scripts from CLI (Command-line interface)](#cli-command-line-interface)
 
 Triggers from external events:
 
-- [Trigger Scripts from Webhooks](#trigger-scripts-from-webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack) or [Emails](#webhooks-trigger-scripts-from-emails)
+- [API](#trigger-from-api) & [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack)
+- [Emails](#emails)
+- [Custom HTTP routes](#custom-http-routes)
+- [Scheduling + Trigger scripts](#scheduling--trigger-scripts)
 
 :::info Scripts in Windmill
 
@@ -31,24 +35,24 @@ Windmill automatically generates user interfaces (UIs) for scripts and flows bas
 By analyzing the main function parameters, it creates an input specification in the JSON Schema format, which is then used to render the UI. Users do not need to interact with the JSON Schema directly, as Windmill simplifies the process and allows for optional UI customization.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/auto_generated_uis.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/auto_generated_uis.mp4"
 />
 
-<br/>
+<br />
 
 This feature is also usable directly in the script editor to test a script in the making:
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/ui_from_script_editor.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/ui_from_script_editor.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Auto-generated UIs"
 		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
@@ -56,97 +60,111 @@ This feature is also usable directly in the script editor to test a script in th
 	/>
 </div>
 
-### Customized UIs with the App Editor
+### Customized UIs with the App editor
 
 Windmill provides a WYSIWYG app editor. It allows you to build your own UI with drag-and-drop components and to connect your data to scripts and flows in minutes.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/app_editor_fast.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/app_editor_fast.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="App Editor"
-        color="orange"
-		description="Detailed section on Windmill's App Editor."
+		title="App editor"
+		color="orange"
+		description="Detailed section on Windmill's App editor."
 		href="/docs/apps/app_editor"
 	/>
 </div>
 
-You can also [automatically generate](../../core_concepts/6_auto_generated_uis/index.mdx#automatically-generated-apps) a dedicated app to execute your script.
+You can also [automatically generate](../../core_concepts/6_auto_generated_uis/index.mdx) a dedicated app to execute your script.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/cowsay_app.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/cowsay_app.mp4"
 />
 
-### Trigger Scripts from Flows
+### Trigger scripts from Flows
 
 Flows are basically sequences of scripts that execute one after another or [in parallel](../../flows/13_flow_branches.md#branch-all).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/crm-automation-execution.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/crm-automation-execution.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Flow Editor"
-        color="teal"
-		description="Detailed section on Windmill's Flow Editor."
+		title="Flow editor"
+		color="teal"
+		description="Detailed section on Windmill's Flow editor."
 		href="/docs/flows/flow_editor"
 	/>
 </div>
 
-### Schedule the Execution of a Script
+### Workflows as code
+
+Flows are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program within a [Python](../0_scripts_quickstart/2_python_quickstart/index.mdx) or [TypeScript](../0_scripts_quickstart/1_typescript_quickstart/index.mdx) script. This is known as workflows as code.
+
+![Flow as code](../../core_concepts/31_workflows_as_code/python_editor.png)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workflows as code"
+		description="Automate tasks and their flow with only code."
+		href="/docs/core_concepts/workflows_as_code"
+	/>
+</div>
+
+### Schedule
 
 Windmill allows you to schedule scripts using a user-friendly interface and control panel, **similar to [cron](https://crontab.guru/)** but with more features.
 
 You can create schedules by specifying a script or flow, its arguments, and a CRON expression to control the execution frequency, ensuring that your tasks run automatically at the desired intervals.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/schedule-cron-menu.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schedule-cron-menu.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Schedules"
-    	description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-    	href="/docs/core_concepts/scheduling"
-    />
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+	/>
 </div>
 
-### CLI (Command Line Interface)
+### CLI (Command-line interface)
 
 The `wmill` CLI allows you to interact with Windmill instances right from your terminal.
 
 <iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080"
-    title="YouTube video player"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/TXtmLrToxoI"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Command-Line Interface"
+		title="Command-line interface"
 		description="Interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
 	/>
@@ -154,62 +172,97 @@ The `wmill` CLI allows you to interact with Windmill instances right from your t
 
 ## Triggers from external events
 
+### Trigger from API
+
+Windmill provides a RESTful API that allows you to interact with your Windmill instance programmatically.
+
+In particular, the operation [run script by path](https://app.windmill.dev/openapi.html#/operations/runScriptByPath) is designed to trigger a script by its path, passing the required arguments.
+
+It's an efficient way to run a script from another script.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="OpenAPI"
+		description="Interact with Windmill."
+		href="https://app.windmill.dev/openapi.html"
+	/>
+</div>
+
 ### Webhooks
 
 In Windmill, webhooks are autogenerated for each Script and Flow, providing either asynchronous or synchronous execution modes.
 
-These webhooks accept incoming HTTP requests, allowing users to easily trigger their Windmill scripts and flows from external services by simply sending a POST request to the appropriate authentified webhook URL (requires passing a [token](../../core_concepts/4_webhooks/index.mdx#api-token) as Bearer or query arg). Their purpose is to have the script run when it receives an input from its associated webhook.
+These webhooks accept incoming HTTP requests, allowing users to easily trigger their Windmill scripts and flows from external services by simply sending a POST request to the appropriate authentified webhook URL (requires passing a [token](../../core_concepts/4_webhooks/index.mdx#webhook-specific-tokens) as Bearer or query arg). Their purpose is to have the script run when it receives an input from its associated webhook.
 
 Using webhooks, you could also trigger a script from other scripts.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Webhooks"
-    	description="Trigger scripts and flows from webhooks."
-    	href="/docs/core_concepts/webhooks"
-    />
+		title="Webhooks"
+		description="Trigger scripts and flows from webhooks."
+		href="/docs/core_concepts/webhooks"
+	/>
 </div>
 
-#### Webhooks: Trigger Scripts from Slack
+#### Webhooks: trigger scripts from Slack
 
 One use case of webhooks is [building a Slackbot with Windmill](/blog/handler-slack-commands).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/generated_email.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/generated_email.mp4"
 />
 
-<br/>
+<br />
 
 Windmill uses Slack to trigger scripts and flows by establishing Slackbots and creating specific commands. By connecting Slack with Windmill, parsing incoming Slack commands, and leveraging Windmill workflows, operational teams can trigger complex automations directly from Slack.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Slack Integration"
-    	description="Learn how to integrate Slack with Windmill."
-    	href="/docs/integrations/slack"
-    />
+		title="Slack Integration"
+		description="Learn how to integrate Slack with Windmill."
+		href="/docs/integrations/slack"
+	/>
 </div>
 
-#### Webhooks: Trigger Scripts from Emails
+### Emails
 
-One use case of webhooks is [triggering scripts via inbound emails using Mailchimp](../../integrations/mailchimp_mandrill.md).
+Scripts and flows can be triggered by email messages sent to a specific email address, leveraging [SMTP](https://www.cloudflare.com/learning/email-security/what-is-smtp/).
 
-<video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/trigger_mandrill.mp4"
-/>
-
-<br/>
-
-Windmill leverages [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/)'s capabilities to initiate scripts and flows via email-triggered events. By parsing inbound emails and routing the content to Windmill through webhooks, scripts or flows are activated, enabling automation based on email content or just their arrival.
-
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Mailchimp Mandrill Integration"
-    	description="Learn how to integrate Mailchimp Mandrill with Windmill."
-    	href="/docs/integrations/mailchimp_mandrill"
-    />
+		title="Email triggers"
+		description="Scripts and flows can be triggered by email messages sent to a specific email address."
+		href="/docs/advanced/email_triggers"
+	/>
+</div>
+
+### Custom HTTP routes
+
+Windmill allows you to define custom HTTP routes for your scripts and flows.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Custom HTTP routes"
+		description="Custom HTTP routes for your scripts and flows."
+		href="/docs/core_concepts/http_routing"
+	/>
+</div>
+
+### Scheduling + Trigger scripts
+
+A particular use case for schedules are [Trigger scripts](../../flows/10_flow_trigger.mdx).
+
+Trigger scripts are used in [Flows](../../flows/1_flow_editor.mdx) and are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+
+You could set your script in a flow after a Trigger script to have it run only when new data is available.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Trigger scripts"
+		color="teal"
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
+		href="/docs/flows/flow_trigger"
+	/>
 </div>

@@ -1,0 +1,38 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Rich Result by Job Id
+
+The Rich Result by Job Id component allows you to display the result of a Runnable by providing its [Job](../../core_concepts/20_jobs/index.mdx) id.
+
+![Rich Result by Job Id](../../assets/apps/4_app_component_library/rich_result_by_job_id.png "Rich Result by Job Id")
+
+The following section details Rich Result by Job Id component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
+</div>
+
+## Rich Result by Job Id configuration
+
+| Name        | Type | Connectable | Templatable | Default | Description                 |
+| ----------- | :--: | :---------: | :---------: | :-----: | --------------------------- |
+| Job Id |  string  |    true     |      false       |         | The [job id](../../core_concepts/20_jobs/index.mdx) of the run to display results. |
+
+## Outputs
+
+| Name    |  Type   | Description                         |
+| ------- | :-----: | ----------------------------------- |
+| result  |     string    | The result of the runnable.   |
+| loading | boolean | The loading state of the component. |
+| Job Id |  string  | The [job id](../../core_concepts/20_jobs/index.mdx) of the run to display results. |

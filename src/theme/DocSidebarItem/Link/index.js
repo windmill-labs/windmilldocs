@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { ThemeClassNames } from '@docusaurus/theme-common';
-import { isActiveSidebarItem } from '@docusaurus/theme-common/internal';
+import { isActiveSidebarItem } from '@docusaurus/plugin-content-docs/client';
 import Link from '@docusaurus/Link';
 import isInternalUrl from '@docusaurus/isInternalUrl';
 import IconExternalLink from '@theme/Icon/ExternalLink';
@@ -14,10 +14,10 @@ export default function DocSidebarItemLink({
 	index,
 	...props
 }) {
-	const activeItemRef = useRef(null);
 	const { href, label, className, autoAddBaseUrl } = item;
 	const isActive = isActiveSidebarItem(item, activePath);
 	const isInternalLink = isInternalUrl(href);
+	const activeItemRef = useRef(null);
 
 	useEffect(() => {
 		if (isActive && activeItemRef.current) {

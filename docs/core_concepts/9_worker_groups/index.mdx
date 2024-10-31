@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Workers and Worker Groups
+# Workers and worker groups
 
 Workers are autonomous processes that run one script at a time using the entire cpu and memory available
 to them. They are at the basis of [Windmill's architecture](../../misc/10_architecture/index.md) as run the jobs.
@@ -10,17 +10,19 @@ Each worker on Windmill can run up to 26 million jobs a month, where each job la
 Workers pull [jobs](../20_jobs/index.mdx) from the queue of jobs in the order of their
 `scheduled_for` datetime as long as it is in the past. As soon as a worker pulls
 a job, it atomically sets its state to "running", runs it, streams its logs then
-once it is finished, the final result and logs are stored for as long as the retention period allows. Logs are optionally stored to s3.
+once it is finished, the final result and logs are stored for as long as the retention period allows. Logs are optionally stored to S3.
 
 By default, every worker is the same and interchangeable. However, there are often needs to assign jobs to a specific worker pool, and to configure this worker pool to behave specifically or have different pre-installed binaries. To that end, we introduce the concept of "worker groups".
 
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
+![Workers page](./workers_page.png 'Workers page')
+
 In the [Community Edition](/pricing), worker management is done using tags that can be respectively assigned to workers (through the [env variable](#how-to-assign-worker-tags-to-a-worker-group) `WORKER_TAGS`) and scripts or flows, so that the workers listen to specific jobs queues.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Set Tags to Assign Specific Queues"
+		title="Set tags to assign specific queues"
 		description="You can assign groups to flows and flow steps to be executed on specific queues."
 		href="#set-tags-to-assign-specific-queues"
 	/>
@@ -30,9 +32,9 @@ In the [Community Edition](/pricing), worker management is done using tags that 
 
 In the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), workers can be commonly managed based on the group they are in, from the UI. Specifically, you can group the workers into worker groups, groups for which you can manage the tags they listen to, assignment to a single script, or the worker init scripts, from the UI.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Create Worker Group config"
+		title="Create worker group config"
 		description="workers can be commonly managed based on the group they are in, from the UI."
 		href="#create-worker-group-config"
 	/>
@@ -46,22 +48,22 @@ Examples of configurations include:
 2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
 
-## Assign custom Worker Groups
+## Assign custom worker groups
 
 Assign custom worker groups to scripts and flows in Windmill for efficient execution on different machines with varying specifications.
 
 This feature is useful if you want to run some scripts on a GPU machine, or if you want to run some scripts on high-memory machine.
 
-### How to have a Worker join a Worker Group
+### How to have a worker join a worker group
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/LbjgWKFQWJc?vq=hd1080"
+	src="https://www.youtube.com/embed/LbjgWKFQWJc"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
@@ -95,7 +97,7 @@ Assign replicas, resource constraints, and that's it, the worker will automatica
 
 Worker only require a database URL and can thus be spawned in separate VPCs if needed (as long as there is a tunnel to the database). There is also an agent mode for situations where workers are running in an untrusted environment.
 
-### Set Tags to Assign Specific Queues
+### Set tags to assign specific queues
 
 You can assign groups to flows and flow steps to be executed on specific queues. The name of those queues are called tags. Worker groups listen to those tags.
 
@@ -156,7 +158,7 @@ gpu(workspace+workspace2)
 
 Only 'workspace' and 'workspace2' will be able to use the `gpu` tags.
 
-### How to assign Worker tags to a Worker Group
+### How to assign worker tags to a worker group
 
 Use the edit/create config next to the worker group name in Windmill UI:
 
@@ -168,7 +170,7 @@ Use the edit/create config next to the worker group name in Windmill UI:
 WORKER_TAGS=tag1,tag2
 ```
 
-### How to assign a custom Worker Group to a script or flow
+### How to assign a custom worker group to a script or flow
 
 For scripts deployed on the script editor, select the corresponding worker group tag in the settings section.
 
@@ -200,7 +202,27 @@ Last, if the tags contain `$args[argName]` (e.g: `foo-$args[foobar])` then the t
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
 
-## Create Worker Group config
+## Alerts
+
+You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+
+![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
+
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+
+You need to configre [Critical alert channels](../37_critical_alert_channels/index.mdx) to receive notifications.
+
+![Workers alerts](./workers_alerts.png 'Workers alerts')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical alert channels"
+		description="Get a notification everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alert_channels"
+	/>
+</div>
+
+## Create worker group config
 
 <img
 	src={require('./wg_config_infographics.png').default}
@@ -233,44 +255,83 @@ Examples of configurations include:
 2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
 
-## Init Scripts
+## Init scripts
 
-[Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init Scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
+[Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
 
 Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), they can be set from Windmill UI.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
 	<img
 		src={require('../../advanced/8_preinstall_binaries/init_scripts.png').default}
-		alt="Init Scripts Infographics"
-		title="Init Scripts Infographics"
+		alt="Init scripts Infographics"
+		title="Init scripts Infographics"
 		width="70%"
 	/>
 </div>
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Init Scripts"
-		description="Init Scripts are executed at the beginning when the worker starts."
+		title="Init scripts"
+		description="Init scripts are executed at the beginning when the worker starts."
 		href="/docs/advanced/preinstall_binaries#init-scripts"
 	/>
 </div>
 
-## Dedicated Workers / High Throughput
+## Dedicated workers / High throughput
 
 Dedicated Workers are workers that are dedicated to a particular script. They are able to execute any job that target this script much faster than normal workers at the expense of being capable to only execute that one script.
 They are as fast as running the same logic in a forloop, but keep the benefit of showing separate jobs per execution.
 
-Dedicated Workers / High Throughput is a [Cloud plans & Self-Hosted Enterprise Edition](/pricing) feature.
+Dedicated workers / High throughput is a [Cloud plans & Self-Hosted Enterprise Edition](/pricing) feature.
 
 ![Dedicated Workers Infographics](../25_dedicated_workers/infographic.png 'Dedicated Workers Infographics')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Dedicated Workers / High Throughput"
+		title="Dedicated workers / High throughput"
 		description="Dedicated Workers are workers that are dedicated to a particular script."
 		href="/docs/core_concepts/dedicated_workers"
 	/>
 </div>
+
+## Service logs
+
+View logs from any workers or servers directly within the service logs section of the search modal.
+
+![Service logs](../36_service_logs/service_logs.png "Service logs")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Service logs"
+		description="View logs from any worker or servers directly within the service logs section of the search modal."
+		href="/docs/core_concepts/service_logs"
+	/>
+</div>
+
+## Queue metrics
+
+You can visualize metrics for delayed jobs per tag and queue delay per tag.
+
+Metrics are available under "Queue metrics" button on the Workers page.
+
+Only tags for jobs that have been delayed by more than 3 seconds in the last 14 days are included in the graph.
+
+![Queue Metrics](./queue_metrics.png 'Queue Metrics')
+
+### Queue metric alerts
+
+[Enterprise Edition](/pricing) users can set up [Critical Alerts](../37_critical_alert_channels/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
+
+![Queue Metrics](./queue_metrics_alert.png 'Queue Metrics Alert')
+## Workers and vCPUs
+
+Even though Windmill's architecture relies on workers, Windmill's [pricing](/pricing) is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with 4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by 24. Each vCPU can run up to ~26M jobs per month.
+
+The number of vCPUs will depend on the workload and the jobs Windmill will need to run. Each worker only executes one job at a time, by design to use the full resource of the worker, and you can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4 vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
+
+As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. You can set staging instances as 'Non-prod' in the [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance). The vCPU numbers are the aggregate limit of all of your pods set in [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or in Kubernetes. We set a quota of 2Gb memory per vCPU. We recommend to set [memory limit](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L52) instead of vCPUs limits. A typical memory limit would be `Number of paid vCPUs * 2GB`.
+
+Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate your needs in practice.

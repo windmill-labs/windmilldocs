@@ -1,0 +1,193 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Dependency management & imports
+
+Windmill's strength lies in its ability to run scripts without having to manage dependency manifest files directly (package.json, requirements.txt, etc.). This is achieved by automatically parsing the imports and resolving the dependencies.
+
+When a script is deployed through its UI, Windmill generates a lockfile to ensure that the same version of a script is always executed with the same versions of its dependencies. If no version is specified, the latest version is used. Windmill's workers cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+
+On the [enterprise edition](/pricing), Windmill's caches can be configured to sync their cache with a central S3 repository to distribute the cache across multiple workers as soon as a new dependency is used for the first time.
+
+![Dependency management & imports](./dependency_management.png "Dependency management & imports")
+
+## Lockfile per Script inferred from Imports (Standard)
+
+In Windmill, you can run scripts without having to [manage a package.json](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) / [requirements.txt](../15_dependencies_in_python/index.mdx#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the imports and resolving the dependencies. This method works for all languages in Windmill.
+
+When using Bun or Deno as the runtime for TypeScript in Windmill, dependencies are resolved directly from the script imports and their imports when using [sharing common logic](../5_sharing_common_logic/index.mdx). The TypeScript runtime Bun ensures 100% compatibility with Node.js without requiring any code modifications.
+
+Here is what it would give for Bun:
+
+```ts
+// unpinned import
+import { toWords } from 'number-to-words';
+
+// versioned import
+import * as wmill from 'windmill-client@1.147.3';
+```
+and for Python:
+
+```python
+import os
+
+# etc.
+```
+
+### Web IDE
+
+When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../core_concepts/34_versioning/index.mdx#script-versioning) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) or if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
+
+At runtime, a deployed script always uses the same version of its dependencies.
+
+At each [deployment](../../core_concepts/0_draft_and_deploy/index.mdx), the lockfile is automatically recomputed from the imports in the script and the imports used by the [relative imports](../14_dependencies_in_typescript/index.mdx#sharing-common-logic-with-relative-imports-when-not-using-bundles). The computation of that lockfile is done by a dependency jobs that you can find in the [Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx) page.
+
+### CLI
+
+On [local development](../4_local_development/index.mdx), each script gets:
+
+- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
+- a metadata file (`script_path.yaml`) that contains the metadata of the script,
+- a lockfile (`script_path.lock`) that contains the dependencies of the script.
+
+You can get those 3 files for each script by pulling your workspace with command [`wmill sync pull`](../3_cli/sync.mdx).
+
+Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
+
+Using [wmill CLI](../3_cli/index.mdx) command [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), lockfiles can be generated and updated as files. The CLI asks the Windmill servers to run dependency job, using either the [package.json (if present)](../14_dependencies_in_typescript/index.mdx#lockfile-per-script-inferred-from-a-packagejson) or asking Windmill to automatically resolve it from the script's code as input, and from the output of those jobs, create the lockfiles.
+When a lockfile is present alongside a script at time of deployment by the CLI, no dependency job is run and the present lockfile is used instead.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Command-line interface (CLI)"
+		description="The Windmill CLI, `wmill` allows you to interact with Windmill instances right from your terminal."
+		href="/docs/advanced/cli"
+	/>
+	<DocCard
+		title="Local development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
+## Imports in TypeScript
+
+See our dedicated page on [Dependencies in TypeScript](../14_dependencies_in_typescript/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+</div>
+
+## Imports in Python
+
+See our dedicated page on [Dependencies in Python](../15_dependencies_in_python/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in Python"
+		description="How to manage dependencies in Python scripts."
+		href="/docs/advanced/dependencies_in_python"
+	/>
+</div>
+
+## Imports in Go
+
+For Go, the dependencies and their versions are contained in the
+script and hence there is no need for any additional steps.
+
+e.g:
+
+```go
+import (
+	"rsc.io/quote"
+    wmill "github.com/windmill-labs/windmill-go-client"
+)
+```
+
+You can pin dependencies in Go using those annotations in the body of the script:
+
+```go
+// Pin dependencies partially in go.mod with a comment starting with "//require":
+//require rsc.io/quote v1.5.1
+```
+
+## Imports in PowerShell
+
+For PowerShell, imports are parsed when the script is run and modules are automatically installed if they are not found in the cache.
+
+e.g.:
+
+```powershell
+Import-Module -Name MyModule
+```
+
+## Dependencies on Local development
+
+When created and edited through the UI (Windmill App), the lockfile is automatically generated. On [local development](../4_local_development/index.mdx), each script gets:
+- a content file (`script_path.py`, `script_path.ts`, `script_path.go`, etc.) that contains the code of the script,
+- a metadata file (`script_path.yaml`) that contains the metadata of the script,
+- a lockfile (`script_path.lock`) that contains the dependencies of the script.
+
+You can get those 3 files for each script by pulling your workspace with command [`wmill sync pull`](../3_cli/sync.mdx).
+
+Editing a script is as simple as editing its content. The code can be edited freely in your IDE, and there are possibilities to even run it locally if you have the correct development environment setup for the script language.
+
+Some fields of the metadata file can also be edited by hand, like the summary of the description fields. If you update the dependencies of your script, or the signature of the `main` method, the lockfile and/or the script schema will need to be updated. We do not recommend doing it by hand.
+
+The lockfile is not meant to be edited manually. It is generated by Windmill when the script is created or edited through the UI and updated locally with the `wmill script generate-metadata` command. However, it is useful to check versions changes.
+
+[Windmill CLI](../3_cli/index.mdx) command `wmill script generate-metadata` will read all the files that have been edited and gracefully update the metadata file and lockfile accordingly.
+This command is mainly used update the lockfile and schema inplace. Be re-assured, any manual update to other files like summary and description will be kept.
+
+For each language, there is a way to pin the version directly. This is the recommended way of managing dependencies and the authoritative way of handling dependencies via the UI.
+Locally, the lockfile is respected. It "wins" over the dependencies pinned via the script. Hence the need of the `generate-metadata` command to update the lockfile and metadata files.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to prod using a git workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
+	/>
+	<DocCard
+		title="Local development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
+See the dedicated pages for TypeScript and Python to learn how to handle dependencies locally in those languages:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+	<DocCard
+		title="Dependencies in Python"
+		description="How to manage dependencies in Python scripts."
+		href="/docs/advanced/dependencies_in_python"
+	/>
+</div>
+
+## Relative Imports
+
+To import other scripts from your workspace, see [Sharing common logic](../5_sharing_common_logic/index.mdx).
+
+To import from a custom codebase, see [Codebases & bundles](../../core_concepts/33_codebases_and_bundles/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Sharing common logic"
+		description="It is common to want to share common logic between your scripts. This can be done easily using relative imports in both Python and TypeScript."
+		href="/docs/advanced/sharing_common_logic"
+	/>
+	<DocCard
+		title="Codebases & bundles"
+		description="Deploy scripts with any local relative imports as bundles."
+		href="/docs/core_concepts/codebases_and_bundles"
+	/>
+</div>

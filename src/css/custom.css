@@ -28,7 +28,7 @@ body * {
 :root {
 	--ifm-navbar-background-color: white;
 	--ifm-background-color: white;
-	--ifm-font-family-base: 'Inter', 'Inter';
+	--ifm-font-family-base: 'Inter', 'Arial';
 	--doc-sidebar-width: 320px !important;
 	--ifm-color-primary: rgb(59, 130, 246);
 	--ifm-color-primary-dark: rgb(37, 102, 206);
@@ -50,6 +50,11 @@ body * {
 
 .navbar {
 	@apply border-b dark:border-gray-800;
+}
+
+.navbar__title {
+	@apply text-blue-500 hover:text-blue-400 dark:text-white dark:hover:text-blue-400;
+    transition: color 0.3s ease;
 }
 
 .markdown {
@@ -233,7 +238,7 @@ a {
 	@apply mx-auto max-w-md px-4;
 	@apply text-center;
 	@apply sm:max-w-3xl lg:max-w-7xl;
-	@apply sm:px-6 lg:px-8;
+	@apply sm:px-4 lg:px-8;
 	@apply mb-12;
 }
 
@@ -421,6 +426,10 @@ div.testimonials a:hover .wm-name {
 	filter: brightness(80%);
 }
 
+.hover-change-color-use-cases:hover {
+	fill: #2A3444;
+}
+
 .interactive-image {
 	cursor: pointer;
 	transition: filter 0.3s;
@@ -447,15 +456,14 @@ div.testimonials a:hover .wm-name {
 }
 
 .custom-link {
-    color: inherit;
-    text-decoration: underline dashed;
-    text-decoration-thickness: 0.5px;
+	text-decoration: underline dashed;
+	text-decoration-thickness: 0.5px;
 }
 
 .custom-link:hover {
-    color: rgb(42, 77, 173);
-    text-decoration: underline dashed;
-    text-decoration-thickness: 0.5px;
+	color: rgb(42, 77, 173);
+	text-decoration: underline dashed;
+	text-decoration-thickness: 0.5px;
 }
 
 .reset table {
@@ -481,29 +489,58 @@ div.testimonials a:hover .wm-name {
 }
 
 .tooltip-icon {
-    position: relative;
-    cursor: pointer;
+	position: relative;
+	cursor: pointer;
 }
 
 .tooltip-text {
-    visibility: hidden;
-    width: 300px;
-    background-color: #0f172a;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
+	visibility: hidden;
+	width: 300px;
+	background-color: #0f172a;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -60px;
 
-    opacity: 0;
-    transition: opacity 0.3s;
+	opacity: 0;
+	transition: opacity 0.3s;
 }
 
 .tooltip-icon:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }
+
+.markdown img {
+    border-radius: 2px;
+}
+
+@keyframes text-slide {
+	0% {
+	  transform: translateY(0);
+	}
+	50% {
+	  transform: translateY(-100%);
+	  opacity: 0;
+	}
+	50.1% {
+	  transform: translateY(100%);
+	  opacity: 0;
+	}
+	100% {
+	  transform: translateY(0);
+	  opacity: 1;
+	}
+  }
+  
+  .hover-animate {
+	animation-duration: 0.6s; /* Control the speed of the animation */
+	animation-timing-function: ease-in-out; /* Smooth animation */
+	display: inline-block; /* Needed to animate only the text */
+  }
+  

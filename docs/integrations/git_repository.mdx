@@ -1,27 +1,29 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Git Integration
+# Git integration
 
-[Resource Type](https://hub.windmill.dev/resource_types/135/git_repository) used to sync Windmill workspace to a remote repository that will automatically be committed and pushed scripts, flows and apps on each [deploy](../core_concepts/0_draft_and_deploy/index.mdx).
+[Git](https://git-scm.com/) is a distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+
+Windmill has a dedicated [resource Type](https://hub.windmill.dev/resource_types/135/git_repository) used for [Git sync](../advanced/11_git_sync/index.mdx), to sync Windmill workspace to a remote repository that will automatically be committed and pushed scripts, flows and apps on each [deploy](../core_concepts/0_draft_and_deploy/index.mdx).
 
 More:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-		<DocCard
-			title="Git Sync"
-			description="Connect the Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
-			href="/docs/advanced/git_sync"
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Git sync"
+		description="Connect a Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
+		href="/docs/advanced/git_sync"
 	/>
 </div>
 
-The first 5 minutes of this video show how to set up a Git repository for a workspace (Git Sync - workspace mode), the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions (Git Sync - item mode):
+The first 5 minutes of this video show how to set up a Git repository for a workspace (Git sync - workspace mode), the rest of the video shows how to use it to deploy to a Prod workspace using GitHub Actions (Git sync - item mode):
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/es8FUC2M73o?vq=hd1080"
+	src="https://www.youtube.com/embed/es8FUC2M73o"
 	title="Deploy to a Prod Workspace using a Git Workflow"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>

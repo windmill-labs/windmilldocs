@@ -2,13 +2,40 @@ import DocCard from '@site/src/components/DocCard';
 
 # Database Studio
 
-This component allows you to create a database studio. The database studio is a web-based database management tool. It allows you to display and edit the content of a database. It uses Ag Grid to display the table.
+This component allows you to create a database studio. The database studio is a web-based database management tool. It allows you to display and edit the content of a database. It uses [Ag Grid](./aggrid_table.mdx) to display the table.
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/database_studio.mp4"
-/>
+![Database Studio](../../assets/apps/4_app_component_library/db_studio.png "Database Studio")
+
+For simple data display, check out the [Table](./table.mdx) component or the [Ag Grid](./aggrid_table.mdx) component.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/Fd_0EffVDtw"
+	title="Database Studio"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+The following section details Database Studio's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
+</div>
 
 ## Features
 
@@ -17,18 +44,23 @@ This component allows you to create a database studio. The database studio is a 
 - Add a new row: The form is automatically generated based on the column definitions, and the default values are automatically set. The form opens in a drawer.
 - Delete a row: The delete button is displayed on the right of the row. The delete button is only displayed if the `Allow delete` property is set to true.
 
+## Controls
+
+`recompute`: [frontend script helper](../3_app-runnable-panel.mdx#frontend-scripts-helpers) to recompute the component on demand or automatically.
+
 ## Configuration
 
 The component can be configured with the following properties:
 
-- `resource`: The PostgreSQL resource to use.
-- `table`: The table to use. Once the resource is selected, the list will be populated with the tables available in the database.
+- `Type`: Either [PostgreSQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#postgresql), [MySQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#mysql), [MS SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#ms-sql), [Snowflake](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#snowflake) or [BigQuery](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#bigquery).
+- `Resource`: The actual [resource](../../core_concepts/3_resources_and_types/index.mdx) from the above resource type.
+- `Table`: The table to use. Once the resource is selected, the list will be populated with the tables available in the database.
 
 Once a resource is selected, you can explore the schema: It will open a drawer the schema of the database.
 
 ## Column definition
 
-When the table is selected, the column definitions will automatically synchronise with the columns of the table.
+When the table is selected, the column definitions will automatically synchronize with the columns of the table.
 
 The column can be configured with the following properties:
 
@@ -42,7 +74,7 @@ The column can be configured with the following properties:
 
 Furthermore, each column exposes the same configuration as the Ag Chart column definition.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Ag Grid column definition"
 		description="In this guide, learn how to configure the column definitions"
@@ -55,15 +87,24 @@ Furthermore, each column exposes the same configuration as the Ag Chart column d
 	/>
 </div>
 
-## Table configuration
+## Database Studio configuration
 
 The database studio uses the same configuration as the Ag Chart, expect for the following property.
 
 | Name         |  Type   | Connectable | Templatable | Default | Description                     |
 | ------------ | :-----: | :---------: | :---------: | :-----: | ------------------------------- |
-| Allow delete | boolean |    true     |    false    |  false  | Whether row deletion is enabled |
+| Where Clause | string |    true     |    false    |  Empty  | In PostgreSQL, to add additional constraints to the Where clause. |
+| Flex | boolean |    true     |    false    |  true  | Default col flex is 1 (see [AgGrid docs](https://ag-grid.com/javascript-data-grid/column-sizing/)). |
+| All Editable | boolean |    true     |    false    |  false  | Allow deleting rows. |
+| Allow Delete | boolean |    true     |    false    |  false  | Whether row deletion is enabled. |
+| Multiple Selectable | boolean |    true     |    false    |  false  | Make multiple rows selectable at once. |
+| Row Multiselect With Click | boolean |    true     |    false    |  true  | Allow multiselect with click. |
+| Select First Row by Default | boolean |    true     |    false    |  true  | Select the first row by default on start. |
+| Extra Config | object |    true     |    false    |  `{}`  | Any configuration that can be passed to ag-grid top level. |
+| Hide Insert | boolean |    true     |    false    |  false  | Hide the insert button. |
+| Hide Search | boolean |    true     |    false    |  false  | Hide the search bar. |
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Ag Grid"
 		description="Learn how to use the Ag Grid table"

@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Draft and Deploy
+# Draft and deploy
 
 Draft, test, and deploy scripts, flows, and apps Windmill to iterate and save safely.
 
@@ -8,8 +8,16 @@ Each script, flow or app can be saved (sometimes concurrently) in 3 fashions, by
 
 Once deployed, scripts, flows and apps will be visible, editable and/or runnable by users [with the right permissions](../16_roles_and_permissions/index.mdx).
 
+![Recap Draft and deploy](./recap_draft_and_deploy.png "Recap Draft and deploy")
+
+:::tip Deploy to prod
+
+For all details on Deployments to Prod, see [Deploy to prod](../../advanced/12_deploy_to_prod/index.mdx).
+
+:::
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	id="main-video"
@@ -17,12 +25,6 @@ Once deployed, scripts, flows and apps will be visible, editable and/or runnable
 />
 
 <br />
-
-:::tip Deploy to prod
-
-For all details on Deployments to Prods, see [Deploy to Prod](../../advanced/12_deploy_to_prod/index.mdx).
-
-:::
 
 ## Local Edits
 
@@ -40,22 +42,22 @@ Drafts can be run and tested only from the editor (script, flow or app) with the
 
 The deployed version is the authoritative version of a runnable. Once deployed, it is not only visible by workspace members [with the right permissions](../16_roles_and_permissions/index.mdx) but has its own [auto-generated UI](../6_auto_generated_uis/index.mdx), [webhooks](../4_webhooks/index.mdx), or can be called from flows and apps (for scripts and flows). This also means that local edits and drafts can be made in parallel to a deployed version of a runnable without affecting its behavior.
 
-If you want to have several versions of the same runnable, just fork it with the `Fork` button on the drop down menu of `Deploy`.
+### Deployment History
 
-<div class="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Roles and Permissions"
-		description="Control access and manage permissions within your instance and workspaces."
-		href="/docs/core_concepts/roles_and_permissions"
-	/>
-</div>
+Scripts and flows can be added a Deployment message on each deployment. You can find versions and their deployment message in the "History" menu.
+
+If you want to have several versions of the same runnable, just fork it with the `Fork` button on the drop down menu of `Deploy`. Past versions can be retrieved from the `History` menu with "Restore as fork" or "Redeploy with that version" buttons.
+
+![Deployment History](../../assets/script_editor/deployment_history.png 'Deployment History')
+
+> Deployment History of a flow.
 
 ## Diff Viewer
 
 Visualize changes between [current](#local-edits) and [latest deployed version](#deployed-version) or [latest draft](#draft) for any script, flow or app.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/diff_viewer.mp4"
 />
@@ -70,26 +72,22 @@ Apps and Flows only have one deployed version at a given path and doing a new de
 
 Scripts are special because each deployment of a script creates an immutable hash that will never be overwritten. The path of a script serves as a redirection to the last deployed hash, but all hashes live permanently forever. This ensures that if you refer to a script by its hash, its behavior is guaranteed to remain the same even if a new hash is deployed at the same path.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Versioning"
 		description="Scripts, when deployed, can have a parent script identified by its hash."
-		href="/docs/script_editor/versioning"
+		href="/docs/core_concepts/versioning#script-versioning"
 	/>
 </div>
 
-## Special case: Public Apps
+## Special case: Public apps
 
-Windmill apps can be [Published Publicly](../../apps/8_public_apps.md). It means that the app can be accessed as a standalone app by anyone who has the secret URL.
+Windmill apps can be [Published Publicly](../../apps/8_public_apps.mdx). It means that the app can be accessed as a standalone app by anyone who has the secret URL.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Public Apps"
+		title="Public apps"
 		description="Apps can be accessed as a standalone app by anyone who has the secret URL"
 		href="/docs/apps/public_apps"
 	/>
 </div>
-
-## Recap
-
-![Recap Draft and Deploy](./recap_draft_and_deploy.png.webp)

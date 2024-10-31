@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Outputs Guide
+# Output guide
 
 The outputs represent the states & results of the app.
 
@@ -19,20 +19,26 @@ You can search for an output by typing in the search bar. It searches in the out
 
 ![Search outputs](../assets/apps/2_app_outputs/search_output.png 'Search outputs')
 
-### App context
+## Context and State
+
+### App Context
 
 The app context contains the following outputs:
 
-- email: the email of the current user
-- username: the username of the current user
-- query: the query parameters of the URL
-- hash: the hash parameters of the URL
+- `summary`: the summary of the current app.
+- `email`: the email of the current user.
+- `groups`: the [groups](../core_concepts/8_groups_and_folders/index.mdx) the user is part of.
+- `hash`: the hash parameters of the URL.
+- `mode`: the mode the app is currently in (editor / viewer).
+- `query`: the query parameters of the URL.
+- `username`: the username of the current user.
+- `workspace`: the workspace of the current app.
 
 ### State
 
 The app state is a client-side store that can be used to store data. The app state can be manipulated by frontend scripts.
 
-### Component outputs
+## Component Outputs
 
 Each component has its own outputs. The outputs are displayed in a tree structure. The tree structure is collapsible and can be expanded by clicking on the `{...}` button. Next to the button, you can see the number of outputs.
 
@@ -50,7 +56,7 @@ For example, the [Table component](./4_app_configuration_settings/table.mdx) has
 
 The outputs are used to quickly visualize the current state of the app.
 
-### Containers
+## Containers
 
 Some components are "containers" and can contain other components.
 
@@ -58,7 +64,7 @@ The components contained in a container have their outputs displayed in the cont
 
 ![App outputs](../assets/apps/2_app_outputs/app-output-container.png.webp)
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Layout (Containers)"
 		description="Containers can group other components."
@@ -67,16 +73,16 @@ The components contained in a container have their outputs displayed in the cont
 	/>
 </div>
 
-### Background runnables outputs
+## Background Runnables Outputs
 
 A [background runnable](./3_app-runnable-panel.mdx#background-runnables) is a script or flow that runs in the background and can be used to perform actions that are not related to the UI.
 
-### Connecting inputs
+## Connecting Inputs
 
 Inputs can be connected to any outputs. When connecting, you can click on the output to connect the input to it. The data source will change to [eval](./3_app-runnable-panel.mdx#evals). Note that you can select nested outputs, objects and arrays.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/app-connections.mp4"
 	alt="Connecting inputs"
@@ -96,12 +102,32 @@ Alternatively, refer to the component directly through an [eval](./3_app-runnabl
 
 ![App outputs](../assets/apps/2_app_outputs/connecting_eval.png 'Connecting through eval')
 
-### Editing the id of a component
+### Forcing the Value of a Component
+
+You can use a [frontend script helper](./3_app-runnable-panel.mdx#frontend-scripts-helpers): [setValue](./3_app-runnable-panel.mdx#setvalue) that is meant to manually set or force the value of a component. This can be convenient in cases where connecting components is not the easiest pattern.
+
+```js
+setValue(id: string, value: any)
+```
+
+Note that it's a bad idea to mix dynamic default value and setValue together.
+
+### Connecting Runnables Inputs to Resources
+
+Apps are [executed on behalf of publishers](./3_app-runnable-panel.mdx#policy) and by default cannot access viewer's [resources](../core_concepts/3_resources_and_types/index.mdx).
+
+If the resource passed here as a reference does not come from a static [Resource Select](./4_app_configuration_settings/resource_select.mdx) component (which will be whitelisted by the auto-generated policy), you need to toggle "Resources from users allowed".
+
+The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](./2_connecting_components/index.mdx) is an eval.
+
+![Static resource select only / Resources from users allowed](../assets/apps/0_app_editor/resources_from_users.png "Static resource select only / Resources from users allowed")
+
+## Editing the id of a Component
 
 You can edit the id of a component by clicking on the id. Component id can only contain letters and numbers.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/app-edit-id.mp4"
 />

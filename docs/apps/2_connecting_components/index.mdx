@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Connecting Components
+# Connecting components
 
 The strength of Windmill's app editor is the ability to connect everything together:
 
@@ -10,7 +10,7 @@ The strength of Windmill's app editor is the ability to connect everything toget
 - [frontend scripts](../3_app-runnable-panel.mdx#evals) can be used to manipulate the client app state
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	src="/videos/connecting_components.mp4"
 	id="main-video"
@@ -28,11 +28,11 @@ In Windmill's app editor:
 
 In order to connect the components, it is best to be familiar with the concepts of [Runnable](#runnable-editor) and [Output](#outputs-panel).
 
-### Runnable Editor
+### Runnable editor
 
-On the bottom of the app editor, you can find the Runnable Editor. It allows you to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
+On the bottom of the app editor, you can find the Runnable editor. It allows you to create, edit, or manage the scripts or flows linked to components (runnables) and background runnables.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png.webp)
+![App Runnables panel](../../assets/apps/0_app_editor/app-sections.png)
 
 The panel is structured as follows:
 
@@ -41,11 +41,11 @@ The panel is structured as follows:
 
 Each script can have [inputs from other components](../3_app-runnable-panel.mdx#configure-triggers). The script will return [outputs](#outputs-panel) that can be used in other components.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Runnable Editor"
-		description="Learn how to create and configure runnables."
+		title="Runnable editor"
+		description="Learn how to create and configure Apps runnables."
 		href="/docs/apps/app-runnable-panel"
 	/>
 </div>
@@ -68,7 +68,7 @@ You can perform the following actions with the outputs:
 - Select a component to view its outputs.
 - [Connect an input to an output](../2_connecting_components/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Outputs"
@@ -77,14 +77,14 @@ You can perform the following actions with the outputs:
 	/>
 </div>
 
-### Component Configuration
+### Component configuration
 
 Each component can be configured individually. This allows for adjusting its value, behavior (especially by linking a script) to the component, and styling.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Component Configuration"
+		title="Component configuration"
 		description="Learn how to configure a component."
 		href="/docs/apps/app_configuration_settings/app_component_configuration"
 	/>
@@ -97,7 +97,7 @@ Inputs (from scripts or components) can be connected to any outputs. When connec
 Note that you can select nested outputs, objects and arrays.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/app-connections.mp4"
 	alt="Connecting inputs"

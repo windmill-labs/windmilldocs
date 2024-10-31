@@ -1,13 +1,13 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Instant Preview & Testing
+# Instant preview & testing
 
 On top of its integrated editors ([scripts](../../script_editor/index.mdx), [flows](../../flows/1_flow_editor.mdx), [apps](../../apps/0_app_editor/index.mdx)), Windmill allows users to see and test what they are building directly from the editor, even before deployment.
 
-## Instant preview in Script Editor
+## Instant preview in Script editor
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/auto_g_ui_landing.mp4"
 />
@@ -24,59 +24,59 @@ The right margin of the script editor displays:
 
 ![Test history](./test_history.png 'Test history')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Script Editor"
-		description="Scripts are the basic building blocks that can be written in Typescript, Python, Go, Bash, SQL or launch docker containers."
+		title="Script editor"
+		description="Scripts are the basic building blocks that can be written in TypeScript, Python, Go, PHP, Bash, SQL and Rust or launch docker containers."
 		href="/docs/script_editor"
 	/>
 </div>
 
-### VS Code Extension
+### VS Code extension
 
-For users on [VS Code Extension](../../cli_local_dev/1_vscode-extension/index.mdx), you can also preview instantly and test with the `Windmill: Run preview` command.
+For users on [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx), you can also preview instantly and test with the `Windmill: Run preview` command.
 
-![VS Code Extention](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code Extension')
+![VS Code Extention](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code extension')
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/aSOF6AzyDr8?vq=hd1080"
+	src="https://www.youtube.com/embed/aSOF6AzyDr8"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
 
-## Instant preview in Flow Editor
+## Instant preview in Flow editor
 
 The flow editor has several methods of previewing results instantly.
 
 Testing the flow or certain steps is often required to have the outputs of previous steps suggested as input for another step:
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_preview_results.mp4"
 />
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Flow Editor"
-		description="Windmill's Flow Editor allows you to build flows with a low-code builder."
+		title="Flow editor"
+		description="Windmill's Flow editor allows you to build flows with a low-code builder."
 		href="/docs/flows/flow_editor"
 	/>
 </div>
@@ -86,7 +86,7 @@ Testing the flow or certain steps is often required to have the outputs of previ
 While editing the flow, you can run the whole flow as a test.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_flow.mp4"
 />
@@ -110,7 +110,7 @@ At last, you can fill arguments from a request.
 ### Test up to step
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_up_to.mp4"
 />
@@ -118,6 +118,17 @@ At last, you can fill arguments from a request.
 <br />
 
 As for `Test flow`, you will get the same components (Flow inputs, status, input library etc.), only the flow will execute until a given step, included.
+
+### Test an iteration
+
+[For loops](../../flows/12_flow_loops.md) and [While loops](../../flows/22_while_loops.mdx) can be tested for a specific iteration.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/test_iteration.mp4"
+	description="Test an iteration"
+/>
 
 ### Restart from step, iteration or branch
 
@@ -133,7 +144,7 @@ To see how it works, see our [dedicated blog post](/blog/launch-week-1/restartab
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
@@ -145,7 +156,7 @@ Under [Cloud plans and Self-Hosted Enterprise edition](/pricing), this feature i
 ### Test this step
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_this_step.mp4"
 />
@@ -156,13 +167,13 @@ Under [Cloud plans and Self-Hosted Enterprise edition](/pricing), this feature i
 
 The arguments are pre-filled from the step inputs (if the arguments use results from previous steps, they will be used if those were tested before), but you can change them manually.
 
-## Instant preview in App Editor
+## Instant preview in App editor
 
 The app editor has several methods of previewing results instantly.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="App Editor"
+		title="App editor"
 		description="The app editor is where you build an app with components, create interactions with runnables (scripts & flows), and configure the app settings."
 		href="/docs/apps/app_editor"
 		color="orange"
@@ -172,7 +183,7 @@ The app editor has several methods of previewing results instantly.
 ### Run manually a runnable
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/app_test_run.mp4"
 />
@@ -184,7 +195,7 @@ When on a runnable from the [runnable panel](../../apps/3_app-runnable-panel.mdx
 ### Run all
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/app_test_run_all.mp4"
 />
@@ -196,7 +207,7 @@ On the top bar of the app, you can either manually run all runnables of set a gi
 ### Preview
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/app_test_preview.mp4"
 />

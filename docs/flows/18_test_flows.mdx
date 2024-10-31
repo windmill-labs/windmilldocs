@@ -1,36 +1,36 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Testing Flows
+# Testing flows
 
 On top of its integrated editors ([scripts](../script_editor/index.mdx), [flows](./1_flow_editor.mdx), [apps](../apps/0_app_editor/index.mdx)), Windmill allows users to see and test what they are building directly from the editor, even before deployment.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Instant Preview & Testing"
+		title="Instant preview & testing"
 		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
 		href="/docs/core_concepts/instant_preview"
 	/>
 </div>
 
-## Instant preview in Flow Editor
+## Instant preview in Flow editor
 
 The flow editor has several methods of previewing results instantly.
 
 Testing the flow or certain steps is often required to have the outputs of previous steps suggested as input for another step:
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_preview_results.mp4"
 />
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Flow Editor"
-		description="Windmill's Flow Editor allows you to build flows with a low-code builder."
+		title="Flow editor"
+		description="Windmill's Flow editor allows you to build flows with a low-code builder."
 		href="/docs/flows/flow_editor"
 	/>
 </div>
@@ -40,7 +40,7 @@ Testing the flow or certain steps is often required to have the outputs of previ
 While editing the flow, you can run the whole flow as a test.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_flow.mp4"
 />
@@ -64,7 +64,7 @@ At last, you can fill arguments from a request.
 ### Test up to step
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_up_to.mp4"
 />
@@ -72,6 +72,17 @@ At last, you can fill arguments from a request.
 <br />
 
 As for `Test flow`, you will get the same components (Flow inputs, status, input library etc.), only the flow will execute until a given step, included.
+
+### Test an iteration
+
+[For loops](../flows/12_flow_loops.md) and [While loops](../flows/22_while_loops.mdx) can be tested for a specific iteration.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/test_iteration.mp4"
+	description="Test an iteration"
+/>
 
 ### Restart from step, iteration or branch
 
@@ -87,7 +98,7 @@ To see how it works, see our [dedicated blog post](/blog/launch-week-1/restartab
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
@@ -99,7 +110,7 @@ Under [Cloud plans & Self-Hosted Enterprise Edition](/pricing), this feature is 
 ### Test this step
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/flow_test_this_step.mp4"
 />

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import LandingSection from './LandingSection';
-import '../css/custom.css';
 import { useColorMode } from '@docusaurus/theme-common';
 
-const testimonials = [
+const communityTestimonials = [
 	{
 		body: (
 			<span>
@@ -84,11 +83,16 @@ const testimonials = [
 	{
 		body: (
 			<span>
-				A little late but after reading this thread I moved a airflow instance to windmill and I much much prefer
-				{' '}<strong>
+				A little late but after reading this thread I moved a airflow instance to windmill and I
+				much much prefer{' '}
+				<strong>
 					<span className="text-blue-500">Windmill</span>
-				</strong>{', '}
-				airflow was clunky and heavy for my simple workflow that consists of running a few python script. Also is auto ui is great to play with the arguments in, the cron ui and next start date... Also is it written in rust so much more low usage than airflow that consistently cpu picked while doing nothing.
+				</strong>
+				{', '}
+				airflow was clunky and heavy for my simple workflow that consists of running a few python
+				script. Also is auto ui is great to play with the arguments in, the cron ui and next start
+				date... Also is it written in rust so much more low usage than airflow that consistently cpu
+				picked while doing nothing.
 			</span>
 		),
 		author: {
@@ -101,20 +105,37 @@ const testimonials = [
 	{
 		body: (
 			<span>
-				Love{' '}
+				Stumbled upon{' '}
 				<strong>
-					<span className="text-blue-500">Windmill</span>
+					<span className="text-blue-500">@WindmillDev</span>
 				</strong>{' '}
-				so much. It's blazing fast, super easier to try it out locally with docker-compose, and
-				Ruben and his team are shipping new features / fixing bugs every day, and the product only
-				gets better.
+				amazing open source project exactly what I needed. Team is cracked af Kind of a super advanced Zapier/ActivePieces with huge wiggle room for custom scripts. Just the right balance
+			</span>
+		),
+		author: {
+			handle: 'x',
+			backlink: 'https://x.com/b_arbaretier/status/1832412643082035457',
+			name: '@b_arbaretier on X',
+			date: 'September 7th 2024'
+		}
+	},
+	{
+		body: (
+			<span>
+				I migrated to{' '}
+				<strong>
+					<span className="text-blue-500">windmill.dev</span>
+				</strong>{' '}
+				a couple of weeks ago and couldn't be happier. Honestly the product is simply better than
+				Airplane. I looked at Windmill.dev a 18 months ago when I adopted Airplane, and it was less
+				mature - but it was open source and I wish I'd given that more weight.
 			</span>
 		),
 		author: {
 			handle: 'hn',
-			backlink: 'https://news.ycombinator.com/item?id=37001402',
-			name: 'slig on HackerNews',
-			date: 'August 4th 2023'
+			backlink: 'https://news.ycombinator.com/item?id=39623203',
+			name: 'jeremyjh on HackerNews',
+			date: 'March 6th 2024'
 		}
 	},
 	{
@@ -124,24 +145,28 @@ const testimonials = [
 				<strong>
 					<span className="text-blue-500">windmill.dev</span>
 				</strong>{' '}
-				over the weekend, and it's really hitting a sweet spot for me between no-code/low-code, a fancy UI but still being powerful enough to actually replace significant amounts of code.
+				over the weekend, and it's really hitting a sweet spot for me between no-code/low-code, a
+				fancy UI but still being powerful enough to actually replace significant amounts of code.
 			</span>
 		),
 		author: {
 			handle: 'x',
 			backlink: 'https://twitter.com/moritzhaarmann/status/1731580514136469659',
-			name: 'Moritz Haarmann, former Director of Engineering at adidas',
+			name: 'Moritz Haarmann, former Director of Engineering at Adidas',
 			date: 'December 4th 2023'
 		}
 	},
 	{
 		body: (
 			<span>
-				I had the same thought when it popped up on my radar a year ago. Now that I’ve been using it for a few weeks, it’s difficult to go back to the exact tools you’re naming. I didn’t realize how large of an impediment it is to move back and forth all of them. 
+				I had the same thought when it popped up on my radar a year ago. Now that I’ve been using it
+				for a few weeks, it’s difficult to go back to the exact tools you’re naming. I didn’t
+				realize how large of an impediment it is to move back and forth all of them.
 				<strong>
 					<span className="text-blue-500">Windmill</span>
 				</strong>{' '}
-				is the thing I never knew I needed. It’s changed how I think about delivering data products/solutions.
+				is the thing I never knew I needed. It’s changed how I think about delivering data
+				products/solutions.
 			</span>
 		),
 		author: {
@@ -161,7 +186,8 @@ const clientTestimonials = [
 			position: 'Co-Founder & CTO',
 			dark: '/images/brands/logo-original-dark-transparent.png',
 			light: '/images/brands/logo-original-light-transparent.png',
-			anchor: 'photoroom'
+			anchor: 'photoroom',
+			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQEgFugU1CsFxA/profile-displayphoto-shrink_200_200/0/1709041891469?e=2147483647&v=beta&t=uH8qfqTTK2YmNCedLtJ7rURtXbtKegLF1QLtaOQKEDM',
 		},
 		company_url: 'https://photoroom.com',
 		linkedIn: 'https://www.linkedin.com/in/eliotandres/',
@@ -169,16 +195,17 @@ const clientTestimonials = [
 	},
 	{
 		author: {
-			name: 'Sindre Svendby',
-			company: 'Motimate - a Kahoot! company',
-			position: 'Software Engineer',
-			dark: '/images/brands/Kahoot_Logo-dark.svg',
-			light: '/images/brands/Kahoot_Logo.svg',
-			anchor: 'kahoot'
+			name: 'Lewis Ellis',
+			company: 'Pave',
+			position: 'Staff Platform Engineer',
+			dark: '/images/brands/pave-dark.svg',
+			light: '/images/brands/pave.svg',
+			anchor: 'pave',
+			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1517339626890?e=1733356800&v=beta&t=WDQokhSVjK8SrpyRb4FZhugMpNPuqN0Dtg5GilhsNDI'
 		},
-		company_url: 'https://motimateapp.com',
-		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
-		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
+		company_url: 'https://www.pave.com/',
+		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
+		text: `At Pave, we self-host Windmill Enterprise Edition to run 100+ scripts and 15+ crons. Our Windmill deployment interacts with half a dozen data stores to power all kinds of business-critical tasks and automations across several teams. It enables our engineering org to move quickly while keeping things secure and avoiding infrastructure sprawl. We expect to continue moving more workloads into Windmill over time, simplifying our systems in the process.<br/><br/>The Windmill team are also great partners to work with - incredibly responsive, and have developed new capabilities to support our usage patterns, enabling our Windmill scripts to more seamlessly tie into the rest of our codebase.`
 	},
 	{
 		author: {
@@ -187,21 +214,22 @@ const clientTestimonials = [
 			position: 'Chief Technology Officer',
 			dark: '/images/brands/Bloomcredit-Dark.svg',
 			light: '/images/brands/Bloomcredit-Light.svg',
-			anchor: 'bloomcredit'
+			anchor: 'bloomcredit',
+			profile_picture: 'https://bloomcredit.io/wp-content/uploads/2023/01/person-c.png'
 		},
 		text: `Bloom Credit uses Windmill to automate back office and support tasks, and orchestrate their ELT process. It is rapidly becoming a foundational technology in our SaaS control plane. The Windmill team have been great partners; they are responsive to support inquiries and new feature requests and are truly invested in our success with the platform.`,
 		company_url: 'https://bloomcredit.io',
 		linkedIn: 'https://www.linkedin.com/in/mikeesler/'
 	},
-
 	{
 		author: {
 			name: 'Romaric Philogène',
 			company: 'Qovery',
 			position: 'Co-Founder & CEO',
-			dark: '/images/brands/Qovery-dark.png',
+			dark: '/images/brands/Qovery-dark.svg',
 			light: '/images/brands/Qovery-light.svg',
-			anchor: 'qovery'
+			anchor: 'qovery',
+			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_400_400/0/1693895615653?e=2147483647&v=beta&t=nxGuC4K8eXsJ2YAq1wqG-m8mEkhj8gugGqhccdckJZc'
 		},
 		company_url: 'https://www.qovery.com',
 		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
@@ -209,25 +237,36 @@ const clientTestimonials = [
 	},
 	{
 		author: {
-			name: 'Jim Hudson',
-			company: 'Deluxebase',
-			position: 'IT Coordinator',
-			dark: '/images/brands/Deluxebase.png',
-			light: '/images/brands/Deluxebase.png',
-			anchor: 'deluxebase'
+			name: 'Sindre Svendby',
+			company: 'Motimate - a Kahoot! company',
+			position: 'Software Engineer',
+			dark: '/images/brands/Kahoot_Logo-dark.svg',
+			light: '/images/brands/Kahoot_Logo.svg',
+			anchor: 'kahoot',
+			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
 		},
-		company_url: 'https://www.deluxebase.com',
-		text: `At Deluxebase, we use Windmill to automate and streamline business processes, analyse figures, and synchronise data between our ERP and external services. Having everything in one place has greatly improved the efficiency of our team. The Windmill team are incredibly responsive, providing excellent support, feature request implementations, and almost instant bug fixes for the few we’ve come across!`
+		company_url: 'https://motimateapp.com',
+		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
+		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
+	},
+	{
+		author: {
+			name: 'Ben Packer',
+			company: 'United Auto Workers',
+			position: 'Software Engineer',
+			dark: '/images/brands/uaw_dark.svg',
+			light: '/images/brands/uaw.svg',
+			anchor: 'united-auto-workers',
+			profile_picture: 'https://media.licdn.com/dms/image/v2/C4D03AQGzZ5R0BHz7yg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1600310404802?e=2147483647&v=beta&t=guoo6kwwuEu24WJl1w_5nvJk9nTSDSoSosxBMmMLXBc'
+		},
+		company_url: 'https://uaw.org/',
+		linkedIn: 'https://www.linkedin.com/in/benpaulryanpacker/',
+		text: `I've used Retool, Argo, Airflow, etc., and nothing comes close to Windmill. It's coherent and expertly designed for developers to interface with non-technical staff. It lets our small team move super fast and cover a huge surface area in a way that's maintainable, observable, and debuggable.<br/><br/>The responsiveness and speed of the Windmill team is also unheard of among SaaS providers. Feature requests have often been implemented within a day or week, and the one or two minor bug reports we've had have always been fixed within the day or even a few hours. Tthe team has treated us as partners and co-designers, and listened to our use cases and thought with us about the best way to approach a problem.<br/><br/>We now have 10+ apps, 15+ complex syncing schedules, and 75+ individual custom scripts and actions powered syncs between 7 different systems in daily use by dozens of organizers, and our use is expanding daily. Without Windmill, attempting this level of sophistication for a technical team of our size would not have been possible.`
 	}
 ];
 
 export default function Example() {
-	const [showAll, setShowAll] = useState(true);
 	const { colorMode } = useColorMode();
-
-	const toggleTestimonials = () => {
-		setShowAll(!showAll);
-	};
 
 	return (
 		<LandingSection bgClass="">
@@ -242,84 +281,102 @@ export default function Example() {
 					</span>
 				</div>
 				<div className="mx-auto mt-8 lg:mx-0 lg:max-w-none">
-					<div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
-						{clientTestimonials.map((testimonial) => (
-							<div
-								key={testimonial.author.name}
-								className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
-								id={testimonial.author.anchor}
-							>
-								<a
-									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm"
-									target="_blank"
-								>
-									<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
-										<p>{testimonial.text}</p>
-									</div>
-									<div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4 ">
-										<a className="w-full" href={testimonial.linkedIn} target="_blank">
-											<p className="text-sm font-bold dark:text-gray-50 text-gray-900 ">
-												{testimonial.author.name}
-											</p>
-											<div className="text-sm dark:text-gray-50 text-gray-500">
-												{[testimonial.author.position, testimonial.author.company]
-													.filter(Boolean)
-													.join(' @ ')}
-											</div>
+  <div className="columns-1 sm:columns-2 gap-8 flow-root mb-8">
+    {clientTestimonials.map((testimonial, index) => (
+      <div
+        key={testimonial.author.name + index}
+        className="sm:inline-block sm:w-full mb-8 testimonials scroll-m-64"
+        id={testimonial.author.anchor}
+      >
+        <div className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 text-sm leading-6 hover:bg-gray-50 hover:no-underline shadow-sm">
+		<div className="dark:text-gray-50 text-gray-900 p-8 text-md leading-6">
+			<p dangerouslySetInnerHTML={{ __html: testimonial.text }} />
+		</div>
+          <div className="flex items-center border-t dark:border-gray-800 px-6 py-4 gap-4">
+            {testimonial.author.profile_picture ? (
+              <a href={testimonial.linkedIn ? testimonial.linkedIn : "#"} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={testimonial.author.profile_picture}
+                  alt={testimonial.author.name}
+                  className="w-12 h-12 rounded-full border-2 border-blue-500 flex-shrink-0"
+                />
+              </a>
+            ) : null}
+            {testimonial.linkedIn ? (
+              <a className="flex-grow" href={testimonial.linkedIn} target="_blank" rel="noopener noreferrer">
+                <p className="text-sm font-bold dark:text-gray-50 text-gray-900">
+                  {testimonial.author.name}
+                </p>
+                <div className="text-sm dark:text-gray-50 text-gray-500">
+                  {[testimonial.author.position, testimonial.author.company]
+                    .filter(Boolean)
+                    .join(' @ ')}
+                </div>
+              </a>
+            ) : (
+              <>
+                <p className="text-sm font-bold dark:text-gray-50 text-gray-900 w-full">
+                  {testimonial.author.name}
+                </p>
+                <div className="text-sm dark:text-gray-50 text-gray-500">
+                  {[testimonial.author.position, testimonial.author.company]
+                    .filter(Boolean)
+                    .join(' @ ')}
+                </div>
+              </>
+            )}
+
+            <a
+              className="flex-shrink-0 cursor-pointer"
+              href={testimonial.company_url}
+              target="_blank"
+              title={testimonial.author.company}
+              rel="noopener noreferrer"
+            >
+              <img
+				style={{
+					height: '42px',
+					width: 'auto',
+					maxWidth: '100px',
+				}}
+				src={colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light}
+				alt={testimonial.author.company}
+				/>
 										</a>
-										<a
-											className="flex-shrink-0 cursor-pointer"
-											href={testimonial.company_url}
-											target="_blank"
-										>
-											<img
-												width={100}
-												height={32}
-												src={
-													colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light
-												}
-												alt=""
-											/>
-										</a>
 									</div>
-								</a>
+								</div>
 							</div>
 						))}
 					</div>
 
 					<div className="flex flex-row gap-2 items-center mb-4 h-8">
 						<div className="text-lg text-gray-600 max-w-3xl dark:text-gray-200">Community</div>
-						<button
-							onClick={toggleTestimonials}
-							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-1 text-xs font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
-						>
-							{showAll ? 'Show Less' : 'Show All'}
-						</button>
 					</div>
 
 					<div className="columns-1 sm:columns-2 md:columns-3 gap-4 flow-root">
-						{testimonials.slice(0, showAll ? testimonials.length : 2).map((testimonial) => (
-							<div
-								key={testimonial.author.handle}
-								className="sm:inline-block sm:w-full mb-4 testimonials"
-							>
-								<a
-									href={testimonial.author.backlink}
-									className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-6 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
-									target="_blank"
-								>
-									<div className="dark:text-gray-50 text-gray-900">
-										<p>{testimonial.body}</p>
-									</div>
-									<div
-										className={`font-semibold dark:text-gray-50 text-gray-900 mt-2 ${testimonial.author.handle}-name`}
-									>
-										{testimonial.author.name}
-									</div>
-									<div className="text-xs text-gray-400 mt-1">{testimonial.author.date}</div>
-								</a>
+					{communityTestimonials.map((testimonial, index) => (
+						<div
+						key={testimonial.author.handle + index}
+						className="sm:inline-block sm:w-full mb-4 testimonials"
+						>
+						<a
+							href={testimonial.author.backlink}
+							className="block rounded-2xl dark:bg-gray-1000 border dark:border-0 p-6 text-sm leading-6 hover:bg-gray-50 hover:no-underline"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<div className="dark:text-gray-50 text-gray-900">
+							<p>{testimonial.body}</p>
 							</div>
-						))}
+							<div
+							className={`font-semibold dark:text-gray-50 text-gray-900 mt-2 ${testimonial.author.handle}-name`}
+							>
+							{testimonial.author.name}
+							</div>
+							<div className="text-xs text-gray-400 mt-1">{testimonial.author.date}</div>
+						</a>
+						</div>
+					))}
 					</div>
 				</div>
 			</div>

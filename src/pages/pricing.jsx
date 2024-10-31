@@ -21,14 +21,12 @@ export default function PricingPage() {
 					/>
 					<link rel="icon" href="/img/logo.svg" />
 				</Head>
-				<LandingSection bgClass="relative">
-					<>
-						<RadialBlur />
-						<div className="pt-32">
-							<Pricing />
-						</div>
-					</>
-				</LandingSection>
+				<>
+					<RadialBlur />
+					<div className="pt-32">
+						<Pricing />
+					</div>
+				</>
 				<Footer />
 			</main>
 		</LayoutProvider>

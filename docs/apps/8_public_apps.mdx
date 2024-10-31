@@ -1,0 +1,27 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Public apps
+
+Windmill apps are custom-made user interfaces meant to interact with scripts and flows.
+
+By default, [deployed](./6_app_deployment.mdx) apps are [accessible to](../core_concepts/16_roles_and_permissions/index.mdx) all users that belong to the [folder](../core_concepts/8_groups_and_folders/index.mdx) the app was deployed to.
+
+![Secret Public URL](../assets/apps/5_public_apps/public_app.png "Secret Public URL")
+
+A "Public" app is an app that can be seen and used by users outside this scope (i.e.) folder.
+
+When deployed, an app automatically has a secret public URL.
+
+By default, the public URL can be accessed only by logged-in users with [read-access](../core_concepts/16_roles_and_permissions/index.mdx).
+
+You can also toggle "No login required" and anyone with the secret public URL will be able to access the app.
+
+![Require Logn In](../assets/apps/5_public_apps/public_log.png "Require Logn In")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Roles and permissions"
+		description="Find out about the roles within a Windmill instance and their respective permissions."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
+</div>

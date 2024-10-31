@@ -1,9 +1,20 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
 
-# TypeScript Client
+# TypeScript client
 
-The TypeScript client for Windmill allows you to interact with the Windmill platform using TypeScript in [Deno](https://deno.land/) / [Bun](https://bun.sh/) runtime. This client provides a set of functions and utilities to access Windmill resources and perform various operations.
+The TypeScript client for Windmill allows you to interact with the Windmill platform using TypeScript in [Bun](https://bun.sh/) / [Deno](https://deno.land/) runtime. This client provides a set of functions and utilities to access Windmill resources and perform various operations.
+
+The TypeScript Windmill SDK can be found at https://app.windmill.dev/tsdocs/modules.html
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="TypeScript Windmill SDK"
+		description="TypeScript SDK for Windmill"
+		href="https://app.windmill.dev/tsdocs/modules.html"
+	/>
+</div>
 
 ## Installation
 
@@ -15,7 +26,7 @@ Once Deno/Bun is installed, you can import the `windmill` module directly from t
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import * as wmill from 'npm:windmill-client';
+import * as wmill from 'npm:windmill-client@1.318.0';
 ```
 
 </TabItem>
@@ -36,7 +47,7 @@ The TypeScript client provides several functions that you can use to interact wi
 <TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import * as wmill from 'npm:windmill-client';
+import * as wmill from 'npm:windmill-client@1.318.0';
 
 export async function main() {
 	let x = await wmill.getResource('u/user/name');

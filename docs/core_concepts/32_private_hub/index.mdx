@@ -1,0 +1,40 @@
+# Private Hub
+
+[Windmill Hub](https://hub.windmill.dev/) is the community website of Windmill where you can find and share your Scripts, Flows, Apps and Resource Types with every Windmill user. The best submissions get approved by the Windmill Team and get integrated directly in the app for everyone to reuse easily.
+
+![Example of Hub scripts suggested in flow editor](./hub_suggested.png "Example of Hub scripts suggested in flow editor")
+
+> Example of Hub scripts suggested in flow editor
+
+<br/>
+
+On [Enterprise Edition](/pricing) and [Whitelabelling](/pricing), you can have your own Private Hub. This is a private Windmill Hub instance that is only accessible by your team. You can share your scripts, flows, apps and resource types with your team and keep them private. You can also have your own approval process for the submissions and have your own page with your branding.
+
+You can configure your Private Hub using Docker by following the instructions in the [Private Hub repository](https://github.com/windmill-labs/windmillhub-ee-public).
+We also provide [values in our Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml) for including the Private Hub in a Kubernetes cluster.
+
+Once your Private Hub is up and running, you need to change the hub base url field in the core [instance settings](../../advanced/18_instance_settings/index.mdx#private-hub-base-url) to your Private Hub url.
+
+:::warning
+Authentication on the Hub is performed via the Windmill instance.
+The Hub and Windmill instances must have the same root domain name for authentication to work.
+For example, if the Windmill instance is available on windmill.example.com, the Hub must be accessible on a similar sub-domain such as hub.example.com.
+You'll also need to set the COOKIE_DOMAIN environment variable of the Windmill instance (server) to the root domain name (e.g. example.com).
+:::
+
+## Local Syncing and Syncing with the Public Hub
+
+We provide a [CLI](https://www.npmjs.com/package/@windmill-labs/hub-cli) to sync your Private Hub with your local file system. To use the CLI, set the following environment variables:
+
+1. `HUB_URL`: The URL of your Private Hub
+2. `TOKEN`: A superadmin user token
+
+Use the commands `wmill-hub pull` and `wmill-hub push` for pulling and pushing, respectively.
+
+If you want to partially or fully sync your private hub with the public one:
+
+1. Pull the scripts locally from the public hub using `wmill-hub wm-pull`.
+2. Delete any integration folders you don’t want to add to your Private Hub.
+3. Push the scripts to your Private Hub using `wmill-hub push`.
+
+If you are interested in having your own Private Hub, please [contact us](mailto:contact@windmill.dev).

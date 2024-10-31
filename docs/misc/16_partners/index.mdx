@@ -1,0 +1,102 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Windmill partners
+
+Windmill Certified Partners are third-parties such as consultancies that are Windmill experts and help other organizations implement specific use cases end-to-end.
+
+Windmill is a company that develops a product. Our mission is to build the best possible product so that our users can create the most value out of it.
+
+We provide [priority support](../12_support_and_sla/index.mdx) to our [Enterprise](/pricing) customers. This support includes the implementation of feature requests, prioritized bug resolutions, and recommendations on use cases.
+
+However, we do not carry out the implementation of these use cases ourselves (e.g. building a specific app). While we are able to offer some workshops at the beginning of your Windmill journey, it is not possible to do so repeatedly and systematically.
+
+For these reasons, we recommend that all Windmill users that require end-to-end use case development and exhaustive training engage with Windmill certified partners on specific [skills](#skills).
+
+To discover our list of partners, see this [page](/partners).
+
+## How to become a certified partner
+
+Any organization is welcome to apply to Windmill's partnership program.
+
+Anyone can provide services to organizations that are using Windmill, but certified partners benefit from greater visibility and trust from customers.
+
+Windmill being a broad product, we will define certifications for [skills](#skills) that partners can apply to. For each of those skills they apply to, partners will be tested.
+Certifications are to be renewed every 6 months.
+
+Benefits of being a Windmill Certified Partner include:
+- Being listed on the [Certified Partners](/partners) page with their specific skills.
+- Being sent customers directly by the Windmill team.
+- A badge in our [Discord server](https://discord.com/invite/V7PM2YHsPB) and relevant medium to show that you are partners with us.
+
+Windmill takes no commission in services provided by its partners. We might charge in the future for the certification and renewal. However, for this first batch, everything will be free. Partners' customers do not need to use the [Enterprise Edition](/pricing) version of Windmill but we ask that partners act as such and thus redirect customers to engage with us for questions, features requests that go outside of the scope of use-case building.
+
+For partners that wish to offer an end-to-end experience to their customers, we recommend using the [Cloud Enterprise Edition](/pricing) of Windmill on which users can set up their own customer domain and have a fully-managed Windmill instance that as a partner you will have access to.
+
+If you wish to become a partner, please send an email to [partners@windmill.dev](mailto:partners@windmill.dev)
+
+## Skills
+
+Windmill is a broad product, and there are as many use cases as there are users. We do not expect our certified partners to master all the modules of Windmill, but to clarify the aspects they do master.
+
+To this end, we have established a categorization of the recurring requests from Windmill users. Partners wishing to be listed in one of these categories will need to pass a test to become certified for each that they apply to.
+
+The test consists of a call with a member of the Windmill core team during which specific questions will be asked. It is preferable to have examples specific to each skill to showcase during the interview (e.g., a complex app if you are applying to [Build and maintain complex apps](#build-and-maintain-complex-apps)).
+
+### Common tree (mandatory for all partners)
+
+The common tree involves mastering the main components of Windmill in order to confidently navigate between different aspects of the product for basic use cases.
+
+This requires first being familiar with the three editors: [Script editor](../../script_editor/index.mdx), [Flow editor](../../flows/1_flow_editor.mdx), and [App editor](../../apps/0_app_editor/index.mdx).
+
+Next, it is necessary to be familiar with the core concepts of Windmill, in particular:
+- [Auto-generated UIs](../../core_concepts/6_auto_generated_uis/index.mdx)
+- [Dependency management & imports](../../advanced/6_imports/index.mdx)
+- [Roles & Permissions](../../core_concepts/16_roles_and_permissions/index.mdx)
+- [Monitoring Runs](../../core_concepts/5_monitor_past_and_future_runs/index.mdx)
+- [Schedules](../../core_concepts/1_scheduling/index.mdx)
+- [Webhooks](../../core_concepts/4_webhooks/index.mdx)
+- [Resources and resource types](../../core_concepts/3_resources_and_types/index.mdx)
+- [Variables and secrets](../../core_concepts/2_variables_and_secrets/index.mdx)
+
+### Build and maintain complex apps
+
+This module focuses on Windmill's [App editor](../../apps/0_app_editor/index.mdx). It involves being able to build complex apps with [interactions between components](../../apps/2_connecting_components/index.mdx), [background runnables](../../apps/3_app-runnable-panel.mdx#background-runnables), and custom [styling](../../apps/4_app_configuration_settings/4_app_styling.mdx). Partners are also expected to be familiar with all the low-code [components](../../apps/4_app_configuration_settings/1_app_component_library.mdx).
+
+Finally, partners should be capable of managing [permissions](../../core_concepts/16_roles_and_permissions/index.mdx) within an app, such as who has the right to access it, [use resources](../../apps/3_app-runnable-panel.mdx#static-resource-select-only--resources-from-users-allowed), or manage [public apps](../../apps/8_public_apps.mdx).
+
+### Build and maintain complex flows
+
+For flows, we require partners to be capable of creating custom flows with multiple steps, branches, for loops, error handling, and to master all the advanced features:
+- [Retries](../../flows/14_retries.md)
+- [Concurrency limits](../../flows/6_concurrency_limit.mdx)
+- [Custom timeout for step](../../flows/9_custom_timeout.md)
+- [Priority for steps](../../flows/20_priority.md)
+- [Lifetime / Delete after use](../../flows/21_lifetime.md)
+- [Caching](../../flows/4_cache.mdx)
+- [Early stop / Break](../../flows/2_early_stop.md)
+- [Early return](../../flows/19_early_return.mdx)
+- [Suspend & Approval / Prompts](../../flows/11_flow_approval.mdx)
+- [Sleeps / Delays in flows](../../flows/15_sleep.md)
+- [Step mocking](../../flows/5_step_mocking.md)
+
+### Have a dev/staging/prod setup for version controls and permissioning fit for larger organizations
+
+Be able to set up a custom [local development](../../advanced/4_local_development/index.mdx) environment, including a [git workflow](../../advanced/9_deploy_gh_gl/index.mdx) between a staging and a production workspace with [version control](../../advanced/13_version_control/index.mdx).
+You have experience setting those up with GitHub and GitLab.
+
+You know how to handle [permissions](../../core_concepts/16_roles_and_permissions/index.mdx) at the instance and workspace-level, and within the git workflow.
+
+You know how to configure [SAML, SCIM](../14_saml_and_scim/index.md) and other [authentication methods](../../core_concepts/15_authentification/index.mdx) for large organizations.
+
+### Maintain a complex infrastructure with worker groups and use Windmill at scale
+
+Maintaining a complex infrastructure with worker groups and using Windmill at scale requires mastery of the concepts of [Workers & Worker Groups](../../core_concepts/9_worker_groups/index.mdx), [Distributed Systems](https://en.wikipedia.org/wiki/Distributed_computing), [Autoscaling](https://en.wikipedia.org/wiki/Autoscaling).
+You have experience working with hundreds of workers / worker groups and managing them efficiently.
+
+### Deploy on a specific infrastructure provider (GCP, AWS, Azure...)
+
+You can deploy Windmill on a specific infrastructure provider ([Google Cloud Platform](https://cloud.google.com/), [Amazon Web Service](https://aws.amazon.com/), [Microsoft Azure](https://azure.microsoft.com/en-us)) and use it fully.
+
+### Deploy Windmill for a specific industry
+
+For a specific industry, you have experience applying Windmill to the specific use cases of that industry.

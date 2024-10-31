@@ -1,0 +1,47 @@
+# NoSQL & Document databases (Mongodb, Key-Value Stores)
+
+This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
+
+Key-value stores are a popular choice for managing non-structured data, providing a flexible and scalable solution for various data types and use cases. In the context of Windmill, you can use MongoDB Atlas, Redis, and Upstash to store and manipulate non-structured data effectively.
+
+## MongoDB Atlas
+
+[MongoDB Atlas](https://www.mongodb.com/atlas/database) is a managed database-as-a-service platform that provides an efficient way to deploy, manage, and optimize MongoDB instances. As a document-oriented NoSQL database, MongoDB is well-suited for handling large volumes of unstructured data. Its dynamic schema enables the storage and retrieval of JSON-like documents with diverse structures, making it a suitable option for managing non-structured data.
+
+To use MongoDB Atlas with Windmill:
+
+1. [Sign-up to Atlas](https://www.mongodb.com/cloud/atlas/signup).
+
+2. [Create a database](https://www.mongodb.com/basics/create-database).
+
+3. [Integrate it to Windmill](../../integrations/mongodb.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/).
+
+:::tip
+
+You can find examples and premade MonggoDB scripts on [Windmill Hub](https://hub.windmill.dev/integrations/mongodb).
+
+:::
+
+## Redis
+
+[Redis](https://redis.io/) is an open-source, in-memory key-value store that can be used for caching, message brokering, and real-time analytics. It supports a variety of data structures such as strings, lists, sets, and hashes, providing flexibility for non-structured data storage and management. Redis is known for its high performance and low-latency data access, making it a suitable choice for applications requiring fast data retrieval and processing.
+
+To use Redis with Windmill:
+
+1. [Sign-up to Redis](https://redis.com/try-free/).
+
+2. [Create a database](https://developer.redis.com/create).
+
+3. [Integrate it to Windmill](../../integrations/redis.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.
+
+## Upstash
+
+[Upstash](https://upstash.com/) is a serverless, edge-optimized key-value store designed for low-latency access to non-structured data. It is built on top of Redis, offering similar performance benefits and data structure support while adding serverless capabilities, making it easy to scale your data storage needs.
+
+To use Upstash with Windmill:
+
+1. [Sign-up to Upstash](https://console.upstash.com/).
+
+2. [Create a database](https://docs.upstash.com/redis).
+
+3. [Integrate it to Windmill](../../integrations/upstash.md) by filling the [resource type details](https://hub.windmill.dev/resource_types/22/) following the same schema as MongoDB Atlas.

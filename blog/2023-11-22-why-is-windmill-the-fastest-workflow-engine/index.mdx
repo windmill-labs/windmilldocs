@@ -20,7 +20,7 @@ import ScatterChart from '@site/src/components/ScatterChart';
 
 ## Fastest self-hostable open-source workflow engine
 
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks"
 		xTitle="Duration (in seconds)"
@@ -106,13 +106,13 @@ import ScatterChart from '@site/src/components/ScatterChart';
 	/>
 </div>
 
-[Benchmarking data and dedicated methodology documentation](https://www.Windmill.dev/docs/misc/benchmarks/competitors).
+[Benchmarking data and dedicated methodology documentation](/docs/misc/benchmarks/competitors).
 
 You've known Windmill to be a productive environment to monitor, write and iterate on workflows, but we wanted to prove it's also the best system to deploy at scale in production.
 
 It was important for us to be transparent and you can find the whole benchmark methodology here:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
 		description="Comparing performance of Airflow, Prefect, Temporal and Windmill for 2 representative use cases."
@@ -134,7 +134,7 @@ hand-built workflow engine written on top of the amazing [BEAM](<https://en.wiki
 
 There are tons of workflow engines, but not many of them are self-hostable and generic enough to support arbitrary workloads of jobs defined in code,
 and even those have restrictions:
-Some like Airflow and Prefect support only one runtime (Python). Windmill on the other hand supports Typescript/Javascript, Python, Go, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql, MSSQL. And its design makes it easy to add more upon request.
+Some like Airflow and Prefect support only one runtime (Python). Windmill on the other hand supports TypeScript/Javascript, Python, Go, PHP, Bash and direct SQL queries to BigQuery, Snowflake, Mysql, Postgresql, MS SQL. And its design makes it easy to add more upon request.
 Some are notoriously hard to write for (because of complex SDKs, looking at you Airflow's XCOM or Temporal idempotency primitives) and deploy to. Windmill offers an [integrated DX to build and test workflows](/docs/flows/flow_editor) in a few minutes interactively in a mix of raw code for the steps and low-code (or YAML) for the DAG itself. It is also possible to define them wholly with code and full version control using our [VS Code extension](/blog/launch-week-1/vscode-extension).
 
 One benefit of being very fast is that it makes running tests very fast too both in terms of latency to start and to run. Wasting time waiting for previews and tests to run is not fun.
@@ -149,7 +149,7 @@ That being said, Temporal is amazing at what it does and if there are overlaps b
 
 We leave analytics/ETL engines such as Spark or Dagster out of it for today as they are not workflow engines _per se_ even if they are built on top of ones.
 
-ETL and analytics workflows will be covered later this week, and you will find that Windmill offers best-in-class performance for analytics workloads leveraging s3, duckdb and polars
+ETL and analytics workflows will be covered later this week, and you will find that Windmill offers best-in-class performance for analytics workloads leveraging S3, duckdb and polars
 
 :::
 
@@ -166,7 +166,7 @@ First some definitions, a workflow is a directed acyclic graph [DAG](https://en.
 A workflow engine is a distributed system that takes a workflow and orchestrates it to completion on workers while respecting among others all the dependency constraints of each job.
 There exists a great variety of workflows and many software are domain-specific workflow engines and workflow specs (if you are a software engineer, you probably already wrote one without realizing it).
 
-What will interest us here are workflows that can run arbitrary code in at least one major programming language (Python/Typescript/Go/Bash). Those are the most generic but also the most complex and the most difficult to optimize.
+What will interest us here are workflows that can run arbitrary code in at least one major programming language (Python/TypeScript/Go/Bash). Those are the most generic but also the most complex and the most difficult to optimize.
 Every node is a piece of code that takes as input arguments and data from other steps (or the flow inputs), do some side effects (http requests, computation, write to disk/s3) and then returns some data for other steps to consume.
 
 5 Major benefits of workflow engines:
@@ -277,7 +277,7 @@ In Windmill, there are 3 main ways of doing data passing:
 
 - every input of a step can be a javascript expression that can refer to any step outputs
 
-Every script in typescript, python, go, bash has their main signature parsed (by a WASM program in the frontend) which allows to pre-compute the different inputs needed for a given step.
+Every script in TypeScript, Python, Go, Bash, SQL, Rust has their main signature parsed (by a WASM program in the frontend) which allows to pre-compute the different inputs needed for a given step.
 For each of those inputs, one can define either a static input or a javascript expression that can refer to the result of any step. e.g: `results.d.foo` where `d` is the id of the step.
 That javascript expression when complex is evaluated by an embedded v8 using deno runtime. It takes ~8ms by expression.
 
@@ -299,11 +299,11 @@ json*path.map(|x| x.split(".").map(|x| x.to_string()).collect::<Vec<*>>())
 
 - share data in a temporary folder
   Flows can be configured to be wholly executed on the same worker. When that is the case, a folder is shared and symlinked inside every job's ephemeral folder (jobs are started in an ephemeral folder that is removed at the end of their execution)
-- pass data in s3 using the s3 integration (updates specific to that part to be presented on day 5)
+- pass data in S3 using the [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) (updates specific to that part to be presented on day 5)
 
 ## Workers efficiency
 
-In normal mode, workers pull job one at a time, identify the language used by the job (Python, TypeScript, Go, Bash, SnowFlake, PostgreSql, MySql, MSSQL, BigQquery) and then spawn the corresponding runtime then run the job.
+In normal mode, workers pull job one at a time, identify the language used by the job (Python, TypeScript, Go, PHP, Bash, SnowFlake, PostgreSql, MySql, MS SQL, BigQquery) and then spawn the corresponding runtime then run the job.
 
 Workers run jobs bare, without running containers which gives us a performance boost compared to container based workflow engines. However, for sandboxing purposes, workers themselves can be run inside containers and can run each job in an nsjail sandbox.
 
@@ -320,7 +320,7 @@ In event streaming cases, the logic itself takes about 1ms and hence the cold st
 
 Fortunately, we implemented recently [dedicated workers for scripts](/blog/launch-week-dedicated-workers), which spawn a python process once at the start of the worker and then execute the script logic in a while loop, taking the job inputs in stdin and returning the output to sdout.
 
-We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At first, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or Typescript. This completely obliterates the cold starts and makes Windmill flows capable of handling even-streaming use cases and going up to 1000 steps per second on each worker.
+We extended this approach with **dedicated workers for flows**, which are essentially the same approach. At first, those workers will spawn a corresponding dedicated process for each of the steps implemented in Python or TypeScript. This completely obliterates the cold starts and makes Windmill flows capable of handling even-streaming use cases and going up to 1000 steps per second on each worker.
 
 The dedicated worker for flows will pull any job relative to that flow and then route it to the proper dedicated process. Still executing only one job at a time but in pre-warmed processes.
 

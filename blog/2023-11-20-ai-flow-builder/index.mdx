@@ -18,7 +18,7 @@ import DocCard from '@site/src/components/DocCard';
 # Launch Week Day 1 - Flow Builder Copilot
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	src="/videos/ai_flows.mp4"
@@ -35,12 +35,12 @@ Here's a quick demo of what the AI flow builder can do:
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080"
+	src="https://www.youtube.com/embed/y-pV6CShdZA"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
@@ -49,18 +49,18 @@ At the same time, we're also releasing a new feature for the [script editor](/do
 which prompts you with suggestions based on the code you're writing. This completes our already existing
 copilot which allows you to generate, edit and fix your scripts, learn more here:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Windmill AI for Scripts"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation#windmill-ai-for-script"
-    />
+		title="Windmill AI for Scripts"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation#windmill-ai-for-script"
+	/>
 </div>
 
 Have a look:
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/code_autopilot.mp4"
 />
@@ -73,7 +73,7 @@ To enable Windmill AI, you simply have to setup an OpenAI API key in your worksp
 
 These features complement Windmill AI for Scripts, which lets you generate whole scripts using prompts and fix your errors automatically:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Windmill AI for Scripts"
 		description="Generate Windmill-specific code from simple text"
@@ -82,19 +82,19 @@ These features complement Windmill AI for Scripts, which lets you generate whole
 </div>
 
 We are using [GPT-4-turbo (1106-preview version)](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo) for the AI Flow Builder and have changed Windmill AI for Scripts to use it too, as it is faster, three times cheaper and more up-to-date with libraries than GPT-4. We observed similar results to those obtained with GPT-4 in our tests, but we will continue to monitor the quality of the generations.
- 
+
 ## What are Windmill Flows?
 
 Workflows are graphs ([DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) that represent the dependencies between steps.
 The goal of an orchestrator or workflow engine is to execute the steps on different workers that respect that graph's dependencies, and pass the required data defined in the steps' inputs while applying parallelism when possible.
-In Windmill, each step is code with a main function in TypeScript, Python, Go, Bash or raw queries to databases.
+In Windmill, each step is code with a main function in TypeScript, Python, Go, PHP, Bash or raw queries to databases.
 
 The primitives supported by Windmill workflows are:
 
 - sequence
 - branch based on conditions
 - branch to all subbranches
-- for loops
+- For loops
 - approval/waiting for event steps
 - sub flows
 
@@ -102,9 +102,8 @@ You can see below an example of a simple workflow with a [for-loop](/docs/flows/
 
 ![Windmill DAG](./media/windmill-dag.png.webp)
 
-
 :::info Workflow engine vs Analytics engine
-All the examples above focus on small api integrations but data pipeline that would usually be run on dedicated analytics engine are a great fit for Windmill when combined with s3, and dataframe/olap libraries such as polars or duckdb.
+All the examples above focus on small api integrations but data pipeline that would usually be run on dedicated analytics engine are a great fit for Windmill when combined with S3, and dataframe/olap libraries such as polars or duckdb.
 Indeed, thanks to these integrations and Windmill's lack of boilerplate, Windmill offers state-of-the-art performances for data processing at scale while keeping complexity low.
 
 <br />
@@ -132,7 +131,7 @@ At the end of each step, the user can review and edit each step as desired.
 And if they're not happy with their instructions, they can always edit the instructions and regenerate the step or even the whole flow:
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/ai_flow_regenerate.mp4"
 />
@@ -148,7 +147,7 @@ Sometimes, generating a step's script from scratch is not necessary as there cou
 And if they want even more control, they can ask to generate only one step anywhere in the flow graph:
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/ai_flow_onestep.mp4"
 />
@@ -256,7 +255,7 @@ In the future, we plan on passing more context to generate better suggestions.
 
 A request is sent only in certain cases, for example when the user types a space or parenthesis.
 We implement some debouncing to avoid sending too many requests and cancel the previous request if a new one is sent before the previous one is finished.
-We leverage monaco editor's [inline completions api](https://microsoft.github.io/monaco-editor/docs.html#functions/languages.registerInlineCompletionsProvider.html) to display the suggestions the same way as Github copilot in VS Code.
+We leverage monaco editor's [inline completions api](https://microsoft.github.io/monaco-editor/docs.html#functions/languages.registerInlineCompletionsProvider.html) to display the suggestions the same way as GitHub copilot in VS Code.
 
 You can find all our code for code completion [here](https://github.com/windmill-labs/windmill/blob/main/frontend/src/lib/components/copilot/completion.ts) and [here](https://github.com/windmill-labs/windmill/blob/2d9878647be60288a6d2d8b0c72af84464eefd9c/frontend/src/lib/components/Editor.svelte#L364).
 
@@ -266,10 +265,10 @@ This is just the first day of the launch week! To learn more about the launch we
 
 To learn more about Windmill AI, please refer to our documentation:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Windmill AI"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation"
-    />
+		title="Windmill AI"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation"
+	/>
 </div>

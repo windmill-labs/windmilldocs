@@ -1,10 +1,10 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Plans & How to Upgrade
+# Plans & How to upgrade
 
-Windmill provides a range of pricing plans for both Cloud and Self-hosted deployments, catering to diverse needs. These plans are designed to accommodate individual users, small teams, and enterprise-level organizations, offering additional features, resources, enhanced capabilities, and premium support beyond the free tier.
+Windmill provides a range of pricing plans for both Cloud and Self-hosted deployments. These plans are designed to accommodate individual users, small teams, and enterprise-level organizations, offering additional features, resources, enhanced capabilities, and premium support beyond the free tier. All details on the [Pricing page](/pricing).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Pricing page"
 		description="Explore our plans and estimate a cost."
@@ -12,14 +12,14 @@ Windmill provides a range of pricing plans for both Cloud and Self-hosted deploy
 	/>
 </div>
 
-## Cloud Plans
+## Cloud plans
 
-All Windmill Cloud plans (Community, Team, Enterprise) have most of the Enterprise features.
+All Windmill cloud plans (Community, Team, Enterprise) have most of the Enterprise features.
 The only distinctions will be around the number of users, number of computations, audit logs retention period, support and some networks and security features.
 
 All details on the [Pricing page](/pricing).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Upgrading to Team Edition"
 		description="Team plans work at the workspace-level."
@@ -32,15 +32,17 @@ All details on the [Pricing page](/pricing).
 	/>
 </div>
 
-## Self-Hosted Plans
+## Self-hosted plans
 
-Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [S3 integration](/blog/launch-week-1/data-pipeline-orchestrator), [Git Sync](../../advanced/11_git_sync/index.mdx), [Worker Groups Management UI](../../core_concepts/9_worker_groups/index.mdx)).
+Windmill is free and open source. If self-hosted, the number of executions will be unlimited. The Enterprise plan allows access to some useful features for the use of Windmill in a corporate use case, with technical and security specifics ([Audit logs](../../core_concepts/14_audit_logs/index.mdx), [Workspace & instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx), [Git sync](../../advanced/11_git_sync/index.mdx), [Worker groups management UI](../../core_concepts/9_worker_groups/index.mdx)).
 
-The Pro plan contains the main Enterprise features. It is exclusively available to non-profits and companies with fewer than 10 employees and $250k in revenue.
+The Pro plan contains the main Enterprise features. It is [exclusively available](/pricing#pro-plan) to individuals and companies with fewer than 10 employees and $250k in revenue.
+
+Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
 
 We share our pricing grid and the features of each plan on the [Pricing page](/pricing) in the most transparent way possible.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Upgrading to Enterprise- Self-Host"
 		description="Turn your instance into an Enterprise Edition with a license key."
@@ -48,27 +50,27 @@ We share our pricing grid and the features of each plan on the [Pricing page](/p
 	/>
 </div>
 
-## White Labeling Windmill
+## White labeling Windmill
 
-Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand. We do provide a library to embed the entire Windmill app or specific components - such as the flow builder or the app builder - into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
+Windmill offers white labeling capabilities, allowing you to embed and customize the Windmill platform to align with your brand. We do provide a library to embed the entire Windmill app or specific components - such as the flow builder or the app builder - into your own application or website. This enables you to provide Windmill's services to your clients while maintaining your brand's identity.
 
 For more information about white labeling and customization options, see:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="White Labeling Windmill"
-		description="Windmill offers white labeling capabilities, allowing you to customize the Windmill platform to align with your brand."
+		title="White labeling Windmill"
+		description="Windmill offers white labeling capabilities, allowing you to embed and customize the Windmill platform to align with your brand."
 		href="/docs/misc/white_labelling"
 	/>
 </div>
 
-## How to Upgrade to Each Plan
+## How to upgrade to each plan
 
 ### Upgrading to Team Edition
 
 Team plans work at the workspace-level.
 
-- To upgrade to the Team edition, navigate to your workspace on the <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a> platform.
+- To upgrade to the Team edition, navigate to your workspace on the <a href="https://app.windmill.dev/" rel="nofollow">Windmill cloud</a> platform.
 - Click on your username and select "Upgrade" from the options.
 - You will be redirected to the Workspace tab, where you can click on "Upgrade to the Team plan".
 - Follow the instructions to complete the upgrade process, which includes accessing the Stripe payment page.
@@ -78,80 +80,112 @@ Team plans work at the workspace-level.
 
 #### Cloud
 
-- For upgrading your instance to the Enterprise Edition, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
+- To upgrade your instance to the Enterprise Edition, please reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo).
 - Once you contact us, we will provide you with a secure payment link.
-- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
-- After completing the payment, your workspace and, if applicable, the cluster will be upgraded to the [Enterprise Edition](/pricing), offering dedicated support and advanced features.
+- Upon payment, you will get access to a dedicated Windmill instance on the cloud.
+
+- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill customer portal](#windmill-customer-portal) where you can update plan usage and adjust the number of seats.
+
+- To have a fully Enterprise Edition Windmill, we recommend also setting up:
+	- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
+	- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
+	- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
+	- [Git sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
 
 #### Self-host
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/YAoLXwayjT8?vq=hd1080"
+	src="https://www.youtube.com/embed/YAoLXwayjT8"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
 
-- The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial.
-- You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
-- Upon subscribing, we will get back to you with a [license key](#using-the-license-key-self-host) that is valid for a month (duration of trial). You can also contact us immediately if preferred. At the end of the subscription period (or trial), you will receive another license key valid for a year.
-- To have your instance switch from Community Edition to Enterprise Edition, you'll need to change the Windmill image:
-  - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
-  - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm Chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
-- To adjust the number of seats, you can update your usage on the subscription page at [Windmill billing portal](https://windmill.dev/billing).
-- Usage is self-declared. We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
-- As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill billing portal](https://windmill.dev/billing).
-- (_By end of 2023_: Please note that we are migrating to an automatic reporting system by end of year for usage reporting that will automatically update Stripe links.)
+The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial. You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+To have your instance switch from Free Edition to Enterprise Edition, you'll need to change the Windmill image:
+- [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
+- [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
+
+If not done earlier, you can create your first workspace, but your instance will not have access to Enterprise features until the license key is passed.
+
+Upon subscribing, you will receive a [license key](#using-the-license-key-self-host) to pass in the [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key). The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
+
+To adjust the number of seats, you can update your usage on the subscription page at [Windmill customer portal](#windmill-customer-portal).
+
+Windmill employs lightweight [telemetry](#usage-checks) to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L50) to make sure you respect the terms of your subscription. Setting memory limits is enough.
+
+To have a fully Enterprise Edition Windmill, we recommend also setting up:
+- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
+- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
+- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
+- [Git sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
+
+As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill customer portal](#windmill-customer-portal).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Self Host Windmill"
+		title="Self-host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
 	/>
 </div>
 
-#### Using the License Key (Self-Host)
+#### Using the License Key (Self-host)
 
-To enable the license key, switch from the windmill image to the windmill-ee image in both the server and workers. From the Superadmin Settings, pass the license key, "Test key" and save settings.
+To enable the license key, switch from the `windmill` image to the `windmill-ee` image in both the server and workers. From the [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), pass the license key, "Test key" and save settings.
 
 ![Use license key](./add_license_key.png 'Use license key')
 
-## Frequently Asked Questions (FAQ)
+## Windmill Customer Portal
 
-- **What is an operator?**
+As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & vCPUs) from the portal.
 
-  An [operator](../../core_concepts/16_roles_and_permissions/index.mdx) is a user that can only execute script, flows and apps, but not create and edit them. This is enforced by both a simplified frontend and a restricted API. Operators are 1/2 price of developers (or 1/2 seats).
+![Portal](./portal.png 'Portal')
 
-- **What is an execution?**
+Access to the portal is made through either:
+- From your [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), in the "Core" tab. Where you can also renew your [license key](#self-host).
+- Through a direct link: [portal.windmill.dev](https://portal.windmill.dev/), filling in the email address used for the subscription, and then accessing a link sent by email.
 
-  The single credit-unit is called a "execution". An execution corresponds to a single [job](../../core_concepts/20_jobs/index.mdx) whose duration is less than 1s. For any additional seconds of computation, an additional computation is accounted for.
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Windmill Customer Portal"
+		description="Access detailed usage information and invoices."
+		href="https://portal.windmill.dev/"
+	/>
+</div>
 
-  The number of executions of a flow corresponds to the sum of the executions of each step as seconds, considered as one script execution of that same time (time in sleep or doing state transition are not accounted). For apps, a backend script execution is considered as a script execution. As apps frontend scripts execute on browsers, they are not taken into account.
+Email addresses can be added to the portal to allow multiple users to access it.
 
-  Jobs are executed on one powerful virtual CPU with 2Gb of memory. Most jobs will take less than 200ms to execute.
+![Custom link from the instance settings](./portal_link_instance.png 'Custom link from the instance settings')
 
-- **How is the use of the number of vCPUs and seats reported to Windmill?**
+> Custom link from the instance settings.
 
-  Subscription is self-declared and crossed with the lightweight telemetry that we do. For an air-gapped environment, We kindly request that you export your usage stats by sending us an email containing the data exported by Windmill through the provided export button at the end of the subscription period.
+<br/>
 
-  The vCPUs reported is the sum of the vCPUs used by all your workers. 5 workers with 0.2vCPUs each will count as 1vCPU. 2 workers with 4vCPU each will count as 8vCPUs. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or ecs/kubernetes limits and you will never be overcharged
+You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
 
-- **What is your Technical Support SLA?**
+This is also from the portal that you can [manage your issues and feature requests](../12_support_and_sla/index.mdx#feature-request-and-issue-dashboard).
 
-  We provide [support](../12_support_and_sla/index.mdx) with different response times based on issue priorities. Our support team is available 24/7, and the SLA is consistent for both Cloud and Self-hosted deployments.
+Usage of your instance is reported on the platform - basic metrics such as Seats & vCPUs are reported to Windmill. You can check whether your use of Windmill corresponds to your subscription, and report an error to Windmill if you wish. This comparison is made only for your instance of Prod, for which you can find the Base URL. The other instances URLs are also shown.
 
-- **What is your Security level on APIs?**
+## Usage checks
 
-  Windmill is SOC 2 Type II compliant, and we prioritize addressing vulnerabilities promptly.
+Windmill employs lightweight [telemetry](/pricing#vcpu-reporting) to automatically track and report the usage of vCPUs and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
 
-- **Could the application keep running if Windmill as a company is shut down?**
+How the data is calculated:
+- Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
+- vCPUs: number of vCPUs used by the production [workers](../../core_concepts/9_worker_groups/index.mdx) and set within the container [limits](../../core_concepts/9_worker_groups/index.mdx#workers-and-vcpus).
+- Memory: like the vCPUs, we aggregate the limits of all production containers and for each vCPU you pay for, you get a quota of 2GB.
 
-  Yes, Windmill will continue to operate as long as the license key remains valid, even in the absence of an internet connection. If Windmill shuts down, license keys will be extended indefinitely.
+Using a number of seats, vCPUs, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
+1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min
+2. You need to re-arrange your use of Windmill. If so, please let us know that you need a period of adjustment that exceeds 35 days (validity of a license key), and feel free to contact us here or at support@windmill.dev so we can help you manage this.
+3. Adjust your subscription via the [Customer Portal](#windmill-customer-portal).
 
-For any further inquiries or assistance regarding the Enterprise Edition upgrade process, please [contact us](../6_getting_help/index.mdx).
+Once excessive usage has been detected and we have informed you, your license key will cease to auto-renew (as it does by default every day). This leaves you with a period of 35 days (the validity period of a key) to make the necessary adjustments on your side. At the end of the term, Windmill Enterprise Edition will stop running your jobs.

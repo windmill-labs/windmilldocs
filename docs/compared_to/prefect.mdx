@@ -3,23 +3,23 @@ import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
 # Alternative to Prefect for building Workflows
 
-![Windmill Prefect](../assets/compared_to/windmill_prefect.png.webp "Windmill Prefect")
+![Windmill Prefect](../assets/compared_to/windmill_prefect.png.webp 'Windmill Prefect')
 
 Both Windmill and Prefect support writing complex workflows and ETL with code and run them at scale.
 We highlight below the main differences between the 2 on the following axis:
-- [Alternative to Prefect for building Workflows](#alternative-to-prefect-for-building-workflows)
-	- [Open Source and Hosting](#open-source-and-hosting)
-	- [Workflows and Code](#workflows-and-code)
-	- [Triggers](#triggers)
-	- [Execution Runtime and Coldstarts](#execution-runtime-and-coldstarts)
-		- [Benchmark #1](#benchmark-1)
-		- [Benchmark #2](#benchmark-2)
-	- [Observability and Monitoring](#observability-and-monitoring)
-	- [Windmill AI](#ai-generation)
-	- [Pricing](#pricing)
-	- [Scripts and Apps](#scripts-and-apps)
 
-<a href="https://www.prefect.io/" rel="nofollow">Prefect</a> is a data workflow management system, designed to help teams build, run, and monitor data workflows. It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
+- [Open Source and Hosting](#open-source-and-hosting)
+- [Workflows and Code](#workflows-and-code)
+- [Triggers](#triggers)
+- [Execution Runtime and Coldstarts](#execution-runtime-and-coldstarts)
+  - [Benchmark #1](#benchmark-1)
+  - [Benchmark #2](#benchmark-2)
+- [Observability and Monitoring](#observability-and-monitoring)
+- [Windmill AI](#windmill-ai)
+- [Pricing](#pricing)
+- [Scripts and Apps](#scripts-and-apps)
+
+<a href="https://www.prefect.io/" rel="nofollow"> Prefect </a> is a data workflow management system, designed to help teams build, run, and monitor data workflows. It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
 
 ## Open Source and Hosting
 
@@ -32,21 +32,21 @@ to meet the community's needs.
 Windmill provides and integrates into its platform a [public Community Hub](https://hub.windmill.dev/)
 where users share useful and proven scripts, flows, and applications.
 
-![Windmill Github](../assets/compared_to/windmill_gh.png.webp "Windmill Github")
+![Windmill GitHub](../assets/compared_to/windmill_gh.png.webp 'Windmill GitHub')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Windmill's GitHub"
 		description="Windmill's official repository."
 		href="https://github.com/windmill-labs/windmill"
 	/>
-    <DocCard
-		title="Self Host Windmill"
+	<DocCard
+		title="Self-host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host/"
 	/>
-    <DocCard
-		title="Contributor Guide"
+	<DocCard
+		title="Contributor guide"
 		description="Contribute to our codebase, Windmill Hub or our Discord."
 		href="/docs/misc/contributing"
 	/>
@@ -54,13 +54,13 @@ where users share useful and proven scripts, flows, and applications.
 
 Prefect has an Apache v2.0 License and can be self-hosted.
 
-Prefect's [monitoring](#observability--monitoring) is done through a cloud platform that requires subscription. Many of the features necessary for its proper functioning are only available under Prefect Cloud:
+Prefect's [monitoring](#observability-and-monitoring) is done through a cloud platform that requires subscription. Many of the features necessary for its proper functioning are only available under Prefect Cloud:
 
-![Prefect cloud features](../assets/compared_to/prefect_cloud_features.png.webp "Prefect cloud features")
+![Prefect cloud features](../assets/compared_to/prefect_cloud_features.png 'Prefect cloud features')
 
 ## Workflows and Code
 
-Prefect and Windmill Flow Editor have a very similar sets of features. Below are the advanced features presented by Prefect and, in backlink, their counterpart on Windmill:
+Prefect and Windmill Flow editor have a very similar sets of features. Below are the advanced features presented by Prefect and, in backlink, their counterpart on Windmill:
 
 - [scheduling](../core_concepts/1_scheduling/index.mdx)
 - [retries](../flows/14_retries.md)
@@ -73,41 +73,86 @@ Prefect and Windmill Flow Editor have a very similar sets of features. Below are
 
 We could also mention [storage of configuration](../core_concepts/3_resources_and_types/index.mdx) or [error handling](../core_concepts/10_error_handling/index.mdx) that are dealt with in a similar manner.
 
-![Prefect features](../assets/compared_to/prefect_features.png.webp "Prefect features")
-
-The difference between Prefect and Windmill lies in the method of building flows.
+![Prefect features](../assets/compared_to/prefect_features.png.webp 'Prefect features')
 
 Prefect is heavily code-based. Everything is and can only be defined in Python. The steps and their configurations are defined by code:
 
-![Prefect flow](../assets/compared_to/flow_prefect.png.webp "Prefect flow")
+![Prefect flow](../assets/compared_to/flow_prefect.png.webp 'Prefect flow')
 
-> [Flow](#benchmark-1) _Given a GitHub repository, logs the number of stargazers and contributors for that repo_ on Prefect.
+> [Flow](#benchmark-1) "_Given a GitHub repository, logs the number of stargazers and contributors for that repo_" on Prefect.
 
-<br/>
+<br />
 
-In Windmill, the steps are also code-based but built from scripts ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) ...). Users can write the code directly, choose a script from the workspace, the community library [WindmillHub](https://hub.windmill.dev/), or have it [generated with AI](#ai-generation). Each script can be saved with [permissions](../core_concepts/16_roles_and_permissions/index.mdx) set from the workspace.
+Windmill offers both low-code and code-based solutions.
+
+![Windmill compared to Prefect](../assets/compared_to/windmill_compared_prefect.png 'Windmill compared to Prefect')
+
+### Flow editor
+
+In Windmill's [Flow editor](../flows/1_flow_editor.mdx), the steps are also code-based but built from scripts ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) ...). Users can write the code directly, choose a script from the workspace, the community library [WindmillHub](https://hub.windmill.dev/), or have it [generated with AI](#windmill-ai). Each script can be saved with [permissions](../core_concepts/16_roles_and_permissions/index.mdx) set from the workspace.
 
 The structuring of the flow and the configurations for each step are defined from a User Interface. With a _code when you need_ mindset, the user can navigate the flow editor in low-code.
 
-![Windmill flow](../assets/compared_to/flow_windmill.png.webp "Windmill flow")
+![Windmill flow](../assets/compared_to/flow_windmill.png.webp 'Windmill flow')
 
-> [Flow](#benchmark-1) _Given a GitHub repository, logs the number of stargazers and contributors for that repo_ on Windmill.
+> [Flow](#benchmark-1) "_Given a GitHub repository, logs the number of stargazers and contributors for that repo_" on Windmill.
 
-<br/>
+<br />
 
 In particular, Windmill [generates automatically UIs](../core_concepts/6_auto_generated_uis/index.mdx) for flows and steps and lets users [test](../core_concepts/23_instant_preview/index.mdx) flows, steps or flow until a given step, from the UI.
 
-Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. In particular, Windmill has a VS Code extension to edit from your code editor scripts and workflows-as-code.
+Flows can be [defined visually / YAML](../advanced/4_local_development/index.mdx) on a local environment. In particular, Windmill has a [VS Code extension](../cli_local_dev/1_vscode-extension/index.mdx) to edit from your code editor scripts flows YAML.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
 
-![Windmill compared to Prefect](../assets/compared_to/windmill_compared_prefect.png.webp "Windmill compared to Prefect")
+### Workflows as code
+
+[Flows](#flow-editor) are not the only way to write distributed programs that execute distinct jobs. Another approach is to write a program that defines the jobs and their dependencies, and then execute that program. This is known as [workflows as code](../core_concepts/31_workflows_as_code/index.mdx).
+
+![Script in python executing workflow as code](../core_concepts/31_workflows_as_code/python_editor.png "Script in python executing workflow as code")
+
+Windmill supports defining workflows as code in a single script in both [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) and [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) using intuitive and lightweight syntax.
+
+Here is an example of a workflow as code with Prefect (from their <a href="https://docs.prefect.io/latest/concepts/tasks/" rel="nofollow">documentation</a>):
+
+```python
+from prefect import flow, task
+
+@task
+def my_first_task(msg):
+    print(f"Hello, {msg}")
+
+@task
+def my_second_task(msg):
+    my_first_task.fn(msg)
+
+@flow
+def my_flow():
+    my_second_task("Trillian")
+```
+
+and the same example with [Windmill](../core_concepts/31_workflows_as_code/index.mdx) (in Python):
+
+```python
+from wmill import task
+
+@task
+def my_first_task(msg):
+    print(f"Hello, {msg}")
+
+@task
+def my_second_task(msg):
+    my_first_task(msg)
+
+def main():
+   my_second_task("Trillian")
+```
 
 ## Triggers
 
@@ -118,20 +163,19 @@ To manage its triggers from the Prefect UI, you have to go through a separate me
 While Windmill also allows configuration and triggers from the terminal, the platform is designed to schedule, manually trigger, generate webhooks or UIs from the Windmill UI (cloud or self-hosted).
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/schedule-cron-menu.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schedule-cron-menu.mp4"
 />
-<br/>
+<br />
 
 > Example of a flow scheduled manually via the UI on Windmill.
 
-<br/>
+<br />
 
-<div class="text-xl mb-2 font-semibold"></div>
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Triggering Flows"
+		title="Triggering flows"
 		description="Trigger flows on-demand, by schedule or on external events."
 		href="/docs/getting_started/trigger_flows"
 	/>
@@ -150,11 +194,16 @@ Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/),
 
 We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our performance against our competitors.
 
-
-<div class="grid">
+<div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks (in seconds)"
-		labels={[['Airflow'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		labels={[
+			['Airflow'],
+			['Prefect'],
+			['Temporal'],
+			['Windmill', 'Normal'],
+			['Windmill', 'Dedicated Worker']
+		]}
 		rawData={[
 			[
 				[
@@ -230,7 +279,7 @@ We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our pe
 	/>
 </div>
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
 		description="Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute."
@@ -246,52 +295,52 @@ Each instance is self-hosted.
 
 Flow "Given a GitHub repository, logs the number of stargazers and contributors for that repo", <a href="https://docs.prefect.io/latest/getting-started/quickstart/#step-3-write-a-flow" rel="nofollow">shared by Prefect</a> on their quickstart (at date 09.20.23):
 
-![Prefect flow example](../assets/compared_to/prefect_flow_example.png.webp "Prefect flow example")
+![Prefect flow example](../assets/compared_to/prefect_flow_example.png.webp 'Prefect flow example')
 
 - Prefect: Cold start + Execution + Results = 8.09s
 - Windmill: Cold start + Execution + Results = 1.13s
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/windmill_prefect_flow.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/windmill_prefect_flow.mp4"
 />
 
 ### Benchmark #2
 
 _Slowfunction_ that makes imports and loops from 11^7 down to 0. For each number i in that range:
+
 - Calculates the arctangent (math.atan(i)) of the number.
 - Calculates the tangent (math.tan(i)) of the number.
 - Multiplies the two results together and adds them to the result.
-And records the end time once the loop finishes and then calculates the elapsed time.
-
+  And records the end time once the loop finishes and then calculates the elapsed time.
 
 - Prefect: Cold start + Execution + Results = 8.09s
 - Windmill: Cold start + Execution + Results = 12.33s
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/windmill_prefect_slow.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/windmill_prefect_slow.mp4"
 />
 
-<br/>
+<br />
 
 Trust but verify: to ensure the performance of Windmill's workers and measure their capabilities,
 we provide a benchmarking tool. This tool allows you to benchmark the execution of jobs and flows,
 providing insights into the performance metrics.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks Folder"
 		description="This folder includes a small deno/ts utility to benchmark execution of jobs and flows."
 		href="https://github.com/windmill-labs/windmill/tree/main/benchmarks"
 	/>
 	<DocCard
-    	title="OpenAPI"
-    	description="Interact with Windmill."
-    	href="https://app.windmill.dev/openapi.html"
-    />
+		title="OpenAPI"
+		description="Interact with Windmill."
+		href="https://app.windmill.dev/openapi.html"
+	/>
 </div>
 
 ## Observability and Monitoring
@@ -301,35 +350,35 @@ In terms of monitoring and observability, Windmill and Prefect's cloud app fulfi
 The main difference is that Prefect's application seems to be conceived as a reliable source for reporting actions from Prefect, whereas with Windmill, the application provides more control as everything can be done from the Windmill app (creation of scripts, flows apps, triggers, monitoring, [permissions](../core_concepts/16_roles_and_permissions/index.mdx), etc.)
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	id="monitoring"
 	src="/videos/runs-menu.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Roles and Permissions"
-    	description="Control access and manage permissions within your instance and workspaces."
-    	href="/docs/core_concepts/roles_and_permissions"
-    />
-    <DocCard
-    	title="Monitor Past and Future Runs"
-    	description="Get an aggregated view of past and future runs on your workspace."
-    	href="/docs/core_concepts/monitor_past_and_future_runs"
-    />
-    <DocCard
-    	title="Audit Logs"
-    	description="Windmill provides audit logs for every operation and action that has side-effects."
-    	href="/docs/core_concepts/audit_logs"
-    />
-    <DocCard
-    	title="Workers and Worker Groups"
-    	description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-    	href="/docs/core_concepts/worker_groups"
-    />
+		title="Roles and permissions"
+		description="Control access and manage permissions within your instance and workspaces."
+		href="/docs/core_concepts/roles_and_permissions"
+	/>
+	<DocCard
+		title="Jobs runs"
+		description="Get an aggregated view of past and future runs on your workspace."
+		href="/docs/core_concepts/monitor_past_and_future_runs"
+	/>
+	<DocCard
+		title="Audit logs"
+		description="Windmill provides audit logs for every operation and action that has side-effects."
+		href="/docs/core_concepts/audit_logs"
+	/>
+	<DocCard
+		title="Workers and worker groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
+	/>
 </div>
 
 ## Windmill AI
@@ -337,19 +386,19 @@ The main difference is that Prefect's application seems to be conceived as a rel
 Windmill provides ways to have AI help you in your coding experience. From prompts, generate scripts that interact with your integrations, or flows where the AI manages the data transmission between steps, or even automatic error resolution.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/flow_ai_builder.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/flow_ai_builder.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-    	title="Windmill AI"
-    	description="Have AI complete code on Windmill."
-    	href="/docs/core_concepts/ai_generation"
-    />
+		title="Windmill AI"
+		description="Have AI complete code on Windmill."
+		href="/docs/core_concepts/ai_generation"
+	/>
 </div>
 
 ## Pricing
@@ -362,15 +411,15 @@ As of September 20, 2023, Prefect does not disclose its Enterprise pricing (see 
 
 Prefect pricing:
 
-![Prefect pricing](../assets/compared_to/prefect_pricing.png.webp "Prefect pricing")
+![Prefect pricing](../assets/compared_to/prefect_pricing.png.webp 'Prefect pricing')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Pricing"
 		description="Windmill's subscription plans and simulations."
 		href="/pricing"
 	/>
-    <DocCard
+	<DocCard
 		title="Plans & How to Upgrade"
 		description="Windmill transparently provides the content and pricing of its upgraded plans."
 		href="/docs/misc/plans_details"
@@ -379,27 +428,27 @@ Prefect pricing:
 
 ## Scripts and Apps
 
-This document has focused on the Flow Editor since it is the product closest to what Prefect does. However, Windmill also includes Script and App editors.
+This document has focused on the Flow editor since it is the product closest to what Prefect does. However, Windmill also includes Script and App editors.
 
 The [script editor](../script_editor/index.mdx) allows users to build long-running heavy background jobs, script with complex dependencies, endpoints with high rpm or simple one-off tasks without any overhead. They can be triggered them from a webhook, auto-generated UIs, flows, apps etc.
 
-![Script languages](../../static/images/script_languages.png.webp "Script languages")
+![Script languages](../../static/images/script_languages.png 'Script languages')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Scripts Quickstart"
-		description="Scripts are the basic building blocks that can be written in TypeScript, Python, Go, Bash, SQL or launch docker containers."
+		title="Scripts quickstart"
+		description="Scripts are the basic building blocks that can be written in TypeScript, Python, Go, PHP, Bash, SQL and Rust or launch docker containers."
 		href="/docs/getting_started/scripts_quickstart"
 	/>
 </div>
 
 The [app editor](../apps/0_app_editor/index.mdx) goes beyond auto-generated UIs and allows you to create your own customized UIs using drag-and-drop from components powered by Windmill scripts and flows.
 
-![App Editor](../assets/apps/0_app_editor/app-editor.png.webp "App Editor")
+![App editor](../assets/apps/0_app_editor/app-editor.png.webp 'App editor')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Apps Quickstart"
+		title="Apps quickstart"
 		description="Apps are customized, user-friendly interfaces built using a drag-and-drop editor."
 		href="/docs/getting_started/apps_quickstart"
 	/>

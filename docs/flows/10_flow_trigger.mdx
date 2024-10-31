@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Trigger Scripts
+# Trigger scripts
 
 Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../core_concepts/1_scheduling/index.mdx) and [states](../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
 
@@ -12,7 +12,7 @@ Check our pages dedicated to [Scheduling](../core_concepts/1_scheduling/index.md
 
 :::
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="States"
 		description="A state is an object stored as a resource of the resource type `state` which is meant to persist across distinct executions of the same script."
@@ -50,23 +50,23 @@ activating the schedule as seen in the image below.
 
 Example of a trigger script watching new Slack posts with a given word in a given channel and the flow sending each of them by email in a for loop:
 
-![Example of a schedule script with a for loop](../getting_started/9_trigger_flows/schedule-flow.png "Example of a schedule script with a for loop")
+![Example of a schedule script with a for loop](../getting_started/9_trigger_flows/schedule-flow.png 'Example of a schedule script with a for loop')
 
 > This flow can be found on [WindmillHub](https://hub.windmill.dev/flows/51/watch-slack-posts-containing-a-given-word-and-send-all-new-ones-per-email).
 
-<br/>
+<br />
 
 Examples of trigger scripts include:
 
 - [Trigger every time a new item text on HackerNews match at least one mention](https://hub.windmill.dev/scripts/hackernews/1301/trigger-everytime-a-new-item-text-on-hackernews-match-at-least-one-mention-hackernews)
-- [Notify of new Github repo stars](https://hub.windmill.dev/scripts/github/1208/notify-of-new-github-repo-stars-github)
+- [Notify of new GitHub repo stars](https://hub.windmill.dev/scripts/github/1208/notify-of-new-github-repo-stars-github)
 - [Check new uploaded files on Google Drive](https://hub.windmill.dev/scripts/gdrive/1457/get-new-files-gdrive)
 
 The following TypeScript code is an example of the first module of a Flow that
 checks for new documents in a MongoDB collection on a regular schedule. In this
 case we query documents that were created after a specific time, expressed with
 a timestamp. The timestamp is stored with the help of Windmill's built-in
-[state functions](../core_concepts/3_resources_and_types/index.mdx#state) and is
+[state functions](../core_concepts/3_resources_and_types/index.mdx#states) and is
 updated in each run.
 
 <details>

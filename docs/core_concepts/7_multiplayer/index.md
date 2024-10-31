@@ -18,4 +18,4 @@ The Multiplayer feature allows you to collaborate with team members on scripts s
 
 From a script, just toggle `Multiplayer`, invite other members and start writing scripts in collaboration!
 
-This feature is only available in the [self-hosted Enterprise Edition](/pricing) and the [Windmill Cloud](../../getting_started/00_how_to_use_windmill/index.mdx#use-windmill-cloud) version.
+This feature is only available in the [self-hosted Enterprise Edition](/pricing) and the [Windmill cloud](../../getting_started/00_how_to_use_windmill/index.mdx#windmill-cloud) version.

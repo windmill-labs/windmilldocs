@@ -1,25 +1,37 @@
 import DocCard from '@site/src/components/DocCard';
 import { Timer } from 'lucide-react';
 
-# App Editor
+# App editor
 
 The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Apps Quickstart"
+		title="Apps quickstart"
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
 		Icon={Timer}
 	/>
 	<DocCard
 		color="orange"
-		title="React/Vue/Svelte Apps"
-		description="Users can import their own React/Vue/Svelte Apps in addition to using Windmill's built-in App editor."
+		title="React/Vue/Svelte apps"
+		description="Users can import their own React/Vue/Svelte apps in addition to using Windmill's built-in App editor."
 		href="/docs/react_vue_svelte_apps"
 	/>
 </div>
+
+If you're more into videos, you can check out our tutorial on the App editor:
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/lxqdncP8XR4"
+	title="App editor Tutorial"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
 <br />
 
@@ -30,20 +42,20 @@ The app editor is composed of 6 main sections:
 
 _Connecting components_:<br/> 3. [Outputs](#outputs)<br/> 4. [Runnables panel](#runnables-panel)
 
-5. [Component Library and Settings](#component-library-and-settings)
+5. [Component library and Settings](#component-library-and-settings)
 6. [App Styling](#styling)
 
-![App Editor](../../assets/apps/0_app_editor/app-editor.png 'App Editor')
+![App editor](../../assets/apps/0_app_editor/app-sections.png 'App editor')
 
 ## Toolbar
 
 The topbar helps you in your app editing.
 
-![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png.webp)
+![App Menu](../../assets/apps/1_app_toolbar/app-toolbar.png)
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2">
+<div className="grid grid-cols-2 gap-2">
 	<DocCard
 		color="orange"
 		title="Toolbar"
@@ -57,7 +69,7 @@ The topbar helps you in your app editing.
 The canvas at the center of the editor is where you design and see the overall UI. Insert new components, move them around, resize them, or nest them in containers.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	autoPlay
 	loop
 	controls
@@ -66,7 +78,7 @@ The canvas at the center of the editor is where you design and see the overall U
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2">
+<div className="grid grid-cols-2 gap-2">
 	<DocCard
 		color="orange"
 		title="Canvas"
@@ -75,13 +87,13 @@ The canvas at the center of the editor is where you design and see the overall U
 	/>
 	<DocCard
 		color="orange"
-		title="Component Library"
+		title="Component library"
 		description="Discover all the components available."
 		href="/docs/apps/app_configuration_settings/app_component_library"
 	/>
 </div>
 
-## Connecting Components
+## Connecting components
 
 The strength of Windmill's app editor is the ability to connect everything together:
 
@@ -90,10 +102,10 @@ The strength of Windmill's app editor is the ability to connect everything toget
 - background runnables can be that are run in the background on app refresh on when an input changes
 - frontend scripts can be used to manipulate the client app state
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Connecting Components"
+		title="Connecting components"
 		description="The strength of Windmill's app editor is the ability to connect everything together."
 		href="/docs/apps/connecting_components"
 	/>
@@ -108,15 +120,15 @@ In Windmill's app editor:
 
 On the bottom panel of the editor, you can see the list of runnables of the app. The runnables are the scripts or flows that are linked to components, or ran in the background. They are used to perform actions when a component is clicked, to fetch data, etc. They make all the interactions of the app.
 
-![App Runnables panel](../../assets/apps/0_app_editor/app-runnable-panel.png.webp)
+![App Runnables panel](../../assets/apps/0_app_editor/app-runnables-panel.png)
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Runnable Editor"
-		description="Learn how to create and configure runnables."
+		title="Runnable editor"
+		description="Learn how to create and configure Apps runnables."
 		href="/docs/apps/app-runnable-panel"
 	/>
 </div>
@@ -141,7 +153,7 @@ You can perform the following actions with the outputs:
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
 		title="Outputs"
@@ -156,7 +168,7 @@ You can perform the following actions with the outputs:
 	/>
 </div>
 
-## Component Library and Settings
+## Component library and Settings
 
 Finally, on the right panel of the editor, you can insert a new component, configure a component or edit the component styles.
 
@@ -166,16 +178,16 @@ Finally, on the right panel of the editor, you can insert a new component, confi
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
-		title="Component Library"
+		title="Component library"
 		description="Discover all the components available in the library, and their configurations."
 		href="/docs/apps/app_configuration_settings/app_component_library"
 	/>
 	<DocCard
 		color="orange"
-		title="Component Configuration"
+		title="Component configuration"
 		description="Each component can be configured individually. This allows for adjusting its value, behavior (especially by linking a script to the component), and styling."
 		href="/docs/apps/app_configuration_settings/app_component_configuration"
 	/>
@@ -187,7 +199,7 @@ Styling on the app editor can be managed at the component and app-level, with pr
 
 #### Learn more
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
 		color="orange"
 		title="Styling"
@@ -196,30 +208,30 @@ Styling on the app editor can be managed at the component and app-level, with pr
 	/>
 </div>
 
-## Other app features
+## Other App Features
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
-		title="Public Apps"
+		title="Public apps"
 		description="Apps can be accessed as a standalone app by anyone who has the secret URL."
 		href="/docs/apps/public_apps"
 		color="orange"
 	/>
 	<DocCard
-		title="Schedule App Reports"
+		title="Schedule app reports"
 		description="Send a PDF or PNG preview of any app at a given schedule."
 		href="/docs/apps/schedule_reports"
 		color="orange"
 	/>
 	<DocCard
-		title="Group of Components"
+		title="Group of components"
 		description="Components can be grouped within containers."
 		href="/docs/apps/app_configuration_settings/components_groups"
 		color="orange"
 	/>
 	<DocCard
 		color="orange"
-		title="Import Custom React Components"
+		title="Import custom React components"
 		description="Define components in React or Vanilla JS that interact with the rest of your app."
 		href="/docs/apps/react_components"
 	/>

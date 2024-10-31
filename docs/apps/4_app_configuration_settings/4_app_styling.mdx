@@ -5,7 +5,7 @@ import DocCard from '@site/src/components/DocCard';
 Styling on the app editor can be managed at the component and app-level.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	src="/videos/app_styling.mp4"
@@ -18,7 +18,7 @@ Styling can be defined at the component-level. CSS settings can be turned to [gl
 Component-level CSS has priority over the global level.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/styling_component.mp4"
 />
@@ -33,56 +33,56 @@ Some components have pre-set options for styling. They can be configured from th
 
 Components come with a styling menu. From there, pick styles either from [CSS](https://www.w3schools.com/html/html_css.asp) or [Tailwind classes](https://tailwind.build/classes).
 
-![Styling menu](../../assets/apps/8_app_styling/styling_menu.png.webp)
+![Styling menu](../../assets/apps/8_app_styling/styling_menu.png "Styling menu")
+
+Elements like: background color (incl. shadow, opacity), border (incl. style, radius), typography (incl. font size, family, weight, spacing) etc. can all be configured for each component.
 
 Please note that these different style classes can be combined.
 
-### Rich Editor
+From there, your CSS can be [converted to a global level](#configure-manually-and-replicate-pre-set-styling).
 
-You can configure manually your own classes with our Rich Editor.
+### Dynamic Styling
+
+From the [Styling Menu](#styling-menu), enable "Use dynamic class" to apply styling through an [eval](../3_app-runnable-panel.mdx#evals) and therefore connect it to other components or to runnables (scripts, flows).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
-	src="/videos/rich_editor.mp4"
+	src="/videos/dynamic_styling.mp4"
 />
-
-<br />
-
-Elements like background color (incl. shadow, opacity), border (incl. style, radius), typography (incl. font size, family, weight, spacing) etc. can all be configured for each component.
 
 ## Global Styling
 
 For complex apps, you may not want to repeat the styling configuration on each component.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/global_styling.mp4"
 />
 
-### CSS Editor
+### CSS editor
 
-The [Global CSS Editor](../9_css_editor.mdx) is designed to give styling and theming across your entire app. This functionality offers a centralized location for defining, managing, and applying CSS rules. It's useful for ensuring consistent styling and for creating reusable themes.
+The [Global CSS editor](../9_css_editor.mdx) is designed to give styling and theming across your entire app. This functionality offers a centralized location for defining, managing, and applying CSS rules. It's useful for ensuring consistent styling and for creating reusable themes.
 
-The Global CSS Editor is a feature exclusive to [Cloud plans and Self-Hosted Enterprise Edition](/pricing). However, users on the Community Edition can still access and experiment with this tool directly in the editor for evaluation purposes, although these changes will not be reflected in the app preview.
+The Global CSS editor is a feature exclusive to [Cloud plans and Self-Hosted Enterprise Edition](/pricing). However, users on the Community Edition can still access and experiment with this tool directly in the editor for evaluation purposes, although these changes will not be reflected in the app preview.
 
 <iframe
 	width="560"
 	height="315"
-	src="https://www.youtube.com/embed/6_MjKgbdCFQ?vq=hd1080"
+	src="https://www.youtube.com/embed/6_MjKgbdCFQ"
 	title="YouTube video player"
 	frameborder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowfullscreen="true"
+	allowFullScreen="true"
 ></iframe>
 
 <br />
 
-<div class="grid grid-cols-2 gap-2 my-4">
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
-		title="CSS Editor"
-		description="The Global CSS Editor is designed to give styling and theming across your entire app."
+		title="CSS editor"
+		description="The Global CSS editor is designed to give styling and theming across your entire app."
 		href="/docs/apps/css_editor"
 		color="orange"
 	/>
@@ -95,7 +95,19 @@ Styling on a component level can be replicated to all the components of the same
 Just click on `Convert to global CSS`.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/copy_style_global_css.mp4"
+/>
+
+## Full Height
+
+All components can be set "Desktop full height" and/or "Mobile full height".
+
+When set to full height, a component (in its respective view type, desktop or mobile) components will have their height go down until the end of the parent container (if no, canvas).
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/full_height.mp4"
 />

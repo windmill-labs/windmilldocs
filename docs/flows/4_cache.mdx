@@ -12,7 +12,7 @@ When you configure caching, Windmill stores the result in a cache for the durati
 
 This feature can significantly improve the performance of your scripts & flows, especially for steps that are computationally demanding or dependent on external resources, such as APIs or databases.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Caching"
@@ -26,7 +26,7 @@ This feature can significantly improve the performance of your scripts & flows, 
 Caching a flow means caching the results of that script for a certain duration. If the flow is triggered with the same flow inputs during the given duration, it will return the cached result.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	src="/videos/caching_flow.mp4"
 />
@@ -35,7 +35,7 @@ Caching a flow means caching the results of that script for a certain duration. 
 
 You can enable caching for a flow directly in the flow settings. Here's how you can do it:
 
-1. **Settings**: From the Flow Editor, go to the "Settings" menu and pick the `Cache` tab.
+1. **Settings**: From the Flow editor, go to the "Settings" menu and pick the `Cache` tab.
 2. **Enable Caching**: To enable caching, toggle on "Cache the results for each possible inputs" and specify the desired duration for caching results (in seconds.)
 
 In the above example, the result of step the flow will be cached for 60 seconds. If `u/henri/example_flow_quickstart_no_slack` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
@@ -45,7 +45,7 @@ In the above example, the result of step the flow will be cached for 60 seconds.
 Caching a flow step means caching the results of that step for a certain duration. If the step is triggered with the same inputs during the given duration, it will return the cached result.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full"
+	className="border-2 rounded-lg object-cover w-full h-full"
 	controls
 	src="/videos/cache_for_steps.mp4"
 />
@@ -54,7 +54,7 @@ Caching a flow step means caching the results of that step for a certain duratio
 
 You can enable caching for a step directly in the step configuration. Here's how you can do it:
 
-1. **Select a step**: From the Flow Editor, select the step for which you want to cache the results.
+1. **Select a step**: From the Flow editor, select the step for which you want to cache the results.
 
 2. **Enable Caching**: To enable caching, navigate to the `Advanced` menu and select `Cache`. Toggle it on and specify the desired duration for caching results (in seconds.)
 
@@ -62,7 +62,7 @@ You can enable caching for a step directly in the step configuration. Here's how
 
 In the above example, the result of step `a` will be cached for 86400 seconds (1 day). If `a` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-:::tip Step Mocking
+:::tip Step mocking
 
 [Step mocking](./5_step_mocking.md) allows faster iteration. When a step is mocked, it will immediately return the mocked value without performing any computation.
 

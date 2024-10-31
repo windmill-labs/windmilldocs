@@ -15,6 +15,8 @@ Steps within a flow can be re-tried in case of error. This feature is useful to 
 
 If defined, upon error this step will be retried with a delay and a maximum number of attempts as defined below. If both static and exponential delay is defined, the static delay attempts are tried before the exponential ones.
 
+Note that errors have a [specific shape](../core_concepts/19_rich_display_rendering/index.mdx#error).
+
 From a single flow, this feature can for example help you with:
 
 - **API requests**: Retry failed API calls due to temporary server issues or network timeouts every 5 minutes, for a maximum of 5 attempts, ensuring eventual data retrieval or synchronization with third-party services.
@@ -58,3 +60,13 @@ Here are the delays between each attempts:
 |   3 | 54 seconds after attempt #2  | 2 \* 3^3 |
 |   4 | 162 seconds after attempt #3 | 2 \* 3^4 |
 |   5 | 486 seconds after attempt #4 | 2 \* 3^5 |
+
+## Continue on error with error as step's return
+
+When enabled, the flow will continue to the next step after going through all the retries (if any) even if this step fails. This enables to process the error in a [branch one](./13_flow_branches.md) for instance.
+
+By default, each step is set to "Stop on error and propagate error up".
+
+![Continue on error step](../assets/flows/continue_on_error1.png "Continue on error step")
+
+![Continue on error flow](../assets/flows/continue_on_error2.png "Continue on error flow")

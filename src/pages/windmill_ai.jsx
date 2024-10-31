@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Head from '@docusaurus/Head';
 import LandingHeader from '../landing/LandingHeader';
 import Footer from '../landing/Footer';
 import LayoutProvider from '@theme/Layout/Provider';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Code, Workflow, HeartPulseIcon, FileEditIcon, Wand2, ZapIcon } from 'lucide-react';
+import {
+	Code,
+	Workflow,
+	HeartPulseIcon,
+	FileEditIcon,
+	Wand2,
+	ZapIcon,
+	Plug,
+	Braces
+} from 'lucide-react';
 import HeroAI from '../landing/HeroAI';
 
 import Section from './../landing/Section';
-import { DeveloperModeContext } from './index';
+import GlobalContextProvider from '../components/GlobalContextProvider';
 
 const tabs = [
 	{
-		label: 'Code Editor',
+		label: 'Code editor',
 		icon: Code,
 		id: 'code-editor',
 		data: [
@@ -79,7 +88,7 @@ const tabs = [
 
 const flowTabs = [
 	{
-		label: 'Flow Editor',
+		label: 'Flow editor',
 		icon: Workflow,
 		id: 'flow-editor',
 		data: [
@@ -98,7 +107,7 @@ const flowTabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/y-pV6CShdZA?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/y-pV6CShdZA',
 					altText: 'Sequence Flows'
 				}
 			},
@@ -121,8 +130,51 @@ const flowTabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg',
 					altText: 'Trigger Flows'
+				}
+			},
+			{
+				title: 'Step Input Copilot',
+				description:
+					'When adding a new step to a flow, the AI assistant will suggest inputs based on the previous steps` results and flow inputs.',
+				icon: Plug,
+				caption: (
+					<div>
+						When adding a new step to a flow, the AI assistant will suggest inputs{' '}
+						<a href="/docs/flows/architecture#connecting-flow-steps" target="_blank">
+							inputs
+						</a>
+						.based on the previous steps' results and flow inputs.
+					</div>
+				),
+				video: {
+					videoSrc: '/videos/step_input_copilot.mp4',
+					altText: 'Step Input Copilot'
+				}
+			},
+			{
+				title: 'Predicate Expressions Copilot for Branches and For loops',
+				description:
+					'When adding a for loop or a branch, the AI assistant will suggest iterator expressions based on the previous steps` results or from a prompt.',
+				icon: Braces,
+				caption: (
+					<div>
+						When adding a for loop or a branch
+						<a href="/docs/flows/flow_loops" target="_blank">
+							for loop
+						</a>{' '}
+						or a{' '}
+						<a href="/docs/flows/flow_branches" target="_blank">
+							branch
+						</a>
+						, the AI assistant will suggest iterator expressions based on the previous steps`
+						results or from a prompt.
+					</div>
+				),
+				video: {
+					videoSrc: '/videos/branch_predicate_copilot.mp4',
+					altText: 'Predicate Expressions Copilot for Branches and For loops'
 				}
 			}
 		]
@@ -130,17 +182,10 @@ const flowTabs = [
 ];
 
 export default function Windmill_AI() {
-	const [developerMode, setDeveloperMode] = useState(false);
-
 	return (
-		<DeveloperModeContext.Provider
-			value={{
-				developerMode: developerMode,
-				setDeveloperMode: setDeveloperMode
-			}}
-		>
-			<LayoutProvider>
-				<main>
+		<LayoutProvider>
+			<main>
+				<GlobalContextProvider>
 					<Head>
 						<title>Windmill AI</title>
 						<meta name="Windmill AI" content="Windmill Team." />
@@ -179,8 +224,8 @@ export default function Windmill_AI() {
 					/>
 
 					<Footer />
-				</main>
-			</LayoutProvider>
-		</DeveloperModeContext.Provider>
+				</GlobalContextProvider>
+			</main>
+		</LayoutProvider>
 	);
 }

@@ -26,7 +26,7 @@ This is a testimonial written by [Sindre Svendby](https://github.com/SindreSvend
 
 <br/>
 
-![Windmill Kahoot!](./wm_kahoot.png.webp)
+![Windmill Kahoot!](./wm_kahoot.png)
 
 I have been a software engineer at [Motimate](https://www.motimateapp.com/) for the last 5 years. We are based in Oslo, Norway and we are now part of [Kahoot!](https://kahoot.com/). While the brand Kahoot! traditionally focuses on B2C, we target Enterprise clients.
 
@@ -64,5 +64,5 @@ Bellow you will find an internal app that is used by our CS team to translate fe
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
-    className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+    className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>

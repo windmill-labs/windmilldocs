@@ -1,4 +1,4 @@
-# Browser Automation
+# Browser automation
 
 Windmill makes it easy to perform browser automation tasks, such as testing or web scraping.
 
@@ -20,14 +20,55 @@ Running chromium without the sandbox is a security risk. Make sure you trust the
 :::
 
 To run jobs on a chromium-equipped worker, you have to select the `chromium` tag in the settings of the script or flow step.
-[Learn how here](/docs/script_editor/worker_group_tag).
+[Learn how here](../../core_concepts/9_worker_groups/index.mdx).
 
+## Examples
 
-## Examples using Puppeteer
+### Playwright (Bun)
 
-Here are some basic examples using [Puppeteer](https://pptr.dev/) to get you started with chromium in Deno, Bun, and Python.
+```typescript
+import { chromium } from "playwright"
 
-### Deno
+export async function main() {
+  const browser = await chromium.launch({
+    executablePath: "/usr/bin/chromium",
+  });
+  
+  const page = await browser.newPage();
+  await page.goto("https://google.com");
+
+  const title = await page.title();
+
+  await browser.close()
+  
+  return title
+}
+```
+
+### Puppeteer (Bun)
+
+```typescript
+import puppeteer from "puppeteer-core";
+
+export async function main() {
+  const browser = await puppeteer.launch({
+    headless: "new",
+    executablePath: "/usr/bin/chromium",
+    args: ["--no-sandbox"],
+  });
+
+  const page = await browser.newPage();
+  await page.goto("https://google.com");
+
+  const title = await page.title();
+
+  await browser.close();
+
+  return title;
+}
+```
+
+### Puppeteer (Deno)
 
 ```typescript
 import puppeteer from "npm:puppeteer-core";
@@ -41,7 +82,7 @@ export async function main() {
   });
 
   const page = await browser.newPage();
-  await page.goto("https://google.ch");
+  await page.goto("https://google.com");
 
   const title = await page.title();
 
@@ -49,47 +90,4 @@ export async function main() {
 
   return title;
 }
-```
-
-### Bun
-
-```typescript
-import puppeteer from "puppeteer-core";
-
-export async function main() {
-  const browser = await puppeteer.launch({
-    headless: "new",
-    executablePath: "/usr/bin/chromium",
-    args: ["--no-sandbox"],
-  });
-
-  const page = await browser.newPage();
-  await page.goto("https://google.ch");
-
-  const title = await page.title();
-
-  await browser.close();
-
-  return title;
-}
-```
-
-
-
-### Python
-
-```python
-from pyppeteer import launch
-import asyncio
-
-async def pup():
-    browser = await launch(executablePath="/usr/bin/chromium", args=["--no-sandbox"])
-    page = await browser.newPage()
-    await page.goto('https://google.com')
-    title = await page.title()
-    await browser.close()
-    return title
-
-def main():
-    return asyncio.get_event_loop().run_until_complete(pup())
 ```

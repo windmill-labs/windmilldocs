@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Component Library
+# Component library
 
 Windmill provides a set of components that can be used to build apps.
 
@@ -8,7 +8,7 @@ The app components library is located on the right-hand side of the app editor. 
 
 The list of components is constantly growing according to our users' expectations. If you feel like a new component would be useful, please [reach out to us](/docs/misc/getting_help/).
 
-Even though the list of components is never as up to date as on <a href="https://app.windmill.dev/" rel="nofollow">Windmill Cloud</a>, here is the list of the available components:
+Even though the list of components is never as up to date as on <a href="https://app.windmill.dev/" rel="nofollow">Windmill cloud</a>, here is the list of the available components:
 
 ## Components properties
 
@@ -42,8 +42,10 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Container](./container.mdx)
 
+Containers allow you to host other components in a box. Moving a container means moving all the components inside.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/container.mp4"
 	alt="container component"
@@ -51,8 +53,10 @@ The layout components are used to organize the components in the app canvas.
 
 ### [List](./list.mdx)
 
+The List component enables duplication of cards or rows with consistent structure, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/list_component.mp4"
 	alt="list component"
@@ -60,16 +64,22 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Divider X](./divider_x.mdx)
 
+Divider X is a horizontal line.
+
 ![Divider X](../../assets/apps/4_app_component_library/divider_x.png.webp)
 
 ### [Divider Y](./divider_y.mdx)
+
+Divider Y is a vertical line.
 
 ![Divider Y](../../assets/apps/4_app_component_library/divider_y.png.webp)
 
 ### [Drawer](./drawer.mdx)
 
+The drawer is container called by a button. Once you click on the button, a side tab will appear on which you can display other components.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/drawer.mp4"
 	alt="drawer component"
@@ -77,8 +87,10 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Vertical Split Panes](./vertical_split_panes.mdx)
 
+Split panes component is a container split in x number of panes vertically.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/vertical_split.mp4"
 	alt="vertical split panes"
@@ -86,8 +98,10 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Horizontal Split Panes](./horizontal_split_panes.mdx)
 
+Split panes component is a container split in x number of panes horizontally.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/horizontal_split.mp4"
 	alt="horizontal split panes"
@@ -95,8 +109,10 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Modal](./modal.mdx)
 
+The modal is container called by a button. Once you click on the button, a modal will appear on which you can display other components.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	id="modal-layout"
 	src="/videos/modal-layout.mp4"
@@ -105,8 +121,10 @@ The layout components are used to organize the components in the app canvas.
 
 ### [Stepper](./stepper.mdx)
 
+The stepper component helps you lay out multi-step apps, with an optional validation function to validate a step.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	id="modal-layout"
 	src="/videos/stepper.mp4"
@@ -118,26 +136,60 @@ The layout components are used to organize the components in the app canvas.
 The Carousel List component enables duplication of cards or rows with consistent structure in a carousel, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    autoPlay
-    controls
-    src="/videos/carousel_component.mp4"
-    alt="carousel list component"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	src="/videos/carousel_component.mp4"
+	alt="carousel list component"
 />
 
 ### [Decision Tree](./decision_tree.mdx)
 
-This component allows you to create a decision tree. The decision tree is controlled by a flow-like structure. Each node in the tree represents a decision point and can lead to one or more subsequent nodes based on specified conditions.
+This app component allows you to create a decision tree controlled by a flow-like structure. Each node in the tree represents a decision point with a dedicated subgrid and can lead to one or more subsequent nodes based on specified conditions.
 
 ![Decision Tree](../../assets/apps/4_app_component_library/decision-tree.png.webp)
 
+### [Navbar](./navbar.mdx)
+
+The navbar component facilitates control over the browser's URL bar, enabling:
+1. Changing the behavior of the app by manipulating the query arguments and hash of the URL.
+2. Opening an external URL in a new tab.
+3. Opening another Windmill app, which allows for creating embedded apps where the user navigates between several of your Windmill apps.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/-COM6XozpIc"
+	title="Navbar component video"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+### [Recompute all](./recompute_all.mdx)
+
+The Recompute all component allows you to recompute all elements in the app.
+
+![Recompute all](../../assets/apps/4_app_component_library/recompute_all.png "Recompute all")
+
+### [Top Bar](./topbar.mdx)
+
+The Top Bar component displays a top bar on your app, with the app Summary and the Recompute all button.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/topbar.mp4"
+/>
 
 ## Tabs
 
 ### [Tabs](./tabs.mdx)
 
+Tabs components allow you to host other components in several tabs. Each tab is a container.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/tabs.mp4"
 	alt="tabs component"
@@ -145,19 +197,25 @@ This component allows you to create a decision tree. The decision tree is contro
 
 ### [Conditional Tabs](./conditional_tabs.mdx)
 
+Conditional Tabs are tabs that are displayed only if a condition is met. The conditions are an array of conditions. Conditions are evaluated in order. The first condition that evaluates to true will render its subgrid. If no condition evaluates to true, the last subgrid will be rendered.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	id="conditional-tabs-video"
 	src="/videos/conditional-tabs.mp4"
-	alt="Conditional tabs component"
+	alt="Conditional Tabs component"
 />
 
 ### [Sidebar Tabs](./sidebar_tabs.mdx)
 
+The Sidebar Tabs component is basically a Tabs component whose `Tabs Kind` is "Sidebar".
+
 ![Sidebar Tabs](../../assets/apps/4_app_component_library/sidebar_tabs.gif)
 
 ### [Invisible Tabs](./invisible_tabs.mdx)
+
+The Invisible Tabs component is basically a Tabs component whose `Tabs Kind` is "Invisible", meaning the tabs labels are not visible by the user.
 
 ![Invisible Tabs](../../assets/apps/4_app_component_library/invisible_tabs.gif)
 
@@ -165,25 +223,33 @@ This component allows you to create a decision tree. The decision tree is contro
 
 ### [Button](./button.mdx)
 
+The component triggers a runnable when clicked.
+
 ![Button API](../../assets/apps/4_app_component_library/button.png.webp)
 
-### [Submit](./submit_form.mdx)
+### [Submit Form](./submit_form.mdx)
+
+The submit form component allows you to create a submit form linked to a runnable. It has a submit button that triggers a runnable when clicked.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/submit_form.mp4"
 />
 
 ### [Modal Form](./modal_form.mdx)
 
+The modal form component allows you to create a form linked to a script or flow. It is a Submit Form component but with a dedicated modal opened when triggered. It has a submit button that triggers a runnable when clicked. The form is displayed in a modal, which can be opened by clicking on a button.
+
 ![Form Modal Button](../../assets/apps/4_app_component_library/form-modal-button.png.webp)
 ![Form Modal API](../../assets/apps/4_app_component_library/form-modal.png.webp)
 
 ### [Download Button](./download_button.mdx)
 
+The download button component allows you to download a file.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/download_button.mp4"
 	alt="Download Button"
@@ -193,136 +259,276 @@ This component allows you to create a decision tree. The decision tree is contro
 
 ### [Form](./form_input.mdx)
 
-![Form](../../assets/apps/4_app_component_library/form_input.png.webp)
+The Form component allows you to create a form and get answers from the user.
+
+![Form](../../assets/apps/4_app_component_library/form_input.png)
 
 ### [Text Input](./text_input.mdx)
+
+The text input component allows you to get a string from the user.
 
 ![Text Input API](../../assets/apps/4_app_component_library/text-input.png.webp)
 
 ### [Textarea](./textarea.mdx)
 
+The textarea component allows you to get a string from the user, with an expandable text area.
+
 ![Textarea API](../../assets/apps/4_app_component_library/textarea.gif)
 
 ### [Rich Text Editor](./rich_text_editor.mdx)
+
+The Rich Text Editor component allows to have to user enter text with a layout, on top of files or videos.
 
 ![Rich Text Editor API](../../assets/apps/4_app_component_library/rich_text.gif)
 
 ### [Password](./password_input.mdx)
 
+The password input component allows you to get a password from the user.
+
 ![Password Input API](../../assets/apps/4_app_component_library/password-input.png.webp)
 
 ### [Email Input](./email_input.mdx)
+
+The email input component allows you to get an email from the user.
 
 ![Email Input API](../../assets/apps/4_app_component_library/email.png.webp)
 
 ### [Number](./number_input.mdx)
 
+The number input component allows you to get a number from the user.
+
 ![Number Input API](../../assets/apps/4_app_component_library/number-input.png.webp)
 
 ### [Currency](./currency_input.mdx)
+
+The currency input component allows you to get a written amount of money in a set currency from the user.
 
 ![Currency Input API](../../assets/apps/4_app_component_library/currency.png.webp)
 
 ### [Slider](./slider.mdx)
 
+The slider component allows you to get a number from the user.
+
 ![Slider API](../../assets/apps/4_app_component_library/slider.png.webp)
 
+### [Date Slider](./date_slider.mdx)
+
+The slider component allows you to get a date from a range of dates.
+
+![Date Slider API](../../assets/apps/4_app_component_library/date_slider.png.webp)
+
 ### [Range](./range.mdx)
+
+The slider component allows you to get a range of numbers from the user.
 
 ![Range API](../../assets/apps/4_app_component_library/range.png.webp)
 
 ### [Date](./date_input.mdx)
 
+The date input component allows you to get a date from the user.
+
 ![Date Input API](../../assets/apps/4_app_component_library/date-input.png.webp)
+
+### [Time](./time_input.mdx)
+
+The Time Input component allows the user to fill in a time.
+
+![Time Input](../../assets/apps/4_app_component_library/time_input.png "Time Input")
+
+### [Date & Time](./datetime_input.mdx)
+
+The Date & Time Input component allows the user to fill in a date and time.
+
+![Date & Time Input](../../assets/apps/4_app_component_library/date_time_input.png "Date & Time Input")
+
+### [Date Select](./date_select.mdx)
+
+The Date Select component allows the user to fill in a date by picking a day, month and year.
+
+![Date Select](../../assets/apps/4_app_component_library/date_select.png "Date Select")
 
 ### [File Input](./file_input.mdx)
 
+The file input allows users to drop files into the app.
+
 ![File Input API](../../assets/apps/4_app_component_library/file_input.png.webp)
 
+### [S3 File Uploader](./s3fileinput.mdx)
+
+The S3 File Uploader component allows you to upload files to an S3 bucket.
+
+![s3fileupload](../../assets/apps/4_app_component_library/s3fileupload.png.webp)
+
 ### [Toggle](./toggle.mdx)
+
+The toggle component allows you to get a boolean from the user.
 
 ![Toggle API](../../assets/apps/4_app_component_library/toggle.png.webp)
 
 ### [Select](./select.mdx)
 
+The select component allows you to get a string from the user.
+
 ![Select API](../../assets/apps/4_app_component_library/select.png.webp)
 
 ### [Resource Select](./resource_select.mdx)
 
+The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmill workspace to interact with integrations.
+
 ![Resource Select](../../assets/apps/4_app_component_library/resource_select.png.webp)
 
-### [MultiSelect](./multiselect.mdx)
+### [Multi Select](./multiselect.mdx)
 
-![Multiselect API](../../assets/apps/4_app_component_library/multiselect.png.webp)
+The Multi Select component allows you to get multiple strings from the user.
+
+![Multi Select API](../../assets/apps/4_app_component_library/multiselect.png.webp)
 
 ### [Select Tab](./select_tab.mdx)
+
+The Select Tab is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
 
 ![Select Tab](../../assets/apps/4_app_component_library/tab_select.png.webp)
 
 ### [Select Step](./select_step.mdx)
 
+The Select Step is standalone tab component that behaves like a select component. It is meant to have the chosen tab to be chosen as input by components or runnables.
+
 ![Select Step](../../assets/apps/4_app_component_library/step_select.png.webp)
 
 ## Tables
 
-### [Table](./table.mdx)
-
-![Table API](../../assets/apps/4_app_component_library/table.png.webp)
-
 ### [AgGrid Table](./aggrid_table.mdx)
 
+The AgGrid table component allows you to display an Ag Grid table.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/aggrid_table.mp4"
 	alt="aggrid table"
 />
-<br />
+<br/>
+
+### [Database Studio](./database_studio.mdx)
+
+This component allows you to create a database studio. The database studio is a web-based database management tool. It allows you to display and edit the content of a database. It uses Ag Grid to display the table.
+
+![Database Studio](../../assets/apps/4_app_component_library/db_studio.png "Database Studio")
+
+### [TanStack Table (Depreciated)](./table.mdx)
+
+The table component allows you to display a table.
+
+:::note Depreciated
+
+integrationsand will be removed in the future. Please use the [AgGrid Table](./aggrid_table.mdx) or [Database Studio](./database_studio.mdx) components instead.
+
+:::
+
+![Table API](../../assets/apps/4_app_component_library/table.png.webp)
 
 ## Display
 
 ### [Text](./text.mdx)
 
+The text component allows you to display text.
+
 ![Text API](../../assets/apps/4_app_component_library/text.png.webp)
 
 ### [Icon](./icon.mdx)
+
+The Icon API allows you to display an icon chosen in a library of icons.
 
 ![Icon](../../assets/apps/4_app_component_library/icon.png.webp)
 
 ### [Image](./image.mdx)
 
+The Image component allows you to display a picture.
+
 ![HTML](../../assets/apps/4_app_component_library/image_api.png.webp)
 
 ### [Map](./map.mdx)
+
+The Map component allows you to display an interactive map.
 
 ![map](../../assets/apps/4_app_component_library/map.png.webp)
 
 ### [HTML](./html.mdx)
 
+The HTML component allows you to display HTML content.
+
 ![HTML](../../assets/apps/4_app_component_library/html.png.webp)
 
+### [Markdown](./markdown.mdx)
+
+The Markdown component allows you to display Markdown content.
+
+![Markdown component](../../assets/apps/4_app_component_library/markdown.png "Markdown component")
+
 ### [PDF](./pdf.mdx)
+
+The PDF component allows you to display a PDF file.
 
 ![PDF API](../../assets/apps/4_app_component_library/pdf_api.png.webp)
 
 ### [Rich Result](./rich_result.mdx)
 
+The Rich Result component allows you to display the result of a Runnable.
+
 ![Rich Result](../../assets/apps/4_app_component_library/rich_result.png.webp)
 
-### [Log](./log_display.mdx)
+### [Log by Job Id](./log_display.mdx)
 
-![Log Display](../../assets/apps/4_app_component_library/log_display.png.webp)
+The Log Display component allows you to display the log of a Runnable by providing its Job id.
 
-### [Flow Status](./flow_status.mdx)
+![Log Display](../../assets/apps/4_app_component_library/log_display.png)
 
-![Flow Status](../../assets/apps/4_app_component_library/flow_status.png.webp)
+### [Flow Status by Job Id](./flow_status.mdx)
+
+The Flow Status component allows you to display the status of a flow by providing its Job id.
+
+![Flow Status](../../assets/apps/4_app_component_library/flow_status.png)
+
+### [Rich Result by Job Id](./rich_result_by_job_id.mdx)
+
+The Rich Result by Job Id component allows you to display the result of a Runnable by providing its Job id.
+
+![Rich Result by Job Id](../../assets/apps/4_app_component_library/rich_result_by_job_id.png "Rich Result by Job Id")
+
+### [Statistic Card](./statistic_card.mdx)
+
+The statistic card component is a panel meant to display a value and progress.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/stat_card.mp4"
+/>
+
+### [Dropdown Menu](./dropdown_menu.mdx)
+
+The Dropdown Menu component is meant to embed one of several [Button](#button) components and display them in a dropdown menu.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/dropdown_menu.mp4"
+/>
+
+### [Alert](./alert.mdx)
+
+The alert component allows you to display a message in 4 different styles: `info`, `success`, `warning`, and `error`.
+
+![Alert API](../../assets/apps/4_app_component_library/alert.png.webp "Alert API")
 
 ## Charts
 
 ### [Plotly](./plotly.mdx)
 
+The Plotly component allows you to display a Plotly chart.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	src="/videos/plotly_config.mp4"
@@ -331,8 +537,10 @@ This component allows you to create a decision tree. The decision tree is contro
 
 ### [ChartJs](./chartjs.mdx)
 
+The ChartJs component allows you to display a ChartJs using the [Chart.js](https://www.chartjs.org/) library.
+
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	src="/videos/chartjs.mp4"
@@ -341,15 +549,38 @@ This component allows you to create a decision tree. The decision tree is contro
 
 ### [Vega Lite](./vega_lite.mdx)
 
+The Vega Lite component allows you to display a Vega Lite chart.
+
 ![Vega Lite API](../../assets/apps/4_app_component_library/vega-lite.png.webp)
+
+### [AgCharts](./agcharts.mdx)
+
+The Ag Charts component allows you to display a chart using the [Ag Charts](https://charts.ag-grid.com/) library.
+
+![agcharts](../../assets/apps/4_app_component_library/agcharts.png.webp)
 
 ## Groups
 
-<div class="grid grid-cols-2 gap-2 my-4">
+Components can be grouped within containers:
+
+<div className="grid grid-cols-2 gap-2 my-4">
 	<DocCard
-		title="Group of Components"
+		title="Group of components"
 		description="Components can be grouped within containers."
 		href="/docs/apps/app_configuration_settings/components_groups"
 		color="orange"
+	/>
+</div>
+
+## Custom Components
+
+For more control and standardization with your existing stack, you might want to import your own components in React.
+
+<div className="grid grid-cols-2 gap-2 my-4">
+	<DocCard
+		color="orange"
+		title="Import custom React components"
+		description="Define components in React or Vanilla JS that interact with the rest of your app."
+		href="/docs/apps/react_components"
 	/>
 </div>

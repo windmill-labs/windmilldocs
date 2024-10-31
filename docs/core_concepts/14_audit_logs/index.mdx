@@ -1,15 +1,15 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Audit Logs
+# Audit logs
 
 Windmill provides audit logs for every operation and action that has side-effects. These logs capture the user responsible for the operation and include metadata specific to the type of operation.
 
 As a user, you can only see your own audit logs unless you are an admin.
 
-Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Execute), and specific Operation.
+Audit logs can be filtered by Date, Username, Action (Create, Update, Delete, Execute), and specific Operation. The [Runs menu](../5_monitor_past_and_future_runs/index.mdx) is another feature that allows you to visualise all past and future runs.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	id="main-video"
@@ -18,7 +18,7 @@ Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Ex
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Runs Menu"
 		description="The Runs menu is another feature that allows you to visualise all past and future runs."
@@ -28,14 +28,15 @@ Audit Logs can be filtered by Date, Username, Action (Create, Update, Delete, Ex
 
 ## Retention Policy
 
-The retention policy for audit logs varies depending on your team's plan:
+For self-hosted Windmill instances, you can set the retention period via [instance settings](../../advanced/18_instance_settings/index.mdx#retention-period-in-secs), accessible in the top right corner of the workspace settings. Instance settings are accessible only to [superadmins](../16_roles_and_permissions/index.mdx#superadmin). Audit logs are maintained in Postgres and output to the FileSystem as logs.
+
+On Windmill's cloud service, audit log retention varies by plan:
 
 - Community plan: Audit logs are redacted.
-- Team plan (cloud): Audit logs are retained for 7 days.
-- Enterprise plan (cloud): Audit logs are retained for 60 days.
-- Enterprise plan (cloud): Audit logs are stored in Postgres and also emitted as logs, which are stored in the cloud for a year with the possibility of extending the retention period.
+- Team plan (cloud): Retained for 7 days.
+- Enterprise plan (cloud): Kept for 60 days, with logs stored in Postgres and the cloud for up to a year, extendable upon request.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Plans & How to Upgrade"
 		description="Details on each Windmill Plan"
@@ -43,10 +44,10 @@ The retention policy for audit logs varies depending on your team's plan:
 	/>
 </div>
 
-## Viewing Jobs metadata from the Audit Logs
+## Viewing Jobs metadata from the Audit logs
 
 You can retrieve the job ID from the job and then access all the job metadata, including the job arguments by fetching the information from the job itself which is stored for as long as the configured retention period.
 
-## Backing Up Audit Logs
+## Backing Up Audit logs
 
 To back up the audit logs, simply backup the Postgres database or store the logs in a cold archive. In the cloud environment, we employ both methods for backup.

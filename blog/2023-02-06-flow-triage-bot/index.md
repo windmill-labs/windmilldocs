@@ -3,6 +3,7 @@ slug: issue-triage-bot-flow
 title: Build an Issue Triage Bot Flow
 authors: [malomarrec]
 tags: [issue triage, bot, workflow]
+image: ./issue_triage.png
 ---
 
 # Build an Issue Triage Bot Flow
@@ -157,7 +158,7 @@ Save the webhook, and check that it's successfully posting to Windmill by going
 to the **Recent deliveries** tab. Check the shape of the payload: we'll need
 that to write our script.
 
-Go back to Windill, and check in [Runs](/docs/core_concepts/monitor_past_and_future_runs) that your empty script was indeed
+Go back to Windmill, and check in [Runs](/docs/core_concepts/monitor_past_and_future_runs) that your empty script was indeed
 triggered by the webhook. Great! We're now receiving a payload every time
 there's an issue event. Now let's build our bot.
 

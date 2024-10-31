@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch } from '@headlessui/react';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
 import classNames from 'classnames';
 
 export default function DevModeSwitch({ color = 'blue' }) {
@@ -17,6 +17,7 @@ export default function DevModeSwitch({ color = 'blue' }) {
 	return (
 		<div className="my-4 flex flex-row gap-2 items-center transition-all" id={id}>
 			<Switch
+				title="Toggle Developer Mode"
 				checked={developerMode}
 				onChange={() => {
 					const el = document.getElementById(id);

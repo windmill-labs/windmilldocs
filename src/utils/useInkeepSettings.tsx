@@ -69,17 +69,6 @@ const useInkeepSettings = (): InkeepSharedSettings => {
 					replaceLeading: false,
 					breadcrumbName: 'Home'
 				}
-			],
-			prependBreadcrumbs: [
-				{
-					matchingRule: {
-						UrlMatch: {
-							ruleType: 'PartialUrl',
-							partialUrl: 'windmill.dev/docs'
-						}
-					},
-					breadcrumbToPrepend: 'Docs'
-				}
 			]
 		},
 		theme: {

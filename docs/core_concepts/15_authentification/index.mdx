@@ -4,9 +4,9 @@ import DocCard from '@site/src/components/DocCard';
 
 Windmill provides flexible authentication options to ensure secure access to the platform. Users can authenticate through Single Sign-On (SSO) with a restricted domain or with a simple e-mail if added manually by superadmins.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Roles and Permissions"
+		title="Roles and permissions"
 		description="Find out about the roles within a Windmill instance and their respective permissions."
 		href="/docs/core_concepts/roles_and_permissions"
 	/>
@@ -18,6 +18,14 @@ Windmill supports authentication [through SSO](../../misc/2_setup_oauth/index.md
 
 To enable restricted domain authentication, an administrator can configure the authorized domain in the OAuth configuration by setting 'allowed_domains' to the desired domains (e.g: 'windmill.dev' to accept only Google/Microsoft logins with a xxx@windmill.dev address). Once configured, users with email addresses from the authorized domain will be able to log in using their SSO provider.
 
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Setup OAuth and SSO"
+		description="Windmill supports Single Sign-On for Microsoft, Google, GitHub, GitLab, Okta, and domain restriction."
+		href="/docs/misc/setup_oauth"
+	/>
+</div>
+
 ## Manually Add Users to a Windmill Instance
 
 As a superadmin of the instance, you have the ability to manually add users to the Windmill instance. This is useful for inviting users who do not have SSO credentials or for providing access to individuals outside the restricted domain.
@@ -25,7 +33,7 @@ As a superadmin of the instance, you have the ability to manually add users to t
 To manually add users:
 
 1. Log in to the Windmill instance as a superadmin.
-2. Click on your username and pick "Superadmin settings".
+2. Click on your username and pick [Instance settings](../../advanced/18_instance_settings/index.mdx).
 3. Fill:
    - Email: The email address of the user.
    - Password: A password for the user's account.
@@ -41,19 +49,19 @@ By default, users are not invited to any workspace, unless auto-invite has been 
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/Wyq6d0bkuGo?vq=hd1080"
+	src="https://www.youtube.com/embed/Wyq6d0bkuGo"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
 <br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Self Host Windmill"
+		title="Self-host Windmill"
 		description="Self host Windmill in 2 minutes."
 		href="/docs/advanced/self_host#authentication-and-user-management"
 	/>
@@ -123,3 +131,15 @@ Once access is created to a Windmill account, an invite will be available in the
 From where each user can set their username.
 
 ![Set Username](./set_username.png 'Set a Username')
+
+## SCIM/SAML
+
+Windmill supports [SCIM and SAML](../../misc/14_saml_and_scim/index.md) for user provisioning and authentication.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="SAML & SCIM"
+		description="Configure Okta or Microsoft for both SAML and SCIM."
+		href="/docs/misc/saml_and_scim"
+	/>
+</div>

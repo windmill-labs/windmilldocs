@@ -6,17 +6,20 @@ import {
 	SiTypescript,
 	SiPostgresql,
 	SiGraphql,
-	SiDocker
-} from 'react-icons/si/index';
+	SiDocker,
+	SiPhp,
+	SiAnsible,
+	SiRust
+} from 'react-icons/si';
 
-# Scripts Quickstart
+# Scripts quickstart
 
-Windmill supports scripts in Python, TypeScript, Go, Bash and Sql.
+Windmill supports scripts in TypeScript, Python, Go, PHP, Bash, SQL and Rust.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Typescript (Deno, Bun, Node.js)"
-		description="Write your first Windmill script in Typescript."
+		title="TypeScript (Deno, Bun, Node.js)"
+		description="Write your first Windmill script in TypeScript."
 		href="/docs/getting_started/scripts_quickstart/typescript"
 		Icon={SiTypescript}
 	/>
@@ -39,10 +42,22 @@ Windmill supports scripts in Python, TypeScript, Go, Bash and Sql.
 		Icon={SiGo}
 	/>
 	<DocCard
-		title="PostgreSQL, MySQL, MSSQL, BigQuery, Snowflake"
+		title="SQL & Query Languages"
 		description="Write your first Windmill script in PostgreSQL, MySQL, BigQuery or Snowflake SQL."
 		href="/docs/getting_started/scripts_quickstart/sql"
 		Icon={SiPostgresql}
+	/>
+	<DocCard
+		title="PHP"
+		description="Write your first Windmill script in PHP."
+		href="/docs/getting_started/scripts_quickstart/php"
+		Icon={SiPhp}
+	/>
+	<DocCard
+		title="Docker"
+		description="Windmill supports running any docker container through its Bash support."
+		href="/docs/getting_started/scripts_quickstart/docker"
+		Icon={SiDocker}
 	/>
 	<DocCard
 		title="Rest / GraphQL"
@@ -51,9 +66,15 @@ Windmill supports scripts in Python, TypeScript, Go, Bash and Sql.
 		Icon={SiGraphql}
 	/>
 	<DocCard
-		title="Docker"
-		description="Windmill supports running any docker container through its Bash support."
-		href="/docs/getting_started/scripts_quickstart/docker"
-		Icon={SiDocker}
+		title="Rust"
+		description="Write your first Windmill script in Rust."
+		href="/docs/getting_started/scripts_quickstart/rust"
+		Icon={SiRust}
+	/>
+	<DocCard
+		title="Ansible"
+		description="Write your first Windmill script in Ansible"
+		href="/docs/getting_started/scripts_quickstart/ansible"
+		Icon={SiAnsible}
 	/>
 </div>

@@ -1,4 +1,4 @@
-# Note of Intent
+# Note of intent
 
 All code is not made equal and can be split in 2 categories:
 
@@ -15,21 +15,20 @@ All code is not made equal and can be split in 2 categories:
   code is boilerplate because it _feels_ like you shouldn't have to reinvent the
   wheel, over and over again.
 
-Many services labels themselves as **no-code** or **low-code**, as they address
+Many services labels themselves as **no-code** or low-code, as they address
 indeed the challenge of getting rid of the boilerplate and provide a
 comprehensive platform accessible to all members of a diverse organization not
-made solely of engineers. However, **we believe they lack the full power and
+made solely of engineers. However,  **we believe they lack the full power and
 flexibility of code** as they either hide it completely, or only allow it under
 restricted forms.
 
 Windmill is different:
 
-- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, Bash, SQL) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Airplane and n8n.
-- It **empowers semi-technical users** to access and edit that code without
+- Windmill is an [open-source](https://github.com/windmill-labs/windmill) developer platform and infra to turn scripts (TypeScript, Python, Go, PHP, Bash, SQL and Rust) into endpoints, workflows and UIs. In that respect, Windmill is an alternative to Retool, Prefect and n8n.
+- It empowers semi-technical users to access and edit that code without
   being overwhelmed by the usual barriers to entry (git, IDE, local
   environments, secrets managements, etc).
-- It is compatible with senior/staff software engineers **high standards for
-  production-grade** yet flexible yet customizable with code.
+- It is compatible with senior/staff software engineers with high standards for production-grade yet flexible and customizable with code
 
 Windmill embeds:
 
@@ -43,9 +42,9 @@ Windmill embeds:
   minimal cold start
 - a **parser that will infer the dependencies and arguments** from the code
   itself and generate lockfiles and input specs
-  - the _lockfile_ allows the script being deployed to maintain exactly the same
+  - the _[lockfile](../../advanced/6_imports/index.mdx)_ allows the script being deployed to maintain exactly the same
     set of versioned dependencies forever
-  - the in _input spec_ (which is actually a JSON schema) is used to generate a
+  - the _[input spec](../../core_concepts/13_json_schema_and_parsing/index.mdx)_ (which is actually a JSON schema) is used to generate a
     minimal UI automatically for both using the script as a standalone compute
     or as a step of a Flow
 - a powerful **web IDE** to write Scripts with autocompletion and syntax
@@ -56,7 +55,7 @@ Windmill embeds:
   [Windmill Hub](https://hub.windmill.dev). Flows can, among others, do:
   - [retries](../../flows/14_retries.md) with fixed and exponential backoff
   - [error handling](../../flows/8_error_handling.mdx)
-  - [for loops](../../flows/12_flow_loops.md) over list triggering one flow per item
+  - [For loops](../../flows/12_flow_loops.md) over list triggering one flow per item
   - [branching](../../flows/13_flow_branches.md) to one subflow given a predicate or all sub-flows
   - be [suspended](../../flows/15_sleep.md) with its state preserved without consuming any resources to
     sleep for a pre-determined amount of time or waiting to be reactivated by an
@@ -65,7 +64,7 @@ Windmill embeds:
     urls known only by the approvers
 - a **[low-code UI builder](../../getting_started/7_apps_quickstart/index.mdx)** to build
   complex internal apps, admin panels and dashboards using inline scripts in TypeScript,
-  Python, Go, Bash and SQL or trigger the Scripts and Flows of the workspace
+  Python, Go, PHP, Bash and SQL or trigger the Scripts and Flows of the workspace
 - an **enterprise-grade platform** with tight permissioning, secret management,
   groups and folders enabling
   [RBAC permissions](../../core_concepts/16_roles_and_permissions/index.mdx),
@@ -78,8 +77,7 @@ Windmill embeds:
   Flows. Combined with state storage, it can be used to watch for external
   events - for example triggering a Flow only if the external state is different
   from the one stored previously
-- a **[CLI](../../advanced/3_cli/index.mdx)** and GitHub Actions for **GitHub** and local
-  based development and code management.
+- a **[CLI](../../advanced/3_cli/index.mdx)** and [Git sync](../../advanced/11_git_sync/index.mdx) to automatically commit and push scripts, flows, and apps to a given repository.
 
 On top of all these, you'll get an active [community](https://discord.com/invite/V7PM2YHsPB) and a responsive support
 team to attend you in your journey.
@@ -90,7 +88,7 @@ Examples of what can be built with Windmill include:
 
 - **Scripts** that are deployed automatically into UIs, webhook endpoints and scheduled jobs.
 - **Applicative workflows** such as the ones of Temporal, Airflow or Retool. Applicative workflows allow external APIs (Salesforce, Hubspot, Google Sheets), internal APIs and databases to talk to each other. Their logic can be complex and include approval steps and conditional branching.
-- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our Typescript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
+- **Data-oriented ETLs** as you would find in tools such as Airflow, Dagster and Prefect. One notable difference is our TypeScript support thanks to Deno. Most common ETLs would be syncing transformed data to data warehouses (Snowflake, BigQuery, Redshift) and building reports out of data stores in the same data warehouses. And of course you can include more applicative steps in those ETLs.
 - **Powerful apps and dashboards** that are internal or external-facing, using either a low-code builder similar to Retool or full react views / svelte. In either case, those apps do a mix of frontend logic and calling the scripts and flows directly.
 
 You can find plenty of examples and inspirations on the
@@ -105,7 +103,7 @@ You can find plenty of examples and inspirations on the
 - Running scripts on a production-grade infra that is cost-efficient, reliable
   and easily monitorable takes a lot of **skill and time to do right**.
 
-**Windmill solves those problems**, and makes sure that scripts become widely
+Windmill solves those problems, and makes sure that scripts become widely
 useful tools. The central tenet is: _make building automation fast and easy, and
 everybody will automate repetitive tasks and save a lot of time_.
 
@@ -117,14 +115,14 @@ same time. Some other very interesting frameworks that Windmill shares overlap
 with:
 
 - _Temporal_ and _Airflow_ for the workflow engine, both open-source. They are
-  both **heavily code-based**, have **no low-code builders** for the flows, are
-  **complex to set up** and operate, and do not allow to share scripts easily or
+  both heavily code-based, have no low-code builders for the flows, are
+  complex to set up and operate, and do not allow to share scripts easily or
   build UIs.
-- _Retool_ for building **admin panels**, and its other open-source
+- _Retool_ for building admin panels, and its other open-source
   alternatives: _Tooljet_, _Appsmith_.
-- _Airplane_ and _Superblocks_ have comparable set of features, but **not
-  open-source nor self-hostable**, **limited workflow** engines, **not made for
-  scalability** and have **no open APIs**.
+- _Airplane_ (†) and _Superblocks_ have comparable set of features, but not
+  open-source nor self-hostable, limited workflow engines, not made for
+  scalability and have no open APIs.
 
 You will find more details on our view over our space and competitors in the
 [Windmill compared to competitors](../../compared_to/peers.mdx) page.

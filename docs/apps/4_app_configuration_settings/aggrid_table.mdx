@@ -2,10 +2,10 @@ import DocCard from '@site/src/components/DocCard';
 
 # AgGrid Table
 
-The AgGrid table component allows you to display an agnostic grid table.
+The AgGrid table component allows you to display an [Ag Grid](https://ag-grid.com/) table.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	controls
 	src="/videos/aggrid_table.mp4"
@@ -17,50 +17,163 @@ The AgGrid table component allows you to display an agnostic grid table.
 If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_guides/aggrid_table/index.md).
 :::
 
-The following section details AgGrid Table component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details AgGrid Table component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="App Editor Documentation"
+		title="App editor Documentation"
 		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
 		href="/docs/apps/app_editor"
 	/>
 	<DocCard
 		color="orange"
-		title="Apps Quickstart"
+		title="Apps quickstart"
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
 	/>
 </div>
 
-## AgGird Table Input
+## AgGird Table input
 
 |      Type       | Connectable | Templatable | Default | Description     |
 | :-------------: | :---------: | :---------: | :-----: | --------------- |
 | `Array<Object>` |    true     |    false    |         | The table data. |
 
+The array can be static (hardcoded) or dynamic through an [eval](../3_app-runnable-panel.mdx#evals) function or a compute ([inline script](../3_app-runnable-panel.mdx)).
+
+Example of static input:
+
+```json
+[
+	{
+		"id": 1,
+		"name": "John Doe",
+		"age": 25
+	},
+	{
+		"id": 2,
+		"name": "Jane Doe",
+		"age": 30
+	}
+]
+```
+
+Example of compute input:
+
+```js
+export async function main() {
+	const res = await fetch('https://api.sampleapis.com/recipes/recipes', {
+		headers: { 'Content-Type': 'application/json' }
+	});
+	return res.json();
+}
+```
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+- [getAgGrid](../3_app-runnable-panel.mdx#getaggrid): Use the `getAgGrid` function to get the ag-grid instance of a table.
+- [setSelectedIndex](../3_app-runnable-panel.mdx#setselectedindex): Use the `setSelectedIndex` function to select a row in a table or an AG Grid table.
+
+## Table actions
+
+`AgGrid Table` can define actions that will be displayed in each row of the table. An action is a component that cannot be moved.
+
+Available components are:
+
+- [Button](./button.mdx)
+- [Toggle](./toggle.mdx)
+- [Select](./select.mdx)
+
+![AgGrid Actions](../../assets/apps/4_app_component_library/aggrid_actions.png 'AgGrid Actions')
+
 ## AgGrid Table configuration
 
 | Name                        |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
 | --------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
-| Column Defs                 | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
+| [Column Defs](#column-defs)                 | object  |    true     |    false    | Id, Name, Age | The definition of the columns & their name.                                                                     |
 | Flex                        | boolean |    false    |    false    |     true      | Allows you to distribute available space among multiple elements to control their relative sizes and positions. |
 | All Editable                | boolean |    false    |    false    |     false     | Whether you want all columns to be editable.                                                                    |
 | Multiple Selectable         | boolean |    false    |    false    |     false     | Make multiple rows selectable at once.                                                                          |
 | Row Multiselect With Click  | boolean |    false    |    false    |     true      | If multiple selectable, allow multiselect with click.                                                           |
 | Pagination                  | boolean |    false    |    false    |     false     | Whether you want pages on your table.                                                                           |
 | Select First Row By Default | boolean |    false    |    false    |     false     | Whether you want the first row to be selected by default.                                                       |
-| Extra Config                | object  |    true     |    false    |               | Extra configuration for the AgGrid table.                                                                       |
+| Extra Config                | object  |    true     |    false    |     `{}`      | Extra configuration for the AgGrid table.                                                                       |
+| Compactness                 | select  |    true     |    false    |    normal     | Change the row height (normal, compact, comfortable).                                                           |
+| Wrap Actions                | boolean |    false    |    false    |     false     | Wrap the actions in the table.                                                                                  |
+| Footer                      | boolean |    false    |    false    |     false     | Show the footer of the table.                                                                                   |
+| Custom Actions Header       | string  |    true     |    false    |               | Custom header for the actions.                                                                                  |
 
 ## Outputs
 
-| Name             |  Type   | Description                                     |
-| ---------------- | :-----: | ----------------------------------------------- |
-| result           | Object  | The AgGrid table data.                          |
-| loading          | boolean | The loading state of the AgGrid table component |
-| selectedRow      | Object  | The selected row                                |
-| selectedRowIndex | number  | The selected row index                          |
-| selectedRows     |  Array  | The selected rows                               |
-| page             | number  | The current page                                |
-| newChanges       | Object  | The latest updated row                          |
+| Name             |  Type   | Description                                                            |
+| ---------------- | :-----: | ---------------------------------------------------------------------- |
+| result           | object  | The AgGrid table data.                                                 |
+| loading          | boolean | The loading state of the AgGrid table component                        |
+| selectedRow      | object  | The selected row                                                       |
+| selectedRowIndex | number  | The selected row index                                                 |
+| selectedRows     |  array  | The selected rows                                                      |
+| page             | number  | The current page                                                       |
+| newChanges       | object  | The latest updated row                                                 |
+| ready            | boolean | The AgGrid table component is ready                                    |
+| inputs           | object  | The outputs of each action organised by action id and array of outputs |
+| filters          | object  | The filters applied to the table                                       |
+| displayRowCount  | number  | The number of rows displayed on the table                              |
+
+## Column Defs
+
+The `Column Defs` input allows you to define the columns of the table. The columns are defined as an array of objects, where each object represents a column. The object has the following properties:
+
+| Name             |  Type   | Description                                                              |
+| ---------------- | :-----: | ------------------------------------------------------------------------ |
+| field            | string  | The name of the field to display.  				   				        |
+| headerName       | string  | The name to display (if different from the name of field).      		    |
+| editable         | boolean | Whether the column values can be edited by user.	                        |
+| minWidth         | number  | The minimum width of the column.	                                        |
+| flex             | number  | Dynamically allocates remaining space of column based on its flex values.|
+| hide             | boolean | Whether the column is hidden.	                                        |
+| valueFormatter   | string  | The function to format the value of the column (Currencies, Date, Percentage, Uppercase etc.)	                        |
+| sort             | string  | The order of the column (asc or desc).	                                |
+| filter           | boolean | Whether the values of column can be filtered.	                        |
+| cellRendererType | string  | The type of cell renderer to use (link, image, button etc.)	            |
+
+## AgGrid Infinite Table
+
+The AgGrid Infinite Table component allows you to display an Ag Grid table with infinite scrolling.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/infinite_table.mp4"
+	alt="aggrid infinite table"
+/>
+<br />
+
+With this [SQL syntax](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx), you can create a query that fetches data from the database and lets the component manage:
+
+- `limit`: Specifies the number of rows to display on a single page or to fetch from the server in one go (here, infinite).
+- `isDesc`: Specifies the order of the rows (ascending or descending).
+- `offset`: Specifies the number of rows to skip before starting to return rows.
+- `search`: A search bar added to the component.
+- `orderBy`: Specifies the column by which the data should be sorted.
+
+```sql
+-- $1 limit
+-- $2 offset
+-- $3 search
+SELECT * FROM products WHERE title ILIKE '%' || $3 || '%'LIMIT $1::INT OFFSET $2::INT;
+```
+
+![AgGrid Infinite Table](../../assets/apps/4_app_component_library/aggrid_infinite.png 'AgGrid Infinite Table')
+
+### AgGrid Table EE
+
+The AgGrid Table EE component allows you to display an Ag Grid table with the rest of [AgGrid Enterprise](https://ag-grid.com/license-pricing/) features.
+
+Its independent from Windmill's Enterprise Edition.
+
+### AgGrid Infinite EE
+
+The AgGrid Infinite EE component allows you to display an Ag Grid table with infinite scrolling and the rest of [AgGrid Enterprise](https://ag-grid.com/license-pricing/) features.

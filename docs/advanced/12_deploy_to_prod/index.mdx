@@ -1,48 +1,48 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Deploy to Prod
+# Deploy to prod
 
 To deploy to prod, 3 options are possible:
 
-## Option 1. Draft and deploy - Single Workspace
+## Option 1. Draft and deploy - Single workspace
 
 A simple setup in which deploying to prod means deploying items that have been iterated on in the UI as Drafts.
-Deployments in Windmill are commonly done from the same workspace using the [Draft and Deploy](../../core_concepts/0_draft_and_deploy/index.mdx) buttons.
+Deployments in Windmill are commonly done from the same workspace using the [Draft and deploy](../../core_concepts/0_draft_and_deploy/index.mdx) buttons.
 
-## Option 2. Deploy to Prod using a Git Workflow - Multi Workspace
+## Option 2. Deploy to prod using a git workflow - Multi workspace
 
 The integration can be used to push from git, and receive changes done from the UI in a bi-directional way.
 You can also use a separate dev and staging branch and repo and have Windmill create automatically branches and Pull Request upon any changes deployed to staging/dev.
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Deploy to Prod using a Git Workflow"
+		title="Deploy to prod using a git workflow"
 		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
 		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>
 
-This process can be used in particular for local development with a solid setup:
+This process can be used in particular for [local development](../4_local_development/index.mdx) with a solid setup:
 
-![Local Development Setup](../4_local_development/local_development.png 'Local Development Setup')
+![Local development Setup](../4_local_development/local_development.png 'Local development Setup')
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Local Development"
+		title="Local development"
 		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
 		href="/docs/advanced/local_development"
 	/>
 </div>
 
-## Option 3. Deploy to Prod using the UI only - Multi Workspace
+## Option 3. Deploy to prod using the UI only - Multi workspace
 
 From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace.
 
-Deploy to Staging/Prod Web UI is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
+Deploy to prod using the UI is [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 More details at:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Deploy to prod using the Web UI"
 		description="Avoid Git and deploy directly from the Web UI"

@@ -73,9 +73,9 @@ export default function BarChart({
 				stacked: true,
 				max: 120,
 				title: {
-                    display: true,
-                    text: xTitle,
-                }
+					display: true,
+					text: xTitle
+				}
 			},
 			y: {
 				stacked: true
@@ -123,7 +123,7 @@ export default function BarChart({
 							label: 'Loading',
 							data: chartData,
 							fill: false,
-							backgroundColor: 'rgba(13,148,136, 1)',
+							backgroundColor: '#059669',
 							borderColor: ['rgb(0, 0, 0, 0)'],
 							borderWidth: 1
 						}
@@ -133,7 +133,6 @@ export default function BarChart({
 
 					if (passedTime > Math.max(...sums)) {
 						chart.data.datasets = datasets_data;
-						console.log('chart.data.datasets', chart.data.datasets);
 						chart.update();
 						clearInterval(interval);
 					} else {
@@ -148,7 +147,13 @@ export default function BarChart({
 
 	return (
 		<div ref={ref}>
-			<Bar options={options} data={data} id="canvas-id" />
+			<Bar
+				options={options}
+				data={data}
+				id="canvas-id"
+				width={ref?.current?.clientWidth ?? 0}
+				height={360}
+			/>
 		</div>
 	);
 }

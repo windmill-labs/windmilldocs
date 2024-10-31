@@ -202,10 +202,10 @@ Editor makes it very easy to do so, using the properties picker:
 
 More details at:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Architecture and Data Exchange"
+		title="Architecture and data exchange"
 		description="A workflow is a JSON serializable value in the OpenFlow format."
 		href="/docs/flows/architecture"
 	/>
@@ -258,7 +258,7 @@ When enough resume messages are received, the next job starts with its
 - `resumes`: A list of payloads from all resume messages in the order they were
   received - most recent at the end of the list.
 
-Alternatively, a job can be immediately cancelled by a request to a similar
+Alternatively, a job can be immediately canceled by a request to a similar
 endpoint at `../jobs/cancel/..`. In this case, the Flow will quit, with the
 cancellation payload as the result and without retrying or running further steps
 or the failure modules.

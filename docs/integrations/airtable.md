@@ -1,6 +1,8 @@
-# Airtable Integration
+# Airtable integration
 
-There are two resources associated with [Airtable](https://www.airtable.com/). Both are required to use Airtable's API from Windmill.
+[Airtable](https://www.airtable.com/) is a cloud collaboration platform for organizing and managing data.
+
+There are two resources associated with Airtable. Both are required to use Airtable's API from Windmill.
 
 ## Airtable Account
 
@@ -32,7 +34,7 @@ You'll need to land on Airtable's <a href="https://airtable.com/create/tokens" r
 
 Now specify Airtable which databse and table you want to interact with:
 
-- **Database ID** can be found on the the URL of the page. It starts with "app" and ends before the next "/". e.g. appcy7pfdzgJIhto.
+- **Database ID** can be found on the URL of the page. It starts with "app" and ends before the next "/". e.g. appcy7pfdzgJIhto.
 - **Table name** is the name of the tab. By default it is called "Table 1".
 
 | Property  | Type   | Description                                    | Required | Where to find                              |
@@ -44,12 +46,19 @@ Now specify Airtable which databse and table you want to interact with:
 
 Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
 
-<video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/add_resources_variables.mp4"
-/>
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ggJQtzvqaqA"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
+<br/>
+
+> Example of a Supabase resource being used in two different manners from a script in Windmill.
 <br/>
 
 :::tip

@@ -1,8 +1,11 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+// @ts-ignore
+import { themes } from 'prism-react-renderer';
+
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -15,6 +18,13 @@ const config = {
 	favicon: 'img/docs_logo.svg',
 	organizationName: 'windmill', // Usually your GitHub org/user name.
 	projectName: 'windmill',
+
+	stylesheets: [
+		{
+			href: './src/css/custom.css',
+			type: 'text/css'
+		}
+	],
 
 	customFields: {
 		inkeepCredentials: {
@@ -53,7 +63,8 @@ const config = {
 				id: 'changelog',
 				routeBasePath: 'changelog',
 				path: './changelog',
-				blogSidebarCount: 0
+				blogSidebarCount: 0,
+				postsPerPage: 'ALL'
 			}
 		]
 	],
@@ -84,8 +95,22 @@ const config = {
 			})
 		]
 	],
+	headTags: [
+		{
+			tagName: 'script',
+			attributes: {
+				type: 'text/javascript'
+			},
+			innerHTML:
+				'window.__positional_config = { customerId: "9e217c49-0a4b-4513-8a9e-0c79ce3eb787" };'
+		}
+	],
 	scripts: [
-		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' }
+		{ src: 'https://plausible.io/js/script.js', defer: true, 'data-domain': 'windmill.dev' },
+		{
+			src: 'https://assets.positional-bucket.com/positional.min.js',
+			defer: true
+		}
 	],
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -122,7 +147,7 @@ const config = {
 					{
 						to: 'https://app.windmill.dev',
 						position: 'left',
-						label: 'Cloud App'
+						label: 'Cloud'
 					},
 					{
 						to: 'https://hub.windmill.dev',
@@ -170,14 +195,16 @@ const config = {
 					}
 				]
 			},
+			/*
 			announcementBar: {
 				id: 'airplane_migration',
 				content:
-					'<a href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
-				backgroundColor: '#6b21a8',
+					'<a style="height:20px;" href="/docs/misc/guides/airplane">Migration from Airplane to Windmill made easy, see docs</a>',
+				backgroundColor: '#2563eb',
 				textColor: '#fff',
 				isCloseable: true
 			},
+			*/
 			prism: {
 				theme: lightCodeTheme,
 				darkTheme: darkCodeTheme,
@@ -187,35 +214,6 @@ const config = {
 				defaultMode: 'dark',
 				disableSwitch: false,
 				respectPrefersColorScheme: true
-			},
-			algolia: {
-				// The application ID provided by Algolia
-				appId: '3Q3AONZ2W8',
-
-				// Public API key: it is safe to commit it
-				apiKey: '22ac914215bd02f11fcafa7ef9a9d1bf',
-
-				indexName: 'windmill',
-
-				// Optional: see doc section below
-				contextualSearch: true,
-
-				// Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-				externalUrlRegex: 'windmill\\.dev|www.windmill\\.dev',
-
-				// // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
-				// replaceSearchResultPathname: {
-				// 	from: '/docs/', // or as RegExp: /\/docs\//
-				// 	to: '/'
-				// },
-
-				// Optional: Algolia search parameters
-				searchParameters: {},
-
-				// Optional: path for search page that enabled by default (`false` to disable it)
-				searchPagePath: 'search'
-
-				//... other Algolia params
 			}
 		})
 };

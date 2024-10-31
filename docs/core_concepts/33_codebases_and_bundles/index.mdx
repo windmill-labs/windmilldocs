@@ -1,0 +1,85 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Codebases & bundles
+
+:::note
+
+Codebases & bundles is Beta, only works with TypeScript and is an [Enterprise](/pricing) feature for the time being.
+
+:::
+
+The traditional way to handle codebases on Windmill is two-fold:
+
+- Using [relative imports](../../advanced/14_dependencies_in_typescript/index.mdx#sharing-common-logic-with-relative-imports-when-not-using-bundles) to import scripts from the same workspace.
+- Deploy a private/public packages and import them in your scripts [using the package manager](../../advanced/14_dependencies_in_typescript/index.mdx#private-npm-registry--private-npm-packages).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in TypeScript"
+		description="How to manage dependencies in TypeScript scripts."
+		href="/docs/advanced/dependencies_in_typescript"
+	/>
+</div>
+
+However, that can be inconvenient when working with large codebases.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/RYljT-l-cIE"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+## Bundles
+
+To work with large codebases, there is another mode of deployment that relies on the same mechanism as similar services like Lambda or cloud functions: a bundle is built locally by the CLI using [esbuild](https://esbuild.github.io/) and deployed to Windmill.
+
+This bundle contains all the code and dependencies needed to run the script.
+
+On the latest version of the Windmill CLI, it is done automatically on `wmill sync push` for any script that falls in the patterns of includes and excludes as defined by the [wmill.yaml](#wmillyaml).
+
+## wmill.yaml
+
+Here are the changes needed in your [`wmill.yaml`](https://github.com/windmill-labs/windmill-codebase-example/blob/main/windmill/wmill.yaml):
+
+```yaml
+---
+codebases:
+  - relative_path: ../codebase
+    includes:
+      - '**'
+    excludes: []
+```
+
+Windmill keeps track of the hash of the codebase and will only rebuild the bundle if the codebase or script has changed.
+
+## Instance object storage
+
+The bundles requires [instance-wide object storage](../38_object_storage_in_windmill/index.mdx#instance-object-storage) which is where the bundle resides.
+
+## VS Code extension
+
+This mode of deployment automatically works with the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx) to run preview by recognizing the `codebases` configuration in wmill.yaml and bundling scripts on the fly using the same esbuild.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
+		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
+## Example repository
+
+An example repository with codebases and bundles can be found on [GitHub](https://github.com/windmill-labs/windmill-codebase-example).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="windmill-codebase-example"
+		description="Demo repository showcasing codebases and bundles."
+		href="https://github.com/windmill-labs/windmill-codebase-example"
+	/>
+</div>

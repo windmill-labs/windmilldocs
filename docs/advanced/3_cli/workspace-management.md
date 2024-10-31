@@ -1,4 +1,4 @@
-# Workspace Management
+# Workspace management
 
 Windmill CLI can be used on several workspaces from several instances.
 
@@ -23,7 +23,6 @@ The currently selected workspace will be <ins>underlined</ins>.
 />
 <br/>
 
-
 The wmill CLI is capable of handling working with many remotes & workspaces.
 Each combination of remote & workspace is registered with together with a name
 locally using:
@@ -34,7 +33,7 @@ wmill workspace add [workspace_name] [workspace_id] [remote]
 
 You can login to the workspace with a token or directly from browser.
 
-The new workspace will automatically be [switched](#switching-selection) to.
+The new workspace will automatically be [switched](#switch-workspaces) to.
 
 ### Arguments
 
@@ -72,7 +71,7 @@ wmill workspace add MyWorkspace workspace123 https://example.com/myworkspace
 wmill workspace add --create --create-workspace-name MyWorkspace2 --create-username john.doe
 ```
 
-## Switch Workspaces
+## Switch workspaces
 
 The wmill workspace switch command allows you to switch to another workspace. It requires specifying the target workspace as a positional argument and performs the necessary operations to switch to that workspace. Here is the documentation for the wmill workspace switch command:
 
@@ -94,7 +93,7 @@ wmill workspace switch <workspace_name>
  wmill workspace switch MyWorkspace
 ```
 
-## Selected Workspace
+## Selected workspace
 
 The currently selected workspace will be used for all operations. This workspace
 is <ins>underlined</ins> in the [list of workspaces](#list-workspaces).
@@ -140,3 +139,17 @@ The wmill workspace whoami command allows you to display the currently active us
 ```bash
 wmill workspace whoami
 ```
+
+## Managing encryption keys
+
+All [secrets](../../core_concepts/2_variables_and_secrets/index.mdx#secrets) of a workspace are [encrypted](../../core_concepts/30_workspace_secret_encryption/index.mdx) with a symmetric key unique to that workspace. This key is generated when the workspace is created and is stored in the database in the workspace_settings.
+
+### Encryption key during instance sync
+
+The workspace encryption key is migrated along with the workspace. During the [push process](./sync.mdx#pushing-an-instance), you will be prompted to decide whether to re-encrypt the secrets of the workspace on the remote instance. In the case of instance migration, it is recommended to select "no" as the secrets are already encrypted with the correct key.
+
+### Encryption key during workspace sync
+
+When [synchronizing workspaces](./sync.mdx), the `--include-key` option should be used to ensure the encryption key is also included in the sync process. This is essential for maintaining the security and integrity of encrypted data as it moves between environments.
+
+This option prompts you to confirm if the encryption key should be replaced or retained. Make an informed choice based on whether the destination environment requires a new key or should continue using the existing key.

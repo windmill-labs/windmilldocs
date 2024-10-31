@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
 	Workflow,
@@ -8,7 +8,6 @@ import {
 	FormInput,
 	WebhookIcon,
 	Terminal,
-	RotateCcw,
 	Webhook,
 	OctagonIcon,
 	CheckCircle2,
@@ -19,16 +18,17 @@ import {
 	Voicemail,
 	BedIcon,
 	Calendar,
-	Bot,
 	LucideWebhook,
 	BookOpen,
-	CylinderIcon
+	CylinderIcon,
+	Sparkles,
+	Code
 } from 'lucide-react';
 import { GitBranch, Repeat, Verified } from 'lucide-react';
 import { useColorMode } from '@docusaurus/theme-common';
 
 import Section from './Section';
-import { useDeveloperMode } from '../pages';
+import { useDeveloperMode } from '../components/GlobalContextProvider';
 import { SiVisualstudiocode } from 'react-icons/si';
 import { BoltIcon } from '@heroicons/react/20/solid';
 import TaskDurationBarChart from '../components/TaskDurationBarChart';
@@ -87,28 +87,28 @@ const tabs = [
 				}
 			},
 			{
-				title: 'For Loops',
-				description: 'Create for loops to iterate over a list of items.',
+				title: 'For loops',
+				description: 'Create For loops to iterate over a list of items.',
 				icon: Repeat,
 				caption: (
 					<div>
 						Create{' '}
 						<a href="/docs/flows/flow_loops" target="_blank">
-							for loops
+							For loops
 						</a>{' '}
 						to iterate over a list of items.
 					</div>
 				),
 				video: {
 					videoSrc: '/videos/flow-loop.mp4',
-					altText: 'Flows for loops',
+					altText: 'Flows For loops',
 					videoLength: '18'
 				}
 			},
 			{
 				title: 'Windmill AI',
 				description: 'Generate flows from prompts.',
-				icon: Bot,
+				icon: Sparkles,
 				caption: (
 					<div>
 						Generate flows from prompts with{' '}
@@ -122,6 +122,21 @@ const tabs = [
 					videoSrc: '/videos/flow_ai.mp4',
 					altText: 'Windmill AI for flows'
 				}
+			},
+			{
+				title: 'Workflows as code',
+				description: 'Automate tasks and their flow with only code.',
+				icon: Code,
+				caption: (
+					<div>
+						For a developer-first approach, use{' '}
+						<a href="/docs/core_concepts/workflows_as_code" target="_blank">
+							Workflows as code
+						</a>{' '}
+						to automate tasks and their flow within a script.
+					</div>
+				),
+				imageSrc: '/images/workflow_as_code.png'
 			}
 		]
 	},
@@ -180,12 +195,12 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Error Handling',
+		label: 'Error handling',
 		icon: Bug,
 		id: 'error-handling',
 		data: [
 			{
-				title: 'Error Handler',
+				title: 'Error handler',
 				description:
 					'Easily recover from errors and continue your flow or log the error on Slack, Discord, etc.',
 				icon: Bug,
@@ -223,7 +238,7 @@ const tabs = [
 				}
 			},
 			{
-				title: 'Early Stop / Break',
+				title: 'Early stop / Break',
 				description:
 					'Define a predicate expression that determines whether the flow should stop early at the end of a step.',
 				icon: OctagonIcon,
@@ -238,11 +253,11 @@ const tabs = [
 				),
 				video: {
 					videoSrc: '/videos/early_stop.mp4',
-					altText: 'Early Stop / Break.'
+					altText: 'Early stop / Break.'
 				}
 			},
 			{
-				title: 'Custom Timeout for Step',
+				title: 'Custom timeout for step',
 				description:
 					'For each step can be defined a timeout. If the execution takes longer than the time limit, the execution of the step will be interrupted.',
 				icon: TimerOffIcon,
@@ -258,7 +273,7 @@ const tabs = [
 				),
 				video: {
 					videoSrc: '/videos/custom_timeout.mp4',
-					altText: 'Custom Timeout for Step'
+					altText: 'Custom timeout for step'
 				}
 			}
 		]
@@ -307,7 +322,7 @@ const tabs = [
 				}
 			},
 			{
-				title: 'Step Mocking',
+				title: 'Step mocking',
 				description:
 					'When a step is mocked, it will immediately return the mocked value without performing any computation.',
 				icon: Voicemail,
@@ -323,11 +338,11 @@ const tabs = [
 				video: {
 					videoSrc: '/videos/step_mocking.mp4',
 					videoLength: '15',
-					altText: 'Step Mocking'
+					altText: 'Step mocking'
 				}
 			},
 			{
-				title: 'Concurrency Limits',
+				title: 'Concurrency limits',
 				description:
 					'Define concurrency limits for inline scripts to prevent exceeding the API Limit of the targeted API.',
 				icon: InfinityIcon,
@@ -345,7 +360,7 @@ const tabs = [
 		]
 	},
 	{
-		label: 'Data Pipelines',
+		label: 'Data pipelines',
 		icon: CylinderIcon,
 		id: 'data-pipelines',
 		data: [
@@ -363,7 +378,7 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/I9owHiLUrKw?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/I9owHiLUrKw',
 					videoLength: '26',
 					altText: 'Windmill for data pipelines'
 				},
@@ -447,7 +462,7 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/w2HVTlR2QDI?vq=hd1080',
+					videoSrc: 'https://www.youtube.com/embed/TXtmLrToxoI',
 					videoLength: '26',
 					altText: 'Execute using CLI'
 				},
@@ -474,11 +489,11 @@ const cards = [
 		href: '/docs/misc/benchmarks/competitors'
 	},
 	{
-		title: 'Retries and errors',
-		subtitle: 'Retry failed steps, or handle errors.',
-		Icon: RotateCcw,
+		title: 'Workflows as code',
+		subtitle: 'Automate tasks and their flow within a script.',
+		Icon: Code,
 		gridArea: 'md:col-span-1 md:row-span-3',
-		href: '/docs/flows/retries'
+		href: '/docs/core_concepts/workflows_as_code'
 	},
 
 	{
@@ -492,17 +507,15 @@ const cards = [
 
 	{
 		title: 'Suspend and resume',
-		subtitle:
-			'Automatically resume workflows with secret webhooks.',
+		subtitle: 'Automatically resume workflows with secret webhooks.',
 		Icon: CheckCircle2,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/flows/flow_approval'
 	},
 
 	{
-		title: 'Data Pipelines',
-		subtitle:
-			'Integration with Polars, DuckDB and S3 for data pipelines.',
+		title: 'Data pipelines',
+		subtitle: 'Integration with Polars, DuckDB and S3 for data pipelines.',
 		Icon: CylinderIcon,
 		gridArea: 'md:col-span-1 md:row-span-3',
 		href: '/docs/core_concepts/data_pipelines'
@@ -605,8 +618,12 @@ const examples = [
 
 export default function FlowSection() {
 	const { developerMode } = useDeveloperMode();
-	const [chart, setChart] = React.useState('short');
+	const [chart, setChart] = React.useState<'short' | 'long'>(undefined);
 	const { colorMode } = useColorMode();
+
+	useEffect(() => {
+		setChart('short');
+	}, []);
 
 	return (
 		<>
@@ -646,6 +663,7 @@ export default function FlowSection() {
 							</span>
 							<Switch
 								checked={chart === 'short'}
+								title="Switch between short and long running tasks"
 								onChange={() => {
 									setChart(chart === 'long' ? 'short' : 'long');
 								}}
@@ -670,7 +688,7 @@ export default function FlowSection() {
 					<div
 						className={classNames(
 							colorMode === 'dark' ? 'bg-black' : 'bg-gray-50',
-							'w-full p-8 bg-opacity-40 rounded-xl '
+							'w-full p-8 bg-opacity-40 rounded-xl h-full'
 						)}
 					>
 						<div className="grid">
@@ -794,6 +812,7 @@ export default function FlowSection() {
 										]
 									]}
 									shouldAnimate={true}
+									xTitle="Duration (in seconds)"
 								/>
 							)}
 						</div>

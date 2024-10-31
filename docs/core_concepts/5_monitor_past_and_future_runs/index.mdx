@@ -1,11 +1,11 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Monitor Past and Future Runs
+# Jobs runs
 
-Each workspace has a dedicated Runs menu that allows you to visualise all past and future runs.
+Each workspace has a dedicated Runs menu that allows you to visualise all past and future runs. In Windmill, each run is associated with a [job](../20_jobs/index.mdx).
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	autoPlay
 	loop
 	controls
@@ -15,11 +15,11 @@ Each workspace has a dedicated Runs menu that allows you to visualise all past a
 
 <br />
 
-You might also be interested in Audit Logs:
+You might also be interested in Audit logs:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Audit Logs"
+		title="Audit logs"
 		description="Audit logs are another feature, available in the Cloud & Enterprise Self-Hosted only. They capture and record every operation and action with side-effects."
 		href="/docs/core_concepts/audit_logs"
 	/>
@@ -30,9 +30,19 @@ You might also be interested in Audit Logs:
 The Runs menu in each workspace provides a time series view where you can monitor different time slots.
 The green (respectively, red) dots being the tasks that succeeded (respectively, failed).
 
+You can filter the view per datetime, toggle "CRON schedules" to disable the display of past [scheduled](../1_scheduling/index.mdx) jobs and "Planned later" to disable the display of [schedules](../1_scheduling/index.mdx) planned for later.
+
 ![Time series](./1-runs-menu.png 'Time series')
 
 > All past and future runs of the workspace are visible from the menu.
+
+<br/>
+
+The graph can represent jobs on their Duration (default) or by Concurrency, meaning the number of concurrent jobs at a given time.
+
+![Aggregated view by concurrency](aggregated_concurrency.png "Aggregated view by concurrency")
+
+> Graphical view by concurrent jobs.
 
 ## Details per Run
 
@@ -57,7 +67,7 @@ View of a scheduled run:
 You can adjust the level of details by picking playing with filters on:
 
 - **Datetime**
-- **Metadata**: [Path](../16_roles_and_permissions/index.mdx#path) / User / Folder
+- **Metadata**: [Path](../16_roles_and_permissions/index.mdx#path) / [User](../16_roles_and_permissions/index.mdx#users) / [Folder](../8_groups_and_folders/index.mdx) / [Concurrency key](../21_concurrency_limits/index.md#custom-concurrency-key) / [Labels](#jobs-labels)
 - **Kind**: All / Runs / Previews / Dependencies
 - **Status**: All / Success / Failure
 - **Skipped flows**
@@ -69,3 +79,19 @@ Example of filters in use:
 ![Filters](./4-filters.png 'Filters')
 
 > Here were filtered successful runs from August 2023 which returned `{"baseNumber": 11}`.
+
+## Jobs Labels
+
+Labels allow to add static or dynamic tags to [jobs](../20_jobs/index.mdx) with property "wm_labels" followed by an array of strings.
+
+```js
+export async function main() {
+  return {
+    "wm_labels": ["showcase_labels", "another_label"]
+  }
+}
+```
+
+Jobs can be filtered by labels in the Runs menu to monitor specific groups of jobs.
+
+![Run labels](./runs_labels.png 'Run labels')

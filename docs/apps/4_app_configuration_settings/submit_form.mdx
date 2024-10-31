@@ -13,25 +13,25 @@ The runnable [parameters](../../code_editor/parameter_inference.mdx) are defined
 Only user inputs are displayed in the form.
 
 <video
-	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/submit_form.mp4"
 />
 
 <br />
 
-The following section details Submit Form component's specific settings. For more details on the App Editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App Editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Submit Form component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="App Editor Documentation"
+		title="App editor Documentation"
 		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
 		href="/docs/apps/app_editor"
 	/>
 	<DocCard
 		color="orange"
-		title="Apps Quickstart"
+		title="Apps quickstart"
 		description="Learn how to build your first app in a matter of minutes."
 		href="/docs/getting_started/apps_quickstart"
 	/>
@@ -39,7 +39,7 @@ The following section details Submit Form component's specific settings. For mor
 
 ## Controls
 
-This component can be controlled by frontend scripts using these functions:
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
 
 **setValue**
 
@@ -49,13 +49,13 @@ The [setValue](../3_app-runnable-panel.mdx#setvalue) function is meant to set or
 
 **validate**
 
-Validate a specific field of a form
+Make a specific field of a form in a Validate state.
 
 `validate(id: string, key: string)`
 
 **validateAll**
 
-Validate all fields of a form
+Make all fields of a form in a Validate state.
 
 `validateAll(id: string, key: string)`
 
@@ -65,11 +65,11 @@ Invalidate a specific field of a form
 
 `invalidate(id: string, key: string, error: string)`
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="orange"
-		title="Runnable Editor"
-		description="Learn how to create and configure runnables."
+		title="Runnable editor"
+		description="Learn how to create and configure Apps runnables."
 		href="/docs/apps/app-runnable-panel"
 	/>
 </div>
@@ -84,8 +84,8 @@ Invalidate a specific field of a form
 
 The form component has a special parameters called `On Success` and `On Error`.
 
-
 The options for On Success are:
+
 - Do nothing
 - Go to an url
 - Set the tab of a [tabs component](./tabs.mdx)
@@ -109,3 +109,9 @@ The options for On Error are:
 | result  |   any   | The result of the runnable.      |
 | loading | boolean | The loading state of the button. |
 | jobId   | string  | The job id of the runnable.      |
+
+## Event handler
+
+The submit form component has the following event handler:
+
+- `onSuccess`: Trigger one or more runnables when the button is clicked and the runnable is successful.

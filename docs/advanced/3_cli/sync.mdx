@@ -6,12 +6,12 @@ Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
 Having a Windmill instance synchronized to folders & git repositories allows for
-local development through the [VS Codeextension](../../cli_local_dev/1_vscode-extension/index.mdx).
+local development through the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx).
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>
@@ -20,9 +20,9 @@ local development through the [VS Codeextension](../../cli_local_dev/1_vscode-ex
 
 Raw syncing will soon become the default.
 
-Raw syncing is a one-off operation with no state maintained. When using Windmill EE and [Git Sync](../11_git_sync/index.mdx),
-this is what you should use since Git Sync will always keep your git repo up-to-date.
-When not used in with Git Sync. It's best used for
+Raw syncing is a one-off operation with no state maintained. When using Windmill EE and [Git sync](../11_git_sync/index.mdx),
+this is what you should use since Git sync will always keep your git repo up-to-date.
+When not used in with Git sync. It's best used for
 making backups, cloning a complete workspace, and similar one-off operations.
 
 Raw syncing is done using `wmill sync pull` & `wmill sync push`
@@ -40,26 +40,6 @@ are in the correct folder or you may loose data.
 [selected workspace](./workspace-management.md#selected-workspace), creating or
 updating the remote equivalents.
 
-## Stateful Syncing
-
-Stateful syncing is currently the default but will soon require the --stateful flag
-
-Stateful syncing is best used when your Git repo and windmill workspace might diverge (because of not using [Git Sync](../11_git_sync/index.mdx))
-and you want to keep track of the state the last time you pulled to check for merge conflicts.The CLI will automatically
-maintain state for you and ensure modifications that happen concurrently on the remote and locally stay in sync.
-
-### Pulling
-
-Pulling with `wmill sync pull --stateful` will first update the internal sync state, and then
-generate a diff between your local files and this state, only updating the
-actually modified files. Possible conflicts will warn the user.
-
-### Pushing
-
-Pushing with `wmill sync push --stateful` will push all local files to the remote and then update the internal state to avoid being out-of-sync due to the push.
-Using `sync push` without `--skip-pull` will start the push by doing a pull first to ensure the user is not
-overriding changes made to the remote.
-
 ## Pull API
 
 The `wmill sync pull` command is used to pull remote changes and apply them locally. It synchronizes the local workspace with the remote workspace by downloading any remote changes and updating the corresponding local files.
@@ -70,13 +50,31 @@ wmill sync pull [options]
 
 ### Options
 
-| Option             | parameter | Description                                                                                                        |
-| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| `--fail-conflicts` | None      | Error on conflicts (both remote and local have changes on the same item).                                          |
-| `--yes`            | None      | Pull without needing confirmation. The command proceeds automatically without user intervention.                   |
-| `--stateful`       | None      | Pull using local state tracking, do not overwrite local files with remote changes.                                 |
-| `--plain-secrets`  | None      | Pull secrets as plain text. Secrets are downloaded without encryption or obfuscation.                              |
-| `--json`           | None      | Use JSON instead of YAML. The downloaded files are in JSON format instead of YAML.                                 |
+| Option                | Parameter      | Description                                                                                                                  |
+| --------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `-h, --help`          | None           | Show help options.                                                                                                              |
+| `--fail-conflicts`     | None           | Error on conflicts (both remote and local have changes on the same item).                                                     |
+| `--yes`               | None           | Pull without needing confirmation. The command proceeds automatically without user intervention.                              |
+| `--plain-secrets`      | None           | Pull secrets as plain text. Secrets are downloaded without encryption or obfuscation.                                         |
+| `--json`              | None           | Use JSON instead of YAML. The downloaded files are in JSON format instead of YAML.                                            |
+| `--workspace`         | `<workspace>`  | Specify the target workspace. This overrides the default workspace.                                                           |
+| `--debug`, `--verbose`| None           | Show debug/verbose logs.                                                                                                      |
+| `--show-diffs`        | None           | Show diff information when syncing (may show sensitive information).                                                          |
+| `--token`             | `<token>`      | Specify an API token. This will override any stored token.                                                                    |
+| `--base-url`          | `<baseUrl>`    | Specify the base URL of the API. If used, `--token` and `--workspace` are required and no local remote/workspace will be used. |
+| `--raw`               | None           | Push without using state, just overwrite. (Default, has no effect.)                                                           |
+| `--stateful`          | None           | Pull using state tracking (create `.wmill` folder and needed for `--fail-conflicts`).                                          |
+| `--skip-variables`    | None           | Skip syncing variables (including secrets).                                                                                   |
+| `--skip-secrets`      | None           | Skip syncing only secret variables.                                                                                           |
+| `--skip-resources`    | None           | Skip syncing resources.                                                                                                       |
+| `--include-schedules` | None           | Include syncing schedules.                                                                                                    |
+| `--include-users`     | None           | Include syncing users.                                                                                                        |
+| `--include-groups`    | None           | Include syncing groups.                                                                                                       |
+| `--include-settings`  | None           | Include syncing workspace settings.                                                                                           |
+| `--include-key`       | None           | Include workspace encryption key.                                                                                            |
+| `-i, --includes`      | `<patterns>`   | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Overrides `wmill.yaml` includes. Patterns can include `*` (any string until '/') and `**` (any string). |
+| `-e, --excludes`      | `<patterns>`   | Comma-separated patterns to specify which files to NOT take into account. Overrides `wmill.yaml` excludes.                    |
+| `--extra-includes`    | `<patterns>`   | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy. |
 
 ## Push API
 
@@ -88,31 +86,100 @@ wmill sync push [options]
 
 ### Options
 
-| Option             | parameter | Description                                                                                                        |
-| ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------ |
-| `--fail-conflicts` | None      | Error on conflicts (both remote and local have changes on the same item).                                          |
-| `--skip-pull`      | None      | Push without pulling first. Assumes that the pull operation has already been performed.                            |
-| `--yes`            | None      | Push without needing confirmation. The command proceeds automatically without user intervention.                   |
-| `--stateful`       | None      | Push using local state tracking, do not overwrite local files with remote changes.                                 |
-| `--plain-secrets`  | None      | Push secrets as plain text. Secrets are uploaded without encryption or obfuscation.                                |
-| `--json`           | None      | Use JSON instead of YAML. The uploaded files are in JSON format instead of YAML.                                   |
+| Option                | Parameter      | Description                                                                                                                  |
+| --------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `-h, --help`          | None           | Show help options.                                                                                                              |
+| `--workspace`         | `<workspace>`  | Specify the target workspace. This overrides the default workspace.                                                           |
+| `--debug`, `--verbose`| None           | Show debug/verbose logs.                                                                                                      |
+| `--show-diffs`        | None           | Show diff information when syncing (may show sensitive information).                                                          |
+| `--token`             | `<token>`      | Specify an API token. This will override any stored token.                                                                    |
+| `--base-url`          | `<baseUrl>`    | Specify the base URL of the API. If used, `--token` and `--workspace` are required and no local remote/workspace will be used. |
+| `--fail-conflicts`    | None           | Error on conflicts (both remote and local have changes on the same item).                                                     |
+| `--raw`               | None           | Push without using state, just overwrite. (Default, has no effect.)                                                           |
+| `--stateful`          | None           | Push using state tracking (use `.wmill` folder, required for `--fail-conflicts`).                                             |
+| `--skip-pull`         | None           | (Stateful only) Push without pulling first.                                                                                   |
+| `--yes`               | None           | Push without needing confirmation.                                                                                            |
+| `--plain-secrets`     | None           | Push secrets as plain text.                                                                                                   |
+| `--json`              | None           | Use JSON instead of YAML.                                                                                                     |
+| `--skip-variables`    | None           | Skip syncing variables (including secrets).                                                                                   |
+| `--skip-secrets`      | None           | Skip syncing only secret variables.                                                                                           |
+| `--skip-resources`    | None           | Skip syncing resources.                                                                                                       |
+| `--include-schedules` | None           | Include syncing schedules.                                                                                                    |
+| `--include-users`     | None           | Include syncing users.                                                                                                        |
+| `--include-groups`    | None           | Include syncing groups.                                                                                                       |
+| `--include-settings`  | None           | Include syncing workspace settings.                                                                                           |
+| `--include-key`       | None           | Include workspace encryption key.                                                                                            |
+| `-i, --includes`      | `<patterns>`   | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Patterns can include `*` (any string until '/') and `**` (any string). |
+| `-e, --excludes`      | `<patterns>`   | Comma-separated patterns to specify which files to NOT take into account.                                                     |
+| `--extra-includes`    | `<patterns>`   | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy. |
+| `--message`           | `<message>`    | Include a message that will be added to all scripts/flows/apps updated during this push.                                      |
 
-## How `stateful` mode works
 
-| Command                 | Description                                                                                    |
-| ----------------------- | ---------------------------------------------------------------------------------------------- |
-| `wmill sync pull` | Pulls remote changes without using state tracking. Overwrites local files with remote changes. |
-| `wmill sync pull --stateful`       | Pulls remote changes and applies them locally.                                                 |
-| `wmill sync push` | Pushes local changes without using state tracking. Overwrites remote files with local changes. |
-| `wmill sync push --stateful`       | Pushes local changes and applies them remotely.                                                |
+## wmill.yaml
 
-# wmill.yaml
+Note that you can set the default TypeScript language and explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
-Note that you can explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
+```yaml
+includes: ['f/**'] # uses "*" or uncomment this line to include everything. Note that wmill will only consider files with valid path (u/ or f/, with the right extension)
+excludes: [] # excludes patterns here
 
-## Example Repos
+defaultTs: 'deno' # bun is the default, set it to deno if you primarily use deno to avoid needing the .deno.ts extension
+```
+
+All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/conf.ts#L3):
+
+```ts
+export interface SyncOptions {
+  raw?: boolean;
+  yes?: boolean;
+  skipPull?: boolean;
+  failConflicts?: boolean;
+  plainSecrets?: boolean;
+  json?: boolean;
+  skipVariables?: boolean;
+  skipResources?: boolean;
+  skipSecrets?: boolean;
+  includeSchedules?: boolean;
+  includeUsers?: boolean;
+  includeGroups?: boolean;
+  includeSettings?: boolean;
+  message?: string;
+  includes?: string[];
+  extraIncludes?: string[];
+  excludes?: string[];
+  defaultTs?: "bun" | "deno";
+  codebases?: Codebase[];
+}
+```
+
+## Example repo for syncing with Windmill in git
 
 We provide an example repo for syncing with Windmill:
 
-- Syncing with a remote:
-  [windmill-sync-example](https://github.com/windmill-labs/windmill-sync-example)
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="windmill-sync-example"
+		description="Demo repository showcasing how to sync Windmill with a remote."
+		href="https://github.com/windmill-labs/windmill-sync-example"
+	/>
+</div>
+
+## Cloning an instance
+
+Instances can be cloned with Windmill CLI. This is useful for instance migration or for setting up a new (prod) instance with the same configuration as an existing one.
+
+### Pulling an instance
+
+To pull instance users, groups, settings and configs (=worker groups+SMTP) from the instance use `wmill instance pull`.
+
+You can skip any of those using `--skip-XXX`.
+
+You can also pull all workspaces at the same time by adding the `--include-workspaces` option. It will setup for each a local workspace (including a folder in the current directory) with a prefix specific to the instance (based on the name you've given to the instance).
+
+### Pushing an instance
+
+To push to an instance use `wmill instance push`. It takes the same options as pulling an instance.
+
+When using `--include-workspaces`, you will also have to select the instance prefix of the local workspaces you want to push (make sure you're in its parent folder).
+
+During the push process, you will be prompted to decide whether to [re-encrypt](./workspace-management.md#managing-encryption-keys) the secrets of the workspace on the remote instance. In the case of instance migration, it is recommended to select "no" as the secrets are already encrypted with the correct key.

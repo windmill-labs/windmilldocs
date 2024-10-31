@@ -9,7 +9,7 @@ static website generator.
 $ npm i --legacy-peer-deps
 ```
 
-### Local Development
+### Local development
 
 ```
 $ npm start

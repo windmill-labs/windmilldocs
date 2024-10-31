@@ -1,43 +1,40 @@
 ---
 authors: [rubenfiszel]
-tags:
-  [
-    'Launch week',
-    'VS Code'
-  ]
+tags: ['Launch week', 'VS Code']
 image: ./vscode_extension.png
 slug: launch-week-1/vscode-extension
-description: "Write scripts & flows in your code editor with a UI preview."
+description: 'Write scripts & flows in your code editor with a UI preview.'
 ---
 
 import DocCard from '@site/src/components/DocCard';
 
-# Launch Week Day 1 - VS Code Extension
+# Launch Week Day 1 - VS Code extension
 
 Welcome to the first day of the first launch week of Windmill. To follow all the announcements made this week, please go to the [Launch Week #1](../2023-11-15-launch-week-1/index.mdx) page.
 
-![VS Code Extension](./vscode_extension.png.webp "VS Code Extension")
+![VS Code extension](./vscode_extension.png.webp 'VS Code extension')
 
-Introducing the new Windmill [VS Code extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill) to build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition.
+Introducing the new Windmill [VS Code extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill) to build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/aSOF6AzyDr8?vq=hd1080"
+	src="https://www.youtube.com/embed/aSOF6AzyDr8"
 	title="YouTube video player"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
-	className="border-2 rounded-xl object-cover w-full dark:border-gray-800"
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-## Why a VS Code Extension
+## Why a VS Code extension
 
 Windmill has its own IDE for creating [scripts](/docs/script_editor) and [flows](/docs/flows/flow_editor) from the Windmill application (cloud or [self-hosted](/docs/advanced/self_host)).
 
-![Windmill own IDE](./script_ide.png.webp "Windmill Own IDE")
+![Windmill own IDE](./script_ide.png.webp 'Windmill Own IDE')
+
 > Example of Windmill's own IDE for building scripts.
 
-<br/>
+<br />
 
 The Windmill UI allows you to edit direcly the deployed scripts & flows, which is great for maintenance and quick prototyping.
 
@@ -52,9 +49,9 @@ With this new extension, you can now efficiently edit scripts & flows directly f
 
 > [Example repo](https://github.com/windmill-labs/windmill-sync-example) opened in VS Code. We see 2 flows and 1 script, the flows are their own folders, each step in a flow is a seperate file in their respective language. Scripts have their metadata in a seperate file.
 
-<br/>
+<br />
 
-With [wmill sync pull](/docs/advanced/cli/sync#pulling-1) and [wmill sync push](/docs/advanced/cli/sync#pushing-1) you can synchronize your remote workspace to a local directory which you would version with GitHub / GitLab.
+With [wmill sync pull](/docs/advanced/cli/sync#pulling) and [wmill sync push](/docs/advanced/cli/sync#pushing) you can synchronize your remote workspace to a local directory which you would version with GitHub / GitLab.
 
 2. Install the [extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
 
@@ -63,6 +60,7 @@ With [wmill sync pull](/docs/advanced/cli/sync#pulling-1) and [wmill sync push](
 4. From any script file, use `> Windmill: Run preview in the current editor` or Ctrl+Enter and Shift+Enter to generate the UI preview (provided that the script meets the [few rules](/docs/core_concepts/json_schema_and_parsing#json-schema-in-windmill) required by Windmill).
 
 The extension will split your screen and display a panel. That panel will update automatically based on the edited document on the left.
+
 - When editing a script (or a flow step), you see the script [preview UI](/docs/core_concepts/auto_generated_uis) with the [auto-inference of the parameters](/docs/core_concepts/json_schema_and_parsing).
 - When editing a flow YAML, you it contains the flow builder and the flow [test UI](/docs/flows/test_flows).
 
@@ -71,35 +69,35 @@ In particular:
 ### Test scripts, flows and flows steps from VS Code
 
 <video
-  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
-  loop
-  src="/videos/vs_code_tour.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/vs_code_tour.mp4"
 />
 
 ### Editing the YAML definition of a flow instantly updates the rendered graph
 
 <video
-  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
-  loop
-  src="/videos/ui_to_yaml.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/ui_to_yaml.mp4"
 />
 
 ### Editing the flow from the UI immediately modifies the YAML definition
 
 <video
-  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-  autoPlay
-  loop
-  src="/videos/yaml_to_ui.mp4"
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/yaml_to_ui.mp4"
 />
 
-<br/>
+<br />
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Command-Line Interface - Sync"
+		title="Command-line interface - Sync"
 		description="Sync with a Windmill workspace from Windmill CLI."
 		href="/docs/advanced/cli/sync"
 	/>
@@ -111,10 +109,10 @@ This is just the first day of the launch week! To learn more about the launch we
 
 To learn more about the VS Code extension, please refer to our documentation:
 
-<div class="grid grid-cols-2 gap-6 mb-4">
+<div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="VS Code Extension"
-		description="Build scripts and flows in the comfort of your VS Code Editor, while leveraging Windmill UIs for test & flows edition."
+		title="VS Code extension"
+		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
 	/>
 </div>

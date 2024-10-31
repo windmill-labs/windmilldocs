@@ -1,10 +1,10 @@
-# Deploy to Prod using the UI
+# Deploy to prod using the UI
 
 From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 :::tip Deploy to prod
 
-For all details on Deployments to Prods, see [Deploy to Prod](../../advanced/12_deploy_to_prod/index.mdx).
+For all details on Deployments to Prod, see [Deploy to prod](../../advanced/12_deploy_to_prod/index.mdx).
 
 :::
 
@@ -17,17 +17,17 @@ For all details on Deployments to Prods, see [Deploy to Prod](../../advanced/12_
 
 <br/>
 
-:::tip Draft and Deploy
+:::tip Draft and deploy
 
-The [Draft and Deploy](../0_draft_and_deploy/index.mdx) is another feature that offers a lightweight solution for implementing a staging and production workflow, suitable for various scenarios.
+The [Draft and deploy](../0_draft_and_deploy/index.mdx) is another feature that offers a lightweight solution for implementing a staging and production workflow, suitable for various scenarios.
 
 :::
 
 ## How it works
 
-For users with admin rights on the source workspace, in the `Workspace` menu, go to the "Dev/Staging/Prod" tab and pick a workspace for "Workspace to link to".
+For users with admin rights on the source workspace, in the `Workspace` settings, go to the "Deployment UI" tab and pick a workspace for "Workspace to link to".
 
-![Link to a workspace](./workspace_to_link_to.png.webp 'Link to a workspace')
+![Link to a workspace](./workspace_to_link_to.png 'Link to a workspace')
 
 This workspace to link to can for example be:
 

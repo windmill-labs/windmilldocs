@@ -14,7 +14,7 @@ This is a testimonial written by [Jeffrey Knorr](https://www.linkedin.com/in/jef
 
 <br/>
 
-![Stantt Windmill use case](./0-header.png.webp 'Stantt Windmill testimonial')
+![Stantt Windmill use case](./0-header.png 'Stantt Windmill testimonial')
 
 ## What before Windmill?
 
@@ -26,7 +26,7 @@ We previously had little monitoring, nor visibility on previous runs, and it was
 
 ## How did Windmill help?
 
-We chose to self-host Windmill and use it for our backend batch processing. It allowed us to **keep working with essentially the same Python scripts and set-up we used before**, but with more visibility on [scheduled jobs](/docs/core_concepts/scheduling), [error conditions](/docs/core_concepts/error_handling), and [script versioning](/docs/script_editor/versioning). The platform also enables easier access, by more team members, through the web based UI versus a linux terminal.
+We chose to self-host Windmill and use it for our backend batch processing. It allowed us to **keep working with essentially the same Python scripts and set-up we used before**, but with more visibility on [scheduled jobs](/docs/core_concepts/scheduling), [error conditions](/docs/core_concepts/error_handling), and [script versioning](/docs/core_concepts/versioning). The platform also enables easier access, by more team members, through the web based UI versus a linux terminal.
 
 Our usage of Windmill is quite simple, but it is powerful and **mission critical**. We look forward to leveraging the [Flows](/docs/getting_started/flows_quickstart) and [Apps](/docs/getting_started/apps_quickstart) features of the platform in the future as well. The Windmill Team has been outstanding to work with and incredibly responsive to feature requests.
 
