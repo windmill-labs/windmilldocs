@@ -218,10 +218,11 @@ You can directly "Test connection" if needed.
 
 ### Snowflake
 
-To be able to connect to a [Snowflake](https://www.snowflake.com/) instance, we'll need to define a Resource with the `Snowflake` Resource Type first.
+To be able to connect to [Snowflake](https://www.snowflake.com/), you can choose to either setup [OAuth for Snowflake](misc/setup_oauth#snowflake) or by defining a Snowflake Resource.
 
-Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
-"Add a resource/API" in the top right corner and select the `Snowflake` type.
+If a Snowflake OAuth connection is present, you can create a new Resource by heading to <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a>, clicking on "Add Resource" in the top right corner and selecting `snowflake_oauth`.
+
+If you do not wish to use OAuth, click on "Add Resource" in the top right corner and select the `Snowflake` type instead.
 
 ![Select Snowflake Resource Type](./select_snowflake.png.webp)
 
