@@ -27,6 +27,24 @@ Note that the mechanism of using the end-user's role demonstated here with Snowf
 </div>
 
 ---
+## Video Tutorial
+
+For a visual walkthrough of building this app, watch the tutorial below:
+
+- 00:00 [Create a New Snowflake OAuth User Resource](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=0s)
+- 00:37 [Background Runnable to query Available Tables](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=37s)
+- 02:04 [Display Table Content](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=124s)
+- 02:47 [Test the App](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=167s)
+
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/8Mk_4ErioeE"
+    title="Small tutorial on how to build a Windmill App that uses Snowflake as a data source with OAuth roles and permissions"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
 ## Prerequisites
 
@@ -108,21 +126,3 @@ Now, we’ll see how the displayed data changes based on the logged-in user’s 
 
    ![View as Support user](./support_view.png)
 
-### Step 5: Video Tutorial
-
-For a visual walkthrough of building this app, watch the tutorial below:
-
-- 00:00 [Create a New Snowflake OAuth User Resource](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=0s)
-- 00:37 [Background Runnable to query Available Tables](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=37s)
-- 02:04 [Display Table Content](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=124s)
-- 02:47 [Test the App](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=167s)
-
-<iframe
-    style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/8Mk_4ErioeE"
-    title="Small tutorial on how to build a Windmill App that uses Snowflake as a data source with OAuth roles and permissions"
-    frameBorder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-    className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
