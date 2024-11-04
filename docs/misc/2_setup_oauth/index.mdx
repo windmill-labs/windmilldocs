@@ -428,7 +428,7 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
 - Go to [Snowflake](https://app.snowflake.com/) and open a new worksheet.
 - Edit and run the following query to create an OAuth integration:
   ```sql
-  CREATE OR REPLACE SECURITY INTEGRATION <enter a name for the oauth security integration>
+  CREATE OR REPLACE SECURITY INTEGRATION <enter a name for the OAuth integration>
   TYPE = OAUTH
   OAUTH_CLIENT = CUSTOM
   OAUTH_CLIENT_TYPE = 'CONFIDENTIAL'
@@ -439,8 +439,9 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
   ```
 - Retrieve the **client_id** and **client_secret** from the following query:
   ```sql
+  -- NOTE: replace <OAuth integration name> with the name of the OAuth integration you created above.
   WITH oauth_data AS (
-    SELECT PARSE_JSON(SYSTEM$SHOW_OAUTH_CLIENT_SECRETS('OAUTH_CONFIG')) AS oauth_json
+    SELECT PARSE_JSON(SYSTEM$SHOW_OAUTH_CLIENT_SECRETS('<OAuth integration name>')) AS oauth_json
   )
   SELECT
       oauth_json:OAUTH_CLIENT_ID::string AS client_id,
