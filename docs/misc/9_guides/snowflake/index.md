@@ -3,14 +3,14 @@ title: Build an App accessing Snowflake with end-user Roles
 ---
 
 import DocCard from '@site/src/components/DocCard';
-import { SiPostgresql } from 'react-icons/si';
-
 
 # Build an App Accessing Snowflake with End-User Roles
 
 This guide walks you through building an application that accesses Snowflake data based on the end-user’s role, using OAuth in Windmill. By leveraging dynamic role-based credentials from Snowflake’s OAuth integration, we avoid static credentials and enable secure data access customized for each user. 
 
 The tutorial includes steps to set up Snowflake OAuth, configure user roles, and create UI components in Windmill for a seamless, role-specific data experience.
+
+Note that the mechanism of using the end-user's role demonstated here with Snowflake can be used for any [OAuth-supported resource in Windmill](/docs/misc/setup_oauth#oauth) such as GitHub, Slack, or Google Workspace.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
