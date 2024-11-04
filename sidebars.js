@@ -102,7 +102,8 @@ const sidebars = {
 									label: 'AgGrid Table'
 								},
 								'misc/guides/table/index',
-								'misc/guides/sequin/index'
+								'misc/guides/sequin/index',
+								'misc/guides/snowflake/index'
 							]
 						}
 					]
