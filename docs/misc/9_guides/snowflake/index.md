@@ -50,19 +50,17 @@ The goal is to use OAuth to dynamically retrieve the credentials for the end-use
 1. After creating a new app in your Windmill workspace, add a **User Resource Input** component.
 2. For "Resource Type," enter `snowflake_oauth`.
 3. Enable **Express OAuth Setup** by toggling the option.
-
    ![Settings for User Resource Input](./user_resource_input.png)
 
 4. In the UI editor, click the plus icon (+) to authenticate with your Snowflake account and test the connection.
 
 This component allows the app to use end-user credentials via an interactive OAuth connection rather than relying on static resources defined in the workspace.
 
-### Step 2: Query Available Tables
+### Step 2: Background Runnable to Query Available Tables
 
 Next, create a **Background Runnable** to retrieve the available tables based on the user’s Snowflake role.
 
 1. Create a new **Background Runnable** of type "Snowflake."
-
    ![Settings for Background Runnable](./background_runnable_1.png)
 
 2. Enter a Snowflake query to list available tables:
@@ -113,6 +111,11 @@ Now, we’ll see how the displayed data changes based on the logged-in user’s 
 ### Step 5: Video Tutorial
 
 For a visual walkthrough of building this app, watch the tutorial below:
+
+- 00:00 [Create a New Snowflake OAuth User Resource](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=0s)
+- 00:37 [Background Runnable to query Available Tables](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=37s)
+- 02:04 [Display Table Content](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=124s)
+- 02:47 [Test the App](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=167s)
 
 <iframe
     style={{ aspectRatio: '16/9' }}
