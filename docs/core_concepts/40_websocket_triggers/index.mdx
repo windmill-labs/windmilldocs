@@ -1,0 +1,59 @@
+# Websocket triggers
+
+Windmill can connect to websocket servers and trigger runnables when a message is received.
+Listening is done from the servers, so it doesn't take up any workers.
+Websocket triggers are not available on the Cloud.
+
+## How to use
+
+Create a new trigger on the Websocket triggers page.
+Specify the URL of the websocket server. Instead of a static URL, you can also specify a script or flow to return the connect URL. 
+This is useful when you need to pass an authentication query parameter to the connect URL.
+The runnable must return a string.
+
+![Websocket URL and runnable](./static_url.png 'Websocket static URL')
+
+![Websocket URL as runnable result](./runnable_url.png 'Websocket URL as runnable result')
+
+Once the URL set, select the runnable that should be triggered by this trigger.
+The received webhook message will be passed to the runnable as a string argument called `msg`.
+If you use a preprocessor, the `wm_trigger` object will be of the form:
+
+```json
+{
+  "kind": "websocket",
+  "websocket": {
+    "url": "ws://my.websocket.server",
+  }
+}
+```
+
+
+The trigger also supports additional configuration options:
+
+### Initial messages
+
+You can specify a list of initial messages to send to the websocket server when connection to the server is established.
+This is useful for authentication or subscription messages.
+They can be static strings or runnables that return the message.
+The static string field is in JSON format and will be stringified before sending. If the JSON value is a string, it will be sent without the wrapping quotes.
+The runnable can return a string or a JSON object, which will be stringified before sending.
+The messages are sent in the order they are specified.
+
+![Initial messages](./initial_messages.png 'Initial messages')
+
+### Filters
+
+
+Instead of having all messages trigger the runnable, you can specify filters to only trigger the runnable when the message matches all filters.
+Windmill supports the following filter:
+- **JSON**: The message is parsed as a JSON object and the filter checks that the filter `key` exists and the value at the key is equal or is a subset of the filter `value`.
+
+![Filters](./filters.png 'Filters')
+
+
+
+
+
+
+
