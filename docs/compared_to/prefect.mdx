@@ -1,9 +1,9 @@
 import DocCard from '@site/src/components/DocCard';
 import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
-# Alternative to Prefect for building Workflows
+# Alternative to Prefect for building workflows
 
-![Windmill Prefect](../assets/compared_to/windmill_prefect.png.webp 'Windmill Prefect')
+![Windmill Prefect](../assets/compared_to/windmill_prefect.png 'Windmill Prefect')
 
 Both Windmill and Prefect support writing complex workflows and ETL with code and run them at scale.
 We highlight below the main differences between the 2 on the following axis:
@@ -21,7 +21,7 @@ We highlight below the main differences between the 2 on the following axis:
 
 <a href="https://www.prefect.io/" rel="nofollow"> Prefect </a> is a data workflow management system, designed to help teams build, run, and monitor data workflows. It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
 
-## Open Source and Hosting
+## Open source and hosting
 
 [Windmill](https://www.windmill.dev/) is fully open source. This implies that Windmill can be self-hosted with just a few commands, providing cost-effective and secure solutions.
 
@@ -58,7 +58,7 @@ Prefect's [monitoring](#observability-and-monitoring) is done through a cloud pl
 
 ![Prefect cloud features](../assets/compared_to/prefect_cloud_features.png 'Prefect cloud features')
 
-## Workflows and Code
+## Workflows and code
 
 Prefect and Windmill Flow editor have a very similar sets of features. Below are the advanced features presented by Prefect and, in backlink, their counterpart on Windmill:
 
@@ -181,7 +181,7 @@ While Windmill also allows configuration and triggers from the terminal, the pla
 	/>
 </div>
 
-## Execution Runtime and Coldstarts
+## Execution runtime and coldstarts
 
 Windmill's architecture allows runnning each task on the current fleet of worker
 (which you can auto-scale automatically) and hence do not suffer from cold start.
@@ -343,7 +343,7 @@ providing insights into the performance metrics.
 	/>
 </div>
 
-## Observability and Monitoring
+## Observability and monitoring
 
 In terms of monitoring and observability, Windmill and Prefect's cloud app fulfill the same functions: audit logs, monitoring of runs and schedules, saving of flows, configurations (<a href="https://docs.prefect.io/latest/concepts/blocks/?h=blocks" rel="nofollow">Blocks</a> in Prefect, [Resource Types](../core_concepts/3_resources_and_types/index.mdx) in Windmill) and variables, [allocation of workers](../core_concepts/9_worker_groups/index.mdx).
 
@@ -426,7 +426,7 @@ Prefect pricing:
 	/>
 </div>
 
-## Scripts and Apps
+## Scripts and apps
 
 This document has focused on the Flow editor since it is the product closest to what Prefect does. However, Windmill also includes Script and App editors.
 

@@ -146,6 +146,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'compared_to/kestra',
+							label: 'Kestra'
+						},
+						{
+							type: 'doc',
 							id: 'misc/note_of_intent/index',
 							label: 'Note of intent'
 						},
