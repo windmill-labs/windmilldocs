@@ -423,6 +423,41 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
 - Copy the **Client ID** and **Client Secret**.
 - [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "visma" and set the client id and client secret.
 
+### Snowflake
+
+- Go to [Snowflake](https://app.snowflake.com/) and open a new worksheet.
+- Edit and run the following query to create an OAuth integration:
+  ```sql
+  CREATE OR REPLACE SECURITY INTEGRATION <enter a name for the OAuth integration>
+  TYPE = OAUTH
+  OAUTH_CLIENT = CUSTOM
+  OAUTH_CLIENT_TYPE = 'CONFIDENTIAL'
+  OAUTH_REDIRECT_URI = 'https://<public url of your Windmill instance>/oauth/callback/snowflake_oauth'
+  OAUTH_USE_SECONDARY_ROLES = IMPLICIT
+  ENABLED = TRUE
+  COMMENT = '<enter a description of your security integration>'
+  ```
+- Retrieve the **client_id** and **client_secret** from the following query:
+  ```sql
+  -- NOTE: replace <OAuth integration name> with the name of the OAuth integration you created above.
+  WITH oauth_data AS (
+    SELECT PARSE_JSON(SYSTEM$SHOW_OAUTH_CLIENT_SECRETS('<OAuth integration name>')) AS oauth_json
+  )
+  SELECT
+      oauth_json:OAUTH_CLIENT_ID::string AS client_id,
+      oauth_json:OAUTH_CLIENT_SECRET::string AS client_secret
+  FROM
+      oauth_data;
+  ```
+- Retrieve your [snowflake account identifier](https://docs.snowflake.com/en/user-guide/admin-account-identifier#finding-the-organization-and-account-name-for-an-account) from the URL of your snowflake account or from your account settings. You can also retrieve the account identifier by running this query:
+  ```sql
+  SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME() AS org_account_formatted;
+  ```
+
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "snowflake_oauth" and set the **client id**, **client secret** and **account identifier**.
+
+Take a look at [this guide](/docs/misc/guides/snowflake#sample-app-setup) to learn more about how to build an App with the Snowflake OAuth integration.
+
 ### Custom OAuth
 
 Under [Enterprise Edition](/pricing), you can add a completely custom OAuth without requiring a dev setup. The item accepts an extra optional field: `connect_config` or `login_config` of type OAuthConfig:
