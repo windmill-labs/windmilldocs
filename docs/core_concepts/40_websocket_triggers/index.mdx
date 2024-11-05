@@ -45,7 +45,7 @@ The messages are sent in the order they are specified.
 ### Filters
 
 
-Instead of having all messages trigger the runnable, you can specify a filter to only trigger the runnable when the message matches the filter.
+Instead of having all messages trigger the runnable, you can specify filters to only trigger the runnable when the message matches all filters.
 Windmill supports the following filter:
 - **JSON**: The message is parsed as a JSON object and the filter checks that the filter `key` exists and the value at the key is equal or is a subset of the filter `value`.
 
