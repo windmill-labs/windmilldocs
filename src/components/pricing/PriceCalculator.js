@@ -3,6 +3,7 @@ import { RadioGroup } from '@headlessui/react';
 import React from 'react';
 import classNames from 'classnames';
 import Slider from './Slider';
+import MemorySlider from './MemorySlider';
 import { QuoteForm } from '../QuoteForm';
 
 const plans = [
@@ -35,11 +36,43 @@ const priceFormatter = new Intl.NumberFormat('en-US', {
 	maximumFractionDigits: 0
 });
 
+// Add this new type definition
+const workerGroupDefaults = {
+	workers: 2,
+	memoryGB: 2
+};
+
+// Update the calculateWorkerPrice function
+function calculateWorkerPrice(memoryGB, tierId, selectedOption) {
+	// Cap the price calculation at 4GB
+	const effectiveMemory = Math.min(4, memoryGB);
+	// Base price: Linear interpolation between $25 at 1GB and $100 at 4GB
+	let basePrice = 25 + (effectiveMemory - 1) * 25;
+
+	// Apply discounts for enterprise self-hosted tier based on selectedOption
+	if (tierId === 'tier-enterprise-selfhost') {
+		if (selectedOption === 'SMB') {
+			basePrice = basePrice * 0.4; // 60% discount for SMB
+		} else if (selectedOption === 'Nonprofit') {
+			basePrice = basePrice * 0.4; // 60% discount for Nonprofit
+		}
+	}
+
+	return basePrice;
+}
+
 export default function PriceCalculator({ period, tier, selectedOption }) {
 	const [selected, setSelected] = useState(plans[0]);
 	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
 	const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
 	const [showQuoteForm, setShowQuoteForm] = useState(false);
+
+	// Add new state for worker groups
+	const [workerGroups, setWorkerGroups] = useState(
+		(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') 
+			? [{ workers: workerGroupDefaults.workers, memoryGB: workerGroupDefaults.memoryGB }]
+			: []
+	);
 
 	// Get the appropriate pricing based on selectedOption and tier.id
 	function getPriceByOption() {
@@ -65,31 +98,74 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		}
 	}, [pricing, seats, vCPUs]);
 
+	// Replace the existing computeTotalPrice function
 	function computeTotalPrice() {
 		let total = 0;
 
-		if (tier.id === 'tier-team') {
-			total = calculatePrice(tier.minPrice, period.value, tier.id);
-
+		if (tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') {
+			// Calculate seats cost (before period multiplier)
 			if (pricing.seat) {
-				let additionalSeats = Math.max(0, seats - 1);
-				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * additionalSeats;
-			}
-		} else {
-			if (tier.id === 'tier-enterprise-cloud') {
-				total = calculatePrice(selected.price, period.value, tier.id);
+				total += pricing.seat.monthly * seats;
 			}
 
+			// Calculate workers cost (before period multiplier)
+			const workersTotal = workerGroups.reduce((sum, group) => {
+				const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
+					(tier.id === 'tier-enterprise-cloud' ? 2 : 1); // Double price for cloud
+				return sum + (pricePerWorker * group.workers);
+			}, 0);
+
+			// Apply minimum worker group pricing with adjustments for SMB/Nonprofit
+			let minimumWorkerPrice = tier.id === 'tier-enterprise-cloud' ? 200 : 100;
+			if (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'SMB' || selectedOption === 'Nonprofit')) {
+				minimumWorkerPrice = 40; // 60% discount applied to minimum price
+			}
+			
+			const adjustedWorkersTotal = Math.max(workersTotal, minimumWorkerPrice);
+			total += adjustedWorkersTotal;
+
+			// Add core package price for enterprise cloud
+			if (tier.id === 'tier-enterprise-cloud') {
+				total += selected.price;
+			}
+
+			// Apply period multiplier to the total at the end
+			total = calculatePrice(total, period.value, tier.id);
+		} else {
 			if (pricing.seat) {
 				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * seats;
 			}
+
+			if (pricing.vCPU) {
+				total += calculatePrice(pricing.vCPU.monthly, period.value, tier.id) * vCPUs;
+			}
 		}
 
-		if (pricing.vCPU) {
-			total += calculatePrice(pricing.vCPU.monthly, period.value, tier.id) * vCPUs;
-		}
 		return total;
 	}
+
+	// Add handler for adding new worker groups
+	const addWorkerGroup = () => {
+		setWorkerGroups([
+			...workerGroups,
+			{ workers: workerGroupDefaults.workers, memoryGB: workerGroupDefaults.memoryGB }
+		]);
+	};
+
+	// Add handler for updating worker group values
+	const updateWorkerGroup = (index, field, value) => {
+		const newGroups = [...workerGroups];
+		newGroups[index][field] = value;
+		setWorkerGroups(newGroups);
+	};
+
+	// Add handler for removing worker groups
+	const removeWorkerGroup = (index) => {
+		if (workerGroups.length > 1) {
+			const newGroups = workerGroups.filter((_, i) => i !== index);
+			setWorkerGroups(newGroups);
+		}
+	};
 
 	return (
 		<>
@@ -104,7 +180,27 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 			/>
 			<div className="grow flex flex-col justify-start">
 				<div className="flex justify-between items-center">
-					<h4>Price</h4>
+					<div className="flex flex-col">
+						<h4>Price</h4>
+						<div className="h-6">
+							{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && 
+								workerGroups.reduce((sum, group) => {
+									const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
+										(tier.id === 'tier-enterprise-cloud' ? 2 : 1);
+									return sum + (pricePerWorker * group.workers);
+								}, 0) < (tier.id === 'tier-enterprise-cloud' ? 200 : 
+									(selectedOption === 'SMB' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
+									<span className="text-sm text-rose-700 dark:text-red-400">
+										Price for workers can't be below ${tier.id === 'tier-enterprise-cloud' 
+											? (period.value === 'annually' ? '2,000' : '200') 
+											: (selectedOption === 'SMB' || selectedOption === 'Nonprofit' 
+												? (period.value === 'annually' ? '400' : '40')
+												: (period.value === 'annually' ? '1,000' : '100'))}
+										/{period.value === 'annually' ? 'yr' : 'mo'}
+									</span>
+								)}
+						</div>
+					</div>
 
 					<div>
 						<span className="text-2xl text-gray-900 font-semibold dark:text-white">
@@ -116,72 +212,103 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					</div>
 				</div>
 
-				<div className="mt-4 flex items-baseline gap-x-1">
+				<div className="mt-8 flex items-baseline gap-x-1">
 					<ul className="flex flex-col gap-2 w-full">
-						{Object.keys(pricing).map((key) => (
-							<li key={key} className="flex flex-col">
+						{/* Show seats slider if applicable */}
+						{pricing.seat && (
+							<li className="flex flex-col">
 								<div className="flex justify-between w-full items-center">
 									<div>
-										<span className="text-sm text-gray-600 dark:text-gray-200">
-											{key === 'vCPU' ? vCPUs.toLocaleString() : seats.toLocaleString()}
-										</span>{' '}
-										{key === 'vCPU' ? (
-											<>
-												<a
-													href="#vcpu-reporting"
-													className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200 custom-link decoration-gray-600 dark:decoration-gray-200 decoration-0.1 custom-link-offset-1.5"
-												>
-													{key}s
-												</a>{' '}
-												<span className="text-sm text-gray-600 dark:text-gray-200">
-													({vCPUs * 2} GB of memory)
-												</span>
-											</>
-										) : (
-											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-												{key}s
-											</span>
-										)}
+										<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
+											{seats.toLocaleString()}
+										</span>
+										<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
+											{' '}{seats === 1 ? 'seat' : 'seats'}
+										</span>
 									</div>
 									<div>
 										<span className="text-sm text-gray-900 font-semibold dark:text-white">
-											${calculatePrice(pricing[key].monthly, period.value, tier.id)}
+											${calculatePrice(pricing.seat.monthly, period.value, tier.id)}
 										</span>{' '}
 										<span className="text-sm text-gray-400">
-											{period.value === 'annually' ? `/yr/${key}` : `/mo/${key}`}
+											{period.value === 'annually' ? `/yr/seat` : `/mo/seat`}
 										</span>
 									</div>
 								</div>
 								<Slider
-									min={pricing[key].min}
-									max={pricing[key].max}
+									min={pricing.seat.min}
+									max={pricing.seat.max}
 									step={1}
-									defaultValue={clamp(
-										key === 'vCPU' ? vCPUs : seats,
-										pricing[key].min,
-										pricing[key].max
-									)}
+									defaultValue={clamp(seats, pricing.seat.min, pricing.seat.max)}
 									onChange={(value) => {
-										if (key === 'vCPU') {
-											setvCPUs(clamp(value, pricing[key].min, pricing[key].max));
-										}
-
-										if (key === 'seat') {
-											setSeats(clamp(value, pricing[key].min, pricing[key].max));
-										}
+										setSeats(clamp(value, pricing.seat.min, pricing.seat.max));
 									}}
 								/>
 							</li>
-						))}
-						{tier.id !== 'tier-team' && (
-							<span className="whitespace-nowrap text-sm">
-								<a
-									href="#pricing-explained"
-									className="custom-link text-gray-600 dark:text-gray-200"
+						)}
+
+						{/* Replace vCPU section with worker groups for enterprise self-hosted */}
+						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+							<>
+								{workerGroups.map((group, index) => (
+									<li key={index} className="flex flex-col gap-2 p-4 border rounded-lg">
+										<div className="flex justify-between items-center">
+											<h6 className="font-semibold">Worker group {index + 1}</h6>
+											{workerGroups.length > 1 && (
+												<button
+													onClick={() => removeWorkerGroup(index)}
+													className="text-sm text-gray-600 hover:text-gray-500"
+													aria-label="Remove worker group"
+												>
+													Remove
+												</button>
+											)}
+										</div>
+										
+										{/* Number of workers slider */}
+										<div className="flex justify-between w-full items-center">
+											<span className="text-sm text-gray-600 dark:text-gray-200">
+												{group.workers} {group.workers === 1 ? 'worker' : 'workers'}
+											</span>
+											<span className="text-sm text-gray-900 font-semibold dark:text-white">
+												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * 10) / 10).toFixed(1).replace('.0', '')} /worker/mo
+											</span>
+										</div>
+										<Slider
+											min={1}
+											max={1000}
+											step={1}
+											defaultValue={group.workers}
+											onChange={(value) => updateWorkerGroup(index, 'workers', value)}
+										/>
+
+										{/* Memory per worker slider */}
+										<div className="flex justify-between w-full items-center">
+											<span className="text-sm text-gray-600 dark:text-gray-200">
+												{group.memoryGB}GB memory per worker
+											</span>
+											<div className="text-right">
+												<span className="text-sm text-gray-500 mr-2">
+													{group.memoryGB >= 4 ? '(Price cap)' : '\u00A0'}
+												</span>
+											</div>
+										</div>
+										<MemorySlider
+											min={0.512}
+											max={128}
+											defaultValue={group.memoryGB}
+											onChange={(value) => updateWorkerGroup(index, 'memoryGB', value)}
+										/>
+									</li>
+								))}
+								
+								<button
+									onClick={addWorkerGroup}
+									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white font-semibold"
 								>
-									Our pricing explained
-								</a>
-							</span>
+									+ Add worker group
+								</button>
+							</>
 						)}
 					</ul>
 				</div>

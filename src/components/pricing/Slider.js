@@ -4,7 +4,33 @@ function exponentialScale(value, min, max) {
     if (value <= min) return min;
     const scale = (max - min) / Math.log(max - min + 1);
     let scaledValue = min + Math.round(Math.exp(value / scale) - 1);
-    return Math.min(scaledValue, max); // Ensure the value does not exceed max
+    
+    // Dynamically generate round numbers based on max value
+    const roundNumbers = [];
+    const magnitude = Math.floor(Math.log10(max));
+    const base = Math.pow(10, magnitude);
+    
+    // For max values like 1000, add steps like [100, 250, 500, 750, 1000]
+    // For max values like 100, add steps like [10, 25, 50, 75, 100]
+    // For max values like 50, add steps like [5, 10, 15, 25, 35, 50]
+    if (max >= base) {
+        roundNumbers.push(base * 0.1, base * 0.25, base * 0.5, base * 0.75, base);
+    } else {
+        const step = Math.max(1, Math.floor(max / 10));
+        for (let i = step; i <= max; i += step) {
+            roundNumbers.push(i);
+        }
+    }
+    
+    const snapThreshold = max * 0.02; // 2% of max value as threshold
+    
+    for (const round of roundNumbers) {
+        if (round > min && round < max && Math.abs(scaledValue - round) < snapThreshold) {
+            return round;
+        }
+    }
+    
+    return Math.min(scaledValue, max);
 }
 
 function inverseExponentialScale(value, min, max) {
@@ -20,12 +46,11 @@ export default function Slider({ min, max, step, defaultValue, onChange }) {
     const isExponential = max > 99;
 
     useEffect(() => {
-        // When defaultValue, min, or max changes, reset the slider value if it exceeds the new max
         setValue((prevValue) => clamp(prevValue, min, max));
     }, [defaultValue, min, max]);
 
     const handleChange = (event) => {
-        let newValue = parseFloat(event.target.value);
+        let newValue = parseFloat(parseFloat(event.target.value).toFixed(2));
         if (isExponential) {
             newValue = exponentialScale(newValue, min, max);
         }

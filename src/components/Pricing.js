@@ -19,6 +19,17 @@ const periods = [
 	{ value: 'annually', label: 'Annually' }
 ];
 
+const workerDefaults = {
+	workers: 1,
+	minWorkers: 1,
+	maxWorkers: 100,
+	memoryGB: 4,
+	minMemoryGB: 10,
+	maxMemoryGB: 32,
+	memoryPricePerGB: 10,
+	maxPricedMemoryGB: 16
+};
+
 const pricing = {
 	selfhost: [
 		{
@@ -42,11 +53,18 @@ const pricing = {
 			id: 'tier-enterprise-selfhost',
 			href: 'mailto:contact@windmill.dev',
 			price: {
-				vCPU: {
+				worker: {
 					monthly: 50,
-					default: 2,
-					min: 2,
-					max: 100
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: workerDefaults.maxWorkers,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
+					}
 				},
 				seat: {
 					monthly: 20,
@@ -56,11 +74,18 @@ const pricing = {
 				}
 			},
 			price_nonprofit: {
-				vCPU: {
+				worker: {
 					monthly: 20,
-					default: 2,
-					min: 2,
-					max: 100
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: workerDefaults.maxWorkers,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
+					}
 				},
 				seat: {
 					monthly: 8,
@@ -70,18 +95,25 @@ const pricing = {
 				}
 			},
 			price_smb: {
-				vCPU: {
-					monthly: 20,
-					default: 2,
-					min: 2,
-					max: 10
-				},
-				seat: {
-					monthly: 8,
-					default: 1,
-					min: 1,
-					max: 10
-				}
+					worker: {
+						monthly: 20,
+						default: workerDefaults.workers,
+						min: workerDefaults.minWorkers,
+						max: 10,
+						memoryGB: {
+							default: workerDefaults.memoryGB,
+							min: workerDefaults.minMemoryGB,
+							max: workerDefaults.maxMemoryGB,
+							pricePerGB: workerDefaults.memoryPricePerGB,
+							maxPricedGB: workerDefaults.maxPricedMemoryGB
+						}
+					},
+					seat: {
+						monthly: 8,
+						default: 1,
+						min: 1,
+						max: 10
+					}
 			},
 			minPrice: 120,
 			minPrice_smb: 48,
@@ -207,11 +239,18 @@ const pricing = {
 			href: 'mailto:contact@windmill.dev',
 			enterprise_edition: true,
 			price: {
-				vCPU: {
+				worker: {
 					monthly: 100,
-					default: 2,
-					min: 2,
-					max: 100
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: workerDefaults.maxWorkers,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB * 2,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
+					}
 				},
 				seat: {
 					monthly: 40,
@@ -1165,7 +1204,12 @@ export default function Pricing() {
 							</ul>
 							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
-									<PriceCalculator tier={tier} period={period} selectedOption={selectedOption} />
+									<PriceCalculator 
+										tier={tier} 
+										period={period} 
+										selectedOption={selectedOption}
+										workerDefaults={workerDefaults}
+									/>
 								) : null}
 
 								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
