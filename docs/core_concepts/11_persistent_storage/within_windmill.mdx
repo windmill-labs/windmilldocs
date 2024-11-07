@@ -12,7 +12,7 @@ Instead, Windmill is very convenient to use alongside data storage providers to 
 
 There are however internal methods to persist data between executions of jobs.
 
-## States and Resources
+## States and resources
 
 Within Windmill, you can use [States](../3_resources_and_types/index.mdx#states) and [Resources](../3_resources_and_types/index.mdx) as a way to store a transient state - that can be represented as small JSON.
 
@@ -98,7 +98,7 @@ _Python_
 	/>
 </div>
 
-### Custom Flow States
+### Custom flow states
 
 Custom flow states are a way to store data across steps in a [flow](../../flows/1_flow_editor.mdx). You can set and retrieve a value given a key from any step of flow and it will be available from within the flow globally. That state will be stored in the flow state itself and thus has the same lifetime as the flow [job](../20_jobs/index.mdx) itself.
 
@@ -176,30 +176,25 @@ In conclusion `setState` and `setResource` are convenient ways to persist json b
 	/>
 </div>
 
-## Shared Directory
+## Shared directory
 
-For heavier ETL processes or sharing data between steps in a flow, Windmill provides a [Shared Directory](../../flows/3_editor_components.mdx#shared-directory) feature.
-
-The Shared Directory allows steps within a flow to share data by storing it in a designated folder.
+For heavier ETL processes or sharing data between steps in a flow, Windmill provides a Shared Directory feature. This allows steps within a flow to share data by storing it in a designated folder at `./shared`.
 
 :::caution
-
-Although Shared Folders are recommended for persisting states within a flow, it's important to note that all steps are executed on the same worker and the data stored in the Shared Directory is strictly ephemeral to the flow execution.
-
+Although Shared Directories are recommended for persisting states within a flow, it's important to note that:
+- All steps are executed on the same worker
+- The data stored in the Shared Directory is strictly ephemeral to the flow execution
+- The contents are not preserved across [suspends](../../flows/11_flow_approval.mdx) and [sleeps](../../flows/15_sleep.md)
 :::
 
-To enable the Shared Directory, follow these steps:
-
-1. Open the `Settings` menu in the Windmill interface.
-2. Go to the `Shared Directory` section.
-3. Toggle on the option for `Shared Directory on './shared'`.
+To enable the Shared Directory:
+1. Open the `Settings` menu in the Windmill interface
+2. Go to the `Shared Directory` section
+3. Toggle on the option for `Shared Directory on './shared'`
 
 ![Flow Shared Directory](../../assets/flows/flow_settings_shared_directory.png.webp)
 
-Once the Shared Directory is enabled, you can use it in your flow by referencing the `./shared` folder. This folder is shared among the steps in the flow, allowing you to store and access data between them.
-
-:::tip
-
-Keep in mind that the contents of the `./shared` folder are not preserved across [suspends](../../flows/11_flow_approval.mdx) and [sleeps](../../flows/15_sleep.md). The directory is temporary and active only during the execution of the flow.
-
-:::
+Once enabled, steps can read and write files to the `./shared` folder to pass data between them. This is particularly useful for:
+- Handling larger datasets that would be impractical to pass as step inputs/outputs
+- Temporary storage of intermediate processing results
+- Sharing files between steps in an ETL pipeline

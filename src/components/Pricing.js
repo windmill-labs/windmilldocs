@@ -364,6 +364,17 @@ const sections = [
 				link: '/docs/advanced/email_triggers'
 			},
 			{
+				name: 'Websocket triggers',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/40_websocket_triggers'
+			},
+			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
 				tiers: {
 					'tier-free-selfhost': false,
