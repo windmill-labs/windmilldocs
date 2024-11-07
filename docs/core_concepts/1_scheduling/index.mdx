@@ -41,6 +41,23 @@ Cron jobs are one of many ways to [trigger workflows](../../getting_started/9_tr
 
 :::
 
+## Cron syntax
+
+Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). This library differs slightly from the Unix library.
+
+Although the syntaxes are similar, there are some notable differences:
+
+| Feature                   | Unix cron               | zslayton's `cron` library                        |
+|---------------------------|-------------------------|--------------------------------------------|
+| **Day of Week Index**        | Sunday = 0 through Saturday = 6 | Shifted by one (Sunday = 1 through Saturday = 7, 0 = Sunday) |
+| **Seconds Field**         | Not included            | Included as the first field                |
+| **Year Field**            | Not included            | Optional, can specify specific years       |
+| **Month Representation**  | Numeric and short names | Numeric, short names, and name ranges      |
+| **List and Range in Fields** | Supports lists and ranges | Supports lists, ranges, and combinations |
+| **Step Values**           | Supported (e.g., `*/2`) | Supported, including complex patterns like `2018/2` |
+
+Anyway, the simplified builder and [Windmill AI](../22_ai_generation/index.mdx) will help you to create the cron expression.
+
 ## Set a schedule
 
 Scripts and flows can have unique [primary schedules](#primary-schedule) and multiple [other schedules](#other-schedules).
@@ -150,22 +167,19 @@ More at:
 	/>
 </div>
 
-## Cron syntax
+## Scheduled polls
 
-Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). This library differs slightly from the Unix library.
+A particular use case for schedules are [Trigger scripts](../../flows/10_flow_trigger.mdx).
 
-Although the syntaxes are similar, there are some notable differences:
+ and have it return all of the new items since the last run as scheduled polls, without resorting to external webhooks.
 
-| Feature                   | Unix cron               | zslayton's `cron` library                        |
-|---------------------------|-------------------------|--------------------------------------------|
-| **Day of Week Index**        | Sunday = 0 through Saturday = 6 | Shifted by one (Sunday = 1 through Saturday = 7, 0 = Sunday) |
-| **Seconds Field**         | Not included            | Included as the first field                |
-| **Year Field**            | Not included            | Optional, can specify specific years       |
-| **Month Representation**  | Numeric and short names | Numeric, short names, and name ranges      |
-| **List and Range in Fields** | Supports lists and ranges | Supports lists, ranges, and combinations |
-| **Step Values**           | Supported (e.g., `*/2`) | Supported, including complex patterns like `2018/2` |
-
-Anyway, the simplified builder and [Windmill AI](../22_ai_generation/index.mdx) will help you to create the cron expression.
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Trigger scripts"
+		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
+		href="/docs/flows/flow_trigger"
+	/>
+</div>
 
 ## Control permissions and errors
 

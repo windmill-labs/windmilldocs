@@ -117,7 +117,7 @@ Add a custom timeout for this script, for a given duration.
 
 If enabled to execution will be stopped after the timeout.
 
-### Perpetual Scripts
+### Perpetual script
 
 Perpetual scripts restart upon ending unless canceled.
 
@@ -159,9 +159,13 @@ The deletion is irreversible.
 
 :::
 
+### High priority script
+
+Jobs within a same job queue can be given a [priority](../core_concepts/20_jobs/index.mdx#high-priority-jobs) between 1 and 100. Jobs with a higher priority value will be given precedence over jobs with a lower priority value in the job queue.
+
 ### Runs visibility
 
-When this option is enabled, manual [executions](../core_concepts/5_monitor_past_and_future_runs/index.mdx) of this script are invisible to users other than the user running it, including the [owner(s)](../core_concepts/16_roles_and_permissions/index.mdx). This setting can be overridden when this script is run manually from the advanced menu (available when the script is [deployed](../core_concepts/0_draft_and_deploy/index.mdx)).
+When this [option](../core_concepts/5_monitor_past_and_future_runs/index.mdx#invisible-runs) is enabled, manual [executions](../core_concepts/5_monitor_past_and_future_runs/index.mdx) of this script are invisible to users other than the user running it, including the [owner(s)](../core_concepts/16_roles_and_permissions/index.mdx). This setting can be overridden when this script is run manually from the advanced menu (available when the script is [deployed](../core_concepts/0_draft_and_deploy/index.mdx)).
 
 ## Generated UI
 
@@ -225,6 +229,18 @@ Windmill supports custom HTTP routes to trigger a script or flow.
 		title="Custom HTTP routes"
 		description="Windmill supports custom HTTP routes to trigger a script or flow."
 		href="/docs/core_concepts/http_routing"
+	/>
+</div>
+
+### Websocket
+
+Windmill can connect to websocket servers and trigger runnables (scripts, flows) when a message is received.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Websocket triggers"
+		description="Trigger scripts and flows from websocket servers."
+		href="/docs/core_concepts/websocket_triggers"
 	/>
 </div>
 

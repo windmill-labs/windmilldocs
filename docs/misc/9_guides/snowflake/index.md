@@ -4,7 +4,7 @@ title: Build an App accessing Snowflake with end-user Roles
 
 import DocCard from '@site/src/components/DocCard';
 
-# Build an App Accessing Snowflake with End-User Roles
+# Build an app accessing Snowflake with end-user roles
 
 This guide walks you through building an application that accesses Snowflake data based on the end-user’s role, using OAuth in Windmill. By leveraging dynamic role-based credentials from Snowflake’s OAuth integration, we avoid static credentials and enable secure data access customized for each user. This can be particularly useful for organizations with strict data access policies and multiple user roles where [row access policies](https://docs.snowflake.com/en/user-guide/security-row-intro) are set up.
 
@@ -31,14 +31,14 @@ Note that the mechanism of using the end-user's role demonstated here with Snowf
 
 For a visual walkthrough of building this app, watch the tutorial below:
 
-- 00:00 [Create a New Snowflake OAuth User Resource](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=0s)
-- 00:37 [Background Runnable to query Available Tables](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=37s)
-- 02:04 [Display Table Content](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=124s)
-- 02:47 [Test the App](https://www.youtube.com/watch?v=8Mk_4ErioeE&t=167s)
+- 00:00 [Create a New Snowflake OAuth User Resource](https://www.youtube.com/watch?v=9r17_ABP4Xk&t=0s)
+- 00:37 [Background Runnable to query Available Tables](https://www.youtube.com/watch?v=9r17_ABP4Xk&t=21s)
+- 02:04 [Display Table Content](https://www.youtube.com/watch?v=9r17_ABP4Xk&t=83s)
+- 02:47 [Test the App](https://www.youtube.com/watch?v=9r17_ABP4Xk&t=147s)
 
 <iframe
     style={{ aspectRatio: '16/9' }}
-    src="https://www.youtube.com/embed/8Mk_4ErioeE"
+    src="https://www.youtube.com/embed/9r17_ABP4Xk"
     title="Small tutorial on how to build a Windmill App that uses Snowflake as a data source with OAuth roles and permissions"
     frameBorder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -103,13 +103,19 @@ Next, create a **Background Runnable** to retrieve the available tables based on
 
 ### Step 3: Display Table Content
 
-Now, add a **Database Studio Table** component to show the table content based on the selected table.
+Now, add a **Rich Result** component to show the table content based on the selected table.
 
-1. Create a **Database Studio Table** component.
-2. Connect the **Database Studio Table**’s "resource" field to the **User Resource Input** component from Step 1.
-3. Connect the **Database Studio Table**’s "table" field to the **Select** component created in Step 2.
+1. Create a **Rich Result** component.
+2. In the "Data Source" setting, Select "Create Inline Script" and select "Snowflake". In the code editor enter your snowflake query such as:
+   ```sql
+   -- ? table_name (varchar) = default arg
+   select * from TABLE(?)
+   ```
+2. Connect the **Rich Result**’s "database" field to the **User Resource Input** component from Step 1.
+3. Connect the **Rich Result**’s "table_name" field to the **Select** component created in Step 2.
+4. Enable the toggle **resource from users allowed** to grant access to user-linked resources. Note that this resource is passed as a reference and won’t be accessible to the app publisher.
 
-   ![Settings for Database Studio](./database_studio.png)
+   ![Settings for Rich Result](./rich_result.png)
 
 4. The component will automatically populate with data from the selected table.
 

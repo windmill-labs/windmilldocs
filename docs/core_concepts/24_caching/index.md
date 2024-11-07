@@ -28,7 +28,7 @@ In the above example, the result of step the script will be cached for 180 secon
 
 ## Cache Flows
 
-Caching a flow means caching the results of that script for a certain duration. If the flow is triggered with the same flow inputs during the given duration, it will return the cached result.
+Caching a flow means caching the results of that flow for a certain duration. If the flow is triggered with the same flow inputs during the given duration, it will return the cached result.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full"
