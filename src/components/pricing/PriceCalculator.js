@@ -63,7 +63,8 @@ function calculateWorkerPrice(memoryGB, tierId, selectedOption) {
 
 export default function PriceCalculator({ period, tier, selectedOption }) {
 	const [selected, setSelected] = useState(plans[0]);
-	const [seats, setSeats] = useState(tier.price.seat ? tier.price.seat.default : 2);
+	const [developers, setDevelopers] = useState(tier.price.seat ? tier.price.seat.default : 2);
+	const [operators, setOperators] = useState(0);
 	const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
 	const [showQuoteForm, setShowQuoteForm] = useState(false);
 
@@ -73,6 +74,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 			? [{ workers: workerGroupDefaults.workers, memoryGB: workerGroupDefaults.memoryGB }]
 			: []
 	);
+
+	// Update the initial state of nativeWorkers to 8
+	const [nativeWorkers, setNativeWorkers] = useState(8);
 
 	// Get the appropriate pricing based on selectedOption and tier.id
 	function getPriceByOption() {
@@ -90,13 +94,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 
 	// This effect ensures that seat and vCPU values are clamped to the new tier's limits
 	useEffect(() => {
-		if (pricing.seat && seats > pricing.seat.max) {
-			setSeats(pricing.seat.max);
+		if (pricing.seat && developers > pricing.seat.max) {
+			setDevelopers(pricing.seat.max);
 		}
 		if (pricing.vCPU && vCPUs > pricing.vCPU.max) {
 			setvCPUs(pricing.vCPU.max);
 		}
-	}, [pricing, seats, vCPUs]);
+	}, [pricing, developers, vCPUs]);
 
 	// Replace the existing computeTotalPrice function
 	function computeTotalPrice() {
@@ -105,35 +109,49 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		if (tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') {
 			// Calculate seats cost (before period multiplier)
 			if (pricing.seat) {
-				total += pricing.seat.monthly * seats;
+				total += pricing.seat.monthly * developers; // Full price for developers
+				total += (pricing.seat.monthly / 2) * operators; // Half price for operators
 			}
 
-			// Calculate workers cost (before period multiplier)
+			// Add native workers cost
+			let nativeWorkersCost = 0;
+			if (pricing.worker?.native) {
+				nativeWorkersCost = (pricing.worker.native * nativeWorkers / 8);
+				total += nativeWorkersCost;
+			}
+
+			// Calculate regular workers cost
 			const workersTotal = workerGroups.reduce((sum, group) => {
 				const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
 					(tier.id === 'tier-enterprise-cloud' ? 2 : 1); // Double price for cloud
 				return sum + (pricePerWorker * group.workers);
 			}, 0);
 
-			// Apply minimum worker group pricing with adjustments for SMB/Nonprofit
+			// Apply minimum worker group pricing considering both native and regular workers
 			let minimumWorkerPrice = tier.id === 'tier-enterprise-cloud' ? 200 : 100;
 			if (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'SMB' || selectedOption === 'Nonprofit')) {
 				minimumWorkerPrice = 40; // 60% discount applied to minimum price
 			}
 			
-			const adjustedWorkersTotal = Math.max(workersTotal, minimumWorkerPrice);
-			total += adjustedWorkersTotal;
+			const totalWorkersCost = workersTotal + nativeWorkersCost;
+			if (totalWorkersCost < minimumWorkerPrice) {
+				total += minimumWorkerPrice - nativeWorkersCost;
+			} else {
+				total += workersTotal;
+			}
 
 			// Add core package price for enterprise cloud
 			if (tier.id === 'tier-enterprise-cloud') {
-				total += selected.price;
+					total += selected.price;
 			}
 
 			// Apply period multiplier to the total at the end
 			total = calculatePrice(total, period.value, tier.id);
 		} else {
 			if (pricing.seat) {
-				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * seats;
+				const devCost = calculatePrice(pricing.seat.monthly, period.value, tier.id) * developers;
+				const opCost = calculatePrice(pricing.seat.monthly / 2, period.value, tier.id) * operators;
+				total += devCost + opCost;
 			}
 
 			if (pricing.vCPU) {
@@ -167,11 +185,21 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		}
 	};
 
+	// Add this utility function to count workers by size
+	function getWorkerCounts(workerGroups) {
+		return workerGroups.reduce((acc, group) => {
+			const size = group.memoryGB === 1 ? 'small' : 
+						group.memoryGB === 2 ? 'standard' : 'large';
+			acc[size] = (acc[size] || 0) + group.workers;
+			return acc;
+		}, {});
+	}
+
 	return (
 		<>
 			<QuoteForm
 				vCPUs={vCPUs}
-				seats={seats}
+				seats={developers + operators}
 				open={showQuoteForm}
 				setOpen={setShowQuoteForm}
 				plan={tier.id === 'tier-enterprise-cloud' ? 'cloud_ee' : 'selfhosted_ee'}
@@ -184,11 +212,12 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						<h4>Price</h4>
 						<div className="h-6">
 							{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && 
-								workerGroups.reduce((sum, group) => {
+								(workerGroups.reduce((sum, group) => {
 									const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
 										(tier.id === 'tier-enterprise-cloud' ? 2 : 1);
 									return sum + (pricePerWorker * group.workers);
-								}, 0) < (tier.id === 'tier-enterprise-cloud' ? 200 : 
+								}, 0) + (pricing.worker?.native * nativeWorkers / 8)) < 
+								(tier.id === 'tier-enterprise-cloud' ? 200 : 
 									(selectedOption === 'SMB' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
 									<span className="text-sm text-rose-700 dark:text-red-400">
 										Price for workers can't be below ${tier.id === 'tier-enterprise-cloud' 
@@ -216,40 +245,102 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					<ul className="flex flex-col gap-2 w-full">
 						{/* Show seats slider if applicable */}
 						{pricing.seat && (
-							<li className="flex flex-col">
+							<>
+								<li className="flex flex-col">
+									<div className="flex justify-between w-full items-center">
+										<div>
+											<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
+												{Math.max(1, developers).toLocaleString()}
+											</span>
+											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
+												{' '}{Math.max(1, developers) === 1 ? 'developer' : 'developers'}
+											</span>
+										</div>
+										<div>
+											<span className="text-sm text-gray-900 font-semibold dark:text-white">
+												${calculatePrice(pricing.seat.monthly, period.value, tier.id)}
+											</span>{' '}
+											<span className="text-sm text-gray-400">
+												{period.value === 'annually' ? `/yr/dev` : `/mo/dev`}
+											</span>
+										</div>
+									</div>
+									<Slider
+										min={0}
+										max={pricing.seat.max}
+										step={1}
+										defaultValue={clamp(developers, 0, pricing.seat.max)}
+										onChange={(value) => {
+											setDevelopers(Math.max(1, clamp(value, 0, pricing.seat.max)));
+										}}
+									/>
+								</li>
+
+								<li className="flex flex-col mt-2">
+									<div className="flex justify-between w-full items-center">
+										<div>
+											<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
+												{operators.toLocaleString()}
+											</span>
+											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
+												{' '}{operators === 1 ? 'operator' : 'operators'}
+											</span>
+										</div>
+										<div>
+											<span className="text-sm text-gray-900 font-semibold dark:text-white">
+												${calculatePrice(pricing.seat.monthly / 2, period.value, tier.id)}
+											</span>{' '}
+											<span className="text-sm text-gray-400">
+												{period.value === 'annually' ? `/yr/op` : `/mo/op`}
+											</span>
+										</div>
+									</div>
+									<Slider
+										min={0}
+										max={pricing.seat.max * 2}
+										step={1}
+										defaultValue={clamp(operators, 0, pricing.seat.max * 2)}
+										onChange={(value) => {
+											setOperators(clamp(value, 0, pricing.seat.max * 2));
+										}}
+									/>
+								</li>
+							</>
+						)}
+
+						{/* Add Native workers section before the worker groups */}
+						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+							<li className="flex flex-col gap-2 p-4 border rounded-lg mt-8">
+								<h6 className="font-semibold">
+									Native workers{' '}
+									<a href="#native-workers" className="text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500">
+										<svg className="inline-block w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+										</svg>
+									</a>
+								</h6>
+								
 								<div className="flex justify-between w-full items-center">
-									<div>
-										<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-											{seats.toLocaleString()}
-										</span>
-										<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-											{' '}{seats === 1 ? 'seat' : 'seats'}
-										</span>
-									</div>
-									<div>
-										<span className="text-sm text-gray-900 font-semibold dark:text-white">
-											${calculatePrice(pricing.seat.monthly, period.value, tier.id)}
-										</span>{' '}
-										<span className="text-sm text-gray-400">
-											{period.value === 'annually' ? `/yr/seat` : `/mo/seat`}
-										</span>
-									</div>
+									<span className="text-sm text-gray-600 dark:text-gray-200">
+										{nativeWorkers} native workers
+									</span>
+									<span className="text-sm text-gray-900 font-semibold dark:text-white">
+										${(Math.round((pricing.worker.native * nativeWorkers / 8) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'year' : 'mo'}
+									</span>
 								</div>
 								<Slider
-									min={pricing.seat.min}
-									max={pricing.seat.max}
-									step={1}
-									defaultValue={clamp(seats, pricing.seat.min, pricing.seat.max)}
-									onChange={(value) => {
-										setSeats(clamp(value, pricing.seat.min, pricing.seat.max));
-									}}
+									min={0}
+									max={200}
+									step={8}
+									defaultValue={8}
+									onChange={(value) => setNativeWorkers(value)}
+									noExponential={true}
 								/>
 							</li>
 						)}
-
-						{/* Replace vCPU section with worker groups for enterprise self-hosted */}
+						{/* Existing worker groups section */}
 						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
-							<>
+							<div className="mt-6">
 								{workerGroups.map((group, index) => (
 									<li key={index} className="flex flex-col gap-2 p-4 border rounded-lg">
 										<div className="flex justify-between items-center">
@@ -257,7 +348,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											{workerGroups.length > 1 && (
 												<button
 													onClick={() => removeWorkerGroup(index)}
-													className="text-sm text-gray-600 hover:text-gray-500"
+													className="text-sm text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
 													aria-label="Remove worker group"
 												>
 													Remove
@@ -268,10 +359,16 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{/* Number of workers slider */}
 										<div className="flex justify-between w-full items-center">
 											<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.workers} {group.workers === 1 ? 'worker' : 'workers'}
+												{group.workers} {group.workers === 1 ? 
+													(group.memoryGB === 1 ? 'small worker' : 
+													 group.memoryGB === 2 ? 'standard worker' : 
+													 'large worker') :
+													(group.memoryGB === 1 ? 'small workers' :
+													 group.memoryGB === 2 ? 'standard workers' :
+													 'large workers')}
 											</span>
 											<span className="text-sm text-gray-900 font-semibold dark:text-white">
-												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * 10) / 10).toFixed(1).replace('.0', '')} /worker/mo
+												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'year' : 'mo'}
 											</span>
 										</div>
 										<Slider
@@ -285,19 +382,21 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{/* Memory per worker slider */}
 										<div className="flex justify-between w-full items-center">
 											<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.memoryGB}GB memory per worker
+												{group.memoryGB}GB memory limit per worker
 											</span>
-											<div className="text-right">
-												<span className="text-sm text-gray-500 mr-2">
-													{group.memoryGB >= 4 ? '(Price cap)' : '\u00A0'}
-												</span>
-											</div>
+											<span className="text-sm text-gray-900 font-semibold dark:text-white">
+												{group.memoryGB >= 4 && (
+													<span className="text-sm font-normal text-gray-400 dark:text-gray-300 mr-2">(Price cap)</span>
+												)}
+												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toFixed(1).replace('.0', '')} /worker/{period.value === 'annually' ? 'year' : 'mo'}
+											</span>
 										</div>
 										<MemorySlider
-											min={0.512}
+											min={1}
 											max={128}
 											defaultValue={group.memoryGB}
 											onChange={(value) => updateWorkerGroup(index, 'memoryGB', value)}
+											steps={[1, 2, 4, 6, 8, 12, 14, 16, 32, 48, 64, 80, 96, 112, 128]}
 										/>
 									</li>
 								))}
@@ -308,7 +407,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								>
 									+ Add worker group
 								</button>
-							</>
+							</div>
 						)}
 					</ul>
 				</div>
@@ -380,7 +479,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						<div className="mt-2 flex items-baseline gap-x-1">
 							<div className="text-sm text-gray-600 mt-1">
 								<span>
-									{`~${(seats * 10 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}k `}
+									{`~${(developers * 10 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}k `}
 									<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">
 										executions
 									</a>
@@ -391,15 +490,19 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						</div>
 						<div className="flex flex-row gap-1">
 							<span className="whitespace-nowrap text-sm">
-								{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
+								{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
 							</span>
-							<b className="text-sm">OR</b>
-							<span className="whitespace-nowrap text-sm">
-								{(seats * 2).toLocaleString()}{' '}
-								<a href="#operator" class="custom-link text-black dark:text-white">
-									operators
-								</a>
-							</span>
+							{operators > 0 && (
+								<>
+									<b className="text-sm font-normal">and</b>
+									<span className="whitespace-nowrap text-sm">
+										{operators.toLocaleString()}{' '}
+										<a href="#operator" className="custom-link text-black dark:text-white">
+											{operators === 1 ? 'operator' : 'operators'}
+										</a>
+									</span>
+								</>
+							)}
 						</div>
 					</div>
 				) : null}
@@ -408,29 +511,42 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					<>
 						<div className="mt-8 flex flex-col gap-1">
 							<h5 className="font-semibold">Summary</h5>
-							<div className="mt-2 flex items-baseline gap-x-1">
-								<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
-									<span>
-										{`~${(vCPUs * 26 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}M `}
-										<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">
-											executions
-										</a>
-										{` of 100ms per `}
-									</span>
-									<span>{period.value === 'annually' ? 'year' : 'month'}</span>
-								</div>
+							<div className="mt-2 flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
+								{nativeWorkers > 0 && (
+									<span>{nativeWorkers} native workers</span>
+								)}
+								{workerGroups.length > 0 && (() => {
+									const counts = getWorkerCounts(workerGroups);
+									return (
+										<>
+											{counts.small > 0 && (
+												<span>{counts.small} small workers (1GB)</span>
+											)}
+											{counts.standard > 0 && (
+												<span>{counts.standard} standard workers (2GB)</span>
+											)}
+											{counts.large > 0 && (
+												<span>{counts.large} large workers (>2GB)</span>
+											)}
+										</>
+									);
+								})()}
 							</div>
 							<div className="flex flex-row gap-1">
 								<span className="whitespace-nowrap text-sm">
-									{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
+									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
 								</span>
-								<b className="text-sm">OR</b>
-								<span className="whitespace-nowrap text-sm">
-									{(seats * 2).toLocaleString()}{' '}
-									<a href="#operator" class="custom-link text-black dark:text-white">
-										operators
-									</a>
-								</span>
+								{operators > 0 && (
+									<>
+										<b className="text-sm font-normal">and</b>
+										<span className="whitespace-nowrap text-sm">
+											{operators.toLocaleString()}{' '}
+											<a href="#operator" className="custom-link text-black dark:text-white">
+												{operators === 1 ? 'operator' : 'operators'}
+											</a>
+										</span>
+									</>
+								)}
 							</div>
 						</div>
 						<a
@@ -451,29 +567,42 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							<div className="flex justify-between items-center">
 								<h5 className="font-semibold">Summary</h5>
 							</div>
-							<div className="mt-2 flex items-baseline gap-x-1">
-								<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
-									<span>
-										{`~${(vCPUs * 26 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}M `}
-										<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">
-											executions
-										</a>
-										{` of 100ms per `}
-									</span>
-									<span>{period.value === 'annually' ? 'year' : 'month'}</span>
-								</div>
+							<div className="mt-2 flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
+								{nativeWorkers > 0 && (
+									<span>{nativeWorkers} native workers</span>
+								)}
+								{workerGroups.length > 0 && (() => {
+									const counts = getWorkerCounts(workerGroups);
+									return (
+										<>
+											{counts.small > 0 && (
+												<span>{counts.small} small workers (1GB)</span>
+											)}
+											{counts.standard > 0 && (
+												<span>{counts.standard} standard workers (2GB)</span>
+											)}
+											{counts.large > 0 && (
+												<span>{counts.large} large workers (>2GB)</span>
+											)}
+										</>
+									);
+								})()}
 							</div>
 							<div className="flex flex-row gap-1">
 								<span className="whitespace-nowrap text-sm">
-									{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
+									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
 								</span>
-								<b className="text-sm">OR</b>
-								<span className="whitespace-nowrap text-sm">
-									{(seats * 2).toLocaleString()}{' '}
-									<a href="#operator" class="custom-link text-black dark:text-white">
-										operators
-									</a>
-								</span>
+								{operators > 0 && (
+									<>
+										<b className="text-sm font-normal">and</b>
+										<span className="whitespace-nowrap text-sm">
+											{operators.toLocaleString()}{' '}
+											<a href="#operator" className="custom-link text-black dark:text-white">
+												{operators === 1 ? 'operator' : 'operators'}
+											</a>
+										</span>
+									</>
+								)}
 							</div>
 						</div>
 						<a
@@ -491,35 +620,6 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					</>
 				) : null}
 
-				{tier.id === 'tierpro' ? (
-					<div className="mt-8 flex flex-col gap-1">
-						<h5 className="font-semibold">Summary</h5>
-						<div className="mt-2 flex items-baseline gap-x-1">
-							<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
-								<span>
-									{`~${(vCPUs * 26 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}M `}
-									<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">
-										executions
-									</a>
-									{` of 100ms per `}
-								</span>
-								<span>{period.value === 'annually' ? 'year' : 'month'}</span>
-							</div>
-						</div>
-						<div className="flex flex-row gap-1">
-							<span className="whitespace-nowrap text-sm">
-								{seats.toLocaleString()} {seats > 1 ? 'developers' : 'developer'}
-							</span>
-							<b className="text-sm">OR</b>
-							<span className="whitespace-nowrap text-sm">
-								{(seats * 2).toLocaleString()}{' '}
-								<a href="#operator" class="custom-link text-black dark:text-white">
-									operators
-								</a>
-							</span>
-						</div>
-					</div>
-				) : null}
 			</div>
 		</>
 	);

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-function exponentialScale(value, min, max) {
+function exponentialScale(value, min, max, noExponential = false) {
     if (value <= min) return min;
     const scale = (max - min) / Math.log(max - min + 1);
     let scaledValue = min + Math.round(Math.exp(value / scale) - 1);
     
+    // Skip snapping to round numbers if noExponential is true
+    if (noExponential) {
+        return Math.min(scaledValue, max);
+    }
+
     // Dynamically generate round numbers based on max value
     const roundNumbers = [];
     const magnitude = Math.floor(Math.log10(max));
@@ -41,9 +46,9 @@ function inverseExponentialScale(value, min, max) {
     return Math.min(displayValue, max); // Ensure the display value does not exceed max
 }
 
-export default function Slider({ min, max, step, defaultValue, onChange }) {
+export default function Slider({ min, max, step, defaultValue, onChange, noExponential = false }) {
     const [value, setValue] = useState(defaultValue);
-    const isExponential = max > 99;
+    const isExponential = !noExponential && max > 99;
 
     useEffect(() => {
         setValue((prevValue) => clamp(prevValue, min, max));
@@ -52,7 +57,7 @@ export default function Slider({ min, max, step, defaultValue, onChange }) {
     const handleChange = (event) => {
         let newValue = parseFloat(parseFloat(event.target.value).toFixed(2));
         if (isExponential) {
-            newValue = exponentialScale(newValue, min, max);
+            newValue = exponentialScale(newValue, min, max, noExponential);
         }
         setValue(newValue);
         onChange(newValue);

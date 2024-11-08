@@ -84,6 +84,22 @@ const faqs = [
 		)
 	},
 	{
+		id: 'native-workers',
+		question: 'What are native workers?',
+		answer: (
+			<span>
+				Native workers are workers within the{' '}
+				<Link
+					to="/docs/core_concepts/worker_groups#native-workers"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					native worker group
+				</Link>
+				. This group is pre-configured to listen to native jobs tags. Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
+			</span>
+		)
+	},
+	{
 		id: 'number-of-vcpus',
 		question: 'How many vCPUs do I need?',
 		answer: (

@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
+const ALLOWED_VALUES = [1, 2, 4, 6, 8, 12, 14, 16, 32, 48, 64, 80, 96, 112, 128];
+const POSITIONS = ALLOWED_VALUES.map((_, index) => index * (100 / (ALLOWED_VALUES.length - 1)));
+
 function formatMemoryValue(value) {
     if (value < 1) {
-        return `${Math.round(value * 1024)}MB`;
+        return '512MB';
     }
-    return `${value}GB`;
+    return `${value % 1 === 0 ? value : value.toFixed(1)}GB`;
 }
 
 function getStepForRange(value) {
     if (value < 4) {
-        return 0.512;
+        return 1;
     } else if (value < 16) {
         return 2;
     }
@@ -18,55 +21,26 @@ function getStepForRange(value) {
 
 function snapToNearestStep(value) {
     if (value < 4) {
-        // Special handling for values approaching 2GB from above only
-        if (value > 1.75 && value <= 2.512) {  // If we're approaching 2GB from above
-            return 2;
-        }
-        // Snap to multiples of 0.512, but if we're close to 4, snap to 4
-        if (value > 3.75) {  // If we're within ~0.25 of 4GB
-            return 4;
-        }
-        return Math.round(value / 0.512) * 0.512;
+        if (value < 1.5) return 1;
+        if (value < 2.5) return 2;
+        return 4;
     } else if (value < 16) {
-        // Snap to multiples of 2
         return Math.round(value / 2) * 2;
     }
-    // Snap to multiples of 16
     return Math.round(value / 16) * 16;
 }
 
-function valueToPosition(value, min, max) {
-    // Convert the non-linear memory value to a linear position
-    let position = 0;
-    
-    if (value <= 4) {
-        // Linear scaling for 0-4GB range
-        position = (value / 4) * 33.33;
-    } else if (value <= 16) {
-        // Linear scaling for 4-16GB range
-        position = 33.33 + ((value - 4) / 12) * 33.33;
-    } else {
-        // Linear scaling for 16GB+ range
-        position = 66.66 + ((value - 16) / (max - 16)) * 33.34;
-    }
-    
-    return position;
+function valueToPosition(value) {
+    const index = ALLOWED_VALUES.indexOf(value);
+    return POSITIONS[index];
 }
 
-function positionToValue(position, min, max) {
-    // Convert the linear slider position to the non-linear memory value
-    let value;
-    if (position <= 33.33) {
-        // 0.512-4GB range (changed from 0-4GB)
-        value = Math.max(0.512, (position / 33.33) * 4);
-    } else if (position <= 66.66) {
-        // 4-16GB range
-        value = 4 + ((position - 33.33) / 33.33) * 12;
-    } else {
-        // 16GB+ range
-        value = 16 + ((position - 66.66) / 33.34) * (max - 16);
-    }
-    return snapToNearestStep(value);
+function positionToValue(position) {
+    const closestPosition = POSITIONS.reduce((prev, curr) => 
+        Math.abs(curr - position) < Math.abs(prev - position) ? curr : prev
+    );
+    const index = POSITIONS.indexOf(closestPosition);
+    return ALLOWED_VALUES[index];
 }
 
 function getAllowedValues(min, max) {
@@ -74,6 +48,7 @@ function getAllowedValues(min, max) {
     let current = min;
     while (current <= max) {
         values.push(current);
+        if (current === max) break;
         current += getStepForRange(current);
     }
     return values;
@@ -81,29 +56,39 @@ function getAllowedValues(min, max) {
 
 function findClosestAllowedPosition(position, min, max) {
     const allowedValues = getAllowedValues(min, max);
-    const positions = allowedValues.map(v => valueToPosition(v, min, max));
-    return positions.reduce((prev, curr) => 
+    const positions = allowedValues.map(v => valueToPosition(v));
+    
+    if (Math.abs(position - 100) < 1) {
+        return 100;
+    }
+    
+    const closestPosition = positions.reduce((prev, curr) => 
         Math.abs(curr - position) < Math.abs(prev - position) ? curr : prev
     );
+    
+    return closestPosition;
 }
 
 export default function MemorySlider({ min, max, defaultValue, onChange }) {
     const [value, setValue] = useState(defaultValue);
-    const [position, setPosition] = useState(valueToPosition(defaultValue, min, max));
+    const [position, setPosition] = useState(valueToPosition(defaultValue));
 
     useEffect(() => {
         setValue(defaultValue);
-        setPosition(valueToPosition(defaultValue, min, max));
+        setPosition(valueToPosition(defaultValue));
     }, [defaultValue, min, max]);
 
     const handleChange = (event) => {
         const rawPosition = parseFloat(event.target.value);
         const snappedPosition = findClosestAllowedPosition(rawPosition, min, max);
-        const newValue = positionToValue(snappedPosition, min, max);
+        const newValue = positionToValue(snappedPosition);
         setPosition(snappedPosition);
         setValue(newValue);
         onChange(newValue);
     };
+
+    const pos2GB = valueToPosition(2);
+    const pos4GB = valueToPosition(4);
 
     return (
         <div className="w-full relative">
@@ -114,9 +99,12 @@ export default function MemorySlider({ min, max, defaultValue, onChange }) {
                 step={1}
                 value={position}
                 onChange={handleChange}
-                className="w-full h-2 appearance-none bg-gray-300 rounded-full outline-none accent-blue-500"
+                className="w-full h-2 appearance-none rounded-full outline-none accent-blue-500"
                 style={{
-                    background: `linear-gradient(to right, blue 0%, blue ${position}%, #CBD5E0 ${position}%, #CBD5E0 100%)`
+                    background: `linear-gradient(to right, 
+                        rgb(29, 78, 216) 0%, rgb(29, 78, 216) ${pos2GB}%, 
+                        rgb(59, 130, 246) ${pos2GB}%, rgb(59, 130, 246) ${pos4GB}%, 
+                        rgb(191, 219, 254) ${pos4GB}%, rgb(191, 219, 254) 100%)`
                 }}
             />
         </div>

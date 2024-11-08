@@ -54,7 +54,6 @@ const pricing = {
 			href: 'mailto:contact@windmill.dev',
 			price: {
 				worker: {
-					monthly: 50,
 					default: workerDefaults.workers,
 					min: workerDefaults.minWorkers,
 					max: workerDefaults.maxWorkers,
@@ -64,7 +63,8 @@ const pricing = {
 						max: workerDefaults.maxMemoryGB,
 						pricePerGB: workerDefaults.memoryPricePerGB,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
-					}
+					},
+					native: 50
 				},
 				seat: {
 					monthly: 20,
@@ -75,7 +75,6 @@ const pricing = {
 			},
 			price_nonprofit: {
 				worker: {
-					monthly: 20,
 					default: workerDefaults.workers,
 					min: workerDefaults.minWorkers,
 					max: workerDefaults.maxWorkers,
@@ -85,7 +84,8 @@ const pricing = {
 						max: workerDefaults.maxMemoryGB,
 						pricePerGB: workerDefaults.memoryPricePerGB,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
-					}
+					},
+					native: 20
 				},
 				seat: {
 					monthly: 8,
@@ -96,7 +96,6 @@ const pricing = {
 			},
 			price_smb: {
 					worker: {
-						monthly: 20,
 						default: workerDefaults.workers,
 						min: workerDefaults.minWorkers,
 						max: 10,
@@ -106,7 +105,8 @@ const pricing = {
 							max: workerDefaults.maxMemoryGB,
 							pricePerGB: workerDefaults.memoryPricePerGB,
 							maxPricedGB: workerDefaults.maxPricedMemoryGB
-						}
+						},
+						native: 20
 					},
 					seat: {
 						monthly: 8,
@@ -240,7 +240,6 @@ const pricing = {
 			enterprise_edition: true,
 			price: {
 				worker: {
-					monthly: 100,
 					default: workerDefaults.workers,
 					min: workerDefaults.minWorkers,
 					max: workerDefaults.maxWorkers,
@@ -250,7 +249,8 @@ const pricing = {
 						max: workerDefaults.maxMemoryGB,
 						pricePerGB: workerDefaults.memoryPricePerGB * 2,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
-					}
+					},
+					native: 100
 				},
 				seat: {
 					monthly: 40,
