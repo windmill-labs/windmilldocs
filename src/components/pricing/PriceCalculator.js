@@ -619,7 +619,6 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						</a>
 					</>
 				) : null}
-
 			</div>
 		</>
 	);
