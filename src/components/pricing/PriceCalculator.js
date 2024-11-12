@@ -36,7 +36,6 @@ const priceFormatter = new Intl.NumberFormat('en-US', {
 	maximumFractionDigits: 0
 });
 
-// Add this new type definition
 const workerGroupDefaults = {
 	workers: 2,
 	memoryGB: 2
@@ -250,10 +249,10 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<div className="flex justify-between w-full items-center">
 										<div>
 											<span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-												{Math.max(1, developers).toLocaleString()}
+												{developers.toLocaleString()}
 											</span>
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-												{' '}{Math.max(1, developers) === 1 ? 'developer' : 'developers'}
+												{' '}{developers === 1 ? 'developer' : 'developers'}
 											</span>
 										</div>
 										<div>
@@ -266,12 +265,12 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										</div>
 									</div>
 									<Slider
-										min={0}
+										min={1}
 										max={pricing.seat.max}
 										step={1}
-										defaultValue={clamp(developers, 0, pricing.seat.max)}
+										defaultValue={clamp(developers, 1, pricing.seat.max)}
 										onChange={(value) => {
-											setDevelopers(Math.max(1, clamp(value, 0, pricing.seat.max)));
+											setDevelopers(clamp(value, 1, pricing.seat.max));
 										}}
 									/>
 								</li>
@@ -308,7 +307,103 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							</>
 						)}
 
-						{/* Add Native workers section before the worker groups */}
+						{/* Existing worker groups section */}
+						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+							<div className="mt-6">
+								{workerGroups.map((group, index) => (
+									<li key={index} className="flex flex-col gap-2 p-4 border rounded-lg mt-2">
+										<div className="flex justify-between items-center">
+											<h6 className="font-semibold">Worker group {index + 1}</h6>
+											{workerGroups.length > 1 && (
+												<button
+													onClick={() => removeWorkerGroup(index)}
+													className="text-sm text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+													aria-label="Remove worker group"
+												>
+													Remove
+												</button>
+											)}
+										</div>
+										
+										{/* Number of workers slider */}
+										<div className="flex justify-between w-full items-center">
+										<span className="text-sm text-gray-600 dark:text-gray-200">
+												{group.workers}{" "}
+												{group.workers === 1 ? (
+													<>
+														<span className={
+															group.memoryGB === 1 ? "font-semibold text-blue-800" : 
+															group.memoryGB === 2 ? "font-semibold text-blue-600" : 
+															"font-semibold text-blue-500"
+														}>
+															{group.memoryGB === 1 ? 'small' : 
+															group.memoryGB === 2 ? 'standard' : 
+															'large'}
+														</span>{" "}
+														worker
+													</>
+												) : (
+													<>
+														<span className={
+															group.memoryGB === 1 ? "font-semibold text-blue-800" : 
+															group.memoryGB === 2 ? "font-semibold text-blue-600" : 
+															"font-semibold text-blue-500"
+														}>
+															{group.memoryGB === 1 ? 'small' : 
+															group.memoryGB === 2 ? 'standard' : 
+															'large'}
+														</span>{" "}
+														workers
+													</>
+												)}
+											</span>
+											<span className="text-sm text-gray-900 font-semibold dark:text-white">
+												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
+											</span>
+										</div>
+										<Slider
+											min={1}
+											max={1000}
+											step={1}
+											defaultValue={group.workers}
+											onChange={(value) => updateWorkerGroup(index, 'workers', value)}
+										/>
+
+										{/* Memory per worker slider */}
+										<div className="flex justify-between w-full items-center">
+											<span className="text-sm text-gray-600 dark:text-gray-200">
+												{group.memoryGB}GB memory limit {tier.id === 'tier-enterprise-cloud' && group.memoryGB >= 10 ? '/ worker' : 'per worker'}
+											</span>
+											<span className="text-sm text-gray-900 font-semibold dark:text-white">
+												{group.memoryGB >= 4 && tier.id === 'tier-enterprise-selfhost' && (
+													<span className="text-sm font-normal text-gray-400 dark:text-gray-300 mr-2">(Price cap)</span>
+												)}
+												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toFixed(1).replace('.0', '')} /worker/{period.value === 'annually' ? 'yr' : 'mo'}
+											</span>
+										</div>
+										<MemorySlider
+											min={1}
+											max={128}
+											defaultValue={group.memoryGB}
+											onChange={(value) => updateWorkerGroup(index, 'memoryGB', value)}
+											steps={[1, 2, 4, 6, 8, 12, 14, 16, 32, 48, 64, 80, 96, 112, 128]}
+										/>
+										{group.memoryGB >= 4 && tier.id === 'tier-enterprise-cloud' && (
+											<span className="text-sm font-normal text-gray-400 dark:text-gray-300 mt-1 text-right w-full">
+												(Price cap)
+											</span>
+										)}
+									</li>
+								))}
+								
+								<button
+									onClick={addWorkerGroup}
+									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white font-semibold"
+								>
+									+ Add worker group
+								</button>
+							</div>
+						)}
 						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
 							<li className="flex flex-col gap-2 p-4 border rounded-lg mt-8">
 								<h6 className="font-semibold">
@@ -325,7 +420,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{nativeWorkers} native workers
 									</span>
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
-										${(Math.round((pricing.worker.native * nativeWorkers / 8) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'year' : 'mo'}
+										${(Math.round((pricing.worker.native * nativeWorkers / 8) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
 									</span>
 								</div>
 								<Slider
@@ -337,77 +432,6 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									noExponential={true}
 								/>
 							</li>
-						)}
-						{/* Existing worker groups section */}
-						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
-							<div className="mt-6">
-								{workerGroups.map((group, index) => (
-									<li key={index} className="flex flex-col gap-2 p-4 border rounded-lg">
-										<div className="flex justify-between items-center">
-											<h6 className="font-semibold">Worker group {index + 1}</h6>
-											{workerGroups.length > 1 && (
-												<button
-													onClick={() => removeWorkerGroup(index)}
-													className="text-sm text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-													aria-label="Remove worker group"
-												>
-													Remove
-												</button>
-											)}
-										</div>
-										
-										{/* Number of workers slider */}
-										<div className="flex justify-between w-full items-center">
-											<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.workers} {group.workers === 1 ? 
-													(group.memoryGB === 1 ? 'small worker' : 
-													 group.memoryGB === 2 ? 'standard worker' : 
-													 'large worker') :
-													(group.memoryGB === 1 ? 'small workers' :
-													 group.memoryGB === 2 ? 'standard workers' :
-													 'large workers')}
-											</span>
-											<span className="text-sm text-gray-900 font-semibold dark:text-white">
-												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'year' : 'mo'}
-											</span>
-										</div>
-										<Slider
-											min={1}
-											max={1000}
-											step={1}
-											defaultValue={group.workers}
-											onChange={(value) => updateWorkerGroup(index, 'workers', value)}
-										/>
-
-										{/* Memory per worker slider */}
-										<div className="flex justify-between w-full items-center">
-											<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.memoryGB}GB memory limit per worker
-											</span>
-											<span className="text-sm text-gray-900 font-semibold dark:text-white">
-												{group.memoryGB >= 4 && (
-													<span className="text-sm font-normal text-gray-400 dark:text-gray-300 mr-2">(Price cap)</span>
-												)}
-												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toFixed(1).replace('.0', '')} /worker/{period.value === 'annually' ? 'year' : 'mo'}
-											</span>
-										</div>
-										<MemorySlider
-											min={1}
-											max={128}
-											defaultValue={group.memoryGB}
-											onChange={(value) => updateWorkerGroup(index, 'memoryGB', value)}
-											steps={[1, 2, 4, 6, 8, 12, 14, 16, 32, 48, 64, 80, 96, 112, 128]}
-										/>
-									</li>
-								))}
-								
-								<button
-									onClick={addWorkerGroup}
-									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white font-semibold"
-								>
-									+ Add worker group
-								</button>
-							</div>
 						)}
 					</ul>
 				</div>
@@ -520,10 +544,10 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									return (
 										<>
 											{counts.small > 0 && (
-												<span>{counts.small} small workers (1GB)</span>
+												<span>{counts.small} <span className="text-blue-700 dark:text-blue-700">small</span> workers (1GB)</span>
 											)}
 											{counts.standard > 0 && (
-												<span>{counts.standard} standard workers (2GB)</span>
+												<span>{counts.standard} <span className="text-blue-500 dark:text-blue-500">standard</span> workers (2GB)</span>
 											)}
 											{counts.large > 0 && (
 												<span>{counts.large} large workers (>2GB)</span>

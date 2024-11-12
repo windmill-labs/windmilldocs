@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-function exponentialScale(value, min, max, noExponential = false) {
-    if (value <= min) return min;
-    const scale = (max - min) / Math.log(max - min + 1);
-    let scaledValue = min + Math.round(Math.exp(value / scale) - 1);
+function exponentialScale(displayValue, min, max) {
+    const scale = max / Math.log(max + 1);
+    let value = Math.exp(displayValue / scale) - 1;
     
-    // Skip snapping to round numbers if noExponential is true
-    if (noExponential) {
-        return Math.min(scaledValue, max);
-    }
-
     // Dynamically generate round numbers based on max value
     const roundNumbers = [];
     const magnitude = Math.floor(Math.log10(max));
@@ -30,20 +24,22 @@ function exponentialScale(value, min, max, noExponential = false) {
     const snapThreshold = max * 0.02; // 2% of max value as threshold
     
     for (const round of roundNumbers) {
-        if (round > min && round < max && Math.abs(scaledValue - round) < snapThreshold) {
+        if (round > min && round < max && Math.abs(value - round) < snapThreshold) {
             return round;
         }
     }
     
-    return Math.min(scaledValue, max);
+    return Math.min(Math.round(value), max);
 }
 
 function inverseExponentialScale(value, min, max) {
-    if (value <= min) return min;
     if (value >= max) return max;
-    const scale = (max - min) / Math.log(max - min + 1);
-    let displayValue = scale * Math.log(value - min + 1);
-    return Math.min(displayValue, max); // Ensure the display value does not exceed max
+    
+    const scale = (max) / Math.log(max + 1);
+    // Treat 0 like any other value in the visual scale
+    let displayValue = scale * Math.log(value + 1);
+    
+    return Math.min(displayValue, max);
 }
 
 export default function Slider({ min, max, step, defaultValue, onChange, noExponential = false }) {
@@ -57,8 +53,11 @@ export default function Slider({ min, max, step, defaultValue, onChange, noExpon
     const handleChange = (event) => {
         let newValue = parseFloat(parseFloat(event.target.value).toFixed(2));
         if (isExponential) {
-            newValue = exponentialScale(newValue, min, max, noExponential);
+            // Convert from visual scale back to actual value and snap to round numbers
+            newValue = exponentialScale(newValue, min, max);
         }
+        // Ensure value doesn't go below min
+        newValue = Math.max(min, newValue);
         setValue(newValue);
         onChange(newValue);
     };
@@ -68,20 +67,21 @@ export default function Slider({ min, max, step, defaultValue, onChange, noExpon
         displayValue = inverseExponentialScale(value, min, max);
     }
 
+    // Adjust the gradient calculation to account for the padding
+    const gradientPercentage = ((displayValue) / (max)) * 100;
+
     return (
         <div className="w-full relative">
             <input
                 type="range"
-                min={min}
+                min={0}
                 max={max}
-                step={isExponential ? 1 : step}
+                step={isExponential ? (max / 1000) : step} // Make step size relative to max value
                 value={displayValue}
                 onChange={handleChange}
                 className="w-full h-2 appearance-none bg-gray-300 rounded-full outline-none accent-blue-500"
                 style={{
-                    background: `linear-gradient(to right, blue 0%, blue ${
-                        ((displayValue - min) / (max - min)) * 100
-                    }%, #CBD5E0 ${((displayValue - min) / (max - min)) * 100}%, #CBD5E0 100%)`
+                    background: `linear-gradient(to right, blue 0%, blue ${gradientPercentage}%, #CBD5E0 ${gradientPercentage}%, #CBD5E0 100%)`
                 }}
             />
         </div>
