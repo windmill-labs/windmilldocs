@@ -11,7 +11,7 @@ const faqs = [
 			<span>
 				Windmill's pricing is designed to align with the value we deliver to our customers. Our pricing model reflects the core value of Windmill, which is primarily related to the amount of compute resources used, and the number of users accessing the platform. We've structured our pricing to scale with your usage, ensuring you're paying for the actual value you derive from our platform.
 				<br /><br />
-				For compute resources, we use compute units based on memory allocation. A compute unit corresponds to 1GB of memory. For example, a worker with 2GB of memory counts as 2 compute units. Any worker with >2GB of memory counts as 4 compute units (e.g. a worker with 16GB counts as 4 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
+				For compute resources, we use compute units based on memory allocation. A compute unit corresponds to 2 worker-gb-month (or year). For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
 				<br /><br />
 				For user access, we charge based on seats. A regular user counts as one seat, while an operator (who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base.
 				<br /><br />
@@ -51,7 +51,7 @@ const faqs = [
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />
-				Operators are 1/2 price of normal users (or 1/2 seats).
+				Operators are 1/2 price of developers (or 1/2 seats).
 			</span>
 		)
 	},
@@ -100,8 +100,8 @@ const faqs = [
 		)
 	},
 	{
-		id: 'number-of-workers',
-		question: 'How many workers do I need?',
+		id: 'number-of-compute-units',
+		question: 'How many compute units do I need?',
 		answer: (
 			<span>
 				The number of compute units will depend on the workload and the jobs Windmill will need to run. Each{' '}
@@ -115,11 +115,18 @@ const faqs = [
 				only executes one job at a time, by design to use the full resource of the worker. Workers come in different sizes based on memory: small (1GB), standard (2GB), and large (> 2GB). Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
 				<br />
 				<br />
-				As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. The compute units are calculated based on the memory limits set in docker-compose or Kubernetes. For example, a standard worker with 2GB memory counts as 2 compute units, while a large worker with >2GB memory counts as 4 compute units. Any worker with memory above 2GB still counts as 4 compute units.
+				As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. The compute units are calculated based on the memory limits set in docker-compose or Kubernetes. For example, a standard worker with 2GB memory counts as 1 compute unit, while a large worker with >2GB memory counts as 2 compute units. Any worker with memory above 2GB still counts as 2 compute units. Small workers are counted as 0.5 compute unit.
 				<br />
 				<br />
-				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate
-				your needs in practice.
+				Also, for the Enterprise Edition, the{' '}
+				<a
+					href="https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank"
+				>
+					free trial
+				</a>{' '}
+				of one month is meant to help you evaluate your needs in practice.
 			</span>
 		)
 	},
@@ -144,7 +151,7 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is based on compute units. A compute unit corresponds to 1GB of memory. For example, a worker with 2GB of memory (standard worker) counts as 2 compute units. A worker with 4GB of memory (large worker) counts as 4 compute units. Any worker with memory above 2GB counts as 4 compute units (16GB worker counts as 4 compute units). The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
+				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month (or year). For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. Any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}

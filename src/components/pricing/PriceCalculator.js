@@ -209,7 +209,8 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		<>
 			<QuoteForm
 				workers={getWorkerCountsForQuote()}
-				seats={developers + Math.floor(operators / 2)}
+				developers={developers}
+				operators={operators}
 				open={showQuoteForm}
 				setOpen={setShowQuoteForm}
 				plan={tier.id === 'tier-enterprise-cloud' ? 'cloud_ee' : 'selfhosted_ee'}
@@ -322,13 +323,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
 							<div className="mt-6">
 								{workerGroups.map((group, index) => (
-									<li key={index} className="flex flex-col gap-2 p-4 border rounded-lg mt-2">
+									<li key={index} className="flex flex-col gap-2 p-4 border rounded-lg mt-2 group relative">
 										<div className="flex justify-between items-center">
 											<h6 className="font-semibold">Worker group {index + 1}</h6>
 											{workerGroups.length > 1 && (
 												<button
 													onClick={() => removeWorkerGroup(index)}
-													className="text-sm text-gray-400 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+													className="text-sm text-red-300 hover:text-red-500 invisible group-hover:visible absolute top-4 right-4"
 													aria-label="Remove worker group"
 												>
 													Remove
@@ -339,13 +340,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{/* Number of workers slider */}
 										<div className="flex justify-between w-full items-center">
 										<span className="text-sm text-gray-600 dark:text-gray-200">
-												{group.workers}{" "}
+												{group.workers % 1000 === 0 ? `${group.workers/1000}k` : group.workers.toLocaleString()}{" "}
 												{group.workers === 1 ? (
 													<>
 														<span className={
-															group.memoryGB === 1 ? "font-semibold text-blue-800" : 
-															group.memoryGB === 2 ? "font-semibold text-blue-600" : 
-															"font-semibold text-blue-500"
+															group.memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" : 
+															group.memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" : 
+															"font-semibold text-blue-500 dark:text-blue-400"
 														}>
 															{group.memoryGB === 1 ? 'small' : 
 															group.memoryGB === 2 ? 'standard' : 
@@ -356,9 +357,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 												) : (
 													<>
 														<span className={
-															group.memoryGB === 1 ? "font-semibold text-blue-800" : 
-															group.memoryGB === 2 ? "font-semibold text-blue-600" : 
-															"font-semibold text-blue-500"
+															group.memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" : 
+															group.memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" : 
+															"font-semibold text-blue-500 dark:text-blue-400"
 														}>
 															{group.memoryGB === 1 ? 'small' : 
 															group.memoryGB === 2 ? 'standard' : 
@@ -368,13 +369,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 													</>
 												)}
 											</span>
-											<span className="text-sm text-gray-900 font-semibold dark:text-white">
-												${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
+											<span className="text-sm text-gray-900 dark:text-white">
+												<span className="font-normal text-gray-400 dark:text-gray-300">{(group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2).toLocaleString()} {tier.id === 'tier-enterprise-cloud' ? 'CU' : ((group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2) === 1 ? 'compute unit' : 'compute units')}</span> · <span className="font-semibold">${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}</span>
 											</span>
 										</div>
 										<Slider
 											min={1}
-											max={1000}
+											max={selectedOption === 'SMB' ? 10 : 1000}
 											step={1}
 											defaultValue={group.workers}
 											onChange={(value) => updateWorkerGroup(index, 'workers', value)}
@@ -423,7 +424,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										<svg className="inline-block w-4 h-4 text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 										</svg>
-										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm text-white bg-slate-700 rounded-lg shadow-lg">
+										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm font-normal text-white bg-slate-700 rounded-lg shadow-lg">
 										<a href="#native-workers" className="text-blue-500 hover:text-blue-400">Native</a> workers are workers within the native <a href="/docs/core_concepts/worker_groups#native-workers" className="text-blue-500 hover:text-blue-400">worker group</a>. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
 										</span>
 									</span>
@@ -439,7 +440,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								</div>
 								<Slider
 									min={0}
-									max={200}
+									max={selectedOption === 'SMB' ? 32 : 200}
 									step={8}
 									defaultValue={8}
 									onChange={(value) => setNativeWorkers(value)}
@@ -528,17 +529,18 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						</div>
 						<div className="mt-2 flex flex-col gap-1">
 								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
-									Total seats: {(developers + Math.floor(operators/2)).toLocaleString()}
+									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
 								</span>
-								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
 								</span>
 								{operators > 0 && (
-									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 										{operators.toLocaleString()}{' '}
 										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
 											{operators === 1 ? 'operator' : 'operators'}
 										</a>
+										{operators % 2 === 1 && ` (rounded up to ${Math.ceil(operators/2)} ${operators === 1 ? 'seat' : 'seats'})`}
 									</span>
 								)}
 						</div>
@@ -551,43 +553,44 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							<h5 className="font-semibold">Summary</h5>
 							<div className="mt-2 flex flex-col gap-1">
 								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
-									Total seats: {(developers + Math.floor(operators/2)).toLocaleString()}
+									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
 								</span>
-								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
 								</span>
 								{operators > 0 && (
-									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 										{operators.toLocaleString()}{' '}
 										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
 											{operators === 1 ? 'operator' : 'operators'}
 										</a>
+										{operators % 2 === 1 && ` (rounded up to ${Math.ceil(operators/2)} ${operators === 1 ? 'seat' : 'seats'})`}
 									</span>
 								)}
 							</div>
 							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
 								{(() => {
 									const counts = getWorkerCounts(workerGroups);
-									const totalComputeUnits = (counts.small || 0) + 
-										(2 * (counts.standard || 0)) + 
-										((2/8) * nativeWorkers) + 
-										(4 * (counts.large || 0));
+									const totalComputeUnits = (counts.small / 2 || 0) + 
+										(counts.standard || 0) + 
+										((1/8) * nativeWorkers) + 
+										(2 * (counts.large || 0));
 									
 									return (
 										<>
 											<span className="text-gray-900 dark:text-white">
-												Total compute units (1GB): {totalComputeUnits}</span>
+												Total <a href="#number-of-compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {totalComputeUnits}</span>
 											{counts.standard > 0 && (
-												<span>{counts.standard} standard workers (2GB)</span>
+												<span className="ml-4">{counts.standard} standard workers (2GB)</span>
 											)}
 											{counts.small > 0 && (
-												<span>{counts.small} small workers (1GB)</span>
+												<span className="ml-4">{counts.small} small workers (1GB)</span>
 											)}
 											{counts.large > 0 && (
-												<span>{counts.large} large workers (>2GB)</span>
+												<span className="ml-4">{counts.large} large workers (>2GB)</span>
 											)}
 											{nativeWorkers > 0 && (
-												<span>{nativeWorkers} native workers (2GB)</span>
+												<span className="ml-4">{nativeWorkers} native workers (2GB)</span>
 											)}
 										</>
 									);
@@ -612,43 +615,44 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							<h5 className="font-semibold">Summary</h5>
 							<div className="mt-2 flex flex-col gap-1">
 								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
-									Total seats: {(developers + Math.floor(operators/2)).toLocaleString()}
+									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
 								</span>
-								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
 								</span>
 								{operators > 0 && (
-									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 										{operators.toLocaleString()}{' '}
 										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
 											{operators === 1 ? 'operator' : 'operators'}
 										</a>
+										{operators % 2 === 1 && ` (rounded up to ${Math.ceil(operators/2)} ${operators === 1 ? 'seat' : 'seats'})`}
 									</span>
 								)}
 							</div>
 							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
 								{(() => {
 									const counts = getWorkerCounts(workerGroups);
-									const totalComputeUnits = (counts.small || 0) + 
-										(2 * (counts.standard || 0)) + 
-										((2/8) * nativeWorkers) + 
-										(4 * (counts.large || 0));
+									const totalComputeUnits = (counts.small / 2 || 0) + 
+										(counts.standard || 0) + 
+										((1/8) * nativeWorkers) + 
+										(2 * (counts.large || 0));
 									
 									return (
 										<>
 											<span className="text-gray-900 dark:text-white">
-												Total compute units (1GB): {totalComputeUnits}</span>
+												Total <a href="#number-of-compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {totalComputeUnits}</span>
 											{counts.standard > 0 && (
-												<span>{counts.standard} standard workers (2GB)</span>
+												<span className="ml-4">{counts.standard} standard workers (2GB)</span>
 											)}
 											{counts.small > 0 && (
-												<span>{counts.small} small workers (1GB)</span>
+												<span className="ml-4">{counts.small} small workers (1GB)</span>
 											)}
 											{counts.large > 0 && (
-												<span>{counts.large} large workers (>2GB)</span>
+												<span className="ml-4">{counts.large} large workers (>2GB)</span>
 											)}
 											{nativeWorkers > 0 && (
-												<span>{nativeWorkers} native workers (2GB)</span>
+												<span className="ml-4">{nativeWorkers} native workers (2GB)</span>
 											)}
 										</>
 									);
@@ -660,8 +664,8 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							className={classNames(
 								'border',
 								selectedOption === 'SMB'
-									? 'text-blue-600 dark:text-blue-500 border-blue-600 dark:border-blue-500 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 focus-visible:outline-blue-600'
-									: 'text-teal-600 border-teal-600 hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950 focus-visible:outline-teal-600',
+										? 'text-blue-600 dark:text-blue-500 border-blue-600 dark:border-blue-500 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 focus-visible:outline-blue-600'
+										: 'text-teal-600 border-teal-600 hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950 focus-visible:outline-teal-600',
 								'text-sm cursor-pointer shadow-sm !no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
 							)}
 						>
