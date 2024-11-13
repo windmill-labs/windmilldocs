@@ -1179,7 +1179,7 @@ export default function Pricing() {
 							<a
 								href={
 									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-										? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+										? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
 										: tier.href
 								}
 								target="_blank"
@@ -1227,10 +1227,10 @@ export default function Pricing() {
 									<a
 										href={
 											selectedOption === 'SMB'
-												? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+												? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
 												: selectedOption === 'Nonprofit'
-												? 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT?prefilled_promo_code=nonprofit'
-												: 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT'
+												? 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
+												: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
 										}
 										className={classNames(
 											tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
