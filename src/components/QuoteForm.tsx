@@ -50,7 +50,7 @@ export function QuoteForm({
 				}
 
 			// Calculate total compute units
-			const computeUnits = workers.small / 2 + workers.standard + workers.native + (2 * workers.large);
+			const computeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
 
 			const seats = developers + Math.ceil(operators / 2);
 
@@ -96,7 +96,7 @@ export function QuoteForm({
 	}
 
 	// Add this before the return statement
-	const computeUnits = workers.small / 2 + workers.standard + workers.native + (2 * workers.large);
+	const computeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
 	const isSmbWithTooManyUnits = selectedOption === 'SMB' && computeUnits > 10;
 
 	return (
@@ -156,55 +156,67 @@ export function QuoteForm({
 						{developers > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
 								<span className="pl-4">Developers</span>
-								{developers}
+								<div>
+									{developers} ({developers} {developers === 1 ? 'seat' : 'seats'})
+								</div>
 							</div>
 						)}
 						{operators > 0 && (
-							<>
-								<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-									<span className="pl-4">Operators</span>
-									{operators}
+							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
+								<span className="pl-4">Operators</span>
+								<div>
+									{operators} ({Math.ceil(operators / 2)} {Math.ceil(operators / 2) === 1 ? 'seat' : 'seats'})
 								</div>
-								{operators % 2 === 1 && (
-									<div className="text-sm text-gray-500 pl-4 -mt-2 text-right pr-[1px]">
-										(rounded up to {Math.ceil(operators / 2)} seats)
-									</div>
-								)}
-							</>
+							</div>
 						)}
 						<div className="flex flex-row justify-between">
 							<span className="font-medium text-gray-800 dark:text-gray-200">Total compute units</span>
-							{Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large)}
+							<div>
+								{computeUnits} {computeUnits === 1 ? 'compute unit' : 'compute units'}
+							</div>
 						</div>
 						{workers.standard > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Standard workers (2GB)</span>
-								{workers.standard}
+								<span className="pl-4">Standard workers</span>
+								<div className="grid grid-cols-3 w-36">
+									<span className="text-left w-2">{workers.standard}</span>
+									<span className="text-center w-2">=</span>
+									<span className="text-right w-15">{workers.standard} CU</span>
+								</div>
 							</div>
 						)}
 						{workers.small > 0 && (
-							<>
-								<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-									<span className="pl-4">Small workers (1GB)</span>
-									{workers.small}
+							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
+								<span className="pl-4">Small workers</span>
+								<div className="grid grid-cols-3 w-36">
+									<span className="text-left w-8">{workers.small}</span>
+									<span className="text-center w-2">=</span>
+									<span className="text-right w-15">{Math.ceil(workers.small / 2)} CU</span>
 								</div>
-								{workers.small % 2 === 1 && (
-									<div className="text-sm text-gray-500 pl-4 -mt-2 text-right pr-[1px]">
-										(rounded up to {Math.ceil(workers.small / 2)} compute units)
-									</div>
-								)}
-							</>
+							</div>
 						)}
 						{workers.large > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Large workers (>2GB)</span>
-								{workers.large}
+								<span className="pl-4">Large workers</span>
+								<div className="grid grid-cols-3 w-36">
+									<span className="text-left w-8">{workers.large}</span>
+									<span className="text-center w-2">=</span>
+									<span className="text-right w-15">{workers.large * 2} CU</span>
+								</div>
 							</div>
 						)}
 						{workers.native > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">8 native workers (2GB)</span>
-								{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(workers.native, 10) : workers.native}
+								<span className="pl-4">Native workers</span>
+								<div className="grid grid-cols-3 w-36">
+									<span className="text-left w-8">{workers.native}</span>
+									<span className="text-center w-2">=</span>
+									<span className="text-right w-15">
+										{selectedOption === 'SMB' && plan === 'selfhosted_ee' 
+											? Math.min(workers.native, 10) 
+											: workers.native} CU
+									</span>
+								</div>
 							</div>
 						)}
 						<a

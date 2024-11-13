@@ -11,7 +11,7 @@ const faqs = [
 			<span>
 				Windmill's pricing is designed to align with the value we deliver to our customers. Our pricing model reflects the core value of Windmill, which is primarily related to the amount of compute resources used, and the number of users accessing the platform. We've structured our pricing to scale with your usage, ensuring you're paying for the actual value you derive from our platform.
 				<br /><br />
-				For compute resources, we use compute units based on memory allocation. A compute unit corresponds to 2 worker-gb-month (or year). For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
+				For compute resources, we use compute units based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
 				<br /><br />
 				For user access, we charge based on seats. A regular user counts as one seat, while an operator (who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base.
 				<br /><br />
@@ -100,6 +100,15 @@ const faqs = [
 		)
 	},
 	{
+		id: 'compute-units',
+		question: 'What are compute units?',
+		answer: (
+			<span>
+				Compute units are a unit of measure for the amount of compute resources used. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
+			</span>
+		)
+	},
+	{
 		id: 'number-of-compute-units',
 		question: 'How many compute units do I need?',
 		answer: (
@@ -151,7 +160,7 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month (or year). For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. Any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
+				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. Any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}

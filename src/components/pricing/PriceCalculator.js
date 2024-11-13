@@ -109,7 +109,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 			// Calculate seats cost (before period multiplier)
 			if (pricing.seat) {
 				total += pricing.seat.monthly * developers; // Full price for developers
-				total += (pricing.seat.monthly / 2) * operators; // Half price for operators
+				total += Math.ceil(operators/2) * (pricing.seat.monthly / 2); // Half price for operators
 			}
 
 			// Add native workers cost
@@ -219,9 +219,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 			/>
 			<div className="grow flex flex-col justify-start">
 				<div className="flex justify-between items-center">
-					<div className="flex flex-col">
-						<h4>Price</h4>
-						<div className="h-6">
+					<div className="flex items-center">
+						<h3 className="m-0 font-semibold">Price</h3>
+						<div className="ml-4">
 							{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && 
 								(workerGroups.reduce((sum, group) => {
 									const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
@@ -294,7 +294,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 												{operators.toLocaleString()}
 											</span>
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-												{' '}{operators === 1 ? 'operator' : 'operators'}
+												{' '}{operators <= 1 ? 'operator' : 'operators'}
 											</span>
 										</div>
 										<div>
@@ -370,7 +370,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 												)}
 											</span>
 											<span className="text-sm text-gray-900 dark:text-white">
-												<span className="font-normal text-gray-400 dark:text-gray-300">{(group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2).toLocaleString()} {tier.id === 'tier-enterprise-cloud' ? 'CU' : ((group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2) === 1 ? 'compute unit' : 'compute units')}</span> · <span className="font-semibold">${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}</span>
+												<span className="font-normal text-gray-400 dark:text-gray-300">{(group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2).toLocaleString()} {tier.id === 'tier-enterprise-cloud' ? 'CU' : ((group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2) <= 1 ? 'compute unit' : 'compute units')}</span> · <span className="font-semibold">${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}</span>
 											</span>
 										</div>
 										<Slider
@@ -432,7 +432,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								
 								<div className="flex justify-between w-full items-center">
 									<span className="text-sm text-gray-600 dark:text-gray-200">
-										{nativeWorkers} native workers
+										{nativeWorkers} native {nativeWorkers === 0 ? 'worker' : 'workers'}
 									</span>
 									<span className="text-sm text-gray-900 font-semibold dark:text-white">
 										${(Math.round((pricing.worker.native * nativeWorkers / 8) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
@@ -538,9 +538,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 										{operators.toLocaleString()}{' '}
 										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
-											{operators === 1 ? 'operator' : 'operators'}
+											{operators <= 1 ? 'operator' : 'operators'}
 										</a>
-										{operators % 2 === 1 && ` (rounded up to ${Math.ceil(operators/2)} ${operators === 1 ? 'seat' : 'seats'})`}
+										{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
 									</span>
 								)}
 						</div>
@@ -562,9 +562,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 										{operators.toLocaleString()}{' '}
 										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
-											{operators === 1 ? 'operator' : 'operators'}
+											{operators <= 1 ? 'operator' : 'operators'}
 										</a>
-										{operators % 2 === 1 && ` (rounded up to ${Math.ceil(operators/2)} ${operators === 1 ? 'seat' : 'seats'})`}
+										{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
 									</span>
 								)}
 							</div>
@@ -579,18 +579,18 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									return (
 										<>
 											<span className="text-gray-900 dark:text-white">
-												Total <a href="#number-of-compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {totalComputeUnits}</span>
+												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {Math.round(totalComputeUnits)}</span>
 											{counts.standard > 0 && (
-												<span className="ml-4">{counts.standard} standard workers (2GB)</span>
+												<span className="ml-4">{counts.standard} standard workers ={' '}{counts.standard} CU</span>
 											)}
 											{counts.small > 0 && (
-												<span className="ml-4">{counts.small} small workers (1GB)</span>
+												<span className="ml-4">{counts.small} small workers = {counts.small/2} CU</span>
 											)}
 											{counts.large > 0 && (
-												<span className="ml-4">{counts.large} large workers (>2GB)</span>
+												<span className="ml-4">{counts.large} large workers ={' '}{counts.large * 2} CU</span>
 											)}
 											{nativeWorkers > 0 && (
-												<span className="ml-4">{nativeWorkers} native workers (2GB)</span>
+												<span className="ml-4">{nativeWorkers} native workers ={' '}{nativeWorkers/8} CU</span>
 											)}
 										</>
 									);
@@ -624,9 +624,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 										{operators.toLocaleString()}{' '}
 										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
-											{operators === 1 ? 'operator' : 'operators'}
+											{operators <= 1 ? 'operator' : 'operators'}
 										</a>
-										{operators % 2 === 1 && ` (rounded up to ${Math.ceil(operators/2)} ${operators === 1 ? 'seat' : 'seats'})`}
+										{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
 									</span>
 								)}
 							</div>
@@ -641,18 +641,18 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									return (
 										<>
 											<span className="text-gray-900 dark:text-white">
-												Total <a href="#number-of-compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {totalComputeUnits}</span>
+												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {Math.round(totalComputeUnits)}</span>
 											{counts.standard > 0 && (
-												<span className="ml-4">{counts.standard} standard workers (2GB)</span>
+												<span className="ml-4">{counts.standard} standard workers ={' '}{counts.standard} CU</span>
 											)}
 											{counts.small > 0 && (
-												<span className="ml-4">{counts.small} small workers (1GB)</span>
+												<span className="ml-4">{counts.small} small workers = {counts.small/2} CU</span>
 											)}
 											{counts.large > 0 && (
-												<span className="ml-4">{counts.large} large workers (>2GB)</span>
+												<span className="ml-4">{counts.large} large workers ={' '}{counts.large * 2} CU</span>
 											)}
 											{nativeWorkers > 0 && (
-												<span className="ml-4">{nativeWorkers} native workers (2GB)</span>
+												<span className="ml-4">{nativeWorkers} native workers ={' '}{nativeWorkers/8} CU</span>
 											)}
 										</>
 									);
