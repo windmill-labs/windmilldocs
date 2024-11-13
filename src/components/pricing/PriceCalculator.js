@@ -194,11 +194,22 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		}, {});
 	}
 
+	// Get worker counts for quote generation
+	function getWorkerCountsForQuote() {
+		const counts = getWorkerCounts(workerGroups);
+		return {
+			native: nativeWorkers / 8,
+			small: counts.small || 0,
+			standard: counts.standard || 0,
+			large: counts.large || 0
+		};
+	}
+
 	return (
 		<>
 			<QuoteForm
-				vCPUs={vCPUs}
-				seats={developers + operators}
+				workers={getWorkerCountsForQuote()}
+				seats={developers + Math.floor(operators / 2)}
 				open={showQuoteForm}
 				setOpen={setShowQuoteForm}
 				plan={tier.id === 'tier-enterprise-cloud' ? 'cloud_ee' : 'selfhosted_ee'}
@@ -408,11 +419,14 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							<li className="flex flex-col gap-2 p-4 border rounded-lg mt-8">
 								<h6 className="font-semibold">
 									Native workers{' '}
-									<a href="#native-workers" className="text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500">
-										<svg className="inline-block w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<span className="relative group">
+										<svg className="inline-block w-4 h-4 text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 										</svg>
-									</a>
+										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm text-white bg-slate-700 rounded-lg shadow-lg">
+										<a href="#native-workers" className="text-blue-500 hover:text-blue-400">Native</a> workers are workers within the native <a href="/docs/core_concepts/worker_groups#native-workers" className="text-blue-500 hover:text-blue-400">worker group</a>. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
+										</span>
+									</span>
 								</h6>
 								
 								<div className="flex justify-between w-full items-center">
@@ -501,7 +515,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					<div className="mt-8 flex flex-col gap-1">
 						<h5 className="font-semibold">Summary</h5>
 						<div className="mt-2 flex items-baseline gap-x-1">
-							<div className="text-sm text-gray-600 mt-1">
+							<div className="text-sm text-gray-600 dark:text-gray-200 mt-1">
 								<span>
 									{`~${(developers * 10 * (period.value === 'annually' ? 12 : 1)).toLocaleString()}k `}
 									<a href="#execution" class="custom-link text-gray-600 dark:text-gray-200">
@@ -512,21 +526,21 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								<span>{period.value === 'annually' ? 'year' : 'month'}</span>
 							</div>
 						</div>
-						<div className="flex flex-row gap-1">
-							<span className="whitespace-nowrap text-sm">
-								{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
-							</span>
-							{operators > 0 && (
-								<>
-									<b className="text-sm font-normal">and</b>
-									<span className="whitespace-nowrap text-sm">
+						<div className="mt-2 flex flex-col gap-1">
+								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
+									Total seats: {(developers + Math.floor(operators/2)).toLocaleString()}
+								</span>
+								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
+								</span>
+								{operators > 0 && (
+									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
 										{operators.toLocaleString()}{' '}
-										<a href="#operator" className="custom-link text-black dark:text-white">
+										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
 											{operators === 1 ? 'operator' : 'operators'}
 										</a>
 									</span>
-								</>
-							)}
+								)}
 						</div>
 					</div>
 				) : null}
@@ -535,42 +549,49 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					<>
 						<div className="mt-8 flex flex-col gap-1">
 							<h5 className="font-semibold">Summary</h5>
-							<div className="mt-2 flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
-								{nativeWorkers > 0 && (
-									<span>{nativeWorkers} native workers</span>
+							<div className="mt-2 flex flex-col gap-1">
+								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
+									Total seats: {(developers + Math.floor(operators/2)).toLocaleString()}
+								</span>
+								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
+								</span>
+								{operators > 0 && (
+									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+										{operators.toLocaleString()}{' '}
+										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
+											{operators === 1 ? 'operator' : 'operators'}
+										</a>
+									</span>
 								)}
-								{workerGroups.length > 0 && (() => {
+							</div>
+							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
+								{(() => {
 									const counts = getWorkerCounts(workerGroups);
+									const totalComputeUnits = (counts.small || 0) + 
+										(2 * (counts.standard || 0)) + 
+										((2/8) * nativeWorkers) + 
+										(4 * (counts.large || 0));
+									
 									return (
 										<>
-											{counts.small > 0 && (
-												<span>{counts.small} <span className="text-blue-700 dark:text-blue-700">small</span> workers (1GB)</span>
-											)}
+											<span className="text-gray-900 dark:text-white">
+												Total compute units (1GB): {totalComputeUnits}</span>
 											{counts.standard > 0 && (
-												<span>{counts.standard} <span className="text-blue-500 dark:text-blue-500">standard</span> workers (2GB)</span>
+												<span>{counts.standard} standard workers (2GB)</span>
+											)}
+											{counts.small > 0 && (
+												<span>{counts.small} small workers (1GB)</span>
 											)}
 											{counts.large > 0 && (
 												<span>{counts.large} large workers (>2GB)</span>
 											)}
+											{nativeWorkers > 0 && (
+												<span>{nativeWorkers} native workers (2GB)</span>
+											)}
 										</>
 									);
 								})()}
-							</div>
-							<div className="flex flex-row gap-1">
-								<span className="whitespace-nowrap text-sm">
-									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
-								</span>
-								{operators > 0 && (
-									<>
-										<b className="text-sm font-normal">and</b>
-										<span className="whitespace-nowrap text-sm">
-											{operators.toLocaleString()}{' '}
-											<a href="#operator" className="custom-link text-black dark:text-white">
-												{operators === 1 ? 'operator' : 'operators'}
-											</a>
-										</span>
-									</>
-								)}
 							</div>
 						</div>
 						<a
@@ -588,45 +609,50 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				{tier.id === 'tier-enterprise-selfhost' ? (
 					<>
 						<div className="mt-8 flex flex-col gap-1">
-							<div className="flex justify-between items-center">
-								<h5 className="font-semibold">Summary</h5>
-							</div>
-							<div className="mt-2 flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
-								{nativeWorkers > 0 && (
-									<span>{nativeWorkers} native workers</span>
+							<h5 className="font-semibold">Summary</h5>
+							<div className="mt-2 flex flex-col gap-1">
+								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
+									Total seats: {(developers + Math.floor(operators/2)).toLocaleString()}
+								</span>
+								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
+								</span>
+								{operators > 0 && (
+									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200">
+										{operators.toLocaleString()}{' '}
+										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
+											{operators === 1 ? 'operator' : 'operators'}
+										</a>
+									</span>
 								)}
-								{workerGroups.length > 0 && (() => {
+							</div>
+							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
+								{(() => {
 									const counts = getWorkerCounts(workerGroups);
+									const totalComputeUnits = (counts.small || 0) + 
+										(2 * (counts.standard || 0)) + 
+										((2/8) * nativeWorkers) + 
+										(4 * (counts.large || 0));
+									
 									return (
 										<>
-											{counts.small > 0 && (
-												<span>{counts.small} small workers (1GB)</span>
-											)}
+											<span className="text-gray-900 dark:text-white">
+												Total compute units (1GB): {totalComputeUnits}</span>
 											{counts.standard > 0 && (
 												<span>{counts.standard} standard workers (2GB)</span>
+											)}
+											{counts.small > 0 && (
+												<span>{counts.small} small workers (1GB)</span>
 											)}
 											{counts.large > 0 && (
 												<span>{counts.large} large workers (>2GB)</span>
 											)}
+											{nativeWorkers > 0 && (
+												<span>{nativeWorkers} native workers (2GB)</span>
+											)}
 										</>
 									);
 								})()}
-							</div>
-							<div className="flex flex-row gap-1">
-								<span className="whitespace-nowrap text-sm">
-									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
-								</span>
-								{operators > 0 && (
-									<>
-										<b className="text-sm font-normal">and</b>
-										<span className="whitespace-nowrap text-sm">
-											{operators.toLocaleString()}{' '}
-											<a href="#operator" className="custom-link text-black dark:text-white">
-												{operators === 1 ? 'operator' : 'operators'}
-											</a>
-										</span>
-									</>
-								)}
 							</div>
 						</div>
 						<a

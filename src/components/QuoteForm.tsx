@@ -3,7 +3,7 @@ import { Loader2, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
 export function QuoteForm({
-	vCPUs,
+	workers,
 	seats,
 	frequency,
 	plan,
@@ -11,7 +11,12 @@ export function QuoteForm({
 	setOpen,
 	selectedOption
 }: {
-	vCPUs: number;
+	workers: {
+		native: number;
+		small: number;
+		standard: number;
+		large: number;
+	};
 	seats: number;
 	frequency: string;
 	plan: 'selfhosted_ee' | 'cloud_ee';
@@ -36,9 +41,12 @@ export function QuoteForm({
 				apiPlan = 'nonprofit_ee';
 				}
 
+			// Calculate total compute units
+			const computeUnits = workers.small + (2 * workers.standard) + (2 * workers.native) + (4 * workers.large);
+
 			// API request
 			const response = await fetch(
-				`https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/p/f/bd/public/generate_quote_public?token=ylmZm3yfDfLGPVjvn1N3g3vtOlV8AOnD`,
+				`https://app.windmill.dev/api/w/windmill-labs/jobs/run/p/f/bd/public/generate_quote__public____new_pricing?token=eDuWDGxe3W4JOgBUg1bQuWyRk9bBaUdE`,
 				{
 					method: 'POST',
 					headers: {
@@ -46,12 +54,12 @@ export function QuoteForm({
 						Authorization: 'Bearer '
 					},
 					body: JSON.stringify({
+						plan: apiPlan,
 						frequency,
-						seats: seats,
-						vcpus: vCPUs,
-						company_name: companyName,
-						plan: apiPlan, // Pass the modified plan
-						email
+						seats,
+						compute_units: computeUnits,
+						email,
+						company_name: companyName
 					})
 				}
 			);
@@ -122,21 +130,42 @@ export function QuoteForm({
 							? 'Enterprise - Nonprofit'
 							: 'Self-Hosted EE'}
 						</div>
-
-						<div className="flex flex-row justify-between">
-						<span className="font-medium text-gray-800 dark:text-gray-200">vCPUs</span>
-						{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(vCPUs, 10) : vCPUs}
-						</div>
-
-						<div className="flex flex-row justify-between">
-						<span className="font-medium text-gray-800 dark:text-gray-200">Seats</span>
-						{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(seats, 10) : seats}
-						</div>
 						<div className="flex flex-row justify-between">
 							<span className="font-medium text-gray-800 dark:text-gray-200">Frequency</span>
 							{frequency}
 						</div>
-
+						<div className="flex flex-row justify-between">
+							<span className="font-medium text-gray-800 dark:text-gray-200">Seats</span>
+							{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(seats, 10) : seats}
+						</div>
+						<div className="flex flex-row justify-between">
+							<span className="font-medium text-gray-800 dark:text-gray-200">Total compute units (1GB)</span>
+							{workers.small + (2 * workers.standard) + (2 * workers.native) + (4 * workers.large)}
+						</div>
+						{workers.standard > 0 && (
+							<div className="flex flex-row justify-between">
+								<span className="font-medium text-gray-800 dark:text-gray-200 pl-4">Standard workers (2GB)</span>
+								{workers.standard}
+							</div>
+						)}
+						{workers.small > 0 && (
+							<div className="flex flex-row justify-between">
+								<span className="font-medium text-gray-800 dark:text-gray-200 pl-4">Small workers (1GB)</span>
+								{workers.small}
+							</div>
+						)}
+						{workers.large > 0 && (
+							<div className="flex flex-row justify-between">
+								<span className="font-medium text-gray-800 dark:text-gray-200 pl-4">Large workers (>2GB)</span>
+								{workers.large}
+							</div>
+						)}
+						{workers.native > 0 && (
+							<div className="flex flex-row justify-between">
+								<span className="font-medium text-gray-800 dark:text-gray-200 pl-4">8 native workers (2GB)</span>
+								{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(workers.native, 10) : workers.native}
+							</div>
+						)}
 						<a
 							href="https://drive.google.com/uc?export=download&id=1tbBMNSGcdu3e5BAFf8CIEXlbEKppbtLm"
 							className="text-blue underline text-sm"

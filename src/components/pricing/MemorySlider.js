@@ -76,6 +76,13 @@ export default function MemorySlider({ min, max, defaultValue, onChange }) {
     const pos1GB = valueToPosition(1) * 0.9 + 10;
     const pos2GB = valueToPosition(2) * 0.9 + 10;
 
+    // Determine thumb color based on position
+    const getThumbColor = () => {
+        if (position <= pos1GB) return '#1e40af';  // dark blue
+        if (position <= pos2GB) return '#2563eb';  // medium blue
+        return '#60a5fa';  // light blue
+    };
+
     return (
         <div className="w-full relative">
             <input
@@ -90,8 +97,22 @@ export default function MemorySlider({ min, max, defaultValue, onChange }) {
                     background: `linear-gradient(to right, 
                         #1e40af 0%, #1e40af ${pos1GB}%, 
                         #2563eb ${pos1GB}%, #2563eb ${pos2GB}%, 
-                        #60a5fa ${pos2GB}%, #60a5fa 100%)`
+                        #60a5fa ${pos2GB}%, #60a5fa 100%)`,
+                    '--thumb-color': getThumbColor(),
                 }}
+                // Add these CSS classes for thumb styling
+                className="w-full h-2 appearance-none rounded-full outline-none accent-blue-500 
+                    [&::-webkit-slider-thumb]:appearance-none
+                    [&::-webkit-slider-thumb]:w-4
+                    [&::-webkit-slider-thumb]:h-4
+                    [&::-webkit-slider-thumb]:rounded-full
+                    [&::-webkit-slider-thumb]:bg-[var(--thumb-color)]
+                    [&::-moz-range-thumb]:appearance-none
+                    [&::-moz-range-thumb]:w-4
+                    [&::-moz-range-thumb]:h-4
+                    [&::-moz-range-thumb]:rounded-full
+                    [&::-moz-range-thumb]:bg-[var(--thumb-color)]
+                    [&::-moz-range-thumb]:border-0"
             />
         </div>
     );

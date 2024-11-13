@@ -95,7 +95,7 @@ const faqs = [
 				>
 					native worker group
 				</Link>
-				. This group is pre-configured to listen to native jobs tags. Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
+				. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
 			</span>
 		)
 	},
