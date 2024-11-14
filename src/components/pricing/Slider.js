@@ -76,7 +76,7 @@ export default function Slider({ min, max, step, defaultValue, onChange, noExpon
                 type="range"
                 min={0}
                 max={max}
-                step={isExponential ? (max / 1000) : step} // Make step size relative to max value
+                step={isExponential ? (max / 1000) : step}
                 value={displayValue}
                 onChange={handleChange}
                 className="w-full h-2 appearance-none bg-gray-300 rounded-full outline-none accent-blue-500"

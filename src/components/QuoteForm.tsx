@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
 import { Loader2, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 export function QuoteForm({
 	workers,
@@ -8,6 +8,7 @@ export function QuoteForm({
 	operators,
 	frequency,
 	plan,
+	total_price,
 	open,
 	setOpen,
 	selectedOption
@@ -145,73 +146,78 @@ export function QuoteForm({
 							? 'Enterprise - Nonprofit'
 							: 'Self-Hosted EE'}
 						</div>
+
 						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Frequency</span>
-							{frequency}
+							<span className="font-medium text-gray-800 dark:text-gray-200">Price</span>
+							${total_price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}/{frequency === 'monthly' ? 'mo' : 'yr'}
 						</div>
 						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Total seat units</span>
+							<span className="font-medium text-gray-800 dark:text-gray-200">Total seat units (SU)</span>
 							{Math.ceil(operators / 2) + developers}
 						</div>
 						{developers > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Developers</span>
-								<div>
-									{developers} ({developers} {developers === 1 ? 'seat' : 'seats'})
+								<span className="pl-4 w-40">Developers</span>
+								<div className="grid grid-cols-[60px_20px_60px] gap-1">
+									<span className="text-right">{developers}</span>
+									<span className="text-center">=</span>
+									<span className="text-right">{developers} SU</span>
 								</div>
 							</div>
 						)}
 						{operators > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Operators</span>
-								<div>
-									{operators} ({Math.ceil(operators / 2)} {Math.ceil(operators / 2) === 1 ? 'seat' : 'seats'})
+								<span className="pl-4 w-40">Operators</span>
+								<div className="grid grid-cols-[60px_20px_60px] gap-1">
+									<span className="text-right">{operators}</span>
+									<span className="text-center">=</span>
+									<span className="text-right">{Math.ceil(operators / 2)} SU</span>
 								</div>
 							</div>
 						)}
 						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Total compute units</span>
+							<span className="font-medium text-gray-800 dark:text-gray-200">Total compute units (CU)</span>
 							<div>
-								{computeUnits} {computeUnits === 1 ? 'compute unit' : 'compute units'}
+								{computeUnits}
 							</div>
 						</div>
 						{workers.standard > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Standard workers</span>
-								<div className="grid grid-cols-3 w-36">
-									<span className="text-left w-2">{workers.standard}</span>
-									<span className="text-center w-2">=</span>
-									<span className="text-right w-15">{workers.standard} CU</span>
+								<span className="pl-4 w-40">Standard workers</span>
+								<div className="grid grid-cols-[60px_20px_60px] gap-1">
+									<span className="text-right">{workers.standard}</span>
+									<span className="text-center">=</span>
+									<span className="text-right">{workers.standard} CU</span>
 								</div>
 							</div>
 						)}
 						{workers.small > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Small workers</span>
-								<div className="grid grid-cols-3 w-36">
-									<span className="text-left w-8">{workers.small}</span>
-									<span className="text-center w-2">=</span>
-									<span className="text-right w-15">{Math.ceil(workers.small / 2)} CU</span>
+								<span className="pl-4 w-40">Small workers</span>
+								<div className="grid grid-cols-[60px_20px_60px] gap-1">
+									<span className="text-right">{workers.small}</span>
+									<span className="text-center">=</span>
+									<span className="text-right">{Math.ceil(workers.small / 2)} CU</span>
 								</div>
 							</div>
 						)}
 						{workers.large > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Large workers</span>
-								<div className="grid grid-cols-3 w-36">
-									<span className="text-left w-8">{workers.large}</span>
-									<span className="text-center w-2">=</span>
-									<span className="text-right w-15">{workers.large * 2} CU</span>
+								<span className="pl-4 w-40">Large workers</span>
+								<div className="grid grid-cols-[60px_20px_60px] gap-1">
+									<span className="text-right">{workers.large}</span>
+									<span className="text-center">=</span>
+									<span className="text-right">{workers.large * 2} CU</span>
 								</div>
 							</div>
 						)}
 						{workers.native > 0 && (
 							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4">Native workers</span>
-								<div className="grid grid-cols-3 w-36">
-									<span className="text-left w-8">{workers.native}</span>
-									<span className="text-center w-2">=</span>
-									<span className="text-right w-15">
+								<span className="pl-4 w-40">Native workers</span>
+								<div className="grid grid-cols-[60px_20px_60px] gap-1">
+									<span className="text-right">{workers.native * 8}</span>
+									<span className="text-center">=</span>
+									<span className="text-right">
 										{selectedOption === 'SMB' && plan === 'selfhosted_ee' 
 											? Math.min(workers.native, 10) 
 											: workers.native} CU

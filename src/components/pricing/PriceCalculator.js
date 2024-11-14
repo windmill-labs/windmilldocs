@@ -216,39 +216,76 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				plan={tier.id === 'tier-enterprise-cloud' ? 'cloud_ee' : 'selfhosted_ee'}
 				frequency={period.value === 'annually' ? 'yearly' : 'monthly'}
 				selectedOption={selectedOption}
+				total_price={computeTotalPrice()}
 			/>
 			<div className="grow flex flex-col justify-start">
 				<div className="flex justify-between items-center">
 					<div className="flex items-center">
 						<h3 className="m-0 font-semibold">Price</h3>
 						<div className="ml-4">
-							{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && 
-								(workerGroups.reduce((sum, group) => {
-									const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
-										(tier.id === 'tier-enterprise-cloud' ? 2 : 1);
-									return sum + (pricePerWorker * group.workers);
-								}, 0) + (pricing.worker?.native * nativeWorkers / 8)) < 
-								(tier.id === 'tier-enterprise-cloud' ? 200 : 
-									(selectedOption === 'SMB' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
-									<span className="text-sm text-rose-700 dark:text-red-400">
-										Price for workers can't be below ${tier.id === 'tier-enterprise-cloud' 
-											? (period.value === 'annually' ? '2,000' : '200') 
-											: (selectedOption === 'SMB' || selectedOption === 'Nonprofit' 
-												? (period.value === 'annually' ? '400' : '40')
-												: (period.value === 'annually' ? '1,000' : '100'))}
-										/{period.value === 'annually' ? 'yr' : 'mo'}
-									</span>
-								)}
+							{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+								<>
+									{/* Existing minimum price warning */}
+									{(workerGroups.reduce((sum, group) => {
+										const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
+											(tier.id === 'tier-enterprise-cloud' ? 2 : 1);
+										return sum + (pricePerWorker * group.workers);
+									}, 0) + (pricing.worker?.native * nativeWorkers / 8)) < 
+									(tier.id === 'tier-enterprise-cloud' ? 200 : 
+										(selectedOption === 'SMB' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
+										<span className="text-sm text-rose-700 dark:text-red-400">
+											Price for workers can't be below ${tier.id === 'tier-enterprise-cloud' 
+												? (period.value === 'annually' ? '2,000' : '200') 
+												: (selectedOption === 'SMB' || selectedOption === 'Nonprofit' 
+													? (period.value === 'annually' ? '400' : '40')
+													: (period.value === 'annually' ? '1,000' : '100'))}
+											/{period.value === 'annually' ? 'yr' : 'mo'}
+										</span>
+									)}
+
+									{/* New CU limit warning for SMB */}
+									{selectedOption === 'SMB' && (
+										(() => {
+											const counts = getWorkerCounts(workerGroups);
+											const totalComputeUnits = (counts.small / 2 || 0) + 
+												(counts.standard || 0) + 
+												((1/8) * nativeWorkers) + 
+												(2 * (counts.large || 0));
+											
+											return totalComputeUnits > 10 ? (
+												<span className="text-sm text-rose-700 dark:text-red-400">
+													Maximum 10 CU on Pro plan, go to Enterprise if above
+												</span>
+											) : null;
+										})()
+									)}
+								</>
+							)}
 						</div>
 					</div>
 
 					<div>
-						<span className="text-2xl text-gray-900 font-semibold dark:text-white">
-							{priceFormatter.format(computeTotalPrice())}
-						</span>
-						<span className="text-md text-gray-500">
-							{period.value === 'annually' ? '/yr' : '/mo'}
-						</span>
+						{(() => {
+							const counts = getWorkerCounts(workerGroups);
+							const totalComputeUnits = (counts.small / 2 || 0) + 
+								(counts.standard || 0) + 
+								((1/8) * nativeWorkers) + 
+								(2 * (counts.large || 0));
+							const isOverLimit = selectedOption === 'SMB' && totalComputeUnits > 10;
+							const textColor = isOverLimit ? "text-rose-700 dark:text-red-400" : "text-gray-900 dark:text-white";
+							const subTextColor = isOverLimit ? "text-rose-700 dark:text-red-400" : "text-gray-500";
+
+							return (
+								<>
+									<span className={classNames("text-2xl font-semibold", textColor)}>
+										{priceFormatter.format(computeTotalPrice())}
+									</span>
+									<span className={classNames("text-md", subTextColor)}>
+										{period.value === 'annually' ? '/yr' : '/mo'}
+									</span>
+								</>
+							);
+						})()}
 					</div>
 				</div>
 
@@ -294,7 +331,15 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 												{operators.toLocaleString()}
 											</span>
 											<span className="text-sm font-semibold tracking-tight text-gray-600 dark:text-gray-200">
-												{' '}{operators <= 1 ? 'operator' : 'operators'}
+												{' '}{operators <= 1 ? 'operator' : 'operators'}{' '}
+												<span className="relative group">
+													<svg className="inline-block w-3 h-3 text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+														<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+													</svg>
+													<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm font-normal text-white bg-slate-800 rounded-lg shadow-lg">
+														An <a href="#operators" className="text-blue-400 hover:text-blue-500">operator</a> is a user who can only execute scripts, flows and apps, but not create and edit them. Operators are 1/2 price of developers (or 1/2 seats).
+													</span>
+												</span>
 											</span>
 										</div>
 										<div>
@@ -410,7 +455,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								
 								<button
 									onClick={addWorkerGroup}
-									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white font-semibold"
+									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white dark:hover:text-slate-100 font-semibold"
 								>
 									+ Add worker group
 								</button>
@@ -421,11 +466,11 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								<h6 className="font-semibold">
 									Native workers{' '}
 									<span className="relative group">
-										<svg className="inline-block w-4 h-4 text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+										<svg className="inline-block w-3 h-3 text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 										</svg>
-										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm font-normal text-white bg-slate-700 rounded-lg shadow-lg">
-										<a href="#native-workers" className="text-blue-500 hover:text-blue-400">Native</a> workers are workers within the native <a href="/docs/core_concepts/worker_groups#native-workers" className="text-blue-500 hover:text-blue-400">worker group</a>. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
+										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm font-normal text-white bg-slate-800 rounded-lg shadow-lg">
+											<a href="#native-workers" className="text-blue-400 hover:text-blue-500">Native</a> workers are workers within the native <a href="/docs/core_concepts/worker_groups#native-workers" className="text-blue-400 hover:text-blue-500">worker group</a>. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
 										</span>
 									</span>
 								</h6>
@@ -544,6 +589,29 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									</span>
 								)}
 						</div>
+						<div className="mt-2 text-sm">
+							{(() => {
+								const counts = getWorkerCounts(workerGroups);
+								const totalComputeUnits = (counts.small / 2 || 0) + 
+									(counts.standard || 0) + 
+									((1/8) * nativeWorkers) + 
+									(2 * (counts.large || 0));
+								const textColor = selectedOption === 'SMB' && totalComputeUnits > 10
+									? "text-rose-700 dark:text-red-400"
+									: "text-gray-900 dark:text-white";
+
+								return (
+									<>
+										<span className={classNames(textColor)}>
+											Price: {priceFormatter.format(computeTotalPrice())}
+										</span>
+										<span className={classNames(textColor)}>
+											/{period.value === 'annually' ? 'yr' : 'mo'}
+										</span>
+									</>
+								);
+							})()}
+						</div>
 					</div>
 				) : null}
 
@@ -551,7 +619,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					<>
 						<div className="mt-8 flex flex-col gap-1">
 							<h5 className="font-semibold">Summary</h5>
-							<div className="mt-2 flex flex-col gap-1">
+							<div className="mt-2 flex flex-col gap-1 min-h-[4.5rem]">
 								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
 									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
 								</span>
@@ -568,7 +636,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									</span>
 								)}
 							</div>
-							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
+							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
 								{(() => {
 									const counts = getWorkerCounts(workerGroups);
 									const totalComputeUnits = (counts.small / 2 || 0) + 
@@ -579,7 +647,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									return (
 										<>
 											<span className="text-gray-900 dark:text-white">
-												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {Math.round(totalComputeUnits)}</span>
+												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU): {Math.round(totalComputeUnits)}</span>
 											{counts.standard > 0 && (
 												<span className="ml-4">{counts.standard} standard workers ={' '}{counts.standard} CU</span>
 											)}
@@ -592,6 +660,29 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											{nativeWorkers > 0 && (
 												<span className="ml-4">{nativeWorkers} native workers ={' '}{nativeWorkers/8} CU</span>
 											)}
+										</>
+									);
+								})()}
+							</div>
+							<div className="mt-2 text-sm">
+								{(() => {
+									const counts = getWorkerCounts(workerGroups);
+									const totalComputeUnits = (counts.small / 2 || 0) + 
+										(counts.standard || 0) + 
+										((1/8) * nativeWorkers) + 
+										(2 * (counts.large || 0));
+									const textColor = selectedOption === 'SMB' && totalComputeUnits > 10
+										? "text-rose-700 dark:text-red-400"
+										: "text-gray-900 dark:text-white";
+
+									return (
+										<>
+											<span className={textColor}>
+												Price: {priceFormatter.format(computeTotalPrice())}
+											</span>
+											<span className={textColor}>
+												/{period.value === 'annually' ? 'yr' : 'mo'}
+											</span>
 										</>
 									);
 								})()}
@@ -613,7 +704,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 					<>
 						<div className="mt-8 flex flex-col gap-1">
 							<h5 className="font-semibold">Summary</h5>
-							<div className="mt-2 flex flex-col gap-1">
+							<div className="mt-2 flex flex-col gap-1 min-h-[4.5rem]">
 								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
 									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
 								</span>
@@ -630,7 +721,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									</span>
 								)}
 							</div>
-							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200">
+							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
 								{(() => {
 									const counts = getWorkerCounts(workerGroups);
 									const totalComputeUnits = (counts.small / 2 || 0) + 
@@ -641,7 +732,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									return (
 										<>
 											<span className="text-gray-900 dark:text-white">
-												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a>: {Math.round(totalComputeUnits)}</span>
+												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU): <span className={selectedOption === 'SMB' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>{Math.round(totalComputeUnits)}{selectedOption === 'SMB' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}</span></span>
 											{counts.standard > 0 && (
 												<span className="ml-4">{counts.standard} standard workers ={' '}{counts.standard} CU</span>
 											)}
@@ -654,6 +745,29 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											{nativeWorkers > 0 && (
 												<span className="ml-4">{nativeWorkers} native workers ={' '}{nativeWorkers/8} CU</span>
 											)}
+										</>
+									);
+								})()}
+							</div>
+							<div className="mt-2 text-sm">
+								{(() => {
+									const counts = getWorkerCounts(workerGroups);
+									const totalComputeUnits = (counts.small / 2 || 0) + 
+										(counts.standard || 0) + 
+										((1/8) * nativeWorkers) + 
+										(2 * (counts.large || 0));
+									const textColor = selectedOption === 'SMB' && totalComputeUnits > 10
+										? "text-rose-700 dark:text-red-400"
+										: "text-gray-900 dark:text-white";
+
+									return (
+										<>
+											<span className={classNames(textColor)}>
+												Price: {priceFormatter.format(computeTotalPrice())}
+											</span>
+											<span className={classNames(textColor)}>
+												/{period.value === 'annually' ? 'yr' : 'mo'}
+											</span>
 										</>
 									);
 								})()}

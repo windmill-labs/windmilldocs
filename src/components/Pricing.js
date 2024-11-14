@@ -147,6 +147,11 @@ const pricing = {
 					)
 				},
 				{
+					text: (
+						<span>Dedicated Slack or Discord channel</span>
+					)
+				},
+				{
 					text: <span>Design partners for roadmap</span>
 				}
 			],
@@ -161,7 +166,12 @@ const pricing = {
 					features: [
 						{ text: 'No Audit logs' },
 						{ text: 'No Distributed dependency cache backed by S3' },
-						{ text: 'Max 10 users with SSO' }
+						{ text: 'Max 10 users with SSO' },
+						{
+							text: (
+								<span>Max 10 <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU)</span>
+							)
+						},
 					]
 				},
 				{ text: 'Support with 48h response time by email' }
@@ -211,7 +221,6 @@ const pricing = {
 				{
 					text: <span>Everything in free</span>
 				},
-
 				{
 					text: <span>Audit logs 7 days retention</span>
 				},
@@ -287,7 +296,9 @@ const pricing = {
 						</span>
 					)
 				},
-
+				{
+					text: <span>Dedicated Slack or Discord channel</span>
+				},
 				{
 					text: <span>Design partners for roadmap</span>
 				}
