@@ -657,7 +657,13 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				{tier.id === 'tier-enterprise-cloud' || tier.id === 'tier-enterprise-selfhost' ? (
 					<>
 						<div className="mt-8 flex flex-col gap-1">
-							<h5 className="font-semibold">Summary</h5>
+							<div>
+								<a href="#pricing-explained" className="custom-link text-sm text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100">
+									Our pricing explained
+								</a>
+							</div>
+
+							<h5 className="font-semibold mt-4">Summary</h5>
 							<div className="mt-2 text-sm">
 								<PriceDisplay 
 									amount={computeTotalPrice()} 

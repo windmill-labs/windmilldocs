@@ -11,9 +11,19 @@ const faqs = [
 			<span>
 				Windmill's pricing is designed to align with the value we deliver to our customers. Our pricing model reflects the core value of Windmill, which is primarily related to the amount of compute resources used, and the number of users accessing the platform. We've structured our pricing to scale with your usage, ensuring you're paying for the actual value you derive from our platform.
 				<br /><br />
-				For compute resources, we use compute units based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
+				For compute resources, we use <Link
+					to="#compute-units"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					compute units
+				</Link>{' '}based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
 				<br /><br />
-				For user access, we charge based on seats. A regular user counts as one seat, while an operator (who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base.
+				For user access, we charge based on seats. A regular user counts as one seat, while an <Link
+					to="#operator"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					operator
+				</Link>{' '}(who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base. We only count active users, i.e. users who have logged in to the platform in the last 30 days according to the audit logs.
 				<br /><br />
 				Our billing is meant to be fair and transparent: we only count the actual memory allocated to your workers in your production instance, with minute granularity if you use auto-scaling. This approach ensures that you're only charged for the resources actively contributing to your production environment. If you scale your workers up and down, the compute units will be accounted with minute granularity. For instance, you can run 10 workers with 2GB each for half a month at the same price as 5 workers with 2GB each for the full month.
 				<br /><br />
@@ -104,7 +114,12 @@ const faqs = [
 		question: 'What are compute units?',
 		answer: (
 			<span>
-				Compute units are a unit of measure for the amount of compute resources used. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
+				Compute units are a unit of measure for the amount of compute resources used. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
+					to="/docs/core_concepts/worker_groups"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					worker
+				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
 			</span>
 		)
 	},
@@ -113,7 +128,12 @@ const faqs = [
 		question: 'How many compute units do I need?',
 		answer: (
 			<span>
-				The number of compute units will depend on the workload and the jobs Windmill will need to run. Each{' '}
+				The number of <Link
+					to="#compute-units"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					compute units
+				</Link>{' '}will depend on the workload and the jobs Windmill will need to run. Each{' '}
 				<a
 					href="/docs/core_concepts/worker_groups"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
@@ -141,7 +161,7 @@ const faqs = [
 	},
 	{
 		id: 'worker-reporting',
-		question: 'How is the use of the number of seats & workers estimated and reported to Windmill?',
+		question: 'How is the use of the number of seats & compute units estimated and reported to Windmill?',
 		answer: (
 			<span>
 				Even though Windmill's{' '}
@@ -229,7 +249,7 @@ const faqs = [
 					support
 				</Link>{' '}
 				with different response times based on issue priorities. Our support team is available 24/7,
-				and the SLA is consistent for both cloud and self-hosted deployments.
+				and the SLA is consistent for both cloud and self-hosted deployments. Enterprise customers are also entitled to a dedicated Slack or Discord channel.
 			</span>
 		)
 	},
