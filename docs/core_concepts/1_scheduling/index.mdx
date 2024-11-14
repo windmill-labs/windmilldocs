@@ -43,18 +43,46 @@ Cron jobs are one of many ways to [trigger workflows](../../getting_started/9_tr
 
 ## Cron syntax
 
-Windmill uses [zslayton's cron expression parser](https://github.com/zslayton/cron). This library differs slightly from the Unix library.
+Windmill uses [hexagons's croner expression parser](https://github.com/hexagon/croner-rust). This library supports the Unix cron syntax as well as extensions allowing for more complex scheduling.
 
 Although the syntaxes are similar, there are some notable differences:
 
-| Feature                   | Unix cron               | zslayton's `cron` library                        |
+| Feature                   | Unix cron               | hexagon's `croner` library                 |
 |---------------------------|-------------------------|--------------------------------------------|
-| **Day of Week Index**        | Sunday = 0 through Saturday = 6 | Shifted by one (Sunday = 1 through Saturday = 7, 0 = Sunday) |
-| **Seconds Field**         | Not included            | Included as the first field                |
+| **Day of Week Index**     | Sunday = 0 through Saturday = 6 | Shifted by one (Sunday = 1 through Saturday = 7, 0 = Sunday) |
+| **Seconds Field**         | Not included            | Included as the first field (optional)     |
 | **Year Field**            | Not included            | Optional, can specify specific years       |
 | **Month Representation**  | Numeric and short names | Numeric, short names, and name ranges      |
 | **List and Range in Fields** | Supports lists and ranges | Supports lists, ranges, and combinations |
 | **Step Values**           | Supported (e.g., `*/2`) | Supported, including complex patterns like `2018/2` |
+
+Hexagon's croner expressions have the following additional modifiers:
+  - _?_: In croner a questionmark behaves just as *, to allow for legacy cron
+	patterns to be used.
+  - _L_: The letter 'L' can be used in the day of the month field to indicate
+    the last day of the month. When used in the day of the week field in
+    conjunction with the # character, it denotes the last specific weekday of
+    the month. For example, `5#L` represents the last Friday of the month.
+  - _#_: The # character specifies the "nth" occurrence of a particular day
+    within a month. For example, supplying `5#2` in the day of week field
+    signifies the second Friday of the month. This can be combined with ranges
+    and supports day names. For instance, MON-FRI#2 would match the Monday
+    through Friday of the second week of the month.
+  - _W_: The character 'W' is used to specify the closest weekday to a given day
+    in the day of the month field. For example, 15W will match the closest
+    weekday to the 15th of the month. If the specified day falls on a weekend
+    (Saturday or Sunday), the pattern will match the closest weekday before or
+    after that date. For instance, if the 15th is a Saturday, 15W will match the
+    14th (Friday), and if the 15th is a Sunday, it will match the 16th (Monday).
+
+| Field        | Required | Allowed values  | Allowed special characters | Remarks                                                                                                         |
+| ------------ | -------- | --------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Seconds      | Optional | 0-59            | * , - / ?                  |                                                                                                                 |
+| Minutes      | Yes      | 0-59            | * , - / ?                  |                                                                                                                 |
+| Hours        | Yes      | 0-23            | * , - / ?                  |                                                                                                                 |
+| Day of Month | Yes      | 1-31            | * , - / ? L W              |                                                                                                                 |
+| Month        | Yes      | 1-12 or JAN-DEC | * , - / ?                  |                                                                                                                 |
+| Day of Week  | Yes      | 0-7 or SUN-MON  | * , - / ? # L              | 0 to 6 are Sunday to Saturday<br />7 is Sunday, the same as 0<br /># is used to specify nth occurrence of a weekday |
 
 Anyway, the simplified builder and [Windmill AI](../22_ai_generation/index.mdx) will help you to create the cron expression.
 
