@@ -2,6 +2,33 @@ import { Dialog } from '@headlessui/react';
 import { Loader2, X } from 'lucide-react';
 import React, { useState } from 'react';
 
+type DetailRowProps = {
+	label: string;
+	value: string | number;
+	isSubItem?: boolean;
+	calculation?: {
+		left: number;
+		right: number | string;
+		operator?: string;
+	};
+	className?: string;
+};
+
+const DetailRow = ({ label, value, isSubItem, calculation, className = '' }: DetailRowProps) => (
+	<div className={`flex flex-row justify-between ${isSubItem ? 'font-normal text-gray-600 dark:text-gray-300' : 'font-medium text-gray-800 dark:text-gray-200'} ${className}`}>
+		<span className={isSubItem ? 'pl-4 w-40' : ''}>{label}</span>
+		{calculation ? (
+			<div className="grid grid-cols-[60px_20px_60px] gap-1">
+				<span className="text-right">{calculation.left}</span>
+				<span className="text-center">{calculation.operator || '='}</span>
+				<span className="text-right">{calculation.right}</span>
+			</div>
+		) : (
+			<div>{value}</div>
+		)}
+	</div>
+);
+
 export function QuoteForm({
 	workers,
 	developers,
@@ -37,6 +64,18 @@ export function QuoteForm({
 		return emailRegex.test(email);
 	};
 
+	// Add these helper functions
+	const getPlanDisplay = () => {
+		if (plan === 'cloud_ee') return 'Cloud EE';
+		if (selectedOption === 'SMB' && plan === 'selfhosted_ee') return 'Pro';
+		if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') return 'Enterprise - Nonprofit';
+		return 'Self-Hosted EE';
+	};
+
+	const formatPrice = () => {
+		return `$${total_price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}/${frequency === 'monthly' ? 'mo' : 'yr'}`;
+	};
+
 	// Function to generate quote
 	async function generateQuote() {
 		setLoading(true);
@@ -50,8 +89,8 @@ export function QuoteForm({
 				apiPlan = 'nonprofit_ee';
 				}
 
-			// Calculate total compute units
-			const computeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
+			// Calculate total compute units with minimum of 2
+			const computeUnits = Math.max(2, Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large));
 
 			const seats = developers + Math.ceil(operators / 2);
 
@@ -96,8 +135,9 @@ export function QuoteForm({
 		}
 	}
 
-	// Add this before the return statement
-	const computeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
+	// Add this calculation before the return statement
+	const rawComputeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
+	const computeUnits = Math.max(2, rawComputeUnits);
 	const isSmbWithTooManyUnits = selectedOption === 'SMB' && computeUnits > 10;
 
 	return (
@@ -136,95 +176,58 @@ export function QuoteForm({
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</label>
-						<div className="flex flex-row justify-between">
-						<span className="font-medium text-gray-800 dark:text-gray-200">Plan</span>
-						{plan === 'cloud_ee'
-							? 'Cloud EE'
-							: selectedOption === 'SMB' && plan === 'selfhosted_ee'
-							? 'Pro'
-							: selectedOption === 'Nonprofit' && plan === 'selfhosted_ee'
-							? 'Enterprise - Nonprofit'
-							: 'Self-Hosted EE'}
-						</div>
+						<DetailRow label="Plan" value={getPlanDisplay()} />
+						<DetailRow label="Price" value={formatPrice()} />
+						<DetailRow label="Total seats" value={Math.ceil(operators / 2) + developers} />
 
-						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Price</span>
-							${total_price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}/{frequency === 'monthly' ? 'mo' : 'yr'}
-						</div>
-						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Total seat units (SU)</span>
-							{Math.ceil(operators / 2) + developers}
-						</div>
 						{developers > 0 && (
-							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4 w-40">Developers</span>
-								<div className="grid grid-cols-[60px_20px_60px] gap-1">
-									<span className="text-right">{developers}</span>
-									<span className="text-center">=</span>
-									<span className="text-right">{developers} SU</span>
-								</div>
-							</div>
+							<DetailRow 
+								label="Developers" 
+								isSubItem 
+								calculation={{
+									left: developers,
+									right: `${developers} ${developers === 1 ? 'seat' : 'seats'}`
+								}}
+							/>
 						)}
+
 						{operators > 0 && (
-							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4 w-40">Operators</span>
-								<div className="grid grid-cols-[60px_20px_60px] gap-1">
-									<span className="text-right">{operators}</span>
-									<span className="text-center">=</span>
-									<span className="text-right">{Math.ceil(operators / 2)} SU</span>
-								</div>
-							</div>
+							<DetailRow 
+								label="Operators" 
+								isSubItem 
+								calculation={{
+									left: operators,
+									right: `${Math.ceil(operators / 2)} ${operators === 1 ? 'seat' : 'seats'}`
+								}}
+							/>
 						)}
-						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Total compute units (CU)</span>
-							<div>
-								{computeUnits}
-							</div>
-						</div>
-						{workers.standard > 0 && (
-							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4 w-40">Standard workers</span>
-								<div className="grid grid-cols-[60px_20px_60px] gap-1">
-									<span className="text-right">{workers.standard}</span>
-									<span className="text-center">=</span>
-									<span className="text-right">{workers.standard} CU</span>
-								</div>
-							</div>
+
+						<DetailRow 
+							label={`Total compute units (CU)${rawComputeUnits < 2 ? ' - can\'t be below 2' : ''}`}
+							value={computeUnits}
+							className={rawComputeUnits < 2 ? 'text-red-500' : ''}
+						/>
+
+						{/* Worker type rows */}
+						{Object.entries({
+							'Standard workers': { count: workers.standard, multiplier: 1 },
+							'Small workers': { count: workers.small, multiplier: 0.5 },
+							'Large workers': { count: workers.large, multiplier: 2 },
+							'Native workers': { count: workers.native, multiplier: 1 }
+						}).map(([label, { count, multiplier }]) => 
+							count > 0 && (
+								<DetailRow 
+									key={label}
+									label={label}
+									isSubItem
+									calculation={{
+										left: count,
+										right: `${Math.ceil(count * multiplier)} CU`
+									}}
+								/>
+							)
 						)}
-						{workers.small > 0 && (
-							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4 w-40">Small workers</span>
-								<div className="grid grid-cols-[60px_20px_60px] gap-1">
-									<span className="text-right">{workers.small}</span>
-									<span className="text-center">=</span>
-									<span className="text-right">{Math.ceil(workers.small / 2)} CU</span>
-								</div>
-							</div>
-						)}
-						{workers.large > 0 && (
-							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4 w-40">Large workers</span>
-								<div className="grid grid-cols-[60px_20px_60px] gap-1">
-									<span className="text-right">{workers.large}</span>
-									<span className="text-center">=</span>
-									<span className="text-right">{workers.large * 2} CU</span>
-								</div>
-							</div>
-						)}
-						{workers.native > 0 && (
-							<div className="flex flex-row justify-between font-normal text-gray-600 dark:text-gray-300">
-								<span className="pl-4 w-40">Native workers</span>
-								<div className="grid grid-cols-[60px_20px_60px] gap-1">
-									<span className="text-right">{workers.native * 8}</span>
-									<span className="text-center">=</span>
-									<span className="text-right">
-										{selectedOption === 'SMB' && plan === 'selfhosted_ee' 
-											? Math.min(workers.native, 10) 
-											: workers.native} CU
-									</span>
-								</div>
-							</div>
-						)}
+
 						<a
 							href="https://drive.google.com/uc?export=download&id=1tbBMNSGcdu3e5BAFf8CIEXlbEKppbtLm"
 							className="text-blue underline text-sm"

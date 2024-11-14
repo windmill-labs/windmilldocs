@@ -60,6 +60,78 @@ function calculateWorkerPrice(memoryGB, tierId, selectedOption) {
 	return basePrice;
 }
 
+// New reusable component for price display
+const PriceDisplay = ({ amount, period, className = "" }) => (
+	<span className={className}>
+		<span className="font-semibold">{priceFormatter.format(amount)}</span>
+		<span className="text-gray-400">/{period === 'annually' ? 'yr' : 'mo'}</span>
+	</span>
+);
+
+// New component for seats summary
+const SeatsSummary = ({ developers, operators }) => (
+	<div className="mt-2 flex flex-col gap-1 min-h-[4.5rem]">
+		<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
+			Total seats: {(developers + Math.ceil(operators/2)).toLocaleString()}
+		</span>
+		<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
+			{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
+		</span>
+		{operators > 0 && (
+			<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
+				{operators.toLocaleString()}{' '}
+				<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
+					{operators <= 1 ? 'operator' : 'operators'}
+				</a>
+				{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
+			</span>
+		)}
+	</div>
+);
+
+// New component for compute units summary
+const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption }) => {
+	const counts = getWorkerCounts(workerGroups);
+	const totalComputeUnits = (counts.small / 2 || 0) + 
+		(counts.standard || 0) + 
+		((1/8) * nativeWorkers) + 
+		(2 * (counts.large || 0));
+	
+	return (
+		<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
+			<span className="text-gray-900 dark:text-white">
+				Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU): 
+				<span className={selectedOption === 'SMB' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
+					{Math.round(totalComputeUnits)}
+					{selectedOption === 'SMB' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}
+				</span>
+			</span>
+			{counts.standard > 0 && (
+				<span className="ml-4">{counts.standard} standard workers = {counts.standard} CU</span>
+			)}
+			{counts.small > 0 && (
+				<span className="ml-4">{counts.small} small workers = {counts.small/2} CU</span>
+			)}
+			{counts.large > 0 && (
+				<span className="ml-4">{counts.large} large workers = {counts.large * 2} CU</span>
+			)}
+			{nativeWorkers > 0 && (
+				<span className="ml-4">{nativeWorkers} native workers = {nativeWorkers/8} CU</span>
+			)}
+		</div>
+	);
+};
+
+// Move getWorkerCounts outside of the main component
+function getWorkerCounts(workerGroups) {
+	return workerGroups.reduce((acc, group) => {
+		const size = group.memoryGB === 1 ? 'small' : 
+					 group.memoryGB === 2 ? 'standard' : 'large';
+		acc[size] = (acc[size] || 0) + group.workers;
+		return acc;
+	}, {});
+}
+
 export default function PriceCalculator({ period, tier, selectedOption }) {
 	const [selected, setSelected] = useState(plans[0]);
 	const [developers, setDevelopers] = useState(tier.price.seat ? tier.price.seat.default : 2);
@@ -184,24 +256,14 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		}
 	};
 
-	// Add this utility function to count workers by size
-	function getWorkerCounts(workerGroups) {
-		return workerGroups.reduce((acc, group) => {
-			const size = group.memoryGB === 1 ? 'small' : 
-						group.memoryGB === 2 ? 'standard' : 'large';
-			acc[size] = (acc[size] || 0) + group.workers;
-			return acc;
-		}, {});
-	}
-
 	// Get worker counts for quote generation
 	function getWorkerCountsForQuote() {
 		const counts = getWorkerCounts(workerGroups);
 		return {
 			native: nativeWorkers / 8,
-			small: counts.small || 0,
-			standard: counts.standard || 0,
-			large: counts.large || 0
+				small: counts.small || 0,
+				standard: counts.standard || 0,
+				large: counts.large || 0
 		};
 	}
 
@@ -574,7 +636,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						</div>
 						<div className="mt-2 flex flex-col gap-1">
 								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
-									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
+									Total seats: {(developers + Math.ceil(operators/2)).toLocaleString()}
 								</span>
 								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
 									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
@@ -588,199 +650,39 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
 									</span>
 								)}
-						</div>
-						<div className="mt-2 text-sm">
-							{(() => {
-								const counts = getWorkerCounts(workerGroups);
-								const totalComputeUnits = (counts.small / 2 || 0) + 
-									(counts.standard || 0) + 
-									((1/8) * nativeWorkers) + 
-									(2 * (counts.large || 0));
-								const textColor = selectedOption === 'SMB' && totalComputeUnits > 10
-									? "text-rose-700 dark:text-red-400"
-									: "text-gray-900 dark:text-white";
-
-								return (
-									<>
-										<span className={classNames(textColor)}>
-											Price: {priceFormatter.format(computeTotalPrice())}
-										</span>
-										<span className={classNames(textColor)}>
-											/{period.value === 'annually' ? 'yr' : 'mo'}
-										</span>
-									</>
-								);
-							})()}
 						</div>
 					</div>
 				) : null}
 
-				{tier.id === 'tier-enterprise-cloud' ? (
+				{tier.id === 'tier-enterprise-cloud' || tier.id === 'tier-enterprise-selfhost' ? (
 					<>
 						<div className="mt-8 flex flex-col gap-1">
 							<h5 className="font-semibold">Summary</h5>
-							<div className="mt-2 flex flex-col gap-1 min-h-[4.5rem]">
-								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
-									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
-								</span>
-								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
-									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
-								</span>
-								{operators > 0 && (
-									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
-										{operators.toLocaleString()}{' '}
-										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
-											{operators <= 1 ? 'operator' : 'operators'}
-										</a>
-										{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
-									</span>
-								)}
-							</div>
-							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
-								{(() => {
-									const counts = getWorkerCounts(workerGroups);
-									const totalComputeUnits = (counts.small / 2 || 0) + 
-										(counts.standard || 0) + 
-										((1/8) * nativeWorkers) + 
-										(2 * (counts.large || 0));
-									
-									return (
-										<>
-											<span className="text-gray-900 dark:text-white">
-												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU): {Math.round(totalComputeUnits)}</span>
-											{counts.standard > 0 && (
-												<span className="ml-4">{counts.standard} standard workers ={' '}{counts.standard} CU</span>
-											)}
-											{counts.small > 0 && (
-												<span className="ml-4">{counts.small} small workers = {counts.small/2} CU</span>
-											)}
-											{counts.large > 0 && (
-												<span className="ml-4">{counts.large} large workers ={' '}{counts.large * 2} CU</span>
-											)}
-											{nativeWorkers > 0 && (
-												<span className="ml-4">{nativeWorkers} native workers ={' '}{nativeWorkers/8} CU</span>
-											)}
-										</>
-									);
-								})()}
-							</div>
 							<div className="mt-2 text-sm">
-								{(() => {
-									const counts = getWorkerCounts(workerGroups);
-									const totalComputeUnits = (counts.small / 2 || 0) + 
-										(counts.standard || 0) + 
-										((1/8) * nativeWorkers) + 
-										(2 * (counts.large || 0));
-									const textColor = selectedOption === 'SMB' && totalComputeUnits > 10
-										? "text-rose-700 dark:text-red-400"
-										: "text-gray-900 dark:text-white";
-
-									return (
-										<>
-											<span className={textColor}>
-												Price: {priceFormatter.format(computeTotalPrice())}
-											</span>
-											<span className={textColor}>
-												/{period.value === 'annually' ? 'yr' : 'mo'}
-											</span>
-										</>
-									);
-								})()}
+								<PriceDisplay 
+									amount={computeTotalPrice()} 
+									period={period.value} 
+									className={classNames(
+										selectedOption === 'SMB' && totalComputeUnits > 10 
+											? "text-rose-700 dark:text-red-400" 
+											: "text-gray-900 dark:text-white"
+									)}
+								/>
 							</div>
+							<SeatsSummary developers={developers} operators={operators} />
+							<ComputeUnitsSummary 
+								workerGroups={workerGroups} 
+								nativeWorkers={nativeWorkers} 
+								selectedOption={selectedOption} 
+							/>
 						</div>
 						<a
 							onClick={() => setShowQuoteForm(true)}
 							className={classNames(
-								'text-sm cursor-pointer border-teal-600 border text-teal-600 shadow-sm hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950',
-								'!no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600'
-							)}
-						>
-							Download quote
-						</a>
-					</>
-				) : null}
-
-				{tier.id === 'tier-enterprise-selfhost' ? (
-					<>
-						<div className="mt-8 flex flex-col gap-1">
-							<h5 className="font-semibold">Summary</h5>
-							<div className="mt-2 flex flex-col gap-1 min-h-[4.5rem]">
-								<span className="whitespace-nowrap text-sm text-gray-900 dark:text-white">
-									Total seat units: {(developers + Math.ceil(operators/2)).toLocaleString()}
-								</span>
-								<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
-									{developers.toLocaleString()} {developers === 1 ? 'developer' : 'developers'}
-								</span>
-								{operators > 0 && (
-									<span className="whitespace-nowrap text-sm text-gray-600 dark:text-gray-200 ml-4">
-										{operators.toLocaleString()}{' '}
-										<a href="#operator" className="custom-link text-gray-600 dark:text-gray-200">
-											{operators <= 1 ? 'operator' : 'operators'}
-										</a>
-										{' '}= {operators/2} {operators/2 <= 1 ? 'seat' : 'seats'}
-									</span>
-								)}
-							</div>
-							<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
-								{(() => {
-									const counts = getWorkerCounts(workerGroups);
-									const totalComputeUnits = (counts.small / 2 || 0) + 
-										(counts.standard || 0) + 
-										((1/8) * nativeWorkers) + 
-										(2 * (counts.large || 0));
-									
-									return (
-										<>
-											<span className="text-gray-900 dark:text-white">
-												Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU): <span className={selectedOption === 'SMB' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>{Math.round(totalComputeUnits)}{selectedOption === 'SMB' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}</span></span>
-											{counts.standard > 0 && (
-												<span className="ml-4">{counts.standard} standard workers ={' '}{counts.standard} CU</span>
-											)}
-											{counts.small > 0 && (
-												<span className="ml-4">{counts.small} small workers = {counts.small/2} CU</span>
-											)}
-											{counts.large > 0 && (
-												<span className="ml-4">{counts.large} large workers ={' '}{counts.large * 2} CU</span>
-											)}
-											{nativeWorkers > 0 && (
-												<span className="ml-4">{nativeWorkers} native workers ={' '}{nativeWorkers/8} CU</span>
-											)}
-										</>
-									);
-								})()}
-							</div>
-							<div className="mt-2 text-sm">
-								{(() => {
-									const counts = getWorkerCounts(workerGroups);
-									const totalComputeUnits = (counts.small / 2 || 0) + 
-										(counts.standard || 0) + 
-										((1/8) * nativeWorkers) + 
-										(2 * (counts.large || 0));
-									const textColor = selectedOption === 'SMB' && totalComputeUnits > 10
-										? "text-rose-700 dark:text-red-400"
-										: "text-gray-900 dark:text-white";
-
-									return (
-										<>
-											<span className={classNames(textColor)}>
-												Price: {priceFormatter.format(computeTotalPrice())}
-											</span>
-											<span className={classNames(textColor)}>
-												/{period.value === 'annually' ? 'yr' : 'mo'}
-											</span>
-										</>
-									);
-								})()}
-							</div>
-						</div>
-						<a
-							onClick={() => setShowQuoteForm(true)}
-							className={classNames(
-								'border',
-								selectedOption === 'SMB'
-										? 'text-blue-600 dark:text-blue-500 border-blue-600 dark:border-blue-500 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 focus-visible:outline-blue-600'
-										: 'text-teal-600 border-teal-600 hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950 focus-visible:outline-teal-600',
-								'text-sm cursor-pointer shadow-sm !no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+								'text-sm cursor-pointer border shadow-sm !no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+								tier.id === 'tier-enterprise-cloud' || selectedOption !== 'SMB'
+									? 'border-teal-600 text-teal-600 hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950 focus-visible:outline-teal-600'
+									: 'border-blue-600 text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 focus-visible:outline-blue-600'
 							)}
 						>
 							Download quote
