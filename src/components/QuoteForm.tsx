@@ -213,15 +213,15 @@ export function QuoteForm({
 							'Standard workers': { count: workers.standard, multiplier: 1 },
 							'Small workers': { count: workers.small, multiplier: 0.5 },
 							'Large workers': { count: workers.large, multiplier: 2 },
-							'Native workers': { count: workers.native, multiplier: 1 }
-						}).map(([label, { count, multiplier }]) => 
+							'Native workers': { count: workers.native, multiplier: 1, displayMultiplier: 8 }
+						}).map(([label, { count, multiplier, displayMultiplier }]) => 
 							count > 0 && (
 								<DetailRow 
 									key={label}
 									label={label}
 									isSubItem
 									calculation={{
-										left: count,
+										left: label === 'Native workers' ? count * (displayMultiplier || 1) : count,
 										right: `${Math.ceil(count * multiplier)} CU`
 									}}
 								/>
