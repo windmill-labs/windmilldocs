@@ -1,3 +1,43 @@
 # Windmill compared to Kestra
 
 ![Windmill Kestra](../assets/compared_to/windmill_kestra.png 'Windmill Kestra')
+
+{/*
+
+Context of this page writting
+- We, are Windmill, an open-source workflow engine and developer platform.
+- Kestra is a competitor
+
+Overall thoughts on Kestra
+- when ppl come to Windmill, it's that they don't have to "learn" another framework but just write their code in the language they know with the tools they already have (like vs code / code editor on the web app ) and then the "settings" are in an intuitive UI and not a yaml that they have to kindof learn (Kestr
+
+
+Intro, context
+- Dates, Kestra recent uplift
+
+Notes:
+- Native support for Python, R, Node.js, Julia, Ruby, Shell, or PowerShell, but everything else via Docker
+- Similar architecture based around the queue being the central source of truth for the event driven orchestration of tasks / flows / job
+- Dependency caching and pre-installed dependencies seem to be also supported for Python or when using Docker but has to be done manually
+
+Bad / OK:
+- No baked-in approvals (you can use the pause, then wait for incoming webhook manually)
+- No app builder / automated UI generation for script input fields?
+- No visual flow builder / editor
+- No AI assistant autocomplete
+- No reusable variables / resources (can use external vaults though)
+- No auto dependency installing / caching (you have to do it manually for scripts on the workers)
+- YAML only :(
+- It seems you have to always go through IO and read write files between steps
+- Simple arguments to functions are passed as env variables…
+- No worker logs or metrics? (couldn’t find them in the dashboard)
+- Performance (see benckmark)
+
+Good
+- Workflow as code editor
+- Huge amount of triggers
+- Backfill
+- Simple: only a flow, a script is a one step flow :D
+- Super easy install as well (download Docker compose file) that comes with pre-populated tutorial flows
+- A *lot* of plugins
+*/}
