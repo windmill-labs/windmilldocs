@@ -1,7 +1,7 @@
 import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 import ScatterChart from '@site/src/components/ScatterChart';
 
-# Airflow vs Prefect vs Temporal vs Windmill
+# Airflow vs Prefect vs Temporal vs Kestra vs Windmill
 
 <div className="grid">
 	<TaskDurationBarChart
@@ -9,6 +9,7 @@ import ScatterChart from '@site/src/components/ScatterChart';
 		xTitle="Duration (in seconds)"
 		labels={[
 			['Airflow'],
+			['Kestra'],
 			['Prefect'],
 			['Temporal'],
 			['Windmill', 'Normal'],
@@ -27,6 +28,20 @@ import ScatterChart from '@site/src/components/ScatterChart';
 					0.253, 0.201, 0.226, 0.212, 0.199, 0.207, 0.435, 0.355, 0.408, 0.431, 0.247, 0.461, 0.717,
 					0.237, 0.246, 0.194, 0.205, 0.421, 0.312, 0.421, 0.25, 0.251, 0.206, 0.352, 0.21, 0.604,
 					0.223
+				]
+			],
+			[
+				[
+					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
+					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
+					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
+					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+				],
+				[
+					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
+					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
+					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
+					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
 				]
 			],
 			[
@@ -91,7 +106,7 @@ import ScatterChart from '@site/src/components/ScatterChart';
 
 <br />
 
-We compared Airflow, Prefect, Temporal and Windmill with the following usecases:
+We compared Airflow, Prefect, Temporal, Kestra and Windmill with the following usecases:
 
 - One flow composed of 40 lightweight tasks.
 - One flow composed of 10 long-running tasks.
@@ -593,6 +608,170 @@ For 40 lightweights tasks run sequentially:
 
 </details>
 
+## Kestra setup
+
+We set up Kestra version v0.19.0 using the [docker-compose.yml from their official Documentation](https://kestra.io/docs/installation/docker-compose). We made some adjustments to it to have a similar setup compared to the other orchestrator.
+
+The flow we used to run the benchmarks is the following:
+
+```yaml
+id: benchmark
+namespace: company.team
+inputs:
+ - id: n
+   type: INT
+ - id: iters
+   type: INT
+tasks:
+  - id: getIterations
+    type: io.kestra.plugin.scripts.python.Script
+    taskRunner:
+      type: io.kestra.plugin.scripts.runner.docker.Docker
+    containerImage: ghcr.io/kestra-io/pydata:latest
+    env:
+      iters: "{{ inputs.iters }}"
+    script: |
+      import os
+      from kestra import Kestra
+      iters = int(os.getenv("iters"))
+      iterations = list(range(0, iters))
+      Kestra.outputs({'iterations': iterations})
+
+  - id: processIterations
+    type: io.kestra.plugin.core.flow.ForEach
+    values: '{{ outputs.getIterations.vars.iterations }}'
+    concurrencyLimit: 1
+    tasks:
+      - id: python
+        type: io.kestra.plugin.scripts.python.Script
+        containerImage: python:slim
+        env:
+          N: "{{ inputs.n }}"
+        script: |
+          import os
+          def fibo(n: int):
+            if n <= 1:
+                return n
+            else:
+                return fibo(n - 1) + fibo(n - 2)
+
+          n = int(os.getenv("N"))
+          print(str(fibo(n)))
+```
+
+We  executed it once with `n=33`, `iters=10` and once with `n=10` and `iters=40`. Note that we set the concurrency limit to 1 meaning all task will run sequentially on one worker. Furthermore, no extra python dependencies had to be installed during the execution of those flows.
+
+### Results
+
+For 10 long running tasks:
+
+<div className="grid">
+	<TaskDurationBarChart
+		title="10 long running tasks"
+		xTitle="Duration (in seconds)"
+		labels={[['Kestra']]}
+		rawData={[
+			[
+				[ 0.047, 0.054, 0.047, 0.065, 0.047, 0.06, 0.046, 0.058, 0.044, 0.048 ],
+				[ 1.301, 1.281, 1.32, 1.309, 1.364, 1.313, 1.366, 1.308, 1.337, 1.287 ]
+			]
+		]}
+		maintainAspectRatio={false}
+	/>
+</div>
+
+<details>
+
+|  **Task**   | **Created at** | **Started at** | **Completed at** |
+| :---------: | -------------: | -------------: | ---------------: |
+| **task_00** |          0.000 |          0.047 |            1.348 |
+| **task_01** |          1.348 |          1.402 |            2.683 |
+| **task_02** |          2.683 |          2.730 |            4.050 |
+| **task_03** |          4.050 |          4.115 |            5.424 |
+| **task_04** |          5.424 |          5.471 |            6.835 |
+| **task_05** |          6.835 |          6.895 |            8.208 |
+| **task_06** |          8.208 |          8.254 |            9.620 |
+| **task_07** |          9.620 |          9.678 |           10.986 |
+| **task_08** |         10.986 |         11.030 |           12.367 |
+| **task_09** |         12.367 |         12.415 |           13.702 |
+
+
+</details>
+
+For 40 lightweights tasks run sequentially:
+
+<div className="grid">
+	<TaskDurationBarChart
+		title="40 lightweight tasks"
+		xTitle="Duration (in seconds)"
+		labels={[['Kestra']]}
+		rawData={[
+			[
+				[
+					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
+					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
+					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
+					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+				],
+				[
+					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
+					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
+					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
+					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
+				]
+			]
+		]}
+		maintainAspectRatio={false}
+	/>
+</div>
+
+<details>
+
+|  **Task**   | **Created at** | **Started at** | **Completed at** |
+| :---------: | -------------: | -------------: | ---------------: |
+| **task_00** |          0.000 |          0.062 |            0.832 |
+| **task_01** |          0.832 |          0.888 |            1.479 |
+| **task_02** |          1.479 |          1.524 |            2.137 |
+| **task_03** |          2.137 |          2.195 |            2.840 |
+| **task_04** |          2.840 |          2.885 |            3.502 |
+| **task_05** |          3.502 |          3.561 |            4.177 |
+| **task_06** |          4.177 |          4.222 |            4.846 |
+| **task_07** |          4.846 |          4.902 |            5.504 |
+| **task_08** |          5.504 |          5.552 |            6.243 |
+| **task_09** |          6.243 |          6.325 |            6.935 |
+| **task_10** |          6.935 |          7.005 |            7.612 |
+| **task_11** |          7.612 |          7.668 |            8.278 |
+| **task_12** |          8.278 |          8.323 |            8.960 |
+| **task_13** |          8.960 |          9.011 |            9.629 |
+| **task_14** |          9.629 |          9.090 |           10.290 |
+| **task_15** |         10.290 |         10.385 |           11.055 |
+| **task_16** |         11.055 |         11.123 |           11.807 |
+| **task_17** |         11.807 |         11.863 |           12.515 |
+| **task_18** |         12.515 |         12.578 |           13.153 |
+| **task_19** |         13.153 |         13.224 |           13.869 |
+| **task_20** |         13.869 |         13.939 |           14.614 |
+| **task_21** |         14.614 |         14.685 |           15.323 |
+| **task_22** |         15.323 |         15.388 |           16.022 |
+| **task_23** |         16.022 |         16.089 |           16.772 |
+| **task_24** |         16.772 |         16.831 |           17.453 |
+| **task_25** |         17.453 |         17.508 |           18.120 |
+| **task_26** |         18.120 |         18.177 |           18.780 |
+| **task_27** |         18.780 |         18.831 |           19.457 |
+| **task_28** |         19.457 |         19.525 |           20.149 |
+| **task_29** |         20.149 |         20.210 |           20.843 |
+| **task_30** |         20.843 |         20.895 |           21.507 |
+| **task_31** |         21.507 |         21.572 |           22.206 |
+| **task_32** |         22.206 |         22.267 |           22.904 |
+| **task_33** |         22.904 |         22.982 |           23.597 |
+| **task_34** |         23.597 |         23.667 |           24.282 |
+| **task_35** |         24.282 |         24.343 |           25.010 |
+| **task_36** |         25.010 |         25.072 |           25.694 |
+| **task_37** |         25.694 |         25.752 |           26.368 |
+| **task_38** |         26.368 |         26.440 |           27.075 |
+| **task_39** |         27.075 |         27.132 |           27.762 |
+
+</details>
+
 ## Windmill setup
 
 We set up Windmill version 1.204.1 using the [docker-compose.yml from the official GitHub repository](https://github.com/windmill-labs/windmill). We made some adjustments to it to have a similar setup compared to the other orchestrator. We set the number of workers to only one and removed the native workers since they would have been useless.
@@ -870,6 +1049,7 @@ And for the 40 lightweight tasks:
 		xTitle="Duration (in seconds)"
 		labels={[
 			['Airflow'],
+			['Kestra'],
 			['Prefect'],
 			['Temporal'],
 			['Windmill', 'Normal'],
@@ -879,6 +1059,10 @@ And for the 40 lightweight tasks:
 			[
 				[4.347, 2.78, 1.975, 1.708, 1.832, 2.202, 2.641, 2.44, 2.179, 4.292],
 				[2.564, 6.696, 1.715, 1.702, 2.144, 2.689, 2.503, 1.815, 1.954, 4.489]
+			],
+			[
+				[ 0.047, 0.054, 0.047, 0.065, 0.047, 0.06, 0.046, 0.058, 0.044, 0.048 ],
+				[ 1.301, 1.281, 1.32, 1.309, 1.364, 1.313, 1.366, 1.308, 1.337, 1.287 ]
 			],
 			[
 				[1.27, 0.074, 0.062, 0.059, 0.063, 0.064, 0.058, 0.06, 0.062, 0.059],
@@ -906,6 +1090,7 @@ And for the 40 lightweight tasks:
 		xTitle="Duration (in seconds)"
 		labels={[
 			['Airflow'],
+			['Kestra'],
 			['Prefect'],
 			['Temporal'],
 			['Windmill', 'Normal'],
@@ -924,6 +1109,20 @@ And for the 40 lightweight tasks:
 					0.253, 0.201, 0.226, 0.212, 0.199, 0.207, 0.435, 0.355, 0.408, 0.431, 0.247, 0.461, 0.717,
 					0.237, 0.246, 0.194, 0.205, 0.421, 0.312, 0.421, 0.25, 0.251, 0.206, 0.352, 0.21, 0.604,
 					0.223
+				]
+			],
+			[
+				[
+					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
+					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
+					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
+					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+				],
+				[
+					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
+					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
+					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
+					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
 				]
 			],
 			[
@@ -986,7 +1185,7 @@ And for the 40 lightweight tasks:
 	/>
 </div>
 
-We can exclude Airflow from the previous chart:
+We can exclude Airflow and Kestra from the previous chart:
 
 <div className="grid">
 	<TaskDurationBarChart
@@ -1055,11 +1254,11 @@ We can exclude Airflow from the previous chart:
 
 </div>
 
-At a macro level, it took 54.668s to Airflow to execute the 10 long running tasks, where Prefect took 15.489s, Temporal 13.434s and Windmill 8.351s in normal mode (7.885s in [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mode).
+At a macro level, it took 54.668s to Airflow to execute the 10 long running tasks, where Prefect took 15.489s, Temporal 13.434s, Kestra 14.15s and Windmill 8.351s in normal mode (7.885s in [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mode).
 
-The same can be observed for the 40 lightweight tasks, where Airflow took total of 116.221s, Prefect 4.872s, Temporal 2.967s and Windmill 4.300s in normal mode (2.429s in dedicated worker mode).
+The same can be observed for the 40 lightweight tasks, where Airflow took total of 116.221s, Prefect 4.872s, Temporal 2.967s, Kestra 29.80s and Windmill 4.300s in normal mode (2.429s in dedicated worker mode).
 
-By far, Airflow is the slowest. Temporal and Prefect are faster, but not as fast as Windmill. For the 40 lightweight tasks, Windmill in normal mode was equivalent to Prefect and slightly slower than Temporal. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
+By far, Airflow is the slowest. Temporal and Prefect are faster, but not as fast as Windmill. Kestra performs slowly for the 40 lightweight tasks, whereas it performs similar to Temporal and Prefect for the 10 long running tasks. For the 40 lightweight tasks, Windmill in normal mode was equivalent to Prefect and slightly slower than Temporal. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
 
 But we can deep dive in a little and compare the orchestrators three categories:
 
@@ -1071,33 +1270,33 @@ After looking at the macro numbers above, it's interesting to compare the time s
 
 For the 10 long running tasks flow, we see the following:
 
-|                                  | **Airflow** | **Prefect** | **Temporal** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
-| :------------------------------: | ----------: | ----------: | -----------: | -----------------------: | ---------------------------------: |
-| **Total duration (in secconds)** |      54.668 |      15.489 |       13.434 |                    8.351 |                              7.885 |
-|         **Assignement**          |      40.36% |       9.77% |        0.71% |                    0.47% |                              0.55% |
-|          **Execution**           |      51.72% |      88.18% |       97.74% |                   93.17% |                             93.46% |
-|          **Transition**          |       7.93% |       2.05% |        1.55% |                    6.36% |                              6.00% |
+|                                  | **Airflow** | **Prefect** | **Temporal** | **Kestra** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
+| :------------------------------: | ----------: | ----------: | -----------: | ---------: | -----------------------: | ---------------------------------: |
+| **Total duration (in secconds)** |      54.668 |      15.489 |       13.434 |      14.15 |                    8.351 |                              7.885 |
+|         **Assignement**          |      40.36% |       9.77% |        0.71% |      3.65% |                    0.47% |                              0.55% |
+|          **Execution**           |      51.72% |      88.18% |       97.74% |     93.15% |                   93.17% |                             93.46% |
+|          **Transition**          |       7.93% |       2.05% |        1.55% |      3.20% |                    6.36% |                              6.00% |
 
-The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow and Prefect are spending a lot of time assigning the tasks compared to the two others (When we look at the actual numbers, we see that both Prefect and Airflow are spending a lot of time assigning the first tasks, but after that, assignment duration decrease. Airflow remain relatively slow though, and Prefect reaches decent performance. The exact same can be observed with the 40 tasks workflow below). Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
+The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow and Prefect are spending a lot of time assigning the tasks compared to the others (When we look at the actual numbers, we see that both Prefect and Airflow are spending a lot of time assigning the first tasks, but after that, assignment duration decrease. Kestra's assignment and transition duration are somewhere in the middle, and we see that it spends most of the time in the execution phase. Airflow remain relatively slow though, and Prefect reaches decent performance. The exact same can be observed with the 40 tasks workflow below). Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time doing the transitions, but overall it is the fastest.
 
 If we look at the 40 lightweight tasks flow, we have:
 
-|                                  | **Airflow** | **Prefect** | **Temporal** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
-| :------------------------------: | ----------: | ----------: | -----------: | -----------------------: | :--------------------------------: |
-| **Total duration (in secconds)** |      56.221 |       4.872 |        2.967 |                    4.300 |               2.429                |
-|         **Assignement**          |      64.63% |      44.62% |       35.58% |                    3.42% |               5.89%                |
-|          **Execution**           |      10.77% |      31.73% |       11.26% |                   44.19% |               3.42%                |
-|          **Transition**          |      24.60% |      23.65% |       53.16% |                   52.40% |               90.70%               |
+|                                  | **Airflow** | **Prefect** | **Temporal** | **Kestra** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
+| :------------------------------: | ----------: | ----------: | -----------: | ---------: | -----------------------: | :--------------------------------: |
+| **Total duration (in secconds)** |      56.221 |       4.872 |        2.967 |      29.80 |                    4.300 |               2.429                |
+|         **Assignement**          |      64.63% |      44.62% |       35.58% |      8.28% |                    3.42% |               5.89%                |
+|          **Execution**           |      10.77% |      31.73% |       11.26% |     85.35% |                   44.19% |               3.42%                |
+|          **Transition**          |      24.60% |      23.65% |       53.16% |      6.38% |                   52.40% |               90.70%               |
 
 Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the worker. However, it's by far the fastest assigning tasks to executors. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time transitioning from one task to the next one.
 
 ## Conclusion
 
-Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transitions and assignments will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
+Airflow is the slowest in all categories, followed by Prefect and Kestra. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transitions and assignments will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
 
 ## Appendix: Scaling Windmill
 
-We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this assumption for Airflow, Prefect and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
+We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this assumption for Airflow, Prefect, Kestra and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
 
 For this test, we've deployed the same docker compose as above on an AWS `m4.xlarge` instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the `NUM_WORKERS` environment variable Windmill accepts. Note that it is not strictly equivalent to adding real hardware to the stack, but until we reach the maximum capacities on the instance, both in terms of CPU and memory, we can assume it's a good approximation.
 The other change we had to make was to bump the `max_connections` to `1000` on Postgresql: as we're adding more and more workers, each worker needs to connect to the database and we need to increase the maximum number of connections Posgtresql allows.
