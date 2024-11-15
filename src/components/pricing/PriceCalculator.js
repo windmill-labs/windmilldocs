@@ -665,15 +665,25 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 
 							<h5 className="font-semibold mt-4">Summary</h5>
 							<div className="mt-2 text-sm">
-								<PriceDisplay 
-									amount={computeTotalPrice()} 
-									period={period.value} 
-									className={classNames(
-										selectedOption === 'SMB' && totalComputeUnits > 10 
-											? "text-rose-700 dark:text-red-400" 
-											: "text-gray-900 dark:text-white"
-									)}
-								/>
+								{(() => {
+									const counts = getWorkerCounts(workerGroups);
+									const totalComputeUnits = (counts.small / 2 || 0) + 
+										(counts.standard || 0) + 
+										((1/8) * nativeWorkers) + 
+										(2 * (counts.large || 0));
+									
+									return (
+										<PriceDisplay 
+											amount={computeTotalPrice()} 
+											period={period.value} 
+											className={classNames(
+												selectedOption === 'SMB' && totalComputeUnits > 10 
+													? "text-rose-700 dark:text-red-400" 
+													: "text-gray-900 dark:text-white"
+											)}
+										/>
+									);
+								})()}
 							</div>
 							<SeatsSummary developers={developers} operators={operators} />
 							<ComputeUnitsSummary 
