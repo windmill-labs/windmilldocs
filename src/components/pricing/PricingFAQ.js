@@ -11,13 +11,23 @@ const faqs = [
 			<span>
 				Windmill's pricing is designed to align with the value we deliver to our customers. Our pricing model reflects the core value of Windmill, which is primarily related to the amount of compute resources used, and the number of users accessing the platform. We've structured our pricing to scale with your usage, ensuring you're paying for the actual value you derive from our platform.
 				<br /><br />
-				For compute resources, we use two metrics: vCPUs and memory, set as limits of your workers containers. For each vCPU paid, you add 2GB memory to your global quota. We aggregate the memory of each worker against this global quota. It is possible and even recommended not to use vCPU limits and rely solely on memory limits, which still needs to be under the global quota.
+				For compute resources, we use <Link
+					to="#compute-units"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					compute units
+				</Link>{' '}based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs. In the total sum of compute units, there are no half compute units, therefore the total number is rounded up to the next integer.
 				<br /><br />
-				For user access, we charge based on seats. A regular user counts as one seat, while an operator (who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base.
+				For user access, we charge based on seats. A regular user counts as one seat, while an <Link
+					to="#operator"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					operator
+				</Link>{' '}(who can only execute scripts, flows, and apps) counts as half a seat. This allows for flexible team structures and cost-effective scaling of your user base. We only count active users, i.e. users who have logged in to the platform in the last 30 days according to the audit logs.
 				<br /><br />
-				Our billing is meant to be fair and transparent: we only count the vCPUs reported by the workers of your production instance, and with minute granularity if you use auto-scaling. This approach ensures that you're only charged for the resources actively contributing to your production environment. If you scale your workers up and down, the memory usage will be accounted against the global quota with a minute granularity. For instance, you can run 10 workers with 1 vCPU and 2GB for half a month at the same price as 5 workers with 1 vCPU and 2GB for the full month.
+				Our billing is meant to be fair and transparent: we only count the actual memory allocated to your workers in your production instance, with minute granularity if you use auto-scaling. This approach ensures that you're only charged for the resources actively contributing to your production environment. If you scale your workers up and down, the compute units will be accounted with minute granularity. For instance, you can run 10 workers with 2GB each for half a month at the same price as 5 workers with 2GB each for the full month.
 				<br /><br />
-				This combined approach of charging for compute resources and user seats allows us to provide pricing that scales linearly with your usage and team size, closely aligning with the value you receive from Windmill.
+				This combined approach of charging for compute units and user seats allows us to provide pricing that scales linearly with your usage and team size, closely aligning with the value you receive from Windmill.
 			</span>
 		)
 	},
@@ -51,7 +61,7 @@ const faqs = [
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />
-				Operators are 1/2 price of normal users (or 1/2 seats).
+				Operators are 1/2 price of developers (or 1/2 seats).
 			</span>
 		)
 	},
@@ -84,11 +94,46 @@ const faqs = [
 		)
 	},
 	{
-		id: 'number-of-vcpus',
-		question: 'How many vCPUs do I need?',
+		id: 'native-workers',
+		question: 'What are native workers?',
 		answer: (
 			<span>
-				The number of vCPUs will depend on the workload and the jobs Windmill will need to run. Each{' '}
+				Native workers are workers within the{' '}
+				<Link
+					to="/docs/core_concepts/worker_groups#native-workers"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					native worker group
+				</Link>
+				. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
+			</span>
+		)
+	},
+	{
+		id: 'compute-units',
+		question: 'What are compute units?',
+		answer: (
+			<span>
+				Compute units are a unit of measure for the amount of compute resources used. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
+					to="/docs/core_concepts/worker_groups"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					worker
+				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
+			</span>
+		)
+	},
+	{
+		id: 'number-of-compute-units',
+		question: 'How many compute units do I need?',
+		answer: (
+			<span>
+				The number of <Link
+					to="#compute-units"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					compute units
+				</Link>{' '}will depend on the workload and the jobs Windmill will need to run. Each{' '}
 				<a
 					href="/docs/core_concepts/worker_groups"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
@@ -96,29 +141,27 @@ const faqs = [
 				>
 					worker
 				</a>{' '}
-				only executes one job at a time, by design to use the full resource of the worker, and you
-				can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4
-				vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26
-				million jobs per month per worker if each one lasts 100ms. However, it completely depends on
-				the nature of the jobs, their number and duration.
+				only executes one job at a time, by design to use the full resource of the worker. Workers come in different sizes based on memory: small (1GB), standard (2GB), and large (> 2GB). Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
 				<br />
 				<br />
-				As a note, keep in mind that the number of vCPUs considered is the number of production
-				vCPUs of your workers, not of development staging, if you have separate instances. The vCPU
-				numbers are the aggregate limit of all of your pods set in docker-compose or in Kubernetes.
-				There is also a global quota for memory limit. This quota is set to 2Gb * vCPU paid. Which
-				mean if you have paid for 4vCPU, their aggregate memory limit must be below 8Gb. You can not
-				set any limits for vCPUs and rely solely on memory quotas if you prefer.
+				As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. The compute units are calculated based on the memory limits set in docker-compose or Kubernetes. For example, a standard worker with 2GB memory counts as 1 compute unit, while a large worker with >2GB memory counts as 2 compute units. Any worker with memory above 2GB still counts as 2 compute units. Small workers are counted as 0.5 compute unit.
 				<br />
 				<br />
-				Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate
-				your needs in practice.
+				Also, for the Enterprise Edition, the{' '}
+				<a
+					href="https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+					target="_blank"
+				>
+					free trial
+				</a>{' '}
+				of one month is meant to help you evaluate your needs in practice.
 			</span>
 		)
 	},
 	{
-		id: 'vcpu-reporting',
-		question: 'How is the use of the number of seats & vCPUs estimated and reported to Windmill?',
+		id: 'worker-reporting',
+		question: 'How is the use of the number of seats & compute units estimated and reported to Windmill?',
 		answer: (
 			<span>
 				Even though Windmill's{' '}
@@ -137,13 +180,7 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is vCPU-memory-based. For example, 2 workers with 0.5 vCPU each is 1 vCPU. 1
-				worker with 4 vCPU would count as 4 vCPU. But if it only is provisionned for 1h every day,
-				you would divide that by 24. The number of vCPUs is the aggregate limits of all the workers
-				in your production instances. Note that every vCPU paid gives you a quota of 2Gb of memory
-				limits (the quota is an aggregate sum, not a limit for each individual worker). You may not
-				set vCPU limits and rely solely on memory quotas if you prefer and we actually recommend it.
-				Each worker can run up to ~26M jobs per month (at 100ms per job).
+				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. Any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}
@@ -154,7 +191,7 @@ const faqs = [
 				>
 					lightweight telemetry
 				</a>{' '}
-				to automatically track and report the usage of vCPUs for your subscription.
+				to automatically track and report the usage of compute units for your subscription.
 				<br />
 				<br />
 				Seats reported to Windmill are the number of users (1 developer, or 2 operators) who are
@@ -163,7 +200,7 @@ const faqs = [
 				Windmill only counts once the same user.
 				<br />
 				<br />
-				The number of vCPUs considered is the number of production vCPUs, not of development
+				The number of compute units considered is the number of production compute units, not of development
 				staging, if you have separate instances. So you can simply set limits in the{' '}
 				<a
 					href="https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L50"
@@ -185,7 +222,7 @@ const faqs = [
 		question: 'How can I update my subscription?',
 		answer: (
 			<span>
-				As an Enterprise user, you will have access to detailed usage information and invoices
+				As an Enterprise and Pro user, you will have access to detailed usage information and invoices
 				through the{' '}
 				<Link
 					to="/docs/misc/plans_details#windmill-customer-portal"
@@ -212,7 +249,7 @@ const faqs = [
 					support
 				</Link>{' '}
 				with different response times based on issue priorities. Our support team is available 24/7,
-				and the SLA is consistent for both Cloud and Self-hosted deployments.
+				and the SLA is consistent for both cloud and self-hosted deployments. Enterprise customers are also entitled to a dedicated Slack or Discord channel.
 			</span>
 		)
 	},
