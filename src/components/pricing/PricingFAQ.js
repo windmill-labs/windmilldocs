@@ -16,7 +16,7 @@ const faqs = [
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					compute units
-				</Link>{' '}based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs.
+				</Link>{' '}based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs. In the total sum of compute units, there are no half compute units, therefore the total number is rounded up to the next integer.
 				<br /><br />
 				For user access, we charge based on seats. A regular user counts as one seat, while an <Link
 					to="#operator"
@@ -222,7 +222,7 @@ const faqs = [
 		question: 'How can I update my subscription?',
 		answer: (
 			<span>
-				As an Enterprise user, you will have access to detailed usage information and invoices
+				As an Enterprise and Pro user, you will have access to detailed usage information and invoices
 				through the{' '}
 				<Link
 					to="/docs/misc/plans_details#windmill-customer-portal"

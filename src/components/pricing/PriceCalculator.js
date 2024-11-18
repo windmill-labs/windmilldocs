@@ -100,23 +100,23 @@ const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption }) =>
 	return (
 		<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
 			<span className="text-gray-900 dark:text-white">
-				Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU): 
-				<span className={selectedOption === 'SMB' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
+				Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU):
+				{' '}<span className={selectedOption === 'SMB' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
 					{Math.round(totalComputeUnits)}
 					{selectedOption === 'SMB' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}
 				</span>
 			</span>
 			{counts.standard > 0 && (
-				<span className="ml-4">{counts.standard} standard workers = {counts.standard} CU</span>
+				<span className="ml-4">{counts.standard} standard {counts.standard === 1 ? 'worker' : 'workers'} = {counts.standard} CU</span>
 			)}
 			{counts.small > 0 && (
-				<span className="ml-4">{counts.small} small workers = {counts.small/2} CU</span>
+				<span className="ml-4">{counts.small} small {counts.small === 1 ? 'worker' : 'workers'} = {counts.small/2} CU</span>
 			)}
 			{counts.large > 0 && (
-				<span className="ml-4">{counts.large} large workers = {counts.large * 2} CU</span>
+				<span className="ml-4">{counts.large} large {counts.large === 1 ? 'worker' : 'workers'} = {counts.large * 2} CU</span>
 			)}
 			{nativeWorkers > 0 && (
-				<span className="ml-4">{nativeWorkers} native workers = {nativeWorkers/8} CU</span>
+				<span className="ml-4">{nativeWorkers} native {nativeWorkers === 1 ? 'worker' : 'workers'} = {nativeWorkers/8} CU</span>
 			)}
 		</div>
 	);
