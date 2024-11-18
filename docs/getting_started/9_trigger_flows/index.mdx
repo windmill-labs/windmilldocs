@@ -8,16 +8,17 @@ On-demand triggers:
 
 - [Auto-generated UIs](/docs/getting_started/trigger_flows#auto-generated-uis)
 - [Customized UIs with the App editor](#customized-uis-with-the-app-editor)
+- [Trigger a Flow from another Flow](#trigger-a-flow-from-another-flow)
 - [Schedule](#schedule)
 - [Trigger Flows from CLI (Command-line interface)](#cli-command-line-interface)
-- [Trigger a Flow from another Flow](#trigger-a-flow-from-another-flow)
 
 Triggers from external events:
 
 - [API](#trigger-from-api) and [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-flows-from-slack)
 - [Emails](#emails)
 - [Custom HTTP routes](#custom-http-routes)
-- [Scheduling + Trigger scripts](#scheduling--trigger-scripts)
+- [Websocket triggers](#websocket-triggers)
+- [Scheduled polls (Scheduling + Trigger scripts)](#scheduled-polls-scheduling--trigger-scripts-scheduled-polls)
 
 ## On-demand triggers
 
@@ -82,6 +83,21 @@ You can also [automatically generate](../../core_concepts/6_auto_generated_uis/i
 	src="/videos/cowsay_app.mp4"
 />
 
+### Trigger a Flow from another Flow
+
+Windmill supports inner flows. This allows you to call a flow from another workflow.
+
+![Inner Flows](./inner_flow.png.webp)
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Flow editor"
+		color="teal"
+		description="Detailed section on Windmill's Flow editor."
+		href="/docs/flows/flow_editor"
+	/>
+</div>
+
 ### Schedule
 
 Windmill allows you to schedule scripts using a user-friendly interface and control panels, **similar to [cron](https://crontab.guru/)** but with more features.
@@ -125,21 +141,6 @@ The `wmill` CLI allows you to interact with Windmill instances right from your t
 		title="Command-line interface"
 		description="Interact with Windmill instances right from your terminal."
 		href="/docs/advanced/cli"
-	/>
-</div>
-
-### Trigger a Flow from another Flow
-
-Windmill supports inner flows. This allows you to call a flow from another workflow.
-
-![Inner Flows](./inner_flow.png.webp)
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Flow editor"
-		color="teal"
-		description="Detailed section on Windmill's Flow editor."
-		href="/docs/flows/flow_editor"
 	/>
 </div>
 
@@ -221,11 +222,23 @@ Windmill allows you to define custom HTTP routes for your scripts and flows.
 	/>
 </div>
 
-### Scheduling + Trigger scripts
+### Websocket triggers
+
+Windmill can connect to websocket servers and trigger runnables (scripts, flows) when a message is received.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Websocket triggers"
+		description="Trigger scripts and flows from websocket servers."
+		href="/docs/core_concepts/websocket_triggers"
+	/>
+</div>
+
+### Scheduled polls (Scheduling + Trigger scripts)
 
 A particular use case for schedules are [Trigger scripts](../../flows/10_flow_trigger.mdx).
 
-Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
 
 By default, adding a trigger will set the schedule to 15 minutes.
 

@@ -19,6 +19,17 @@ const periods = [
 	{ value: 'annually', label: 'Annually' }
 ];
 
+const workerDefaults = {
+	workers: 1,
+	minWorkers: 1,
+	maxWorkers: 100,
+	memoryGB: 4,
+	minMemoryGB: 10,
+	maxMemoryGB: 32,
+	memoryPricePerGB: 10,
+	maxPricedMemoryGB: 16
+};
+
 const pricing = {
 	selfhost: [
 		{
@@ -42,11 +53,18 @@ const pricing = {
 			id: 'tier-enterprise-selfhost',
 			href: 'mailto:contact@windmill.dev',
 			price: {
-				vCPU: {
-					monthly: 50,
-					default: 2,
-					min: 2,
-					max: 100
+				worker: {
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: workerDefaults.maxWorkers,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
+					},
+					native: 50
 				},
 				seat: {
 					monthly: 20,
@@ -56,11 +74,18 @@ const pricing = {
 				}
 			},
 			price_nonprofit: {
-				vCPU: {
-					monthly: 20,
-					default: 2,
-					min: 2,
-					max: 100
+				worker: {
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: workerDefaults.maxWorkers,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
+					},
+					native: 20
 				},
 				seat: {
 					monthly: 8,
@@ -70,18 +95,25 @@ const pricing = {
 				}
 			},
 			price_smb: {
-				vCPU: {
-					monthly: 20,
-					default: 2,
-					min: 2,
-					max: 10
-				},
-				seat: {
-					monthly: 8,
-					default: 1,
-					min: 1,
-					max: 10
-				}
+					worker: {
+						default: workerDefaults.workers,
+						min: workerDefaults.minWorkers,
+						max: 10,
+						memoryGB: {
+							default: workerDefaults.memoryGB,
+							min: workerDefaults.minMemoryGB,
+							max: workerDefaults.maxMemoryGB,
+							pricePerGB: workerDefaults.memoryPricePerGB,
+							maxPricedGB: workerDefaults.maxPricedMemoryGB
+						},
+						native: 20
+					},
+					seat: {
+						monthly: 8,
+						default: 1,
+						min: 1,
+						max: 10
+					}
 			},
 			minPrice: 120,
 			minPrice_smb: 48,
@@ -115,6 +147,11 @@ const pricing = {
 					)
 				},
 				{
+					text: (
+						<span>Dedicated Slack or Discord channel</span>
+					)
+				},
+				{
 					text: <span>Design partners for roadmap</span>
 				}
 			],
@@ -129,7 +166,12 @@ const pricing = {
 					features: [
 						{ text: 'No Audit logs' },
 						{ text: 'No Distributed dependency cache backed by S3' },
-						{ text: 'Max 10 users with SSO' }
+						{ text: 'Max 10 users with SSO' },
+						{
+							text: (
+								<span>Max 10 <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU)</span>
+							)
+						},
 					]
 				},
 				{ text: 'Support with 48h response time by email' }
@@ -179,7 +221,6 @@ const pricing = {
 				{
 					text: <span>Everything in free</span>
 				},
-
 				{
 					text: <span>Audit logs 7 days retention</span>
 				},
@@ -207,11 +248,18 @@ const pricing = {
 			href: 'mailto:contact@windmill.dev',
 			enterprise_edition: true,
 			price: {
-				vCPU: {
-					monthly: 100,
-					default: 2,
-					min: 2,
-					max: 100
+				worker: {
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: workerDefaults.maxWorkers,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB * 2,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
+					},
+					native: 100
 				},
 				seat: {
 					monthly: 40,
@@ -248,7 +296,9 @@ const pricing = {
 						</span>
 					)
 				},
-
+				{
+					text: <span>Dedicated Slack or Discord channel</span>
+				},
 				{
 					text: <span>Design partners for roadmap</span>
 				}
@@ -362,6 +412,17 @@ const sections = [
 					'tier-team': 'Unlimited'
 				},
 				link: '/docs/advanced/email_triggers'
+			},
+			{
+				name: 'Websocket triggers',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/40_websocket_triggers'
 			},
 			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
@@ -1129,7 +1190,7 @@ export default function Pricing() {
 							<a
 								href={
 									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-										? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+										? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
 										: tier.href
 								}
 								target="_blank"
@@ -1165,17 +1226,22 @@ export default function Pricing() {
 							</ul>
 							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
-									<PriceCalculator tier={tier} period={period} selectedOption={selectedOption} />
+									<PriceCalculator 
+										tier={tier} 
+										period={period} 
+										selectedOption={selectedOption}
+										workerDefaults={workerDefaults}
+									/>
 								) : null}
 
 								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
 									<a
 										href={
 											selectedOption === 'SMB'
-												? 'https://billing.windmill.dev/b/eVa15ifGC1Fp8fu14f'
+												? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
 												: selectedOption === 'Nonprofit'
-												? 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT?prefilled_promo_code=nonprofit'
-												: 'https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT'
+												? 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
+												: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
 										}
 										className={classNames(
 											tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',

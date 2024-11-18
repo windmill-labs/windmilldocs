@@ -25,7 +25,7 @@ You might also be interested in Audit logs:
 	/>
 </div>
 
-## Aggregated View
+## Aggregated view
 
 The Runs menu in each workspace provides a time series view where you can monitor different time slots.
 The green (respectively, red) dots being the tasks that succeeded (respectively, failed).
@@ -44,7 +44,7 @@ The graph can represent jobs on their Duration (default) or by Concurrency, mean
 
 > Graphical view by concurrent jobs.
 
-## Details per Run
+## Details per run
 
 Clicking on each run in the menu opens a run page where you can view the run's state, inputs, and success/failure reasons.
 
@@ -80,7 +80,7 @@ Example of filters in use:
 
 > Here were filtered successful runs from August 2023 which returned `{"baseNumber": 11}`.
 
-## Jobs Labels
+## Jobs labels
 
 Labels allow to add static or dynamic tags to [jobs](../20_jobs/index.mdx) with property "wm_labels" followed by an array of strings.
 
@@ -95,3 +95,7 @@ export async function main() {
 Jobs can be filtered by labels in the Runs menu to monitor specific groups of jobs.
 
 ![Run labels](./runs_labels.png 'Run labels')
+
+## Invisible runs
+
+When this option is enabled, manual executions of this script or flow are invisible to users other than the user running it, including the owner(s). This setting can be overridden when this script is run manually from the advanced menu.
