@@ -20,8 +20,8 @@ import { SiTypescript } from 'react-icons/si';
 import { twMerge } from 'tailwind-merge';
 import { motion } from 'framer-motion';
 
-export default function AppAnimation({ active, only }) {
-	const [step, setStep] = React.useState(only ? 0 : -1);
+export default function AppAnimation({ active }) {
+	const [step, setStep] = React.useState(0);
 	const [scriptStep, setScriptStep] = React.useState(0);
 	const [buttonName, setButtonName] = React.useState('Press me');
 	const [clicked, setClicked] = React.useState(false);
@@ -136,7 +136,7 @@ export default function AppAnimation({ active, only }) {
 		}
 	};
 
-	useAnimateScroll(active, steps, appScrollCount, only ? 0 : flowScrollCount + scriptScrollCount);
+	useAnimateScroll(active, steps, appScrollCount, flowScrollCount + scriptScrollCount);
 
 	return (
 		<div className=" bg-gradient-to-br from-orange-200 to-orange-400 dark:from-orange-700 dark:to-orange-600 w-full rounded-lg p-6 shadow-inner overflow-hidden  h-[550px]">
