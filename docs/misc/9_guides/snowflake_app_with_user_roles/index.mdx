@@ -1,5 +1,5 @@
 ---
-title: Build an App accessing Snowflake with end-user Roles
+title: Snowflake app with user roles
 ---
 
 import DocCard from '@site/src/components/DocCard';
@@ -27,7 +27,8 @@ Note that the mechanism of using the end-user's role demonstated here with Snowf
 </div>
 
 ---
-## Video Tutorial
+
+## Video tutorial
 
 For a visual walkthrough of building this app, watch the tutorial below:
 
@@ -51,7 +52,7 @@ For a visual walkthrough of building this app, watch the tutorial below:
 1. **Set up Snowflake OAuth**: Follow the [Snowflake OAuth guide](/docs/misc/setup_oauth#snowflake).
 2. **Configure User Roles in Snowflake**: In the [Snowflake console](https://app.snowflake.com/), ensure that user roles connected through OAuth have access to the relevant tables.
 
-## Sample App Setup
+## Sample app setup
 
 For this example, we created a new Snowflake organization with a `WINDMILL` database, a `PUBLIC` schema, and two user roles:
 
@@ -64,7 +65,8 @@ The database contains the following tables:
 
 The goal is to use OAuth to dynamically retrieve the credentials for the end-user connecting to the app rather than using static credentials.
 
-### Step 1: Create a New Snowflake OAuth User Resource
+### Step 1: Create a new Snowflake OAuth user resource
+
 1. After creating a new app in your Windmill workspace, add a **User Resource Input** component.
 2. For "Resource Type," enter `snowflake_oauth`.
 3. Enable **Express OAuth Setup** by toggling the option.
@@ -74,7 +76,7 @@ The goal is to use OAuth to dynamically retrieve the credentials for the end-use
 
 This component allows the app to use end-user credentials via an interactive OAuth connection rather than relying on static resources defined in the workspace.
 
-### Step 2: Background Runnable to Query Available Tables
+### Step 2: Background runnable to query available tables
 
 Next, create a **Background Runnable** to retrieve the available tables based on the user’s Snowflake role.
 
@@ -101,7 +103,7 @@ Next, create a **Background Runnable** to retrieve the available tables based on
    bg_0.result.map(_ => ({ value: _.TABLE_NAME, label: _.TABLE_NAME }))
    ```
 
-### Step 3: Display Table Content
+### Step 3: Display table content
 
 Now, add a **Rich Result** component to show the table content based on the selected table.
 
@@ -119,7 +121,7 @@ Now, add a **Rich Result** component to show the table content based on the sele
 
 4. The component will automatically populate with data from the selected table.
 
-### Step 4: Test the App
+### Step 4: Test the app
 
 Now, we’ll see how the displayed data changes based on the logged-in user’s role.
 

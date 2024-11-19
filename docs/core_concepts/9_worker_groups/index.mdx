@@ -215,26 +215,6 @@ Last, if the tags contain `$args[argName]` (e.g: `foo-$args[foobar])` then the t
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
 
-## Alerts
-
-You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
-
-![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
-
-Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
-
-You need to configre [Critical alert channels](../37_critical_alert_channels/index.mdx) to receive notifications.
-
-![Workers alerts](./workers_alerts.png 'Workers alerts')
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Critical alert channels"
-		description="Get a notification everytime a job is re-run after a crash."
-		href="/docs/core_concepts/critical_alert_channels"
-	/>
-</div>
-
 ## Create worker group config
 
 <img
@@ -267,6 +247,68 @@ Examples of configurations include:
 1. [Assign different jobs to specific worker groups](#set-tags-to-assign-specific-queues) by giving them tags.
 2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
+
+## Alerts
+
+You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+
+![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
+
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+
+You need to configre [Critical alert channels](../37_critical_alert_channels/index.mdx) to receive notifications.
+
+![Workers alerts](./workers_alerts.png 'Workers alerts')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical alert channels"
+		description="Get a notification everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alert_channels"
+	/>
+</div>
+
+## Python runtime settings
+
+Add Python runtime specific settings like additional Python paths and PIP local dependencies.
+
+![Python runtime settings](./python_runtime_settings.png 'Python runtime settings')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Dependencies in Python"
+		description="How to manage dependencies in Python scripts."
+		href="/docs/advanced/dependencies_in_python"
+	/>
+</div>
+
+## Environment variables passed to jobs
+
+Add static and dynamic environment variables that will be passed to jobs handled by this worker group. Dynamic environment variable values will be loaded from the worker host environment variables while static environment variables will be set directly from their values below.
+
+![Environment variables passed to jobs](./environment_variables_passed_to_jobs.png 'Environment variables passed to jobs')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Variables and secrets"
+		description="Variables and secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
+		href="/docs/core_concepts/variables_and_secrets"
+	/>
+</div>
+
+## Autoscaling
+
+Autoscaling automatically adjusts the number of workers based on your workload demands.
+
+Autoscaling is available in the [Enterprise plan](/pricing).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Autoscaling"
+		description="Autoscaling automatically adjusts the number of workers based on your workload demands."
+		href="/docs/core_concepts/autoscaling"
+	/>
+</div>
 
 ## Init scripts
 
@@ -339,12 +381,13 @@ Only tags for jobs that have been delayed by more than 3 seconds in the last 14 
 [Enterprise Edition](/pricing) users can set up [Critical Alerts](../37_critical_alert_channels/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
 
 ![Queue Metrics](./queue_metrics_alert.png 'Queue Metrics Alert')
-## Workers and vCPUs
 
-Even though Windmill's architecture relies on workers, Windmill's [pricing](/pricing) is vCPU-based. For example, 4 workers with 0.25 vCPU each is 1 vCPU. 1 worker with 4 vCPU would count as 4 vCPU. But if it only runs for 1h every day, you would divide that by 24. Each vCPU can run up to ~26M jobs per month.
+## Workers and compute units
 
-The number of vCPUs will depend on the workload and the jobs Windmill will need to run. Each worker only executes one job at a time, by design to use the full resource of the worker, and you can assign it an arbitrary vCPU limit - typically 1 vCPU but it can vary between 0.2 to 4 vCPUs. Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
+Even though Windmill's architecture relies on workers, Windmill's [pricing](/pricing) is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. Any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). Each worker can run up to ~26M jobs per month (at 100ms per job).
 
-As a note, keep in mind that the number of vCPUs considered is the number of production vCPUs of your workers, not of development staging, if you have separate instances. You can set staging instances as 'Non-prod' in the [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance). The vCPU numbers are the aggregate limit of all of your pods set in [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or in Kubernetes. We set a quota of 2Gb memory per vCPU. We recommend to set [memory limit](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L52) instead of vCPUs limits. A typical memory limit would be `Number of paid vCPUs * 2GB`.
+The number of compute units will depend on the workload and the jobs Windmill will need to run. Each worker only executes one job at a time, by design to use the full resource of the worker. Workers come in different sizes based on memory: small (1GB), standard (2GB), and large (> 2GB). Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
 
-Also, for the Enterprise Edition, the free trial of one month is meant to help you evaluate your needs in practice.
+As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. You can set staging instances as 'Non-prod' in the [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance). The compute units are calculated based on the memory limits set in [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) or in Kubernetes. For example, a standard worker with 2GB memory counts as 1 compute unit, while a large worker with >2GB memory counts as 2 compute units. Any worker with memory above 2GB still counts as 2 compute units. Small workers are counted as 0.5 compute unit.
+
+Also, for the [Enterprise Edition](/pricing), the free trial of one month is meant to help you evaluate your needs in practice.

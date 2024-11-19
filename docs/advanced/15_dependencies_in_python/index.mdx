@@ -9,10 +9,11 @@ There are however methods to have more control on your dependencies:
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
 - Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt).
 
-Moreover, there are two other tricks, compatible with the methodologies mentioned above:
+Moreover, there are other tricks, compatible with the methodologies mentioned above:
 - [Sharing common logic with Relative Imports](#sharing-common-logic-with-relative-imports).
-- [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements).
-- [Private PyPi Repository](#private-pypi-repository).
+- [Pinning dependencies and requirements](#pinning-dependencies-and-requirements).
+- [Private PyPI Repository](#private-pypi-repository).
+- [Python runtime settings](#python-runtime-settings).
 
 To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
@@ -31,12 +32,12 @@ To learn more about how dependencies from other languages are handled, see [Depe
 	/>
 </div>
 
-## Lockfile per Script inferred from Imports (Standard)
+## Lockfile per script inferred from imports (Standard)
 
 In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
 
 In Python, the imports are automatically parsed on saving of the script and a list of imports is generated.
-A dependency job is then spawned to associate that list of PyPi packages with a lockfile, which will lock
+A dependency job is then spawned to associate that list of PyPI packages with a lockfile, which will lock
 the versions. This ensures that the same version of a Python script is always
 executed with the same versions of its dependencies. It also avoids the hassle
 of having to maintain a separate requirements file.
@@ -87,7 +88,7 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 	/>
 </div>
 
-## Lockfile per Script inferred from a requirements.txt
+## Lockfile per script inferred from a requirements.txt
 
 Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports-standard). It is possible to override the dependencies by providing a `requirements.txt` file in the same directory as the script as you would do in a standard Python project, building and maintaining a requirements.txt to declare dependencies.
 
@@ -151,9 +152,9 @@ With this toggle, you can choose to use the metadata lockfile (derived from requ
 
 ## Other
 
-Other tricks can be used: [Sharing common logic with Relative Imports](#sharing-common-logic-with-relative-imports), [Pinning Dependencies and Requirements](#pinning-dependencies-and-requirements) and [Private PyPi Repository](#private-pypi-repository). All are compatible with the methods described above.
+Other tricks can be used: [Sharing common logic with relative imports](#sharing-common-logic-with-relative-imports), [Pinning dependencies and requirements](#pinning-dependencies-and-requirements) and [Private PyPI Repository](#private-pypi-repository). All are compatible with the methods described above.
 
-### Sharing common logic with Relative Imports
+### Sharing common logic with relative imports
 
 If you want to share common logic with Relative Imports, this can be done easily using [relative imports](../5_sharing_common_logic/index.mdx) in both Python and TypeScript.
 
@@ -204,7 +205,7 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 	/>
 </div>
 
-### Pinning Dependencies and Requirements
+### Pinning dependencies and requirements
 
 If the imports are not properly analyzed, there exists an escape hatch to
 override the inferred imports. One needs to head the Script with the `requirements` comment followed by dependencies.
@@ -239,7 +240,7 @@ def main(...):
   ...
 ```
 
-### Private PyPi Repository
+### Private PyPI repository
 
 Environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate.
 This is useful for private repositories.
@@ -257,4 +258,8 @@ windmill_worker:
 
 "Pip Index Url" and "Pip Extra Index Url" are filled through Windmill UI, in [Instance settings](../18_instance_settings/index.mdx#registries) under [Enterprise Edition](/pricing).
 
-![Private PyPi Repository](./private_pip.png 'Private PyPi Repository')
+![Private PyPI Repository](./private_pip.png 'Private PyPI Repository')
+
+### Python runtime settings
+
+For a given [worker group](../../core_concepts/9_worker_groups/index.mdx), you can add Python [runtime specific settings](../../core_concepts/9_worker_groups/index.mdx#python-runtime-settings) like additional Python paths and PIP local dependencies.
