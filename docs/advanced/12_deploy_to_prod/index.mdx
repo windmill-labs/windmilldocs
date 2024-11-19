@@ -4,12 +4,12 @@ import DocCard from '@site/src/components/DocCard';
 
 To deploy to prod, 3 options are possible:
 
-## Option 1. Draft and deploy - Single Workspace
+## Option 1. Draft and deploy - Single workspace
 
 A simple setup in which deploying to prod means deploying items that have been iterated on in the UI as Drafts.
 Deployments in Windmill are commonly done from the same workspace using the [Draft and deploy](../../core_concepts/0_draft_and_deploy/index.mdx) buttons.
 
-## Option 2. Deploy to prod using a git workflow - Multi Workspace
+## Option 2. Deploy to prod using a git workflow - Multi workspace
 
 The integration can be used to push from git, and receive changes done from the UI in a bi-directional way.
 You can also use a separate dev and staging branch and repo and have Windmill create automatically branches and Pull Request upon any changes deployed to staging/dev.
@@ -22,7 +22,7 @@ You can also use a separate dev and staging branch and repo and have Windmill cr
 	/>
 </div>
 
-This process can be used in particular for local development with a solid setup:
+This process can be used in particular for [local development](../4_local_development/index.mdx) with a solid setup:
 
 ![Local development Setup](../4_local_development/local_development.png 'Local development Setup')
 
@@ -34,7 +34,7 @@ This process can be used in particular for local development with a solid setup:
 	/>
 </div>
 
-## Option 3. Deploy to prod using the UI only - Multi Workspace
+## Option 3. Deploy to prod using the UI only - Multi workspace
 
 From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace.
 

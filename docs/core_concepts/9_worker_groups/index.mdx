@@ -110,7 +110,9 @@ You can assign groups to flows and flow steps to be executed on specific queues.
 
 <br />
 
-There are 2 worker groups by default: _default_ and _native_.
+There are 2 worker groups by default: [default](#default-worker-group) and [native](#native-worker-group).
+
+#### Default worker group
 
 The tags of _default_ worker group are:
 
@@ -127,6 +129,13 @@ The tags of _default_ worker group are:
 
 Button `Reset to all tags minus native ones` will reset the tags of _default_ worker group to a given worker group.
 
+#### Native worker group
+
+Native workers are workers within the _native_ worker group.
+This group is pre-configured to listen to native jobs tags. Those jobs are executed under a special mode with subworkers for increased throughput.
+
+You can set the number of native workers to 0.
+
 The tags of _native_ worker group are:
 
 - `nativets`: The default worker group for rest scripts.
@@ -137,6 +146,8 @@ The tags of _native_ worker group are:
 - `snowflake`: The default worker group for snowflake scripts.
 - `bigquery`: The default worker group for bigquery scripts.
 - `mssql`: The default worker group for mssql scripts.
+
+<br/><br/>
 
 If you assign custom worker groups to all your workers, make sure that they cover all tags above, otherwise those jobs will never be executed.
 
@@ -157,6 +168,8 @@ gpu(workspace+workspace2)
 ```
 
 Only 'workspace' and 'workspace2' will be able to use the `gpu` tags.
+
+Jobs within a same job queue can be given a [priority](../20_jobs/index.mdx#high-priority-jobs) between 1 and 100. Jobs with a higher priority value will be given precedence over jobs with a lower priority value in the job queue.
 
 ### How to assign worker tags to a worker group
 

@@ -151,7 +151,6 @@ GRANT windmill_admin TO <user used in database_url>;
 GRANT windmill_user TO <user used in database_url>;
 ```
 
-If you cannot use BYPASSRLS (for instance on Azure PostgreSQL), on EE, pass `MIGRATION_NO_BYPASSRLS=true` to your servers, otherwise see this [workaround](https://github.com/windmill-labs/windmill/issues/2345#issuecomment-1739777068)
 :::
 
 ### Set number of replicas accordingly in docker-compose
@@ -366,11 +365,11 @@ services:
       - traefik.http.services.windmill_lsp.loadbalancer.server.port=3001
       #http
       - traefik.http.routers.windmill_lsp_http.entrypoints=web
-      - traefik.http.routers.windmill_lsp_http.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_http.rule=Host(`windmill.yourdomain.com`) && PathPrefix(`/ws/`)
       - traefik.http.routers.windmill_lsp_http.service=windmill_lsp
       # https
       - traefik.http.routers.windmill_lsp_https.entrypoints=websecure
-      - traefik.http.routers.windmill_lsp_https.rule=Host(`windmill.yourdomain.com`)
+      - traefik.http.routers.windmill_lsp_https.rule=Host(`windmill.yourdomain.com`) && PathPrefix(`/ws/`)
       - traefik.http.routers.windmill_lsp_https.service=windmill_lsp
       - traefik.http.routers.windmill_lsp_https.tls=true
       - traefik.http.routers.windmill_lsp_https.tls.certresolver=letsencryptresolver

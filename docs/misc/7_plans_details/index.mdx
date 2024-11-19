@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Plans & How to upgrade
 
-Windmill provides a range of pricing plans for both Cloud and Self-hosted deployments. These plans are designed to accommodate individual users, small teams, and enterprise-level organizations, offering additional features, resources, enhanced capabilities, and premium support beyond the free tier. All details on the [Pricing page](/pricing).
+Windmill provides a range of pricing plans for both cloud and self-hosted deployments. These plans are designed to accommodate individual users, small teams, and enterprise-level organizations, offering additional features, resources, enhanced capabilities, and premium support beyond the free tier. All details on the [Pricing page](/pricing).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -106,7 +106,7 @@ Team plans work at the workspace-level.
 
 <br />
 
-The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/8wMaFS51Y0Bl2VacMT), with a 1-month free trial. You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
+The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j), with a 1-month free trial. You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
 
 To have your instance switch from Free Edition to Enterprise Edition, you'll need to change the Windmill image:
 - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
@@ -118,15 +118,18 @@ Upon subscribing, you will receive a [license key](#using-the-license-key-self-h
 
 To adjust the number of seats, you can update your usage on the subscription page at [Windmill customer portal](#windmill-customer-portal).
 
-Windmill employs lightweight [telemetry](#usage-checks) to automatically track and report the usage of vCPUs and seats for your subscription. We only count the vCPUs reported by your workers as being used. So you can simply set limits in the [docker-compose](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml#L50) to make sure you respect the terms of your subscription. Setting memory limits is enough.
+Windmill employs lightweight [telemetry](#usage-checks) to automatically track and report the usage of memory and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
 
-To have a fully Enterprise Edition Windmill, we recommend also setting up:
-- [SSO/SAML](../2_setup_oauth/index.mdx) for user management and authentification.
-- [S3 / Azure Blob storage integration](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) within a Windmill workspace to manage large data files.
-- [Instance object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to have a dedicated S3 storage for large-scale log management and distributed dependency caching.
-- [Git sync](../../advanced/11_git_sync/index.mdx) to have workspace synchronize with a Git repository for version control.
+How the data is calculated:
+- Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
+- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month.
 
-As an Enterprise user, you will have access to detailed usage information and invoices through the [Windmill customer portal](#windmill-customer-portal).
+Using a number of seats, workers, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
+1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min
+2. You need to re-arrange your use of Windmill. If so, please let us know that you need a period of adjustment that exceeds 35 days (validity of a license key), and feel free to contact us here or at support@windmill.dev so we can help you manage this.
+3. Adjust your subscription via the [Customer Portal](#windmill-customer-portal).
+
+Once excessive usage has been detected and we have informed you, your license key will cease to auto-renew (as it does by default every day). This leaves you with a period of 35 days (the validity period of a key) to make the necessary adjustments on your side. At the end of the term, Windmill Enterprise Edition will stop running your jobs.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -144,7 +147,9 @@ To enable the license key, switch from the `windmill` image to the `windmill-ee`
 
 ## Windmill Customer Portal
 
-As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & vCPUs) from the portal.
+As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal.
+
+![Portal](./portal.png 'Portal')
 
 Access to the portal is made through either:
 - From your [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), in the "Core" tab. Where you can also renew your [license key](#self-host).
@@ -168,22 +173,19 @@ Email addresses can be added to the portal to allow multiple users to access it.
 
 You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
 
-![Portal](./portal.png 'Portal')
+This is also from the portal that you can [manage your issues and feature requests](../12_support_and_sla/index.mdx#feature-request-and-issue-dashboard).
 
-As you can see, your usage is reported on the platform - basic metrics such as Seats & vCPUs are reported to Windmill. You can check whether your use of Windmill corresponds to your subscription, and report an error to Windmill if you wish.
-
-This comparison is made only for your instance of Prod, for which you can find the Base URL. The other instances URLs are also shown.
+Usage of your instance is reported on the platform - basic metrics such as Seats & workers are reported to Windmill. You can check whether your use of Windmill corresponds to your subscription, and report an error to Windmill if you wish. This comparison is made only for your instance of Prod, for which you can find the Base URL. The other instances URLs are also shown.
 
 ## Usage checks
 
-Windmill employs lightweight [telemetry](/pricing#vcpu-reporting) to automatically track and report the usage of vCPUs and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
+Windmill employs lightweight [telemetry](/pricing#worker-reporting) to automatically track and report the usage of memory and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
-- vCPUs: number of vCPUs used by the production [workers](../../core_concepts/9_worker_groups/index.mdx) and set within the container [limits](../../core_concepts/9_worker_groups/index.mdx#workers-and-vcpus).
-- Memory: like the vCPUs, we aggregate the limits of all production containers and for each vCPU you pay for, you get a quota of 2GB.
+- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month.
 
-Using a number of seats, vCPUs, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
+Using a number of seats, workers, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
 1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min
 2. You need to re-arrange your use of Windmill. If so, please let us know that you need a period of adjustment that exceeds 35 days (validity of a license key), and feel free to contact us here or at support@windmill.dev so we can help you manage this.
 3. Adjust your subscription via the [Customer Portal](#windmill-customer-portal).

@@ -126,6 +126,10 @@ You can set a custom retention period for the jobs runs details. The retention p
 	/>
 </div>
 
+## High priority jobs
+
+High priority jobs are jobs that are given a `priority` value between 1 and 100. Jobs with a higher priority value will be given precedence over jobs with a lower priority value in the job queue.
+
 ## Large job logs management
 
 To optimize log storage and performance, Windmill leverages S3 for log management. This approach minimizes database load by treating the database as a temporary buffer for up to 5000 characters of logs per job.

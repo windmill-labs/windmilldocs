@@ -8,7 +8,7 @@ import CallToAction from '../landing/CallToAction';
 import LogoClouds from '../landing/LogoClouds';
 import RadialBlur from '../landing/RadialBlur';
 import HubExamples from '../landing/HubExamples';
-import Window from '../landing/animations/Window';
+import TutorialSection from '../landing/TutorialSection';
 
 const hubExamples = [
 	{
@@ -66,26 +66,13 @@ export default function FlowPage() {
 
 				<LandingHeader />
 
-				<div className="max-w-7xl px-4 lg:px-8 mx-auto flex justify-center h-full mt-20 flex-col gap-8">
+				<TutorialSection subIndex={1}>
 					<div
-						className={`text-emerald-900 dark:text-emerald-300 text-5xl text-left font-normal tracking-tight leading-12 mb-2  pt-8`}
+						className={`text-emerald-900 dark:text-emerald-300 text-5xl text-left font-normal tracking-tight leading-12`}
 					>
 						{'Develop and iterate with instant feedback'}
 					</div>
-					<div className="bg-gradient-to-br from-emerald-200 to-emerald-400 dark:from-emerald-500 dark:to-emerald-600 w-full rounded-lg p-6 shadow-inner overflow-hidden h-[550px]">
-						<Window
-							shouldRender={true}
-							name="Flows | Windmill"
-							icon="/third_party_logos/firefox.svg"
-						>
-							<img
-								src="/images/flow_example.png"
-								alt="Flows"
-								className="w-full object-cover object-left-top h-full"
-							/>
-						</Window>
-					</div>
-				</div>
+				</TutorialSection>
 				<div className="mt-16">
 					<FlowLightSection />
 				</div>

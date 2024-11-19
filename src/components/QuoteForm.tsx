@@ -1,18 +1,53 @@
 import { Dialog } from '@headlessui/react';
 import { Loader2, X } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
+type DetailRowProps = {
+	label: string;
+	value: string | number;
+	isSubItem?: boolean;
+	calculation?: {
+		left: number;
+		right: number | string;
+		operator?: string;
+	};
+	className?: string;
+};
+
+const DetailRow = ({ label, value, isSubItem, calculation, className = '' }: DetailRowProps) => (
+	<div className={`flex flex-row justify-between ${isSubItem ? 'font-normal text-gray-600 dark:text-gray-300' : 'font-medium text-gray-800 dark:text-gray-200'} ${className}`}>
+		<span className={isSubItem ? 'pl-4 w-40' : ''}>{label}</span>
+		{calculation ? (
+			<div className="grid grid-cols-[60px_20px_60px] gap-1">
+				<span className="text-right">{calculation.left}</span>
+				<span className="text-center">{calculation.operator || '='}</span>
+				<span className="text-right">{calculation.right}</span>
+			</div>
+		) : (
+			<div>{value}</div>
+		)}
+	</div>
+);
 
 export function QuoteForm({
-	vCPUs,
-	seats,
+	workers,
+	developers,
+	operators,
 	frequency,
 	plan,
+	total_price,
 	open,
 	setOpen,
 	selectedOption
 }: {
-	vCPUs: number;
-	seats: number;
+	workers: {
+		native: number;
+		small: number;
+		standard: number;
+		large: number;
+	};
+	developers: number;
+	operators: number;
 	frequency: string;
 	plan: 'selfhosted_ee' | 'cloud_ee';
 	open: boolean;
@@ -22,6 +57,24 @@ export function QuoteForm({
 	const [companyName, setCompanyName] = useState('');
 	const [email, setEmail] = useState('');
 	const [loading, setLoading] = useState(false);
+
+	// Add this function near the top of the component
+	const isValidEmail = (email: string): boolean => {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailRegex.test(email);
+	};
+
+	// Add these helper functions
+	const getPlanDisplay = () => {
+		if (plan === 'cloud_ee') return 'Cloud EE';
+		if (selectedOption === 'SMB' && plan === 'selfhosted_ee') return 'Pro';
+		if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') return 'Enterprise - Nonprofit';
+		return 'Self-Hosted EE';
+	};
+
+	const formatPrice = () => {
+		return `$${total_price.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}/${frequency === 'monthly' ? 'mo' : 'yr'}`;
+	};
 
 	// Function to generate quote
 	async function generateQuote() {
@@ -36,9 +89,14 @@ export function QuoteForm({
 				apiPlan = 'nonprofit_ee';
 				}
 
+			// Calculate total compute units with minimum of 2
+			const computeUnits = Math.max(2, Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large));
+
+			const seats = developers + Math.ceil(operators / 2);
+
 			// API request
 			const response = await fetch(
-				`https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/p/f/bd/public/generate_quote_public?token=ylmZm3yfDfLGPVjvn1N3g3vtOlV8AOnD`,
+				`https://app.windmill.dev/api/w/windmill-labs/jobs/run_wait_result/p/f/bd/public/generate_quote__public____new_pricing?token=eDuWDGxe3W4JOgBUg1bQuWyRk9bBaUdE`,
 				{
 					method: 'POST',
 					headers: {
@@ -46,12 +104,12 @@ export function QuoteForm({
 						Authorization: 'Bearer '
 					},
 					body: JSON.stringify({
+						plan: apiPlan,
 						frequency,
-						seats: seats,
-						vcpus: vCPUs,
-						company_name: companyName,
-						plan: apiPlan, // Pass the modified plan
-						email
+						seats,
+						compute_units: computeUnits,
+						email,
+						company_name: companyName
 					})
 				}
 			);
@@ -76,6 +134,12 @@ export function QuoteForm({
 			setLoading(false);
 		}
 	}
+
+	// Add this calculation before the return statement
+	const rawComputeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
+	const computeUnits = Math.max(2, rawComputeUnits);
+	const isSmbWithTooManyUnits = selectedOption === 'SMB' && computeUnits > 10;
+
 	return (
 		<Dialog open={open} onClose={() => setOpen(false)}>
 			<div className="fixed inset-0 bg-black/50 flex flex-row justify-center items-center">
@@ -97,7 +161,7 @@ export function QuoteForm({
 							</span>
 							<input
 								type="text"
-								className="border-gray-100 dark:border-gray-600 border rounded-lg bg-white dark:bg-gray-800"
+								className="border-gray-100 dark:border-gray-600 border rounded-lg bg-white dark:bg-gray-950"
 								value={companyName}
 								onChange={(e) => setCompanyName(e.target.value)}
 								autoFocus
@@ -107,35 +171,62 @@ export function QuoteForm({
 							<span className="font-medium text-gray-800 dark:text-gray-200 text-sm">Email</span>
 							<input
 								type="email"
-								className="border-gray-100 dark:border-gray-600 border rounded-lg bg-white dark:bg-gray-800 "
+								className="border-gray-100 dark:border-gray-600 border rounded-lg bg-white dark:bg-gray-950 "
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 						</label>
-						<div className="flex flex-row justify-between">
-						<span className="font-medium text-gray-800 dark:text-gray-200">Plan</span>
-						{plan === 'cloud_ee'
-							? 'Cloud EE'
-							: selectedOption === 'SMB' && plan === 'selfhosted_ee'
-							? 'Pro'
-							: selectedOption === 'Nonprofit' && plan === 'selfhosted_ee'
-							? 'Enterprise - Nonprofit'
-							: 'Self-Hosted EE'}
-						</div>
+						<DetailRow label="Plan" value={getPlanDisplay()} />
+						<DetailRow label="Price" value={formatPrice()} />
+						<DetailRow label="Total seats" value={Math.ceil(operators / 2) + developers} />
 
-						<div className="flex flex-row justify-between">
-						<span className="font-medium text-gray-800 dark:text-gray-200">vCPUs</span>
-						{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(vCPUs, 10) : vCPUs}
-						</div>
+						{developers > 0 && (
+							<DetailRow 
+								label="Developers" 
+								isSubItem 
+								calculation={{
+									left: developers,
+									right: `${developers} ${developers === 1 ? 'seat' : 'seats'}`
+								}}
+							/>
+						)}
 
-						<div className="flex flex-row justify-between">
-						<span className="font-medium text-gray-800 dark:text-gray-200">Seats</span>
-						{selectedOption === 'SMB' && plan === 'selfhosted_ee' ? Math.min(seats, 10) : seats}
-						</div>
-						<div className="flex flex-row justify-between">
-							<span className="font-medium text-gray-800 dark:text-gray-200">Frequency</span>
-							{frequency}
-						</div>
+						{operators > 0 && (
+							<DetailRow 
+								label="Operators" 
+								isSubItem 
+								calculation={{
+									left: operators,
+									right: `${Math.ceil(operators / 2)} ${operators === 1 ? 'seat' : 'seats'}`
+								}}
+							/>
+						)}
+
+						<DetailRow 
+							label={`Total compute units (CU)${rawComputeUnits < 2 ? ' - can\'t be below 2' : ''}`}
+							value={computeUnits}
+							className={rawComputeUnits < 2 ? 'text-red-500' : ''}
+						/>
+
+						{/* Worker type rows */}
+						{Object.entries({
+							'Standard workers': { count: workers.standard, multiplier: 1 },
+							'Small workers': { count: workers.small, multiplier: 0.5 },
+							'Large workers': { count: workers.large, multiplier: 2 },
+							'Native workers': { count: workers.native, multiplier: 1, displayMultiplier: 8 }
+						}).map(([label, { count, multiplier, displayMultiplier }]) => 
+							count > 0 && (
+								<DetailRow 
+									key={label}
+									label={label}
+									isSubItem
+									calculation={{
+										left: label === 'Native workers' ? count * (displayMultiplier || 1) : count,
+										right: `${Math.ceil(count * multiplier)} CU`
+									}}
+								/>
+							)
+						)}
 
 						<a
 							href="https://drive.google.com/uc?export=download&id=1tbBMNSGcdu3e5BAFf8CIEXlbEKppbtLm"
@@ -144,12 +235,18 @@ export function QuoteForm({
 							Also need a presentation?
 						</a>
 
+						{isSmbWithTooManyUnits && (
+							<div className="text-red-500 text-sm">
+								Pro plan is limited to 10 compute units maximum
+							</div>
+						)}
+
 						<button
-							className="rounded-md bg-blue-600 px-4 py-2 flex flex-row gap-2 justify-center items-center font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white"
+							className="rounded-md bg-blue-600 px-4 py-2 flex flex-row gap-2 justify-center items-center font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
 							onClick={() => {
 								generateQuote();
 							}}
-							disabled={!companyName || !email || loading}
+							disabled={!companyName || !email || !isValidEmail(email) || loading || isSmbWithTooManyUnits}
 						>
 							Generate quote
 							{loading && <Loader2 className="animate-spin" />}

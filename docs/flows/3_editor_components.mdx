@@ -13,7 +13,7 @@ The Flow Builder has the following major components we will detail below:
 
 <br />
 
-![Example of a flow](../assets/flows/flow_example.png.webp)
+![Example of a flow](../assets/flows/flow_example.png)
 
 > _Example of a [flow](https://hub.windmill.dev/flows/38/automatically-populate-crm-contact-details-from-simple-email) in Windmill._
 
@@ -84,15 +84,6 @@ The diff button allows you to view the diff between the current and the latest [
 
 ## Settings
 
-The flow settings are divided into four tabs:
-
-- [Metadata](#metadata)
-- [Schedule](#schedule)
-- [Shared Directory](#shared-directory)
-- [Worker Group](#worker-group-tag)
-
-### Metadata
-
 Each flow has metadata associated with it, enabling it to be defined and configured in depth.
 
 #### Summary
@@ -127,63 +118,59 @@ This is where you can give instructions to users on how to run your Flow. It sup
 
 ![Flow Metadata Markdown](../assets/flows/flow_settings_metadata_markdown.png "Flow Metadata Markdown")
 
-### Schedule
+### Advanced
 
-Flows can be [triggered](../getting_started/9_trigger_flows/index.mdx) by any [schedules](../core_concepts/1_scheduling/index.mdx), their [webhooks](../core_concepts/4_webhooks/index.mdx) or their [UI](../core_concepts/6_auto_generated_uis/index.mdx) but they only have only one primary schedules with which they share the same path. The primary schedule can be set here.
+![Flow Advanced](../assets/flows/flow_advanced_settings.png "Flow Advanced")
 
-A CRON expression is used to define the schedule. Schedules can also be disabled.
-
-![Flow Schedule](../assets/flows/flow_settings_schedule.png.webp)
-
-:::tip
-
-Have more details on all the ways to trigger flows [here](../getting_started/9_trigger_flows/index.mdx).
-
-:::
+The advanced section allows to configure the following:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
-		title="Schedules"
-		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-		href="/docs/core_concepts/scheduling"
-	/>
-</div>
-
-### Shared Directory
-
-Flows on Windmill are by default based on a result basis. A step will take as inputs the results of previous steps. And this works fine for lightweight automation.
-
-For heavier ETLs, you might want to use the `Shared Directory` to share data between steps. Steps will share a folder at `./shared` in which they can store heavier data and pass them to the next step.
-
-Beware that the `./shared` folder is not preserved across [suspends](./11_flow_approval.mdx) and [sleeps](./15_sleep.md). The directory is temporary and active for the time of the execution.
-
-To enable the shared directory, on the `Settings` menu, go to `Shared Directory` and toggle on `Shared Directory on './shared'`.
-
-![Flow Shared Directory](../assets/flows/flow_settings_shared_directory.png.webp)
-
-To use the shared directory, just load outputs using `./shared/${path}` and call it for following steps.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Storage Within Windmill"
-		description="Windmill is not designed to store heavy data that extends beyond the execution of a script or flow. There are however internal methods to persist data between executions of jobs."
-		href="/docs/core_concepts/persistent_storage/within_windmill"
-	/>
-</div>
-
-### Worker group tag
-
-Flows can be assigned custom [worker groups](../core_concepts/9_worker_groups/index.mdx) for efficient execution on different machines with varying specifications.
-
-![Worker group tag](../core_concepts/9_worker_groups/select_script_builder.png.webp)
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Worker Groups"
+		title="Worker groups and tags"
 		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
 		href="/docs/core_concepts/worker_groups"
+	/>
+	<DocCard
 		color="teal"
+		title="Caching"
+		description="Caching a flow means caching the results of that flow for a certain duration."
+		href="/docs/flows/cache"
+	/>
+	<DocCard
+		color="teal"
+		title="Early stop for flow"
+		description="Stop early a flow based on a condition."
+		href="/docs/flows/early_stop#early-stop-for-flow"
+	/>
+	<DocCard
+		color="teal"
+		title="Early return"
+		description="Define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously."
+		href="/docs/flows/early_return"
+	/>
+	<DocCard
+		color="teal"
+		title="Shared Directory"
+		description="The Shared Directory allows steps within a flow to share data by storing it in a designated folder"
+		href="/docs/core_concepts/persistent_storage/within_windmill#shared-directory"
+	/>
+</div>
+
+## Triggers
+
+Flows can be triggered manually or in reaction to external events.
+
+![Flow triggers](../assets/flows/flow_triggers.png "Flow triggers")
+
+See [Triggering flows](../getting_started/9_trigger_flows/index.mdx) for more details.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Triggering flows"
+		description="Trigger flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/trigger_flows"
 	/>
 </div>
 
@@ -450,66 +437,5 @@ The result and logs are displayed on the left-hand side.
 		description="Windmill allows users to see and test what they are building directly from the editor, even before deployment."
 		href="/docs/core_concepts/instant_preview"
 		color="teal"
-	/>
-</div>
-
-#### Advanced
-
-The advanced section allows to configure the following:
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		color="teal"
-		title="Retries"
-		description="Re-try a step in case of error."
-		href="/docs/flows/retries"
-	/>
-	<DocCard
-		color="teal"
-		title="Cache for steps"
-		description="Re-use a step's previous results."
-		href="/docs/flows/cache"
-	/>
-	<DocCard
-		color="teal"
-		title="Concurrency limits"
-		description="The Concurrency limit feature allows you to define concurrency limits for scripts and inline scripts within flows."
-		href="/docs/flows/concurrency_limit"
-	/>
-	<DocCard
-		color="teal"
-		title="Early stop / Break"
-		description="Stop early a flow based on a step's result."
-		href="/docs/flows/early_stop"
-	/>
-	<DocCard
-		color="teal"
-		title="Suspend & Approval / Prompts"
-		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
-		href="/docs/flows/flow_approval"
-	/>
-	<DocCard
-		color="teal"
-		title="Sleep / Delays in flows"
-		description="Executions within a flow can be suspended for a given time."
-		href="/docs/flows/sleep"
-	/>
-	<DocCard
-		color="teal"
-		title="Step mocking"
-		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
-		href="/docs/flows/step_mocking"
-	/>
-	<DocCard
-		color="teal"
-		title="Shared Directory"
-		description="The Shared Directory allows steps within a flow to share data by storing it in a designated folder"
-		href="/docs/core_concepts/persistent_storage/within_windmill#shared-directory"
-	/>
-	<DocCard
-		color="teal"
-		title="Custom timeout for step"
-		description="If the execution takes longer than the time limit, the execution of the step will be interrupted."
-		href="/docs/flows/early_stop"
 	/>
 </div>

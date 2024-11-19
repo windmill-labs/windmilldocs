@@ -69,11 +69,17 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 
 ## Deno or Bun relative imports for sharing common logic
 
-Similarly to Python, it is possible to import directly from other TypeScript scripts. One can simply follow the path layout. For instance,
+Similarly to [Python](#python-relative-imports-for-sharing-common-logic), it is possible to import directly from other TypeScript scripts. One can simply follow the path layout. For instance,
 `import { foo } from "/f/<foldername>/script_name.ts"`. A more verbose example below:
 
 ```typescript
 import { main as foo, util } from '../my_script_path.ts';
+```
+
+With [Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), you don't need to specify the `.ts` file extension (it is only required for the [Deno](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx#deno) runtime):
+
+```typescript
+import { main as foo, util } from '../my_script_path';
 ```
 
 Relative imports syntax is much preferred as it will work on [local editors](../4_local_development/index.mdx) without further configuration.
@@ -81,7 +87,7 @@ Relative imports syntax is much preferred as it will work on [local editors](../
 You may also use absolute imports:
 
 ```typescript
-import { main as foo, util } from '/f/common/my_script_path.ts';
+import { main as foo, util } from '/f/common/my_script_path';
 
 export async function main() {
 	await foo();
@@ -101,7 +107,7 @@ but to make it work with your local editor, you will need the following configur
 }
 ```
 
-Note that path in Windmill can have as many depth as needed, so you can have paths like this `f/folder/subfolder/my_script_path.ts` and relative imports will work at any level. Hence, it will work exactly the same as on local.
+Note that [paths](../../core_concepts/16_roles_and_permissions/index.mdx#path) in Windmill can have as many depth as needed, so you can have paths like this `f/folder/subfolder/my_script_path` and relative imports will work at any level. Hence, it will work exactly the same as on local.
 
 ### Bundle per Script built by CLI
 

@@ -102,7 +102,8 @@ const sidebars = {
 									label: 'AgGrid Table'
 								},
 								'misc/guides/table/index',
-								'misc/guides/sequin/index'
+								'misc/guides/sequin/index',
+								'misc/guides/snowflake/index'
 							]
 						}
 					]
@@ -236,6 +237,7 @@ const sidebars = {
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
+				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
@@ -246,9 +248,9 @@ const sidebars = {
 				'core_concepts/workspace_secret_encryption/index',
 				'advanced/email_triggers/index',
 				'core_concepts/http_routing/index',
+				'core_concepts/websocket_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
-				'core_concepts/jobs/index',
 				'core_concepts/service_logs/index',
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
@@ -558,9 +560,9 @@ const sidebars = {
 					items: [
 						'flows/architecture',
 						'openflow/index',
+						'flows/editor_components',
 						'flows/test_flows',
 						'flows/ai_flows',
-						'flows/editor_components',
 						'flows/error_handling',
 						'flows/flow_branches',
 						'flows/flow_loops',
