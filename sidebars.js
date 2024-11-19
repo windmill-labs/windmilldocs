@@ -157,7 +157,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'misc/benchmarks/competitors/index',
-									label: 'vs Airflow vs Prefect vs Temporal'
+									label: 'vs Airflow vs Prefect vs Temporal vs Kestra'
 								},
 								'misc/benchmarks/aws_lambda/index'
 							]
