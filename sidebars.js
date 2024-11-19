@@ -164,7 +164,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Airflow, Prefect, Temporal'
+							label: 'Airflow, Prefect, Temporal, Kestra'
 						},
 						{
 							type: 'doc',
