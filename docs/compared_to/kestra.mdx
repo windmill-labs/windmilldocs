@@ -8,13 +8,25 @@ import DocCard from '@site/src/components/DocCard';
 
 We have tested and conducted performance benchmarks on Kestra, and this page outlines our conclusions. Please note that the content is written by Windmill; feel free to [contact us](../misc/6_getting_help/index.mdx) for any requests or modifications.
 
+- [Open source](#open-source)
+- [Language support and dependencies](#language-support-and-dependencies)
+- [Architecture and development experience](#architecture-and-development-experience)
+- [Features comparison](#features-comparison)
+- [Performance](#performance)
+- [Pricing](#pricing)
+- [Conclusion](#conclusion)
+
 ## Open source
 
-Both Windmill and [Kestra](https://github.com/kestra-io/kestra) are fully open source and can be self-hosted. They both offer an easy installation process through Docker Compose, with pre-populated tutorial flows to help users get started.
+Both Windmill and [Kestra](https://github.com/kestra-io/kestra) are fully open source and can be self-hosted. They both offer an easy installation process through [Docker](https://www.docker.com/), with pre-populated tutorial flows to help users get started.
 
 Windmill provides and integrates into its platform a [public community Hub](https://hub.windmill.dev/) where users share useful and proven scripts, flows, and applications.
 
 ![Windmill GitHub](../assets/compared_to/windmill_gh.png 'Windmill GitHub')
+
+> Windmill Git repository
+
+<br/>
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -28,7 +40,7 @@ Windmill provides and integrates into its platform a [public community Hub](http
 
 Kestra provides [native support](https://kestra.io/docs/workflow-components/tasks/scripts/languages) for Python, R, Node.js, Julia, Ruby, Shell, and PowerShell scripts. Additional language support is available through Docker containers. While this offers flexibility, there are some key differences in how dependencies are handled:
 
-- In Kestra, dependency caching and pre-installed dependencies need to be managed manually by the user
+- In Kestra, dependency caching and pre-installed [dependencies](https://kestra.io/docs/workflow-components/tasks/scripts/installing-dependencies) need to be managed manually by the user
 - Windmill automatically handles [dependency](../advanced/6_imports/index.mdx) installation and caching, allowing developers to focus on writing code
 - Windmill supports [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) and more [languages](../getting_started/0_scripts_quickstart/index.mdx) natively
 
@@ -49,7 +61,7 @@ Kestra provides [native support](https://kestra.io/docs/workflow-components/task
 
 ## Architecture and development experience
 
-Both platforms share a similar architecture centered around a queue-based system for event-driven orchestration of tasks and flows. However, there are several key differences in the development experience:
+Both platforms share a similar architecture centered around a queue-based system for event-driven orchestration of tasks and flows. However, there are several key differences in the development experience.
 
 ### Configuration and workflow building
 
@@ -77,7 +89,7 @@ In Windmill, a step is simply a script in a language—nothing more. From the fl
 
 ### Developer tools
 
-Windmill is designed to integrate seamlessly with your existing tool stack and workflows, specifically:
+Windmill is designed to integrate seamlessly with your existing tool stack and processes, with specific support for:
 - [Local development support](../advanced/4_local_development/index.mdx)
 - [Windmill CLI](../advanced/3_cli/index.mdx)
 - [Git sync](../advanced/11_git_sync/index.mdx) for version control
@@ -96,7 +108,9 @@ Although Kestra offers an alternative for some of these features ([Version contr
 
 ## Features comparison
 
-Kestra and Windmill have a very similar set of features (they address the same needs); however, there are a few features where they stand out from each other.
+Kestra and Windmill have a very similar set of features as they address the same needs. Both platforms offer core workflow engine features like [scheduling](../core_concepts/1_scheduling/), [webhooks](../core_concepts/4_webhooks/index.mdx), and [error handling](../core_concepts/10_error_handling/index.mdx).
+
+However, there are a few features where they stand out from each other.
 
 ### What Kestra does differently (and well)
 
@@ -115,10 +129,6 @@ Kestra and Windmill have a very similar set of features (they address the same n
 - Reusable [variables, secrets](../core_concepts/2_variables_and_secrets/index.mdx), and [resources](../core_concepts/3_resources_and_types/index.mdx)
 - Built-in worker [logs and metrics](../core_concepts/9_worker_groups/index.mdx#queue-metrics) (EE only)
 
-### Everything else
-
-For everything else, both platforms offer core workflow engine features like [scheduling](../core_concepts/1_scheduling/), [webhooks](../core_concepts/4_webhooks/index.mdx), and [error handling](../core_concepts/10_error_handling/index.mdx).
-
 ## Performance
 
 [Performance benchmark placeholder - reference to comparative benchmarks with other workflow engines]
@@ -129,9 +139,7 @@ Windmill has a transparent pricing policy, with clear steps for implementation. 
 
 Windmill is cheaper at scale and can be used for free at any scale thanks to its open source nature.
 
-As of November 18, 2024, Kestra does not disclose its Enterprise pricing (see below).
-
-Kestra's pricing:
+As of November 18, 2024, Kestra does not disclose its Enterprise pricing (see below):
 
 ![Kestra pricing](../assets/compared_to/kestra_pricing.png 'Kestra pricing')
 

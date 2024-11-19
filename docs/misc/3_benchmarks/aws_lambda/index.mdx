@@ -2,6 +2,21 @@ import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
 # AWS Lambda vs Windmill
 
+This benchmark compares the performance of AWS Lambda and Windmill for executing a simple but computationally intensive task - calculating the 33rd Fibonacci number using a recursive algorithm.
+
+We chose this task because:
+1. It's CPU-bound rather than I/O-bound, making it a good test of raw compute performance
+2. The recursive implementation creates significant computational overhead
+3. It's simple enough to implement identically in both platforms
+
+The goal is to measure and compare:
+- Cold start latency
+- Warm execution time 
+- Consistency of response times
+- Cost implications at scale
+
+Both services were configured similarly, using Python 3.11 as the runtime. The same Fibonacci calculation code was deployed to each platform to ensure a fair comparison.
+
 ## Setup
 
 ### Windmill
