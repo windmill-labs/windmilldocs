@@ -103,7 +103,7 @@ const sidebars = {
 								},
 								'misc/guides/table/index',
 								'misc/guides/sequin/index',
-								'misc/guides/snowflake/index'
+								'misc/guides/snowflake_app_with_user_roles/index'
 							]
 						}
 					]
