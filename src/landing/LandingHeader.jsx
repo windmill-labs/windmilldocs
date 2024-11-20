@@ -373,7 +373,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
-			<Banner />
+			{/* <Banner /> */}
 		</div>
 	);
 }
