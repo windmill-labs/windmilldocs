@@ -43,13 +43,15 @@ In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set 
 
 When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
 
+### S3 input and output UI
+
 When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
 
 ![S3 File Uploader](../11_persistent_storage/file_upload.png)
 
 ![S3 bucket browsing](../11_persistent_storage/bucket_browsing.png)
 
-When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
+When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs, images, PDFs, and parquet files).
 
 ![S3 file download](../18_files_binary_data/s3_file_output.png)
 

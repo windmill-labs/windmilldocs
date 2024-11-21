@@ -103,7 +103,7 @@ const sidebars = {
 								},
 								'misc/guides/table/index',
 								'misc/guides/sequin/index',
-								'misc/guides/snowflake/index'
+								'misc/guides/snowflake_app_with_user_roles/index'
 							]
 						}
 					]
@@ -258,6 +258,7 @@ const sidebars = {
 				'advanced/email_triggers/index',
 				'core_concepts/http_routing/index',
 				'core_concepts/websocket_triggers/index',
+				'core_concepts/kafka_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/service_logs/index',
@@ -852,6 +853,7 @@ const sidebars = {
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
 				'misc/worker_group_management_ui/index',
+				'core_concepts/autoscaling/index',
 				'core_concepts/concurrency_limits/index',
 				'misc/s3_cache/index',
 				'core_concepts/oidc/index',

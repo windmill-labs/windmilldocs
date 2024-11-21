@@ -136,7 +136,6 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 	const [selected, setSelected] = useState(plans[0]);
 	const [developers, setDevelopers] = useState(tier.price.seat ? tier.price.seat.default : 2);
 	const [operators, setOperators] = useState(0);
-	const [vCPUs, setvCPUs] = useState(tier.price.vCPU ? tier.price.vCPU.default : 2);
 	const [showQuoteForm, setShowQuoteForm] = useState(false);
 
 	// Add new state for worker groups
@@ -163,15 +162,12 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 
 	const pricing = getPriceByOption();
 
-	// This effect ensures that seat and vCPU values are clamped to the new tier's limits
+	// This effect ensures that seat values are clamped to the new tier's limits
 	useEffect(() => {
 		if (pricing.seat && developers > pricing.seat.max) {
 			setDevelopers(pricing.seat.max);
 		}
-		if (pricing.vCPU && vCPUs > pricing.vCPU.max) {
-			setvCPUs(pricing.vCPU.max);
-		}
-	}, [pricing, developers, vCPUs]);
+	}, [pricing, developers]);
 
 	// Replace the existing computeTotalPrice function
 	function computeTotalPrice() {
@@ -180,8 +176,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		if (tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') {
 			// Calculate seats cost (before period multiplier)
 			if (pricing.seat) {
-				total += pricing.seat.monthly * developers; // Full price for developers
-				total += Math.ceil(operators/2) * (pricing.seat.monthly / 2); // Half price for operators
+				// Calculate total seats first, then multiply by price
+				const totalSeats = developers + Math.ceil(operators/2);
+				total += pricing.seat.monthly * totalSeats;
 			}
 
 			// Add native workers cost
@@ -220,13 +217,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 			total = calculatePrice(total, period.value, tier.id);
 		} else {
 			if (pricing.seat) {
-				const devCost = calculatePrice(pricing.seat.monthly, period.value, tier.id) * developers;
-				const opCost = calculatePrice(pricing.seat.monthly / 2, period.value, tier.id) * operators;
-				total += devCost + opCost;
-			}
-
-			if (pricing.vCPU) {
-				total += calculatePrice(pricing.vCPU.monthly, period.value, tier.id) * vCPUs;
+				// For non-enterprise tiers, calculate total seats first
+				const totalSeats = developers + Math.ceil(operators/2);
+				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * totalSeats;
 			}
 		}
 

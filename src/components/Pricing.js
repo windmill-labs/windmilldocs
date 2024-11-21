@@ -738,7 +738,7 @@ const sections = [
 				link: '/docs/core_concepts/codebases_and_bundles'
 			},
 			{
-				name: 'Private PyPi repositories & npm registries and packages',
+				name: 'Private PyPI repositories & npm registries and packages',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -786,6 +786,17 @@ const sections = [
 				},
 				link: '/docs/core_concepts/worker_groups',
 				tooltip: 'Only available on self-hosting and enterprise edition on private clusters'
+			},
+			{
+				name: 'Autoscaling',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/autoscaling'
 			},
 			{
 				name: 'Critical alert channels',

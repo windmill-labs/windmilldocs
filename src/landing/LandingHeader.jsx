@@ -7,7 +7,7 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
-// import Banner from './Banner';
+import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
 const products = [
@@ -373,6 +373,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
+			{/* <Banner /> */}
 		</div>
 	);
 }

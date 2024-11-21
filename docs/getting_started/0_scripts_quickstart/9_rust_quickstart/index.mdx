@@ -43,7 +43,7 @@ Scripts consist of 2 parts:
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.rs` and `<path>.script.yaml`
 
-Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your Rust script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
+Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your Rust script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPI packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
 From the Home page, click `+Script`. This will take you to the first step of script creation: Metadata.
 

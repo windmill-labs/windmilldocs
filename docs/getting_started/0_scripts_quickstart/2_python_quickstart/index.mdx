@@ -56,7 +56,7 @@ Scripts consist of 2 parts:
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.py` and `<path>.script.yaml`
 
-Windmill automatically manages [dependencies](../../../advanced/15_dependencies_in_python/index.mdx) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
+Windmill automatically manages [dependencies](../../../advanced/15_dependencies_in_python/index.mdx) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPI packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
 [This](https://hub.windmill.dev/scripts/%22%22/1530/do-sentiment-analysis-with-nltk-%22%22) is a simple example of a script built in Python with Windmill:
 
@@ -133,7 +133,7 @@ boilerplate. Let's take a look:
 import os
 import wmill
 
-# You can import any PyPi package. 
+# You can import any PyPI package. 
 # See here for more info: https://www.windmill.dev/docs/advanced/dependencies_in_python
 
 # you can use typed resources by doing a type alias to dict
