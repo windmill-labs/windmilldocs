@@ -249,6 +249,7 @@ const sidebars = {
 				'advanced/email_triggers/index',
 				'core_concepts/http_routing/index',
 				'core_concepts/websocket_triggers/index',
+				'core_concepts/kafka_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/service_logs/index',

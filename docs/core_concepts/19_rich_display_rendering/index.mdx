@@ -17,6 +17,7 @@ If the result is an object/dict with a single key (except for `resume`, which ne
 | [html](#html)             | Render the value as HTML.                                    | `return { "html": "<div>...</div>" }`                                                                                |
 | [markdown](#markdown)         | Render the value as Markdown.                                | `return { "markdown": "## Hello World\nNice to meet you" }` or `return { "md": "## Hello World\nNice to meet you" }`                                     |
 | [file](#file)             | Render an option to download a file.                       | `return { "file": { "content": encode(file), "filename": "data.txt" } }`                                             |
+| [pdf](#pdf)              | Render the value as a PDF document.                            | `return { "pdf": base64Pdf }`                               
 | [png](#png)              | Render the value as a PNG image.                             | `return { "png": { "content": base64Image } }` or `return { "png": base64Image }`                                |
 | [jpeg](#jpeg)             | Render the value as a JPEG image.                            | `return { "jpeg": { "content": base64Image } }` or `return { "jpeg": base64Image }`                              |
 | [gif](#gif)              | Render the value as a GIF image.                             | `return { "gif": { "content": base64Image } }` or `return { "gif": base64Image }`                                |
@@ -190,7 +191,7 @@ The `s3` key renders S3 files as a downloadable file and a bucket explorer, when
 return { "s3": "path/to/file" }
 ```
 
-When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs or parquet files).
+When a script outputs a S3 file, it can be downloaded or previewed directly in Windmill's UI (for displayable files like text files, CSVs, images, PDFs or parquet files).
 
 ![S3 file download](../18_files_binary_data/s3_file_output.png "S3 file download")
 
@@ -251,6 +252,25 @@ return { "file": { "content": encode(file), "filename": "data.txt" } }
 ```
 
 ![Rich display File](./file.png "Rich display File")
+
+## PDF
+
+The `pdf` key allows returning the value as a PDF.
+
+The PDF must be encoded in base64.
+
+```ts
+return { "pdf": { "content": base64Pdf } }
+```
+
+or
+
+```ts
+return { "pdf": base64Pdf }
+```
+
+
+![Rich display PDF](./pdf.png "Rich display PDF")
 
 ## PNG
 
@@ -318,6 +338,7 @@ return { "svg": "<svg>...</svg>" }
 ```
 
 ![Rich display SVG](./svg.png "Rich display SVG")
+
 
 ## Error
 
