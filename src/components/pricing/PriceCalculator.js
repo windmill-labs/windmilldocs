@@ -586,7 +586,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 														<RadioGroup.Description as="div" className="flex w-full justify-end">
 															+
 															<span className="text-sm text-gray-900 font-semibold dark:text-white">
-																${calculatePrice(plan.price, period.value)}
+																${calculatePrice(plan.price, period.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
 															</span>
 															<span className="text-sm text-gray-500 dark:text-gray-300">
 																{period.value === 'annually' ? '/yr' : '/mo'}

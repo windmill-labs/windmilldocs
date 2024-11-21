@@ -147,20 +147,29 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'misc/note_of_intent/index',
-							label: 'Note of intent'
+							id: 'compared_to/kestra',
+							label: 'Kestra'
 						},
 						{
-							type: 'category',
-							label: 'Benchmarks',
-							items: [
-								{
-									type: 'doc',
-									id: 'misc/benchmarks/competitors/index',
-									label: 'vs Airflow vs Prefect vs Temporal vs Kestra'
-								},
-								'misc/benchmarks/aws_lambda/index'
-							]
+							type: 'doc',
+							id: 'misc/note_of_intent/index',
+							label: 'Note of intent'
+						}
+					]
+				},
+				{
+					type: 'category',
+					label: 'Benchmarks',
+					items: [
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/index',
+							label: 'Airflow, Prefect, Temporal, Kestra'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/aws_lambda/index',
+							label: 'AWS Lambda'
 						}
 					]
 				},
