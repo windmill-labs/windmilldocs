@@ -49,7 +49,7 @@ Clicking on one branch will open the branch editor. You can configure the:
 - **Summary**: the summary of the branch.
 - **Skip failure**: if set to `true`, the branch will be skipped if it fails.
 
-## Predicate Expression
+## Predicate expression
 
 The predicate expression is the JavaScript expression that will be evaluated to determine if the branch should be executed. It can be simple `true`/`false` but also comparison operators (`results.c.command === 'email'`, `flow_input.number >= 2` etc.)
 

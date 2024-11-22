@@ -37,7 +37,7 @@ export default defineConfig({
 
 An example is provided directly in the `windmill-react-sdk` repository.s
 
-### Using Webpack 5 (Next.js)
+### Using webpack 5 (Next.js)
 
 You need to install `svelte-loader` and add the following to your `next.config.js`:
 
@@ -84,7 +84,7 @@ UserService.login({
 
 Replace YOUR_EMAIL and YOUR_PASSWORD with the corresponding values.
 
-### App Preview
+### App preview
 
 ```jsx
 import { AppPreview } from 'windmill-react-sdk';

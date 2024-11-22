@@ -163,14 +163,14 @@ Flows can be triggered manually or in reaction to external events.
 
 ![Flow triggers](../assets/flows/flow_triggers.png "Flow triggers")
 
-See [Triggering flows](../getting_started/9_trigger_flows/index.mdx) for more details.
+See [Triggering flows](../getting_started/8_triggers/index.mdx) for more details.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		color="teal"
 		title="Triggering flows"
-		description="Trigger flows on-demand, by schedule or on external events."
-		href="/docs/getting_started/trigger_flows"
+		description="Trigger scripts and flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/triggers"
 	/>
 </div>
 
@@ -245,7 +245,7 @@ Below is the list of all available advanced settings for each argument type:
 | Number  | Min and Max. Currency. Currency locale.                                                                                                                              |
 | String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../core_concepts/2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                 |
 | Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource Types](../core_concepts/3_resources_and_types/index.mdx).                                                 |
+| Object  | Advanced settings are [Resource types](../core_concepts/3_resources_and_types/index.mdx).                                                 |
 | Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
 | Any     | No advanced configuration for this type.                                                                                          |
 
@@ -264,7 +264,7 @@ Below is the list of all available advanced settings for each argument type:
 	/>
 </div>
 
-### Using a Request
+### Using a request
 
 For this example, we will use the following flow at path: `u/test-user/my_flow`.
 
@@ -288,7 +288,7 @@ The flow input will be added with the following properties:
 
 To copy the first step inputs, click on the `First step inputs` button.
 
-## Flow Actions
+## Flow actions
 
 An action script is simply a script that is neither a [trigger](./10_flow_trigger.mdx) nor an [approval](./11_flow_approval.mdx)
 script. Those are the majority of the scripts.

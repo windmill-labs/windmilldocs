@@ -226,7 +226,7 @@ Now, let's add our two Scripts as tests. Windmill supports many types of steps,
 but here we'll pick **Script from workflace** as we want to reuse the scripts we
 defined previously. Pick the script that accepts the incoming GitHub payload.
 You can read more about all the capabilities of Flows
-[here](/docs/getting_started/trigger_flows).
+[here](/docs/getting_started/triggers).
 
 Each step in a flow needs to be connected to the next one. For this first step,
 we need to connect the inputs of the Flow to the Script. You can do that in the

@@ -11,7 +11,7 @@ image: ./k8s.png
 
 ![Restarting a Kubernetes Pod with Kubectl](./k8s.png "Restarting a Kubernetes Pod with Kubectl")
 
-In the [Kubernetes](https://kubernetes.io/) world, the smallest API object we deal with is the [pod](https://kubernetes.io/docs/concepts/workloads/pods/). Think of it as the basic building block of Kubernetes. A pod represents a running application process within a cluster and contains one or more containers along with shared resources like storage and network. 
+In the [Kubernetes](https://kubernetes.io/) world, the smallest API object we deal with is the [pod](https://kubernetes.io/docs/concepts/workloads/pods/).{/* truncate */} Think of it as the basic building block of Kubernetes. A pod represents a running application process within a cluster and contains one or more containers along with shared resources like storage and network. 
 
 The status of a pod provides a snapshot of its current lifecycle stage. There are five stages in total. But what happens when something goes awry with your pod? Perhaps a bug causes an unexpected termination. In such cases, you'll need to restart your Kubernetes pod. This guide will show you how to do just that using [kubectl](https://kubernetes.io/docs/reference/kubectl/).
 

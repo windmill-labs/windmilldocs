@@ -27,7 +27,7 @@ need to define a Resource with the `mongodb_rest` Resource Type first.
 
 :::tip
 
-You can find a list of all the officially supported Resource Types on
+You can find a list of all the officially supported Resource types on
 [Windmill Hub][hub-resources].
 
 :::

@@ -111,17 +111,29 @@ const sidebars = {
 				{
 					type: 'category',
 					label: 'Triggers',
-					collapsed: true,
+					link: {
+						type: 'doc',
+						id: 'getting_started/triggers/index'
+					},
+					collapsed: false,
 					items: [
+						'core_concepts/scheduling/index',
+						'core_concepts/webhooks/index',
 						{
 							type: 'doc',
-							id: 'getting_started/trigger_scripts/index',
-							label: 'Triggering scripts'
+							id: 'advanced/email_triggers/index',
+							label: 'Emails'
+						},
+						'core_concepts/http_routing/index',
+						{
+							type: 'doc',
+							id: 'core_concepts/websocket_triggers/index',
+							label: 'Websockets'
 						},
 						{
 							type: 'doc',
-							id: 'getting_started/trigger_flows/index',
-							label: 'Triggering flows'
+							id: 'core_concepts/kafka_triggers/index',
+							label: 'Kafka'
 						}
 					]
 				},
@@ -248,20 +260,15 @@ const sidebars = {
 				'core_concepts/error_handling/index',
 				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
-				'core_concepts/scheduling/index',
-				'core_concepts/webhooks/index',
 				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
-				'advanced/email_triggers/index',
-				'core_concepts/http_routing/index',
-				'core_concepts/websocket_triggers/index',
-				'core_concepts/kafka_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
 				'core_concepts/service_logs/index',
+				'core_concepts/preprocessors/index',
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',

@@ -29,7 +29,7 @@ On the docker-compose, it is enough to uncomment the volume mount of the Windmil
 
 In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`.
 
-### Remote Docker Daemon
+### Remote Docker daemon
 
 One possibility to use the docker daemon with k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
 
@@ -91,14 +91,14 @@ As a flow step:
 
 ![flow step 2](./as_flow2.png.webp)
 
-## Use with Remote Docker Daemon
+## Use with remote Docker daemon
 
 ```bash
 #!/bin/bash
 
 set -ex
 
-# The Remote Docker Daemon Address -> 100.64.2.97:8000
+# The Remote Docker daemon Address -> 100.64.2.97:8000
 # In the example, 100.64.2.97 is my pod address.
 
 DOCKER="docker -H 100.64.2.97:8000"

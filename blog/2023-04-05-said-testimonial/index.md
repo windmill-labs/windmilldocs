@@ -24,7 +24,7 @@ Before transitioning to Windmill, I had been using Meta API (code-based automati
 
 ## How did Windmill help?
 
-I use Windmill to build workflows meant to be **automatically triggered** (either [scheduled](/docs/core_concepts/scheduling) or [by external events](/docs/getting_started/trigger_flows)). I only use a few workflows - 2 or 3 on a daily basis - but they are **business critical**.
+I use Windmill to build workflows meant to be **automatically triggered** (either [scheduled](/docs/core_concepts/scheduling) or [by external events](/docs/getting_started/triggers)). I only use a few workflows - 2 or 3 on a daily basis - but they are **business critical**.
 
 Within a few weeks of usage, **Windmill replaced all my previous workflows and automation tools**, consolidating my flows into a single, efficient platform.
 

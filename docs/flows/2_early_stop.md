@@ -28,7 +28,7 @@ If stop early is run within a forloop, it will just break the for-loop and have 
 
 ## Early stop for flow
 
-To stop early the flow based on the flow inputs, you can set an "Early Stop" from the flow settings. If the inputs meet the predefined condition, the flow will not run.
+To stop early the flow based on the flow inputs, you can set an "Early stop" from the flow settings. If the inputs meet the predefined condition, the flow will not run.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"

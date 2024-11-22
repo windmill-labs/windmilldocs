@@ -8,11 +8,11 @@ As an open-source platform, Windmill relies on the developer community for enhan
 
 Here are some ways you can contribute to our platform:
 
-- **Share Your Work**: [Upload your Scripts, Flows, Apps, and Resource Types](../1_share_on_hub/index.md) to Windmill Hub. Approved high-quality submissions are accessible for community use.
+- **Share Your Work**: [Upload your Scripts, Flows, Apps, and Resource types](../1_share_on_hub/index.md) to Windmill Hub. Approved high-quality submissions are accessible for community use.
 - **Code Contributions**: Enhance the [Windmill codebase](https://github.com/windmill-labs/windmill) by submitting pull requests (PRs) on GitHub. Bug reports and feature requests are valuable—please file an issue to start the conversation.
 - **Community Engagement**: Join our [Discord community](https://discord.com/invite/V7PM2YHsPB) to offer suggestions, assist others, or discuss your ideas.
 
-## Security Bounty Program
+## Security bounty program
 
 We are committed to rewarding white hat hackers who help us by identifying and reporting significant security vulnerabilities.
 
@@ -29,7 +29,7 @@ We ask that you act responsibly, not disclose the vulnerability publicly or to t
 
 Thank you for helping us keep Windmill secure.
 
-## Expanding Windmill's Integrations: Adding New OAuth Providers
+## Expanding Windmill's integrations: adding new OAuth providers
 
 To enhance Windmill's connectivity and integration capabilities, we welcome contributions that add new OAuth providers. This not only broadens the range of services Windmill can interact with but also directly impacts the platform's functionality and user experience.
 

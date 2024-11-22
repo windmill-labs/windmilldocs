@@ -2,7 +2,7 @@
 
 [SMTP](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol) (Simple Mail Transfer Protocol) is an internet standard for electronic mail transmission.
 
-Note that SMTP can be configured at the instance level to auto-invite users or send [critical alerts](../core_concepts/37_critical_alerts/index.mdx). See [Set up SMTP](../advanced/1_self_host/index.mdx#set-up-smtp-from-the-ui).
+Note that SMTP can be configured at the instance level to auto-invite users or send [critical alerts](../core_concepts/37_critical_alerts/index.mdx). See [Set up SMTP](../advanced/18_instance_settings/index.mdx#smtp).
 
 To add a SMTP [resource](../core_concepts/3_resources_and_types/index.mdx) to Windmill, you need to save the following elements:
 

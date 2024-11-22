@@ -9,7 +9,11 @@ description: 'This example shows how to use a perpetual script to implement a se
 
 import DocCard from '@site/src/components/DocCard';
 
-This example shows how to use a [perpetual script](/docs/script_editor/perpetual_scripts) to implement a service in Windmill leveraging [Apache Kafka](https://kafka.apache.org/). Services are processes listening to certain events and triggering actions based on the events they received, and this is now easily achievable in Windmill.
+This example shows how to use a [perpetual script](/docs/script_editor/perpetual_scripts) to implement a service in Windmill leveraging [Apache Kafka](https://kafka.apache.org/).{/* truncate */} Services are processes listening to certain events and triggering actions based on the events they received, and this is now easily achievable in Windmill.
+
+:::note
+This blog post was written before Windmill's native [Kafka triggers](/docs/core_concepts/kafka_triggers) feature was released. While the pattern described here still works, we now recommend using Kafka triggers for a more streamlined experience. Kafka triggers are available as part of [Windmill Enterprise](/pricing) and allow you to directly connect Kafka topics to Windmill runnables without needing to write a perpetual script listener.
+:::
 
 First, we need a messaging service to listen to. Here we will use Kafka, but it can easily be adapted to others. In Windmill, we are going to implement a perpetual script that will listen to events coming from a Kafka topic. On every event received, the perpetual script will spin off a Windmill job with the content of the event being passed as an argument to the job.
 

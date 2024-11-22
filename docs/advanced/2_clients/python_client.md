@@ -21,7 +21,7 @@ def main(...):
     # Your script code
 ```
 
-## Client Class
+## Client class
 
 The `Client` class is the main entry point for interacting with the Windmill API. It provides methods for accessing resources, running scripts, retrieving job statuses and results, and more. Here is the class signature:
 
@@ -79,7 +79,7 @@ def get_version(self) -> str
 
 The `get_version` method returns the current version of the Windmill backend.
 
-## JobStatus Enumeration
+## JobStatus enumeration
 
 The `JobStatus` class is an enumeration that represents the different states of a job in Windmill. It provides the following class variables:
 

@@ -18,7 +18,7 @@ In Windmill, a workflow is a JSON serializable value in the [OpenFlow](../openfl
 
 ![Flow architecture](../assets/flows/flow_architecture.png.webp 'Flow architecture')
 
-## Input Transform
+## Input transform
 
 With the mechanism of input transforms, the input of any step can be the output of any previous step, hence every Flow is actually a [Directed Acyclic Graph (DAG)](https://en.wikipedia.org/wiki/Directed_acyclic_graph) rather than simple sequences. You can refer to the result of any step using its ID.
 
@@ -52,7 +52,7 @@ and a few more functions which are the following:
 Using JavaScript in this manner, for every parameter, is extremely flexible and
 allows Windmill to be extremely generic in the kind of modules it runs.
 
-### Connecting Flow Steps
+### Connecting flow steps
 
 For each field, one has the option to write the JavaScript directly or to use
 the quick connect button if the field map one to one with a field of the
@@ -75,7 +75,7 @@ You can connect step inputs automatically using [Windmill AI](../core_concepts/2
 	src="/videos/step_input_copilot.mp4"
 />
 
-## Custom Flow States
+## Custom flow states
 
 A [state](../core_concepts/3_resources_and_types/index.mdx#states) is an object stored as a [resource](../core_concepts/3_resources_and_types/index.mdx) of the resource type `state` which is meant to persist across distinct
 executions of the same Script. This is what enables Flows to watch for changes in most [event-watching scenarios](./10_flow_trigger.mdx).
@@ -130,7 +130,7 @@ def main(x: str):
 	/>
 </div>
 
-## Shared Directory
+## Shared directory
 
 By default, flows on Windmill are based on a result basis (see above). A step will take as input the results of previous steps. And this works fine for lightweight automation.
 

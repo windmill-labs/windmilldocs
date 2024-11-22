@@ -26,7 +26,7 @@ Audit logs can be filtered by Date, Username, Action (Create, Update, Delete, Ex
 	/>
 </div>
 
-## Retention Policy
+## Retention policy
 
 For self-hosted Windmill instances, you can set the retention period via [instance settings](../../advanced/18_instance_settings/index.mdx#retention-period-in-secs), accessible in the top right corner of the workspace settings. Instance settings are accessible only to [superadmins](../16_roles_and_permissions/index.mdx#superadmin). Audit logs are maintained in Postgres and output to the FileSystem as logs.
 
@@ -44,10 +44,10 @@ On Windmill's cloud service, audit log retention varies by plan:
 	/>
 </div>
 
-## Viewing Jobs metadata from the Audit logs
+## Viewing jobs metadata from the audit logs
 
 You can retrieve the job ID from the job and then access all the job metadata, including the job arguments by fetching the information from the job itself which is stored for as long as the configured retention period.
 
-## Backing Up Audit logs
+## Backing up audit logs
 
 To back up the audit logs, simply backup the Postgres database or store the logs in a cold archive. In the cloud environment, we employ both methods for backup.

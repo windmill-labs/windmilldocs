@@ -19,11 +19,11 @@ You can set the canvas' width to:
 - Limited width: The max width is 1168px and the content stay centered instead of taking the full page width.
 - Max width: The width is of the app if the full width of its container.
 
-## Desktop/Mobile Mode
+## Desktop / Mobile mode
 
 You can switch the canvas' mode to `Mobile` or `Desktop` layout from the toolbar. This enables you to manually set the position and size of the components in both modes.
 
-## Hide / Show Buttons
+## Hide / Show buttons
 
 You can hide the panels you see by default with special buttons and shortcuts.
 
@@ -105,7 +105,7 @@ The app builder enables you to examine recent runs to [identify potential bugs](
 	src="/videos/debug_app.mp4"
 />
 
-## Preview Mode
+## Preview mode
 
 The app editor mode can be toggled between `Editor` and `Preview` modes. The preview mode allows you to see the app in action.
 

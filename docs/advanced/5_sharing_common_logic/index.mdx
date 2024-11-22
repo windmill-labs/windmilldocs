@@ -109,7 +109,7 @@ but to make it work with your local editor, you will need the following configur
 
 Note that [paths](../../core_concepts/16_roles_and_permissions/index.mdx#path) in Windmill can have as many depth as needed, so you can have paths like this `f/folder/subfolder/my_script_path` and relative imports will work at any level. Hence, it will work exactly the same as on local.
 
-### Bundle per Script built by CLI
+### Bundle per script built by CLI
 
 This method can only be deployed from the [CLI](../3_cli/index.mdx), on [local development](../4_local_development/index.mdx).
 
@@ -135,7 +135,7 @@ You can reuse bash scripts by fetching them "raw" and source them. The url is as
 curl -H "Authorization: Bearer <Token>" <INSTANCE>/api/w/<workspace>/scripts/raw/p/<path>.sh
 ```
 
-## Tracking Relative Imports on Local development
+## Tracking relative imports on local development
 
 On [local development](../4_local_development/index.mdx), Windmill automatically tracks relative imports in Bun and Python such that if you update a common dependency and update its imports, it will now re-trigger deployment and [lockfile](../6_imports/index.mdx) computation of all the scripts that depend on it (it was working for Python but not Bun before).
 
