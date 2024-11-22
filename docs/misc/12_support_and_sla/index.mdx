@@ -62,13 +62,27 @@ Our support team is committed to ensuring your success with Windmill, and we are
 
 ## Feature request and issue dashboard
 
-[Enterprise](/pricing) users have access to a dedicated feature request and issue dashboard, allowing them to submit and track their requests and issues. This fosters improved communication, visibility, and collaboration between the Windmill team and our enterprise customers. Additionally, updates to issues are automatically sent to a designated Slack or Discord channel for easy tracking.
+[Enterprise](/pricing) users have access to a dedicated feature request and issue dashboard, allowing them to submit and track their requests and issues. This fosters improved communication, visibility, and collaboration between the Windmill team and our enterprise customers. Additionally, updates to issues are automatically sent via email and to a designated Slack or Discord channel for easy tracking.
 
 ### Configuration
 
 [Superadmins](../../core_concepts/16_roles_and_permissions/index.mdx) and anyone with access to [Windmill Customer Portal](../7_plans_details/index.mdx#windmill-customer-portal) can configure the following dashboard settings from the portal:
-- **Linked GitHub Users**: When an issue is created by a linked GitHub user, it is automatically added to the dashboard.
-- **Authorized Domains**: Users with email addresses associated with authorized domains are granted access to the dashboard.
+- **Linked GitHub users**: When an issue is created by a linked GitHub user, it is automatically added to the dashboard.
+- **Authorized domains**: Users with email addresses associated with authorized domains are granted access to the dashboard.
+- **Email notification addresses**: Email addresses to receive notifications about new issues and updates.
+
+### Usage
+
+To use the feature request and issue dashboard, follow these steps:
+
+1. Access the dashboard at [https://portal.windmill.dev/issues](https://portal.windmill.dev/issues).
+2. Log in using your authorized email address.
+3. Create a new issue by clicking the "New private issue" of "New private feature request" button and filling out the form. If you believe your issue is of general public interest you can also create a public GitHub issue.
+4. View and update existing issues by clicking on them in the dashboard.
+5. Receive email notifications and Slack/Discord updates about new issues and updates.
+![Example Slack Notification](./example_slack_notification.png)
+6. An issue is marked as done when a corresponding pull request is merged. The issue will be tagged as "release: pending"
+7. Once a new release has been cut, you will be notified and the issue will be tagged with the release version.
 
 ![Issue Dashboard](./dashboard.png)
 
