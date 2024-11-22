@@ -861,7 +861,7 @@ const sidebars = {
 				'advanced/external_auth_with_jwt/index',
 				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
-				'core_concepts/critical_alert_channels/index',
+				'core_concepts/critical_alerts/index',
 				'core_concepts/content_search/index',
 				'core_concepts/codebases_and_bundles/index',
 				'apps/css_editor',

@@ -807,7 +807,7 @@ const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/critical_alert_channels'
+				link: '/docs/core_concepts/critical_alerts'
 			},
 			{
 				name: 'Script-specific workers (dedicated) / High throughput',

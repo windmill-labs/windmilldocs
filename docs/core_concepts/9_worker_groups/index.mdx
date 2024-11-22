@@ -215,6 +215,27 @@ Last, if the tags contain `$args[argName]` (e.g: `foo-$args[foobar])` then the t
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
 
+## Alerts
+
+You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+
+![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
+
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+
+You need to configure [Critical alert channels](../37_critical_alerts/index.mdx) to receive notifications.
+
+![Workers alerts](./workers_alerts.png 'Workers alerts')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical Alerts"
+		description="Get a notification for critical events such as everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alerts"
+	/>
+</div>
+
+
 ## Create worker group config
 
 <img
@@ -380,7 +401,7 @@ Only tags for jobs that have been delayed by more than 3 seconds in the last 14 
 
 ### Queue metric alerts
 
-[Enterprise Edition](/pricing) users can set up [Critical Alerts](../37_critical_alert_channels/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
+[Enterprise Edition](/pricing) users can set up [Critical Alerts](../37_critical_alerts/index.mdx) on the [Queue Metrics page](#queue-metrics), and be notified when the number of delayed jobs in a queue is above a certain threshold for more than a configured amount of time. The "cooldown" parameter determines the minimum duration between two consecutive alerts if the number of waiting jobs are fluctuating around the configured threshold.
 
 ![Queue Metrics](./queue_metrics_alert.png 'Queue Metrics Alert')
 
