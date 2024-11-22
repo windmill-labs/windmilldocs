@@ -147,7 +147,8 @@ The tags of _native_ worker group are:
 - `bigquery`: The default worker group for bigquery scripts.
 - `mssql`: The default worker group for mssql scripts.
 
-<br/><br/>
+<br />
+<br />
 
 If you assign custom worker groups to all your workers, make sure that they cover all tags above, otherwise those jobs will never be executed.
 
@@ -214,6 +215,26 @@ the workspaces, `dev`, `staging`, `prod` and the worker groups: `normal-dev`, `n
 Last, if the tags contain `$args[argName]` (e.g: `foo-$args[foobar])` then the tag will be replaced by the string value at the arg key `argName` and thus can be fully dynamic.
 
 See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow to deploy to staging and prod.
+
+## Alerts
+
+You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+
+![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
+
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+
+You need to configure [Critical alert channels](../37_critical_alerts/index.mdx) to receive notifications.
+
+![Workers alerts](./workers_alerts.png 'Workers alerts')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical Alerts"
+		description="Get a notification for critical events such as everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alerts"
+	/>
+</div>
 
 ## Create worker group config
 
@@ -356,7 +377,7 @@ Dedicated workers / High throughput is a [Cloud plans & Self-Hosted Enterprise E
 
 View logs from any workers or servers directly within the service logs section of the search modal.
 
-![Service logs](../36_service_logs/service_logs.png "Service logs")
+![Service logs](../36_service_logs/service_logs.png 'Service logs')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
