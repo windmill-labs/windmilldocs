@@ -1,7 +1,3 @@
----
-title: Windows workers
----
-
 import DocCard from '@site/src/components/DocCard';
 
 # Windows workers
@@ -13,15 +9,15 @@ This feature supports the **Python**, **Bun**, and **PowerShell** executors.
 
 You can connect Windows workers to your existing Dockerized or cloud self-hosted PostgreSQL database and Windmill server.
 
-### Setting up Windmill Worker Executable
+### Setting up Windmill worker executable
 
-1. **Set Up a Working Directory**:
+1. **Set up a working directory**:
    - Create a directory from where you want to run the Windmill worker, e.g., `C:\Users\Alex\windmill`.
 
-2. **Download Windmill Executable**:
+2. **Download Windmill executable**:
    - Download the `windmill-ee.exe` file into the newly created directory from the [releases page](https://github.com/windmill-labs/windmill/releases).
 
-3. **Set Basic Environment Variables**:
+3. **Set basic environment variables**:
    - Set the following environment variables (replace the placeholders with your specific values):
      ```powershell
      # Replace these variables with your specific configuration
@@ -39,12 +35,12 @@ You can connect Windows workers to your existing Dockerized or cloud self-hosted
 
 After the basic setup, follow these steps for each language your worker should support.
 
-### Python Executor
+### Python executor
 
 1. **Install Python**: [Download Python](https://python.org/downloads).
    - **Note**: When installing, make sure to check the box to add Python to the `PATH`.
 
-2. **Verify Python Installation**:
+2. **Verify Python installation**:
    - Open a new PowerShell window and type `python`. You should see output similar to the following:
      ```powershell
      PS C:\Users\Alex> python
@@ -59,7 +55,7 @@ After the basic setup, follow these steps for each language your worker should s
      pip install uv
      ```
 
-4. **Locate Python Installation**:
+4. **Locate Python installation**:
    - Find where Python is installed by running:
      ```powershell
      where.exe python
@@ -69,17 +65,17 @@ After the basic setup, follow these steps for each language your worker should s
      C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
      ```
 
-5. **Set Environment Variables**:
+5. **Set environment variables**:
    - Add the following environment variables (replace the placeholders with your specific values):
      ```powershell
      # Replace these variables with your specific configuration
      $env:PYTHON_PATH="C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe"
      ```
 
-### Bun Executor
+### Bun executor
 
 1. **Install Bun**: Follow the official [documentation](https://bun.sh/docs/installation) for Windows.
-2. **Locate Bun Installation**:
+2. **Locate Bun installation**:
    - Find where Bun is installed by running:
      ```powershell
      where.exe bun
@@ -89,14 +85,14 @@ After the basic setup, follow these steps for each language your worker should s
      C:\Users\Alex\.bun\bin\bun.exe
      ```
 
-3. **Set Environment Variables**:
+3. **Set environment variables**:
    - Add the following environment variables (replace the placeholders with your specific values):
      ```powershell
      # Replace these variables with your specific configuration
      $env:BUN_PATH="C:\Users\Alex\.bun\bin\bun.exe"
      ```
 
-### PowerShell Executor
+### PowerShell executor
 
 1. **Install PowerShell 7+ (stable)**: Ensure you have the latest stable release of PowerShell by following the [official documentation](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows).
    - Start PowerShell 7 and verify you're running PowerShell 7 by checking `$PSVersionTable`:
@@ -105,7 +101,7 @@ After the basic setup, follow these steps for each language your worker should s
      PSVersion 7.4.5
      ```
 
-2. **Locate PowerShell 7 Installation**:
+2. **Locate PowerShell 7 installation**:
    - Find where PowerShell 7 is installed by running:
      ```powershell
      where.exe pwsh.exe # Note: previous versions used powershell.exe
@@ -115,10 +111,9 @@ After the basic setup, follow these steps for each language your worker should s
      C:\Program Files\PowerShell\7\pwsh.exe
      ```
 
-3. **Set Environment Variables**:
+3. **Set environment variables**:
    - Add the following environment variables (replace the placeholders with your specific values):
      ```powershell
      # Replace these variables with your specific configuration
      $env:POWERSHELL_PATH="C:\Program Files\PowerShell\7\pwsh.exe"
      ```
-

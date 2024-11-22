@@ -154,7 +154,7 @@ const flowTabs = [
 				}
 			},
 			{
-				title: 'Predicate Expressions Copilot for Branches and For loops',
+				title: 'Predicate expressions Copilot for Branches and For loops',
 				description:
 					'When adding a for loop or a branch, the AI assistant will suggest iterator expressions based on the previous steps` results or from a prompt.',
 				icon: Braces,
@@ -174,7 +174,7 @@ const flowTabs = [
 				),
 				video: {
 					videoSrc: '/videos/branch_predicate_copilot.mp4',
-					altText: 'Predicate Expressions Copilot for Branches and For loops'
+					altText: 'Predicate expressions Copilot for Branches and For loops'
 				}
 			}
 		]

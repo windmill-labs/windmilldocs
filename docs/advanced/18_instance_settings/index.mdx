@@ -116,11 +116,15 @@ This setting is only available on [Enterprise Edition](/pricing).
 
 ### Critical alert channels
 
-Channels to send [critical alerts](../../core_concepts/37_critical_alert_channels/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel.
+Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel.
 
 You can add multiple channels between Email and Slack.
 
 This setting is only available on [Enterprise Edition](/pricing).
+
+### Mute critical alerts in UI
+
+Enable to mute critical alerts in the UI.
 
 ### Azure OpenAI base path
 
@@ -193,19 +197,19 @@ These settings are only available on [Enterprise Edition](/pricing).
 	/>
 </div>
 
-### Pip Index Url
+### Pip index url
 
 Add private PIP registry.
 
-### Pip Extra Index Url
+### Pip extra index url
 
 Add private extra PIP registry.
 
-### Npm Config Registry
+### Npm config registry
 
 Add private NPM registry.
 
-### Bunfig Install Scopes
+### Bunfig install scopes
 
 Add private scoped registries for Bun, See: https://bun.sh/docs/install/registries.
 
@@ -253,7 +257,7 @@ SMTP_USERNAME=email@domain.com
 SMTP_PASSWORD=app_password
 ```
 
-If you used the [Setup Windmill on localhost](#setup-windmill-on-localhost) method, open the `.env` file in any text editor. You can use `nano`, `vim`, or any other editor you're comfortable with.
+If you used the [Setup Windmill on localhost](../../advanced/1_self_host/index.mdx#setup-windmill-on-localhost) method, open the `.env` file in any text editor. You can use `nano`, `vim`, or any other editor you're comfortable with.
 
 ```bash
 nano .env
@@ -297,7 +301,7 @@ Now, your Windmill instance should use the SMTP settings you've provided to send
 
 </details>
 
-### Set up Auto-Invites
+### Set up auto-invites
 
 When creating a workspace, you have the option to invite automatically everyone on the same domain. That's how you make sure that anyone added to the instance is also added to the workspace.
 

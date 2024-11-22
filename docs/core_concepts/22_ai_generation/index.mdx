@@ -16,11 +16,11 @@ Windmill AI uses OpenAI's [GPT-4o](https://openai.com/index/hello-gpt-4o/).
 
 ![Enable Windmill autopilot](./enable_autopilot.png 'Enable Windmill autopilot')
 
-## Windmill AI for Scripts
+## Windmill AI for scripts
 
 Generate Windmill-specific code from simple text. All languages that can be run on Windmill are supported.
 
-### Code Generation
+### Code generation
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -40,7 +40,7 @@ Moreover, you will get better results if you specify in the prompt what the scri
 For instance, in the demo video above we wanted to generate a script that fetches the commits of a GitHub repository passed as a parameter, so we wrote: `fetch and return the commits of a given repository on GitHub using octokit`.
 :::
 
-### Code Editing
+### Code editing
 
 Inside the `AI Gen` popup, you can choose to edit the existing code rather than generating a new one. The assistant will modify the code according to your prompt.
 
@@ -50,7 +50,7 @@ Inside the `AI Gen` popup, you can choose to edit the existing code rather than 
 	src="/videos/ai_edit.mp4"
 />
 
-### Code Fixing
+### Code fixing
 
 Upon error when executing code, you will be offered to "AI Fix" it. The assistant will automatically read the code, explain what went wrong, and suggest a way to fix it.
 
@@ -60,7 +60,7 @@ Upon error when executing code, you will be offered to "AI Fix" it. The assistan
 	src="/videos/ai_fix.mp4"
 />
 
-### Summary Copilot
+### Summary copilot
 
 From your code, the AI assistant can generate a script summary.
 
@@ -70,7 +70,7 @@ From your code, the AI assistant can generate a script summary.
 	src="/videos/summary_compilot.mp4"
 />
 
-## Windmill AI for Flows
+## Windmill AI for flows
 
 Generate Workflows from prompts.
 
@@ -89,7 +89,7 @@ At the end of the process, flow inputs are inferred and you just need to fill th
 	/>
 </div>
 
-### Sequence Flows
+### Sequence flows
 
 Generate a flow consisting of a sequence of scripts.
 
@@ -103,7 +103,7 @@ Generate a flow consisting of a sequence of scripts.
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-### Trigger Flows
+### Trigger flows
 
 [Trigger flows](../../flows/10_flow_trigger.mdx) are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../1_scheduling/index.mdx) and [states](../3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md).
 
@@ -134,7 +134,7 @@ This allows you to avoid relying on webhooks sent by external APIs, which can be
 	/>
 </div>
 
-### Summary Copilot for Steps
+### Summary copilot for steps
 
 From your code, the AI assistant can generate a summary for flow steps.
 
@@ -144,7 +144,7 @@ From your code, the AI assistant can generate a summary for flow steps.
 	src="/videos/summary_copilot_steps.mp4"
 />
 
-### Step Input Copilot
+### Step input copilot
 
 When adding a new step to a flow, the AI assistant will suggest inputs based on the previous steps' results and flow inputs.
 
@@ -154,7 +154,7 @@ When adding a new step to a flow, the AI assistant will suggest inputs based on 
 	src="/videos/step_input_copilot.mp4"
 />
 
-### Flow Loops Iterator Expressions from Context
+### Flow loops iterator expressions from context
 
 When adding a [for loop](../../flows/12_flow_loops.md), the AI assistant will suggest iterator expressions based on the previous steps' results.
 
@@ -164,7 +164,7 @@ When adding a [for loop](../../flows/12_flow_loops.md), the AI assistant will su
 	src="/videos/iterator_prefill.mp4"
 />
 
-### Flow Branches Predicate Expressions from Prompts
+### Flow branches predicate expressions from prompts
 
 When adding a [branch](../../flows/13_flow_branches.md), the AI assistant will suggest predicate expressions from a prompt.
 
@@ -174,15 +174,15 @@ When adding a [branch](../../flows/13_flow_branches.md), the AI assistant will s
 	src="/videos/branch_predicate_copilot.mp4"
 />
 
-## Azure OpenAI Advanced Models
+## Azure OpenAI advanced models
 
 You can run all Windmill AI features on a specified deployed model.
 
 You need to specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
 
-## Windmill AI Code Completion
+## Windmill AI code completion
 
-When Code Completion is enabled, Windmill AI suggests completions as you type in all code editors (Script, Flow, Apps).
+When code completion is enabled, Windmill AI suggests completions as you type in all code editors (Script, Flow, Apps).
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -190,7 +190,7 @@ When Code Completion is enabled, Windmill AI suggests completions as you type in
 	src="/videos/code_autopilot.mp4"
 />
 
-## CRON Schedules from Prompt
+## CRON schedules from prompt
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"

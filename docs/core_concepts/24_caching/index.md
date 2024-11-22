@@ -73,7 +73,7 @@ In the above example, the result of step `a` will be cached for 86400 seconds (1
 
 :::
 
-## Cache App Inline Scripts
+## Cache app inline scripts
 
 Caching an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 

@@ -2,7 +2,7 @@
 
 Windmill can connect to [Kafka](https://kafka.apache.org/) brokers servers and trigger runnables (scripts, flows) when a message is received.
 Listening is done from the servers, so it doesn't take up any workers.
-Kafka triggers are not available on the [Cloud](/pricing).
+Kafka triggers is a [self-hosted Enterprise](/pricing) feature.
 
 ![Kafka triggers](./kafka_triggers.png 'Kafka triggers')
 
@@ -16,7 +16,7 @@ It indicates the consumer group to which the trigger belongs. This garantees tha
 
 Once the Kafka resource and settings are set, select the runnable that should be triggered by this trigger.
 The received webhook message will be passed to the runnable as a string argument called `msg`.
-If you use a preprocessor, the `wm_trigger` object will be of the form:
+If you use a [preprocessor](../43_preprocessors/index.mdx), the `wm_trigger` object will be of the form:
 
 ```json
 {
@@ -28,12 +28,3 @@ If you use a preprocessor, the `wm_trigger` object will be of the form:
   }
 }
 ```
-
-
-
-
-
-
-
-
-

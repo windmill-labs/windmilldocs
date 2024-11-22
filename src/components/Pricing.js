@@ -425,6 +425,17 @@ const sections = [
 				link: '/docs/core_concepts/40_websocket_triggers'
 			},
 			{
+				name: 'Kafka triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/kafka_triggers'
+			},
+			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -554,9 +565,9 @@ const sections = [
 				tiers: {
 					'tier-free-selfhost': 'Community support on Discord',
 					'tier-enterprise-selfhost':
-						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
+						'24/7 Priority support with 3h response and dedicated Slack channel',
 					'tier-enterprise-cloud':
-						'24/7 Priority Support with 3h Response, Engineer Assistance and dedicated Slack channel',
+						'24/7 Priority support with 3h response and dedicated Slack channel',
 					'tier-free': 'Community support on Discord',
 					'tier-team': 'Priority support on Discord'
 				},
@@ -799,7 +810,7 @@ const sections = [
 				link: '/docs/core_concepts/autoscaling'
 			},
 			{
-				name: 'Critical alert channels',
+				name: 'Critical alerts',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -807,7 +818,7 @@ const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/critical_alert_channels'
+				link: '/docs/core_concepts/critical_alerts'
 			},
 			{
 				name: 'Script-specific workers (dedicated) / High throughput',
@@ -1308,9 +1319,9 @@ export default function Pricing() {
 											<h3
 												className={classNames(
 													pricingItem.id === 'tier-team'
-														? 'text-blue-600'
+														? 'text-blue-600 dark:text-blue-400'
 														: pricingItem.enterprise_edition
-														? 'text-teal-600'
+														? 'text-teal-600 dark:text-teal-500'
 														: 'text-gray-900 dark:text-white',
 													'text-sm font-semibold leading-6'
 												)}
@@ -1375,9 +1386,9 @@ export default function Pricing() {
 																				<span
 																					className={
 																						pricingItem.id === 'tier-team'
-																							? 'font-semibold text-blue-600'
+																							? 'font-semibold text-blue-600 dark:text-blue-500'
 																							: pricingItem.enterprise_edition
-																							? 'font-semibold text-teal-600'
+																							? 'font-semibold text-teal-600 dark:text-teal-500'
 																							: 'text-gray-900 dark:text-white'
 																					}
 																				>
@@ -1458,9 +1469,9 @@ export default function Pricing() {
 											<p
 												className={classNames(
 													pricingItem.id === 'tier-team'
-														? 'text-blue-600'
+														? 'text-blue-600 dark:text-blue-400'
 														: pricingItem.enterprise_edition
-														? 'text-teal-600'
+														? 'text-teal-600 dark:text-teal-500'
 														: 'text-gray-900 dark:text-white',
 													'text-sm font-semibold leading-6'
 												)}
@@ -1541,9 +1552,9 @@ export default function Pricing() {
 																			<span
 																				className={classNames(
 																					pricingItem.id === 'tier-team'
-																						? 'font-semibold text-blue-600'
+																						? 'font-semibold text-blue-600 dark:text-blue-500'
 																						: pricingItem.enterprise_edition
-																						? 'font-semibold text-teal-600'
+																						? 'font-semibold text-teal-600 dark:text-teal-500'
 																						: 'text-gray-900 dark:text-white',
 																					'text-sm leading-6'
 																				)}

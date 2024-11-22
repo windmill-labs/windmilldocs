@@ -97,7 +97,7 @@ return state.foo;
 Background runnables are scripts that are executed in the background. They are executed on the server.
 They can be triggered on app refresh or when their input changes. They are not attached to any component but their result can be [shared among many components](./2_connecting_components/index.mdx).
 
-See Background runnables configurations at [Runnable Configuration](#runnable-configuration).
+See Background runnables configurations at [Runnable configuration](#runnable-configuration).
 
 ### Evals
 
@@ -139,7 +139,7 @@ Clicking on the dedicated link, evals can be "transformed to a [frontend script]
 
 ![App Runnables panel](../assets/apps/0_app_editor/eval_to_frontend.png.webp 'App Runnables panel')
 
-## Creating a Runnable
+## Creating a runnable
 
 There are several ways to create runnables:
 
@@ -176,7 +176,7 @@ A component can have runnables attached to it. Depending on the component type, 
 - **Event handler**: The runnable executes when the event is triggered. For instance, if the component is a [button](./4_app_configuration_settings/button.mdx), the runnable executes when the button is clicked.
 - **Validations**: Only the [Stepper](./4_app_configuration_settings/stepper.mdx) component has validations. The runnable executes when the step of the stepper changes.
 
-## Runnable Configuration
+## Runnable configuration
 
 The runnable configuration consists of:
 
@@ -222,9 +222,9 @@ Here is an example of a transformer used with a [background script](#background-
 
 <br />
 
-### Configure Triggers
+### Configure triggers
 
-#### Run on Start and App Refresh
+#### Run on start and app refresh
 
 Two types of runnables can be configured to run on app start and app refresh:
 
@@ -233,7 +233,7 @@ Two types of runnables can be configured to run on app start and app refresh:
 
 You may want to disable this so that the background runnable is only triggered by [changes to other values](#recompute-on-any-input-change) or triggered by [another computation](#trigger-runnables-on-success) on a button.
 
-![Run on Start and App Refresh](../assets/apps/0_app_editor/app_refresh.png 'Run on Start and App Refresh')
+![Run on start and app refresh](../assets/apps/0_app_editor/app_refresh.png 'Run on start and app refresh')
 
 #### Recompute on Any Input Change
 
@@ -266,15 +266,15 @@ The toggle "Static resource select only / Resources from users allowed" can be f
 
 ![Static resource select only / Resources from users allowed](../assets/apps/0_app_editor/resources_from_users.png 'Static resource select only / Resources from users allowed')
 
-### Manual Dependencies
+### Manual dependencies
 
 [Frontend scripts](#frontend-scripts) don't have any inputs. However, you can manually specify a frontend script's dependencies. This is useful when you want to recompute a frontend script when an input changes.
 
 Manual dependencies are added clicking on `Add dependency` button and can be removed by clicking on the `x` button.
 
-![Manual Dependencies](../assets/apps/0_app_editor/manual_dependencies.png 'Manual Dependencies')
+![Manual dependencies](../assets/apps/0_app_editor/manual_dependencies.png 'Manual dependencies')
 
-## Cache App Inline Scripts
+## Cache app inline scripts
 
 [Caching](../core_concepts/24_caching/index.md) an app inline script means caching the results of that script for a certain duration. If the script is triggered with the same inputs during the given duration, it will return the cached result.
 

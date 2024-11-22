@@ -10,5 +10,5 @@ features:
     'You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number.'
   ]
 image: ./critical_alert_slack.png
-docs: /docs/core_concepts/critical_alert_channels
+docs: /docs/core_concepts/critical_alerts
 ---

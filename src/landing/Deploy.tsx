@@ -33,7 +33,7 @@ const features = [
 		description: 'Trigger scripts from webhooks, schedules, CLI, Slack, emails and more. ',
 		lottieData: triggers,
 		span: 'col-span-1',
-		url: '/docs/getting_started/trigger_scripts'
+		url: '/docs/getting_started/triggers'
 	},
 	{
 		title: 'Web IDE of Local developement',

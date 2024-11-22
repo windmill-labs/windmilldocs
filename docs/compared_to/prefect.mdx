@@ -68,7 +68,7 @@ Prefect and Windmill Flow editor have a very similar sets of features. Below are
 - [caching](../flows/4_cache.mdx)
 - [notifications](../core_concepts/1_scheduling/index.mdx#be-notified-every-time-a-scheduled-workflow-has-been-executed)
 - [observability](../core_concepts/5_monitor_past_and_future_runs/index.mdx)
-- [event-based orchestration](../getting_started/9_trigger_flows/index.mdx)
+- [event-based orchestration](../getting_started/8_triggers/index.mdx)
 
 We could also mention [storage of configuration](../core_concepts/3_resources_and_types/index.mdx) or [error handling](../core_concepts/10_error_handling/index.mdx) that are dealt with in a similar manner.
 
@@ -174,9 +174,9 @@ While Windmill also allows configuration and triggers from the terminal, the pla
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Triggering flows"
-		description="Trigger flows on-demand, by schedule or on external events."
-		href="/docs/getting_started/trigger_flows"
+		title="Triggers"
+		description="Trigger scripts and flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/triggers"
 	/>
 </div>
 
@@ -359,7 +359,7 @@ providing insights into the performance metrics.
 
 ## Observability and monitoring
 
-In terms of monitoring and observability, Windmill and Prefect's cloud app fulfill the same functions: audit logs, monitoring of runs and schedules, saving of flows, configurations (<a href="https://docs.prefect.io/latest/concepts/blocks/?h=blocks" rel="nofollow">Blocks</a> in Prefect, [Resource Types](../core_concepts/3_resources_and_types/index.mdx) in Windmill) and variables, [allocation of workers](../core_concepts/9_worker_groups/index.mdx).
+In terms of monitoring and observability, Windmill and Prefect's cloud app fulfill the same functions: audit logs, monitoring of runs and schedules, saving of flows, configurations (<a href="https://docs.prefect.io/latest/concepts/blocks/?h=blocks" rel="nofollow">Blocks</a> in Prefect, [Resource types](../core_concepts/3_resources_and_types/index.mdx) in Windmill) and variables, [allocation of workers](../core_concepts/9_worker_groups/index.mdx).
 
 The main difference is that Prefect's application seems to be conceived as a reliable source for reporting actions from Prefect, whereas with Windmill, the application provides more control as everything can be done from the Windmill app (creation of scripts, flows apps, triggers, monitoring, [permissions](../core_concepts/16_roles_and_permissions/index.mdx), etc.)
 

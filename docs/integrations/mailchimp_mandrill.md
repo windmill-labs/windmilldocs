@@ -2,7 +2,7 @@
 
 [Mailchimp Mandrill](https://mailchimp.com/en/features/transactional-email/) is a delivery service for transactional emails from websites and application.
 
-Integrating Mailchimp Mandrill is a powerfull way of [triggering scripts](../getting_started/8_trigger_scripts/index.mdx) or [flows](../getting_started/9_trigger_flows/index.mdx) by e-mail.
+Integrating Mailchimp Mandrill is a powerfull way of [triggering scripts and flows](../getting_started/8_triggers/index.mdx) by e-mail.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"

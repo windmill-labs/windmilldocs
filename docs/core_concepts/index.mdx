@@ -4,6 +4,41 @@ import DocCard from '@site/src/components/DocCard';
 
 On top of its editors to build endpoints, flows and apps, Windmill comes with a set of features.
 
+## Triggers
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+	/>
+	<DocCard
+		title="Webhooks"
+		description="Trigger scripts and flows from webhooks."
+		href="/docs/core_concepts/webhooks"
+	/>
+	<DocCard
+		title="Emails"
+		description="Scripts and flows can be triggered by email messages sent to a specific email address."
+		href="/docs/advanced/email_triggers"
+	/>
+	<DocCard
+		title="Custom HTTP routes"
+		description="Trigger scripts and flows from custom HTTP routes."
+		href="/docs/core_concepts/http_routing"
+	/>
+	<DocCard
+		title="Websocket"
+		description="Trigger scripts and flows from websocket servers."
+		href="/docs/core_concepts/websocket_triggers"
+	/>
+	<DocCard
+		title="Kafka"
+		description="Trigger scripts and flows from Kafka topics."
+		href="/docs/core_concepts/kafka_triggers"
+	/>
+</div>
+
 ## Windmill features
 
 <div className="grid grid-cols-2 gap-6 mb-4">
@@ -88,23 +123,13 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/monitor_past_and_future_runs"
 	/>
 	<DocCard
-		title="Schedules"
-		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-		href="/docs/core_concepts/scheduling"
-	/>
-	<DocCard
-		title="Webhooks"
-		description="Trigger scripts and flows from webhooks."
-		href="/docs/core_concepts/webhooks"
-	/>
-	<DocCard
 		title="Variables and secrets"
 		description="Variables and secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
 		href="/docs/core_concepts/variables_and_secrets"
 	/>
 	<DocCard
 		title="Resources and resource types"
-		description="Resources are structured configurations and connections to third-party systems, with Resource Types defining the schema for each Resource."
+		description="Resources are structured configurations and connections to third-party systems, with Resource types defining the schema for each Resource."
 		href="/docs/core_concepts/resources_and_types"
 	/>
 	<DocCard
@@ -123,21 +148,6 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/core_concepts/workspace_secret_encryption"
 	/>
 	<DocCard
-		title="Email triggers"
-		description="Scripts and flows can be triggered by email messages sent to a specific email address."
-		href="/docs/advanced/email_triggers"
-	/>
-	<DocCard
-		title="Custom HTTP routes"
-		description="Trigger scripts and flows from custom HTTP routes."
-		href="/docs/core_concepts/http_routing"
-	/>
-	<DocCard
-		title="Websocket triggers"
-		description="Trigger scripts and flows from websocket servers."
-		href="/docs/core_concepts/websocket_triggers"
-	/>
-	<DocCard
 		title="Caching"
 		description="Caching is used to cache the results of a script, flow, flow step or app inline scripts for a specified number of seconds."
 		href="/docs/core_concepts/caching"
@@ -151,6 +161,11 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		title="Service logs"
 		description="View logs from any worker or servers directly within the service logs section of the search modal."
 		href="/docs/core_concepts/service_logs"
+	/>
+	<DocCard
+		title="Preprocessors"
+		description="Preprocessors are used to transform incoming requests before they are passed to the runnable."
+		href="/docs/core_concepts/preprocessors"
 	/>
 	<DocCard
 		title="Search bar"
@@ -324,8 +339,8 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	<DocCard
 		color="teal"
 		title="Triggering flows"
-		description="Trigger flows on-demand, by schedule or on external events."
-		href="/docs/getting_started/trigger_flows"
+		description="Trigger scripts and flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/triggers"
 	/>
 	<DocCard
 		color="teal"
@@ -354,7 +369,7 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	<DocCard
 		color="teal"
 		title="While loops"
-		description="While loops execute a sequence of code indefinitely until the user cancels or a step set to Early Stop stops."
+		description="While loops execute a sequence of code indefinitely until the user cancels or a step set to Early stop stops."
 		href="/docs/flows/while_loops"
 	/>
 	<DocCard
@@ -565,9 +580,9 @@ All details & features on [Pricing page](/pricing).
 		href="/docs/core_concepts/agent_workers"
 	/>
 	<DocCard
-		title="Critical alert channels"
+		title="Critical alerts"
 		description="Get a notification everytime a job is re-run after a crash."
-		href="/docs/core_concepts/critical_alert_channels"
+		href="/docs/core_concepts/critical_alerts"
 	/>
 	<DocCard
 		title="Content search"

@@ -25,7 +25,7 @@ From a single flow, this feature can for example help you with:
 
 As well as many other examples (inventory synchronization, data backups, file uploads, scraping etc.)
 
-## Constant Retries
+## Constant retries
 
 From the `Advanced` menu, pick `Retries` and toggle `Constant retry enabled`.
 
@@ -33,7 +33,7 @@ From there, define a maximum number of attempts and a given delay.
 
 Although the delay is set in seconds, inputs can be given in minutes, hours or days.
 
-![Constant Retries](../assets/flows/constant_retries.png.webp)
+![Constant retries](../assets/flows/constant_retries.png.webp)
 
 ## Exponential backoff enabled
 

@@ -120,7 +120,7 @@ Editing the flow from the UI immediately modifies the YAML definition
 	src="/videos/yaml_to_ui.mp4"
 />
 
-### Infer lockfile or Use current lockfile
+### Infer lockfile or use current lockfile
 
 With this toggle, you can choose to use the metadata lockfile ([derived from](../../advanced/3_cli/script.md#packagejson--requirementstxt) package.json or requirements.txt after [`wmill script generate-metadata`](../../advanced/3_cli/script.md#re-generating-a-script-metadata-file)) instead of inferring them directly from the script.
 
@@ -156,4 +156,4 @@ The extension provides the following settings:
 
 You can create a user token in the Windmill app. Follow the instructions on the [Webhooks docs](/docs/core_concepts/webhooks#user-token).
 
-For TypeScript scripts, the Windmill extension will use by default [Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx#bun) as the runtime. You can change it either per script by using file extension `.deno.ts` or globally in your [wmill.yaml](../../advanced/3_cli/sync.mdx#wmillyaml) in the field `defaultTs`.
+For TypeScript scripts, the Windmill extension will use by default [Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) as the runtime. You can change it either per script by using file extension `.deno.ts` or globally in your [wmill.yaml](../../advanced/3_cli/sync.mdx#wmillyaml) in the field `defaultTs`.
