@@ -102,7 +102,8 @@ const sidebars = {
 									label: 'AgGrid Table'
 								},
 								'misc/guides/table/index',
-								'misc/guides/sequin/index'
+								'misc/guides/sequin/index',
+								'misc/guides/snowflake_app_with_user_roles/index'
 							]
 						}
 					]
@@ -146,20 +147,29 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
-							id: 'misc/note_of_intent/index',
-							label: 'Note of intent'
+							id: 'compared_to/kestra',
+							label: 'Kestra'
 						},
 						{
-							type: 'category',
-							label: 'Benchmarks',
-							items: [
-								{
-									type: 'doc',
-									id: 'misc/benchmarks/competitors/index',
-									label: 'vs Airflow vs Prefect vs Temporal'
-								},
-								'misc/benchmarks/aws_lambda/index'
-							]
+							type: 'doc',
+							id: 'misc/note_of_intent/index',
+							label: 'Note of intent'
+						}
+					]
+				},
+				{
+					type: 'category',
+					label: 'Benchmarks',
+					items: [
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/index',
+							label: 'Airflow, Prefect, Temporal, Kestra'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/aws_lambda/index',
+							label: 'AWS Lambda'
 						}
 					]
 				},
@@ -236,6 +246,7 @@ const sidebars = {
 				'core_concepts/roles_and_permissions/index',
 				'core_concepts/authentification/index',
 				'core_concepts/error_handling/index',
+				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
 				'core_concepts/scheduling/index',
 				'core_concepts/webhooks/index',
@@ -246,9 +257,10 @@ const sidebars = {
 				'core_concepts/workspace_secret_encryption/index',
 				'advanced/email_triggers/index',
 				'core_concepts/http_routing/index',
+				'core_concepts/websocket_triggers/index',
+				'core_concepts/kafka_triggers/index',
 				'core_concepts/caching/index',
 				'core_concepts/files_binary_data/index',
-				'core_concepts/jobs/index',
 				'core_concepts/service_logs/index',
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
@@ -558,9 +570,9 @@ const sidebars = {
 					items: [
 						'flows/architecture',
 						'openflow/index',
+						'flows/editor_components',
 						'flows/test_flows',
 						'flows/ai_flows',
-						'flows/editor_components',
 						'flows/error_handling',
 						'flows/flow_branches',
 						'flows/flow_loops',
@@ -841,6 +853,7 @@ const sidebars = {
 				'misc/support_and_sla/index',
 				'core_concepts/audit_logs/index',
 				'misc/worker_group_management_ui/index',
+				'core_concepts/autoscaling/index',
 				'core_concepts/concurrency_limits/index',
 				'misc/s3_cache/index',
 				'core_concepts/oidc/index',
@@ -848,7 +861,7 @@ const sidebars = {
 				'advanced/external_auth_with_jwt/index',
 				'core_concepts/dedicated_workers/index',
 				'core_concepts/agent_workers/index',
-				'core_concepts/critical_alert_channels/index',
+				'core_concepts/critical_alerts/index',
 				'core_concepts/content_search/index',
 				'core_concepts/codebases_and_bundles/index',
 				'apps/css_editor',

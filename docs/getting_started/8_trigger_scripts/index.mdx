@@ -18,7 +18,8 @@ Triggers from external events:
 - [API](#trigger-from-api) & [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack)
 - [Emails](#emails)
 - [Custom HTTP routes](#custom-http-routes)
-- [Scheduling + Trigger scripts](#scheduling--trigger-scripts)
+- [Websocket triggers](#websocket-triggers)
+- [Scheduled polls (Scheduling + Trigger scripts)](#scheduled-polls-scheduling--trigger-scripts)
 
 :::info Scripts in Windmill
 
@@ -250,11 +251,23 @@ Windmill allows you to define custom HTTP routes for your scripts and flows.
 	/>
 </div>
 
-### Scheduling + Trigger scripts
+### Websocket triggers
+
+Windmill can connect to websocket servers and trigger runnables (scripts, flows) when a message is received.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Websocket triggers"
+		description="Trigger scripts and flows from websocket servers."
+		href="/docs/core_concepts/websocket_triggers"
+	/>
+</div>
+
+### Scheduled polls (Scheduling + Trigger scripts)
 
 A particular use case for schedules are [Trigger scripts](../../flows/10_flow_trigger.mdx).
 
-Trigger scripts are used in [Flows](../../flows/1_flow_editor.mdx) and are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
+Trigger scripts are used in [Flows](../../flows/1_flow_editor.mdx) and are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../../core_concepts/1_scheduling/index.mdx) and [states](../../core_concepts/3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md). If there are no new items, the flow will be skipped.
 
 You could set your script in a flow after a Trigger script to have it run only when new data is available.
 

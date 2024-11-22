@@ -7,7 +7,7 @@ import { useColorMode } from '@docusaurus/theme-common';
 import { SiDiscord, SiGithub } from 'react-icons/si';
 import { motion } from 'framer-motion';
 import ThemeToggleButton from './ThemeToggleButton';
-// import Banner from './Banner';
+import Banner from './Banner';
 import Link from '@docusaurus/Link';
 
 const products = [
@@ -178,15 +178,15 @@ export default function LandingHeader() {
 								<>
 									<Popover.Button
 										className={classNames(
-											open ? 'text-gray-900' : 'text-gray-500',
-											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
+											open ? 'text-gray-900 dark:text-gray-100' : 'text-gray-500',
+											'group inline-flex items-center rounded-md text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300'
 										)}
 									>
 										<span>More</span>
 										<ChevronDownIcon
 											className={classNames(
-												open ? 'text-gray-600' : 'text-gray-400',
-												'ml-2 h-5 w-5 group-hover:text-gray-500'
+												open ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400',
+												'ml-2 h-5 w-5 group-hover:text-gray-500 dark:group-hover:text-gray-300'
 											)}
 											aria-hidden="true"
 										/>
@@ -373,6 +373,7 @@ export default function LandingHeader() {
 					</Popover.Panel>
 				</Transition>
 			</Popover>
+			{/* <Banner /> */}
 		</div>
 	);
 }

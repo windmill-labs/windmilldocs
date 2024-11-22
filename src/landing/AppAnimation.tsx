@@ -21,7 +21,7 @@ import { twMerge } from 'tailwind-merge';
 import { motion } from 'framer-motion';
 
 export default function AppAnimation({ active, only }) {
-	const [step, setStep] = React.useState(only ? 0 : -1);
+	const [step, setStep] = React.useState(0);
 	const [scriptStep, setScriptStep] = React.useState(0);
 	const [buttonName, setButtonName] = React.useState('Press me');
 	const [clicked, setClicked] = React.useState(false);

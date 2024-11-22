@@ -1,5 +1,15 @@
+import DocCard from '@site/src/components/DocCard';
+
 # Custom environment variables
 
 In a self-hosted environment, Windmill allows you to set custom environment [variables](../core_concepts/2_variables_and_secrets/index.mdx) for your scripts. This feature is useful when a script needs an environment variable prior to the main function executing itself. For instance, some libraries in Go do some setup in the 'init' function that depends on environment variables.
 
 To add a custom environment variable to a script in Windmill, you should follow this format: `<KEY>=<VALUE>`. Where `<KEY>` is the name of the environment variable and `<VALUE>` is the corresponding value of the environment variable.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Variables and secrets"
+		description="Variables and secrets are encrypted, dynamic values used for reusing information and securely passing sensitive data within scripts."
+		href="/docs/core_concepts/variables_and_secrets"
+	/>
+</div>

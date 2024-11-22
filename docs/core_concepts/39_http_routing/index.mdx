@@ -29,7 +29,7 @@ The route also supports additional configuration options:
 ## Preprocessor
 
 [Scripts](#script-preprocessor) and [flows](#flow-preprocessor) can include a preprocessor to transform incoming requests before they are passed to the runnable.
-The preprocessor is only called when the runnable is triggered via an HTTP route, a webhook or an email trigger.
+The preprocessor is only called when the runnable is triggered via an HTTP route, a webhook, an email trigger, or a websocket trigger.
 This is useful for handling headers, query/path parameters, or modifying arguments before execution.
 Using a preprocessor also separates the handling of arguments according to whether they are called by a trigger (http, email or webhook) or from the UI, which can help you keep a simple schema form in the UI for the runnable.
 
@@ -47,7 +47,7 @@ Here are examples of a preprocessor function in [TypeScript](../../getting_start
 ```TypeScript
 export async function preprocessor(
 	wm_trigger: {
-		kind: 'http' | 'email' | 'webhook',
+		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka',
 		http?: {
 			route: string // The route path, e.g. "/users/:id"
 			path: string // The actual path called, e.g. "/users/123"
@@ -55,6 +55,14 @@ export async function preprocessor(
 			params: Record<string, string>
 			query: Record<string, string>
 			headers: Record<string, string>
+		},
+		websocket?: {
+			url: string // The websocket URL
+		},
+		kafka?: {
+			brokers: string[]
+			topic: string
+			group_id: string
 		}
 	},
 	/* your other args from the request body */ 
@@ -82,9 +90,19 @@ class Http(TypedDict):
 	query: dict[str, str]
 	headers: dict[str, str]
 
+class Websocket(TypedDict):
+	url: str # The websocket URL
+
+class Kafka(TypedDict):
+	topic: str
+	brokers: list[str]
+	group_id: str
+
 class WmTrigger(TypedDict):
-    kind: Literal["http", "email", "webhook"]
-    http: Http | None
+	kind: Literal["http", "email", "webhook", "websocket", "kafka"]
+	http: Http | None
+	websocket: Websocket | None
+	kakfa: Kafka | None
 
 def preprocessor(
 	wm_trigger: WmTrigger,
@@ -118,7 +136,7 @@ The flow preprocessor takes the same arguments as the script preprocessor and sh
 ```TypeScript
 export async function preprocessor(
 	wm_trigger: {
-		kind: 'http' | 'email' | 'webhook',
+		kind: 'http' | 'email' | 'webhook' | 'websocket',
 		http?: {
 			route: string // The route path, e.g. "/users/:id"
 			path: string // The actual path called, e.g. "/users/123"
@@ -126,6 +144,9 @@ export async function preprocessor(
 			params: Record<string, string>
 			query: Record<string, string>
 			headers: Record<string, string>
+		},
+		websocket?: {
+			url: string // The websocket URL
 		}
 	},
 	/* your other args from the request body */ 
@@ -149,9 +170,13 @@ class Http(TypedDict):
 	query: dict[str, str]
 	headers: dict[str, str]
 
+class Websocket(TypedDict):
+	url: str # The websocket URL
+
 class WmTrigger(TypedDict):
-    kind: Literal["http", "email", "webhook"]
+    kind: Literal["http", "email", "webhook", "websocket"]
     http: Http | None
+		websocket: Websocket | None
 
 def preprocessor(
 	wm_trigger: WmTrigger,
