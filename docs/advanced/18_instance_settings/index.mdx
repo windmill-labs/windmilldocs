@@ -20,7 +20,7 @@ You can access it from the list of workspaces or from Instance settings.
 
 ![Admins workspace](./admins_workspace.png "Admins workspace")
 
-## Global Users
+## Global users
 
 Global Users are users of the Windmill instance. They are not associated with any workspace and can be assigned to any workspace (from the workspace settings).
 
@@ -30,7 +30,9 @@ You can also enable automatic username creation from emails. Usernames will be s
 
 A more common way to add users is to use [SSO/OAuth](#ssooauth).
 
-For each user, you can see Email, Auth (manually-set password or Auth methods), name and role.
+For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator)), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
+
+You can also toggle on 'Show active users only' to show only users who have performed at least one action in the last 30 days. Only those users are counted in our [Pricing](/pricing).
 
 ![Global Users](./global_users.png "Global Users")
 
@@ -82,7 +84,7 @@ If your subscription is active, the key is automatically renewed everyday. A key
 
 Whether we should consider the reported usage of this instance as non-prod.
 
-It is useful to avoid [counting the usage](/pricing#vcpu-reporting) of a non-prod instance in the billing.
+It is useful to avoid [counting the usage](/pricing#worker-reporting) of a non-prod instance in the billing.
 
 This setting is only available on [Enterprise Edition](/pricing).
 
@@ -370,7 +372,7 @@ The following information is collected:
 - accounts usage
 - login type usage
 - workers usage
-- vVCPUs usage
+- vCPUs usage
 - memory usage
 
 From the instance settings, you can manually send usage or disable telemetry.

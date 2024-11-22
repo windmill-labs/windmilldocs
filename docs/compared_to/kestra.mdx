@@ -1,0 +1,293 @@
+import DocCard from '@site/src/components/DocCard';
+import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
+
+# Kestra compared to Windmill
+
+![Windmill Kestra](../assets/compared_to/windmill_kestra.png 'Windmill Kestra')
+
+[Kestra](https://kestra.io) is an event-driven orchestration platform that allows developers to build and run workflows declaratively in code.
+
+We have tested and conducted performance benchmarks on Kestra, and this page outlines our conclusions. Please note that the content is written by Windmill; feel free to [contact us](../misc/6_getting_help/index.mdx) for any requests or modifications.
+
+- [Open source](#open-source)
+- [Language support and dependencies](#language-support-and-dependencies)
+- [Architecture and development experience](#architecture-and-development-experience)
+- [Features comparison](#features-comparison)
+- [Performance](#performance)
+- [Pricing](#pricing)
+- [Conclusion](#conclusion)
+
+## Open source
+
+Both Windmill and [Kestra](https://github.com/kestra-io/kestra) are fully open source and can be self-hosted. They both offer an easy installation process through [Docker](https://www.docker.com/), with pre-populated tutorial flows to help users get started.
+
+Windmill provides and integrates into its platform a [public community Hub](https://hub.windmill.dev/) where users share useful and proven scripts, flows, and applications.
+
+![Windmill GitHub](../assets/compared_to/windmill_gh.png 'Windmill GitHub')
+
+> Windmill Git repository
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Self-host Windmill"
+		description="Self host Windmill in 2 minutes."
+		href="/docs/advanced/self_host/"
+	/>
+</div>
+
+## Language support and dependencies
+
+Kestra provides [native support](https://kestra.io/docs/workflow-components/tasks/scripts/languages) for Python, R, Node.js, Julia, Ruby, Shell, and PowerShell scripts. Additional language support is available through Docker containers. While this offers flexibility, there are some key differences in how dependencies are handled:
+
+- In Kestra, dependency caching and pre-installed [dependencies](https://kestra.io/docs/workflow-components/tasks/scripts/installing-dependencies) need to be managed manually by the user
+- Windmill automatically handles [dependency](../advanced/6_imports/index.mdx) installation and caching, allowing developers to focus on writing code
+- Windmill supports [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx), [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx), [Bash](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx), [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) and more [languages](../getting_started/0_scripts_quickstart/index.mdx) natively
+
+![Script languages](../../static/images/script_languages.png 'Script languages')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Languages"
+		description="Windmill supports TypeScript, Python, Go, PHP, Bash, SQL and Rust or launch docker containers."
+		href="/docs/getting_started/scripts_quickstart"
+	/>
+    <DocCard
+		title="Dependencies in Windmill"
+		description="Learn how Windmill handles dependencies automatically."
+		href="/docs/advanced/imports"
+	/>
+</div>
+
+## Architecture and development experience
+
+Both platforms share a similar architecture centered around a queue-based system for event-driven orchestration of tasks and flows. However, there are several key differences in the development experience.
+
+### Configuration and workflow building
+
+Kestra:
+- Uses YAML-only configuration for workflows where scripts are referenced as files
+- Requires passing arguments between steps through file I/O
+- Passes simple arguments as environment variables
+- No visual flow builder/editor
+
+Kestra takes a code-only approach. Workflow creation is done through a YAML file. Each task is a value in the YAML, and most of your tasks will be separate files that need to be referenced in the flow (e.g. Python code can type `io.kestra.core.tasks.scripts.Python`, `io.kestra.core.tasks.python.Commands`, `io.kestra.core.tasks.python.Script`).
+
+![Kestra flow example](../assets/compared_to/flow_kestra.png 'Kestra flow example')
+
+Windmill:
+- Provides a UI for workflow configuration and step advanced settings
+- Offers a visual [Flow Editor](../flows/1_flow_editor.mdx)
+- Allows direct passing of arguments between steps
+- Supports both UI-based and code-based workflow creation
+
+In Windmill, a step is simply a script in a language—nothing more. From the flow editor, you can select an existing script from your workspace or the Hub, or just write it directly in the integrated code editor. Each step can either be forked or saved as a separate script in your workspace.
+
+![Windmill flow example](../assets/compared_to/flow_windmill_kestra.png 'Windmill flow example')
+
+This video shows how to create the same flow in Kestra and Windmill. It does not cover advanced features but focuses on the flow creation experience. For advanced benchmarks, see [Performance](#performance).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ajzxuK0zT2I"
+	title="Flow creation, Kestra vs Windmill"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+### Developer tools
+
+Windmill is designed to integrate seamlessly with your existing tool stack and processes, with specific support for:
+- [Local development support](../advanced/4_local_development/index.mdx)
+- [Windmill CLI](../advanced/3_cli/index.mdx)
+- [Git sync](../advanced/11_git_sync/index.mdx) for version control
+- [VS Code extension](../cli_local_dev/1_vscode-extension/index.mdx)
+- Built-in code editor with [AI assistance](../core_concepts/22_ai_generation/index.mdx) for autocomplete and code generation
+
+Although Kestra offers an alternative for some of these features ([Version control with Git](https://kestra.io/docs/version-control-cicd/git), [Server CLI](https://kestra.io/docs/server-cli)), it does not allow for as seamless an integration with your existing tools.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
+## Features comparison
+
+Kestra and Windmill have a very similar set of features as they address the same needs. Both platforms offer core workflow engine features like [scheduling](../core_concepts/1_scheduling/index.mdx), [webhooks](../core_concepts/4_webhooks/index.mdx), and [error handling](../core_concepts/10_error_handling/index.mdx).
+
+However, there are a few features where they stand out from each other.
+
+### What Kestra does differently (and well)
+
+{/* Say they are good with data pipelines? */}
+
+- Large number of trigger types through [plugins](https://kestra.io/plugins)
+- [Backfill](https://kestra.io/docs/concepts/backfill) capabilities
+- Simple architecture where a script is treated as a one-step flow, only one editor
+
+### What Windmill offers additionally
+
+- [Automated UI generation](../core_concepts/6_auto_generated_uis/index.mdx) for script and flows input fields
+- Custom platform (and pricing) for [operators](../core_concepts/16_roles_and_permissions/index.mdx#operator) to only trigger flows
+- [Approval steps](../flows/11_flow_approval.mdx) to pause a flow execution until approval
+- [Low-code App Editor](../apps/0_app_editor/index.mdx) for building UIs
+- Reusable [variables, secrets](../core_concepts/2_variables_and_secrets/index.mdx), and [resources](../core_concepts/3_resources_and_types/index.mdx)
+- Built-in worker [logs and metrics](../core_concepts/9_worker_groups/index.mdx#queue-metrics) (EE only)
+
+## Performance
+
+Windmill's architecture allows runnning each task on the current fleet of worker
+(which you can auto-scale automatically) and hence do not suffer from cold start.
+Isolation and creating dedicated dependency environment is the secret sauce that makes Windmill
+the fastest execution runtime for scripts (10ms cold start).
+
+Windmill can run 26M tasks a month on a single worker costing 5$. Kestra does not provide figures on its average runtime and performance.
+
+Also, Windmill has a [transparent API](https://app.windmill.dev/openapi.html#/), on which you could imagine launching 1m simulateously by API.
+
+We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our performance against our competitors.
+
+For 40 lightweight tasks, Windmill is estimated to be 7x faster than Kestra:
+
+<div className="grid">
+	<TaskDurationBarChart
+		title="40 lightweight tasks (in seconds)"
+		labels={[
+			['Airflow'],
+			['Kestra'],
+			['Prefect'],
+			['Temporal'],
+			['Windmill', 'Normal'],
+			['Windmill', 'Dedicated Worker']
+		]}
+		rawData={[
+			[
+				[
+					4.335, 3.959, 2.194, 2.192, 1.68, 1.965, 2.377, 2.259, 2.39, 2.6, 2.401, 4.888, 5.118,
+					1.64, 2.396, 2.196, 2.488, 1.853, 1.513, 2.575, 2.218, 2.316, 1.933, 2.176, 2.976, 5.192,
+					1.684, 2.361, 2.218, 1.409, 2.591, 2.192, 2.328, 2.464, 2.88, 2.394, 2.046, 1.537, 4.988,
+					2.784
+				],
+				[
+					0.417, 0.213, 0.203, 0.22, 0.209, 0.262, 0.205, 0.268, 0.209, 0.477, 0.322, 0.817, 0.207,
+					0.253, 0.201, 0.226, 0.212, 0.199, 0.207, 0.435, 0.355, 0.408, 0.431, 0.247, 0.461, 0.717,
+					0.237, 0.246, 0.194, 0.205, 0.421, 0.312, 0.421, 0.25, 0.251, 0.206, 0.352, 0.21, 0.604,
+					0.223
+				]
+			],
+			[
+				[
+					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
+					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
+					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
+					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+				],
+				[
+					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
+					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
+					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
+					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
+				]
+			],
+			[
+				[
+					1.213, 0.064, 0.061, 0.059, 0.054, 0.053, 0.053, 0.054, 0.055, 0.056, 0.057, 0.064, 0.052,
+					0.056, 0.056, 0.058, 0.052, 0.051, 0.054, 0.053, 0.053, 0.055, 0.052, 0.054, 0.062, 0.051,
+					0.051, 0.052, 0.051, 0.048, 0.055, 0.057, 0.049, 0.048, 0.055, 0.05, 0.051, 0.05, 0.053,
+					0.054
+				],
+				[
+					0.044, 0.041, 0.04, 0.036, 0.035, 0.038, 0.037, 0.061, 0.039, 0.038, 0.04, 0.038, 0.038,
+					0.041, 0.039, 0.043, 0.035, 0.035, 0.035, 0.038, 0.037, 0.036, 0.036, 0.038, 0.039, 0.034,
+					0.035, 0.037, 0.034, 0.083, 0.035, 0.034, 0.033, 0.034, 0.038, 0.034, 0.034, 0.035, 0.035,
+					0.034
+				]
+			],
+			[
+				[
+					0.009, 0.028, 0.027, 0.029, 0.029, 0.029, 0.03, 0.03, 0.032, 0.028, 0.028, 0.028, 0.029,
+					0.041, 0.029, 0.029, 0.077, 0.09, 0.091, 0.093, 0.092, 0.09, 0.092, 0.091, 0.091, 0.091,
+					0.091, 0.09, 0.091, 0.093, 0.09, 0.093, 0.092, 0.091, 0.09, 0.092, 0.091, 0.091, 0.091,
+					0.092
+				],
+				[
+					0.007, 0.008, 0.008, 0.008, 0.007, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008, 0.008,
+					0.008, 0.009, 0.009, 0.009, 0.009, 0.008, 0.008, 0.009, 0.008, 0.009, 0.009, 0.009, 0.009,
+					0.009, 0.008, 0.009, 0.009, 0.008, 0.009, 0.009, 0.009, 0.009, 0.009, 0.009, 0.009, 0.008,
+					0.008
+				]
+			],
+			[
+				[
+					0.004, 0.063, 0.061, 0.062, 0.061, 0.061, 0.061, 0.061, 0.062, 0.062, 0.061, 0.061, 0.065,
+					0.063, 0.06, 0.064, 0.062, 0.061, 0.062, 0.062, 0.06, 0.062, 0.06, 0.062, 0.06, 0.063,
+					0.062, 0.061, 0.061, 0.06, 0.061, 0.06, 0.061, 0.061, 0.061, 0.062, 0.06, 0.062, 0.06,
+					0.062
+				],
+				[
+					0.048, 0.048, 0.048, 0.048, 0.047, 0.047, 0.047, 0.046, 0.05, 0.049, 0.047, 0.047, 0.056,
+					0.052, 0.047, 0.045, 0.046, 0.047, 0.047, 0.05, 0.05, 0.047, 0.046, 0.046, 0.046, 0.046,
+					0.046, 0.047, 0.046, 0.046, 0.047, 0.046, 0.046, 0.046, 0.046, 0.048, 0.049, 0.049, 0.047,
+					0.048
+				]
+			],
+			[
+				[
+					0.003, 0.06, 0.059, 0.06, 0.061, 0.061, 0.06, 0.059, 0.061, 0.061, 0.06, 0.06, 0.061,
+					0.061, 0.062, 0.059, 0.06, 0.06, 0.06, 0.058, 0.06, 0.059, 0.06, 0.059, 0.06, 0.059,
+					0.061, 0.061, 0.061, 0.06, 0.059, 0.061, 0.06, 0.06, 0.06, 0.06, 0.059, 0.061, 0.061,
+					0.059
+				],
+				[
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002,
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.004, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002,
+					0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.002, 0.003, 0.002, 0.002, 0.002,
+					0.002
+				]
+			]
+		]}
+	/>
+</div>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Benchmarks"
+		description="Comparing performance of Airflow, Prefect, Temporal, Kestra and Windmill for 2 representative use cases."
+		href="/docs/misc/benchmarks/competitors"
+	/>
+</div>
+
+## Pricing
+
+Windmill has a transparent pricing policy, with clear steps for implementation. Every feature mentioned above is free with Windmill, unless mentioned otherwise (EE). See all Enterprise Edition features on our [Pricing page](/pricing).
+
+Windmill is cheaper at scale and can be used for free at any scale thanks to its open source nature.
+
+As of November 18, 2024, Kestra does not disclose its Enterprise pricing (see below):
+
+![Kestra pricing](../assets/compared_to/kestra_pricing.png 'Kestra pricing')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Pricing"
+		description="Windmill's subscription plans and simulations."
+		href="/pricing"
+	/>
+	<DocCard
+		title="Plans & How to Upgrade"
+		description="Windmill transparently provides the content and pricing of its upgraded plans."
+		href="/docs/misc/plans_details"
+	/>
+</div>
+
+## Conclusion
+
+Kestra offers a solid foundation for workflow orchestration with its extensive plugin system. We believe that Windmill is a more intuitive solution for developers: the user doesn't need to "learn" a new framework but simply write code in the language they already know, using the [tools](#developer-tools) they are already familiar with (VS Code, GitHub, etc.). Dependencies are automatically handled and all settings are in an intuitive UI, not in a YAML file that only a few developers in your organization are familiar with.
+
+The choice between the two may come down to specific needs: if you're looking for a pure workflow orchestration tool with extensive plugins, Kestra might be sufficient. However, if you need a more complete platform that includes UI building, automated dependency management, and intuitive development experience, Windmill would be the better choice.

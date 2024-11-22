@@ -275,7 +275,7 @@ If you want to achieve a similar effect with a variable or a secret, you can use
 
 ```yaml
 files:
-  - resource: u/user/my_ssh_key
+  - variable: u/user/my_ssh_key
     target:  ./id_rsa
 ```
 
@@ -283,6 +283,40 @@ And the content of the variable will be written to the file.
 
 This is useful when you want to store the data in a secret for example, like you would do for ssh keys.
 
+#### Ansible and ssh
+
+To succesfully have the playbook ssh, you might need to follow these tips:
+
+1) Write the ssh key into a *secret* variable, and **make sure it has an ending newline**, otherwise you might get an error.
+
+```
+-----BEGIN OPENSSH PRIVATE KEY-----
+MHgCAQEEIQDWlK/Rk2h4WGKCxRs2SwplFVTSyqouwTQKIXrJ/L2clqAKBggqhkjO
+PQMBB6FEA0IABErMvG2Fa1jjG7DjEQuwRGCEDnVQc1G0ibU/HI1BjkIyf4d+sh
+91GhwKDvHGbPaEQFWeTBQ+KbYwjtomLfmZM[...]
+-----END OPENSSH PRIVATE KEY-----
+
+```
+
+2) Make a file for the script that will contain this ssh key. Make sure to add the `mode: '0600'` or you might get another error.
+
+```yaml
+files:
+  - variable: u/user/my_ssh_key
+    target:  ./ssh_key
+    mode: '0600'
+```
+
+3) In your inventory file, you'll want to add these :
+```ini
+...
+[your_host:vars]
+ansible_host=your_host
+ansible_user=john # The ssh user
+ansible_ssh_private_key_file=ssh_key # The file we declared where the ssh key can be found.
+ansible_ssh_common_args='-o StrictHostKeyChecking=no' # This skips host key verification, avoiding the error. Alternatively, you can add the host to known_hosts, either as an init script or a task in your playbook
+...
+```
 
 ### Dependencies
 

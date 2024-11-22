@@ -39,7 +39,7 @@ To run Python scripts in Windmill, you first need access to Windmill (free on ou
 
 A Python script in Windmill consists of two parts: the code and the settings that include metadata and configurations. The code must have at least a main function. Once the Python environment is set up, you can proceed to write your script.
 
-Windmill automatically manages [dependencies](/docs/advanced/imports) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPi packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
+Windmill automatically manages [dependencies](/docs/advanced/imports) for you. When you import libraries in your Python script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPI packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
 Here is a simple example of a Python script in Windmill that performs sentiment analysis:
 

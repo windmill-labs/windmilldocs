@@ -25,7 +25,7 @@ We try to build a self-serve product with [transparent pricing](/pricing) and ve
 
 ## Schedule app report usage platform
 
-For [Enterprise Self-Hosted](/pricing) users, Windmill employs lightweight telemetry to automatically track and report the usage of vCPUs and seats of the subscription. We only count the vCPUs reported by the workers as being used (limits can be set in the docker-compose to avoid being overcharged).
+For [Enterprise Self-Hosted](/pricing) users, Windmill employs lightweight telemetry to automatically track and report the usage of workers and seats of the subscription. We only count the memory reported by the workers as being used (limits can be set in the docker-compose to avoid being overcharged).
 
 From there, we can centralize all of this in a dashboard with several pieces of information (versions in use, number of executions, workers usage).
 

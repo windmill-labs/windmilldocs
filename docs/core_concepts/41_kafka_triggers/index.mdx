@@ -1,0 +1,39 @@
+# Kafka triggers
+
+Windmill can connect to [Kafka](https://kafka.apache.org/) brokers servers and trigger runnables (scripts, flows) when a message is received.
+Listening is done from the servers, so it doesn't take up any workers.
+Kafka triggers are not available on the [Cloud](/pricing).
+
+![Kafka triggers](./kafka_triggers.png 'Kafka triggers')
+
+## How to use
+
+Create a new trigger on the Kafka triggers page.
+Add a Kafka resource with the broker hostnames (hostname:port) and the security settings.
+Specify the topics the trigger should listen to.
+The group id is automatically filled in from the current workspace and the trigger path. You can change it if necessary.
+It indicates the consumer group to which the trigger belongs. This garantees that even if the trigger stops listening for a while, it will receive the messages it missed when it starts listening again.
+
+Once the Kafka resource and settings are set, select the runnable that should be triggered by this trigger.
+The received webhook message will be passed to the runnable as a string argument called `msg`.
+If you use a preprocessor, the `wm_trigger` object will be of the form:
+
+```json
+{
+  "kind": "kafka",
+  "kafka": {
+    "brokers": ["localhost:9092"],
+    "topic": "my-topic", 
+    "group_id": "my-group-id"
+  }
+}
+```
+
+
+
+
+
+
+
+
+

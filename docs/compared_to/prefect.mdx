@@ -1,9 +1,9 @@
 import DocCard from '@site/src/components/DocCard';
 import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
-# Alternative to Prefect for building Workflows
+# Alternative to Prefect for building workflows
 
-![Windmill Prefect](../assets/compared_to/windmill_prefect.png.webp 'Windmill Prefect')
+![Windmill Prefect](../assets/compared_to/windmill_prefect.png 'Windmill Prefect')
 
 Both Windmill and Prefect support writing complex workflows and ETL with code and run them at scale.
 We highlight below the main differences between the 2 on the following axis:
@@ -21,7 +21,7 @@ We highlight below the main differences between the 2 on the following axis:
 
 <a href="https://www.prefect.io/" rel="nofollow"> Prefect </a> is a data workflow management system, designed to help teams build, run, and monitor data workflows. It provides tools for orchestrating data pipelines, managing their execution, and ensuring data integrity.
 
-## Open Source and Hosting
+## Open source and hosting
 
 [Windmill](https://www.windmill.dev/) is fully open source. This implies that Windmill can be self-hosted with just a few commands, providing cost-effective and secure solutions.
 
@@ -29,10 +29,9 @@ Windmill offers a clean slate, allowing you to fully explore its platform before
 Windmill's open-source nature ensures that the platform is tested, approved, and continuously enhanced
 to meet the community's needs.
 
-Windmill provides and integrates into its platform a [public Community Hub](https://hub.windmill.dev/)
-where users share useful and proven scripts, flows, and applications.
+Windmill provides and integrates into its platform a [public community Hub](https://hub.windmill.dev/) where users share useful and proven scripts, flows, and applications.
 
-![Windmill GitHub](../assets/compared_to/windmill_gh.png.webp 'Windmill GitHub')
+![Windmill GitHub](../assets/compared_to/windmill_gh.png 'Windmill GitHub')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -58,7 +57,7 @@ Prefect's [monitoring](#observability-and-monitoring) is done through a cloud pl
 
 ![Prefect cloud features](../assets/compared_to/prefect_cloud_features.png 'Prefect cloud features')
 
-## Workflows and Code
+## Workflows and code
 
 Prefect and Windmill Flow editor have a very similar sets of features. Below are the advanced features presented by Prefect and, in backlink, their counterpart on Windmill:
 
@@ -181,7 +180,7 @@ While Windmill also allows configuration and triggers from the terminal, the pla
 	/>
 </div>
 
-## Execution Runtime and Coldstarts
+## Execution runtime and coldstarts
 
 Windmill's architecture allows runnning each task on the current fleet of worker
 (which you can auto-scale automatically) and hence do not suffer from cold start.
@@ -199,6 +198,7 @@ We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our pe
 		title="40 lightweight tasks (in seconds)"
 		labels={[
 			['Airflow'],
+			['Kestra'],
 			['Prefect'],
 			['Temporal'],
 			['Windmill', 'Normal'],
@@ -217,6 +217,20 @@ We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our pe
 					0.253, 0.201, 0.226, 0.212, 0.199, 0.207, 0.435, 0.355, 0.408, 0.431, 0.247, 0.461, 0.717,
 					0.237, 0.246, 0.194, 0.205, 0.421, 0.312, 0.421, 0.25, 0.251, 0.206, 0.352, 0.21, 0.604,
 					0.223
+				]
+			],
+			[
+				[
+					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
+					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
+					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
+					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+				],
+				[
+					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
+					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
+					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
+					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
 				]
 			],
 			[
@@ -282,8 +296,8 @@ We have conducted [benchmarks](../misc/3_benchmarks/index.mdx) to measure our pe
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Benchmarks"
-		description="Windmill has about the same performance as AWS Lambda for heavier workloads, but it is slower on cold starts for medium compute."
-		href="/docs/misc/benchmarks"
+		description="Comparing performance of Airflow, Prefect, Temporal, Kestra and Windmill for 2 representative use cases."
+		href="/docs/misc/benchmarks/competitors"
 	/>
 </div>
 
@@ -343,7 +357,7 @@ providing insights into the performance metrics.
 	/>
 </div>
 
-## Observability and Monitoring
+## Observability and monitoring
 
 In terms of monitoring and observability, Windmill and Prefect's cloud app fulfill the same functions: audit logs, monitoring of runs and schedules, saving of flows, configurations (<a href="https://docs.prefect.io/latest/concepts/blocks/?h=blocks" rel="nofollow">Blocks</a> in Prefect, [Resource Types](../core_concepts/3_resources_and_types/index.mdx) in Windmill) and variables, [allocation of workers](../core_concepts/9_worker_groups/index.mdx).
 
@@ -407,11 +421,11 @@ Windmill has a [transparent pricing policy](/pricing), with clear steps for impl
 
 Windmill is cheaper at scale and can be used for free at any scale thanks to its open source nature.
 
-As of September 20, 2023, Prefect does not disclose its Enterprise pricing (see below). Its Organization pricing is more expensive than Windmill's Team Plan.
+As of November 18, 2024, Prefect does not disclose its Enterprise pricing (see below).
 
 Prefect pricing:
 
-![Prefect pricing](../assets/compared_to/prefect_pricing.png.webp 'Prefect pricing')
+![Prefect pricing](../assets/compared_to/prefect_pricing.png 'Prefect pricing')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -426,7 +440,7 @@ Prefect pricing:
 	/>
 </div>
 
-## Scripts and Apps
+## Scripts and apps
 
 This document has focused on the Flow editor since it is the product closest to what Prefect does. However, Windmill also includes Script and App editors.
 

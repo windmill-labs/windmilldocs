@@ -14,7 +14,7 @@ All Variables (not just secrets) are encrypted with a workspace specific symmetr
 
 There are two types of Variables in Windmill: user-defined and contextual.
 
-## User-defined Variables
+## User-defined variables
 
 User-defined Variables is essentially a key-value store where every user can
 read, set and share values at given keys as long as they have the privilege to
@@ -69,7 +69,7 @@ offer a selection over the resources of type postgresql in the auto-generated UI
 There is also a concept of [state](..//3_resources_and_types/index.mdx#states) to share values
 across script executions.
 
-## Contextual Variables
+## Contextual variables
 
 Contextual Variables are environment variables automatically set by Windmill. This is how the Deno and Python clients get their implicit
 credentials to interact with the platform.
@@ -100,7 +100,7 @@ You can use them in a Script by clicking on "+Context Var":
 | WM_OBJECT_PATH | u_user_flow_path/u_user_flow_path/c/17[...]196dd | Script or flow step execution unique path, useful for storing results in an external service |
 | WM_OIDC_JWT | eyJh[...]ciOiJIUzI1NiIsInR5 | OIDC JWT token (EE only) |
 
-### Custom Contextual Variables
+### Custom contextual variables
 
 From Variables tab, [admins](../16_roles_and_permissions/index.mdx) can create custom contextual variables that will act as env variables for all jobs within a workspace.
 
@@ -123,7 +123,7 @@ are kept safe in three different ways:
   the <a href="https://app.windmill.dev/audit_logs" rel="nofollow">Audit logs</a>. It means that you can audit who accesses secrets. Additionally you can audit results, logs and
   script code for every script run.
 
-## Add a Variable or Secret
+## Add a variable or secret
 
 You can define variables from the Variables page. Like all objects in
 Windmill, variable ownership is defined by the path - see
@@ -136,7 +136,7 @@ A variable can be made secret. In this case, its value will not be visible outsi
 
 ![Add variable](./add_variable.png.webp)
 
-## Accessing a Variable from a script
+## Accessing a variable from a script
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -146,7 +146,7 @@ A variable can be made secret. In this case, its value will not be visible outsi
 	/>
 </div>
 
-### Accessing Contextual Variables from a script
+### Accessing contextual variables from a script
 
 See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel="nofollow">Variable page</a> for the list of reserved variables and what they are used for.
 
@@ -156,11 +156,11 @@ You can use them in a Script by clicking on "+Context Var":
 
 Reserved variables are passed to the job as environment variables. For example, the ephemeral token is passed as `WM_TOKEN`.
 
-### Accessing User-defined Variables from a script
+### Accessing user-defined variables from a script
 
 There are 2 main ways variables are used within scripts:
 
-#### Passing Variables as parameters to scripts
+#### Passing variables as parameters to scripts
 
 Variables can be passed as parameters of the script, using the UI-based variable picker. Underneath, the variable is passed as a string of the form: `$var:<variable_path>` and replaced by the worker at time of execution of the script by fetching the value with the job's permissions. So the job will fail if the job's permissions inherited from the caller do not allow access to the variable. This is the same mechanism used for resource, but they use `$res:` instead of `$var:`.
 
@@ -220,5 +220,17 @@ To add a custom environment variable to a script in Windmill, you should follow 
 		title="Custom environment variables"
 		description="In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts."
 		href="/docs/script_editor/custom_environment_variables"
+	/>
+</div>
+
+## Environment variables passed to jobs
+
+From a [worker group](../9_worker_groups/index.mdx), you can add static and dynamic environment variables that will be [passed to jobs](../9_worker_groups/index.mdx#environment-variables-passed-to-jobs) handled by this worker group. Dynamic environment variable values will be loaded from the worker host environment variables while static environment variables will be set directly from their values below.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Workers and worker groups"
+		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
+		href="/docs/core_concepts/worker_groups"
 	/>
 </div>
