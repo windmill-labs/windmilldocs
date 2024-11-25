@@ -401,40 +401,7 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/apps/public_apps'
-			},
-			{
-				name: 'Email triggers',
-				tiers: {
-					'tier-free-selfhost': 'Max 100 emails per day',
-					'tier-enterprise-selfhost': 'Unlimited',
-					'tier-enterprise-cloud': 'Unlimited',
-					'tier-free': 'Unlimited',
-					'tier-team': 'Unlimited'
-				},
-				link: '/docs/advanced/email_triggers'
-			},
-			{
-				name: 'Websocket triggers',
-				tiers: {
-					'tier-free-selfhost': true,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/core_concepts/40_websocket_triggers'
-			},
-			{
-				name: 'Kafka triggers',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/core_concepts/kafka_triggers'
-			},
+			},	
 			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
 				tiers: {
@@ -480,6 +447,41 @@ const sections = [
 				link: '/docs/core_concepts/object_storage_in_windmill'
 			},
 			{
+				name: 'Email triggers',
+				tiers: {
+					'tier-free-selfhost': 'Max 100 emails per day',
+					'tier-enterprise-selfhost': 'Unlimited',
+					'tier-enterprise-cloud': 'Unlimited',
+					'tier-free': 'Unlimited',
+					'tier-team': 'Unlimited'
+				},
+				link: '/docs/advanced/email_triggers'
+			},
+			{
+				name: 'Websocket triggers',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/40_websocket_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'Kafka triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/kafka_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
 				name: 'Private Hub',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -517,17 +519,6 @@ const sections = [
 				link: '/docs/core_concepts/authentification'
 			},
 			{
-				name: 'Custom OAuth',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/misc/setup_oauth#custom-oauth-1'
-			},
-			{
 				name: 'Workspace secret custom encryption',
 				tiers: {
 					'tier-free-selfhost': true,
@@ -537,6 +528,17 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/core_concepts/workspace_secret_encryption'
+			},
+			{
+				name: 'Custom OAuth',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/misc/setup_oauth#custom-oauth-1'
 			},
 			{
 				name: 'SAML & SCIM support including groups synchronization',
@@ -567,11 +569,19 @@ const sections = [
 					'tier-enterprise-selfhost':
 						'24/7 Priority support with 3h response and dedicated Slack channel',
 					'tier-enterprise-cloud':
-						'24/7 Priority support with 3h response and dedicated Slack channel',
+						'24/7 Priority support with 3h response and dedicated Slack',
 					'tier-free': 'Community support on Discord',
 					'tier-team': 'Priority support on Discord'
 				},
 				link: '/docs/misc/support_and_sla'
+			},
+			{
+				name: 'SOC 2 Type II report',
+				tiers: {
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true
+				},
+				link: '/docs/misc/support_and_sla#security'
 			},
 			{
 				name: 'Design partners for roadmap',
@@ -779,7 +789,8 @@ const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/misc/windows_workers'
+				link: '/docs/misc/windows_workers',
+				tooltip: 'Self-hosted only'
 			}
 		]
 	},
@@ -807,7 +818,8 @@ const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/autoscaling'
+				link: '/docs/core_concepts/autoscaling',
+				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'Critical alerts',
@@ -818,7 +830,8 @@ const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/critical_alerts'
+				link: '/docs/core_concepts/critical_alerts',
+				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'Script-specific workers (dedicated) / High throughput',
@@ -848,17 +861,6 @@ const sections = [
 		name: 'Flows',
 		attributes: [
 			{
-				name: 'Restart deployed flows from any node',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': true,
-					'tier-free': true,
-					'tier-team': true
-				},
-				link: '/blog/launch-week-1/restartable-flows'
-			},
-			{
 				name: 'Priority for steps',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -869,6 +871,17 @@ const sections = [
 				},
 				link: '/docs/flows/priority',
 				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'Restart deployed flows from any node',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/blog/launch-week-1/restartable-flows'
 			},
 			{
 				name: 'Lifetime / Delete after use',
