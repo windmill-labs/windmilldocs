@@ -95,15 +95,21 @@ export default function Footer() {
 						</p>
 					</div>
 					<div className="flex justify-center items-center">
-						<img
-							className="h-10"
-							src="/img/soc.png.webp"
-							alt="SOC Compliance badge"
-							loading="lazy"
-						/>
-						<p className="text-xs text-left leading-6 text-gray-800 dark:text-gray-200 text-opacity-60 ml-2">
-							Windmill Labs is SOC 2 Type II compliant.
-						</p>
+						<a
+							href="https://trust.windmill.dev"
+							alt="Trust center"
+							class="flex justify-center items-center"
+						>
+							<img
+								className="h-10"
+								src="/img/soc.png.webp"
+								alt="SOC Compliance badge"
+								loading="lazy"
+							/>
+							<p className="text-xs text-left leading-6 text-gray-800 dark:text-gray-200 text-opacity-60 ml-2">
+								Windmill Labs is SOC 2 Type II compliant.
+							</p>
+						</a>
 					</div>
 					<div className="social-icons flex justify-center space-x-4 mt-1 mb-1">
 						<a
