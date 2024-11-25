@@ -10,11 +10,9 @@ If you're rather interested in leveraging OpenAI from your scripts, flows and ap
 
 :::
 
-To enable Windmill AI, go to the "Windmill AI" tab in the workspace settings and add an [OpenAI resource](../../integrations/openai.md). Code completion is disabled by default, but you can enable it in the same tab.
+To enable Windmill AI, go to the "Windmill AI" tab in the workspace settings and add a [supported model](#models)'s [resource](../3_resources_and_types/index.mdx). Code completion is disabled by default, but you can enable it in the same tab.
 
-Windmill AI uses OpenAI's [GPT-4o](https://openai.com/index/hello-gpt-4o/).
-
-![Enable Windmill autopilot](./enable_autopilot.png 'Enable Windmill autopilot')
+![Enable Windmill AI](./enable_ai.png 'Enable Windmill AI')
 
 ## Windmill AI for scripts
 
@@ -174,12 +172,6 @@ When adding a [branch](../../flows/13_flow_branches.md), the AI assistant will s
 	src="/videos/branch_predicate_copilot.mp4"
 />
 
-## Azure OpenAI advanced models
-
-You can run all Windmill AI features on a specified deployed model.
-
-You need to specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
-
 ## Windmill AI code completion
 
 When code completion is enabled, Windmill AI suggests completions as you type in all code editors (Script, Flow, Apps).
@@ -192,8 +184,18 @@ When code completion is enabled, Windmill AI suggests completions as you type in
 
 ## CRON schedules from prompt
 
+The AI assistant can generate CRON [schedules](../1_scheduling/index.mdx) from a prompt.
+
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/cron_from_prompt.mp4"
 />
+
+## Models
+
+Windmill AI supports natively OpenAI's [GPT-4o](https://platform.openai.com/docs/models/gpt-4o), Anthropic's [Claude 3.5](https://docs.anthropic.com/en/docs/models/claude-3-5-sonnet) and Mistral's [Codestral](https://mistral.ai/technology/#models).
+
+Additionnaly, you can run all Windmill AI features on a specified Azure OpenAI deployed model.
+
+You need to specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
