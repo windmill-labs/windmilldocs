@@ -100,9 +100,6 @@ export default function BlogPostItemContainer({ children, className }) {
 
 					<div className="mb-6">
 						<div className="flex items-center">
-							<p className="text-base dark:text-gray-300 text-gray-600 mr-3">
-								{new Date(metadata.date).toLocaleDateString()} |{' '}
-							</p>
 							{frontMatter.docs && (
 								<a
 									href={frontMatter.docs}
@@ -232,9 +229,22 @@ export default function BlogPostItemContainer({ children, className }) {
 							{metadata.description ?? frontMatter.description}
 						</p>
 					</div>
-					<div className="flex flex-row gap-2 text-blue-400 font-semibold items-center p-4">
-						Read more
-						<ArrowRight size={16} className="opacity-50" />
+					<div className="flex flex-row justify-between items-center p-4">
+						<div className="flex flex-row gap-2 text-blue-400 font-semibold items-center">
+							Read more
+							<ArrowRight size={16} className="opacity-50" />
+						</div>
+						<span className="text-sm text-gray-500">
+							{(() => {
+								const months = {
+									'01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
+									'05': 'May', '06': 'Jun', '07': 'Jul', '08': 'Aug',
+									'09': 'Sep', '10': 'Oct', '11': 'Nov', '12': 'Dec'
+								};
+								const [year, month, day] = metadata.date.split('-');
+								return `${months[month]} ${parseInt(day)}, ${year}`;
+							})()}
+						</span>
 					</div>
 				</Link>
 			) : (
