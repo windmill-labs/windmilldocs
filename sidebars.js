@@ -272,10 +272,13 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
-				'integrations/integrations_on_windmill',
 				{
 					type: 'category',
-					label: 'List of integrations',
+					label: 'Integrations',
+					link: {
+						type: 'doc',
+						id: 'integrations/integrations_on_windmill'
+					},
 					items: [
 						{
 							type: 'doc',
@@ -562,7 +565,6 @@ const sidebars = {
 						'script_editor/concurrency_limit',
 						'script_editor/perpetual_scripts',
 						'script_editor/custom_environment_variables',
-						'script_editor/custom_response_code',
 						'script_editor/multiplayer',
 						'script_editor/vs_code_scripts'
 					]

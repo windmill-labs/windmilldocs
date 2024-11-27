@@ -5,6 +5,7 @@ import { usePluralForm } from '@docusaurus/theme-common';
 import { useBlogPost } from '@docusaurus/plugin-content-blog/client';
 
 import styles from './styles.module.css';
+
 // Very simple pluralization: probably good enough for now
 function useReadingTimePlural() {
 	const { selectMessage } = usePluralForm();
@@ -29,21 +30,66 @@ function ReadingTime({ readingTime }) {
 	return <>{readingTimePlural(readingTime)}</>;
 }
 function Date({ date, formattedDate }) {
+	// Add null check for date prop
+	if (!date) {
+		return null;
+	}
+	
+	// If formattedDate is provided, use it directly
+	if (formattedDate) {
+		return (
+			<time dateTime={date} itemProp="datePublished">
+				{formattedDate}
+			</time>
+		);
+	}
+
+	// Convert YYYY-MM-DD to Month DD, YYYY
+	const months = {
+		'01': 'Jan',
+		'02': 'Feb',
+		'03': 'Mar',
+		'04': 'Apr',
+		'05': 'May',
+		'06': 'Jun',
+		'07': 'Jul',
+		'08': 'Aug',
+		'09': 'Sep',
+		'10': 'Oct',
+		'11': 'Nov',
+		'12': 'Dec'
+	};
+
+	const [year, month, day] = date.split('-');
+	const displayDate = `${months[month]} ${parseInt(day)}, ${year}`;
+	
 	return (
 		<time dateTime={date} itemProp="datePublished">
-			{formattedDate}
+			{displayDate}
 		</time>
 	);
 }
 
+function Spacer() {
+	return <>{' · '}</>;
+}
+
 export default function BlogPostItemHeaderInfo({ className }) {
-	const { metadata } = useBlogPost();
-	const { date, formattedDate, readingTime } = metadata;
+	const blogPostContext = useBlogPost();
+	console.log('BlogPost context:', blogPostContext);
+	
+	if (!blogPostContext?.metadata) {
+		console.warn('No metadata available');
+		return null;
+	}
+
+	const { date, formattedDate, readingTime } = blogPostContext.metadata;
 	return (
 		<div className={clsx(styles.container, 'margin-vert--md', className)}>
-			<Date date={date} formattedDate={formattedDate} />
+			{date && <Date date={date} formattedDate={formattedDate} />}
 			{typeof readingTime !== 'undefined' && (
 				<>
+					<Spacer />
 					<ReadingTime readingTime={readingTime} />
 				</>
 			)}
