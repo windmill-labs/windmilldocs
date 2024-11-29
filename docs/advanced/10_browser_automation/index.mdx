@@ -32,6 +32,7 @@ import { chromium } from "playwright"
 export async function main() {
   const browser = await chromium.launch({
     executablePath: "/usr/bin/chromium",
+    args: ['--no-sandbox', '--single-process', '--no-zygote', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
   });
   
   const page = await browser.newPage();
@@ -52,33 +53,9 @@ import puppeteer from "puppeteer-core";
 
 export async function main() {
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: true,
     executablePath: "/usr/bin/chromium",
-    args: ["--no-sandbox"],
-  });
-
-  const page = await browser.newPage();
-  await page.goto("https://google.com");
-
-  const title = await page.title();
-
-  await browser.close();
-
-  return title;
-}
-```
-
-### Puppeteer (Deno)
-
-```typescript
-import puppeteer from "npm:puppeteer-core";
-
-export async function main() {
-  const browser = await puppeteer.launch({
-    headless: "new",
-    executablePath: "/usr/bin/chromium",
-    args: ["--no-sandbox"],
-    //userDataDir: "./user-data", // this is only required when Windmill is running with nsjail where you don't have access to the default user data dir
+    args: ['--no-sandbox', '--single-process', '--no-zygote', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
   });
 
   const page = await browser.newPage();
