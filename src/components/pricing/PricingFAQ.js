@@ -61,7 +61,7 @@ const faqs = [
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />
-				Operators are 1/2 price of developers (or 1/2 seats).
+				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are member of.
 			</span>
 		)
 	},
