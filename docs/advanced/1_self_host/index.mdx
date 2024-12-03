@@ -285,6 +285,7 @@ services:
         limits:
           cpus: '1'
           memory: 2048M
+        # for GB, use syntax '2Gi'
     restart: unless-stopped
     environment:
       - DATABASE_URL=${DATABASE_URL}
