@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 
 Windmill leverages the JSON Schema to define the structure and validation rules for JSON data, adhering to the [JSON Schema standard (version 2020-12)](https://json-schema.org/draft/2020-12/schema) for schema definition.
 
-## JSON Schema Specification
+## JSON Schema specification
 
 A JSON Schema defines the properties, types, and constraints of a JSON object. It consists of the following components:
 
@@ -50,7 +50,7 @@ The property names need to match the arguments declared by the main function, in
 - Each argument can have a description and default fields, that will appear in the generated UI.
 - Some types have advanced settings.
 
-### Script Parameters to JSON Schema
+### Script parameters to JSON Schema
 
 Scripts in Windmill have input parameters defined by a JSON Schema, where each parameter in the main function of a script corresponds to a field in the JSON Schema. This one-to-one correspondence ensures that the name of the argument becomes the name of the property, and most primitive types in Python and TypeScript have a corresponding primitive type in JSON and JSON Schema. During script execution, the parameters and their types are validated against the JSON Schema, ensuring that the input adheres to the expected format.
 
@@ -126,7 +126,7 @@ The JSON Schema of a script's arguments is visible and can be modified from the 
     src="/videos/schema_script.mp4"
 />
 
-### Flows Parameters and JSON Schema
+### Flows parameters and JSON Schema
 
 Flows in Windmill have input parameters defined by a JSON Schema. Each argument of the [`Flow Input`](../../flows/3_editor_components.mdx#flow-inputs) section corresponds to a field in the JSON Schema. The parameters and their types are validated against the JSON Schema during flow execution.
 
@@ -195,7 +195,7 @@ Below is the list of advanced settings for each type of field:
 	/>
 </div>
 
-## Special Types
+## Special types
 
 There are special types that lead to a custom behavior in the [auto-generated UIs](../6_auto_generated_uis/index.mdx).
 
@@ -238,9 +238,9 @@ The result of the user's selection will be the selected object. With the example
 wmill script run u/user/path -d '{"example_oneof":{"label":"Option 2","attribute":"Value that the user entered"}}'
 ```
 
-### Dynamic Select
+### Dynamic select
 
-Dynamic Select is an helper function within [scripts](../../script_editor/index.mdx) that allows you to create a select field with dynamic options.
+Dynamic select is an helper function within [scripts](../../script_editor/index.mdx) that allows you to create a select field with dynamic options.
 
 You must export the string type as `DynSelect_<name>` and the function as `<name>` :
 

@@ -19,7 +19,7 @@ In this quickstart guide, we will write our first script/playbook with [Ansible]
 
 <br />
 
-This tutorial covers how to create a simple ansible script through Windmill web IDE. See the dedicated page to [Develop Scripts Locally](../../../advanced/4_local_development/index.mdx).
+This tutorial covers how to create a simple Ansible script through Windmill web IDE. See the dedicated page to [Develop scripts locally](../../../advanced/4_local_development/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -29,7 +29,7 @@ This tutorial covers how to create a simple ansible script through Windmill web 
 	/>
 </div>
 
-Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_triggers/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
+Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_triggers/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized user interface as [Apps](../../7_apps_quickstart/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -46,7 +46,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code-playbook): For ansible this is a playbook file written in yaml.
+- [Code](#code-playbook): for Ansible this is a playbook file written in yaml.
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.playbook.yml` and `<path>.script.yaml`
@@ -84,7 +84,7 @@ Now click on the code editor on the left side.
 
 ## Code (Playbook)
 
-In order to make Ansible playbooks compatible with the windmill environment and script model, there is some extra information preceding the start of the playbook that can be entered. Because of this, an Ansible playbook in Windmill will typically look like this:
+In order to make Ansible playbooks compatible with the Windmill environment and script model, there is some extra information preceding the start of the playbook that can be entered. Because of this, an Ansible playbook in Windmill will typically look like this:
 
 ![Ansible in Windmill](./ansible_script_ide.png)
 
@@ -101,7 +101,7 @@ files:
   - resource: u/user/fabulous_jinja_template
     target:  ./config_template.j2
 
-# Define the arguments of the windmill script
+# Define the arguments of the Windmill script
 extra_vars:
   world_qualifier:
     type: string
@@ -134,13 +134,13 @@ dependencies:
       dest: result.json
 ```
 
-There are two YAML documents in series, the second being the Ansible Playbook. The first one is only used by windmill, and will not be visible to Ansible when executing the playbook. It contains different sections that declare some metadata about the script.
+There are two YAML documents in series, the second being the Ansible playbook. The first one is only used by Windmill, and will not be visible to Ansible when executing the playbook. It contains different sections that declare some metadata about the script.
 
 We will now go thorugh each of these sections.
 
 ### Arguments (extra-args)
 
-Windmill scripts can take arguments, and in order to define the names and types of the arguments you can use this section. These definitions will be parsed allowing the frontend to interactively display dynamic inputs for the script.
+Windmill scripts can take [arguments](../../../core_concepts/13_json_schema_and_parsing/index.mdx), and in order to define the names and types of the arguments you can use this section. These definitions will be parsed allowing the frontend to interactively display dynamic inputs for the script.
 
 
 ```yaml
@@ -174,7 +174,7 @@ extra_vars:
 ```
 :::
 
-To use windmill resources as types you can use the following type definition:
+To use Windmill [resources](../../../core_concepts/3_resources_and_types/index.mdx) as types you can use the following type definition:
 
 ```yaml
 extra_vars:
@@ -189,7 +189,7 @@ Under the hood, Windmill will pass these variables using the `--extra-vars` flag
 
 ### Static resources and variables
 
-Resources and variables that are hardcoded to a particular script can also be defined in the `extra-vars` section. This is because they are similarly passed through the `--extra-vars` flag in the ansible playbook.
+Resources and [variables](../../../core_concepts/2_variables_and_secrets/index.mdx) that are hardcoded to a particular script can also be defined in the `extra-vars` section. This is because they are similarly passed through the `--extra-vars` flag in the Ansible playbook.
 
 This is what the syntax looks like:
 ```yml
@@ -208,9 +208,9 @@ Under `resource` or `variable` you can statically link the path to the resource/
 Note that Variables defined this way can only be static. If you want to use non-static Variables, define a normal argument with `type: string` and from the UI fill it with one of your Variables or Secrets.
 :::
 
-### Return Values
+### Return values
 
-In windmill scripts usually have a return value, which allows scripts to be chained in flows and run conditionally on the result of a previous operation. For Ansible playbooks you can achieve the same result by having one of the tasks (preferably the last one for coherence of results/errors) write a file named `result.json` with the JSON object you want to return:
+In Windmill scripts usually have a return value, which allows scripts to be chained in flows and run conditionally on the result of a previous operation. For Ansible playbooks you can achieve the same result by having one of the tasks (preferably the last one for coherence of results/errors) write a file named `result.json` with the JSON object you want to return:
 
 ```yaml
 ---
@@ -281,13 +281,13 @@ files:
 
 And the content of the variable will be written to the file.
 
-This is useful when you want to store the data in a secret for example, like you would do for ssh keys.
+This is useful when you want to store the data in a secret for example, like you would do for SSH keys.
 
-#### Ansible and ssh
+#### Ansible and SSH
 
-To succesfully have the playbook ssh, you might need to follow these tips:
+To succesfully have the playbook SSH, you might need to follow these tips:
 
-1) Write the ssh key into a *secret* variable, and **make sure it has an ending newline**, otherwise you might get an error.
+1) Write the SSH key into a *secret* variable, and **make sure it has an ending newline**, otherwise you might get an error.
 
 ```
 -----BEGIN OPENSSH PRIVATE KEY-----
@@ -298,7 +298,7 @@ PQMBB6FEA0IABErMvG2Fa1jjG7DjEQuwRGCEDnVQc1G0ibU/HI1BjkIyf4d+sh
 
 ```
 
-2) Make a file for the script that will contain this ssh key. Make sure to add the `mode: '0600'` or you might get another error.
+2) Make a file for the script that will contain this SSH key. Make sure to add the `mode: '0600'` or you might get another error.
 
 ```yaml
 files:
@@ -312,15 +312,15 @@ files:
 ...
 [your_host:vars]
 ansible_host=your_host
-ansible_user=john # The ssh user
-ansible_ssh_private_key_file=ssh_key # The file we declared where the ssh key can be found.
+ansible_user=john # The SSH user
+ansible_ssh_private_key_file=ssh_key # The file we declared where the SSH key can be found.
 ansible_ssh_common_args='-o StrictHostKeyChecking=no' # This skips host key verification, avoiding the error. Alternatively, you can add the host to known_hosts, either as an init script or a task in your playbook
 ...
 ```
 
 ### Dependencies
 
-Ansible playbooks often depend on python packages or Ansible Galaxy Collections. In windmill you can specify these dependencies in the `dependencies` section and Windmill will take care of satisfying them before running the playbook.
+Ansible playbooks often depend on Python packages or Ansible Galaxy Collections. In Windmill you can specify these dependencies in the `dependencies` section and Windmill will take care of satisfying them before running the playbook.
 
 ```yaml
 dependencies:
@@ -332,13 +332,13 @@ dependencies:
     - jmespath
 ```
 
-The syntax is similar to `ansible-builder` and Execution Environments, however all is installed locally using the same technology as for managing [Python Dependencies](../../../advanced/15_dependencies_in_python/index.mdx) in python scripts, meaning no extra container is created.
+The syntax is similar to `ansible-builder` and Execution Environments, however all is installed locally using the same technology as for managing [Python dependencies](../../../advanced/15_dependencies_in_python/index.mdx) in Python scripts, meaning no extra container is created.
 
 :::info Ansible vs Ansible-core
-Currently the Windmill image supporting ansible runs the full `ansible` and not `ansible-core`. You can expect the respective collections to be preinstalled.
+Currently the Windmill image supporting Ansible runs the full `ansible` and not `ansible-core`. You can expect the respective collections to be preinstalled.
 :::
 
-## Instant Preview & Testing
+## Instant preview & testing
 
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
@@ -354,7 +354,7 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Instant Preview & Testing"
+		title="Instant preview & testing"
 		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
 		href="/docs/core_concepts/instant_preview"
 	/>
@@ -367,8 +367,6 @@ Now let's go to the last step: the "Generated UI" settings.
 From the Settings menu, the "Generated UI" tab lets you customize the script's arguments.
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
-
-`![Advanced settings for Python](./customize_python.png.webp)`
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -383,7 +381,7 @@ The UI is generated from the Script's main function signature, but you can add a
 	/>
 </div>
 
-## Workflows as Code
+## Workflows as code
 
 One way to write distributed programs that execute distinct jobs is to use [flows](../../../flows/1_flow_editor.mdx) that chain scripts together.
 
@@ -395,7 +393,7 @@ All details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workflows as Code"
+		title="Workflows as code"
 		description="Automate tasks and their flow with only code."
 		href="/docs/core_concepts/workflows_as_code"
 	/>
@@ -412,8 +410,6 @@ each script version is uniquely identified by a hash.
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
-
-`![Run hello world in Python](./run_python.png.webp)`
 
 You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-Line Interface call.
 
