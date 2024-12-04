@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# AgGrid Table
+# AgGrid table
 
 The AgGrid table component allows you to display an [Ag Grid](https://ag-grid.com/) table.
 
@@ -17,7 +17,7 @@ The AgGrid table component allows you to display an [Ag Grid](https://ag-grid.co
 If you are new to Ag Grid, check out our [Introduction guide](../../misc/9_guides/aggrid_table/index.md).
 :::
 
-The following section details AgGrid Table component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details AgGrid table component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -79,7 +79,7 @@ This component can be controlled by [frontend scripts](../3_app-runnable-panel.m
 
 ## Table actions
 
-`AgGrid Table` can define actions that will be displayed in each row of the table. An action is a component that cannot be moved.
+`AgGrid table` can define actions that will be displayed in each row of the table. An action is a component that cannot be moved.
 
 Available components are:
 
@@ -87,9 +87,9 @@ Available components are:
 - [Toggle](./toggle.mdx)
 - [Select](./select.mdx)
 
-![AgGrid Actions](../../assets/apps/4_app_component_library/aggrid_actions.png 'AgGrid Actions')
+![AgGrid actions](../../assets/apps/4_app_component_library/aggrid_actions.png 'AgGrid actions')
 
-## AgGrid Table configuration
+## AgGrid table configuration
 
 | Name                        |  Type   | Connectable | Templatable |    Default    | Description                                                                                                     |
 | --------------------------- | :-----: | :---------: | :---------: | :-----------: | --------------------------------------------------------------------------------------------------------------- |
@@ -139,9 +139,9 @@ The `Column Defs` input allows you to define the columns of the table. The colum
 | filter           | boolean | Whether the values of column can be filtered.	                        |
 | cellRendererType | string  | The type of cell renderer to use (link, image, button etc.)	            |
 
-## AgGrid Infinite Table
+## AgGrid infinite table
 
-The AgGrid Infinite Table component allows you to display an Ag Grid table with infinite scrolling.
+The AgGrid infinite table component allows you to display an Ag Grid table with infinite scrolling.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -166,11 +166,11 @@ With this [SQL syntax](../../getting_started/0_scripts_quickstart/5_sql_quicksta
 SELECT * FROM products WHERE title ILIKE '%' || $3 || '%'LIMIT $1::INT OFFSET $2::INT;
 ```
 
-![AgGrid Infinite Table](../../assets/apps/4_app_component_library/aggrid_infinite.png 'AgGrid Infinite Table')
+![AgGrid infinite table](../../assets/apps/4_app_component_library/aggrid_infinite.png 'AgGrid infinite table')
 
-### AgGrid Table EE
+### AgGrid table EE
 
-The AgGrid Table EE component allows you to display an Ag Grid table with the rest of [AgGrid Enterprise](https://ag-grid.com/license-pricing/) features.
+The AgGrid table EE component allows you to display an Ag Grid table with the rest of [AgGrid Enterprise](https://ag-grid.com/license-pricing/) features.
 
 Its independent from Windmill's Enterprise Edition.
 

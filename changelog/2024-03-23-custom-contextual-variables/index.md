@@ -1,7 +1,7 @@
 ---
 slug: custom-contextual-variables
 version: v1.295.0
-title: Custom Contextual Variables
+title: Custom contextual variables
 tags: ['Variables']
 image: ./create_custom_contextual_variable.png
 description: From Variables tab, admins can create custom contextual variables that will act as env variables for all jobs within a workspace.

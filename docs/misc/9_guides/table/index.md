@@ -4,10 +4,10 @@ This is a introduction on how to use the Table component in Windmill.
 
 ![Table API](../../../assets/apps/4_app_component_library/table.png.webp)
 
-## AgGrid vs Table component vs Database Studio
+## AgGrid vs Table component vs Database studio
 
 In Windmill there are 3 table components: one simply called Table,
-[AgGrid](../aggrid_table/index.md) and [Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx).
+[AgGrid](../aggrid_table/index.md) and [Database studio](../../../apps/4_app_configuration_settings/database_studio.mdx).
 
 The Table component is for most usecases. In it's simplest form it takes an
 array of objects as input, and uses the key of the object as the header of the
@@ -17,7 +17,7 @@ See bottom of this document for the current Limitations.
  
 [AgGrid](../aggrid_table/index.md) component provides you with a lot of advanced features.
 
-[Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx) is a web-based database management tool. It allows you to display and edit the content of a database.
+[Database studio](../../../apps/4_app_configuration_settings/database_studio.mdx) is a web-based database management tool. It allows you to display and edit the content of a database.
 
 ### Examples
 
@@ -27,7 +27,7 @@ See bottom of this document for the current Limitations.
 See below to copy/paste fast. Hopefully you then have the best from both world. Easy copy/paste, and working code you can look at
 :::
 
-## Table data (Data Source)
+## Table data (data source)
 
 As in almost all the fields in the app, you can have either `static`,
 `connected` or `eval` data.
@@ -55,7 +55,7 @@ with the `row.value` and `row.index` properties.
 
 You will find example of using `row.value` and `row.index`
 
-### Initial State
+### Initial state
 
 :::info
 

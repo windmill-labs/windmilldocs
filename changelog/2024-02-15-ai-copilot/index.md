@@ -1,10 +1,10 @@
 ---
 slug: ai-copilot
 version: v1.270.0
-title: Flow & Metadata Copilot
+title: Flow & metadata copilot
 tags: ['Windmill AI', 'Flow editor', 'Script editor']
 video: /videos/ai_fill_inputs.mp4
-description: The Flow & Metadata Copilot is an assistant powered by an OpenAI resource that simplifies your script & flows building experience by population fields (summaries, descriptions, step input expressions) automatically based on context and prompts.
+description: The Flow & metadata copilot is an assistant powered by an OpenAI resource that simplifies your script & flows building experience by population fields (summaries, descriptions, step input expressions) automatically based on context and prompts.
 features:
   [
     'Fills summary of script & flow steps.',

@@ -1,7 +1,7 @@
 ---
 slug: navbar
 version: v1.358.0
-title: Navbar Component
+title: Navbar component
 tags: ['App editor']
 description: The Navbar component facilitates control over an app by changing its ctx.query and jumping into another app.
 features:

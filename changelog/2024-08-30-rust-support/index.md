@@ -1,7 +1,7 @@
 ---
 slug: rust-support
 version: v1.388.0
-title: Rust Support
+title: Rust support
 tags: ['Rust', 'Code editor']
 description: Windmill now supports Rust scripts.
 features:

@@ -1,7 +1,7 @@
 ---
 slug: full-height-components
 version: v1.331.0
-title: Full Height Components
+title: Full-height components
 tags: ['App editor']
 video: /videos/full_height.mp4
 description: When set to full height, a component (in its respective view type, desktop or mobile) components will have their height go down until the end of the parent container (if no, canvas).

@@ -1,7 +1,7 @@
 ---
 slug: flow-status-viewer
 version: v1.362.0
-title: Flow Status Viewer improvements
+title: Flow status viewer improvements
 tags: ['Flow editor']
 description: Improved the flow status viewer readability.
 features:

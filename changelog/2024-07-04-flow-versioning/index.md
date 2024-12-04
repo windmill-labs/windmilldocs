@@ -1,7 +1,7 @@
 ---
 slug: flow-versioning
 version: v1.357.0
-title: Flow Versioning
+title: Flow versioning
 tags: ['Flow editor', 'Script editor', 'App editor']
 image: ./deployment_history.png
 description: Flows now have versions just like scripts and apps.

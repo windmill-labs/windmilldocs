@@ -1,7 +1,7 @@
 ---
 slug: rename-workspace
 version: v1.294.0
-title: Rename Workspace
+title: Rename workspace
 tags: ['Instance']
 image: ./change_workspace_id.png
 description: On self-hosted instances, workspaces can have names and IDs updated from the workspace settings.

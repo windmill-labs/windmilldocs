@@ -15,9 +15,9 @@ Integrating Mailchimp Mandrill is a powerfull way of [triggering scripts and flo
 <br/>
 
 :::info TLDR
-
 The present tutorial explains how to use Mailchimp to trigger Windmill [scripts](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) and [flows](../getting_started/6_flows_quickstart/index.mdx) through sending parsed inbound emails to Windmill via [webhooks](../core_concepts/4_webhooks/index.mdx).
-
+<br/>
+Note that Windmill now natively supports [email triggers](../advanced/17_email_triggers/index.mdx) through SMTP.
 :::
 
 ## Webhooks in Windmill

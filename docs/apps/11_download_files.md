@@ -2,7 +2,7 @@
 
 Within your Windmill apps, you might want users to download files. There are two options: the download button, and the transformers. Both involve manipulating data URLs scheme with a Base64 encoded string.
 
-## Download Button
+## Download button
 
 The [download button](./4_app_configuration_settings/download_button.mdx) component allows you to download a file. The data source of the Download button must be a data URL scheme with a [Base64 encoded string](../core_concepts/18_files_binary_data/index.mdx):
 
@@ -10,7 +10,7 @@ The [download button](./4_app_configuration_settings/download_button.mdx) compon
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
 	src="/videos/download_base64.mp4"
-	alt="Download Button Base64"
+	alt="Download button Base64"
 />
 
 ## Transformers

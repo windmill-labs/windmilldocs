@@ -99,7 +99,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'misc/guides/aggrid_table/index',
-									label: 'AgGrid Table'
+									label: 'AgGrid table'
 								},
 								'misc/guides/table/index',
 								'misc/guides/sequin/index',
@@ -358,7 +358,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'integrations/git_repository',
-							label: 'Git Repository'
+							label: 'Git repository'
 						},
 						{
 							type: 'doc',

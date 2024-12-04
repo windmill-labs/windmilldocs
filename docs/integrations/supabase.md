@@ -12,7 +12,7 @@ This tutorial assumes that you already have a <a href='https://app.windmill.dev/
 
 :::
 
-## Through Postgres Protocol
+## Through Postgres protocol
 
 You can execute queries on Supabase through the regular Postgres protocol.
 

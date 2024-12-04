@@ -1,7 +1,7 @@
 ---
 slug: secondary-storage
 version: v1.340.0
-title: Secondary Storage
+title: Secondary storage
 tags: ['Persistent Storage']
 image: ./secondary_storage.png
 description: Read and write from a storage that is not your main storage by specifying it in the S3 object as "secondary_storage" with the name of it.

@@ -1,8 +1,8 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Top Bar
+# Top bar
 
-The Top Bar component displays a top bar on your app, with the app Summary and the Recompute all button.
+The Top bar component displays a top bar on your app, with the app Summary and the Recompute all button.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -10,7 +10,7 @@ The Top Bar component displays a top bar on your app, with the app Summary and t
 	src="/videos/topbar.mp4"
 />
 
-The following section details Top Bar component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Top bar component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -27,15 +27,15 @@ The following section details Top Bar component's specific settings. For more de
 	/>
 </div>
 
-The Top Bar component is in fact a [Container](#container) with a [Text](#text) and a [Recompute all](#recompute-all) components.
+The Top bar component is in fact a [Container](#container) with a [Text](#text) and a [Recompute all](#recompute-all) components.
 
 ## Container
 
 [Containers](./container.mdx) allow you to host other components in a box. Moving a container means moving all the components inside.
 
-In that case, the container of the Top Bar component takes the whole width of the canvas and contains on its left a [Text](#text) component, and on its right a [Recompute all](#recompute-all) component.
+In that case, the container of the Top bar component takes the whole width of the canvas and contains on its left a [Text](#text) component, and on its right a [Recompute all](#recompute-all) component.
 
-![Top Bar Container](../../assets/apps/4_app_component_library/topbar_container.png "Top Bar Container")
+![Top bar Container](../../assets/apps/4_app_component_library/topbar_container.png "Top bar Container")
 
 ## Text
 
@@ -43,7 +43,7 @@ The [Text](./text.mdx) component allows you to display text.
 
 In that case, the Text component has by default template value `${ctx.summary}` which will display the [context](../2_outputs.mdx#app-context) [Summary](../0_toolbar.md#app-summary) of the app.
 
-![Top Bar Text](../../assets/apps/4_app_component_library/topbar_text.png "Top Bar Text")
+![Top bar Text](../../assets/apps/4_app_component_library/topbar_text.png "Top bar Text")
 
 ## Recompute all
 
@@ -51,4 +51,4 @@ The [Recompute all](./recompute_all.mdx) component allows you to recompute all e
 
 By default, it will be set to Once.
 
-![Top Bar Recompute all](../../assets/apps/4_app_component_library/topbar_recomputeall.png "Top Bar Text")
+![Top bar Recompute all](../../assets/apps/4_app_component_library/topbar_recomputeall.png "Top bar Text")
