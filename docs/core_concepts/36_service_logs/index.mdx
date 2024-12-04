@@ -4,6 +4,7 @@ View logs from any [workers](../9_worker_groups/index.mdx) or servers directly w
 
 ![Service logs](./service_logs.png "Service logs")
 
+
 Windmill provides direct access to the logs emitted by containers, removing the need to manually retrieve them from Docker or other container platforms. This enables monitoring services without needing to leave the Windmill environment.
 
 You can view them from the [Workers](../9_worker_groups/index.mdx) page, in particular:
@@ -14,7 +15,42 @@ You can view them from the [Workers](../9_worker_groups/index.mdx) page, in part
   - **Error Count**: Displayed in red, highlighting errors separately for quick identification.
 - **Separation by Type**: Logs are organized by type. You can see logs for workers, servers and indexers.
 
-In future releases, we plan to introduce a powerful search capability for logs, integrated directly into the search modal. This feature will be exclusive to the Enterprise Edition, enabling users to quickly search across logs for specific events, errors, or patterns.
+
+On the left menu, you can navigate to Service logs.
+
+![Service Logs On Menu](./service_logs_menu.png)
+
+## Log search
+
+:::info
+Full text search is a feature available in Windmill EE, however, note that it is disabled by default in the example docker compose. To enable full text search on logs and completed jobs, you need to spin up the indexer service, [learn how to](../../misc/18_full_text_search/index.mdx).
+:::
+
+You can type any string on the search bar to query logs, the hosts that matched your query will be shown on the left pane with the count of lines that matched the query.
+
+If you select a host, you will get the most recent lines that match your query (limited to 1000). This is very similar to what you would expect from a graphana setup.
+
+![Search results](./service_log_search_results.png)
+
+
+Queries are parsed by Tantivy's [QueryParser](https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html), which lets you build relatively complex and useful queries. For example, you can try searching:
+
+```
+worker_group:default ping
+```
+To limit the search to workers in the default worker group.
+
+The fields that are indexed and can be used for this kind of search are:
+
+| Filed name  | Type | Description |
+| ----------- | ---- | ----------- |
+|host         | TEXT | The hostname, e.g windmill-workers-7cbf97c994-lptqj |
+|mode         | TEXT | The mode, `worker`, `server` or `indexer` |
+|worker_group | TEXT | Worker Group associated (if applicable) |
+|timestamp    | DATE | This is the timestamp of the log file used to store the logs internally, meaning that it's innacurate of up to a minute. |
+|file_name    | TEXT | Name of the file associated in s3 or in disk. |
+|logs         | TEXT | the log lines themselves. `logs:<query>` is equivalent to `query` |
+
 
 ## Log Storage
 
@@ -25,3 +61,7 @@ Windmill provides a flexible solution for log storage depending on your setup:
   
 - **Enterprise Edition** (with [Instance object storage](../38_object_storage_in_windmill/index.mdx#instance-object-storage)):
   For users with the Enterprise Edition (EE), logs can be stored in S3 if instance object storage is configured. This option provides more scalable storage and is ideal for larger-scale deployments or where long-term log retention is important.
+
+### Log retention
+
+Windmill retains logs no older than two weeks. You can decide if this retention policy also applies to the logs stored on s3 through the Instance Settings.
