@@ -4,7 +4,7 @@
 
 There are two resources associated with Airtable. Both are required to use Airtable's API from Windmill.
 
-## Airtable Account
+## Airtable account
 
 <video
  className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -21,7 +21,7 @@ You'll need to land on Airtable's <a href="https://airtable.com/create/tokens" r
 | -------- | ------ | ---------------- | ----------------- | -------- | ----------------------------------------- |
 | apiKey   | string | Airtable API key | keyXXXXXXXXXXXXXX | true     | Airtable Account > API > Generate API Key |
 
-## Airtable Table
+## Airtable table
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"

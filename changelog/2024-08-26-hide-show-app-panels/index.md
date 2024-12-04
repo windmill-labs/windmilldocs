@@ -1,7 +1,7 @@
 ---
 slug: hide-show-app-panels
 version: v1.384.0
-title: Hide / Show App editor Panels
+title: Hide / Show App editor panels
 tags: ['App editor']
 description: Hide panels on App editor with buttons and shortcuts.
 features:

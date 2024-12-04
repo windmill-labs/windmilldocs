@@ -34,7 +34,7 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 
 When a script accepts a S3 file as input, it can be directly uploaded or chosen from the bucket explorer.
 
-![S3 File Uploader](../11_persistent_storage/file_upload.png)
+![S3 file uploader](../11_persistent_storage/file_upload.png)
 
 ![S3 bucket browsing](../11_persistent_storage/bucket_browsing.png)
 
@@ -79,18 +79,18 @@ In the app editor, in some cases when there is no ambiguity, the data prefix is 
 
 Base64 encoded strings are used in:
 
-- File Input component in the app editor: files uploaded are converted and returned as a Base64 encoded string.
-- Download Button: the source to be downloaded must be in Base64 format.
+- File input component in the app editor: files uploaded are converted and returned as a Base64 encoded string.
+- Download button: the source to be downloaded must be in Base64 format.
 - File inputs to run scripts must be typed into the [JSON](../13_json_schema_and_parsing/index.mdx) `string, encodingFormat: base64` (python: `bytes`, Deno: `wmill.Base64`).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="File Input Component"
+		title="File input Component"
 		description="The file input allows users to drop files into the app."
 		href="/docs/apps/app_configuration_settings/app_component_library#file-input"
 	/>
 	<DocCard
-		title="Download Button"
+		title="Download button"
 		description="The download button component allows you to download a file."
 		href="/docs/apps/app_configuration_settings/app_component_library#download-button"
 	/>

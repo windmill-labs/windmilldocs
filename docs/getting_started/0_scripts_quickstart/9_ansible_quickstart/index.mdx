@@ -208,7 +208,7 @@ Under `resource` or `variable` you can statically link the path to the resource/
 Note that Variables defined this way can only be static. If you want to use non-static Variables, define a normal argument with `type: string` and from the UI fill it with one of your Variables or Secrets.
 :::
 
-### Return Values
+### Return values
 
 In windmill scripts usually have a return value, which allows scripts to be chained in flows and run conditionally on the result of a previous operation. For Ansible playbooks you can achieve the same result by having one of the tasks (preferably the last one for coherence of results/errors) write a file named `result.json` with the JSON object you want to return:
 
@@ -338,7 +338,7 @@ The syntax is similar to `ansible-builder` and Execution Environments, however a
 Currently the Windmill image supporting ansible runs the full `ansible` and not `ansible-core`. You can expect the respective collections to be preinstalled.
 :::
 
-## Instant Preview & Testing
+## Instant preview & testing
 
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
@@ -383,7 +383,7 @@ The UI is generated from the Script's main function signature, but you can add a
 	/>
 </div>
 
-## Workflows as Code
+## Workflows as code
 
 One way to write distributed programs that execute distinct jobs is to use [flows](../../../flows/1_flow_editor.mdx) that chain scripts together.
 
@@ -395,7 +395,7 @@ All details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Workflows as Code"
+		title="Workflows as code"
 		description="Automate tasks and their flow with only code."
 		href="/docs/core_concepts/workflows_as_code"
 	/>

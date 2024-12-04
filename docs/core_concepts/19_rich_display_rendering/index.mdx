@@ -38,7 +38,7 @@ There are 3 table shapes that are supported:
 - [table-col](#table-column) (list of columns)
 - [table-row](#table-row) (list of values)
 
-### Rich Table Display
+### Rich table display
 
 The rich table display does not require a specific key and will be enabled for [scripts](../../script_editor/index.mdx) or [flows](../../flows/1_flow_editor.mdx) when the result is an array of objects.
 
@@ -68,7 +68,7 @@ def main() -> List[Dict[str, str]]:
 
 ![Rich Table Display](./rich_table_display.png "Rich Table Display")
 
-#### Force Column Order
+#### Force column order
 
 As you can see in the example above, the columns are not properly ordered. You can force column order with [Table Row Object](#table-row-object).
 
@@ -125,7 +125,7 @@ export async function main(): Promise<Array<{ "Pokemon name": string, "Type": st
 
 ![Columns ordered](./columns_ordered.png "Columns ordered")
 
-### Table Column
+### Table column
 
 The `table-col` key allows returning the value as a column-wise table.
 
@@ -143,7 +143,7 @@ return { "table-col": { "foo": [42, 8], "bar": [38, 12] } }
 
 ![Rich display Table Column](./table-col.png "Rich display Table Column")
 
-### Table Row
+### Table row
 
 The `table-row` key allows returning the value as a row-wise table.
 
@@ -161,7 +161,7 @@ return { "table-row": [ [ "foo", "bar" ], [ 42, 38 ], [ 8, 12 ] ] }
 
 ![Rich display Table Row](./table-row.png "Rich display Table Row")
 
-### Table Row Object
+### Table row object
 
 The `table-row-object` key allows returning the value as a row-wise table but where each row is an object (optionally the first row can be an array of strings to enforce column order).
 
@@ -369,7 +369,7 @@ return { "map": { lat: 40, lon: 0, zoom: 3, markers: [{lat: 50.6, lon: 3.1, titl
 ```
 ![Rich display map](./rich_display_map.png "Rich display map")
 
-## Render All
+## Render all
 
 The `render_all` key allows returning all results with their specific format.
 

@@ -78,12 +78,10 @@ You can filter on type if you don't want some items (e.g. variables) to be pushe
 
 Additionally, you can filter on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path), meaning only scripts, flows and apps with their path matching one of those filters will be synced to the Git repositories below. The filters allow '*'' and '**' characters, with '*'' matching any character allowed in paths until the next slash (/) and '**' matching anything including slashes. By default everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced.
 
-
-
 ### Azure DevOps with Service Principal setup
-In Microsoft Entra ID, create an application and a secret. 
+In Microsoft Entra ID, create an application and a secret (also known as Service Principal - an identity used by applications to access Azure resources). 
 Create an `azure` resource on your Windmill instance with the application's `client_id`, `client_secret` and `tenant_id`.
-On Azure DevOps, add the application to the DevOps organization with the appropriate permissions. 
+On Azure DevOps, add the application to the DevOps organization with the appropriate permissions.
 In Git sync settings of your Windmill instance, define a new repository with URL:
 
 ```

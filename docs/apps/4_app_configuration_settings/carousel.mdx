@@ -1,8 +1,8 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Carousel List
+# Carousel list
 
-The Carousel List component enables duplication of cards or rows with consistent structure in a carousel, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
+The Carousel list component enables duplication of cards or rows with consistent structure in a carousel, allowing for containment of other components. By default, editing or moving a component will apply changes to all cards or rows, while still allowing customization and exceptions for unique values per component.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -36,7 +36,7 @@ List components also support having inputs set inside them. Retrieve the values 
 />
 <br />
 
-The following section details Carousel List component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Carousel list component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -61,11 +61,11 @@ This component can be controlled by [frontend scripts](../3_app-runnable-panel.m
 | ------ | :----------------------: | -------------------- | ------------- |
 | [recompute](../3_app-runnable-panel.mdx#recompute) | id: string | Recompute a component. | recompute('a'); |
 
-## Carousel List configuration
+## Carousel list configuration
 
 | Name             |                              Type                               | Connectable | Templatable | Default  | Description                                                                                                                                         |
 | ---------------- | :-------------------------------------------------------------: | :---------: | :---------: | :------: | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Items            |                              array                              |    true     |    false    | 3 items  | The Carousel List items in JSON.                                                                                                                    |
+| Items            |                              array                              |    true     |    false    | 3 items  | The Carousel list items in JSON.                                                                                                                    |
 | Timing Fonctions | select ("linear", "ease", "ease-in", "ease-out", "ease-in-out") |    true     |    false    | "linear" | Sets how an animation progresses through the duration of each cycle, see https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function |
 
 ## Outputs

@@ -1,12 +1,12 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Resource Select
+# Resource select
 
-The Resource Select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmill workspace to interact with [integrations](../../integrations/0_integrations_on_windmill.mdx).
+The Resource select component allows you to have users pick [resources](../../core_concepts/3_resources_and_types/index.mdx) from your Windmill workspace to interact with [integrations](../../integrations/0_integrations_on_windmill.mdx).
 
-![Resource Select](../../assets/apps/4_app_component_library/resource_select.png.webp)
+![Resource select](../../assets/apps/4_app_component_library/resource_select.png.webp)
 
-The following section details Resource Select component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+The following section details Resource select component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -23,7 +23,7 @@ The following section details Resource Select component's specific settings. For
 	/>
 </div>
 
-## Resource Select configuration
+## Resource select configuration
 
 | Name        |                               Type                                | Connectable | Templatable | Default | Description                                                     |
 | ----------- | :---------------------------------------------------------------: | :---------: | :---------: | :-----: | --------------------------------------------------------------- |
@@ -43,7 +43,7 @@ The following section details Resource Select component's specific settings. For
 
 Apps are [executed on behalf of publishers](../3_app-runnable-panel.mdx#policy) and by default cannot access viewer's [resources](../../core_concepts/3_resources_and_types/index.mdx).
 
-If the resource passed here as a reference does not come from a static Resource Select component (which will be whitelisted by the auto-generated policy), you need to toggle "Resources from users allowed".
+If the resource passed here as a reference does not come from a static Resource select component (which will be whitelisted by the auto-generated policy), you need to toggle "Resources from users allowed".
 
 The toggle "Static resource select only / Resources from users allowed" can be found for each runnable input when the [source](../2_connecting_components/index.mdx) is an [eval](../3_app-runnable-panel.mdx#evals).
 

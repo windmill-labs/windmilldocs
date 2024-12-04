@@ -36,7 +36,7 @@ Windmill supports [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www
 
 Although all users can use BigQuery, Snowflake and MS SQL through resources and [community-available languages](../index.mdx) (TypeScript, Python, Go, Bash etc.), only instances under [Enterprise edition](/pricing) and cloud workspaces can use BigQuery, Snowflake and MS SQL runtimes as a dedicated language.
 
-## Create Resource
+## Create resource
 
 Windmill provides integrations with many different apps and services with the use
 of [Resources](../../../core_concepts/3_resources_and_types/index.mdx). Resources are rich objects in JSON that allow to store configuration and credentials.
@@ -86,7 +86,7 @@ every user. It is available under the path `f/examples/demo_windmillshowcases`.
 
 :::
 
-#### PostgreSQL: Add a Supabase Database
+#### PostgreSQL: Add a Supabase database
 
 Windmill provides a wizard to easily add a [Supabase](../../../integrations/supabase.md) database through PostgreSQL.
 
@@ -155,9 +155,7 @@ Fill out the form with the information of your MySQL instance and "Test connecti
 | dbname   | string | Database name   |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
 | password | string | User's password |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
 
-
 To specify the application intent for read-only requests, add `-- ApplicationIntent=ReadOnly` to the script.
-
 
 ### BigQuery
 
@@ -311,7 +309,7 @@ Now you can fill those values in Windmill, fill also the user and password for t
 
 Once it's working press save and you have succesfully added your Redshift instance as a PostgreSQL resource!
 
-## Create Script
+## Create script
 
 Next, let's create a script that will use the newly created Resource. From the <a href="https://app.windmill.dev/" rel="nofollow">Home</a> page,
 click on the "+Script" button. Name the Script, give it a summary, and select your preferred language, [PostgreSQL](#postgresql-1), [MySQL](#mysql-1), [MS SQL](#ms-sql-1), [BigQuery](#bigquery-1), [Snowflake](#snowflake-1).
@@ -469,8 +467,7 @@ INSERT INTO demo VALUES ($1::TEXT, $2::INT)
 
 Learn more about [the differences here](https://docs.aws.amazon.com/redshift/latest/dg/c_redshift-and-postgres-sql.html).
 
-
-## Raw Queries
+## Raw queries
 
 A more convenient but less secure option is to execute raw queries with a TypeScript, Deno or Python client. This enables you more flexibility than SQL prepared statement. You can for instance do string interpolation to make the name of the table a parameter of your script: `SELECT * FROM ${table}`. However this is dangerous since the string is directly interpolated and this open the door for [SQL injections](https://en.wikipedia.org/wiki/SQL_injection). Use with care and only in trusted environment.
 
@@ -833,7 +830,7 @@ Those scripts are minimal working examples, but there's a few more steps that ca
   to a script.
 - Connect to [resources](../../../core_concepts/3_resources_and_types/index.mdx).
 - [Trigger that script](../../8_triggers/index.mdx) in many ways.
-- Compose scripts in [Flows](../../../flows/1_flow_editor.mdx) or [Apps](../../../apps/0_app_editor/index.mdx) (in particular, [Database Studio](#database-studio) to visualize and manage your databases in apps).
+- Compose scripts in [Flows](../../../flows/1_flow_editor.mdx) or [Apps](../../../apps/0_app_editor/index.mdx) (in particular, [Database studio](#database-studio) to visualize and manage your databases in apps).
 - You can [share your scripts](../../../misc/1_share_on_hub/index.md) with the community on [Windmill Hub](https://hub.windmill.dev). Once
   submitted, they will be verified by moderators before becoming available to
   everyone right within Windmill.
@@ -873,16 +870,16 @@ In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhoo
 	/>
 </div>
 
-## Database Studio
+## Database studio
 
-From Windmill [App editor](../../../apps/0_app_editor/index.mdx), you can also use the [Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx) component to visualize and manage your databases (PostgreSQL / MySQL / MS SQL / Snowflake / BigQuery are all supported).
+From Windmill [App editor](../../../apps/0_app_editor/index.mdx), you can also use the [Database studio](../../../apps/4_app_configuration_settings/database_studio.mdx) component to visualize and manage your databases (PostgreSQL / MySQL / MS SQL / Snowflake / BigQuery are all supported).
 
-![Database Studio](../../../assets/apps/4_app_component_library/db_studio.png "Database Studio")
+![Database studio](../../../assets/apps/4_app_component_library/db_studio.png "Database studio")
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/Fd_0EffVDtw"
-	title="Database Studio"
+	title="Database studio"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -891,7 +888,7 @@ From Windmill [App editor](../../../apps/0_app_editor/index.mdx), you can also u
 
 <br/>
 
-The Database Studio component allows you to:
+The Database studio component allows you to:
 - Display the content of a table.
 - Edit the content of a table by directly editing the cells (only when the cell is editable).
 - Add a new row.
@@ -901,8 +898,8 @@ All details at:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Database Studio"
-		description="The Database Studio is a web-based database management tool that leverages Ag Grid for table display and interaction"
+		title="Database studio"
+		description="The Database studio is a web-based database management tool that leverages Ag Grid for table display and interaction"
 		href="/docs/apps/app_configuration_settings/database_studio"
 	/>
 </div>

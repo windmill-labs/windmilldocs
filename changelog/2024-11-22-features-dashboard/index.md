@@ -1,7 +1,7 @@
 ---
 slug: feature-request-and-issue-dashboard
 title: Feature request & issue dashboard
-tags: ['Enterprise']
+tags: ['Enterprise Edition']
 description: Enterprise users now have access to a dedicated dashboard for tracking feature requests and issues.
 features:
   [

@@ -1,7 +1,7 @@
 ---
 slug: workers-metrics
 version: v1.325.0
-title: Workers Metrics
+title: Workers metrics
 tags: ['Workers']
 image: ./workers_metrics.png
 description: You can visualize metrics for Delayed jobs per tag and Queue delay per tag.

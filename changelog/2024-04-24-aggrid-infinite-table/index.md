@@ -1,10 +1,10 @@
 ---
 slug: aggrid-infinite-table
 version: v1.315.0
-title: AgGrid Infinite Table
+title: AgGrid infinite table
 tags: ['App editor']
 video: /videos/infinite_table.mp4
-description: The AgGrid Infinite Table component allows you to display an Ag Grid table with infinite scrolling.
+description: The AgGrid infinite table component allows you to display an Ag Grid table with infinite scrolling.
 features:
   [
     'Specific syntax to let component manage rows display.',

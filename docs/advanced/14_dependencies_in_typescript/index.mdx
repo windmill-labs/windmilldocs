@@ -15,7 +15,7 @@ There are however methods to have more control on your dependencies:
 Moreover, there are other tricks, compatible with the methodologies mentioned above:
 
 - [Sharing common logic with Relative Imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles) when not using Bundles.
-- [Private npm Registry & Private npm Packages](#private-npm-registry--private-npm-packages).
+- [Private npm registry & private npm packages](#private-npm-registry--private-npm-packages).
 
 To learn more about how dependencies from other languages are handled, see [Dependency management & imports](../../advanced/6_imports/index.mdx).
 
@@ -34,7 +34,7 @@ To learn more about how dependencies from other languages are handled, see [Depe
 	/>
 </div>
 
-## Lockfile per Script inferred from Imports (Standard)
+## Lockfile per script inferred from imports (Standard)
 
 In Windmill, you can run scripts without having to [manage a package.json](#lockfile-per-script-inferred-from-a-packagejson) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
 
@@ -102,7 +102,7 @@ When a lockfile is present alongside a script at time of deployment by the CLI, 
 	/>
 </div>
 
-## Lockfile per Script inferred from a package.json
+## Lockfile per script inferred from a package.json
 
 Although Windmill can [automatically resolve imports](#lockfile-per-script-inferred-from-imports-standard). It is possible to override the dependencies by providing a `package.json` file in the same directory as the script as you would do in a standard Node.js project, building and maintaining a package.json to declare dependencies.
 
@@ -196,9 +196,9 @@ Windmill CLI, it is done automatically on `wmill sync push` for any script that 
 
 ## Other
 
-Two tricks can be used: [Relative Imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles) and [Private npm Registry & Private npm Packages](#private-npm-registry--private-npm-packages). Both are compatible with the methods described above.
+Two tricks can be used: [Relative Imports](#sharing-common-logic-with-relative-imports-when-not-using-bundles) and [Private npm registry & private npm packages](#private-npm-registry--private-npm-packages). Both are compatible with the methods described above.
 
-### Sharing common logic with Relative Imports when not using Bundles
+### Sharing common logic with relative imports when not using bundles
 
 If you want to share common logic with Relative Imports when not using [Bundles](#bundle-per-script-built-by-cli), this can be done easily using [relative imports](../5_sharing_common_logic/index.mdx) in both Bun and Deno.
 
@@ -258,7 +258,7 @@ Note that path in Windmill can have as many depth as needed, so you can have pat
 	/>
 </div>
 
-### Private npm Registry & Private npm Packages
+### Private npm registry & private npm packages
 
 You can use private npm registries and private npm packages in your TypeScript scripts.
 
@@ -292,7 +292,7 @@ windmill_worker:
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Private npm Registry & Private npm Packages"
+		title="Private npm registry & private npm packages"
 		description="Import private packages from npm in Windmill."
 		href="/docs/advanced/dependencies_in_typescript#private-npm-registry--private-npm-packages"
 	/>

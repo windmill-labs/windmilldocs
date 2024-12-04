@@ -1,14 +1,14 @@
-# AgGrid Table Guide
+# AgGrid table guide
 
 This is a basic introduction on how to use
-[AgGrid Table](https://www.ag-grid.com/) together with Windmill. It assumes
+[AgGrid table](https://www.ag-grid.com/) together with Windmill. It assumes
 little to no knowledge about AgGrid.
 
 ![AgGrid Overview](../../../../static/img/guide/aggrid_overview.png.webp)
 
-## What is AgGrid Table
+## What is AgGrid table
 
-The [AgGrid Table component](../../../apps/4_app_configuration_settings/aggrid_table.mdx) (called AgGrid from here) is a small wrapper around a
+The [AgGrid table component](../../../apps/4_app_configuration_settings/aggrid_table.mdx) (called AgGrid from here) is a small wrapper around a
 fantastic library called [AgGrid](https://www.ag-grid.com/). It provides you with
 a lot of advanced features. It comes in a free and a Enterprise (paid) version.
 All features below are part of the free version of AgGrid.
@@ -18,17 +18,17 @@ If you need the enterprise version of AgGrid, please
 [contact us](../../6_getting_help/index.mdx).
 :::
 
-## AgGrid vs Table component vs Database Studio
+## AgGrid vs Table component vs Database studio
 
 In Windmill there are 3 table components: one simply called [Table](../../../apps/4_app_configuration_settings/table.mdx),
-[AgGrid](../aggrid_table/index.md) and [Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx).
+[AgGrid](../aggrid_table/index.md) and [Database studio](../../../apps/4_app_configuration_settings/database_studio.mdx).
 
 The [Table component](../../../apps/4_app_configuration_settings/table.mdx) is for most usecases. It takes an array of objects as d
 input, and uses the key of the object as the header of the table. It also
 provides you with one or more action buttons to trigger an action for the row or
 create a dropdown button based on the row data.
 
-[Database Studio](../../../apps/4_app_configuration_settings/database_studio.mdx) is a web-based database management tool. It allows you to display and edit the content of a database.
+[Database studio](../../../apps/4_app_configuration_settings/database_studio.mdx) is a web-based database management tool. It allows you to display and edit the content of a database.
 
 :::info Transformer
 If you want to do basic sorting, or edit the column header name from the script
@@ -37,7 +37,7 @@ you can also use a Transformer script. See the
 for more information.
 :::
 
-## Column Definition
+## Column definition
 
 AgGrid needs two inputs, rowdata and column definitions. By default AgGrid does
 not show the rowdata. You need to specify the properties of each column. This is

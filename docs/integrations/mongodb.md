@@ -18,7 +18,7 @@ You can find more information about setting up MongoDB Atlas
 
 ![Integration between MongoDB and Windmill](../assets/integrations/0-header.png.webp 'Connect a MongoDB Atlas project with Windmill')
 
-## Create Resource
+## Create resource
 
 Windmill provides integration with many different apps and services with the use
 of [Resources][docs-resources]. Each Resource has a **Resources Type**, which
@@ -54,7 +54,7 @@ Windmill. When it's done, click "Save".
 
 ![Paste in Resource Values](../assets/integrations/2-mongo-rt.png.webp)
 
-### Using Custom Configuration
+### Using custom configuration
 
 Integration MongoDB through the [mongodb resource type](https://hub.windmill.dev/resource_types/22/mongodb) can be made by providing the following parameters.
 
@@ -76,7 +76,7 @@ Integration MongoDB through the [mongodb resource type](https://hub.windmill.dev
 
 </details>
 
-## Create Script
+## Create script
 
 Next, let's create a Script that will use the newly created Resource. Head on to
 the [Home][wm-app-home] page and click on the "+Script" button. We'll be using

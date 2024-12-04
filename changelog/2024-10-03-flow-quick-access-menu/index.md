@@ -2,7 +2,7 @@
 slug: flow-quick-access-menu
 version: v1.404.0
 title: Quick access menu for faster component insertion
-tags: ['Flow Editor']
+tags: ['Flow editor']
 description: Introducing the Quick Access Menu—a streamlined solution that centralizes all key features previously scattered across side panels. Now, you can benefit from the full potential of search, enhanced by intuitive filters, all in one place.
 features:
   [

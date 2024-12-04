@@ -1,7 +1,7 @@
 ---
 slug: pin-database
 version: v1.280.0
-title: Pin Database in SQL Scripts
+title: Pin database in SQL scripts
 tags: ['Script editor', 'SQL']
 video: /videos/pin_database.mp4
 description: Pin database resource path directly within a SQL script instead of filling it through the UI.
