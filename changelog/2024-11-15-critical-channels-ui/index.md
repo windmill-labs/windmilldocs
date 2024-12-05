@@ -2,7 +2,7 @@
 slug: critical-channels-ui
 version: v1.425.0
 title: Critical channels in UI
-tags: ['Critical alerts', 'Enterprise Edition']
+tags: ['Critical alerts', 'Enterprise']
 description: Critical alerts notifications are now displayed in the UI.
 docs: /docs/core_concepts/critical_alerts
 features:

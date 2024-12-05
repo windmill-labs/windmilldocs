@@ -2,7 +2,7 @@
 slug: critical-alerts
 version: v1.389.0
 title: Critical alerts
-tags: ['Workers', 'Security', 'Enterprise Edition']
+tags: ['Workers', 'Security', 'Enterprise']
 description: Get a notification everytime on critical events such as when a job is re-run after a crash.
 features:
   [

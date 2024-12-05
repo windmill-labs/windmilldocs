@@ -2,7 +2,7 @@
 slug: websocket-triggers
 version: v1.419.0
 title: Websocket triggers
-tags: ['Websocket', 'Enterprise Edition']
+tags: ['Websocket', 'Enterprise']
 description: Support for websocket triggers to run jobs when messages are received.
 docs: /docs/core_concepts/websocket_triggers
 features:
