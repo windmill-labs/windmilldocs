@@ -2,7 +2,7 @@
 slug: queue-metric-alerts
 version: v1.406.0
 title: Queue metric alerts
-tags: ['Worker groups', 'Enterprise Edition']
+tags: ['Worker groups', 'Enterprise']
 description: Critical alerts for jobs waiting in queue.
 docs: /docs/core_concepts/worker_groups#queue-metric-alerts
 features:

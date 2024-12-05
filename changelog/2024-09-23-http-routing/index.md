@@ -2,7 +2,7 @@
 slug: http-routing
 version: v1.398.0
 title: Custom HTTP routes
-tags: ['Workers', 'Security', 'Enterprise Edition']
+tags: ['Workers', 'Security', 'Enterprise']
 description: Windmill supports custom HTTP routes to trigger a script or flow.
 features:
   [

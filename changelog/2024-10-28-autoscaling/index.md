@@ -2,7 +2,7 @@
 slug: autoscaling
 version: v1.413.0
 title: Autoscaling
-tags: ['Core concepts', 'Enterprise Edition']
+tags: ['Core concepts', 'Enterprise']
 description: Worker autoscaling automatically adjusts the number of workers based on your workload demands.
 features:
   [
