@@ -1,7 +1,7 @@
 ---
 slug: full-text-search-on-jobs-and-logs
 title: Full text search on jobs and logs
-version: v1.434.0
+version: v1.435.2
 tags: ['Enterprise']
 description: Enterprise users can now search jobs and logs thanks to an indexer service powered by the rust search engine Tantivy
 features:
