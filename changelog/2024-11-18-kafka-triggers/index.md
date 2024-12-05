@@ -2,7 +2,7 @@
 slug: kafka-triggers
 version: v1.426.0
 title: Kafka triggers
-tags: ['Kafka', 'Enterprise Edition']
+tags: ['Kafka', 'Enterprise']
 description: Support for Kafka triggers to run jobs when messages are received.
 docs: /docs/core_concepts/kafka_triggers
 features:

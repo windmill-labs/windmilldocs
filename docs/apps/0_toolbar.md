@@ -19,6 +19,10 @@ You can set the canvas' width to:
 - Limited width: The max width is 1168px and the content stay centered instead of taking the full page width.
 - Max width: The width is of the app if the full width of its container.
 
+## Color mode
+
+You can switch the color mode of the app to `Dark`, `Light`, or `Automatic` from the toolbar. The automatic mode will match your system's color scheme.
+
 ## Desktop / Mobile mode
 
 You can switch the canvas' mode to `Mobile` or `Desktop` layout from the toolbar. This enables you to manually set the position and size of the components in both modes.

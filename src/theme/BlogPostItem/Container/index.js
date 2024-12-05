@@ -67,12 +67,12 @@ export default function BlogPostItemContainer({ children, className }) {
 										? 'bg-orange-100 text-orange-800'
 										: tag.label === 'Flow editor'
 										? 'bg-emerald-100 text-emerald-800'
-										: tag.label === 'Enterprise edition'
+										: tag.label === 'Enterprise'
 										? 'bg-gray-50 text-blue-900'
 										: 'bg-blue-100 text-blue-800')
 								}
 							>
-								{tag.label === 'Enterprise Edition' ? (
+								{tag.label === 'Enterprise' ? (
 									<a href="/pricing" className="text-blue-900 hover:text-blue-700">
 										{tag.label}
 									</a>
