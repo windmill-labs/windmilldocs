@@ -45,6 +45,10 @@ Users can be given different levels of permissions:
 
 The superadmin role has the highest level of access and can manage the entire Windmill instance. Only superadmins can access the dedicated 'admins' workspace. Also by default, superadmins have access to all workspaces as admins of those workspaces. When an admin does an action as a user of a workspace he is not a member of and as such as no username in, their email is used in lieu of the username. Windmill can be configured to remove the ability for non-superadmins to create workspace using the: CREATE_WORKSPACE_REQUIRE_SUPERADMIN env variable.
 
+### Devops
+
+The devops role is also set at the instance level. Conceptually, it can be understood as a "readonly Superadmin". Devops users have read rights over what is usually only visible to superadmins, such as [Service Logs](../36_service_logs/index.mdx) or [Critical Alerts](../37_critical_alerts/index.mdx) while keeping write operations to a minimum. Contrary to the superadmin, this role does not supersede other roles like workspace admins.
+
 ### Admin
 
 At the [workspace](#workspace) level, admins have the ability to manage a specific Windmill workspace and users within that workspace. They can see and edit all scripts, flows, apps, and other entities within the workspace. Admins have the power to create, modify, and delete entities and can manage permissions within the workspace.
