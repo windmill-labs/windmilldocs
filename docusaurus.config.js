@@ -52,6 +52,10 @@ const config = {
 					{
 						to: '/docs/intro',
 						from: '/docs/'
+					},
+					{
+						to: '/docs/core_concepts/webhooks#custom-response-code',
+						from: '/docs/script_editor/custom_response_code'
 					}
 				]
 			}
