@@ -74,6 +74,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/ansible_quickstart/index',
 									label: 'Ansible'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/csharp_quickstart/index',
+									label: 'C#'
 								}
 							]
 						},
