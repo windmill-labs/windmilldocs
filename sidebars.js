@@ -522,6 +522,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/svix',
+							label: 'Svix'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/s3',
 							label: 'S3 APIs'
 						},
