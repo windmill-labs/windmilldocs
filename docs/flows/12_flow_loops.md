@@ -44,6 +44,18 @@ Assign a maximum number of branches run in parallel to control huge for-loops.
 
 ![For loop step](../assets/flows/flow_for_loop.png.webp "For loop step")
 
+## Test an iteration
+
+You can get a [test](../core_concepts/23_instant_preview/index.mdx) of the current iteration by clicking on the `Test an iteration` button.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/test_iteration.mp4"
+	description="Test an iteration"
+/>
+
+
 ## Iterate on steps
 
 Steps within the flow can use both the iteration index and value. For example with iterator expression `["Paris", "Lausanne", "Lille"]`, for iteration index "1", "Lausanne" is the value.
