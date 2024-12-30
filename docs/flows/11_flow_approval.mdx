@@ -264,6 +264,103 @@ export async function main() {
 
 Find this script on [Windmill Hub](https://hub.windmill.dev/scripts/windmill/7122/dynamics-enums-in-approval-step-windmill).
 
+That's a powerful way of having dynamic enums as flow inputs. As shown in the video below, you can have a dynamic list of choices as a first step of a flow. Just run the flow and see the list of choices.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full"
+	controls
+	src="/videos/dynamic_input.mp4"
+/>
+
+<br />
+
+And below is the flow YAML used for this example:
+
+```yaml
+summary: ""
+value:
+  modules:
+    - id: a
+      value:
+        type: rawscript
+        content: >-
+          import * as wmillClient from "windmill-client"
+
+
+          export async function main() {
+            // Constant array, but could come from dynamic source
+            const customers: string[] = [
+              "New York",
+              "Los Angeles",
+              "Chicago",
+              "Houston",
+              "Phoenix",
+              "Philadelphia",
+              "San Antonio",
+              "San Diego",
+              "Dallas",
+              "San Jose"
+            ];
+
+            const resumeUrls = await wmillClient.getResumeUrls("approver1");
+
+            // Remove duplicates and sort the customers array in alphabetical order
+            const sortedCustomers = Array.from(new Set(customers)).sort();
+
+            return {
+              resume: resumeUrls['resume'],
+              enums: {
+                "Customers to send to": sortedCustomers
+              },
+              default_args: {
+                "Customers to send to": sortedCustomers
+              }
+            }
+          }
+        language: bun
+        input_transforms: {}
+        is_trigger: false
+      continue_on_error: false
+      suspend:
+        required_events: 1
+        timeout: 1800
+        hide_cancel: false
+        resume_form:
+          schema:
+            properties:
+              Customers to send to:
+                items:
+                  type: string
+                type: array
+                description: ""
+            required: []
+            order:
+              - Customers to send to
+      summary: Approval step with dynamic enum
+    - id: b
+      summary: Use the selected arguments
+      value:
+        type: rawscript
+        content: |-
+          # import wmill
+
+
+          def main(x):
+              return x
+        language: python3
+        input_transforms:
+          x:
+            type: javascript
+            expr: resume["Customers to send to"]
+        is_trigger: false
+  same_worker: false
+schema:
+  $schema: https://json-schema.org/draft/2020-12/schema
+  properties: {}
+  required: []
+  type: object
+```
+
 ### Description
 
 You can add a description to give clear instructions that support the whole range of [rich display rendering](../core_concepts/19_rich_display_rendering/index.mdx) (including markdown).
