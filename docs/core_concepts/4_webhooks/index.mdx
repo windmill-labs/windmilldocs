@@ -1,3 +1,5 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 import DocCard from '@site/src/components/DocCard';
 
 # Webhooks
@@ -165,6 +167,87 @@ encountered issues), by checking the [Runs menu][runs] on the app.
 
 ![Runs page](./runs.png.webp)
 
+### Body
+
+The webhook endpoints accept a JSON object as the body, where each key corresponds to an argument of the script/flow.
+
+#### Non object payload / body
+
+If the payload is not an object, it will be wrapped in an object with the key `body` and the value will be the payload/body itself. e.g:
+
+```
+[1,2,3] => {"body": [1,2,3]}
+```
+
+and your script can process it as:
+
+```python
+def main(body: List[int]):
+    print(body)
+```
+
+#### Wrapping body, handling arbitrary payload
+
+You can also force the payload to be wrapped in an object at the key `body` by passing the query arg `wrap_body=true`. This is useful when the payload is not not known in advance and you want to handle it in your script. e.g:
+
+Python:
+
+```python
+def main(body: Any):
+	print(body)
+```
+
+Typescript:
+
+```typescript
+export async function main(body: any) {
+	console.log(body);
+}
+```
+
+#### Raw payload / body
+
+Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
+
+
+#### Handling form data (file uploads)
+
+The webhook endpoints also accept `multipart/form-data`, useful for file uploads. The payload should be a `FormData` object, where each key corresponds to an argument of the script/flow.
+
+For file fields, the value will be an array containing [s3 objects](/docs/core_concepts/object_storage_in_windmill#read-a-file-from-s3-or-object-storage-within-a-script) with the path to the uploaded files in the [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) (e.g., S3).
+
+Here's an example script for handling form data with a file field:
+
+<Tabs className="unique-tabs">
+<TabItem value="bun" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+import { S3Object } from 'windmill-client'
+
+export async function main(mytextfield: string, myfilefield: S3Object[]) {
+	return myfilefield
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+from typing import List
+
+def main(mytextfield: str, myfilefield: List[wmill.S3Object]):
+    return myfilefield
+```
+
+</TabItem>
+</Tabs>
+
+
+:::warning
+A [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) must be configured to accept form data payloads.
+:::
+
 ### Request headers
 
 It is possible for jobs to take request headers as arguments. To do so, either specify in the query args the headers to process at `include_header`, separated with `,`. e.g:
@@ -184,44 +267,6 @@ It is possible to pass query args to the job. To do so, either specify in the qu
 ```
 
 to have a: "foo", b: "bar", c: "foobar", passed as args.
-
-### Non object payload / body
-
-If the payload is not an object, it will be wrapped in an object with the key `body` and the value will be the payload/body itself. e.g:
-
-```
-[1,2,3] => {"body": [1,2,3]}
-```
-
-and your script can process it as:
-
-```python
-def main(body: List[int]):
-    print(body)
-```
-
-### Wrapping body, handling arbitrary payload
-
-You can also force the payload to be wrapped in an object at the key `body` by passing the query arg `wrap_body=true`. This is useful when the payload is not not known in advance and you want to handle it in your script. e.g:
-
-Python:
-
-```python
-def main(body: Any):
-	print(body)
-```
-
-Typescript:
-
-```typescript
-export async function main(body: any) {
-	console.log(body);
-}
-```
-
-### Raw payload / body
-
-Similarly to request headers, if the query args contain `raw=true`, then an additional argument will be added: `raw_string` which contains the entire json payload as a string (without any parsing). This is useful to verify the signature of the payload for example (discord require the endpoints to verify the signature for instance).
 
 ### Custom response code
 
@@ -248,7 +293,7 @@ with a status code `201`.
 
 Note that if the status code is invalid (w.r.t [RFC9110](https://httpwg.org/specs/rfc9110.html#overview.of.status.codes)), the endpoint will return an error.
 
-### Custom content type
+### Custom response content type
 
 Similarly to the above, for all sync run jobs endpoints, if the response contains a key `windmill_content_type`, the associated value will be used as the content type header of the response. For example, if a script or flow returns:
 
