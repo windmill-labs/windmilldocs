@@ -1,0 +1,200 @@
+---
+title: Tracing & Logs with OpenTelemetry
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Introduction to OpenTelemetry
+
+[OpenTelemetry (OTEL)](https://opentelemetry.io/) is an open-source observability framework that provides a set of APIs, libraries, agents, and instrumentation to capture and export telemetry data such as traces, metrics, and logs. It is designed to help developers and operators gain insights into the performance and behavior of their applications and infrastructure.
+
+### Core Components and Vocabulary
+
+- **Traces**: Represent the execution path of a request as it traverses through various services. A trace is composed of multiple spans.
+- **Spans**: The building blocks of a trace, representing a single operation within a trace. Each span contains metadata such as operation name, start and end timestamps, and attributes.
+- **Metrics**: Quantitative data that measures the performance of a system, such as CPU usage, memory consumption, or request count.
+- **Logs**: Records of events that occur within a system, providing context and details about operations and errors.
+- **Instrumentation**: The process of adding code to applications to collect telemetry data. OpenTelemetry provides SDKs and APIs for this purpose.
+- **Collector**: A component that receives, processes, and exports telemetry data to various backends. It acts as a central hub for telemetry data.
+
+While Windmill offers internal service logs and alerts accessible via the Windmill UI, integrating OpenTelemetry can be beneficial for users who wish to centrally aggregate and manage traces and logs. This centralized approach allows for enhanced alerting, monitoring, and analysis capabilities, enabling users to proactively address issues and optimize their systems.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Example deployment with Jaeger"
+		description="Download this folder and run `docker compose up` to start a Windmill instance with Jaeger and Prometheus."
+		href="https://github.com/windmill-labs/windmill/tree/main/examples/deploy/otel-tracing-jaeger"
+	/>
+	<DocCard
+		title="Instance settings"
+		description="Instance settings are where you can configure OTEL/Prometheus settings."
+		href="/docs/advanced/instance_settings#opentelemetry-otel"
+	/>
+</div>
+
+# Tracing with Jaeger
+
+[Jaeger](https://www.jaegertracing.io/) Jaeger is an open-source distributed tracing system for monitoring and debugging microservices. Originally developed by Uber, it helps track requests across services, analyze latency, identify bottlenecks, and diagnose failures.
+
+Key use cases include debugging production issues, monitoring performance, visualizing service dependencies, and optimizing system reliability. As Jaeger supports the OpenTelemetry protocol, it can be used to collect traces from Windmill.
+
+## Setting up Jaeger
+
+If you do not have an existing Jaeger instance, you can start a container running Jaeger with by adding the following to your `docker-compose.yml` file or uncomment the jaeger service in the [docker-compose.yml](https://github.com/windmill-labs/windmill/tree/main/examples/deploy/otel-tracing-jaeger) file in the Windmill repo.
+
+```yaml
+  jaeger:
+    image: jaegertracing/jaeger:latest
+    ports:
+      - "16686:16686"
+    expose:
+      - 4317
+```
+
+this will expose Jaegers UI on port 16686 and the OpenTelemetry collector on port 4317.
+
+## Configuring Windmill to use Jaeger
+
+In the Windmill UI, go to the "Instances Settings" and "OTEL/Prom" tab and fill in the Jaeger endpoint and service name and toggle the Tracing option to send traces to Jaeger.
+
+If you are using the Jaeger container, the endpoint will be `http://jaeger:4317`.
+
+![Jaeger Endpoint](./jaeger_endpoint.png)
+
+## Open the Jaeger UI
+
+The Jaeger UI if hosted with the `docker-compose.yaml` file above will be available at `http://localhost:16686`. When running a script or workflow with windmill, you will be able to see the traces in the Jaeger UI and investigate them. This can be useful to understand the performance of a workflow and identify bottlenecks in the windmill server or client.
+
+![Jaeger Timeline](./jaeger_timeline.png)
+![Jaeger Flamegraph](./jaeger_flamegraph.png)
+![Jaeger Trace](./jaeger_trace_graph.png)
+
+## Searching for specific traces
+
+To search/filter for a specific trace, for example a workflow, you can use the search function in the Jaeger UI by filtering by tags set by windmill.
+
+The following tags are useful to filter for specific traces:
+
+- `job_id`: The ID of the job
+- `root_job`: The ID of the root job (flow)
+- `parent_job`: The ID of the parent job (flow)
+- `flow_step_id`: The ID of the step within the workflow
+- `script_path`: The path of the script
+- `workspace_id`: The name of the workspace
+- `worker_id`: The ID of the worker
+- `language`: The language of the script
+- `tag`: The queue tag of the workflow
+
+![Jaeger Search](./jaeger_search.png)
+
+## Monitoring metrics with Jaeger
+
+Jaeger can be used to generate time series for metrics of the collected traces. These time series can be used to compare the performance of individual steps within a workflow and their overall
+performance and realtive contribution over time as well as identify and troubleshoot issues and anomalies.
+
+To set this up, Jaeger needs to store the generated metrics in PromQL-compatible storage such as Prometheus.
+
+If you do don't have an existing Prometheus instance, you can start one with the following in your `docker-compose.yml` file or uncomment the prometheus service in the [docker-compose.yml](https://github.com/windmill-labs/windmill/tree/main/examples/deploy/otel-tracing-jaeger) file in the Windmill repo.
+
+```yaml
+  prometheus:
+    image: prom/prometheus:latest
+    expose:
+      - 9090
+    volumes:
+      - ./prometheus-config.yaml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+```
+
+with the following `prometheus-config.yaml` file:
+
+```yaml
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: aggregated-trace-metrics
+    static_configs:
+    - targets: ['jaeger:8889']
+```    
+
+In order to use prometheus with Jaeger, you need to configure Jaeger to send metrics to Prometheus. For this we will mount a config file to the Jaeger container that will enable the metrics export.
+
+In the docker-compose.yml file, add the following to the Jaeger service:
+
+```yaml
+  jaeger:
+    image: jaegertracing/jaeger:latest
+    ports:
+      - "16686:16686"
+    expose:
+      - 4317
+      - 8889
+    volumes:
+      - ./jaeger-config.yaml:/etc/jaeger/config.yml
+    command: ["--config", "/etc/jaeger/config.yml"]
+```
+
+and the following `jaeger-config.yaml` file:
+
+```yaml
+service:
+  extensions: [jaeger_storage, jaeger_query]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [jaeger_storage_exporter, spanmetrics]
+    metrics/spanmetrics:
+      receivers: [spanmetrics]
+      exporters: [prometheus]
+  telemetry:
+    resource:
+      service.name: jaeger
+    metrics:
+      level: detailed
+      address: 0.0.0.0:8888
+    logs:
+      level: DEBUG
+
+extensions:
+  jaeger_query:
+    storage:
+      traces: some_storage
+      metrics: some_metrics_storage
+  jaeger_storage:
+    backends:
+      some_storage:
+        memory:
+          max_traces: 100000
+    metric_backends:
+      some_metrics_storage:
+        prometheus:
+          endpoint: http://prometheus:9090
+          normalize_calls: true
+          normalize_duration: true
+
+connectors:
+  spanmetrics:
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+
+processors:
+  batch:
+
+exporters:
+  jaeger_storage_exporter:
+    trace_storage: some_storage
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+```
+
+In the Jaeger UI, you will now be able to see metrics time series for the traces in the "Monitor" tab.
+
+![Jaeger Metrics](./jaeger_metrics.png)
