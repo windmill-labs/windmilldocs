@@ -68,6 +68,10 @@ Maximum amount of time (measured in seconds) that a [sync endpoint](../../core_c
 
 You will find a helper to convert days, hours, minutes, and seconds to seconds.
 
+### Keep job directories for debug
+
+Toogle to keep Job directories after execution at `/tmp/windmill/<worker>/<job_id>`.
+
 ### License key
 
 The license key is used to enable [Enterprise Edition](/pricing). You can get one by starting a free trial from the [pricing page](/pricing) or by contacting us at contact@windmill.dev
@@ -96,12 +100,6 @@ You will find a helper to convert days, hours, minutes, and seconds to seconds.
 
 This setting is only available on [Enterprise Edition](/pricing).
 
-### Expose metrics
-
-Expose [Prometheus](https://prometheus.io/) metrics for workers and servers on port 8001 at /metrics.
-
-This setting is only available on [Enterprise Edition](/pricing).
-
 ### Instance object storage
 
 [Connect your instance](../../core_concepts/38_object_storage_in_windmill/index.mdx#instance-object-storage) to a S3 bucket to [store large logs](../../core_concepts/20_jobs/index.mdx#large-job-logs-management) and [global cache for Python and Go](../../misc/13_s3_cache/index.mdx).
@@ -113,20 +111,6 @@ You can choose to use either S3 or Azure Blob Storage. For each you will find a 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
 
 This setting is only available on [Enterprise Edition](/pricing).
-
-### Critical alert channels
-
-Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel.
-
-You can add multiple channels between Email and Slack.
-
-Furthermore you can chose to mute [critical alerts in the UI](../../core_concepts/37_critical_alerts/index.mdx) using the "Mute critical alerts in UI" toggle.
-
-This setting is only available on [Enterprise Edition](/pricing).
-
-### Mute critical alerts in UI
-
-Enable to mute critical alerts in the UI.
 
 ### Azure OpenAI base path
 
@@ -140,7 +124,7 @@ Base url of your [private Hub](../../core_concepts/32_private_hub/index.mdx) ins
 
 This setting is only available on [Enterprise Edition](/pricing).
 
-## SSO/OAuth
+## Auth/OAuth
 
 Windmill supports [SSO/OAuth](../../misc/2_setup_oauth/index.mdx) for user authentication. You can enable it from the Instance settings.
 
@@ -152,7 +136,7 @@ Windmill supports [SSO/OAuth](../../misc/2_setup_oauth/index.mdx) for user authe
 	/>
 </div>
 
-### Single Sign On
+### Single Sign On (SSO)
 
 When at least one of the [SSO options](../../misc/2_setup_oauth/index.mdx#sso) is set, users will be able to login to Windmill via their third-party account.
 
@@ -173,9 +157,35 @@ To test it after setting an oauth client, go to the Resources menu and create a 
 
 ![OAuth](./oauth.png "OAuth")
 
+### SCIM/SAML
+
+Windmill supports [SCIM and SAML](../../misc/14_saml_and_scim/index.md) for user provisioning and [authentication](../../core_concepts/15_authentification/index.mdx).
+
+![SCIM/SAML](./scim_saml.png "SCIM/SAML")
+
+You can test settings with button 'Test content/url'.
+
+These settings are only available on [Enterprise Edition](/pricing).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="SAML & SCIM"
+		description="Configure Okta or Microsoft for both SAML and SCIM."
+		href="/docs/misc/saml_and_scim"
+	/>
+</div>
+
+#### SCIM token
+
+Token used to authenticate requests from the IdP.
+
+#### SAML metadata
+
+XML metadata url OR content for the SAML IdP.
+
 ## Registries
 
-Add private registries for [Pip](https://pypi.org/), [Bun](https://bun.sh/) and [npm](https://www.npmjs.com/).
+Add private registries for [Pip](https://pypi.org/), [Bun](https://bun.sh/), [npm](https://www.npmjs.com/), and [Nuget](https://www.nuget.org/).
 
 These settings are only available on [Enterprise Edition](/pricing).
 
@@ -215,11 +225,39 @@ Add private NPM registry.
 
 Add private scoped registries for Bun, See: https://bun.sh/docs/install/registries.
 
-## SMTP
+### Nuget config
 
-Setting SMTP unlocks [sending emails upon adding new users](../../core_concepts/15_authentification/index.mdx) to the workspace or the instance and [sending critical alerts](#critical-alert-channels).
+Write a nuget.config file to set custom/private package sources and credentials.
 
-![SMTP](./smtp.png "SMTP")
+## Alerts
+
+![Alerts](./alerts.png)
+
+### Critical alert channels
+
+Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel.
+
+You can add multiple channels between Email and Slack.
+
+Furthermore you can chose to mute [critical alerts in the UI](../../core_concepts/37_critical_alerts/index.mdx) using the "Mute critical alerts in UI" toggle.
+
+This setting is only available on [Enterprise Edition](/pricing).
+
+### Mute critical alerts in UI
+
+Enable to mute critical alerts in the UI.
+
+### Slack
+
+Connecting your instance to a Slack workspace enables [critical alerts](#critical-alerts) to be sent to a Slack channel.
+
+Just click on the 'Connect to Slack' button and follow the instructions from Slack.
+
+This setting is only available on [Enterprise Edition](/pricing).
+
+### SMTP
+
+Setting SMTP unlocks [sending emails upon adding new users](../../core_concepts/15_authentification/index.mdx) to the workspace or the instance and [sending critical alerts](#critical-alerts).
 
 You need to provide the following details:
 
@@ -314,55 +352,45 @@ When creating a workspace, you have the option to invite automatically everyone 
 	src="/videos/new_workspace.mp4"
 />
 
-## Slack
 
-Connecting your instance to a Slack workspace enables [critical alerts](#critical-alert-channels) to be sent to a Slack channel.
+## Open Telemetry & Prometheus
 
-![Slack](./slack.png "Slack")
+![Open Telemetry & Prometheus](./otel_prometheus.png)
 
-Just click on the 'Connect to Slack' button and follow the instructions from Slack.
+### OpenTelemetry (OTEL)
 
-This setting is only available on [Enterprise Edition](/pricing).
+Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](/docs/misc/guides/otel) for an example setup.
 
-## SCIM/SAML
+### Prometheus
+Expose [Prometheus](https://prometheus.io/) metrics for workers and servers on port 8001 at /metrics.
 
-Windmill supports [SCIM and SAML](../../misc/14_saml_and_scim/index.md) for user provisioning and [authentication](../../core_concepts/15_authentification/index.mdx).
+## Indexer 
 
-![SCIM/SAML](./scim_saml.png "SCIM/SAML")
+![Indexer](./indexer.png)
 
-You can test settings with button 'Test content/url'.
+### Index writer memory budget 
 
-These settings are only available on [Enterprise Edition](/pricing).
+The allocated memory arena for the indexer. A bigger value means less writing to disk and potentially higher indexing throughput
 
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="SAML & SCIM"
-		description="Configure Okta or Microsoft for both SAML and SCIM."
-		href="/docs/misc/saml_and_scim"
-	/>
-</div>
+### Commit max batch size
 
-### SCIM token
+The max amount of documents (here jobs) per commit. To optimize indexing throughput, it is best to keep this as high as possible. However, especially when reindexing the whole instance, it can be useful to have a limit on how many jobs can be written without being commited. A commit will make the jobs available for search, constitute a "checkpoint" state in the indexing and will be logged.
 
-Token used to authenticate requests from the IdP.
+### Refresh index period
 
-### SAML metadata
+The index will query new jobs periodically and write them on the index. This setting sets that period in seconds.
 
-XML metadata url OR content for the SAML IdP.
+### Max indexed job log size
 
-## Debug
+Job logs are included when indexing, but to avoid the index size growing artificially, the logs will be truncated after that size (in KB) has been reached.
 
-Enable debug mode to see additional logs.
+### Commit max batch size
 
-![Debug](./debug.png "Debug")
+The max amount of documents per commit. In this case 1 document is one log file representing all logs during 1 minute for a specific host. To optimize indexing throughput, it is best to keep this as high as possible. However, especially when reindexing the whole instance, it can be useful to have a limit on how many logs can be written without being commited. A commit will make the logs available for search, appear as a log line, and be a "checkpoint" of the indexing progress.
 
-### Keep job directories
+### Refresh index period
 
-Toogle to keep Job directories after execution at `/tmp/windmill/<worker>/<job_id>`.
-
-### Expose debug metrics
-
-Expose additional metrics (require metrics to be enabled).
+The index will query new service logs peridically and write them on the index. This setting sets that period in seconds.
 
 ## Telemetry
 
