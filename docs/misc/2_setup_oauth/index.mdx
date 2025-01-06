@@ -234,7 +234,7 @@ Pick "From an app manifest", then YAML.
 
 ![Slack Create App](./slack_create_app.png 'Slack Create App')
 
-Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 2 places:
+Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 3 places:
 
 ```yaml
 display_information:
@@ -270,6 +270,9 @@ oauth_config:
       - channels:join
       - commands
 settings:
+  interactivity:
+    is_enabled: true
+    request_url: <YOUR INSTANCE URL>/api/slack
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
