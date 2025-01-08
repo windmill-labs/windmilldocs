@@ -30,6 +30,7 @@ One such role that can be defined could be as follows:
 ```sql
 CREATE USER agent with PASSWORD 'changeme';
 GRANT ALL ON queue to agent;
+GRANT SELECT ON job to agent;
 GRANT INSERT on audit to agent;
 GRANT ALL on sequence audit_id_seq to agent;
 GRANT SELECT, INSERT, UPDATE ON completed_job to agent;
@@ -45,14 +46,19 @@ GRANT SELECT, UPDATE, INSERT on deployment_metadata to agent;
 GRANT SELECT, UPDATE, INSERT on dependency_map to agent;
 GRANT SELECT, UPDATE on flow to agent;
 GRANT SELECT, UPDATE on flow_version to agent;
+GRANT SELECT, UPDATE, INSERT on flow_version_lite to agent;
+GRANT SELECT, UPDATE, INSERT on flow_node to agent;
 GRANT SELECT, UPDATE on schedule to agent;
 GRANT SELECT (hostname, log_ts) ON log_file TO agent;
 
 CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
 CREATE POLICY agent ON script TO agent USING (tag = '<x>' OR tag = '<y>');
 CREATE POLICY agent ON flow TO agent USING (tag = '<x>' OR tag = '<y>');
+CREATE POLICY agent ON job TO agent USING (tag = '<x>' OR tag = '<y>');
 -- adapt below (and above) policies to your needs (e.g. based on workspace/path etc...)
 CREATE POLICY agent ON flow_version TO agent USING (true);
+CREATE POLICY agent ON flow_version_lite TO agent USING (true);
+CREATE POLICY agent ON flow_node TO agent USING (true);
 CREATE POLICY agent ON schedule TO agent USING (true);
 CREATE POLICY agent ON completed_job TO agent USING (true);
 CREATE POLICY agent
