@@ -374,6 +374,91 @@ With input list_of_approvers taking as JavaScript expression `approvers`.
 	src="/videos/list_of_approvers.mp4"
 />
 
+## Slack approval step
+
+The windmill python and typescript clients both have a helper function to request an interactive approval on Slack. An interactive approval is a Slack message that can be approved or rejected directly from Slack without having to go back to the Windmill UI.
+
+The following hub scripts can be used:
+ - Python: [Request Interactive Slack Approval](https://hub.windmill.dev/scripts/slack/11403/request-interactive-slack-approval-(python)-slack)
+ - TypeScript [Request Interactive Slack Approval](https://hub.windmill.dev/scripts/slack/11402/request-interactive-slack-approval-slack)
+
+If you define a [form](./flow_approval#form) on the approval step, the form will be displayed in the Slack message as a modal.
+
+![Approval form slack](../assets/flows/tuto_approval_slack_form.png.webp)
+
+Both of these scripts are using the windmill client helper function:
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```python
+wmill.request_interactive_slack_approval(
+    slack_resource_path="/u/alex/my_slack_resource",
+    channel_id="admins-slack-channel",
+    message="Please approve this request",
+    approver="approver123",
+    default_args_json={"key1": "value1", "key2": 42},
+	dynamic_enums_json={"foo": ["choice1", "choice2"], "bar": ["optionA", "optionB"]},
+)
+```
+</TabItem>
+
+
+<TabItem value="bun" label="Bun" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```ts
+ await wmill.requestInteractiveSlackApproval({
+   slackResourcePath: "/u/alex/my_slack_resource",
+   channelId: "admins-slack-channel",
+   message: "Please approve this request",
+   approver: "approver123",
+   defaultArgsJson: { key1: "value1", key2: 42 },
+   dynamicEnumsJson: { foo: ["choice1", "choice2"], bar: ["optionA", "optionB"] },
+ });
+```
+</TabItem>
+</Tabs>
+
+Where [dynamic_enums](./flow_approval#slack-approval-step) can be used to dynamically set the options of enum form arguments and [default_args](./flow_approval#default-args) can be used to dynamically set the default values of form arguments.
+
+If multiple approvals are required you can use the client helper directly and send approval requests to different channels:
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```python
+import wmill
+
+def main():
+	# Send approval request to customers
+    wmill.request_interactive_slack_approval(
+        'u/alex/slack_resource', 
+        'customers', 
+    )
+
+	# Send approval request to admins
+    wmill.request_interactive_slack_approval(
+        'u/alex/slack_resource', 
+        'admins', 
+    )
+```
+</TabItem>
+
+<TabItem value="bun" label="Bun" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```ts
+import * as wmill from "windmill-client"
+
+export async function main() {
+  await wmill.requestInteractiveSlackApproval({
+    slackResourcePath: "/u/alex/slack_resource",
+   channelId: "customers"
+  })
+  await wmill.requestInteractiveSlackApproval({
+    slackResourcePath: "/u/alex/slack_resource",
+    channelId: "admins"
+  })
+}
+```
+</TabItem>
+</Tabs>
+
 ## Tutorial: a Slack approval step conditioning flow branches
 
 The answer to the arguments of an approval page can be used as an input to condition branches in human-in-the-loop workflows.
@@ -404,23 +489,29 @@ For the sake of the example, we made this flow simple with a [manual trigger](..
 
 ![Flow inputs](../assets/flows/tuto_approval_input.png.webp)
 
-Then, we picked an approval step on the Hub to [Ask channel for approval on Slack](https://hub.windmill.dev/scripts/slack/1503/). With inputs:
+Then, we picked an approval step on the Hub to [Request Interactive Slack Approval](https://hub.windmill.dev/scripts/slack/11402/request-interactive-slack-approval-slack). With inputs:
 
-- "slack": your [Slack resource](../integrations/slack.mdx).
+- "slackResourcePath": the path to your [Slack resource](../integrations/slack.mdx).
 - "channel": Slack channel to publish message, as string.
 - "text: `Refund request by _${flow_input["User email"]}_ on order ${flow_input["Order number"]}.`.
+
+This will alow the user to approve or reject the refund request directly from Slack without having to go back to the Windmill UI.
 
 ![Slack inputs](../assets/flows/tuto_approval_slack.png.webp)
 
 In the `Advanced` settings of the step, for "Suspend/Approval". We added the following properties to the form.
 
+![Form settings](../assets/flows/tuto_approval_form_0.png.webp)
+
 ![Form settings](../assets/flows/tuto_approval_form.png.webp)
 
 ![Form settings 2](../assets/flows/tuto_approval_form_2.png.webp)
 
-This will lead to the following approval page:
+This will lead to the following approval page and slack form:
 
 ![Approval page](../assets/flows/tuto_approval_page.png.webp)
+
+![Approval form slack](../assets/flows/tuto_approval_slack_form.png.webp)
 
 This approval page will generate two keys you can use for further steps: `resume["Action"]` and `resume["Message"]`. `resume` is the resume payload.
 
