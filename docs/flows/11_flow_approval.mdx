@@ -473,7 +473,18 @@ With input list_of_approvers taking as JavaScript expression `approvers`.
 
 ## Slack approval step
 
-The windmill python and typescript clients both have a helper function to request an interactive approval on Slack. An interactive approval is a Slack message that can be approved or rejected directly from Slack without having to go back to the Windmill UI.
+The Windmill [Python](../advanced/2_clients/python_client.md) and [TypeScript](../advanced/2_clients/ts_client.mdx) clients both have a helper function to request an interactive approval on Slack. An interactive approval is a Slack message that can be approved or rejected directly from Slack without having to go back to the Windmill UI.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/wUvqom8nmM4"
+	title="Slack approval step"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
 
 The following hub scripts can be used:
  - Python: [Request Interactive Slack Approval](https://hub.windmill.dev/scripts/slack/11403/request-interactive-slack-approval-(python)-slack)
@@ -489,7 +500,7 @@ Both of these scripts are using the windmill client helper function:
 <TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 ```python
 wmill.request_interactive_slack_approval(
-    slack_resource_path="/u/alex/my_slack_resource",
+    slack_resource_path="/u/username/my_slack_resource",
     channel_id="admins-slack-channel",
     message="Please approve this request",
     approver="approver123",
@@ -503,7 +514,7 @@ wmill.request_interactive_slack_approval(
 <TabItem value="bun" label="Bun" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 ```ts
  await wmill.requestInteractiveSlackApproval({
-   slackResourcePath: "/u/alex/my_slack_resource",
+   slackResourcePath: "/u/username/my_slack_resource",
    channelId: "admins-slack-channel",
    message: "Please approve this request",
    approver: "approver123",
@@ -526,13 +537,13 @@ import wmill
 def main():
 	# Send approval request to customers
     wmill.request_interactive_slack_approval(
-        'u/alex/slack_resource', 
+        'u/username/slack_resource', 
         'customers', 
     )
 
 	# Send approval request to admins
     wmill.request_interactive_slack_approval(
-        'u/alex/slack_resource', 
+        'u/username/slack_resource', 
         'admins', 
     )
 ```
@@ -544,11 +555,11 @@ import * as wmill from "windmill-client"
 
 export async function main() {
   await wmill.requestInteractiveSlackApproval({
-    slackResourcePath: "/u/alex/slack_resource",
+    slackResourcePath: "/u/username/slack_resource",
    channelId: "customers"
   })
   await wmill.requestInteractiveSlackApproval({
-    slackResourcePath: "/u/alex/slack_resource",
+    slackResourcePath: "/u/username/slack_resource",
     channelId: "admins"
   })
 }
