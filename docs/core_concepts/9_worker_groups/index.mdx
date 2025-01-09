@@ -116,45 +116,48 @@ There are 2 worker groups by default: [default](#default-worker-group) and [nati
 
 The tags of _default_ worker group are:
 
-- `deno`: The default worker group for deno scripts.
-- `python3`: The default worker group for python scripts.
-- `go`: The default worker group for go scripts.
-- `bash`: The default worker group for bash scripts.
-- `powershell`: The default worker group for powershell scripts.
-- `dependency`: Where dependency jobs are run.
-- `flow`: The default worker group for executing flows modules outside of the script steps.
-- `hub`: The default worker group for executing hub scripts.
-- `bun`: The default worker group for bun scripts.
-- `other`: Everything else.
-
-Button `Reset to all tags minus native ones` will reset the tags of _default_ worker group to a given worker group.
+- `deno`: The default worker group for [Deno scripts](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx).
+- `python3`: The default worker group for [Python scripts](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx).
+- `go`: The default worker group for [Go scripts](../../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx).
+- `bash`: The default worker group for [Bash scripts](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx).
+- `powershell`: The default worker group for [Powershell scripts](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx).
+- `dependency`: Where [dependency](../../advanced/6_imports/index.mdx) jobs are run.
+- `flow`: The default worker group for executing [flows](../../flows/1_flow_editor.mdx) modules outside of the script steps.
+- `hub`: The default worker group for executing [Hub](https://hub.windmill.dev/) scripts.
+- `bun`: The default worker group for [Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) scripts.
+- `php`: The default worker group for [PHP](../../getting_started/0_scripts_quickstart/8_php_quickstart/index.mdx) scripts.
+- `rust`: The default worker group for [Rust](../../getting_started/0_scripts_quickstart/9_rust_quickstart/index.mdx) scripts.
+- `ansible`: The default worker group for [Ansible](../../getting_started/0_scripts_quickstart/10_ansible_quickstart/index.mdx) scripts.
+- `csharp`: The default worker group for [C#](../../getting_started/0_scripts_quickstart/11_csharp_quickstart/index.mdx) scripts.
+- `other`: Everything else (other than the [native](#native-worker-group) tags).
 
 #### Native worker group
 
 Native workers are workers within the _native_ worker group.
 This group is pre-configured to listen to native jobs tags. Those jobs are executed under a special mode with subworkers for increased throughput.
 
-You can set the number of native workers to 0.
+You can set the number of native workers to 0. Just make sure that you assign the native tags to other worker groups. Otherwise, the jobs with those tags will never be executed.
 
 The tags of _native_ worker group are:
 
-- `nativets`: The default worker group for rest scripts.
-- `postgresql`: The default worker group for postgresql scripts.
-- `mysql`: The default worker group for mysql scripts.
-- `mssql`: The default worker group for mssql scripts.
-- `graphql`: The default worker group for graphql scripts.
-- `snowflake`: The default worker group for snowflake scripts.
-- `bigquery`: The default worker group for bigquery scripts.
-- `mssql`: The default worker group for mssql scripts.
+- `nativets`: The default worker group for [Rest](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx) scripts.
+- `postgresql`: The default worker group for [PostgreSQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) scripts.
+- `mysql`: The default worker group for [MySQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) scripts.
+- `mssql`: The default worker group for [MS SQL](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) scripts.
+- `graphql`: The default worker group for [Graphql](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) scripts.
+- `snowflake`: The default worker group for [Snowflake](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) scripts.
+- `bigquery`: The default worker group for [Bigquery](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) scripts.
 
 <br />
 <br />
 
 If you assign custom worker groups to all your workers, make sure that they cover all tags above, otherwise those jobs will never be executed.
 
-Button `Reset to native tags` will reset the tags of _native_ worker group to a given worker group.
+Button `Reset to native tags` will reset the tags of [_native_](#native-worker-group) worker group to a given worker group.
 
-Button `Reset to all tags` will reset the tags of _default_ and _native_ worker group to a given worker group.
+Button `Reset to all tags` will reset the tags of [_default_](#default-worker-group) and [_native_](#native-worker-group) worker group to a given worker group.
+
+Button `Reset to all tags minus native ones` will reset the tags of [_default_](#default-worker-group) worker group to a given worker group.
 
 ![Reset to tags buttons](./reset_tags.png 'Reset to tags buttons')
 
