@@ -145,6 +145,19 @@ const faqs = [
 				<br />
 				<br />
 				As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. The compute units are calculated based on the memory limits set in docker-compose or Kubernetes. For example, a standard worker with 2GB memory counts as 1 compute unit, while a large worker with >2GB memory counts as 2 compute units. Any worker with memory above 2GB still counts as 2 compute units. Small workers are counted as 0.5 compute unit.
+
+				
+				<br />
+				<br />
+				You can optimize your compute unit usage with{' '}
+				<Link
+					to="/docs/core_concepts/autoscaling"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					autoscaling
+				</Link>
+				. This automatically adjusts the number of workers based on your workload, ensuring you only pay for the compute units you actually need. For example, you could scale down to minimal workers during low-usage periods and automatically scale up during peak times, with billing calculated at minute-level granularity.
+				
 				<br />
 				<br />
 				Also, for the Enterprise Edition, the{' '}
