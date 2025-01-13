@@ -156,7 +156,7 @@ const faqs = [
 				>
 					autoscaling
 				</Link>
-				. This automatically adjusts the number of workers based on your workload, ensuring you only pay for the compute units you actually need. For example, you could scale down to minimal workers during low-usage periods and automatically scale up during peak times, with billing calculated at minute-level granularity.
+				. This automatically adjusts the number of workers based on your workload, ensuring you only pay for the compute units you actually need. For example, you could scale down to minimal workers during low-usage periods and automatically scale up during peak times, with compute usage calculated at minute-level granularity.
 				
 				<br />
 				<br />
