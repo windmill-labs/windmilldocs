@@ -278,6 +278,7 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
+				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
 					label: 'Integrations',

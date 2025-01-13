@@ -1,9 +1,9 @@
 ---
 slug: slack-approval-steps
-title: Interactive Slack Approval Steps
+title: Interactive Slack approval steps
 version: v1.441.0
 tags: ['Flow editor']
-description: Approve or reject flow steps directly from Slack with support for form inputs
+description: Approve or reject flow steps directly from Slack with support for form inputs.
 features:
   [
     'Interactive approval/rejection buttons directly in Slack messages',
