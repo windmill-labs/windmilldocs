@@ -50,7 +50,6 @@ export default function BlogLayout(props) {
 									<h2 className="text-xl font-semibold mb-4">Coming soon</h2>
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
 										<li>Code-based UI AI builder</li>
-										<li>NATS triggers</li>
 										<li>Cursor-like AI experience</li>
 										<li>Oracle DB support</li>
 									</ul>

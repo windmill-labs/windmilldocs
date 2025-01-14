@@ -95,25 +95,25 @@ const pricing = {
 				}
 			},
 			price_smb: {
-					worker: {
-						default: workerDefaults.workers,
-						min: workerDefaults.minWorkers,
-						max: 10,
-						memoryGB: {
-							default: workerDefaults.memoryGB,
-							min: workerDefaults.minMemoryGB,
-							max: workerDefaults.maxMemoryGB,
-							pricePerGB: workerDefaults.memoryPricePerGB,
-							maxPricedGB: workerDefaults.maxPricedMemoryGB
-						},
-						native: 20
+				worker: {
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: 10,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
 					},
-					seat: {
-						monthly: 8,
-						default: 1,
-						min: 1,
-						max: 10
-					}
+					native: 20
+				},
+				seat: {
+					monthly: 8,
+					default: 1,
+					min: 1,
+					max: 10
+				}
 			},
 			minPrice: 120,
 			minPrice_smb: 48,
@@ -147,9 +147,7 @@ const pricing = {
 					)
 				},
 				{
-					text: (
-						<span>Dedicated Slack or Discord channel</span>
-					)
+					text: <span>Dedicated Slack or Discord channel</span>
 				},
 				{
 					text: <span>Design partners for roadmap</span>
@@ -169,9 +167,18 @@ const pricing = {
 						{ text: 'Max 10 users with SSO' },
 						{
 							text: (
-								<span>Max 10 <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU)</span>
+								<span>
+									Max 10{' '}
+									<a
+										href="#compute-units"
+										className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200"
+									>
+										compute units
+									</a>{' '}
+									(CU)
+								</span>
 							)
-						},
+						}
 					]
 				},
 				{ text: 'Support with 48h response time by email' }
@@ -401,7 +408,7 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/apps/public_apps'
-			},	
+			},
 			{
 				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
 				tiers: {
@@ -479,6 +486,18 @@ const sections = [
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/kafka_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'NATS triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/nats_triggers',
 				tooltip: 'Self-hosted only'
 			},
 			{
@@ -568,8 +587,7 @@ const sections = [
 					'tier-free-selfhost': 'Community support on Discord',
 					'tier-enterprise-selfhost':
 						'24/7 Priority support with 3h response and dedicated Slack channel',
-					'tier-enterprise-cloud':
-						'24/7 Priority support with 3h response and dedicated Slack',
+					'tier-enterprise-cloud': '24/7 Priority support with 3h response and dedicated Slack',
 					'tier-free': 'Community support on Discord',
 					'tier-team': 'Priority support on Discord'
 				},
@@ -1272,9 +1290,9 @@ export default function Pricing() {
 							</ul>
 							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
-									<PriceCalculator 
-										tier={tier} 
-										period={period} 
+									<PriceCalculator
+										tier={tier}
+										period={period}
 										selectedOption={selectedOption}
 										workerDefaults={workerDefaults}
 									/>

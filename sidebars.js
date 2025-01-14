@@ -140,6 +140,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/kafka_triggers/index',
 							label: 'Kafka'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/nats_triggers/index',
+							label: 'NATS'
 						}
 					]
 				},
