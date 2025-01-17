@@ -45,6 +45,16 @@ export default function BlogLayout(props) {
 									? "See what's new with Windmill."
 									: 'Discover the latest news, updates, and articles from the team and community.'}
 							</p>
+							{isChangelog && (
+								<div className="container mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
+									<h2 className="text-xl font-semibold mb-4">Coming soon</h2>
+									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+										<li>Code-based UI AI builder</li>
+										<li>Cursor-like AI experience</li>
+										<li>Oracle DB support</li>
+									</ul>
+								</div>
+							)}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 1024 1024"

@@ -140,6 +140,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/kafka_triggers/index',
 							label: 'Kafka'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/nats_triggers/index',
+							label: 'NATS'
 						}
 					]
 				},
@@ -278,6 +283,7 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
+				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
 					label: 'Integrations',
