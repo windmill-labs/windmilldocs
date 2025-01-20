@@ -321,10 +321,10 @@ const pricing = {
 			description:
 				'Windmill offers white labeling capabilities, allowing you to embed and customize the Windmill platform to align with your brand.',
 			features: [
-				{ text: 'Embed the entire Windmill app.' },
-				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
-				{ text: 'Private Hub.' },
-				{ text: 'External auth with JWT.' }
+				{ text: 'Embed the entire Windmill app' },
+				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK' },
+				{ text: 'Private Hub' },
+				{ text: 'External auth with JWT' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -1122,7 +1122,7 @@ export default function Pricing() {
 						}
 					)}
 				>
-					{pricing[frequency.value].map((tier, index) => (
+					{pricing[frequency.value].map((tier) => (
 						<div
 							key={tier.id}
 							className={classNames(
@@ -1267,7 +1267,7 @@ export default function Pricing() {
 										: tier.enterprise_edition
 										? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
 										: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
-									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600'
 								)}
 							>
 								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
@@ -1299,25 +1299,50 @@ export default function Pricing() {
 								) : null}
 
 								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
-									<a
-										href={
-											selectedOption === 'SMB'
-												? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
-												: selectedOption === 'Nonprofit'
-												? 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
-												: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
-										}
-										className={classNames(
-											tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
-											selectedOption === 'SMB'
-												? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
-												: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
-											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-										)}
-										target="_blank"
-									>
-										Try it for a month
-									</a>
+									selectedOption === 'Enterprise' ? (
+										<div className="try-it-button">
+											<a
+												href={
+													selectedOption === 'SMB'
+														? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
+														: selectedOption === 'Nonprofit'
+														? 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
+														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
+												}
+												className="main-section"
+												onClick={(e) => {
+													e.stopPropagation(); // Prevent event bubbling
+												}}
+											>
+												Try it for a month
+											</a>
+											<a
+												href="https://app.windmill.dev/public/windmill-labs/cae76591e9a0c229a338636c50e67066"
+												className="hover-section"
+												onClick={(e) => {
+													e.stopPropagation(); // Prevent event bubbling
+												}}
+											>
+												No credit card?
+											</a>
+										</div>
+									) : (
+										<a
+											href={
+												selectedOption === 'SMB'
+													? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
+													: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
+											}
+											className={classNames(
+												selectedOption === 'SMB'
+													? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
+													: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+												'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+											)}
+										>
+											Try it for a month
+										</a>
+									)
 								)}
 							</div>
 						</div>
@@ -1440,9 +1465,7 @@ export default function Pricing() {
 																					)}
 
 																					<span className="sr-only">
-																						{attribute.tiers[pricingItem.id] === true
-																							? 'Yes'
-																							: 'No'}
+																						{attribute.tiers[pricingItem.id] === true ? 'Yes' : 'No'}
 																					</span>
 																				</>
 																			)}
@@ -1621,7 +1644,7 @@ export default function Pricing() {
 											{/* Fake card borders */}
 											<div
 												className={twMerge(
-													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
+													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
 													frequency.value === 'cloud' ? 'grid-cols-4' : 'grid-cols-3'
 												)}
 												aria-hidden="true"
