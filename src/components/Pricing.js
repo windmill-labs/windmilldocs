@@ -410,7 +410,7 @@ const sections = [
 				link: '/docs/apps/public_apps'
 			},
 			{
-				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
+				name: 'BigQuery, Snowflake, Oracle DB and MS SQL runtimes as languages',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
