@@ -89,3 +89,7 @@ The goal is to have just enough workers to handle the current workload (represen
 
 Autoscaling events can be viewed under the worker group details:
 ![Autoscaling events](./events.png)
+
+## Billing
+
+In terms of billing for Windmill [Enterprise Edition](/pricing), Windmill measures how long the workers are online with a minute granularity. If you use 10 workers with 2GB for 1/10th of the month, it will count the same as if you had a single worker for the full month.

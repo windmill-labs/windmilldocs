@@ -176,48 +176,57 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		if (tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') {
 			// Calculate seats cost (before period multiplier)
 			if (pricing.seat) {
-				// Calculate total seats first, then multiply by price
 				const totalSeats = developers + Math.ceil(operators/2);
 				total += pricing.seat.monthly * totalSeats;
 			}
+
+			// Calculate total compute units and round up
+			const counts = getWorkerCounts(workerGroups);
+			const totalComputeUnits = Math.ceil(
+				(counts.small / 2 || 0) + 
+				(counts.standard || 0) + 
+				((1/8) * nativeWorkers) + 
+				(2 * (counts.large || 0))
+			);
+
+			// Calculate cost based on total compute units
+			let workersTotal = 0;
+			workerGroups.forEach(group => {
+				const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
+					(tier.id === 'tier-enterprise-cloud' ? 2 : 1);
+				workersTotal += pricePerWorker * group.workers;
+			});
 
 			// Add native workers cost
 			let nativeWorkersCost = 0;
 			if (pricing.worker?.native) {
 				nativeWorkersCost = (pricing.worker.native * nativeWorkers / 8);
-				total += nativeWorkersCost;
 			}
 
-			// Calculate regular workers cost
-			const workersTotal = workerGroups.reduce((sum, group) => {
-				const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
-					(tier.id === 'tier-enterprise-cloud' ? 2 : 1); // Double price for cloud
-				return sum + (pricePerWorker * group.workers);
-			}, 0);
-
-			// Apply minimum worker group pricing considering both native and regular workers
+			// Apply minimum worker group pricing
 			let minimumWorkerPrice = tier.id === 'tier-enterprise-cloud' ? 200 : 100;
 			if (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'SMB' || selectedOption === 'Nonprofit')) {
-				minimumWorkerPrice = 40; // 60% discount applied to minimum price
+				minimumWorkerPrice = 40;
 			}
 			
 			const totalWorkersCost = workersTotal + nativeWorkersCost;
 			if (totalWorkersCost < minimumWorkerPrice) {
-				total += minimumWorkerPrice - nativeWorkersCost;
+				total += minimumWorkerPrice;
 			} else {
-				total += workersTotal;
+				// Adjust the cost based on the ceiling of compute units
+				const adjustmentFactor = totalComputeUnits / ((counts.small / 2 || 0) + (counts.standard || 0) + ((1/8) * nativeWorkers) + (2 * (counts.large || 0)));
+				total += totalWorkersCost * adjustmentFactor;
 			}
 
 			// Add core package price for enterprise cloud
 			if (tier.id === 'tier-enterprise-cloud') {
-					total += selected.price;
+				total += selected.price;
 			}
 
 			// Apply period multiplier to the total at the end
 			total = calculatePrice(total, period.value, tier.id);
 		} else {
 			if (pricing.seat) {
-				// For non-enterprise tiers, calculate total seats first
 				const totalSeats = developers + Math.ceil(operators/2);
 				total += calculatePrice(pricing.seat.monthly, period.value, tier.id) * totalSeats;
 			}
@@ -419,6 +428,16 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							</>
 						)}
 
+						{/* Add the new text here for enterprise plans */}
+						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+							<p className="mt-6 text-sm text-gray-600 dark:text-gray-200">
+								Get a simulation of the number of Units needed by reproducing your workers config below.{' '}
+								<a href="#number-of-compute-units" className="text-blue-600 hover:text-blue-500 dark:text-blue-400">
+									More details
+								</a>
+							</p>
+						)}
+
 						{/* Existing worker groups section */}
 						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
 							<div className="mt-6">
@@ -510,7 +529,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								
 								<button
 									onClick={addWorkerGroup}
-									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white dark:hover:text-slate-100 font-semibold"
+									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-slate-100 dark:hover:text-white font-semibold"
 								>
 									+ Add worker group
 								</button>

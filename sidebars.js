@@ -140,6 +140,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/kafka_triggers/index',
 							label: 'Kafka'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/nats_triggers/index',
+							label: 'NATS'
 						}
 					]
 				},
@@ -228,7 +233,6 @@ const sidebars = {
 				},
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/workflows_as_code/index',
-				'core_concepts/draft_and_deploy/index',
 				{
 					type: 'category',
 					label: 'Persistent storage & databases',
@@ -278,6 +282,7 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
+				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
 					label: 'Integrations',
@@ -774,6 +779,38 @@ const sidebars = {
 				},
 				{
 					type: 'category',
+					label: 'Version control in Windmill',
+					link: {
+						type: 'doc',
+						id: 'advanced/version_control/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'advanced/git_sync/index',
+							label: 'Git sync'
+						},
+						'advanced/git_sync/cli_sync',
+						{
+							type: 'doc',
+							id: 'core_concepts/versioning/index',
+							label: 'Versioning with UI'
+						}
+					],
+					collapsed: false
+				},
+				{
+					type: 'category',
+					label: 'Deploy to prod',
+					link: {
+						type: 'doc',
+						id: 'advanced/deploy_to_prod/index'
+					},
+					items: ['core_concepts/draft_and_deploy/index', 'advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					collapsed: false
+				},
+				{
+					type: 'category',
 					label: 'Local development',
 					collapsed: true,
 					link: {
@@ -808,37 +845,6 @@ const sidebars = {
 						'advanced/cli/variable',
 						'advanced/cli/folder'
 					]
-				},
-				{
-					type: 'category',
-					label: 'Version control in Windmill',
-					link: {
-						type: 'doc',
-						id: 'advanced/version_control/index'
-					},
-					items: [
-						{
-							type: 'doc',
-							id: 'advanced/git_sync/index',
-							label: 'Git sync'
-						},
-						'advanced/git_sync/cli_sync',
-						{
-							type: 'doc',
-							id: 'core_concepts/versioning/index',
-							label: 'Versioning with UI'
-						}
-					]
-				},
-				{
-					type: 'category',
-					label: 'Deploy to prod',
-					link: {
-						type: 'doc',
-						id: 'advanced/deploy_to_prod/index'
-					},
-					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
-					collapsed: true
 				},
 				'advanced/preinstall_binaries/index',
 				{

@@ -189,7 +189,7 @@ project. You can find them in the "API" menu of the "Project Settings" page in y
 
 :::tip
 
-Find more help on our [Supabase Integration](/docs/integrations/supabase) tutorial.
+Find more help on our [Supabase integration](/docs/integrations/supabase) tutorial.
 
 :::
 
