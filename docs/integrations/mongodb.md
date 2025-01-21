@@ -32,8 +32,8 @@ You can find a list of all the officially supported Resource types on
 
 :::
 
-Head to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page in the Windmill app, click on
-"Add a resource/API" in the top right corner and select the `mongodb_rest` type.
+Head to the Resources page in the Windmill app, click on
+"Add resource" in the top right corner and select the `mongodb_rest` type.
 
 ![Select Resource Type](../assets/integrations/1-resources.png.webp)
 
