@@ -58,7 +58,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/sql_quickstart/index',
-									label: 'SQL & Query languages'
+									label: 'SQL & query languages'
 								},
 								{
 									type: 'doc',

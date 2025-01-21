@@ -26,3 +26,5 @@ The first time a dependency is seen by a worker, if it is not cached locally, th
 
 1. If it is not, install the dependency from pypi, then do a snapshot of installed dependency, tar it and push it to S3 (we call this a "piptar").
 2. If it is, simply pull the "piptar" and extract it in place of installing from pypi. It is much faster than installing from pypi because that S3 is much closer to your workers than pypi and because there is no installation step to be done, a simple tar extract is sufficient which takes no compute.
+
+> **Note**: For [Enterprise Edition](/pricing) (EE) customers, S3 cache tarballs are organized and separated by Python version. This ensures that dependencies are cached and retrieved according to the specific Python version used.
