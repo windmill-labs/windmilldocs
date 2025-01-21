@@ -95,25 +95,25 @@ const pricing = {
 				}
 			},
 			price_smb: {
-					worker: {
-						default: workerDefaults.workers,
-						min: workerDefaults.minWorkers,
-						max: 10,
-						memoryGB: {
-							default: workerDefaults.memoryGB,
-							min: workerDefaults.minMemoryGB,
-							max: workerDefaults.maxMemoryGB,
-							pricePerGB: workerDefaults.memoryPricePerGB,
-							maxPricedGB: workerDefaults.maxPricedMemoryGB
-						},
-						native: 20
+				worker: {
+					default: workerDefaults.workers,
+					min: workerDefaults.minWorkers,
+					max: 10,
+					memoryGB: {
+						default: workerDefaults.memoryGB,
+						min: workerDefaults.minMemoryGB,
+						max: workerDefaults.maxMemoryGB,
+						pricePerGB: workerDefaults.memoryPricePerGB,
+						maxPricedGB: workerDefaults.maxPricedMemoryGB
 					},
-					seat: {
-						monthly: 8,
-						default: 1,
-						min: 1,
-						max: 10
-					}
+					native: 20
+				},
+				seat: {
+					monthly: 8,
+					default: 1,
+					min: 1,
+					max: 10
+				}
 			},
 			minPrice: 120,
 			minPrice_smb: 48,
@@ -147,9 +147,7 @@ const pricing = {
 					)
 				},
 				{
-					text: (
-						<span>Dedicated Slack or Discord channel</span>
-					)
+					text: <span>Dedicated Slack or Discord channel</span>
 				},
 				{
 					text: <span>Design partners for roadmap</span>
@@ -169,9 +167,18 @@ const pricing = {
 						{ text: 'Max 10 users with SSO' },
 						{
 							text: (
-								<span>Max 10 <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU)</span>
+								<span>
+									Max 10{' '}
+									<a
+										href="#compute-units"
+										className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200"
+									>
+										compute units
+									</a>{' '}
+									(CU)
+								</span>
 							)
-						},
+						}
 					]
 				},
 				{ text: 'Support with 48h response time by email' }
@@ -314,10 +321,10 @@ const pricing = {
 			description:
 				'Windmill offers white labeling capabilities, allowing you to embed and customize the Windmill platform to align with your brand.',
 			features: [
-				{ text: 'Embed the entire Windmill app.' },
-				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK.' },
-				{ text: 'Private Hub.' },
-				{ text: 'External auth with JWT.' }
+				{ text: 'Embed the entire Windmill app' },
+				{ text: 'Embed specific components (flow builder, app builder) with Windmill React SDK' },
+				{ text: 'Private Hub' },
+				{ text: 'External auth with JWT' }
 			],
 			customMessage: 'Learn more',
 			href: '/docs/misc/white_labelling'
@@ -401,9 +408,9 @@ const sections = [
 					'tier-team': true
 				},
 				link: '/docs/apps/public_apps'
-			},	
+			},
 			{
-				name: 'BigQuery, Snowflake and MS SQL runtimes as languages',
+				name: 'BigQuery, Snowflake, Oracle DB and MS SQL runtimes as languages',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
@@ -479,6 +486,18 @@ const sections = [
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/kafka_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'NATS triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/nats_triggers',
 				tooltip: 'Self-hosted only'
 			},
 			{
@@ -568,8 +587,7 @@ const sections = [
 					'tier-free-selfhost': 'Community support on Discord',
 					'tier-enterprise-selfhost':
 						'24/7 Priority support with 3h response and dedicated Slack channel',
-					'tier-enterprise-cloud':
-						'24/7 Priority support with 3h response and dedicated Slack',
+					'tier-enterprise-cloud': '24/7 Priority support with 3h response and dedicated Slack',
 					'tier-free': 'Community support on Discord',
 					'tier-team': 'Priority support on Discord'
 				},
@@ -1104,7 +1122,7 @@ export default function Pricing() {
 						}
 					)}
 				>
-					{pricing[frequency.value].map((tier, index) => (
+					{pricing[frequency.value].map((tier) => (
 						<div
 							key={tier.id}
 							className={classNames(
@@ -1249,7 +1267,7 @@ export default function Pricing() {
 										: tier.enterprise_edition
 										? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
 										: 'text-gray-900 hover:text-blue-600 dark:hover:text-blue-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600 hover:ring-gray-300 dark:hover:ring-gray-500 dark:text-white',
-									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600'
+									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600'
 								)}
 							>
 								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
@@ -1272,34 +1290,59 @@ export default function Pricing() {
 							</ul>
 							<div className="flex flex-col justify-between flex-1">
 								{Object.keys(tier.price).length > 0 ? (
-									<PriceCalculator 
-										tier={tier} 
-										period={period} 
+									<PriceCalculator
+										tier={tier}
+										period={period}
 										selectedOption={selectedOption}
 										workerDefaults={workerDefaults}
 									/>
 								) : null}
 
 								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
-									<a
-										href={
-											selectedOption === 'SMB'
-												? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
-												: selectedOption === 'Nonprofit'
-												? 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
-												: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
-										}
-										className={classNames(
-											tier.id === 'tier-team' ? 'additional-class-for-most-popular' : '',
-											selectedOption === 'SMB'
-												? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
-												: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
-											'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-										)}
-										target="_blank"
-									>
-										Try it for a month
-									</a>
+									selectedOption === 'Enterprise' ? (
+										<div className="try-it-button">
+											<a
+												href={
+													selectedOption === 'SMB'
+														? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
+														: selectedOption === 'Nonprofit'
+														? 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
+														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
+												}
+												className="main-section"
+												onClick={(e) => {
+													e.stopPropagation(); // Prevent event bubbling
+												}}
+											>
+												Try it for a month
+											</a>
+											<a
+												href="https://app.windmill.dev/public/windmill-labs/cae76591e9a0c229a338636c50e67066"
+												className="hover-section"
+												onClick={(e) => {
+													e.stopPropagation(); // Prevent event bubbling
+												}}
+											>
+												No credit card?
+											</a>
+										</div>
+									) : (
+										<a
+											href={
+												selectedOption === 'SMB'
+													? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
+													: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit'
+											}
+											className={classNames(
+												selectedOption === 'SMB'
+													? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
+													: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+												'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+											)}
+										>
+											Try it for a month
+										</a>
+									)
 								)}
 							</div>
 						</div>
@@ -1422,9 +1465,7 @@ export default function Pricing() {
 																					)}
 
 																					<span className="sr-only">
-																						{attribute.tiers[pricingItem.id] === true
-																							? 'Yes'
-																							: 'No'}
+																						{attribute.tiers[pricingItem.id] === true ? 'Yes' : 'No'}
 																					</span>
 																				</>
 																			)}
@@ -1603,7 +1644,7 @@ export default function Pricing() {
 											{/* Fake card borders */}
 											<div
 												className={twMerge(
-													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
+													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
 													frequency.value === 'cloud' ? 'grid-cols-4' : 'grid-cols-3'
 												)}
 												aria-hidden="true"
