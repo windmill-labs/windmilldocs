@@ -428,6 +428,16 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							</>
 						)}
 
+						{/* Add the new text here for enterprise plans */}
+						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+							<p className="mt-6 text-sm text-gray-600 dark:text-gray-200">
+								Get a simulation of the number of Units needed by reproducing your workers config below.{' '}
+								<a href="#number-of-compute-units" className="text-blue-600 hover:text-blue-500 dark:text-blue-400">
+									More details
+								</a>
+							</p>
+						)}
+
 						{/* Existing worker groups section */}
 						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
 							<div className="mt-6">
@@ -519,7 +529,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								
 								<button
 									onClick={addWorkerGroup}
-									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-white dark:hover:text-slate-100 font-semibold"
+									className="mt-2 text-sm text-blue-600 hover:text-blue-500 dark:text-slate-100 dark:hover:text-white font-semibold"
 								>
 									+ Add worker group
 								</button>

@@ -79,7 +79,10 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 }
 ```
 
-You can read a file from S3 or object storage within a script using the `loadS3File` and `loadS3FileStream` functions from the [TypeScript client](../../advanced/2_clients/ts_client.mdx) and the `wmill.load_s3_file` and `wmill.load_s3_file_stream` functions from the [Python client](../../advanced/2_clients/python_client.md).
+You can read a file from S3 or object storage within a script using the `loadS3File` and `loadS3FileStream` functions from the [TypeScript client](../../advanced/2_clients/ts_client.mdx) and the `wmill.load_s3_file` and `wmill.load_s3_file_stream` functions from the [Python client](../../advanced/2_clients/python_client.md). When writing or manipulating file content, consider using `Blob` objects to efficiently handle binary data and ensure compatibility across different file types.
+
+- **`loadS3File`**: This function loads the entire file content into memory as a single unit, which is useful for smaller files where you need immediate access to all data.
+- **`loadS3FileStream`**: This function provides a stream of the file content, allowing you to process large files incrementally without loading the entire file into memory, which is ideal for handling large datasets or files.
 
 <Tabs className="unique-tabs">
 
