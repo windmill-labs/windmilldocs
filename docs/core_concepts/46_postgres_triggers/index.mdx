@@ -5,7 +5,24 @@ Listening is done using PostgreSQL's **logical replication streaming protocol**,
 
 ---
 
-## 1. How to use
+## 1. Introduction
+
+### What is Logical Replication?
+
+Windmill's Postgres trigger feature is built on **PostgreSQL's logical replication protocol**, which allows changes to a database to be streamed in real time to subscribers. Logical replication provides fine-grained control over what data is replicated by allowing the user to define **publications** and subscribe to specific changes.
+
+#### How Logical Replication Works:
+1. **Publications**: Define what changes (e.g., INSERT, UPDATE, DELETE) should be made available for replication. Publications allow you to select specific tables or schemas to track.
+2. **Replication Slots**: Ensure that all changes from a publication are retained until they are successfully delivered to the subscriber (e.g., Windmill triggers). This guarantees data reliability and prevents data loss.
+
+Windmill uses logical replication to efficiently stream database changes to your configured triggers, ensuring minimal latency and high reliability.
+
+For more details, see the [PostgreSQL documentation on logical replication](https://www.postgresql.org/docs/current/logical-replication.html).\
+For more details, see the [PostgreSQL documentation on logical replication streaming protocol](https://www.postgresql.org/docs/current/protocol-logical-replication.html).
+
+---
+
+## 2. How to use
 
 ### Create a Postgres trigger
 To begin, navigate to the Postgres triggers page and create a new trigger. Follow the steps below to set up your environment.
@@ -45,7 +62,7 @@ In this setup, the `bakery` table in the `paris` schema is tracked, but only the
 
 ---
 
-## 2. Limitations and examples
+## 3. Limitations and examples
 
 ### Valid configuration
 You **can** combine:
@@ -68,7 +85,7 @@ Tracking all tables in the `public` schema **and** the `bakery` table in the `pa
 
 ---
 
-## 3. Additional options
+## 4. Additional options
 
 ### Filtering rows with WHERE condition
 When tracking specific tables, you can filter rows by providing a **WHERE condition**.
@@ -107,7 +124,7 @@ In the `paris` schema, you can track the `bakery` table but only retrieve the `n
 
 ---
 
-## 4. Advanced
+## 5. Advanced
 
 ### Managing PostgreSQL publications
 By default, Windmill automatically creates a **publication** and a **replication slot** for you when setting up a trigger. However, in the **Advanced** section, you can:
@@ -125,8 +142,6 @@ By default, Windmill automatically creates a **publication** and a **replication
 
       ![Retrieving and managing publication example](./retrieve_publication_example.png 'Retrieve and manage publication: windmill_publication_non_violent')
 
-By providing this flexibility, you can directly interact with your PostgreSQL database to better control the publications used by your triggers.
-
 For more information on **PostgreSQL publications**, refer to the [PostgreSQL documentation on publications](https://www.postgresql.org/docs/current/logical-replication-publication.html).
 
 ---
@@ -142,7 +157,7 @@ For more information on **PostgreSQL replication slots**, refer to the [PostgreS
 
 ---
 
-## 5. Creating a script from tracked tables
+## 6. Creating a script from tracked tables
 
 Windmill enables you to **automatically generate a script template** for specific tables and/or schemas tracked by a trigger. This feature simplifies the creation of a TypeScript script with the necessary structure to handle data passed by the trigger.
 
@@ -172,7 +187,6 @@ Windmill enables you to **automatically generate a script template** for specifi
   }
 }
 ```
-
 ### Explanation of fields
 
 - **transaction_type**: Specifies the type of change (either `insert`, `update`, or `delete`).
@@ -195,7 +209,6 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 ```
-
 For this schema, the corresponding **row** in the JSON object would look like this:
 
 ```json
@@ -211,7 +224,6 @@ For this schema, the corresponding **row** in the JSON object would look like th
 	}
 }
 ```
-
 ### Key notes
 
 - **Transaction Types**: The `transaction_type` field in the JSON object can be one of `insert`, `update`, or `delete`, depending on the change type in the tracked table.
@@ -237,7 +249,4 @@ Once the template is generated, you can modify it to meet your needs. Below is a
 	}
 ) {
 }
-
 ```
-
-This template will process the transaction types (`insert`, `update`, or `delete`), handle the schema and table names, and include the row data for processing.
