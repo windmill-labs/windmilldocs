@@ -2,7 +2,6 @@
 
 Windmill can connect to a [Postgres](https://www.postgres.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
 Listening is done using Postgres's **logical replication streaming protocol**, ensuring efficient and low-latency triggering.  
-Listening is done from the servers, so it doesn't take up any workers.
 Postgres triggers are not available on the [Cloud](/pricing).
 
 ---
