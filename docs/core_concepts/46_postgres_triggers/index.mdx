@@ -1,15 +1,15 @@
 # Postgres triggers in windmill
 
-Windmill can connect to a [PostgreSQL](https://www.postgresql.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
-Listening is done using PostgreSQL's **logical replication streaming protocol**, ensuring efficient and low-latency triggering.  
+Windmill can connect to a [Postgres](https://www.postgres.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
+Listening is done using Postgres's **logical replication streaming protocol**, ensuring efficient and low-latency triggering.  
 
 ---
 
 ## 1. Introduction
 
-### What is Logical Replication?
+### What is logical replication?
 
-Windmill's Postgres trigger feature is built on **PostgreSQL's logical replication protocol**, which allows changes to a database to be streamed in real time to subscribers. Logical replication provides fine-grained control over what data is replicated by allowing the user to define **publications** and subscribe to specific changes.
+Windmill's Postgres trigger feature is built on **Postgres's logical replication protocol**, which allows changes to a database to be streamed in real time to subscribers. Logical replication provides fine-grained control over what data is replicated by allowing the user to define **publications** and subscribe to specific changes.
 
 #### How Logical Replication Works:
 1. **Publications**: Define what changes (e.g., INSERT, UPDATE, DELETE) should be made available for replication. Publications allow you to select specific tables or schemas to track.
@@ -17,8 +17,8 @@ Windmill's Postgres trigger feature is built on **PostgreSQL's logical replicati
 
 Windmill uses logical replication to efficiently stream database changes to your configured triggers, ensuring minimal latency and high reliability.
 
-For more details, see the [PostgreSQL documentation on logical replication](https://www.postgresql.org/docs/current/logical-replication.html).\
-For more details, see the [PostgreSQL documentation on logical replication streaming protocol](https://www.postgresql.org/docs/current/protocol-logical-replication.html).
+For more details, see the [Postgres documentation on logical replication](https://www.postgres.org/docs/current/logical-replication.html).\
+For more details, see the [Postgres documentation on logical replication streaming protocol](https://www.postgres.org/docs/current/protocol-logical-replication.html).
 
 ---
 
@@ -27,15 +27,15 @@ For more details, see the [PostgreSQL documentation on logical replication strea
 ### Create a Postgres trigger
 To begin, navigate to the Postgres triggers page and create a new trigger. Follow the steps below to set up your environment.
 
-### Set Up a PostgreSQL resource
+### Set Up a Postgres resource
 You need to either:
-- **Create a new PostgreSQL resource** by providing:
+- **Create a new Postgres resource** by providing:
   - Hostname, port, database name, username, and password.
   - Advanced options such as SSL settings if needed.
-- **Reuse an existing PostgreSQL resource**.
+- **Reuse an existing Postgres resource**.
 
 ### Define what to track
-Once the PostgreSQL resource is configured, you can choose what to track.
+Once the Postgres resource is configured, you can choose what to track.
 
 #### All tables
 The trigger will listen for transactions on **all tables** in the database.
@@ -100,10 +100,10 @@ When tracking specific tables, you can filter rows by providing a **WHERE condit
 **Important:**
 - You **only need to provide the condition**, not the entire `WHERE` clause. For example, instead of writing `WHERE speciality = 'croissant'`, just provide the condition: `speciality = 'croissant'`.
 - If your trigger is set to track `UPDATE` and/or `DELETE` transactions, the `WHERE` clause **can only reference columns that are part of the table’s replica identity**.  
-  See the [REPLICA IDENTITY documentation](https://www.postgresql.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-REPLICA-IDENTITY) for more details.
+  See the [REPLICA IDENTITY documentation](https://www.postgres.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-REPLICA-IDENTITY) for more details.
 - If your trigger tracks only `INSERT` transactions, the `WHERE` clause can reference **any column**.
 
-For more details, refer to the [PostgreSQL WHERE clause documentation](https://www.postgresql.org/docs/current/logical-replication-row-filter.html#LOGICAL-REPLICATION-ROW-FILTER-RESTRICTIONS).
+For more details, refer to the [Postgres WHERE clause documentation](https://www.postgres.org/docs/current/logical-replication-row-filter.html#LOGICAL-REPLICATION-ROW-FILTER-RESTRICTIONS).
 
 **Illustration:**
 Here’s an example showing how to filter rows based on the condition `speciality = 'croissant'` in the `bakery` table of the `paris` schema:
@@ -126,7 +126,7 @@ In the `paris` schema, you can track the `bakery` table but only retrieve the `n
 
 ## 5. Advanced
 
-### Managing PostgreSQL publications
+### Managing Postgres publications
 By default, Windmill automatically creates a **publication** and a **replication slot** for you when setting up a trigger. However, in the **Advanced** section, you can:
 
 - **Create a custom publication**: If you prefer to use your own publication, you can create it directly from the interface.
@@ -142,18 +142,18 @@ By default, Windmill automatically creates a **publication** and a **replication
 
       ![Retrieving and managing publication example](./retrieve_publication_example.png 'Retrieve and manage publication: windmill_publication_non_violent')
 
-For more information on **PostgreSQL publications**, refer to the [PostgreSQL documentation on publications](https://www.postgresql.org/docs/current/logical-replication-publication.html).
+For more information on **Postgres publications**, refer to the [Postgres documentation on publications](https://www.postgres.org/docs/current/logical-replication-publication.html).
 
 ---
 
-### Managing PostgreSQL replication slots
+### Managing Postgres replication slots
 In the **Advanced** section, you can also manage your **replication slots**. Windmill will automatically create a replication slot for you by default, but you can interact with replication slots as follows:
 
 - **Create a custom replication slot**: If needed, you can create your own replication slot directly in the interface.
 - **Choose an existing replication slot**: You can select an existing replication slot from your database and link it to the trigger.
 - **Delete a replication slot**: If a replication slot is no longer necessary, you can delete it through the interface.
 
-For more information on **PostgreSQL replication slots**, refer to the [PostgreSQL documentation on replication slots](https://www.postgresql.org/docs/current/logical-replication-slot.html).
+For more information on **Postgres replication slots**, refer to the [Postgres documentation on replication slots](https://www.postgres.org/docs/current/logical-replication-slot.html).
 
 ---
 
@@ -163,13 +163,13 @@ Windmill enables you to **automatically generate a script template** for specifi
 
 ### Prerequisites
 
-- **PostgreSQL Resource**: A PostgreSQL resource must be configured in your environment to enable this feature.
+- **Postgres Resource**: A Postgres resource must be configured in your environment to enable this feature.
 - **At Least One Schema**: You need to select at least one schema to track.
 - **Specific Tables and/or Schema**: This feature works **only for specific tables and/or schemas**. Make sure your selection matches the criteria for script generation.
 
 ### How to use
 
-1. **Set up PostgreSQL Resource**: Ensure that a PostgreSQL resource is configured in the resources page.
+1. **Set up Postgres Resource**: Ensure that a Postgres resource is configured in the resources page.
 
 2. **Select Schema and Tables**: Choose the schema and tables you want to track. Note that this feature does not work for all tables; only those meeting the criteria for tracking will be available.
 
@@ -192,7 +192,7 @@ Windmill enables you to **automatically generate a script template** for specifi
 - **transaction_type**: Specifies the type of change (either `insert`, `update`, or `delete`).
 - **schema_name**: The name of the schema being tracked (type: `string`).
 - **table_name**: The name of the table being tracked (type: `string`).
-- **row**: Contains the data of the row involved in the transaction. The data type of each field in `row` depends on the column's data type in the PostgreSQL table.
+- **row**: Contains the data of the row involved in the transaction. The data type of each field in `row` depends on the column's data type in the Postgres table.
 
 #### Example table schema
 
