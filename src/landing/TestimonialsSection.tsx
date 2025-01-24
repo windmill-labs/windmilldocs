@@ -201,7 +201,7 @@ const clientTestimonials = [
 			dark: '/images/brands/pave-dark.svg',
 			light: '/images/brands/pave.svg',
 			anchor: 'pave',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1517339626890?e=1733356800&v=beta&t=WDQokhSVjK8SrpyRb4FZhugMpNPuqN0Dtg5GilhsNDI'
+			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517339626889?e=1743033600&v=beta&t=OAB_xIcFW_hKsvMuVxdGEiPia4ngcOiG9LDYhWsKM7A'
 		},
 		company_url: 'https://www.pave.com/',
 		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
