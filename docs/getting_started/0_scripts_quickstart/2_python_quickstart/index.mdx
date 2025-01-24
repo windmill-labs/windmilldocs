@@ -7,7 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Python quickstart
 
-In this quick start guide, we will write our first script in Python. Windmill provides a Python `3.11` environment.
+In this quick start guide, we will write our first script in Python.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -332,7 +332,7 @@ def main():
 />
 <br/>
 
-Alternatively, you can set a global version by configuring the INSTANCE_PYTHON_VERSION [environment variable](../../../core_concepts/2_variables_and_secrets/index.mdx) to one of the mentioned versions or unset it to use "Latest Stable".
+Alternatively, you can set a global version by configuring the INSTANCE_PYTHON_VERSION environment variable to one of the mentioned versions or unset it to use "Latest Stable". If you leave `INSTANCE_PYTHON_VERSION` empty it will inherit "Latest Stable" version, which depends on Windmill.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -347,9 +347,11 @@ For scripts that are already deployed and have no version specified in lockfile,
 
 During test runs or deployments, if there are imported scripts, Windmill will search through all of them to find an annotated version, which will be used as the final version. If no annotated version is found, the instance version will be used instead. 
 
-> **Note**
-> only one python version can be annotated within a single tree.
-<br/>
+
+
+:::note
+Only one python version can be annotated within a single tree.
+:::
 
 For [Enterprise Edition](/pricing) (EE) customers, [S3 cache](../../../misc/13_s3_cache/index.mdx) tarballs will be organized and separated by Python version.
 

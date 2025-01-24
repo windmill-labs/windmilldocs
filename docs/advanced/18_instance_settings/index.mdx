@@ -235,13 +235,17 @@ Write a nuget.config file to set custom/private package sources and credentials.
 
 ### Critical alert channels
 
-Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel.
+Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel. [Microsoft Teams](../../misc/2_setup_oauth/index.mdx#microsoft-teams) must be setup to configure critical alerts to be sent to a Microsoft Teams channel.
 
-You can add multiple channels between Email and Slack.
+You can add multiple channels between Email, Slack, and Microsoft Teams.
+
+![Critical alerts channels](./critical_alerts_channels.png 'Critical alerts channels')
 
 Furthermore you can chose to mute [critical alerts in the UI](../../core_concepts/37_critical_alerts/index.mdx) using the "Mute critical alerts in UI" toggle.
 
 This setting is only available on [Enterprise Edition](/pricing).
+
+![Critical alert example](./teams_critical_alert.png 'Critical alert example')
 
 ### Mute critical alerts in UI
 

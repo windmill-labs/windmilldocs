@@ -253,6 +253,26 @@ inventory:
 
 Then the UI will not prompt you for the inventory but will use this resource at every run of the script. If otherwise you wish to not specify any inventory, you can remove the section altogether
 
+By default, the inventory will be named `inventory.ini`, but if your inventory needs to have a different extension (e.g. dynamic invetories) you can specify the name of the inventory file like this:
+
+```yaml
+inventory:
+  - resource_type: c_dynamic_ansible_inventory
+    name: hcloud.yml
+```
+
+Additionally, if you need to pass multiple inventories, you just need to continue the yaml array with your other invetories, they will all be passed to the `ansible-playbook` command.
+
+```yaml
+# Declaring three different inventories to be passed to the playbook
+inventory:
+  - resource: u/user/my_base_inventory
+    name: base.ini
+  - resource_type: ansible_inventory
+  - resource_type: c_dynamic_ansible_inventory
+    name: hcloud.yml
+```
+
 ### Other non-inventory file resources
 
 It sometimes happens that your Ansible playbook depends on some text file existing at a relative path to the playbook. This can be a configuration file, a template, some other file that you can't inline or otherwise is simpler to keep as a separate file. In this case, Windmill offers a feature to create these files at the specified path before running the playbook. The syntax will be the following:
