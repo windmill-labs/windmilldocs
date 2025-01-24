@@ -138,6 +138,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'core_concepts/postgres_triggers/index',
+							label: 'Postgres'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/kafka_triggers/index',
 							label: 'Kafka'
 						},
