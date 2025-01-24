@@ -293,6 +293,35 @@ Now users should be able to connect to Slack through OAuth:
 
 ![Slack Connect](./slack_connect.png 'Slack Connect')
 
+### Microsoft Teams
+- Go to the [Azure Portal](https://portal.azure.com/) and create a new "Bot Service" of type "[Azure Bot](https://portal.azure.com/#create/Microsoft.AzureBot)".
+![Azure Bot Service](./azure_bot_service.png 'Azure Bot Service')
+- Give your bot a unique "handle".
+- Select the bot to be "Single tenant" rather than "Multi-tenant".
+- You can leave the rest of the settings as default.
+- Once created, go to [Microsoft Entra App Registration](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps) and select the bot you just created.
+- On the left menu, click "Manage" -> "API permissions" -> "+ Add a permission" -> "Microsoft Graph" -> "Application permissions" -> "Channel.ReadBasic.All" and "Team.ReadBasic.All".
+![Azure Bot API Permissions](./azure_bot_api_permissions.png 'Azure Bot API Permissions')
+- On the left menu, click "Manage" -> "Certificates & secrets" -> "+ New client secret" -> "Add".
+- Copy the **Client Secret** as you'll need it to set up the OAuth resource in Windmill.
+- Also, copy the **Application (client) ID** and **Directory (tenant) ID** as you'll need them to set up the OAuth resource in Windmill.
+![Azure Bot Client](./teams_app_id.png 'Azure Bot Client Secret')
+- Sign in to the [Teams Bot Framework Portal](https://dev.teams.microsoft.com/apps) and create a new App.
+- Fill in the "Basic Information" section and use the "Application ID" from the previous step.
+- In the "Branding" section, upload the icons and accent colors.
+- In "App Features", select "Bot" and under "Bot ID", use the "Application ID" from the previous step.
+![Azure Bot Bot ID](./teams_bot_capabilities.png 'Azure Bot Bot ID')
+- Leave the rest of the settings as default, then go to "Domains" and add the domain of your Windmill instance.
+- Finally, either "Preview" or "Publish" the app to your organization. Note that a preview is only possible if your organization allows [custom app installations](https://learn.microsoft.com/en-us/microsoftteams/manage-apps). If you publish, your Microsoft Teams admin will have to approve the app before it can be used in the "[Manage apps](https://admin.teams.microsoft.com/policies/manage-apps)" section of your organization.
+
+:::warning
+Deploying and approving an app to your organization can take a while. In the worst case, it can take up to 24 hours.
+:::
+
+- [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "teams" and set the client id (Application ID / Bot ID from the previous steps), client secret, and tenant id (Directory ID).
+![Azure Bot App](./teams_oauth_settings.png 'Azure Bot App')
+
+
 ### GitHub
 
 - Go to [GitHub Developer Settings](https://github.com/settings/developers).
@@ -389,7 +418,7 @@ The same steps apply to enable more APIs (**Gmail**, **Gdrive**, etc.) on your G
 
 ### Basecamp
 
-- Go to [Basecamp’s Developer Portal](https://integrate.37signals.com/authentication).
+- Go to [Basecamp's Developer Portal](https://integrate.37signals.com/authentication).
 - Click "Register Your Application".
 - Enter the following:
   - Name: Windmill
