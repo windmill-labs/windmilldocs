@@ -2,6 +2,8 @@
 
 Windmill can connect to a [Postgres](https://www.postgres.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
 Listening is done using Postgres's **logical replication streaming protocol**, ensuring efficient and low-latency triggering.  
+Listening is done from the servers, so it doesn't take up any workers.
+Postgres triggers are not available on the [Cloud](/pricing).
 
 ---
 
@@ -152,8 +154,6 @@ In the **Advanced** section, you can also manage your **replication slots**. Win
 - **Create a custom replication slot**: If needed, you can create your own replication slot directly in the interface.
 - **Choose an existing replication slot**: You can select an existing replication slot from your database and link it to the trigger.
 - **Delete a replication slot**: If a replication slot is no longer necessary, you can delete it through the interface.
-
-For more information on **Postgres replication slots**, refer to the [Postgres documentation on replication slots](https://www.postgres.org/docs/current/logical-replication-slot.html).
 
 ---
 
