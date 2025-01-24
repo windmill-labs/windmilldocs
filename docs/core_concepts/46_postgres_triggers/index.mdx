@@ -1,58 +1,33 @@
-# Postgres Triggers in Windmill
+# Postgres triggers in windmill
 
 Windmill can connect to a [PostgreSQL](https://www.postgresql.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
 Listening is done using PostgreSQL's **logical replication streaming protocol**, ensuring efficient and low-latency triggering.  
 
 ---
 
-## Table of Contents
-1. [How to Use](#how-to-use)
-   - [Create a Postgres Trigger](#create-a-postgres-trigger)
-   - [Set Up a PostgreSQL Resource](#set-up-a-postgresql-resource)
-   - [Define What to Track](#define-what-to-track)
-     - [All Tables](#all-tables)
-     - [Specific Schemas](#specific-schemas)
-     - [Specific Tables](#specific-tables)
-   - [Limitations and Examples](#limitations-and-examples)
-     - [Valid Configuration](#valid-configuration)
-     - [Invalid Configuration](#invalid-configuration)
-   - [Additional Options](#additional-options)
-     - [Filtering Rows with WHERE Condition](#filtering-rows-with-where-condition)
-     - [Selecting Specific Columns](#selecting-specific-columns)
-2. [Advanced](#advanced)
-   - [Managing PostgreSQL Publications](#managing-postgresql-publications)
-   - [Managing PostgreSQL Replication Slots](#managing-postgresql-replication-slots)
-3. [Creating a Script from Tracked Tables](#creating-a-script-from-tracked-tables)
-   - [Prerequisites](#prerequisites)
-   - [How to Use](#how-to-use-1)
-   - [Key Notes](#key-notes)
-   - [Example Schema and Table](#example-schema-and-table)
+## 1. How to use
 
----
+### Create a Postgres trigger
+To begin, navigate to the Postgres triggers page and create a new trigger. Follow the steps below to set up your environment.
 
-## 1. How to Use
-
-### Create a Postgres Trigger
-To begin, navigate to the Postgres Triggers page and create a new trigger. Follow the steps below to set up your environment.
-
-### Set Up a PostgreSQL Resource
+### Set Up a PostgreSQL resource
 You need to either:
 - **Create a new PostgreSQL resource** by providing:
   - Hostname, port, database name, username, and password.
   - Advanced options such as SSL settings if needed.
 - **Reuse an existing PostgreSQL resource**.
 
-### Define What to Track
+### Define what to track
 Once the PostgreSQL resource is configured, you can choose what to track.
 
-#### All Tables
+#### All tables
 The trigger will listen for transactions on **all tables** in the database.
 
 **Example:**
 
 ![Track all tables example](./track_all_tables.png 'Track all tables example')
 
-#### Specific Schemas
+#### Specific schemas
 The trigger will listen for transactions on all tables within the selected schemas. Any new tables added to these schemas in the future will also be tracked automatically.
 
 **Example:**
@@ -60,7 +35,7 @@ Tracking the `public` and `marketing` schemas:
 
 ![Track specific schemas example](./track_specific_schemas_marketing_public.png 'Track specific schemas: marketing and public')
 
-#### Specific Tables
+#### Specific tables
 The trigger will listen only for transactions on the specified tables. You can also choose which **columns** to retrieve when tracking specific tables.
 
 **Example:**
@@ -70,9 +45,9 @@ In this setup, the `bakery` table in the `paris` schema is tracked, but only the
 
 ---
 
-## 2. Limitations and Examples
+## 2. Limitations and examples
 
-### Valid Configuration
+### Valid configuration
 You **can** combine:
 - Schema-level tracking (e.g., `public` schema).
 - Specific table tracking **without selecting columns**.
@@ -82,7 +57,7 @@ Tracking the `bakery` table in the `paris` schema and all tables in the `private
 
 ![Valid configuration example](./valid_config.png 'Valid configuration example')
 
-### Invalid Configuration
+### Invalid configuration
 You **cannot** combine:
 - Schema-level tracking with specific table tracking **that includes column selection**.
 
@@ -93,12 +68,12 @@ Tracking all tables in the `public` schema **and** the `bakery` table in the `pa
 
 ---
 
-## 3. Additional Options
+## 3. Additional options
 
-### Filtering Rows with WHERE Condition
+### Filtering rows with WHERE condition
 When tracking specific tables, you can filter rows by providing a **WHERE condition**.
 
-**Key Notes:**
+**Key notes:**
 - The `WHERE` clause allows only **simple expressions**.
 - It **cannot** contain:
   - User-defined functions, operators, types, and collations.
@@ -120,7 +95,7 @@ Here’s an example showing how to filter rows based on the condition `specialit
 
 ---
 
-### Selecting Specific Columns
+### Selecting specific columns
 For specific tables, you can reduce the data sent to the triggered runnable by retrieving only the columns you need.
 
 **Example:**
@@ -134,7 +109,7 @@ In the `paris` schema, you can track the `bakery` table but only retrieve the `n
 
 ## 4. Advanced
 
-### Managing PostgreSQL Publications
+### Managing PostgreSQL publications
 By default, Windmill automatically creates a **publication** and a **replication slot** for you when setting up a trigger. However, in the **Advanced** section, you can:
 
 - **Create a custom publication**: If you prefer to use your own publication, you can create it directly from the interface.
@@ -156,7 +131,7 @@ For more information on **PostgreSQL publications**, refer to the [PostgreSQL do
 
 ---
 
-### Managing PostgreSQL Replication Slots
+### Managing PostgreSQL replication slots
 In the **Advanced** section, you can also manage your **replication slots**. Windmill will automatically create a replication slot for you by default, but you can interact with replication slots as follows:
 
 - **Create a custom replication slot**: If needed, you can create your own replication slot directly in the interface.
@@ -167,7 +142,7 @@ For more information on **PostgreSQL replication slots**, refer to the [PostgreS
 
 ---
 
-## 5. Creating a Script from Tracked Tables
+## 5. Creating a script from tracked tables
 
 Windmill enables you to **automatically generate a script template** for specific tables and/or schemas tracked by a trigger. This feature simplifies the creation of a TypeScript script with the necessary structure to handle data passed by the trigger.
 
@@ -177,7 +152,7 @@ Windmill enables you to **automatically generate a script template** for specifi
 - **At Least One Schema**: You need to select at least one schema to track.
 - **Specific Tables and/or Schema**: This feature works **only for specific tables and/or schemas**. Make sure your selection matches the criteria for script generation.
 
-### How to Use
+### How to use
 
 1. **Set up PostgreSQL Resource**: Ensure that a PostgreSQL resource is configured in the resources page.
 
@@ -198,14 +173,14 @@ Windmill enables you to **automatically generate a script template** for specifi
 }
 ```
 
-### Explanation of Fields
+### Explanation of fields
 
 - **transaction_type**: Specifies the type of change (either `insert`, `update`, or `delete`).
 - **schema_name**: The name of the schema being tracked (type: `string`).
 - **table_name**: The name of the table being tracked (type: `string`).
 - **row**: Contains the data of the row involved in the transaction. The data type of each field in `row` depends on the column's data type in the PostgreSQL table.
 
-#### Example Table Schema
+#### Example table schema
 
 Consider a table `users` in the **public** schema with the following SQL definition:
 
@@ -237,15 +212,32 @@ For this schema, the corresponding **row** in the JSON object would look like th
 }
 ```
 
-### Key Notes
+### Key notes
 
 - **Transaction Types**: The `transaction_type` field in the JSON object can be one of `insert`, `update`, or `delete`, depending on the change type in the tracked table.
 - **Row Data**: The `row` field contains the data of the specific table or schema, and can be used directly in your script for processing.
 
-### Script Template Example
+### Script template example
 
 Once the template is generated, you can modify it to meet your needs. Below is an example of the generated script template, based on a sample transaction, with a `users` table in the **public** schema.
 
-![Generated script template example](./generated_script_template_example.png 'Generated script template for tracked tables')
+```typescript
+  export async function main(
+  transaction_type: "insert" | "update" | "delete",
+  schema_name: string,
+  table_name: string,
+  row: {
+		id?: number,
+		name?: string,
+		lastname?: string,
+		age: number,
+		personal_information: unknown,
+		created_at?: Date,
+		updated_at?: Date,
+	}
+) {
+}
+
+```
 
 This template will process the transaction types (`insert`, `update`, or `delete`), handle the schema and table names, and include the row data for processing.
