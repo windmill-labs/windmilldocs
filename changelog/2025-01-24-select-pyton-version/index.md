@@ -1,7 +1,7 @@
 ---
 slug: select-python-version
 title: Select Python version
-version: v1.441.0
+version: v1.449.0
 tags: ['Script editor', 'Python']
 description: Select Python version for your script.
 features:
