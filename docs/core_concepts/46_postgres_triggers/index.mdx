@@ -1,27 +1,26 @@
 # Postgres triggers
 
-Windmill can connect to a [Postgres](https://www.postgres.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
+Windmill can connect to a [Postgres](https://www.postgresql.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
 Listening is done using Postgres's logical replication streaming protocol, ensuring efficient and low-latency triggering.  
 Postgres triggers are not available on the [Cloud](/pricing).
 
-## Introduction
-
-### What is logical replication?
+## What is logical replication?
 
 Windmill's Postgres trigger feature is built on Postgres's logical replication protocol, which allows changes to a database to be streamed in real time to subscribers. Logical replication provides fine-grained control over what data is replicated by allowing the user to define publications and subscribe to specific changes.
 
 #### How logical replication works:
-1. Publications: Define what changes (e.g., INSERT, UPDATE, DELETE) should be made available for replication. Publications allow you to select specific tables or schemas to track.
-2. Replication slots: Ensure that all changes from a publication are retained until they are successfully delivered to the subscriber (e.g., Windmill triggers). This guarantees data reliability and prevents data loss.
+1. **Publications**: Define what changes (e.g., INSERT, UPDATE, DELETE) should be made available for replication. Publications allow you to select specific tables or schemas to track.
+2. **Replication slots**: Ensure that all changes from a publication are retained until they are successfully delivered to the subscriber (e.g., Windmill triggers). This guarantees data reliability and prevents data loss.
 
 Windmill uses logical replication to efficiently stream database changes to your configured triggers, ensuring minimal latency and high reliability.
 
-For more details, see the [Postgres documentation on logical replication](https://www.postgres.org/docs/current/logical-replication.html).\
-For more details, see the [Postgres documentation on logical replication streaming protocol](https://www.postgres.org/docs/current/protocol-logical-replication.html).
+For more details, see the [Postgres documentation on logical replication](https://www.postgresql.org/docs/current/logical-replication.html).  
+For more details, see the [Postgres documentation on logical replication streaming protocol](https://www.postgresql.org/docs/current/protocol-logical-replication.html).
 
 ---
 
 ## How to use
+Learn how to set up and configure Postgres triggers in Windmill through these key steps.
 
 ### Create a Postgres trigger
 To begin, navigate to the Postgres triggers page and create a new trigger. Follow the steps below to set up your environment.
@@ -46,7 +45,7 @@ Example:
 #### Specific schemas
 The trigger will listen for transactions on all tables within the selected schemas. Any new tables added to these schemas in the future will also be tracked automatically.
 
-Example:
+Example:  
 Tracking the `public` and `marketing` schemas:
 
 ![Track specific schemas example](./track_specific_schemas_marketing_public.png 'Track specific schemas: marketing and public')
@@ -54,7 +53,7 @@ Tracking the `public` and `marketing` schemas:
 #### Specific tables
 The trigger will listen only for transactions on the specified tables. You can also choose which columns to retrieve when tracking specific tables.
 
-Example:
+Example:  
 In this setup, the `bakery` table in the `paris` schema is tracked, but only the `name` and `address` columns are retrieved.
 
 ![Track specific tables example](./track_specific_tables_bakery.png 'Track specific tables: user and bakery')
@@ -63,12 +62,14 @@ In this setup, the `bakery` table in the `paris` schema is tracked, but only the
 
 ## Limitations and examples
 
+This section outlines the supported and unsupported combinations of tracking configurations, helping you avoid common setup issues and ensure your triggers work as intended.
+
 ### Valid configuration
 You can combine:
 - Schema-level tracking (e.g., `public` schema).
 - Specific table tracking without selecting columns.
 
-Example:
+Example:  
 Tracking the `bakery` table in the `paris` schema and all tables in the `private` and `public` schemas:
 
 ![Valid configuration example](./valid_config.png 'Valid configuration example')
@@ -77,7 +78,7 @@ Tracking the `bakery` table in the `paris` schema and all tables in the `private
 You cannot combine:
 - Schema-level tracking with specific table tracking that includes column selection.
 
-Example:
+Example:  
 Tracking all tables in the `public` schema and the `bakery` table in the `paris` schema with selected columns (`name` and `address`):
 
 ![Invalid configuration example](./invalid_config.png 'Invalid configuration example')
@@ -85,6 +86,7 @@ Tracking all tables in the `public` schema and the `bakery` table in the `paris`
 ---
 
 ## Additional options
+The following section showcases additional options provided by PostgreSQL's logical replication feature that Windmill integrates with.
 
 ### Filtering rows with WHERE condition
 When tracking specific tables, you can filter rows by providing a WHERE condition.
@@ -102,9 +104,9 @@ Important:
   See the [REPLICA IDENTITY documentation](https://www.postgres.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-REPLICA-IDENTITY) for more details.
 - If your trigger tracks only `INSERT` transactions, the `WHERE` clause can reference any column.
 
-For more details, refer to the [Postgres WHERE clause documentation](https://www.postgres.org/docs/current/logical-replication-row-filter.html#LOGICAL-REPLICATION-ROW-FILTER-RESTRICTIONS).
+For more details, refer to the [Postgres WHERE clause documentation](https://www.postgresql.org/docs/current/logical-replication-row-filter.html#LOGICAL-REPLICATION-ROW-FILTER-RESTRICTIONS).
 
-Illustration:
+Illustration:  
 Here’s an example showing how to filter rows based on the condition `speciality = 'croissant'` in the `bakery` table of the `paris` schema:
 
 ![Where condition example](./where_condition_paris_bakery.png 'Filtering rows example: speciality = croissant')
@@ -114,7 +116,7 @@ Here’s an example showing how to filter rows based on the condition `specialit
 ### Selecting specific columns
 For specific tables, you can reduce the data sent to the triggered runnable by retrieving only the columns you need.
 
-Example:
+Example:  
 In the `paris` schema, you can track the `bakery` table but only retrieve the `name` and `address` columns.
 
 Illustration:
@@ -124,16 +126,16 @@ Illustration:
 ---
 
 ## Advanced
-
+The Advanced section provides granular control over publications and replication slots, offering flexibility beyond Windmill's default automatic management.
 ### Managing Postgres publications
 By default, Windmill automatically creates a publication and a replication slot for you when setting up a trigger. However, in the Advanced section, you can:
 
-- Create a custom publication: If you prefer to use your own publication, you can create it directly from the interface.
-    - Example: Create a publication named `windmill_publication_sincere`, which tracks all tables in the `public` and `private` schemas, and is set to track only update and delete transactions.
+- **Create a custom publication**: If you prefer to use your own publication, you can create it directly from the interface.
+    - Example: Create a publication named `windmill_publication_gracious`, which tracks all tables in the `public` and `private` schemas, and is set to track only update and delete transactions.
 
       ![Creating publication example](./create_publication_example.png 'Create a custom publication: windmill_publication_illuminating')
 
-- Choose an existing publication: Instead of relying on the default publication created by Windmill, you can select an existing publication from your database to use for your trigger.
+- **Choose an existing publication**: Instead of relying on the default publication created by Windmill, you can select an existing publication from your database to use for your trigger.
     - For example, when retrieving the publication `windmill_publication_non_violent`, all tables are tracked, and the publication tracks insert, update, and delete transactions by default.
     - In the image below, the tracked tables and insert transaction type for the publication are displayed. You can use the publication as is or:
       - Update the publication by adding or removing tables and schemas being tracked, or modifying the transaction types.
@@ -141,16 +143,26 @@ By default, Windmill automatically creates a publication and a replication slot 
 
       ![Retrieving and managing publication example](./retrieve_publication_example.png 'Retrieve and manage publication: windmill_publication_non_violent')
 
-For more information on Postgres publications, refer to the [Postgres documentation on publications](https://www.postgres.org/docs/current/logical-replication-publication.html).
+For more information on Postgres publications, refer to the [Postgres documentation on publications](https://www.postgresql.org/docs/current/logical-replication-publication.html).
 
 ---
 
 ### Managing Postgres replication slots
 In the Advanced section, you can also manage your replication slots. Windmill will automatically create a replication slot for you by default, but you can interact with replication slots as follows:
 
-- Create a custom replication slot: If needed, you can create your own replication slot directly in the interface.
-- Choose an existing replication slot: You can select an existing replication slot from your database and link it to the trigger.
-- Delete a replication slot: If a replication slot is no longer necessary, you can delete it through the interface.
+- **Create a custom replication slot**: If needed, you can create your own replication slot directly in the interface.
+    - Example: Create a replication slot named `windmill_replication_adored`.
+
+      ![Creating Replication Slot Example](./create_replication_slot_example.png 'Creating Replication Slot Example')
+
+- **Choose an existing replication slot**: You can select an existing replication slot from your database and link it to the trigger.
+    - Example: Retrieve and manage the replication slot `windmill_1737909146368_4zuvg52h3pge` for your trigger.
+
+      ![Retrieving Replication Slot Example](./retrieve_replication_slot_example.png 'Retrieving Replication Slot Example')
+
+- **Delete a replication slot**: If a replication slot is no longer necessary, you can delete it through the interface.
+
+Windmill will display only logical replication slots and inactive slots. For more details, refer to the [Postgres documentation on replication slots](https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION-SLOTS).
 
 ---
 
@@ -247,3 +259,44 @@ Once the template is generated, you can modify it to meet your needs. Below is a
 ) {
 }
 ```
+
+---
+
+## Troubleshooting
+If you're experiencing issues when creating or running Postgres triggers, here are some common problems and how to resolve them.
+
+### Failed to start trigger
+When a trigger fails to start, you may encounter one of these issues:
+
+#### 1. WAL sender limit reached
+When starting a trigger, you may encounter an error indicating no more room for WAL sender connections. This occurs when an active trigger attempts to establish a connection but the `max_wal_senders` limit has been reached.
+
+##### Try any of these following solutions:
+- **Disable one of the running triggers**: You can disable one of the triggers using the same Postgres resource. By doing so, the resource will free up a connection, allowing you to use the newly created trigger.
+- **Increase the `max_wal_senders` limit**: You can increase this limit on your Postgres server to allow more connections. For more information, refer to the [Postgres documentation on max_wal_senders](https://www.postgresql.org/docs/current/runtime-config-replication.html#GUC-MAX-WAL-SENDERS).
+  **Note**: Simply increasing the limit may not be enough if the `max_replication_slots` limit is also reached.
+
+##### Example Error:
+In this example, the database has `max_wal_senders` set to 2. Two triggers are already running (shown as "currently 2" in the error), preventing a third trigger from starting. To resolve this, either disable one of the running triggers or increase the database's `max_wal_senders` limit.
+
+![Error: No more room left for WAL sender](./no_more_room_wal_sender_error.png)
+
+### Failed to create trigger
+When creating a new trigger, you may encounter these issues:
+
+#### 1. Replication slot limit reached
+If you encounter an error stating that the `max_replication_slots` limit is reached, this error happens because Windmill, in basic mode, tries to create both a replication slot and a publication when a new trigger is set up. If the `max_replication_slots` limit is exceeded, the new replication slot cannot be created.
+
+##### Try any of these following solutions:
+- **Delete an existing replication slot**: You can navigate to the [Advanced](#advanced) section and delete an unused replication slot. This will free up space for a new replication slot.
+- **Increase the `max_replication_slots` limit**: Increase the replication slots limit on your Postgres server to allow more replication slots. For more information, refer to the [Postgres documentation on max_replication_slots](https://www.postgresql.org/docs/current/runtime-config-replication.html#GUC-MAX-REPLICATION-SLOTS).
+- **Manage replication slots and publications directly**: Since Windmill automatically creates a publication and replication slot when setting up a trigger, you can go to the Advanced section of the interface to manage these elements manually. This includes creating, selecting, or deleting replication slots and publications as needed. For more information, see the section on [Managing Postgres publications and replication slots](#advanced).
+
+##### Example Error:
+In this example, the database has reached its maximum number of replication slots (shown as "all replication slots are in use" in the error). This prevents the creation of a new trigger since Windmill cannot create the required replication slot. To resolve this, either delete unused replication slots or increase the database's `max_replication_slots` limit.
+
+![Error: No replication slots available](./no_replication_slots_available_error.png)
+
+---
+
+For more help with troubleshooting, refer to the Postgres logs or contact Windmill support.
