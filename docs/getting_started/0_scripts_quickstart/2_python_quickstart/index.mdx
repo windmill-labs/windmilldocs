@@ -7,7 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Python quickstart
 
-In this quick start guide, we will write our first script in Python. Windmill provides a Python `3.11` environment.
+In this quick start guide, we will write our first script in Python.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -310,6 +310,50 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 		href="/docs/getting_started/triggers"
 	/>
 </div>
+
+## Select Python version
+
+You can annotate the version of Python you would like to use for a script using the following annotations: py310, py311, py312, or py313:
+
+```python
+# py312
+
+type Foo = str
+
+def main():
+	foo: Foo = "Foo"
+	return foo
+```
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/annotate_py_version.mp4"
+/>
+<br/>
+
+Alternatively, you can set a global version by configuring the INSTANCE_PYTHON_VERSION environment variable to one of the mentioned versions or unset it to use "Latest Stable". If you leave `INSTANCE_PYTHON_VERSION` empty it will inherit "Latest Stable" version, which depends on Windmill.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/set_instance_py_version.mp4"
+/>
+<br/>
+
+For newly deployed scripts, the annotated or instance version will be assigned to the lockfile, and all future executions will adhere to that specified version. 
+
+For scripts that are already deployed and have no version specified in lockfile, Python 3.11 will be used by default, even if the instance version is changed to a different one.
+
+During test runs or deployments, if there are imported scripts, Windmill will search through all of them to find an annotated version, which will be used as the final version. If no annotated version is found, the instance version will be used instead. 
+
+
+
+:::note
+Only one python version can be annotated within a single tree.
+:::
+
+For [Enterprise Edition](/pricing) (EE) customers, [S3 cache](../../../misc/13_s3_cache/index.mdx) tarballs will be organized and separated by Python version.
 
 ## Caching
 
