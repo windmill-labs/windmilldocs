@@ -63,7 +63,10 @@ export default function LogoClouds() {
 							href={logo.anchor ? `#${logo.anchor}` : logo.url}
 							target={logo.anchor ? '_self' : '_blank'}
 							title={String(logo.name)}
-							className="flex items-center justify-center"
+							className={classNames(
+								'flex items-center justify-center',
+								logo.name === 'Nocd' && 'mt-[-8px]'
+							)}
 						>
 							<img
 								className={classNames(
