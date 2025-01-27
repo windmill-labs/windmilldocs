@@ -33,7 +33,7 @@ const faqs = [
 	},
 	{
 		id: 'pro-plan',
-		question: 'Which organizations can subscribe to the Pro plan?',
+		question: 'Which organizations can subscribe to the Pro plan and non-profit EE?',
 		answer: (
 			<span>
 				The Pro plan is only available in Self-hosted for:
