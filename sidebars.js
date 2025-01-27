@@ -663,6 +663,7 @@ const sidebars = {
 								'apps/app_configuration_settings/alert',
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/carousel',
+								'apps/app_configuration_settings/accordion',
 								'apps/app_configuration_settings/chartjs',
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',
