@@ -658,6 +658,8 @@ const sidebars = {
 								id: 'apps/app_configuration_settings/app_component_library'
 							},
 							items: [
+								'apps/app_configuration_settings/accordion',
+								'apps/app_configuration_settings/accordion_tabs',
 								'apps/app_configuration_settings/aggrid_table',
 								'apps/app_configuration_settings/agcharts',
 								'apps/app_configuration_settings/alert',

@@ -50,7 +50,9 @@ import {
 	UploadCloud,
 	Lock,
 	Image,
-	Puzzle
+	Puzzle,
+	GalleryThumbnails,
+	ListCollapse
 } from 'lucide-react';
 
 import { motion } from 'framer-motion';
@@ -415,8 +417,14 @@ export const components = [
 
 	{
 		name: 'Carousel List',
-		Icon: ListIcon,
+		Icon: GalleryThumbnails,
 		documentationLink: `${documentationBaseUrl}/carousel`
+	},
+
+	{
+		name: 'Accordion List',
+		Icon: ListCollapse,
+		documentationLink: `${documentationBaseUrl}/accordion`
 	},
 
 	{
