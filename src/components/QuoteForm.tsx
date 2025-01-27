@@ -238,7 +238,7 @@ export function QuoteForm({
 								<input
 									type="text"
 									className="text-sm border-gray-100 dark:border-gray-600 border rounded-lg bg-white dark:bg-gray-950"
-									placeholder={`Write in a few words why you qualify as a ${selectedOption === 'Nonprofit' ? 'nonprofit' : 'Pro plan'}`}
+									placeholder={`Write in a few words why you qualify for ${selectedOption === 'Nonprofit' ? 'Nonprofit plan' : 'Pro plan'}`}
 									value={qualification}
 									onChange={(e) => setQualification(e.target.value)}
 								/>
