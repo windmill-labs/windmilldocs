@@ -12,7 +12,7 @@ Variables are dynamic values that have a key associated to them and can be retri
 
 All Variables (not just secrets) are encrypted with a workspace specific symmetric key to avoid leakage.
 
-There are two types of Variables in Windmill: user-defined and contextual.
+There are 2 types of Variables in Windmill: user-defined and contextual (including environment variables).
 
 ## User-defined variables
 
@@ -69,44 +69,21 @@ offer a selection over the resources of type postgresql in the auto-generated UI
 There is also a concept of [state](..//3_resources_and_types/index.mdx#states) to share values
 across script executions.
 
+## Environment variables
+
+Environment variables are used to configure the behavior of scripts and services, allowing for dynamic and flexible execution across different environments.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Environment variables"
+		description="Environment variables are used to configure the behavior of scripts and services, allowing for dynamic and flexible execution across different environments."
+		href="/docs/core_concepts/environment_variables"
+	/>
+</div>
+
 ## Contextual variables
 
-Contextual Variables are environment variables automatically set by Windmill. This is how the Deno and Python clients get their implicit
-credentials to interact with the platform.
-
-See the `Contextual` tab on the <a href="https://app.windmill.dev/variables" rel="nofollow">Variable page</a> for the list of reserved variables and what they are used for.
-
-You can use them in a Script by clicking on "+Context Var":
-
-![Contextual variable](./context_variables.png.webp)
-
-| Name | Example of value | Description |
-|------|------------------|-------------|
-| WM_WORKSPACE | demo | Workspace id of the current script |
-| WM_TOKEN | q1E2qcLyO00yxioll7oph76N9CJDqn | Token ephemeral to the current script with equal permission to the \ permission of the run (Usable as a bearer token)" |
-| WM_EMAIL | demo@windmill.dev | Email of the user that executed the current script |
-| WM_USERNAME | ruben | Username of the user that executed the current script |
-| WM_BASE_URL | https://app.windmill.dev/ | base url of this instance |
-| WM_JOB_ID | 017e0ad5-f499-73b6-5488-92a61c5196dd | Job id of the current script |
-| WM_JOB_PATH | u/user/script_path | Path of the script or flow being run if any |
-| WM_FLOW_JOB_ID | 017e0ad5-f499-73b6-5488-92a61c5196dd | Job id of the encapsulating flow if the job is a flow step |
-| WM_ROOT_FLOW_JOB_ID | 017e0ad5-f499-73b6-5488-92a61c5196dd | Job id of the root flow if the job is a flow step |
-| WM_FLOW_PATH | u/user/flow_path | Path of the encapsulating flow if the job is a flow step |
-| WM_SCHEDULE_PATH | u/user/triggering_flow_path | Path of the schedule if the job of the step or encapsulating step has \ been triggered by a schedule" |
-| WM_PERMISSIONED_AS | u/henri | Fully Qualified (u/g) owner name of executor of the job |
-| WM_STATE_PATH | u/user/flow_path/c_henri | State resource path unique to a script and its trigger |
-| WM_STATE_PATH_NEW | u/user/flow_path/c_henri | State resource path unique to a script and its trigger (legacy) |
-| WM_FLOW_STEP_ID | c | The node id in a flow (like 'a', 'b', or 'f') |
-| WM_OBJECT_PATH | u_user_flow_path/u_user_flow_path/c/17[...]196dd | Script or flow step execution unique path, useful for storing results in an external service |
-| WM_OIDC_JWT | eyJh[...]ciOiJIUzI1NiIsInR5 | OIDC JWT token (EE only) |
-
-### Custom contextual variables
-
-From Variables tab, [admins](../16_roles_and_permissions/index.mdx) can create custom contextual variables that will act as env variables for all jobs within a workspace.
-
-We still recommend using [user-defined variables](#user-defined-variables) but in some cases (e.g. your imports depend on env variables), this might be a good escape hatch.
-
-![Create Custom Contextual Variable](./create_custom_contextual_variable.png)
+[Contextual variables](../47_environment_variables/index.mdx#contextual-variables) are variables whose values are contextual to the script execution. They are automatically set by Windmill. This is how the [languages](../../getting_started/0_scripts_quickstart/index.mdx) clients get their implicit credentials to interact with the platform.
 
 ## Secrets
 
@@ -209,28 +186,14 @@ Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_W
 
 The last examples in bash and PowerShell showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as an environment variable to the job.
 
-## Custom environment variables
+## Mocked API files
 
-In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts. This feature is useful when a script needs an environment variable prior to the main function executing itself. For instance, some libraries in Go do some setup in the 'init' function that depends on environment variables.
-
-To add a custom environment variable to a script in Windmill, you should follow this format: `<KEY>=<VALUE>`. Where `<KEY>` is the name of the environment variable and `<VALUE>` is the corresponding value of the environment variable.
+Simulate API interactions locally by using a JSON file to store and retrieve variables and resources.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Custom environment variables"
-		description="In a self-hosted environment, Windmill allows you to set custom environment variables for your scripts."
-		href="/docs/script_editor/custom_environment_variables"
-	/>
-</div>
-
-## Environment variables passed to jobs
-
-From a [worker group](../9_worker_groups/index.mdx), you can add static and dynamic environment variables that will be [passed to jobs](../9_worker_groups/index.mdx#environment-variables-passed-to-jobs) handled by this worker group. Dynamic environment variable values will be loaded from the worker host environment variables while static environment variables will be set directly from their values below.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Workers and worker groups"
-		description="Worker Groups allow users to run scripts and flows on different machines with varying specifications."
-		href="/docs/core_concepts/worker_groups"
+		title="Mocked API files"
+		description="Simulate API interactions locally by using a JSON file to store and retrieve variables and resources."
+		href="/docs/advanced/local_development/#mocked-api-files"
 	/>
 </div>
