@@ -115,7 +115,7 @@ The goal of the current section is to give you more hints on the potentiality of
 
 ### Control the Slackbot by getting username
 
-You can get the username of the Slack user that triggered the workflow, leveraging the [contextual variable](/docs/core_concepts/variables_and_secrets#contextual-variables) `WM_USERNAME`.
+You can get the username of the Slack user that triggered the workflow, leveraging the [contextual variable](/docs/core_concepts/environment_variables#contextual-variables) `WM_USERNAME`.
 
 To the first step of your script, click on "+Context Var" and pick `WM_USERNAME`. The variable will take the value of the Slack username.
 

@@ -275,8 +275,9 @@ const sidebars = {
 				'core_concepts/error_handling/index',
 				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
-				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
+				'core_concepts/variables_and_secrets/index',
+				'core_concepts/environment_variables/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
@@ -658,6 +659,8 @@ const sidebars = {
 								id: 'apps/app_configuration_settings/app_component_library'
 							},
 							items: [
+								'apps/app_configuration_settings/accordion',
+								'apps/app_configuration_settings/accordion_tabs',
 								'apps/app_configuration_settings/aggrid_table',
 								'apps/app_configuration_settings/agcharts',
 								'apps/app_configuration_settings/alert',

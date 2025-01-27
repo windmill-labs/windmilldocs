@@ -259,6 +259,36 @@ The Windmill VS Code extension allows you to build scripts and flows in the comf
 
 ![VS Code extension](../../../blog/2023-11-20-vscode/vscode_extension.png 'VS Code extension')
 
+## Mocked API files
+
+Simulate API interactions locally by using a JSON file to store and retrieve variables and resources.
+
+The file should conform to the following interface:
+
+```typescript
+interface MockedApi {
+  variables: Record<string, string>;
+  resources: Record<string, any>;
+}
+```
+
+Use the file by setting the `WM_MOCKED_API_FILE` [environment variable](../../core_concepts/47_environment_variables/index.mdx) to the path of your JSON file. For example:
+
+```ts
+import * as wmill from "windmill-client@1.450.0-beta.2"
+
+export async function main(x: string) {
+  await Bun.write("./foo.json", '{}')
+  process.env["WM_MOCKED_API_FILE"] = "./foo.json"
+  await wmill.setVariable("foo", "foobar")
+  await wmill.setResource({ "we": 42}, "foo")
+  console.log(await wmill.getResource("foo"))
+  return x
+}
+```
+
+If WM_MOCKED_API_FILE is present, [`getVariable`](../../core_concepts/2_variables_and_secrets/index.mdx#accessing-a-variable-from-a-script) / [`getResource`](../../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) will look up first in that object if the value exists. `setVariable` / `setResource` will set it there. If the environment variable is set but no file exists, it is set to an empty mocked API.
+
 ## Deploy from GitHub/GitLab with Staging/Prod
 
 Syncing directly from the CLI is great, but instead of using the CLI directly, you should combine it with your CI/CD and set up a full productive Git workflow with a Staging and Prod workspaces and [Git sync](../11_git_sync/index.mdx). See more details here:
