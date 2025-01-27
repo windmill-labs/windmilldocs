@@ -57,6 +57,7 @@ export function QuoteForm({
 	const [companyName, setCompanyName] = useState('');
 	const [email, setEmail] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [qualification, setQualification] = useState('');
 
 	// Add this function near the top of the component
 	const isValidEmail = (email: string): boolean => {
@@ -83,11 +84,11 @@ export function QuoteForm({
 			// Modify plan if conditions are met
 			let apiPlan = plan;
 
-				if (selectedOption === 'SMB' && plan === 'selfhosted_ee') {
+			if (selectedOption === 'SMB' && plan === 'selfhosted_ee') {
 				apiPlan = 'selfhosted_pro';
-				} else if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') {
+			} else if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') {
 				apiPlan = 'nonprofit_ee';
-				}
+			}
 
 			// Calculate total compute units with minimum of 2
 			const computeUnits = Math.max(2, Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large));
@@ -109,7 +110,8 @@ export function QuoteForm({
 						seats,
 						compute_units: computeUnits,
 						email,
-						company_name: companyName
+						company_name: companyName,
+						reason_plan: (selectedOption === 'Nonprofit' || selectedOption === 'SMB') ? qualification : '',
 					})
 				}
 			);
@@ -228,12 +230,20 @@ export function QuoteForm({
 							)
 						)}
 
-						<a
-							href="https://drive.google.com/uc?export=download&id=1tbBMNSGcdu3e5BAFf8CIEXlbEKppbtLm"
-							className="text-blue underline text-sm"
-						>
-							Also need a presentation?
-						</a>
+						{plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'SMB') && (
+							<label className="flex flex-col">
+								<span className="font-medium text-gray-800 dark:text-gray-200 text-sm">
+									Qualification for {selectedOption === 'Nonprofit' ? 'nonprofit' : 'Pro plan'} (<a href="#pro-plan" className="font-normal text-blue-600 hover:text-blue-800">see rules</a>)
+								</span>
+								<input
+									type="text"
+									className="text-sm border-gray-100 dark:border-gray-600 border rounded-lg bg-white dark:bg-gray-950"
+									placeholder={`Write in a few words why you qualify as a ${selectedOption === 'Nonprofit' ? 'nonprofit' : 'Pro plan'}`}
+									value={qualification}
+									onChange={(e) => setQualification(e.target.value)}
+								/>
+							</label>
+						)}
 
 						{isSmbWithTooManyUnits && (
 							<div className="text-red-500 text-sm">
@@ -246,11 +256,24 @@ export function QuoteForm({
 							onClick={() => {
 								generateQuote();
 							}}
-							disabled={!companyName || !email || !isValidEmail(email) || loading || isSmbWithTooManyUnits}
+							disabled={
+								!companyName || 
+								!email || 
+								!isValidEmail(email) || 
+								loading || 
+								isSmbWithTooManyUnits || 
+								((plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'SMB')) && qualification.length < 3)
+							}
 						>
 							Generate quote
 							{loading && <Loader2 className="animate-spin" />}
 						</button>
+						<a
+							href="https://drive.google.com/uc?export=download&id=1tbBMNSGcdu3e5BAFf8CIEXlbEKppbtLm"
+							className="text-blue underline text-sm"
+						>
+							Also need a presentation?
+						</a>
 					</div>
 				</Dialog.Panel>
 			</div>
