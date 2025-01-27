@@ -259,6 +259,90 @@ Once the template is generated, you can modify it to meet your needs. Below is a
 ) {
 }
 ```
+---
+
+## Handling external database hosters
+
+When using a Postgres database hosted by external providers, special configurations might be necessary to ensure compatibility with Windmill's Postgres triggers feature. This section provides guidelines for handling various database hosters to avoid common connection issues.
+
+---
+
+### NeonDB
+If your Postgres database is hosted on **NeonDB**, special considerations are required when configuring your Postgres resource in Windmill. By default, NeonDB uses **pooled connections** with `pgbouncer`, which are not compatible with Windmill's triggers due to restrictions on the `replica` parameter.
+
+#### Why pooled connections fail by default
+NeonDB’s pooled connections are managed using `pgbouncer`. By default, `pgbouncer` allows only a specific subset of startup parameters, and **logical replication**, which Windmill uses to create triggers, requires the `replica` parameter, which is not allowed by default.
+
+If you attempt to use NeonDB's `-pooler` host without modifying the `pgbouncer` configuration, Windmill's triggers will fail to connect because `pgbouncer` will reject the `replica` parameter.
+
+---
+
+#### Avoiding Common Pitfalls: Configuring NeonDB with Windmill
+
+When entering the database details manually (`host`, `port`, `db_name`, `password`, `ssl_mode`, `root_certificate_pem`, etc.), you have two options:
+
+---
+
+#### Option 1: Use the non-pooled connection host
+
+**Recommended for simplicity.**  
+Avoid using the `-pooler` host provided by NeonDB.
+
+1. Remove the `-pooler` suffix from the host.
+   Example:
+   - **Original `host` (with pooled connection)**:  
+     `<cluster-name>-pooler.neon.tech`
+   - **Updated `host` (without pooled connection)**:  
+     `<cluster-name>.neon.tech`
+
+2. Enter the remaining parameters as provided by NeonDB:
+   - **`db_name`**: The name of the database
+   - **`password`**: The password for your database
+   - **`port`**: The port (usually `5432`)
+   - **`ssl_mode`**: Typically `require`
+   - **`root_certificate_pem`**: Optional certificate for secure SSL connections
+
+This configuration works without requiring changes to NeonDB's `pgbouncer` settings.
+
+##### **Good configuration**
+For example, if NeonDB provides the following details:
+- `host`: `<cluster-name>-pooler.neon.tech`
+- `db_name`: `my_database`
+- `password`: `my_password`
+- `port`: `5432`
+- `ssl_mode`: `require`
+
+Configure the Postgres resource as follows:
+- **`host`**: `<cluster-name>.neon.tech`  
+  _(Remove the `-pooler` suffix.)_
+- **`db_name`**: `my_database`  
+- **`password`**: `my_password`  
+- **`port`**: `5432`  
+- **`ssl_mode`**: `require`  
+- **`root_certificate_pem`**: Provide if required by NeonDB.
+
+---
+
+#### Option 2: Enable pooled connections by modifying `pgbouncer`
+
+**For advanced users who prefer using pooled connections.**  
+To use NeonDB’s `-pooler` host with Windmill's Postgres triggers, you must update the `pgbouncer` configuration on your NeonDB instance to allow the `replica` parameter. 
+
+1. **Locate the `pgbouncer` configuration file**:  
+   Check NeonDB’s documentation for guidance on accessing and modifying the `pgbouncer` configuration.
+
+2. **Update the `ignore_startup_parameters` setting**:  
+   Add `replica` to the `ignore_startup_parameters` list in the `pgbouncer` configuration file.
+
+   Example:
+   ```txt
+   ignore_startup_parameters = replica
+
+---
+
+### Other providers
+As other database hosting services are integrated or used, additional guidelines will be provided in this section. Always review your database hoster's documentation for compatibility with long-lived connections required by Windmill's Postgres triggers.
+
 
 ---
 
