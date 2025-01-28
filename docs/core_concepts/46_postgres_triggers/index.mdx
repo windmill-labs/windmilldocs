@@ -156,7 +156,7 @@ The default replica identity tracks only the primary key column(s). For the `bak
       - Alternatively, update or delete the publication and recreate it with the correct configuration.
 
 #### 2. `USING INDEX` replica identity
-With `USING INDEX index_name`, the replica identity tracks the columns of a unique index, and this index must cover all the columns that are **NOT NULL**.
+With `USING INDEX index_name`, the replica identity tracks the columns of a unique index.
 
 - **Correct configuration**: 
     - The trigger must track at least the columns that are part of the unique index.
