@@ -191,7 +191,7 @@ The `NOTHING` replica identity records no information about the old row, which i
 #### Conclusion
 - **For `UPDATE` and `DELETE` operations**, ensure that the tracked columns include the primary key column (e.g., `id`, `bakery_id`, or whatever the primary key column is named) or match the requirements of the replica identity configuration.
 - If the default replica identity is used (`DEFAULT`), ensure that the primary key column is included in the tracked columns to avoid failures with `UPDATE` and `DELETE`.
-- For `USING INDEX`, make sure the tracked columns align with the unique index.
+- For `USING INDEX`, make sure the trigger tracks **at least** the columns in the unique index. You can also track other columns, but the index columns must be tracked to ensure the correct behavior for `UPDATE` and `DELETE` transactions.
 - If the replica identity is set to `FULL`, you can safely track any columns.
 - Avoid using `NOTHING` replica identity if you need to track `UPDATE` and `DELETE` operations.
 
