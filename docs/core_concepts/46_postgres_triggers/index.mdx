@@ -159,13 +159,13 @@ The default replica identity tracks only the primary key column(s). For the `bak
 With `USING INDEX index_name`, the replica identity tracks the columns of a unique index, and this index must cover all the columns that are **NOT NULL**.
 
 - **Correct configuration**: 
-    - The trigger must track all the columns that are included in the unique index.
-    - If the `bakery` table has a unique index (e.g., `idx_bakery_name_address`) covering `name` and `address`, the trigger should track these two columns.
+    - The trigger must track at least the columns that are part of the unique index.
+    - If the `bakery` table has a unique index (e.g., `idx_bakery_name_address`) covering `name` and `address`, the trigger should track **at least** those two columns, but it can also track other columns, such as `id`, if needed for your logic.
 
 - **Incorrect configuration**:
     - If the columns tracked by the trigger do not match those in the unique index, `UPDATE` and `DELETE` transactions will fail.
     - To fix this:
-      - Ensure the trigger tracks the columns in the `USING INDEX` replica identity or create an appropriate unique index.
+      - Ensure the trigger tracks **at least** the columns in the `USING INDEX` replica identity or create an appropriate unique index.
 
 #### 3. `FULL` replica identity
 The `FULL` replica identity records the old values of **all columns** in the row.
