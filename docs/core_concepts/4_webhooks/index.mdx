@@ -312,6 +312,23 @@ the synchronous endpoint will return:
 
 with the response header: "Content-Type: text/csv".
 
+### Custom response headers
+
+Similar to the above, for all sync run jobs endpoints, if the response contains a key `windmill_headers`, the headers will be added to the response. For example, if a script or flow returns:
+
+```json
+{
+	"windmill_headers": {"X-Custom-Header": "foo"},
+	"result": {
+		"Hello": "World"
+	}
+}
+```
+
+the synchronous endpoint with return the result with the header `X-Custom-Header: foo` (in addition to `Content-Type: application/json`).
+
+It's better to use `windmill_content_type` to override the content type, as the output will be correctly formatted.
+
 ### Return early for flows
 
 It is possible to define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously.
