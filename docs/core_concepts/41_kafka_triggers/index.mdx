@@ -16,15 +16,41 @@ It indicates the consumer group to which the trigger belongs. This garantees tha
 
 Once the Kafka resource and settings are set, select the runnable that should be triggered by this trigger.
 The received webhook message will be passed to the runnable as a string argument called `msg`.
-If you use a [preprocessor](../43_preprocessors/index.mdx), the `wm_trigger` object will be of the form:
 
-```json
-{
-  "kind": "kafka",
-  "kafka": {
-    "brokers": ["localhost:9092"],
-    "topic": "my-topic", 
-    "group_id": "my-group-id"
-  }
+Here's an example script:
+
+```TypeScript
+export async function main(msg: string) {
+  // do something with the message
+}
+```
+
+And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could look like this:
+
+```TypeScript
+export async function preprocessor(
+  msg: string,
+  wm_trigger: {
+    kind: "kafka",
+    kafka: {
+      brokers: string[];
+      topic: string; // the specific topic the message was received from
+      group_id: string;
+    }
+  },
+) {
+  // assuming the message is a JSON object
+  const msg = JSON.parse(msg); 
+
+  // define args for the main function
+  // let's assume we want to use the message content and the topic
+  return {
+    message_content: msg.content,
+    topic: wm_trigger.kafka.topic
+  };
+}
+
+export async function main(message_content: string, topic: string) {
+  // do something with the message content and topic
 }
 ```

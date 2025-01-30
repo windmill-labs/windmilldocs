@@ -1,39 +1,72 @@
-# Websocket triggers
+# WebSocket triggers
 
-Windmill can connect to [websocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) servers and trigger runnables (scripts, flows) when a message is received.
+Windmill can connect to [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) servers and trigger runnables (scripts, flows) when a message is received.
 Listening is done from the servers, so it doesn't take up any workers.
-Websocket triggers are not available on the [Cloud](/pricing).
+WebSocket triggers are not available on the [Cloud](/pricing).
 
 ## How to use
 
-Create a new trigger on the Websocket triggers page.
-Specify the URL of the websocket server. Instead of a static URL, you can also specify a script or flow to return the connect URL. 
+Create a new trigger on the WebSocket triggers page.
+Specify the URL of the WebSocket server. Instead of a static URL, you can also specify a script or flow to return the connect URL. 
 This is useful when you need to pass an authentication query parameter to the connect URL.
 The runnable must return a string.
 
-![Websocket URL and runnable](./static_url.png 'Websocket static URL')
+![WebSocket URL and runnable](./static_url.png 'WebSocket static URL')
 
-![Websocket URL as runnable result](./runnable_url.png 'Websocket URL as runnable result')
+![WebSocket URL as runnable result](./runnable_url.png 'WebSocket URL as runnable result')
 
 Once the URL set, select the runnable that should be triggered by this trigger.
-The received webhook message will be passed to the runnable as a string argument called `msg`.
-If you use a [preprocessor](../43_preprocessors/index.mdx), the `wm_trigger` object will be of the form:
+The received WebSocket message will be passed to the runnable as a string argument called `msg`.
 
-```json
-{
-  "kind": "websocket",
-  "websocket": {
-    "url": "ws://my.websocket.server",
-  }
+Here's an example script:
+
+```TypeScript
+export async function main(msg: string) {
+  // do something with the message
 }
 ```
 
+And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could look like this:
+
+```TypeScript
+export async function preprocessor(
+  msg: string,
+  wm_trigger: {
+    kind: "websocket",
+    websocket: {
+      url: string // the WebSocket URL
+    }
+  },
+) {
+  // assuming the message is a JSON object
+  const msg = JSON.parse(msg); 
+
+  // define args for the main function
+  // let's assume we want to use the message content and the url
+  return {
+    message_content: msg.content,
+    url: wm_trigger.websocket.url
+  };
+}
+
+
+export async function main(message_content: string, url: string) {
+  // do something with the message content and url
+}
+```
 
 The trigger also supports additional configuration options:
 
+
+### Send runnable result to WebSocket server
+
+If you enable the "Send runnable result" toggle, the runnable result will be sent to the WebSocket server as a message, as long as the job is a success and the result is not null.
+Like for [sync webhooks](../4_webhooks/index.mdx#synchronous), if the flow has the [early return](../../flows/19_early_return.mdx) setting set, the chosen node result will be sent and the rest of the flow will continue asynchronously.
+
+
 ### Initial messages
 
-You can specify a list of initial messages to send to the websocket server when connection to the server is established.
+You can specify a list of initial messages to send to the WebSocket server when connection to the server is established.
 This is useful for authentication or subscription messages.
 They can be static strings or runnables that return the message.
 The static string field is in JSON format and will be stringified before sending. If the JSON value is a string, it will be sent without the wrapping quotes.
