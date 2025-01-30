@@ -28,7 +28,7 @@ From there you can manually add a user to the instance, giving an email and a pa
 
 You can also enable automatic username creation from emails. Usernames will be shared accross workspaces. We recommend setting it to avoid duplicated usernames.
 
-A more common way to add users is to use [SSO/OAuth](#ssooauth).
+A more common way to add users is to use [SSO/OAuth](#authoauth).
 
 For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator)), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
 
@@ -44,7 +44,7 @@ You can also toggle on 'Show active users only' to show only users who have perf
 
 The base URL is the public base url of the instance.
 
-If the base URL is not set correctly, some server-side generated URLs like resume URLs will be incorrect. Additionally, [OAuth and SSO](#ssooauth) functionalities will not work properly.
+If the base URL is not set correctly, some server-side generated URLs like resume URLs will be incorrect. Additionally, [OAuth and SSO](#authoauth) functionalities will not work properly.
 
 ### Email domain
 
@@ -254,7 +254,7 @@ Enable to mute critical alerts in the UI.
 
 ### Slack
 
-Connecting your instance to a Slack workspace enables [critical alerts](#critical-alerts) to be sent to a Slack channel.
+Connecting your instance to a Slack workspace enables [critical alerts](#critical-alert-channels) to be sent to a Slack channel.
 
 Just click on the 'Connect to Slack' button and follow the instructions from Slack.
 
@@ -262,7 +262,7 @@ This setting is only available on [Enterprise Edition](/pricing).
 
 ### SMTP
 
-Setting SMTP unlocks [sending emails upon adding new users](../../core_concepts/15_authentification/index.mdx) to the workspace or the instance and [sending critical alerts](#critical-alerts).
+Setting SMTP unlocks [sending emails upon adding new users](../../core_concepts/15_authentification/index.mdx) to the workspace or the instance and [sending critical alerts](#critical-alert-channels).
 
 You need to provide the following details:
 
@@ -364,7 +364,7 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 ### OpenTelemetry (OTEL)
 
-Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](/docs/misc/guides/otel) for an example setup.
+Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](../../misc/9_guides/otel/index.mdx) for an example setup.
 
 ### Prometheus
 Expose [Prometheus](https://prometheus.io/) metrics for workers and servers on port 8001 at /metrics.

@@ -15,8 +15,8 @@ We will now use the Windmill app builder to build a simple E-commerce backoffice
 
 It showcases a variety of features that are available in the Windmill app builder, such as:
 
-- [Runnables](/docs/apps/3_app-runnable-panel.mdx): scripts or flows that are executed on demand.
-- [Components](/docs/apps/4_app_configuration_settings/1_app_component_library.mdx): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
+- [Runnables](./3_app-runnable-panel.mdx): scripts or flows that are executed on demand.
+- [Components](./4_app_configuration_settings/1_app_component_library.mdx): pre-built, reusable building blocks that encapsulate specific functionalities or design elements.
 
 :::tip
 
@@ -26,7 +26,7 @@ This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be
 
 ## Features
 
-We use [Supabase](https://supabase.com/) as a backend for this app. It is a great alternative to Firebase and it is free to use. It is a great way to get started with building your app. You can read more about Supabase [here](https://supabase.com/docs). Windmill has a [Supabase integration](/docs/integrations/supabase/) on the [Hub](https://hub.windmill.dev/) that allows you to easily connect your app to Supabase, and integrate it with your app.
+We use [Supabase](https://supabase.com/) as a backend for this app. It is a great alternative to Firebase and it is free to use. It is a great way to get started with building your app. You can read more about Supabase [here](https://supabase.com/docs). Windmill has a [Supabase integration](../integrations/supabase.md) on the [Hub](https://hub.windmill.dev/) that allows you to easily connect your app to Supabase, and integrate it with your app.
 
 We will use the following scripts from the Hub:
 
@@ -63,7 +63,7 @@ We will structure the app as follows:
 
 /docs/apps/app_configuration_settings/app_component_library
 
-We will split the product view into two parts, with the [vertical split](/docs/apps/app_configuration_settings/app_component_library#vertical-split-panes). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
+We will split the product view into two parts, with the [vertical split](./4_app_configuration_settings/vertical_split_panes.mdx). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
 
 <video
     className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
@@ -349,7 +349,7 @@ For instance, let's create a new table and use the following inline script to di
 return state.cart ? state.cart.map((id) => j.result.find((x) => x.id === id)) : [];
 ```
 
-The `add to cart` action needs to trigger a refresh of the table. We can do this by selecting the id of the table in the `Recompute others` configuration of the action. See [Recompute others](/docs/apps/3_app-runnable-panel.mdx#recompute-on-any-input-change) for more details.
+The `add to cart` action needs to trigger a refresh of the table. We can do this by selecting the id of the table in the `Recompute others` configuration of the action. See [Recompute others](./3_app-runnable-panel.mdx#recompute-on-any-input-change) for more details.
 
 We also need a action to remove a product from the cart. We can use the following frontend script to do this.
 
