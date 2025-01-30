@@ -86,7 +86,7 @@ wmill flow generate-locks
 
 ## Flow specification
 
-You can find the definition of the flow file structure [here](/docs/openflow/index.mdx).
+You can find the definition of the flow file structure [here](../../openflow/index.mdx).
 
 ## Remote path format
 

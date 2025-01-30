@@ -46,12 +46,12 @@ will be easier to manage and your pipeline will be easier to write, maintain, an
 
 ## Windmill integration with an external object storage
 
-In Windmill, a data pipeline is implemented using a [flow](/docs/flows/flow_editor), and each step of the pipeline is a script. One of the key features of Windmill flows is to easily [pass a step result to its dependent steps](/docs/flows/architecture). But
+In Windmill, a data pipeline is implemented using a [flow](../../flows/1_flow_editor.mdx), and each step of the pipeline is a script. One of the key features of Windmill flows is to easily [pass a step result to its dependent steps](../../flows/16_architecture.mdx). But
 because those results are serialized to Windmill database and kept as long as the job is stored, this obviously won't work when the result is a dataset of millions of rows. The solution is to save the datasets to an external storage at the end of each script.
 
 In most cases, S3 is a well-suited storage and Windmill now provides a basic yet very useful [integration with external S3 storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) at the workspace level.
 
-The first step is to define an [S3 resource](/docs/integrations/s3) in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
+The first step is to define an [S3 resource](../../integrations/s3.mdx) in Windmill and assign it to be the Workspace S3 bucket in the workspace settings.
 
 ![S3 workspace settings](../../../blog/2023-11-24-data-pipeline-orchestrator/workspace_s3_settings.png 'S3 workspace settings')
 

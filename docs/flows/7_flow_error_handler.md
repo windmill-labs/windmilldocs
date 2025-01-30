@@ -19,9 +19,9 @@ Steps are retried until they succeed, or until the maximum number of retries def
 
 You can write error handler scripts in:
 
-- [Python](/docs/getting_started/scripts_quickstart/python/)
-- [TypeScript](/docs/getting_started/scripts_quickstart/typescript/)
-- [Go](/docs/getting_started/scripts_quickstart/go/)
+- [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)
+- [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)
+- [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx)
 
 On the Hub, two examples of error handlers are provided:
 

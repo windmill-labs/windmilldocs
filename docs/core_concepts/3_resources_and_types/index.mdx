@@ -421,7 +421,7 @@ The toggle "Static resource select only / Resources from users allowed" can be f
 
 ## Plain text file resources
 
-In certain scenarios it is useful to store data as a a text file, with a format such as `.json`, `.cfg`, etc. Windmill can store plain text files as a resource, which can then be used as arguments for scripts, or have special support in certain languages (e.g. Ansible).
+In certain scenarios it is useful to store data as a a text file, with a format such as `.json`, `.cfg`, etc. Windmill can store plain text files as a resource, which can then be used as arguments for scripts, or have special support in certain languages (e.g. [Ansible](../../getting_started/0_scripts_quickstart/10_ansible_quickstart/index.mdx)).
 
 ### Creating a plain text resource
 
@@ -432,7 +432,6 @@ You first need to create the resource type. You will find a toggle to indicate t
 Under the hood, this resource type is just like others, but the schema only has a `content` field where the file contents are stored. Additionally, the format that you input will be used to diplay the contents on the frontend and also when pulling with the CLI and create a type to represent Ansible Inventories.
 
 Now you can create the resource by adding a resource and searching your newly created resource type:
-
 
 ![Create a Text File Resource](./create_text_file_resource.png)
 

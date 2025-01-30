@@ -3,11 +3,11 @@
 Windmill makes it easy to perform browser automation tasks, such as testing or web scraping.
 
 :::info
-Not sure what a worker group is? You should probably [read about it first](/docs/core_concepts/worker_groups).
+Not sure what a worker group is? You should probably [read about it first](../../core_concepts/9_worker_groups/index.mdx).
 :::
 
 By default, a worker group named `reports` is available which will handle jobs with the `chromium` tag.
-Workers assigned to this group will install chromium on start (learn more about [init scripts](/docs/core_concepts/worker_groups#init-scripts)).
+Workers assigned to this group will install chromium on start (learn more about [init scripts](../../core_concepts/9_worker_groups/index.mdx#init-scripts)).
 You have to set the worker group of at least one worker to `reports`.
 There is a sample worker container definition called `windmill_worker_reports` in the `docker-compose.yml` file which you can uncomment to quickly start a worker with the right worker group.
 
