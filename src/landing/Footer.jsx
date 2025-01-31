@@ -19,7 +19,7 @@ const navigation = [
 			{ name: 'Supabase', href: '/integrations/supabase' },
 			{ name: 'Slack', href: '/integrations/slack' },
 			{ name: 'Windmill AI', href: '/windmill_ai' },
-			{ name: 'More Integrations', href: '/integrations/' }
+			{ name: 'More integrations', href: '/integrations/' }
 		],
 		title: 'Integrations'
 	},
@@ -143,7 +143,7 @@ export default function Footer() {
 					</div>
 				</div>
 				<p className="text-left text-xs leading-4 tracking-tight text-gray-800 dark:text-gray-200 text-opacity-60 hover:text-opacity-100">
-					&copy; 2024 Windmill Labs, Inc. All rights reserved. 1111B S Governors Ave, Dover, DE
+					&copy; 2025 Windmill Labs, Inc. All rights reserved. 1111B S Governors Ave, Dover, DE
 					19904, USA
 				</p>
 			</div>

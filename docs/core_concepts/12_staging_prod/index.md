@@ -2,9 +2,9 @@
 
 From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
-:::tip Deploy to prod
+:::info Deploy to prod
 
-For all details on Deployments to Prod, see [Deploy to prod](../../advanced/12_deploy_to_prod/index.mdx).
+For all details on Deployments to prod in Windmill, see [Deploy to prod](../../advanced/12_deploy_to_prod/index.mdx).
 
 :::
 

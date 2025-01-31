@@ -8,7 +8,7 @@ Learn how to connect to your Supabase project from Windmill Scripts, Flows and A
 
 :::info
 
-This tutorial assumes that you already have a <a href='https://app.windmill.dev/user/login' rel="nofollow">Windmill</a> account and a [Supabase](https://supabase.com) project. If you don't, visit the [Windmill documentation](/docs/getting_started/how_to_use_windmill) or the [Supabase documentation](https://supabase.com/docs) to find out more.
+This tutorial assumes that you already have a <a href='https://app.windmill.dev/user/login' rel="nofollow">Windmill</a> account and a [Supabase](https://supabase.com) project. If you don't, visit the [Windmill documentation](../intro.mdx) or the [Supabase documentation](https://supabase.com/docs) to find out more.
 
 :::
 
@@ -55,7 +55,7 @@ want an integration to be supported by Windmill directly, please submit a new
 **Navigate to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources page</a> page**
 ![Resources page](../assets/integrations/sb-2-1-resources.png.webp)
 
-**Click "Add a resource/API"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png.webp)
+**Click "Add resource"** ![Resource selector](../assets/integrations/sb-2-2-drawer.png.webp)
 
 **Search for `Supabase` and select the resource type**
 ![Resource selector](../assets/integrations/sb-2-3-search.png.webp)

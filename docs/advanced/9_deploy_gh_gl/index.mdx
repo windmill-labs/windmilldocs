@@ -1,14 +1,28 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Deploy to prod using a git workflow
 
 Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps.
 
+This is the recommended way to deploy to prod in Windmill.
+
+:::info Deploy to prod in Windmill
+
+For all details on Deployments to prod in Windmill, see [Deploy to prod](../12_deploy_to_prod/index.mdx).
+
+:::
+
 ![Local development Setup](../4_local_development/local_development.png 'Local development Setup')
+
+> See section [Setup the full Git workflow](#setup-the-full-git-workflow) for the detailed setup steps.
+
+<br/>
 
 The integration with git works in three-folds:
 
-1. [GitHub Action](https://docs.github.com/en/actions) + [CLI](../3_cli/index.mdx): upon any commit to a particular branch, the GitHub action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push` ([free & open source](/pricing))
+1. [GitHub Action](https://docs.github.com/en/actions) + [CLI](../3_cli/index.mdx): upon any commit to a particular branch, the GitHub action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push` ([free & open source](/pricing)).
 2. [Git sync](../11_git_sync/index.mdx) (Workspace mode): Windmill automatically committing to a git repository upon any deployment to a workspace, this works using the CLI doing `wmill sync pull` ([Cloud and Enterprise Self-Hosted](/pricing)). Having it commit back to Windmill has 2 benefits:
 
     - It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance).
@@ -35,18 +49,6 @@ Check out the [windmill-sync-example repository](https://github.com/windmill-lab
 
 :::
 
-More details at:
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Local development"
-		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
-		href="/docs/advanced/local_development"
-	/>
-</div>
-
-## Git sync
-
 Deploying to a prod workspace using git requires the [Git sync](../11_git_sync/index.mdx) feature, which is is a [Cloud plans and Self-Hosted Enterprise Edition](/pricing)-only feature.
 
 From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
@@ -63,7 +65,7 @@ From the workspace settings, you can set a [git_repository](../../integrations/g
 
 Note: this is the detailed setup steps for a [GitHub](https://github.com/) repository. It will need to be adapted for [GitLab](https://about.gitlab.com/).
 
-The Video below show a simplified setup, see the steps below it for the full setup.
+The video below shows a simplified setup, see the steps below it for the full setup.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -85,60 +87,105 @@ If you are not using the [Enterprise Edition](/pricing) (EE) version of Windmill
 The guide covers a staging and prod setup. To add an additional dev environment, simply consider staging to be the target of the dev workspace and prod to be the target of the staging workspace.
 :::
 
-### Variables, resources and secrets
+### Pull workspace locally
 
-The [CLI](../3_cli/index.mdx) is able to sync [variables](../../core_concepts/2_variables_and_secrets/index.mdx), [resources](../../core_concepts/3_resources_and_types/index.mdx) and [secrets](../../core_concepts/2_variables_and_secrets/index.mdx#secrets) as well. However, everywhere the CLI is used here, it it set with the flags `--skip-variables --skip-secrets --skip-resources` to avoid syncing them. This is because variables, resources and secrets should have values that are specific to each environment.
-
-For instance, a resource named `f/myproject/myimportantdb` should have a different value in staging and prod. This is why they are not synced and should be set manually in each environment. You can however if you prefer, manually sync those. Do note that secrets have an additional layer of encryption and are by default exported in their encrypted form whose decryption key is workspace specific. To sync them between workspace, use `--plain-secrets` to export them in plain text.
-
-### GitHub repository setup
-
-First, the GitHub repo needs to be set up and Windmill needs to be able to commit to it.
-
-1. Create a GitHub repository.
-1. Initialize it by pulling the content of your workspace:
+1. Open your terminal and add your workspace to the [Windmill CLI](../3_cli/index.mdx) using the command:
+   ```bash
+   wmill workspace add <workspace-name> <workspace-id> <url>
    ```
-   #first github-sync-example is the local name of the workspace (can be anything), second is the workspace id (need to be exact), third is the url of your instance
-   wmill workspace add  github-sync-example-staging github-sync-example-staging https://app.windmill.dev/
-   echo 'includes: ["f/**"]' > wmill.yaml
-   wmill sync pull --skip-variables --skip-secrets --skip-resources
-   git add -A
-   git commit -m 'Initial commit'
-   git push
-   ```
-1. Create a branch named `staging` and push it to the repo.
-1. Generate a [GitHub token with write permission](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) to this repository. This is necessary for Windmill to push commits to the repo every time a change is made to the staging workspace.
-1. In the repository Settings > Actions > General, tick the [Allow GitHub Actions to create and approve pull requests](https://docs.github.com/en/enterprise-server@3.10/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests). This is necessary for the GitHub Action automatically creating PRs when Windmill commits a change.
-1. From Windmill, create a [token](../../core_concepts/4_webhooks/index.mdx#user-token) under User settings > Token and [save it as a secret](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) named `WMILL_TOKEN` in the repo Settings > "Secret and Variable" > "Actions". This is necessary for Windmill to push to the production workspace.
+2. Authorize the CLI to access the workspace.
+3. [Pull](../3_cli/sync.mdx) the entire Windmill workspace locally to your machine.
 
-#### GitHub Actions setup
+The CLI is able to sync [variables](../../core_concepts/2_variables_and_secrets/index.mdx), [resources](../../core_concepts/3_resources_and_types/index.mdx) and [secrets](../../core_concepts/2_variables_and_secrets/index.mdx#secrets) as well. However, everywhere the CLI is used here, it it set with the flags `--skip-variables --skip-secrets --skip-resources` to avoid syncing them. This is because variables, resources and secrets should have values that are specific to each environment.
 
-3 actions are needed.
+For instance, a [resource](../../core_concepts/3_resources_and_types/index.mdx) named `f/myproject/myimportantdb` should have a different value in staging and prod. This is why they are not synced and should be set manually in each environment. You can however if you prefer, manually sync those. Do note that secrets have an additional layer of encryption and are by default exported in their encrypted form whose decryption key is workspace specific. To sync them between workspace, use `--plain-secrets` to export them in plain text.
 
-1. The first one to automatically create a PR when Windmill commits a change after a user deployed a script/flow/app in the staging workspace. The workflow file is available in [the example repo](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/open-pr-on-commit.yaml). All branches created by Windmill will have a `wm_deploy/` prefix, which is handy to trigger this action only when a branch matching this pattern is created.
-2. The second one to automatically push the content of the repo to the Windmill prod workspace when a PR is merged. The workflow file is available in [the example repo](https://github.com/windmill-labs/windmill-sync-example/blob/main/.github/workflows/push-on-merge.yaml). This action uses the wmill itself with `wmill sync push`.
-   For this action to work, you need to set the following secrets in the repo Settings > "Secret and Variable" > "Actions":
+### Push workspace to GitHub
 
-   - `WMILL_TOKEN`: the token generated previously in Windmill
+1. Create a new private repository on GitHub.
+2. Use the [suggested Git commands](../11_git_sync/index.mdx#push-workspace-to-github) to push your local repository to GitHub.
+3. Verify that your workspace is now available in the GitHub repository.
 
-   2 other variables need to be set in the GitHub action workflow file:
+### Setup git sync
 
-   - `WMILL_WORKSPACE`: the name of the workspace
-   - `WMILL_URL`: the base URL of the Windmill instance (e.g. `https://app.windmill.dev/`)
+1. In Windmill, navigate to the workspace settings and go to the [Git sync](../11_git_sync/index.mdx) tab.
+2. Create a `git_repository` [resource](../../core_concepts/3_resources_and_types/index.mdx) with the necessary URL, username, repo name, and a GitHub token.
+3. Generate a fine-grained GitHub [token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with read and write permissions for content and add it to the Windmill `git_repository` resource.
 
-3. Copy the previous GitHub action/workflow file but now set the `WMILL_WORKSPACE` variable to the id of the staging workspace and the `WMILL_URL` variable to the base URL of the Windmill instance if different than the one for prod. Also changes the trigger to listen to the branches: 'staging'.
+Your URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`
 
-![GitHub Actions](gh_actions.png)
+If you do the setup with a staging workspace, you can set the branch to 'Staging'.
 
-Here is the automation for GitHub Actions, but it is simple enough to easily be adapted for other CIs.
+Test git sync:
 
+1. Create a [folder](../../core_concepts/8_groups_and_folders/index.mdx) in your Windmill workspace and add scripts, apps, and flows to it.
+2. Verify that these items are pushed to the GitHub repository and appear in the correct folder structure.
+
+### Deploy to a prod workspace using a git workflow
+
+1. Set up a new empty workspace in Windmill that will be the target of the prod branch.
+2. Enable the [Create one branch per deployed object](../11_git_sync/index.mdx#create-one-branch-per-deployed-object) option in the Git sync settings.
+3. In GitHub, [allow actions](https://docs.github.com/en/enterprise-server@3.10/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#preventing-github-actions-from-creating-or-approving-pull-requests) to create and approve pull requests.
+4. Create a [user token](../../core_concepts/4_webhooks/index.mdx#user-token) in Windmill and save it as a [secret](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) named `WMILL_TOKEN` in your GitHub repository Settings > "Secret and Variable" > "Actions".
+
+Test deploy to prod workspace:
+
+1. From the staging workspace, create a new flow and save it in a folder.
+2. Verify that a new branch is created in the GitHub repository and a pull request is opened.
+3. Merge the pull request and check that the changes are deployed to the prod workspace in Windmill.
+
+### GitHub Actions setup
+
+1. Add [GitHub Actions](https://github.com/features/actions) to your repository. You will find the necessary actions in the [windmill-sync-example repository](https://github.com/windmill-labs/windmill-sync-example).
+2. Create a `.github/workflows` directory in your repository and add the following files:
+   - `open-pr-on-commit.yaml`: This action automatically creates a PR when Windmill commits a change.
+   - `push-on-merge.yaml`: This action automatically pushes the content of the repo to the Windmill prod workspace when a PR is merged. Update the `WMILL_WORKSPACE` variable to the name of your prod workspace.
+   - Optionnaly, if you want to add a staging workspace, copy the previous GitHub action/workflow file but now set the `WMILL_WORKSPACE` variable to the id of the staging workspace and the `WMILL_URL` variable to the base URL of the Windmill instance if different than the one for prod. Also changes the trigger to listen to the branches: 'staging'.
+
+On top of `WMILL_TOKEN`, 2 other variables need to be set in the GitHub action workflow file:
+- `WMILL_WORKSPACE`: the name of the workspace
+- `WMILL_URL`: the base URL of the Windmill instance (e.g. https://app.windmill.dev/)
+
+<Tabs className="unique-tabs">
+<TabItem value="open-pr-on-commit.yaml" label="open-pr-on-commit.yaml" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 ```yaml
-name: 'Push main to Windmill workspace'
+name: Windmill Pull Request
+on:
+  push:
+    branches:
+      - wm_deploy/github-sync-example-staging/**
+
+env:
+  TARGET_BRANCH: main
+
+jobs:
+  submit_pull_requests:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create pull request
+        run: |
+          gh pr view ${{ github.ref_name }} \
+          && gh pr reopen ${{ github.ref_name }} \
+          || gh pr create -B ${{ env.TARGET_BRANCH }} -H ${{ github.ref_name }} \
+          --title "${{github.event.head_commit.message }}" \
+          --body "PR created by Github action '${{ github.workflow }}'"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+</TabItem>
+<TabItem value="push-on-merge.yaml" label="push-on-merge.yaml" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```yaml
+name: "Push main to Windmill workspace"
 on:
   workflow_dispatch:
   push:
     branches:
-      - 'main'
+      - "main"
     # if the windmill workspace is persisted in a subfolder of this repos, you can add the following to avoid pushing to windmill when there's no change
     # paths:
     #   - wm/**
@@ -150,7 +197,7 @@ env:
 jobs:
   sync:
     environment: windmill
-    runs-on: 'ubuntu-latest'
+    runs-on: "ubuntu-latest"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -159,7 +206,7 @@ jobs:
         with:
           node-version: 20
 
-      # We check the commit to make sure it doesn't start with [WM] which commits coming from Windmill Git sync do.\
+      # We check the commit to make sure it doesn't start with [WM] which commits coming from Windmill Git Sync do.\
       # If that's the case, then we stop the workflow as we want to avoid overwriting changes that are out-of-sync
       # (for instance if one were to deploy in quick succession)
       - name: Check commit message
@@ -178,34 +225,15 @@ jobs:
           npm install -g windmill-cli@1.393.3
           wmill sync push --yes --skip-variables --skip-secrets --skip-resources --workspace ${{ env.WMILL_WORKSPACE }} --token ${{ secrets.WMILL_TOKEN }} --base-url ${{ env.WMILL_URL }}
 ```
-
-The automation installs deno and then invokes 2 commands of the wmill CLI that were already covered above. It adds the workspace and pushes the changes to it.
-
-### Windmill GitHub sync setup
-
-1. **staging** workspace:
-
-   1. In Windmill, create (by clicking on the + icon next to the resource picker) a [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) [resource](../../core_concepts/3_resources_and_types/index.mdx) pointing to the GitHub repository and containing the token generated previously. You URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`. Set the branch to staging.
-   1. Create a second [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) resource pointing to the same GitHub repository but this time set branch to main
-   1. Under the second git repository resource (the one pointing to prod), the one pointing to main, toggle: " Create one branch per deployed script/flow/app"
-
-   ![Staging setup](staging.png)
-
-2. **prod** workspace
-
-   1. In Windmill, create a [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) resource pointing to the GitHub repository and containing the token generated previously. You URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`. Set the branch to main
-
-   ![Prod setup](prod.png)
-
-See our dedicated page [here](../11_git_sync/index.mdx)
+</TabItem>
+</Tabs>
 
 ### Testing
 
-1. To verify that all is working correctly, push a change to your staging branch in git (for instance copy a script with a slightly different path)
-1. Verify in the GitHub action run that the sync push has been able to push the change to the staging workspace
-1. Go to your staging workspace in Windmill, the new script should be there
-1. go to the runs page, toggle the "Sync" kind of jobs. You should see at least 2 jobs, one to push back your change to the staging workspace (no-op), and one to create a branch that targets the main branch (the one that will be merged)
-1. Now in your repo, you should see a new branch named `wm_deploy/[WORKSPACE_NAME]/[SCRIPT_PATH]` (for instance `wm_deploy/staging/f/example/script`)
-1. Merge that branch, now the changes should trigger the "Deploy to prod" GitHub action in the main branch
-
-You can also test doing a change in the staging workspace directly in the UI. Since this setup is bidirectional, it will also trigger the GitHub action to create a PR but also update your staging branch.
+You are now ready to test the workflow. You can do so by:
+1. Create and deploy a new script in the staging workspace, give it a path within the allowed [filters](../11_git_sync/index.mdx#path-filters).
+2. Verify in the GitHub action run that the sync push has been able to push the change to the staging workspace (or the prod workspace if you have not set up a staging workspace).
+3. Check the target workspace in Windmill if the script has been deployed.
+4. Go to the runs page, toggle the "Sync" kind of jobs. You should see at least 2 jobs, one to push back your change to the staging (if set) workspace (no-op), and one to create a branch that targets the main branch (the one that will be merged).
+5. Now in your repository, you should see a new branch named wm_deploy/[WORKSPACE_NAME]/[SCRIPT_PATH] (for instance wm_deploy/staging/f/example/script).
+6. Merge that branch, now the changes should trigger the "Deploy to prod" GitHub action in the main branch.

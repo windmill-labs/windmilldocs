@@ -6,7 +6,7 @@ Windmill scripts and flows can be triggered in various ways.
 
 On-demand triggers:
 
-- [Auto-generated UIs](/docs/getting_started/triggers#auto-generated-uis)
+- [Auto-generated UIs](../8_triggers/index.mdx#auto-generated-uis)
 - [Customized UIs with the App editor](#customized-uis-with-the-app-editor)
 - [Trigger from flows](#trigger-from-flows)
 - [Workflows as code](#workflows-as-code) (scripts only)
@@ -18,8 +18,10 @@ Triggers from external events:
 - [API](#trigger-from-api) & [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack)
 - [Emails](#emails)
 - [Custom HTTP routes](#custom-http-routes)
-- [Websocket triggers](#websocket-triggers)
+- [WebSocket triggers](#websocket-triggers)
+- [Postgres triggers](#postgres-triggers)
 - [Kafka triggers](#kafka-triggers)
+- [NATS triggers](#nats-triggers)
 - [Scheduled polls](#scheduled-polls-scheduling--trigger-scripts)
 
 :::info Scripts and Flows in Windmill
@@ -225,7 +227,7 @@ Windmill uses Slack to trigger scripts and flows by establishing Slackbots and c
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Slack Integration"
+		title="Slack integration"
 		description="Learn how to integrate Slack with Windmill."
 		href="/docs/integrations/slack"
 	/>
@@ -255,15 +257,27 @@ Windmill allows you to define custom HTTP routes for your scripts and flows. You
 	/>
 </div>
 
-### Websocket triggers
+### WebSocket triggers
 
-Windmill can connect to websocket servers and trigger runnables (scripts, flows) when a message is received. Preprocessors can transform the websocket message data before it's passed to your script or flow.
+Windmill can connect to WebSocket servers and trigger runnables (scripts, flows) when a message is received. Preprocessors can transform the websocket message data before it's passed to your script or flow.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Websocket triggers"
-		description="Trigger scripts and flows from websocket servers."
+		title="WebSocket triggers"
+		description="Trigger scripts and flows from WebSocket servers."
 		href="/docs/core_concepts/websocket_triggers"
+	/>
+</div>
+
+### Postgres triggers
+
+Windmill can connect to postgres database servers and trigger runnables (scripts, flows) when a message is received.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Postgres triggers"
+		description="Trigger scripts and flows from postgres database servers."
+		href="/docs/core_concepts/postgres_triggers"
 	/>
 </div>
 
@@ -276,6 +290,18 @@ Windmill can connect to Kafka brokers and trigger scripts or flows when messages
 		title="Kafka triggers"
 		description="Trigger scripts and flows from Kafka messages."
 		href="/docs/core_concepts/kafka_triggers"
+	/>
+</div>
+
+### NATS triggers
+
+Windmill can connect to NATS servers and trigger scripts or flows when messages are received on specific subjects. This enables real-time processing of events from your NATS ecosystem. Preprocessors can transform the NATS message data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="NATS triggers"
+		description="Trigger scripts and flows from NATS messages."
+		href="/docs/core_concepts/nats_triggers"
 	/>
 </div>
 

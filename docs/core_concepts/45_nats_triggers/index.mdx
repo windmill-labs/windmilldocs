@@ -1,0 +1,76 @@
+# NATS triggers
+
+Windmill can connect to [NATS](https://nats.io/) servers and trigger runnables (scripts, flows) when a message is received.
+Listening is done from the servers, so it doesn't take up any workers.
+NATS triggers is a [self-hosted Enterprise](/pricing) feature.
+
+![NATS triggers](./nats_triggers.png 'NATS triggers')
+
+## How to use
+
+### Core NATS
+
+Create a new trigger on the NATS triggers page.
+Add a NATS resource with the server hostnames (`hostname[:port]`, without the `nats://` prefix) and the authentication configuration.
+Specify the subjects the trigger should listen to (wildcards are supported). 
+Only one subject is supported in core NATS.
+
+Once the NATS resource and settings are set, select the runnable that should be triggered by this trigger.
+The received webhook message will be passed to the runnable as a string argument called `msg`.
+
+Here's an example script:
+
+```TypeScript
+export async function main(msg: string) {
+  // do something with the message
+}
+```
+
+And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could look like this:
+
+```TypeScript
+export async function preprocessor(
+  msg: string,
+  wm_trigger: {
+    kind: "nats",
+    nats: {
+      servers: string[];
+      subject: string; // the specific subject the message was received from
+      length: number;
+      headers?: Record<string, string[]>;
+      status?: number;
+      description?: string;
+    }
+  },
+) {
+  // assuming the message is a JSON object
+  const msg = JSON.parse(msg); 
+
+  // define args for the main function
+  // let's assume we want to use the message content and the subject
+  return {
+    message_content: msg.content,
+    subject: wm_trigger.nats.subject
+  };
+}
+
+
+export async function main(message_content: string, subject: string) {
+  // do something with the message content and subject
+}
+```
+
+### JetStream
+[JetStream](https://docs.nats.io/nats-concepts/jetstream) is also supported and enables persistence as well as listening to multiple subjects.
+Persistence makes sure that even if the trigger stops listening for a while, it will receive the messages it missed when it starts listening again.
+
+A stream will be created with the specified name and subjects, if no stream exists with this name.
+If one already exists, whether created outside or inside of Windmill, its config will be adapted to include the specified subjects but only if they are missing (considering wildcards). 
+The rest of the config will be left untouched.
+**Stream subjects are never deleted automatically. If you need to delete old subjects, you have to do it manually.**
+
+
+A [durable push-consumer](https://docs.nats.io/nats-concepts/jetstream/consumers) will be created with the specified name and subjects.
+If one already exists, it will be overwritten.
+The consumer name is also used as the `DeliverSubject`, so make sure it's unique.
+

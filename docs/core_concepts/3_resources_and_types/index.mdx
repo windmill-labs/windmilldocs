@@ -39,7 +39,7 @@ Check our [list of integrations](../../integrations/0_integrations_on_windmill.m
 
 ## Create a resource
 
-To create a resource using an existing type, go to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources </a> page and click "Add a resource/API".
+To create a resource using an existing type, go to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources </a> page and click "Add resource".
 
 ![Add a resource](./add_resource.png.webp 'Add a resource')
 
@@ -76,7 +76,7 @@ a link, for example:
 ## Create a resource type
 
 Windmill comes preloaded with some common Resource types, such as databases, apps, SMTP, etc. You can see the full list on [Windmill Hub](https://hub.windmill.dev/resources).
-You can also add custom Resource types by clicking "Add a resource type" on the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources</a> page.
+You can also add custom Resource types by clicking "Add a resource type" on the Resources page.
 
 ![Create resource type](./add_resource_type.png.webp)
 
@@ -421,7 +421,7 @@ The toggle "Static resource select only / Resources from users allowed" can be f
 
 ## Plain text file resources
 
-In certain scenarios it is useful to store data as a a text file, with a format such as `.json`, `.cfg`, etc. Windmill can store plain text files as a resource, which can then be used as arguments for scripts, or have special support in certain languages (e.g. Ansible).
+In certain scenarios it is useful to store data as a a text file, with a format such as `.json`, `.cfg`, etc. Windmill can store plain text files as a resource, which can then be used as arguments for scripts, or have special support in certain languages (e.g. [Ansible](../../getting_started/0_scripts_quickstart/10_ansible_quickstart/index.mdx)).
 
 ### Creating a plain text resource
 
@@ -433,7 +433,6 @@ Under the hood, this resource type is just like others, but the schema only has 
 
 Now you can create the resource by adding a resource and searching your newly created resource type:
 
-
 ![Create a Text File Resource](./create_text_file_resource.png)
 
 As you will notice, the format specified will be used for syntax highlighting when editing and displaying this file. When pulling this resource on the CLI, you will find two files: `<resource_name>.resource.file.ini` and `<resource_name>.resource.yaml`.
@@ -441,3 +440,15 @@ As you will notice, the format specified will be used for syntax highlighting wh
 ### Using the resource
 
 This resource only has a `content` field, so any language can use it and access the `content` like for any other resource/object. In certain languages (currenttly only Ansible), it can be preferable to have the file available on the file system instead of inlining its contents. You can ask windmill to [create these files before the execution of the script](../getting_started/scripts_quickstart/ansible#other-non-inventory-file-resources)
+
+## Mocked API files
+
+Simulate API interactions locally by using a JSON file to store and retrieve variables and resources.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Mocked API files"
+		description="Simulate API interactions locally by using a JSON file to store and retrieve variables and resources."
+		href="/docs/advanced/local_development/#mocked-api-files"
+	/>
+</div>

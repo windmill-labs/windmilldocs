@@ -58,7 +58,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/sql_quickstart/index',
-									label: 'SQL & Query languages'
+									label: 'SQL & query languages'
 								},
 								{
 									type: 'doc',
@@ -138,8 +138,18 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'core_concepts/postgres_triggers/index',
+							label: 'Postgres'
+						},
+						{
+							type: 'doc',
 							id: 'core_concepts/kafka_triggers/index',
 							label: 'Kafka'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/nats_triggers/index',
+							label: 'NATS'
 						}
 					]
 				},
@@ -228,7 +238,6 @@ const sidebars = {
 				},
 				'core_concepts/rich_display_rendering/index',
 				'core_concepts/workflows_as_code/index',
-				'core_concepts/draft_and_deploy/index',
 				{
 					type: 'category',
 					label: 'Persistent storage & databases',
@@ -266,8 +275,9 @@ const sidebars = {
 				'core_concepts/error_handling/index',
 				'core_concepts/jobs/index',
 				'core_concepts/monitor_past_and_future_runs/index',
-				'core_concepts/variables_and_secrets/index',
 				'core_concepts/resources_and_types/index',
+				'core_concepts/variables_and_secrets/index',
+				'core_concepts/environment_variables/index',
 				'core_concepts/groups_and_folders/index',
 				'core_concepts/worker_groups/index',
 				'core_concepts/workspace_secret_encryption/index',
@@ -278,6 +288,7 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
+				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
 					label: 'Integrations',
@@ -648,6 +659,8 @@ const sidebars = {
 								id: 'apps/app_configuration_settings/app_component_library'
 							},
 							items: [
+								'apps/app_configuration_settings/accordion',
+								'apps/app_configuration_settings/accordion_tabs',
 								'apps/app_configuration_settings/aggrid_table',
 								'apps/app_configuration_settings/agcharts',
 								'apps/app_configuration_settings/alert',
@@ -774,6 +787,38 @@ const sidebars = {
 				},
 				{
 					type: 'category',
+					label: 'Version control in Windmill',
+					link: {
+						type: 'doc',
+						id: 'advanced/version_control/index'
+					},
+					items: [
+						{
+							type: 'doc',
+							id: 'advanced/git_sync/index',
+							label: 'Git sync'
+						},
+						'advanced/git_sync/cli_sync',
+						{
+							type: 'doc',
+							id: 'core_concepts/versioning/index',
+							label: 'Versioning with UI'
+						}
+					],
+					collapsed: false
+				},
+				{
+					type: 'category',
+					label: 'Deploy to prod',
+					link: {
+						type: 'doc',
+						id: 'advanced/deploy_to_prod/index'
+					},
+					items: ['core_concepts/draft_and_deploy/index', 'advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					collapsed: false
+				},
+				{
+					type: 'category',
 					label: 'Local development',
 					collapsed: true,
 					link: {
@@ -808,37 +853,6 @@ const sidebars = {
 						'advanced/cli/variable',
 						'advanced/cli/folder'
 					]
-				},
-				{
-					type: 'category',
-					label: 'Version control in Windmill',
-					link: {
-						type: 'doc',
-						id: 'advanced/version_control/index'
-					},
-					items: [
-						{
-							type: 'doc',
-							id: 'advanced/git_sync/index',
-							label: 'Git sync'
-						},
-						'advanced/git_sync/cli_sync',
-						{
-							type: 'doc',
-							id: 'core_concepts/versioning/index',
-							label: 'Versioning with UI'
-						}
-					]
-				},
-				{
-					type: 'category',
-					label: 'Deploy to prod',
-					link: {
-						type: 'doc',
-						id: 'advanced/deploy_to_prod/index'
-					},
-					items: ['advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
-					collapsed: true
 				},
 				'advanced/preinstall_binaries/index',
 				{

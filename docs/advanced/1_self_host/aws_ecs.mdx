@@ -260,6 +260,7 @@ The following fields needs to be set manually: `LATEST_RELEASE`, `DB_PASSWORD`, 
    - Resource allocation: 2 CPU / 3.5 GiB memory
    - Environment variable: `JSON_FMT=true`, `MODE=worker`, `WORKER_GROUP=default` and `DATABASE_URL=postgres://postgres:<DB_PASSWORD>@<DB_HOSTNAME>:5432/windmill?sslmode=disable`
    - Add a Bind volume named `worker_dependency_cache` mapped to `/tmp/windmill/cache`
+   - Add the following "Stop timeout": `604800` (corresponds to 7 days) in "Container timeouts"
    - Turn on log collection for easy debugging
    - This is it, leave the rest default
 
@@ -274,6 +275,7 @@ The following fields needs to be set manually: `LATEST_RELEASE`, `DB_PASSWORD`, 
 		{
 			"name": "windmill-worker",
 			"image": "ghcr.io/windmill-labs/windmill-ee:<LATEST_RELEASE>",
+			"stopTimeout": 604800,
 			"cpu": 2048,
 			"memory": 3072,
 			"portMappings": [],

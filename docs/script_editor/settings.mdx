@@ -234,12 +234,12 @@ Windmill supports custom HTTP routes to trigger a script or flow.
 
 ### Websocket
 
-Windmill can connect to websocket servers and trigger runnables (scripts, flows) when a message is received.
+Windmill can connect to WebSocket servers and trigger runnables (scripts, flows) when a message is received.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Websocket triggers"
-		description="Trigger scripts and flows from websocket servers."
+		title="WebSocket triggers"
+		description="Trigger scripts and flows from WebSocket servers."
 		href="/docs/core_concepts/websocket_triggers"
 	/>
 </div>
@@ -253,6 +253,18 @@ Windmill can connect to Kafka brokers and trigger scripts or flows when messages
 		title="Kafka triggers"
 		description="Trigger scripts and flows from Kafka messages."
 		href="/docs/core_concepts/kafka_triggers"
+	/>
+</div>
+
+### NATS
+
+Windmill can connect to NATS brokers and trigger scripts or flows when messages are received on specific subjects. This enables real-time processing of events from your NATS ecosystem.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="NATS triggers"
+		description="Trigger scripts and flows from NATS messages."
+		href="/docs/core_concepts/nats_triggers"
 	/>
 </div>
 

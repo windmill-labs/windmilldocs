@@ -11,5 +11,5 @@ features:
     'For admins only.',
     'We still recommend using user-defined variables but in some cases (e.g. your imports depend on env variables), this might be a good escape hatch.'
   ]
-docs: /docs/core_concepts/variables_and_secrets#custom-contextual-variables
+docs: /docs/core_concepts/environment_variables#custom-environment-variables
 ---

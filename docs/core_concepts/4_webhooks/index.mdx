@@ -214,7 +214,7 @@ Similarly to request headers, if the query args contain `raw=true`, then an addi
 
 The webhook endpoints also accept `multipart/form-data`, useful for file uploads. The payload should be a `FormData` object, where each key corresponds to an argument of the script/flow.
 
-For file fields, the value will be an array containing [s3 objects](/docs/core_concepts/object_storage_in_windmill#read-a-file-from-s3-or-object-storage-within-a-script) with the path to the uploaded files in the [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) (e.g., S3).
+For file fields, the value will be an array containing [s3 objects](../38_object_storage_in_windmill/index.mdx#read-a-file-from-s3-or-object-storage-within-a-script) with the path to the uploaded files in the [workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) (e.g., S3).
 
 Here's an example script for handling form data with a file field:
 
@@ -245,7 +245,7 @@ def main(mytextfield: str, myfilefield: List[wmill.S3Object]):
 
 
 :::warning
-A [workspace object storage](/docs/core_concepts/object_storage_in_windmill#workspace-object-storage) must be configured to accept form data payloads.
+A [workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) must be configured to accept form data payloads.
 :::
 
 ### Request headers
@@ -312,11 +312,28 @@ the synchronous endpoint will return:
 
 with the response header: "Content-Type: text/csv".
 
+### Custom response headers
+
+Similar to the above, for all sync run jobs endpoints, if the response contains a key `windmill_headers`, the headers will be added to the response. For example, if a script or flow returns:
+
+```json
+{
+	"windmill_headers": {"X-Custom-Header": "foo"},
+	"result": {
+		"Hello": "World"
+	}
+}
+```
+
+the synchronous endpoint with return the result with the header `X-Custom-Header: foo` (in addition to `Content-Type: application/json`).
+
+It's better to use `windmill_content_type` to override the content type, as the output will be correctly formatted.
+
 ### Return early for flows
 
 It is possible to define a node at which the flow will return at for sync endpoints. The rest of the flow will continue asynchronously.
 
-Useful when some webhooks need to return extremely fast but not just the uuid (define first step as [early stop](../../flows/2_early_stop.md)) or when the expected return from the webhook doesn't need to the full flow being computed.
+Useful when some webhooks need to return extremely fast but not just the uuid (define first step as [early return](../../flows/19_early_return.mdx)) or when the expected return from the webhook doesn't need to the full flow being computed.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

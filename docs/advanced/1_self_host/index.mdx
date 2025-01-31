@@ -10,7 +10,7 @@ Self-host Windmill on your own infrastructure.
 
 For small setups, use [Docker](#docker) and Docker Compose on a single instance.
 For larger and production use-cases, use our [Helm chart](#helm-chart) to deploy on Kubernetes.
-You can also run [Windmill workers on Windows](/docs/misc/windows_workers) without Docker.
+You can also run [Windmill workers on Windows](../../misc/17_windows_workers/index.mdx) without Docker.
 
 ![Self-hosted Windmill](./self_hosted_windmill.png 'Self-hosted Windmill')
 
@@ -46,7 +46,7 @@ If you have no specific requirements, see [Docker](#docker).
 
 We recommend using the [Helm chart](#helm-chart) to deploy on managed [Kubernetes](https://kubernetes.io/). But for simplified setup, simply use the docker-compose (see [below](#docker)) on a single large instance and use a high number of replicas for the worker service.
 
-The rule of thumb is 1 worker per 1vCPU and 1-2 GB of RAM. Cloud providers have managed load balancer services (ELB, GCLB, ALB) and managed database (RDS, Cloud SQL, Aurora, Postgres on Azure). We recommend disabling the db service in docker-compose and using an external database by setting the `DATABASE_URL` in the [.env][windmill-env] file for handling environment variables.
+The rule of thumb is 1 worker per 1vCPU and 1-2 GB of RAM. Cloud providers have managed load balancer services (ELB, GCLB, ALB) and managed database (RDS, Cloud SQL, Aurora, Postgres on Azure). We recommend disabling the db service in docker-compose and using an external database by setting the `DATABASE_URL` in the [.env][windmill-env] file for handling [environment variables](../../core_concepts/47_environment_variables/index.mdx).
 
 Windmill is compatible with [AWS Aurora](https://aws.amazon.com/rds/aurora/), [GCP Cloud SQL](https://cloud.google.com/sql), [Azure](https://azure.microsoft.com/en-us) and [Neon](https://neon.tech/) serverless database.
 
@@ -159,7 +159,7 @@ In the docker-compose, set the number of windmill_worker and windmill_worker_nat
 
 ### Enterprise Edition
 
-To use the [enterprise edition](/pricing), you need pass the license key in the [instance settings](../18_instance_settings/index.mdx#license-key).
+To use the [Enterprise Edition](/pricing), you need pass the license key in the [instance settings](../18_instance_settings/index.mdx#license-key). A same license key can be used for multiple instances (for dev instances make sure to turn on the 'Non-prod instance' flag from the [instance settings](../18_instance_settings/index.mdx#non-prod-instance)).
 
 You can then set the number of replicas of the multiplayer container to 1 in the docker-compose.
 
@@ -549,7 +549,7 @@ GRANT USAGE ON SCHEMA public TO windmill_user;
 
 ## First time login
 
-Once you have setup your environment for deployment and have access to the instance, you will be able to login with the default credentials `admin@windmill.dev` / `changeme` (even if you [setup OAuth](/docs/misc/2_setup_oauth/index.mdx)).
+Once you have setup your environment for deployment and have access to the instance, you will be able to login with the default credentials `admin@windmill.dev` / `changeme` (even if you [setup OAuth](../../misc/2_setup_oauth/index.mdx)).
 
 ![First time login](./first_time_login.png "First time login")
 

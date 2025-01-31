@@ -41,12 +41,46 @@ The email address takes the form `<path/hash>+<workspace+path/hash+token base32 
 Your script will receive two arguments: 
 - `raw_email`: the raw email as a string
 - `parsed_email` the parsed email with the following attributes:
-  - `headers` a dictionary with the email headers (e.g. `from`, `to`, `subject`, `date`)
+  - `headers` a dictionary with the email headers (e.g. `From`, `To`, `Subject`, `Date`)
   - `text_body` the text body of the email (or textified html body if none)
   - `html_body` the html body of the email (or htmlified text body if none)
   - `attachments` list of attachments with the following attributes:
     - `headers` a dictionary with the attachment headers
-    - `body` the attachment data (base64 encoded if binary)
+    - `body` the attachment data
+
+Attchments are uploaded to the [workspace object storage (s3)](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) and are replaced in `parsed_email` by s3 objects (`{ s3: "path/to/key" }`).
+A workspace object storage is required for attachments to be handled.
+
+
+Here's an example script:
+
+```TypeScript
+export async function main(raw_email: string, parsed_email: any) {
+  // do something with the email
+}
+```
+
+And if you use a [preprocessor](../../core_concepts/43_preprocessors/index.mdx), the script could look like this:
+
+```TypeScript
+export async function preprocessor(
+  raw_email: string,
+  parsed_email: any,
+  wm_trigger: {
+    kind: "email",
+  },
+) {
+  // return what you want to pass to the main function, for instance the sender email address and the email body
+  return {
+    sender_address: parsed_email.headers["From"][0].address,
+    email_body: parsed_email.text_body
+  }
+}
+
+export async function main(sender_address: string, email_body: string) {
+  // do something with the sender email address and the email body
+}
+```
 
 From a script or flow [deployed](../../core_concepts/0_draft_and_deploy/index.mdx) page, you will find on the "Details & Triggers" - "Email" tab the email address to use.
 

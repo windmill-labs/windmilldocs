@@ -28,7 +28,7 @@ From there you can manually add a user to the instance, giving an email and a pa
 
 You can also enable automatic username creation from emails. Usernames will be shared accross workspaces. We recommend setting it to avoid duplicated usernames.
 
-A more common way to add users is to use [SSO/OAuth](#ssooauth).
+A more common way to add users is to use [SSO/OAuth](#authoauth).
 
 For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator)), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
 
@@ -44,7 +44,7 @@ You can also toggle on 'Show active users only' to show only users who have perf
 
 The base URL is the public base url of the instance.
 
-If the base URL is not set correctly, some server-side generated URLs like resume URLs will be incorrect. Additionally, [OAuth and SSO](#ssooauth) functionalities will not work properly.
+If the base URL is not set correctly, some server-side generated URLs like resume URLs will be incorrect. Additionally, [OAuth and SSO](#authoauth) functionalities will not work properly.
 
 ### Email domain
 
@@ -77,6 +77,7 @@ Toogle to keep Job directories after execution at `/tmp/windmill/<worker>/<job_i
 The license key is used to enable [Enterprise Edition](/pricing). You can get one by starting a free trial from the [pricing page](/pricing) or by contacting us at contact@windmill.dev
 
 To see how to upgrade your instance to Enterprise Edition, see the [Upgrade to Enterprise Edition](../../misc/7_plans_details/index.mdx#self-host) docs.
+A same key can also be used for non-prod instances. Just make sure to set the [`Non-prod instance`](#non-prod-instance) to true so that the computation usage is not counted in the billing.
 
 From there you also have two buttons:
 - `Renew key`: to renew the license key (as long as you have a valid subscription). Anyway, the key is automatically renewed everyday as long as your subscription is valid.
@@ -88,7 +89,7 @@ If your subscription is active, the key is automatically renewed everyday. A key
 
 Whether we should consider the reported usage of this instance as non-prod.
 
-It is useful to avoid [counting the usage](/pricing#worker-reporting) of a non-prod instance in the billing.
+It is useful to avoid [counting the computation usage](/pricing#worker-reporting) of a non-prod instance in the billing.
 
 This setting is only available on [Enterprise Edition](/pricing).
 
@@ -235,13 +236,17 @@ Write a nuget.config file to set custom/private package sources and credentials.
 
 ### Critical alert channels
 
-Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel.
+Channels to send [critical alerts](../../core_concepts/37_critical_alerts/index.mdx) to. [SMTP](#smtp) must be configured for the email channel. A Slack workspace must be connected to the instance for the Slack channel. [Microsoft Teams](../../misc/2_setup_oauth/index.mdx#microsoft-teams) must be setup to configure critical alerts to be sent to a Microsoft Teams channel.
 
-You can add multiple channels between Email and Slack.
+You can add multiple channels between Email, Slack, and Microsoft Teams.
+
+![Critical alerts channels](./critical_alerts_channels.png 'Critical alerts channels')
 
 Furthermore you can chose to mute [critical alerts in the UI](../../core_concepts/37_critical_alerts/index.mdx) using the "Mute critical alerts in UI" toggle.
 
 This setting is only available on [Enterprise Edition](/pricing).
+
+![Critical alert example](./teams_critical_alert.png 'Critical alert example')
 
 ### Mute critical alerts in UI
 
@@ -249,7 +254,7 @@ Enable to mute critical alerts in the UI.
 
 ### Slack
 
-Connecting your instance to a Slack workspace enables [critical alerts](#critical-alerts) to be sent to a Slack channel.
+Connecting your instance to a Slack workspace enables [critical alerts](#critical-alert-channels) to be sent to a Slack channel.
 
 Just click on the 'Connect to Slack' button and follow the instructions from Slack.
 
@@ -257,7 +262,7 @@ This setting is only available on [Enterprise Edition](/pricing).
 
 ### SMTP
 
-Setting SMTP unlocks [sending emails upon adding new users](../../core_concepts/15_authentification/index.mdx) to the workspace or the instance and [sending critical alerts](#critical-alerts).
+Setting SMTP unlocks [sending emails upon adding new users](../../core_concepts/15_authentification/index.mdx) to the workspace or the instance and [sending critical alerts](#critical-alert-channels).
 
 You need to provide the following details:
 
@@ -359,7 +364,7 @@ When creating a workspace, you have the option to invite automatically everyone 
 
 ### OpenTelemetry (OTEL)
 
-Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](/docs/misc/guides/otel) for an example setup.
+Enable to collect telemetry data and send it to an [OpenTelemetry](https://opentelemetry.io/) collector such as [Jaeger](https://www.jaegertracing.io/) or [Tempo](https://www.tempo.io/) for tracing. OpenTelementry data sent to the collector consists of traces, logs and metrics (coming soon). Follow this [guide](../../misc/9_guides/otel/index.mdx) for an example setup.
 
 ### Prometheus
 Expose [Prometheus](https://prometheus.io/) metrics for workers and servers on port 8001 at /metrics.
@@ -394,7 +399,7 @@ The index will query new service logs peridically and write them on the index. T
 
 ## Telemetry
 
-Anonymous usage data is collected to help improve Windmill.
+Anonymous usage data is collected to help improve Windmill. Telemetry data is sent as a HTTPS request to https://stats.windmill.dev. Stats are sent once a day. Stats only contain the size of workers, their uptime and number of seats used.
 
 ![Telemetry](./telemetry.png "Telemetry")
 
@@ -409,4 +414,4 @@ The following information is collected:
 
 From the instance settings, you can manually send usage or disable telemetry.
 
-Under [Enterprise Edition](/pricing) (self-hosted), telemetry (only on the ) is mandatory to ensure usage correctly matches the subscription.
+Under [Enterprise Edition](/pricing) (self-hosted), telemetry is mandatory to ensure usage correctly matches the subscription.

@@ -45,6 +45,44 @@ export default function BlogLayout(props) {
 									? "See what's new with Windmill."
 									: 'Discover the latest news, updates, and articles from the team and community.'}
 							</p>
+							{isChangelog && (
+								<div className="container mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
+									<h2 className="text-xl font-semibold mb-4">Coming soon</h2>
+									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+										<li>Code-based UI AI builder</li>
+										<li>Cursor-like AI experience</li>
+									</ul>
+									<h3 className="text-lg font-semibold mt-6">Watch latest Windmill weekly keynotes</h3>
+									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+										<li>
+											<a href="https://youtube.com/live/8tOpodhrg68" target="_blank" rel="noopener noreferrer">
+												January 17, 2025
+											</a>
+										</li>
+										<li>
+											<a href="https://youtube.com/live/mYJlHKOk8TE" target="_blank" rel="noopener noreferrer">
+												January 15, 2025
+											</a>
+										</li>
+										<li>
+											<a href="https://youtube.com/live/s3T7dPTw69o" target="_blank" rel="noopener noreferrer">
+												December 6, 2024
+											</a>
+										</li>
+										<li>
+											<a href="https://youtube.com/live/mgjwgg7i3tQ" target="_blank" rel="noopener noreferrer">
+												November 29, 2024
+											</a>
+										</li>
+									</ul>
+									<p className="mt-4 text-lg leading-8 container">
+										Weekly keynotes are hosted on {' '}
+										<a href="https://discord.com/channels/930051556043276338/1278977038430240813" target="_blank" rel="noopener noreferrer">Discord</a> and {' '}
+										<a href="https://www.youtube.com/@WindmillDev" target="_blank" rel="noopener noreferrer">Youtube</a>{' '}
+										on Friday at 5:45 pm CET+1.
+									</p>
+								</div>
+							)}
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 1024 1024"

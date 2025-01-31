@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 It is possible to define a node at which the flow will return at for [sync endpoints](../core_concepts/4_webhooks/index.mdx#synchronous). The rest of the flow will continue asynchronously.
 
-Useful when some webhooks need to return extremely fast but not just the uuid (define first step as [early stop](./2_early_stop.md)) or when the expected return from the webhook doesn't need to the full flow being computed.
+Useful when some webhooks need to return extremely fast but not just the uuid (define first step as early return) or when the expected return from the webhook doesn't need to the full flow being computed.
 
 ![Set early return](../assets/flows/set_early_return.png.webp 'Set early return')
 

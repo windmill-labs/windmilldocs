@@ -1,10 +1,8 @@
 # Full text search on jobs and logs
 
-
 Windmill offers the functionality to do full-text search on jobs (across args, logs, results, ...) and service logs.
 
 In order to access this functionality, the instance must be running the windmill indexer service, which is powered by the super fast search engine written in rust, [Tantivy](https://github.com/quickwit-oss/tantivy)
-
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -19,7 +17,7 @@ In order to access this functionality, the instance must be running the windmill
 
 On the Windmill's docker-compose.yml there is an example of how to setup the indexer container to enable full text search, just make sure to change replicas from 0 to 1.
 
-:::warn
+:::warning
 The replicas should be set to exactly one and not more, only one index writer can exist at a time and having multiple will not result in the expected behavior.
 :::
 
@@ -71,7 +69,6 @@ This section is a work in progress.
 
 The index can be configured in the Instance Settings. Note that the default values should work for most use cases
 
-
 ![Indexer Settings](./indexer_settings.png)
 
 | Setting name                           | default  | description |
@@ -80,7 +77,6 @@ The index can be configured in the Instance Settings. Note that the default valu
 | Commit max batch size                  | 100000  | How many documents to include at most per commit. This is mostly relevant for the first time indexing. A large value will result in less commits, i.e. faster and more efficient indexing, but results will be available only once their commits are completed.  |
 | Refresh index period (s)               | 300s    | The indexer will periodically fetch the latest jobs and write them to the index. A shorter period means new jobs/logs are available for search faster, but also results in more and more frequent writes to s3. |
 | Max indexed job log size (MB)          | 1 MB    | Job logs bigger than this will be truncated before indexing. |
-
 
 ### Index persistence
 
@@ -91,5 +87,3 @@ It is also possible to store the index in a volume attached to the indexer conta
 ## Using full text search
 
 Learn how full text search can be used to find [completed jobs](../../core_concepts/35_search_bar/index.mdx#searching-runs) and [service logs](../../core_concepts/36_service_logs/index.mdx#log-search)
-
-
