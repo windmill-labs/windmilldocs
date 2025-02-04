@@ -465,7 +465,7 @@ const sections = [
 				link: '/docs/advanced/email_triggers'
 			},
 			{
-				name: 'Websocket triggers',
+				name: 'WebSocket triggers',
 				tiers: {
 					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
@@ -1298,8 +1298,9 @@ export default function Pricing() {
 									/>
 								) : null}
 
-								{tier.id === 'tier-enterprise-selfhost' && frequency.value === 'selfhost' && (
-									selectedOption === 'Enterprise' ? (
+								{tier.id === 'tier-enterprise-selfhost' &&
+									frequency.value === 'selfhost' &&
+									(selectedOption === 'Enterprise' ? (
 										<div className="try-it-button">
 											<a
 												href={
@@ -1342,8 +1343,7 @@ export default function Pricing() {
 										>
 											Try it for a month
 										</a>
-									)
-								)}
+									))}
 							</div>
 						</div>
 					))}
@@ -1465,7 +1465,9 @@ export default function Pricing() {
 																					)}
 
 																					<span className="sr-only">
-																						{attribute.tiers[pricingItem.id] === true ? 'Yes' : 'No'}
+																						{attribute.tiers[pricingItem.id] === true
+																							? 'Yes'
+																							: 'No'}
 																					</span>
 																				</>
 																			)}

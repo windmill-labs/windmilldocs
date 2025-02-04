@@ -6,7 +6,7 @@ To deploy to prod, 3 options are possible.
 
 [Draft and deploy](#option-1-draft-and-deploy---single-workspace) is the simplest method. It is meant to be used in a single workspace.
 
-[Git integration](#option-2-deploy-to-prod-using-a-git-workflow---multi-workspace) is clearly the superior, most powerful method but it is more complex. Usually, to deploy to prod you would want absolutely to have the normal CI flow that goes through one review which is something that is built-in with GitHub/GitLab. Also you may want to put some CI checks there.
+[Git integration](#option-2-deploy-to-prod-using-a-git-workflow---multi-workspace-recommended) is clearly the superior, most powerful method but it is more complex. Usually, to deploy to prod you would want absolutely to have the normal CI flow that goes through one review which is something that is built-in with GitHub/GitLab. Also you may want to put some CI checks there.
 
 However, in a setting where you have dev/staging/prod, you could use the [UI to deploy to staging from dev](#option-3-deploy-to-prod-using-the-ui-only---multi-workspace), and then use git between staging and prod to tighten down prod.
 
@@ -20,23 +20,15 @@ Deployments in Windmill are commonly done from the same workspace using the [Dra
 The integration can be used to push from git, and receive changes done from the UI in a bi-directional way.
 You can also use a separate dev and staging branch and repo and have Windmill create automatically branches and Pull Request upon any changes deployed to staging/dev.
 
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Deploy to prod using a git workflow"
-		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
-		href="/docs/advanced/deploy_gh_gl"
-	/>
-</div>
-
 This process can be used in particular for [local development](../4_local_development/index.mdx) with a solid setup:
 
 ![Local development Setup](../4_local_development/local_development.png 'Local development Setup')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
-		title="Local development"
-		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
-		href="/docs/advanced/local_development"
+		title="Deploy to prod using a git workflow"
+		description="Windmill integration with Git repositories makes it possible to adopt a robust development process for your Windmill scripts, flows and apps."
+		href="/docs/advanced/deploy_gh_gl"
 	/>
 </div>
 

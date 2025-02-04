@@ -49,7 +49,7 @@ First, you need to create a Google OAuth Client:
 - Click Create.
 - Copy the **Client ID** and **Client Secret** from the "OAuth Client" modal.
 
-[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - 'SSO' - Toggle "Google" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - 'SSO' - Toggle "Google" and set client id, org and client secret.
 
 ### Microsoft
 
@@ -64,7 +64,7 @@ Also set "Accounts in any organizational directory (Any Microsoft Entra ID tenan
 Multitenant) and personal Microsoft accounts (e.g. Skype, Xbox)", you can restrict the
 emails directly in Windmill using the "allowed_domains" setting.
 
-[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "microsoft" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' - Toggle "microsoft" and set client id, org and client secret.
 
 ### Okta
 
@@ -92,14 +92,14 @@ From your Admin page, setup Windmill using the service flow:
    - "Login initiated by" `App Only`
    - "Initiate login URI" `https://<your windmill's public hostname as configured in values.yaml>/user/login`
 
-[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "okta" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' - Toggle "okta" and set client id, org and client secret.
 
 ### GitHub
 
 Redirect URI: `https://<YOUR_INSTANCE>/user/login_callback/github`
 Login: `https://<YOUR_INSTANCE>/user/login`
 
-[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "github" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' - Toggle "github" and set client id, org and client secret.
 
 ### GitLab
 
@@ -108,7 +108,7 @@ Login: `https://<YOUR_INSTANCE>/user/login`
 
 GitLab's Single Sign-On integration is supported by Windmill. Detailed steps for setting up GitLab as an OAuth SSO provider will be provided in the upcoming documentation but the entry for the oauth.json is as following:
 
-[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "gitlab" and set client id, org and client secret.
+[Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' - Toggle "gitlab" and set client id, org and client secret.
 
 ### Jumpcloud
 
@@ -126,13 +126,13 @@ Attribute Mapping, Standard Scopes: Check Email
 
 Add the proper groups then click save. You should see your Client ID and Client Secret on the next screen then add the following entry "jumpcloud":
 
-[Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' - Toggle "jumpcloud" and set client id and client secret, and "Client Authentication Type" to "Client Secret Basic"
+[Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' - Toggle "jumpcloud" and set client id and client secret, and "Client Authentication Type" to "Client Secret Basic"
 
 ![Jumpcloud](./jumpcloud.png.webp)
 
 ### Keycloak
 
-Setup your realm in Keycloak and set Keycloak in [Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' and Keycloak
+Setup your realm in Keycloak and set Keycloak in [Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' and Keycloak
 
 ### Authentik
 
@@ -217,7 +217,7 @@ To integrate Windmill with Zitadel as an OAuth provider, follow these steps:
 
 ### Custom OAuth
 
-You can use other custom SSO clients from the [Instance settings](../../advanced/18_instance_settings/index.mdx#ssooauth) 'SSO OAuth' - - 'SSO' and provide a client id to 'Add custom SSO client'.
+You can use other custom SSO clients from the [Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' and provide a client id to 'Add custom SSO client'.
 
 ## OAuth
 
@@ -492,7 +492,7 @@ SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME() AS org_accou
 
 [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "snowflake_oauth" and set the **client id**, **client secret** and **account identifier**.
 
-Take a look at [this guide](/docs/misc/guides/snowflake_app_with_user_roles#sample-app-setup) to learn more about how to build an App with the Snowflake OAuth integration.
+Take a look at [this guide](../../misc/9_guides/snowflake_app_with_user_roles/index.mdx#sample-app-setup) to learn more about how to build an App with the Snowflake OAuth integration.
 
 ### Custom OAuth
 

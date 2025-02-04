@@ -238,7 +238,7 @@ inventory:
   - resource_type: ansible_inventory
 ```
 
-To create similar resource type, refer to [creating plain text resources](/docs/core_concepts/resources_and_types#plain-text-file-resources). Otherwise `ansible_inventory` should be available after syncing resource types from the hub.
+To create similar resource type, refer to [creating plain text resources](../../../core_concepts/3_resources_and_types/index.mdx#plain-text-file-resources). Otherwise `ansible_inventory` should be available after syncing resource types from the hub.
 
 After adding this in the Web IDE, you will see a new `inventory.ini` argument pop up. You can then select or create a new ansible_inventory resource.
 
@@ -275,15 +275,13 @@ inventory:
 
 ### Other non-inventory file resources
 
-It sometimes happens that your Ansible playbook depends on some text file existing at a relative path to the playbook. This can be a configuration file, a template, some other file that you can't inline or otherwise is simpler to keep as a separate file. In this case, Windmill offers a feature to create these files at the specified path before running the playbook. The syntax will be the following:
+It sometimes happens that your Ansible playbook depends on some text file existing at a relative path to the playbook. This can be a configuration file, a template, some other file that you can't inline or otherwise is simpler to keep as a separate file. In this case, Windmill's [plain text file resources](../../../core_concepts/3_resources_and_types/index.mdx#plain-text-file-resources) can be used to create these files at the specified path before running the playbook. The syntax will be the following:
 
 ```yaml
 files:
   - resource: u/user/fabulous_jinja_template
     target:  ./config_template.j2
 ```
-
-To create text file resource type and resources, refer to [creating plain text resources](/docs/core_concepts/resources_and_types#plain-text-file-resources)
 
 In the example above, the resource `u/user/faboulous_jinja_template` is a special plain text file resource. The target `./config_template.j2` is the path relative to the playbook where the file will be created and where the playbook can access it.
 

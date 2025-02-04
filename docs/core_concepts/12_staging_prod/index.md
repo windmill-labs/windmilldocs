@@ -4,7 +4,7 @@ From a workspace in Windmill, you can deploy a script/flow/resource/variable and
 
 :::info Deploy to prod
 
-For all details on Deployments to prod in Windill, see [Deploy to prod](../../advanced/12_deploy_to_prod/index.mdx).
+For all details on Deployments to prod in Windmill, see [Deploy to prod](../../advanced/12_deploy_to_prod/index.mdx).
 
 :::
 

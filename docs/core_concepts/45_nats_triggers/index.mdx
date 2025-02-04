@@ -17,20 +17,46 @@ Only one subject is supported in core NATS.
 
 Once the NATS resource and settings are set, select the runnable that should be triggered by this trigger.
 The received webhook message will be passed to the runnable as a string argument called `msg`.
-If you use a [preprocessor](../43_preprocessors/index.mdx), the `wm_trigger` object will be of the form:
 
-```json
-{
-  "kind": "nats",
-  "nats": {
-    "servers": ["localhost:4222"],
-    "subject": "my-subject",
-    "length": 1024,
-    /* following are optional */
-    "headers": {"my-header": ["my-value"]},
-    "status": 200,
-    "description": "my-description"
-  }
+Here's an example script:
+
+```TypeScript
+export async function main(msg: string) {
+  // do something with the message
+}
+```
+
+And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could look like this:
+
+```TypeScript
+export async function preprocessor(
+  msg: string,
+  wm_trigger: {
+    kind: "nats",
+    nats: {
+      servers: string[];
+      subject: string; // the specific subject the message was received from
+      length: number;
+      headers?: Record<string, string[]>;
+      status?: number;
+      description?: string;
+    }
+  },
+) {
+  // assuming the message is a JSON object
+  const msg = JSON.parse(msg); 
+
+  // define args for the main function
+  // let's assume we want to use the message content and the subject
+  return {
+    message_content: msg.content,
+    subject: wm_trigger.nats.subject
+  };
+}
+
+
+export async function main(message_content: string, subject: string) {
+  // do something with the message content and subject
 }
 ```
 

@@ -68,7 +68,7 @@ If you are using the Jaeger container, the endpoint will be `http://jaeger:4317`
 
 ## Open the Jaeger UI
 
-The Jaeger UI if hosted with the `docker-compose.yaml` file above will be available at `http://localhost:16686`. When running a script or workflow with windmill, you will be able to see the traces in the Jaeger UI and investigate them. This can be useful to understand the performance of a workflow and identify bottlenecks in the windmill server or client.
+The Jaeger UI if hosted with the `docker-compose.yaml` file above will be available at `http://localhost:16686`. When running a script or workflow with Windmill, you will be able to see the traces in the Jaeger UI and investigate them. This can be useful to understand the performance of a workflow and identify bottlenecks in the Windmill server or client.
 
 ![Jaeger Timeline](./jaeger_timeline.png)
 ![Jaeger Flamegraph](./jaeger_flamegraph.png)
@@ -76,7 +76,7 @@ The Jaeger UI if hosted with the `docker-compose.yaml` file above will be availa
 
 ## Searching for specific traces
 
-To search/filter for a specific trace, for example a workflow, you can use the search function in the Jaeger UI by filtering by tags set by windmill.
+To search/filter for a specific trace, for example a workflow, you can use the search function in the Jaeger UI by filtering by tags set by Windmill.
 
 The following tags are useful to filter for specific traces:
 
@@ -389,7 +389,7 @@ In the Windmill UI, go to the "Instances Settings" and "OTEL/Prom" tab and fill 
 The Grafana UI if hosted with the `docker-compose.yaml` file above will be available at `http://localhost:3000`.
 
 ### Traces
-As with Jaeger, you can search for specific traces by filtering by tags set by windmill.
+As with Jaeger, you can search for specific traces by filtering by tags set by Windmill.
 
 ![Grafana Traces](./tempo_traces.png)
 

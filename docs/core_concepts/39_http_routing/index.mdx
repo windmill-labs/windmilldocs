@@ -19,6 +19,48 @@ The full http route takes the following form:
 
 Select the runnable that should be triggered by this route. To quickly get started, you can use the `create from template` button to generate a runnable template.
 
+Here's an example script:
+
+```TypeScript
+export async function main(/* args from the request body */) {
+    // your code here
+}
+```
+
+And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could look like this:
+
+```TypeScript
+export async function preprocessor(
+  /* args from the request body, let's assume `name` and `age` */
+  name: string,
+  age: number,
+  wm_trigger: {
+    kind: "http",
+    http: {
+      route: string; // The route path, e.g. "/users/:id"
+      path: string; // The actual path called, e.g. "/users/123"
+      method: string;
+      params: Record<string, string>; // The route parameters, e.g. { id: "123" }
+      query: Record<string, string>; // The query parameters
+      headers: Record<string, string>;
+    }
+  },
+) {
+
+  // define args for the main function
+  // let's assume the id is passed in the path (e.g. "/users/:id") and we want to pass it with the body (name, age) to the main function
+  return {
+    user_id: wm_trigger.http.params.id,
+    name,
+    age,
+  };
+}
+
+export async function main(user_id: string, name: string, age: number) {
+  // handle arguments, e.g. update the name and age of the user with the given id
+}
+```
+
 The route also supports additional configuration options:
 - **Request type**: Whether the route should return the id (async) or the result (sync) of the runnable.
 - **Authentication**: Whether the route should require authentication. If authentication is required, the user needs to have read access to both the route and the runnable.
