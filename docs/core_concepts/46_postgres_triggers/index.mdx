@@ -4,6 +4,16 @@ Windmill can connect to a [Postgres](https://www.postgresql.org/) database and t
 Listening is done using Postgres's logical replication streaming protocol, ensuring efficient and low-latency triggering.  
 Postgres triggers are not available on the [Cloud](/pricing).
 
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/XJOxyFfHiv8"
+	title="Postgres triggers"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
 ## What is logical replication?
 
 Windmill's Postgres trigger feature is built on Postgres's logical replication protocol, which allows changes to a database to be streamed in real time to subscribers. Logical replication provides fine-grained control over what data is replicated by allowing the user to define publications and subscribe to specific changes.
@@ -25,7 +35,7 @@ Learn how to set up and configure Postgres triggers in Windmill through these ke
 ### Create a Postgres trigger
 To begin, navigate to the Postgres triggers page and create a new trigger. Follow the steps below to set up your environment.
 
-### Set Up a Postgres resource
+### Set up a Postgres resource
 You need to either:
 - Create a new Postgres resource by providing:
   - Hostname, port, database name, username, and password.
@@ -349,7 +359,7 @@ If you attempt to use Neon's `-pooler` host without modifying the `pgbouncer` co
 
 ---
 
-#### Avoiding Common Pitfalls: Configuring Neon with Windmill
+#### Avoiding common pitfalls: Configuring Neon with Windmill
 
 When entering the database details manually (`host`, `port`, `db_name`, `password`, `ssl_mode`, `root_certificate_pem`, etc.), you have two options:
 
@@ -412,7 +422,7 @@ To use Neon’s `-pooler` host with Windmill's Postgres triggers, you must updat
 
 ---
 
-### Future Updates for Other Database Hosting Services
+### Future updates for other database hosting services
 
 This section will be updated if additional database hosting services require special configurations for Postgres triggers.  
 If you are using a database service other than Neon and encounter issues when setting up triggers, please **contact Windmill support** for assistance.  
