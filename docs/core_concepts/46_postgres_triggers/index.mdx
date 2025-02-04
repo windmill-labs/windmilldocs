@@ -38,11 +38,11 @@ You have two options to configure this setting. Both options require a restart o
 
 #### Option 1: Using SQL (requires database restart)
 
-1. Run the following SQL command to set `wal_level` to `'logical'`:
-
-   ```sql
+1. Run the following SQL command to set `wal_level` to `'logical'`:         
+   
+  ```sql
    ALTER SYSTEM SET wal_level = 'logical';
-   ```
+  ```
 
 2. After executing the command, restart your Postgres instance for the changes to take effect.
 
@@ -52,9 +52,9 @@ You have two options to configure this setting. Both options require a restart o
 
 2. Look for the `wal_level` setting. If it's not already present, **add** the following line to the file:
 
-   ```ini
+  ```ini
    wal_level = logical
-   ```
+  ```
 
    If the setting is already there, **update** it to `logical`.
 
