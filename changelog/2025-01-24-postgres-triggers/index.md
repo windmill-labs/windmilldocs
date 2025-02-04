@@ -14,4 +14,5 @@ features:
     "Automatically generate TypeScript script templates for tracked tables and schemas."
   ]
 docs: /docs/core_concepts/postgres_triggers
+video: /videos/postgres_triggers.mp4
 ---
