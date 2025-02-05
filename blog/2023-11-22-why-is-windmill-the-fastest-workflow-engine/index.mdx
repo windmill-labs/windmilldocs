@@ -277,7 +277,7 @@ In Windmill, there are 3 main ways of doing data passing:
 
 - every input of a step can be a javascript expression that can refer to any step outputs
 
-Every script in TypeScript, Python, Go, Bash, SQL, Rust has their main signature parsed (by a WASM program in the frontend) which allows to pre-compute the different inputs needed for a given step.
+Every script in TypeScript, Python, Go, Bash, C#, SQL, Rust has their main signature parsed (by a WASM program in the frontend) which allows to pre-compute the different inputs needed for a given step.
 For each of those inputs, one can define either a static input or a javascript expression that can refer to the result of any step. e.g: `results.d.foo` where `d` is the id of the step.
 That javascript expression when complex is evaluated by an embedded v8 using deno runtime. It takes ~8ms by expression.
 
