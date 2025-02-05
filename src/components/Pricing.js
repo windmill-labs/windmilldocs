@@ -299,7 +299,7 @@ const pricing = {
 					text: (
 						<span>
 							SLA & Priority Support 24/7 with 3h response time, automation engineer assistance and
-							dedicated slack channel
+							dedicated Slack channel
 						</span>
 					)
 				},
@@ -1311,6 +1311,7 @@ export default function Pricing() {
 														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j'
 												}
 												className="main-section"
+												target="_blank"
 												onClick={(e) => {
 													e.stopPropagation(); // Prevent event bubbling
 												}}
@@ -1320,6 +1321,7 @@ export default function Pricing() {
 											<a
 												href="https://app.windmill.dev/public/windmill-labs/cae76591e9a0c229a338636c50e67066"
 												className="hover-section"
+												target="_blank"
 												onClick={(e) => {
 													e.stopPropagation(); // Prevent event bubbling
 												}}
