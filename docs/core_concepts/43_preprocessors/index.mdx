@@ -47,6 +47,9 @@ export async function preprocessor(
 			status?: number
 			description?: string
 			length: number
+		},
+		sqs?: {
+			queue_url: string
 		}
 	}
 ) {
@@ -89,12 +92,16 @@ class Nats(TypedDict):
 	description: str | None
 	length: int
 
+class Sqs(TypedDict):
+	queue_url: str
+
 class WmTrigger(TypedDict):
-	kind: Literal["http", "email", "webhook", "websocket", "kafka", "nats"]
+	kind: Literal["http", "email", "webhook", "websocket", "kafka", "nats", "sqs"]
 	http: Http | None
 	websocket: Websocket | None
 	kakfa: Kafka | None
 	nats: Nats | None
+	sqs: Sqs | None
 
 def preprocessor(
 	# args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email)
@@ -127,7 +134,7 @@ The flow preprocessor takes the same arguments as the script preprocessor and sh
 <TabItem value="TypeScript">
 ```TypeScript
 export async function preprocessor(
-	/* args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email) */ 
+	/* args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats/sqs, raw_email and parsed_email for email) */ 
 	wm_trigger: {
 		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats',
 		http?: {
@@ -149,6 +156,9 @@ export async function preprocessor(
 		nats?: {
 			servers: string[]
 			subject: string
+		},
+		sqs?: {
+			queue_url: string
 		}
 	}
 ) {
@@ -187,12 +197,16 @@ class Nats(TypedDict):
 	description: str | None
 	length: int
 
+class Sqs(TypedDict):
+	queue_url: str
+
 class WmTrigger(TypedDict):
-    kind: Literal["http", "email", "webhook", "websocket", "kafka", "nats"]
+    kind: Literal["http", "email", "webhook", "websocket", "kafka", "nats", "sqs"]
     http: Http | None
 	websocket: Websocket | None
 	kafka: Kafka | None
 	nats: Nats | None
+	sqs: Sqs | None
 
 def preprocessor(
 	# args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email)
