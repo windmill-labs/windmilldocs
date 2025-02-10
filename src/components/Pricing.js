@@ -465,40 +465,48 @@ const sections = [
 				link: '/docs/advanced/email_triggers'
 			},
 			{
+				name: 'Postgres triggers',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/postgres_triggers',
+			},
+			{
 				name: 'WebSocket triggers',
 				tiers: {
 					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
+					'tier-enterprise-cloud': true,
 					'tier-free': false,
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/40_websocket_triggers',
-				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'Kafka triggers',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
+					'tier-enterprise-cloud': true,
 					'tier-free': false,
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/kafka_triggers',
-				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'NATS triggers',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
+					'tier-enterprise-cloud': true,
 					'tier-free': false,
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/nats_triggers',
-				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'Private Hub',
@@ -844,12 +852,11 @@ const sections = [
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
+					'tier-enterprise-cloud': true,
 					'tier-free': false,
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/critical_alerts',
-				tooltip: 'Self-hosted only'
 			},
 			{
 				name: 'Script-specific workers (dedicated) / High throughput',
