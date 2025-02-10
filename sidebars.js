@@ -154,7 +154,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'core_concepts/sqs_triggers/index',
-							label: 'Amazon SQS'
+							label: 'SQS'
 						}
 					]
 				},

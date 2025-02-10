@@ -501,7 +501,7 @@ const sections = [
 				tooltip: 'Self-hosted only'
 			},
 			{
-				name: 'Amazon SQS triggers',
+				name: 'SQS triggers',
 				tiers: {
 					'tier-free-selfhost': false,
 					'tier-enterprise-selfhost': true,
