@@ -469,7 +469,7 @@ const sections = [
 				tiers: {
 					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
+					'tier-enterprise-cloud': true,
 					'tier-free': false,
 					'tier-team': false
 				},
