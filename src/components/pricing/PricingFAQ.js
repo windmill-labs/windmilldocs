@@ -114,7 +114,7 @@ const faqs = [
 		question: 'What are compute units?',
 		answer: (
 			<span>
-				Compute units are a unit of measure for the amount of compute resources used. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
+				Compute units are a unit of measure for the amount of compute resources provisioned for the workers, based on their memory limits. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
 					to="/docs/core_concepts/worker_groups"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
@@ -168,7 +168,7 @@ const faqs = [
 				of one month is meant to help you evaluate your needs in practice.
 				<br />
 				<br />
-				Compute units are based on the provisioned workers, not the scripts. This means your pricing is determined by the size of your infrastructure, not by the memory consumption of individual scripts. Therefore, your costs remain predictable regardless of script demands.
+				Compute units are based on the provisioned workers, not the ones actually used by scripts. This means your pricing is determined by the size of your infrastructure, not by the memory consumption of individual scripts. Therefore, your costs remain predictable regardless of script demands.
 			</span>
 		)
 	},
