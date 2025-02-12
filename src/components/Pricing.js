@@ -469,11 +469,23 @@ const sections = [
 				tiers: {
 					'tier-free-selfhost': true,
 					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
+					'tier-enterprise-cloud': true,
 					'tier-free': false,
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/40_websocket_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'Postgres triggers',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/46_postgres_triggers',
 				tooltip: 'Self-hosted only'
 			},
 			{
