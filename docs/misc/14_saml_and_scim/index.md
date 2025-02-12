@@ -16,6 +16,12 @@ Application username format is `Email`
 
 In the Instance settings UI, pass the SAML Metadata URL (or content) containing the metadata URL (or XML content).
 
+:::tip
+
+You can control the entity ID using the `SAML_AUDIENCE` environment variable. This can be useful if you want to use the same identity provider for multiple instances (e.g dev / prod).
+
+:::
+
 ### Okta
 
 Configure Okta with the following settings (and replace cf.wimill.xyz with your domain):

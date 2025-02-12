@@ -23,7 +23,7 @@ Here are examples of a preprocessor function in [TypeScript](../../getting_start
 export async function preprocessor(
 	/* args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email) */ 
 	wm_trigger: {
-		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats',
+		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'postgres' | 'kafka' | 'nats', 'sqs',
 		http?: {
 			route: string // The route path, e.g. "/users/:id"
 			path: string // The actual path called, e.g. "/users/123"
@@ -49,7 +49,14 @@ export async function preprocessor(
 			length: number
 		},
 		sqs?: {
-			queue_url: string
+			queue_url: string,
+			message_id?: string,
+			receipt_handle?: string,
+			attributes: Record<string, string>,
+			message_attributes?: Record<string, {
+				string_value?: string,
+				data_type: string
+			}>
 		}
 	}
 ) {
@@ -92,11 +99,19 @@ class Nats(TypedDict):
 	description: str | None
 	length: int
 
-class Sqs(TypedDict):
-	queue_url: str
+class MessageAttribute(TypedDict):
+   string_value: str | None
+   data_type: str
+
+class Sqs(TypeDict):
+   queue_url: str
+   message_id: str | None
+   receipt_handle: str | None
+   attributes: dict[str, str]
+   message_attributes: dict[str, MessageAttribute] | None
 
 class WmTrigger(TypedDict):
-	kind: Literal["http", "email", "webhook", "websocket", "kafka", "nats", "sqs"]
+	kind: Literal["http", "email", "webhook", "websocket", "postgres", "kafka", "nats", "sqs"]
 	http: Http | None
 	websocket: Websocket | None
 	kakfa: Kafka | None
@@ -136,7 +151,7 @@ The flow preprocessor takes the same arguments as the script preprocessor and sh
 export async function preprocessor(
 	/* args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats/sqs, raw_email and parsed_email for email) */ 
 	wm_trigger: {
-		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats',
+		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'postgres' | 'kafka' | 'nats', 'sqs',
 		http?: {
 			route: string // The route path, e.g. "/users/:id"
 			path: string // The actual path called, e.g. "/users/123"
@@ -158,7 +173,14 @@ export async function preprocessor(
 			subject: string
 		},
 		sqs?: {
-			queue_url: string
+			queue_url: string,
+			message_id?: string,
+			receipt_handle?: string,
+			attributes: Record<string, string>,
+			message_attributes?: Record<string, {
+				string_value?: string,
+				data_type: string
+			}>
 		}
 	}
 ) {
@@ -197,11 +219,19 @@ class Nats(TypedDict):
 	description: str | None
 	length: int
 
-class Sqs(TypedDict):
-	queue_url: str
+class MessageAttribute(TypedDict):
+   string_value: str | None
+   data_type: str
+
+class Sqs(TypeDict):
+   queue_url: str
+   message_id: str | None
+   receipt_handle: str | None
+   attributes: dict[str, str]
+   message_attributes: dict[str, MessageAttribute] | None
 
 class WmTrigger(TypedDict):
-    kind: Literal["http", "email", "webhook", "websocket", "kafka", "nats", "sqs"]
+    kind: Literal["http", "email", "webhook", "websocket", "postgres", "kafka", "nats", "sqs"]
     http: Http | None
 	websocket: Websocket | None
 	kafka: Kafka | None
