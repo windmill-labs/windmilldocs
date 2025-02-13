@@ -32,16 +32,16 @@ import ScatterChart from '@site/src/components/ScatterChart';
 			],
 			[
 				[
-					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
-					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
-					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
-					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+					0.054, 0.018,	0.032, 0.047, 0.062, 0.085, 0.083, 0.048, 0.036, 0.045,
+					0.057, 0.050, 0.062, 0.055, 0.040, 0.081, 0.050, 0.038, 0.055, 0.048,
+					0.031, 0.037, 0.064, 0.071, 0.028, 0.031, 0.071, 0.073, 0.028, 0.044,
+					0.062, 0.067, 0.062, 0.046, 0.064, 0.040, 0.035, 0.029, 0.073, 0.068
 				],
 				[
-					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
-					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
-					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
-					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
+					0.030, 0.031, 0.029, 0.032, 0.029, 0.027, 0.029, 0.032, 0.035, 0.044,
+					0.029, 0.025, 0.034, 0.024, 0.031, 0.022, 0.031, 0.034, 0.022, 0.030,
+					0.041, 0.033, 0.030, 0.040, 0.033, 0.030, 0.038, 0.029, 0.038, 0.033,
+					0.024, 0.038, 0.038, 0.041, 0.030, 0.043, 0.024, 0.041, 0.031, 0.032
 				]
 			],
 			[
@@ -623,43 +623,26 @@ inputs:
  - id: iters
    type: INT
 tasks:
-  - id: getIterations
-    type: io.kestra.plugin.scripts.python.Script
-    taskRunner:
-      type: io.kestra.plugin.scripts.runner.docker.Docker
-    containerImage: ghcr.io/kestra-io/pydata:latest
-    env:
-      iters: "{{ inputs.iters }}"
-    script: |
-      import os
-      from kestra import Kestra
-      iters = int(os.getenv("iters"))
-      iterations = list(range(0, iters))
-      Kestra.outputs({'iterations': iterations})
-
   - id: processIterations
     type: io.kestra.plugin.core.flow.ForEach
-    values: '{{ outputs.getIterations.vars.iterations }}'
+    values: '{{ range(0, inputs.iters - 1) }}'
     concurrencyLimit: 1
     tasks:
       - id: python
         type: io.kestra.plugin.scripts.python.Script
-        containerImage: python:slim
-        env:
-          N: "{{ inputs.n }}"
+        taskRunner:
+          type: io.kestra.plugin.core.runner.Process
         script: |
-          import os
           def fibo(n: int):
             if n <= 1:
                 return n
             else:
                 return fibo(n - 1) + fibo(n - 2)
 
-          n = int(os.getenv("N"))
-          print(str(fibo(n)))
+          print(str(fibo({{ inputs.n }})))
 ```
 
-We  executed it once with `n=33`, `iters=10` and once with `n=10` and `iters=40`. Note that we set the concurrency limit to 1 meaning all task will run sequentially on one worker. Furthermore, no extra python dependencies had to be installed during the execution of those flows.
+We executed it once with `n=33`, `iters=10` and once with `n=10` and `iters=40`. Note that we set the concurrency limit to 1 meaning all task will run sequentially on one worker. Furthermore, no extra python dependencies had to be installed during the execution of those flows, and we use a `Process` task runner to avoid starting a Docker container for each task execution.
 
 ### Results
 
@@ -684,7 +667,7 @@ For 10 long running tasks:
 
 |  **Task**   | **Created at** | **Started at** | **Completed at** |
 | :---------: | -------------: | -------------: | ---------------: |
-| **task_00** |          0.000 |          0.047 |            1.348 |
+| **task_00** |          0.000 |          0.035 |            1.348 |
 | **task_01** |          1.348 |          1.402 |            2.683 |
 | **task_02** |          2.683 |          2.730 |            4.050 |
 | **task_03** |          4.050 |          4.115 |            5.424 |
@@ -708,17 +691,17 @@ For 40 lightweights tasks run sequentially:
 		rawData={[
 			[
 				[
-					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
-					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
-					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
-					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
-				],
+					0.054, 0.018,	0.032, 0.047, 0.062, 0.085, 0.083, 0.048, 0.036, 0.045,
+					0.057, 0.050, 0.062, 0.055, 0.040, 0.081, 0.050, 0.038, 0.055, 0.048,
+					0.031, 0.037, 0.064, 0.071, 0.028, 0.031, 0.071, 0.073, 0.028, 0.044,
+					0.062, 0.067, 0.062, 0.046, 0.064, 0.040, 0.035, 0.029, 0.073, 0.068
+			],
 				[
-					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
-					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
-					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
-					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
-				]
+					0.030, 0.031, 0.029, 0.032, 0.029, 0.027, 0.029, 0.032, 0.035, 0.044,
+					0.029, 0.025, 0.034, 0.024, 0.031, 0.022, 0.031, 0.034, 0.022, 0.030,
+					0.041, 0.033, 0.030, 0.040, 0.033, 0.030, 0.038, 0.029, 0.038, 0.033,
+					0.024, 0.038, 0.038, 0.041, 0.030, 0.043, 0.024, 0.041, 0.031, 0.032
+			]
 			]
 		]}
 		maintainAspectRatio={false}
@@ -729,46 +712,46 @@ For 40 lightweights tasks run sequentially:
 
 |  **Task**   | **Created at** | **Started at** | **Completed at** |
 | :---------: | -------------: | -------------: | ---------------: |
-| **task_00** |          0.000 |          0.062 |            0.832 |
-| **task_01** |          0.832 |          0.888 |            1.479 |
-| **task_02** |          1.479 |          1.524 |            2.137 |
-| **task_03** |          2.137 |          2.195 |            2.840 |
-| **task_04** |          2.840 |          2.885 |            3.502 |
-| **task_05** |          3.502 |          3.561 |            4.177 |
-| **task_06** |          4.177 |          4.222 |            4.846 |
-| **task_07** |          4.846 |          4.902 |            5.504 |
-| **task_08** |          5.504 |          5.552 |            6.243 |
-| **task_09** |          6.243 |          6.325 |            6.935 |
-| **task_10** |          6.935 |          7.005 |            7.612 |
-| **task_11** |          7.612 |          7.668 |            8.278 |
-| **task_12** |          8.278 |          8.323 |            8.960 |
-| **task_13** |          8.960 |          9.011 |            9.629 |
-| **task_14** |          9.629 |          9.090 |           10.290 |
-| **task_15** |         10.290 |         10.385 |           11.055 |
-| **task_16** |         11.055 |         11.123 |           11.807 |
-| **task_17** |         11.807 |         11.863 |           12.515 |
-| **task_18** |         12.515 |         12.578 |           13.153 |
-| **task_19** |         13.153 |         13.224 |           13.869 |
-| **task_20** |         13.869 |         13.939 |           14.614 |
-| **task_21** |         14.614 |         14.685 |           15.323 |
-| **task_22** |         15.323 |         15.388 |           16.022 |
-| **task_23** |         16.022 |         16.089 |           16.772 |
-| **task_24** |         16.772 |         16.831 |           17.453 |
-| **task_25** |         17.453 |         17.508 |           18.120 |
-| **task_26** |         18.120 |         18.177 |           18.780 |
-| **task_27** |         18.780 |         18.831 |           19.457 |
-| **task_28** |         19.457 |         19.525 |           20.149 |
-| **task_29** |         20.149 |         20.210 |           20.843 |
-| **task_30** |         20.843 |         20.895 |           21.507 |
-| **task_31** |         21.507 |         21.572 |           22.206 |
-| **task_32** |         22.206 |         22.267 |           22.904 |
-| **task_33** |         22.904 |         22.982 |           23.597 |
-| **task_34** |         23.597 |         23.667 |           24.282 |
-| **task_35** |         24.282 |         24.343 |           25.010 |
-| **task_36** |         25.010 |         25.072 |           25.694 |
-| **task_37** |         25.694 |         25.752 |           26.368 |
-| **task_38** |         26.368 |         26.440 |           27.075 |
-| **task_39** |         27.075 |         27.132 |           27.762 |
+| **task_00** |          0.000 |          0.054 |            0.084 |
+| **task_01** |          0.117 |          0.135 |            0.166 |
+| **task_02** |          0.209 |          0.241 |            0.270 |
+| **task_03** |          0.326 |          0.373 |            0.405 |
+| **task_04** |          0.467 |          0.529 |            0.558 |
+| **task_05** |          0.626 |          0.711 |            0.738 |
+| **task_06** |          0.811 |          0.894 |            0.923 |
+| **task_07** |          1.028 |          1.076 |            1.108 |
+| **task_08** |          1.149 |          1.185	|            1.220 |
+| **task_09** |          1.272 |          1.317 |            1.361 |
+| **task_10** |          1.418 |          1.475 |            1.504 |
+| **task_11** |          1.556 |          1.606 |            1.631 |
+| **task_12** |          1.699 |          1.761 |            1.795 |
+| **task_13** |          1.897 |          1.952 |            1.976 |
+| **task_14** |          2.019 |          2.059 |            2.090 |
+| **task_15** |          2.164 |          2.245 |            2.267 |
+| **task_16** |          2.325 |          2.375 |            2.406 |
+| **task_17** |          2.470 |          2.508 |            2.542 |
+| **task_18** |          2.609 |          2.664 |            2.686 |
+| **task_19** |          2.749 |          2.797 |            2.827 |
+| **task_20** |          2.875 |          2.906 |            2.947 |
+| **task_21** |          3.000 |          3.037 |            3.070 |
+| **task_22** |          3.181 |          3.245 |            3.275 |
+| **task_23** |          3.330 |          3.401 |            3.441 |
+| **task_24** |          3.484 |          3.512 |            3.545 |
+| **task_25** |          3.613 |          3.644 |            3.674 |
+| **task_26** |          3.732 |          3.803 |            3.841 |
+| **task_27** |          3.887 |          3.960 |            3.989 |
+| **task_28** |          4.040 |          4.068 |            4.106 |
+| **task_29** |          4.187 |          4.231 |            4.264 |
+| **task_30** |          4.355 |          4.417 |            4.441 |
+| **task_31** |          4.507 |          4.574 |            4.612 |
+| **task_32** |          4.671 |          4.733 |            4.771 |
+| **task_33** |          4.852 |          4.898 |            4.939 |
+| **task_34** |          5.017 |          5.081 |            5.111 |
+| **task_35** |          5.173 |          5.213 |            5.256 |
+| **task_36** |          5.311 |          5.346 |            5.370 |
+| **task_37** |          5.449 |          5.478 |            5.519 |
+| **task_38** |          5.588 |          5.661 |            5.692 |
+| **task_39** |          5.749 |          5.817 |            5.849 |
 
 </details>
 
@@ -1113,16 +1096,16 @@ And for the 40 lightweight tasks:
 			],
 			[
 				[
-					0.062, 0.056, 0.045, 0.058, 0.045, 0.059, 0.045, 0.056, 0.048, 0.082, 0.07,
-					0.056, 0.045, 0.051, 0.061, 0.095, 0.068, 0.056, 0.063, 0.071, 0.07, 0.071,
-					0.065, 0.067, 0.059, 0.055, 0.057, 0.051, 0.068, 0.061, 0.065, 0.069, 0.061,
-					0.078, 0.07, 0.061, 0.062, 0.058, 0.072, 0.057
+					0.054, 0.018,	0.032, 0.047, 0.062, 0.085, 0.083, 0.048, 0.036, 0.045,
+					0.057, 0.050, 0.062, 0.055, 0.040, 0.081, 0.050, 0.038, 0.055, 0.048,
+					0.031, 0.037, 0.064, 0.071, 0.028, 0.031, 0.071, 0.073, 0.028, 0.044,
+					0.062, 0.067, 0.062, 0.046, 0.064, 0.040, 0.035, 0.029, 0.073, 0.068
 				],
 				[
-					0.77, 0.591, 0.613, 0.645, 0.617, 0.616, 0.624, 0.602, 0.691, 0.61, 0.607,
-					0.61, 0.637, 0.618, 0.66, 0.67, 0.684, 0.652, 0.638, 0.645, 0.675, 0.638,
-					0.634, 0.683, 0.622, 0.612, 0.603, 0.626, 0.624, 0.633, 0.612, 0.634, 0.637,
-					0.615, 0.615, 0.667, 0.622, 0.616, 0.635, 0.63
+					0.030, 0.031, 0.029, 0.032, 0.029, 0.027, 0.029, 0.032, 0.035, 0.044,
+					0.029, 0.025, 0.034, 0.024, 0.031, 0.022, 0.031, 0.034, 0.022, 0.030,
+					0.041, 0.033, 0.030, 0.040, 0.033, 0.030, 0.038, 0.029, 0.038, 0.033,
+					0.024, 0.038, 0.038, 0.041, 0.030, 0.043, 0.024, 0.041, 0.031, 0.032
 				]
 			],
 			[
@@ -1185,14 +1168,28 @@ And for the 40 lightweight tasks:
 	/>
 </div>
 
-We can exclude Airflow and Kestra from the previous chart:
+We can exclude Airflow from the previous chart:
 
 <div className="grid">
 	<TaskDurationBarChart
 		title="40 lightweight tasks (excluding Airflow)"
 		xTitle="Duration (in seconds)"
-		labels={[['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
+		labels={[['Kestra'], ['Prefect'], ['Temporal'], ['Windmill', 'Normal'], ['Windmill', 'Dedicated Worker']]}
 		rawData={[
+			[
+				[
+					0.054, 0.018,	0.032, 0.047, 0.062, 0.085, 0.083, 0.048, 0.036, 0.045,
+					0.057, 0.050, 0.062, 0.055, 0.040, 0.081, 0.050, 0.038, 0.055, 0.048,
+					0.031, 0.037, 0.064, 0.071, 0.028, 0.031, 0.071, 0.073, 0.028, 0.044,
+					0.062, 0.067, 0.062, 0.046, 0.064, 0.040, 0.035, 0.029, 0.073, 0.068
+				],
+				[
+					0.030, 0.031, 0.029, 0.032, 0.029, 0.027, 0.029, 0.032, 0.035, 0.044,
+					0.029, 0.025, 0.034, 0.024, 0.031, 0.022, 0.031, 0.034, 0.022, 0.030,
+					0.041, 0.033, 0.030, 0.040, 0.033, 0.030, 0.038, 0.029, 0.038, 0.033,
+					0.024, 0.038, 0.038, 0.041, 0.030, 0.043, 0.024, 0.041, 0.031, 0.032
+				]
+			],
 			[
 				[
 					1.213, 0.064, 0.061, 0.059, 0.054, 0.053, 0.053, 0.054, 0.055, 0.056, 0.057, 0.064, 0.052,
@@ -1256,9 +1253,9 @@ We can exclude Airflow and Kestra from the previous chart:
 
 At a macro level, it took 54.668s to Airflow to execute the 10 long running tasks, where Prefect took 15.489s, Temporal 13.434s, Kestra 14.15s and Windmill 8.351s in normal mode (7.885s in [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mode).
 
-The same can be observed for the 40 lightweight tasks, where Airflow took total of 116.221s, Prefect 4.872s, Temporal 2.967s, Kestra 29.80s and Windmill 4.300s in normal mode (2.429s in dedicated worker mode).
+The same can be observed for the 40 lightweight tasks, where Airflow took total of 116.221s, Prefect 4.872s, Temporal 2.967s, Kestra 5.849s and Windmill 4.300s in normal mode (2.429s in dedicated worker mode).
 
-By far, Airflow is the slowest. Temporal and Prefect are faster, but not as fast as Windmill. Kestra performs slowly for the 40 lightweight tasks, whereas it performs similar to Temporal and Prefect for the 10 long running tasks. For the 40 lightweight tasks, Windmill in normal mode was equivalent to Prefect and slightly slower than Temporal. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
+By far, Airflow is the slowest. Temporal, Prefect and Kestra are faster, but not as fast as Windmill. For the 40 lightweight tasks, Windmill in normal mode was equivalent to Prefect and slightly slower than Temporal. This can be explained by the fact that the way Temporal works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal, and we can see that the performance are similar, with a slight advantage for Windmill.
 
 But we can deep dive in a little and compare the orchestrators three categories:
 
@@ -1283,16 +1280,16 @@ If we look at the 40 lightweight tasks flow, we have:
 
 |                                  | **Airflow** | **Prefect** | **Temporal** | **Kestra** | **Windmill<br />Normal** | **Windmill<br />Dedicated Worker** |
 | :------------------------------: | ----------: | ----------: | -----------: | ---------: | -----------------------: | :--------------------------------: |
-| **Total duration (in secconds)** |      56.221 |       4.872 |        2.967 |      29.80 |                    4.300 |               2.429                |
-|         **Assignement**          |      64.63% |      44.62% |       35.58% |      8.28% |                    3.42% |               5.89%                |
-|          **Execution**           |      10.77% |      31.73% |       11.26% |     85.35% |                   44.19% |               3.42%                |
-|          **Transition**          |      24.60% |      23.65% |       53.16% |      6.38% |                   52.40% |               90.70%               |
+| **Total duration (in secconds)** |      56.221 |       4.872 |        2.967 |      5.849 |                    4.300 |               2.429                |
+|         **Assignement**          |      64.63% |      44.62% |       35.58% |      TDB   |                    3.42% |               5.89%                |
+|          **Execution**           |      10.77% |      31.73% |       11.26% |     TBD    |                   44.19% |               3.42%                |
+|          **Transition**          |      24.60% |      23.65% |       53.16% |      TBD   |                   52.40% |               90.70%               |
 
 Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each tasks submitted to the worker. However, it's by far the fastest assigning tasks to executors. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time transitioning from one task to the next one.
 
 ## Conclusion
 
-Airflow is the slowest in all categories, followed by Prefect and Kestra. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transitions and assignments will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
+Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal, Kestra and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transitions and assignments will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
 
 ## Appendix: Scaling Windmill
 
