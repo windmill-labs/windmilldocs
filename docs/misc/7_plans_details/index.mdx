@@ -108,13 +108,13 @@ Team plans work at the workspace-level.
 
 The subscription to the Enterprise Self-Host offer is done through a [secure payment link](https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j), with a 1-month free trial. You can reach out to us via contact@windmill.dev, [Discord](https://discord.com/invite/V7PM2YHsPB), or schedule a [meeting](https://www.windmill.dev/book-demo) for an introduction session.
 
-To have your instance switch from Free Edition to Enterprise Edition, you'll need to change the Windmill image:
+To have your instance switch from Free Edition to Enterprise Edition, make sure to use the [ghcr.io/windmill-labs/windmill-ee](https://github.com/windmill-labs/windmill/pkgs/container/windmill-ee) image in all your servers/workers containers, in particular you'll need to change the Windmill image:
 - [Docker](../../advanced/1_self_host/index.mdx#docker): in [docker-compose.yml](https://raw.githubusercontent.com/windmill-labs/windmill/main/docker-compose.yml) and [.env](https://raw.githubusercontent.com/windmill-labs/windmill/main/.env).
 - [Helm](../../advanced/1_self_host/index.mdx#enterprise-deployment-with-helm): see the [Helm chart repository README](https://github.com/windmill-labs/windmill-helm-charts).
 
-If not done earlier, you can create your first workspace, but your instance will not have access to Enterprise features until the license key is passed.
-
 Upon subscribing, you will receive a [license key](#using-the-license-key-self-host) to pass in the [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key). The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
+
+Your license key can be used accross multiple instances. Just make sure to turn dev / staging instances as 'Non-prod' in the [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance) so that their computation usage is not taken into account.
 
 To adjust the number of seats, you can update your usage on the subscription page at [Windmill customer portal](#windmill-customer-portal).
 
@@ -122,7 +122,7 @@ Windmill employs lightweight [telemetry](#usage-checks) to automatically track a
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
-- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month.
+- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each [Compute Unit](/pricing#compute-units), you pay for, you get a quota of 2 worker-gb-month.
 
 Using a number of seats, workers, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
 1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min
@@ -139,7 +139,7 @@ Once excessive usage has been detected and we have informed you, your license ke
 	/>
 </div>
 
-#### Using the License Key (Self-host)
+#### Using the license key (self-host)
 
 To enable the license key, switch from the `windmill` image to the `windmill-ee` image in both the server and workers. From the [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), pass the license key, "Test key" and save settings.
 
