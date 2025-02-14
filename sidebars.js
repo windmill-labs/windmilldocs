@@ -150,6 +150,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/nats_triggers/index',
 							label: 'NATS'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/sqs_triggers/index',
+							label: 'SQS'
 						}
 					]
 				},

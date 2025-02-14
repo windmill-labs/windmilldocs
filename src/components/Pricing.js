@@ -521,6 +521,18 @@ const sections = [
 				link: '/docs/core_concepts/nats_triggers',
 			},
 			{
+				name: 'SQS triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': false,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/sqs_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
 				name: 'Private Hub',
 				tiers: {
 					'tier-free-selfhost': false,
