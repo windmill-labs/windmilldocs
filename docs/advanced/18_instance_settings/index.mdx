@@ -30,7 +30,7 @@ You can also enable automatic username creation from emails. Usernames will be s
 
 A more common way to add users is to use [SSO/OAuth](#authoauth).
 
-For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator)), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
+For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator) where an operator at the instace level is an operator in all workspaces they are member of), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
 
 You can also toggle on 'Show active users only' to show only users who have performed at least one action in the last 30 days. Only those users are counted in our [Pricing](/pricing).
 
@@ -357,7 +357,6 @@ When creating a workspace, you have the option to invite automatically everyone 
 	src="/videos/new_workspace.mp4"
 />
 
-
 ## Open Telemetry & Prometheus
 
 ![Open Telemetry & Prometheus](./otel_prometheus.png)
@@ -404,13 +403,16 @@ Anonymous usage data is collected to help improve Windmill. Telemetry data is se
 ![Telemetry](./telemetry.png "Telemetry")
 
 The following information is collected:
-- version of your instance
-- number and total duration of jobs
-- accounts usage
-- login type usage
-- workers usage
-- vCPUs usage
+- version of your instances
+- instance base URL
+- job usage (language, total duration, count)
+- login type usage (login type, count)
+- worker usage (worker, worker instance, vCPUs, memory)
+- user usage (author count, operator count)
+- superadmin email addresses
+- vCPU usage
 - memory usage
+- development instance status
 
 From the instance settings, you can manually send usage or disable telemetry.
 

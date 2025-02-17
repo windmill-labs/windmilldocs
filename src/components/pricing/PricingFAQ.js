@@ -40,8 +40,8 @@ const faqs = [
 				<br />- Individuals
 				<br />- Businesses with less than 10 employees and $250k revenues
 				<br />- Startups at seed stage <br />
-				Reach out to contact@windmill.dev to inquiry about exceptions.<br />
-				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
+				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.<br />
+				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
 		)
 	},
@@ -61,7 +61,7 @@ const faqs = [
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />
-				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are member of.
+				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are member of. Operators are not set as the instance-level.
 			</span>
 		)
 	},
@@ -227,6 +227,15 @@ const faqs = [
 				<br />
 				<br />
 				Our compute pricing should be linear to the compute cost from your cloud provider.
+			</span>
+		)
+	},
+	{
+		id: 'payment',
+		question: 'How is payment done?',
+		answer: (
+			<span>
+				Payment is processed through Stripe and can be made using ACH, bank transfer, Cash App Pay, or credit or debit card. Subscriptions can be made by automatic debit or by invoice.
 			</span>
 		)
 	},
