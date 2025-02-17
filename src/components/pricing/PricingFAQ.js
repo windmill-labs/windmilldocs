@@ -40,8 +40,8 @@ const faqs = [
 				<br />- Individuals
 				<br />- Businesses with less than 10 employees and $250k revenues
 				<br />- Startups at seed stage <br />
-				Reach out to contact@windmill.dev to inquiry about exceptions.<br />
-				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
+				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.<br />
+				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
 		)
 	},
