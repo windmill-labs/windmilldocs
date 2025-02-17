@@ -434,6 +434,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/teams',
+							label: 'Microsoft Teams'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/mongodb',
 							label: 'MongoDB'
 						},
