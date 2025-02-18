@@ -366,8 +366,8 @@ function QualificationModal({ isOpen, closeModal, planType, qualificationText, s
 							onChange={(e) => setQualificationText(e.target.value)}
 							className="w-full p-3 text-base border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
 							rows={6}
-							placeholder={planType === 'SMB' 
-								? 'Please explain how you qualify for the SMB plan (e.g., small business size, revenue, etc.).'
+							placeholder={planType === 'Pro' 
+								? 'Please explain how you qualify for the Pro plan (e.g., small business size, revenue, etc.).'
 								: 'Please explain how you qualify for the Nonprofit plan (e.g., organization status, registration number, etc.).'}
 						/>
 					</div>
@@ -397,7 +397,7 @@ export default function Pricing() {
 	const [frequency, setFrequency] = useState(types[1]);
 	const [period, setPeriod] = useState(periods[0]);
 
-	const buttonOptions = ['SMB', 'Nonprofit', 'Enterprise'];
+	const buttonOptions = ['Pro', 'Nonprofit', 'Enterprise'];
 
 	const [selectedOption, setSelectedOption] = useState('Enterprise');
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -425,7 +425,7 @@ export default function Pricing() {
 	};
 
 	const handlePlanClick = (url, planType) => {
-		if (planType === 'SMB' || planType === 'Nonprofit') {
+		if (planType === 'Pro' || planType === 'Nonprofit') {
 			setIsModalOpen(true);
 			setPendingUrl(url);
 		} else {
@@ -544,7 +544,7 @@ export default function Pricing() {
 							className={classNames(
 								tier.id === 'tier-team'
 									? 'ring-1 ring-blue-600'
-									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
 									? 'ring-1 ring-blue-600'
 									: tier.enterprise_edition
 									? 'ring-1 ring-teal-600'
@@ -558,7 +558,7 @@ export default function Pricing() {
 									className={classNames(
 										tier.id === 'tier-team'
 											? 'text-blue-600'
-											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
 											? 'text-blue-600'
 											: tier.enterprise_edition
 											? 'text-teal-600'
@@ -569,8 +569,8 @@ export default function Pricing() {
 									{
 										tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
 											? tier.name_nonprofit // Display name for Nonprofit
-											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-											? tier.name_smb // Display name for SMB
+											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
+											? tier.name_smb // Display name for Pro
 											: tier.name // Default name
 									}
 								</h3>
@@ -601,13 +601,13 @@ export default function Pricing() {
 											{period.value === 'annually'
 												? tier.id === 'tier-team'
 													? (tier.minPrice * 12).toLocaleString('en-US') // Team tier calculation
-													: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
-													? (tier.minPrice_smb * 10).toLocaleString('en-US') // Annual price for SMB
+													: selectedOption === 'Pro' && tier.minPrice_smb !== undefined
+													? (tier.minPrice_smb * 10).toLocaleString('en-US') // Annual price for Pro
 													: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
 													? (tier.minPrice_nonprofit * 10).toLocaleString('en-US') // Annual price for Nonprofit
 													: (tier.minPrice * 10).toLocaleString('en-US') // Annual price for others
-												: selectedOption === 'SMB' && tier.minPrice_smb !== undefined
-												? tier.minPrice_smb.toLocaleString('en-US') // Monthly price for SMB
+												: selectedOption === 'Pro' && tier.minPrice_smb !== undefined
+												? tier.minPrice_smb.toLocaleString('en-US') // Monthly price for Pro
 												: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
 												? tier.minPrice_nonprofit.toLocaleString('en-US') // Monthly price for Nonprofit
 												: tier.minPrice.toLocaleString('en-US')}
@@ -633,7 +633,7 @@ export default function Pricing() {
 															? 'bg-gray-500 text-white'
 															: 'bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-gray-300',
 														'ring-1 ring-inset ring-white dark:ring-zinc-800 hover:bg-gray-100 dark:hover:bg-gray-600 focus:z-10',
-														option === 'SMB'
+														option === 'Pro'
 															? 'rounded-l-md'
 															: option === 'Enterprise'
 															? 'rounded-r-md -ml-px'
@@ -660,8 +660,8 @@ export default function Pricing() {
 										__html:
 											tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
 												? tier.description_nonprofit // Display the nonprofit description with links
-												: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
-												? tier.description_smb // Display the SMB description with links
+												: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
+												? tier.description_smb // Display the Pro description with links
 												: tier.description // Default description with links
 									}}
 								/>
@@ -669,7 +669,7 @@ export default function Pricing() {
 
 							<a
 								href={
-									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+									tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
 										? '#pro-plan'
 										: tier.href
 								}
@@ -678,7 +678,7 @@ export default function Pricing() {
 								className={classNames(
 									tier.id === 'tier-team'
 										? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
-										: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+										: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
 										? 'bg-blue-600 !text-white shadow-sm hover:bg-blue-700'
 										: tier.enterprise_edition
 										? 'bg-teal-600 !text-white shadow-sm hover:bg-teal-700'
@@ -686,7 +686,7 @@ export default function Pricing() {
 									'!no-underline mt-6 block rounded-md py-2 px-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600'
 								)}
 							>
-								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB'
+								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
 									? 'Check if you qualify'
 									: tier.customMessage
 									? tier.customMessage
@@ -698,7 +698,7 @@ export default function Pricing() {
 								className="mt-8 space-y-3 text-sm leading-6 text-gray-600 xl:mt-10"
 								style={{ marginBottom: '4rem' }}
 							>
-								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'SMB' ? (
+								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro' ? (
 									<FeatureList features={tier.features_smb} level={1} id={tier.id} />
 								) : (
 									<FeatureList features={tier.features} level={1} id={tier.id} />
@@ -745,14 +745,14 @@ export default function Pricing() {
 											onClick={(e) => {
 												e.preventDefault();
 												handlePlanClick(
-													selectedOption === 'SMB'
+													selectedOption === 'Pro'
 														? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
 														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit',
 													selectedOption
 												);
 											}}
 											className={classNames(
-												selectedOption === 'SMB'
+												selectedOption === 'Pro'
 													? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
 													: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
 												'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
