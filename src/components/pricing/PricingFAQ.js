@@ -16,7 +16,7 @@ const faqs = [
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					compute units
-				</Link>{' '}based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs. In the total sum of compute units, there are no half compute units, therefore the total number is rounded up to the next integer.
+				</Link>{' '}based on memory allocation. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit counts as 1 compute unit. On self-hosted plans, any worker with memory above 2GB counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). On cloud EE, it scales linearly with the memory limit. We aggregate the memory of each worker against your global compute unit quota. You can freely allocate these compute units across workers of different sizes based on your needs. In the total sum of compute units, there are no half compute units, therefore the total number is rounded up to the next integer.
 				<br /><br />
 				For user access, we charge based on seats. A regular user counts as one seat, while an <Link
 					to="#operator"
@@ -40,8 +40,8 @@ const faqs = [
 				<br />- Individuals
 				<br />- Businesses with less than 10 employees and $250k revenues
 				<br />- Startups at seed stage <br />
-				Reach out to contact@windmill.dev to inquiry about exceptions.<br />
-				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.
+				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.<br />
+				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
 		)
 	},
@@ -61,7 +61,7 @@ const faqs = [
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />
-				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are member of.
+				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are member of. Operators are not set as the instance-level.
 			</span>
 		)
 	},
@@ -144,7 +144,7 @@ const faqs = [
 				only executes one job at a time, by design to use the full resource of the worker. Workers come in different sizes based on memory: small (1GB), standard (2GB), and large (> 2GB). Each worker is extremely efficient to execute a job, and you can execute up to 26 million jobs per month per worker if each one lasts 100ms. However, it completely depends on the nature of the jobs, their number and duration.
 				<br />
 				<br />
-				As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. The compute units are calculated based on the memory limits set in docker-compose or Kubernetes. For example, a standard worker with 2GB memory counts as 1 compute unit, while a large worker with >2GB memory counts as 2 compute units. Any worker with memory above 2GB still counts as 2 compute units. Small workers are counted as 0.5 compute unit.
+				As a note, keep in mind that the number of compute units considered is the number of production compute units of your workers, not of development staging, if you have separate instances. The compute units are calculated based on the memory limits set in docker-compose or Kubernetes. For example, a standard worker with 2GB memory counts as 1 compute unit, while a large worker with >2GB memory counts as 2 compute units. On self-hosted plans, any worker with memory above 2GB still counts as 2 compute units (on cloud EE, it scales linearly with the memory limit). Small workers are counted as 0.5 compute unit.
 				<br />
 				<br />
 				You can optimize your compute unit usage with{' '}
@@ -193,7 +193,7 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. Any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
+				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. On self-hosted plans, any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). On cloud EE, it scales linearly with the memory limit. The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}
@@ -227,6 +227,15 @@ const faqs = [
 				<br />
 				<br />
 				Our compute pricing should be linear to the compute cost from your cloud provider.
+			</span>
+		)
+	},
+	{
+		id: 'payment',
+		question: 'How is payment done?',
+		answer: (
+			<span>
+				Payment is processed through Stripe and can be made using ACH, bank transfer, Cash App Pay, or credit or debit card. Subscriptions can be made by automatic debit or by invoice.
 			</span>
 		)
 	},
