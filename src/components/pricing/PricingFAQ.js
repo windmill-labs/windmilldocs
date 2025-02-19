@@ -61,7 +61,7 @@ const faqs = [
 				is enforced by both a simplified frontend and a restricted API.
 				<br />
 				<br />
-				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are member of. Operators are not set as the instance-level.
+				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are members of. Operators are not set as the instance-level.
 			</span>
 		)
 	},
@@ -119,7 +119,7 @@ const faqs = [
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					worker
-				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. Any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
+				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. On self-hosted plans, any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
 			</span>
 		)
 	},
