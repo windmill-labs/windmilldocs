@@ -55,6 +55,21 @@ export default function BlogLayout(props) {
 									<h3 className="text-lg font-semibold mt-6">Watch latest Windmill weekly keynotes</h3>
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
 										<li>
+											<a href="https://youtube.com/live/6O9EGnvt8GA" target="_blank" rel="noopener noreferrer">
+												February 21, 2025
+											</a>
+										</li>
+										<li>
+											<a href="https://youtube.com/live/e1hVuaS2ruY" target="_blank" rel="noopener noreferrer">
+												February 14, 2025
+											</a>
+										</li>
+										<li>
+											<a href="https://youtube.com/live/0a06icylQsk" target="_blank" rel="noopener noreferrer">
+												January 24, 2025
+											</a>
+										</li>
+										<li>
 											<a href="https://youtube.com/live/8tOpodhrg68" target="_blank" rel="noopener noreferrer">
 												January 17, 2025
 											</a>
