@@ -46,7 +46,7 @@ CMD ["windmill"]
 ```dockerfile
 FROM ghcr.io/windmill-labs/windmill-ee:main
 
-RUN pip install playwright
+RUN uv tool install playwright
 RUN playwright install
 RUN playwright install-deps
 
@@ -126,8 +126,7 @@ The execution of Init scripts is inspectable in the superadmin workspace, with `
 ### Example: Installing Playwright (via pip)
 
 ```bash
-pip install playwright
-export PATH=$PATH:/tmp/.local/bin
+uv tool install playwright
 playwright install
 playwright install-deps
 ```
