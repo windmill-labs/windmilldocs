@@ -223,6 +223,20 @@ const clientTestimonials = [
 	},
 	{
 		author: {
+			name: 'Yonathan Adest',
+			company: 'Investing.com',
+			position: 'Chief Technology Officer',
+			dark: '/images/brands/Investing-Dark.svg',
+			light: '/images/brands/Investing-Light.svg',
+			anchor: 'investing',
+			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQHh9uu2s-Aviw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1680507511387?e=1746057600&v=beta&t=uncSMmdMz0sB6nWEiWoIF7jc2CaFHiVCVjJmUG6d4kw'
+		},
+		company_url: 'https://www.investing.com',
+		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
+		text: `At Investing.com, we use Windmill to orchestrate our AI and content generation workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content translation pipelines, automated stock analysis report generation, and ETL processes. The excellent support response time (15-30 minutes) and comprehensive logging capabilities make it an integral part of our infrastructure.`
+	},
+	{
+		author: {
 			name: 'Romaric Philogène',
 			company: 'Qovery',
 			position: 'Co-Founder & CEO',
