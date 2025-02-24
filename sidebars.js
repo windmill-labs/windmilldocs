@@ -914,8 +914,8 @@ const sidebars = {
 				'misc/windows_workers/index',
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
-				'misc/partners/index',
-				'misc/full_text_search/index'
+				'misc/full_text_search/index',
+				'misc/partners/index'
 			]
 		}
 	]
