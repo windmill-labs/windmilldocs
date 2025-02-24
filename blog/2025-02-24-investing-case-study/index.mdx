@@ -1,0 +1,59 @@
+---
+slug: investing-case-study
+authors: [yonathanadest]
+tags:
+  [
+    'Case Study',
+    'Testimonial',
+    'Fintech',
+    'Investing',
+  ]
+image: ./blog_split_investing.png
+description: This is a testimonial from Yonathan Adest, CTO at Investing.com, about how Windmill has helped them to automate their workflows and improve their data processing capabilities.
+---
+
+# Windmill for AI & Content Generation - Investing.com Case Study
+
+> "The most appreciatable thing about Windmill is the feedback and support. The UI is great, it was just easy to start and the functionality was really acceptable. Overall experience is great - it's evolving really fast." - Denis Cherepanov
+
+<br/>
+
+This testimonial is based on conversations with Yonathan Adest, (CTO at Investing.com) and Denis Cherepanov & Alex Avaneysan from the AI squad at Investing.com.
+
+![Windmill Investing.com](./blog_split_investing.png)
+
+## What before Windmill?
+
+[Investing.com](https://www.investing.com/) is one of the top financial markets platforms worldwide, providing real-time data, quotes, charts, financial tools, and news services. Our AI squad needed a workflow orchestrator to consolidate our various automation processes in one place.
+
+While evaluating different tools like [Airflow](https://airflow.apache.org/), our primary focus was on speed of implementation, as we needed a solution we could deploy quickly. We found that Airflow would have required significant setup time for our workflows, whereas Windmill offered us an intuitive UI and rapid setup through [Docker Compose](/docs/advanced/self_host#docker). The ability to easily port our existing code and the self-explanatory interface made Windmill the obvious choice for our team.
+
+## How we use Windmill
+
+Our AI team leverages Windmill for various automation workflows:
+
+### Content Translation Pipeline
+
+One of our core workflows manages article translations. When our translators submit content via webhooks, our system processes the original text through a sophisticated algorithm that determines target languages and publishing rules. We orchestrate the entire pipeline—from receiving content to publishing translations—through Windmill.
+
+### Automated Stock Analysis
+
+We recently launched a project generating comprehensive PDF reports for individual stocks. These reports include extensive data analysis and trading recommendations. Our workflow pulls data from multiple sources, processes it through our AI models, and generates detailed reports—all orchestrated within Windmill.
+
+### ETL & Data Processing
+
+We heavily rely on Windmill for our [ETL](/docs/core_concepts/data_pipelines) workflows—extracting data from websites, transforming it (often using our AI models for tasks like summarization), and loading results into our PostgreSQL database. All processing happens within Windmill, which serves as our central hub for data operations.
+
+## Why we chose Windmill
+
+Several key factors made Windmill the right choice for our team:
+
+- **Quick setup**: The intuitive UI and Docker Compose setup enabled us to get started immediately.
+- **Excellent support**: We consistently receive responses within 15-30 minutes for technical questions.
+- **Comprehensive logging**: Built-in logging capabilities make our debugging and monitoring straightforward.
+- **Evolving features**: Regular updates that address our needs, like improved parallelism handling.
+- **API integration**: The ability to expose workflows as APIs gives us additional flexibility.
+
+We've been particularly impressed with how Windmill has evolved to address early challenges. For example, initial workarounds we needed for handling parallel processing of large datasets are no longer necessary thanks to recent updates.
+
+While we primarily use Windmill for automated workflows rather than its UI generation capabilities, it has become an integral part of our infrastructure, handling everything from periodic data crawling to complex AI-driven content generation.
