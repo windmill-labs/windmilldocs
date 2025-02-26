@@ -194,17 +194,19 @@ The AI assistant can generate CRON [schedules](../1_scheduling/index.mdx) from a
 
 ## Models
 
-Windmill AI supports natively:
-- OpenAI's [GPT-4o](https://platform.openai.com/docs/models/gpt-4o) and [GPT-4o-mini](https://platform.openai.com/docs/models/gpt-4o-mini)
-- Anthropic's [Claude 3.5 Sonnet](https://docs.anthropic.com/en/docs/models/claude-3-5-sonnet) and [Claude 3.5 Haiku](https://docs.anthropic.com/en/docs/models/claude-3-5-haiku)
+Windmill AI supports:
+- OpenAI's [models](https://platform.openai.com/docs/models) (o1 currently not supported)
+- Anthropic's [models](https://docs.anthropic.com/en/docs/about-claude/models/all-models) (including Claude 3.7 Sonnet in extended thinking mode)
 - Mistral's [Codestral](https://mistral.ai/technology/#models)
-- DeepSeek's [Chat](https://deepseek.ai/models) and [Reasoner](https://deepseek.ai/models)
-- Google's [Gemini 1.5 Pro](https://ai.google.dev/models/gemini), [Gemini 2.0 Flash](https://ai.google.dev/models/gemini), and [Gemini 1.5 Flash](https://ai.google.dev/models/gemini)
-- Groq's [Llama 3.3 70B Versatile](https://groq.com/models) and [Llama 3.1 8B Instant](https://groq.com/models)
-- OpenRouter's [Meta Llama 3.2 3B Instruct](https://openrouter.ai/models)
+- DeepSeek's [models](https://api-docs.deepseek.com/quick_start/pricing)
+- Google's [Gemini models](https://ai.google.dev/models/gemini)
+- Groq's [models](https://console.groq.com/docs/models)
+- OpenRouter's [models](https://openrouter.ai/models)
+
+If you'd like to use a model that isn't in the default dropdown list, you can use any model supported by a provider (like `gpt-4o-2024-05-13` or `claude-3-7-sonnet-20250219`) by simply typing the model name in the model input field and pressing enter.
 
 ### Custom models
 
-Additionnaly, you can run all Windmill AI features on a custom AI provider that is OpenAI API compatible.
+Enterprise customers can run all Windmill AI features on any custom AI provider that is OpenAI API-compatible using the `Custom AI` tab.
 
-You need to specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
+For Azure OpenAI models, you should use the OpenAI provider and specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
