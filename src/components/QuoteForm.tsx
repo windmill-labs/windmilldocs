@@ -29,6 +29,19 @@ const DetailRow = ({ label, value, isSubItem, calculation, className = '' }: Det
 	</div>
 );
 
+type Workers = {
+	native: number;
+} & (
+	| {
+		workerGroups: Array<{ workers: number; memoryGB: number }>;  // For cloud
+	}
+	| {
+		small: number;
+		standard: number;
+		large: number;  // For self-hosted
+	}
+);
+
 export function QuoteForm({
 	workers,
 	developers,
@@ -40,12 +53,7 @@ export function QuoteForm({
 	setOpen,
 	selectedOption
 }: {
-	workers: {
-		native: number;
-		small: number;
-		standard: number;
-		large: number;
-	};
+	workers: Workers;
 	developers: number;
 	operators: number;
 	frequency: string;
@@ -53,6 +61,7 @@ export function QuoteForm({
 	open: boolean;
 	setOpen: (open: boolean) => void;
 	selectedOption: string;
+	total_price: number;
 }) {
 	const [companyName, setCompanyName] = useState('');
 	const [email, setEmail] = useState('');
@@ -91,7 +100,13 @@ export function QuoteForm({
 			}
 
 			// Calculate total compute units with minimum of 2
-			const computeUnits = Math.max(2, Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large));
+			const computeUnits = plan === 'cloud_ee'
+				? Math.max(2, (workers as { workerGroups: Array<{ workers: number; memoryGB: number }> })
+					.workerGroups.reduce((sum, group) => sum + (group.memoryGB/2 * group.workers), 0) + workers.native)
+				: Math.max(2, Math.ceil((workers as { small: number }).small / 2) + 
+					(workers as { standard: number }).standard + 
+					workers.native + 
+					(2 * (workers as { large: number }).large));
 
 			const seats = developers + Math.ceil(operators / 2);
 
@@ -137,8 +152,16 @@ export function QuoteForm({
 		}
 	}
 
-	// Add this calculation before the return statement
-	const rawComputeUnits = Math.ceil(workers.small / 2) + workers.standard + workers.native + (2 * workers.large);
+	// Update this calculation before the return statement
+	const rawComputeUnits = plan === 'cloud_ee'
+		? (workers as { workerGroups: Array<{ workers: number; memoryGB: number }> }).workerGroups.reduce(
+			(sum, group) => sum + (group.memoryGB/2 * group.workers), 0
+		  ) + workers.native
+		: Math.ceil((workers as { small: number; standard: number; large: number }).small / 2) + 
+		  (workers as { small: number; standard: number; large: number }).standard + 
+		  workers.native + 
+		  (2 * (workers as { small: number; standard: number; large: number }).large);
+
 	const computeUnits = Math.max(2, rawComputeUnits);
 	const isSmbWithTooManyUnits = selectedOption === 'SMB' && computeUnits > 10;
 
@@ -211,23 +234,53 @@ export function QuoteForm({
 						/>
 
 						{/* Worker type rows */}
-						{Object.entries({
-							'Standard workers': { count: workers.standard, multiplier: 1 },
-							'Small workers': { count: workers.small, multiplier: 0.5 },
-							'Large workers': { count: workers.large, multiplier: 2 },
-							'Native workers': { count: workers.native, multiplier: 1, displayMultiplier: 8 }
-						}).map(([label, { count, multiplier, displayMultiplier }]) => 
-							count > 0 && (
-								<DetailRow 
-									key={label}
-									label={label}
-									isSubItem
-									calculation={{
-										left: label === 'Native workers' ? count * (displayMultiplier || 1) : count,
-										right: `${Math.ceil(count * multiplier)} CU`
-									}}
-								/>
+						{plan === 'cloud_ee' ? (
+							// For cloud, show workers with their memory sizes
+							(workers as { workerGroups: Array<{ workers: number; memoryGB: number }> }).workerGroups.map((group, index) => 
+								group.workers > 0 && (
+									<DetailRow 
+										key={index}
+										label={`${group.memoryGB}GB workers`}
+										isSubItem
+										calculation={{
+											left: group.workers,
+											right: `${(group.memoryGB/2 * group.workers)} CU`
+										}}
+									/>
+								)
 							)
+						) : (
+							// For self-hosted, show the original breakdown
+							Object.entries({
+								'Standard workers': { count: (workers as { standard: number }).standard, multiplier: 1 },
+								'Small workers': { count: (workers as { small: number }).small, multiplier: 0.5 },
+								'Large workers': { count: (workers as { large: number }).large, multiplier: 2 }
+							}).map(([label, { count, multiplier }]) => 
+								count > 0 && (
+									<DetailRow 
+										key={label}
+										label={label}
+										isSubItem
+										calculation={{
+											left: count,
+											right: `${Math.ceil(count * multiplier)} CU`
+										}}
+									/>
+								)
+							)
+						)}
+
+						{/* Show native workers for both plans */}
+						{workers.native > 0 && (
+							<DetailRow 
+								key="Native workers"
+								label="Native workers"
+								isSubItem
+								calculation={{
+									left: workers.native * 8,
+									right: `${workers.native} CU`
+								}}
+							/>
 						)}
 
 						{plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'SMB') && (

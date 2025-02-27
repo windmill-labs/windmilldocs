@@ -16,7 +16,9 @@ Recap of how are permissioned items (scripts, flows, apps, resources, variables,
 
 ## Users
 
-Users are uniquely identified globally by their email. They also have a unique username with respect to each workspace they are member of.
+Users are uniquely identified globally by their email. They also have a unique username with respect to each workspace they are members of.
+
+In terms of billing for Windmill [Enterprise Edition](/pricing), we only count active users, i.e. users who have at least logged in to the platform in the last 30 days according to the audit logs. [Operators](#operator) (i.e. users who are Operators in all workspaces they are members of) are counted as half of a regular seat. Logging in once in 30 days is enough to be considered 'Active'.
 
 ## Workspace
 
@@ -65,7 +67,19 @@ Operators have limited access within a workspace. They can only execute and view
 The recommended way to share scripts and flows with operators is through [auto-generated apps](../6_auto_generated_uis/index.mdx).
 With the second option being of sharing the script and [variables](../2_variables_and_secrets/index.mdx) it depends on (but operators won't be able to load variable directly from the UI/API, only use them within the scripts they have access to).
 
-Regarding to [Pricing](/pricing), operators are counted as half of a regular seat ([developers](#developer)) as long as they are operators in all workspaces they are member of.
+From the workspace settings, you can configure the operator visibility settings for your workspace. In particular, you can allow/disallow operators to view:
+
+- [Runs](../5_monitor_past_and_future_runs/index.mdx)
+- [Schedules](../1_scheduling/index.mdx)
+- [Resources](../3_resources_and_types/index.mdx)
+- [Variables](../2_variables_and_secrets/index.mdx)
+- [Triggers](../../getting_started/8_triggers/index.mdx)
+- [Audit logs](../14_audit_logs/index.mdx)
+- [Groups](../8_groups_and_folders/index.mdx#groups)
+- [Folders](../8_groups_and_folders/index.mdx#folders)
+- [Workers](../9_worker_groups/index.mdx)
+
+Regarding to [Pricing](/pricing), operators are counted as half of a regular seat ([developers](#developer)) as long as they are operators in all workspaces they are members of. Operators are not set as the instance-level.
 
 ### Anonymous app viewers
 

@@ -242,7 +242,7 @@ def main(...):
 
 ### Private PyPI repository
 
-Environment variables can be set to customize `pip`'s index-url and extra-index-url and certificate.
+Environment variables can be set to customize `uv`'s index-url and extra-index-url and certificate.
 This is useful for private repositories.
 
 In a docker-compose file, you would add following lines:
@@ -252,9 +252,15 @@ windmill_worker:
   ...
   environment:
     ...
-    - PIP_TRUSTED_HOST=pypi.org
-    - PIP_INDEX_CERT=/custom-certs/root-ca.crt
+    # Completely whitelist pypi.org
+    - PY_TRUSTED_HOST=pypi.org
+    # or specificy path to custom certificate 
+    - PY_INDEX_CERT=/custom-certs/root-ca.crt
 ```
+:::note
+UV is not using system certificates by default, if you wish to use them, set `PY_NATIVE_CERT=true`
+:::
+
 
 "Pip index url" and "Pip extra index url" are filled through Windmill UI, in [Instance settings](../18_instance_settings/index.mdx#registries) under [Enterprise Edition](/pricing).
 
