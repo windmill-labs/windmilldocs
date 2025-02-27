@@ -244,6 +244,18 @@ Windmill can connect to WebSocket servers and trigger runnables (scripts, flows)
 	/>
 </div>
 
+### Postgres
+
+Windmill can connect to a [Postgres](https://www.postgresql.org/) database and trigger runnables (scripts, flows) in response to database transactions (INSERT, UPDATE, DELETE) on specified tables, schemas, or the entire database.  
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Postgres triggers"
+		description="Trigger scripts and flows from postgres database servers."
+		href="/docs/core_concepts/postgres_triggers"
+	/>
+</div>
+
 ### Kafka
 
 Windmill can connect to Kafka brokers and trigger scripts or flows when messages are received on specific topics. This enables real-time processing of events from your Kafka ecosystem.
@@ -265,6 +277,18 @@ Windmill can connect to NATS brokers and trigger scripts or flows when messages 
 		title="NATS triggers"
 		description="Trigger scripts and flows from NATS messages."
 		href="/docs/core_concepts/nats_triggers"
+	/>
+</div>
+
+### SQS triggers
+
+Windmill can connect to Amazon SQS queues and trigger scripts or flows when messages are received. This enables event-driven processing from your AWS ecosystem. Preprocessors can transform the SQS message data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="SQS triggers"
+		description="Trigger scripts and flows from Amazon SQS messages."
+		href="/docs/core_concepts/sqs_triggers"
 	/>
 </div>
 
