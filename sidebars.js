@@ -80,11 +80,6 @@ const sidebars = {
 									id: 'getting_started/scripts_quickstart/csharp_quickstart/index',
 									label: 'C#'
 								},
-								{
-									type: 'doc',
-									id: 'getting_started/scripts_quickstart/nu_quickstart/index',
-									label: 'Nu'
-								}
 							]
 						},
 						{
