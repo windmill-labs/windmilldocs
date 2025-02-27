@@ -68,7 +68,7 @@ const tabs = [
 			{
 				title: 'Run any script and flow',
 				description:
-					'Run any script or flow from the app editor. In Python, Go, PHP, Bash, SQL or TypeScript.',
+					'Run any script or flow from the app editor. In Python, Go, PHP, Bash, C#, SQL or TypeScript.',
 				icon: Code2,
 				caption: (
 					<div>

@@ -1,0 +1,223 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Microsoft Teams integration
+
+[Microsoft Teams](https://teams.microsoft.com/) is a collaboration platform that integrates with Office 365.
+
+There are two ways to build interactions between Microsoft Teams and Windmill: run code on Windmill by a Microsoft Teams command or use the
+Microsoft Teams API directly from Windmill. In this guide, we'll cover both approaches.
+
+## Action on Windmill from MicrosoftTeams
+
+The goal here is to be able to invoke a Windmill Script from Microsoft Teams, by using
+`/windmill` command.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/teams_handler.mp4"
+/>
+
+<br />
+
+First, you need to be a **workspace admin**. Then you
+should go to
+
+<a href="https://app.windmill.dev/workspace_settings" rel="nofollow">
+	Workspace Settings Page
+</a>
+and select the "Slack / Teams" tab. On there, click "Connect to Microsoft Teams".
+
+:::info Self-hosted
+
+The Microsoft Teams integration is done through OAuth. On [self-hosted instances](../advanced/1_self_host/index.mdx), integrating an OAuth API will require [Setup OAuth and SSO](../misc/2_setup_oauth/index.mdx).
+
+:::
+
+Note that you can connect multiple Windmill workspaces to the same Teams bot. Only one Windmill workspace can accept the `/windmill` [commands](#using-commands-on-teams) from a given Teams "Team".
+
+### Using commands on Teams
+
+Once you connected your workspace to a Teams Team, you can either select an existing script or flow to handle the `/windmill` command, or create a new one by clicking the "Create a script to handle teams command" button.
+
+You will be navigated to the Script editor. Give your script a name
+(e.g. `teams_command_handler`), a short summary (e.g. "Teams command handler"). You'll get to [this](https://hub.windmill.dev/scripts/teams/11409/example-of-responding-to-a-microsoft-teams-command-teams) template:
+
+```typescript
+import * as wmill from "windmill-client"
+
+export async function main(
+  activity_id: string,
+  command: string,
+  from_name: string,
+  team_id: string,
+  teams_message: any
+) {
+  // Your business logic
+  const res = "task completed successfully!"
+
+  // (optional) Send update to Teams channel about completion of job
+  await wmill.TeamsService.sendMessageToConversation(
+    {
+      requestBody: {
+        conversation_id: activity_id,
+        success: true,
+        text: `Hi, ${from_name}, command: ${command} ran successfully with the following result: ${res}`
+      }
+    }
+  )
+}
+```
+
+After the Script is deployed, navigate back to the
+
+<a href="https://app.windmill.dev/workspace_settings?tab=slack" rel="nofollow">
+	Teams settings
+</a>
+Choose the "Script" option for adding a command handler and select your newly created Script.
+
+![Connected settings](../assets/integrations/teams-connected.png.webp)
+
+Congratulations! You've just created a Teams command handler. Now you can use
+the `/windmill` command in your Teams workspace to trigger the Script. 
+
+In addition to activity_id, the script/flow can use the following parameters, simply by having them as inputs with the proper name:
+
+```
+# the ID of the activity in the Teams conversation
+activity_id 
+
+# the command that was triggered
+command 
+
+# the name of the user who triggered the command
+from_name 
+
+# Microsoft Teams Team ID
+team_id 
+
+# the original payload from the Teams backend
+teams_message 
+```
+
+![Use the Windmill command](../assets/integrations/teams-command.png.webp)
+
+You won't be able to have Teams interact with your [resources](../core_concepts/3_resources_and_types/index.mdx) and [variables](../core_concepts/2_variables_and_secrets/index.mdx) before adding them to the `teams` [group](../core_concepts/8_groups_and_folders/index.mdx#groups) that was automatically created by Windmill after you set up your Teams workspace on Windmill.
+
+<details>
+  <summary>How to let Teams use your resources and variables:</summary>
+
+To give the permission, go to "Resources" (and "Variables") menu, click on `Share`, `Group` and pick `teams`.
+
+<br />
+
+![Share to teams group](../assets/integrations/teams-teams_group.png.webp)
+
+<br />
+
+One simplier way to handle permissions is to host resources and variables on a [folder](../core_concepts/8_groups_and_folders/index.mdx#folders) that is part of the [group](../core_concepts/8_groups_and_folders/index.mdx#groups) `teams`.
+
+<br />
+
+![Share variable to folder](../assets/integrations/teams-variable_to_folder.png.webp)
+
+<br />
+
+![Share folder to group](../assets/integrations/teams-folder_to_group.png.webp)
+
+</details>
+
+### Handle multiple commands
+
+You can extend your workspace script to handle complex commands coming from Teams messages. [This article](/blog/handler-slack-commands) shows how to manage multiple commands & human-in-the-loop steps for a slackbot using [branches](../flows/13_flow_branches.md), a text parser and [approval steps](../flows/11_flow_approval.mdx) and can be easily adapted to Teams.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Tutotial - Handler of multiple Slack commands"
+		description="Create a flow with a parser & branches that will handle multiple Slack commands."
+		href="/blog/handler-slack-commands#control-the-slackbot-by-getting-username"
+	/>
+</div>
+
+### Monitor who ran the command
+
+You can see who ran the `/windmill` command by going to the
+
+<a href="https://app.windmill.dev/runs" rel="nofollow">
+	Runs page
+</a>
+on Windmill. The runs will be permissioned through the `g/teams` global group.
+
+![Run info](../assets/integrations/teams-permissions.png.webp)
+
+One of the parameters passed to the script is the "from_name" parameter, which is the name of the user who triggered the command. To process further teams specific details from the command, you can use the "teams_message" parameter.
+
+```javascript
+## Example of teams_message payload
+{
+  "id": "1739549535827",
+  "from": {
+    "id": "29:152-adq1512TRGdQmxTqdgnfTA",
+    "name": "Alexander Petric"
+  },
+  "text": "<at>WindmillHelperBot</at>. /windmill echo Hello World!",
+  "type": "message",
+  "locale": "en-US",
+  "entities": [
+    {
+      "text": "<at>WindmillHelperBot</at>",
+      "type": "mention",
+      "mentioned": {
+        "id": "28:0eba9472-83d1-429e-ba2c-1c2993dda84d",
+        "name": "WindmillHelperBot"
+      }
+    },
+    {
+      "type": "clientInfo",
+      "locale": "en-US",
+      "country": "US",
+      "platform": "Mac",
+      "timezone": "America/New_York"
+    }
+  ],
+  "recipient": {
+    "id": "28:0eba9472-83d1-429e-ba2c-1c2993dda84d",
+    "name": "WindmillHelperBot"
+  },
+  "timestamp": "2025-02-14T16:12:15.857639Z",
+  "serviceUrl": "https://smba.trafficmanager.net/amer/508f04d5-b0de-4661-b035-b90bb6911ce7/",
+  "attachments": [
+    {
+      "content": "<p><span itemtype=\"http://schema.skype.com/Mention\" itemscope=\"\" itemid=\"0\">WindmillHelperBot</span>. /windmill echo Hello World!</p>"
+    }
+  ],
+  "channelData": {
+    "team": {
+      "id": "19:4SkiS4RJt1gOqqwRUeYdKJvB0XoklVFX4bL9-mhPLbs1@thread.tacv2"
+    },
+    "tenant": {
+      "id": "508f04d5-b0de-4661-b035-b90bb6911ce7"
+    },
+    "channel": {
+      "id": "19:4SkiS4RJt1gOqqwRUeXdKJvB0XoklVFX4bL9-mhPLbs1@thread.tacv2"
+    },
+    "teamsTeamId": "19:4SkiS4RJt1gOqqwRUeXdKJvB0XoklVFX4bL9-mhPLbs1@thread.tacv2"
+  },
+  "conversation": {
+    "id": "19:4SkiS4RJt1gOqqwRUeXdKJvB0XoklVFX4bL9-mhPLbs1@thread.tacv2;messageid=1737565847488"
+  }
+}
+
+```
+
+### Error handlers
+
+Microsoft Teams is an efficient way to be notified of errors on a Windmill run, whole workspace or instance. Windmill provides an integration for error / success / recovery handling on Microsoft Teams.
+
+More details on [Error handling](../core_concepts/10_error_handling/index.mdx) page.
+
+<!-- Links -->
+
+[hub-teams]: https://hub.windmill.dev/integrations/teams
+[hub-script]: https://hub.windmill.dev/scripts/teams/11409/example-of-responding-to-a-microsoft-teams-command-teams
+[docs-resource]: /docs/core_concepts/resources_and_types

@@ -46,7 +46,7 @@ CMD ["windmill"]
 ```dockerfile
 FROM ghcr.io/windmill-labs/windmill-ee:main
 
-RUN pip install playwright
+RUN uv tool install playwright
 RUN playwright install
 RUN playwright install-deps
 
@@ -123,11 +123,19 @@ The execution of Init scripts is inspectable in the superadmin workspace, with `
 
 <br />
 
-### Example: Installing Playwright (via pip)
+:::info
+Windmill does not pre-install pip or python directly in the base image as system binaries, instead it uses uv and uv manages the python versions (including pre-installing one for performance).
+
+To pre-install packages using pip, you will want to use uv, in particular the [uv tool install](https://docs.astral.sh/uv/concepts/tools/#tools-directory) command. The bin path of uv tool is already in the PATH of the worker, so your jobs will be able to run directly binaries installed in such way.
+
+To have packages be available for import, place them in `/tmp/windmill/cache/python_xyz/global-site-packages` where xyz is the python version intended. For python 3.11, the path would be `/tmp/windmill/cache/python_311/global-site-packages`.
+
+:::
+
+### Example: Installing Playwright (via uv)
 
 ```bash
-pip install playwright
-export PATH=$PATH:/tmp/.local/bin
+uv tool install playwright
 playwright install
 playwright install-deps
 ```

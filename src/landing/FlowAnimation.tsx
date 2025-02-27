@@ -349,7 +349,7 @@ export async function main(
 			top: 360,
 			left: 300,
 			// Explain thaht the flow is stored as a YAML file, that you can sync with git
-			text: 'Your flow is stored as a YAML file that you can sync with git. Scripts are stored seperatly.',
+			text: 'Your flow is stored as a YAML file that you can sync with git. Scripts are stored seperately.',
 			displayArrow: false
 		},
 		variant5: {

@@ -150,6 +150,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/nats_triggers/index',
 							label: 'NATS'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/sqs_triggers/index',
+							label: 'SQS'
 						}
 					]
 				},
@@ -431,6 +436,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/microsoft-azure-blob',
 							label: 'Microsoft Azure Blob'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/teams',
+							label: 'Microsoft Teams'
 						},
 						{
 							type: 'doc',
@@ -904,8 +914,8 @@ const sidebars = {
 				'misc/windows_workers/index',
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
-				'misc/partners/index',
-				'misc/full_text_search/index'
+				'misc/full_text_search/index',
+				'misc/partners/index'
 			]
 		}
 	]

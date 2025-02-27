@@ -1,6 +1,6 @@
 # Custom HTTP routes
 
-Windmill supports custom HTTP routes to trigger a script or flow. 
+Windmill supports custom HTTP routes to trigger runnables or serve static assets and websites.
 They can only be created by [admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace). 
 All properties of the route apart from the http path can be modified by any user with write access to the route.
 
@@ -17,13 +17,15 @@ The full http route takes the following form:
 - Self-hosted Windmill: `{base_url}/api/r/{path}`
 - Windmill cloud: `https://app.windmill.dev/api/r/{workspace_id}/{path}`
 
+### Triggering a runnable
+
 Select the runnable that should be triggered by this route. To quickly get started, you can use the `create from template` button to generate a runnable template.
 
 Here's an example script:
 
 ```TypeScript
 export async function main(/* args from the request body */) {
-    // your code here
+  // your code here
 }
 ```
 
@@ -64,3 +66,13 @@ export async function main(user_id: string, name: string, age: number) {
 The route also supports additional configuration options:
 - **Request type**: Whether the route should return the id (async) or the result (sync) of the runnable.
 - **Authentication**: Whether the route should require authentication. If authentication is required, the user needs to have read access to both the route and the runnable.
+
+### Serving static assets and websites
+
+For static assets, upload or specify a file using the S3 picker. The file will be served at the chosen path.
+
+For websites, upload or specify a folder on S3. All its files will be served under the chosen path. 
+Use the full path as the base URL of your website to ensure relative imports work correctly.
+If no file is found at the requested subpath, Windmill will fallback to index.html.
+
+
