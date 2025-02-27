@@ -155,6 +155,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/sqs_triggers/index',
 							label: 'SQS'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/mqtt_triggers/index',
+							label: 'MQTT'
 						}
 					]
 				},
