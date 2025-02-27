@@ -13,7 +13,7 @@
         };
       in {
         devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ nodejs ];
+          buildInputs = with pkgs; [ nodejs git ];
           shellHook = ''
             echo ""
             echo "1. wm-setup"
