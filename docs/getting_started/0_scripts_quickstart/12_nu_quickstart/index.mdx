@@ -1,25 +1,15 @@
 ---
-title: TypeScript quickstart
-slug: '/getting_started/scripts_quickstart/bash'
+title: 'Nu quickstart'
+slug: '/getting_started/scripts_quickstart/nu'
 ---
 
 import DocCard from '@site/src/components/DocCard';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
-# Bash / PowerShell / Nu quickstart
+# Nu quickstart
 
-In this quick start guide, we will write our first script in Bash, PowerShell or Nu.
+In this quick start guide, we will write our first script in [Nu](https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/overview).
 
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	controls
-	id="main-video"
-	src="/videos/bash_quickstart.mp4"
-/>
-
-<br />
+![Editor for Nu](./editor_csharp.png "Script in Nu")
 
 This tutorial covers how to create a simple script through Windmill web IDE. See the dedicated page to [develop scripts locally](../../../advanced/4_local_development/index.mdx).
 
@@ -48,72 +38,18 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 
 Scripts consist of 2 parts:
 
-- [Code](#code).
+- [Code](#code): for C# scripts, it must have at least a **public** static Main method inside a class (the name of the class is irrelevant).
 - [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
-When stored in a code repository, those 2 parts are stored separately at `<path>.sh` and `<path>.script.yaml`.
+When stored in a code repository, these 2 parts are stored separately at `<path>.rs` and `<path>.script.yaml`
 
-Below is a simple example of a script built in Bash/Powershell/Nu with Windmill:
+Windmill automatically manages [dependencies](../../../advanced/6_imports/index.mdx) for you. When you import libraries in your C# script, Windmill parses these imports upon saving the script and automatically generates a list of dependencies. It then spawns a dependency job to associate these PyPI packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
 
-<Tabs className="unique-tabs">
-<TabItem value="bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```bash
-# shellcheck shell=bash
-# arguments of the form X="$I" are parsed as parameters X of type string
-url="${1:-default value}"
-
-status_code=$(curl -s -o /dev/null -w "%{http_code}" $url)
-
-if [[ $status_code == 2* ]] || [[ $status_code == 3* ]]; then
-  echo "The URL is reachable!"
-else
-  echo "The URL is not reachable."
-fi
-```
-
-</TabItem>
-<TabItem value="powershell" label="PowerShell" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```powershell
-param($url = "default value")
-
-$status_code = (Invoke-WebRequest -Uri $url -Method Get).StatusCode
-
-if ($status_code -like "2*" -or $status_code -like "3*") {
-    Write-Host "The URL is reachable!"
-} else {
-    Write-Host "The URL is not reachable."
-}
-```
-</TabItem>
-<TabItem value="nu" label="Nu" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-def main [
-  url: string = "default value"
-] {
-  try {
-    # Nu will throw an error automatically if request fails
-    http get $url
-    echo "The URL is reachable!"
-  } catch {
-    echo "The URL is not reachable."
-  }
-}
-```
-
-</TabItem>
-</Tabs>
-
-In this quick start guide, we'll create a script that greets the operator running it.
-
-From the Home page, click `+Script`. This will take you to the
-first step of script creation: Metadata.
+From the Home page, click `+Script`. This will take you to the first step of script creation: Metadata.
 
 ## Settings
 
-![New script](../../../../static/images/script_languages.png "New script")
+![New script](./select_csharp.png "New script")
 
 As part of the [settings](../../../script_editor/settings.mdx) menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
@@ -147,7 +83,7 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for Bash](./editor_bash.png.webp)
+![Editor for C#](./editor_csharp.png "Editor for C#")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -162,119 +98,90 @@ Script. You can preview that UI, provide input values, and [test your script](#i
 	/>
 </div>
 
-### Bash
-
-As we picked `Bash` for this example, Windmill provided some Bash
+As we picked `C#` for this example, Windmill provided some
 boilerplate. Let's take a look:
 
-```bash
-# shellcheck shell=bash
-# arguments of the form X="$I" are parsed as parameters X of type string
-msg="$1"
-dflt="${2:-default value}"
+```cs
+#r "nuget: Humanizer, 2.14.1"
 
-# the last line of the stdout is the return value
-echo "Hello $msg"
-```
+using System;
+using System.Linq;
+using Humanizer;
 
-In Bash, the arguments are inferred from the arguments requiring a \$1, \$2, \$3. Default arguments can be specified using the syntax above: `dflt="${2:-default value}"`.
 
-The last line of the output, here `echo "Hello $msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
+class Script
+{
+    public static DateTime Main(string[] extraWords, string word = "clue", int highNumberThreshold = 50)
+    {
+        Console.WriteLine("Hello, World!");
 
-### PowerShell
+        Console.WriteLine("Your chosen words are pluralized here:");
 
-As we picked `PowerShell` for this example, Windmill provided some PowerShell
-boilerplate. Let's take a look:
+        string[] newWordArray = extraWords.Concat(new[] { word }).ToArray();
 
-```powershell
-param($Msg, $Dflt = "default value", [int]$Nb = 3)
+        foreach (var s in newWordArray)
+        {
+            Console.WriteLine($"  {s.Pluralize()}");
+        }
 
-# Import-Module MyModule
+        var random = new Random();
+        int randomNumber = random.Next(1, 101);
 
-# the last line of the stdout is the return value
-Write-Output "Hello $Msg"
-```
+        Console.WriteLine($"Random number: {randomNumber}");
 
-In PowerShell, the arguments are inferred from the param instruction. It has to be first in the script.
-Default arguments can be specified using the syntax above: `$argument_name = "Its default value"`.
+        string greeting = randomNumber > highNumberThreshold ? "High number!" : "Low number!";
+        greeting += " (according to the threshold parameter)";
+        Console.WriteLine(greeting);
+         // Humanize a timespan
+        var timespan = TimeSpan.FromMinutes(90);
+        Console.WriteLine($"Timespan: {timespan.Humanize()}");
 
-The last line of the output, here `Write-Output "Hello $Msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
+        // Humanize numbers into words
+        int number = 123;
+        Console.WriteLine($"Number: {number.ToWords()}");
 
-### Nu
+        // Pluralize words
+        string singular = "apple";
 
-Unlike `Bash` and `PowerShell`, `Nu` requires main function and all arguments should defined in signature.
-It supports typed, optional, default and nested arguments.
-
-<Tabs className="unique-tabs">
-<TabItem value="simple" label="Simple" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-def main [ msg, dflt = "default value", nb: number = 3 ] {
-	echo $"Hello ($msg)"
+        // Humanize date difference
+        var date = DateTime.UtcNow.AddDays(-3);
+        Console.WriteLine($"Date: {date.Humanize()}");
+        return date;
+    }
 }
 ```
-</TabItem>
-<TabItem value="complete" label="Complete" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
-```python
-use std assert
+In Windmill, scripts need to have a main function that will be the script's
+entrypoint. There are a few important things to note about the `Main`.
 
-# Flexible argument inputs
-def main [
-    no_default: string,
-    name = "Nicolas Bourbaki",
-    age: int = 42,
-    date_of_birth?: datetime,
-    obj: record = {records: "included"},
-    l: list<string> = ["or", "lists!"],
-    tables: table<a: string, b: string, c: number> = [
-      { a: "table",   b: "is just a", c: 100 },
-      { a: "list of", b: "records",   c: 999 }
-    ]
-    work_with_bytes?: binary,
-    enable_kill_mode?: bool = true,
-] {
-    # Testing
-    # https://www.nushell.sh/book/testing.html
-		assert ($age == 42)
+- The arguments are used for generating
+  1.  the [input spec](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of the Script
+  2.  the [frontend](../../../core_concepts/6_auto_generated_uis/index.mdx) that you see when running the Script as a standalone app.
+- Type annotations are used to generate the UI form, and help pre-validate
+  inputs. While not mandatory, they are highly recommended. You can customize
+  the UI in later steps (but not change the input type!).
 
-    print $"Hello World and a warm welcome especially to ($name)"
-    print "and its acolytes.." $age $obj $l
-    print $tables
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="JSON schema and parsing"
+		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
+		href="/docs/core_concepts/json_schema_and_parsing"
+	/>
+</div>
 
-    let secret = try { 
-			# Get windmill variables easily!
-      get_variable f/examples/secret
-    } catch { 
-      'No secret yet at f/examples/secret !' 
-    };
+Packages can be installed through NuGet. Just add the dependencies you need at the top of the file, using the following format:
 
-    print $"The variable at `f/examples/secret`: ($secret)"
-    # fetch context variables
-    let user = $env.WM_USERNAME
-
-    # Nu pipelines
-    ls | where size > 1kb | sort-by modified | print "ls:" $in
-
-    # Nu works with existing data
-    # Nu speaks JSON, YAML, SQLite, Excel, and more out of the box. 
-    # It's easy to bring data into a Nu pipeline whether it's in a file, a database, or a web API:
-    let nu_license = http get https://api.github.com/repos/nushell/nushell | get license
-
-    return { splitted: ($name | split words), user: $user, nu_license: $nu_license}
-}
-
+```cs
+#r "nuget: Humanizer, 2.14.1"
+#r "nuget: AutoMapper, 6.1.0"
 ```
 
-</TabItem>
-</Tabs>
-
-One of the strong sides of `Nu` is that it is cross-platform. If you have linux workers and [windows workers](../../../misc/17_windows_workers/index.mdx)
-Nushell scripts will be able to run on both!
-
-If you are interested in `Nu` you can read their [official documentation](https://www.nushell.sh/book/getting_started.html)
+::: warn
+Note that only the lines at the very top will be taken into account.
+:::
 
 ## Instant preview & testing
+
 
 Look at the UI preview on the right: it was updated to match the input
 signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
@@ -285,53 +192,13 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 	src="/videos/auto_g_ui_landing.mp4"
 />
 
-<br />
-
-You can change how the UI behaves by changing the main signature. For example,
-if you add a default for the `name` argument, the UI won't consider this field
-as required anymore.
-
-<Tabs className="unique-tabs">
-<TabItem value="bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```bash
-argument_name="${1:-Its default value}"
-```
-
-</TabItem>
-<TabItem value="powershell" label="PowerShell" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```bash
-$argument_name = "Its default value"
-```
-
-</TabItem>
-<TabItem value="nu" label="Nu" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
-
-```python
-def main [ argument_name = "Its default value" ] { }
-```
-
-</TabItem>
-</Tabs>
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Instant preview & testing"
-		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
-		href="/docs/core_concepts/instant_preview"
-	/>
-</div>
-
-Now let's go to the last step: the "Generated UI" settings.
-
 ## Generated UI
 
 From the Settings menu, the "Generated UI" tab lets you customize the script's arguments.
 
 The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
 
-![Advanced settings for Bash](./customize_bash.png.webp)
+![Advanced settings for C#](./customize_csharp.png "Advanced settings for C#")
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -358,7 +225,7 @@ Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
 
-![Run Hello in Bash](./run_bash.png.webp)
+![Run in C#](./run_csharp.png "Run in C#")
 
 You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-line interface call.
 
@@ -370,25 +237,9 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 	/>
 </div>
 
-## JSON result
+## Caching
 
-The last line returned by the script will be the string result. To use a json result instead, output your result in `./result.json` and it will be automatically picked-up and considered as the JSON result for Bash and Powershell scripts.
-
-For Nu first returned data from main function will be used as a result.
-
-## Run Docker containers
-
-In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script.
-
-Windmill supports running any docker container through its Bash support. As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Run Docker containers"
-		description="In some cases where your task requires a complex set of dependencies or is implemented in a non-supported language, you can still include it as a flow step or individual script."
-		href="/docs/advanced/docker"
-	/>
-</div>
+Every binary on C# is cached on disk by default. Furthermore if you use the [Distributed cache storage](../../../misc/13_s3_cache/index.mdx), it will be available to every other worker, allowing fast startup for every worker.
 
 ## What's next?
 
