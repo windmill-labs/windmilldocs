@@ -1,0 +1,150 @@
+# MQTT triggers
+
+Windmill can connect to an **MQTT broker** and trigger runnables (scripts, flows) in response to messages published to specified topics.  
+MQTT triggers are not available on the [Cloud](/pricing).
+
+For more details on MQTT, see the [MQTT Protocol Documentation](https://mqtt.org/mqtt-specification/).
+
+---
+
+## How to use
+
+- **Pick an MQTT resource**  
+  - Select an existing MQTT resource or create a new one.  
+  - The resource must contain the broker hostname and port, while authentication credentials and certificates depend on the configuration of the broker.
+
+- **Select the runnable to execute**  
+  - Choose the runnable (script or flow) that should be executed when a message is published to the subscribed topic.  
+
+- **Choose the subscription topics**  
+  - Specify one or more topics you want to subscribe to, each with its own [QoS](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/) level. 
+  - MQTT topics are case-sensitive and follow a hierarchical structure (e.g., `home/sensor/temperature`).  
+  - For more information, see the [MQTT Topics Documentation](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/).
+
+- **Set the quality of service (QoS)**  
+  - Choose the desired **QoS (Quality of Service)** level for the subscription:  
+    - **0**: At most once (No guarantee of delivery)  
+    - **1**: At least once (Guaranteed delivery, may receive duplicates)  
+    - **2**: Exactly once (Guaranteed delivery without duplicates)  
+  - For more information, see the [MQTT QoS Documentation](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/).
+
+---
+
+## Example
+
+Below are code examples demonstrating how to handle MQTT messages in your Windmill scripts. You can either process messages directly in a basic script or use a preprocessor for more advanced message handling and transformation before execution.
+
+### Basic script example
+
+```TypeScript
+export async function main(payload: Array<number>) {
+  // Convert binary payload to string if needed
+  const textPayload = new TextDecoder().decode(new Uint8Array(payload));
+  
+  // Parse JSON if the payload is in JSON format
+  try {
+    const jsonData = JSON.parse(textPayload);
+    console.log("Received JSON data:", jsonData);
+    // Process JSON data
+  } catch (e) {
+    // Handle as plain text
+    console.log("Received text data:", textPayload);
+    // Process text data
+  }
+  
+  return { processed: true, message: "MQTT message processed successfully" };
+}
+```
+
+### Using a preprocessor
+
+If you use a [preprocessor](../43_preprocessors/index.mdx), the preprocessor function receives the message payload as byte array and an MQTT object with the following fields:
+
+#### Field descriptions
+
+- **`topic`**: The MQTT topic on which the message was received.  
+- **`retain`**: A boolean indicating whether the message is a retained message.  
+  - [More details](https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/)  
+- **`pkid`**: The packet identifier for the message (if QoS > 0).  
+- **`qos`**: The Quality of Service level at which the message was published.  
+  - [More details](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/)  
+- **`v5`**: Optional MQTT v5 properties that may be present on the message.  
+  - `payload_format_indicator`: Indicates if the payload is UTF-8 encoded or binary.  
+  - `topic_alias`: An alias for the topic name.  
+  - `response_topic`: A topic for the recipient to send a response to.  
+  - `correlation_data`: Correlation data for request/response.  
+  - `user_properties`: A list of user-defined properties.  
+  - `subscription_identifiers`: Subscription identifiers.  
+  - `content_type`: The content type of the payload.  
+
+For more information, see the [MQTT v5 Properties Documentation](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901205).
+
+```TypeScript
+/**
+ * General Trigger Preprocessor
+ * 
+ * ⚠️ This function runs BEFORE the main function.
+ * 
+ * It processes raw trigger data (e.g., MQTT, HTTP, SQS) before passing it to `main()`.
+ * Common tasks:
+ * - Convert binary payloads to string/JSON
+ * - Extract metadata
+ * - Filter messages
+ * - Add timestamps/context
+ * 
+ * The returned object determines `main()` parameters:
+ * - `{a: 1, b: 2}` → `main(a, b)`
+ * - `{payload}` → `main(payload)`
+ * 
+ * @param wm_trigger - Trigger details (e.g., MQTT, HTTP)
+ * @param payload - Raw trigger data (format varies by trigger type)
+ * @returns Processed data for `main()`
+ */
+export async function preprocessor(
+  wm_trigger: {
+    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'mqtt',
+    mqtt?: {
+      topic: string,
+      retain: boolean,
+      pkid: number,
+      qos: number,
+      v5?: {
+        payload_format_indicator?: number,
+        topic_alias?: number,
+        response_topic?: string,
+        correlation_data?: Array<number>,
+        user_properties?: Array<[string, string]>,
+        subscription_identifiers?: Array<number>,
+        content_type?: string
+      }
+    }
+  },
+  payload: Array<number>,
+) {
+  if (wm_trigger.kind === 'mqtt' && wm_trigger.mqtt) {
+    const uint8Payload = new Uint8Array(payload);
+    const payloadAsString = new TextDecoder().decode(uint8Payload);
+    return {
+      v5: wm_trigger.mqtt.v5,
+      payload: uint8Payload,
+      payloadAsString
+    };
+  }
+  return { kind: wm_trigger.kind };
+}
+
+/**
+ * Main Function - Handles processed trigger events
+ * 
+ * ⚠️ Called AFTER `preprocessor()`, with its return values.
+ * 
+ * @param payload - Raw binary payload
+ * @param payloadAsString - Decoded string payload
+ * @param contentType - MQTT v5 content type (if available)
+ */
+export async function main(payload: Uint8Array, payloadAsString: string, v5?: unknown) {
+  console.log({ payload, payloadAsString, v5 })
+}
+```
+
+---
