@@ -4,6 +4,12 @@ import DocCard from '@site/src/components/DocCard';
 
 Environment variables are used to configure the behavior of scripts and services, allowing for dynamic and flexible execution across different environments.
 
+You can retrieve environment variables from a script with the `Contextual` tab on the [Variable](../2_variables_and_secrets/index.mdx) page.
+
+You can use them in a Script by clicking on "+Context Var":
+
+![Contextual variable](../2_variables_and_secrets/context_variables.png.webp)
+
 ## List of environment variables
 
 | Name | Default                | Description                                                                                                                                                                                        | Api Server/Worker/All |
@@ -43,12 +49,6 @@ Environment variables are used to configure the behavior of scripts and services
 
 Contextual variables are environment variables automatically set by Windmill. This is how the Deno and Python clients get their implicit
 credentials to interact with the platform.
-
-See the `Contextual` tab on the [Variable](../2_variables_and_secrets/index.mdx) page for the list of reserved variables and what they are used for.
-
-You can use them in a Script by clicking on "+Context Var":
-
-![Contextual variable](../2_variables_and_secrets/context_variables.png.webp)
 
 | Name | Example of value | Description |
 |------|------------------|-------------|
