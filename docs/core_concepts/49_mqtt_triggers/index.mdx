@@ -1,47 +1,65 @@
+
 # MQTT triggers
 
-Windmill can connect to an **MQTT broker** and trigger runnables (scripts, flows) in response to messages published to specified topics.  
-MQTT triggers are not available on the [Cloud](/pricing).
+Windmill can connect to an **MQTT broker** and trigger runnables (scripts, flows) in response to messages published to specified topics. MQTT triggers are not available on the [Cloud](/pricing).
 
 For more details on MQTT, see the [MQTT Protocol Documentation](https://mqtt.org/mqtt-specification/).
 
----
-
 ## How to use
 
-- **Pick an MQTT resource**  
-  - Select an existing MQTT resource or create a new one.  
-  - The resource must contain the broker hostname and port, while authentication credentials and certificates depend on the configuration of the broker.
+### 1. Configure MQTT resource
+- Select an existing MQTT resource or create a new one
+- Provide broker hostname and port
+- Add authentication credentials and certificates as required by your broker
 
-- **Select the runnable to execute**  
-  - Choose the runnable (script or flow) that should be executed when a message is published to the subscribed topic.  
+### 2. Select runnable
+- Choose the script or flow to execute when messages are published to your subscribed topics
 
-- **Choose the subscription topics**  
-  - Specify one or more topics you want to subscribe to, each with its own [QoS](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/) level. 
-  - MQTT topics are case-sensitive and follow a hierarchical structure (e.g., `home/sensor/temperature`).  
-  - For more information, see the [MQTT Topics Documentation](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/).
+### 3. Configure topic subscriptions
+- Specify one or more topics to subscribe to
+- Set appropriate QoS level for each topic
 
-- **Set the quality of service (QoS)**  
-  - Choose the desired **QoS (Quality of Service)** level for the subscription:  
-    - **0**: At most once (No guarantee of delivery)  
-    - **1**: At least once (Guaranteed delivery, may receive duplicates)  
-    - **2**: Exactly once (Guaranteed delivery without duplicates)  
-  - For more information, see the [MQTT QoS Documentation](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/).
+## Quality of Service (QoS) levels
 
----
+| Level | Description | When to use |
+|-------|-------------|-------------|
+| **0** | **At most once** – Message delivered once or not at all without confirmation | Choose when it is okay for your script/flow to not be triggered (if the message is lost) or triggered only once. |
+| **1** | **At least once** – Guaranteed delivery but may arrive multiple times | Choose when it is okay for your script/flow to be triggered again by an already received message from the broker. |
+| **2** | **Exactly once** – Guaranteed delivery exactly once | Choose when you need your script/flow to be triggered only once and avoid any duplicates. |
 
-## Example
+For more information about MQTT QoS, see the [MQTT QoS Documentation](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/).
+
+## MQTT topic structure
+
+MQTT topics are case-sensitive and follow a hierarchical structure (e.g., `home/sensor/temperature`).  
+For best practices on MQTT topics, see the [MQTT Topics Documentation](https://www.hivemq.com/blog/mqtt-essentials-part-5-mqtt-topics-best-practices/).
+
+### 4. Advanced MQTT options
+
+By default, Windmill uses **MQTT version 5**. However, you can choose to use **MQTT version 3** or **MQTT version 5** with specific associated options. 
+
+- **MQTT v3 options**:
+  - **Clean Session** (default: true): [Learn more](https://www.emqx.com/en/blog/mqtt5-new-feature-clean-start-and-session-expiry-interval#clean-session-in-mqtt-3-1-1)
+  - **Client ID**: [Learn more](https://public.dhe.ibm.com/software/dw/webservices/ws-mqtt/mqtt-v3r1.html)
+  
+- **MQTT v5 options**:
+  - **Clean Start** (default: true): [Learn more](https://www.emqx.com/en/blog/mqtt5-new-feature-clean-start-and-session-expiry-interval#introduction-to-clean-start)
+  - **Session Expiry Interval**: [Learn more](https://www.emqx.com/en/blog/mqtt5-new-feature-clean-start-and-session-expiry-interval#introduction-to-session-expiry-interval)
+  - **Topic Alias Maximum**: [Learn more](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901051)
+  - **Client ID**: [Learn more](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901059)
+
+## Implementation examples
 
 Below are code examples demonstrating how to handle MQTT messages in your Windmill scripts. You can either process messages directly in a basic script or use a preprocessor for more advanced message handling and transformation before execution.
 
-### Basic script example
+### Basic script
 
-```TypeScript
+```typescript
 export async function main(payload: Array<number>) {
-  // Convert binary payload to string if needed
+  // Convert binary payload to string
   const textPayload = new TextDecoder().decode(new Uint8Array(payload));
   
-  // Parse JSON if the payload is in JSON format
+  // Parse JSON if applicable
   try {
     const jsonData = JSON.parse(textPayload);
     console.log("Received JSON data:", jsonData);
@@ -56,53 +74,43 @@ export async function main(payload: Array<number>) {
 }
 ```
 
-### Using a preprocessor
+### Script with preprocessor
 
 If you use a [preprocessor](../43_preprocessors/index.mdx), the preprocessor function receives the message payload as byte array and an MQTT object with the following fields:
 
-#### Field descriptions
+#### MQTT object
 
-- **`topic`**: The MQTT topic on which the message was received.  
-- **`retain`**: A boolean indicating whether the message is a retained message.  
-  - [More details](https://www.hivemq.com/blog/mqtt-essentials-part-8-retained-messages/)  
-- **`pkid`**: The packet identifier for the message (if QoS > 0).  
-- **`qos`**: The Quality of Service level at which the message was published.  
-  - [More details](https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/)  
-- **`v5`**: Optional MQTT v5 properties that may be present on the message.  
-  - `payload_format_indicator`: Indicates if the payload is UTF-8 encoded or binary.  
-  - `topic_alias`: An alias for the topic name.  
-  - `response_topic`: A topic for the recipient to send a response to.  
-  - `correlation_data`: Correlation data for request/response.  
-  - `user_properties`: A list of user-defined properties.  
-  - `subscription_identifiers`: Subscription identifiers.  
-  - `content_type`: The content type of the payload.  
+- **`topic`**: The MQTT topic on which the message was received.
+- **`retain`**: Boolean indicating if the message is retained.
+- **`pkid`**: Packet identifier (if QoS > 0).
+- **`qos`**: Quality of Service level.
+- **`v5`**: MQTT v5 properties (optional).
 
-For more information, see the [MQTT v5 Properties Documentation](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901205).
+#### MQTT v5 properties
 
-```TypeScript
+- **`payload_format_indicator`**: Indicates if the payload is UTF-8 encoded or binary.
+- **`topic_alias`**: An alias for the topic name.
+- **`response_topic`**: A topic for the recipient to send a response to.
+- **`correlation_data`**: Correlation data for request/response.
+- **`user_properties`**: A list of user-defined properties.
+- **`subscription_identifiers`**: Subscription identifiers.
+- **`content_type`**: The content type of the payload.
+
+For more information about MQTT v5 properties, see the [MQTT v5 Properties Documentation](https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html#_Toc3901109).
+
+```typescript
 /**
- * General Trigger Preprocessor
+ * MQTT Trigger Preprocessor
  * 
- * ⚠️ This function runs BEFORE the main function.
+ * Processes raw MQTT messages before passing data to main()
  * 
- * It processes raw trigger data (e.g., MQTT, HTTP, SQS) before passing it to `main()`.
- * Common tasks:
- * - Convert binary payloads to string/JSON
- * - Extract metadata
- * - Filter messages
- * - Add timestamps/context
- * 
- * The returned object determines `main()` parameters:
- * - `{a: 1, b: 2}` → `main(a, b)`
- * - `{payload}` → `main(payload)`
- * 
- * @param wm_trigger - Trigger details (e.g., MQTT, HTTP)
- * @param payload - Raw trigger data (format varies by trigger type)
- * @returns Processed data for `main()`
+ * @param wm_trigger - Trigger metadata
+ * @param payload - Raw binary payload
+ * @returns Processed data for main()
  */
 export async function preprocessor(
   wm_trigger: {
-    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'mqtt',
+    kind: 'mqtt' | 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs',
     mqtt?: {
       topic: string,
       retain: boolean,
@@ -119,32 +127,28 @@ export async function preprocessor(
       }
     }
   },
-  payload: Array<number>,
+  payload: Array<number>
 ) {
   if (wm_trigger.kind === 'mqtt' && wm_trigger.mqtt) {
     const uint8Payload = new Uint8Array(payload);
     const payloadAsString = new TextDecoder().decode(uint8Payload);
     return {
-      v5: wm_trigger.mqtt.v5,
+      contentType: wm_trigger.mqtt.v5?.content_type,
       payload: uint8Payload,
       payloadAsString
     };
   }
-  return { kind: wm_trigger.kind };
+  throw new Error(`Expected mqtt trigger, got: ${wm_trigger.kind}`);
 }
 
 /**
- * Main Function - Handles processed trigger events
- * 
- * ⚠️ Called AFTER `preprocessor()`, with its return values.
+ * Main Function
  * 
  * @param payload - Raw binary payload
  * @param payloadAsString - Decoded string payload
- * @param contentType - MQTT v5 content type (if available)
+ * @param contentType - MQTT content type (if available)
  */
-export async function main(payload: Uint8Array, payloadAsString: string, v5?: unknown) {
-  console.log({ payload, payloadAsString, v5 })
+export async function main(payload: Uint8Array, payloadAsString: string, contentType?: string) {
+  // Process the message here
 }
 ```
-
----
