@@ -18,8 +18,8 @@ local development through the [VS Code extension](../../cli_local_dev/1_vscode-e
 
 Syncing is done using `wmill sync pull` & `wmill sync push`.
 
-Syncing is a one-off operation with no state maintained. It will override any item that is within the scope, and that are in the target and not in the source, and it will create new items that are in source but not in target.
-It is a dangerous operation, that we recommend doing on a version-controlled folder to be able to revert any undesired changes made by mistake if necessary.
+Syncing is a one-off operation with no state maintained. It will override any item that is within the scope: remove those that are in the target and not in the source, and it will create new items that are in source but not in target.
+It is a _dangerous_ operation, that we recommend doing on a version-controlled folder to be able to revert any undesired changes made by mistake if necessary. It will however, show you the list of changes and ask you for confirmation before applying them.
 
 To specify the scopes of files, you should modify the includes and excludes (array of path matchers) part of the `wmill.yaml` file generated with `wmill init`. We recommend looking at all the settings of the `wmill.yaml` file to understand the different options available.
 Those are the default ones:
@@ -36,6 +36,8 @@ skipSecrets: true
 includeSchedules: false
 includeTriggers: false
 ```
+
+See more details in [wmill.yaml](#wmillyaml).
 
 Note that here, the variables, resources, secrets, schedules, and triggers are all skipped by default. You can change that by setting the corresponding options.g
 
