@@ -233,7 +233,7 @@ const clientTestimonials = [
 		},
 		company_url: 'https://www.investing.com',
 		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
-		text: `At Investing.com, we use Windmill to orchestrate our AI and content generation workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content translation pipelines, automated stock analysis report generation, and ETL processes. The excellent support response time (15-30 minutes) and comprehensive logging capabilities make it an integral part of our infrastructure.`
+		text: `At Investing.com, we use Windmill to orchestrate our AI workflows. The quick setup through Docker Compose and intuitive UI allowed us to get started immediately. We leverage Windmill for various automation tasks including content processing pipelines, automated stock analysis report generation, and ETL processes. The excellent support response time (15-30 minutes) and comprehensive logging capabilities make it an integral part of our infrastructure.`
 	},
 	{
 		author: {
