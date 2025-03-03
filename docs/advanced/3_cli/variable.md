@@ -24,13 +24,13 @@ wmill add <remote_path:string> --value=<value:string> [--secret] [--description=
 
 ### Options
 
-| Option          | parameter       | Description                                                                                                              |
-| --------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `--value`       | `<value>`       | The value of the variable.                                                                                               |
-| `--secret`      | None            | (Optional) Specifies whether the variable is a secret. If provided, the value will be encrypted in the remote workspace. |
-| `--description` | `<description>` | (Optional) A description of the variable.                                                                                |
-| `--account`     | `<account>`     | (Optional) The account associated with the variable.                                                                     |
-| `--oauth`       | None            | (Optional) Specifies whether the variable requires OAuth authentication.                                                 |
+| Option            | parameter       | Description                                                              |
+| ----------------- | --------------- | ------------------------------------------------------------------------ |
+| `--value`         | `<value>`       | The value of the variable.                                               |
+| `--plain-secrets` | None            | (Optional) Specifies whether the variable is plain and not a secret      |
+| `--description`   | `<description>` | (Optional) A description of the variable.                                |
+| `--account`       | `<account>`     | (Optional) The account associated with the variable.                     |
+| `--oauth`         | None            | (Optional) Specifies whether the variable requires OAuth authentication. |
 
 ### Example
 
