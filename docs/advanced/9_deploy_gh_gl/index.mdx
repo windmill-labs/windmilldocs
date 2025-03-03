@@ -23,6 +23,13 @@ For all details on Deployments to prod in Windmill, see [Deploy to prod](../12_d
 The integration with git works in three-folds:
 
 1. [GitHub Action](https://docs.github.com/en/actions) + [CLI](../3_cli/index.mdx): upon any commit to a particular branch, the GitHub action will run the `wmill` CLI and push to a Windmill workspace this works using the CLI doing `wmill sync push` ([free & open source](/pricing)).
+
+:::tip
+
+You can also trigger a webhook and push the changes to Windmill using [this Windmill script](https://hub.windmill.dev/scripts/windmill/11414/git-sync-push-windmill) and pass the arguments as query args in the webhook triggered after pushing to the repo.
+
+:::
+
 2. [Git sync](../11_git_sync/index.mdx) (Workspace mode): Windmill automatically committing to a git repository upon any deployment to a workspace, this works using the CLI doing `wmill sync pull` ([Cloud and Enterprise Self-Hosted](/pricing)). Having it commit back to Windmill has 2 benefits:
 
     - It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance).

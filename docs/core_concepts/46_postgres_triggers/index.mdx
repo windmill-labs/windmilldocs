@@ -4,11 +4,21 @@ Windmill can connect to a [Postgres](https://www.postgresql.org/) database and t
 Listening is done using Postgres's logical replication streaming protocol, ensuring efficient and low-latency triggering.  
 Postgres triggers are not available on the [Cloud](/pricing).
 
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/V50Jl4D_RTY"
+	title="Postgres triggers"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
 ## What is logical replication?
 
 Windmill's Postgres trigger feature is built on Postgres's logical replication protocol, which allows changes to a database to be streamed in real time to subscribers. Logical replication provides fine-grained control over what data is replicated by allowing the user to define publications and subscribe to specific changes.
 
-#### How logical replication works:
+### How logical replication works
 1. **Publications**: Define what changes (e.g., INSERT, UPDATE, DELETE) should be made available for replication. Publications allow you to select specific tables or schemas to track.
 2. **Replication slots**: Ensure that all changes from a publication are retained until they are successfully delivered to the subscriber (e.g., Windmill triggers). This guarantees data reliability and prevents data loss.
 
@@ -17,15 +27,103 @@ Windmill uses logical replication to efficiently stream database changes to your
 For more details, see the [Postgres documentation on logical replication](https://www.postgresql.org/docs/current/logical-replication.html).  
 For more details, see the [Postgres documentation on logical replication streaming protocol](https://www.postgresql.org/docs/current/protocol-logical-replication.html).
 
+
+## Requirements
+
+Before using Postgres triggers with Windmill, your database must be properly configured for logical replication. The primary requirement is setting the Write-Ahead Log (WAL) level to `'logical'`.
+
+### Setting `wal_level` to `logical`
+
+You have two options to configure this setting. Both options require a restart of your Postgres instance to take effect.
+
+#### Option 1: Using SQL (requires database restart)
+
+1. Run the following SQL command to set `wal_level` to `'logical'`:         
+   
+  ```sql
+   ALTER SYSTEM SET wal_level = 'logical';
+  ```
+
+2. After executing the command, restart your Postgres instance for the changes to take effect.
+
+#### Option 2: Editing the `postgresql.conf` file (requires database restart)
+
+1. Locate and open your `postgresql.conf` file. The location of this file may vary depending on your installation.
+
+2. Look for the `wal_level` setting. If it's not already present, **add** the following line to the file:
+
+  ```ini
+   wal_level = logical
+  ```
+
+   If the setting is already there, **update** it to `logical`.
+
+3. Save the file and restart your Postgres instance for the changes to take effect.
+
+### Verifying Logical Replication
+
+You can verify that logical replication is enabled by running the following query:
+
+```sql
+SHOW wal_level;
+```
+
+This should return:
+
+```plaintext
+ wal_level
+-----------
+ logical
+```
+
+### Impact of Enabling Logical Replication
+
+Enabling logical replication turns on detailed logging, which is essential for supporting the replication process. Be aware that this will increase the amount of data written to the Write-Ahead Log (WAL). Typically, you can expect a 10% to 30% increase in the amount of data written to the WAL, depending on the volume of write activity in your database.
+
 ---
 
+## Additional Configuration for Logical Replication
+
+For logical replication to work properly, you need to configure additional parameters in your `postgresql.conf` file. These parameters control the number of replication processes and slots available for replication. Both settings require a restart of your Postgres instance to take effect.
+
+#### `max_wal_senders`
+
+The `max_wal_senders` setting determines the maximum number of **walsender** processes that can run concurrently. A **walsender** is responsible for sending the Write-Ahead Log (WAL) data to subscribers for logical replication. The default value is 10, but you can increase this based on your replication needs.
+
+```ini
+#max_wal_senders = 10  # max number of walsender processes (change requires restart)
+```
+
+- **Impact on Triggers**: Each active trigger in logical replication will use a **walsender** process. So, if `max_wal_senders` is set to 10, only 10 active triggers can be used at the same time. If you reach this limit, you will need to increase the `max_wal_senders` value to accommodate more active triggers.
+
+#### `max_replication_slots`
+
+The `max_replication_slots` setting determines how many **replication slots** can be created. Replication slots are used to maintain state for each logical replication subscription. This setting also limits the number of triggers that can be created for logical replication.
+
+```ini
+#max_replication_slots = 10  # max number of replication slots (change requires restart)
+```
+
+- **Impact on Trigger Creation**: You can only create as many triggers as there are replication slots available. So if `max_replication_slots` is set to 10, you will be able to create a maximum of 10 triggers. If you need more triggers, you will need to increase the `max_replication_slots` value.
+
+### Summary of Limits
+
+- **Active triggers**: The number of active triggers you can have is limited by `max_wal_senders`. If you set `max_wal_senders` to 10, only 10 active triggers can be running simultaneously.
+  
+- **Trigger creation**: The number of triggers you can create is limited by `max_replication_slots`. If you set `max_replication_slots` to 10, you can only create 10 triggers in total.
+
+---
+
+### Final Considerations
+
+When configuring these settings, make sure to account for the number of active triggers and replication slots needed for your application. If you expect to have many triggers or high replication activity, you may need to increase both `max_wal_senders` and `max_replication_slots`.
 ## How to use
 Learn how to set up and configure Postgres triggers in Windmill through these key steps.
 
 ### Create a Postgres trigger
 To begin, navigate to the Postgres triggers page and create a new trigger. Follow the steps below to set up your environment.
 
-### Set Up a Postgres resource
+### Set up a Postgres resource
 You need to either:
 - Create a new Postgres resource by providing:
   - Hostname, port, database name, username, and password.
@@ -349,7 +447,7 @@ If you attempt to use Neon's `-pooler` host without modifying the `pgbouncer` co
 
 ---
 
-#### Avoiding Common Pitfalls: Configuring Neon with Windmill
+#### Avoiding common pitfalls: Configuring Neon with Windmill
 
 When entering the database details manually (`host`, `port`, `db_name`, `password`, `ssl_mode`, `root_certificate_pem`, etc.), you have two options:
 
@@ -412,7 +510,7 @@ To use Neon’s `-pooler` host with Windmill's Postgres triggers, you must updat
 
 ---
 
-### Future Updates for Other Database Hosting Services
+### Future updates for other database hosting services
 
 This section will be updated if additional database hosting services require special configurations for Postgres triggers.  
 If you are using a database service other than Neon and encounter issues when setting up triggers, please **contact Windmill support** for assistance.  

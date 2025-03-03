@@ -36,6 +36,14 @@ const people = [
     email: 'stephan@knowsuchagency.com',
     profile: 'https://www.linkedin.com/in/fitzpatrickstephan/',
     imageUrl: '/images/partners/stphftzptrk.jpg'
+},
+{
+  name: 'David Peter',
+  description: 'David Peter is a TypeScript programmer and founder at Type Driven, a software development agency.',
+  roles: ['Common tree', 'App editor'],
+  email: 'david@type-driven.com',
+  profile: 'https://www.linkedin.com/in/david-peter-498423280/',
+  imageUrl: '/images/partners/davidpeter.jpg'
 }
 ];
 

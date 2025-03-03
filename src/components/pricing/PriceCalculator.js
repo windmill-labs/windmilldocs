@@ -43,21 +43,22 @@ const workerGroupDefaults = {
 
 // Update the calculateWorkerPrice function
 function calculateWorkerPrice(memoryGB, tierId, selectedOption) {
-	// Cap the price calculation at 4GB
-	const effectiveMemory = Math.min(4, memoryGB);
-	// Base price: Linear interpolation between $25 at 1GB and $100 at 4GB
-	let basePrice = 25 + (effectiveMemory - 1) * 25;
-
-	// Apply discounts for enterprise self-hosted tier based on selectedOption
+	// For enterprise self-hosted, cap the price calculation at 4GB
 	if (tierId === 'tier-enterprise-selfhost') {
-		if (selectedOption === 'SMB') {
-			basePrice = basePrice * 0.4; // 60% discount for SMB
-		} else if (selectedOption === 'Nonprofit') {
-			basePrice = basePrice * 0.4; // 60% discount for Nonprofit
+		const effectiveMemory = Math.min(4, memoryGB);
+		// Base price: Linear interpolation between $25 at 1GB and $100 at 4GB
+		let basePrice = 25 + (effectiveMemory - 1) * 25;
+
+		// Apply discounts based on selectedOption
+		if (selectedOption === 'Pro' || selectedOption === 'Nonprofit') {
+			basePrice = basePrice * 0.4; // 60% discount
 		}
+		return basePrice;
 	}
 
-	return basePrice;
+	// For enterprise cloud, no memory cap - linear scaling
+	// Base price: $25 per GB of memory
+	return memoryGB * 25;
 }
 
 // New reusable component for price display
@@ -89,32 +90,68 @@ const SeatsSummary = ({ developers, operators }) => (
 	</div>
 );
 
-// New component for compute units summary
-const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption }) => {
-	const counts = getWorkerCounts(workerGroups);
-	const totalComputeUnits = (counts.small / 2 || 0) + 
-		(counts.standard || 0) + 
-		((1/8) * nativeWorkers) + 
-		(2 * (counts.large || 0));
+// Update the ComputeUnitsSummary component
+const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption, tierId }) => {
+	// Group workers by memory size
+	const groupedWorkers = workerGroups.reduce((acc, group) => {
+		// For self-hosted, group all workers with memoryGB >= 4 as 'large'
+		const key = tierId === 'tier-enterprise-selfhost' && group.memoryGB >= 4 
+			? 4  // Use 4 as key for all large workers
+			: group.memoryGB;
+		
+		if (!acc[key]) {
+			acc[key] = 0;
+		}
+		acc[key] += group.workers;
+		return acc;
+	}, {});
+
+	const totalComputeUnits = tierId === 'tier-enterprise-cloud'
+		? workerGroups.reduce((sum, group) => sum + (group.memoryGB/2 * group.workers), 0) + (nativeWorkers/8)
+		: Object.entries(groupedWorkers).reduce((sum, [memoryGB, workers]) => {
+			memoryGB = Number(memoryGB);
+			return sum + (memoryGB === 1 ? workers/2 : memoryGB === 2 ? workers : workers * 2);
+		}, 0) + (nativeWorkers/8);
 	
 	return (
 		<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
 			<span className="text-gray-900 dark:text-white">
 				Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU):
-				{' '}<span className={selectedOption === 'SMB' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
+				{' '}<span className={selectedOption === 'Pro' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
 					{Math.round(totalComputeUnits)}
-					{selectedOption === 'SMB' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}
+					{selectedOption === 'Pro' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}
 				</span>
 			</span>
-			{counts.standard > 0 && (
-				<span className="ml-4">{counts.standard} standard {counts.standard === 1 ? 'worker' : 'workers'} = {counts.standard} CU</span>
-			)}
-			{counts.small > 0 && (
-				<span className="ml-4">{counts.small} small {counts.small === 1 ? 'worker' : 'workers'} = {counts.small/2} CU</span>
-			)}
-			{counts.large > 0 && (
-				<span className="ml-4">{counts.large} large {counts.large === 1 ? 'worker' : 'workers'} = {counts.large * 2} CU</span>
-			)}
+			{Object.entries(groupedWorkers)
+				.sort(([memoryA], [memoryB]) => Number(memoryA) - Number(memoryB))
+				.map(([memoryGB, workers]) => {
+					memoryGB = Number(memoryGB);
+					const computeUnits = tierId === 'tier-enterprise-cloud'
+						? (memoryGB/2 * workers)
+						: (memoryGB === 1 ? workers/2 : memoryGB === 2 ? workers : workers * 2);
+
+					const getWorkerSizeLabel = (memoryGB, tierId) => {
+						if (memoryGB === 1) return 'small';
+						if (memoryGB === 2) return 'standard';
+						if (tierId === 'tier-enterprise-selfhost') return 'large';
+						return `${memoryGB}GB`;
+					};
+
+					return computeUnits > 0 && (
+						<span key={memoryGB} className="ml-4">
+							{workers} {' '}
+							<span className={
+								memoryGB === 1 ? "font-semibold text-blue-800 dark:text-blue-600" : 
+								memoryGB === 2 ? "font-semibold text-blue-600 dark:text-blue-500" : 
+								tierId === 'tier-enterprise-selfhost' ? "font-semibold text-blue-500 dark:text-blue-400" :
+								"font-semibold"
+							}>
+								{getWorkerSizeLabel(memoryGB, tierId)}
+							</span>{' '}
+							{workers === 1 ? 'worker' : 'workers'} = {computeUnits} CU
+						</span>
+					);
+				})}
 			{nativeWorkers > 0 && (
 				<span className="ml-4">{nativeWorkers} native {nativeWorkers === 1 ? 'worker' : 'workers'} = {nativeWorkers/8} CU</span>
 			)}
@@ -151,8 +188,8 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 	// Get the appropriate pricing based on selectedOption and tier.id
 	function getPriceByOption() {
 		if (tier.id === 'tier-enterprise-selfhost') {
-			if (selectedOption === 'SMB' && tier.price_smb) {
-				return tier.price_smb;
+			if (selectedOption === 'Pro' && tier.price_pro) {
+				return tier.price_pro;
 			} else if (selectedOption === 'Nonprofit' && tier.price_nonprofit) {
 				return tier.price_nonprofit;
 			}
@@ -205,7 +242,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 
 			// Apply minimum worker group pricing
 			let minimumWorkerPrice = tier.id === 'tier-enterprise-cloud' ? 200 : 100;
-			if (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'SMB' || selectedOption === 'Nonprofit')) {
+			if (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'Pro' || selectedOption === 'Nonprofit')) {
 				minimumWorkerPrice = 40;
 			}
 			
@@ -258,15 +295,23 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		}
 	};
 
-	// Get worker counts for quote generation
+	// Update the getWorkerCountsForQuote function
 	function getWorkerCountsForQuote() {
-		const counts = getWorkerCounts(workerGroups);
-		return {
-			native: nativeWorkers / 8,
+		if (tier.id === 'tier-enterprise-cloud') {
+			return {
+				workerGroups,  // Pass the full worker groups array for cloud
+				native: nativeWorkers / 8
+			};
+		} else {
+			// For self-hosted, use the original categorization
+			const counts = getWorkerCounts(workerGroups);
+			return {
+				native: nativeWorkers / 8,
 				small: counts.small || 0,
 				standard: counts.standard || 0,
 				large: counts.large || 0
-		};
+			};
+		}
 	}
 
 	return (
@@ -296,19 +341,19 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										return sum + (pricePerWorker * group.workers);
 									}, 0) + (pricing.worker?.native * nativeWorkers / 8)) < 
 									(tier.id === 'tier-enterprise-cloud' ? 200 : 
-										(selectedOption === 'SMB' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
+										(selectedOption === 'Pro' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
 										<span className="text-sm text-rose-700 dark:text-red-400">
 											Price for workers can't be below ${tier.id === 'tier-enterprise-cloud' 
 												? (period.value === 'annually' ? '2,000' : '200') 
-												: (selectedOption === 'SMB' || selectedOption === 'Nonprofit' 
+												: (selectedOption === 'Pro' || selectedOption === 'Nonprofit' 
 													? (period.value === 'annually' ? '400' : '40')
 													: (period.value === 'annually' ? '1,000' : '100'))}
 											/{period.value === 'annually' ? 'yr' : 'mo'}
 										</span>
 									)}
 
-									{/* New CU limit warning for SMB */}
-									{selectedOption === 'SMB' && (
+									{/* New CU limit warning for Pro */}
+									{selectedOption === 'Pro' && (
 										(() => {
 											const counts = getWorkerCounts(workerGroups);
 											const totalComputeUnits = (counts.small / 2 || 0) + 
@@ -335,7 +380,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								(counts.standard || 0) + 
 								((1/8) * nativeWorkers) + 
 								(2 * (counts.large || 0));
-							const isOverLimit = selectedOption === 'SMB' && totalComputeUnits > 10;
+							const isOverLimit = selectedOption === 'Pro' && totalComputeUnits > 10;
 							const textColor = isOverLimit ? "text-rose-700 dark:text-red-400" : "text-gray-900 dark:text-white";
 							const subTextColor = isOverLimit ? "text-rose-700 dark:text-red-400" : "text-gray-500";
 
@@ -468,8 +513,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 															"font-semibold text-blue-500 dark:text-blue-400"
 														}>
 															{group.memoryGB === 1 ? 'small' : 
-															group.memoryGB === 2 ? 'standard' : 
-															'large'}
+															 group.memoryGB === 2 ? 'standard' : 
+															 tier.id === 'tier-enterprise-cloud' ? `${group.memoryGB}GB` : 
+															 'large'}
 														</span>{" "}
 														worker
 													</>
@@ -481,20 +527,33 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 															"font-semibold text-blue-500 dark:text-blue-400"
 														}>
 															{group.memoryGB === 1 ? 'small' : 
-															group.memoryGB === 2 ? 'standard' : 
-															'large'}
+															 group.memoryGB === 2 ? 'standard' : 
+															 tier.id === 'tier-enterprise-cloud' ? `${group.memoryGB}GB` : 
+															 'large'}
 														</span>{" "}
 														workers
 													</>
 												)}
 											</span>
 											<span className="text-sm text-gray-900 dark:text-white">
-												<span className="font-normal text-gray-400 dark:text-gray-300">{(group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2).toLocaleString()} {tier.id === 'tier-enterprise-cloud' ? 'CU' : ((group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2) <= 1 ? 'compute unit' : 'compute units')}</span> · <span className="font-semibold">${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * (tier.id === 'tier-enterprise-cloud' ? 2 : 1) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}</span>
+												<span className="font-normal text-gray-400 dark:text-gray-300">
+													{(tier.id === 'tier-enterprise-cloud' 
+														? (group.memoryGB/2 * group.workers)
+														: (group.memoryGB === 1 ? group.workers/2 : group.memoryGB === 2 ? group.workers : group.workers * 2)
+													).toLocaleString()} CU
+												</span>
+												{' · '}
+												<span className="font-semibold">
+													${(Math.round(calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * group.workers * 
+														(tier.id === 'tier-enterprise-cloud' ? 2 : 1) * 
+														(period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})}
+													/{period.value === 'annually' ? 'yr' : 'mo'}
+												</span>
 											</span>
 										</div>
 										<Slider
 											min={1}
-											max={selectedOption === 'SMB' ? 10 : 1000}
+											max={selectedOption === 'Pro' ? 10 : 1000}
 											step={1}
 											defaultValue={group.workers}
 											onChange={(value) => updateWorkerGroup(index, 'workers', value)}
@@ -519,11 +578,6 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											onChange={(value) => updateWorkerGroup(index, 'memoryGB', value)}
 											steps={[1, 2, 4, 6, 8, 12, 14, 16, 32, 48, 64, 80, 96, 112, 128]}
 										/>
-										{group.memoryGB >= 4 && tier.id === 'tier-enterprise-cloud' && (
-											<span className="text-sm font-normal text-gray-400 dark:text-gray-300 mt-1 text-right w-full">
-												(Price cap)
-											</span>
-										)}
 									</li>
 								))}
 								
@@ -559,7 +613,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								</div>
 								<Slider
 									min={0}
-									max={selectedOption === 'SMB' ? 32 : 200}
+									max={selectedOption === 'Pro' ? 32 : 200}
 									step={8}
 									defaultValue={8}
 									onChange={(value) => setNativeWorkers(value)}
@@ -689,7 +743,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											amount={computeTotalPrice()} 
 											period={period.value} 
 											className={classNames(
-												selectedOption === 'SMB' && totalComputeUnits > 10 
+												selectedOption === 'Pro' && totalComputeUnits > 10 
 													? "text-rose-700 dark:text-red-400" 
 													: "text-gray-900 dark:text-white"
 											)}
@@ -702,13 +756,14 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								workerGroups={workerGroups} 
 								nativeWorkers={nativeWorkers} 
 								selectedOption={selectedOption} 
+								tierId={tier.id}
 							/>
 						</div>
 						<a
 							onClick={() => setShowQuoteForm(true)}
 							className={classNames(
 								'text-sm cursor-pointer border shadow-sm !no-underline mt-6 block rounded-md py-2 px-3 text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
-								tier.id === 'tier-enterprise-cloud' || selectedOption !== 'SMB'
+								tier.id === 'tier-enterprise-cloud' || selectedOption !== 'Pro'
 									? 'border-teal-600 text-teal-600 hover:text-teal-700 dark:hover:text-teal-500 hover:bg-teal-50 dark:hover:bg-teal-950 focus-visible:outline-teal-600'
 									: 'border-blue-600 text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-950 focus-visible:outline-blue-600'
 							)}
