@@ -77,7 +77,7 @@ export function QuoteForm({
 	// Add these helper functions
 	const getPlanDisplay = () => {
 		if (plan === 'cloud_ee') return 'Cloud EE';
-		if (selectedOption === 'SMB' && plan === 'selfhosted_ee') return 'Pro';
+		if (selectedOption === 'Pro' && plan === 'selfhosted_ee') return 'Pro';
 		if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') return 'Enterprise - Nonprofit';
 		return 'Self-Hosted EE';
 	};
@@ -93,7 +93,7 @@ export function QuoteForm({
 			// Modify plan if conditions are met
 			let apiPlan = plan;
 
-			if (selectedOption === 'SMB' && plan === 'selfhosted_ee') {
+			if (selectedOption === 'Pro' && plan === 'selfhosted_ee') {
 				apiPlan = 'selfhosted_pro';
 			} else if (selectedOption === 'Nonprofit' && plan === 'selfhosted_ee') {
 				apiPlan = 'nonprofit_ee';
@@ -126,7 +126,7 @@ export function QuoteForm({
 						compute_units: computeUnits,
 						email,
 						company_name: companyName,
-						reason_plan: (selectedOption === 'Nonprofit' || selectedOption === 'SMB') ? qualification : '',
+						reason_plan: (selectedOption === 'Nonprofit' || selectedOption === 'Pro') ? qualification : '',
 					})
 				}
 			);
@@ -163,7 +163,7 @@ export function QuoteForm({
 		  (2 * (workers as { small: number; standard: number; large: number }).large);
 
 	const computeUnits = Math.max(2, rawComputeUnits);
-	const isSmbWithTooManyUnits = selectedOption === 'SMB' && computeUnits > 10;
+	const isProWithTooManyUnits = selectedOption === 'Pro' && computeUnits > 10;
 
 	return (
 		<Dialog open={open} onClose={() => setOpen(false)}>
@@ -283,7 +283,7 @@ export function QuoteForm({
 							/>
 						)}
 
-						{plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'SMB') && (
+						{plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'Pro') && (
 							<label className="flex flex-col">
 								<span className="font-medium text-gray-800 dark:text-gray-200 text-sm">
 									Qualification for {selectedOption === 'Nonprofit' ? 'nonprofit' : 'Pro plan'} (<a href="#pro-plan" className="font-normal text-blue-600 hover:text-blue-800">see rules</a>)
@@ -298,7 +298,7 @@ export function QuoteForm({
 							</label>
 						)}
 
-						{isSmbWithTooManyUnits && (
+						{isProWithTooManyUnits && (
 							<div className="text-red-500 text-sm">
 								Pro plan is limited to 10 compute units maximum
 							</div>
@@ -314,8 +314,8 @@ export function QuoteForm({
 								!email || 
 								!isValidEmail(email) || 
 								loading || 
-								isSmbWithTooManyUnits || 
-								((plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'SMB')) && qualification.length < 3)
+								isProWithTooManyUnits || 
+								((plan === 'selfhosted_ee' && (selectedOption === 'Nonprofit' || selectedOption === 'Pro')) && qualification.length < 3)
 							}
 						>
 							Generate quote

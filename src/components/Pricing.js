@@ -49,7 +49,7 @@ const pricing = {
 		{
 			name: 'Enterprise',
 			name_nonprofit: 'Enterprise - Nonprofit',
-			name_smb: 'Pro',
+			name_pro: 'Pro',
 			id: 'tier-enterprise-selfhost',
 			href: 'mailto:contact@windmill.dev',
 			price: {
@@ -94,7 +94,7 @@ const pricing = {
 					max: 1000
 				}
 			},
-			price_smb: {
+			price_pro: {
 				worker: {
 					default: workerDefaults.workers,
 					min: workerDefaults.minWorkers,
@@ -116,11 +116,11 @@ const pricing = {
 				}
 			},
 			minPrice: 120,
-			minPrice_smb: 48,
+			minPrice_pro: 48,
 			minPrice_nonprofit: 48,
 			description: 'For advanced needs in observability, security and performance.',
 			description_nonprofit: '60% discount for nonprofits & universities, no limits.',
-			description_smb:
+			description_pro:
 				'For individuals and small businesses.',
 			enterprise_edition: true,
 			features: [
@@ -153,7 +153,7 @@ const pricing = {
 					text: <span>Design partners for roadmap</span>
 				}
 			],
-			features_smb: [
+			features_pro: [
 				{
 					text: (
 						<span>
@@ -570,7 +570,7 @@ export default function Pricing() {
 										tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
 											? tier.name_nonprofit // Display name for Nonprofit
 											: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
-											? tier.name_smb // Display name for Pro
+											? tier.name_pro // Display name for Pro
 											: tier.name // Default name
 									}
 								</h3>
@@ -601,13 +601,13 @@ export default function Pricing() {
 											{period.value === 'annually'
 												? tier.id === 'tier-team'
 													? (tier.minPrice * 12).toLocaleString('en-US') // Team tier calculation
-													: selectedOption === 'Pro' && tier.minPrice_smb !== undefined
-													? (tier.minPrice_smb * 10).toLocaleString('en-US') // Annual price for Pro
+													: selectedOption === 'Pro' && tier.minPrice_pro !== undefined
+													? (tier.minPrice_pro * 10).toLocaleString('en-US') // Annual price for Pro
 													: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
 													? (tier.minPrice_nonprofit * 10).toLocaleString('en-US') // Annual price for Nonprofit
 													: (tier.minPrice * 10).toLocaleString('en-US') // Annual price for others
-												: selectedOption === 'Pro' && tier.minPrice_smb !== undefined
-												? tier.minPrice_smb.toLocaleString('en-US') // Monthly price for Pro
+												: selectedOption === 'Pro' && tier.minPrice_pro !== undefined
+												? tier.minPrice_pro.toLocaleString('en-US') // Monthly price for Pro
 												: selectedOption === 'Nonprofit' && tier.minPrice_nonprofit !== undefined
 												? tier.minPrice_nonprofit.toLocaleString('en-US') // Monthly price for Nonprofit
 												: tier.minPrice.toLocaleString('en-US')}
@@ -661,7 +661,7 @@ export default function Pricing() {
 											tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Nonprofit'
 												? tier.description_nonprofit // Display the nonprofit description with links
 												: tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro'
-												? tier.description_smb // Display the Pro description with links
+												? tier.description_pro // Display the Pro description with links
 												: tier.description // Default description with links
 									}}
 								/>
@@ -699,7 +699,7 @@ export default function Pricing() {
 								style={{ marginBottom: '4rem' }}
 							>
 								{tier.id === 'tier-enterprise-selfhost' && selectedOption === 'Pro' ? (
-									<FeatureList features={tier.features_smb} level={1} id={tier.id} />
+									<FeatureList features={tier.features_pro} level={1} id={tier.id} />
 								) : (
 									<FeatureList features={tier.features} level={1} id={tier.id} />
 								)}
@@ -710,7 +710,6 @@ export default function Pricing() {
 										tier={tier}
 										period={period}
 										selectedOption={selectedOption}
-										workerDefaults={workerDefaults}
 									/>
 								) : null}
 
@@ -741,25 +740,47 @@ export default function Pricing() {
 											</a>
 										</div>
 									) : (
-										<button
-											onClick={(e) => {
-												e.preventDefault();
-												handlePlanClick(
+										<div className="try-it-button">
+											<a
+												href={
 													selectedOption === 'Pro'
 														? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
-														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j?prefilled_promo_code=nonprofit',
-													selectedOption
-												);
-											}}
-											className={classNames(
-												selectedOption === 'Pro'
-													? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
-													: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
-												'!no-underline text-center mt-6 block rounded-md py-2 px-3 font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
-											)}
-										>
-											Try it for a month
-										</button>
+														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' + 
+														  (selectedOption === 'Nonprofit' ? '?prefilled_promo_code=nonprofit' : '')
+												}
+												onClick={(e) => {
+													e.preventDefault();
+													e.stopPropagation();
+													handlePlanClick(
+														selectedOption === 'Pro'
+															? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
+															: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' +
+															(selectedOption === 'Nonprofit' ? '?prefilled_promo_code=nonprofit' : ''),
+														selectedOption
+													);
+												}}
+												className={classNames(
+													selectedOption === 'Pro'
+														? 'text-sm bg-blue-600 !text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600'
+														: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
+													'main-section !no-underline text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+												)}
+											>
+												Try it for a month
+											</a>
+											<a
+												href={`https://app.windmill.dev/public/windmill-labs/cae76591e9a0c229a338636c50e67066${
+													selectedOption !== 'Enterprise' ? `?plan=${selectedOption.toLowerCase()}` : ''
+												}`}
+												className="hover-section"
+												target="_blank"
+												onClick={(e) => {
+													e.stopPropagation();
+												}}
+											>
+												No credit card?
+											</a>
+										</div>
 									))}
 							</div>
 						</div>
