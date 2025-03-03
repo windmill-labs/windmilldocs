@@ -106,7 +106,7 @@ Although Windmill can [automatically resolve imports](#lockfile-per-script-infer
 
 When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a requirements.txt is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
 
-You can write those requirements.txt manually or through a standar `pip install package_name`.
+You can write those requirements.txt manually or through a standard `pip install package_name`.
 
 Several requirements.txt files can therefore coexist, each having authority over the scripts closest to it:
 
@@ -262,7 +262,7 @@ UV is not using system certificates by default, if you wish to use them, set `PY
 :::
 
 
-"Pip index url" and "Pip extra index url" are filled through Windmill UI, in [Instance settings](../18_instance_settings/index.mdx#registries) under [Enterprise Edition](/pricing).
+`UV index url` and `UV extra index url` are filled through Windmill UI, in [Instance settings](../18_instance_settings/index.mdx#registries) under [Enterprise Edition](/pricing).
 
 ![Private PyPI Repository](./private_pip.png 'Private PyPI Repository')
 
