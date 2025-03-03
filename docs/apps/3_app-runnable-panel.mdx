@@ -408,6 +408,26 @@ Example:
 recompute('a');
 ```
 
+### globalRecompute
+
+Use the `globalRecompute` function to recompute all components and trigger their runnables.
+
+Syntax:
+
+```js
+globalRecompute(filterIds?: string[])
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `filterIds`      | string[] | The ids of the component to not recompute. |
+
+Example:
+
+```js
+globalRecompute(['a','e'])
+```
+
 ### getAgGrid
 
 Use the `getAgGrid` function to get the ag-grid instance of a table.
