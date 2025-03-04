@@ -411,21 +411,18 @@ recompute('a');
 ### globalRecompute
 
 Use the `globalRecompute` function to recompute all components and trigger their runnables.
+Note that you should disable the "Run on start and app refresh" toggle for the runnable to avoid circular recomputes.
 
 Syntax:
 
 ```js
-globalRecompute(excludeIds?: string[])
+globalRecompute()
 ```
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `excludeIds` | string[] | The ids of the component to not recompute. |
 
 Example:
 
 ```js
-globalRecompute(['a','e'])
+globalRecompute()
 ```
 
 ### getAgGrid
