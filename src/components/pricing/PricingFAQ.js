@@ -240,6 +240,17 @@ const faqs = [
 		)
 	},
 	{
+		id: 'usage-based-billing',
+		question: 'Is Windmill billed based on usage?',
+		answer: (
+			<span>
+				Only the Teams plan is billed based on actual usage. For Enterprise Edition and Pro plans, you commit to terms that fit within a given range of seats and Compute Units, providing more predictable pricing.
+				<br /><br />
+				If your usage temporarily exceeds your subscription terms on EE or Pro plans, you will be notified and given 35 days to address the situation before your latest license key expires.
+			</span>
+		)
+	},
+	{
 		id: 'portal',
 		question: 'How can I update my subscription?',
 		answer: (
