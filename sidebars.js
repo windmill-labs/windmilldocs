@@ -454,6 +454,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/mqtt',
+							label: 'MQTT'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/mssql',
 							label: 'MS SQL'
 						},
