@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Preprocessors
 
 [Scripts](#script-preprocessor) and [flows](#flow-preprocessor) can include a preprocessor to transform incoming requests before they are passed to the runnable.
-The preprocessor is only called when the runnable is triggered via an [HTTP route](../39_http_routing/index.mdx), a [webhook](../4_webhooks/index.mdx), an [email trigger](../../advanced/17_email_triggers/index.mdx), a [websocket trigger](../40_websocket_triggers/index.mdx) or a [kafka trigger](../41_kafka_triggers/index.mdx).
+The preprocessor is only called when the runnable is triggered via an [HTTP route](../39_http_routing/index.mdx), a [webhook](../4_webhooks/index.mdx), an [email trigger](../../advanced/17_email_triggers/index.mdx), a [websocket trigger](../40_websocket_triggers/index.mdx), a [Kafka trigger](../41_kafka_triggers/index.mdx), a [NATS trigger](../45_nats_triggers/index.mdx), a [SQS trigger](../48_sqs_triggers/index.mdx) or a [MQTT trigger](../49_mqtt_triggers/index.mdx).
 This is useful for handling headers, query/path parameters, or modifying arguments before execution.
 Using a preprocessor also separates the handling of arguments according to whether they are called by a trigger (http, email or webhook) or from the UI, which can help you keep a simple schema form in the UI for the runnable.
 
