@@ -408,6 +408,23 @@ Example:
 recompute('a');
 ```
 
+### globalRecompute
+
+Use the `globalRecompute` function to recompute all components and trigger their runnables.
+Note that you should disable the "Run on start and app refresh" toggle for the runnable to avoid circular recomputes.
+
+Syntax:
+
+```js
+globalRecompute()
+```
+
+Example:
+
+```js
+globalRecompute()
+```
+
 ### getAgGrid
 
 Use the `getAgGrid` function to get the ag-grid instance of a table.
