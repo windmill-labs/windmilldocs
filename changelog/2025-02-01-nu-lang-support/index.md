@@ -1,9 +1,9 @@
 ---
 slug: nu-lang-support
 version: TODO
-title: Nushell 🐘
+title: Nushell
 tags: ['Nushell', 'Nu', 'Code editor']
-description: Nu is cross-platform and statically typed shell written in Rust. I invite you to play around with it! 
+description: Nu is cross-platform and statically typed shell written in Rust. Now shipped to windmill
 features:
   [
     'Write your Windmill script in Nu.',
