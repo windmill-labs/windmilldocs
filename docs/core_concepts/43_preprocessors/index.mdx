@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Preprocessors
 
 [Scripts](#script-preprocessor) and [flows](#flow-preprocessor) can include a preprocessor to transform incoming requests before they are passed to the runnable.
-The preprocessor is only called when the runnable is triggered via an [HTTP route](../39_http_routing/index.mdx), a [webhook](../4_webhooks/index.mdx), an [email trigger](../../advanced/17_email_triggers/index.mdx), a [websocket trigger](../40_websocket_triggers/index.mdx) or a [kafka trigger](../41_kafka_triggers/index.mdx).
+The preprocessor is only called when the runnable is triggered via an [HTTP route](../39_http_routing/index.mdx), a [webhook](../4_webhooks/index.mdx), an [email trigger](../../advanced/17_email_triggers/index.mdx), a [websocket trigger](../40_websocket_triggers/index.mdx), a [Kafka trigger](../41_kafka_triggers/index.mdx), a [NATS trigger](../45_nats_triggers/index.mdx), a [SQS trigger](../48_sqs_triggers/index.mdx) or a [MQTT trigger](../49_mqtt_triggers/index.mdx).
 This is useful for handling headers, query/path parameters, or modifying arguments before execution.
 Using a preprocessor also separates the handling of arguments according to whether they are called by a trigger (http, email or webhook) or from the UI, which can help you keep a simple schema form in the UI for the runnable.
 
@@ -23,7 +23,7 @@ Here are examples of a preprocessor function in [TypeScript](../../getting_start
 export async function preprocessor(
 	/* args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email) */ 
 	wm_trigger: {
-		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'postgres' | 'kafka' | 'nats', 'sqs',
+		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'postgres' | 'kafka' | 'nats' | 'sqs' | 'mqtt',
 		http?: {
 			route: string // The route path, e.g. "/users/:id"
 			path: string // The actual path called, e.g. "/users/123"
@@ -57,6 +57,21 @@ export async function preprocessor(
 				string_value?: string,
 				data_type: string
 			}>
+		},
+		mqtt?: {
+			topic: string,
+			retain: boolean,
+			pkid: number,
+			qos: number,
+			v5?: {
+				payload_format_indicator?: number,
+				topic_alias?: number,
+				response_topic?: string,
+				correlation_data?: Array<number>,
+				user_properties?: Array<[string, string]>,
+				subscription_identifiers?: Array<number>,
+				content_type?: string
+			}
 		}
 	}
 ) {
@@ -110,13 +125,30 @@ class Sqs(TypeDict):
    attributes: dict[str, str]
    message_attributes: dict[str, MessageAttribute] | None
 
+class MqttV5Properties:
+   payload_format_indicator: int | None
+   topic_alias: int | None
+   response_topic: str | None
+   correlation_data: list[int] | None
+   user_properties: list[tuple[str, str]] | None
+   subscription_identifiers: list[int] | None
+   content_type: str | None
+
+class Mqtt(TypeDict):
+   topic: str
+   retain: bool
+   pkid: int
+   qos: int
+   v5: MqttV5Properties | None
+
 class WmTrigger(TypedDict):
-	kind: Literal["http", "email", "webhook", "websocket", "postgres", "kafka", "nats", "sqs"]
+	kind: Literal["http", "email", "webhook", "websocket", "postgres", "kafka", "nats", "sqs", "mqtt"]
 	http: Http | None
 	websocket: Websocket | None
 	kakfa: Kafka | None
 	nats: Nats | None
 	sqs: Sqs | None
+	mqtt: Mqtt | None
 
 def preprocessor(
 	# args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email)
@@ -151,7 +183,7 @@ The flow preprocessor takes the same arguments as the script preprocessor and sh
 export async function preprocessor(
 	/* args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats/sqs, raw_email and parsed_email for email) */ 
 	wm_trigger: {
-		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'postgres' | 'kafka' | 'nats', 'sqs',
+		kind: 'http' | 'email' | 'webhook' | 'websocket' | 'postgres' | 'kafka' | 'nats' | 'sqs' | 'mqtt',
 		http?: {
 			route: string // The route path, e.g. "/users/:id"
 			path: string // The actual path called, e.g. "/users/123"
@@ -181,6 +213,21 @@ export async function preprocessor(
 				string_value?: string,
 				data_type: string
 			}>
+		},
+		mqtt?: {
+			topic: string,
+			retain: boolean,
+			pkid: number,
+			qos: number,
+			v5?: {
+				payload_format_indicator?: number,
+				topic_alias?: number,
+				response_topic?: string,
+				correlation_data?: Array<number>,
+				user_properties?: Array<[string, string]>,
+				subscription_identifiers?: Array<number>,
+				content_type?: string
+			}
 		}
 	}
 ) {
@@ -230,13 +277,30 @@ class Sqs(TypeDict):
    attributes: dict[str, str]
    message_attributes: dict[str, MessageAttribute] | None
 
+class MqttV5Properties:
+   payload_format_indicator: int | None
+   topic_alias: int | None
+   response_topic: str | None
+   correlation_data: list[int] | None
+   user_properties: list[tuple[str, str]] | None
+   subscription_identifiers: list[int] | None
+   content_type: str | None
+
+class Mqtt(TypeDict):
+   topic: str
+   retain: bool
+   pkid: int
+   qos: int
+   v5: MqttV5Properties | None
+
 class WmTrigger(TypedDict):
-    kind: Literal["http", "email", "webhook", "websocket", "postgres", "kafka", "nats", "sqs"]
+    kind: Literal["http", "email", "webhook", "websocket", "postgres", "kafka", "nats", "sqs", "mqtt"]
     http: Http | None
 	websocket: Websocket | None
 	kafka: Kafka | None
 	nats: Nats | None
 	sqs: Sqs | None
+	mqtt: Mqtt | None
 
 def preprocessor(
 	# args from the request body (e.g. webhook/http body args, msg for ws/kafka/nats, raw_email and parsed_email for email)
