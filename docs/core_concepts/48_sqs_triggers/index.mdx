@@ -1,30 +1,38 @@
-# SQS Triggers
+# SQS triggers
 
 Windmill can connect to an [SQS](https://aws.amazon.com/sqs/) queue and trigger runnables (scripts, flows) in response to messages received.  
 SQS triggers is a self-hosted Enterprise feature.
 
 For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html).
 
-![SQS triggers](./sqs_triggers.png)
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/-p4jznB5mMQ?vq=1080p"
+	title="SQS triggers"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
 
 ---
 
-## How to Use
+## How to use
 
-- **Pick an AWS Resource**  
-  - Select an existing AWS resource or create a new one.  
+- **Pick an AWS resource**  
+  - Select an existing [AWS resource](../../integrations/aws.md) or create a new one.  
   - The AWS resource must have permissions to interact with SQS.
 
-- **Select the Runnable to Execute**  
+- **Select the runnable to execute**  
   - Choose the runnable (script or flow) that should be executed when a message arrives in the queue.  
   - The message will be passed as a JSON object to the runnable.
 
-- **Provide an SQS Queue URL**  
+- **Provide an SQS queue URL**  
   - Enter the **Queue URL** of the SQS queue that should trigger the runnable.  
   - You can find the Queue URL in the AWS Management Console under SQS.  
   - For more details, see the [SQS Queue URL Documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-queue-message-identifiers.html#sqs-queue-url).
 
-- **Choose (Optional) Message Attributes**  
+- **Choose (optional) message attributes**  
   - Specify which message attributes should be included in the triggered event.  
   - These attributes can carry metadata, such as sender information or priority levels.  
   - For more details, see the [SQS Message Attributes Documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-message-metadata.html#sqs-message-attributes).
@@ -34,7 +42,7 @@ For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon
 
 Below are code examples demonstrating how to handle SQS messages in your Windmill scripts. You can either process messages directly in a basic script or use a preprocessor for more advanced message handling and transformation before execution.
 
-### Basic Script Example
+### Basic script example
 
 ```TypeScript
 export async function main(msg: string) {
@@ -42,11 +50,11 @@ export async function main(msg: string) {
 }
 ```
 
-### Using a Preprocessor
+### Using a preprocessor
 
 If you use a [preprocessor](../43_preprocessors/index.mdx), the preprocessor function receives an SQS message with the following fields:
 
-#### Field Descriptions
+#### Field descriptions
 
 - **`queue_url`**: The URL of the SQS queue that received the message.  
 - **`message_id`**: A unique identifier assigned to each message by SQS.  

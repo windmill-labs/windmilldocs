@@ -114,7 +114,7 @@ To have your instance switch from Free Edition to Enterprise Edition, make sure 
 
 Upon subscribing, you will receive a [license key](#using-the-license-key-self-host) to pass in the [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key). The key will self-update every day at 2 a.m CET as long as the subscription is valid (being paid). A key is valid for 35 days.
 
-Your license key can be used accross multiple instances. Just make sure to turn dev / staging instances as 'Non-prod' in the [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance) so that their computation usage is not taken into account.
+Your license key can be used accross multiple instances. Just make sure to turn dev / staging instances as 'Non-prod' in the [Instance settings](../../advanced/18_instance_settings/index.mdx#non-prod-instance) so that their computation usage is not taken into account. Seats however are counted in for non-prod instances as the unique set of users across all instances based on email address, therefore each user is counted only once.
 
 To adjust the number of seats, you can update your usage on the subscription page at [Windmill customer portal](#windmill-customer-portal).
 
@@ -153,7 +153,7 @@ If you have any questions, please contact support@windmill.dev
 
 ## Windmill Customer Portal
 
-As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal.
+As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal. If you want to monitor your usage in real time, you can 'Send usage' from your [instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (if you have several instances, make sure to do it for each instance) and check how it converts into seats and compute units from the portal.
 
 From the portal, you can adjust your subscription on your own. If you adjust your subscription during a billing cycle, you will be charged a prorated amount for the additional resources. This means you will only pay for the portion of the year that remains after the adjustment. For example on a yearly subscription, if you make the adjustment 10 months into the year, you would pay for approximately 2/12 of the annual cost for the additional resources.
 
@@ -177,7 +177,7 @@ Access to the portal is made through either:
 
 <br/>
 
-You can also enable/disable any time automatic renewal and automatic debit (therefore payment by invoice).
+You can also enable/disable automatic renewal and automatic debit at any time. If disabled, you will need to pay by invoice.
 
 This is also from the portal that you can [manage your issues and feature requests](../12_support_and_sla/index.mdx#feature-request-and-issue-dashboard). Access to the Issues Dasboard is made throught the 'Authorized domains'. Anyone with an email address from the set domains will be able to login to the issues page.
 
@@ -207,3 +207,7 @@ Using a number of seats, workers, or memory greater than the terms of your subsc
 3. Adjust your subscription via the [Customer Portal](#windmill-customer-portal).
 
 Once excessive usage has been detected and we have informed you, your license key will cease to auto-renew (as it does by default every day). This leaves you with a period of 35 days (the validity period of a key) to make the necessary adjustments on your side. At the end of the term, Windmill Enterprise Edition will stop running your jobs.
+
+### Excessive usage
+
+If the numbers we receive from telemetry exceeds the terms of the subscription on average at the end of the period, we will send you a warning to either clarify that it was a one-off exceptional event or to adjust your subscription. The key won't renew until clarification or adjustment is provided meaning there is a 35 days period to act on it before it will expire as it renews every day.

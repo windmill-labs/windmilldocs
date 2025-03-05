@@ -30,7 +30,7 @@ You can also enable automatic username creation from emails. Usernames will be s
 
 A more common way to add users is to use [SSO/OAuth](#authoauth).
 
-For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator) where an operator at the instace level is an operator in all workspaces they are member of), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
+For each user, you can see Email, Auth (manually-set password or Auth methods), Name, Kind ([Developer](../../core_concepts/16_roles_and_permissions/index.mdx#developer) or [Operator](../../core_concepts/16_roles_and_permissions/index.mdx#operator) where an operator at the instace level is an operator in all workspaces they are members of), and Role (User or [Superadmin](../../core_concepts/16_roles_and_permissions/index.mdx#superadmin)).
 
 You can also toggle on 'Show active users only' to show only users who have performed at least one action in the last 30 days. Only those users are counted in our [Pricing](/pricing).
 
@@ -89,7 +89,7 @@ If your subscription is active, the key is automatically renewed everyday. A key
 
 Whether we should consider the reported usage of this instance as non-prod.
 
-It is useful to avoid [counting the computation usage](/pricing#worker-reporting) of a non-prod instance in the billing.
+Non-prod instances work the same as prod instances in terms of features, but their [computation usage](/pricing#worker-reporting) is not counted in the billing. Seats count, however, are across all instances. If all instances using the same key are 'Non-prod', the one using most Compute Units will be counted as Prod.
 
 This setting is only available on [Enterprise Edition](/pricing).
 
@@ -414,6 +414,6 @@ The following information is collected:
 - memory usage
 - development instance status
 
-From the instance settings, you can manually send usage or disable telemetry.
+From the instance settings, you can manually disable telemetry or "Send usage" to send usage data to Windmill and monitor it from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal).
 
 Under [Enterprise Edition](/pricing) (self-hosted), telemetry is mandatory to ensure usage correctly matches the subscription.

@@ -22,11 +22,11 @@ export default function LogoClouds() {
 			anchor: 'kahoot'
 		},
 		{
-			url: 'https://www.qovery.com/',
-			dark: '/images/brands/Qovery-dark.svg',
-			light: '/images/brands/Qovery-light.svg',
-			name: 'Qovery',
-			anchor: 'qovery'
+			url: 'https://www.investing.com/',
+			dark: '/images/brands/Investing-Dark.svg',
+			light: '/images/brands/Investing-Light.svg',
+			name: 'Investing.com',
+			anchor: 'investing'
 		},
 		{
 			url: 'https://www.bloomcredit.io/',

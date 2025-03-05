@@ -16,16 +16,43 @@ local development through the [VS Code extension](../../cli_local_dev/1_vscode-e
 	/>
 </div>
 
-## Raw syncing
+Syncing is done using `wmill sync pull` & `wmill sync push`.
 
-Raw syncing will soon become the default.
+Syncing is a one-off operation with no state maintained. It will override any item that is within the scope: remove those that are in the target and not in the source, and it will create new items that are in source but not in target.
+It is a _dangerous_ operation, that we recommend doing on a version-controlled folder to be able to revert any undesired changes made by mistake if necessary. It will however, show you the list of changes and ask you for confirmation before applying them.
 
-Raw syncing is a one-off operation with no state maintained. When using Windmill EE and [Git sync](../11_git_sync/index.mdx),
-this is what you should use since Git sync will always keep your git repo up-to-date.
-When not used in with Git sync. It's best used for
-making backups, cloning a complete workspace, and similar one-off operations.
+To specify the scopes of files, you should modify the includes and excludes (array of path matchers) part of the `wmill.yaml` file generated with `wmill init`. We recommend looking at all the settings of the `wmill.yaml` file to understand the different options available.
+Those are the default ones:
 
-Raw syncing is done using `wmill sync pull` & `wmill sync push`
+```
+defaultTs: bun
+includes:
+  - f/**
+excludes: []
+codebases: []
+skipVariables: true
+skipResources: true
+skipSecrets: true
+includeSchedules: false
+includeTriggers: false
+```
+
+See more details in [wmill.yaml](#wmillyaml).
+
+Note that here, the variables, resources, secrets, schedules, and triggers are all skipped by default. You can change that by setting the corresponding options.g
+
+When pulling, the source is the remote workspace and the target is the local folder, and when pushing, the source is the local folder and the target is the remote workspace.
+
+To add a remote workspace, use `wmill workspace add`, and to switch workspace after having added multiple, use `wmill workspace switch <source_workspace_id>`. The workspaces can be on completely different instances.
+
+```bash
+wmill workspace switch <source_workspace_id>
+wmill sync pull
+wmill workspace switch <target_workspace_id>
+wmill sync push
+```
+
+It can be used for bi-directional sync using Windmill EE and [Git sync](../11_git_sync/index.mdx).
 
 ### Pulling
 
