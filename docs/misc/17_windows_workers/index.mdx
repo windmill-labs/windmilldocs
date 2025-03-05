@@ -37,40 +37,11 @@ After the basic setup, follow these steps for each language your worker should s
 
 ### Python executor
 
-1. **Install Python**: [Download Python](https://python.org/downloads).
-   - **Note**: When installing, make sure to check the box to add Python to the `PATH`.
-
-2. **Verify Python installation**:
-   - Open a new PowerShell window and type `python`. You should see output similar to the following:
-     ```powershell
-     PS C:\Users\Alex> python
-     Python 3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)] on win32
-     Type "help", "copyright", "credits" or "license" for more information.
-     >>> 
-     ```
-
-3. **Install `uv`**:
-   - Run the following command in PowerShell:
-     ```powershell
-     pip install uv
-     ```
-
-4. **Locate Python installation**:
-   - Find where Python is installed by running:
-     ```powershell
-     where.exe python
-     ```
-     Example output:
-     ```plaintext
-     C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
-     ```
-
-5. **Set environment variables**:
-   - Add the following environment variables (replace the placeholders with your specific values):
-     ```powershell
-     # Replace these variables with your specific configuration
-     $env:PYTHON_PATH="C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe"
-     ```
+1. **Install uv**:
+   ```powershell
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+You can also check other installation methods in uv`s [official documentation](https://docs.astral.sh/uv/getting-started/installation/).
 
 ### Bun executor
 
