@@ -66,7 +66,7 @@ This would be a settable setting such that the layout within the buckets can fol
 		description: `SDK clients should automatically propagate to the workers (maybe using a special pattern in stdout) that there is some strings that are sensitive because they correspond to secrets pulled with getResource and getValue. Additionally, workers should be able to have a list of values to consider secrets synced from an external source-of-truth. Those sensitive values would always be masked in logs.`
 	},
 	{
-		title: 'feature: Database explorer for every SQL',
+		title: 'Database explorer for every SQL',
 		month: 'May',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5448',
