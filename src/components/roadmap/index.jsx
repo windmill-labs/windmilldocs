@@ -50,6 +50,30 @@ const roadmapItems = [
 		description: ''
 	},
 	{
+		title: 'Settable permissions within object storage by folders',
+		month: 'April',
+		category: 'Backend',
+		issueLink: 'https://github.com/windmill-labs/windmill/issues/5446',
+		description: `Currently the workspace object storage is all or nothing. You can either see the object explorer or not, and you can either write and read everywhere or not.
+
+This would be a settable setting such that the layout within the buckets can follow the standard u/ and f/ layouts of windmill and that list, read and write permissions would be inherited from the folder permissions.`
+	},
+	{
+		title: 'feature: Database explorer for every SQL',
+		month: 'May',
+		category: 'Developer',
+		issueLink: 'https://github.com/windmill-labs/windmill/issues/5448',
+		description: `It would be nice to have a database explorer similar to Supabase to explore your database data and run REPL like commands directly from a windmill db resource`
+	},
+	{
+		title: 'SSH-like repl direct to workers (ee)',
+		month: 'April',
+		category: 'Developer',
+		issueLink: 'https://github.com/windmill-labs/windmill/issues/5447',
+		description: `feature: SSH-like repl direct to workers (ee)`
+	},
+
+	{
 		title: 'Dedicated workers improvements',
 		month: 'May',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5337',
