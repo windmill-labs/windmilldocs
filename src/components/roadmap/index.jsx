@@ -59,6 +59,13 @@ const roadmapItems = [
 This would be a settable setting such that the layout within the buckets can follow the standard u/ and f/ layouts of windmill and that list, read and write permissions would be inherited from the folder permissions.`
 	},
 	{
+		title: 'Hide sensitive values from logs',
+		month: 'June',
+		category: 'Backend',
+		issueLink: 'https://github.com/windmill-labs/windmill/issues/5450',
+		description: `SDK clients should automatically propagate to the workers (maybe using a special pattern in stdout) that there is some strings that are sensitive because they correspond to secrets pulled with getResource and getValue. Additionally, workers should be able to have a list of values to consider secrets synced from an external source-of-truth. Those sensitive values would always be masked in logs.`
+	},
+	{
 		title: 'feature: Database explorer for every SQL',
 		month: 'May',
 		category: 'Developer',
@@ -69,7 +76,7 @@ This would be a settable setting such that the layout within the buckets can fol
 		title: 'SSH-like repl direct to workers (ee)',
 		month: 'April',
 		category: 'Developer',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5447',
+		issueLink: 'https://github.com/windmill-labs/windmill/issues/5449',
 		description: `feature: SSH-like repl direct to workers (ee)`
 	},
 
