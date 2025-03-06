@@ -78,7 +78,7 @@ const roadmapItems = [
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5433',
 		important: true,
 		description:
-			'Write apps fully in code in React/Svelte/Vue with any libraries and see preview and code editor directly'
+			'Write apps fully in code in React/Svelte/Vue with any libraries and see preview and code editor directly. If you like Lovable/v0.dev, you will love this since it will be equivalent but much better integrated with windmill backend flow/script capabilities.'
 	},
 	{
 		title: 'Agent workers through HTTP',
