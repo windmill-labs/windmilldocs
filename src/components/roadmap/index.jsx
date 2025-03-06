@@ -12,6 +12,14 @@ const roadmapItems = [
 		important: true
 	},
 	{
+		title: 'GCP PubSub Support',
+		month: 'March',
+		category: 'Integration',
+		issueLink: 'https://github.com/windmill-labs/windmill/issues/5445',
+		description:
+			'Currently, Windmill does not have a native support for GCP PubSub. It would be great to have a native support for GCP PubSub.'
+	},
+	{
 		title: 'Backend side jsonschema validation of args',
 		month: 'March',
 		category: 'Backend',
