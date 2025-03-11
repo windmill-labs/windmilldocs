@@ -473,7 +473,67 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							</>
 						)}
 
-						{/* Add the new text here for enterprise plans */}
+						{/* Move plans section here for enterprise cloud */}
+						{tier.id === 'tier-enterprise-cloud' && (
+							<div className="mt-8">
+								<RadioGroup value={selected} onChange={setSelected}>
+									<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+									<div className="space-y-4 mt-4">
+										{plans.map((plan) => (
+											<RadioGroup.Option
+												key={plan.name}
+												value={plan}
+											>
+												{({ checked, active }) => (
+													<div className={classNames(
+														checked ? 'border-transparent' : 'border-gray-300',
+														active ? 'border-blue-600 ring-2 ring-blue-600' : '',
+														'relative block cursor-pointer rounded-lg border p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
+													)}>
+														<span className="flex items-center w-full">
+															<span className="flex flex-col text-sm w-full">
+																<RadioGroup.Label
+																	as="span"
+																	className="font-medium text-gray-900 dark:text-white"
+																>
+																	{plan.name}
+																</RadioGroup.Label>
+																<RadioGroup.Description
+																	as="span"
+																	className="text-gray-500 dark:text-gray-300"
+																>
+																	<span className="block sm:inline">{plan.description}</span>
+																</RadioGroup.Description>
+																<RadioGroup.Description as="div" className="flex w-full justify-end">
+																	+
+																	<span className="text-sm text-gray-900 font-semibold dark:text-white">
+																		${calculatePrice(plan.price, period.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+																	</span>
+																	<span className="text-sm text-gray-500 dark:text-gray-300">
+																		{period.value === 'annually' ? '/yr' : '/mo'}
+																	</span>
+																</RadioGroup.Description>
+															</span>
+														</span>
+
+														<span
+															className={classNames(
+																'border',
+																checked ? 'border-blue-600' : 'border-transparent',
+																'pointer-events-none absolute -inset-px rounded-lg'
+															)}
+															aria-hidden="true"
+														/>
+													</div>
+												)}
+											</RadioGroup.Option>
+										))}
+									</div>
+								</RadioGroup>
+							</div>
+						)}
+
+						{/* Add the simulation text here for enterprise plans */}
 						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
 							<p className="mt-6 text-sm text-gray-600 dark:text-gray-200">
 								Get a simulation of the number of Units needed by reproducing your workers config below.{' '}
@@ -623,68 +683,6 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 						)}
 					</ul>
 				</div>
-				{tier.id === 'tier-enterprise-cloud' ? (
-					<div className="mt-8">
-						<RadioGroup value={selected} onChange={setSelected}>
-							<RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-							<div className="space-y-4 mt-4">
-								{plans.map((plan) => (
-									<RadioGroup.Option
-										key={plan.name}
-										value={plan}
-										className={({ checked, active }) =>
-											classNames(
-												checked ? 'border-transparent' : 'border-gray-300',
-												active ? 'border-blue-600 ring-2 ring-blue-600' : '',
-												'relative block cursor-pointer rounded-lg border p-3 shadow-sm focus:outline-none sm:flex sm:justify-between'
-											)
-										}
-									>
-										{({ active, checked }) => (
-											<>
-												<span className="flex items-center w-full">
-													<span className="flex flex-col text-sm w-full">
-														<RadioGroup.Label
-															as="span"
-															className="font-medium text-gray-900 dark:text-white"
-														>
-															{plan.name}
-														</RadioGroup.Label>
-														<RadioGroup.Description
-															as="span"
-															className="text-gray-500 dark:text-gray-300"
-														>
-															<span className="block sm:inline">{plan.description}</span>
-														</RadioGroup.Description>
-														<RadioGroup.Description as="div" className="flex w-full justify-end">
-															+
-															<span className="text-sm text-gray-900 font-semibold dark:text-white">
-																${calculatePrice(plan.price, period.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-															</span>
-															<span className="text-sm text-gray-500 dark:text-gray-300">
-																{period.value === 'annually' ? '/yr' : '/mo'}
-															</span>
-														</RadioGroup.Description>
-													</span>
-												</span>
-
-												<span
-													className={classNames(
-														'border',
-														checked ? 'border-blue-600' : 'border-transparent',
-														'pointer-events-none absolute -inset-px rounded-lg'
-													)}
-													aria-hidden="true"
-												/>
-											</>
-										)}
-									</RadioGroup.Option>
-								))}
-							</div>
-						</RadioGroup>
-					</div>
-				) : null}
-
 				{tier.id === 'tier-team' ? (
 					<div className="mt-8 flex flex-col gap-1">
 						<h5 className="font-semibold">Summary</h5>
