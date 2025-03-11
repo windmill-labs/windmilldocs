@@ -174,6 +174,11 @@ const config = {
 						position: 'left',
 						label: 'Changelog'
 					},
+					{
+						href: '/roadmap',
+						position: 'left',
+						label: 'Roadmap'
+					},
 					// {
 					// 	href: '/hiring',
 					// 	position: 'right',
