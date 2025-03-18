@@ -70,15 +70,27 @@ Once it's saved, you can test the login by clicking on the `Test` button at the 
 
 Configure Okta with the following settings (and replace cf.wimill.xyz with your domain):
 
+:::warning
+The `/api/scim` endpoint of your windmill instance needs to be exposed to the internet for Okta to push groups/users to your windmill instance.
+:::
+
+
 ![Okta SCIM](okta-scim2.png.webp)
 
 ![Okta SCIM](okta-scim1.png.webp)
 
 ![Instance settings UI](instance_settings.png)
 
-In the Instance settings UI, set the SCIM token containing the secret value that you will share to Okta.
+In the Instance settings UI, choose a random secure string as a SCIM token that you will set in the Okta SCIM connection setting's "Authentication Mode -> HTTP Header".
 
 ![Okta SCIM](okta-scim.png.webp)
+
+<video
+className="border-2 rounded-xl object-cover w-full h-full"
+controls
+muted
+src="/videos/okta_scim.mp4"
+/>
 
 ### Microsoft Azure
 

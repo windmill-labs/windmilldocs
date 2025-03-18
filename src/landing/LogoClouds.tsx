@@ -26,6 +26,7 @@ export default function LogoClouds() {
 			dark: '/images/brands/Investing-Dark.svg',
 			light: '/images/brands/Investing-Light.svg',
 			name: 'Investing.com',
+			anchor: 'investing'
 		},
 		{
 			url: 'https://www.bloomcredit.io/',

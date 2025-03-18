@@ -4,6 +4,12 @@ import DocCard from '@site/src/components/DocCard';
 
 Environment variables are used to configure the behavior of scripts and services, allowing for dynamic and flexible execution across different environments.
 
+You can retrieve environment variables from a script with the `Contextual` tab on the [Variable](../2_variables_and_secrets/index.mdx) page.
+
+You can use them in a Script by clicking on "+Context Var":
+
+![Contextual variable](../2_variables_and_secrets/context_variables.png.webp)
+
 ## List of environment variables
 
 | Name | Default                | Description                                                                                                                                                                                        | Api Server/Worker/All |
@@ -22,7 +28,7 @@ Environment variables are used to configure the behavior of scripts and services
 | SLACK_SIGNING_SECRET      | None                   | The signing secret of your Slack app. See [Slack documentation](https://api.slack.com/authentication/verifying-requests-from-slack)                                                                | Server                |
 | COOKIE_DOMAIN             | None                   | The domain of the cookie. If not set, the cookie will be set by the browser based on the full origin                                                                                               | Server                |
 | DENO_PATH                 | /usr/bin/deno          | The path to the deno binary.                                                                                                                                                                       | Worker                |
-| PYTHON_PATH               | /usr/local/bin/python3 | The path to the python binary.                                                                                                                                                                     | Worker                |
+| PYTHON_PATH (not recommended) | /usr/local/bin/python3 | The path to the python binary. If used [selecting python version](http://localhost:3000/docs/getting_started/scripts_quickstart/python#select-python-version) will not work and scripts will be executed using provided python.                                                             | Worker                |
 | GO_PATH                   | /usr/bin/go            | The path to the go binary.                                                                                                                                                                         | Worker                |
 | GOPRIVATE                 |                        | The GOPRIVATE env variable to use private go modules                                                                                                                                               | Worker                |
 | GOPROXY                   |                        | The GOPROXY env variable to use                                                                                                                                                                    | Worker                |
@@ -38,17 +44,14 @@ Environment variables are used to configure the behavior of scripts and services
 | DISABLE_RESPONSE_LOGS          | false                   | Disable response logs                                                   | Server                |
 | CREATE_WORKSPACE_REQUIRE_SUPERADMIN | true | If true, only superadmins can create new workspaces | Server |
 | WM_MOCKED_API_FILE | /path/to/mocked_api.json | Path to the mocked API file | All |
+| MAX_SESSION_VALIDITY_SECONDS | 3 * 24 * 60 * 60    | Session will be invalidated after this amount of seconds of inactivity (default 3 days) 																											  | Server                |
+| INVALIDATE_OLD_SESSIONS   | false                  | Existing session will be invalidated if new session is created if set to true (default false) 																								      | Server                |
+| INVALIDATE_ALL_SESSIONS_ON_LOGOUT | false          | All sessions will be invalidated on logout if set to true (default false) 																								                          | Server                |
 
 ## Contextual variables
 
 Contextual variables are environment variables automatically set by Windmill. This is how the Deno and Python clients get their implicit
 credentials to interact with the platform.
-
-See the `Contextual` tab on the [Variable](../2_variables_and_secrets/index.mdx) page for the list of reserved variables and what they are used for.
-
-You can use them in a Script by clicking on "+Context Var":
-
-![Contextual variable](../2_variables_and_secrets/context_variables.png.webp)
 
 | Name | Example of value | Description |
 |------|------------------|-------------|

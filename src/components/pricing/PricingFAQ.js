@@ -119,7 +119,13 @@ const faqs = [
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					worker
-				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. On self-hosted plans, any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units).
+				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. On self-hosted plans, any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). For detailed information on how your setup translates to compute units, see the{' '}
+				<Link
+					to="/docs/misc/plans_details#setup-and-compute-units"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					setup and compute units guide
+				</Link>.
 			</span>
 		)
 	},
@@ -193,7 +199,13 @@ const faqs = [
 				>
 					workers
 				</a>
-				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. On self-hosted plans, any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). On cloud EE, it scales linearly with the memory limit. The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. Each worker can run up to ~26M jobs per month (at 100ms per job).
+				, pricing is based on compute units. A compute unit corresponds to 2 worker-gb-month. For example, a worker with 2GB of memory limit (standard worker) counts as 1 compute unit. A worker with 4GB of memory (large worker) counts as 2 compute units. On self-hosted plans, any worker with memory above 2GB counts as 2 compute units (16GB worker counts as 2 compute units). On cloud EE, it scales linearly with the memory limit. The number of compute units is calculated based on the memory limits set for your workers in production instances. You can set memory limits in docker-compose or Kubernetes manifests to control your compute unit usage. For detailed information on how your setup translates to compute units, see the{' '}
+				<Link
+					to="/docs/misc/plans_details#setup-and-compute-units"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					setup and compute units guide
+				</Link>. Each worker can run up to ~26M jobs per month (at 100ms per job).
 				<br />
 				<br />
 				Windmill employs{' '}
@@ -236,6 +248,17 @@ const faqs = [
 		answer: (
 			<span>
 				Payment is processed through Stripe and can be made using ACH, bank transfer, Cash App Pay, or credit or debit card. Subscriptions can be made by automatic debit or by invoice.
+			</span>
+		)
+	},
+	{
+		id: 'usage-based-billing',
+		question: 'Is Windmill billed based on usage?',
+		answer: (
+			<span>
+				Only the Teams plan is billed based on actual usage. For Enterprise Edition and Pro plans, you commit to terms that fit within a given range of seats and Compute Units, providing more predictable pricing.
+				<br /><br />
+				If your usage temporarily exceeds your subscription terms on EE or Pro plans, you will be notified and given 35 days to address the situation before your latest license key expires.
 			</span>
 		)
 	},
