@@ -36,7 +36,7 @@ export default function Careers() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer arDPgCvSsZlp3oPKdaGXtKFYxEuNOgyq'
+            'Authorization': 'Bearer arDPgCvSsZlp3oPKdaGXtKFYxEuNOgyq' // intentionally, harmless token
           },
           body: JSON.stringify({})
         });
