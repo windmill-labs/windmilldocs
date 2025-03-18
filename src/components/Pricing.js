@@ -468,6 +468,7 @@ export default function Pricing() {
 			<div className="mx-auto max-w-7xl">
 				<div className="mx-auto max-w-4xl text-center">
 					<p className="text-4xl font-bold tracking-tight sm:text-5xl">Pricing</p>
+					<p className="text-lg font-medium text-gray-600 dark:text-gray-300 mt-2">Open source. Open pricing. No lock-in.</p>
 				</div>
 
 				<div className="mt-12 flex justify-center flex-col gap-4 items-center">
