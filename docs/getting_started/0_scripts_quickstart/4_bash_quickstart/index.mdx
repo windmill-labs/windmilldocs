@@ -7,9 +7,9 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Bash / PowerShell quickstart
+# Bash / PowerShell / Nu quickstart
 
-In this quick start guide, we will write our first script in Bash and PowerShell.
+In this quick start guide, we will write our first script in Bash, PowerShell or Nu.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -53,7 +53,7 @@ Scripts consist of 2 parts:
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.sh` and `<path>.script.yaml`.
 
-Below is a simple example of a script built in Bash/Powershell with Windmill:
+Below is a simple example of a script built in Bash/Powershell/Nu with Windmill:
 
 <Tabs className="unique-tabs">
 <TabItem value="bash" label="Bash" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -84,6 +84,22 @@ if ($status_code -like "2*" -or $status_code -like "3*") {
     Write-Host "The URL is reachable!"
 } else {
     Write-Host "The URL is not reachable."
+}
+```
+</TabItem>
+<TabItem value="nu" label="Nu" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+def main [
+  url: string = "default value"
+] {
+  try {
+    # Nu will throw an error automatically if request fails
+    http get $url
+    echo "The URL is reachable!"
+  } catch {
+    echo "The URL is not reachable."
+  }
 }
 ```
 
@@ -184,6 +200,76 @@ Default arguments can be specified using the syntax above: `$argument_name = "It
 
 The last line of the output, here `Write-Output "Hello $Msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
+### Nu
+
+Unlike `Bash` and `PowerShell`, `Nu` requires main function and all arguments should defined in signature.
+It supports typed, optional and default arguments.
+
+<Tabs className="unique-tabs">
+<TabItem value="simple" label="Simple" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+def main [ msg, dflt = "default value", nb: number = 3 ] {
+	echo $"Hello ($msg)"
+}
+```
+</TabItem>
+<TabItem value="complete" label="Complete" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+use std assert
+# Nushell
+# A new type of shell
+def main [
+    no_default: string,
+    name = "Nicolas Bourbaki",
+    age: int = 42,
+    date_of_birth?: datetime,
+    obj: record = {"records": "included"},
+    l: list<string> = ["or", "lists!"],
+    tables?: table,
+    enable_kill_mode?: bool = true,
+] {
+    # Test
+    # https://www.nushell.sh/book/testing.html
+		assert ($age == 42)
+
+    print $"Hello World and a warm welcome especially to ($name)"
+    print "and its acolytes.." $age $obj $l
+    print $tables
+
+    let secret = try { 
+      get_variable f/examples/secret
+    } catch { 
+      'No secret yet at f/examples/secret !' 
+    };
+
+    print $"The variable at \`f/examples/secret\`: ($secret)"
+    # fetch context variables
+    let user = $env.WM_USERNAME
+
+    # Nu pipelines
+    ls | where size > 1kb | sort-by modified | print "ls:" $in
+
+    # Nu works with existing data
+    # Nu speaks JSON, YAML, SQLite, Excel, and more out of the box. 
+    # It's easy to bring data into a Nu pipeline whether it's in a file, a database, or a web API:
+    let nu_license = http get https://api.github.com/repos/nushell/nushell | get license
+
+    return { splitted: ($name | split words), user: $user, nu_license: $nu_license}
+    # Interested in learning more?
+    # https://www.nushell.sh/book/getting_started.html
+
+```
+
+</TabItem>
+</Tabs>
+
+One of the strong sides of `Nu` is that it is cross-platform. If you have linux workers and [windows workers](../../../misc/17_windows_workers/index.mdx)
+Nushell scripts will be able to run on both!
+
+If you are interested in `Nu` you can read their [official documentation](https://www.nushell.sh/book/getting_started.html)
+
 ## Instant preview & testing
 
 Look at the UI preview on the right: it was updated to match the input
@@ -213,6 +299,13 @@ argument_name="${1:-Its default value}"
 
 ```bash
 $argument_name = "Its default value"
+```
+
+</TabItem>
+<TabItem value="nu" label="Nu" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+def main [ argument_name = "Its default value" ] { }
 ```
 
 </TabItem>
@@ -276,6 +369,8 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 ## JSON result
 
 The last line returned by the script will be the string result. To use a json result instead, output your result in `./result.json` and it will be automatically picked-up and considered as the JSON result for Bash and Powershell scripts.
+
+For Nu first returned data from main function will be used as a result.
 
 ## Run Docker containers
 
