@@ -203,7 +203,7 @@ The last line of the output, here `Write-Output "Hello $Msg"`, is the return val
 ### Nu
 
 Unlike `Bash` and `PowerShell`, `Nu` requires main function and all arguments should defined in signature.
-It supports typed, optional, default and nested arguments.
+It supports typed, optional and default arguments.
 
 <Tabs className="unique-tabs">
 <TabItem value="simple" label="Simple" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -218,23 +218,19 @@ def main [ msg, dflt = "default value", nb: number = 3 ] {
 
 ```python
 use std assert
-
-# Flexible argument inputs
+# Nushell
+# A new type of shell
 def main [
     no_default: string,
     name = "Nicolas Bourbaki",
     age: int = 42,
     date_of_birth?: datetime,
-    obj: record = {records: "included"},
+    obj: record = {"records": "included"},
     l: list<string> = ["or", "lists!"],
-    tables: table<a: string, b: string, c: number> = [
-      { a: "table",   b: "is just a", c: 100 },
-      { a: "list of", b: "records",   c: 999 }
-    ]
-    work_with_bytes?: binary,
+    tables?: table,
     enable_kill_mode?: bool = true,
 ] {
-    # Testing
+    # Test
     # https://www.nushell.sh/book/testing.html
 		assert ($age == 42)
 
@@ -243,13 +239,12 @@ def main [
     print $tables
 
     let secret = try { 
-			# Get windmill variables easily!
       get_variable f/examples/secret
     } catch { 
       'No secret yet at f/examples/secret !' 
     };
 
-    print $"The variable at `f/examples/secret`: ($secret)"
+    print $"The variable at \`f/examples/secret\`: ($secret)"
     # fetch context variables
     let user = $env.WM_USERNAME
 
@@ -262,7 +257,8 @@ def main [
     let nu_license = http get https://api.github.com/repos/nushell/nushell | get license
 
     return { splitted: ($name | split words), user: $user, nu_license: $nu_license}
-}
+    # Interested in learning more?
+    # https://www.nushell.sh/book/getting_started.html
 
 ```
 
