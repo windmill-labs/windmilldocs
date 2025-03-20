@@ -523,9 +523,43 @@ You can then write your prepared statement.
 
 ## Raw queries
 
-A more convenient but less secure option is to execute raw queries with a TypeScript, Deno or Python client. This enables you more flexibility than SQL prepared statement. You can for instance do string interpolation to make the name of the table a parameter of your script: `SELECT * FROM ${table}`. However this is dangerous since the string is directly interpolated and this open the door for [SQL injections](https://en.wikipedia.org/wiki/SQL_injection). Use with care and only in trusted environment.
+### Safe Interpolated Arguments
 
-### PostgreSQL
+To allow more flexibility than with prepared statements, Windmill offers the possibility to do safe string interpolation in your queries. This allows you to use script parameters for elements you would usually not be able to, such as table or column names. In order to avoid SQL injections however, these parameters are checked at runtime and the job will fail if any of these rules is not followed:
+
+- The parameter is a non-empty string.
+- The characters are all either alphabetical (ASCII only), numeric, or an underscore (`_`). Meaning no whitespace or symbol is allowed.
+- The string does not start with a number.
+- If the parameter is an enum, it must be one of the defined variants.
+
+These rules are strict enough to protect from any kind of unexpected injection, but lenient enough to have some powerful use cases. Let's look at an example:
+
+```sql
+-- :daily_minimum_calories (int)
+-- %%table_name%% fruits/vegetables/cereals
+
+SELECT name, calories FROM %%table_name%% WHERE calories > daily_minimum_calories
+```
+
+In this example the argument `table_name` is defined as a string that can be either `"fruits"`, `"vegetables"` or `"cereals"`, and the user of the script can then choose which table to query by setting this argument. If the user of the script tries to query a different table, the job will fail before making a connection to the DB, and thus protecting potentially sensitive data.
+
+It the enum variants are ommited, the field is considered to be a regular string and only the other rules apply:
+
+```sql
+-- :daily_minimum_calories (int)
+-- %%table_name%%
+
+SELECT name, calories FROM %%table_name%% WHERE calories > daily_minimum_calories
+```
+
+Keep in mind that this means users of this script can try this query against all existant and non-existant tables of the database.
+
+
+### Unsafe interpolation on a REST script
+
+A more convenient but less secure option is to execute raw queries with a TypeScript, Deno or Python client. You can for instance do string interpolation to make the name of the table a parameter of your script: `SELECT * FROM ${table}`. However this is dangerous since the string is directly interpolated and this open the door for [SQL injections](https://en.wikipedia.org/wiki/SQL_injection). Use with care and only in trusted environment.
+
+#### PostgreSQL
 
 <Tabs className="unique-tabs">
 
@@ -684,7 +718,7 @@ You can find more Script examples related to PostgreSQL on
 
 :::
 
-### MySQL
+#### MySQL
 
 The same logic goes for MySQL.
 
