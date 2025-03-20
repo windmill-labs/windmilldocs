@@ -299,3 +299,38 @@ You can also do your own filtering and sorting of the options. In the example ab
     controls
     src="/videos/dynamic_select.mp4"
 />
+
+## Backend Schema Validation
+
+By default, the schema is not explicitly checked by Windmill. For example, when triggering a script via Webhook, it is possible to pass an arbitrary JSON payload for the arguments, and Windmill workers will just try to execute the script with it.
+
+In some cases, you might want the job to fail if the payload does not follow the defined schema. For this, just add the `schema_validation` annotation as a comment to the top of your script. The logs should tell you if schema validation is taking place.
+
+For example in TypeScript:
+
+```ts
+// schema_validation
+
+export async function main(
+  a: number,
+  b: "my" | "enum",
+  e = "inferred type string from default arg",
+  f = { nested: "object" },
+  g: {
+    label: "Variant 1",
+    foo: string
+  } | {
+    label: "Variant 2",
+    bar: number
+  }
+) {
+  return { foo: a };
+}
+```
+
+Here, if we were to pass a string to `a` instead of a number, or pass `"something else"` to `b` instead of `"my"` or `"enum"`, or even if the shape of `g` does not correspond to one of the OneOf variants, the job will fail.
+
+This was an example in TypeScript but backend schema validation is available on all languages.
+
+Note that this validation is not a fully JSON schema compliant. The checks you can expect are type and shape, required fields, strict enums. One thing that is not supported yet for instance is matching regex patterns on strings. When in doubt, it's best to test it out or provide your own checks.
+
