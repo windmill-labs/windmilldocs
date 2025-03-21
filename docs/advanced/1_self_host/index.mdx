@@ -586,6 +586,10 @@ Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml 
 
 Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with the same value in the worker’s environment variables.
 
+### Configure Java's Trust:
+
+keytool -importcert -alias "your.corp.com" -file "path/to/cert.crt" -keystore cacerts
+
 <!-- Resources -->
 
 [caddy]: https://caddyserver.com/
