@@ -300,13 +300,13 @@ You can also do your own filtering and sorting of the options. In the example ab
     src="/videos/dynamic_select.mp4"
 />
 
-## Backend Schema Validation
+## Backend schema validation
 
-By default, the schema is not explicitly checked by Windmill. For example, when triggering a script via Webhook, it is possible to pass an arbitrary JSON payload for the arguments, and Windmill workers will just try to execute the script with it.
+By default, the schema is not explicitly checked by Windmill. For example, when triggering a script via [webhook](../4_webhooks/index.mdx), it is possible to pass an arbitrary JSON payload for the arguments, and Windmill [workers](../9_worker_groups/index.mdx) will just try to execute the script with it.
 
 In some cases, you might want the job to fail if the payload does not follow the defined schema. For this, just add the `schema_validation` annotation as a comment to the top of your script. The logs should tell you if schema validation is taking place.
 
-For example in TypeScript:
+For example in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx):
 
 ```ts
 // schema_validation
@@ -330,7 +330,6 @@ export async function main(
 
 Here, if we were to pass a string to `a` instead of a number, or pass `"something else"` to `b` instead of `"my"` or `"enum"`, or even if the shape of `g` does not correspond to one of the OneOf variants, the job will fail.
 
-This was an example in TypeScript but backend schema validation is available on all languages.
+This was an example in TypeScript but backend schema validation is available on all [languages](../../getting_started/0_scripts_quickstart/index.mdx), in particular for [SQL safe interpolated arguments](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#safe-interpolated-arguments).
 
 Note that this validation is not a fully JSON schema compliant. The checks you can expect are type and shape, required fields, strict enums. One thing that is not supported yet for instance is matching regex patterns on strings. When in doubt, it's best to test it out or provide your own checks.
-

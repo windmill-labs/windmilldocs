@@ -523,9 +523,9 @@ You can then write your prepared statement.
 
 ## Raw queries
 
-### Safe Interpolated Arguments
+### Safe interpolated arguments
 
-To allow more flexibility than with prepared statements, Windmill offers the possibility to do safe string interpolation in your queries. This allows you to use script parameters for elements you would usually not be able to, such as table or column names. In order to avoid SQL injections however, these parameters are checked at runtime and the job will fail if any of these rules is not followed:
+To allow more flexibility than with prepared statements, Windmill offers the possibility to do safe string interpolation in your queries thanks to [backend schema validation](../../../core_concepts/13_json_schema_and_parsing/index.mdx#backend-schema-validation). This allows you to use script parameters for elements you would usually not be able to, such as table or column names. In order to avoid SQL injections however, these parameters are checked at runtime and the job will fail if any of these rules is not followed:
 
 - The parameter is a non-empty string.
 - The characters are all either alphabetical (ASCII only), numeric, or an underscore (`_`). Meaning no whitespace or symbol is allowed.
