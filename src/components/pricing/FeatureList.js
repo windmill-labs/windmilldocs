@@ -457,6 +457,17 @@ export const sections = [
 				link: '/docs/advanced/git_sync'
 			},
 			{
+				name: 'GitHub App',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/integrations/git_repository#github-app'
+			},
+			{
 				name: 'Deploy to staging/prod web UI',
 				tiers: {
 					'tier-free-selfhost': false,
