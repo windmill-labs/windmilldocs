@@ -103,7 +103,7 @@ export default function Careers() {
         </LandingSection>
         <LandingSection bgClass="relative">
           <div className="space-y-8 pt-32 pb-16">
-            <h2 className="!text-3xl font-bold tracking-tight sm:!text-4xl mb-8 text-center">Back to the essence of code</h2>
+            <h2 className="!text-3xl font-bold tracking-tight sm:!text-4xl mb-10 text-center">Back to the essence of code</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left max-w-4xl mx-auto px-6 sm:px-10 lg:px-12">
               <div className="space-y-5">
                 <p className="text-md">
