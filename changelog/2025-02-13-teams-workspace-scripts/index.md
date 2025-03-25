@@ -1,7 +1,7 @@
 ---
 slug: teams-workspace-integration
 version: v1.462.0
-title: Microsoft Teams Workspace Scripts
+title: Microsoft Teams workspace scripts
 tags: ['Microsoft Teams', 'Error handling']
 description: Windmill now supports Microsoft Teams integration, allowing you to trigger scripts and flows directly from Teams commands and receive error notifications.
 features:
