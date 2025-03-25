@@ -1,6 +1,6 @@
 # Deploy to prod using the UI
 
-From a workspace in Windmill, you can deploy a script/flow/resource/variable and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
+From a workspace in Windmill, you can deploy a item and all its dependencies to another workspace. This is a natural way of implementing staging/prod. This feature is available for [Cloud plans and Self-Hosted Enterprise Edition](/pricing) only.
 
 :::info Deploy to prod
 
@@ -27,11 +27,20 @@ The [Draft and deploy](../0_draft_and_deploy/index.mdx) is another feature that 
 
 For users with admin rights on the source workspace, in the `Workspace` settings, go to the "Deployment UI" tab and pick a workspace for "Workspace to link to".
 
+Items that can be deployed are:
+- [Scripts](../../script_editor/index.mdx)
+- [Flows](../../flows/1_flow_editor.mdx)
+- [Resources](../3_resources_and_types/index.mdx)
+- [Variables](../2_variables_and_secrets/index.mdx)
+- [Triggers](../../getting_started/8_triggers/index.mdx)
+
+You can filter out on each of these types so that they won't be deployed.
+
 ![Link to a workspace](./workspace_to_link_to.png 'Link to a workspace')
 
-This workspace to link to can for example be:
+The workspace to link to can for example be:
 
-- a Staging workspace to test scrips and flows
+- a Staging workspace to test scripts and flows
 - a Prod workspace where you can deploy scripts and flows when ready.
 
 Then, from the workspace, on the `⋮` menu of each [deployed](../0_draft_and_deploy/index.mdx#deployed-version) script or flow, pick "Deploy to staging/prod". This can be done also from the [Resources](../3_resources_and_types/index.mdx) and [Variables](../2_variables_and_secrets/index.mdx) menus or directly from a script or flow `Details` page.
