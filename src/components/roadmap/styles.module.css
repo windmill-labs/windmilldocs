@@ -245,7 +245,7 @@
 	width: 32px;
 	height: 32px;
 	background-color: var(--ifm-background-color);
-	border: 4px solid var(--ifm-color-primary);
+	border: 4px solid var(--ifm-color-primary-dark);
 	border-radius: 50%;
 	z-index: 2;
 }
@@ -256,7 +256,7 @@
 	top: 6px;
 	font-size: 1rem;
 	font-weight: 600;
-	color: var(--ifm-color-primary);
+	color: var(--ifm-color-primary-dark);
 	white-space: nowrap;
 	text-align: left;
 	width: 90px;
@@ -291,6 +291,7 @@
 	width: 100%;
 	margin-bottom: 0.5rem;
 	margin-top: 0;
+	color: oklch(0.446 0.043 257.281)
 }
 
 .cardCategory {
@@ -325,7 +326,8 @@
 	max-height: 500px;
 }
 
-.cardContent:not(:hover) .cardText::after {
+/* Only show the down arrow for truncated text */
+.cardContent:not(:hover) .cardText.truncated::after {
 	content: '▼';
 	position: absolute;
 	bottom: 0;
@@ -336,7 +338,8 @@
 	transition: opacity 0.2s ease;
 }
 
-.cardContent:hover .cardText::after {
+/* Hide arrow on hover for all cards */
+.cardContent:hover .cardText.truncated::after {
 	opacity: 0;
 }
 
@@ -379,7 +382,7 @@
 }
 
 .timelineCard.important .cardContent {
-	box-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
+	box-shadow: 0 0 15px rgba(49, 130, 211, 0.5);
 	border-width: 3px;
 }
 
