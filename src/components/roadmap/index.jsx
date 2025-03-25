@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './styles.module.css';
 
 // Roadmap data
 const roadmapItems = [
 	{
-		title: 'Java Support',
+		title: 'Java support',
 		month: 'March',
 		category: 'Languages',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5430',
@@ -12,7 +12,7 @@ const roadmapItems = [
 		important: true
 	},
 	{
-		title: 'GCP PubSub Support',
+		title: 'GCP PubSub support',
 		month: 'March',
 		category: 'Integration',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5445',
@@ -36,14 +36,14 @@ const roadmapItems = [
 			'Currently, SQL scripts can only have prepared statement parameters. It would be great to have dynamic table and column names.'
 	},
 	{
-		title: 'Ansible Improvements',
+		title: 'Ansible improvements',
 		month: 'April',
 		category: 'Languages',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5431',
 		description: ''
 	},
 	{
-		title: 'Ruby Support',
+		title: 'Ruby support',
 		month: 'June',
 		category: 'Languages',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/3201',
@@ -89,14 +89,14 @@ This would be a settable setting such that the layout within the buckets can fol
 		important: true
 	},
 	{
-		title: 'Batch Runs UI',
+		title: 'Batch runs UI',
 		month: 'April',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/4787',
 		description:
 			'The goal of this feature is to allow to run more than 1 jobs at once from the UI\n\nScenarios that need to be handled:\n\n    Filtering jobs from the runs page, selecting them (all within page, all within filters, or one by one) and re-running all of them (v0)\n    Take a time window range within a schedule that is in the past and run all ticks that would have happened in the past, with optionally not re-running the ticks that did actually happen\n\nIn terms of job arguments, here are the different scenarios:\n\n    Rerun with exactly same args as the re-ran job (v0)\n    If having selected different script versions or flow versions, which have different schemas:\n        Have a tab for each script/flow version containing a schema form\n        Have a "common tab" where fields that are common can be set there\n        every field can either be set with static info or a javascript expression like for scripts/flows, where possible values usable in that javascript expressions are the date at which the job was originally schedules or the value of other fields'
 	},
 	{
-		title: 'Interactive Script debugger',
+		title: 'Interactive script debugger',
 		month: 'April',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5432',
@@ -104,7 +104,7 @@ This would be a settable setting such that the layout within the buckets can fol
 		description: 'Add breakpoints and run an interactive debugger for Python and Typescript.'
 	},
 	{
-		title: 'Code/React UI Builder',
+		title: 'Code/React UI builder',
 		month: 'April',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5433',
 		important: true,
@@ -120,21 +120,21 @@ This would be a settable setting such that the layout within the buckets can fol
 			'Currently Remote Agent Workers still need to connect to the central Postgresql Database using a direct tcp connection and work leveraging RLS policies in Postgresql and require a complex and deep understanding of Windmill and Postgresql.\n\nHTTP Agent workers will only communicate to the central servers using HTTP and will be seamless to setup using simply a secure policy as config.'
 	},
 	{
-		title: 'Cloudflare Workers support',
+		title: 'Cloudflare workers support',
 		month: 'TBD',
 		category: 'Backend',
 		issueLink: '',
 		description: 'Cloudflare workers support for native jobs'
 	},
 	{
-		title: 'Free Form Flows',
+		title: 'Free form flows',
 		month: 'April',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5435',
 		description:
 			'- Free positioning of nodes\n- Colorable Rectangle to group nodes\n- Free Text annotable anywhere'
 	},
 	{
-		title: 'AI step as Flow primitive',
+		title: 'AI step as flow primitive',
 		month: 'June',
 		category: 'AI',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5436',
@@ -202,13 +202,13 @@ This would be a settable setting such that the layout within the buckets can fol
 
 // Color categories based on types of features
 const categoryColors = {
-	AI: '#8b5cf6', // Purple for AI-related
-	UI: '#f59e0b', // Amber for UI improvements
-	Backend: '#10b981', // Emerald for backend/infrastructure
-	Developer: '#3b82f6', // Blue for developer tools
-	Integration: '#ec4899', // Pink for integrations
-	Languages: '#06b6d4', // Cyan for programming languages
-	Default: '#6b7280' // Gray for miscellaneous
+	Default: '#f5f5f5', // White smoke
+	Languages: '#add8e6', // Light blue
+	Integration: '#1D4ED8', // Blue
+	Developer: '#7f96ad', // Slate gray
+	Backend: '#ced6f2', // Lavender
+	UI: '#87cefa', // Light sky blue
+	AI: '#818CF8'  // Purple
 };
 
 // Assign categories to items if not already defined
@@ -280,6 +280,32 @@ function groupByMonth(items) {
 }
 
 function WindmillRoadmap() {
+	// State to track which cards have truncated content
+	const [truncatedItems, setTruncatedItems] = React.useState({});
+	
+	// Reference to check text heights
+	const textRefs = React.useRef({});
+	
+	// Check if content is truncated after component mounts
+	React.useEffect(() => {
+		const newTruncatedItems = {};
+		
+		// Give DOM time to render
+		setTimeout(() => {
+			Object.keys(textRefs.current).forEach(key => {
+				const element = textRefs.current[key];
+				if (element) {
+					// Check if scrollHeight is greater than clientHeight
+					// If it is, the text is truncated
+					const isTruncated = element.scrollHeight > element.clientHeight;
+					newTruncatedItems[key] = isTruncated;
+				}
+			});
+			
+			setTruncatedItems(newTruncatedItems);
+		}, 100);
+	}, []);
+
 	const renderTimeline = () => {
 		const groupedItems = groupByMonth(categorizedItems);
 
@@ -311,9 +337,12 @@ function WindmillRoadmap() {
 						<div className={styles.monthMarker}></div>
 						<div className={styles.monthLabel}>{month}</div>
 
-						{groupedItems[month].map((item, index) => (
+						{groupedItems[month].map((item, index) => {
+							const itemKey = `${month}-${index}`;
+							
+							return (
 							<div
-								key={`${month}-${index}`}
+								key={itemKey}
 								className={`${styles.timelineCard} ${styles.right} ${
 									item.important ? styles.important : ''
 								}`}
@@ -351,7 +380,10 @@ function WindmillRoadmap() {
 									</h3>
 
 									<div className={styles.cardPreviewContainer}>
-										<div className={styles.cardText + ' text-gray-500 dark:text-gray-300'}>
+										<div 
+											ref={el => textRefs.current[itemKey] = el}
+											className={`${styles.cardText} ${truncatedItems[itemKey] ? styles.truncated : ''} text-gray-500 dark:text-gray-300`}
+										>
 											{item.description.split('\n').map((line, i) => (
 												<React.Fragment key={i}>
 													{line}
@@ -361,8 +393,9 @@ function WindmillRoadmap() {
 										</div>
 									</div>
 								</div>
-							</div>
-						))}
+								</div>
+							);
+						})}
 					</div>
 				))}
 			</div>
