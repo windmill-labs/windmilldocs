@@ -27,3 +27,17 @@ The first 5 minutes of this video show how to set up a Git repository for a work
 	allowFullScreen
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
+
+## GitHub App
+
+Instead of using a long lived personal access token to authenticate with GitHub for [Git sync](../advanced/11_git_sync/index.mdx), you can use the GitHub App to authenticate with GitHub. This allows you to control which repositories can be accessed by your Windmill deployment using a short-live [GitHub app installation token](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-as-a-github-app-installation).
+
+GitHub App is available under [Windmill Enterprise](/pricing).
+
+As a [Windmill workspace admin](https://www.windmill.dev/docs/core_concepts/roles_and_permissions#admin), you can install the GitHub app to multiple organizations and link them to your Windmill workspaces. Once an app has been installed to a workspace, you can install it to other workspace where you have the admin role.
+
+![GitHub App](/integrations/visual_elements/github_app_installation.png.webp)
+
+:::warning
+You will only be able to use the installation token for [Git sync](../advanced/11_git_sync/index.mdx).
+:::
