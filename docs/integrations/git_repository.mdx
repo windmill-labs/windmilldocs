@@ -41,3 +41,11 @@ As a [Windmill workspace admin](https://www.windmill.dev/docs/core_concepts/role
 :::warning
 You will only be able to use the installation token for [Git sync](../advanced/11_git_sync/index.mdx).
 :::
+
+### Importing / Exporting to/from other windmill instance
+
+A GitHub app can only be installed to a GitHub organization once. Hence to associate an installation to multiple windmill instances you need to export the associated JWT token on the source instance using the "Export" button and paste the JWT in the destination instance to import the installation.
+
+:::warning
+The JWT token associated to your GitHub app installation is sensitive and has the rights to request a short lived installation token. To revoke the JWT, you need to uninstall the GitHub app from your organization and re-install it to re-associate it with a windmill instance.
+:::
