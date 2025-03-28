@@ -588,7 +588,17 @@ Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with t
 
 ### Configure Java's Trust:
 
-keytool -importcert -alias "your.corp.com" -file "path/to/cert.crt" -keystore cacerts
+```
+keytool -import -alias "your.corp.com" -file path/to/cert.crt -keystore path/to/created/dir/with/certs/truststore.jks -storepass '12345678' -noprompt
+```
+
+:::note
+
+By default windmill will use 123456 password. But you can change it to something else by setting JAVA_STOREPASS.
+
+You can alse set JAVA_TRUST_STORE_PATH to point to different java truststore.
+
+:::
 
 <!-- Resources -->
 
