@@ -33,7 +33,7 @@ const navigation = [
 	},
 	{
 		items: [
-			{ name: 'Jobs', href: 'https://www.ycombinator.com/companies/windmill/jobs' },
+			{ name: 'Jobs', href: '/careers' },
 			{ name: 'Brand', href: '/brand' },
 			{ name: 'Partners', href: '/partners' }
 		],
