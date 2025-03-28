@@ -53,7 +53,7 @@ const resources = [
 	{
 		name: 'Jobs',
 		description: 'See our current job openings and apply for a position.',
-		href: 'https://www.ycombinator.com/companies/windmill/jobs'
+		href: '/careers'
 	}
 ];
 

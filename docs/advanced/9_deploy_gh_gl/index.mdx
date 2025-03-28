@@ -116,7 +116,7 @@ For instance, a [resource](../../core_concepts/3_resources_and_types/index.mdx) 
 ### Setup git sync
 
 1. In Windmill, navigate to the workspace settings and go to the [Git sync](../11_git_sync/index.mdx) tab.
-2. Create a `git_repository` [resource](../../core_concepts/3_resources_and_types/index.mdx) with the necessary URL, username, repo name, and a GitHub token.
+2. Create a `git_repository` [resource](../../core_concepts/3_resources_and_types/index.mdx) with the necessary URL, username, repo name, and a GitHub token. You can also use a [GitHub app installation](../integrations/git_repository#github-app) to connect a repo to your windmill instance.
 3. Generate a fine-grained GitHub [token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with read and write permissions for content and add it to the Windmill `git_repository` resource.
 
 Your URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`
