@@ -8,11 +8,11 @@ Everybody having access to a Windmill instance is considered a User.
 
 Recap of how roles within an instance and a workspace are structured:
 
-![Recap Instances and Members](./instance_members.png "Recap Instances and Members")
+![Recap Instances and Members](./instance_members.png 'Recap Instances and Members')
 
 Recap of how are permissioned items (scripts, flows, apps, resources, variables, schedules, jobs) within a workspace:
 
-![Recap Item Permissions](./permissions.png "Recap Item Permissions")
+![Recap Item Permissions](./permissions.png 'Recap Item Permissions')
 
 ## Users
 
@@ -131,6 +131,10 @@ A path is either inside a user space `u/<user>/<path>` or inside a folder `f/<fo
 
 - a User: that user will be by default given read, write and archive access on the item (`u/henri/amazed_postgresql`).
 - a Folder: the item will be available to the users having access to the folder, with its own levels of permissions (`f/data_team/amazed_postgresql`).
+
+You can modify paths, but this may break other dependent entities. For scripts, flows, and apps, you will see a warning with a list of affected entities:
+
+![Path Renaming](./path_renaming.png 'Path Renaming')
 
 ### Extra permissions
 

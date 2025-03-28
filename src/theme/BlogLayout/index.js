@@ -48,15 +48,28 @@ export default function BlogLayout(props) {
 							</p>
 							{isChangelog && (
 								<div className="container mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
-									<h3 className="text-lg font-semibold mt-6">Roadmap</h3>
-									<p>
-										See the Windmill roadmap and what's coming next.
-										<a href="/roadmap">Roadmap</a>
-									</p>
-									<h3 className="text-lg font-semibold mt-6">
+									<h3 className="text-lg font-semibold">
 										Watch latest Windmill weekly keynotes
 									</h3>
-									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-4">
+										<li>
+											<a
+												href="https://youtube.com/live/QsviBik0YH4"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												March 21, 2025
+											</a>
+										</li>
+										<li>
+											<a
+												href="https://youtube.com/live/rivi2IzUXYg"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												March 14, 2025
+											</a>
+										</li>
 										<li>
 											<a
 												href="https://youtube.com/live/6O9EGnvt8GA"
@@ -75,53 +88,8 @@ export default function BlogLayout(props) {
 												February 14, 2025
 											</a>
 										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/0a06icylQsk"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												January 24, 2025
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/8tOpodhrg68"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												January 17, 2025
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/mYJlHKOk8TE"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												January 15, 2025
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/s3T7dPTw69o"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												December 6, 2024
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/mgjwgg7i3tQ"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												November 29, 2024
-											</a>
-										</li>
 									</ul>
-									<p className="mt-4 text-lg leading-8 container">
+									<p className="mt-4 text-md leading-8 container">
 										Weekly keynotes are hosted on{' '}
 										<a
 											href="https://discord.com/channels/930051556043276338/1278977038430240813"
@@ -140,6 +108,15 @@ export default function BlogLayout(props) {
 										</a>{' '}
 										on Friday at 5:45 pm CET+1.
 									</p>
+									<h3 className="text-lg font-semibold mt-6 mb-4">
+										See the Windmill roadmap and what's coming next
+									</h3>
+									<a 
+										href="/roadmap" 
+										className="inline-flex items-center px-3 py-1.5 bg-blue-100 hover:bg-blue-50 dark:bg-blue-900 dark:text-blue-100 dark:hover:bg-blue-800 text-primary font-medium rounded-md transition duration-150 ease-in-out shadow-md hover:no-underline text-sm"
+									>
+										Roadmap
+									</a>
 								</div>
 							)}
 							<svg
