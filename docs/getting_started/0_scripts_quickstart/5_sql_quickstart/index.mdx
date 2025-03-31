@@ -147,15 +147,20 @@ Fill out the form with the information of your MS SQL instance and "Test connect
 
 ![Paste in Resource Values](./fill_mssql.png.webp)
 
-| Property | Type   | Description     | Default | Required | Where to Find                                                                         |
-| -------- | ------ | --------------- | ------- | -------- | ------------------------------------------------------------------------------------- |
-| host     | string | Instance host   |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file    |
-| port     | number | Instance port   |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file    |
-| user     | string | Username        |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
-| dbname   | string | Database name   |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
-| password | string | User's password |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting |
+| Property | Type   | Description     | Default | Required | Where to Find                                                                              |
+| -------- | ------ | --------------- | ------- | -------- | -------------------------------------------------------------------------------------      |
+| host     | string | Instance host   |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file        |
+| port     | number | Instance port   |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file        |
+| user     | string | Username        |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting     |
+| dbname   | string | Database name   |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting     |
+| password | string | User's password |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting     |
+| aad_token| object | OAuth token AD  |         | true     | Either username/password or aad_token should be provided. Requires OAuth setup in Windmill |
 
 To specify the application intent for read-only requests, add `-- ApplicationIntent=ReadOnly` to the script.
+
+:::info
+When using domain credentials via Entra (Azure Active Directory) you need to add the scope `https://database.windows.net//.default` to the [Windmill OAuth instance setting](../../misc/setup_oauth#azure).
+:::
 
 ### BigQuery
 
