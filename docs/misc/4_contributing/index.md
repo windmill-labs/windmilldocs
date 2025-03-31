@@ -65,3 +65,70 @@ interface OAuthConfig {
 ```
 
 `connect_config` is used for resources, and `login_config` for SSO.
+
+## Mapping python imports
+
+Python can automatically [infer requirements from imports](../../advanced/15_dependencies_in_python/index.mdx).
+However it is not always accurate because import can missmatch with the requirement.
+To handle this case, there is [import map](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py-imports/src/mapping.rs).
+You can help us and others by adding new entries there and opening PR.
+
+Let's take a look at simple example
+
+**1. Find problematic import**
+
+```python
+import git
+
+def main():
+  ...
+```
+
+It will fail with error indicates either `git` cannot be resolved or `git` module cannot be imported.
+
+**2. Pin it**
+
+Use one of the [pinning methods](../../advanced/15_dependencies_in_python/index.mdx#pinning-dependencies-and-requirements) to override requirement
+
+```python
+import git # pin: GitPython
+
+def main():
+  ...
+```
+
+**3. Add entry to global map**
+
+Navigate to [mappings](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py-imports/src/mapping.rs) and add new entry to the `SHORT_IMPORTS_MAP`
+
+```rust
+pub static SHORT_IMPORTS_MAP: PyMap = phf_map! {
+    ...
+    "git" => "GitPython",
+};
+```
+
+**4. Open PR**
+
+We appreciate every contribution to Windmill!
+
+**Special cases**
+
+Sometimes dependencies require to be imported separated by `.`
+
+Let's take a look at one of those on [azure-storage-blob](https://pypi.org/project/azure-storage-blob/) example
+
+```python
+import azure.storage.blob # pin: azure-storage-blob
+```
+
+As you can see this entire import needs to be mapped and not just `azure` part of it.
+
+To finalize map for everyone, add this entry in the [mappings](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py-imports/src/mapping.rs).
+But this time add it to `FULL_IMPORTS_MAP` 
+```rust
+pub static FULL_IMPORTS_MAP: PyMap = phf_map! {
+    ...
+    "azure.storage.blob" => "azure-storage-blob",
+};
+```
