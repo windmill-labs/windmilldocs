@@ -114,12 +114,12 @@ const faqs = [
 		question: 'What are compute units?',
 		answer: (
 			<span>
-				Compute units are a unit of measure for the amount of compute resources provisioned for the workers, based on their memory limits. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
+				Compute units are a unit of measure for the amount of compute resources provisioned (not effectively used) for the workers, based on their memory limits. A compute unit corresponds to 2 worker-gb-month. For example, a <Link
 					to="/docs/core_concepts/worker_groups"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					worker
-				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. On self-hosted plans, any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). For detailed information on how your setup translates to compute units, see the{' '}
+				</Link>{' '}with 2GB of memory limit counts as 1 compute unit. On self-hosted plans, any worker with >2GB of memory counts as 2 compute units (e.g. a worker with 16GB counts as 2 compute units). The minimum CU billed for a worker is 0.5. For detailed information on how your setup translates to compute units, see the{' '}
 				<Link
 					to="/docs/misc/plans_details#setup-and-compute-units"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
