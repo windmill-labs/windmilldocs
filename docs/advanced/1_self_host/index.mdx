@@ -586,6 +586,20 @@ Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml 
 
 Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with the same value in the worker’s environment variables.
 
+### Configure Java's Trust:
+
+```
+keytool -import -alias "your.corp.com" -file path/to/cert.crt -keystore path/to/created/dir/with/certs/truststore.jks -storepass '12345678' -noprompt
+```
+
+:::note
+
+By default Windmill will use 123456 password. But you can change it to something else by setting JAVA_STOREPASS.
+
+You can alse set JAVA_TRUST_STORE_PATH to point to different java truststore.
+
+:::
+
 ## Running Windmill as non-root user
 
 Certain cloud providers require containers to be run as non-root users. For these cases you can use the `windmill` user (uid/gid 1000) or run it as any other non-root user by passing the `--user windmill` argument. For the [windmill helm chart](https://github.com/windmill-labs/windmill-helm-charts/tree/main/charts/windmill), you can pass the `runAsUser` or `runAsNonRoot` in the `podSecurityContext`.
