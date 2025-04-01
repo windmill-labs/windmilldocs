@@ -184,7 +184,13 @@ $Headers = @{
 Invoke-RestMethod -Headers $Headers -Uri "$Env:BASE_INTERNAL_URL/api/w/$Env:WM_WORKSPACE/variables/get/u/user/foo"
 ```
 
-The last examples in bash and PowerShell showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as an environment variable to the job.
+Nu:
+
+```python
+get_variable u/user/foo
+```
+
+Examples in bash and PowerShell showcase well how it works under the hood: It fetches the secret from the API using the job's permissions through the ephemeral token passed as an environment variable to the job.
 
 ## Mocked API files
 

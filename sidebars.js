@@ -38,7 +38,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/bash_quickstart/index',
-									label: 'Bash / PowerShell'
+									label: 'Bash / PowerShell / Nu'
 								},
 								{
 									type: 'doc',

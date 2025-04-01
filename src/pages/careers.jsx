@@ -178,7 +178,7 @@ export default function Careers() {
             )}
             <div className="text-center mt-4">
               <a 
-                href="mailto:jobs@windmill.com" 
+                href="mailto:jobs@windmill.dev" 
                 className="inline-block bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 font-medium py-2 px-6 rounded-md transition-colors"
               >
                 Send general application
