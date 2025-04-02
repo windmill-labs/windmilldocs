@@ -147,14 +147,16 @@ Fill out the form with the information of your MS SQL instance and "Test connect
 
 ![Paste in Resource Values](./fill_mssql.png.webp)
 
-| Property | Type   | Description     | Default | Required | Where to Find                                                                              |
-| -------- | ------ | --------------- | ------- | -------- | -------------------------------------------------------------------------------------      |
-| host     | string | Instance host   |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file        |
-| port     | number | Instance port   |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file        |
-| user     | string | Username        |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting     |
-| dbname   | string | Database name   |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting     |
-| password | string | User's password |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting     |
-| aad_token| object | OAuth token AD  |         | true     | Either username/password or aad_token should be provided. Requires OAuth setup in Windmill |
+| Property  | Type   | Description              | Default | Required | Where to Find                                                                                   |
+| --------- | ------ | ------------------------ | ------- | -------- | ----------------------------------------------------------------------------------------------- |
+| host      | string | Instance host            |         | true     | Your hosting provider's control panel or in your server's MS SQL configuration file             |
+| port      | number | Instance port            |         | false    | Your hosting provider's control panel or in your server's MS SQL configuration file             |
+| user      | string | Username                 |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| dbname    | string | Database name            |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| password  | string | User's password          |         | true     | Created in MS SQL (e.g., via SQL Server Management Studio) or provided by your hosting          |
+| aad_token | object | OAuth token AD           |         | true     | Either username/password or aad_token should be provided. Requires OAuth setup in Windmill      |
+| trust_cert| bool   | Trust server certificate | true    | false    | If true, the server certificate will be trusted even if it is not signed by a trusted authority |
+| ca_cert   | string | CA certificate           |         | false    | CA certificate to verify the server certificate. [More information on MS SQL certificates](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-security?view=sql-server-ver16#encrypt-connections-to-sql-server-linux-containers) |
 
 To specify the application intent for read-only requests, add `-- ApplicationIntent=ReadOnly` to the script.
 
@@ -646,7 +648,7 @@ export async function main(db: Postgresql, query: Sql = "SELECT * FROM demo;") {
   return rows;
 }
 
-export function pgClient(db: any) {    
+export function pgClient(db: any) {
   let db2 = {
     ...db,
     hostname: db.host,
