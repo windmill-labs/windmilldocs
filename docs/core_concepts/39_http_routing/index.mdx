@@ -17,19 +17,15 @@ The full http route takes the following form:
 - Self-hosted Windmill: `{base_url}/api/r/{path}`
 - Windmill cloud: `https://app.windmill.dev/api/r/{workspace_id}/{path}`
 
-### Triggering a runnable
+Finally select the runnable that should be triggered by this route. To quickly get started, you can use the `create from template` button to generate a runnable template.
 
-Select the runnable that should be triggered by this route. To quickly get started, you can use the `create from template` button to generate a runnable template.
+HTTP triggers accept the same request body format as [webhooks](../4_webhooks/index.mdx#body).
 
-Here's an example script:
+### Using a preprocessor
 
-```TypeScript
-export async function main(/* args from the request body */) {
-  // your code here
-}
-```
+When using a [preprocessor](../43_preprocessors/index.mdx), the trigger metadata (`wm_trigger`) is passed alongside the request body keys as arguments to the preprocessor.
 
-And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could look like this:
+Below is an example of a preprocessor that combines the request body and the route parameters, and passes them as arguments to the main function:
 
 ```TypeScript
 export async function preprocessor(
