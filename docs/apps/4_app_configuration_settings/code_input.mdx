@@ -1,0 +1,48 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Code input
+
+The code input component allows you to get a string from the user using a code editor.
+
+![Code input API](../../assets/apps/4_app_component_library/code-input.png.webp)
+
+The following section details Code input component's specific settings. For more details on the App editor, check the [dedicated documentation](../0_app_editor/index.mdx) or the App editor [Quickstart](../../getting_started/7_apps_quickstart/index.mdx):
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="orange"
+		title="App editor Documentation"
+		description="The app editor is a low-code builder to create custom User Interfaces with a mix of drag-and-drop and code."
+		href="/docs/apps/app_editor"
+	/>
+	<DocCard
+		color="orange"
+		title="Apps quickstart"
+		description="Learn how to build your first app in a matter of minutes."
+		href="/docs/getting_started/apps_quickstart"
+	/>
+</div>
+
+## Controls
+
+This component can be controlled by [frontend scripts](../3_app-runnable-panel.mdx#frontend-scripts) using these functions:
+
+| Name   |        Parameters        | Description          | Example       |
+| ------ | :----------------------: | -------------------- | ------------- |
+| [setValue](../3_app-runnable-panel.mdx#setvalue) | id: string, value: any | Manually set or force the value of a component. | `setValue(id: 'a', value: 17)` |
+
+## Code input configuration
+
+| Name          |  Type   | Connectable | Templatable |  Default  | Description                                |
+| ------------- | :-----: | :---------: | :---------: | :-------: | ------------------------------------------ |
+| Placeholder   | string  |    false    |    false    |  Type...  | The code input placeholder.                |
+| Default value | string  |    true     |    false    |           | The default value of the code input.       |
+| Disable Suggestions | boolean  |    false    |    false    |   false   | Whether the code input should disable suggestions. |
+| Disable Linting | boolean |    false    |    false    |   false   | Whether the code input should disable linting. |
+| Hide Line Numbers | boolean |    false    |    false    |   false   | Whether the code input should hide line numbers. |
+
+## Outputs
+
+| Name   |  Type  | Description           |
+| ------ | :----: | --------------------- |
+| Result | string | The code input value. |
