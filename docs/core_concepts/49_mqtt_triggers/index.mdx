@@ -131,7 +131,7 @@ For more information about MQTT v5 properties, see the [MQTT v5 Properties Docum
  */
 export async function preprocessor(
   wm_trigger: {
-    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'mqtt',
+    kind: 'gcp',
     mqtt?: {
       topic: string,
       retain: boolean,

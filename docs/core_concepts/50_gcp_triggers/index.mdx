@@ -1,0 +1,184 @@
+# GCP Pub/Sub triggers
+
+Windmill can connect to **Google Cloud Pub/Sub** and trigger runnables (scripts, flows) in response to messages published on topics.  
+You can configure Windmill to either **pull** messages from subscriptions or **receive push** messages via auto-generated endpoints.
+
+GCP Pub/Sub triggers are not available on the [Cloud](/pricing).
+
+For more details about Pub/Sub, see [Google Cloud Pub/Sub Documentation](https://cloud.google.com/pubsub/docs/overview).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/TODO"
+	title="GCP Pub/Sub triggers"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+/>
+
+---
+
+## How to use
+
+### Configure GCP resource
+
+- Select an existing [GCP resource](https://hub.windmill.dev/resource_types/225/gcloud) or create a new one.
+- Provide service account credentials with Pub/Sub access.
+- Test the connection to ensure correct permissions.
+
+### Select topic and subscription
+
+- Choose the **Pub/Sub topic** you want to listen to.
+- Select an existing **subscription**, or create/update a subscription:
+  - **Pull delivery**: Windmill will periodically pull new messages.
+  - **Push delivery**: Windmill will create a webhook endpoint to receive pushed messages.
+
+If creating/updating a subscription:
+- Set a **subscription ID**, or let Windmill auto-generate one.
+- Configure the delivery mode and (for push) endpoint settings.
+
+### Choose the runnable
+
+- Select the **script or flow** to trigger when messages are received from Pub/Sub.
+
+---
+
+## Delivery types
+
+| Type    | Description |
+|---------|-------------|
+| **Pull** | Windmill pulls messages manually. Good for low latency control and reliable retries. |
+| **Push** | Google Cloud automatically sends messages to a Windmill-managed HTTPS endpoint. |
+
+For **Push delivery**, Windmill generates a secure webhook URL. You can configure authentication settings if needed.
+
+---
+
+## Implementation examples
+
+Below are example scripts for handling GCP Pub/Sub messages in Windmill.
+
+### Basic script
+
+```typescript
+export async function main(message: { data: Array<number>; attributes?: Record<string, string> }) {
+  const textPayload = new TextDecoder().decode(new Uint8Array(message.data));
+
+  try {
+    const jsonData = JSON.parse(textPayload);
+    console.log("Received JSON data:", jsonData);
+    // Process structured data
+  } catch (e) {
+    console.log("Received plain text:", textPayload);
+    // Process raw text
+  }
+
+  return { processed: true };
+}
+```
+
+---
+
+### Script with updated real preprocessor
+
+If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extract fields from the Pub/Sub event before reaching the main function.
+
+#### GCP Pub/Sub trigger object
+
+- `subscription`: Subscription name
+- `topic`: Topic name
+- `message_id`: Message ID
+- `publish_time`: Publish timestamp
+- `attributes`: Key-value attributes attached to the message
+
+Example preprocessor:
+
+```typescript
+export async function preprocessor(
+  wm_trigger: {
+    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'mqtt' | 'gcp',
+    gcp?: {
+      attributes?: Record<string, string>,
+      message_id: string,
+      subscription: string,
+      ordering_key?: string,
+      pull?: { publish_time?: number },
+      push?: { headers: Record<string, string>, publish_time: string }
+    }
+  },
+  msg: string,
+) {
+  if (wm_trigger.kind === 'gcp' && wm_trigger.gcp) {
+    const decodedString = atob(msg);
+
+    const attributes = wm_trigger.gcp.attributes || {};
+    const contentType = attributes['content-type'] || attributes['Content-Type'];
+    const isJson = contentType === 'application/json';
+
+    let parsedMessage: any = decodedString;
+    if (isJson) {
+      try {
+        parsedMessage = JSON.parse(decodedString);
+      } catch (err) {
+        throw new Error(`Invalid JSON payload: ${err}`);
+      }
+    }
+
+    return {
+      messageAsDecodedString: decodedString,
+      contentType,
+      parsedMessage,
+      attributes
+    };
+  }
+
+  throw new Error(`Expected gcp trigger kind got: ${wm_trigger.kind}`);
+}
+```
+
+Then the `main` function can receive structured arguments:
+
+```typescript
+export async function main(
+  messageAsDecodedString: string,
+  contentType?: string,
+  parsedMessage?: any,
+  attributes?: Record<string, string>,
+) {
+  console.log("Decoded String:", messageAsDecodedString);
+  console.log("Content-Type:", contentType);
+  console.log("Parsed Message:", parsedMessage);
+  console.log("Attributes:", attributes);
+}
+```
+
+---
+
+## Delivery authentication (Push mode)
+
+If you use **push delivery**, Windmill can automatically validate Google-signed tokens:
+
+- Enable "Authenticate" option when setting up push delivery.
+- Provide the **audience** value if different from the endpoint URL.
+- Windmill verifies the identity of Google Cloud on incoming push messages.
+
+---
+
+## Best practices
+
+- Prefer **pull** mode if you want maximum control over retries and message acknowledgment.
+- Use **push** mode for real-time streaming without polling overhead.
+- Always use a **preprocessor** if you need to filter, transform, or validate Pub/Sub payloads before processing.
+- Ensure service account permissions allow access to Pub/Sub APIs.
+- Secure your endpoints when using push delivery with authentication enabled.
+
+---
+
+## Troubleshooting
+
+- **Permission issues**: Ensure the GCP resource has `pubsub.subscriptions.consume` and `pubsub.topics.attachSubscription` permissions.
+- **Push delivery not working**: Check endpoint URL correctness, authentication settings, and whether Windmill received the push.
+- **Subscription conflicts**: If an existing subscription is reused, ensure it matches the configured delivery type.
+
+---

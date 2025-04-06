@@ -166,6 +166,12 @@ const sidebars = {
 							id: 'core_concepts/mqtt_triggers/index',
 							label: 'MQTT'
 						}
+						,
+						{
+							type: 'doc',
+							id: 'core_concepts/gcp_triggers/index',
+							label: 'GCP'
+						}
 					]
 				},
 				{

@@ -24,6 +24,7 @@ Triggers from external events:
 - [NATS triggers](#nats-triggers)
 - [SQS triggers](#sqs-triggers)
 - [MQTT triggers](#mqtt-triggers)
+- [GCP triggers](#gcp-triggers)
 - [Scheduled polls](#scheduled-polls-scheduling--trigger-scripts)
 
 :::info Scripts and Flows in Windmill
@@ -330,6 +331,19 @@ Windmill can connect to an MQTT broker, subscribe to specific topics, and trigge
 		href="/docs/core_concepts/mqtt_triggers"
 	/>
 </div>
+
+### GCP triggers
+
+Windmill can connect to Google Cloud Pub/Sub, subscribe to specific topics, and trigger scripts or flows when messages are published, enabling event-driven processing. Preprocessors can transform the Pub/Sub message data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+  <DocCard
+    title="GCP Pub/Sub triggers"
+    description="Trigger scripts and flows from Google Cloud Pub/Sub."
+    href="/docs/core_concepts/gcp_triggers"
+  />
+</div>
+
 
 ### Scheduled polls (Scheduling + Trigger scripts)
 
