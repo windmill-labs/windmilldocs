@@ -1,74 +1,280 @@
-# Custom HTTP routes
+# HTTP routes
 
-Windmill supports custom HTTP routes to trigger runnables or serve static assets and websites.
-They can only be created by [admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace). 
-All properties of the route apart from the http path can be modified by any user with write access to the route.
+Windmill supports HTTP Routes as triggers to execute runnables (scripts or flows) whenever the route is hit by an external HTTP request.  
+This feature is ideal for integrating with third-party services, custom webhooks, or internal systems where events are sent via HTTP.
 
-![HTTP routes](./custom_http_routes.png 'HTTP routes')
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/TODO"
+	title="HTTP Routes Trigger"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+/>
 
-## How to use
+---
 
-Create a new route on the HTTP routes page.
-Specify the path of the http route. You can use the `:param` syntax to define parameters.
-Parameters can be handled using a [preprocessor](../43_preprocessors/index.mdx).
-You also need to select the method of the route (GET, POST, PUT, PATCH or DELETE).
+## How it works
 
-The full http route takes the following form:
-- Self-hosted Windmill: `{base_url}/api/r/{path}`
-- Windmill cloud: `https://app.windmill.dev/api/r/{workspace_id}/{path}`
+You define a custom HTTP route with a specific method (GET, POST, PUT, PATCH, DELETE).  
+When the route is called, Windmill triggers the selected script or flow.
 
-Finally select the runnable that should be triggered by this route. To quickly get started, you can use the `create from template` button to generate a runnable template.
+Each route can be protected with various authentication mechanisms, ranging from simple API keys to advanced HMAC signature validation or even fully custom logic.
 
-HTTP triggers accept the same request body format as [webhooks](../4_webhooks/index.mdx#body).
+Among the supported authentication mechanisms, there's also **Windmill Auth**, which uses a JWT token to authenticate requests and ensure you have read access to the route and the runnable. You can generate your personal Windmill JWT token directly from your user settings and use it to securely access your HTTP routes.
 
-### Using a preprocessor
+You can configure the route to run:
+- **Synchronously**: Wait for the script to complete and return the result.
+- **Asynchronously**: Return a job ID immediately; the script runs in the background.
 
-When using a [preprocessor](../43_preprocessors/index.mdx), the trigger metadata (`wm_trigger`) is passed alongside the request body keys as arguments to the preprocessor.
+---
 
-Below is an example of a preprocessor that combines the request body and the route parameters, and passes them as arguments to the main function:
+## Creating an HTTP route
 
-```TypeScript
-export async function preprocessor(
-  /* args from the request body, let's assume `name` and `age` */
-  name: string,
-  age: number,
-  wm_trigger: {
-    kind: "http",
-    http: {
-      route: string; // The route path, e.g. "/users/:id"
-      path: string; // The actual path called, e.g. "/users/123"
-      method: string;
-      params: Record<string, string>; // The route parameters, e.g. { id: "123" }
-      query: Record<string, string>; // The query parameters
-      headers: Record<string, string>;
-    }
-  },
-) {
+### Define the route
 
-  // define args for the main function
-  // let's assume the id is passed in the path (e.g. "/users/:id") and we want to pass it with the body (name, age) to the main function
-  return {
-    user_id: wm_trigger.http.params.id,
-    name,
-    age,
-  };
-}
+- Go to the **HTTP routes** page in Windmill.
+- Set the **path** (e.g., `/webhooks/github/:event`) and select the **HTTP method**.
+- The full endpoint will look like:
+  - Self-hosted: `{base_url}/api/r/{path}`
+  - Cloud: `https://app.windmill.dev/api/r/{workspace_id}/{path}`
 
-export async function main(user_id: string, name: string, age: number) {
-  // handle arguments, e.g. update the name and age of the user with the given id
+You can use `:param` in the path and access these as `params` in a [preprocessor](https://docs.windmill.dev/docs/core_concepts/preprocessors).
+
+> ℹ️ **Only workspace admins** can create routes.  
+> Once created, all properties of a route **except the HTTP path** can be modified by any user with **write access** to the route.  
+> Learn more about [Admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace).
+
+---
+
+### Workspace prefix
+
+On Windmill Cloud, all HTTP routes are automatically prefixed by the `workspace_id` (e.g., `{workspace_id}/{path}`).  
+This ensures that different workspaces can define the same route paths independently.
+
+On self-hosted Windmill, you can optionally enable the **workspace prefix** setting to achieve the same behavior.
+
+When workspace prefix is enabled:
+- Multiple workspaces can define the same route path without conflict.
+- HTTP triggers can be deployed across different workspaces if no conflicting route exists.
+
+When workspace prefix is disabled (on self-hosted):
+- Route paths will be **globally unique** across the entire instance.
+- A route path cannot be reused by another workspace unless it is first deleted.
+
+**Example:**  
+If workspace A creates the route `/webhooks/github`, then without workspace prefix, no other workspace can create `/webhooks/github`.  
+With workspace prefix enabled, workspace A could have `/workspace_a/webhooks/github` and workspace B could have `/workspace_b/webhooks/github`.
+
+---
+
+### Select a script or flow
+
+- Pick the runnable to be triggered when the route is called.
+- Use the “Create from template” button to generate a boilerplate if needed.
+
+Example script:
+```ts
+export async function main(/* args from the request body */) {
+  // your code here
 }
 ```
 
-The route also supports additional configuration options:
-- **Request type**: Whether the route should return the id (async) or the result (sync) of the runnable.
-- **Authentication**: Whether the route should require authentication. If authentication is required, the user needs to have read access to both the route and the runnable.
+With a preprocessor:
+```ts
+export async function preprocessor(
+  name: string,
+  age: number,
+  wm_trigger: {
+    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'gcp',
+    http: {
+      route: string;
+      path: string;
+      method: string;
+      params: Record<string, string>;
+      query: Record<string, string>;
+      headers: Record<string, string>;
+    }
+  }
+) {
+  if (wm_trigger.kind === 'http' && wm_trigger.http) {
+    return {
+      user_id: wm_trigger.http.params.id,
+      name,
+      age
+    };
+  }
 
-### Serving static assets and websites
+  throw new Error(`Expected trigger of kind 'http', but received: ${wm_trigger.kind}`);
+}
 
-For static assets, upload or specify a file using the S3 picker. The file will be served at the chosen path.
+export async function main(user_id: string, name: string, age: number) {
+  // Do something
+}
+```
 
-For websites, upload or specify a folder on S3. All its files will be served under the chosen path. 
-Use the full path as the base URL of your website to ensure relative imports work correctly.
-If no file is found at the requested subpath, Windmill will fallback to index.html.
+---
 
+## Authentication options
 
+Windmill supports several ways to secure HTTP triggers:
+
+| Method           | Description                                                                                  |
+|------------------|----------------------------------------------------------------------------------------------|
+| **None**         | Open to anyone (use only in trusted environments)                                            |
+| **Windmill Auth**| Uses a Windmill-signed JWT token to ensure the requesting agent has read access to both the runnable and the trigger. The token must be provided either in the Authorization header as Bearer `<token>`, or via a cookie named `token`. You can generate this token from your user settings. |
+| **API Key**      | Checks a header (e.g., `x-api-key`) for a valid key stored as a resource                     |
+| **Basic Auth**   | Uses HTTP Basic Authentication via a configured resource                                     |
+| **Signature Auth** | Verifies a signature using HMAC or third-party formats (Stripe, GitHub, etc.)               |
+
+---
+
+### Signature Auth (HMAC-based)
+
+Use **Signature Auth** to validate incoming HTTP requests using HMAC-style signatures.
+
+- Choose a preset (e.g., Stripe, GitHub) or configure a generic HMAC check.
+- If your provider uses custom logic not covered by presets, you can write a **Custom Script** instead.
+
+---
+
+## Body processing options
+
+Depending on your setup, additional arguments can be injected into your runnable:
+
+| Option           | Argument Provided     | Description                                                                                          |
+|------------------|------------------------|------------------------------------------------------------------------------------------------------|
+| **Wrap body**    | `body`                 | If enabled, Windmill will wrap the incoming request body inside an object under the `body` key. Useful when the payload structure is dynamic or unknown. |
+| **Raw body**   | `raw_string`           | The raw (unprocessed) request body is provided as a `raw_string` argument (type: `string`). Useful for signature verification, binary payloads, etc. |
+
+### Example using `body`
+```ts
+export async function main(body: unknown) {
+  console.log("Received body:", body);
+  return body;
+}
+```
+
+### Example using `raw_string`
+```ts
+export async function main(raw_string: string) {
+  console.log("Raw body received:", raw_string);
+  return JSON.parse(raw_string);
+}
+```
+
+---
+
+## Serving static files or websites
+
+HTTP routes can also serve:
+
+- **Static files**: Pick a file from S3.
+- **Static websites**: Choose an S3 folder.
+
+Windmill will host them under your custom path, using `index.html` as a fallback if necessary.
+
+---
+
+## Best practices
+
+- Use **preprocessors** to parse, validate, or transform payloads before the `main()` function.
+- Prefer **Signature Auth** for third-party integrations that support webhook signing (e.g., Stripe, GitHub).
+- Use **Custom Script** authentication only when predefined options are not flexible enough.
+- Enable **raw_string** if you need access to the raw body for signature verification or special payloads.
+
+---
+
+## Troubleshooting
+
+- If the script isn't triggered:
+  - Check that the HTTP method matches (e.g., POST vs GET).
+  - Verify authentication is correctly set.
+  - Ensure any custom scripts throw errors to help debug failures.
+
+- For signature validation failures:
+  - Double-check the secret key and signature header.
+  - Ensure `raw_body` is enabled if validation depends on the raw body.
+
+---
+
+## Custom script authentication (Advanced)
+
+Use a **Custom Script** for full control over authentication and validation when built-in methods are not enough.  
+This gives access to:
+
+- Raw payload
+- Headers, query, and route parameters
+- Secrets stored as [variables](https://docs.windmill.dev/docs/core_concepts/variables_and_secrets)
+
+Example script for HMAC signature validation:
+```ts
+const SECRET_KEY_VARIABLE_PATH = "u/admin/well_backlit_variable";
+
+export async function main(
+  wm_trigger: {
+    kind: 'http',
+    http?: {
+      route: string;
+      path: string;
+      method: string;
+      params: Record<string, string>;
+      query: Record<string, string>;
+      headers: Record<string, string>;
+    };
+  },
+  raw_string: string
+) {
+  if (!wm_trigger.http) {
+    throw new Error('Missing HTTP context');
+  }
+
+  const signature = wm_trigger.http.headers['x-signature'] || wm_trigger.http.headers['signature'];
+  if (!signature) {
+    throw new Error('Missing signature in request headers.');
+  }
+
+  const timestamp = wm_trigger.http.headers['x-timestamp'] || wm_trigger.http.headers['timestamp'];
+  if (timestamp) {
+    const timestampValue = parseInt(timestamp, 10);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const TIME_WINDOW_SECONDS = 5 * 60;
+
+    if (isNaN(timestampValue)) {
+      throw new Error('Invalid timestamp format.');
+    }
+
+    if (Math.abs(currentTime - timestampValue) > TIME_WINDOW_SECONDS) {
+      throw new Error('Request timestamp is outside the acceptable window.');
+    }
+  }
+
+  const isValid = await verifySignature(signature, raw_string, timestamp);
+  if (!isValid) {
+    throw new Error('Invalid signature.');
+  }
+
+  return JSON.parse(raw_string);
+}
+
+async function verifySignature(signature: string, body: string, timestamp?: string): Promise<boolean> {
+  const dataToVerify = timestamp ? `${body}${timestamp}` : body;
+  const secretKey = await wmill.getVariable(SECRET_KEY_VARIABLE_PATH);
+  const expectedSignature = crypto
+    .createHmac('sha256', secretKey)
+    .update(dataToVerify)
+    .digest('hex');
+
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(signature),
+      Buffer.from(expectedSignature)
+    );
+  } catch (error) {
+    console.error('Signature comparison error:', error);
+    return false;
+  }
+}
+```
+> ℹ️ When using **Custom Script**, the `raw_body` option is automatically enabled.
