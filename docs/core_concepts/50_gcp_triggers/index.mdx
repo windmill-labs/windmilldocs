@@ -21,7 +21,7 @@ Google Cloud Pub/Sub triggers is a [self-hosted Enterprise](/pricing) feature.
 >
 > If you prefer not to assign these three individually, you can simply grant the **Pub/Sub Admin** role (`roles/pubsub.admin`).
 >
-> Additionally, if you want to create **authenticated push delivery subscriptions**, the service account must also have **Service Account User** (`roles/iam.serviceAccountUser`) permission.
+> Additionally, if you want to create **authenticated push delivery subscriptions**, the service account must also have **Service Account User** (`roles/iam.serviceAccountUser`) permission. See [Authenticate Push Subscriptions](https://cloud.google.com/pubsub/docs/authenticate-push-subscriptions) for more details.
 
 ### Subscription setup
 
@@ -38,8 +38,11 @@ Google Cloud Pub/Sub triggers is a [self-hosted Enterprise](/pricing) feature.
 - Choose the **delivery type**:
   - **Pull**: Windmill sets the subscription as a **Pull** subscription.
   - **Push**: Windmill sets the subscription as a **Push** subscription.
-    - For **push delivery**, Windmill provides a **randomly generated URL** following the format:\
-      `{base_endpoint}/api/gcp/w/{workspace_id}/{random_string}`.
+    - For **push delivery**, Windmill sets the subscription's push endpoint URL to match the path of the trigger.\
+      The format is:\
+      `{base_endpoint}/api/gcp/w/{workspace_id}/{trigger_path}`
+    - Example: if the trigger path is `u/test/fabulous_trigger`, the endpoint will be:\
+      `{base_endpoint}/api/gcp/w/myworkspace/u/test/fabulous_trigger`
     - When creating or updating a **push** subscription, Windmill allows you to configure:
       - Whether **authentication** is enabled or disabled.
 
@@ -50,17 +53,20 @@ Refer to [Google Cloud Pub/Sub - Managing Subscriptions](https://cloud.google.co
 - Select an existing subscription ID **among the subscriptions fetched from the selected topic**.
 - Windmill will automatically detect the subscription's **delivery type** based on the cloud configuration.
 - If the subscription is of **push delivery** type:
-  - The subscription's endpoint URL must match the format:\
-    `{base_endpoint}/api/gcp/w/{workspace_id}/*`
+  - The subscription's endpoint URL must match the path of the trigger that will be bound to it.
+  - The expected format is:\
+    `{base_endpoint}/api/gcp/w/{workspace_id}/{trigger_path}`
   - The **path segment** (the portion after `{workspace_id}/`) must be **unique across your workspace**.
 
   **Example:**
 
+  Suppose your trigger path is `u/test/fabulous_trigger`:
+
   - Valid:
-    - `{base_endpoint}/api/gcp/w/myworkspace/topic-abc`
-    - `{base_endpoint}/api/gcp/w/myworkspace/topic-xyz`
+    - `{base_endpoint}/api/gcp/w/myworkspace/u/test/fabulous_trigger`
+    - `{base_endpoint}/api/gcp/w/myworkspace/u/test/another_trigger`
   - Invalid:
-    - Two subscriptions both using `{base_endpoint}/api/gcp/w/myworkspace/topic-abc`
+    - Two subscriptions both using `{base_endpoint}/api/gcp/w/myworkspace/u/test/fabulous_trigger`
 
 ### Choose the runnable
 
@@ -182,8 +188,7 @@ export async function main(
 ## Troubleshooting
 
 - **Permission issues**: Verify the service account has required Pub/Sub permissions. If the correct permissions are set but you still encounter `unauthorized` or `permission denied` errors, it might indicate that Google has updated required permissions. Please contact Windmill support so we can investigate and assist.
-- **Push delivery failures**: Ensure the push endpoint URL matches the required format:\
-`{base_endpoint}/api/gcp/w/{workspace_id}/*`.
+- **Push delivery failures**: If using existing subscription ensure the push endpoint URL matches the required format (`{base_endpoint}/api/gcp/w/{workspace_id}/{trigger_path}`) and is unique across the workspace.
 - **Topic or subscription not found**: Refresh the list to fetch the latest available resources.
 
 ---
