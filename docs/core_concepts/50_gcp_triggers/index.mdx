@@ -56,17 +56,7 @@ Refer to [Google Cloud Pub/Sub - Managing Subscriptions](https://cloud.google.co
   - The subscription's endpoint URL must match the path of the trigger that will be bound to it.
   - The expected format is:\
     `{base_endpoint}/api/gcp/w/{workspace_id}/{trigger_path}`
-  - The **path segment** (the portion after `{workspace_id}/`) must be **unique across your workspace**.
-
-  **Example:**
-
-  Suppose your trigger path is `u/test/fabulous_trigger`:
-
-  - Valid:
-    - `{base_endpoint}/api/gcp/w/myworkspace/u/test/fabulous_trigger`
-    - `{base_endpoint}/api/gcp/w/myworkspace/u/test/another_trigger`
-  - Invalid:
-    - Two subscriptions both using `{base_endpoint}/api/gcp/w/myworkspace/u/test/fabulous_trigger`
+> **Note:** You must not have multiple subscriptions pointing to the same trigger URL (for example, two subscriptions targeting `{base_endpoint}/api/gcp/w/myworkspace/u/test/fabulous_trigger`).
 
 ### Choose the runnable
 
@@ -112,8 +102,11 @@ If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extrac
 - `subscription`: Subscription ID
 - `topic`: Topic ID
 - `message_id`: Unique message ID
-- `publish_time`: Timestamp
+- `publish_time`: Publish timestamp (RFC 3339 format with `Z`, e.g., `"2024-04-07T12:34:56Z"`)
 - `attributes`: Key-value metadata
+- `delivery_type`: `"push"` or `"pull"` (the type of delivery)
+- `ordering_key`: Ordering key (optional, if message ordering is enabled)
+- `headers`: HTTP headers for push delivery (only present for push)
 
 Example preprocessor:
 
@@ -176,13 +169,6 @@ export async function main(
   console.log("Attributes:", attributes);
 }
 ```
-
----
-
-## Best practices
-
-- Always use a **preprocessor** if your Pub/Sub payloads vary in format or need validation.
-- For push endpoints, **enable authentication** to ensure secure delivery.
 
 ---
 
