@@ -68,13 +68,13 @@ Refer to [Google Cloud Pub/Sub - Managing Subscriptions](https://cloud.google.co
 
 Below are examples for handling GCP Pub/Sub messages in Windmill.
 
-> Windmill provides the Pub/Sub message as the argument `msg` (a base64-encoded string) to your runnable.
+> Windmill provides the Pub/Sub message as the argument `payload` (a base64-encoded string) to your runnable.
 
 ### Basic script
 
 ```typescript
-export async function main(msg: string) {
-  const decoded = new TextDecoder().decode(Uint8Array.from(atob(msg), c => c.charCodeAt(0)));
+export async function main(payload: string) {
+  const decoded = new TextDecoder().decode(Uint8Array.from(atob(payload), c => c.charCodeAt(0)));
 
   try {
     const jsonData = JSON.parse(decoded);
@@ -95,7 +95,7 @@ export async function main(msg: string) {
 
 If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extract fields before they reach the main function.
 
-> Windmill provides the Pub/Sub message as the argument `msg` (a base64-encoded string) to the preprocessor.
+> Windmill provides the Pub/Sub message as the argument `payload` (a base64-encoded string) to the preprocessor.
 
 #### GCP Pub/Sub trigger object
 
@@ -124,10 +124,10 @@ export async function preprocessor(
       publish_time?: string,
     }
   },
-  msg: string,
+  payload: string,
 ) {
   if (wm_trigger.kind === 'gcp' && wm_trigger.gcp) {
-    const decodedString = new TextDecoder().decode(Uint8Array.from(atob(msg), c => c.charCodeAt(0)));
+    const decodedString = new TextDecoder().decode(Uint8Array.from(atob(payload), c => c.charCodeAt(0)));
 
     const attributes = wm_trigger.gcp.attributes || {};
     const contentType = attributes['content-type'] || attributes['Content-Type'];
