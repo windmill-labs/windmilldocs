@@ -699,6 +699,7 @@ const sidebars = {
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
+								'apps/app_configuration_settings/code_input',
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',
 								'apps/app_configuration_settings/currency_input',
