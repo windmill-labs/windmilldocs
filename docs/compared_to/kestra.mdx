@@ -67,10 +67,9 @@ Both platforms share a similar architecture centered around a queue-based system
 ### Configuration and workflow building
 
 Kestra:
-- Uses YAML-only configuration for workflows where scripts are referenced as files
+- Uses YAML-first configuration for workflows where scripts are referenced as files (recently introduced a no-code interface for basic workflow creation)
 - Requires passing arguments between steps through file I/O
 - Passes simple arguments as environment variables
-- No visual flow builder/editor
 
 Kestra takes a code-only approach. Workflow creation is done through a YAML file. Each task is a value in the YAML, and most of your tasks will be separate files that need to be referenced in the flow (e.g. Python code can type `io.kestra.core.tasks.scripts.Python`, `io.kestra.core.tasks.python.Commands`, `io.kestra.core.tasks.python.Script`).
 

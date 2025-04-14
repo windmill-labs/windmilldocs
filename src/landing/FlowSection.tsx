@@ -322,7 +322,7 @@ const tabs = [
 				}
 			},
 			{
-				title: 'Step mocking',
+				title: 'Step mocking / Pin result',
 				description:
 					'When a step is mocked, it will immediately return the mocked value without performing any computation.',
 				icon: Voicemail,
@@ -336,9 +336,9 @@ const tabs = [
 					</div>
 				),
 				video: {
-					videoSrc: '/videos/step_mocking.mp4',
+					videoSrc: 'https://www.youtube.com/embed/-cATEh8saqU',
 					videoLength: '15',
-					altText: 'Step mocking'
+					altText: 'Step mocking / Pin result'
 				}
 			},
 			{
