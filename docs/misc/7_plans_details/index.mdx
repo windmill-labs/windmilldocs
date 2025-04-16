@@ -332,9 +332,11 @@ If you have any questions, please contact support@windmill.dev
 
 ## Windmill Customer Portal
 
-As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal. If you want to monitor your usage in real time, you can 'Send usage' from your [instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (if you have several instances, make sure to do it for each instance) and check how it converts into seats and compute units from the portal.
+As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal. The portal also displays your last license renewal result and date in the top right corner, helping you track your subscription status. If you want to monitor your usage in real time, you can 'Send usage' from your [instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (if you have several instances, make sure to do it for each instance) and check how it converts into seats and compute units from the portal.
 
 From the portal, you can adjust your subscription on your own. If you adjust your subscription during a billing cycle, you will be charged a prorated amount for the additional resources. This means you will only pay for the portion of the year that remains after the adjustment. For example on a yearly subscription, if you make the adjustment 10 months into the year, you would pay for approximately 2/12 of the annual cost for the additional resources.
+
+Enterprise Edition customers with an active subscription can download our SOC2 report directly from the portal using the link in the bottom left. For other users, a "Request SOC2 report" button will open an email to support@windmill.dev.
 
 ![Portal](./portal.png 'Portal')
 
@@ -378,7 +380,7 @@ The following information is collected:
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
-- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month. [Non-prod instances](../../advanced/18_instance_settings/index.mdx#non-prod-instance) are not counted in the billing for computation usage.
+- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month. [Non-prod instances](../../advanced/18_instance_settings/index.mdx#non-prod-instance) are not counted in the billing for computation usage. For development environments, you can also easily copy a development license key using the button in the bottom right of the portal. This provides an alternative to manually turning instances to Non-prod mode.
 
 Using a number of seats, workers, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
 1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min
