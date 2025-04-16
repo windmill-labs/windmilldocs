@@ -12,6 +12,6 @@ features:
     'Handle different script and flow versions',
     'Always run latest version'
   ]
-image: /assets/images/batch-reruns-example-62bb4b65dbcaae368ac03f6851f56cd0.png
+image: ./batch-reruns-example.png
 docs: /docs/core_concepts/monitor_past_and_future_runs#batch-actions
 ---
