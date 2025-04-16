@@ -10,5 +10,5 @@ features:
     'Run your Nu scripts locally or in the cloud.',
   ]
 image: ./nu-lang.png
-docs: docs/getting_started/scripts_quickstart/bash/#nu
+docs: /docs/getting_started/scripts_quickstart/bash/#nu
 ---
