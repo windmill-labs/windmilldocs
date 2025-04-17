@@ -6,98 +6,56 @@ Agent workers are a 4th mode of execution of the Windmill binary, but instead of
 It is most useful when workers are deployed remotely and they are in an unsecure environments and/or have a high latency to the Postgresql database.
 Note that agent workers can even be running without docker on Linux, Windows and Apple targets using the cross-compiled binaries of Windmill attached to each release.
 
-The differences is that the worker:
+## Quickstart
 
-1. will NOT emit intempestive warnings logs about high latency to the database
-2. will NOT start the embedded server api like normal workers do (the embedded server api is a performance optimization)
-3. (optional) will NOT create an ephemeral token per job and will instead use a static token that is pre-defined and that must only have access to the workspaces and folders this remote workers is meant to have access to
+Go to the Workers page (/workers) as a superadmin and click "+ New agent worker"
 
-In this settings, workers will still require a connection to be passed with `DATABASE_URL` as this is how they will:
+![Add worker](./new_agent_worker.png)
 
-- fetch jobs from the queue,
-- emit audit logs in the database
-- insert the finished job in the completed_job table.
+After clicking, a drawer will open:
 
-All other operations are done by the intermerdiary of the api servers that the remote workers will connect to using http and the BASE_URL defined in the [instance settings](../../advanced/18_instance_settings/index.mdx#base-url) (overridable by passing `BASE_INTERNAL_URL=<https://private_instance_url:8000>` to the worker`).
+![Agent worker config](./agent_worker.png)
 
-## (Optional) Restrict the role used by the worker to the strict minimum
+Fill the form with the following values:
 
-Not having access to the other tables allow to restrict the [postgresql role](https://www.postgresql.org/docs/current/user-manag.html) of the database_url used by the worker to the strict minimum, mitigating any risks
-for the rest of the system even in the event of a compromise of the remote worker.
+- Agent Group: this is only used to group agent workers together on the workers page, contrary to normal workers, no config is pulled dynamically from the agent group.
+- Tags: this is a list of tags that the agent worker will listen to. It can't be changed by the worker and is encoded in the JWT token passed to the worker
 
-One such role that can be defined could be as follows:
+You will see a token below once the tags are added.
 
-```sql
-CREATE USER agent with PASSWORD 'changeme';
-GRANT ALL ON queue to agent;
-GRANT SELECT ON job to agent;
-GRANT INSERT on audit to agent;
-GRANT ALL on sequence audit_id_seq to agent;
-GRANT SELECT, INSERT, UPDATE ON completed_job to agent;
-GRANT SELECT on config to agent;
-GRANT SELECT on global_settings to agent;
-GRANT SELECT, INSERT, UPDATE on worker_ping to agent;
-GRANT ALL on concurrency_counter to agent;
-GRANT SELECT, INSERT, UPDATE on pip_resolution_cache to agent;
-GRANT SELECT, INSERT, UPDATE on job_logs to agent;
-GRANT SELECT, INSERT, UPDATE on outstanding_wait_time to agent;
-GRANT SELECT, UPDATE on script to agent;
-GRANT SELECT, UPDATE, INSERT on deployment_metadata to agent;
-GRANT SELECT, UPDATE, INSERT on dependency_map to agent;
-GRANT SELECT, UPDATE on flow to agent;
-GRANT SELECT, UPDATE on flow_version to agent;
-GRANT SELECT, UPDATE, INSERT on flow_version_lite to agent;
-GRANT SELECT, UPDATE, INSERT on flow_node to agent;
-GRANT SELECT, UPDATE on schedule to agent;
-GRANT SELECT (hostname, log_ts) ON log_file TO agent;
-
-CREATE POLICY agent ON queue TO agent USING (tag = '<x>' OR tag = '<y>');
-CREATE POLICY agent ON script TO agent USING (tag = '<x>' OR tag = '<y>');
-CREATE POLICY agent ON flow TO agent USING (tag = '<x>' OR tag = '<y>');
-CREATE POLICY agent ON job TO agent USING (tag = '<x>' OR tag = '<y>');
--- adapt below (and above) policies to your needs (e.g. based on workspace/path etc...)
-CREATE POLICY agent ON flow_version TO agent USING (true);
-CREATE POLICY agent ON flow_version_lite TO agent USING (true);
-CREATE POLICY agent ON flow_node TO agent USING (true);
-CREATE POLICY agent ON schedule TO agent USING (true);
-CREATE POLICY agent ON completed_job TO agent USING (true);
-CREATE POLICY agent
-   ON audit
-   FOR INSERT
-   TO agent
-   WITH CHECK  (true);
-
+You can now start any windmill binary or container with the following env variables:
 
 ```
-
-Note that `<x>` and `<y>` need to be replaced with the exact job tags this agent is meant to be using.
-
-### Option 1. Using a static job token to avoid having to write complex RLS policies
-
-1. Create a user with all the possible permissions ever needed by jobs on the remote worker:
-
-   1. Instance settings -> Global users -> Add user to instance
-   2. Login with what user, create a token
-
-2. Run the binary or docker on the target with:
-
-```
-DATABASE_URL=postgres://agent:changeme@localhost/windmill JOB_TOKEN=<STATIC_TOKEN> BASE_INTERNAL_URL=http://private_instance_url:8000 MODE=agent ./windmill
+MODE=agent
+AGENT_TOKEN="<token above>"
+BASE_INTERNAL_URL="<base internal url>"
 ```
 
-### Option 2: Define an RLS policy to the token table
+Also pass an INIT_SCRIPT with the content of the script you want to run when the worker starts. See [this page](../../advanced/8_preinstall_binaries/index.mdx) for more information.
 
-The token table is the primary mechanism by which it is possible to do privilege escalation. Which is why Option 1. is recommended. But if writing RLS policy is your cup of tea, then you can avoid having to create a job token and do as follows:
+BASE_INTERNAL_URL must correspond to the base of the url of the windmill instance the worker should send HTTP requests to, it has no trailing slash (e.g. `http://my-windmill-instance.xyz`). It can be the same as BASE_URL but it can be different if it's within a private network.
 
-Note that the token table has the following schema:
+You can mix and match normal and agent workers. You actually will need to have at least one normal worker that listens to the tags `flow` and `dependency` (or `flow-$workspace` and `dependency-$workspace` if using workspace specific default tags) to have flow and dependency job being runnable as agent workers can't run dependency jobs nor can run the flow state machine (but can run the subjobs within them).
 
-```
-token | label | expiration | workspace_id | owner | email | super_admin | created_at | last_used_at | scopes
-```
+That's it! You can now start your worker and it will be ready to run jobs that are tagged with the worker's tags.
 
-```
-GRANT ALL on token to agent;
-CREATE POLICY agent ON token TO agent USING <your custom defined policy>
-```
+### Dynamic tags for agent workers
 
-You will most definitely want to restrict the ability to set super_admin to True and limit the `owner` to be permissioned with only a few restricted possible owners.
+The tags are assigned statically to a script/flow at deployment time but can have a dynamic part to make them more flexible.
+
+You can use dynamic tags based on the job's args `tag-$args[argName]` or the job's workspace id `tag-$workspace` to target a different agent worker based either on the job's args or the job's workspace id. See more about [dynamic tags](../9_worker_groups/index.mdx#dynamic-tag).
+
+## Architecture
+
+Normal workers interact with the Postgresql database directly.
+
+Agent workers interact only via HTTP requests with the server which expose api methods specifically for it at `/api/agent_workers/` and `/api/w/<workspace>/agent_workers/`. Those methods all require the requests to be authenticated with a JWT token, and that's what the `AGENT_TOKEN` env variable is for.
+
+The JWT token is a signed JSON Web Token that contains the following information:
+
+- The worker's tags
+- The worker's group
+
+It make sure that the worker can only pull and run jobs that are tagged with the worker's tags. A benefit of this architecture is that it is both secure and lightweight. Only a superadmin can create an agent worker because only a superadmin can create the JWT token with the arbitrary tags. The API exposed expose methods that are needed by the worker to run the jobs and only those. All the HTTP requests are retried in case of a transient error which make them resilient.
+
+In addition, agent workers have slightly less throughput than normal workers but you can have many more of them because the servers act as an connection pool to the Postgresql database. You can for instance have 1000 agent workers on a single server without having to worry about the database connection limit.
