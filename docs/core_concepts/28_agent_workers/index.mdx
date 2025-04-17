@@ -2,8 +2,14 @@
 
 Agent workers are a Cloud & Self-hosted [Enterprise](/pricing) Feature.
 
-Agent workers are a 4th mode of execution of the Windmill binary, but instead of using `MODE=worker`, we use here `MODE=agent`.
-It is most useful when workers are deployed remotely and they are in an unsecure environments and/or have a high latency to the Postgresql database.
+Agent workers are a 4th mode of execution of the Windmill binary, but instead of using `MODE=worker`, we use here `MODE=agent`. Instead of using a direct connection to the database, they only require an HTTP connection to an internal base url of the cluster.
+
+They should be used:
+
+- For remote workers with non-low latency to the main database/cluster and or unreliable connectivity to it or complex firewall since they only require an HTTP connection to an internal base url of the cluster
+- Untrusted sites, since they do not require access to the database and only have access to a limited set of APIs relative to the jobs that have been assigned to them
+- If you need thousands of workers as it is less taxing on the database since the servers act as a connection pooler
+
 Note that agent workers can even be running without docker on Linux, Windows and Apple targets using the cross-compiled binaries of Windmill attached to each release.
 
 ## Quickstart
