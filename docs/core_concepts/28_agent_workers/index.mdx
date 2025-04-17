@@ -31,7 +31,7 @@ AGENT_TOKEN="<token above>"
 BASE_INTERNAL_URL="<base internal url>"
 ```
 
-Also pass an INIT_SCRIPT with the content of the script you want to run when the worker starts. See [this page](../../advanced/8_preinstall_binaries/index.mdx) for more information.
+If needed, pass an INIT_SCRIPT env variable with the content of the script you want to run when the worker starts. See [this page](../../advanced/8_preinstall_binaries/index.mdx) for more information.
 
 BASE_INTERNAL_URL must correspond to the base of the url of the windmill instance the worker should send HTTP requests to, it has no trailing slash (e.g. `http://my-windmill-instance.xyz`). It can be the same as BASE_URL but it can be different if it's within a private network.
 
