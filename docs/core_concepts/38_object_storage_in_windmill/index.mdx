@@ -357,6 +357,14 @@ Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) sect
 	/>
 </div>
 
+### S3 object signing for image access in public apps
+
+The TypeScript and Python Windmill clients include functions to generate signed S3 objects. 
+These objects can be used to [display s3 images in public apps](../../apps/4_app_configuration_settings/image.mdx#public-app-access-for-s3-images).
+The functions are `wmill.signS3Object` for TypeScript and `wmill.sign_s3_object` for Python (or `wmill.signS3Objects` and `wmill.sign_s3_objects` for multiple objects).
+They take an `S3Object` as input and return an `S3Object` with an additional `presigned` property which contains a signature making the object publicly available.
+Once you have a signed S3 object, you can pass it directly to the image component in an app.
+
 ## Instance object storage
 
 Under [Enterprise Edition](/pricing), instance object storage offers advanced features to enhance performance and scalability at the [instance](../../advanced/18_instance_settings/index.mdx) level. This integration is separate from the [Workspace object storage](#workspace-object-storage) and provides solutions for large-scale log management and distributed dependency caching.
