@@ -10,5 +10,5 @@ features:
     'Improved controls over repo access from Windmill using the App installation scope',
   ]
 image: ./gh_app.png
-docs: docs/integrations/git_repository#github-app
+docs: /docs/integrations/git_repository#github-app
 ---

@@ -11,5 +11,5 @@ features:
     'Autocomplete'
   ]
 image: ./code-input.png
-docs: docs/apps/app_configuration_settings/code_input
+docs: /docs/apps/app_configuration_settings/code_input
 ---
