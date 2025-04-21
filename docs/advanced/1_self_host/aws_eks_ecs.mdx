@@ -1,11 +1,54 @@
 ---
-title: Windmill on AWS ECS
+title: Windmill on AWS
 ---
 
 import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+## Windmill on AWS EKS
+Windmill can be deployed on an EKS ([Elastic Kubernetes Service](https://aws.amazon.com/eks/)) cluster. Below are the detailed steps to get a Windmill stack up and running. The number of servers and [workers](../../core_concepts/9_worker_groups/index.mdx), as well as the instance sizes, should be tuned to your own usecases.
+
+You can either setup your own EKS cluster and RDS instance and deploy Windmill using the [Helm chart](../self_host#helm-chart) or use the Cloudformation template below.
+
+### Cloudformation
+The [CloudFormation template](https://github.com/windmill-labs/windmill/tree/main/examples/deploy/aws-eks-cloudformation) automatically deploys Windmill on AWS EKS. The deployment includes:
+
+- An EKS cluster with configurable node types and sizes
+- An RDS PostgreSQL database for Windmill data
+- AWS Load Balancer Controller for handling ingress traffic
+- Proper network configuration with VPC, subnets, and security groups
+- A fully automated installation of Windmill via Helm
+
+### Parameters
+
+The template accepts various parameters to customize your deployment:
+
+- **NodeInstanceType**: EC2 instance type for EKS worker nodes (t3.small to r5.2xlarge)
+- **NodeGroupSize**: Number of EKS worker nodes
+- **RdsInstanceClass**: RDS instance class for the PostgreSQL database (db.t3.micro to db.r5.2xlarge)
+- **DBPassword**: Password for the PostgreSQL database
+- **WorkerReplicas**: Number of Windmill worker replicas
+- **NativeWorkerReplicas**: Number of Windmill native worker replicas
+- **Enterprise**: Enable Windmill [Enterprise features](https://www.windmill.dev/docs/misc/plans_details#upgrading-to-enterprise-edition) (requires license key)
+
+
+To modify the Helm chart configuration or update the template, refer to the official [Windmill Helm chart repository](https://github.com/windmill-labs/windmill-helm-charts). For detailed information about a recommended setup for setting up RDS for Windmill on AWS, see [Windmill on AWS ECS](/docs/advanced/self_host/aws_ecs#create-a-rds-database) below.
+
+### Deployment
+
+1. Upload the CloudFormation template to your AWS account
+2. Fill in the required parameters
+3. Deploy the stack
+4. Access Windmill using the URL provided in the Outputs section of the stack
+
+After deployment, you can access Windmill via the LoadBalancer URL shown in the CloudFormation stack outputs.
+
+:::tip
+The Cloudformation template is a good option for a quick start. Once the installation is done, we recommend using the [Helm chart](../self_host#helm-chart) to manage your Windmill stack and also update the loadbalancer to use a custom domain name and SSL certificate as by default this deployment is HTTP only.
+:::
+
+## Windmill on AWS ECS
 Windmill can be deployed on an ECS ([Elastic Container Service](https://aws.amazon.com/ecs/)) cluster. Below are the detailed steps to get a Windmill stack up and running. The number of servers and [workers](../../core_concepts/9_worker_groups/index.mdx), as well as the instance sizes, should be tuned to your own usecases.
 
 To give a brief overview, we will first create a VPC and an associated security group. This VPC will contain the Database, the instances powering the ECS cluster, and the Windmill containers. Then we will create a database on RDS, and finally the ECS cluster.
@@ -15,7 +58,7 @@ Once the ECS cluster is running, we will define the tasks definitions and the as
 Familiar with Terraform? The terraform files are available [here in Windmill's GitHub repo](https://github.com/windmill-labs/windmill/blob/main/examples/deploy/aws-ecs-terraform/README.md) to deploy this Windmill Stack on ECS with just a few commands!
 :::
 
-## Create a VPC and a security group
+### Create a VPC and a security group
 
 1. Go to AWS VPC and create a new one.
    - Name: `windmill-vpc`
@@ -32,7 +75,7 @@ Familiar with Terraform? The terraform files are available [here in Windmill's G
    - Add a rule `HTTP traffic FROM anywhere` to be able to hit Windmill Server from your workstation. You can refine security here by having 2 security groups with only one allowing HTTP traffic. And later you'll place only the server in this security group and all the other containers in the more restricted security group. For simplicity, we will just have one security group here.
    - The default outbound rule can be used: `All traffic TO 0.0.0.0/0`
 
-## Create a RDS database
+### Create a RDS database
 
 1. Go to AWS RDS
 1. Standard create
@@ -69,7 +112,7 @@ Familiar with Terraform? The terraform files are available [here in Windmill's G
    - It is advised to enable automated backups
    - Encryption can be set depending on your requirement, same for log export and maintenance.
 
-## Create the ECS cluster
+### Create the ECS cluster
 
 As said in the introduction, the architecture of your stack depends of your needs. The only requires parts are one Windmill server at least one multi-purpose worker.
 
@@ -88,7 +131,7 @@ As said in the introduction, the architecture of your stack depends of your need
    - Attach it to the VPC and security group created above
    - The instance can be placed in the private subnets, we will access them through a load balancer
 
-## Create a Load Balancer and Target Groups
+### Create a Load Balancer and Target Groups
 
 We're going to create 3 target groups, for the Windmill server, LSP and Multiplayer
 
@@ -135,7 +178,7 @@ The load balancer plays the role of a single entry door for all Windmill endpoin
    - Give it a priority of `20`
    - Click on Create
 
-## Create the task definitions
+### Create the task definitions
 
 We will create 6 tasks definitions here:
 
@@ -598,7 +641,7 @@ The following field needs to be set manually: `ECS_TASK_EXECUTION_ROLE_ARN`.
 </TabItem>
 </Tabs>
 
-## Create the services
+### Create the services
 
 One for each task definition, we will now create 6 services. Obviously if you skipped some optional task definition above, the corresponding service shouldn't be created.
 
@@ -670,9 +713,9 @@ One for each task definition, we will now create 6 services. Obviously if you sk
 </TabItem>
 </Tabs>
 
-## Open Windmill
+### Open Windmill
 
-Go back to the `windmill-server-lb` and copy its DNS. Open it in a new tab. You should see the Windmill Login interface. The default credentials are `admin@windmill.dev` / `changeme`. Follow the instructions to go through the initial Windmill setup during which you will be invited to update your login email and password.
+Go back to the `windmill-server-lb` and copy its DNS. Open it in a new t	ab. You should see the Windmill Login interface. The default credentials are `admin@windmill.dev` / `changeme`. Follow the instructions to go through the initial Windmill setup during which you will be invited to update your login email and password.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
