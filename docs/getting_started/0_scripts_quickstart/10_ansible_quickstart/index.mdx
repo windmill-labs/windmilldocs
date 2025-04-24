@@ -346,6 +346,8 @@ dependencies:
     collections:
       - name: community.general
       - name: community.vmware
+    roles:
+      - name: geerlingguy.apache
   python:
     - jmespath
 ```
@@ -358,7 +360,16 @@ Currently the Windmill image supporting Ansible runs the full `ansible` and not 
 
 ### Git repo dependencies
 
-To enable more flexibility, it is possible to declare a git repo to be cloned at a specified location before the playbook is run. You can do this as follows:
+Outside of galaxy dependencies, a role or collection can exist on a git repo and be imported as such. The only caveat is that the repo needs to be a valid role or collection at its root. Check the [ansible documentation](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#install-multiple-collections-with-a-requirements-file) for more information.
+
+```yaml
+collections:
+  - name: git+https://github.com/organization/collection.git
+    type: git
+    version: main
+```
+
+To enable more flexibility however, it is possible to declare a git repo to be cloned at a specified location before the playbook is run. You can do this as follows:
 
 ```yaml
 git_repos:
