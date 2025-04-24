@@ -19,7 +19,6 @@ const navigation = [
 			{ name: 'Supabase', href: '/integrations/supabase' },
 			{ name: 'Slack', href: '/integrations/slack' },
 			{ name: 'Windmill AI', href: '/windmill_ai' },
-			{ name: 'Windmill MCP', href: '/windmill_mcp' },
 			{ name: 'More integrations', href: '/integrations/' }
 		],
 		title: 'Integrations'
