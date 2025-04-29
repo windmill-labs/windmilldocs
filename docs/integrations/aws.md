@@ -2,7 +2,9 @@
 
 [AWS](https://aws.amazon.com/) is a cloud computing platform offering various services like computing, storage and databases.
 
-To integrate AWS to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+To integrate AWS with Windmill, you can configure either a classic **AWS resource** using access keys, or a more secure **AWS OIDC resource**, which assumes IAM roles via OpenID Connect.
+
+These should be saved as a [resource](../core_concepts/3_resources_and_types/index.mdx).
 
 :::info Self-host
 
@@ -10,7 +12,9 @@ If you're looking for a way to self-host Windmill using AWS, see [Self-Host Wind
 
 :::
 
-![Add AWS Resource](../assets/integrations/add-aws.png.webp)
+---
+
+## AWS Resource
 
 | Property           | Type   | Description                        | Default | Required | Where to Find                                                             |
 | ------------------ | ------ | ---------------------------------- | ------- | -------- | ------------------------------------------------------------------------- |
@@ -18,9 +22,25 @@ If you're looking for a way to self-host Windmill using AWS, see [Self-Host Wind
 | awsSecretAccessKey | string | AWS Secret Access Key for account  |         | true     | AWS Management Console > IAM > Users > [Your User] > Security Credentials |
 | region             | string | AWS Region for your resources      |         | false    | AWS Management Console > Top Right Corner (e.g., "N. Virginia")           |
 
-<br/><br/>
+---
 
-Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
+## AWS OIDC Resource
+
+| Property | Type   | Description                                         | Default | Required | Where to Find / Define                                                                 |
+|----------|--------|-----------------------------------------------------|---------|----------|-----------------------------------------------------------------------------------------|
+| roleArn  | string | ARN of the IAM role to assume using OIDC            |         | true     | AWS Management Console > IAM > Roles > [Your Role] > ARN                               |
+| region   | string | AWS Region for your resources                       |         | false    | AWS Management Console > Top Right Corner (e.g., "us-west-2")                          |
+
+> ℹ️ Ensure the IAM role trusts Windmill's OIDC provider and has sufficient permissions for the services you intend to use.
+
+---
+
+## Usage
+
+Your AWS or AWS OIDC resource can be:
+
+- [Passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) to scripts
+- [Fetched programmatically](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx), or [apps](../apps/0_app_editor/index.mdx)
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -32,10 +52,11 @@ Your resource can be used [passed as parameters](../core_concepts/3_resources_an
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-<br/>
-
+<br />
 > Example of a Supabase resource being used in two different manners from a script in Windmill.
-<br/>
+<br />
+
+---
 
 :::tip
 
