@@ -12,10 +12,12 @@ On-demand triggers:
 - [Workflows as code](#workflows-as-code) (scripts only)
 - [Schedule](#schedule)
 - [Command-line interface (CLI)](#cli-command-line-interface)
+- [Trigger from API](#trigger-from-api)
+- [Trigger from LLM clients with MCP](#trigger-from-llm-clients-with-mcp)
 
 Triggers from external events:
 
-- [API](#trigger-from-api) & [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack)
+- [Webhooks](#webhooks), including from [Slack](#webhooks-trigger-scripts-from-slack)
 - [Emails](#emails)
 - [Custom HTTP routes](#custom-http-routes)
 - [WebSocket triggers](#websocket-triggers)
@@ -23,6 +25,8 @@ Triggers from external events:
 - [Kafka triggers](#kafka-triggers)
 - [NATS triggers](#nats-triggers)
 - [SQS triggers](#sqs-triggers)
+- [MQTT triggers](#mqtt-triggers)
+- [GCP triggers](#gcp-triggers)
 - [Scheduled polls](#scheduled-polls-scheduling--trigger-scripts)
 
 :::info Scripts and Flows in Windmill
@@ -194,6 +198,19 @@ It's an efficient way to run a script from another script.
 	/>
 </div>
 
+
+### Trigger from LLM clients with MCP
+
+Windmill supports the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) to trigger scripts and flows from LLM clients. All you need is an MCP URL to connect your LLM client to Windmill.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="MCP"
+		description="Trigger scripts and flows from LLM clients with MCP."
+		href="/docs/core_concepts/mcp"
+	/>
+</div>
+
 ## Triggers from external events
 
 ### Webhooks
@@ -317,6 +334,31 @@ Windmill can connect to an Amazon SQS queues and trigger scripts or flows when m
 		href="/docs/core_concepts/sqs_triggers"
 	/>
 </div>
+
+### MQTT triggers
+
+Windmill can connect to an MQTT broker, subscribe to specific topics, and trigger scripts or flows when messages are received, enabling event-driven processing. Preprocessors can transform the MQTT message data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="MQTT triggers"
+		description="Trigger scripts and flows from MQTT broker."
+		href="/docs/core_concepts/mqtt_triggers"
+	/>
+</div>
+
+### GCP triggers
+
+Windmill can connect to Google Cloud Pub/Sub, subscribe to specific topics, and trigger scripts or flows when messages are published, enabling event-driven processing. Preprocessors can transform the Pub/Sub message data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+  <DocCard
+    title="GCP Pub/Sub triggers"
+    description="Trigger scripts and flows from Google Cloud Pub/Sub."
+    href="/docs/core_concepts/gcp_triggers"
+  />
+</div>
+
 
 ### Scheduled polls (Scheduling + Trigger scripts)
 

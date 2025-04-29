@@ -3,16 +3,41 @@
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern
 static website generator.
 
+### Nix
+
+If you are using nix, you can:
+```
+$ nix develop
+```
+This will bring into scope all dependencies and helpers.
+
+#### Direnv
+Additionally if you are using [nix-direnv](https://github.com/nix-community/nix-direnv):
+```
+$ direnv allow
+```
+This will automatically enable shell when you enter the repository
+
 ### Installation
 
 ```
 $ npm i --legacy-peer-deps
 ```
 
+#### Nix
+```
+$ wm-setup
+```
+
 ### Local development
 
 ```
 $ npm start
+```
+
+#### Nix
+```
+$ wm-dev
 ```
 
 This command starts a local development server and opens up a browser window.

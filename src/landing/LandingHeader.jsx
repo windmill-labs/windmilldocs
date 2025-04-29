@@ -41,6 +41,11 @@ const resources = [
 		href: '/changelog'
 	},
 	{
+		name: 'Roadmap',
+		description: "See the Windmill roadmap and what's coming next.",
+		href: '/roadmap'
+	},
+	{
 		name: 'Blog',
 		description: 'Stay up to date with our latest news and articles.',
 		href: '/blog'
@@ -48,7 +53,7 @@ const resources = [
 	{
 		name: 'Jobs',
 		description: 'See our current job openings and apply for a position.',
-		href: 'https://www.ycombinator.com/companies/windmill/jobs'
+		href: '/careers'
 	}
 ];
 

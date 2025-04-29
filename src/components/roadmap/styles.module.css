@@ -1,0 +1,405 @@
+/* WindmillRoadmap Component Styles */
+.roadmapContainer {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: #fff;
+	margin: 2rem 0;
+	background: var(--ifm-background-color);
+	min-height: 100vh;
+	padding: 2rem;
+	overflow-y: auto;
+	text-align: left;
+	color: var(--ifm-color-primary);
+}
+
+.container {
+	display: flex;
+	height: 600px;
+	max-width: 1400px;
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	min-height: calc(100vh - 4rem);
+}
+
+.circleContainer {
+	flex: 1;
+	position: relative;
+	overflow: hidden;
+	height: 500px;
+}
+
+.circle {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 500px;
+	height: 500px;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.2);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.node {
+	position: absolute;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #3b82f6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+	top: 50%;
+	left: 50%;
+}
+
+.nodeIcon {
+	font-size: 24px;
+	color: white;
+	font-weight: bold;
+}
+
+.nodeLabel {
+	position: absolute;
+	white-space: nowrap;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 4px 8px;
+	border-radius: 12px;
+	opacity: 0;
+}
+
+.node:hover .nodeLabel {
+	opacity: 1;
+}
+
+.detailsPanel {
+	width: 0;
+	background-color: white;
+	box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+	overflow-y: auto;
+	transition: width 0.3s ease;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.detailsPanel.active {
+	width: 400px;
+	padding: 2rem;
+}
+
+.detailHeader {
+	margin-top: 0;
+	color: #1e3a8a;
+	border-bottom: 2px solid #e5e7eb;
+	padding-bottom: 1rem;
+}
+
+.detailEstimate {
+	display: inline-block;
+	background-color: #e5e7eb;
+	padding: 4px 10px;
+	border-radius: 12px;
+	font-size: 14px;
+	margin-bottom: 1rem;
+}
+
+.detailContent {
+	line-height: 1.6;
+	white-space: pre-wrap;
+}
+
+.closeBtn {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	background: none;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: #6b7280;
+}
+
+.closeBtn:hover {
+	color: #1e3a8a;
+}
+
+.techTree {
+	display: flex;
+	flex-direction: column;
+	gap: 4rem;
+	padding: 2rem;
+	align-items: center;
+}
+
+.tier {
+	display: flex;
+	gap: 3rem;
+	position: relative;
+	justify-content: center;
+}
+
+.techNode {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.nodeContent {
+	width: 200px;
+	padding: 1rem;
+	border-radius: 8px;
+	cursor: pointer;
+	position: relative;
+	transition: all 0.3s ease;
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(5px);
+}
+
+.nodeIcon {
+	font-size: 1.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.nodeLabel {
+	font-size: 0.9rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+.timeEstimate {
+	font-size: 0.8rem;
+	opacity: 0.8;
+	margin-top: 0.5rem;
+}
+
+.connectionLines {
+	position: absolute;
+	bottom: -4rem;
+	left: 50%;
+	width: 2px;
+	height: 4rem;
+	background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+}
+
+.connectionLines::before,
+.connectionLines::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 100px;
+	height: 2px;
+	background: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+}
+
+.connectionLines::before {
+	right: 0;
+	transform: translateX(50%);
+}
+
+.connectionLines::after {
+	left: 0;
+	transform: translateX(-50%);
+}
+
+.timeline {
+	position: relative;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-left: 80px;
+}
+
+.timeline::before {
+	content: '';
+	position: absolute;
+	left: 21px;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background: #e5e7eb;
+}
+
+.timelineCard {
+	margin: 1rem 0;
+	position: relative;
+}
+
+.monthGroup {
+	position: relative;
+	margin-bottom: 2rem;
+	padding-top: 5rem;
+}
+
+.monthMarker {
+	position: absolute;
+	left: -75px;
+	top: 0;
+	width: 32px;
+	height: 32px;
+	background-color: var(--ifm-background-color);
+	border: 4px solid var(--ifm-color-primary-dark);
+	border-radius: 50%;
+	z-index: 2;
+}
+
+.monthLabel {
+	position: absolute;
+	left: -20px;
+	top: 6px;
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--ifm-color-primary-dark);
+	white-space: nowrap;
+	text-align: left;
+	width: 90px;
+}
+
+.right {
+	margin-left: 10px;
+}
+
+.cardTitle,
+.cardCategory,
+.timeEstimate {
+	position: relative;
+	z-index: 1;
+}
+
+.cardContent {
+	border-radius: 0.75rem;
+	border-left: 4px solid;
+	padding: 1rem;
+	background: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(10px);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	margin-bottom: 2rem;
+}
+
+.cardTitle {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 0.5rem;
+	margin-top: 0;
+	color: oklch(0.446 0.043 257.281)
+}
+
+.cardCategory {
+	display: flex;
+	align-items: center;
+	font-size: 0.9rem;
+	color: #666;
+	font-weight: 600;
+	margin-left: auto;
+}
+
+.githubLink {
+	margin-left: 0.5rem;
+	color: #666;
+	transition: color 0.2s ease;
+	display: flex;
+	align-items: center;
+}
+
+.githubLink:hover {
+	color: #3b82f6;
+}
+
+.cardContent:not(:hover) .cardText {
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	max-height: 5.6em;
+}
+
+.cardContent:hover .cardText {
+	max-height: 500px;
+}
+
+/* Only show the down arrow for truncated text */
+.cardContent:not(:hover) .cardText.truncated::after {
+	content: '▼';
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	font-size: 0.75rem;
+	color: #666;
+	opacity: 1;
+	transition: opacity 0.2s ease;
+}
+
+/* Hide arrow on hover for all cards */
+.cardContent:hover .cardText.truncated::after {
+	opacity: 0;
+}
+
+.cardPreviewContainer {
+	position: relative;
+}
+
+.cardText {
+	font-size: 0.875rem;
+	line-height: 1.4;
+	margin-top: 0.5rem;
+	transition: max-height 0.3s ease-in-out;
+	overflow: hidden;
+}
+
+.cardPreview {
+	cursor: pointer;
+	font-size: 0.875rem;
+	color: #666;
+	transition: all 0.3s ease;
+}
+
+.cardPreviewContainer:hover .cardPreview {
+	color: #333;
+}
+
+/* Update container styles */
+.container {
+	position: relative;
+}
+
+/* Add bottom margin to last card to prevent truncation */
+.timelineCard:last-child {
+	margin-bottom: 0;
+}
+
+.monthSection {
+	position: relative;
+	padding-top: 2rem;
+}
+
+.timelineCard.important .cardContent {
+	box-shadow: 0 0 15px rgba(49, 130, 211, 0.5);
+	border-width: 3px;
+}
+
+.importantBadge {
+	position: absolute;
+	top: -10px;
+	right: 0px;
+	background-color: #ff9800;
+	color: white;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 14px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	z-index: 1;
+}

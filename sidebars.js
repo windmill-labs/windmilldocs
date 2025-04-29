@@ -38,7 +38,7 @@ const sidebars = {
 								{
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/bash_quickstart/index',
-									label: 'Bash / PowerShell'
+									label: 'Bash / PowerShell / Nu'
 								},
 								{
 									type: 'doc',
@@ -79,6 +79,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/csharp_quickstart/index',
 									label: 'C#'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/java_quickstart/index',
+									label: 'Java'
 								}
 							]
 						},
@@ -109,7 +114,8 @@ const sidebars = {
 								'misc/guides/table/index',
 								'misc/guides/sequin/index',
 								'misc/guides/snowflake_app_with_user_roles/index',
-								'misc/guides/otel/index'
+								'misc/guides/otel/index',
+								'misc/guides/aws_bedrock/index'
 							]
 						}
 					]
@@ -155,6 +161,17 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/sqs_triggers/index',
 							label: 'SQS'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/mqtt_triggers/index',
+							label: 'MQTT'
+						}
+						,
+						{
+							type: 'doc',
+							id: 'core_concepts/gcp_triggers/index',
+							label: 'GCP'
 						}
 					]
 				},
@@ -293,6 +310,7 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
+				'core_concepts/mcp/index',
 				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
@@ -446,6 +464,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/mongodb',
 							label: 'MongoDB'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/mqtt',
+							label: 'MQTT'
 						},
 						{
 							type: 'doc',
@@ -677,6 +700,7 @@ const sidebars = {
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
+								'apps/app_configuration_settings/code_input',
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',
 								'apps/app_configuration_settings/currency_input',
@@ -793,7 +817,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_ecs']
+					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_eks_ecs']
 				},
 				{
 					type: 'category',

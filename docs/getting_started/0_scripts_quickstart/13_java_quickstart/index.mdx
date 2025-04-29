@@ -1,0 +1,296 @@
+---
+title: 'Java quickstart'
+slug: '/getting_started/scripts_quickstart/java'
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Java quickstart
+
+In this quick start guide, we will write our first script in [Java](https://www.java.com/).
+
+![Editor for Java](./java_exec.png "Script in Java")
+
+This tutorial covers how to create a simple script through Windmill web IDE. See the dedicated page to [develop scripts locally](../../../advanced/4_local_development/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Local development"
+		description="Develop from various environments such as your terminal, VS Code, and JetBrains IDEs."
+		href="/docs/advanced/local_development"
+	/>
+</div>
+
+Scripts are the basic building blocks in Windmill. They can be [run and scheduled](../../8_triggers/index.mdx) as standalone, chained together to create [Flows](../../../flows/1_flow_editor.mdx) or displayed with a personalized User Interface as [Apps](../../7_apps_quickstart/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Script editor"
+		description="All the details on scripts."
+		href="/docs/script_editor"
+	/>
+	<DocCard
+		title="Triggers"
+		description="Trigger scripts and flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/triggers"
+	/>
+</div>
+
+Scripts consist of 2 parts:
+
+- [Code](#code): for Java scripts, it must have at least a **public** static main method inside a Main class.
+- [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
+
+
+From the Home page, click `+Script`. This will take you to the first step of script creation: Metadata.
+
+## Settings
+
+![New script](./java_settings.png "New script")
+
+As part of the [settings](../../../script_editor/settings.mdx) menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
+
+- **Path** is the Script's unique identifier that consists of the
+  [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
+  The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
+- **Summary** (optional) is a short, human-readable summary of the Script. It
+  will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
+  default.
+- **Language** of the script.
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
+  to users on how to run your Script. It supports markdown.
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+
+This menu also has additional settings on [Runtime](../../../script_editor/settings.mdx#runtime), [Generated UI](#generated-ui) and [Triggers](../../../script_editor/settings.mdx#triggers).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Settings"
+		description="Each script has metadata & settings associated with it, enabling it to be defined and configured in depth."
+		href="/docs/script_editor/settings"
+	/>
+</div>
+
+Now click on the code editor on the left side.
+
+## Code
+
+Windmill provides an online editor to work on your Scripts. The left-side is
+the editor itself. The right-side [previews the UI](../../../core_concepts/6_auto_generated_uis/index.mdx) that Windmill will
+generate from the Script's signature - this will be visible to the users of the
+Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
+
+![Editor for Java](./java_exec.png "Editor for Java")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Code editor"
+		description="The code editor is Windmill's integrated development environment."
+		href="/docs/code_editor"
+	/>
+	<DocCard
+		title="Auto-generated UIs"
+		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
+		href="/docs/core_concepts/auto_generated_uis"
+	/>
+</div>
+
+As we picked `Java` for this example, Windmill provided some
+boilerplate. Let's take a look:
+
+```java
+//requirements:
+//com.google.code.gson:gson:2.8.9
+//com.github.ricksbrown:cowsay:1.1.0
+//com.github.ricksbrown:cowsay:1.1.0
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.github.ricksbrown.cowsay.Cowsay;
+import com.github.ricksbrown.cowsay.plugin.CowExecutor;
+
+public class Main {
+  public static class Person {
+    private String name;
+    private int age;
+
+    // Constructor
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+  }
+
+  public static Object main(
+    // Primitive
+    int a,
+    float b,
+    // Objects
+    Integer age,
+    Float d,
+    Object e,
+    String name,
+    // Lists
+    String[] f
+    // No trailing commas!
+    ){
+    Gson gson = new Gson();
+
+    // Get resources
+    var theme = Wmill.getResource("f/app_themes/theme_0");
+    System.out.println("Theme: " + theme);
+    
+    // Create a Person object
+    Person person = new Person( (name == "") ? "Alice" : name, (age == null) ? 30 : age);
+
+    // Serialize the Person object to JSON
+    String json = gson.toJson(person);
+    System.out.println("Serialized JSON: " + json);
+
+    // Use cowsay
+    String[] args = new String[]{"-f", "dragon", json };
+    String result = Cowsay.say(args);
+    return result;
+  }
+}
+
+```
+
+In Java you need `Main` public class and public static `main` function.
+Return type can either be an `Object` or `void`. Any primitive java type can be automatically converted to `Object`.
+
+ There are a few important things to note about the `Main`.
+
+- The arguments are used for generating
+  1.  the [input spec](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of the Script
+  2.  the [frontend](../../../core_concepts/6_auto_generated_uis/index.mdx) that you see when running the Script as a standalone app.
+- Type annotations are used to generate the UI form, and help pre-validate
+  inputs. While not mandatory, they are highly recommended. You can customize
+  the UI in later steps (but not change the input type!).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="JSON schema and parsing"
+		description="JSON Schemas are used for defining the input specification for scripts and flows, and specifying resource types."
+		href="/docs/core_concepts/json_schema_and_parsing"
+	/>
+</div>
+
+Packages can be installed through [Coursier](https://get-coursier.io/). Just add the dependencies you need at the top of the file, using the following format:
+
+```java
+//requirements: 
+//groupId:artifact:Id:version
+//com.google.code.gson:gson:2.8.9
+//com.github.ricksbrown:cowsay:1.1.0
+```
+It supports [Maven](https://maven.apache.org/what-is-maven.html) and [Ivy](https://ant.apache.org/ivy/) repositories.
+
+## Instant preview & testing
+
+
+Look at the UI preview on the right: it was updated to match the input
+signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/auto_g_ui_landing.mp4"
+/>
+
+## Generated UI
+
+From the Settings menu, the "Generated UI" tab lets you customize the script's arguments.
+
+The UI is generated from the Script's main function signature, but you can add additional constraints here. For example, we could use the `Customize property`: add a regex by clicking on `Pattern` to make sure users are providing a name with only alphanumeric characters: `^[A-Za-z0-9]+$`. Let's still allow numbers in case you are some tech billionaire's kid.
+
+![Advanced settings for Java](./ui_java.png "Advanced settings for Java")
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Script kind"
+		description="You can attach additional functionalities to Scripts by specializing them into specific Script kinds."
+		href="/docs/script_editor/script_kinds"
+	/>
+	<DocCard
+		title="Generated UI"
+		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		href="/docs/script_editor/customize_ui"
+	/>
+</div>
+
+## Run!
+
+We're done! Now let's look at what users of the script will do. Click on the [Deploy](../../../core_concepts/0_draft_and_deploy/index.mdx) button
+to load the script. You'll see the user input form we defined earlier.
+
+Note that Scripts are [versioned](../../../core_concepts/34_versioning/index.mdx#script-versioning) in Windmill, and
+each script version is uniquely identified by a hash.
+
+Fill in the input field, then hit "Run". You should see a run view, as well as
+your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
+the left.
+
+![Run in Java](./run_java.png "Run in Java")
+
+You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-line interface call.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Triggers"
+		description="Trigger scripts and flows on-demand, by schedule or on external events."
+		href="/docs/getting_started/triggers"
+	/>
+</div>
+
+## Caching
+
+Every binary and dependency on Java is cached on disk by default. Furthermore if you use the [Distributed cache storage](../../../misc/13_s3_cache/index.mdx), it will be available to every other worker, allowing fast startup for every worker.
+
+## What's next?
+
+This script is a minimal working example, but there's a few more steps that can be useful in a real-world use case:
+
+- Pass [variables and secrets](../../../core_concepts/2_variables_and_secrets/index.mdx)
+  to a script.
+- Connect to [resources](../../../core_concepts/3_resources_and_types/index.mdx).
+- [Trigger that script](../../8_triggers/index.mdx) in many ways.
+- Compose scripts in [Flows](../../../flows/1_flow_editor.mdx) or [Apps](../../../apps/0_app_editor/index.mdx).
+- You can [share your scripts](../../../misc/1_share_on_hub/index.md) with the community on [Windmill Hub](https://hub.windmill.dev). Once
+  submitted, they will be verified by moderators before becoming available to
+  everyone right within Windmill.
+
+Scripts are immutable and there is an hash for each deployment of a given script. Scripts are never overwritten and referring to a script by path is referring to the latest deployed hash at that path.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Versioning"
+		description="Scripts, when deployed, can have a parent script identified by its hash."
+		href="/docs/core_concepts/versioning#script-versioning"
+	/>
+</div>
+
+For each script, a UI is autogenerated from the jsonchema inferred from the script signature, and can be customized further as standalone or embedded into rich UIs using the [App builder](../../7_apps_quickstart/index.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Auto-generated UIs"
+		description="Windmill creates auto-generated user interfaces for scripts and flows based on their parameters."
+		href="/docs/core_concepts/auto_generated_uis"
+	/>
+	<DocCard
+		title="Generated UI"
+		description="main function's arguments can be given advanced settings that will affect the inputs' auto-generated UI and JSON Schema."
+		href="/docs/script_editor/customize_ui"
+	/>
+</div>
+
+In addition to the UI, sync and async [webhooks](../../../core_concepts/4_webhooks/index.mdx) are generated for each deployment.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Webhooks"
+		description="Trigger scripts and flows from webhooks."
+		href="/docs/core_concepts/webhooks"
+	/>
+</div>

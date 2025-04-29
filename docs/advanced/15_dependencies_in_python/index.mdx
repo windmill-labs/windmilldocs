@@ -106,7 +106,7 @@ Although Windmill can [automatically resolve imports](#lockfile-per-script-infer
 
 When doing [`wmill script generate-metadata`](../3_cli/script.md#re-generating-a-script-metadata-file), if a requirements.txt is discovered, the closest one will be used as source-of-truth instead of being discovered from the imports in the script directly to generate the lockfile from the server.
 
-You can write those requirements.txt manually or through a standar `pip install package_name`.
+You can write those requirements.txt manually or through a standard `pip install package_name`.
 
 Several requirements.txt files can therefore coexist, each having authority over the scripts closest to it:
 
@@ -206,7 +206,7 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 </div>
 
 ### Pinning dependencies and requirements
-
+#### Requirements
 If the imports are not properly analyzed, there exists an escape hatch to
 override the inferred imports. One needs to head the Script with the `requirements` comment followed by dependencies.
 The standard pip [requirement specifiers](https://pip.pypa.io/en/stable/reference/requirement-specifiers/) are supported. Some examples:
@@ -225,6 +225,8 @@ def main(...):
   ...
 ```
 
+#### Extra requirements
+
 To add extra dependencies or pin the version of some dependencies
 
 To combine both the inference of Windmill and being able to pin dependencies, use `extra_requirements`:
@@ -239,6 +241,47 @@ import dependency
 def main(...):
   ...
 ```
+
+#### Pin and Repin
+
+It is possible to pin specific import to different version or even another dependency
+
+```python
+import pandas
+import dependency # pin: dependency==0.4
+import nested.modules # pin: nested-modules
+
+def main(...):
+  ...
+```
+
+If import was pinned once, whenever you use the same import again it will be pinned.
+
+It is possible to have several pins to same import and all of them will be included.
+However if you want to override all pins associated with an import you can use `repin`
+```python
+# content of f/foo/bar:
+import dependency # pin: dependency==0.4 Hard lock on 0.4
+...
+
+# content of f/foo/baz:
+import dependency # pin: dependency==1.0 Hard lock on 1.0
+...
+
+# content of f/foo/main:
+import f.foo.bar
+import f.foo.baz
+import dependency # repin: dependency==1.0 Repin to version that works for all scripts
+...
+
+```
+
+:::note
+Windmill assumes that imports directly map to requirements,
+however it is not always the case.
+To handle this there is windmill import map.
+And if you found a public python dependency that needs to be explicitly mapped you can submit an issue or [contribute](../../misc/4_contributing/index.md#mapping-python-imports). 
+:::
 
 ### Private PyPI repository
 
@@ -262,7 +305,7 @@ UV is not using system certificates by default, if you wish to use them, set `PY
 :::
 
 
-"Pip index url" and "Pip extra index url" are filled through Windmill UI, in [Instance settings](../18_instance_settings/index.mdx#registries) under [Enterprise Edition](/pricing).
+`UV index url` and `UV extra index url` are filled through Windmill UI, in [Instance settings](../18_instance_settings/index.mdx#registries) under [Enterprise Edition](/pricing).
 
 ![Private PyPI Repository](./private_pip.png 'Private PyPI Repository')
 

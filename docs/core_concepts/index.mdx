@@ -52,6 +52,16 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		description="Trigger scripts and flows from Amazon SQS."
 		href="/docs/core_concepts/sqs_triggers"
 	/>
+	<DocCard
+		title="MQTT"
+		description="Trigger scripts and flows from MQTT broker."
+		href="/docs/core_concepts/mqtt_triggers"
+	/>
+	<DocCard
+		title="GCP"
+		description="Trigger scripts and flows from Google Cloud Pub/Sub messages."
+		href="/docs/core_concepts/gcp_triggers"
+	/>
 </div>
 
 ## Windmill features
@@ -202,6 +212,11 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		description="Have AI complete code on Windmill."
 		href="/docs/core_concepts/ai_generation"
 	/>
+	<DocCard
+		title="Windmill MCP"
+		description="Connect LLMs to Windmill using the Model Context Protocol."
+		href="/docs/core_concepts/mcp"
+	/>
 </div>
 
 ## Hosting & advanced
@@ -213,9 +228,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/advanced/self_host"
 	/>
 	<DocCard
-		title="Windmill on AWS ECS"
-		description="Windmill can be deployed on an ECS cluster."
-		href="/docs/advanced/self_host/aws_ecs"
+		title="Windmill on AWS ECS or EKS"
+		description="Windmill can be deployed on an ECS or EKS cluster."
+		href="/docs/advanced/self_host/aws_eks_ecs"
 	/>
 	<DocCard
 		title="Command-line interface"
@@ -466,7 +481,7 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Step mocking"
+		title="Step mocking / Pin result"
 		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
 		href="/docs/flows/step_mocking"
 	/>
@@ -641,7 +656,7 @@ All details & features on [Pricing page](/pricing).
 	/>
 	<DocCard
 		title="Windows workers"
-		description="Windows Native Workers are a Self-Hosted Enterprise Feature. You can use the Windows worker natively if you do not want to run Docker or WSL on Windows (e.g., for policy or security reasons). This feature supports the **Python**, **Bun**, and **PowerShell** executors."
+		description="Windows Native Workers are a Self-Hosted Enterprise Feature. You can use the Windows worker natively if you do not want to run Docker or WSL on Windows (e.g., for policy or security reasons). This feature supports the **Python**, **Bun**, **PowerShell** and **Nu** executors."
 		href="/docs/misc/windows_workers"
 	/>
 	<DocCard

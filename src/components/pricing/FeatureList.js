@@ -154,7 +154,7 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/40_websocket_triggers',
+				link: '/docs/core_concepts/websocket_triggers',
 			},
 			{
 				name: 'Postgres triggers',
@@ -165,7 +165,19 @@ export const sections = [
 					'tier-free': false,
 					'tier-team': false
 				},
-				link: '/docs/core_concepts/46_postgres_triggers',
+				link: '/docs/core_concepts/postgres_triggers',
+				tooltip: 'Self-hosted only'
+			},
+			{
+				name: 'MQTT triggers',
+				tiers: {
+					'tier-free-selfhost': true,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/mqtt_triggers',
 				tooltip: 'Self-hosted only'
 			},
 			{
@@ -189,6 +201,28 @@ export const sections = [
 					'tier-team': false
 				},
 				link: '/docs/core_concepts/nats_triggers',
+			},
+			{
+				name: 'SQS triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/sqs_triggers',
+			},
+			{
+				name: 'GCP triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/gcp_triggers',
 			},
 			{
 				name: 'Private Hub',
@@ -432,6 +466,17 @@ export const sections = [
 					'tier-team': true
 				},
 				link: '/docs/advanced/git_sync'
+			},
+			{
+				name: 'GitHub App',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': true,
+					'tier-team': true
+				},
+				link: '/docs/integrations/git_repository#github-app'
 			},
 			{
 				name: 'Deploy to staging/prod web UI',

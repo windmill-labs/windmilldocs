@@ -2,7 +2,7 @@ name: Trigger Webhook on PR Ready for Review
 
 on:
   pull_request:
-    types: [ready_for_review]
+    types: [ready_for_review, opened]
 
 jobs:
   trigger-webhook:

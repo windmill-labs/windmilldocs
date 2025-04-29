@@ -91,6 +91,8 @@ Whether we should consider the reported usage of this instance as non-prod.
 
 Non-prod instances work the same as prod instances in terms of features, but their [computation usage](/pricing#worker-reporting) is not counted in the billing. Seats count, however, are across all instances. If all instances using the same key are 'Non-prod', the one using most Compute Units will be counted as Prod.
 
+Alternatively, you can copy a development license key using the dedicated button from the [Customer portal](../../misc/7_plans_details/index.mdx#windmill-customer-portal). This provides an alternative to manually turning instances to Non-prod mode.
+
 This setting is only available on [Enterprise Edition](/pricing).
 
 ### Retention period in secs
@@ -110,12 +112,6 @@ This feature has no overlap with the [Workspace object storage](../../core_conce
 You can choose to use either S3 or Azure Blob Storage. For each you will find a button to test settings from a server or from a worker.
 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
-
-This setting is only available on [Enterprise Edition](/pricing).
-
-### Azure OpenAI base path
-
-All [Windmill AI](../../core_concepts/22_ai_generation/index.mdx) features will run on the specified deployed model. Format: `https://{your-resource-name}.openai.azure.com/openai/deployments/{deployment-id}`.
 
 This setting is only available on [Enterprise Edition](/pricing).
 
@@ -186,7 +182,7 @@ XML metadata url OR content for the SAML IdP.
 
 ## Registries
 
-Add private registries for [Pip](https://pypi.org/), [Bun](https://bun.sh/), [npm](https://www.npmjs.com/), and [Nuget](https://www.nuget.org/).
+Add private registries for [UV](https://pypi.org/), [Bun](https://bun.sh/), [npm](https://www.npmjs.com/), and [Nuget](https://www.nuget.org/).
 
 These settings are only available on [Enterprise Edition](/pricing).
 
@@ -210,13 +206,13 @@ These settings are only available on [Enterprise Edition](/pricing).
 	/>
 </div>
 
-### Pip index url
+### UV index url
 
-Add private PIP registry.
+Add private registry for python.
 
-### Pip extra index url
+### UV extra index url
 
-Add private extra PIP registry.
+Add private extra private registry for python.
 
 ### Npm config registry
 

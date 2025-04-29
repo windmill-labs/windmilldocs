@@ -1,9 +1,7 @@
 # SQS triggers
 
-Windmill can connect to an [SQS](https://aws.amazon.com/sqs/) queue and trigger runnables (scripts, flows) in response to messages received.  
+Windmill can connect to an [SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) queue and trigger runnables (scripts, flows) in response to messages received.  
 SQS triggers is a self-hosted Enterprise feature.
-
-For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -25,7 +23,6 @@ For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon
 
 - **Select the runnable to execute**  
   - Choose the runnable (script or flow) that should be executed when a message arrives in the queue.  
-  - The message will be passed as a JSON object to the runnable.
 
 - **Provide an SQS queue URL**  
   - Enter the **Queue URL** of the SQS queue that should trigger the runnable.  

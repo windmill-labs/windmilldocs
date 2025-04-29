@@ -468,6 +468,7 @@ export default function Pricing() {
 			<div className="mx-auto max-w-7xl">
 				<div className="mx-auto max-w-4xl text-center">
 					<p className="text-4xl font-bold tracking-tight sm:text-5xl">Pricing</p>
+					<p className="text-lg font-medium text-gray-600 dark:text-gray-300 mt-2">Open source. Open pricing. No lock-in.</p>
 				</div>
 
 				<div className="mt-12 flex justify-center flex-col gap-4 items-center">
@@ -742,12 +743,6 @@ export default function Pricing() {
 									) : (
 										<div className="try-it-button">
 											<a
-												href={
-													selectedOption === 'Pro'
-														? 'https://billing.windmill.dev/b/28o3dq51Y6ZJ9jy7sM'
-														: 'https://billing.windmill.dev/b/4gw4hu51YbfZ0N200j' + 
-														  (selectedOption === 'Nonprofit' ? '?prefilled_promo_code=nonprofit' : '')
-												}
 												onClick={(e) => {
 													e.preventDefault();
 													e.stopPropagation();
@@ -765,6 +760,7 @@ export default function Pricing() {
 														: 'text-sm bg-teal-600 !text-white shadow-sm hover:bg-teal-700 focus-visible:outline-teal-600',
 													'main-section !no-underline text-center font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
 												)}
+												style={{ cursor: 'pointer' }}
 											>
 												Try it for a month
 											</a>

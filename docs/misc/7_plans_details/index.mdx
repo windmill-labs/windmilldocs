@@ -145,6 +145,185 @@ To enable the license key, switch from the `windmill` image to the `windmill-ee`
 
 ![Use license key](./add_license_key.png 'Use license key')
 
+## Setup and Compute Units
+
+Windmill uses Compute Units (CUs) to measure and track resource usage across your EE instances.
+
+A [compute unit](/pricing#compute-units) (CU) represents the computational resources allocated to a worker based on its memory limit. The memory limit determines the size and capacity of the worker, therefore its Compute Units.
+
+Compute Units are calculated as follows:
+- A worker with 1GB memory limit = 0.5 CU
+- A worker with 2GB memory limit = 1 CU
+- A worker with 4GB memory limit = 2 CUs
+- On self-hosted plans, any worker with more than 2GB of memory counts as 2 Compute Units (e.g., a worker with 16GB counts as 2 Compute Units)
+- On cloud plans, the number of Compute Units scales linearly with memory (e.g., a 4GB worker = 2 Compute Units, 8GB worker = 4 Compute Units)
+- 8 native workers count as 1 compute unit. They go 8 by 8. Native workers are workers within the native worker group. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
+
+### How Compute Units are counted for a subscription
+
+Based on the telemetry your EE instances send, Compute Units are calculated as follows:
+- The memory of each worker of all of the prod instances is aggregated against the global compute unit quota
+- Compute Units are allocated freely across workers of different sizes based on needs
+- The total number of Compute Units is rounded up to the nearest whole number, as there are no half Compute Units
+- It only counts workers of all of the prod instances and exclude the other containers like ui, lsp, multi-player, etc.
+
+You can monitor your Compute Units usage from the [Customer Portal](#windmill-customer-portal).
+
+### Example setups and their Compute Units
+
+Below are examples from your setup [docker-compose.yml](https://github.com/windmill-labs/windmill/blob/main/docker-compose.yml) file and their Compute Units.
+
+#### Basic setup (3 CUs)
+
+Calculation: 2 workers × 1 CU each + 1 native worker with NUM_WORKERS=8 = 3 CUs
+
+```yaml
+services:
+  # Other services (db, server, caddy, etc.) don't count towards CUs
+  
+  windmill_worker_custom_name:
+    deploy:
+      replicas: 2  # 2 workers × 1 CU each = 2 CUs
+      resources:
+        limits:
+          memory: 2048M  # 2GB = 1 CU per worker
+  
+  windmill_worker_native:
+    deploy:
+      replicas: 1  # 1 worker with subworkers NUM_WORKERS=8 = 1 CU
+      resources:
+        limits:
+          memory: 2048M
+    environment:
+      - WORKER_GROUP=native
+      - NUM_WORKERS=8
+```
+
+#### Medium setup (8 CUs)
+
+Calculation: 3 workers × 1 CU each + 1 native worker with NUM_WORKERS=8 = 8 CUs
+
+```yaml
+services:
+  windmill_worker:
+    deploy:
+      replicas: 3  # 3 workers × 1 CU each = 3 CUs
+      resources:
+        limits:
+          memory: 2048M # 2GB = 1 CU
+
+  windmill_small_worker:
+    deploy:
+      replicas: 4  # 4 workers with 1GB memory = 0.5 CUs each = 2 CUs
+      resources:
+        limits:
+          memory: 1024M # 1GB = 0.5 CU
+
+  windmill_worker_reports:
+    deploy:
+      replicas: 2  # 2 workers × 1 CU each = 2 CUs
+      resources:
+        limits:
+          memory: 2048M # 2GB = 1 CU
+    environment:
+      - WORKER_GROUP=reports
+
+  windmill_worker_native:
+    deploy:
+      replicas: 1  # 1 worker with NUM_WORKERS=8 = 1 CU
+      resources:
+        limits:
+          memory: 2048M
+    environment:
+      - WORKER_GROUP=native
+      - NUM_WORKERS=8
+```
+
+#### Large setup (Cloud Plan - 16 CUs)
+
+Note: for now, setups of cloud EE instances are handled directly by the Windmill team. Please reach out to us if you need to configure your setup.
+
+Calculation: 2 workers × 1 CU each + 4 workers × 3 CUs each + 1 native worker with NUM_WORKERS=8 = 16 CUs
+
+```yaml
+services:
+  windmill_worker_standard:
+    deploy:
+      replicas: 2  # 2 workers × 1 CU each = 2 CUs
+      resources:
+        limits:
+          memory: 2048M  # 2GB = 1 CU per worker
+
+  windmill_worker_large:
+    deploy:
+      replicas: 4  # 4 workers × 3 CUs each = 12 CUs
+      resources:
+        limits:
+          memory: 6144M  # 6GB = 3 CUs per worker
+
+  windmill_worker_reports:
+    deploy:
+      replicas: 1 # 1 worker × 1 CU = 1 CU
+      resources:
+        limits:
+          memory: 2048M # 2GB = 1 CU
+
+  windmill_worker_native:
+    deploy:
+      replicas: 1  # 1 worker with 8 subworkers (can't be changed) = 1 CU
+      resources:
+        limits:
+          memory: 2048M
+    environment:
+      - WORKER_GROUP=native
+      - NUM_WORKERS=8
+```
+
+#### Large setup (Self-hosted - 12 CUs)
+
+Calculation: 2 workers × 1 CU each + 4 workers × 2 CUs each + 1 native worker with NUM_WORKERS=8 = 12 CUs
+
+```yaml
+services:
+  windmill_worker_standard:
+    deploy:
+      replicas: 2  # 2 workers × 1 CU each = 2 CUs
+      resources:
+        limits:
+          memory: 2048M  # 2GB = 1 CU per worker
+
+  windmill_worker_large:
+    deploy:
+      replicas: 4  # 4 workers × 2 CUs each = 8 CUs
+      resources:
+        limits:
+          memory: 6144M  # 6GB but capped at 2 CUs per worker
+
+  windmill_worker_reports:
+    deploy:
+      replicas: 1 # 1 worker × 1 CU = 1 CU
+      resources:
+        limits:
+          memory: 2048M # 2GB = 1 CU
+
+  windmill_worker_native:
+    deploy:
+      replicas: 1  # 1 worker with NUM_WORKERS=8 = 1 CU
+      resources:
+        limits:
+          memory: 2048M
+    environment:
+      - WORKER_GROUP=native
+      - NUM_WORKERS=8
+```
+Note: Services like db, windmill_server, lsp, multiplayer, indexer, and caddy don't count towards Compute Units.
+
+### Compute Units and autoscaling
+
+In terms of billing for Windmill Enterprise Edition with [autoscaling](../../core_concepts/42_autoscaling/index.mdx), Windmill measures how long the workers are online with a minute granularity. If you use 10 workers with 2GB for 1/10th of the month, it will count the same as if you had a single worker for the full month.
+
+As for the setup, it's like if the replicas of the worker group would adjust for a given amount of time.
+
 ## AWS Marketplace
 
 Windmill is available on the [AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=seller-pxlq6nidwn3lo). We are notified as soon as you have subscribed to a package, a Windmill representative will come to you to give you what you need to start your subscription: license key for the self-hosted EE package, access to dedicated instance for the cloud EE package.
@@ -153,15 +332,17 @@ If you have any questions, please contact support@windmill.dev
 
 ## Windmill Customer Portal
 
-As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal. If you want to monitor your usage in real time, you can 'Send usage' from your [instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (if you have several instances, make sure to do it for each instance) and check how it converts into seats and compute units from the portal.
+As an [Enterprise](/pricing) user, you will have access to detailed usage information and invoices through the [Windmill Customer Portal](https://portal.windmill.dev/). You can update contact information, billing details and subscription (seats & workers/compute units) from the portal. The portal also displays your last license renewal result and date in the top right corner, helping you track your subscription status. If you want to monitor your usage in real time, you can 'Send usage' from your [instance settings](../../advanced/18_instance_settings/index.mdx#telemetry) (if you have several instances, make sure to do it for each instance) and check how it converts into seats and compute units from the portal.
 
 From the portal, you can adjust your subscription on your own. If you adjust your subscription during a billing cycle, you will be charged a prorated amount for the additional resources. This means you will only pay for the portion of the year that remains after the adjustment. For example on a yearly subscription, if you make the adjustment 10 months into the year, you would pay for approximately 2/12 of the annual cost for the additional resources.
+
+Enterprise Edition customers with an active subscription can download our SOC2 report directly from the portal using the link in the bottom left. For other users, a "Request SOC2 report" button will open an email to support@windmill.dev.
 
 ![Portal](./portal.png 'Portal')
 
 Access to the portal is made through either:
 - From your [Instance settings](../../advanced/18_instance_settings/index.mdx#license-key), in the "Core" tab. Where you can also renew your [license key](#self-host).
-- Through a direct link: [portal.windmill.dev](https://portal.windmill.dev/), filling in the email address used for the subscription, and then accessing a link sent by email. Only email addresses from the 'Contact emails' list can access the portal. You can add email addresses to the list by clicking on the "Update contact info" button in the portal.
+- Through a direct link: [portal.windmill.dev](https://portal.windmill.dev/), filling in the email address used for the subscription, and then accessing a link sent by email.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -183,6 +364,10 @@ This is also from the portal that you can [manage your issues and feature reques
 
 Usage of your instance is reported on the platform - basic metrics such as Seats & workers are reported to Windmill. You can check whether your use of Windmill corresponds to your subscription, and report an error to Windmill if you wish. This comparison is made only for your instance of Prod, for which you can find the Base URL. The other instances URLs are also shown.
 
+### How to grant access to the portal
+
+To grant access to the portal, you need to add the email address to the 'Contact emails' list. You can do this by clicking on the "Update contact info" button in the portal.
+
 ## Usage checks
 
 Windmill employs lightweight telemetry to automatically track and report the usage of memory and seats for your subscription. Even on self-hosted plans, telemetry associated to your license key is reported to Windmill.
@@ -199,7 +384,7 @@ The following information is collected:
 
 How the data is calculated:
 - Seats: number of users (1 developer, or 2 operators) who are active (from logging in to running or deploying a script) on the platform in the last 30 days, according to the [audit logs](../../core_concepts/14_audit_logs/index.mdx). User count is across all instances (dev, prod) but Windmill only counts once the same user.
-- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month. [Non-prod instances](../../advanced/18_instance_settings/index.mdx#non-prod-instance) are not counted in the billing for computation usage.
+- Memory: we aggregate the limits of all production containers. Workers come in different sizes: small (1GB), standard (2GB), and large (> 2GB). For each compute unit, you pay for, you get a quota of 2 worker-gb-month. [Non-prod instances](../../advanced/18_instance_settings/index.mdx#non-prod-instance) are not counted in the billing for computation usage. For development environments, you can also easily copy a development license key using the button in the bottom right of the portal. This provides an alternative to manually turning instances to Non-prod mode.
 
 Using a number of seats, workers, or memory greater than the terms of your subscription is technically possible, but if you do not adjust your subscription accordingly (via the [Customer Portal](#windmill-customer-portal)), we will ask you to take steps to correct this, with 3 options:
 1. Our telemetry data may not be accurate or you do not understand it. In this case, please inform us or book a call: https://www.windmill.dev/ruben-30min
