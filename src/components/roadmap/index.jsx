@@ -4,45 +4,6 @@ import styles from './styles.module.css';
 // Roadmap data
 const roadmapItems = [
 	{
-		title: 'Java support',
-		month: 'March',
-		category: 'Languages',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5430',
-		description: '',
-		important: true
-	},
-	{
-		title: 'GCP PubSub support',
-		month: 'March',
-		category: 'Integration',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5445',
-		description:
-			'Currently, Windmill does not have a native support for GCP PubSub. It would be great to have a native support for GCP PubSub.'
-	},
-	{
-		title: 'Backend side jsonschema validation of args',
-		month: 'March',
-		category: 'Backend',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5443',
-		description:
-			'Currently, the jsonschema validation of args is done on the frontend. This is a problem because there are no guarantees that the payload will actually respond the jsonschema'
-	},
-	{
-		title: 'Dynamic table and column name for SQL',
-		month: 'March',
-		category: 'Languages',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5444',
-		description:
-			'Currently, SQL scripts can only have prepared statement parameters. It would be great to have dynamic table and column names.'
-	},
-	{
-		title: 'Ansible improvements',
-		month: 'April',
-		category: 'Languages',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5431',
-		description: ''
-	},
-	{
 		title: 'Ruby support',
 		month: 'June',
 		category: 'Languages',
@@ -51,7 +12,7 @@ const roadmapItems = [
 	},
 	{
 		title: 'Settable permissions within object storage by folders',
-		month: 'April',
+		month: 'May',
 		category: 'Backend',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5446',
 		description: `Currently the workspace object storage is all or nothing. You can either see the object explorer or not, and you can either write and read everywhere or not.
@@ -74,7 +35,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'SSH-like repl direct to workers (ee)',
-		month: 'April',
+		month: 'May',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5449',
 		description: `feature: SSH-like repl direct to workers (ee)`
@@ -89,35 +50,20 @@ This would be a settable setting such that the layout within the buckets can fol
 		important: true
 	},
 	{
-		title: 'Batch runs UI',
-		month: 'April',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/4787',
-		description:
-			'The goal of this feature is to allow to run more than 1 jobs at once from the UI\n\nScenarios that need to be handled:\n\n    Filtering jobs from the runs page, selecting them (all within page, all within filters, or one by one) and re-running all of them (v0)\n    Take a time window range within a schedule that is in the past and run all ticks that would have happened in the past, with optionally not re-running the ticks that did actually happen\n\nIn terms of job arguments, here are the different scenarios:\n\n    Rerun with exactly same args as the re-ran job (v0)\n    If having selected different script versions or flow versions, which have different schemas:\n        Have a tab for each script/flow version containing a schema form\n        Have a "common tab" where fields that are common can be set there\n        every field can either be set with static info or a javascript expression like for scripts/flows, where possible values usable in that javascript expressions are the date at which the job was originally schedules or the value of other fields'
-	},
-	{
 		title: 'Interactive script debugger',
-		month: 'April',
+		month: 'May',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5432',
 		important: true,
-		description: 'Add breakpoints and run an interactive debugger for Python and Typescript.'
+		description: 'Add breakpoints and run an interactive debugger for Python and TypeScript.'
 	},
 	{
 		title: 'Code/React UI builder',
-		month: 'April',
+		month: 'May',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5433',
 		important: true,
 		description:
 			'Write apps fully in code in React/Svelte/Vue with any libraries and see preview and code editor directly. If you like Lovable/v0.dev, you will love this since it will be equivalent but much better integrated with windmill backend flow/script capabilities.'
-	},
-	{
-		title: 'Agent workers through HTTP',
-		month: 'March',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5434',
-		important: true,
-		description:
-			'Currently Remote Agent Workers still need to connect to the central Postgresql Database using a direct tcp connection and work leveraging RLS policies in Postgresql and require a complex and deep understanding of Windmill and Postgresql.\n\nHTTP Agent workers will only communicate to the central servers using HTTP and will be seamless to setup using simply a secure policy as config.'
 	},
 	{
 		title: 'Cloudflare workers support',
@@ -128,7 +74,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Free form flows',
-		month: 'April',
+		month: 'May',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5435',
 		description:
 			'- Free positioning of nodes\n- Colorable Rectangle to group nodes\n- Free Text annotable anywhere'
@@ -139,15 +85,6 @@ This would be a settable setting such that the layout within the buckets can fol
 		category: 'AI',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5436',
 		description: '- More powerful and native API calls to AI models'
-	},
-	{
-		title: 'Global Windmill AI Copilot/Chat',
-		month: 'April',
-		category: 'AI',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5437',
-		description:
-			'- cursor-like autocompletion for all script editors (inline)\n- MCP server to give context about Windmill workspace\n- AI chat panel available globally that adapts to context and unify all AI interactions (AI Fix, AI gen, AI edit, Workflow Edit, Explain Code, Summarize info from workspace)',
-		important: true
 	},
 	{
 		title: 'OpenAPI -> HTTP routes + scripts templates',
@@ -314,7 +251,7 @@ function WindmillRoadmap() {
 			January: 1,
 			February: 2,
 			March: 3,
-			April: 4,
+			May: 4,
 			May: 5,
 			June: 6,
 			July: 7,
