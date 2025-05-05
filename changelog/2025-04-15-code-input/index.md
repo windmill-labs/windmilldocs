@@ -1,7 +1,7 @@
 ---
 slug: code-input
 version: v1.482.0
-title: Code Input Component
+title: Code Input component
 tags: ['App Editor']
 description: You can now add an input component in your app where a user can enter code with syntax highlighting and linting.
 features:

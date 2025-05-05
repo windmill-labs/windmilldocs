@@ -1,7 +1,7 @@
 ---
 slug: ai-chat
 version: v1.480.0
-title: AI Chat Assistant
+title: AI chat assistant
 tags: ['AI Chat', 'Windmill AI', 'Custom AI model']
 video: /videos/ai_chat.mp4
 description: The script editor now includes an integrated AI Chat Panel designed to assist with coding tasks. The assistant can generate code, fix issues, suggest improvements, add documentation, and more — all in a conversational interface.
