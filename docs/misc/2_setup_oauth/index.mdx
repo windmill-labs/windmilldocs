@@ -134,7 +134,7 @@ Add the proper groups then click save. You should see your Client ID and Client 
 
 Setup your realm in Keycloak and set Keycloak in [Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' and Keycloak
 
-You need to add the following client scope to keycloak client: offline_access 
+You need to add the following client scope to keycloak client: offline_access
 
 ### Authentik
 
@@ -237,6 +237,12 @@ Pick "From an app manifest", then YAML.
 ![Slack Create App](./slack_create_app.png 'Slack Create App')
 
 Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 3 places:
+
+:::warning
+`<YOUR INSTANCE URL>/api/oauth/slack_command` must be reachable from the public internet for the Slack command to work.
+
+`<YOUR INSTANCE URL>/api/slack` must be reachable from the public internet for interactive approvals to work.
+:::
 
 ```yaml
 display_information:

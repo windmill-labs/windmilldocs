@@ -136,6 +136,11 @@ const sidebars = {
 							id: 'advanced/email_triggers/index',
 							label: 'Emails'
 						},
+						{
+							type: 'doc',
+							id: 'core_concepts/mcp/index',
+							label: 'MCP'
+						},
 						'core_concepts/http_routing/index',
 						{
 							type: 'doc',
@@ -346,7 +351,6 @@ const sidebars = {
 				'core_concepts/search_bar/index',
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
-				'core_concepts/mcp/index',
 				'core_concepts/workspace_settings/index',
 				{
 					type: 'category',
