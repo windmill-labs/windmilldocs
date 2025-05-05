@@ -1,0 +1,84 @@
+import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+
+export const toc = getToc("prefect");
+
+# Prefect Benchmarks
+
+## Summary
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Prefect setup
+
+We set up Prefect version 2.14.4. We wrote our own simple docker compose since we couldn't find a recommended one in Prefect's documentation. We chose to use Postgresql as a database, as it is the recommended option for production usecases.
+
+```yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: prefect
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prefect-server:
+    image: prefecthq/prefect:2-latest
+    command:
+      - prefect
+      - server
+      - start
+    ports:
+      - 4200:4200
+    depends_on:
+      postgres:
+        condition: service_started
+    volumes:
+      - ${PWD}/prefect:/root/.prefect
+      - ${PWD}/flows:/flows
+    environment:
+      PREFECT_API_DATABASE_CONNECTION_URL: postgresql+asyncpg://postgres:changeme@postgres:5432/prefect
+      PREFECT_LOGGING_SERVER_LEVEL: INFO
+      PREFECT_API_URL: http://localhost:4200/api
+volumes:
+  db_data: null
+```
+
+The flow was defined using the following Python file.
+
+```python
+from prefect import flow, task
+
+ITER = 10     # respectively 40
+FIBO_N = 33   # respectively 10
+
+def fibo(n: int):
+    if n <= 1:
+        return n
+    else:
+        return fibo(n - 1) + fibo(n - 2)
+
+@task
+def fibo_task():
+    return fibo(FIBO_N)
+
+@flow(name="bench_{}".format(ITER))
+def benchmark_flow():
+    for i in range(ITER):
+        fibo_task()
+
+if __name__ == "__main__":
+    benchmark_flow.serve(name="bench_{}".format(ITER))
+```
+
+<EngineBenchmarks engine="prefect" />

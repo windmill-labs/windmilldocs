@@ -1,0 +1,382 @@
+import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+export const toc = getToc("temporal");
+
+# Temporal Benchmarks
+
+## Summary
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Temporal setup
+
+We set up Temporal version 2.34.0 using the [docker-compose.yml from the official GitHub repository](https://github.com/temporalio/docker-compose).
+
+
+<Tabs>
+  <TabItem value="python" label="Python" default>
+    ```python
+    ITER = 10     # respectively 40
+    FIBO_N = 33   # respectively 10
+
+    @activity.defn
+    async def fibo_activity(n: int) -> int:
+        return fibo(n)
+
+    @workflow.defn
+    class BenchWorkflow:
+        @workflow.run
+        async def run(self) -> None:
+            for i in range(ITER):
+                await workflow.execute_activity(
+                    fibo_activity,
+                    FIBO_N,
+                    activity_id="task_{}".format(i),
+                    start_to_close_timeout=timedelta(seconds=60),
+                )
+
+    async def main():
+        client = await Client.connect("localhost:7233")
+        flow_name = "bench-{}".format(ITER)
+        async with Worker(
+            client,
+            task_queue=flow_name,
+            workflows=[BenchWorkflow],
+            activities=[fibo_activity],
+        ):
+            await client.execute_workflow(
+                BenchWorkflow.run,
+                id=flow_name,
+                task_queue=flow_name,
+            )
+
+
+    if __name__ == "__main__":
+        asyncio.run(main())
+    ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```js
+    // ------------------------------------------------------
+    // activities.ts
+    export function fiboActivity(n: number): number {
+        if (n <= 1) {
+            return n;
+        }
+        return fiboActivity(n - 1) +  fiboActivity(n - 2);
+    }
+
+    // ------------------------------------------------------
+    // worker.ts
+    import { Worker } from '@temporalio/worker';
+    import { fiboActivity } from './activities';
+    import { bench10Workflow } from './workflows';
+    import { Client } from '@temporalio/client';
+
+    const ITER = 10; // respectively 40
+
+    async function run() {
+        const worker = await Worker.create({
+            workflowsPath: require.resolve('./workflows'),
+            activities: { fiboActivity },
+            taskQueue: `bench-${ITER}`,
+        });
+
+        const client = new Client();
+
+        // Launch the workflow
+        await client.workflow.start(bench10Workflow, {
+            workflowId: `bench-${ITER}`,
+            taskQueue: `bench-${ITER}`,
+        });
+
+        await worker.run();
+        process.exit(0);
+    }
+
+    run().catch((err) => {
+        console.error(err);
+        process.exit(1);
+    });
+
+    // ------------------------------------------------------
+    // workflow.ts
+    import { proxyActivities } from '@temporalio/workflow';
+
+    const ITER = 10; // respectively 40
+    const FIBO_N = 33; // respectively 10
+
+    const { fiboActivity } = proxyActivities<{
+        fiboActivity(n: number): Promise<number>;
+    }>({
+        startToCloseTimeout: '360s',
+    });
+
+    export async function bench10Workflow(): Promise<void> {
+        for (let i = 0; i < ITER; i++) {
+            await fiboActivity(FIBO_N);
+        }
+    }
+    ```
+  </TabItem>
+  <TabItem value="go" label="Go">
+    ```go
+    // ------------------------------------------------------
+    // worker/worker.go
+
+    package worker
+
+    import (
+        "context"
+        "flag"
+        "fmt"
+        "log"
+        "os"
+        "time"
+
+        "go.temporal.io/sdk/client"
+        "go.temporal.io/sdk/worker"
+        "go.temporal.io/sdk/workflow"
+    )
+
+    // Fibo computes the nth Fibonacci number recursively
+    func Fibo(n int) int {
+        if n <= 1 {
+            return n
+        }
+        return Fibo(n-1) + Fibo(n-2)
+    }
+
+    // FiboActivity is the activity implementation
+    func FiboActivity(ctx context.Context, n int) (int, error) {
+        return Fibo(n), nil
+    }
+
+    // BenchWorkflow is the workflow implementation
+    func BenchWorkflow(ctx workflow.Context, iter int, fiboN int, parallel bool) error {
+        taskQueue := workflow.GetInfo(ctx).TaskQueueName
+
+        if !parallel {
+            // Sequential execution
+            for i := 0; i < iter; i++ {
+                activityID := fmt.Sprintf("task_%02d", i)
+                activityOptions := workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
+                    ActivityID:         activityID,
+                    StartToCloseTimeout: 360 * time.Second,
+                    TaskQueue:           taskQueue,
+                })
+
+                var result int
+                if err := workflow.ExecuteActivity(activityOptions, FiboActivity, fiboN).Get(ctx, &result); err != nil {
+                    return err
+                }
+            }
+            return nil
+        }
+
+        // Parallel execution
+        futures := make([]workflow.Future, iter)
+        for i := 0; i < iter; i++ {
+            activityID := fmt.Sprintf("task_%02d", i)
+            activityOptions := workflow.WithActivityOptions(ctx, workflow.ActivityOptions{
+                ActivityID:         activityID,
+                StartToCloseTimeout: 360 * time.Second,
+                TaskQueue:           taskQueue,
+            })
+            futures[i] = workflow.ExecuteActivity(activityOptions, FiboActivity, fiboN)
+        }
+
+        // Wait for all activities to complete
+        for i := 0; i < iter; i++ {
+            var result int
+            if err := futures[i].Get(ctx, &result); err != nil {
+                return err
+            }
+        }
+
+        return nil
+    }
+
+    // RunWorker starts a worker process
+    func RunWorker() {
+        // Parse command line arguments
+        iter := flag.Int("iter", 10, "Number of iterations")
+        fiboN := flag.Int("fibo-n", 33, "Fibonacci number to calculate")
+        parallel := flag.Bool("parallel", false, "Run in parallel mode")
+        flag.Parse()
+
+        log.Printf("Worker starting with iter=%d, fibo_n=%d, parallel=%v", *iter, *fiboN, *parallel)
+
+        c, err := client.Dial(client.Options{})
+        if err != nil {
+            log.Fatalln("Unable to create client", err)
+        }
+        defer c.Close()
+
+        taskQueue := fmt.Sprintf("bench-%d-task-queue", *iter)
+
+        // Configure worker options to control concurrency
+        workerOptions := worker.Options{
+            MaxConcurrentActivityExecutionSize: 1,  // Only execute one activity at a time
+        }
+
+        w := worker.New(c, taskQueue, workerOptions)
+
+        w.RegisterWorkflowWithOptions(BenchWorkflow, workflow.RegisterOptions{
+            Name: fmt.Sprintf("bench_%d_%d", *iter, *fiboN),
+        })
+        w.RegisterActivity(FiboActivity)
+
+        // Signal that we're ready by creating a file
+        readyFile := fmt.Sprintf("/tmp/worker_%d_%d.ready", *iter, os.Getpid())
+        if err := os.WriteFile(readyFile, []byte("ready"), 0644); err != nil {
+            log.Fatalf("Failed to create ready file: %v", err)
+        }
+        defer os.Remove(readyFile)
+
+        log.Printf("Worker ready and registered on task queue: %s", taskQueue)
+        err = w.Run(worker.InterruptCh())
+        if err != nil {
+            log.Fatalln("Unable to start worker", err)
+        }
+    }
+
+    // ------------------------------------------------------
+    // cmd/starter/main.go
+
+    package main
+
+    import (
+        "context"
+        "flag"
+        "fmt"
+        "log"
+        "os"
+        "os/exec"
+        "path/filepath"
+        "strconv"
+        "sync"
+        "time"
+
+        "go.temporal.io/sdk/client"
+    )
+
+    func main() {
+        // Parse command line arguments
+        iter := flag.Int("iter", 10, "Number of iterations")
+        fiboN := flag.Int("fibo-n", 33, "Fibonacci number to calculate")
+        workers := flag.Int("workers", 1, "Number of worker processes")
+        parallel := flag.Bool("parallel", false, "Run in parallel mode")
+        flag.Parse()
+
+        log.Printf("Starting benchmark with %d workers, %d iterations, fibo(%d), parallel=%v", *workers, *iter, *fiboN, *parallel)
+
+        // Keep track of worker processes
+        var workerProcesses []*os.Process
+        var wg sync.WaitGroup
+
+        // Start worker processes
+        for i := 0; i < *workers; i++ {
+            cmd := exec.Command("go", "run", "./cmd/worker/main.go",
+                "-iter", strconv.Itoa(*iter),
+                "-fibo-n", strconv.Itoa(*fiboN),
+                fmt.Sprintf("-parallel=%v", *parallel))
+            cmd.Stdout = os.Stdout
+            cmd.Stderr = os.Stderr
+            log.Printf("Starting worker %d with command: %v", i, cmd.Args)
+            if err := cmd.Start(); err != nil {
+                log.Fatalf("Failed to start worker %d: %v", i, err)
+            }
+            workerProcesses = append(workerProcesses, cmd.Process)
+            log.Printf("Started worker %d with PID %d", i, cmd.Process.Pid)
+
+            // Set up wait group for worker
+            wg.Add(1)
+            go func(cmd *exec.Cmd) {
+                defer wg.Done()
+                cmd.Wait()
+            }(cmd)
+        }
+
+        // Wait for all workers to signal ready
+        log.Printf("Waiting for %d workers to initialize...", *workers)
+        readyCount := 0
+        deadline := time.Now().Add(10 * time.Second)
+        for readyCount < *workers && time.Now().Before(deadline) {
+            files, err := filepath.Glob(fmt.Sprintf("/tmp/worker_%d_*.ready", *iter))
+            if err != nil {
+                log.Fatalf("Failed to check for ready files: %v", err)
+            }
+            if len(files) > readyCount {
+                readyCount = len(files)
+                log.Printf("%d/%d workers ready...", readyCount, *workers)
+            }
+            if readyCount < *workers {
+                time.Sleep(100 * time.Millisecond)
+            }
+        }
+
+        if readyCount < *workers {
+            log.Fatalf("Timed out waiting for workers to initialize. Only %d/%d workers ready", readyCount, *workers)
+        }
+
+        log.Printf("All %d workers ready! Starting workflow...", *workers)
+
+        // Create a client to talk to the Temporal server
+        c, err := client.Dial(client.Options{})
+        if err != nil {
+            log.Fatalln("Unable to create client", err)
+        }
+        defer c.Close()
+
+        // Define workflow options
+        workflowID := fmt.Sprintf("bench_%d_%d", *iter, *fiboN)
+        workflowOptions := client.StartWorkflowOptions{
+            ID:        workflowID,
+            TaskQueue: fmt.Sprintf("bench-%d-task-queue", *iter),
+        }
+
+        log.Printf("Starting workflow with ID %s on task queue %s", workflowOptions.ID, workflowOptions.TaskQueue)
+
+        // Start the workflow with parameters
+        we, err := c.ExecuteWorkflow(
+            context.Background(),
+            workflowOptions,
+            workflowID,
+            *iter,
+            *fiboN,
+            *parallel,
+        )
+        if err != nil {
+            log.Fatalln("Unable to execute workflow", err)
+        }
+
+        log.Printf("Started workflow: WorkflowID: %s, RunID: %s\n", we.GetID(), we.GetRunID())
+
+        // Wait for workflow completion
+        var result interface{}
+        err = we.Get(context.Background(), &result)
+        if err != nil {
+            log.Fatalln("Unable to get workflow result", err)
+        }
+
+        log.Println("Workflow completed! Cleaning up workers...")
+
+        // Kill all worker processes
+        for _, process := range workerProcesses {
+            if err := process.Kill(); err != nil {
+                log.Printf("Error killing worker process %d: %v", process.Pid, err)
+            }
+        }
+
+        // Wait for all processes to be cleaned up
+        wg.Wait()
+        log.Println("All workers cleaned up. Benchmark complete!")
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+<EngineBenchmarks engine="temporal" />

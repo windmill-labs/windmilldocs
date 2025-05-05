@@ -214,12 +214,48 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Airflow, Prefect, Temporal, Kestra'
+							label: 'Python: comparison with other engines'
 						},
 						{
-							type: 'doc',
-							id: 'misc/benchmarks/aws_lambda/index',
-							label: 'AWS Lambda'
+							type: 'category',
+							label: 'Engine Benchmarks',
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/windmill/index',
+									label: 'Windmill'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/kestra/index',
+									label: 'Kestra'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/airflow/index',
+									label: 'Airflow'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/hatchet/index',
+									label: 'Hatchet'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/temporal/index',
+									label: 'Temporal'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/prefect/index',
+									label: 'Prefect'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/aws_lambda/index',
+									label: 'AWS Lambda'
+								}
+							]
 						}
 					]
 				},

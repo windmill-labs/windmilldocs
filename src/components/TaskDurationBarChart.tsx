@@ -17,13 +17,23 @@ export default function BarChart({
 	labels,
 	rawData,
 	maintainAspectRatio = true,
-	shouldAnimate = false
+	shouldAnimate = false,
+	maxXScale = 120
 }) {
 	ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 	const ref = useRef<HTMLDivElement | null>(null);
 	const entry = useIntersectionObserver(ref, {});
 	const isVisible = !!entry?.isIntersecting;
+
+	// Check if rawData is valid before processing
+	if (!rawData || !rawData.length || !rawData[0] || !rawData[0].length) {
+		return (
+			<div ref={ref} className="flex items-center justify-center p-6 bg-gray-50 rounded-lg">
+				<p className="text-gray-500">No data available for this benchmark.</p>
+			</div>
+		);
+	}
 
 	const standby_col = 'rgba(188, 212, 252, 1)';
 	const task_running_col = 'rgba(59, 130, 246, 1)';
@@ -71,7 +81,7 @@ export default function BarChart({
 		scales: {
 			x: {
 				stacked: true,
-				max: 120,
+				max: maxXScale,
 				title: {
 					display: true,
 					text: xTitle
