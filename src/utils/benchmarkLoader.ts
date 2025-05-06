@@ -147,7 +147,8 @@ export function getAvailableEngines(): Engine[] {
 // Add this function to the exports
 export function calculateMaxScale(timings: TaskTiming[]): number {
 	if (!timings.length) return 0;
-	return Math.ceil(timings[timings.length - 1].completed_at);
+  console.log("timings", timings);
+	return Math.ceil(Math.max(...timings.map((t) => t.completed_at)));
 }
 
 // Get available worker counts for a specific engine, usecase, and language
