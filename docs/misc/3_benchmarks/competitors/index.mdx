@@ -1,26 +1,22 @@
-import ScatterChart from '@site/src/components/ScatterChart';
 import { BenchmarkVisualization } from '@site/src/components/BenchmarkVisualization';
-import { TaskStatisticsTable } from '@site/src/components/TaskStatisticsTable';
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-# Python benchmarks: comparison with other workflow engines
+# Comparison with other workflow engines
 
 <div className="grid">
 	<BenchmarkVisualization
 		usecase="fibonacci_40_10"
-		language="python"
+		language="js"
 		engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
 		workers={1}
-		title="40 lightweight tasks"
+		title="40 lightweight tasks javascript"
 		xAxisLabel="Duration (in seconds)"
 	/>
 </div>
 
 <br />
-
-We compared Airflow, Prefect, Temporal, Kestra and Windmill with the following usecases:
-
-- One flow composed of 40 lightweight tasks.
-- One flow composed of 10 long-running tasks.
 
 :::tip More context
 
@@ -28,8 +24,34 @@ For additional insights about this study, refer to our [blog post](/blog/launch-
 
 :::
 
+## Methodology
+
+In this benchmark study, we compared six workflow orchestration engines: **Airflow**, **Prefect**, **Temporal**, **Kestra**, **Hatchet**, and **Windmill**, focusing on performance across several scenarios. The aim was to evaluate not just raw task execution time, but also deeper engine-level behaviors such as scheduling efficiency, task dispatch latency, and worker utilization.
+
 We chose to compute Fibonacci numbers as a simple task that can easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers was very naive:
 
+### Benchmark use cases
+
+We defined three categories of workflow scenarios:
+
+1. **Lightweight Tasks**:
+	Simulates high-frequency, short-lived operations where engine overhead may dominate.
+
+2. **Long-Running Tasks**:
+	Designed to surface runtime performance and engine efficiency when task duration is significant.
+
+3. **Multi-worker Scenarios**:
+	For engines demonstrating high efficiency and Go support, we ran:
+	- 400 lightweight tasks
+	- 100 long-running tasks
+		These were distributed across multiple workers, examining parallelism, load balancing, and assignment latency.
+
+### Task definition
+
+To ensure simplicity, repeatability, and no external dependencies, we used the classic recursive Fibonacci function:
+
+<Tabs>
+  <TabItem value="python" label="Python">
 ```python
 def fibo(n: int):
     if n <= 1:
@@ -37,184 +59,80 @@ def fibo(n: int):
     else:
         return fibo(n - 1) + fibo(n - 2)
 ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```js
+    function fibo(n) {
+      if (n <= 1) {
+        return n;
+      }
+      return fibo(n - 1) + fibo(n - 2);
+    }
+    ```
+  </TabItem>
+  <TabItem value="go" label="Go">
+    ```go
+    func fibo(n int) int {
+      if n <= 1 {
+        return n
+      }
+      return fibo(n - 1) + fibo(n - 2)
+    ```
+  </TabItem>
+</Tabs>
 
-After some testing, we chose to compute `fibo(10)` for the lightweight tasks (taking around 10ms in our setup), and `fibo(33)` for what we called "long-running" tasks (taking at least a few hundreds milliseconds as seen in the results).
+- `fibo(10)` was used for lightweight tasks, with an average execution time of ~10ms.
+- `fibo(33/38)` was selected for long-running tasks, typically taking several hundred milliseconds.
 
-On the infrastructure side, we went simple and used the `docker-compose.yml` recommended in the documentation of each orchestrator. We deployed the orchestrators on AWS `m4-large` instances.
+This approach eliminates the need for external libraries, providing a level playing field and highlighting the core performance of the orchestration engines.
 
+<DocCard
+	title="Detailed task and workflow definitions per engine"
+	description="Detailed task and workflow definitions per engine"
+	href="/docs/misc/benchmarks/competitors/results/"
+/>
 
-## Comparisons
+### Language and runtime environment
+Given native Python support in Airflow, Python was used as the primary implementation language for initial benchmarks. For orchestrators supporting multiple runtimes, we expanded testing to:
 
-<div className="grid">
-	<BenchmarkVisualization
-		usecase="fibonacci_10_33"
-		language="python"
-		engines={['airflow', 'kestra', 'prefect', 'temporal', 'hatchet', 'windmill', 'windmill_dedicated']}
-		workers={1}
-		title="10 long running tasks"
-		xAxisLabel="Duration (in seconds)"
-	/>
-</div>
+- JavaScript (where supported)
+- Go for its speed, concurrency features, and lack of warmup latency
 
-<div className="grid">
-	<BenchmarkVisualization
-		usecase="fibonacci_40_10"
-		language="python"
-		engines={['airflow', 'kestra', 'prefect', 'temporal', 'hatchet', 'windmill', 'windmill_dedicated']}
-		workers={1}
-		title="40 lightweight tasks"
-		xAxisLabel="Duration (in seconds)"
-	/>
-</div>
+For Go-enabled engines, we also evaluated multi-worker configurations to explore scaling behavior.
 
-We can exclude Airflow from the previous chart as it was performing much slower than the other orchestrators and focus on the other orchestrators:
+### Infrastructure setup
+To standardize the environment, each orchestrator was deployed using its recommended docker-compose.yml setup, running on **AWS m4.large instances**. This provides a balanced compute and memory profile while ensuring consistency across platforms.
 
-<div className="grid">
-	<BenchmarkVisualization
-		usecase="fibonacci_40_10"
-		language="python"
-		engines={['prefect', 'kestra', 'temporal', 'hatchet', 'windmill', 'windmill_dedicated']}
-		workers={1}
-		title="40 lightweight tasks"
-		xAxisLabel="Duration (in seconds)"
-	/>
-</div>
+### Performance evaluation metrics
+The benchmarking framework was designed to expose both high-level throughput and low-level engine characteristics.
 
-
-At a macro level, it took 54.668s to Airflow to execute the 10 long running tasks, where Prefect took 15.489s, Temporal 13.434s, Kestra 15.78s, Hatchet 7.793s and Windmill 8.347s in normal mode (7.701s in [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mode).
-
-The same can be observed for the 40 lightweight tasks, where Airflow took total of 116.221s, Prefect 4.872s, Temporal 2.967s, Kestra 6.04s, Hatchet 1.222s and Windmill 4.383s in normal mode (2.092s in dedicated worker mode).
-
-By far, Airflow is the slowest. Temporal, Prefect, Kestra and Hatchet are faster, but not as fast as Windmill. For the 40 lightweight tasks, Windmill in normal mode was equivalent to Prefect and slightly slower than Temporal and Hatchet. This can be explained by the fact that the way Temporal and Hatchet works is closer to the way Windmill works in dedicated mode. I.e. Windmill in normal mode does a cold starts for each tasks, and when the tasks are numerous and lightweight, most of the execution ends up being taken by the cold start. In dedicated worker mode however, Windmill behavior is closer to Temporal and Hatchet, and we can see that the performance are similar.
-
-But we can deep dive in a little and compare the orchestrators three categories:
+Key metrics observed:
 
 - Execution time: The time it takes for the orchestrator to execute the task once is has been assigned to an executor
 - Assignment time: The time is takes for a task to be assigned to an executor once it has been created in the queue
 - Transition time: The time it takes for to create the following time once a task is finished
+- Worker load distribution: Whether tasks were evenly distributed or exhibited contention/idling.
 
-After looking at the macro numbers above, it's interesting to compare the time spent in each of the above categories, relative to the total time the orchestrator took to execute the flow.
+Observational Expectations
 
-For the 10 long running tasks flow, we see the following:
+- Short-running tasks: Performance is expected to be dominated by orchestration overhead, making it a strong indicator of engine efficiency in high-frequency workflows.
+- Long-running tasks: Majority of time should be spent on actual computation, with minimal overhead from task management and worker assignment.
 
-<TaskStatisticsTable
-  usecase="fibonacci_10_33"
-  language="python"
-  engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
-  workers={1}
-/>
+### Extraction of timings
 
-The proportion of time spent in execution is important here since each task takes a long time to run. We see that Airflow and Prefect are spending a lot of time assigning the tasks compared to the others. When we look at the actual numbers, we see that both Prefect and Airflow are spending a lot of time assigning the first tasks, but after that, assignment duration decreases. Kestra's assignment and transition duration are somewhere in the middle, and we see that it spends most of the time in the execution phase. Airflow remains relatively slow though, and Prefect and Kestra are reaching decent performance. Temporal and Windmill in normal mode are pretty similar. Windmill in dedicated worker mode is incredibly fast at executing the jobs, at a cost of spending a little more time in the assignment phase, but overall it is the fastest.
+The timings were extracted either through the exposed api of the orchestrators or by directly querying the database of the orchestrators. For most of the engines the following timestamps could be extracted:
 
-If we look at the 40 lightweight tasks flow, we have:
+- `Reference time (t0)`: workflow start time
+- `created_at`: task added to queue / scheduled time
+- `started_at`: task assigned to worker
+- `completed_at`: task finished
 
-<TaskStatisticsTable
-  usecase="fibonacci_40_10"
-  language="python"
-  engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
-  workers={1}
-/>
+Raw measurements for each engine:
+ - [Airflow](@site/src/data/airflow.json)
+ - [Kestra](@site/src/data/kestra.json)
+ - [Prefect](@site/src/data/prefect.json)
+ - [Temporal](@site/src/data/temporal.json)
+ - [Windmill](@site/src/data/windmill.json)
+ - [Hatchet](@site/src/data/hatchet.json)
 
-Here we see that Windmill takes a greater portion of time executing the tasks, which can be explained by the fact that Windmill runs a "cold start" for each task submitted to the worker. However, it's by far the fastest transitioning to a new task. As observed above, Windmill in dedicated worker mode is lightning fast at executing the tasks, but takes more time assigning a task to a worker.
-
-## Conclusion
-
-Airflow is the slowest in all categories, followed by Prefect. If you're looking for a high performance job orchestrator, they seem to not be the best option. Temporal, Kestra, Hatchet and Windmill have better performance and are closer to each other in terms of performance, but in both cases Windmill performs better either in normal mode or in [dedicated mode](../../../core_concepts/25_dedicated_workers/index.mdx). If you're looking for a job orchestrator for various long-running tasks, Windmill in normal mode will be the most performant solution, optimizing the duration of each tasks knowing that transitions and assignments will remain a small portion of the overall workload. To run lightweight tasks at a very fast pace Windmill in dedicated worker mode should be your preferred choice, provided that the tasks are similar. It is lightening fast at execution and assignment.
-
-# Appendix: Scaling Windmill
-
-We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this assumption for Airflow, Prefect, Kestra and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
-
-For this test, we've deployed the same docker compose as above on an AWS `m4.xlarge` instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the `NUM_WORKERS` environment variable Windmill accepts. Note that it is not strictly equivalent to adding real hardware to the stack, but until we reach the maximum capacities on the instance, both in terms of CPU and memory, we can assume it's a good approximation.
-The other change we had to make was to bump the `max_connections` to `1000` on Postgresql: as we're adding more and more workers, each worker needs to connect to the database and we need to increase the maximum number of connections Posgtresql allows.
-
-The job we ran was a simple sleeping job sleeping for 100ms, which is a good average during for a job running on an orchestrator.
-
-```python
-import time
-def main():
-	time.sleep(0.1)
-```
-
-Finally, we've ran it on Windmill Dedicated Worker mode, and we used a specific endpoint to "bulk-create" the jobs before any worker can start pulling them from the queue. For this test to be representative, we had to measure the performance of Windmill processing a large number of jobs (10000 in this case), and we quickly realised that the time it was taking to only _insert_ the jobs one by one in the queue was non negligible and was affecting the real performance of workers.
-
-The results are the following:
-
-<div className="grid">
-	<ScatterChart
-		title="Job throughput at scale"
-		xTitle="Number of workers"
-		yTitle="Jobs / second"
-		rawData={[
-			{
-				x: 2,
-				y: 19.9
-			},
-			{
-				x: 6,
-				y: 59.8
-			},
-			{
-				x: 10,
-				y: 99.6
-			},
-			{
-				x: 20,
-				y: 198
-			},
-			{
-				x: 30,
-				y: 298
-			},
-			{
-				x: 40,
-				y: 361
-			},
-			{
-				x: 50,
-				y: 496
-			},
-			{
-				x: 60,
-				y: 591
-			},
-			{
-				x: 70,
-				y: 693
-			},
-			{
-				x: 80,
-				y: 786
-			},
-			{
-				x: 90,
-				y: 887
-			},
-			{
-				x: 100,
-				y: 981
-			}
-		]}
-	/>
-</div>
-
-<details>
-
-| **Number of workers** | **Throughput (jobs/sec) batch of 10K jobs** |
-| --------------------- | ------------------------------------------- |
-| 2                     | 19.9                                        |
-| 6                     | 59.8                                        |
-| 10                    | 99.6                                        |
-| 20                    | 198                                         |
-| 30                    | 298                                         |
-| 40                    | 391                                         |
-| 50                    | 496                                         |
-| 60                    | 591                                         |
-| 70                    | 693                                         |
-| 80                    | 786                                         |
-| 90                    | 887                                         |
-| 100                   | 981                                         |
-
-</details>
-
-This proves that Windmill scales linearly with the number of workers (at least up to 100 workers). We can also notice that the throughput is close to the optimal: given that the job takes 100ms to be executed, N workers processing the jobs in parallel can't go above `N*100` jobs per seconds, and Windmill is pretty close.
+ The scripts used to extract the data can be found [in the windmill-benchmarks repository](https://github.com/windmill-labs/windmill-benchmarks). We did not dive into the source code of each workflow engine to see if the timestamp generation is consistent across all engines or there are some slight differences.

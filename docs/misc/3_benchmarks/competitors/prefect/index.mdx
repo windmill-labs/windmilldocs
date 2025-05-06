@@ -1,12 +1,19 @@
 import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import DocCard from '@site/src/components/DocCard';
 
 export const toc = getToc("prefect");
 
 # Prefect Benchmarks
 
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
 ## Summary
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Prefect outperformed Airflow in most benchmarks, especially in long-running tasks, but still exhibited noticeable assignment delays and orchestration latency. It’s adequate for moderate workloads, but not optimized for high-frequency or highly parallel use cases.
 
 ## Prefect setup
 

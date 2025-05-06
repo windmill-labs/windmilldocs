@@ -1,8 +1,19 @@
 import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import DocCard from '@site/src/components/DocCard';
 
 export const toc = getToc("airflow");
 
 # Airflow Benchmarks
+
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
+## Summary
+
+Airflow was the slowest in all categories, with high orchestration overhead and poor responsiveness to both lightweight and long-running tasks. It suffers from long assignment delays and inefficient scaling, making it unsuitable for performance-critical workflows.
 
 ## Airflow setup
 

@@ -1,0 +1,188 @@
+import { BenchmarkVisualization } from '@site/src/components/BenchmarkVisualization';
+import { TaskStatisticsTable } from '@site/src/components/TaskStatisticsTable';
+import DocCard from '@site/src/components/DocCard';
+
+# Results: Go
+
+<DocCard
+	title="Detailed results per engine"
+	description="Results for each benchmark run for each engine in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/"
+/>
+
+<br />
+
+To evaluate orchestrator performance in Go, we tested Hatchet, Temporal, and Windmill using a consistent set of benchmark scenarios: 400 lightweight tasks and 100 long-running tasks, both in single-worker and 10-worker configurations.
+
+**Go provides an ideal testbed** for orchestration engine performance due to its **low startup** overhead and **tight runtime**, meaning most latency observed can be attributed to the orchestration engine itself.
+
+The other workflow engines either didn't support the Go language natively (e.g Kestra only via Docker) or not at all.
+
+## Single worker
+
+### Long-Running Tasks (10 tasks)
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_100_38"
+		language="go"
+		engines={['hatchet', 'temporal', 'windmill']}
+		workers={1}
+		title="100 long running tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+In the single-worker configuration for long-running tasks, total flow durations were: Hatchet: 30.715s, Temporal: 28.313s and Windmill: 27.648s.
+
+As expected with heavier workloads, execution time dominated the run: Windmill: 93.82%, Temporal: 91.81% and Hatchet: 88.69%
+
+This suggests that all three engines handle Go workloads efficiently once tasks are assigned. Assignment times were lowest for Windmill (2.46%) and Temporal (2.60%), with Hatchet slightly higher at 4.95%. Transition times were also well managed, with Windmill again leading at just 3.73% of total time.
+
+The results confirm that in long-running tasks, all three engines effectively minimize orchestration overhead in Go, with Windmill slightly outperforming the others in total time and transition latency.
+
+<TaskStatisticsTable
+  usecase="fibonacci_100_38"
+  language="go"
+  engines={['hatchet', 'temporal', 'windmill']}
+  workers={1}
+/>
+
+### Lightweight Tasks (400 tasks)
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_400_10"
+		language="go"
+		engines={['hatchet', 'temporal', 'windmill']}
+		workers={1}
+		title="400 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+For lightweight tasks, engine overhead becomes critical. The results show: Hatchet: 35.845s, Temporal: 39.016s and Windmill: 19.702s.
+
+Here, the execution of fibo(10) is negligible (~10ms), so orchestration mechanics dominate performance. Windmill stands out with less than half the total time of either Temporal or Hatchet.
+
+Breaking it down: Assignment: Windmill: 18.53%, Temporal: 41.24% and Hatchet: 68.87%. Transition: Windmill: 67.17%, Temporal: 52.62% and Hatchet: 26.75%.
+
+The high transition percentage for Windmill reflects its very fast execution and relatively even task distribution. Hatchet and Temporal, in contrast, spend more time assigning tasks and maintaining queues, which stretches the total duration.
+
+Overall, Windmill clearly leads in lightweight throughput in Go with a single worker, suggesting minimal orchestration latency and efficient task sequencing.
+
+<TaskStatisticsTable
+  usecase="fibonacci_400_10"
+  language="go"
+  engines={['hatchet', 'temporal', 'windmill']}
+  workers={1}
+/>
+
+## Multi-worker
+
+### 10 workers: 100 long running tasks
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_100_38"
+		language="go"
+		engines={['hatchet']}
+		workers={10}
+		title="100 long running tasks"
+		xAxisLabel="Duration (in seconds)"
+		maxScale={19}
+	/>
+</div>
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_100_38"
+		language="go"
+		engines={['temporal']}
+		workers={10}
+		title="100 long running tasks"
+		xAxisLabel="Duration (in seconds)"
+		maxScale={19}
+	/>
+</div>
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_100_38"
+		language="go"
+		engines={['windmill']}
+		workers={10}
+		title="100 long running tasks"
+		xAxisLabel="Duration (in seconds)"
+		maxScale={19}
+	/>
+</div>
+All three engines performed well under this heavier workload, with durations as follows: Temporal: 11.152s, Windmill: 11.899s and Hatchet: 17.753s.
+
+Temporal had slightly better worker utilization (94.86%) compared to Windmill (92.19%), with Windmill showing slightly higher avg wait time (5.478s vs. 5.012s). Execution time per worker was nearly identical across engines (roughly 11s), suggesting that the core compute workload was equally distributed.
+
+Windmill's advantage, however, lies in its fast scheduling (0.024s) and low transition costs, which helped maintain competitive performance despite a slightly higher wait time.
+
+Hatchet again showed lower utilization (63.05%) and higher idle times, indicating room for improvement in orchestrating long-running parallel workloads in Go.
+
+<TaskStatisticsTable
+  usecase="fibonacci_100_38"
+  language="go"
+  engines={['hatchet', 'temporal', 'windmill']}
+  workers={10}
+/>
+
+### 10 workers: 400 lightweight tasks
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_400_10"
+		language="go"
+		engines={['hatchet']}
+		workers={10}
+		title="400 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+		maxScale={39}
+	/>
+</div>
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_400_10"
+		language="go"
+		engines={['temporal']}
+		workers={10}
+		title="400 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+		maxScale={39}
+	/>
+</div>
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_400_10"
+		language="go"
+		engines={['windmill']}
+		workers={10}
+		title="400 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+		maxScale={39}
+	/>
+</div>
+
+In the multi-worker configuration for lightweight tasks, Temporal was the fastest, completing all 400 tasks in just 4.270 seconds. Windmill followed at 7.224 seconds, while Hatchet significantly lagged behind with a total duration of 37.809 seconds.
+
+At first glance, Windmill appears notably slower than Temporal, but a deeper look into worker load distribution helps explain the trade-offs in orchestration design.
+
+- Worker Utilization: Temporal: 32.41%, Windmill: 11.75%, Hatchet: 3.16%
+- Avg Wait Time: Windmill: 4.235s, Temporal: 2.115s, Hatchet: 19.187s
+
+Despite Hatchet having perfect task distribution (exactly 40 per worker), the wait time and idle time were extremely high, indicating tasks were not being effectively overlapped or queued. Its average task duration was very low (0.030s), but these were not leveraged due to orchestration bottlenecks.
+
+Temporal and Windmill both showed strong parallel execution, but with some differences: Windmill started scheduling tasks faster (first task scheduled at 0.025s), but took longer to start executing the first task (1.663s). This is due to the fact that Windmill, when executing flow iterations in parallel, will create a sub-flow for each iteration containing the fibonacci task. This creates a slight overhead in orchestration compared to the other engines. Temporal, by contrast, started execution almost immediately at 0.108s and maintained lower wait and idle times.
+
+<TaskStatisticsTable
+  usecase="fibonacci_400_10"
+  language="go"
+  engines={['hatchet', 'temporal', 'windmill']}
+  workers={10}
+/>

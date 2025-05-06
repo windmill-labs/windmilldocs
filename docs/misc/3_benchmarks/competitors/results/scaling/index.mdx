@@ -1,0 +1,99 @@
+import ScatterChart from '@site/src/components/ScatterChart';
+
+# Scaling Windmill workers
+
+We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this assumption for Airflow, Prefect, Kestra and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
+
+For this test, we've deployed the same docker compose as above on an AWS `m4.xlarge` instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the `NUM_WORKERS` environment variable Windmill accepts. Note that it is not strictly equivalent to adding real hardware to the stack, but until we reach the maximum capacities on the instance, both in terms of CPU and memory, we can assume it's a good approximation.
+The other change we had to make was to bump the `max_connections` to `1000` on Postgresql: as we're adding more and more workers, each worker needs to connect to the database and we need to increase the maximum number of connections Posgtresql allows.
+
+The job we ran was a simple sleeping job sleeping for 100ms, which is a good average during for a job running on an orchestrator.
+
+```python
+import time
+def main():
+	time.sleep(0.1)
+```
+
+Finally, we've ran it on Windmill Dedicated Worker mode, and we used a specific endpoint to "bulk-create" the jobs before any worker can start pulling them from the queue. For this test to be representative, we had to measure the performance of Windmill processing a large number of jobs (10000 in this case), and we quickly realised that the time it was taking to only _insert_ the jobs one by one in the queue was non negligible and was affecting the real performance of workers.
+
+The results are the following:
+
+<div className="grid">
+	<ScatterChart
+		title="Job throughput at scale"
+		xTitle="Number of workers"
+		yTitle="Jobs / second"
+		rawData={[
+			{
+				x: 2,
+				y: 19.9
+			},
+			{
+				x: 6,
+				y: 59.8
+			},
+			{
+				x: 10,
+				y: 99.6
+			},
+			{
+				x: 20,
+				y: 198
+			},
+			{
+				x: 30,
+				y: 298
+			},
+			{
+				x: 40,
+				y: 361
+			},
+			{
+				x: 50,
+				y: 496
+			},
+			{
+				x: 60,
+				y: 591
+			},
+			{
+				x: 70,
+				y: 693
+			},
+			{
+				x: 80,
+				y: 786
+			},
+			{
+				x: 90,
+				y: 887
+			},
+			{
+				x: 100,
+				y: 981
+			}
+		]}
+	/>
+</div>
+
+<details>
+
+| **Number of workers** | **Throughput (jobs/sec) batch of 10K jobs** |
+| --------------------- | ------------------------------------------- |
+| 2                     | 19.9                                        |
+| 6                     | 59.8                                        |
+| 10                    | 99.6                                        |
+| 20                    | 198                                         |
+| 30                    | 298                                         |
+| 40                    | 391                                         |
+| 50                    | 496                                         |
+| 60                    | 591                                         |
+| 70                    | 693                                         |
+| 80                    | 786                                         |
+| 90                    | 887                                         |
+| 100                   | 981                                         |
+
+</details>
+
+This proves that Windmill scales linearly with the number of workers (at least up to 100 workers). We can also notice that the throughput is close to the optimal: given that the job takes 100ms to be executed, N workers processing the jobs in parallel can't go above `N*100` jobs per seconds, and Windmill is pretty close.

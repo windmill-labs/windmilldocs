@@ -219,7 +219,32 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Python: comparison with other engines'
+							label: 'Comparing engines: Methodology'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/python/index',
+							label: 'Results: Python'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/js/index',
+							label: 'Results: JavaScript'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/go/index',
+							label: 'Results: Go'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/conclusion/index',
+							label: 'Conclusion'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/scaling/index',
+							label: 'Scaling'
 						},
 						{
 							type: 'category',

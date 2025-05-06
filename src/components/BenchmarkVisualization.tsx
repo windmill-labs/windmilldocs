@@ -113,13 +113,13 @@ export function BenchmarkVisualization({
 
 	try {
 		if (isSingleEngine) {
-			const timings =
-				maxScale === undefined
-					? getTaskTimings(selectedEngines[0], usecase, language, workers)
-					: null;
-			const autoMaxScale = timings ? calculateMaxScale(timings) : maxScale;
+			// Always fetch timings data regardless of maxScale setting
+			const timings = getTaskTimings(selectedEngines[0], usecase, language, workers);
 
-			if (workers > 1 && timings?.[0]?.worker_execution !== undefined) {
+			// Determine scale - either use provided maxScale or calculate it
+			const autoMaxScale = maxScale !== undefined ? maxScale : calculateMaxScale(timings);
+
+			if (workers > 1 && timings[0]?.worker_execution !== undefined) {
 				return renderMultiWorkerDetails({
 					usecase,
 					language,

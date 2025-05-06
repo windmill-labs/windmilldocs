@@ -1,14 +1,21 @@
 import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
 
 export const toc = getToc("hatchet");
 
 # Hatchet Benchmarks
 
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
 ## Summary
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Hatchet performed well in long-running tasks, with high execution ratios and low overhead. However, it struggled in multi-worker lightweight scenarios, with high wait and idle times despite perfect task distribution. It's efficient for compute-heavy jobs, but needs refinement in orchestration under load.
 
 ## Hatchet setup
 

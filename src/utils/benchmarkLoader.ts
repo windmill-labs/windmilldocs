@@ -335,3 +335,120 @@ export function formatEngineName(engine: Engine): string {
 	// For other engines, capitalize first letter
 	return engineName.charAt(0).toUpperCase() + engineName.slice(1);
 }
+
+/**
+ * Calculate standard deviation for an array of values
+ */
+export function calculateStdDev(values: number[]): number {
+	const n = values.length;
+	if (n === 0) return 0;
+
+	const mean = values.reduce((a, b) => a + b, 0) / n;
+	const variance = values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / n;
+	return Math.sqrt(variance);
+}
+
+/**
+ * Interface for aggregate worker statistics
+ */
+export interface AggregateWorkerStats {
+	taskCount: {
+		avg: number;
+		min: number;
+		max: number;
+		stdDev: number;
+	};
+	activeTime: {
+		avg: number;
+		min: number;
+		max: number;
+		stdDev: number;
+	};
+	activePercentage: {
+		avg: number;
+		min: number;
+		max: number;
+		stdDev: number;
+	};
+	idleTime: {
+		avg: number;
+		min: number;
+		max: number;
+		stdDev: number;
+	};
+	avgTaskDuration: {
+		avg: number;
+		min: number;
+		max: number;
+		stdDev: number;
+	};
+	avgWaitTime: {
+		avg: number;
+		min: number;
+		max: number;
+		stdDev: number;
+	};
+}
+
+/**
+ * Calculate aggregate statistics for worker data
+ */
+export function calculateAggregateStats(workerStats: Record<number, WorkerStat>): AggregateWorkerStats {
+	const workers = Object.values(workerStats);
+	if (workers.length === 0) {
+		return {
+			taskCount: { avg: 0, min: 0, max: 0, stdDev: 0 },
+			activeTime: { avg: 0, min: 0, max: 0, stdDev: 0 },
+			activePercentage: { avg: 0, min: 0, max: 0, stdDev: 0 },
+			idleTime: { avg: 0, min: 0, max: 0, stdDev: 0 },
+			avgTaskDuration: { avg: 0, min: 0, max: 0, stdDev: 0 },
+			avgWaitTime: { avg: 0, min: 0, max: 0, stdDev: 0 }
+		};
+	}
+
+	const taskCounts = workers.map(w => w.taskCount);
+	const activeTimes = workers.map(w => w.activeTime);
+	const activePercentages = workers.map(w => w.activePercentage);
+	const idleTimes = workers.map(w => w.idleTime);
+	const avgTaskDurations = workers.map(w => w.avgTaskDuration);
+	const avgWaitTimes = workers.map(w => w.avgWaitTime);
+
+	return {
+		taskCount: {
+			avg: taskCounts.reduce((a, b) => a + b, 0) / workers.length,
+			min: Math.min(...taskCounts),
+			max: Math.max(...taskCounts),
+			stdDev: calculateStdDev(taskCounts)
+		},
+		activeTime: {
+			avg: activeTimes.reduce((a, b) => a + b, 0) / workers.length,
+			min: Math.min(...activeTimes),
+			max: Math.max(...activeTimes),
+			stdDev: calculateStdDev(activeTimes)
+		},
+		activePercentage: {
+			avg: activePercentages.reduce((a, b) => a + b, 0) / workers.length,
+			min: Math.min(...activePercentages),
+			max: Math.max(...activePercentages),
+			stdDev: calculateStdDev(activePercentages)
+		},
+		idleTime: {
+			avg: idleTimes.reduce((a, b) => a + b, 0) / workers.length,
+			min: Math.min(...idleTimes),
+			max: Math.max(...idleTimes),
+			stdDev: calculateStdDev(idleTimes)
+		},
+		avgTaskDuration: {
+			avg: avgTaskDurations.reduce((a, b) => a + b, 0) / workers.length,
+			min: Math.min(...avgTaskDurations),
+			max: Math.max(...avgTaskDurations),
+			stdDev: calculateStdDev(avgTaskDurations)
+		},
+		avgWaitTime: {
+			avg: avgWaitTimes.reduce((a, b) => a + b, 0) / workers.length,
+			min: Math.min(...avgWaitTimes),
+			max: Math.max(...avgWaitTimes),
+			stdDev: calculateStdDev(avgWaitTimes)
+		}
+	};
+}

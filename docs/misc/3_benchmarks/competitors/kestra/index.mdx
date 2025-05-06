@@ -1,4 +1,5 @@
 import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -6,9 +7,15 @@ export const toc = getToc("kestra");
 
 # Kestra Benchmarks
 
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
 ## Summary
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Kestra delivered middle-of-the-pack performance — relatively stable for long-running tasks, but slower than competitors in lightweight workloads. While more modern than Airflow and Prefect, it falls short of the orchestration efficiency seen in Temporal, Hatchet, or Windmill.
 
 ## Kestra setup
 

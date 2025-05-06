@@ -1,0 +1,71 @@
+import { BenchmarkVisualization } from '@site/src/components/BenchmarkVisualization';
+import { TaskStatisticsTable } from '@site/src/components/TaskStatisticsTable';
+import DocCard from '@site/src/components/DocCard';
+
+# Results: JavaScript
+
+<DocCard
+	title="Detailed results per engine"
+	description="Results for each benchmark run for each engine in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/"
+/>
+
+<br />
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_10_33"
+		language="js"
+		engines={['kestra', 'temporal', 'windmill', 'windmill_dedicated']}
+		workers={1}
+		title="10 long running tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_40_10"
+		language="js"
+		engines={['kestra', 'temporal', 'windmill', 'windmill_dedicated']}
+		workers={1}
+		title="40 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+## Long-Running Tasks (10 tasks)
+
+When executing long-running tasks (`fibo(33)`), **Windmill** emerged as the **fastest orchestrator** overall, completing the full workflow in 0.935 seconds. Temporal followed closely at 0.966 seconds, while Windmill Dedicated took slightly longer at 1.077 seconds. Kestra, in contrast, lagged behind at 2.919 seconds, more than twice as slow as the top performers.
+
+The execution phase dominated the runtime in this scenario, as expected for compute-intensive tasks. Windmill devoted 82.67% of its total time to execution, significantly higher than the others. Temporal also maintained a high execution ratio at 66.05%, while Kestra's share dropped to 60.98%. The overhead introduced by assignment and task transitions remained comparatively low for all orchestrators in this category.
+
+This reinforces the expectation that for longer tasks, the engine’s overhead fades into the background, and raw computational throughput takes precedence. Windmill's ability to maintain minimal assignment (5.78%) and transition (11.55%) times is a strong indicator of its lightweight orchestration layer. Temporal also performed well, though it incurred slightly more scheduling overhead. Windmill Dedicated's assignment time was higher at 22.19%, likely reflecting startup or handoff costs in a dedicated worker configuration, yet the system still completed the workflow with excellent overall timing.
+
+<TaskStatisticsTable
+  usecase="fibonacci_10_33"
+  language="js"
+  engines={['kestra', 'temporal', 'windmill', 'windmill_dedicated']}
+  workers={1}
+/>
+
+## Lightweight Tasks (40 tasks)
+
+When shifting to lightweight tasks using `fibo(10)` — with each task lasting around 10 milliseconds — the dynamics changed dramatically. In this scenario, orchestration efficiency became the bottleneck, as the time spent managing tasks often exceeded the time spent executing them.
+
+Windmill Dedicated posted the **fastest total runtime** at 2.125 seconds, with Windmill right behind at 2.973 seconds. Temporal completed the flow in 3.063 seconds, while Kestra required 9.050 seconds—making it the slowest by a substantial margin.
+
+Unlike the long-running task case, here the execution phase was only a minor part of the total runtime: Execution time accounted for just 9.72% for Windmill, 5.93% for Windmill Dedicated, 8.81% for Temporal, and 51.19% for Kestra.
+
+These proportions confirm that engine overhead dominates lightweight workflows. Windmill and Windmill Dedicated both handled orchestration with high parallelism, but the dedicated setup incurred notably higher assignment overhead  —84.05% of total time, compared to Windmill’s 48.00%. Despite this, Windmill Dedicated still completed the full workflow quickly, likely due to parallel scheduling and nearly negligible transition time (10.02%).
+
+Temporal, while maintaining decent overall timing, exhibited the highest transition overhead (55.17%), which may be attributed to workflow state persistence or slower task chaining under rapid-fire conditions.
+
+Kestra underperformed again, consuming 30.69% of time in assignment and 18.12% in transition, along with longer-than-expected task execution durations. This suggests either less responsive workers or more rigid task dispatch intervals that cannot keep up with high-frequency scheduling even though we were using `io.kestra.plugin.core.runner.Process` rather than spawning a new container. Another notable difference is that Kestra's time to schedule the first task was the highest at 0.93 seconds, compared to the other orchestrators that were close to each other (0.08s for Windmill, 0.04s for Windmill Dedicated, 0.1s for Temporal).
+
+<TaskStatisticsTable
+  usecase="fibonacci_40_10"
+  language="js"
+  engines={['kestra', 'temporal', 'windmill', 'windmill_dedicated']}
+  workers={1}
+/>
