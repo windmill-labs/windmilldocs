@@ -3,18 +3,50 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Comparison with other workflow engines
+# Comparison with other job orchestration engines
 
-<div className="grid">
-	<BenchmarkVisualization
-		usecase="fibonacci_40_10"
-		language="js"
-		engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
-		workers={1}
-		title="40 lightweight tasks javascript"
-		xAxisLabel="Duration (in seconds)"
-	/>
-</div>
+<Tabs>
+	<TabItem value="js" label="JavaScript">
+		<div className="grid">
+			<p className="text-center text-sm"> * Airflow/Prefect only support python, see python tab for results</p>
+			<br />
+			<BenchmarkVisualization
+				usecase="fibonacci_40_10"
+				language="js"
+				engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
+				workers={1}
+				title="40 lightweight tasks javascript"
+				xAxisLabel="Duration (in seconds)"
+			/>
+		</div>
+	</TabItem>
+	<TabItem value="python" label="Python">
+	<div className="grid">
+			<BenchmarkVisualization
+				usecase="fibonacci_40_10"
+				language="python"
+				engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
+				workers={1}
+				title="40 lightweight tasks python"
+				xAxisLabel="Duration (in seconds)"
+			/>
+		</div>
+	</TabItem>
+	<TabItem value="go" label="Go">
+		<div className="grid">
+			<p className="text-center text-sm"> * Airflow/Prefect/Kestra don't support go natively</p>
+			<br />
+			<BenchmarkVisualization
+				usecase="fibonacci_100_38"
+				language="go"
+				engines={['hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
+				workers={1}
+				title="100 long running tasks go"
+				xAxisLabel="Duration (in seconds)"
+			/>
+		</div>
+	</TabItem>
+</Tabs>
 
 <br />
 
@@ -26,7 +58,7 @@ For additional insights about this study, refer to our [blog post](/blog/launch-
 
 ## Methodology
 
-In this benchmark study, we compared six workflow orchestration engines: **Airflow**, **Prefect**, **Temporal**, **Kestra**, **Hatchet**, and **Windmill**, focusing on performance across several scenarios. The aim was to evaluate not just raw task execution time, but also deeper engine-level behaviors such as scheduling efficiency, task dispatch latency, and worker utilization.
+In this benchmark study, we compared six job orchestration engines: **Airflow**, **Prefect**, **Temporal**, **Kestra**, **Hatchet**, and **Windmill**, focusing on performance across several scenarios. The aim was to evaluate not just raw task execution time, but also deeper engine-level behaviors such as scheduling efficiency, task dispatch latency, and worker utilization.
 
 We chose to compute Fibonacci numbers as a simple task that can easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers was very naive:
 
@@ -135,4 +167,4 @@ Raw measurements for each engine:
  - [Windmill](@site/src/data/windmill.json)
  - [Hatchet](@site/src/data/hatchet.json)
 
- The scripts used to extract the data can be found [in the windmill-benchmarks repository](https://github.com/windmill-labs/windmill-benchmarks). We did not dive into the source code of each workflow engine to see if the timestamp generation is consistent across all engines or there are some slight differences.
+ The scripts used to extract the data can be found [in the windmill-benchmarks repository](https://github.com/windmill-labs/windmill-benchmarks). We did not dive into the source code of each orchestration engine to see if the timestamp generation is consistent across all engines or there are some slight differences.

@@ -219,7 +219,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Comparing engines: Methodology'
+							label: 'Comparing orchestrators: Methodology'
 						},
 						{
 							type: 'doc',
