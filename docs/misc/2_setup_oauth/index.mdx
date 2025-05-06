@@ -134,6 +134,8 @@ Add the proper groups then click save. You should see your Client ID and Client 
 
 Setup your realm in Keycloak and set Keycloak in [Instance settings](../../advanced/18_instance_settings/index.mdx#authoauth) 'SSO OAuth' - - 'SSO' and Keycloak
 
+You need to add the following client scope to keycloak client: offline_access
+
 ### Authentik
 
 To integrate Windmill with Authentik as an OAuth provider, follow these steps:
@@ -235,6 +237,12 @@ Pick "From an app manifest", then YAML.
 ![Slack Create App](./slack_create_app.png 'Slack Create App')
 
 Your app manifest should look like this, replacing `<YOUR INSTANCE URL>` in 3 places:
+
+:::warning
+`<YOUR INSTANCE URL>/api/oauth/slack_command` must be reachable from the public internet for the Slack command to work.
+
+`<YOUR INSTANCE URL>/api/slack` must be reachable from the public internet for interactive approvals to work.
+:::
 
 ```yaml
 display_information:
@@ -493,6 +501,36 @@ SELECT CURRENT_ORGANIZATION_NAME() || '-' || CURRENT_ACCOUNT_NAME() AS org_accou
 [Instance settings](../../advanced/18_instance_settings/index.mdx) -> Resources -> Add OAuth "snowflake_oauth" and set the **client id**, **client secret** and **account identifier**.
 
 Take a look at [this guide](../../misc/9_guides/snowflake_app_with_user_roles/index.mdx#sample-app-setup) to learn more about how to build an App with the Snowflake OAuth integration.
+
+### Azure OAuth
+
+Go to your [Azure AAD App registrations](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps) and create a new registration.
+
+Select a name set the rediredct url to: `https://<YOUR WINDMILL BASE URL>/oauth/callback/azure_oauth` and application type to "Web".
+
+![Azure OAuth Setup](./azure_oauth.png.webp)
+
+Next in "Certificates and secrets" create a new client secret and copy the **Secret Value** as this is the client secret you'll set later in the Windmill OAuth settings (the Secret ID is not required).
+
+Then under "API permissions" you have to select the appropriate permissions that the OAuth application shall be able to access:
+
+**Example MSSQL**:
+- select "Add a permission"
+- Type "Delegated"
+- select "Azure SQL Database" -> "user_impersonation"
+
+![Azure Oauth API permissions](./azure_oauth_api_permissions.png.webp)
+
+Next create a new OAuth client in the [Windmill instance settings](../advanced/instance_settings#authoauth) and fill in
+- the "Client ID" corresponding to the "Application (client) ID" in Azure "Overview" menu item
+- the "Client Secret" corresponding to the Secret Value from client secret you created earlier
+- the "Tenant ID" from the "Overview" menu item
+
+![Azure IDs](./azure_oauth_ids.png.webp)
+
+Now depending on which application you're trying to use you, you will need to as extra "scopes" such as `https://database.windows.net//.default` for [MS SQL Server](../getting_started/scripts_quickstart/sql#ms-sql).
+
+![Azure Windmill](./azure_oauth_windmill.png.webp)
 
 ### Custom OAuth
 

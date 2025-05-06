@@ -65,9 +65,22 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 		href="/docs/core_concepts/worker_groups"
 	/>
 	<DocCard
-		title="Windmill on AWS ECS"
-		description="Windmill can also be deployed on AWS ECS"
-		href="/docs/advanced/self_host/aws_ecs"
+		title="Windmill on AWS EKS or ECS"
+		description="Windmill can also be deployed on AWS EKS or ECS"
+		href="/docs/advanced/self_host/aws_eks_ecs"
+	/>
+</div>
+
+### Ubicloud
+
+Ubicloud provides cost-efficient managed Kubernetes and Postgresql. They are a great compromise if you are cost sensitive but still want to get a multi-node Kubernetes Windmill setup. And they are open-source too as an infra layer on top of other cloud providers.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ubicloud"
+		description="Ubicloud Community-Contributed Guide."
+		href="https://www.ubicloud.com/docs/managed-kubernetes/windmill-tutorial"
+		target="_blank"
 	/>
 </div>
 
@@ -78,6 +91,16 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 		title="Fly.io"
 		description="Fly.io Community-Contributed Guide."
 		href="https://dev.to/singee/deploy-windmill-on-flyio-3ii3"
+		target="_blank"
+	/>
+</div>
+
+### Render.com
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Render.com"
+		description="Render.com Setup Guide."
+		href="https://github.com/alpetric/wmilll_render"
 		target="_blank"
 	/>
 </div>
@@ -585,6 +608,24 @@ Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml 
 ### Configure Python (requests & httpx) Trust:
 
 Set REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt & SSL_CERT_FILE with the same value in the worker’s environment variables.
+
+### Configure Java's Trust:
+
+```
+keytool -import -alias "your.corp.com" -file path/to/cert.crt -keystore path/to/created/dir/with/certs/truststore.jks -storepass '12345678' -noprompt
+```
+
+:::note
+
+By default Windmill will use 123456 password. But you can change it to something else by setting JAVA_STOREPASS.
+
+You can alse set JAVA_TRUST_STORE_PATH to point to different java truststore.
+
+:::
+
+## Running Windmill as non-root user
+
+Certain cloud providers require containers to be run as non-root users. For these cases you can use the `windmill` user (uid/gid 1000) or run it as any other non-root user by passing the `--user windmill` argument. For the [windmill helm chart](https://github.com/windmill-labs/windmill-helm-charts/tree/main/charts/windmill), you can pass the `runAsUser` or `runAsNonRoot` in the `podSecurityContext`.
 
 <!-- Resources -->
 

@@ -100,7 +100,7 @@ export default function BarChart({
 	let dt = 0.2;
 	let iter = 1;
 
-	const sums: number[] = [0, 0, 0, 0, 0];
+	const sums: number[] = [0, 0, 0, 0, 0, 0];
 
 	datasets_data.forEach((dataset) => {
 		dataset.data.forEach((value, i) => {

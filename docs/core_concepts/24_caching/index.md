@@ -67,9 +67,9 @@ You can enable caching for a step directly in the step configuration. Here's how
 
 In the above example, the result of step `a` will be cached for 86400 seconds (1 day). If `a` is re-triggered with the same input within this period, Windmill will immediately return the cached result.
 
-:::tip Step mocking
+:::tip Step mocking / Pin result
 
-[Step mocking](../../flows/5_step_mocking.md) allows faster iteration. When a step is mocked, it will immediately return the mocked value without performing any computation.
+[Step mocking / Pin result](../../flows/5_step_mocking.md) allows faster iteration. When a step is mocked, it will immediately return the mocked value without performing any computation.
 
 :::
 

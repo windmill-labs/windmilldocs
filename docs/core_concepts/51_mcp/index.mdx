@@ -1,0 +1,96 @@
+# Windmill MCP
+
+Windmill supports the [**Model Context Protocol (MCP)**](https://modelcontextprotocol.io/introduction), an open standard that enables seamless interaction between LLMs and tools like Windmill.
+
+With MCP, you can connect your favorite LLMs (like [Claude](https://claude.ai/download), [Cursor](https://www.cursor.com), or any [MCP compatible client](https://modelcontextprotocol.io/clients)) to Windmill, allowing you to trigger scripts and flows by chatting with them.
+
+## How to use
+
+### Generate your MCP token and URL
+
+1. Navigate to your **account settings** in Windmill.
+2. Create a new **token** under the **Tokens** section, and select **Generate MCP URL**.
+
+![Generate MCP token](./user_settings.png 'Generate MCP token')
+
+Once created, your MCP URL will look like this:
+
+```
+https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>
+```
+
+> This token is used to authenticate MCP clients and generate your personal MCP endpoint URL. Save this URL securely. Treat it like an API key—anyone with access can trigger actions in your workspace.
+
+---
+
+### Connect your LLM to Windmill
+
+Most modern LLM agents and interfaces now support MCP as a plug-and-play integration. Here are some examples configurations, for Claude Desktop and Cursor.
+
+To connect with Cursor:
+
+  - Go to Cursor > Settings > MCP
+  - Click on "Add new global MCP server"
+  - Add the following configuration in the json file:
+
+```
+{
+  "mcpServers": {
+    "windmill-mcp": {
+      "url": "https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>"
+    }
+  }
+}
+```
+
+To connect with Claude Desktop:
+
+- Go to Claude Desktop > Settings > Developer
+- Click on "Modify configuration"
+- Add the following configuration in the json file:
+
+```
+{
+  "mcpServers": {
+    "windmill-mcp": {
+      "command": "npx",
+      "args": ["-y", "supergateway", "--sse", "https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>"]
+    }
+  }
+}
+```
+
+Once connected, your LLM will be able to run any script or flow in your Windmill workspace.
+
+## Example: Triggering a script from Claude
+
+Say you’ve created a script called `send_welcome_email`.
+
+Once your MCP server is connected, in Claude you could type:
+
+> “Send an email to user@example.com with the subject 'Welcome' and the body 'Welcome to our service!' with Windmill”
+<br/>
+
+Claude will:
+
+- Find the `send_welcome_email` script in your windmill workspace
+- Ask you for required inputs if needed
+- Run the script and show you the result right inside the chat
+
+---
+
+## Troubleshooting
+
+- **Not seeing any scripts/flows?**
+  - Ensure your LLM tool is connected to the correct MCP URL.
+  - If you chose the "favorites only" option when creating your MCP URL, make sure the script or flow is in your favorites.
+- **My LLM does not find the correct script/flow to run**
+  - Ensure the script or flow is deployed and visible in your workspace.
+  - Choose good titles and descriptions to help the LLM find the correct script/flow.
+
+---
+
+## Learn more
+
+- [MCP official docs](https://modelcontextprotocol.io/introduction)
+- [MCP compatible clients](https://modelcontextprotocol.io/clients)

@@ -1,9 +1,7 @@
 # SQS triggers
 
-Windmill can connect to an [SQS](https://aws.amazon.com/sqs/) queue and trigger runnables (scripts, flows) in response to messages received.  
+Windmill can connect to an [SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) queue and trigger runnables (scripts, flows) in response to messages received.  
 SQS triggers is a self-hosted Enterprise feature.
-
-For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -19,8 +17,8 @@ For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon
 
 ## How to use
 
-- **Pick an AWS resource**  
-  - Select an existing [AWS resource](../../integrations/aws.md) or create a new one.  
+- **Pick an AWS or AWS OIDC resourcee**  
+  - Select an existing [AWS resource](../../integrations/aws.md#aws-resource) or [AWS OIDC resource](../../integrations/aws.md#aws-oidc-resource) or create a new one.  
   - The AWS resource must have permissions to interact with SQS.
 
 - **Select the runnable to execute**  

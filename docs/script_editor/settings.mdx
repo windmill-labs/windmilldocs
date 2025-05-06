@@ -50,7 +50,7 @@ Language of the script. Windmill supports:
 - [TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx) (Bun & Deno)
 - [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)
 - [Go](../getting_started/0_scripts_quickstart/3_go_quickstart/index.mdx)
-- [Bash & Powershell](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx)
+- [Bash & Powershell & Nu](../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx)
 - [SQL](../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx) (PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake)
 - [Rest & GraphQL](../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx)
 - [Docker](../getting_started/0_scripts_quickstart/7_docker_quickstart/index.mdx)
@@ -289,6 +289,18 @@ Windmill can connect to Amazon SQS queues and trigger scripts or flows when mess
 		title="SQS triggers"
 		description="Trigger scripts and flows from Amazon SQS messages."
 		href="/docs/core_concepts/sqs_triggers"
+	/>
+</div>
+
+### MQTT triggers
+
+Windmill can connect to an MQTT broker, subscribe to specific topics, and trigger scripts or flows when messages are received, enabling event-driven processing. Preprocessors can transform the MQTT message data before it reaches your script or flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="MQTT triggers"
+		description="Trigger scripts and flows from MQTT broker."
+		href="/docs/core_concepts/mqtt_triggers"
 	/>
 </div>
 

@@ -1,9 +1,8 @@
 
 # MQTT triggers
 
-Windmill can connect to an **MQTT broker** and trigger runnables (scripts, flows) in response to messages published to specified topics. MQTT triggers are not available on the [Cloud](/pricing).
+Windmill can connect to an [**MQTT**](https://mqtt.org/mqtt-specification/) broker and trigger runnables (scripts, flows) in response to messages published to specified topics. MQTT triggers are not available on the [Cloud](/pricing).
 
-For more details on MQTT, see the [MQTT Protocol Documentation](https://mqtt.org/mqtt-specification/).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -131,7 +130,7 @@ For more information about MQTT v5 properties, see the [MQTT v5 Properties Docum
  */
 export async function preprocessor(
   wm_trigger: {
-    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'mqtt',
+    kind: 'gcp',
     mqtt?: {
       topic: string,
       retain: boolean,

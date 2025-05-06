@@ -43,7 +43,7 @@ executed with the same versions of its dependencies. It also avoids the hassle
 of having to maintain a separate requirements file.
 
 We use a simple heuristics to infer the package name: the import root name must be the package name. We also maintain a list of exceptions.
-You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/baac93f40140ee37548a273885c028a8e6500b6d/backend/parsers/windmill-parser-py-imports/src/lib.rs#L48).
+You can make a PR to add your dependency to the list of exceptions [here](https://github.com/windmill-labs/windmill/blob/main/backend/parsers/windmill-parser-py-imports/src/mapping.rs).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -206,7 +206,7 @@ scripts locally and on Windmill. See [Developing scripts locally](../4_local_dev
 </div>
 
 ### Pinning dependencies and requirements
-
+#### Requirements
 If the imports are not properly analyzed, there exists an escape hatch to
 override the inferred imports. One needs to head the Script with the `requirements` comment followed by dependencies.
 The standard pip [requirement specifiers](https://pip.pypa.io/en/stable/reference/requirement-specifiers/) are supported. Some examples:
@@ -225,6 +225,8 @@ def main(...):
   ...
 ```
 
+#### Extra requirements
+
 To add extra dependencies or pin the version of some dependencies
 
 To combine both the inference of Windmill and being able to pin dependencies, use `extra_requirements`:
@@ -239,6 +241,47 @@ import dependency
 def main(...):
   ...
 ```
+
+#### Pin and Repin
+
+It is possible to pin specific import to different version or even another dependency
+
+```python
+import pandas
+import dependency # pin: dependency==0.4
+import nested.modules # pin: nested-modules
+
+def main(...):
+  ...
+```
+
+If import was pinned once, whenever you use the same import again it will be pinned.
+
+It is possible to have several pins to same import and all of them will be included.
+However if you want to override all pins associated with an import you can use `repin`
+```python
+# content of f/foo/bar:
+import dependency # pin: dependency==0.4 Hard lock on 0.4
+...
+
+# content of f/foo/baz:
+import dependency # pin: dependency==1.0 Hard lock on 1.0
+...
+
+# content of f/foo/main:
+import f.foo.bar
+import f.foo.baz
+import dependency # repin: dependency==1.0 Repin to version that works for all scripts
+...
+
+```
+
+:::note
+Windmill assumes that imports directly map to requirements,
+however it is not always the case.
+To handle this there is windmill import map.
+And if you found a public python dependency that needs to be explicitly mapped you can submit an issue or [contribute](../../misc/4_contributing/index.md#mapping-python-imports). 
+:::
 
 ### Private PyPI repository
 
