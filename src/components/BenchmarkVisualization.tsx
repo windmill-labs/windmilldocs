@@ -118,9 +118,6 @@ export function BenchmarkVisualization({
 					? getTaskTimings(selectedEngines[0], usecase, language, workers)
 					: null;
 			const autoMaxScale = timings ? calculateMaxScale(timings) : maxScale;
-      console.log("usecase", usecase);
-      console.log(autoMaxScale);
-      console.log(maxScale);
 
 			if (workers > 1 && timings?.[0]?.worker_execution !== undefined) {
 				return renderMultiWorkerDetails({
