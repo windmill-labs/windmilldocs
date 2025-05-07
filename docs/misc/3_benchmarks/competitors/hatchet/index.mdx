@@ -23,6 +23,8 @@ We set up Hatchet version 0.62.0 using the [docker-compose.yml from the official
 
 The following workflows were used to run the benchmarks:
 
+Note that for multi-worker scenarios, we tried both using `RunBulkNoWait` that splits up all individual fibonacci tasks as separate workflows and setting `PARALLEL=true` that runs all fibonacci tasks in parallel in a single workflow with parrallel tasks. We did not see significant difference in the results.
+
 <Tabs>
   <TabItem value="python" label="Python">
     ```python
@@ -91,6 +93,8 @@ The following workflows were used to run the benchmarks:
 
     import (
         "fmt"
+        "os"
+        "strconv"
 
         "github.com/hatchet-dev/hatchet/pkg/client/create"
         v1 "github.com/hatchet-dev/hatchet/pkg/v1"
@@ -121,14 +125,24 @@ The following workflows were used to run the benchmarks:
         )
 
         var previous *task.TaskDeclaration[FibonacciInput]
+        parallel := os.Getenv("PARALLEL") != ""
 
-        for i := 0; i < 10; i++ {
+        iterations := 100
+        if iterStr := os.Getenv("ITERATIONS"); iterStr != "" {
+            if iter, err := strconv.Atoi(iterStr); err == nil && iter > 0 {
+                iterations = iter
+            }
+        }
+
+        for i := 0; i < iterations; i++ {
             name := fmt.Sprintf("fibo_%d", i)
 
             opts := create.WorkflowTask[FibonacciInput, FibonacciResult]{
                 Name: name,
             }
-            if previous != nil {
+
+            // Only set parents if not running in parallel mode
+            if !parallel && previous != nil {
                 opts.Parents = []create.NamedTask{previous}
             }
 
@@ -223,54 +237,7 @@ The following workflows were used to run the benchmarks:
             worker.WorkerOpts{
                 Name: "fibo-workflow-worker",
                 Workflows: []workflow.WorkflowBase{
-                    // workflows.FibonacciWorkflow(hatchet),
-                    workflows.BulkFibonacciWorkflow(hatchet),
-                },
-                Slots: 1,
-            },
-        )
-
-        if err != nil {
-            panic(err)
-        }
-
-        interruptCtx, cancel := cmdutils.NewInterruptContext()
-
-        defer cancel()
-
-        err = worker.StartBlocking(interruptCtx)
-
-        if err != nil {
-            panic(err)
-        }
-    }
-
-    // ------------------------------------------------------------
-    // cmd/worker/main.go
-    package main
-
-    import (
-        hatchet_client "hatchet-go-quickstart/hatchet_client"
-        workflows "hatchet-go-quickstart/workflows"
-
-        "github.com/hatchet-dev/hatchet/pkg/cmdutils"
-        "github.com/hatchet-dev/hatchet/pkg/v1/worker"
-        "github.com/hatchet-dev/hatchet/pkg/v1/workflow"
-    )
-
-    func main() {
-
-        hatchet, err := hatchet_client.HatchetClient()
-
-        if err != nil {
-            panic(err)
-        }
-
-        worker, err := hatchet.Worker(
-            worker.WorkerOpts{
-                Name: "fibo-workflow-worker",
-                Workflows: []workflow.WorkflowBase{
-                    // workflows.FibonacciWorkflow(hatchet),
+                    workflows.FibonacciWorkflow(hatchet),
                     workflows.BulkFibonacciWorkflow(hatchet),
                 },
                 Slots: 1,
@@ -307,7 +274,8 @@ The following workflows were used to run the benchmarks:
     )
 
     func main() {
-        n := flag.Int("n", 10, "Fibonacci number to compute or number of bulk iterations")
+        n := flag.Int("n", 10, "Fibonacci number to compute")
+        iterations := flag.Int("iterations", 1, "Number of bulk iterations")
         bulk := flag.Bool("bulk", false, "Run multiple independent Fibonacci workflows")
         flag.Parse()
 
@@ -317,14 +285,13 @@ The following workflows were used to run the benchmarks:
         }
 
         if *bulk {
-            fmt.Printf("Running %d independent Fibonacci workflows with n=%d...\n", *n, *n)
+            fmt.Printf("Running %d independent Fibonacci workflows with n=%d...\n", *iterations, *n)
 
-            wf := workflows.FibonacciWorkflow(hatchet)
+            wf := workflows.BulkFibonacciWorkflow(hatchet)
 
-            // Create `n` inputs with the same N value
-            var inputs []workflows.FibonacciInput
-            for i := 0; i < *n; i++ {
-                inputs = append(inputs, workflows.FibonacciInput{
+            var inputs []workflows.FiboInput
+            for i := 0; i < *iterations; i++ {
+                inputs = append(inputs, workflows.FiboInput{
                     N: *n,
                 })
             }
@@ -338,7 +305,7 @@ The following workflows were used to run the benchmarks:
                 fmt.Println("Started workflow run:", id)
             }
         } else {
-            fmt.Printf("Running single Fibonacci workflow for n=%d...\n", *n)
+            fmt.Printf("Running single Fibonaccii workflow for n=%d...\n", *n)
 
             wf := workflows.FibonacciWorkflow(hatchet)
 

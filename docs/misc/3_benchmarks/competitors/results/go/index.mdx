@@ -122,7 +122,7 @@ Temporal had slightly better worker utilization (94.86%) compared to Windmill (9
 
 Windmill's advantage, however, lies in its fast scheduling (0.024s) and low transition costs, which helped maintain competitive performance despite a slightly higher wait time.
 
-Hatchet again showed lower utilization (63.05%) and higher idle times, indicating room for improvement in orchestrating long-running parallel workloads in Go.
+Hatchet showed lower utilization (63.05%) and higher idle times, indicating room for improvement in orchestrating long-running parallel workloads in Go. Note that for multi-worker scenarios, we tried both using `RunBulkNoWait` that splits up all individual fibonacci tasks as separate workflows and setting `PARALLEL=true` that runs all fibonacci tasks in parallel in a single workflow with parrallel tasks. We did not see significant difference in the results.
 
 <TaskStatisticsTable
   usecase="fibonacci_100_38"
@@ -176,7 +176,7 @@ At first glance, Windmill appears notably slower than Temporal, but a deeper loo
 - Worker Utilization: Temporal: 32.41%, Windmill: 11.75%, Hatchet: 3.16%
 - Avg Wait Time: Windmill: 4.235s, Temporal: 2.115s, Hatchet: 19.187s
 
-Despite Hatchet having perfect task distribution (exactly 40 per worker), the wait time and idle time were extremely high, indicating tasks were not being effectively overlapped or queued. Its average task duration was very low (0.030s), but these were not leveraged due to orchestration bottlenecks.
+Despite Hatchet having perfect task distribution (exactly 40 per worker), the wait time and idle time were extremely high, indicating tasks were not being effectively overlapped or queued. Its average task duration was very low (0.030s), but these were not leveraged due to orchestration bottlenecks. Note that for multi-worker scenarios, we tried both using `RunBulkNoWait` that splits up all individual fibonacci tasks as separate workflows and setting `PARALLEL=true` that runs all fibonacci tasks in parallel in a single workflow with parrallel tasks. We did not see significant difference in the results.
 
 Temporal and Windmill both showed strong parallel execution, but with some differences: Windmill started scheduling tasks faster (first task scheduled at 0.025s), but took longer to start executing the first task (1.663s). This is due to the fact that Windmill, when executing flow iterations in parallel, will create a sub-flow for each iteration containing the fibonacci task. This creates a slight overhead in orchestration compared to the other engines. Temporal, by contrast, started execution almost immediately at 0.108s and maintained lower wait and idle times.
 
