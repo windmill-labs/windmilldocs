@@ -52,6 +52,33 @@ export default function BlogLayout(props) {
 										Watch latest Windmill weekly keynotes
 									</h3>
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-4">
+									<li>
+											<a
+												href="https://youtube.com/live/109Iq5qS68Y"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												April 25, 2025
+											</a>
+										</li>
+										<li>
+											<a
+												href="https://youtube.com/live/-WMw3aJNt98"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												April 18, 2025
+											</a>
+										</li>
+										<li>
+											<a
+												href="https://youtube.com/live/Qz_IDtowbkY"
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												April 4, 2025
+											</a>
+										</li>
 										<li>
 											<a
 												href="https://youtube.com/live/QsviBik0YH4"
@@ -59,33 +86,6 @@ export default function BlogLayout(props) {
 												rel="noopener noreferrer"
 											>
 												March 21, 2025
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/rivi2IzUXYg"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												March 14, 2025
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/6O9EGnvt8GA"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												February 21, 2025
-											</a>
-										</li>
-										<li>
-											<a
-												href="https://youtube.com/live/e1hVuaS2ruY"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												February 14, 2025
 											</a>
 										</li>
 									</ul>

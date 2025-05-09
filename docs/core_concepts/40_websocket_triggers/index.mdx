@@ -30,22 +30,24 @@ And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could
 
 ```TypeScript
 export async function preprocessor(
-  msg: string,
-  wm_trigger: {
+  event: {
     kind: "websocket",
-    websocket: {
-      url: string // the WebSocket URL
-    }
-  },
+    msg: string,
+    url: string,
+  }
 ) {
+  if (event.kind !== "websocket") {
+    throw new Error(`Expected a websocket event`);
+  }
+
   // assuming the message is a JSON object
-  const msg = JSON.parse(msg); 
+  const msg = JSON.parse(event.msg); 
 
   // define args for the main function
   // let's assume we want to use the message content and the url
   return {
     message_content: msg.content,
-    url: wm_trigger.websocket.url
+    url: event.url
   };
 }
 
