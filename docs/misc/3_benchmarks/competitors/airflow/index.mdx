@@ -1,0 +1,46 @@
+import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import DocCard from '@site/src/components/DocCard';
+
+export const toc = getToc("airflow");
+
+# Airflow benchmarks
+
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
+## Summary
+
+[Airflow](https://airflow.apache.org/) was the slowest in all categories, with high orchestration overhead and poor responsiveness to both lightweight and long-running tasks. It suffers from long assignment delays and inefficient scaling, making it unsuitable for performance-critical workflows.
+
+## Airflow setup
+
+We set up Airflow version 2.7.3 using the [docker-compose.yaml](https://airflow.apache.org/docs/apache-airflow/2.7.3/docker-compose.yaml) referenced in Airflows official [documentation](https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#fetching-docker-compose-yaml).
+
+The DAG was the following:
+
+```python
+ITER = 10     # respectively 40
+FIBO_N = 33   # respectively 10
+
+with DAG(
+    dag_id="bench_{}".format(ITER),
+    schedule=None,
+    start_date=datetime(2023, 1, 1),
+    catchup=False,
+    tags=["benchmark"],
+) as dag:
+    for i in range(ITER):
+        @task(task_id=f"task_{i}")
+        def task_module():
+            return fibo(FIBO_N)
+        fibo_task = task_module()
+
+        if i > 0:
+            previous_task >> fibo_task
+        previous_task = fibo_task
+```
+
+<EngineBenchmarks engine="airflow" />
