@@ -10,7 +10,6 @@ import {
 	formatEngineName,
 	BenchmarkRun,
 	engines,
-	getAvailableEngines
 } from '../utils/benchmarkLoader';
 
 interface EngineBenchmarksProps {
@@ -62,13 +61,15 @@ function getLanguagesForUsecase(usecaseData: BenchmarkData): Language[] {
 		return [];
 	}
 
-	return Object.keys(usecaseData).filter(
-		(key) =>
-			key !== 'title' &&
-			key !== 'description' &&
-			usecaseData[key] &&
-			Array.isArray(usecaseData[key])
-	).map( _ => _ === 'js' ? 'javascript' : _) as Language[];
+	return Object.keys(usecaseData)
+		.filter(
+			(key) =>
+				key !== 'title' &&
+				key !== 'description' &&
+				usecaseData[key] &&
+				Array.isArray(usecaseData[key])
+		)
+		.map((_) => (_ === 'js' ? 'javascript' : _)) as Language[];
 }
 
 function getWorkerCounts(usecaseData: BenchmarkData, language: Language): number[] {
@@ -103,7 +104,7 @@ export function getToc(engine: Engine) {
 
 	const toc: TOCItem[] = [];
 
-  toc.push({
+	toc.push({
 		value: 'Summary',
 		id: 'summary',
 		level: 2
@@ -171,7 +172,6 @@ export function getToc(engine: Engine) {
 export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 	const benchmarkData = getBenchmarkData(engine);
 	const usecases = Object.entries(benchmarkData);
-	const allEngines = getAvailableEngines();
 
 	if (usecases.length === 0) {
 		return <div>No benchmark data available for {formatEngineName(engine)}</div>;
@@ -196,11 +196,13 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 						<p className="mb-6">{data.description || ''}</p>
 
 						{languages.map((language) => {
-							const workerCounts = getWorkerCounts(data, language);
+							let langShort = language === 'javascript' ? 'js' : language;
+
+							const workerCounts = getWorkerCounts(data, langShort);
 
 							return (
-								<div key={`${usecase}-${language}`} className="mb-12">
-									<h3 className="text-xl font-bold mb-4" id={`${usecaseId}-${language}`}>
+								<div key={`${usecase}-${langShort}`} className="mb-12">
+									<h3 className="text-xl font-bold mb-4" id={`${usecaseId}-${langShort}`}>
 										{language.charAt(0).toUpperCase() + language.slice(1)}
 									</h3>
 
@@ -208,26 +210,26 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 										const availableEngines: Engine[] = [engine];
 										if (
 											engine !== 'windmill' &&
-											hasEngineData('windmill', usecase, language, workers)
+											hasEngineData('windmill', usecase, langShort, workers)
 										) {
 											availableEngines.push('windmill');
 										}
 										if (
 											engine !== 'windmill_dedicated' &&
-											hasEngineData('windmill_dedicated', usecase, language, workers)
+											hasEngineData('windmill_dedicated', usecase, langShort, workers)
 										) {
 											availableEngines.push('windmill_dedicated');
 										}
 
-										const workerId = `${usecaseId}-${language}-workers-${workers}`;
+										const workerId = `${usecaseId}-${langShort}-workers-${workers}`;
 
 										return (
-											<div key={`${usecase}-${language}-${workers}`} className="mb-12">
-                        {workers > 1 && (
-                          <h4 className="text-lg font-bold mb-4" id={workerId}>
-                            {workers} Worker{workers > 1 ? 's' : ''}
-                          </h4>
-                        )}
+											<div key={`${usecase}-${langShort}-${workers}`} className="mb-12">
+												{workers > 1 && (
+													<h4 className="text-lg font-bold mb-4" id={workerId}>
+														{workers} Worker{workers > 1 ? 's' : ''}
+													</h4>
+												)}
 
 												<div className="benchmark-visualization mb-8">
 													<h5
@@ -239,7 +241,7 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 													<div className="grid">
 														<BenchmarkVisualization
 															usecase={usecase}
-															language={language}
+															language={langShort}
 															engines={workers > 1 ? undefined : availableEngines}
 															engine={workers > 1 ? engine : undefined}
 															workers={workers}
@@ -257,7 +259,7 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 													</h5>
 													<TaskStatisticsTable
 														usecase={usecase}
-														language={language}
+														language={langShort}
 														engines={availableEngines}
 														workers={workers}
 													/>
@@ -275,7 +277,7 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 															<TaskTimingTable
 																usecase={usecase}
 																scenario="sequential"
-																language={language}
+																language={langShort}
 																engine={engine}
 																workers={workers}
 															/>
@@ -290,7 +292,7 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 																			<TaskTimingTable
 																				usecase={usecase}
 																				scenario="sequential"
-																				language={language}
+																				language={langShort}
 																				engine={compEngine}
 																				workers={workers}
 																			/>

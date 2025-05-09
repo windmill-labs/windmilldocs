@@ -22,7 +22,7 @@ export interface MultiWorkerStats {
 // Define types based on available data
 export type Engine = keyof typeof engineData & string;
 export type Usecase = string;
-export type Language = 'python' | 'js' | 'go';
+export type Language = 'python' | 'js' | 'go' | 'javascript';
 export type Scenario = 'sequential' | 'parallel';
 
 // Define Task Timing interface
