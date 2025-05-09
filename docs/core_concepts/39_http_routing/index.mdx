@@ -75,29 +75,31 @@ export async function main(/* args from the request body */) {
 With a preprocessor:
 ```ts
 export async function preprocessor(
-  name: string,
-  age: number,
-  wm_trigger: {
-    kind: 'http' | 'email' | 'webhook' | 'websocket' | 'kafka' | 'nats' | 'postgres' | 'sqs' | 'gcp',
-    http: {
-      route: string;
-      path: string;
-      method: string;
-      params: Record<string, string>;
-      query: Record<string, string>;
-      headers: Record<string, string>;
-    }
+  event: {
+    kind: 'http',
+    body: { // assuming the body contains name and age parameters
+      name: string,
+      age: number,
+    },
+    raw_string: string | null,
+    route: string;
+    path: string;
+    method: string;
+    params: Record<string, string>;
+    query: Record<string, string>;
+    headers: Record<string, string>;
   }
 ) {
-  if (wm_trigger.kind === 'http' && wm_trigger.http) {
+  if (event.kind === 'http') {
+    const { name, age } = event.body;
     return {
-      user_id: wm_trigger.http.params.id,
+      user_id: event.params.id,
       name,
-      age
+      age,
     };
   }
 
-  throw new Error(`Expected trigger of kind 'http', but received: ${wm_trigger.kind}`);
+  throw new Error(`Expected trigger of kind 'http', but received: ${event.kind}`);
 }
 
 export async function main(user_id: string, name: string, age: number) {
@@ -204,29 +206,28 @@ Example script for HMAC signature validation:
 const SECRET_KEY_VARIABLE_PATH = "u/admin/well_backlit_variable";
 
 export async function main(
-  wm_trigger: {
+  event: {
     kind: 'http',
-    http?: {
-      route: string;
-      path: string;
-      method: string;
-      params: Record<string, string>;
-      query: Record<string, string>;
-      headers: Record<string, string>;
-    };
+    body: any
+    raw_string: string,
+    route: string;
+    path: string;
+    method: string;
+    params: Record<string, string>;
+    query: Record<string, string>;
+    headers: Record<string, string>;
   },
-  raw_string: string
 ) {
-  if (!wm_trigger.http) {
-    throw new Error('Missing HTTP context');
+  if (event.kind !== 'http') {
+    throw new Error('Expected a http event');
   }
 
-  const signature = wm_trigger.http.headers['x-signature'] || wm_trigger.http.headers['signature'];
+  const signature = event.headers['x-signature'] || event.headers['signature'];
   if (!signature) {
     throw new Error('Missing signature in request headers.');
   }
 
-  const timestamp = wm_trigger.http.headers['x-timestamp'] || wm_trigger.http.headers['timestamp'];
+  const timestamp = event.headers['x-timestamp'] || event.headers['timestamp'];
   if (timestamp) {
     const timestampValue = parseInt(timestamp, 10);
     const currentTime = Math.floor(Date.now() / 1000);

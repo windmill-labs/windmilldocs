@@ -15,12 +15,12 @@ The group id is automatically filled in from the current workspace and the trigg
 It indicates the consumer group to which the trigger belongs. This garantees that even if the trigger stops listening for a while, it will receive the messages it missed when it starts listening again.
 
 Once the Kafka resource and settings are set, select the runnable that should be triggered by this trigger.
-The received webhook message will be passed to the runnable as a string argument called `msg`.
+The received webhook base64 encoded payload will be passed to the runnable as a string argument called `payload`.
 
 Here's an example script:
 
 ```TypeScript
-export async function main(msg: string) {
+export async function main(payload: string) {
   // do something with the message
 }
 ```
@@ -29,24 +29,26 @@ And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could
 
 ```TypeScript
 export async function preprocessor(
-  msg: string,
-  wm_trigger: {
+  event: {
     kind: "kafka",
-    kafka: {
-      brokers: string[];
-      topic: string; // the specific topic the message was received from
-      group_id: string;
-    }
-  },
+    payload: string, // base64 encoded payload
+    brokers: string[];
+    topic: string; // the specific topic the message was received from
+    group_id: string;
+  }
 ) {
+  if (event.kind !== "kafka") {
+    throw new Error(`Expected a kafka event`);
+  }
+
   // assuming the message is a JSON object
-  const msg = JSON.parse(msg); 
+  const msg = JSON.parse(atob(event.payload)); 
 
   // define args for the main function
   // let's assume we want to use the message content and the topic
   return {
     message_content: msg.content,
-    topic: wm_trigger.kafka.topic
+    topic: event.topic
   };
 }
 
