@@ -92,7 +92,9 @@ export default function BarChart({
 			}
 		},
 		responsive: true,
-		maintainAspectRatio: maintainAspectRatio,
+		// NOTE: maintainAspectRatio is not working as expected, so we're disabling it as it's never set to true by any of the parent components
+		// maintainAspectRatio: maintainAspectRatio,
+		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				display: false
@@ -156,14 +158,8 @@ export default function BarChart({
 	}, [isVisible]);
 
 	return (
-		<div ref={ref}>
-			<Bar
-				options={options}
-				data={data}
-				id="canvas-id"
-				width={ref?.current?.clientWidth ?? 0}
-				height={360}
-			/>
+		<div ref={ref} style={{ position: 'relative', height: '40vh', width: '100%' }}>
+			<Bar options={options} data={data} id="canvas-id" />
 		</div>
 	);
 }
