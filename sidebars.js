@@ -219,7 +219,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Comparing orchestrators: Methodology'
+							label: 'Methodology'
 						},
 						{
 							type: 'doc',
@@ -248,7 +248,11 @@ const sidebars = {
 						},
 						{
 							type: 'category',
-							label: 'Engine Benchmarks',
+							label: 'Engine benchmarks',
+							link: {
+								type: 'doc',
+								id: 'misc/benchmarks/competitors/results/index',
+							},
 							items: [
 								{
 									type: 'doc',

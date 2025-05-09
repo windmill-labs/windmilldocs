@@ -36,11 +36,11 @@ import DocCard from '@site/src/components/DocCard';
 
 ## Long-Running Tasks (10 tasks)
 
-When executing long-running tasks (`fibo(33)`), **Windmill** emerged as the **fastest orchestrator** overall, completing the full workflow in 0.935 seconds. Temporal followed closely at 0.966 seconds, while Windmill Dedicated took slightly longer at 1.077 seconds. Kestra, in contrast, lagged behind at 2.919 seconds, more than twice as slow as the top performers.
+When executing long-running tasks (`fibo(33)`), [Windmill](../../windmill/index.mdx) emerged as the **fastest orchestrator** overall, completing the full workflow in 0.935 seconds. [Temporal](../../temporal/index.mdx) followed closely at 0.966 seconds, while Windmill Dedicated took slightly longer at 1.077 seconds. [Kestra](../../kestra/index.mdx), in contrast, lagged behind at 2.919 seconds, more than twice as slow as the top performers.
 
 The execution phase dominated the runtime in this scenario, as expected for compute-intensive tasks. Windmill devoted 82.67% of its total time to execution, significantly higher than the others. Temporal also maintained a high execution ratio at 66.05%, while Kestra's share dropped to 60.98%. The overhead introduced by assignment and task transitions remained comparatively low for all orchestrators in this category.
 
-This reinforces the expectation that for longer tasks, the engine’s overhead fades into the background, and raw computational throughput takes precedence. Windmill's ability to maintain minimal assignment (5.78%) and transition (11.55%) times is a strong indicator of its lightweight orchestration layer. Temporal also performed well, though it incurred slightly more scheduling overhead. Windmill Dedicated's assignment time was higher at 22.19%, likely reflecting startup or handoff costs in a dedicated worker configuration, yet the system still completed the workflow with excellent overall timing.
+This reinforces the expectation that for longer tasks, the engine's overhead fades into the background, and raw computational throughput takes precedence. Windmill's ability to maintain minimal assignment (5.78%) and transition (11.55%) times is a strong indicator of its lightweight orchestration layer. Temporal also performed well, though it incurred slightly more scheduling overhead. Windmill Dedicated's assignment time was higher at 22.19%, likely reflecting startup or handoff costs in a [dedicated worker](../../../../../core_concepts/25_dedicated_workers/index.mdx) configuration, yet the system still completed the workflow with excellent overall timing.
 
 <TaskStatisticsTable
   usecase="fibonacci_10_33"
@@ -57,7 +57,7 @@ Windmill Dedicated posted the **fastest total runtime** at 2.125 seconds, with W
 
 Unlike the long-running task case, here the execution phase was only a minor part of the total runtime: Execution time accounted for just 9.72% for Windmill, 5.93% for Windmill Dedicated, 8.81% for Temporal, and 51.19% for Kestra.
 
-These proportions confirm that engine overhead dominates lightweight workflows. Windmill and Windmill Dedicated both handled orchestration with high parallelism, but the dedicated setup incurred notably higher assignment overhead  —84.05% of total time, compared to Windmill’s 48.00%. Despite this, Windmill Dedicated still completed the full workflow quickly, likely due to parallel scheduling and nearly negligible transition time (10.02%).
+These proportions confirm that engine overhead dominates lightweight workflows. Windmill and Windmill Dedicated both handled orchestration with high parallelism, but the dedicated setup incurred notably higher assignment overhead  —84.05% of total time, compared to Windmill's 48.00%. Despite this, Windmill Dedicated still completed the full workflow quickly, likely due to parallel scheduling and nearly negligible transition time (10.02%).
 
 Temporal, while maintaining decent overall timing, exhibited the highest transition overhead (55.17%), which may be attributed to workflow state persistence or slower task chaining under rapid-fire conditions.
 

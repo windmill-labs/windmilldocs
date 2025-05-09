@@ -157,7 +157,7 @@ export function getToc(engine: Engine) {
 					level: 5
 				});
 				toc.push({
-					value: 'Timing Details',
+					value: 'Timing details',
 					id: `${usecaseId}-${language}-workers-${workers}-timing`,
 					level: 5
 				});
@@ -265,11 +265,11 @@ export function EngineBenchmarks({ engine }: EngineBenchmarksProps) {
 
 												<div className="benchmark-timing">
 													<h5 className="text-md font-semibold mb-4" id={`${workerId}-timing`}>
-														Timing Details
+														Timing details
 													</h5>
 													<details className="overflow-hidden">
 														<summary className="cursor-pointer p-2 transition-colors">
-															View Task Timing Details
+															View task timing details
 														</summary>
 														<div className="p-4 border-t">
 															<TaskTimingTable

@@ -1,6 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
 
-# Conclusion
+# Benchmark conclusions
 
 <DocCard
 	title="Detailed results per engine"
@@ -12,32 +12,32 @@ import DocCard from '@site/src/components/DocCard';
 
 ## Conclusion
 
-Across all our benchmarks, **Airflow consistently demonstrated the weakest performance**, particularly struggling with lightweight or high-concurrency workloads. While reliable and widely adopted, its architecture introduces significant scheduling and task startup overhead that makes it a poor fit for modern, performance-sensitive workflows. **Prefect** performed moderately better, especially in long-running task scenarios, but also showed signs of orchestration latency when scaled out or pushed with lightweight workloads.
+Across all our benchmarks, **[Airflow](../../airflow/index.mdx) consistently demonstrated the weakest performance**, particularly struggling with lightweight or high-concurrency workloads. While reliable and widely adopted, its architecture introduces significant scheduling and task startup overhead that makes it a poor fit for modern, performance-sensitive workflows. **[Prefect](../../prefect/index.mdx)** performed moderately better, especially in long-running task scenarios, but also showed signs of orchestration latency when scaled out or pushed with lightweight workloads.
 
-In contrast, **Temporal**, **Hatchet**, **Kestra**, and **Windmill** consistently outperformed Airflow and Prefect across languages and scenarios, with varying strengths depending on the workload and configuration. Among these, **Windmill** stood out for its flexibility and consistent performance profile in both single-worker and multi-worker setups.
+In contrast, **[Temporal](../../temporal/index.mdx)**, **[Hatchet](../../hatchet/index.mdx)**, **[Kestra](../../kestra/index.mdx)**, and **[Windmill](../../windmill/index.mdx)** consistently outperformed Airflow and Prefect across languages and scenarios, with varying strengths depending on the workload and configuration. Among these, **Windmill** stood out for its flexibility and consistent performance profile in both single-worker and multi-worker setups.
 
-For **long-running tasks**, where actual computation dominates, **Windmill** delivered the fastest total flow times across Python, JavaScript, and Go, maintaining extremely high execution ratios and minimal orchestration overhead. It’s well-suited for CPU-bound or latency-insensitive workflows, where efficient use of compute resources matters most.
+For **long-running tasks**, where actual computation dominates, **Windmill** delivered the fastest total flow times across Python, JavaScript, and Go, maintaining extremely high execution ratios and minimal orchestration overhead. It's well-suited for CPU-bound or latency-insensitive workflows, where efficient use of compute resources matters most.
 
-When dealing with **high-frequency, lightweight workloads**, **Windmill in dedicated worker mode** and **Temporal** emerged as the most effective solutions. Temporal achieved top throughput in Go multi-worker scenarios thanks to high worker utilization and low scheduling latency. Windmill, even with lower utilization due to its per-task isolation model, delivered competitive completion times due to its optimized caching and parallel dispatch model. **Hatchet**, while strong in raw execution, showed bottlenecks in multi-worker environments, with high wait times and underutilized workers despite perfect task distribution.
+When dealing with **high-frequency, lightweight workloads**, **Windmill** in [dedicated worker](../../../../../core_concepts/25_dedicated_workers/index.mdx) mode and **Temporal** emerged as the most effective solutions. Temporal achieved top throughput in Go multi-worker scenarios thanks to high worker utilization and low scheduling latency. Windmill, even with lower utilization due to its per-task isolation model, delivered competitive completion times due to its optimized caching and parallel dispatch model. **Hatchet**, while strong in raw execution, showed bottlenecks in multi-worker environments, with high wait times and underutilized workers despite perfect task distribution.
 
 **Kestra** remained in the mid-tier throughout — showing decent performance in long-running task setups, but slower orchestration in short task loads. Its behavior was more predictable than Airflow or Prefect, but less optimized than Temporal, Hatchet, or Windmill.
 
 Ultimately, **Windmill** proved to be the most versatile and well-balanced engine across all dimensions tested — combining strong execution speed, adaptive behavior between cold and warm task starts, and reliable scaling patterns. **Temporal** was a close contender, particularly in Go environments, offering efficient parallelism and predictable low-latency behavior. **Hatchet** shined in tightly controlled, compute-heavy scenarios but would benefit from improved orchestration in dynamic workloads.
 
-## Future Work
+## Future work
 
 We plan to extend this study in the following directions:
 
-1. **Scalability Testing**
+1. **Scalability testing**:
    Evaluating how each orchestrator performs as the number of workers scales into the hundreds. This will help determine the elasticity and bottlenecks of each engine under real-world horizontal scaling.
 
-2. **Throughput Ceilings**
-   Measuring the **maximum tasks per second** each engine can handle, while observing database and queue saturation points. This is especially important for orchestrators with hybrid persistence models (e.g., DB + message queues).
+2. **Throughput ceilings**:
+   Measuring the maximum tasks per second each engine can handle, while observing database and queue saturation points. This is especially important for orchestrators with hybrid persistence models (e.g., DB + message queues).
 
-3. **Resilience Under Network Conditions**
-   Introducing artificial **latency, jitter, and packet loss** into the orchestration network to simulate real-world infrastructure variance, particularly useful for hybrid or edge-cloud setups.
+3. **Resilience under network conditions**:
+   Introducing artificial latency, jitter, and packet loss into the orchestration network to simulate real-world infrastructure variance, particularly useful for hybrid or edge-cloud setups.
 
-4. **Engine Determinism and Stability**
-   Repeating each benchmark multiple times to measure variance and uncover how consistent each engine’s performance is under otherwise identical loads.
+4. **Engine determinism and stability**:
+   Repeating each benchmark multiple times to measure variance and uncover how consistent each engine's performance is under otherwise identical loads.
 
 These next steps aim to paint a fuller picture of not just speed, but **robustness**, **scalability**, and **real-world reliability**.

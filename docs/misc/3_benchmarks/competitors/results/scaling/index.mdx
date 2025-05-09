@@ -2,9 +2,9 @@ import ScatterChart from '@site/src/components/ScatterChart';
 
 # Scaling Windmill workers
 
-We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack. We haven't verified this assumption for Airflow, Prefect, Kestra and Temporal, but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
+We performed those benchmarks with a single worker assuming the capacity to process jobs would scale linearly with the number of workers deployed on the stack (conclusions [here](../conclusion/index.mdx)). We haven't verified this assumption for [Airflow](../../airflow/index.mdx), [Prefect](../../prefect/index.mdx), [Kestra](../../kestra/index.mdx) and [Temporal](../../temporal/index.mdx), but we've scaled Windmill up to a 100 virtual workers to verify. And the conclusion is that it scales pretty linearly.
 
-For this test, we've deployed the same docker compose as above on an AWS `m4.xlarge` instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the `NUM_WORKERS` environment variable Windmill accepts. Note that it is not strictly equivalent to adding real hardware to the stack, but until we reach the maximum capacities on the instance, both in terms of CPU and memory, we can assume it's a good approximation.
+For this test, we've deployed the same docker compose as earlier on an AWS `m4.xlarge` instance (4 vCPU, 16Gb of memory) and to virtually increase the number of workers, we've used the `NUM_WORKERS` environment variable Windmill accepts. Note that it is not strictly equivalent to adding real hardware to the stack, but until we reach the maximum capacities on the instance, both in terms of CPU and memory, we can assume it's a good approximation.
 The other change we had to make was to bump the `max_connections` to `1000` on Postgresql: as we're adding more and more workers, each worker needs to connect to the database and we need to increase the maximum number of connections Posgtresql allows.
 
 The job we ran was a simple sleeping job sleeping for 100ms, which is a good average during for a job running on an orchestrator.

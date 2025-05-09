@@ -3,19 +3,19 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Comparison with other job orchestration engines
+# Comparison orchestration engines - Methodology
 
 <Tabs>
 	<TabItem value="js" label="JavaScript">
 		<div className="grid">
-			<p className="text-center text-sm"> * Airflow/Prefect only support python, see python tab for results</p>
+			<p className="text-center text-sm"> * Airflow/Prefect only support Python, see Python tab for results</p>
 			<br />
 			<BenchmarkVisualization
 				usecase="fibonacci_40_10"
 				language="js"
 				engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
 				workers={1}
-				title="40 lightweight tasks javascript"
+				title="40 lightweight tasks JavaScript"
 				xAxisLabel="Duration (in seconds)"
 			/>
 		</div>
@@ -27,14 +27,14 @@ import TabItem from '@theme/TabItem';
 				language="python"
 				engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
 				workers={1}
-				title="40 lightweight tasks python"
+				title="40 lightweight tasks Python"
 				xAxisLabel="Duration (in seconds)"
 			/>
 		</div>
 	</TabItem>
 	<TabItem value="go" label="Go">
 		<div className="grid">
-			<p className="text-center text-sm"> * Airflow/Prefect/Kestra don't support go natively</p>
+			<p className="text-center text-sm"> * Airflow/Prefect/Kestra don't support Go natively</p>
 			<br />
 			<BenchmarkVisualization
 				usecase="fibonacci_100_38"
@@ -52,33 +52,37 @@ import TabItem from '@theme/TabItem';
 
 :::tip More context
 
-For additional insights about this study, refer to our [blog post](/blog/launch-week-1/fastest-workflow-engine).
+For additional insights about benchmark methodology, refer to our [blog post](/blog/launch-week-1/fastest-workflow-engine).
 
 :::
 
-## Methodology
-
-In this benchmark study, we compared six job orchestration engines: **Airflow**, **Prefect**, **Temporal**, **Kestra**, **Hatchet**, and **Windmill**, focusing on performance across several scenarios. The aim was to evaluate not just raw task execution time, but also deeper engine-level behaviors such as scheduling efficiency, task dispatch latency, and worker utilization.
+In this benchmark study, we compared six job orchestration engines: [Airflow](https://airflow.apache.org/), [Prefect](https://www.prefect.io/), [Temporal](https://temporal.io/), [Kestra](https://kestra.io/), [Hatchet](https://github.com/hatchet-dev/hatchet), and [Windmill](/), focusing on performance across several scenarios. The aim was to evaluate not just raw task execution time, but also deeper engine-level behaviors such as scheduling efficiency, task dispatch latency, and worker utilization.
 
 We chose to compute Fibonacci numbers as a simple task that can easily be run with the three orchestrators. Given that Airflow has a first class support for Python, we used Python for all 3 orchestrators. The function in charge of computing the Fibonacci numbers was very naive:
 
-### Benchmark use cases
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
+## Benchmark use cases
 
 We defined three categories of workflow scenarios:
 
-1. **Lightweight Tasks**:
+1. **Lightweight tasks**:
 	Simulates high-frequency, short-lived operations where engine overhead may dominate.
 
-2. **Long-Running Tasks**:
+2. **Long-running tasks**:
 	Designed to surface runtime performance and engine efficiency when task duration is significant.
 
-3. **Multi-worker Scenarios**:
+3. **Multi-worker scenarios**:
 	For engines demonstrating high efficiency and Go support, we ran:
 	- 400 lightweight tasks
 	- 100 long-running tasks
 		These were distributed across multiple workers, examining parallelism, load balancing, and assignment latency.
 
-### Task definition
+## Task definition
 
 To ensure simplicity, repeatability, and no external dependencies, we used the classic recursive Fibonacci function:
 
@@ -124,7 +128,7 @@ This approach eliminates the need for external libraries, providing a level play
 	href="/docs/misc/benchmarks/competitors/results/"
 />
 
-### Language and runtime environment
+## Language and runtime environment
 Given native Python support in Airflow, Python was used as the primary implementation language for initial benchmarks. For orchestrators supporting multiple runtimes, we expanded testing to:
 
 - JavaScript (where supported)
@@ -132,25 +136,25 @@ Given native Python support in Airflow, Python was used as the primary implement
 
 For Go-enabled engines, we also evaluated multi-worker configurations to explore scaling behavior.
 
-### Infrastructure setup
+## Infrastructure setup
 To standardize the environment, each orchestrator was deployed using its recommended docker-compose.yml setup, running on **AWS m4.large instances**. This provides a balanced compute and memory profile while ensuring consistency across platforms.
 
-### Performance evaluation metrics
+## Performance evaluation metrics
 The benchmarking framework was designed to expose both high-level throughput and low-level engine characteristics.
 
 Key metrics observed:
 
-- Execution time: The time it takes for the orchestrator to execute the task once is has been assigned to an executor
-- Assignment time: The time is takes for a task to be assigned to an executor once it has been created in the queue
-- Transition time: The time it takes for to create the following time once a task is finished
-- Worker load distribution: Whether tasks were evenly distributed or exhibited contention/idling.
+- Execution time: the time it takes for the orchestrator to execute the task once is has been assigned to an executor
+- Assignment time: the time is takes for a task to be assigned to an executor once it has been created in the queue
+- Transition time: the time it takes for to create the following time once a task is finished
+- Worker load distribution: whether tasks were evenly distributed or exhibited contention/idling.
 
-Observational Expectations
+Observational expectations:
 
 - Short-running tasks: Performance is expected to be dominated by orchestration overhead, making it a strong indicator of engine efficiency in high-frequency workflows.
 - Long-running tasks: Majority of time should be spent on actual computation, with minimal overhead from task management and worker assignment.
 
-### Extraction of timings
+## Extraction of timings
 
 The timings were extracted either through the exposed api of the orchestrators or by directly querying the database of the orchestrators. For most of the engines the following timestamps could be extracted:
 
