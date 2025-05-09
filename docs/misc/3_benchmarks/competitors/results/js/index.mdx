@@ -12,6 +12,8 @@ import DocCard from '@site/src/components/DocCard';
 
 <br />
 
+## Long-Running Tasks (10 tasks)
+
 <div className="grid">
 	<BenchmarkVisualization
 		usecase="fibonacci_10_33"
@@ -22,19 +24,6 @@ import DocCard from '@site/src/components/DocCard';
 		xAxisLabel="Duration (in seconds)"
 	/>
 </div>
-
-<div className="grid">
-	<BenchmarkVisualization
-		usecase="fibonacci_40_10"
-		language="js"
-		engines={['kestra', 'temporal', 'windmill', 'windmill_dedicated']}
-		workers={1}
-		title="40 lightweight tasks"
-		xAxisLabel="Duration (in seconds)"
-	/>
-</div>
-
-## Long-Running Tasks (10 tasks)
 
 When executing long-running tasks (`fibo(33)`), [Windmill](../../windmill/index.mdx) emerged as the **fastest orchestrator** overall, completing the full workflow in 0.935 seconds. [Temporal](../../temporal/index.mdx) followed closely at 0.966 seconds, while Windmill Dedicated took slightly longer at 1.077 seconds. [Kestra](../../kestra/index.mdx), in contrast, lagged behind at 2.919 seconds, more than twice as slow as the top performers.
 
@@ -50,6 +39,17 @@ This reinforces the expectation that for longer tasks, the engine's overhead fad
 />
 
 ## Lightweight Tasks (40 tasks)
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_40_10"
+		language="js"
+		engines={['kestra', 'temporal', 'windmill', 'windmill_dedicated']}
+		workers={1}
+		title="40 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
 
 When shifting to lightweight tasks using `fibo(10)` — with each task lasting around 10 milliseconds — the dynamics changed dramatically. In this scenario, orchestration efficiency became the bottleneck, as the time spent managing tasks often exceeded the time spent executing them.
 
