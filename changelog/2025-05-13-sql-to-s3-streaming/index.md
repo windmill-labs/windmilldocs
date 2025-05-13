@@ -8,5 +8,5 @@ features:
   - 'Supported formats: json (default), csv, parquet'
   - Set object key prefix
   - Select a secondary storage
-docs: /docs/misc/sql_to_s3_streaming
+docs: /docs/core_concepts/sql_to_s3_streaming
 ---

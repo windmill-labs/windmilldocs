@@ -1,7 +1,7 @@
 ---
 slug: database-manager
 version: v1.486.0
-title: Database Manager
+title: Database manager
 tags: ['Storage']
 description: You can manage your database resources in the Resource tab
 features:

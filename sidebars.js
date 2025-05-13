@@ -941,7 +941,7 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/full_text_search/index',
-				'misc/sql_to_s3_streaming/index',
+				'core_concepts/sql_to_s3_streaming/index',
 				'misc/partners/index'
 			]
 		}
