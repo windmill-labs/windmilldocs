@@ -67,6 +67,12 @@ export async function main() {
 
 ![S3 list of files download](../19_rich_display_rendering/s3_array.png "S3 list of files download")
 
+:::warning
+
+Rendering JSON files straight from S3 is not supported. Instead you can load the file and parse it as a JSON object and return it as a [rich result](../19_rich_display_rendering/index.mdx).
+
+:::
+
 ### Read a file from S3 or object storage within a script
 
 `S3Object` is a type that represents a file in S3 or object storage.
@@ -356,6 +362,14 @@ Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) sect
 		href="/docs/core_concepts/data_pipelines"
 	/>
 </div>
+
+### S3 object signing for image access in public apps
+
+The TypeScript and Python Windmill clients include functions to generate signed S3 objects.
+These objects can be used to [display s3 images in public apps](../../apps/4_app_configuration_settings/image.mdx#public-app-access-for-s3-images).
+The functions are `wmill.signS3Object` for TypeScript and `wmill.sign_s3_object` for Python (or `wmill.signS3Objects` and `wmill.sign_s3_objects` for multiple objects).
+They take an `S3Object` as input and return an `S3Object` with an additional `presigned` property which contains a signature making the object publicly available.
+Once you have a signed S3 object, you can pass it directly to the image component in an app.
 
 ## Instance object storage
 

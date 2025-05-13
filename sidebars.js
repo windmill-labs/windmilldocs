@@ -115,7 +115,8 @@ const sidebars = {
 								'misc/guides/sequin/index',
 								'misc/guides/snowflake_app_with_user_roles/index',
 								'misc/guides/otel/index',
-								'misc/guides/aws_bedrock/index'
+								'misc/guides/aws_bedrock/index',
+								'misc/guides/aws_marketplace/index'
 							]
 						}
 					]
@@ -135,6 +136,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'advanced/email_triggers/index',
 							label: 'Emails'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/mcp/index',
+							label: 'MCP'
 						},
 						'core_concepts/http_routing/index',
 						{
@@ -213,12 +219,77 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Airflow, Prefect, Temporal, Kestra'
+							label: 'Methodology'
 						},
 						{
 							type: 'doc',
-							id: 'misc/benchmarks/aws_lambda/index',
-							label: 'AWS Lambda'
+							id: 'misc/benchmarks/competitors/results/python/index',
+							label: 'Results: Python'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/js/index',
+							label: 'Results: JavaScript'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/go/index',
+							label: 'Results: Go'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/conclusion/index',
+							label: 'Conclusion'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/scaling/index',
+							label: 'Scaling'
+						},
+						{
+							type: 'category',
+							label: 'Engine benchmarks',
+							link: {
+								type: 'doc',
+								id: 'misc/benchmarks/competitors/results/index',
+							},
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/windmill/index',
+									label: 'Windmill'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/kestra/index',
+									label: 'Kestra'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/airflow/index',
+									label: 'Airflow'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/hatchet/index',
+									label: 'Hatchet'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/temporal/index',
+									label: 'Temporal'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/prefect/index',
+									label: 'Prefect'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/aws_lambda/index',
+									label: 'AWS Lambda'
+								}
+							]
 						}
 					]
 				},
@@ -815,7 +886,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_ecs']
+					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_eks_ecs']
 				},
 				{
 					type: 'category',

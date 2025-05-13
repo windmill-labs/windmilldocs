@@ -27,7 +27,7 @@ The following section details Image component's specific settings. For more deta
 
 | Name      |             Type             | Connectable | Templatable |  Default  | Description                                                        |
 | --------- | :--------------------------: | :---------: | :---------: | :-------: | ------------------------------------------------------------------ |
-| Source    |            string            |    true     |    false    | /logo.svg | The image.                                                         |
+| Source    |            string, S3Object          |    true     |    false    | /logo.svg | The image.                                                         |
 | Source Kind   | string: url, base64, s3  |    true     |    false    | url       | Source kind, one of bas64 (jpg,png,svg), url, or s3 url (workspace storage) |
 | Image Fit | string: contain, cover, fill |    false    |    false    |  contain  | How the image will fit the component box.                          |
 | Alt text  |            string            |    false    |    false    |     /     | This text will appear if the image can't be loaded for any reason. |
@@ -35,6 +35,11 @@ The following section details Image component's specific settings. For more deta
 ![Pick image from workspace storage](../../assets/apps/4_app_component_library/pick_from_workspace_storage.png "Pick image from workspace storage")
 
 > Example of picking an image from the [workspace storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) bucket.
+
+## Public app access for S3 images
+
+You should sign s3 objects before passing them to the image component in a public app.
+Learn more about it [here](../../core_concepts/38_object_storage_in_windmill/index.mdx#s3-object-signing-for-image-access-in-public-apps).
 
 ## Outputs
 

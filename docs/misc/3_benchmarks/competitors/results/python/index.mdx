@@ -1,0 +1,86 @@
+import { BenchmarkVisualization } from '@site/src/components/BenchmarkVisualization';
+import { TaskStatisticsTable } from '@site/src/components/TaskStatisticsTable';
+import DocCard from '@site/src/components/DocCard';
+
+# Results: Python
+
+<DocCard
+	title="Detailed results per engine"
+	description="Results for each benchmark run for each engine in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/"
+/>
+
+<br />
+
+## Long-Running Tasks (10 tasks)
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_10_33"
+		language="python"
+		engines={['airflow', 'kestra', 'prefect', 'temporal', 'hatchet', 'windmill', 'windmill_dedicated']}
+		workers={1}
+		title="10 long running tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+At a macro level, the total time to complete the long-running task flow varied widely across orchestrators. [Airflow](../../airflow/index.mdx) was by far the slowest, taking 54.668 seconds, followed by [Kestra](../../kestra/index.mdx) at 15.786s, [Prefect](../../prefect/index.mdx) at 15.489s, and [Temporal](../../temporal/index.mdx) at 7.247s. [Hatchet](../../hatchet/index.mdx) and [Windmill](../../windmill/index.mdx) were the fastest in this scenario, with total durations of 7.793s and 8.347s respectively. When Windmill was run in [dedicated worker](../../../../../core_concepts/25_dedicated_workers/index.mdx) mode, it edged ahead slightly with a total of 7.701s.
+
+Execution time—defined as the period during which tasks were actively being processed by workers—dominated the total runtime for all engines, especially for Hatchet (96.21%), Temporal (96.56%), and Windmill (93.83%). This is expected given the computationally intensive nature of fibo(33). The higher execution ratios suggest these engines introduce minimal orchestration overhead and keep workers consistently busy.
+
+Airflow and Prefect, by contrast, spent significantly more time on assignment, consuming 40.35% and 9.77% of total runtime, respectively. This indicates slower dispatch of the initial tasks, especially noticeable before the parallelism benefits take effect. Despite this, Prefect still maintained decent performance compared to Airflow, though both trail behind more modern orchestrators.
+
+Windmill in dedicated mode exhibited slightly higher assignment time (4.80%) than its normal mode (5.13%), suggesting a shift of overhead from task execution to scheduling. Nonetheless, Windmill's transition time—the delay between finishing one task and initiating the next—was remarkably low at 1.04%, demonstrating highly efficient task chaining.
+
+Overall, the engines that most closely aligned with Windmill's dedicated worker architecture—namely Hatchet and Temporal—showed similar performance characteristics: tight scheduling, consistent task execution throughput, and minimal orchestration noise.
+
+<TaskStatisticsTable
+  usecase="fibonacci_10_33"
+  language="python"
+  engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
+  workers={1}
+/>
+
+## Lightweight Tasks (40 tasks)
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_40_10"
+		language="python"
+		engines={['airflow', 'kestra', 'prefect', 'temporal', 'hatchet', 'windmill', 'windmill_dedicated']}
+		workers={1}
+		title="40 lightweight tasks"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+We can exclude Airflow from the previous chart as it was performing much slower than the other orchestrators and focus on the other orchestrators:
+
+<div className="grid">
+	<BenchmarkVisualization
+		usecase="fibonacci_40_10"
+		language="python"
+		engines={['prefect', 'kestra', 'temporal', 'hatchet', 'windmill', 'windmill_dedicated']}
+		workers={1}
+		title="40 lightweight tasks with Airflow excluded"
+		xAxisLabel="Duration (in seconds)"
+	/>
+</div>
+
+The lightweight task scenario produced a far starker contrast in performance. As expected, Airflow underperformed dramatically, taking 116.221 seconds to complete the 40-task flow. The next slowest, Kestra, completed in 6.044s, while Prefect followed at 4.872s. Temporal, Windmill, and Hatchet all performed significantly better, with durations of 2.967s, 4.383s, and 1.222s respectively. Hatchet delivered the fastest performance, completing the flow in just 1.222 seconds, followed by Windmill in dedicated mode at 2.092 seconds, and Temporal at 2.967 seconds.
+
+In lightweight scenarios, where each task executes in around 10ms, orchestration overhead becomes the dominant factor. Execution accounted for only a small portion of total time—just 11.19% for Temporal, 8.18% for Hatchet, and a mere 5.83% for Windmill in dedicated mode. The implication is that most of the runtime is now spent coordinating tasks, rather than executing them.
+
+Windmill, in normal mode, spent more time on task execution (50.54%) compared to other engines. This is due to the way Windmill handles task startup—using isolated, "cold-started" task containers. As a result, each task includes some initialization cost, making Windmill slightly slower than Hatchet and Temporal in this lightweight test. However, this changes when Windmill is run in dedicated worker mode. In this configuration, startup overhead is minimized, and orchestration becomes more efficient. Execution time drops to 5.83%, and assignment jumps to 85.80%, resembling the tight loop style seen in Temporal and Hatchet.
+
+Transition times in this scenario further highlight orchestration differences. Windmill again stood out with one of the lowest transition delays—only 7.57% in standard mode and 8.37% in dedicated. Temporal’s transition overhead was higher (53.15%), which may point to internal mechanisms such as durable state recording. Hatchet also showed a relatively high transition cost (54.91%), which is interesting given its otherwise strong performance.
+
+<TaskStatisticsTable
+  usecase="fibonacci_40_10"
+  language="python"
+  engines={['airflow', 'kestra', 'prefect', 'hatchet', 'temporal', 'windmill', 'windmill_dedicated']}
+  workers={1}
+/>
+
+These results confirm that Windmill-dedicated, Hatchet, and Temporal are the top performers in lightweight task orchestration, where internal engine latency dominates. Windmill, despite its cold-start architecture in normal mode, holds up well and excels in transition responsiveness. Prefect and Kestra show adequate performance in both cases but are less consistent under varying load. Airflow, though functional, is considerably slower in both test scenarios and appears less suitable for modern, latency-sensitive workflows.

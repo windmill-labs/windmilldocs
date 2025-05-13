@@ -64,16 +64,19 @@ And if you use a [preprocessor](../../core_concepts/43_preprocessors/index.mdx),
 
 ```TypeScript
 export async function preprocessor(
-  raw_email: string,
-  parsed_email: any,
-  wm_trigger: {
+  event: {
     kind: "email",
-  },
+    raw_email: string,
+    parsed_email: any,
+  }
 ) {
+  if (event.kind !== "email") {
+    throw new Error("Expected an email event");
+  }
   // return what you want to pass to the main function, for instance the sender email address and the email body
   return {
-    sender_address: parsed_email.headers["From"][0].address,
-    email_body: parsed_email.text_body
+    sender_address: event.parsed_email.headers["From"][0].address,
+    email_body: event.parsed_email.text_body
   }
 }
 
