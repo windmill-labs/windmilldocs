@@ -427,3 +427,13 @@ The first time a dependency is seen by a worker, if it is not cached locally, th
 		href="/docs/core_concepts/service_logs"
 	/>
 </div>
+
+## Streaming large SQL query results to S3 (Enterprise feature)
+
+Sometimes, your SQL script will return too much data which exceeds the 10 000 rows query limit within Windmill. In this case, you will want to use the s3 flag to stream your query result to a file.
+
+<DocCard
+	title="SQL to S3 streaming"
+	description="Stream an SQL query large result to a workspace storage file"
+	href="/docs/core_concepts/sql_to_s3_streaming"
+/>

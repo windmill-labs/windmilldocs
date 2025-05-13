@@ -172,8 +172,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/mqtt_triggers/index',
 							label: 'MQTT'
-						}
-						,
+						},
 						{
 							type: 'doc',
 							id: 'core_concepts/gcp_triggers/index',
@@ -918,7 +917,11 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/deploy_to_prod/index'
 					},
-					items: ['core_concepts/draft_and_deploy/index', 'advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					items: [
+						'core_concepts/draft_and_deploy/index',
+						'advanced/deploy_gh_gl/index',
+						'core_concepts/staging_prod/index'
+					],
 					collapsed: false
 				},
 				{
@@ -1009,6 +1012,7 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/full_text_search/index',
+				'core_concepts/sql_to_s3_streaming/index',
 				'misc/partners/index'
 			]
 		}
