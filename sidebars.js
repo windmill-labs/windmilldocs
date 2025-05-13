@@ -840,14 +840,15 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'apps/download_files',
-							label: 'Download Files'
+							label: 'Download files'
 						},
 						'apps/public_apps',
 						'apps/schedule_reports',
+						'apps/lazy_mode',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/default_app/index',
-						'apps/app_e-commerce'
+						'apps/app_e-commerce',
 					],
 
 					collapsed: true

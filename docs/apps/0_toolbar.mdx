@@ -1,3 +1,6 @@
+
+import DocCard from '@site/src/components/DocCard';
+
 # Toolbar
 
 The app toolbar is located at the top of the app editor. It enables you to adjust app settings.
@@ -87,17 +90,79 @@ Hub Compatible JSON: View the JSON / YAML representation of the app in a format 
 
 ![Submit App JSON to Hub](../assets/apps/1_app_toolbar/submit_app.png 'Submit App JSON to Hub')
 
-### App Inputs
+### App inputs
 
 The app inputs menu displays a list of all the inputs of each component. A toggle allows you to display only resources inputs, enabling you to easily configure your third-party resources for an app imported from the Hub, for example:
 
 ![App Inputs Configuration](../assets/apps/1_app_toolbar/app-inputs-configuration.png 'App Inputs Configuration')
+
+### Schedule reports
+
+Send a PDF or PNG preview of any app at a given [schedule](../core_concepts/1_scheduling/index.mdx).
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/4VSAZ-WTh4Y"
+	title="Scheduled App Reports Tutorial"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Schedule app reports"
+		description="Send a PDF or PNG preview of any app at a given schedule."
+		href="/docs/apps/schedule_reports"
+		color="orange"
+	/>
+</div>
 
 ### Diff
 
 Visualize changes between [current](../core_concepts/0_draft_and_deploy/index.mdx#local-edits) and [latest deployed version](../core_concepts/0_draft_and_deploy/index.mdx#deployed-version) or [latest draft](../core_concepts/0_draft_and_deploy/index.mdx#draft).
 
 ![Diff Viewer](../assets/apps/1_app_toolbar/diff_viewer.png 'Diff Viewer')
+
+### Troubleshoot panel
+
+The Troubleshoot panel is a menu dedicated to debugging your Windmill apps.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/troubleshoot_panel.mp4"
+/>
+
+<br/>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Troubleshoot panel"
+		description="Debug your Windmill apps."
+		href="/docs/apps/troubleshoot_panel"
+		color="orange"
+	/>
+</div>
+
+### Lazy mode
+
+Lazy mode is a feature that allows you to lazy render components which is ideal for apps with many components where most are not directly visible to the user.
+
+![Lazy mode](../assets/apps/12_lazy_mode/lazy_mode.png 'Lazy mode')
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Lazy mode"
+		description="Lazy mode is a feature that allows you to lazy render components which is ideal for apps with many components where most are not directly visible to the user."
+		href="/docs/apps/lazy_mode"
+		color="orange"
+	/>
+</div>
+
 
 ## Debug runs
 
