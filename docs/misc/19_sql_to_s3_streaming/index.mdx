@@ -1,0 +1,18 @@
+# S3 streaming for large queries
+
+Sometimes, your SQL script will return too much data which exceeds the 10 000 rows query limit within Windmill. In this case, you
+will want to use the s3 flag to stream your query result to a file. You will need to have workspace storage enabled for this.
+
+```sql
+-- s3 prefix=datalake format=csv
+SELECT id, created_at FROM users
+```
+
+This will return a path string to the generated file which has the job id as its name, for example in this case:
+`"datalake/0196c8e6-1fd4-0d05-d31c-c7eae9a12b1a.csv"`
+
+All parameters are optional :
+
+- prefix : adds a prefix to the object key of the generated file. Default: wmill_datalake/path/to/job/id
+- format : json (default), csv or parquet
+- storage : name of the secondary workspace storage to use
