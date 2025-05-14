@@ -51,7 +51,7 @@ into every workspace of every instance of Windmill.
 
 ## Apps
 
-Using the [Hub Compatible JSON](../../apps/0_toolbar.md#hub-compatible-json) of an app, just paste the JSON of your app to [Windmill Hub](https://hub.windmill.dev/).
+Using the [Hub Compatible JSON](../../apps/0_toolbar.mdx#hub-compatible-json) of an app, just paste the JSON of your app to [Windmill Hub](https://hub.windmill.dev/).
 
 ![Export App JSON to Hub](../../assets/apps/1_app_toolbar/export_hub.png.webp "Export App JSON to Hub")
 
