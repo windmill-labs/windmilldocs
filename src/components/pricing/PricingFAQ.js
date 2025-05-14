@@ -41,6 +41,7 @@ const faqs = [
 				<br />- Businesses with less than 10 employees and $250k revenues
 				<br />- Startups at seed stage <br />
 				Non-profits & Universities benefit from the regular Enterprise plan at a 60% discount.<br />
+				If Windmill is used as teaching material, it can be provided for free upon request to sales@windmill.dev<br/>
 				Reach out to contact@windmill.dev to inquiry about exceptions.
 			</span>
 		)
@@ -52,7 +53,7 @@ const faqs = [
 			<span>
 				An{' '}
 				<Link
-					to="/docs/core_concepts/roles_and_permissions#roles-in-windmill"
+					to="/docs/core_concepts/roles_and_permissions#operator"
 					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
 				>
 					operator
@@ -62,6 +63,9 @@ const faqs = [
 				<br />
 				<br />
 				Operators are 1/2 price of developers (or 1/2 seats) as long as they are operators in all workspaces they are members of. Operators are not set as the instance-level.
+				<br />
+				<br />
+				On the billing side, 1 developer seat or 2 operators seats count as 1 seat, there is no need to differentiate between developers and operators when purchasing the license.
 			</span>
 		)
 	},
@@ -259,6 +263,15 @@ const faqs = [
 				Only the Teams plan is billed based on actual usage. For Enterprise Edition and Pro plans, you commit to terms that fit within a given range of seats and Compute Units, providing more predictable pricing.
 				<br /><br />
 				If your usage temporarily exceeds your subscription terms on EE or Pro plans, you will be notified and given 35 days to address the situation before your latest license key expires.
+			</span>
+		)
+	},
+	{
+		id: 'subscription-flexibility',
+		question: 'Can I increase the subscription terms during the subscription period?',
+		answer: (
+			<span>
+				On EE & Pro subscriptions (especially annual subscriptions), there is flexibility to increase the number of seats and compute units as needed during the subscription period. A prorated amount will be billed for the additional resources for the remaining period. On an annual subscription, this means you will only pay for the portion of the year that remains after the adjustment. For example, if you increase seats 10 months into the year, you would pay for approximately 2/12 of the annual cost for the additional seats.
 			</span>
 		)
 	},
