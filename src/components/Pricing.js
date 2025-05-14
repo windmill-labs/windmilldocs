@@ -119,7 +119,7 @@ const pricing = {
 			minPrice_pro: 48,
 			minPrice_nonprofit: 48,
 			description: 'For advanced needs in observability, security and performance.',
-			description_nonprofit: '60% discount for nonprofits & universities, no limits.',
+			description_nonprofit: '60% discount for nonprofits & universities, no limits. Free if used as teaching material.',
 			description_pro:
 				'For individuals and small businesses.',
 			enterprise_edition: true,

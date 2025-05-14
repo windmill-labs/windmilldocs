@@ -998,3 +998,13 @@ All details at:
 		href="/docs/apps/app_configuration_settings/database_studio"
 	/>
 </div>
+
+## Streaming large query results to S3 (Enterprise feature)
+
+Sometimes, your SQL script will return too much data which exceeds the 10 000 rows query limit within Windmill. In this case, you will want to use the s3 flag to stream your query result to a file.
+
+<DocCard
+	title="SQL to S3 streaming"
+	description="Stream an SQL query large result to a workspace storage file"
+	href="/docs/core_concepts/sql_to_s3_streaming"
+/>
