@@ -23,7 +23,7 @@ There are 3 main benefits of using your own components:
 
 If that's not sufficient you can even [build your own app in React](../react_vue_svelte_apps/react.md).
 
-## How to import react components to App editor
+## How to import React components to App editor
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
