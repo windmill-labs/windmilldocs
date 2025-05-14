@@ -18,11 +18,28 @@ Send a PDF or PNG preview of any app at a given [schedule](../core_concepts/1_sc
 
 For the flow to be executed, you need to set the WORKER_GROUP [environment variable](../core_concepts//47_environment_variables/index.mdx) of one of your [workers](../core_concepts/9_worker_groups/index.mdx) to "reports" or add the tag "chromium" to one of your worker groups.
 
+## Reporting schedule
+
+The schedule is set in cron format. Learn more at:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Schedules"
+		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
+		href="/docs/core_concepts/scheduling"
+		color="orange"
+	/>
+</div>
+
 ## Startup duration in seconds
 
 Startup duration is the number of seconds to wait before capturing a preview to ensure that all startup scripts have been executed.
 
 It can be defined manually.
+
+## Custom resolution
+
+You can choose a custom resolution for the screenshot. Default is 1200 x auto. An empty value will use the auto resolution.
 
 ## Screenshot kind
 
@@ -35,14 +52,3 @@ Whether you want the screenshot to be in pdf or png (useful for previews).
 Reports will be sent through a dedicated medium. Under [Cloud and Self-Hosted Enterprise plans](/pricing), screenshots can be sent through pre-set scripts to Slack (on your workspace's chosen [Slack resource](../integrations/slack.mdx)), [Discord](../integrations/discord.md), or Email ([SMTP](../integrations/smtp.md)). Otherwise, you can pick a custom script to handle the report.
 
 ![App Report on Discord](../assets/apps/10_schedule_reports/app_report_discord.png 'App Report on Discord')
-
-## More about schedules
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Schedules"
-		description="Scheduling allows you to define schedules for Scripts and Flows, automatically running them at set frequencies."
-		href="/docs/core_concepts/scheduling"
-		color="orange"
-	/>
-</div>
