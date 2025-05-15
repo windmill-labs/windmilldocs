@@ -115,7 +115,7 @@ export default function Careers() {
               </div>
               <div className="space-y-5">
                 <p className="text-md">
-                  We're creating infrastructure that delivers the best of both worlds: accessible to semi-technical users without compromising on the flexibility and control senior engineers demand. Our platform handles the undifferentiated heavy lifting—permissions, scheduling, secret management, deployment—so you can focus on what matters.
+                  We're creating infrastructure that delivers the best of both worlds: accessible to semi-technical users without compromising on the flexibility and control senior engineers demand. Our platform handles the undifferentiated heavy lifting - permissions, scheduling, secret management, deployment - so you can focus on what matters.
                 </p>
                 <p className="text-md">
                   If you believe infrastructure should get out of your way, that good tooling should amplify rather than constrain engineers, and that powerful systems can also be accessible, we want you on our team.
