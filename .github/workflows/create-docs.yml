@@ -5,9 +5,6 @@ on:
       pr_number:
         required: true
         type: number
-      pr_branch:
-        required: true
-        type: string
       repo:
         required: true
         type: string
