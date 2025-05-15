@@ -247,6 +247,27 @@ const faqs = [
 		)
 	},
 	{
+		id: 'staging-licensing',
+		question: 'Do I need a separate license for staging/development environments?',
+		answer: (
+			<span>
+				No, you can use the same license key - and therefore subscription - for both staging and production systems. For Compute Units, our <Link to="/docs/misc/plans_details#usage-checks" className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600">telemetry</Link> only reports production instances, so no additional license is needed. Seats are across all instances (dev, prod), but Windmill only counts once the same user.
+				<br /><br />
+				What matters is that your instances are marked as <Link
+					to="/docs/advanced/instance_settings#non-prod-instance"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					non-prod
+				</Link>. You can do that from the instance settings or generate a development license key from the <Link
+					to="/docs/misc/plans_details#windmill-customer-portal"
+					className="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-600"
+				>
+					Customer Portal
+				</Link>.
+			</span>
+		)
+	},
+	{
 		id: 'payment',
 		question: 'How is payment done?',
 		answer: (
