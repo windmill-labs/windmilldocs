@@ -68,3 +68,4 @@ pdoc --template template --output-dir /tmp wmill --force\
  && sed -i -e "/^title: /s/title: .*/title: Python Client/" /tmp/wmill/client.md\
  && mv /tmp/wmill/client.md src/pages/python.md
 ```
+test
