@@ -205,11 +205,11 @@ Example script for HMAC signature validation:
 ```ts
 const SECRET_KEY_VARIABLE_PATH = "u/admin/well_backlit_variable";
 
-export async function main(
+export async function preprocessor(
   event: {
-    kind: 'http',
-    body: any
-    raw_string: string,
+    kind: 'http';
+    body: any;
+    raw_string: string | null;
     route: string;
     path: string;
     method: string;
@@ -220,6 +220,10 @@ export async function main(
 ) {
   if (event.kind !== 'http') {
     throw new Error('Expected a http event');
+  }
+
+  if (!event.raw_string) {
+    throw new Error('Missing raw_string in event');
   }
 
   const signature = event.headers['x-signature'] || event.headers['signature'];
@@ -242,12 +246,12 @@ export async function main(
     }
   }
 
-  const isValid = await verifySignature(signature, raw_string, timestamp);
+  const isValid = await verifySignature(signature, event.raw_string, timestamp);
   if (!isValid) {
     throw new Error('Invalid signature.');
   }
 
-  return JSON.parse(raw_string);
+  return JSON.parse(event.raw_string);
 }
 
 async function verifySignature(signature: string, body: string, timestamp?: string): Promise<boolean> {
