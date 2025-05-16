@@ -30,8 +30,8 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/centdix/${{ inputs.repo }}/pulls/${{ inputs.pr_number }}")
 
-          PR_TITLE_RAW=$(echo "$PR_DETAILS" | jq -r .title)
-          PR_BODY_RAW=$(echo "$PR_DETAILS" | jq -r .body)
+          PR_TITLE_RAW=$(jq -r '.title // ""' <<< "$PR_DETAILS")
+          PR_BODY_RAW=$(jq -r '.body // ""' <<< "$PR_DETAILS")
 
           echo "PR_TITLE=$(printf '%q' "$PR_TITLE_RAW")" >> $GITHUB_ENV
           echo "PR_BODY=$(printf '%q' "$PR_BODY_RAW")" >> $GITHUB_ENV
