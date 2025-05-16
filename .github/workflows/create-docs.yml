@@ -49,18 +49,21 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           echo "Running probe-chat to find relevant files..."
-          MESSAGE_FOR_PROBE="I made some changes in another repo. I will give you the PR informations that made these changes.
-          PR_TITLE: \\n${{ env.PR_TITLE }}
-          PR_BODY: \\n${{ env.PR_BODY }}
+          printf -v MESSAGE_FOR_PROBE \
+          'I made some changes in another repo. I will give you the PR informations that made these changes.
+          PR_TITLE: \\n%s
+          PR_BODY: \\n%s
 
-          Here is the user's request related to the changes:
-          PR_COMMENT: \\n${{ env.PR_COMMENT }}
+          Here is the user''s request related to the changes:
+          PR_COMMENT: \\n%s
 
           Your role is ONLY to give me the files that are relevant to the request in this repo and nothing else.
           For exemple, if the pr mentions flows, search for flows related files in this repo.
           Give me all the files relevant to this request. Your output MUST be a single json array that can be parsed with programatic json parsing, with the relevant files.
-          DO NOT INCLUDE ANY OTHER TEXT IN YOUR OUTPUT. ONLY THE JSON ARRAY. Example of output: [\"file1.py\", \"file2.py\"]"
-
+          DO NOT INCLUDE ANY OTHER TEXT IN YOUR OUTPUT. ONLY THE JSON ARRAY. Example of output: ["file1.py", "file2.py"]' \
+                    "${PR_TITLE}" \
+                    "${PR_BODY}" \
+                    "${PR_COMMENT}"
           set -o pipefail
           PROBE_OUTPUT=$(npx --yes @buger/probe-chat@latest --max-iterations 50 --model-name gemini-2.5-pro-preview-05-06 --message "$MESSAGE_FOR_PROBE" 2>&1) || {
             echo "::error::probe-chat command failed. Output:"
