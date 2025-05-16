@@ -113,14 +113,18 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
-          PROMPT="I made some changes in another repo. I will give you the PR informations that made these changes.
-          PR_TITLE: ${{ env.PR_TITLE }}
-          PR_BODY: ${{ env.PR_BODY }}
+          printf -v PROMPT \
+          'I made some changes in another repo. I will give you the PR informations that made these changes.
+          PR_TITLE: \\n%s
+          PR_BODY: \\n%s
 
-          Here is the user's request related to the changes:
-          PR_COMMENT: ${{ env.PR_COMMENT }}
+          Here is the user''s request related to the changes:
+          PR_COMMENT: \\n%s
 
-          I want you to update the files in this repo to reflect the changes in the other repo. It can be a change in an existing file or a complete new file."
+          I want you to update the files in this repo to reflect the changes in the other repo. It can be a change in an existing file or a complete new file.' \
+                    "${PR_TITLE}" \
+                    "${PR_BODY}" \
+                    "${PR_COMMENT}"
 
           echo "Files identified by probe-chat: ${{ env.FILES_TO_EDIT }}"
           aider \
