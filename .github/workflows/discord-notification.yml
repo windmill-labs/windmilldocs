@@ -9,8 +9,8 @@ on:
 
 jobs:
   notify_discord_when_pr_opened:
-    if: github.event.pull_request.draft == false
-    uses: ./.github/workflows/shareable-discord-notification.yml
+    if: (github.event.pull_request.draft == false) && (github.event.action == 'opened' || github.event.action == 'ready_for_review')
+    uses: windmill-labs/windmill/.github/workflows/shareable-discord-notification.yml@main
     with:
       PR_TITLE: ${{ github.event.pull_request.title }}
       PR_URL: ${{ github.event.pull_request.html_url }}
@@ -22,7 +22,7 @@ jobs:
 
   merge_success_emoji:
     if: github.event.pull_request.merged == true
-    uses: ./.github/workflows/shareable-discord-notification.yml
+    uses: windmill-labs/windmill/.github/workflows/shareable-discord-notification.yml@main
     with:
       PR_STATUS: 'merged'
       DISCORD_CHANNEL_ID: '1372522929270820995'
