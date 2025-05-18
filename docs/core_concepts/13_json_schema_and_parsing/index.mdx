@@ -56,36 +56,35 @@ Scripts in Windmill have input parameters defined by a JSON Schema, where each p
 
 In [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx):
 
-| Python              | JSON Schema                      |
-| ------------------- | -------------------------------- |
-| `str`               | `string`                         |
-| `float`             | `number`                         |
-| `Literal["a", "b"]` | `string` with enums: "a", "b"    |
-| `int`               | `integer`                        |
-| `bool`              | `boolean`                        |
-| `dict`              | `object`                         |
-| `list`              | `any[]`                          |
-| `List[str]`         | `string[]`                       |
-| `bytes`             | `string, encodingFormat: base64` |
-| `datetime`          | `str, format: date-time`         |
-| `_`                 | `any`                            |
-| [DynSelect_foo](#dynamic-select)| `dynselect-<name>`   |
-
+| Python                           | JSON Schema                      |
+| -------------------------------- | -------------------------------- |
+| `str`                            | `string`                         |
+| `float`                          | `number`                         |
+| `Literal["a", "b"]`              | `string` with enums: "a", "b"    |
+| `int`                            | `integer`                        |
+| `bool`                           | `boolean`                        |
+| `dict`                           | `object`                         |
+| `list`                           | `any[]`                          |
+| `List[str]`                      | `string[]`                       |
+| `bytes`                          | `string, encodingFormat: base64` |
+| `datetime`                       | `str, format: date-time`         |
+| `_`                              | `any`                            |
+| [DynSelect_foo](#dynamic-select) | `dynselect-<name>`               |
 
 In [Deno, Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [REST](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx):
 
-| TypeScript           | JSON Schema                   |
-| -------------------- | ----------------------------- |
-| `string`             | `string`                      |
-| `"a" \| "b"`         | `string` with enums: "a", "b" |
-| `object`             | `object`                      |
-| `boolean`            | `boolean`                     |
-| `bigint`             | `int`                         |
-| `number`             | `number`                      |
-| `string[]`           | `string[]`                    |
-| `("foo" \| "bar")[]` | `enum[]`                      |
-| [oneOf](#oneof)      | `object`                      |
-| [DynSelect_foo](#dynamic-select)| `dynselect-<name>` |
+| TypeScript                       | JSON Schema                   |
+| -------------------------------- | ----------------------------- |
+| `string`                         | `string`                      |
+| `"a" \| "b"`                     | `string` with enums: "a", "b" |
+| `object`                         | `object`                      |
+| `boolean`                        | `boolean`                     |
+| `bigint`                         | `int`                         |
+| `number`                         | `number`                      |
+| `string[]`                       | `string[]`                    |
+| `("foo" \| "bar")[]`             | `enum[]`                      |
+| [oneOf](#oneof)                  | `object`                      |
+| [DynSelect_foo](#dynamic-select) | `dynselect-<name>`            |
 
 However in TypeScript there also some special types that are specific to Windmill.
 They are as follows:
@@ -121,9 +120,9 @@ def main(x: my_resource_type):
 The JSON Schema of a script's arguments is visible and can be modified from the [`Generated UI`](../6_auto_generated_uis/index.mdx) menu.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/schema_script.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schema_script.mp4"
 />
 
 ### Flows parameters and JSON Schema
@@ -133,12 +132,12 @@ Flows in Windmill have input parameters defined by a JSON Schema. Each argument 
 The JSON Schema of a script's arguments can be modified in the `Flow Input` menu. The schema is visible from the `Export / OpenFlow` section, in particular the "Input Schema" tab.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/schema_flows.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schema_flows.mp4"
 />
 
-<br/>
+<br />
 
 Inline scripts of flows & apps use an autogenerated JSON Schema that is implicitly used by the frontend.
 
@@ -147,9 +146,9 @@ Inline scripts of flows & apps use an autogenerated JSON Schema that is implicit
 Resource types in Windmill are associated with JSON Schemas. A resource type defines the structure and constraints of a resource object. JSON Schema is used to validate the properties and values of a resource object against the specified resource type.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/schema_rt.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/schema_rt.mp4"
 />
 
 ## Advanced settings
@@ -159,15 +158,15 @@ main function's arguments can be given advanced settings that will affect the in
 Here is an example on how to define a [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx) list as an enum of strings using the `Generated UI` menu.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/advanced_parameters_enum.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/advanced_parameters_enum.mp4"
 />
 
-<br/>
-
+<br />
 
 Each argument has the following settings:
+
 - **Name**: the name of the argument (defined in the main Function).
 - **Type**: the type of the argument (defined in the main Function): Integer, Number, String, Boolean, Array, Object, or Any.
 - **Description**: the description of the argument.
@@ -177,15 +176,15 @@ Each argument has the following settings:
 
 Below is the list of advanced settings for each type of field:
 
-| Type    | Advanced Configuration                                                                                                                    |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Integer | Min and Max. Currency. Currency locale.                                                                                                   |
-| Number  | Min and Max. Currency. Currency locale.                                                                                                                              |
-| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex)                 |
-| Boolean | No advanced configuration for this type.                                                                                                  |
-| Object  | Advanced settings are [Resource types](../3_resources_and_types/index.mdx).                                                 |
-| Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes |
-| Any     | No advanced configuration for this type.                                                                                          |
+| Type    | Advanced Configuration                                                                                                                                                                                                                                                         |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Integer | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                        |
+| Number  | Min and Max. Currency. Currency locale.                                                                                                                                                                                                                                        |
+| String  | Min textarea rows. Disable variable picker. Is Password (will create a [variable](../2_variables_and_secrets/index.mdx) when filled). Field settings: - File (base64) &#124; Enum &#124; Format: email, hostname, uri, uuid, ipv4, yaml, sql, date-time &#124; Pattern (Regex) |
+| Boolean | No advanced configuration for this type.                                                                                                                                                                                                                                       |
+| Object  | Advanced settings are [Resource types](../3_resources_and_types/index.mdx).                                                                                                                                                                                                    |
+| Array   | - Items are strings &#124; Items are strings from an enum &#124; Items are objects (JSON) &#124; Items are numbers &#124; Items are bytes                                                                                                                                      |
+| Any     | No advanced configuration for this type.                                                                                                                                                                                                                                       |
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -195,25 +194,21 @@ Below is the list of advanced settings for each type of field:
 	/>
 </div>
 
-## Special types
-
-There are special types that lead to a custom behavior in the [auto-generated UIs](../6_auto_generated_uis/index.mdx).
-
-### oneOf
+## oneOf
 
 `oneOf` is a type that can be used to have the user pick between two objects through [auto-generated UI](../6_auto_generated_uis/index.mdx). Within a [TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), it can be used with the following syntax:
 
 ```ts
-example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string } 
+example_oneof: { label: "Option 1", attribute: string } | { label: "Option 2", other_attribute: string }
 ```
 
 And the auto-generated UI will render:
 
-![oneOf Script](./one_of_script.png "oneOf Script")
+![oneOf Script](./one_of_script.png 'oneOf Script')
 
 For flows, `oneOf` can be added as a [flow input](../../flows/3_editor_components.mdx#flow-inputs).
 
-![oneOf Flow](./one_of_flow.png "oneOf Flow")
+![oneOf Flow](./one_of_flow.png 'oneOf Flow')
 
 The result of the user's selection will be the selected object. With the example above if user picks Option 2 and enters a custom value:
 
@@ -225,12 +220,12 @@ The result of the user's selection will be the selected object. With the example
 ```
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/oneof.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/oneof.mp4"
 />
 
-<br/>
+<br />
 
 `oneOf` input can also be filled with [CLI](../../advanced/3_cli/index.mdx) or [webhooks](../4_webhooks/index.mdx), for example with `wmill` CLI:
 
@@ -238,7 +233,7 @@ The result of the user's selection will be the selected object. With the example
 wmill script run u/user/path -d '{"example_oneof":{"label":"Option 2","attribute":"Value that the user entered"}}'
 ```
 
-### Dynamic select
+## Dynamic select
 
 Dynamic select is an helper function within [scripts](../../script_editor/index.mdx) that allows you to create a select field with dynamic options.
 
@@ -248,22 +243,25 @@ You must export the string type as `DynSelect_<name>` and the function as `<name
 <TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-export type DynSelect_foo = string
+export type DynSelect_foo = string;
 
-export async function foo(x: string, y: number) {
-  if (x === "bar") {
-    return [{ value: "barbar", label: "barbarbar" }];
-  }
-  return [
-    { value: '1', label: 'Foo' + x + y },
-    { value: '2', label: 'Bar' },
-    { value: '3', label: 'Foobar' }
-  ]
+export async function foo(x: string, y: number, text: string) {
+	if (text === '42') {
+		return [{ value: '42', label: 'The answer to the universe' }];
+	}
+	if (x === 'bar') {
+		return [{ value: 'barbar', label: 'barbarbar' }];
+	}
+	return [
+		{ value: '1', label: 'Foo' + x + y },
+		{ value: '2', label: 'Bar' },
+		{ value: '3', label: 'Foobar' }
+	];
 }
 
 export async function main(y: number, x: string, xy: DynSelect_foo) {
-  console.log(xy)
-  return xy
+	console.log(xy);
+	return xy;
 }
 ```
 
@@ -273,7 +271,9 @@ export async function main(y: number, x: string, xy: DynSelect_foo) {
 ```python
 DynSelect_foo = str
 
-def foo(x: str, y: int):
+def foo(x: str, y: int, text):
+  if text == "42":
+    return [{"value": "42", "label": "The answer to the universe"}]
   if x == "bar":
     return [{"value": "barbar", "label": "barbarbar"}]
   return [
@@ -290,14 +290,14 @@ def main(x: str, y: int, xy: DynSelect_foo):
 </TabItem>
 </Tabs>
 
-The select options recompute dynamically based on the other arguments, in this case `x` and `y`.
+The select options recompute dynamically based on the other arguments, in this case `x` and `y`. You can also use `text` as an arg in the function to have the current text select input be passed.
 
 You can also do your own filtering and sorting of the options. In the example above, if `x` is "bar", the options will be filtered to only one option.
 
 <video
-    className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
-    controls
-    src="/videos/dynamic_select.mp4"
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/dynamic_select.mp4"
 />
 
 ## Backend schema validation
@@ -312,19 +312,21 @@ For example in [TypeScript](../../getting_started/0_scripts_quickstart/1_typescr
 // schema_validation
 
 export async function main(
-  a: number,
-  b: "my" | "enum",
-  e = "inferred type string from default arg",
-  f = { nested: "object" },
-  g: {
-    label: "Variant 1",
-    foo: string
-  } | {
-    label: "Variant 2",
-    bar: number
-  }
+	a: number,
+	b: 'my' | 'enum',
+	e = 'inferred type string from default arg',
+	f = { nested: 'object' },
+	g:
+		| {
+				label: 'Variant 1';
+				foo: string;
+		  }
+		| {
+				label: 'Variant 2';
+				bar: number;
+		  }
 ) {
-  return { foo: a };
+	return { foo: a };
 }
 ```
 
