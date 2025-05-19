@@ -24,7 +24,7 @@ With MCP, you can connect your favorite LLMs (like [Claude](https://claude.ai/do
 ### Generate your MCP token and URL
 
 1. Navigate to your **account settings** in Windmill.
-2. Create a new **token** under the **Tokens** section, and select **Generate MCP URL**.
+2. Create a new **token** under the **Tokens** section. When creating the token, you'll find an option such as "Include Hub Scripts" or similar, allowing you to specify if this token should grant access to scripts from the Windmill Hub. Select this option if you want your LLM to be able to use scripts from the Hub. Finally, select **Generate MCP URL**.
 
 ![Generate MCP token](./user_settings.png 'Generate MCP token')
 
@@ -75,7 +75,7 @@ To connect with Claude Desktop:
 }
 ```
 
-Once connected, your LLM will be able to run any script or flow in your Windmill workspace.
+Once connected, your LLM will be able to run any script or flow in your Windmill workspace. If you enabled Hub script access for your token (as described in the token generation step), your LLM will also be able to discover and run available scripts from the Windmill Hub.
 
 ## Example: Triggering a script from Claude
 
@@ -99,9 +99,10 @@ Claude will:
 - **Not seeing any scripts/flows?**
   - Ensure your LLM tool is connected to the correct MCP URL.
   - If you chose the "favorites only" option when creating your MCP URL, make sure the script or flow is in your favorites.
+  - If you intended to use Hub scripts, verify that your MCP token was generated with the option to include Hub scripts enabled.
 - **My LLM does not find the correct script/flow to run**
-  - Ensure the script or flow is deployed and visible in your workspace.
-  - Choose good titles and descriptions to help the LLM find the correct script/flow.
+  - Ensure the script or flow (from your workspace or the Hub) is deployed and accessible.
+  - Choose good titles and descriptions for your workspace scripts/flows to help the LLM find them. Hub scripts are curated, but clear prompts to your LLM are always beneficial.
 
 ---
 
