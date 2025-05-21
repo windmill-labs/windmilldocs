@@ -570,6 +570,10 @@ GRANT USAGE ON SCHEMA public TO windmill_admin;
 GRANT USAGE ON SCHEMA public TO windmill_user;
 ```
 
+:::note
+If you use a schema other than `public`, pass `PG_SCHEMA=<schema>` as an environment variable to every `windmill_server` container.
+:::
+
 ## First time login
 
 Once you have setup your environment for deployment and have access to the instance, you will be able to login with the default credentials `admin@windmill.dev` / `changeme` (even if you [setup OAuth](../../misc/2_setup_oauth/index.mdx)).

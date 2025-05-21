@@ -1,0 +1,328 @@
+import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
+
+export const toc = getToc("hatchet");
+
+# Hatchet benchmarks
+
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
+## Summary
+
+[Hatchet](https://hatchet.run/) performed well in long-running tasks, with high execution ratios and low overhead. However, it struggled in multi-worker lightweight scenarios, with high wait and idle times despite perfect task distribution. It's efficient for compute-heavy jobs, but needs refinement in orchestration under load.
+
+## Hatchet setup
+
+We set up Hatchet version 0.62.0 using the [docker-compose.yml from the official documentation](https://docs.hatchet.run/self-hosting/docker-compose).
+
+The following workflows were used to run the benchmarks:
+
+Note that for multi-worker scenarios, we tried both using `RunBulkNoWait` that splits up all individual fibonacci tasks as separate workflows and setting `PARALLEL=true` that runs all fibonacci tasks in parallel in a single workflow with parrallel tasks. We did not see significant difference in the results.
+
+<Tabs>
+  <TabItem value="python" label="Python">
+    ```python
+    # ------------------------------------------------------------
+    # worker.py
+
+    import os
+    from hatchet_sdk import Context, Hatchet
+    from pydantic import BaseModel
+
+    hatchet = Hatchet(debug=True)
+
+    class WorkflowInput(BaseModel):
+        n: int = 10  # Only n is passed now
+
+    fibo_wf = hatchet.workflow(name="StaticSequentialFibo", input_validator=WorkflowInput)
+
+    def fibo(n: int) -> int:
+        if n <= 1:
+            return n
+        return fibo(n - 1) + fibo(n - 2)
+
+    # Read number of iterations from environment
+    ITERATIONS = int(os.environ.get("ITERATIONS", 5))
+    task_refs = []
+
+    # Build DAG statically with ITERATIONS steps
+    for i in range(ITERATIONS):
+        @fibo_wf.task(name=f"fibo_task_{i}", parents=[task_refs[i-1]] if i > 0 else [])
+        def fibo_task(input: WorkflowInput, ctx: Context, idx=i) -> dict:
+            print(f"Task {idx}: Computing fibo({input.n})")
+            result = fibo(input.n)
+            return {"index": idx, "fibo": result}
+
+        task_refs.append(fibo_task)
+
+    def main() -> None:
+        worker = hatchet.worker(slots=1, name="fibo-worker", workflows=[fibo_wf])
+        worker.start()
+
+    if __name__ == "__main__":
+        main()
+
+    # ------------------------------------------------------------
+    # trigger.py
+    import argparse
+    from worker import fibo_wf, WorkflowInput
+
+    def main():
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--n', type=int, default=10)
+        args = parser.parse_args()
+
+        result = fibo_wf.run(WorkflowInput(n=args.n))
+        print(result)
+
+    if __name__ == "__main__":
+        main()
+    ```
+  </TabItem>
+  <TabItem value="go" label="Go">
+    ```go
+    // ------------------------------------------------------------
+    // workflows/fibo_workflow.go
+    package workflows
+
+    import (
+        "fmt"
+        "os"
+        "strconv"
+
+        "github.com/hatchet-dev/hatchet/pkg/client/create"
+        v1 "github.com/hatchet-dev/hatchet/pkg/v1"
+        "github.com/hatchet-dev/hatchet/pkg/v1/factory"
+        "github.com/hatchet-dev/hatchet/pkg/v1/task"
+        "github.com/hatchet-dev/hatchet/pkg/v1/workflow"
+        "github.com/hatchet-dev/hatchet/pkg/worker"
+    )
+
+    type FibonacciInput struct {
+        N int
+    }
+
+    type FibonacciOutput struct {
+        Result int
+    }
+
+    type FibonacciResult struct {
+        Fibo FibonacciOutput
+    }
+
+    func FibonacciWorkflow(hatchet v1.HatchetClient) workflow.WorkflowDeclaration[FibonacciInput, FibonacciResult] {
+        simple := factory.NewWorkflow[FibonacciInput, FibonacciResult](
+            create.WorkflowCreateOpts[FibonacciInput]{
+                Name: "fibo-workflow",
+            },
+            hatchet,
+        )
+
+        var previous *task.TaskDeclaration[FibonacciInput]
+        parallel := os.Getenv("PARALLEL") != ""
+
+        iterations := 100
+        if iterStr := os.Getenv("ITERATIONS"); iterStr != "" {
+            if iter, err := strconv.Atoi(iterStr); err == nil && iter > 0 {
+                iterations = iter
+            }
+        }
+
+        for i := 0; i < iterations; i++ {
+            name := fmt.Sprintf("fibo_%d", i)
+
+            opts := create.WorkflowTask[FibonacciInput, FibonacciResult]{
+                Name: name,
+            }
+
+            // Only set parents if not running in parallel mode
+            if !parallel && previous != nil {
+                opts.Parents = []create.NamedTask{previous}
+            }
+
+            current := simple.Task(
+                opts,
+                func(ctx worker.HatchetContext, input FibonacciInput) (any, error) {
+                    fmt.Println("Fibonacci task called")
+                    return &FibonacciOutput{
+                        Result: fibo(input.N),
+                    }, nil
+                },
+            )
+
+            previous = current
+        }
+
+        return simple
+    }
+
+    func fibo(n int) int {
+        if n <= 1 {
+            return n
+        }
+        return fibo(n-1) + fibo(n-2)
+    }
+
+    // ------------------------------------------------------------
+    // workflows/fibo_bulk_workflow.go
+    package workflows
+
+    import (
+        "fmt"
+
+        "github.com/hatchet-dev/hatchet/pkg/client/create"
+        v1 "github.com/hatchet-dev/hatchet/pkg/v1"
+        "github.com/hatchet-dev/hatchet/pkg/v1/factory"
+        "github.com/hatchet-dev/hatchet/pkg/v1/workflow"
+        "github.com/hatchet-dev/hatchet/pkg/worker"
+    )
+
+    type FiboInput struct {
+        N int `json:"n"`
+    }
+
+    type FiboTaskOutput struct {
+        Result int `json:"result"`
+    }
+
+    func BulkFibonacciWorkflow(hatchet v1.HatchetClient) workflow.WorkflowDeclaration[FiboInput, FiboTaskOutput] {
+        wf := factory.NewWorkflow[FiboInput, FiboTaskOutput](
+            create.WorkflowCreateOpts[FiboInput]{
+                Name: "bulk-fibo-workflow",
+            },
+            hatchet,
+        )
+
+        wf.Task(
+            create.WorkflowTask[FiboInput, FiboTaskOutput]{
+                Name: "compute_fibo",
+            },
+            func(ctx worker.HatchetContext, input FiboInput) (any, error) {
+                fmt.Printf("Running fibo(%d)\n", input.N)
+                return &FiboTaskOutput{Result: fibo(input.N)}, nil
+            },
+        )
+
+        return wf
+    }
+
+    // ------------------------------------------------------------
+    // cmd/worker/main.go
+    package main
+
+    import (
+        hatchet_client "hatchet-go-quickstart/hatchet_client"
+        workflows "hatchet-go-quickstart/workflows"
+
+        "github.com/hatchet-dev/hatchet/pkg/cmdutils"
+        "github.com/hatchet-dev/hatchet/pkg/v1/worker"
+        "github.com/hatchet-dev/hatchet/pkg/v1/workflow"
+    )
+
+    func main() {
+
+        hatchet, err := hatchet_client.HatchetClient()
+
+        if err != nil {
+            panic(err)
+        }
+
+        worker, err := hatchet.Worker(
+            worker.WorkerOpts{
+                Name: "fibo-workflow-worker",
+                Workflows: []workflow.WorkflowBase{
+                    workflows.FibonacciWorkflow(hatchet),
+                    workflows.BulkFibonacciWorkflow(hatchet),
+                },
+                Slots: 1,
+            },
+        )
+
+        if err != nil {
+            panic(err)
+        }
+
+        interruptCtx, cancel := cmdutils.NewInterruptContext()
+
+        defer cancel()
+
+        err = worker.StartBlocking(interruptCtx)
+
+        if err != nil {
+            panic(err)
+        }
+    }
+
+    // ------------------------------------------------------------
+    // cmd/run/main.go
+    package main
+
+    import (
+        "context"
+        "flag"
+        "fmt"
+        "log"
+
+        hatchet_client "hatchet-go-quickstart/hatchet_client"
+        workflows "hatchet-go-quickstart/workflows"
+    )
+
+    func main() {
+        n := flag.Int("n", 10, "Fibonacci number to compute")
+        iterations := flag.Int("iterations", 1, "Number of bulk iterations")
+        bulk := flag.Bool("bulk", false, "Run multiple independent Fibonacci workflows")
+        flag.Parse()
+
+        hatchet, err := hatchet_client.HatchetClient()
+        if err != nil {
+            log.Fatalf("failed to initialize hatchet client: %v", err)
+        }
+
+        if *bulk {
+            fmt.Printf("Running %d independent Fibonacci workflows with n=%d...\n", *iterations, *n)
+
+            wf := workflows.BulkFibonacciWorkflow(hatchet)
+
+            var inputs []workflows.FiboInput
+            for i := 0; i < *iterations; i++ {
+                inputs = append(inputs, workflows.FiboInput{
+                    N: *n,
+                })
+            }
+
+            runIDs, err := wf.RunBulkNoWait(context.Background(), inputs)
+            if err != nil {
+                log.Fatalf("RunBulkNoWait failed: %v", err)
+            }
+
+            for _, id := range runIDs {
+                fmt.Println("Started workflow run:", id)
+            }
+        } else {
+            fmt.Printf("Running single Fibonaccii workflow for n=%d...\n", *n)
+
+            wf := workflows.FibonacciWorkflow(hatchet)
+
+            result, err := wf.Run(context.Background(), workflows.FibonacciInput{
+                N: *n,
+            })
+
+            if err != nil {
+                log.Fatalf("workflow run failed: %v", err)
+            }
+
+            fmt.Printf("fibo(%d) = %d\n", *n, result.Fibo.Result)
+        }
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+
+<EngineBenchmarks engine="hatchet" />

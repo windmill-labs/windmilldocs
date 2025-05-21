@@ -418,7 +418,7 @@ For this schema, the corresponding row in the JSON object would look like this:
 Once the template is generated, you can modify it to meet your needs. Below is an example of the generated script template, based on a sample transaction, with a `users` table in the public schema.
 
 ```typescript
-  export async function main(
+export async function main(
   transaction_type: "insert" | "update" | "delete",
   schema_name: string,
   table_name: string,

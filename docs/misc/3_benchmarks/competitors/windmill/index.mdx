@@ -1,0 +1,107 @@
+import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
+
+export const toc = getToc("windmill");
+
+# Windmill benchmarks
+
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
+## Summary
+
+[Windmill](/) emerged as the most balanced and versatile orchestrator. In normal mode, it excelled at long-running tasks with minimal overhead. In dedicated worker mode, it matched or surpassed the performance of [Temporal](../temporal/index.mdx) and [Hatchet](../hatchet/index.mdx) for lightweight, parallel workloads. With smart caching, cold-start isolation, and adaptive behavior, it consistently delivered top-tier performance across runtimes and load types.
+
+## Windmill setup
+
+We set up Windmill version 1.483.1 using the [docker-compose.yml from the official GitHub repository](https://github.com/windmill-labs/windmill). We made some adjustments to it to have a similar setup compared to the other orchestrators.
+
+We executed the Windmill benchmarks in both "normal" and "[dedicated worker](../../../../core_concepts/25_dedicated_workers/index.mdx)" mode. To implement the flows in Windmill, we first created a script simply computing the Fibonacci numbers:
+
+<Tabs>
+  <TabItem value="python" label="Python">
+    ```python
+    # WIMDMILL script: `u/benchmarkuser/fibo_script`
+    def fibo(n: int):
+    if n <= 1:
+        return n
+    else:
+        return fibo(n - 1) + fibo(n - 2)
+
+def main(
+    n: int,
+):
+    return fibo(n)
+```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```javascript
+    // WIMDMILL script: `u/benchmarkuser/fibo_script_ts`
+    function fibo(n) {
+      if (n <= 1) {
+        return n
+      } else {
+        return fibo(n-1) + fibo(n-2)
+      }
+    }
+```
+  </TabItem>
+  <TabItem value="ts" label="Go">
+    ```go
+    // WIMDMILL script: `u/benchmarkuser/fibo_script_go`
+    package inner
+
+    func fibo(n int) int {
+        if n <= 1 {
+            return n
+        } else {
+            return fibo(n-1) + fibo(n-2)
+        }
+    }
+
+    func main(n int) (interface{}, error) {
+        return fibo(n), nil
+    }
+    ```
+  </TabItem>
+</Tabs>
+
+And then we used this script in a simple flow composed of a For-Loop sequentially executing the scripts. The JSON representation of the flow is as follow:
+
+```yaml
+summary: Fibonacci benchmark flow
+description: Flow running 10 (resp. 40) times Fibonacci of 33 (resp. 10)
+value:
+  modules:
+    - id: a
+      value:
+        type: forloopflow
+        modules:
+          - id: b
+            value:
+              path: u/admin/fibo_script # respectively u/admin/fibo_script_ts or u/admin/fibo_script_go
+              type: script
+              input_transforms:
+                n:
+                  type: static
+                  value: 33 # respectively 10
+        iterator:
+          expr: Array(10) # respectively 40
+          type: javascript
+        parallel: false # respectively true for more than one worker
+        skip_failures: true
+schema:
+  '$schema': https://json-schema.org/draft/2020-12/schema
+  properties: {}
+  required: []
+  type: object
+```
+
+When using more than one worker, we're also using the `parallel` parameter so that each iteration of the for-loop is executed in parallel. Under the hood, Windmill will spawn a sub-flow with a single job for each iteration.
+
+<EngineBenchmarks engine="windmill" />

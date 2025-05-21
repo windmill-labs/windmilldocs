@@ -1,0 +1,102 @@
+---
+title: Subscribe to Windmill on AWS Marketplace
+---
+
+import DocCard from '@site/src/components/DocCard';
+
+# Subscribe to Windmill on AWS Marketplace
+
+[AWS Marketplace](https://aws.amazon.com/marketplace/) is a service that allows you to subscribe to software and services on AWS. Windmill is available on AWS Marketplace and can be subscribed to by clicking the button below.
+
+<div style={{textAlign: 'center', width: '100%', display: 'flex', justifyContent: 'center'}}>
+  <img
+    src={require('./aws_marketplace.png').default}
+    alt="Windmill on AWS Marketplace"
+    style={{
+      height: '300px',
+      maxWidth: '100%',
+      display: 'block'
+    }}
+  />
+</div>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Windmill on AWS Marketplace"
+		description="Windmill is available on AWS Marketplace and can be subscribed to by clicking the button above."
+		href="https://aws.amazon.com/marketplace/pp/prodview-gojmh6g2hrdzo"
+	/>
+
+	<DocCard
+		title="Windmill Helm Chart"
+		description="Windmill is available on AWS Marketplace and can be subscribed to by clicking the button above."
+		href="https://github.com/windmill-labs/windmill-helm-charts"
+	/>
+</div>
+## Installation
+
+### Create an EKS cluster
+
+On your AWS console, navigate to the EKS service and create a new cluster.
+
+### Create an RDS instance
+
+On your AWS console, navigate to the RDS service and create a new instance.
+
+You will also have to create a new security group that allows inbound access on port 5432 from the subnets of the EKS cluster. Furthermore, you will have to create the windmill database using the postgres command `CREATE DATABASE windmill;`.
+
+Test if you can connect to the database from your EKS cluster by running the following command:
+
+```bash
+kubectl run psql --image=postgres --rm -i -t -- bash
+
+psql -h <rds-instance-address> -U postgres -d windmill
+```
+
+### Install Windmill
+
+Open a terminal and run the following command to connect to your EKS cluster:
+
+```bash
+aws eks update-kubeconfig --name <cluster-name> --region <region>
+```
+
+Update the values.yaml file with your desired configuration, specifically the database credentials and endpoint.
+
+Then, run the following command to install Windmill:
+
+```bash
+helm install windmill windmill/windmill --namespace windmill --create-namespace
+```
+
+Check if the installation was successful by running the following command:
+
+```bash
+kubectl get pods -n windmill
+```
+
+If all the pods are running, you can access the Windmill UI by running the following command:
+
+```bash
+kubectl port-forward svc/windmill-service 8080:8080 -n windmill
+```
+
+Then, open your browser and navigate to `http://localhost:8080`. You should see the Windmill UI.
+
+If you any issues, you can check the logs of the pods by running the following command:
+
+```bash
+kubectl logs -n windmill -l app=windmill #or the specific pod name that has the issue
+```
+
+More information about the configuration of windmill can be found in the [helm chart repo](https://github.com/windmill-labs/windmill-helm-charts).
+
+<iframe
+    style={{ aspectRatio: '16/9' }}
+    src="https://www.youtube.com/embed/15zvnA2P7sg?vq=hd720"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+    className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>

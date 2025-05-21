@@ -115,7 +115,8 @@ const sidebars = {
 								'misc/guides/sequin/index',
 								'misc/guides/snowflake_app_with_user_roles/index',
 								'misc/guides/otel/index',
-								'misc/guides/aws_bedrock/index'
+								'misc/guides/aws_bedrock/index',
+								'misc/guides/aws_marketplace/index'
 							]
 						}
 					]
@@ -171,8 +172,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/mqtt_triggers/index',
 							label: 'MQTT'
-						}
-						,
+						},
 						{
 							type: 'doc',
 							id: 'core_concepts/gcp_triggers/index',
@@ -219,12 +219,77 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Airflow, Prefect, Temporal, Kestra'
+							label: 'Methodology'
 						},
 						{
 							type: 'doc',
-							id: 'misc/benchmarks/aws_lambda/index',
-							label: 'AWS Lambda'
+							id: 'misc/benchmarks/competitors/results/python/index',
+							label: 'Results: Python'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/js/index',
+							label: 'Results: JavaScript'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/go/index',
+							label: 'Results: Go'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/conclusion/index',
+							label: 'Conclusion'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/scaling/index',
+							label: 'Scaling'
+						},
+						{
+							type: 'category',
+							label: 'Engine benchmarks',
+							link: {
+								type: 'doc',
+								id: 'misc/benchmarks/competitors/results/index',
+							},
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/windmill/index',
+									label: 'Windmill'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/kestra/index',
+									label: 'Kestra'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/airflow/index',
+									label: 'Airflow'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/hatchet/index',
+									label: 'Hatchet'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/temporal/index',
+									label: 'Temporal'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/prefect/index',
+									label: 'Prefect'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/aws_lambda/index',
+									label: 'AWS Lambda'
+								}
+							]
 						}
 					]
 				},
@@ -775,14 +840,15 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'apps/download_files',
-							label: 'Download Files'
+							label: 'Download files'
 						},
 						'apps/public_apps',
 						'apps/schedule_reports',
+						'apps/lazy_mode',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/default_app/index',
-						'apps/app_e-commerce'
+						'apps/app_e-commerce',
 					],
 
 					collapsed: true
@@ -852,7 +918,11 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/deploy_to_prod/index'
 					},
-					items: ['core_concepts/draft_and_deploy/index', 'advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					items: [
+						'core_concepts/draft_and_deploy/index',
+						'advanced/deploy_gh_gl/index',
+						'core_concepts/staging_prod/index'
+					],
 					collapsed: false
 				},
 				{
@@ -943,6 +1013,7 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/full_text_search/index',
+				'core_concepts/sql_to_s3_streaming/index',
 				'misc/partners/index'
 			]
 		}
