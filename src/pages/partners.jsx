@@ -17,6 +17,11 @@ const roles = {
       name: "App editor",
       colors: "bg-orange-50 text-orange-700 hover:text-orange-800",
       link: "/docs/misc/partners#build-and-maintain-complex-apps"
+    },
+    "ERP integration": {
+      name: "ERP integration",
+      colors: "bg-teal-50 text-teal-700 hover:text-teal-800",
+      link: "/docs/misc/partners#erp-integration-and-automation"
     }
   };  
 
@@ -44,6 +49,14 @@ const people = [
   email: 'david@type-driven.com',
   profile: 'https://www.linkedin.com/in/david-peter-498423280/',
   imageUrl: '/images/partners/davidpeter.jpg'
+},
+{
+  name: 'Chris Edgington',
+  description: 'Chris Edgington is a seasoned software architect and problem solver with over 30 years of experience, leveraging Windmill to host Autodesk API and ERP integrations for clients of his company EdgeCraft Studio.',
+  roles: ['Common tree', 'ERP integration'],
+  email: 'chris@edgecraftstudio.com',
+  profile: 'https://www.linkedin.com/in/chris-edgington-46973533/',
+  imageUrl: '/images/partners/chris-edgington.jpg'
 }
 ];
 
