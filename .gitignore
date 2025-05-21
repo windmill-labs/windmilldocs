@@ -22,3 +22,7 @@ yarn-error.log*
 
 # VIM
 *.swp
+
+.aider*
+!.aider/
+!.aiderignore
