@@ -123,3 +123,16 @@ As a temporary solution, you can use the `!important` declaration to ensure your
   font-size: 50px !important;
 }
 ```
+## Dark mode
+
+In dark mode, Windmill adds a `dark` class to the document root. To provide alternate styling, prefix your CSS selectors with `.dark` in the CSS editor.
+
+```css
+.dark .wm-button-blue {
+  background-color: green !important;
+}
+
+.wm-button-blue {
+  background-color: red !important;
+}
+```
