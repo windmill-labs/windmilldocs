@@ -5,8 +5,6 @@ tags:
   [
     'Case Study',
     'Testimonial',
-    'Conservation',
-    'Indigenous Communities',
     'Tech for Good',
   ]
 image: ./blog_split_conservationmetrics.png
