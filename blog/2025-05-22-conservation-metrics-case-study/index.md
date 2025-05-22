@@ -77,7 +77,7 @@ Several key factors made Windmill the right choice for our organization:
 - **Accessibility**: The intuitive UI and operator mode allow non-technical users to manage workflows without coding knowledge
 - **Open source**: Our scripts remain in raw Python format, making them easily transferable and maintainable
 - **Quick implementation**: Small teams can become productive quickly, crucial for organizations with limited resources
-- **Community support**: Excellent [documentation](/docs) and responsive community on [Discord](https://discord.com/invite/V7PM2YHsPB)
+- **Community support**: Excellent [documentation](/docs/intro) and responsive community on [Discord](https://discord.com/invite/V7PM2YHsPB)
 - **Flexibility**: Easy integration with various data sources and notification systems
 - **Portability**: The ability to run raw Python scripts without special formatting means we can easily port our code to other frameworks if needed
 - **Low learning curve**: New contributors can quickly understand and work with our codebase without needing to learn a specific framework
