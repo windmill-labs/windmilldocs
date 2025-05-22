@@ -32,7 +32,7 @@ excludes: []
 codebases: []
 skipVariables: true
 skipResources: true
-# skipResourceTypes: [] # Specify resource types to skip, e.g., ['postgresql_db', 's3_bucket']
+skipResourceTypes: true
 skipSecrets: true
 includeSchedules: false
 includeTriggers: false
@@ -160,8 +160,7 @@ export interface SyncOptions {
 	json?: boolean;
 	skipVariables?: boolean;
 	skipResources?: boolean;
-	/** Specify which resource types should be skipped. Takes an array of resource type names. */
-	skipResourceTypes?: string[];
+	skipResourceTypes?: boolean;
 	skipSecrets?: boolean;
 	includeSchedules?: boolean;
 	includeUsers?: boolean;
