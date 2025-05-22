@@ -14,8 +14,6 @@ jobs:
       - name: Check organization membership
         id: check-membership
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
           REVIEWER: ${{ github.event.review.user.login }}
           ORG_ACCESS_TOKEN: ${{ secrets.ORG_ACCESS_TOKEN }}
         run: |
