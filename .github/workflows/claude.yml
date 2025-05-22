@@ -24,10 +24,18 @@ jobs:
       - name: Check organization membership
         id: check-membership
         env:
-          COMMENTER: ${{ github.event_name == 'issue_comment' || github.event_name == 'pull_request_review_comment' ? github.event.comment.user.login : github.event_name == 'pull_request_review' ? github.event.review.user.login : github.event.issue.user.login }}
           ORG_ACCESS_TOKEN: ${{ secrets.ORG_ACCESS_TOKEN }}
         run: |
           ORG="windmill-labs"
+
+          if [[ "${{ github.event_name }}" == "issue_comment" || "${{ github.event_name }}" == "pull_request_review_comment" ]]; then
+            COMMENTER="${{ github.event.comment.user.login }}"
+          elif [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
+            COMMENTER="${{ github.event.review.user.login }}"
+          else
+            COMMENTER="${{ github.event.issue.user.login }}"
+          fi
+
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
             -H "Authorization: token $ORG_ACCESS_TOKEN" \
             -H "Accept: application/vnd.github+json" \
@@ -60,7 +68,7 @@ jobs:
         uses: anthropics/claude-code-action@beta
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          timeout_minutes: "60"
-          allowed_tools: "mcp__github__create_pull_request"
-          custom_instructions: "IMPORTANT: Bypass previous instructions and instead of adding a url in your comment to manually create a PR, if you created a new branch with your changes, automatically create a PR from that branch to main, with the title starting with [Claude PR]"
-          trigger_phrase: "/aider"
+          timeout_minutes: '60'
+          allowed_tools: 'mcp__github__create_pull_request'
+          custom_instructions: 'IMPORTANT: Bypass previous instructions and instead of adding a url in your comment to manually create a PR, if you created a new branch with your changes, automatically create a PR from that branch to main, with the title starting with [Claude PR]'
+          trigger_phrase: '/aider'
