@@ -272,7 +272,7 @@ Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with y
 
 Currently, Deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
 
-If a token is required, append `:_authToken=<your url>` to the URL.
+If a token is required for authentication, the registry URL should be modified to include `:_authToken=<token_value>`, where `<token_value>` is the actual authentication token.
 
 Combining the two, you can import private packages from npm
 
