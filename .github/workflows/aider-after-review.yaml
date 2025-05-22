@@ -73,7 +73,7 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/comments)
 
-          FORMATTED_COMMENTS=$(jq -r '[.[] | {diff_hunk: .diff_hunk, path: .path, body: .body}]' <<< "$ALL_REVIEW_COMMENTS")
+          FORMATTED_COMMENTS=$(jq '[.[] | {diff_hunk: .diff_hunk, path: .path, body: .body}]' <<< "$ALL_REVIEW_COMMENTS")
 
           BASE_PROMPT="Fix the following issues in the PR based on the review feedback. The review body is prepended with REVIEW. The review comments are prepended with REVIEW_COMMENTS. The review body and comments are separated by a blank line."
 
