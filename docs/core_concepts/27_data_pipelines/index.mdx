@@ -168,7 +168,7 @@ def main(input_file: S3Object):
 ```
 
 </TabItem>
-<TabItem value="duckdb (AWS S3)" label="DuckDB (AWS S3)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+<TabItem value="duckdb (Python / AWS S3)" label="DuckDB (Python / AWS S3)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 import wmill
@@ -221,7 +221,7 @@ def main(input_file: S3Object):
 ```
 
 </TabItem>
-<TabItem value="duckdb (Azure Blob Storage)" label="DuckDB (Azure Blob Storage)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+<TabItem value="duckdb (Python / Azure Blob Storage)" label="DuckDB (Python / Azure Blob Storage)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 import wmill
@@ -241,7 +241,7 @@ def main(input_file: S3Object):
     # create a DuckDB database in memory
     # see https://duckdb.org/docs/api/python/dbapi
     conn = duckdb.connect()
-    
+
     # connect duck db to the S3 bucket - this will default to the workspace S3 resource
     conn.execute(connection_str)
 
@@ -259,11 +259,32 @@ def main(input_file: S3Object):
 
     # NOTE: DuckDB doesn't support writing to Azure Blob Storage as of Jan 30 2025
     # Write the result of a query to a different parquet file on Azure Blob Storage
-    # using Polars 
+    # using Polars
     storage_options = wmill.polars_connection_settings().storage_options
     query_result.pl().write_parquet(output_uri, storage_options=storage_options)
     conn.close()
     return S3Object(s3=output_file)
+```
+
+</TabItem>
+<TabItem value="duckdb" label="DuckDb (AWS S3)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```sql
+-- $file1 (s3object)
+
+-- Run queries directly on an S3 parquet file passed as an argument
+SELECT * FROM read_parquet($file1);
+
+-- Or using an explicit path in a workspace storage
+SELECT * FROM read_json('s3:///demo/data.json');
+
+-- You can also specify a secondary workspace storage
+SELECT * FROM read_csv('s3://secondary_storage/demo/data.csv');
+
+-- Write the result of a query to a different parquet file on S3
+COPY (
+    SELECT COUNT(*) FROM read_parquet($file1)
+) TO 's3:///demo/output.pq' (FORMAT 'parquet');
+
 ```
 
 </TabItem>
@@ -283,7 +304,16 @@ With S3 as the external store, a transformation script in a flow will typically 
 2. Running some computation on the data.
 3. Storing the result back to S3 for the next scripts to be run.
 
-Windmill SDKs now expose helpers to simplify code and help you connect Polars or DuckDB to the Windmill workspace S3 bucket. In your usual IDE, you would need to write for _each script_:
+When running a DuckDB script, Windmill automatically handles connection to your workspace storage :
+
+```sql
+-- This queries the windmill api under the hood to figure out the
+-- correct connection string
+SELECT * FROM read_parquet('s3:///path/to/file.parquet');
+SELECT * FROM read_csv('s3://secondary_storage/path/to/file.csv');
+```
+
+If you want to use a scripting language, Windmill SDKs now expose helpers to simplify code and help you connect Polars or DuckDB to the Windmill workspace S3 bucket. In your usual IDE, you would need to write for _each script_:
 
 ```python
 conn = duckdb.connect()
