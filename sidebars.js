@@ -431,6 +431,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/duckdb',
+							label: 'DuckDB'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/faunadb',
 							label: 'FaunaDB'
 						},
