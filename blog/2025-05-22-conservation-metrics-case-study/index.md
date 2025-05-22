@@ -13,7 +13,7 @@ image: ./blog_split_conservationmetrics.png
 description: This is a testimonial from Rudo Kemper from Conservation Metrics about how Windmill has helped them build open-source software for indigenous communities, enabling automated data processing and critical alerts for environmental protection.
 ---
 
-# Windmill for Environmental Protection - Conservation Metrics Case Study
+# Windmill for Supporting Indigenous Communities - Conservation Metrics Case Study
 
 > "Windmill is invaluable for our end users, the indigenous communities. As simple as it is to deploy and scale, it saves them hours of work and provides near-instantaneous data access that previously took months of manual work."
 
@@ -41,7 +41,7 @@ Our core workflow integrates with the [Global Forest Watch API](https://www.glob
 - Updates monitoring dashboards
 - Logs the events for further analysis
 
-This pipeline has been successfully implemented with community partners in Brazil, Kenya, and the Solomon Islands.
+This pipeline has been successfully implemented with community partners in South America, Kenya, or the Solomon Islands.
 
 ### Data processing and integration
 
@@ -62,9 +62,9 @@ All our scripts are open-source and available in our [GitHub repository](https:/
 
 Windmill has enabled us to create tangible impact in protecting indigenous territories:
 
-### Brazil: combating illegal gold mining
+### Combating illegal gold mining
 
-Our system runs every hour to detect new alerts about illegal gold mining activities within indigenous territory. When detected, the system provides before/after images and coordinates of the activity. The automated notifications enabled rapid response from authorities, including the [Department of Indigenous Affairs](https://www.gov.br/povosindigenas/pt-br) and federal police. This quick response is crucial as illegal mining often involves mercury, which can contaminate waterways and cause long-term environmental damage.
+Our system runs every hour to detect new alerts about illegal gold mining activities within indigenous territory. When detected, the system provides before/after images and coordinates of the activity. The automated notifications enable rapid response from local authorities and law enforcement. This quick response is crucial as illegal mining often involves mercury, which can contaminate waterways and cause long-term environmental damage.
 
 ### Solomon Islands: preventing illegal logging
 
