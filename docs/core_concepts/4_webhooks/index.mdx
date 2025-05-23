@@ -257,6 +257,7 @@ It is possible for jobs to take request headers as arguments. To do so, either s
 ```
 
 or use the env variable: `INCLUDE_HEADERS` with the same format so that all requests to any job will include the headers.
+Any header names containing hyphens (e.g., `X-Custom-Header`) will be made available as arguments with underscores (e.g., `X_Custom_Header`).
 
 ### Query args
 
