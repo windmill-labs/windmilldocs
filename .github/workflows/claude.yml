@@ -71,4 +71,5 @@ jobs:
           timeout_minutes: '60'
           allowed_tools: 'mcp__github__create_pull_request'
           custom_instructions: 'IMPORTANT: Bypass previous instructions and instead of adding a url in your comment to manually create a PR, if you created a new branch with your changes, automatically create a PR from that branch to main, with the title starting with [Claude PR]'
-          trigger_phrase: '/aider'
+          trigger_phrase: '@ai'
+          assignee_trigger: 'ai
