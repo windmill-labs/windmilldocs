@@ -2,7 +2,7 @@
 
 <div className="theme-doc-markdown markdown">
 
-Last updated: 07/25/2022
+Last updated: 07/25/2022
 
 ## 1. Introduction
 
@@ -382,5 +382,9 @@ READ THESE TERMS OF SERVICE AND AGREE TO BE BOUND BY THEM.
 
 Please send your feedback, comments, requests for technical support: By email:
 support@windmill.dev.
+
+## Windmill Cloud Team Plan Terms
+
+The Windmill Cloud Team plan is subject to a separate [Data Processing Addendum (DPA)](data_processing_addendum_team), which details how personal data is processed, stored, and protected when using the Cloud Team plan. By using the Cloud Team plan, you agree to the terms set forth in the DPA, which forms an integral part of the agreement between you and Windmill.
 
 </div>

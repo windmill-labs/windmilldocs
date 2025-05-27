@@ -7,7 +7,7 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake, Redshift, Oracle
+# PostgreSQL, MySQL, MS SQL, BigQuery, Snowflake, Redshift, Oracle, DuckDB
 
 In this quick start guide, we will write our first script in SQL. We will see how to connect a Windmill instance to an external SQL service and then send queries to the database using Windmill Scripts.
 
@@ -344,6 +344,10 @@ Here's a step-by-step guide on where to find each detail.
 
 You can directly "Test connection" if needed.
 
+### DuckDB
+
+DuckDB scripts run in-memory out-of-the-box.
+
 ## Create script
 
 Next, let's create a script that will use the newly created Resource. From the Home page,
@@ -516,6 +520,30 @@ UPDATE demo SET col2 = :name3 WHERE col2 = :name2;
 ```
 
 "name1", "name2", "name3" being the names of the arguments, and "default arg" the optional default value.
+
+### DuckDB
+
+DuckDB arguments need to be passed in the given format:
+```sql
+-- $name1 (text) = default arg
+-- $name2 (int)
+INSERT INTO demo VALUES ($name1, $name2)
+```
+"name1", "name2" being the names of the arguments, and "default arg" the optional default value.  
+
+You can pass a file on S3 as an argument of type s3object. This will automatically setup httpfs with the s3 credentials of the corresponding storage.
+You can then query this file using the standard read_csv/read_parquet/read_json functions :
+```sql
+-- $file (s3object)
+SELECT * FROM read_parquet($file)
+```
+
+You can also attach to other database resources (BigQuery, PostgreSQL and MySQL). We use the official and community DuckDB extensions under the hood :
+```sql
+ATTACH '$res:u/demo/amazed_postgresql' AS db (TYPE postgres);
+SELECT * FROM db.public.friends;
+```
+
 
 Database resource can be specified from the UI or directly within the script with a line `-- database resource_path`.
 

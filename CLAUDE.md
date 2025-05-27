@@ -1,13 +1,9 @@
----
-description: 
-globs: docs/*
-alwaysApply: false
----
-# Cursor rules for Windmill documentation
+# AI rules for Windmill documentation
 
 These guidelines ensure consistency and quality when writing or modifying Windmill documentation.
 
 ## Content
+
 - The doc should focus on the user experience, not on the engineering behind it, unless it's important (e.g. feature related to performance)
 
 ## File structure and naming
