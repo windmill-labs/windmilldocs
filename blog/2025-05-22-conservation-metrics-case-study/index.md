@@ -66,7 +66,11 @@ Our system runs daily to detect new alerts about gold mining activities within i
 
 ### Solomon Islands: preventing illegal logging
 
-In the Solomon Islands, our Windmill-powered monitoring system helped detect and stop logging operations above 400m in elevation — areas that often overlap with Indigenous community lands and were [deemed illegal under the 2018 Sky Islands pledge](https://www.solomonstarnews.com/pm-signs-gov-t-pledge-to-ban-logging-mining/). Having demonstrated the effectiveness of automated environmental monitoring, the system is becoming a national-level methodology for monitoring alerts.
+In the Solomon Islands, our Windmill-powered monitoring system helped detect and stop logging operations above 400m in elevation — areas that often overlap with Indigenous community lands and were [deemed illegal under the 2018 Sky Islands pledge](https://www.solomonstarnews.com/pm-signs-gov-t-pledge-to-ban-logging-mining/). Having demonstrated the effectiveness of automated environmental monitoring, the system is becoming a national-level methodology for monitoring alerts and has [been received positively by the ministry of the environment](https://mai-maasina.org/change-detection-presentation-to-the-ministry-of-environment/).
+
+![Presentation of alerts dashboard for the Solomons ministry of the environment workspace](./solomons.jpg "Presentation of alerts dashboard for the Solomons ministry of the environment")
+
+> Presentation of alerts dashboard for the Solomons ministry of the environment. [[source](https://mai-maasina.org/change-detection-presentation-to-the-ministry-of-environment/)]
 
 ### Real-time dashboards for community-led monitoring
 
