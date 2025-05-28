@@ -45,7 +45,7 @@ This pipeline has been successfully implemented with community partners in Brazi
 ### Data processing and integration
 
 We use Windmill for various [ETL](/docs/core_concepts/data_pipelines) workflows:
-- Extracting tabular and binary data from multiple environmental monitoring and field data collection sources (such as [KoboToolbox](https://www.kobotoolbox.org/), [ODK](https://getodk.org/), and [CoMapeo](https://www.comapeo.app/))
+- Extracting tabular and binary data from multiple environmental monitoring and field data collection sources (such as [KoboToolbox](https://www.kobotoolbox.org/), [ODK](https://getodk.org/), [CoMapeo](https://www.comapeo.app/)), and wildlife sensors (camera trap and bioacoustic devices)
 - Transforming and processing the data
 - Loading results into our databases
 - Generating automated reports and alerts
