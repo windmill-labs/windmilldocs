@@ -325,6 +325,23 @@ def main():
 	return foo
 ```
 
+You can also use version specifiers to allow a range of compatible Python versions:
+
+```python
+# py: >=3.12
+
+type Foo = str
+
+def main():
+	foo: Foo = "Foo"
+	return foo
+```
+
+Supported version specifiers include:
+- `py: >=3.11` - Python 3.11 or higher
+- `py: >=3.12,<3.14` - Python 3.12 or 3.13 (but not 3.14+)
+- `py: ==3.12` - Exactly Python 3.12
+
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
