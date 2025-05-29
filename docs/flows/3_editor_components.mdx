@@ -485,6 +485,34 @@ Inline script metadata refers to the configuration information associated with s
 - **Runtime settings**: Worker groups, concurrency limits, caching configuration
 - **Advanced configuration**: Timeouts, retries, error handling, and other execution settings
 
+### PEP-723 compatibility
+
+Windmill is now compatible with [PEP-723](https://peps.python.org/pep-0723/) for Python inline script metadata. This means you can use the standard Python `requires-python` format directly in your inline scripts:
+
+```python
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "requests>=2.28.0",
+#     "pandas",
+# ]
+# ///
+
+def main():
+    # This script requires Python 3.12 or higher
+    return "Hello from Python 3.12+"
+```
+
+For convenience, Windmill also supports a shortcut syntax that's equivalent to the `requires-python` field:
+
+```python
+# py: >=3.12
+
+def main():
+    # Equivalent to requires-python = ">=3.12"
+    return "Hello from Python 3.12+"
+```
+
 ### Key features
 
 #### Diff toggle
@@ -531,13 +559,25 @@ For each inline script within a flow, Windmill maintains:
 
 #### Version specifiers
 
-Inline scripts support [Python version selection](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx#select-python-version) using annotations or version specifiers:
+Inline scripts support [Python version selection](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx#select-python-version) using annotations, version specifiers, or [PEP-723](https://peps.python.org/pep-0723/) format:
 
 ```python
 # py: >=3.12
 
 def main():
     # This script requires Python 3.12 or higher
+    return "Hello from Python 3.12+"
+```
+
+Or using the standard PEP-723 `requires-python` format:
+
+```python
+# /// script
+# requires-python = ">=3.12"
+# ///
+
+def main():
+    # Equivalent to py: >=3.12
     return "Hello from Python 3.12+"
 ```
 
