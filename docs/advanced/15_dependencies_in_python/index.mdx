@@ -7,6 +7,7 @@ From the import lines, Windmill automatically handles the resolution and caching
 
 There are however methods to have more control on your dependencies:
 - Leveraging [standard mode](#lockfile-per-script-inferred-from-imports-standard) on [web IDE](#web-ide) or [locally](#cli).
+- Using [PEP-723 inline script metadata](#pep-723-inline-script-metadata) for standardized dependency specification.
 - Overriding dependencies [providing a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt).
 
 Moreover, there are other tricks, compatible with the methodologies mentioned above:
@@ -147,6 +148,67 @@ With this toggle, you can choose to use the metadata lockfile (derived from requ
 		title="VS Code extension"
 		description="Build scripts and flows in the comfort of your VS Code editor, while leveraging Windmill UIs for test & flows edition."
 		href="/docs/cli_local_dev/vscode-extension"
+	/>
+</div>
+
+## PEP-723 inline script metadata
+
+Windmill supports **PEP-723** inline script metadata, providing a standardized way to specify script dependencies and Python version requirements directly within your script. This implements the official Python packaging standard for inline script metadata.
+
+### Using PEP-723 format
+
+You can use the standard PEP-723 format to specify dependencies and Python version requirements:
+
+```python
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "requests",
+#     "pandas>=1.0",
+#     "numpy==1.21.0"
+# ]
+# ///
+
+import requests
+import pandas as pd
+import numpy as np
+
+def main():
+    response = requests.get("https://api.example.com/data")
+    df = pd.DataFrame(response.json())
+    return df.to_dict()
+```
+
+The PEP-723 format allows you to:
+- Specify exact Python version requirements with `requires-python`
+- List dependencies with version constraints in the `dependencies` array
+- Use standard [PEP 440](https://peps.python.org/pep-0440/) version specifiers
+
+### Python version shortcut
+
+For Python version requirements, Windmill also provides a convenient shortcut. Instead of using the full PEP-723 `requires-python` field, you can use the simple annotation format:
+
+```python
+#py: >=3.12
+
+def main():
+    return "Hello from Python 3.12+"
+```
+
+This shortcut is equivalent to specifying `requires-python = ">=3.12"` in the PEP-723 format.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Select Python version"
+		description="Learn more about Python version selection and version specifiers."
+		href="/docs/getting_started/scripts_quickstart/python#select-python-version"
+		color="teal"
+	/>
+	<DocCard
+		title="Inline script metadata"
+		description="Learn about using PEP-723 metadata in flow inline scripts."
+		href="/docs/flows/editor_components#inline-script-metadata"
+		color="teal"
 	/>
 </div>
 
