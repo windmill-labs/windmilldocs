@@ -324,57 +324,6 @@ There are special kinds of scripts, [SQL and query languages](../getting_started
 
 These are essentially TypeScript template to easily write queries to a database.
 
-### Inline script metadata
-
-Windmill now supports **PEP-723** inline script metadata for Python scripts, providing a standardized way to specify script dependencies and Python version requirements directly within your script. This implements the official Python packaging standard for inline script metadata.
-
-#### PEP-723 format
-
-You can use the standard PEP-723 format to specify dependencies and Python version requirements:
-
-```python
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#     "requests",
-#     "pandas>=1.0",
-# ]
-# ///
-
-import requests
-import pandas as pd
-
-def main():
-    response = requests.get("https://api.example.com/data")
-    df = pd.DataFrame(response.json())
-    return df.to_dict()
-```
-
-#### Python version shortcut
-
-For Python version requirements, Windmill also provides a convenient shortcut. Instead of using the full PEP-723 `requires-python` field, you can use the simple annotation format:
-
-```python
-#py: >=3.12
-
-def main():
-    return "Hello from Python 3.12+"
-```
-
-This shortcut is equivalent to specifying `requires-python = ">=3.12"` in the PEP-723 format. You can use version specifiers like:
-- `#py: ==3.12.*` - Exact Python 3.12 family
-- `#py: >=3.11,<3.14` - Range specification
-- `#py: >=3.12` - Minimum version
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Select Python version"
-		description="Learn more about Python version selection and version specifiers."
-		href="/docs/getting_started/scripts_quickstart/python#select-python-version"
-		color="teal"
-	/>
-</div>
-
 ### Triggering an action script from the Hub
 
 You can refer to and trigger an action script from the [Hub](https://hub.windmill.dev/). You also have the possibility to fork it (copy it as an inline script) directly to modify its behavior.
