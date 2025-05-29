@@ -440,3 +440,118 @@ The result and logs are displayed on the left-hand side.
 		color="teal"
 	/>
 </div>
+
+#### Advanced
+
+The advanced configuration section allows you to configure advanced features for the step:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		color="teal"
+		title="Retries"
+		description="Configure the number of retries and the delay between each retry."
+		href="/docs/flows/retries"
+	/>
+	<DocCard
+		color="teal"
+		title="Concurrency limit"
+		description="Set concurrency limits to prevent exceeding the API Limit of the targeted API."
+		href="/docs/flows/concurrency_limit"
+	/>
+	<DocCard
+		color="teal"
+		title="Cache"
+		description="Cache the results of a step for a specified time."
+		href="/docs/flows/cache"
+	/>
+	<DocCard
+		color="teal"
+		title="Early stop/Break"
+		description="Stop early a flow based on a condition."
+		href="/docs/flows/early_stop"
+	/>
+</div>
+
+## Inline script metadata
+
+Inline scripts within flows have their own metadata and configuration settings that can be managed both in the web editor and through local development.
+
+### What is inline script metadata?
+
+Inline script metadata refers to the configuration information associated with scripts that are written directly within flows, rather than standalone scripts. This metadata includes:
+
+- **Schema information**: Parameter types, validation rules, and input specifications
+- **Lockfile data**: Dependencies and their versions for consistent execution
+- **Runtime settings**: Worker groups, concurrency limits, caching configuration
+- **Advanced configuration**: Timeouts, retries, error handling, and other execution settings
+
+### Key features
+
+#### Diff toggle
+
+The inline script editor includes a diff toggle that allows you to quickly view changes between your current edits and the deployed version. This helps track modifications during development.
+
+#### Backend schema validation
+
+You can enable strict input validation for inline scripts by adding a `// schema_validation` comment at the top of your script:
+
+```python
+# schema_validation
+
+def main(user_id: int, email: str):
+    # This script will validate that user_id is an integer
+    # and email is a string before execution
+    return f"Processing user {user_id} with email {email}"
+```
+
+This prevents execution with invalid payloads, which is especially important for webhook-triggered flows.
+
+#### Enhanced dependency management
+
+Windmill automatically tracks relative imports in inline scripts and surgically updates lockfiles when dependencies change. This avoids dependency conflicts and ensures consistent dependency management across flow executions.
+
+### Local development
+
+When developing flows locally, inline script metadata is managed through the CLI:
+
+```bash
+# Generate locks for inline scripts in flows
+wmill flow generate-locks
+
+# This is equivalent to wmill script generate-metadata --lock-only
+# but specifically for flows' inline scripts
+```
+
+#### File organization
+
+For each inline script within a flow, Windmill maintains:
+- Script content in separate files (e.g., `inline_script1.py`)
+- Metadata and lockfiles in corresponding `.lock` files
+- Schema information in the flow's YAML definition
+
+#### Version specifiers
+
+Inline scripts support [Python version selection](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx#select-python-version) using annotations or version specifiers:
+
+```python
+# py: >=3.12
+
+def main():
+    # This script requires Python 3.12 or higher
+    return "Hello from Python 3.12+"
+```
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Select Python version"
+		description="You can annotate the version of Python you would like to use for a script using annotations or version specifiers."
+		href="/docs/getting_started/scripts_quickstart/python#select-python-version"
+		color="teal"
+	/>
+	<DocCard
+		title="Local development"
+		description="Develop locally, push to git and deploy automatically to Windmill."
+		href="/docs/advanced/local_development"
+		color="teal"
+	/>
+</div>
