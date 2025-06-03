@@ -26,41 +26,31 @@ const tabs = [
 		id: 'code-editor',
 		data: [
 			{
-				title: 'Generate Windmill-specific code from simple prompt',
+				title: 'AI Chat',
 				description:
-					"With a simple prompt, write a script using Windmill's main requirements and features.",
+					"Get help with coding tasks through the AI Chat. Generate code, fix issues, improve your code, or add documentation with granular control over suggestions. Add context like database schemas or error messages for better assistance.",
 				icon: Wand2,
 				caption: (
 					<div>
-						From a{' '}
-						<a href="/docs/code_editor" target="_blank">
-							code editor
-						</a>{' '}
-						(Script, Flow, Apps), click on AI Gen and write with a prompt what the script should do.
+						From the{' '}
+						<a href="/docs/script_editor" target="_blank">
+							script editor
+						</a>, press CMD/CTRL + L to open the AI chat panel and write what you want to do.
 					</div>
 				),
 				video: {
-					videoSrc: '/videos/ai_generation.mp4',
-					altText: 'Code Generation'
+					videoSrc: '/videos/ai_chat.mp4',
+					altText: 'AI Chat'
 				}
 			},
 			{
-				title: 'Code Edition',
+				title: 'Code completion',
 				description:
-					'Select the code section you want to edit and give instructions to the AI assistant.',
+					'Press Tab to autocomplete code snippets based on neighboring context, not just at the cursor.',
 				icon: FileEditIcon,
-				caption: (
-					<div>
-						Select the code section you want to edit and give instructions to the{' '}
-						<a href="/docs/core_concepts/ai_generation#code-edition" target="_blank">
-							AI assistant
-						</a>
-						.
-					</div>
-				),
 				video: {
-					videoSrc: '/videos/ai_edit.mp4',
-					altText: 'Code Edition'
+					videoSrc: '/videos/ai_autocomplete.mp4',
+					altText: 'AI Autocomplete'
 				}
 			},
 			{
@@ -93,45 +83,22 @@ const flowTabs = [
 		id: 'flow-editor',
 		data: [
 			{
-				title: 'Sequence Flow Generation',
+				title: 'AI Flow Chat',
 				description:
-					'Describe the sequence of actions you wish to execute, and the AI Flow builder will write all the steps, link them together, and allow you to trigger the flow manually.',
+					'Describe what you want to achieve, and the AI will help build or modify your flow by generating or suggesting relevant scripts from your workspace and the hub, while ensuring that all steps are properly connected.',
 				icon: Workflow,
 				caption: (
 					<div>
 						Just explain what you want the flow to do, and the{' '}
-						<a href="/docs/core_concepts/ai_generation#sequence-flows" target="_blank">
+						<a href="/docs/core_concepts/ai_generation#ai-flow-chat" target="_blank">
 							assistant
 						</a>{' '}
 						will build steps & link them together.
 					</div>
 				),
 				video: {
-					videoSrc: 'https://www.youtube.com/embed/y-pV6CShdZA',
-					altText: 'Sequence Flows'
-				}
-			},
-			{
-				title: 'Trigger Flow Generation',
-				description:
-					'Avoid counting on external APIs-sent webhooks and have AI build flows that watch external APIs on a schedule.',
-				icon: ZapIcon,
-				caption: (
-					<div>
-						Avoid counting on external APIs-sent webhooks and have the{' '}
-						<a href="/docs/core_concepts/ai_generation#trigger-flows" target="_blank">
-							assistant
-						</a>{' '}
-						build flows that watch external APIs on a{' '}
-						<a href="/docs/core_concepts/scheduling" target="_blank">
-							schedule
-						</a>
-						.{' '}
-					</div>
-				),
-				video: {
-					videoSrc: 'https://www.youtube.com/embed/4HTIKOAyVIg',
-					altText: 'Trigger Flows'
+					videoSrc: 'VIDEO_PLACEHOLDER',
+					altText: 'AI Flow Chat'
 				}
 			},
 			{
