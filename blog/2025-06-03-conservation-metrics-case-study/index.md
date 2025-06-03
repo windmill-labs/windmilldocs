@@ -25,7 +25,7 @@ This testimonial is based on conversations with [Rudo Kemper](https://www.linked
 
 [Conservation Metrics](https://conservationmetrics.com/) works with indigenous communities worldwide to provide tools and systems for environmental monitoring and protection. As part of our [Guardian Connector](https://guardianconnector.net) toolkit, our team needed a workflow orchestrator that could handle data processing from various sources, particularly for centralizing data from many different field data collection applications used by communities, and monitoring illegal activities in protected territories.
 
-While evaluating different tools like [Dagster](https://dagster.io/), our primary focus was on accessibility and ease of use, as we needed a solution that could be managed by small teams and understood by non-technical users. We found that Dagster was too code-heavy and its UI wasn't optimal for our use case. We were actually in the process of building our own user interface on top of Dagster to make it easier when we discovered Windmill. Having migrated from Dagster, we were able to focus entirely on the core business logic of our scripts without needing to spend any time on framework configuration.
+Having migrated from [Dagster](https://dagster.io/), we found that Windmill offered the accessibility and ease of use we needed for our small teams and non-technical users. Its intuitive interface and flexibility allowed us to focus on our core mission, rather than spending time on framework configuration or building additional user interfaces.
 
 ## How we use Windmill
 
