@@ -531,6 +531,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/excel',
+							label: 'Microsoft Excel'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/teams',
 							label: 'Microsoft Teams'
 						},

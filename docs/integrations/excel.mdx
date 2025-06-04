@@ -1,0 +1,193 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import DocCard from '@site/src/components/DocCard';
+
+# Microsoft Excel integration
+
+Windmill doesn't have a direct API integration with Microsoft Excel, but it provides powerful ways to work with Excel files through file uploads and processing. You can handle Excel files (.xlsx, .xls) using two main approaches: [base64 encoded strings](#base64-encoded-strings) for smaller files or [S3 object storage](#s3-object-storage-recommended-for-larger-files) for larger files and better performance.
+
+Excel files in Windmill can be:
+- **Uploaded directly** in [apps](../apps/0_app_editor/index.mdx) using [file input components](../apps/4_app_configuration_settings/file_input.mdx) or within scripts and flows' [auto-generated UIs](../core_concepts/6_auto_generated_uis/index.mdx).
+- **Stored and processed** using [workspace object storage (S3)](../core_concepts/38_object_storage_in_windmill/index.mdx).
+- **Parsed and manipulated** using popular libraries like [pandas](https://pandas.pydata.org/) ([Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)) or [xlsx](https://www.npmjs.com/package/xlsx) ([TypeScript](../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)).
+- **Processed in batch** through [flows](../flows/1_flow_editor.mdx) for multiple files.
+- **Visualized** in scripts and flows using [rich-rendering](../core_concepts/19_rich_display_rendering/index.mdx) or in [apps](../apps/0_app_editor/index.mdx) using tables and charts using file input and display components (AgGrid Table, Text, etc.)
+
+## Base64 encoded strings
+
+For smaller Excel files (< 10MB), you can use [base64 encoded strings](../core_concepts/18_files_binary_data/index.mdx). This is the simplest approach for basic file processing.
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import pandas as pd
+import io
+
+def main(excel: bytes, sheet_name: str = None):
+    """
+    Read specific sheet from Excel file with options.
+    
+    Args:
+        excel: The Excel file as bytes
+        sheet_name: Optional sheet name (defaults to first sheet)
+    
+    Returns:
+        Processed Excel data
+    """
+    excel_buffer = io.BytesIO(excel)
+    
+    # Read specific sheet or first sheet
+    df = pd.read_excel(excel_buffer, sheet_name=sheet_name or 0)
+    
+    # Example processing: get summary statistics
+    summary = {
+        "rows": len(df),
+        "columns": len(df.columns),
+        "column_names": df.columns.tolist(),
+        "data_preview": df.head(10).to_dict(orient='records'),
+        "numeric_summary": df.describe().to_dict() if df.select_dtypes(include='number').shape[1] > 0 else None
+    }
+    
+    return summary
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as XLSX from 'xlsx';
+
+export function main(excel: string, sheetName?: string) {
+    // Decode base64 string to buffer
+    const data = Uint8Array.from(atob(excel), c => c.charCodeAt(0));
+    
+    // Parse Excel file
+    const workbook = XLSX.read(data, { type: 'array' });
+    
+    // Get sheet name (first sheet if not specified)
+    const targetSheet = sheetName || workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[targetSheet];
+    
+    // Convert to JSON
+    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+    
+    return {
+        sheets: workbook.SheetNames,
+        selectedSheet: targetSheet,
+        rows: jsonData.length,
+        data: jsonData.slice(0, 10), // Preview first 10 rows
+        summary: {
+            totalSheets: workbook.SheetNames.length,
+            availableSheets: workbook.SheetNames
+        }
+    };
+}
+```
+
+</TabItem>
+</Tabs>
+
+More details on how to use base64 encoded strings in scripts and flows can be found in the [Handling files and binary data](../core_concepts/18_files_binary_data/index.mdx) section:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Handling files and binary data"
+		description="Learn about the two main approaches for handling binary data in Windmill: S3/Azure Blob storage and base64 encoded strings."
+		href="/docs/core_concepts/files_binary_data"
+	/>
+</div>
+
+## S3 object storage (recommended for larger files)
+
+For better performance and larger files, use Windmill's [workspace object storage integration](../core_concepts/38_object_storage_in_windmill/index.mdx).
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import pandas as pd
+import wmill
+from wmill import S3Object
+
+def main(excel_file: S3Object, sheet_name: str = None):
+    """
+    Process Excel file from S3 storage.
+    
+    Args:
+        excel_file: S3Object pointing to the Excel file
+        sheet_name: Optional sheet name
+    
+    Returns:
+        Processed data and summary
+    """
+    # Load file from S3
+    file_content = wmill.load_s3_file(excel_file)
+    
+    # Read Excel from bytes
+    df = pd.read_excel(file_content, sheet_name=sheet_name or 0)
+    
+    # Process data
+    processed_data = {
+        "shape": df.shape,
+        "columns": df.columns.tolist(),
+        "dtypes": df.dtypes.to_dict(),
+        "sample_data": df.head(5).to_dict(orient='records'),
+        "missing_values": df.isnull().sum().to_dict(),
+        "numeric_stats": df.describe().to_dict() if len(df.select_dtypes(include='number').columns) > 0 else None
+    }
+    
+    return processed_data
+```
+
+</TabItem>
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+import * as wmill from 'windmill-client';
+import { S3Object } from 'windmill-client';
+import * as XLSX from 'xlsx';
+
+export async function main(excel_file: S3Object, sheetName?: string) {
+    // Load file from S3
+    const fileContent = await wmill.loadS3File(excel_file);
+    
+    // Parse Excel file
+    const workbook = XLSX.read(fileContent, { type: 'array' });
+    
+    // Get target sheet
+    const targetSheet = sheetName || workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[targetSheet];
+    
+    // Convert to JSON
+    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+    
+    // Process and return results
+    return {
+        file_info: {
+            sheets: workbook.SheetNames,
+            processed_sheet: targetSheet,
+            total_rows: jsonData.length
+        },
+        data_preview: jsonData.slice(0, 10),
+        column_info: jsonData.length > 0 ? Object.keys(jsonData[0]) : [],
+        summary: {
+            empty_rows: jsonData.filter(row => Object.values(row).every(val => val === '' || val == null)).length,
+            total_columns: jsonData.length > 0 ? Object.keys(jsonData[0]).length : 0
+        }
+    };
+}
+```
+
+</TabItem>
+</Tabs>
+
+More details on how to use S3 object storage in scripts and flows can be found in the [Object storage in Windmill (S3)](../core_concepts/38_object_storage_in_windmill/index.mdx) section:
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Object storage in Windmill (S3)"
+		description="Connect your Windmill workspace to S3 or Azure Blob storage for seamless file handling without credential management."
+		href="/docs/core_concepts/object_storage_in_windmill"
+	/>
+</div>
