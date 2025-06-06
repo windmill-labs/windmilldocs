@@ -32,6 +32,7 @@ excludes: []
 codebases: []
 skipVariables: true
 skipResources: true
+skipResourceTypes: true
 skipSecrets: true
 includeSchedules: false
 includeTriggers: false
@@ -39,7 +40,7 @@ includeTriggers: false
 
 See more details in [wmill.yaml](#wmillyaml).
 
-Note that here, the variables, resources, secrets, schedules, and triggers are all skipped by default. You can change that by setting the corresponding options.g
+Note that here, the variables, resources, secrets, schedules, and triggers are all skipped by default. You can change that by setting the corresponding options.
 
 When pulling, the source is the remote workspace and the target is the local folder, and when pushing, the source is the local folder and the target is the remote workspace.
 
@@ -94,6 +95,7 @@ wmill sync pull [options]
 | `--include-schedules`  | None          | Include syncing schedules.                                                                                                                                                                                           |
 | `--include-users`      | None          | Include syncing users.                                                                                                                                                                                               |
 | `--include-groups`     | None          | Include syncing groups.                                                                                                                                                                                              |
+| `--include-triggers`   | None          | Include syncing triggers (HTTP routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT).                                                                                                                    |
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                                  |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                                    |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Overrides `wmill.yaml` includes. Patterns can include `*` (any string until '/') and `**` (any string). |
@@ -127,6 +129,7 @@ wmill sync push [options]
 | `--include-schedules`  | None          | Include syncing schedules.                                                                                                                                                                          |
 | `--include-users`      | None          | Include syncing users.                                                                                                                                                                              |
 | `--include-groups`     | None          | Include syncing groups.                                                                                                                                                                             |
+| `--include-triggers`   | None          | Include syncing triggers (HTTP routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT).                                                                                                   |
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                 |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                   |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Patterns can include `*` (any string until '/') and `**` (any string).                 |
@@ -157,6 +160,7 @@ export interface SyncOptions {
 	json?: boolean;
 	skipVariables?: boolean;
 	skipResources?: boolean;
+	skipResourceTypes?: boolean;
 	skipSecrets?: boolean;
 	includeSchedules?: boolean;
 	includeUsers?: boolean;

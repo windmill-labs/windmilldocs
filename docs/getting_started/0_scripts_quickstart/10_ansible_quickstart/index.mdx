@@ -346,6 +346,8 @@ dependencies:
     collections:
       - name: community.general
       - name: community.vmware
+    roles:
+      - name: geerlingguy.apache
   python:
     - jmespath
 ```
@@ -355,6 +357,67 @@ The syntax is similar to `ansible-builder` and Execution Environments, however a
 :::info Ansible vs Ansible-core
 Currently the Windmill image supporting Ansible runs the full `ansible` and not `ansible-core`. You can expect the respective collections to be preinstalled.
 :::
+
+### Git repo dependencies
+
+Outside of galaxy dependencies, a role or collection can exist on a git repo and be imported as such. The only caveat is that the repo needs to be a valid role or collection at its root. Check the [ansible documentation](https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#install-multiple-collections-with-a-requirements-file) for more information.
+
+```yaml
+collections:
+  - name: git+https://github.com/organization/collection.git
+    type: git
+    version: main
+```
+
+To enable more flexibility however, it is possible to declare a git repo to be cloned at a specified location before the playbook is run. You can do this as follows:
+
+```yaml
+git_repos:
+  - url: git@github.com:some_user/your_git_repo.git
+    target: ./git_repo1
+    commit: a34ac4fa
+    branch: prod
+# An https or ssh url can be used:
+  - url: https://github.com/some_user/your_other_git_repo.git
+    target: ./git_repo2
+```
+
+:::info Specifying a commit for your repo
+If you do not specify the commit to be used, the latest commit hash will be stored in the script lockfile on deployment, and all subsequent executions will use that commit. This is done to ensure reproducibility. If you need to update this, you can simply redeploy the script
+:::
+
+If you want to clone a private repo, you can add the ssh private key like so:
+```yaml
+git_ssh_identity:
+  - u/user/ssh_id_priv
+git_repos:
+  - url: git@github.com:some_user/your_private_repo.git
+    target: ./my_roles_and_collections
+```
+
+### Ansible Vault
+
+If you have files that are encripted by ansible vault, you need to pass a password to decrypt them. This can be easily done by storing the password as a Windmill secret, and specifying the path to the secret in the metadata section of your playbook:
+
+```yaml
+vault_password: u/user/ansible_vault_password
+```
+
+If you are using multiple vault password with Vault IDs, the setup is slightly different. You need to define your password files, and also add them as [file resources](#other-non-inventory-file-resources):
+
+```yaml
+vault_id:
+  - label1@password_filename1
+  - label2@password_filename2
+  - label3@password_filename3
+files:
+  - variable: u/user/password_for_label1
+    target: ./password_filename1
+  - variable: u/user/password_for_label2
+    target: ./password_filename2
+  - variable: u/user/password_for_label3
+    target: ./password_filename3
+```
 
 ## Instant preview & testing
 
@@ -371,9 +434,7 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 
 <div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Instant preview & testing"
-		description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
+	<DocCard title="Instant preview & testing" description="On top of its integrated editors, Windmill allows users to see and test what they are building directly from the editor, even before deployment."
 		href="/docs/core_concepts/instant_preview"
 	/>
 </div>

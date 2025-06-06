@@ -16,9 +16,51 @@ To enable Windmill AI, go to the "Windmill AI" tab in the workspace settings and
 
 ## Windmill AI for scripts
 
-Generate Windmill-specific code from simple text. All languages that can be run on Windmill are supported.
+### AI Chat
 
-### Code generation
+The script editor includes an integrated AI chat panel designed to assist with coding tasks directly. 
+The assistant can generate code, identify and fix issues, suggest improvements, add documentation, and more.
+
+Key features include:
+
+- **Granular Apply/Reject**: When the AI suggests code changes, you can apply or discard specific parts of the suggestion, rather than having to accept or reject the entire block.
+- **Contextual Awareness**: You can provide additional context to guide the AI’s suggestions, such as database schemas, diffs from the deployed version, or runtime errors.
+- **Quick Actions**: The panel includes built-in shortcuts for common tasks like fixing bugs or optimizing code, making it faster to apply standard improvements.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/ai_chat.mp4"
+/>
+
+### Code completion
+
+The script editor includes code autocomplete using AI. Pressing Tab completes code snippets based on neighboring context, not just at the cursor.
+
+It can be enabled/disabled at the user level in the script editor settings.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/ai_autocomplete.mp4"
+/>
+
+
+### Summary copilot
+
+From your code, the AI assistant can generate a script summary.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/summary_compilot.mp4"
+/>
+
+### Legacy AI features
+
+The following guides are still applicable for code editing of inline scripts inside flows and apps.
+
+#### Code generation
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -38,7 +80,7 @@ Moreover, you will get better results if you specify in the prompt what the scri
 For instance, in the demo video above we wanted to generate a script that fetches the commits of a GitHub repository passed as a parameter, so we wrote: `fetch and return the commits of a given repository on GitHub using octokit`.
 :::
 
-### Code editing
+#### Code editing
 
 Inside the `AI Gen` popup, you can choose to edit the existing code rather than generating a new one. The assistant will modify the code according to your prompt.
 
@@ -48,7 +90,7 @@ Inside the `AI Gen` popup, you can choose to edit the existing code rather than 
 	src="/videos/ai_edit.mp4"
 />
 
-### Code fixing
+#### Code fixing
 
 Upon error when executing code, you will be offered to "AI Fix" it. The assistant will automatically read the code, explain what went wrong, and suggest a way to fix it.
 
@@ -58,15 +100,6 @@ Upon error when executing code, you will be offered to "AI Fix" it. The assistan
 	src="/videos/ai_fix.mp4"
 />
 
-### Summary copilot
-
-From your code, the AI assistant can generate a script summary.
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/summary_compilot.mp4"
-/>
 
 ## Windmill AI for flows
 
@@ -172,16 +205,6 @@ When adding a [branch](../../flows/13_flow_branches.md), the AI assistant will s
 	src="/videos/branch_predicate_copilot.mp4"
 />
 
-## Windmill AI code completion
-
-When code completion is enabled, Windmill AI suggests completions as you type in all code editors (Script, Flow, Apps).
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/code_autopilot.mp4"
-/>
-
 ## CRON schedules from prompt
 
 The AI assistant can generate CRON [schedules](../1_scheduling/index.mdx) from a prompt.
@@ -196,6 +219,8 @@ The AI assistant can generate CRON [schedules](../1_scheduling/index.mdx) from a
 
 Windmill AI supports:
 - OpenAI's [models](https://platform.openai.com/docs/models) (o1 currently not supported)
+- Azure OpenAI's [models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models)
+	- Base URL format: `https://{your-resource-name}.openai.azure.com/openai/deployments/{deployment-id}`
 - Anthropic's [models](https://docs.anthropic.com/en/docs/about-claude/models/all-models) (including Claude 3.7 Sonnet in extended thinking mode)
 - Mistral's [Codestral](https://mistral.ai/technology/#models)
 - DeepSeek's [models](https://api-docs.deepseek.com/quick_start/pricing)
@@ -203,11 +228,10 @@ Windmill AI supports:
 - Groq's [models](https://console.groq.com/docs/models)
 - OpenRouter's [models](https://openrouter.ai/models)
 - Together AI's [models](https://docs.together.ai/docs/serverless-models)
+- Custom AI: base URL and API key of any AI provider that is OpenAI API-compatible
 
 If you'd like to use a model that isn't in the default dropdown list, you can use any model supported by a provider (like `gpt-4o-2024-05-13` or `claude-3-7-sonnet-20250219`) by simply typing the model name in the model input field and pressing enter.
 
-### Custom models
+### AWS Bedrock
 
-[Enterprise](/pricing) customers can run all Windmill AI features on any custom AI provider that is OpenAI API-compatible using the `Custom AI` tab.
-
-For Azure OpenAI models, you should use the OpenAI provider and specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
+For models hosted on AWS Bedrock, you can use the `Custom AI` provider and follow the instructions in the [Windmill AI using AWS Bedrock](/docs/misc/9_guides/aws_bedrock/index.mdx) guide.

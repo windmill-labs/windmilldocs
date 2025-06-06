@@ -1,9 +1,7 @@
 # SQS triggers
 
-Windmill can connect to an [SQS](https://aws.amazon.com/sqs/) queue and trigger runnables (scripts, flows) in response to messages received.  
+Windmill can connect to an [SQS](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html) queue and trigger runnables (scripts, flows) in response to messages received.  
 SQS triggers is a self-hosted Enterprise feature.
-
-For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html).
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
@@ -19,8 +17,8 @@ For more details on SQS, see the [AWS SQS Documentation](https://docs.aws.amazon
 
 ## How to use
 
-- **Pick an AWS resource**  
-  - Select an existing [AWS resource](../../integrations/aws.md) or create a new one.  
+- **Pick an AWS or AWS OIDC resourcee**  
+  - Select an existing [AWS resource](../../integrations/aws.md#aws-resource) or [AWS OIDC resource](../../integrations/aws.md#aws-oidc-resource) or create a new one.  
   - The AWS resource must have permissions to interact with SQS.
 
 - **Select the runnable to execute**  
@@ -70,36 +68,38 @@ If you use a [preprocessor](../43_preprocessors/index.mdx), the preprocessor fun
 
 ```TypeScript
 export async function preprocessor(
+  event: {
+    kind: "sqs",
     msg: string,
-    wm_trigger: {
-        kind: "sqs",
-        sqs: {
-            queue_url: string,
-            message_id?: string,
-            receipt_handle?: string,
-            attributes: Record<string, string>,
-            message_attributes?: Record<string, {
-                string_value?: string,
-                data_type: string
-            }>
-        }
-    },
+    queue_url: string,
+    message_id?: string,
+    receipt_handle?: string,
+    attributes: Record<string, string>,
+    message_attributes?: Record<string, {
+        string_value?: string,
+        data_type: string
+    }>
+  }
 ) {
-    // assuming the message is a JSON object
-    const data = JSON.parse(msg);
-    
-    return {
-        content: data.content,
-        metadata: {
-            sentAt: wm_trigger.sqs.attributes.SentTimestamp,
-            messageId: wm_trigger.sqs.message_id
-        }
-    };
+  if (event.kind !== "sqs") {
+    throw new Error(`Expected a SQS event`);
+  }
+
+  // assuming the message is a JSON object
+  const data = JSON.parse(event.msg);
+  
+  return {
+      content: data.content,
+      metadata: {
+          sentAt: event.attributes.SentTimestamp,
+          messageId: event.message_id
+      }
+  };
 }
 
 export async function main(content: string, metadata: { sentAt: string, messageId: string }) {
-    // Process transformed message data
-    console.log(`Processing message ${metadata.messageId} sent at ${metadata.sentAt}`);
-    console.log("Content:", content);
+  // Process transformed message data
+  console.log(`Processing message ${metadata.messageId} sent at ${metadata.sentAt}`);
+  console.log("Content:", content);
 }
 ```

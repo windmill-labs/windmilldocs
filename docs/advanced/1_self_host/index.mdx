@@ -65,9 +65,22 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 		href="/docs/core_concepts/worker_groups"
 	/>
 	<DocCard
-		title="Windmill on AWS ECS"
-		description="Windmill can also be deployed on AWS ECS"
-		href="/docs/advanced/self_host/aws_ecs"
+		title="Windmill on AWS EKS or ECS"
+		description="Windmill can also be deployed on AWS EKS or ECS"
+		href="/docs/advanced/self_host/aws_eks_ecs"
+	/>
+</div>
+
+### Ubicloud
+
+Ubicloud provides cost-efficient managed Kubernetes and Postgresql. They are a great compromise if you are cost sensitive but still want to get a multi-node Kubernetes Windmill setup. And they are open-source too as an infra layer on top of other cloud providers.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ubicloud"
+		description="Ubicloud Community-Contributed Guide."
+		href="https://www.ubicloud.com/docs/managed-kubernetes/windmill-tutorial"
+		target="_blank"
 	/>
 </div>
 
@@ -78,6 +91,16 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 		title="Fly.io"
 		description="Fly.io Community-Contributed Guide."
 		href="https://dev.to/singee/deploy-windmill-on-flyio-3ii3"
+		target="_blank"
+	/>
+</div>
+
+### Render.com
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Render.com"
+		description="Render.com Setup Guide."
+		href="https://github.com/alpetric/wmilll_render"
 		target="_blank"
 	/>
 </div>
@@ -546,6 +569,10 @@ name `public` with your schema, in case you use a different one:
 GRANT USAGE ON SCHEMA public TO windmill_admin;
 GRANT USAGE ON SCHEMA public TO windmill_user;
 ```
+
+:::note
+If you use a schema other than `public`, pass `PG_SCHEMA=<schema>` as an environment variable to every `windmill_server` container.
+:::
 
 ## First time login
 

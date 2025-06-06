@@ -2,18 +2,18 @@ import TaskDurationBarChart from '@site/src/components/TaskDurationBarChart';
 
 # AWS Lambda vs Windmill
 
-This benchmark compares the performance of AWS Lambda and Windmill for executing a simple but computationally intensive task - calculating the 33rd Fibonacci number using a recursive algorithm.
+This benchmark compares the performance of [AWS Lambda](https://aws.amazon.com/lambda/) and Windmill for executing a simple but computationally intensive task - calculating the 33rd Fibonacci number using a recursive algorithm.
 
 We chose this task because:
-1. It's CPU-bound rather than I/O-bound, making it a good test of raw compute performance
-2. The recursive implementation creates significant computational overhead
-3. It's simple enough to implement identically in both platforms
+1. It's CPU-bound rather than I/O-bound, making it a good test of raw compute performance.
+2. The recursive implementation creates significant computational overhead.
+3. It's simple enough to implement identically in both platforms.
 
 The goal is to measure and compare:
-- Cold start latency
-- Warm execution time 
-- Consistency of response times
-- Cost implications at scale
+- Cold start latency.
+- Warm execution time.
+- Consistency of response times.
+- Cost implications at scale.
 
 Both services were configured similarly, using Python 3.11 as the runtime. The same Fibonacci calculation code was deployed to each platform to ensure a fair comparison.
 
@@ -21,12 +21,11 @@ Both services were configured similarly, using Python 3.11 as the runtime. The s
 
 ### Windmill
 
-The setup is the exact same as for the other benchmarks in [Airflow vs Prefect vs Temporal vs Kestra vs Windmill](../competitors/index.mdx). We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official GitHub repo (with the same adjustment, i.e. 1 worker only, even though for this use case it would not make a difference).
+The setup is the exact same as for the [other benchmarks ](../competitors/index.mdx). We used the same EC2 m4-large instance and deployed Windmill on docker using the docker-compose.yml in Windmill's official GitHub repo (with the same adjustment, i.e. 1 worker only, even though for this use case it would not make a difference).
 
 We created a script in Windmill computing a Fibonacci number in Python:
 
 ```python
-
 N_FIBO = 33
 
 # WIMDMILL script: `u/benchmarkuser/fibo_script`
@@ -125,5 +124,5 @@ Visually, we have the following graphs:
 
 ## Conclusion
 
-For running a high number of lightweight tasks (`fibonacci(10)`), we can see that Windmill in dedicated worker mode is the fastest. Windmill in normal mode is slower because it runs a cold start for each task.
+For running a high number of lightweight tasks (`fibonacci(10)`), we can see that Windmill in [dedicated worker](../../../core_concepts/25_dedicated_workers/index.mdx) mode is the fastest. Windmill in normal mode is slower because it runs a cold start for each task.
 For long running tasks (`fibonacci(33)`), Windmill in normal mode and dedicated worker mode is almost equivalent because the warm-up time needed in normal mode is negligible compared to the duration of tasks. AWS Lambda has slightly better performance for those kind of tasks, likely because it is able to run the core of the Python logic faster than Windmill.

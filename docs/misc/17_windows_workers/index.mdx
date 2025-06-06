@@ -2,10 +2,9 @@ import DocCard from '@site/src/components/DocCard';
 
 # Windows workers
 
-Windows Native Workers are a [Self-Hosted Enterprise](/pricing) Feature.
+Windows workers enable you to run Windmill scripts and flows directly on Windows machines without requiring Docker or WSL, supporting Python, Bun, PowerShell, C#, and Nu executors for native Windows execution.
 
-You can use the Windows worker natively if you do not want to run Docker or WSL on Windows (e.g., for policy or security reasons).
-This feature supports the **Python**, **Bun**, **PowerShell** and **Nu** executors.
+Windows Native Workers are a [Self-Hosted Enterprise](/pricing) Feature.
 
 You can connect Windows workers to your existing Dockerized or cloud self-hosted PostgreSQL database and Windmill server.
 
@@ -86,6 +85,29 @@ You can also check other installation methods in uv`s [official documentation](h
      # Replace these variables with your specific configuration
      $env:POWERSHELL_PATH="C:\Program Files\PowerShell\7\pwsh.exe"
      ```
+
+### C# executor
+
+1. **Install .NET 9.0 SDK**: Follow [Microsoft instructions](https://learn.microsoft.com/en-us/dotnet/core/install/windows) and make sure you have .NET 9.0 installed.
+   - You can check it by listing the installed SDKs:
+     ```powershell
+     dotnet --list-sdks
+     ```
+2. **Locate your .NET installation**:
+   - Find where .NET is installed by running:
+     ```powershell
+     where.exe dotnet
+     ```
+
+3. **Set environment variables**:
+   - Add the following environment variables (replace with your values if needed):
+     ```powershell
+     # Replace these variables with your specific configuration
+     $env:DOTNET_ROOT="C:\Program Files\dotnet"
+     $env:DOTNET_PATH="C:\Program Files\dotnet\dotnet.exe"
+     ```
+
+
 ### Nu executor
 
 1. **Nu**: Ensure you have installed Nu by following the [official documentation](https://www.nushell.sh/book/installation.html#package-managers).

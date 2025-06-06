@@ -214,6 +214,17 @@ export const sections = [
 				link: '/docs/core_concepts/sqs_triggers',
 			},
 			{
+				name: 'GCP triggers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/gcp_triggers',
+			},
+			{
 				name: 'Private Hub',
 				tiers: {
 					'tier-free-selfhost': false,
