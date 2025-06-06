@@ -159,6 +159,8 @@ Compute Units are calculated as follows:
 - On cloud plans, the number of Compute Units scales linearly with memory (e.g., a 4GB worker = 2 Compute Units, 8GB worker = 4 Compute Units)
 - 8 native workers count as 1 compute unit. They go 8 by 8. Native workers are workers within the native worker group. This group is pre-configured to listen to native jobs tags (query languages). Those jobs are executed under a special mode with subworkers for increased throughput. You can set the number of native workers to 0.
 
+On [AWS ECS](../../advanced/1_self_host/index.mdx#aws-gcp-azure-neon), if the reported Compute Units is not what you expect, you can apply memory limit [at the container level](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#standard_container_definition_params).
+
 ### How Compute Units are counted for a subscription
 
 Based on the telemetry your EE instances send, Compute Units are calculated as follows:

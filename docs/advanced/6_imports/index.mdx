@@ -33,6 +33,8 @@ import os
 # etc.
 ```
 
+**Note: For Python scripts, Windmill only considers top-level imports for automatic dependency installation.** Imports inside functions, conditional blocks, or other nested scopes will not be detected for dependency resolution.
+
 ### Web IDE
 
 When a script is deployed through the Web IDE, Windmill generates a lockfile to ensure that the same [version of a script](../../core_concepts/34_versioning/index.mdx#script-versioning) is always executed with the same versions of its [dependencies](../6_imports/index.mdx). To generate a lockfile, it analyzes the imports, the imports can use a version pin (e.g. `windmill-client@1.147.3`) or if no version is used, it uses the latest version. Windmill's [workers](../../core_concepts/9_worker_groups/index.mdx) cache dependencies to ensure fast performance without the need to pre-package dependencies - most jobs take under 100ms end-to-end.
