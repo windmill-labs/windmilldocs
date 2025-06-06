@@ -10,14 +10,16 @@ The best submissions get approved by the Windmill Team and get integrated direct
 <br/>
 
 On [Enterprise Edition](/pricing) and [Whitelabelling](/pricing), you can have your own Private Hub. 
-This is a private Windmill Hub instance that is only accessible by your team. 
-You can share your scripts, flows, apps and resource types with your team and keep them private.
-You can also have your own approval process for the submissions and have your own page with your branding.
+You decide which scripts, flows, apps and resource types are approved and are shared with your Windmill instances, appearing directly in the app.
 
 You can configure your Private Hub using Docker by following the instructions in the [Private Hub repository](https://github.com/windmill-labs/windmillhub-ee-public).
 We also provide [values in our Helm chart](https://github.com/windmill-labs/windmill-helm-charts/blob/main/charts/windmill/values.yaml) for including the Private Hub in a Kubernetes cluster.
 
 Once your Private Hub is up and running, you need to change the hub base url field in the core [instance settings](../../advanced/18_instance_settings/index.mdx#private-hub-base-url) to your Private Hub url.
+
+:::warning
+To limit access to your Private Hub resources exclusively to your team and instances, ensure it is hosted within an internal network or behind a VPN.
+:::
 
 :::warning
 Authentication on the Hub is performed via the Windmill instance.
