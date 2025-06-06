@@ -97,7 +97,7 @@ const flowTabs = [
 					</div>
 				),
 				video: {
-					videoSrc: 'VIDEO_PLACEHOLDER',
+					videoSrc: 'https://www.youtube.com/embed/L7JPHDtbSNM',
 					altText: 'AI Flow Chat'
 				}
 			},
