@@ -23,15 +23,60 @@ You can configure the route to run:
 
 ## Creating an HTTP route
 
-### Define the route
+Windmill supports two ways to create HTTP routes:
 
-- Go to the **HTTP routes** page in Windmill.
-- Set the **path** (e.g., `/webhooks/github/:event`) and select the **HTTP method**.
-- The full endpoint will look like:
-  - Self-hosted: `{base_url}/api/r/{path}`
-  - Cloud: `https://app.windmill.dev/api/r/{workspace_id}/{path}`
+- **Manual creation**, where you define a path, method, and bind it to a runnable.
+- **Automatic generation** from an OpenAPI specification, enabling batch creation.
 
-You can use `:param` in the path and access these as `params` in a [preprocessor](https://docs.windmill.dev/docs/core_concepts/preprocessors).
+#### To create a route manually:
+
+1. Navigate to the **Custom HTTP routes** page.
+2. Click the **New route** button.
+3. Fill in the route configuration fields:
+   - **Path**: The route path (e.g., `/webhooks/github/:event`)
+   - **HTTP method**: One of GET, POST, PUT, PATCH, DELETE
+   - **Runnable**: The script or flow to trigger (or serve static content)
+   - Optional fields:
+     - **Authentication method**
+     - **Async vs sync behavior**
+     - **Body handling options**
+     - **Static asset or website settings**
+     - Etc.
+4. Click **Save** to create the route.
+
+### Generate routes from an OpenAPI specification
+
+Windmill can generate HTTP routes directly from an OpenAPI 2.0+ specification in JSON or YAML format.
+
+You can provide the specification in one of three ways:
+- Paste raw content
+- Upload a file
+- Provide a public URL
+
+#### To generate routes:
+
+- Navigate to the **Custom HTTP routes** page.
+- Click the **From OpenAPI spec** button.
+- Pick a folder for the generated routes.
+- Choose your input method and provide the OpenAPI spec.
+- Click **Generate HTTP routes**.
+
+#### Behavior and limitations:
+
+- If a path object has a `summary` field, it will be used as suffix for the trigger path.
+  - If the `summary` exceeds 255 characters, it will be **automatically truncated** to fit the maximum allowed length.
+- If no `summary` is defined, Windmill generates a unique route path automatically.
+- Generated routes **do not include a script or flow binding** (`script_path`) by default.
+  - This means requests to the route will return an error until a runnable is attached.
+- You can:
+  - **Save routes immediately without modifying them**.
+  - **Edit any route before or after saving**, to assign a runnable, change route path, etc.
+- External `$ref` references (e.g., referencing outside the spec) are **not supported**.
+  - You must resolve them beforehand.
+  - Only internal references (e.g., `#/components/...`) are supported.
+
+
+You can use `:param` in the route path and access these as `params` in a [preprocessor](https://docs.windmill.dev/docs/core_concepts/preprocessors).
 
 > ℹ️ **Only workspace admins** can create routes.  
 > Once created, all properties of a route **except the HTTP path** can be modified by any user with **write access** to the route.  
