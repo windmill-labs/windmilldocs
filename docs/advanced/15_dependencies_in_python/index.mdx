@@ -34,9 +34,9 @@ To learn more about how dependencies from other languages are handled, see [Depe
 
 ## Lockfile per script inferred from imports (Standard)
 
-In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the imports and resolving the dependencies.
+In Windmill, you can run scripts without having to [manage a requirements.txt](#lockfile-per-script-inferred-from-a-requirementstxt) directly. This is achieved by automatically parsing the top-level imports and resolving the dependencies. For automatic dependency installation, Windmill will only consider these top-level imports.
 
-In Python, the imports are automatically parsed on saving of the script and a list of imports is generated.
+In Python, the top-level imports are automatically parsed on saving of the script and a list of imports is generated. For automatic dependency installation, Windmill will only consider these top-level imports.
 A dependency job is then spawned to associate that list of PyPI packages with a lockfile, which will lock
 the versions. This ensures that the same version of a Python script is always
 executed with the same versions of its dependencies. It also avoids the hassle
