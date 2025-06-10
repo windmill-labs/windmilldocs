@@ -11,7 +11,7 @@ features:
   - Live job output rendered using a full-featured xterm.js-based interface.
   - Cancel running commands (jobs) with keyboard interrupts or UI controls.
   - View and inspect code pending executions.
-  - Auto-handling of common terminal behaviors (input prompt, history, resizing).
+  - Auto-handling of common terminal behaviors (input prompt, history).
 image: ./ssh-repl.png
-docs: /docs/core_concepts/worker_groups#interactive-ssh-repl-for-worker-debugging
+docs: /docs/core_concepts/worker_groups#interactive-ssh-repl-for-worker-hosts
 ---

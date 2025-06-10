@@ -392,12 +392,11 @@ View logs from any workers or servers directly within the service logs section o
 	/>
 </div>
 
-## Interactive SSH REPL for Worker Debugging
+## Interactive SSH REPL for worker hosts
 
 Windmill includes a built-in interactive SSH-like REPL for each worker. This allows you to execute bash commands directly on the machine running the worker, making it significantly easier to debug, explore the filesystem, or run quick system-level commands.
 
 ### Key capabilities:
-- Launch a REPL terminal connected to the host of a specific worker.
 - Run interactive bash commands with support for:
   - Changing directories via `cd`.
   - Multi-line and compound commands.
@@ -416,9 +415,9 @@ Windmill includes a built-in interactive SSH-like REPL for each worker. This all
 - Type and run bash commands directly in the terminal.
 
 > This feature is especially useful for debugging init scripts, verifying pre-installed binaries, inspecting the file system, or quickly running bash commands without needing to deploy a script.
-
+<br />
 **Note:**  
-- Use `cd` to navigate directories — the shell remembers your working directory across commands.  
+- Use `cd` to navigate directories — the REPL remembers your working directory across commands.  
 - You can press `Ctrl+C` or use the **Cancel** button to stop a running job.  
 - If no command has run in the past 2 minutes, the first one may take up to ~15 seconds to start.
 
