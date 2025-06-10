@@ -13,5 +13,5 @@ features:
   - View and inspect code pending executions.
   - Auto-handling of common terminal behaviors (input prompt, history, resizing).
 image: ./ssh-repl.png
-docs: /docs/advanced/worker-debug-console#ssh-repl
+docs: /docs/core_concepts/worker_groups#interactive-ssh-repl-for-worker-debugging
 ---
