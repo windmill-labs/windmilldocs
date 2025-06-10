@@ -396,16 +396,6 @@ View logs from any workers or servers directly within the service logs section o
 
 Windmill includes a built-in interactive SSH-like REPL for each worker. This allows you to execute bash commands directly on the machine running the worker, making it significantly easier to debug, explore the filesystem, or run quick system-level commands.
 
-### Key capabilities:
-- Run interactive bash commands with support for:
-  - Changing directories via `cd`.
-  - Multi-line and compound commands.
-  - Auto-output formatting for results.
-- View and cancel pendings jobs directly from the terminal session.
-- Easily paste and run bash snippets, or open from existing workspace/hub scripts.
-
-> The REPL uses the same job execution backend as regular scripts, meaning commands are executed via short-lived bash jobs, offering a secure and reproducible environment.
-
 ### How to use
 
 - Go to the **Workers** page in the Windmill.
