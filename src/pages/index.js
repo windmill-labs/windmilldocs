@@ -1,7 +1,7 @@
 import React from 'react';
 import Hero from '../landing/Hero';
 import Footer from '../landing/Footer';
-import IntergrationList from '../landing/IntergrationList';
+import IntegrationsList from '../landing/IntegrationsList';
 import LandingSection from '../landing/LandingSection';
 import CallToAction from '../landing/CallToAction';
 import EntrepriseFeatures from '../landing/EntrepriseFeatures';
@@ -34,7 +34,7 @@ function HomepageHeader() {
 			<ScriptLightSection />
 			<FlowLightSection />
 			<AppLightSection />
-			<IntergrationList />
+			<IntegrationsList />
 			<EntrepriseFeatures />
 			<TestimonialsSection />
 			<LandingSection bgClass="py-0">
