@@ -24,7 +24,7 @@ The assistant can generate code, identify and fix issues, suggest improvements, 
 Key features include:
 
 - **Granular Apply/Reject**: When the AI suggests code changes, you can apply or discard specific parts of the suggestion, rather than having to accept or reject the entire block.
-- **Contextual Awareness**: You can provide additional context to guide the AI’s suggestions, such as database schemas, diffs from the deployed version, or runtime errors.
+- **Contextual Awareness**: You can provide additional context to guide the AI's suggestions, such as database schemas, diffs from the deployed version, or runtime errors.
 - **Quick Actions**: The panel includes built-in shortcuts for common tasks like fixing bugs or optimizing code, making it faster to apply standard improvements.
 
 <video
@@ -103,67 +103,28 @@ Upon error when executing code, you will be offered to "AI Fix" it. The assistan
 
 ## Windmill AI for flows
 
-Generate Workflows from prompts.
+### AI Flow Chat
 
-Windmill AI for Flows support two creation modes: Sequence Flows and Trigger Flows.
-In both cases, you specify a prompt for each step. The AI assistant will then generate the code step by step and link them together.
-You will have the opportunity at the end of each step to review, edit or even regenerate the step's code.
+The [flow editor](../../flows/1_flow_editor.mdx) includes an integrated AI chat panel that lets you create and modify flows using natural language. 
+Just describe what you want to achieve, and the AI will build the flow for you, step by step.
 
-For each action, you can either choose a script from the [Hub](https://hub.windmill.dev/) or generate one from scratch using Windmill AI.
-At the end of the process, flow inputs are inferred and you just need to fill them in.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Blog - Flow Builder Copilot"
-		description="Details on how the Flow Builder Copilot was built"
-		href="/blog/launch-week-1/ai-flow-builder"
-	/>
-</div>
-
-### Sequence flows
-
-Generate a flow consisting of a sequence of scripts.
+It can add scripts, [loops](../../flows/12_flow_loops.md), and [branches](../../flows/13_flow_branches.md), searching your workspace and [Windmill Hub](https://hub.windmill.dev/) for relevant scripts or generating new ones when needed or on request.
+It automatically sets up flow inputs and connects steps by filling in parameters based on context.
+For loops and branches, the AI sets suitable iterator expressions and predicates based on your flow's data.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/y-pV6CShdZA"
-	title="YouTube video player"
+	src="https://www.youtube.com/embed/L7JPHDtbSNM"
+	title="Perpetual Scripts"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-### Trigger flows
+### Script mode in AI Flow Chat
 
-[Trigger flows](../../flows/10_flow_trigger.mdx) are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../1_scheduling/index.mdx) and [states](../3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md).
-
-If there are no new items, the flow will be skipped.
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/4HTIKOAyVIg"
-	title="YouTube video player"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
-
-<br />
-
-The inputs of the for-loop action are automatically filled in with the outputs of the trigger step.
-
-Moreover, the flow is automatically set to run every 15 minutes when deployed. The [schedule](../1_scheduling/index.mdx) can then be customized (e.g. every 30 seconds etc.).
-This allows you to avoid relying on webhooks sent by external APIs, which can be tedious to configure.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Trigger scripts"
-		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
-		href="/docs/flows/flow_trigger"
-	/>
-</div>
+If you're working on an inline script in your flow, you can switch to script mode using the toggle to access the same AI assistance as in the script editor — including the ability to add context like database schemas, diffs, and preview errors, along with granular apply/reject controls and quick actions.
 
 ### Summary copilot for steps
 

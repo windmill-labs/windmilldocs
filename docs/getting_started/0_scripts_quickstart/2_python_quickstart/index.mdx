@@ -56,7 +56,7 @@ Scripts consist of 2 parts:
 
 When stored in a code repository, these 2 parts are stored separately at `<path>.py` and `<path>.script.yaml`
 
-Windmill automatically manages [dependencies](../../../advanced/15_dependencies_in_python/index.mdx) for you. When you import libraries in your Python script, Windmill parses these top-level imports upon saving the script and automatically generates a list of dependencies. For automatic dependency installation, Windmill will only consider these top-level imports. It then spawns a dependency job to associate these PyPI packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies.
+Windmill automatically manages [dependencies](../../../advanced/15_dependencies_in_python/index.mdx) for you. When you import libraries in your Python script, Windmill parses these top-level imports upon saving the script and automatically generates a list of dependencies. For automatic dependency installation, Windmill will only consider these top-level imports. It then spawns a dependency job to associate these PyPI packages with a lockfile, ensuring that the same version of the script is always executed with the same versions of its dependencies
 
 [This](https://hub.windmill.dev/scripts/%22%22/1530/do-sentiment-analysis-with-nltk-%22%22) is a simple example of a script built in Python with Windmill:
 
@@ -325,6 +325,33 @@ def main():
 	return foo
 ```
 
+### Python version specifiers
+
+You can also use more advanced version specifiers with the shortcut format to specify exact version requirements:
+
+```python
+# py: >=3.12
+
+def main():
+    return "Hello from Python 3.12+"
+```
+
+```python
+# py: ==3.12.*
+
+def main():
+    return "Hello from any Python 3.12 version"
+```
+
+```python
+# py: >=3.11,<3.14
+
+def main():
+    return "Hello from Python 3.11 to 3.13"
+```
+
+These version specifiers use [PEP 440](https://peps.python.org/pep-0440/) syntax and provide more precise control over Python version requirements than the simple annotations. This is especially useful when you need to ensure compatibility with specific Python features or avoid known issues in certain versions.
+
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
@@ -347,11 +374,6 @@ For scripts that are already deployed and have no version specified in lockfile,
 
 During test runs or deployments, if there are imported scripts, Windmill will search through all of them to find an annotated version, which will be used as the final version. If no annotated version is found, the instance version will be used instead. 
 
-
-
-:::note
-Only one python version can be annotated within a single tree.
-:::
 
 For [Enterprise Edition](/pricing) (EE) customers, [S3 cache](../../../misc/13_s3_cache/index.mdx) tarballs will be organized and separated by Python version.
 

@@ -119,3 +119,16 @@ Once this is done, you can click on the Save button at the top left. Azure will 
 Once setup, the groups page should contain a new section:
 
 ![New section SCIM](okta-scim-groups.png.webp)
+
+## Instance groups
+
+When SCIM is properly configured, groups from your identity provider will be automatically synchronized to Windmill as **instance groups**. These are special groups that:
+
+- Are automatically managed by your identity provider (no manual creation needed)
+- Sync users and group memberships automatically
+- Can be used across multiple workspaces within your instance
+- Provide enterprise-level group management without manual provisioning
+
+Instance groups appear in your Windmill groups interface with a special designation, and can be assigned permissions to folders and resources just like regular groups. This eliminates the need for manual group management while maintaining full integration with Windmill's permission system.
+
+For more details about how to use instance groups within your workflows and permission structure, see [Groups and folders](../../core_concepts/8_groups_and_folders/index.mdx#instance-groups).
