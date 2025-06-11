@@ -431,6 +431,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/duckdb',
+							label: 'DuckDB'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/faunadb',
 							label: 'FaunaDB'
 						},
@@ -523,6 +528,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/microsoft-azure-blob',
 							label: 'Microsoft Azure Blob'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/excel',
+							label: 'Microsoft Excel'
 						},
 						{
 							type: 'doc',

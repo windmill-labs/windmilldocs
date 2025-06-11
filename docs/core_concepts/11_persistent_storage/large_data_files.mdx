@@ -31,6 +31,27 @@ Windmill S3 bucket browser will not work for buckets containing more than 20 fil
 ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
 
 <Tabs className="unique-tabs">
+<TabItem value="duckdb-script" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```sql
+-- $file1 (s3object)
+
+-- Run queries directly on an S3 parquet file passed as an argument
+SELECT * FROM read_parquet($file1)
+
+-- Or using an explicit path in a workspace storage
+SELECT * FROM read_json('s3:///demo/data.json')
+
+-- You can also specify a secondary workspace storage
+SELECT * FROM read_csv('s3://secondary_storage/demo/data.csv')
+
+-- Write the result of a query to a different parquet file on S3
+COPY (
+    SELECT COUNT(*) FROM read_parquet($file1)
+) TO 's3:///demo/output.pq' (FORMAT 'parquet');
+```
+
+</TabItem>
 <TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
@@ -77,7 +98,7 @@ def main(input_file: S3Object):
 ```
 
 </TabItem>
-<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+<TabItem value="duckdb" label="DuckDB (Python)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 #requirements:
