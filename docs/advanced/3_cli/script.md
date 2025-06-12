@@ -94,7 +94,7 @@ Below is a video on how to override Windmill inferred dependencies by [providing
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/T8jMjpNvC2g"
-	title="Perpetual Scripts"
+	title="Override Inferred Dependencies with Custom Dependency Files"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen

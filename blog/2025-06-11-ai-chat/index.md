@@ -16,7 +16,7 @@ The assistant is now available on every screen: in the [script editor](/docs/scr
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/ZAlotkJlQ2c"
-	title="Perpetual Scripts"
+	title="Windmill AI Chat"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -63,7 +63,7 @@ Based on the context, it sets inputs, chooses iterator expressions, and configur
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/L7JPHDtbSNM"
-	title="Perpetual Scripts"
+	title="Windmill AI Flow Chat"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -90,7 +90,7 @@ In addition to the [MCP server we already provide for executing scripts](/docs/c
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/De77j1T3gRs"
-	title="Perpetual Scripts"
+	title="Windmill MCP"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
