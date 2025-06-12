@@ -106,3 +106,5 @@ This has allowed our small team to focus on our core mission of supporting indig
 We're excited about Windmill's continued evolution and its potential to further empower organizations working in environmental conservation. The upcoming improvements to the app builder will make it even more valuable for our work.
 
 Our experience with Windmill demonstrates how the right tools can amplify the impact of organizations working on critical environmental and social issues, even with limited technical resources.
+
+We are grateful to our partners, including the community organizations and [Nia Tero](https://www.niatero.org/), for co-creating this resource with us.
