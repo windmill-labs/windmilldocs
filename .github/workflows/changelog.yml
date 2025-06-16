@@ -8,10 +8,8 @@ on:
       - 'changelog/**'
 
 jobs:
-  find-new-entries:
+  process-changelog:
     runs-on: ubicloud-standard-2
-    outputs:
-      new_entries: ${{ steps.find_entries.outputs.entries }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,133 +20,60 @@ jobs:
         id: find_entries
         run: |
           # Compare the state before and after the push to find added files.
-          # We only care about index.md files to identify new entries.
           new_files=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.event.after }} | grep '^changelog/.*/index.md$')
-
           if [ -z "$new_files" ]; then
             echo "entries=[]" >> $GITHUB_OUTPUT
             echo "No new changelog entries found."
-            exit 0
+          else
+            echo "Found new changelog files:"
+            echo "$new_files"
+            json_array=$(echo "$new_files" | while read -r file; do dirname "$file"; done | jq -R . | jq -sc .)
+            echo "entries=${json_array}" >> $GITHUB_OUTPUT
           fi
 
-          echo "Found new changelog files:"
-          echo "$new_files"
-
-          json_array=$(echo "$new_files" | while read -r file; do dirname "$file"; done | jq -R . | jq -sc .)
-          echo "entries=${json_array}" >> $GITHUB_OUTPUT
-
-  process-new-entries:
-    needs: find-new-entries
-    if: needs.find-new-entries.outputs.new_entries != '[]'
-    runs-on: ubicloud-standard-2
-    strategy:
-      matrix:
-        entry_path: ${{ fromJson(needs.find-new-entries.outputs.new_entries) }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Extract changelog data
-        id: extract_data
-        run: |
-          folder_path="${{ matrix.entry_path }}"
-          index_file="$folder_path/index.md"
-
-          echo "Processing entry: $folder_path"
-
-          folder_name=$(basename "$folder_path")
-
-          # Extract date from folder name (e.g., YYYY-MM-DD-slug-name -> YYYY-MM-DD)
-          date=$(echo "$folder_name" | cut -d'-' -f1-3)
-
-          # Extract slug and title from the frontmatter of index.md
-          slug=$(grep 'slug:' "$index_file" | sed 's/slug: \(.*\)/\1/' | sed 's/"//g')
-          title=$(grep 'title:' "$index_file" | sed 's/title: \(.*\)/\1/' | sed 's/"//g')
-
-          echo "date=${date}" >> $GITHUB_OUTPUT
-          echo "title=${title}" >> $GITHUB_OUTPUT
-          echo "slug=${slug}" >> $GITHUB_OUTPUT
+      - name: Setup Node.js
+        if: steps.find_entries.outputs.entries != '[]'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Update changelog in frontend repository
+        if: steps.find_entries.outputs.entries != '[]'
         env:
-          CHANGELOG_TITLE: ${{ steps.extract_data.outputs.title }}
-          CHANGELOG_SLUG: ${{ steps.extract_data.outputs.slug }}
-          CHANGELOG_DATE: ${{ steps.extract_data.outputs.date }}
+          NEW_ENTRIES: ${{ steps.find_entries.outputs.entries }}
           GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
           FRONTEND_REPO: windmill-labs/windmill
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
           set -e
-
           if [ -z "$GH_TOKEN" ]; then
             echo "Error: GH_TOKEN secret is not set. Aborting."
             exit 1
           fi
-
           echo "---"
-          echo "Starting changelog update for: '${CHANGELOG_TITLE}'"
-
-          # 1. Configure Git for the action
+          echo "Starting changelog update."
+          # 1. Configure Git
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
           # 2. Clone the frontend repository
           echo "Cloning ${FRONTEND_REPO}..."
           git clone "https://x-access-token:${GH_TOKEN}@github.com/${FRONTEND_REPO}.git" frontend_repo
           cd frontend_repo
-
-          # 3. Create and run a Node.js script to safely update the changelog file
-          cat > update_changelog.js <<'EOF'
-          const fs = require('fs');
-          const file = 'frontend/src/lib/components/sidebar/changelogs.ts';
-
-          if (!fs.existsSync(file)) {
-            console.error(`Error: ${file} not found in repository.`);
-            process.exit(1);
-          }
-
-          const content = fs.readFileSync(file, 'utf-8');
-
-          const title = process.env.CHANGELOG_TITLE.replace(/'/g, "\\'");
-          const slug = process.env.CHANGELOG_SLUG;
-          const date = process.env.CHANGELOG_DATE;
-
-          const newEntryString = `\t{\n\t\tlabel: '${title}',\n\t\thref: 'https://www.windmill.dev/changelog/${slug}',\n\t\tdate: '${date}'\n\t},`;
-
-          // Prevent adding a duplicate entry
-          if (content.includes(`href: 'https://www.windmill.dev/changelog/${slug}'`)) {
-            console.log("Changelog entry with this slug already exists. Skipping.");
-            process.exit(0);
-          }
-
-          // Prepend the new entry to the array
-          const newContent = content.replace(
-            /(const changelogs: Changelog\[] = \[)/,
-            `$1\n${newEntryString}`
-          );
-
-          fs.writeFileSync(file, newContent);
-          console.log(`Successfully prepared update for ${file}`);
-          EOF
-
-          node update_changelog.js
-
-          # Create a new branch
+          # 3. Create a new branch
           BRANCH_NAME="changelog-update-${GITHUB_RUN_ID}"
           git checkout -b "${BRANCH_NAME}"
-
-          # Commit and push the changes if any were made
+          # 4. Run the Node.js script to update the changelog file
+          node ../.github/scripts/update-changelog.js
+          # 5. Commit and push the changes if any were made
           git add frontend/src/lib/components/sidebar/changelogs.ts
-
           if git diff --staged --quiet; then
-            echo "No changes to commit."
+            echo "No changes to commit. The changelog entries may already exist."
           else
+            COMMIT_MESSAGE="docs(changelog): add new entries from changelog"
             echo "Committing and pushing changes..."
-            git commit -m "docs(changelog): add '${CHANGELOG_TITLE}'"
+            git commit -m "${COMMIT_MESSAGE}"
             git push origin "${BRANCH_NAME}"
             echo "Successfully pushed changelog update to ${FRONTEND_REPO}."
-            gh pr create --title "docs(changelog): add '${CHANGELOG_TITLE}'" --body "This PR adds a new changelog entry for '${CHANGELOG_TITLE}'." --base main --head "${BRANCH_NAME}" --draft
+            gh pr create --title "${COMMIT_MESSAGE}" --body "This PR adds new changelog entries." --base main --head "${BRANCH_NAME}"
           fi
-
           echo "---"
