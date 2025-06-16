@@ -9,7 +9,7 @@ on:
 
 jobs:
   find-new-entries:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-2
     outputs:
       new_entries: ${{ steps.find_entries.outputs.entries }}
     steps:
@@ -40,7 +40,7 @@ jobs:
   process-new-entries:
     needs: find-new-entries
     if: needs.find-new-entries.outputs.new_entries != '[]'
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-2
     strategy:
       matrix:
         entry_path: ${{ fromJson(needs.find-new-entries.outputs.new_entries) }}
