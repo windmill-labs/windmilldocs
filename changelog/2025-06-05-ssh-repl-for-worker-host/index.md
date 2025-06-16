@@ -2,7 +2,7 @@
 slug: ssh-repl-for-worker-host
 version: v1.495.0
 title: SSH REPL to access the worker host
-tags: ['ssh', 'repl', 'debugging', 'bash', 'workers']
+tags: ['SSH', 'REPL', 'Debugging', 'Bash', 'Workers']
 description: Windmill now includes an interactive SSH-like REPL console for each worker, allowing you to run bash commands on the machine where the worker is hosted. This enables seamless on-the-fly debugging, filesystem exploration, and command execution directly from the UI.
 features:
   - Open a bash REPL session per worker.
