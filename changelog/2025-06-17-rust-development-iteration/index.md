@@ -1,6 +1,6 @@
 ---
 slug: rust-development-iteration
-version: v1.496.0
+version: v1.494.0
 title: Improved Rust development iteration
 tags: ['Rust', 'Development', 'Performance']
 description: Rust development in Windmill is now significantly faster with optimized build strategies - debug mode for previews with shared build directories, and release mode for deployments.
