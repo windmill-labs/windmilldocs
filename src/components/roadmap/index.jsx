@@ -5,14 +5,14 @@ import styles from './styles.module.css';
 const roadmapItems = [
 	{
 		title: 'Ruby support',
-		month: 'June',
+		month: 'July',
 		category: 'Languages',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/3201',
 		description: ''
 	},
 	{
 		title: 'Settable permissions within object storage by folders',
-		month: 'May',
+		month: 'June',
 		category: 'Backend',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5446',
 		description: `Currently the workspace object storage is all or nothing. You can either see the object explorer or not, and you can either write and read everywhere or not.
@@ -21,29 +21,21 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Hide sensitive values from logs',
-		month: 'June',
+		month: 'July',
 		category: 'Backend',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5450',
 		description: `SDK clients should automatically propagate to the workers (maybe using a special pattern in stdout) that there is some strings that are sensitive because they correspond to secrets pulled with getResource and getValue. Additionally, workers should be able to have a list of values to consider secrets synced from an external source-of-truth. Those sensitive values would always be masked in logs.`
 	},
 	{
 		title: 'Database explorer for every SQL',
-		month: 'May',
+		month: 'June',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5448',
 		description: `It would be nice to have a database explorer similar to Supabase to explore your database data and run REPL like commands directly from a windmill db resource`
 	},
 	{
-		title: 'SSH-like repl direct to workers (ee)',
-		month: 'May',
-		category: 'Developer',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5449',
-		description: `feature: SSH-like repl direct to workers (ee)`
-	},
-
-	{
 		title: 'Dedicated workers improvements',
-		month: 'May',
+		month: 'June',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5337',
 		description:
 			'Dedicated workers are currently a setting for individual scripts, flows and worker groups. A dedicated worker can only be dedicated to one script or flow. We mean to change that so that in the extreme case, it can handle a full workspace.\n\nWe want them to now have a configuration, let\'s call it the dedicated worker configurations that select all the flows and scripts (potentially apps) it will be dedicated to:\nfor all those it needs to do a compaction for ts and python where it will essentially route internally the job to the right subfunction based on job path which mean all those scripts can now run on the same runtime and we have at most 2 running runtimes (bun, python) on a dedicated worker. Those configuration can be deployed and each deployment will have a deployment version and a status . It corresponds to the status of creating the single lockfile for ts and single lockfile for python. If we have incompatible reqs for different scripts it will fail otherwise it pass.\n\nInstead of having to declare if a script or flow is ran on dedicated worker on the script or flow, they will be automatically updated when they are part of a successful deployment of a worker config such that their tag become dedicated:<dedicated_worker_config_name>\nThe creation of the compacted view is the "hard part". Once we have those, we can use our normal traversers to generated or fail to generate the single lockfile.',
@@ -51,7 +43,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Interactive script debugger',
-		month: 'May',
+		month: 'June',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5432',
 		important: true,
@@ -59,7 +51,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Code/React UI builder',
-		month: 'May',
+		month: 'June',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5433',
 		important: true,
 		description:
@@ -74,37 +66,21 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Free form flows',
-		month: 'May',
+		month: 'June',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5435',
 		description:
 			'- Free positioning of nodes\n- Colorable Rectangle to group nodes\n- Free Text annotable anywhere'
 	},
 	{
 		title: 'AI step as flow primitive',
-		month: 'June',
+		month: 'July',
 		category: 'AI',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5436',
 		description: '- More powerful and native API calls to AI models'
 	},
 	{
-		title: 'OpenAPI -> HTTP routes + scripts templates',
-		month: 'May',
-		category: 'Integration',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5438',
-		description:
-			'Ability to transform an OpenAPI spec into a set of http routes + scripts pre-generated by AI'
-	},
-	{
-		title: 'Workspace -> OpenAPI',
-		month: 'May',
-		category: 'Integration',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5439',
-		description:
-			'Generate all the webhooks and HTTP routers, as OpenAPI endpoints, including summary and description'
-	},
-	{
 		title: 'Improved local dev experience',
-		month: 'May',
+		month: 'June',
 		category: 'Developer',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5440',
 		description:
@@ -112,15 +88,15 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Exhaustive Hub integrations generated by AI',
-		month: 'June',
+		month: 'July',
 		category: 'Integration',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5441',
 		description:
 			'- Improve AI agents to generate both code and test for all possible integrations\n- Make it easier for community to contribute to this process'
 	},
 	{
-		title: 'Data pipelines v2',
-		month: 'July',
+		title: 'Data pipelines v2: DuckLake integration',
+		month: 'August',
 		category: 'Backend',
 		important: true,
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5442',
@@ -129,7 +105,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Shardable job queue for unlimited scalability',
-		month: 'July',
+		month: 'August',
 		category: 'Backend',
 		issueLink: '',
 		description:
