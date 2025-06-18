@@ -405,6 +405,22 @@ The deletion is irreversible.
 
 :::
 
+## Export webhook definitions to OpenAPI
+
+Windmill supports generating an OpenAPI 3.1 specification that includes both HTTP routes and webhook triggers.
+
+Webhook endpoints included in the spec:
+- Are matched using filters you define
+- Include `summary` and `description` if available
+- Are automatically mapped to use **JWT Bearer authentication** in the spec
+
+This is useful if you're:
+- Documenting your webhook endpoints
+- Generating SDKs or reverse proxies
+- Integrating with third-party API tools
+
+You can generate this from the [Custom HTTP routes](/docs/core_concepts/http_routing#generate-an-openapi-specification-from-http-routes-and-webhooks) page.
+
 ## Workspace webhook
 
 Connect your Windmill workspace to an external service to sync or get notified about any change.
