@@ -8,5 +8,5 @@ features:
   - Optional custom instructions to guide AI form filling behavior
   - Auto-fill script and flow input forms using AI
 image: ./image.png
-docs: /docs/core_concepts/ai_generation#windmill-ai-for-general-help
+docs: /docs/core_concepts/ai_generation#fill-your-script-and-flow-run-forms
 ---
