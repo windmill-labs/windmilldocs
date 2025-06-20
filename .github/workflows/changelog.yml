@@ -37,11 +37,19 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Generate an installation token
+        id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.INTERNAL_APP_ID }}
+          private-key: ${{ secrets.INTERNAL_APP_KEY }}
+          owner: windmill-labs
+
       - name: Update changelog in frontend repository
         if: steps.find_entries.outputs.entries != '[]'
         env:
           NEW_ENTRIES: ${{ steps.find_entries.outputs.entries }}
-          GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+          GH_TOKEN: ${{ steps.app.outputs.token }}
           FRONTEND_REPO: windmill-labs/windmill
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
@@ -53,8 +61,8 @@ jobs:
           echo "---"
           echo "Starting changelog update."
           # 1. Configure Git
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.name 'windmill-internal-app[bot]'
+          git config --global user.email 'windmill-internal-app[bot]@users.noreply.github.com'
           # 2. Clone the frontend repository
           echo "Cloning ${FRONTEND_REPO}..."
           git clone "https://x-access-token:${GH_TOKEN}@github.com/${FRONTEND_REPO}.git" frontend_repo
