@@ -1,6 +1,6 @@
 # Claude writing style guide
 
-This file contains raw feedback about Claude's writing style when creating Windmill documentation. Review these feedbacks before writing new documentation to avoid repeating past issues.
+This file contains writing style guidance when creating Windmill documentation. Review this guide before writing new documentation.
 
 ## General writing style issues
 
