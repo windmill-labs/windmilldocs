@@ -226,6 +226,16 @@ You can also choose to [run the script from the CLI](../../../advanced/3_cli/ind
 
 Every bundle on Rust is cached on disk by default. Furtherfore if you use the [Distributed cache storage](../../../misc/13_s3_cache/index.mdx), it will be available to every other worker, allowing fast startup for every worker.
 
+## Fast development iteration
+
+Windmill optimizes Rust development for faster iteration cycles. When developing and testing scripts:
+
+- **Debug mode builds**: Preview and test runs use debug mode compilation, which is significantly faster to build but produces unoptimized binaries
+- **Shared build directory**: All Rust scripts share a common build directory, reducing redundant compilation and improving cache efficiency
+- **Release mode deployment**: When scripts are deployed to production, they are compiled in release mode for optimal performance
+
+This approach provides the best of both worlds - fast development cycles during script creation and testing, with optimized performance in production deployments.
+
 ## What's next?
 
 This script is a minimal working example, but there's a few more steps that can be useful in a real-world use case:
