@@ -145,8 +145,6 @@ You can provide the specification in one of three ways:
 
 Windmill supports generating a compliant OpenAPI 3.1 specification from your existing HTTP routes and webhook triggers.
 
-This lets you automatically document your API surface, including routing, authentication, and metadata — ready for sharing, client SDK generation, or integration with API gateways and documentation tools.
-
 ### How it works
 
 You can export a unified OpenAPI specification that includes:
@@ -190,8 +188,14 @@ The OpenAPI document reflects security as follows:
 
 All defined security schemes are included under `components.securitySchemes`.
 
----
 
+### Additional behavior
+
+- For **HTTP routes**, any route segments like `:user_id` are automatically converted to OpenAPI `path` parameters
+- For **webhooks**, both **asynchronous** and **synchronous** endpoint variants are included in the spec
+- Metadata such as `summary` and `description` is included when available
+- Standardized `requestBodies` and `responses` are defined in the `components` section
+---
 
 ## Authentication options
 
