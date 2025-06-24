@@ -1,0 +1,286 @@
+# Rust client
+
+The Rust client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your Rust applications. By authenticating with the `WM_TOKEN` reserved variable or custom tokens, you can utilize the Rust client to access various functionalities offered by Windmill.
+
+## Installation
+
+To use the Rust client library, you need to add the `wmill` crate to your `Cargo.toml` dependencies:
+
+```toml
+[dependencies]
+wmill = "^1.0"
+```
+
+Or using cargo:
+
+```bash
+cargo add wmill
+```
+
+## Usage
+
+To use the Rust client library in your script, include the following in your code:
+
+```rust
+use wmill::*;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Your script code
+    Ok(())
+}
+```
+
+## Client Configuration
+
+The Rust client can be configured with different authentication methods and base URLs:
+
+```rust
+use wmill::{Client, AuthMethod};
+
+// Using the default configuration (reads WM_TOKEN from environment)
+let client = Client::new()?;
+
+// Using a custom token
+let client = Client::new_with_token("your_token_here")?;
+
+// Using a custom base URL and token
+let client = Client::new_with_config("https://your-windmill-instance.com/api", "your_token")?;
+```
+
+## Core Methods
+
+### get_resource
+
+Retrieves a resource at the specified path from the Windmill platform.
+
+```rust
+use serde_json::Value;
+
+async fn get_resource_example() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    let resource: Value = client.get_resource("u/user/my_resource").await?;
+    println!("Resource: {}", resource);
+    Ok(())
+}
+```
+
+### run_script_async
+
+Launches the execution of a script asynchronously on the Windmill platform.
+
+```rust
+use std::collections::HashMap;
+use serde_json::Value;
+
+async fn run_script_async_example() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    
+    let mut args = HashMap::new();
+    args.insert("name".to_string(), Value::String("World".to_string()));
+    
+    let job_id = client.run_script_async("script_hash_here", &args, None).await?;
+    println!("Job started with ID: {}", job_id);
+    Ok(())
+}
+```
+
+### run_script_sync
+
+Runs a script synchronously on the Windmill platform, waiting for completion.
+
+```rust
+use std::collections::HashMap;
+use serde_json::Value;
+
+async fn run_script_sync_example() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    
+    let mut args = HashMap::new();
+    args.insert("input".to_string(), Value::String("test".to_string()));
+    
+    let result = client.run_script_sync("script_hash_here", &args, false).await?;
+    println!("Script result: {}", result);
+    Ok(())
+}
+```
+
+### get_job_status
+
+Retrieves the status of a queued or completed job.
+
+```rust
+use wmill::{Client, JobStatus};
+
+async fn check_job_status() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    let status = client.get_job_status("job_id_here").await?;
+    
+    match status {
+        JobStatus::Completed => println!("Job completed successfully"),
+        JobStatus::Running => println!("Job is still running"),
+        JobStatus::Waiting => println!("Job is waiting in queue"),
+        JobStatus::Failed => println!("Job failed"),
+    }
+    Ok(())
+}
+```
+
+### get_result
+
+Retrieves the result of a completed job.
+
+```rust
+use serde_json::Value;
+
+async fn get_job_result() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    let result: Value = client.get_result("job_id_here").await?;
+    println!("Job result: {}", result);
+    Ok(())
+}
+```
+
+### get_variable
+
+Retrieves a variable from Windmill.
+
+```rust
+async fn get_variable_example() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    let value = client.get_variable("f/folder/variable_name").await?;
+    println!("Variable value: {}", value);
+    Ok(())
+}
+```
+
+### get_version
+
+Returns the current version of the Windmill backend.
+
+```rust
+async fn get_windmill_version() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    let version = client.get_version().await?;
+    println!("Windmill version: {}", version);
+    Ok(())
+}
+```
+
+## JobStatus Enumeration
+
+The `JobStatus` enum represents the different states of a job in Windmill:
+
+```rust
+pub enum JobStatus {
+    Waiting,    // Job is queued and waiting to be executed
+    Running,    // Job is currently running  
+    Completed,  // Job completed successfully
+    Failed,     // Job failed during execution
+}
+```
+
+## Error Handling
+
+The Rust client uses standard Rust error handling patterns:
+
+```rust
+use wmill::{Client, WindmillError};
+
+async fn handle_errors() -> Result<(), WindmillError> {
+    let client = Client::new()?;
+    
+    match client.get_resource("invalid/path").await {
+        Ok(resource) => println!("Got resource: {}", resource),
+        Err(WindmillError::NotFound) => println!("Resource not found"),
+        Err(WindmillError::Unauthorized) => println!("Authentication failed"),
+        Err(e) => println!("Other error: {}", e),
+    }
+    
+    Ok(())
+}
+```
+
+## Advanced Usage
+
+### Custom HTTP Client
+
+You can configure the underlying HTTP client for custom timeouts, proxies, or other settings:
+
+```rust
+use wmill::Client;
+use reqwest::ClientBuilder;
+use std::time::Duration;
+
+async fn custom_client() -> Result<(), Box<dyn std::error::Error>> {
+    let http_client = ClientBuilder::new()
+        .timeout(Duration::from_secs(30))
+        .build()?;
+    
+    let client = Client::new_with_http_client(
+        "https://your-windmill-instance.com/api",
+        "your_token",
+        http_client
+    )?;
+    
+    Ok(())
+}
+```
+
+### Polling for Job Completion
+
+```rust
+use tokio::time::{sleep, Duration};
+use wmill::{Client, JobStatus};
+
+async fn wait_for_job_completion(job_id: &str) -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new()?;
+    
+    loop {
+        let status = client.get_job_status(job_id).await?;
+        
+        match status {
+            JobStatus::Completed => {
+                let result = client.get_result(job_id).await?;
+                println!("Job completed with result: {}", result);
+                break;
+            },
+            JobStatus::Failed => {
+                println!("Job failed");
+                break;
+            },
+            JobStatus::Running | JobStatus::Waiting => {
+                println!("Job still in progress...");
+                sleep(Duration::from_secs(2)).await;
+            }
+        }
+    }
+    
+    Ok(())
+}
+```
+
+## Integration with Windmill Scripts
+
+When using the Rust client within a Windmill script, the authentication is handled automatically:
+
+```rust
+use wmill::*;
+use serde_json::Value;
+
+// This function signature will be used to generate the Windmill UI
+pub async fn main(input_param: String) -> Result<Value, Box<dyn std::error::Error>> {
+    // The WM_TOKEN is automatically available in Windmill scripts
+    let client = Client::new()?;
+    
+    // Use the client to interact with other Windmill resources
+    let resource = client.get_resource("u/user/database_config").await?;
+    
+    // Your script logic here
+    let result = serde_json::json!({
+        "message": format!("Processed: {}", input_param),
+        "resource_data": resource
+    });
+    
+    Ok(result)
+}
+```
