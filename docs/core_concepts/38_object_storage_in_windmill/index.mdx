@@ -14,13 +14,13 @@ Additionally, for [instance integration](#instance-object-storage), the Enterpri
 
 ## Workspace object storage
 
-Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials.
+Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or Google Cloud Storage to enable users to read and write from object storage without having to have access to the credentials.
 
 ![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
 
 Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
 
-Once you've created an [S3 or Azure Blob resource](../../integrations/s3.mdx) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+Once you've created an [S3](../../integrations/s3.mdx), [Azure Blob](../../integrations/microsoft-azure-blob.md), or [Google Cloud Storage](../../integrations/google-cloud-storage.mdx) resource in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
 ![S3 storage workspace settings](../11_persistent_storage/workspace_settings.png)
 
@@ -348,6 +348,33 @@ export async function main() {
 	allowFullScreen
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
+
+### Google Cloud Storage compatibility
+
+Google Cloud Storage (GCS) is fully compatible with Windmill's S3 integration through Google's S3-compatible interoperability API. This means you can use all Windmill object storage features with GCS buckets.
+
+To use Google Cloud Storage with Windmill:
+
+1. **Create HMAC keys** for your GCS service account in the Google Cloud Console
+2. **Configure the S3 resource** using:
+   - **Endpoint**: `storage.googleapis.com`
+   - **Access Key/Secret Key**: Your HMAC credentials
+   - **Region**: Your GCS bucket region (e.g., `us-central1`)
+3. **Use the same S3 functions** (`loadS3File`, `writeS3File`, etc.) in your scripts
+
+All workspace and instance object storage features work seamlessly with GCS, including:
+- File upload/download through Windmill UI
+- Distributed dependency caching
+- Large log storage
+- Secondary storage configurations
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Google Cloud Storage integration"
+		description="Complete setup guide for using Google Cloud Storage with Windmill's S3-compatible object storage features."
+		href="/docs/integrations/google-cloud-storage"
+	/>
+</div>
 
 ### Windmill integration with Polars and DuckDB for data pipelines
 

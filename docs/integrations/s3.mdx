@@ -30,7 +30,7 @@ Here are the required details:
 
 <br/>
 
-For guidelines on where to find such details on a given platform, please go to the [AWS S3](./aws-s3.mdx) or [Cloudflare R2](./cloudflare-r2.mdx) pages.
+For guidelines on where to find such details on a given platform, please go to the [AWS S3](./aws-s3.mdx), [Cloudflare R2](./cloudflare-r2.mdx), or [Google Cloud Storage](./google-cloud-storage.mdx) pages.
 
 Your resource can be used [passed as parameters](../core_concepts/3_resources_and_types/index.mdx#passing-resources-as-parameters-to-scripts-preferred) or [directly fetched](../core_concepts/3_resources_and_types/index.mdx#fetching-them-from-within-a-script-by-using-the-wmill-client-in-the-respective-language) within [scripts](../script_editor/index.mdx), [flows](../flows/1_flow_editor.mdx) and [apps](../apps/0_app_editor/index.mdx).
 
@@ -59,7 +59,7 @@ Feel free to create your own S3 scripts on [Windmill](../getting_started/00_how_
 
 ## Workspace object storage
 
-Once you've created an S3 or Azure Blob resource in Windmill, you can use Windmill's native integration with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data.
+Once you've created an S3, Azure Blob, or Google Cloud Storage resource in Windmill, you can use Windmill's native integration with S3-compatible storage, making it the recommended storage for large objects like files and binary data.
 
 ![Workspace object storage Infographic](../core_concepts/11_persistent_storage/s3_infographics.png "Workspace object storage Infographic")
 
@@ -68,7 +68,7 @@ The workspace object storage is exclusive to the [Enterprise](/pricing) edition.
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workspace object storage"
-		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		description="Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or Google Cloud Storage to enable users to read and write from object storage without having to have access to the credentials."
 		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
 	/>
 </div>
@@ -82,7 +82,7 @@ Under [Enterprise Edition](/pricing), instance object storage offers advanced fe
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Instance object storage"
-		description="Connect your Windmill instance to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		description="Connect your Windmill instance to your S3 bucket, Azure Blob storage, or Google Cloud Storage to enable advanced features like distributed caching and large log storage."
 		href="/docs/core_concepts/object_storage_in_windmill#instance-object-storage"
 	/>
 </div>
