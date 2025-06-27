@@ -41,7 +41,7 @@ The new workspace will automatically be [switched](#switch-workspaces) to.
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `workspace_name` | The name of the workspace. Note: This is a name used to refer this workspace locally on your machine. It can be same or different from your remote instance |
 | `workspace_id`   | The ID of the workspace.remote. The workspace ID is displayed in the switch workspace menu.                                                                 |
-| `remote`         | The remote URL.                                                                                                                                             |
+| `remote`         | The base URL of the Windmill installation (e.g., https://app.windmill.dev or https://your-windmill-instance.com).                                          |
 
 ### Options
 
@@ -59,10 +59,10 @@ The new workspace will automatically be [switched](#switch-workspaces) to.
 wmill workspace add
 ```
 
-2. Adds a workspace with the name "MyWorkspace", ID "workspace123", and remote URL "<a href="https://example.com/myworkspace" rel="nofollow">https://example.com/myworkspace</a>".
+2. Adds a workspace with the name "MyWorkspace", ID "workspace123", and base URL of the Windmill installation "https://example.com".
 
 ```bash
-wmill workspace add MyWorkspace workspace123 https://example.com/myworkspace
+wmill workspace add MyWorkspace workspace123 https://example.com
 ```
 
 1. This command creates a workspace with the name "MyWorkspace2," using the provided username "john.doe."
