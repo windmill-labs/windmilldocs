@@ -60,6 +60,16 @@ To connect with Claude:
 - Choose a name for your integration (e.g. "Windmill")
 - Add your MCP URL in the "URL" field
 
+To connect with Claude Code:
+
+- Use the Claude Code CLI to add the Windmill MCP server:
+
+```bash
+claude mcp add --transport http windmill <windmill_url_with_token>
+```
+
+Replace `<windmill_url_with_token>` with your actual MCP URL from the previous step.
+
 Once connected, your LLM will be able to run any script or flow in your Windmill workspace.
 
 ## Example: Triggering a script from Claude
