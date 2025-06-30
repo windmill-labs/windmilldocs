@@ -142,7 +142,95 @@ export async function main(user_id: string, name: string, age: number) {
   // Do something
 }
 ```
+---
 
+## Generate routes from an OpenAPI specification
+
+Windmill can generate HTTP routes directly from an OpenAPI 2.0+ specification in JSON or YAML format.
+
+You can provide the specification in one of three ways:
+- Paste raw content
+- Upload a file
+- Provide a public URL
+
+### To generate routes
+
+- Navigate to the **Custom HTTP routes** page.
+- Click the **From OpenAPI spec** button.
+- Pick a folder for the generated routes.
+- Choose your input method and provide the OpenAPI spec.
+- Click **Generate HTTP routes**.
+
+### Behavior and limitations
+
+- If a path object has a `summary` field, it will be used as suffix for the trigger path.
+  - If the `summary` exceeds 255 characters, it will be **automatically truncated** to fit the maximum allowed length.
+- If no `summary` is defined, Windmill generates a unique route path automatically.
+- Generated routes **do not include a script or flow binding** (`script_path`) by default.
+  - This means requests to the route will return an error until a runnable is attached.
+- You can:
+  - **Save routes immediately without modifying them**.
+  - **Edit any route before or after saving**, to assign a runnable, change route path, etc.
+- External `$ref` references (e.g., referencing outside the spec) are **not supported**.
+  - You must resolve them beforehand.
+  - Only internal references (e.g., `#/components/...`) are supported.
+
+---
+
+## Generate an OpenAPI specification from HTTP routes and webhooks
+
+Windmill supports generating a compliant OpenAPI 3.1 specification from your existing HTTP routes and webhook triggers.
+
+### How it works
+
+You can export a unified OpenAPI specification that includes:
+
+- HTTP routes and webhook triggers (filtered by path or type)
+- Route metadata: `summary`, `description`, async/sync behavior
+- Security models for supported authentication types
+- Parameter inference (e.g., `:id` becomes an OpenAPI `path` parameter)
+- Auto-generated `servers`, `components`, and reusable definitions
+
+### To generate a spec
+
+1. Go to **Custom HTTP routes**
+2. Click **To OpenAPI spec**
+3. (Optional) Provide API metadata:
+   - **Title** and **version** (default to `"Windmill API"` and `"1.0.0"` if omitted)
+   - **Description**, **contact info**, and **license** are also supported
+4. Add **filters** to include specific routes or webhooks:
+   - HTTP Routes: by folder, path, and route pattern
+   - Webhooks: by kind (`script` or `flow`) and path
+5. Choose output format: **YAML** or **JSON**
+6. Click **Generate OpenAPI document**
+
+You can then:
+- Preview and copy the document
+- Download it
+- Copy a ready-made `cURL` command to call the generation API
+
+### Security mapping
+
+The OpenAPI document reflects security as follows:
+
+- **HTTP Routes**:
+  - ✅ `Windmill Auth` → JWT bearer scheme (`bearerFormat: JWT`)
+  - ✅ `Basic Auth` → HTTP Basic auth scheme
+  - ✅ `API Key` → API key in header (with exact header name)
+  - ❌ Other methods (e.g., Custom Script, Signature Auth) will not be included in the `security` field
+
+- **Webhooks**:
+  - Always mapped to `JWT bearer` authentication (`bearerFormat: JWT`)
+
+All defined security schemes are included under `components.securitySchemes`.
+
+
+### Additional behavior
+
+- For **HTTP routes**, any route segments like `:user_id` are automatically converted to OpenAPI `path` parameters
+- For **webhooks**, both **asynchronous** and **synchronous** endpoint variants are included in the spec
+- Metadata such as `summary` and `description` is included when available
+- Standardized `requestBodies` and `responses` are defined in the `components` section
 ---
 
 ## Authentication options
