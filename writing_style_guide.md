@@ -4,7 +4,7 @@ This file contains writing style guidance when creating Windmill documentation. 
 
 ## General writing style issues
 
-### Overly Marketing Language
+### Overly marketing language
 
 **Problem example:**
 "Windmill can automatically fill your script and flow input forms using AI to save you time and effort. This intelligent feature analyzes your form parameters and can populate them with contextually appropriate values based on your requirements."
