@@ -11,5 +11,5 @@ features:
   - Include context elements like database schemas, deployed script diffs, and runtime errors
   - Quick actions for common tasks such as bug fixing, refactoring, and documentation
   - Support for any AI model including self-hosted/custom base URL (now part of the community edition!)
-docs: /docs/core_concepts/ai_generation
+docs: /docs/core_concepts/ai_generation#windmill-ai-chat
 ---
