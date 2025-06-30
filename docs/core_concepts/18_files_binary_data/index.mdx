@@ -7,18 +7,18 @@ import TabItem from '@theme/TabItem';
 In Windmill, JSON is the primary data format used for representing information.
 Binary data, such as files, are not easy to handle. Windmill provides two options.
 
-1. Have a dedicated storage for binary data: S3 or Azure Blob. Windmill has a first class integration with S3 buckets or Azure Blob containers.
+1. Have a dedicated storage for binary data: S3, Azure Blob, or Google Cloud Storage. Windmill has a first class integration with S3 buckets, Azure Blob containers, or Google Cloud Storage buckets.
 2. If the above is not an option, there's always the possibility to store the binary as base64 encoded string.
 
 ## Workspace object storage
 
-The recommended way to store binary data is to upload it to S3 or Azure Blob Storage leveraging [Windmill's workspace object storage](../38_object_storage_in_windmill/index.mdx).
+The recommended way to store binary data is to upload it to S3, Azure Blob Storage, or Google Cloud Storage leveraging [Windmill's workspace object storage](../38_object_storage_in_windmill/index.mdx).
 
 Instance and workspace object storage are different from using [S3 resources](../../integrations/s3.mdx) within scripts, flows, and apps, which is free and unlimited. What is exclusive to the [Enterprise](/pricing) version is using the integration of Windmill with S3 that is a major convenience layer to enable users to read and write from S3 without having to have access to the credentials.
 
 :::info
 
-Windmill's integration with S3 and Azure Blob Storage works exactly the same and the features described below works in both cases. The only difference is that you need to select an `azure_blob` resource when setting up the S3 storage in the Workspace settings.
+Windmill's integration with S3, Azure Blob Storage, and Google Cloud Storage works exactly the same and the features described below work in all cases. The only difference is that you need to select an `azure_blob` resource for Azure Blob or a `gcloud_storage` resource for Google Cloud Storage when setting up the storage in the Workspace settings.
 
 :::
 

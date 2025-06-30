@@ -1,0 +1,20 @@
+# Google Cloud Storage integration
+
+[Google Cloud Storage](https://cloud.google.com/storage) is Google's cloud storage service, an alternative to S3 and Azure Blob.
+
+:::info Windmill for data pipelines
+
+You can link a Windmill workspace to a Google Cloud Storage bucket and use it as source and/or target of your processing steps seamlessly, without any boilerplate.
+
+<br/>
+
+See [Windmill for data pipelines](../core_concepts/27_data_pipelines/index.mdx) for more details.
+
+:::
+
+To integrate Google Cloud Storage to Windmill, you need to save the following elements as a [resource](../core_concepts/3_resources_and_types/index.mdx).
+
+| Property  | Type    | Description                  | Default | Required        | Where to Find                                      | Additional Details                                                                                                                                                                                |
+| --------- | ------- | ---------------------------- | ------- | --------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| bucket    | string  | Google Cloud Storage bucket name      |         | true            | Google Cloud Console > Storage > Buckets                     | Name of the GCS bucket                                                                             |
+| serviceAccountKey  | string/object  | Service Account Key |         | true            | Google Cloud Console > IAM & Admin > Service Accounts               | For workspace: reference to a `gcloud` resource. For instance: JSON object containing the service account key          |
