@@ -48,11 +48,12 @@ This navigation mode makes Windmill more accessible by providing contextual help
 The script editor includes an integrated AI chat panel designed to assist with coding tasks directly. 
 The assistant can generate code, identify and fix issues, suggest improvements, add documentation, and more.
 
-Key features include:
+You can open the AI chat panel using **Cmd+L** (Mac) or **Ctrl+L** (Windows/Linux). When you have code selected, it will automatically include the selected code in your message to the AI.
 
-- **Granular Apply/Reject**: When the AI suggests code changes, you can apply or discard specific parts of the suggestion, rather than having to accept or reject the entire block.
-- **Contextual Awareness**: You can provide additional context to guide the AI's suggestions, such as database schemas, diffs from the deployed version, or runtime errors.
-- **Quick Actions**: The panel includes built-in shortcuts for common tasks like fixing bugs or optimizing code, making it faster to apply standard improvements.
+Key features:
+- When the AI suggests code changes, you can apply or discard specific parts of the suggestion, rather than having to accept or reject the entire block.
+- You can provide additional context to guide the AI's suggestions, such as database schemas, deployed script diffs, and runtime errors. Access the context menu by clicking the context button or typing `@` directly in the chat input.
+- The panel includes built-in shortcuts for common tasks like fixing bugs or optimizing code.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -62,16 +63,10 @@ Key features include:
 
 ### Code completion
 
-The script editor includes code autocomplete using AI. Pressing Tab completes code snippets based on neighboring context, not just at the cursor.
+The script editor includes code autocomplete that provides real-time suggestions as you type. 
+Currently, this feature requires [Mistral Codestral](https://mistral.ai/news/codestral), which excels at code completion thanks to their specialized [FIM (Fill-in-Middle)](https://docs.mistral.ai/capabilities/code_generation/#fill-in-the-middle-endpoint) endpoint.
 
-It can be enabled/disabled at the user level in the script editor settings.
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/ai_autocomplete.mp4"
-/>
-
+The autocomplete feature can be enabled globally in the workspace settings. Individual users can then toggle it on or off in their personal script editor settings.
 
 ### Summary copilot
 
