@@ -12,5 +12,5 @@ features:
   - Quick actions for common tasks such as bug fixing, refactoring, and documentation
   - AI code suggestions that completes code snippets based on neighboring context, not just at the cursor
   - Support for any AI model including self-hosted/custom base URL (now part of the community edition!)
-docs: /docs/core_concepts/ai_generation
+docs: /docs/core_concepts/ai_generation#windmill-ai-chat
 ---
