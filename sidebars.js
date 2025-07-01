@@ -251,7 +251,7 @@ const sidebars = {
 							label: 'Engine benchmarks',
 							link: {
 								type: 'doc',
-								id: 'misc/benchmarks/competitors/results/index',
+								id: 'misc/benchmarks/competitors/results/index'
 							},
 							items: [
 								{
@@ -346,7 +346,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/large_data_files',
-							label: 'Large data (S3, R2, MinIO, Azure Blob)'
+							label: 'Large data (S3, R2, MinIO, Azure Blob, AWS OIDC, GCS)'
 						},
 						{
 							type: 'doc',
@@ -453,6 +453,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/gcp',
 							label: 'Google Cloud Platform'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/google-cloud-storage',
+							label: 'Google Cloud Storage'
 						},
 						{
 							type: 'doc',
@@ -858,7 +863,7 @@ const sidebars = {
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/default_app/index',
-						'apps/app_e-commerce',
+						'apps/app_e-commerce'
 					],
 
 					collapsed: true
