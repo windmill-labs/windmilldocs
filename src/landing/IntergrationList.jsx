@@ -32,6 +32,7 @@ const integrations = [
 	{ name: 'Cloudflare-r2', src: 'third_party_logos/cloudflare.svg' },
 	{ name: 'Datadog', src: 'third_party_logos/datadog.svg' },
 	{ name: 'Discord', src: 'third_party_logos/discord.svg' },
+	{ name: 'DuckDB', src: 'third_party_logos/duckdb.svg' },
 	{ name: 'FaunaDB', src: 'third_party_logos/faunadb.svg' },
 	{ name: 'Funkwhale', src: 'third_party_logos/funkwhale.svg' },
 	{ name: 'Gcal', src: 'third_party_logos/gcal.svg' },
