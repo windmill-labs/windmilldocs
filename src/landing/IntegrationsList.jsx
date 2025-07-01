@@ -4,60 +4,86 @@ import { ExternalLink, ArrowRight } from 'lucide-react';
 import classNames from 'classnames';
 import {
 	SiGithub,
-	SiLinkedin,
 	SiMatrix,
 	SiMysql,
 	SiMicrosoftsqlserver,
 	SiOpenai,
 	SiTelegram,
 	SiToggl,
-	SiBigquery
+	SiMqtt
 } from 'react-icons/si';
 
 const integrations = [
-	{ name: 'OpenAI', src: 'third_party_logos/openai.svg', Icon: SiOpenai },
+	// Databases
 	{ name: 'PostgreSQL', src: 'third_party_logos/postgres.svg' },
 	{ name: 'MySQL', src: 'third_party_logos/mysql.svg', Icon: SiMysql },
 	{ name: 'MS SQL', src: 'third_party_logos/msssql.svg', Icon: SiMicrosoftsqlserver },
 	{ name: 'BigQuery', src: 'third_party_logos/bigquery.svg' },
 	{ name: 'Snowflake', src: 'third_party_logos/snowflake.svg' },
+	{ name: 'ClickHouse', src: 'third_party_logos/clickhouse.svg' },
+	{ name: 'DuckDB', src: 'third_party_logos/duckdb.svg' },
+	{ name: 'FaunaDB', src: 'third_party_logos/faunadb.svg' },
+	{ name: 'MongoDB', src: 'third_party_logos/mongodb.svg' },
+	{ name: 'Neon', src: 'third_party_logos/neon.svg' },
+	{ name: 'Redis', src: 'third_party_logos/redis.svg' },
+	{ name: 'SurrealDB', src: 'third_party_logos/surrealdb.svg' },
+	{ name: 'Redshift', src: 'third_party_logos/redshift.svg' },
+	{ name: 'Excel', src: 'third_party_logos/excel.svg' },
+
+	// Cloud & Storage
+	{ name: 'AWS', src: 'third_party_logos/aws.svg' },
+	{ name: 'Cloudflare-r2', src: 'third_party_logos/cloudflare.svg' },
+	{ name: 'S3', src: 'third_party_logos/s3.svg' },
+	{ name: 'Microsoft-Azure-Blob', src: 'third_party_logos/azure_blob.svg' },
+	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
+
+	// Dev Tools & Platforms
 	{ name: 'GitHub', src: 'third_party_logos/github.svg', Icon: SiGithub },
 	{ name: 'GitLab', src: 'third_party_logos/gitlab.svg' },
 	{ name: 'Supabase', src: 'third_party_logos/supabase.svg' },
-	{ name: 'Slack', src: 'third_party_logos/slack.svg' },
-	{ name: 'Airtable', src: 'third_party_logos/airtable.svg' },
 	{ name: 'Appwrite', src: 'third_party_logos/appwrite.svg' },
-	{ name: 'AWS', src: 'third_party_logos/aws.svg' },
-	{ name: 'ClickHouse', src: 'third_party_logos/clickhouse.svg' },
-	{ name: 'Cloudflare-r2', src: 'third_party_logos/cloudflare.svg' },
-	{ name: 'Datadog', src: 'third_party_logos/datadog.svg' },
+	{ name: 'Svix', src: 'third_party_logos/svix.svg' },
+	{ name: 'Linear', src: 'third_party_logos/linear.svg' },
+
+	// Communication & Social
+	{ name: 'Slack', src: 'third_party_logos/slack.svg' },
 	{ name: 'Discord', src: 'third_party_logos/discord.svg' },
-	{ name: 'DuckDB', src: 'third_party_logos/duckdb.svg' },
-	{ name: 'FaunaDB', src: 'third_party_logos/faunadb.svg' },
-	{ name: 'Funkwhale', src: 'third_party_logos/funkwhale.svg' },
+	{ name: 'Telegram', src: 'third_party_logos/telegram.svg', Icon: SiTelegram },
+	{ name: 'Matrix', src: 'third_party_logos/matrix.svg', Icon: SiMatrix },
+	{ name: 'Teams', src: 'third_party_logos/teams.svg' },
+	{ name: 'Mailchimp', src: 'third_party_logos/mailchimp.svg' },
+	{ name: 'Gmail', src: 'third_party_logos/gmail.svg' },
+	{ name: 'Mastodon', src: 'third_party_logos/mastodon.svg' },
+	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg' },
+
+	// Productivity & Workflow
+	{ name: 'Airtable', src: 'third_party_logos/airtable.svg' },
 	{ name: 'Gcal', src: 'third_party_logos/gcal.svg' },
 	{ name: 'Gdrive', src: 'third_party_logos/gdrive.svg' },
-	{ name: 'Gmail', src: 'third_party_logos/gmail.svg' },
 	{ name: 'Gsheets', src: 'third_party_logos/gsheets.svg' },
+	{ name: 'Notion', src: 'third_party_logos/notion.svg' },
+	{ name: 'Toggl', src: 'third_party_logos/toggl.svg', Icon: SiToggl },
 	{ name: 'HubSpot', src: 'third_party_logos/hubspot.svg' },
-	{ name: 'LinkedIn', src: 'third_party_logos/linkedin.svg' },
-	{ name: 'Mailchimp', src: 'third_party_logos/mailchimp.svg' },
-	{ name: 'Mastodon', src: 'third_party_logos/mastodon.svg' },
-	{ name: 'Matrix', src: 'third_party_logos/matrix.svg', Icon: SiMatrix },
-	{ name: 'MongoDB', src: 'third_party_logos/mongodb.svg' },
-	{ name: 'Neon', src: 'third_party_logos/neon.svg' },
-	{ name: 'Nextcloud', src: 'third_party_logos/nextcloud.svg' },
-	{ name: 'Redis', src: 'third_party_logos/redis.svg' },
+
+	// Monitoring & Analytics
+	{ name: 'Datadog', src: 'third_party_logos/datadog.svg' },
+
+	// IoT & Messaging
+	{ name: 'MQTT', Icon: SiMqtt },
 	{ name: 'Rss', src: 'third_party_logos/rss.svg' },
-	{ name: 'S3', src: 'third_party_logos/s3.svg' },
-	{ name: 'Sendgrid', src: 'third_party_logos/sendgrid.svg' },
-	{ name: 'SMTP', src: 'third_party_logos/smtp.svg' },
+
+	// Payments & Commerce
 	{ name: 'Square', src: 'third_party_logos/square.svg' },
 	{ name: 'Stripe', src: 'third_party_logos/stripe.svg' },
-	{ name: 'SurrealDB', src: 'third_party_logos/surrealdb.svg' },
-	{ name: 'Telegram', src: 'third_party_logos/telegram.svg', Icon: SiTelegram },
-	{ name: 'Toggl', src: 'third_party_logos/toggl.svg', Icon: SiToggl },
-	{ name: 'Upstash', src: 'third_party_logos/upstash.svg' }
+
+	// Email & Notifications
+	{ name: 'Sendgrid', src: 'third_party_logos/sendgrid.svg' },
+	{ name: 'SMTP', src: 'third_party_logos/smtp.svg' },
+
+	// Other/Utilities
+	{ name: 'Funkwhale', src: 'third_party_logos/funkwhale.svg' },
+	{ name: 'Upstash', src: 'third_party_logos/upstash.svg' },
+	{ name: 'OpenAI', src: 'third_party_logos/openai.svg', Icon: SiOpenai },
 ];
 
 export default function IntergrationList() {

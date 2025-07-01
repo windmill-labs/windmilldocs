@@ -342,7 +342,7 @@ export async function main() {
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/-nJs6E_1E8Y"
-	title="Perpetual Scripts"
+	title="Secondary Storage"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -376,6 +376,8 @@ Once you have a signed S3 object, you can pass it directly to the image componen
 Under [Enterprise Edition](/pricing), instance object storage offers advanced features to enhance performance and scalability at the [instance](../../advanced/18_instance_settings/index.mdx) level. This integration is separate from the [Workspace object storage](#workspace-object-storage) and provides solutions for large-scale log management and distributed dependency caching.
 
 ![Instance object storage infographic](./instance_object_storage_infographic.png 'Instance object storage infographic')
+
+This can be configured from the [instance settings](../../advanced/18_instance_settings/index.mdx#instance-object-storage), with configuration options for S3, Azure Blob or AWS OIDC.
 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
 

@@ -7,7 +7,7 @@ With MCP, you can connect your favorite LLMs (like [Claude](https://claude.ai/do
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/De77j1T3gRs"
-	title="Perpetual Scripts"
+	title="Windmill MCP"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -39,8 +39,8 @@ Most modern LLM agents and interfaces now support MCP as a plug-and-play integra
 
 To connect with Cursor:
 
-  - Go to Cursor > Settings > MCP
-  - Click on "Add new global MCP server"
+  - Go to Cursor > Settings > MCP Tools
+  - Click on "Add a Custom MCP server"
   - Add the following configuration in the json file:
 
 ```
@@ -53,22 +53,22 @@ To connect with Cursor:
 }
 ```
 
-To connect with Claude Desktop:
+To connect with Claude:
 
-- Go to Claude Desktop > Settings > Developer
-- Click on "Modify configuration"
-- Add the following configuration in the json file:
+- Go to Claude > Settings > Integrations ([here](https://claude.ai/settings/integrations))
+- Click on "Add an integration"
+- Choose a name for your integration (e.g. "Windmill")
+- Add your MCP URL in the "URL" field
 
+To connect with Claude Code:
+
+- Use the Claude Code CLI to add the Windmill MCP server:
+
+```bash
+claude mcp add --transport http windmill <windmill_url_with_token>
 ```
-{
-  "mcpServers": {
-    "windmill-mcp": {
-      "command": "npx",
-      "args": ["-y", "supergateway", "--sse", "https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>"]
-    }
-  }
-}
-```
+
+Replace `<windmill_url_with_token>` with your actual MCP URL from the previous step.
 
 Once connected, your LLM will be able to run any script or flow in your Windmill workspace.
 

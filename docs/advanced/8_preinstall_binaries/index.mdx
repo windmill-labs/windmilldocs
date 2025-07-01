@@ -128,9 +128,15 @@ Windmill does not pre-install pip or python directly in the base image as system
 
 To pre-install packages using pip, you will want to use uv, in particular the [uv tool install](https://docs.astral.sh/uv/concepts/tools/#tools-directory) command. The bin path of uv tool is already in the PATH of the worker, so your jobs will be able to run directly binaries installed in such way.
 
-To have packages be available for import, place them in `/tmp/windmill/cache/python_xyz/global-site-packages` where xyz is the python version intended. For python 3.11, the path would be `/tmp/windmill/cache/python_311/global-site-packages`.
+To have packages be available for import, place them in `/tmp/windmill/cache/python_x_y/global-site-packages` where x_y is the python version intended. For python 3.11.*, the path would be `/tmp/windmill/cache/python_3_11/global-site-packages`.
 
 :::
+
+### Example: Installing Pandas
+
+```bash
+uv pip install --system pandas --target /tmp/windmill/cache/python_3_11/global-site-packages
+```
 
 ### Example: Installing Playwright (via uv)
 

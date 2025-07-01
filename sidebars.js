@@ -531,6 +531,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/excel',
+							label: 'Microsoft Excel'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/teams',
 							label: 'Microsoft Teams'
 						},
@@ -987,6 +992,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
+				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'misc/share_on_hub/index'
 			]

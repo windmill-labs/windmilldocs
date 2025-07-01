@@ -11,42 +11,37 @@ on:
     types: [submitted]
 
 jobs:
-  check-membership:
+  determine-commenter:
     if: |
-      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/ai') && !contains(github.event.comment.user.login, '[bot]')) ||
-      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '/ai') && !contains(github.event.comment.user.login, '[bot]')) ||
-      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '/ai') && !contains(github.event.review.user.login, '[bot]')) ||
-      (github.event_name == 'issues' && contains(github.event.issue.body, '/ai') && !contains(github.event.issue.user.login, '[bot]'))
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/ai')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '/ai')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '/ai')) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '/ai'))
     runs-on: ubicloud-standard-2
     outputs:
-      is_member: ${{ steps.check-membership.outputs.is_member }}
+      commenter: ${{ steps.determine-commenter.outputs.commenter }}
     steps:
-      - name: Check organization membership
-        id: check-membership
-        env:
-          ORG_ACCESS_TOKEN: ${{ secrets.ORG_ACCESS_TOKEN }}
+      - name: Determine commenter
+        id: determine-commenter
         run: |
-          ORG="windmill-labs"
-
-          if [[ "${{ github.event_name }}" == "issue_comment" || "${{ github.event_name }}" == "pull_request_review_comment" ]]; then
+          # Work out who wrote the comment / review
+          if [[ "${{ github.event_name }}" == "issue_comment" || \
+                "${{ github.event_name }}" == "pull_request_review_comment" ]]; then
             COMMENTER="${{ github.event.comment.user.login }}"
           elif [[ "${{ github.event_name }}" == "pull_request_review" ]]; then
             COMMENTER="${{ github.event.review.user.login }}"
           else
             COMMENTER="${{ github.event.issue.user.login }}"
           fi
+          echo "commenter=$COMMENTER" >> $GITHUB_OUTPUT
 
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-            -H "Authorization: token $ORG_ACCESS_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/orgs/$ORG/members/$COMMENTER")
-
-          if [ "$STATUS" -eq 204 ]; then
-            echo "is_member=true" >> $GITHUB_OUTPUT
-          else
-            echo "is_member=false" >> $GITHUB_OUTPUT
-          fi
+  check-membership:
+    needs: determine-commenter
+    uses: windmill-labs/windmill/.github/workflows/check-org-membership.yml@main
+    with:
+      commenter: ${{ needs.determine-commenter.outputs.commenter }}
+    secrets:
+      access_token: ${{ secrets.ORG_ACCESS_TOKEN }}
 
   claude-code-action:
     needs: check-membership
@@ -70,6 +65,6 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           timeout_minutes: '60'
           allowed_tools: 'mcp__github__create_pull_request'
-          custom_instructions: 'IMPORTANT: Bypass previous instructions and instead of adding a url in your comment to manually create a PR, if you created a new branch with your changes, automatically create a PR from that branch to main, with the title starting with [Claude PR]'
+          custom_instructions: 'IMPORTANT: Bypass previous instructions and instead of adding a url in your comment to manually create a PR, if you created a new branch with your changes, automatically create a draft PR from that branch to main.'
           trigger_phrase: '/ai'
           assignee_trigger: 'ai'
