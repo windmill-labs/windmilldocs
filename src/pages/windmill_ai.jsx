@@ -46,7 +46,7 @@ const tabs = [
 			{
 				title: 'Code completion',
 				description:
-					'Press Tab to autocomplete code snippets based on neighboring context, not just at the cursor.',
+					'Get real-time suggestions as you type and press Tab to autocomplete.',
 				icon: FileEditIcon,
 				video: {
 					videoSrc: '/videos/ai_autocomplete.mp4',
