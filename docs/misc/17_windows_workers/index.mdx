@@ -128,3 +128,24 @@ You can also check other installation methods in uv`s [official documentation](h
      # Replace these variables with your specific configuration
      $env:NU_PATH="C:\..\..\nu.exe"
      ```
+### Java executor
+
+1. **Install Java**: Ensure you have installed Java. You can use any Java version, but OpenJDK-22 is recommended and tested by Windmill.
+   - Start PowerShell and verify you have working `java` and `javac`:
+     ```powershell
+     java --version && javac --version
+     ```
+
+2. **Install Coursier**:
+   - Open PowerShell and fetch .jar:
+     ```powershell
+      Start-BitsTransfer -Source https://github.com/coursier/launchers/raw/master/coursier -Destination coursier
+     ```
+
+3. **Set environment variables**:
+   - Add the following environment variables (replace the placeholders with your specific values):
+     ```powershell
+     # Replace these variables with your specific configuration.
+     # Make sure you provide **full** path!
+     $env:COURSIER_PATH="C:\..\..\coursier"
+     ```
