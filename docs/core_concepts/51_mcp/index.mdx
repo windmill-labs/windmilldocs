@@ -35,7 +35,7 @@ https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>
 
 ### Connect your LLM to Windmill
 
-Most modern LLM agents and interfaces now support MCP as a plug-and-play integration. Here are some examples configurations, for Claude Desktop and Cursor.
+Most modern LLM agents and interfaces now support MCP as a plug-and-play integration. The Windmill MCP server uses **HTTP streamable** as the transport layer, and MCP clients should be configured to use that protocol. Here are some examples configurations, for Claude Desktop and Cursor.
 
 To connect with Cursor:
 
@@ -97,6 +97,9 @@ Claude will:
 - **My LLM does not find the correct script/flow to run**
   - Ensure the script or flow is deployed and visible in your workspace.
   - Choose good titles and descriptions to help the LLM find the correct script/flow.
+- **Client has issues connecting to the MCP server**
+  - Make sure your MCP client is configured to use **HTTP streamable** as the transport protocol.
+  - Verify that your MCP URL is correct and the token is valid.
 
 ---
 
