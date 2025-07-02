@@ -82,7 +82,7 @@ Find all details at:
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workspace object storage"
-		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		description="Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or GCS bucket to enable users to read and write from S3 without having to have access to the credentials."
 		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
 	/>
 </div>
@@ -160,6 +160,44 @@ def main(input_file: S3Object):
     print(output_df)
 
     # To write back the result to Azure Blob Storage, Polars needs an s3fs connection
+    output_file = "output/result.parquet"
+    output_uri = "{}/{}".format(endpoint_url, output_file)
+    output_df.write_parquet(output_uri, storage_options=storage_options)
+
+    return S3Object(s3=output_file)
+```
+
+</TabItem>
+<TabItem value="polars (Google Cloud Storage)" label="Polars (Google Cloud Storage)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+import wmill
+from wmill import S3Object
+import polars as pl
+
+
+def main(input_file: S3Object):
+    # this will default to the workspace Google Cloud Storage resource
+    endpoint_url = wmill.polars_connection_settings().s3fs_args["endpoint_url"]
+    storage_options = wmill.polars_connection_settings().storage_options
+
+    # this will use the designated resource
+    # storage_options = wmill.polars_connection_settings("<PATH_TO_S3_RESOURCE>").storage_options
+
+    # input is a parquet file, we use read_parquet in lazy mode.
+    # Polars can read various file types, see
+    # https://pola-rs.github.io/polars/py-polars/html/reference/io.html
+    input_uri = "{}/{}".format(endpoint_url, input_file["s3"])
+
+    input_df = pl.read_parquet(input_uri, storage_options=storage_options).lazy()
+
+    # process the Polars dataframe. See Polars docs:
+    # for dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/dataframe/index.html
+    # for lazy dataframe: https://pola-rs.github.io/polars/py-polars/html/reference/lazyframe/index.html
+    output_df = input_df.collect()
+    print(output_df)
+
+    # To write back the result to Google Cloud Storage, Polars needs an s3fs connection
     output_file = "output/result.parquet"
     output_uri = "{}/{}".format(endpoint_url, output_file)
     output_df.write_parquet(output_uri, storage_options=storage_options)
