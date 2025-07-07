@@ -5,6 +5,7 @@ These guidelines ensure consistency and quality when writing or modifying Windmi
 ## Content
 
 - The doc should focus on the user experience, not on the engineering behind it, unless it's important (e.g. feature related to performance)
+- **Before writing new documentation, review @writing_style_guide.md for guidance about how to write good documentation**
 
 ## File structure and naming
 
