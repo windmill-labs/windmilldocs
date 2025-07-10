@@ -1,0 +1,52 @@
+# Assets
+
+Windmill auto detects when you reference assets directly in your code. Assets are referenced with URIs and include:
+
+- S3 Objects : s3://storage/path/to/file.csv
+- Resources : res://path/to/resource
+- Variables : var://path/to/variable
+
+![Assets in script editor](./assets_in_script_editor.png 'Assets in script editor')
+
+As of writing this, assets are supported for the following languages:
+
+- Python
+- JavaScript / TypeScript
+- DuckDB
+
+When the asset is a database resource or an S3 file, an explore button will appear next to the asset.
+
+Read / Write mode is infered from code context.
+For example, a `COPY (...) TO file` statement is always `Write`.
+Sometimes the Read / Write mode cannot be inferred, in which case you are able to manually select it.
+
+You can use the Add Resource / Variable / S3 Object buttons in the editor bar for convenience :
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/assets_demo.mp4"
+/>
+
+## Asset nodes in flows
+
+In flows, your assets will show up as asset nodes, making data flow easy to visualize :
+
+![Asset nodes](./asset_nodes.png 'Asset nodes')
+
+The Read/Write mode is used to show the asset as an input or output node.
+
+When running a flow and passing an asset as an input, it will appear as an input of the flow in the preview graph :
+
+![Flow input assets](./flow_input_assets.png 'Flow input assets')
+
+## Tracking where your assets are used
+
+Assets are stored in the database upon script / flow deployment.
+You can see a list of all assets used in your workspace by going to the Assets tab in the sidebar.
+
+Clicking on the `usages` link will show the list of scripts and flows that use the asset.
+
+![Assets page](./assets_page.png 'Assets page')
