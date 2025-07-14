@@ -346,7 +346,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/large_data_files',
-							label: 'Large data (S3, R2, MinIO, Azure Blob)'
+							label: 'Large data (S3, R2, MinIO, Azure Blob, AWS OIDC, GCS)'
 						},
 						{
 							type: 'doc',
@@ -454,6 +454,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/gcp',
 							label: 'Google Cloud Platform'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/google-cloud-storage',
+							label: 'Google Cloud Storage'
 						},
 						{
 							type: 'doc',
