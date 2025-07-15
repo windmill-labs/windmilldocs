@@ -24,6 +24,22 @@ const communityTestimonials = [
 	{
 		body: (
 			<span>
+				<strong>
+					<span className="text-blue-500">Windmill</span>
+				</strong>{' '}
+				is in a godsend tier. The fact that it's oss, is gonna make it go down in the history books and will probably be the defacto tool for automation in the future. Absolutely incredible stuff. Thank you to all who made it possible. 
+			</span>
+		),
+		author: {
+			handle: 'discord',
+			name: 'dankestofall on Discord',
+			date: 'July 11th 2025',
+			backlink: 'https://discord.com/channels/930051556043276338/930051949888405524/1393129025379237991'
+		}
+	},
+	{
+		body: (
+			<span>
 				We've been using windmill for our internal tooling and dashboards and its been great!{' '}
 				<strong>
 					<span className="text-blue-500">Windmill</span>
@@ -246,7 +262,7 @@ const clientTestimonials = [
 			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_400_400/0/1693895615653?e=2147483647&v=beta&t=nxGuC4K8eXsJ2YAq1wqG-m8mEkhj8gugGqhccdckJZc'
 		},
 		company_url: 'https://www.qovery.com',
-		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
+		linkedIn: '/blog/qovery-case-study',
 		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. They made it simple to build, schedule, and monitor script & flows. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
 	{
@@ -260,7 +276,7 @@ const clientTestimonials = [
 			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
 		},
 		company_url: 'https://motimateapp.com',
-		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
+		linkedIn: '/blog/kahoot-case-study',
 		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
 	},
 	{
@@ -284,10 +300,10 @@ const clientTestimonials = [
 			position: 'Director, Indigenous Guardianship Program',
 			dark: '/images/brands/logo-conservation-metrics.png',
 			light: '/images/brands/logo-conservation-metrics.png',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/D4E35AQFYF9PPmUM9Dg/profile-framedphoto-shrink_200_200/B4EZbGEmEZHcAY-/0/1747079815693?e=1749571200&v=beta&t=qM5-ArAvsxKcvrDSaxntZMsRrLr_dN4k1MIlg4CC4Nw'
+			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQGsDNU9khzxmQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1685649292887?e=1758153600&v=beta&t=l6BGPXXXfysecBGMq9YRgZt5thKAKvx-v59G7h8vaWQ'
 		},
 		company_url: 'https://conservationmetrics.com/',
-		linkedIn: 'https://www.linkedin.com/in/rudo-kemper/',
+		linkedIn: '/blog/conservation-metrics-case-study',
 		text: `Windmill is invaluable for our end users, the indigenous communities. As simple as it is to deploy and scale, it saves them hours of work and provides near-instantaneous data access that previously took months of manual work.`
 	}
 ];
