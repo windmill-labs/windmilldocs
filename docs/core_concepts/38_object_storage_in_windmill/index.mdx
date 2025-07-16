@@ -363,16 +363,16 @@ Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) sect
 	/>
 </div>
 
-### S3 object access in public apps
+### Dynamic S3 object access in public apps
 
-By default, S3 objects are not accessible in public apps when users aren't logged in. 
+For security reasons, dynamic S3 objects are not accessible by default in public apps when users aren't logged in.
 To make them publicly accessible, you need to sign S3 objects using Windmill's built-in helpers:
 - TypeScript: `wmill.signS3Object()` (single) / `wmill.signS3Objects()` (multiple)
 - Python: `wmill.sign_s3_object()` (single) / `wmill.sign_s3_objects()` (multiple)
 
 These functions take an `S3Object` as input and return an `S3Object` with an additional `presigned` property containing a signature that makes the object publicly accessible.
 
-Signed S3 objects can be used in the [Image](../../apps/4_app_configuration_settings/image.mdx) or [Rich result](../../apps/4_app_configuration_settings/rich_result.mdx) app components.
+Signed S3 objects are supported by the [Image](../../apps/4_app_configuration_settings/image.mdx), [Rich result](../../apps/4_app_configuration_settings/rich_result.mdx) and [Rich result by job id](../../apps/4_app_configuration_settings/rich_result_by_job_id.mdx) app components.
 
 ## Instance object storage
 
