@@ -2,21 +2,36 @@ import DocCard from '@site/src/components/DocCard';
 
 # Run Docker containers
 
-Windmill supports running any [Docker](https://www.docker.com/) container through its [Bash](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx) support. As a pre-requisite, the host docker daemon needs to be mounted into the worker container. This is done through a simple volume mount: `/var/run/docker.sock:/var/run/docker.sock`.
+## Using Windmill native docker support (recommended)
 
-Once Docker is set up, see:
+Windmill has a native docker support if the `# docker` annotation is used in a bash script. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends, assuming that the container was ran with the `$WM_JOB_ID` as name.
+Which is why you should use docker `-d` deamon mode so that the bash script terminates early.
 
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Docker quickstart"
-		description="Learn to run a script using from Docker containers."
-		href="/docs/getting_started/scripts_quickstart/docker"
-	/>
-</div>
+It will handle memory tracking, logs streaming and the different exit code of the container properly.
 
-## Setup
+The default code is as follows:
 
-### Docker compose
+```
+# docker
+# The annotation "docker" above is important, it tells windmill that after 
+# the end of the bash script, it should manage the container at id $WM_JOB_ID:
+# pipe logs, monitor memory usage, kill container if job is cancelled.
+
+msg="${1:-world}"
+
+IMAGE="alpine:latest"
+COMMAND="/bin/echo Hello $msg"
+
+# ensure that the image is up-to-date
+docker pull $IMAGE
+
+# if using the 'docker' mode, name it with $WM_JOB_ID for windmill to monitor it
+docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
+```
+
+### Setup
+
+#### Docker compose
 
 On the docker-compose, it is enough to uncomment the volume mount of the Windmill worker
 
@@ -25,7 +40,7 @@ On the docker-compose, it is enough to uncomment the volume mount of the Windmil
       # - /var/run/docker.sock:/var/run/docker.sock
 ```
 
-### Helm charts
+#### Helm charts
 
 In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`.
 
@@ -77,35 +92,10 @@ Here an example of a a worker group setup with a dind side-container to be adapt
               name: sock-dir
 ```
 
-## Using Windmill native docker support (recommended)
-
-Windmill has a native docker support if the `# docker` annotation is used. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends, assuming that the container was ran with the `$WM_JOB_ID` as name.
-Which is why you should use docker `-d` deamon mode so that the bash script terminates early.
-
-It will handle memory tracking, logs streaming and the different exit code of the container properly.
-
-The default code is as follows:
-
-```
-# docker
-# The annotation "docker" above is important, it tells windmill that after 
-# the end of the bash script, it should manage the container at id $WM_JOB_ID:
-# pipe logs, monitor memory usage, kill container if job is cancelled.
-
-msg="${1:-world}"
-
-IMAGE="alpine:latest"
-COMMAND="/bin/echo Hello $msg"
-
-# ensure that the image is up-to-date
-docker pull $IMAGE
-
-# if using the 'docker' mode, name it with $WM_JOB_ID for windmill to monitor it
-docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
-```
 
 
-## Using remote container runtimes (not recommended)
+
+### Using remote container runtimes (not recommended)
 
 This method is not recommended because it skips Windmill's native docker runtime and simpl execute as a normal bash script.
 
