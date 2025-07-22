@@ -374,16 +374,6 @@ Worker scripts are bash scripts that run at regular intervals on workers, comple
 - **Init scripts**: Run once when the worker starts, ideal for setup and configuration tasks
 - **Worker scripts**: Run continuously at specified intervals (minimum 60 seconds), ideal for maintenance and monitoring tasks
 
-### Common use cases
-
-Worker scripts are particularly useful for:
-
-- **System maintenance**: Cleaning temporary files, rotating logs, or performing health checks
-- **Cache management**: Clearing expired cache entries or warming up caches  
-- **Resource monitoring**: Collecting metrics or monitoring system resources
-- **Security tasks**: Running periodic security scans or updating security configurations
-- **Dependency updates**: Checking for and applying dependency updates
-
 ### Configuration and execution
 
 Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), worker scripts can be configured from the Windmill UI in the worker group settings, similar to init scripts.
