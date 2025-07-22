@@ -79,7 +79,10 @@ Here an example of a a worker group setup with a dind side-container to be adapt
 
 ## Using Windmill native docker support (recommended)
 
-Windmill has a native docker support if the `# docker` annotation is used. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends. Which is why you should use docker `-d` deamon mode so that the bash script terminates early.
+Windmill has a native docker support if the `# docker` annotation is used. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends, assuming that the container was ran with the `$WM_JOB_ID` as name.
+ Which is why you should use docker `-d` deamon mode so that the bash script terminates early.
+
+ It will handle memory tracking, logs streaming and the different exit code of the container properly.
 
 The default code is as follows:
 
@@ -102,7 +105,9 @@ docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
 ```
 
 
-## Using remote container deamons (not recommended)
+## Using remote container runtimes (not recommended)
+
+This method is not recommended because it skips Windmill's native docker runtime and simpl execute as a normal bash script.
 
 ### Remote docker deamon (not recommended)
 
