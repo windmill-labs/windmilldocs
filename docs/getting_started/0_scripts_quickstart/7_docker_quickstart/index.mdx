@@ -54,8 +54,11 @@ Below is a simple example of a script built using Bash to run Docker containers 
 
 ```bash
 # shellcheck shell=bash
-# Bash script that calls docker as a client to the host daemon
-# See documentation: https://www.windmill.dev/docs/advanced/docker
+# docker
+# The annotation "docker" above is important, it tells windmill that after 
+# the end of the bash script, it should manage the container at id $WM_JOB_ID:
+# pipe logs, monitor memory usage, kill container if job is cancelled.
+
 msg="${1:-world}"
 
 IMAGE="alpine:latest"
@@ -63,95 +66,13 @@ COMMAND="/bin/echo Hello $msg"
 
 # ensure that the image is up-to-date
 docker pull $IMAGE
-docker run --rm $IMAGE $COMMAND
+
+# if using the 'docker' mode, name it with $WM_JOB_ID for windmill to monitor it
+docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
 ```
 
-### Kubernetes
+To see more details about to setup your kubernetes or docker-compose setup to run docker containers, see [Run docker containers](../../../advanced/7_docker/index.mdx)
 
-If you use kubernetes and would like to run your docker file directly on the kubernetes host, use the following script:
-
-```
-# shellcheck shell=bash
-# Bash script that calls docker as a client to the host daemon
-# See documentation: https://www.windmill.dev/docs/advanced/docker
-msg="${1:-world}"
-
-IMAGE="docker/whalesay:latest"
-COMMAND=(sh -c "cowsay $msg")
-
-APISERVER=https://kubernetes.default.svc
-SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount
-NAMESPACE=$(cat ${SERVICEACCOUNT}/namespace)
-TOKEN=$(cat ${SERVICEACCOUNT}/token)
-CACERT=${SERVICEACCOUNT}/ca.crt
-
-KUBECONFIG_TMP_DIR="$(mktemp -d)"
-export KUBECONFIG="${KUBECONFIG_TMP_DIR}/kubeconfig"
-
-trap "rm -rfv ${KUBECONFIG_TMP_DIR}" EXIT
-
-kubectl config set-cluster local --server="${APISERVER}" --certificate-authority="${CACERT}"
-kubectl config set-credentials local --token="${TOKEN}"
-kubectl config set-context local --cluster=local --user=local --namespace="${NAMESPACE}"
-kubectl config use-context local
-
-kubectl run task -it --rm --restart=Never --image="$IMAGE" -- "${COMMAND[@]}"
-```
-
-and use the following additional privileges
-
-```yaml
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  namespace: windmill
-  name: pod-management
-rules:
-  - apiGroups: ['']
-    resources: ['pods']
-    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
-  - apiGroups: ['']
-    resources: ['pods/log']
-    verbs: ['get', 'list', 'watch']
-  - apiGroups: ['']
-    resources: ['pods/attach']
-    verbs: ['get', 'list', 'watch', 'create', 'update', 'patch', 'delete']
-  - apiGroups: ['']
-    resources: ['events']
-    verbs: ['get', 'list', 'watch']
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: pod-management
-  namespace: windmill
-subjects:
-  - kind: ServiceAccount
-    name: windmill-chart
-    namespace: windmill
-roleRef:
-  kind: Role
-  name: pod-management
-  apiGroup: rbac.authorization.k8s.io
-```
-
-## Setup
-
-To set-up Docker, see:
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Docker Set-Up"
-		description="Windmill supports running any Docker container through its Bash support."
-		href="/docs/advanced/docker"
-	/>
-</div>
-
-## Use
-
-From the Home page of Windmill App, click `+Script`. This will take you to the
-first step of script creation: Metadata.
 
 ## Settings
 
@@ -209,8 +130,11 @@ boilerplate. Let's take a look:
 
 ```bash
 # shellcheck shell=bash
-# Bash script that calls docker as a client to the host daemon
-# See documentation: https://www.windmill.dev/docs/advanced/docker
+# docker
+# The annotation "docker" above is important, it tells windmill that after 
+# the end of the bash script, it should manage the container at id $WM_JOB_ID:
+# pipe logs, monitor memory usage, kill container if job is cancelled.
+
 msg="${1:-world}"
 
 IMAGE="alpine:latest"
@@ -218,26 +142,19 @@ COMMAND="/bin/echo Hello $msg"
 
 # ensure that the image is up-to-date
 docker pull $IMAGE
-docker run --rm $IMAGE $COMMAND
+
+# if using the 'docker' mode, name it with $WM_JOB_ID for windmill to monitor it
+docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
 ```
 
 `msg` is just a normal Bash variable. It can be used to pass arguments to the script. This syntax is the standard Bash one to assign default values to parameters.
 
 ```
-docker run --rm <image> <command>
+docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
 ```
 
---rm is so that the container dispose itself after being executed. It helps unpollute the host.
-
-The image is the docker image to run. It can be any image available on docker hub or any private registry. It can also be a local image.
-
-The command is the command to run inside the container. It can be any command available in the image.
-
-It is just a Bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentication.
-
-Do not use the daemon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
-
-Like any Bash script, it will return the last line of the stdout. So be sure to print the return value from your command if you'd like to use it as a result.
+Windmill has a native docker support if the `# docker` annotation is used. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends, assuming that the container was ran with the `$WM_JOB_ID` as name.
+Which is why you should use docker `-d` deamon mode so that the bash script terminates early.
 
 ### Instant preview & testing
 
