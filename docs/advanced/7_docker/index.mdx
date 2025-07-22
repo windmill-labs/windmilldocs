@@ -29,69 +29,82 @@ On the docker-compose, it is enough to uncomment the volume mount of the Windmil
 
 In the charts values of our [helm charts](https://github.com/windmill-labs/windmill-helm-charts), set `windmill.exposeHostDocker` to `true`.
 
-### Remote Docker daemon
+## Docker-in-Docker sidecar container (Recommended)
 
 One possibility to use the docker daemon with k8s with containerd is to run a docker daemon in the same pod using "Docker-in-Docker" ( dind) Using the official image `docker:stable-dind`:
 
-Here an example of a dind template to be adapted:
+Here an example of a a worker group setup with a dind side-container to be adapted with your needs.
 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: dind
-spec:
-  containers:
-    - name: dind
-      image: 'docker:stable-dind'
-      command:
-        - dockerd
-        - --host=tcp://0.0.0.0:8000
+```
+  workerGroups:
+    ...
+    - name: "docker"
+      replicas: 2
       securityContext:
         privileged: true
+      resources:
+        limits:
+          memory: "256M"
+          ephemeral-storage: "8Gi"
+      volumes:
+        - emptyDir: {}
+          name: sock-dir
+        - emptyDir: {}
+          name: windmill-workspace
+      volumeMounts:
+        - mountPath: /var/run
+          name: sock-dir
+        - mountPath: /opt/windmill
+          name: windmill-workspace
+      extraContainers:
+        - args:
+            - --mtu=1450
+          image: docker:27.2.1-dind
+          imagePullPolicy: IfNotPresent
+          name: dind
+          resources:
+            limits:
+              memory: "2Gi"
+              ephemeral-storage: "8Gi"
+          securityContext:
+            privileged: true
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/windmill
+              name: windmill-workspace
+            - mountPath: /var/run
+              name: sock-dir
 ```
 
-## Use
+## Using Windmill native docker support (recommended)
+
+Windmill has a native docker support if the `# docker` annotation is used. It will assume a a docker socket is mounted like in the example above and will take over management of the container as soon as the script ends. Which is why you should use docker `-d` deamon mode so that the bash script terminates early.
 
 The default code is as follows:
 
 ```
+# docker
+# The annotation "docker" above is important, it tells windmill that after 
+# the end of the bash script, it should manage the container at id $WM_JOB_ID:
+# pipe logs, monitor memory usage, kill container if job is cancelled.
+
 msg="${1:-world}"
 
-docker run --rm alpine /bin/echo "Hello $msg"
+IMAGE="alpine:latest"
+COMMAND="/bin/echo Hello $msg"
+
+# ensure that the image is up-to-date
+docker pull $IMAGE
+
+# if using the 'docker' mode, name it with $WM_JOB_ID for windmill to monitor it
+docker run --name $WM_JOB_ID -it -d $IMAGE $COMMAND
 ```
 
-`msg` is just a normal bash variable. It can be used to pass arguments to the script. This syntax is the standard bash one to assign default values to parameters.
 
-```
-docker run --rm <image> <command>
-```
+## Using remote container deamons (not recommended)
 
---rm is so that the container dispose itself after being executed. It helps unpollute the host.
-
-The image is the docker image to run. It can be any image available on docker hub or any private registry. It can also be a local image.
-
-The command is the command to run inside the container. It can be any command available in the image.
-
-It is just a bash script so it will behave exactly the same as a local command or if running this as an ssh command on the host. As a consequence, you can use any strategy to cache docker images or handle authentication.
-
-Do not use the daemon mode `-d` otherwise the script will immediately return while the container continue to run in the background. However, in some cases, that might be what you want.
-
-Like any bash script, it will return the last line of the stdout. So be sure to print the return value from your command if you'd like to use it as a result.
-
-As a script:
-
-![script 1](./as_script.png.webp)
-
-![script 2](./as_script2.png.webp)
-
-As a flow step:
-
-![flow step 1](./as_flow.png.webp)
-
-![flow step 2](./as_flow2.png.webp)
-
-## Use with remote Docker daemon
+### Remote docker deamon (not recommended)
 
 ```bash
 #!/bin/bash
@@ -122,7 +135,7 @@ Hello
 + exit 0
 ```
 
-## Kubernetes
+### As a kubernetes task (not recommended)
 
 If you use kubernetes and would like to run your docker file directly on the kubernetes host, use the following script:
 
