@@ -538,6 +538,23 @@ You can then query this file using the standard read_csv/read_parquet/read_json 
 SELECT * FROM read_parquet($file)
 ```
 
+Alternatively, you can reference files on the workspace directly using s3:// notation. This is equivalent to passing an s3 object as a parameter:
+
+For primary workspace storage:
+```sql
+SELECT * FROM read_parquet('s3:///path/to/file.parquet')
+```
+
+For secondary storage:
+```sql
+SELECT * FROM read_parquet('s3://<secondary_storage>/path/to/file.parquet')
+```
+
+This notation also works with glob patterns:
+```sql
+SELECT * FROM read_parquet('s3:///myfiles/*.parquet')
+```
+
 You can also attach to other database resources (BigQuery, PostgreSQL and MySQL). We use the official and community DuckDB extensions under the hood :
 ```sql
 ATTACH '$res:u/demo/amazed_postgresql' AS db (TYPE postgres);
