@@ -27,13 +27,6 @@ This would be a settable setting such that the layout within the buckets can fol
 		description: `SDK clients should automatically propagate to the workers (maybe using a special pattern in stdout) that there is some strings that are sensitive because they correspond to secrets pulled with getResource and getValue. Additionally, workers should be able to have a list of values to consider secrets synced from an external source-of-truth. Those sensitive values would always be masked in logs.`
 	},
 	{
-		title: 'Database explorer for every SQL',
-		month: 'June',
-		category: 'Developer',
-		issueLink: 'https://github.com/windmill-labs/windmill/issues/5448',
-		description: `It would be nice to have a database explorer similar to Supabase to explore your database data and run REPL like commands directly from a windmill db resource`
-	},
-	{
 		title: 'Dedicated workers improvements',
 		month: 'June',
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5337',
@@ -96,7 +89,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Data pipelines v2: DuckLake integration',
-		month: 'August',
+		month: 'July',
 		category: 'Backend',
 		important: true,
 		issueLink: 'https://github.com/windmill-labs/windmill/issues/5442',
@@ -105,7 +98,7 @@ This would be a settable setting such that the layout within the buckets can fol
 	},
 	{
 		title: 'Shardable job queue for unlimited scalability',
-		month: 'August',
+		month: 'June',
 		category: 'Backend',
 		issueLink: '',
 		description:
