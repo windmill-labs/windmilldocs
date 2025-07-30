@@ -14,13 +14,13 @@ Additionally, for [instance integration](#instance-object-storage), the Enterpri
 
 ## Workspace object storage
 
-Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials.
+Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or GCS bucket to enable users to read and write from S3 without having to have access to the credentials.
 
 ![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
 
 Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
 
-Once you've created an [S3 or Azure Blob resource](../../integrations/s3.mdx) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
+Once you've created an [S3, Azure Blob, or Google Cloud Storage resource](../../integrations/s3.mdx) in Windmill, go to the workspace settings > S3 Storage. Select the resource and click Save.
 
 ![S3 storage workspace settings](../11_persistent_storage/workspace_settings.png)
 
@@ -314,7 +314,7 @@ For more info on how to use files and S3 files in Windmill, see [Handling files 
 
 Read and write from a storage that is not your main storage by specifying it in the S3 object as "secondary_storage" with the name of it.
 
-From the workspace settings, in tab "S3 Storage", just click on "Add secondary storage", give it a name, and pick a resource from type "S3", "Azure Blob", "AWS OIDC" or "Azure Workload Identity". You can save as many additional storages as you want as long as you give them a different name.
+From the workspace settings, in tab "S3 Storage", just click on "Add secondary storage", give it a name, and pick a resource from type "S3", "Azure Blob", "Google Cloud Storage", "AWS OIDC" or "Azure Workload Identity". You can save as many additional storages as you want as long as you give them a different name.
 
 Then from script, you can specify the secondary storage with an object with properties `s3` (path to the file) and `storage` (name of the secondary storage).
 
@@ -380,7 +380,7 @@ Under [Enterprise Edition](/pricing), instance object storage offers advanced fe
 
 ![Instance object storage infographic](./instance_object_storage_infographic.png 'Instance object storage infographic')
 
-This can be configured from the [instance settings](../../advanced/18_instance_settings/index.mdx#instance-object-storage), with configuration options for S3, Azure Blob or AWS OIDC.
+This can be configured from the [instance settings](../../advanced/18_instance_settings/index.mdx#instance-object-storage), with configuration options for S3, Azure Blob, Google Cloud Storage, or AWS OIDC.
 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
 
