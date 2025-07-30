@@ -251,7 +251,7 @@ const sidebars = {
 							label: 'Engine benchmarks',
 							link: {
 								type: 'doc',
-								id: 'misc/benchmarks/competitors/results/index',
+								id: 'misc/benchmarks/competitors/results/index'
 							},
 							items: [
 								{
@@ -381,6 +381,7 @@ const sidebars = {
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'core_concepts/workspace_settings/index',
+				'core_concepts/assets/index',
 				{
 					type: 'category',
 					label: 'Integrations',
@@ -858,7 +859,7 @@ const sidebars = {
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/default_app/index',
-						'apps/app_e-commerce',
+						'apps/app_e-commerce'
 					],
 
 					collapsed: true
@@ -992,6 +993,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
+				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'misc/share_on_hub/index'
 			]
