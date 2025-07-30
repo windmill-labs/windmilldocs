@@ -4,7 +4,6 @@ Windmill auto detects when you reference assets directly in your code. Assets ar
 
 - S3 Objects : s3://storage/path/to/file.csv
 - Resources : res://path/to/resource
-- Variables : var://path/to/variable
 
 ![Assets in script editor](./assets_in_script_editor.png 'Assets in script editor')
 
@@ -20,7 +19,7 @@ Read / Write mode is infered from code context.
 For example, a `COPY (...) TO file` statement is always `Write`.
 Sometimes the Read / Write mode cannot be inferred, in which case you are able to manually select it.
 
-You can use the Add Resource / Variable / S3 Object buttons in the editor bar for convenience :
+You can use the Add Resource / S3 Object buttons in the editor bar for convenience :
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -35,7 +34,6 @@ The python and Typescript/Javascript clients now support the new URI syntax :
 
 ```python
 wmill.get_resource('res://path/to/resource')
-wmill.get_variable('var://path/to/variable')
 wmill.load_s3_file('s3://storage/path/to/file.csv')
 
 # Not using the URI syntax still works for back-compatibility,
