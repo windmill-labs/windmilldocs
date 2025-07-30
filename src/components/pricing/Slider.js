@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-function exponentialScale(displayValue, min, max) {
+function exponentialScale(displayValue, min, max, step = 1) {
     const scale = max / Math.log(max + 1);
     let value = Math.exp(displayValue / scale) - 1;
     
-    // Dynamically generate round numbers based on max value
+    // If step is provided and greater than 1, ensure we only return values that are multiples of step
+    if (step > 1) {
+        // Round to the nearest step
+        value = Math.round(value / step) * step;
+        return Math.min(Math.max(value, min), max);
+    }
+    
+    // Dynamically generate round numbers based on max value (only when step is 1)
     const roundNumbers = [];
     const magnitude = Math.floor(Math.log10(max));
     const base = Math.pow(10, magnitude);
@@ -54,7 +61,12 @@ export default function Slider({ min, max, step, defaultValue, onChange, noExpon
         let newValue = parseFloat(parseFloat(event.target.value).toFixed(2));
         if (isExponential) {
             // Convert from visual scale back to actual value and snap to round numbers
-            newValue = exponentialScale(newValue, min, max);
+            newValue = exponentialScale(newValue, min, max, step);
+        } else {
+            // For non-exponential sliders, ensure step compliance
+            if (step > 1) {
+                newValue = Math.round(newValue / step) * step;
+            }
         }
         // Ensure value doesn't go below min
         newValue = Math.max(min, newValue);

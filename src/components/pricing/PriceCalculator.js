@@ -463,7 +463,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									<Slider
 										min={0}
 										max={pricing.seat.max * 2}
-										step={1}
+										step={2}
 										defaultValue={clamp(operators, 0, pricing.seat.max * 2)}
 										onChange={(value) => {
 											setOperators(clamp(value, 0, pricing.seat.max * 2));
