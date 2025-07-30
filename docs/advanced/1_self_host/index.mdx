@@ -606,6 +606,8 @@ TL;DR: below
 3. Modify docker-compose.yml to mount this directory to /usr/local/share/ca-certificates in read-only mode.
 4. Use INIT_SCRIPT in the worker config to run update-ca-certificates in worker containers.
 
+Alternatively, you can use the `RUN_UPDATE_CA_CERTIFICATE_AT_START=true` [environment variable](../../core_concepts/47_environment_variables/index.mdx) to automatically run CA certificate updates at startup. You can also customize the command path using `RUN_UPDATE_CA_CERTIFICATE_PATH` if needed.
+
 ### Establish Deno’s trust
 
 Set environment variable DENO_TLS_CA_STORE=system,mozilla in docker-compose.yml for Windmill workers.
