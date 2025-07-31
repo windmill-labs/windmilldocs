@@ -382,6 +382,7 @@ const sidebars = {
 				'core_concepts/ai_generation/index',
 				'core_concepts/workspace_settings/index',
 				'core_concepts/assets/index',
+				'core_concepts/ducklake/index',
 				{
 					type: 'category',
 					label: 'Integrations',
