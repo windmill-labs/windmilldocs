@@ -7,19 +7,9 @@ import TabItem from '@theme/TabItem';
 Flows can be suspended until resumed or canceled event(s) are received. This
 feature is most useful for implementing approval steps.
 
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	controls
-	id="main-video"
-	src="/videos/flow-approval.mp4"
-/>
+![Approval step diagram](../assets/flows/approval_diagram.png 'Approval step diagram')
 
-<br />
-
-An approval step will suspend the execution of a flow until it has been approved
-through the resume endpoints or the approval page by and solely by the recipients of
-the secret urls.
+An approval step is a normal script with the **Suspend** option enabled in the step's advanced settings. This will suspend the execution of a flow until it has been approved through the resume endpoints or the approval page by and solely by the recipients of the secret URLs.
 
 :::info Suspending a flow in Windmill
 
@@ -37,7 +27,7 @@ An event can be:
 - a cancel
 - a pre-set number of approval that is met.
 
-The approval steps are received in the form of an HTTP request. For each event, a single URL is generated. It is not unique to each user to whom it is sent.
+The approval step generates a unique URL for each required approval using `wmill.getResumeUrls()` (or `wmill.get_resume_urls()` in [Python](../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)). The approval step works like a webhook mechanism - the flow remains suspended until the required number of approval events are received via HTTP requests to these generated URLs. Each approval event is an HTTP request to one of these URLs, which then resumes or cancels the flow execution.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -47,6 +37,16 @@ The approval steps are received in the form of an HTTP request. For each event, 
 		color="teal"
 	/>
 </div>
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/flow-approval.mp4"
+/>
+
+<br />
 
 ## Add approval script
 
@@ -66,6 +66,8 @@ Use `wmill.getResumeUrls()` in [TypeScript](../getting_started/0_scripts_quickst
 
 The number of required approvals can be customized.
 This allows flexibility and security for cases where you either require approvals from all authorized people or only from one.
+
+**Important**: The flow will remain suspended and will not proceed to the next step until the exact number of required approval events is received. If fewer approvals than required are received, the flow stays suspended indefinitely (unless a timeout is configured).
 
 ![Required approvals](../assets/flows/flow-number-of-approvals.png 'Required approvals')
 
