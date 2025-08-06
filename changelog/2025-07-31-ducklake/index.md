@@ -1,6 +1,6 @@
 ---
 slug: ducklake
-version: v1.516.0
+version: v1.519.0
 title: Ducklake
 tags: ['assets', 'storage']
 description: First class support for Ducklake
