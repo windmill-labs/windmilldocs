@@ -37,20 +37,20 @@ wmill.set_variable("u/user/foo", value)
 ```
 
 </TabItem>
-<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { getVariable, setVariable } from 'npm:windmill-client@1';
+import { getVariable, setVariable } from 'windmill-client';
 
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
 ```
 
 </TabItem>
-<TabItem value="bun" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+<TabItem value="deno" label="TypeScript (Deno)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```ts
-import { getVariable, setVariable } from 'windmill-client';
+import { getVariable, setVariable } from 'npm:windmill-client@1';
 
 getVariable('u/user/foo');
 setVariable('u/user/foo', value);
