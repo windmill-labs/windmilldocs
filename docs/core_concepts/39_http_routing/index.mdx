@@ -398,3 +398,7 @@ async function verifySignature(signature: string, body: string, timestamp?: stri
 }
 ```
 > ℹ️ When using **Custom Script**, the `raw_body` option is automatically enabled.
+
+## Error handling
+
+HTTP routes support local error handlers that override workspace error handlers for specific routes. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.

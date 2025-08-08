@@ -176,4 +176,8 @@ export async function main(
 - **Push delivery failures**: If using existing subscription ensure the push endpoint URL matches the required format (`{base_endpoint}/api/gcp/w/{workspace_id}/{trigger_path}`) and is unique across the workspace.
 - **Topic or subscription not found**: Refresh the list to fetch the latest available resources.
 
+## Error handling
+
+GCP triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
+
 ---

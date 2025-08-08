@@ -76,3 +76,7 @@ A [durable push-consumer](https://docs.nats.io/nats-concepts/jetstream/consumers
 If one already exists, it will be overwritten.
 The consumer name is also used as the `DeliverSubject`, so make sure it's unique.
 
+## Error handling
+
+NATS triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
+
