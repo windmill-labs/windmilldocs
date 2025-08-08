@@ -88,3 +88,7 @@ export async function main(sender_address: string, email_body: string) {
 From a script or flow [deployed](../../core_concepts/0_draft_and_deploy/index.mdx) page, you will find on the "Details & Triggers" - "Email" tab the email address to use.
 
 ![Trigger panel](./trigger_panel.png "Trigger panel")
+
+## Error handling
+
+Email triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../../core_concepts/10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
