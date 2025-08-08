@@ -2,7 +2,7 @@ import DocCard from '@site/src/components/DocCard';
 
 # Setup OAuth and SSO
 
-Windmill supports Single Sign-On for [Google](#google-login), [Microsoft](#microsoft), [Okta](#okta), [GitHub](#github), [GitLab](#gitlab), [Jumpcloud](#jumpcloud), [Keycloak](#keycloak), [Authentik](#authentik), [Authelia](#authelia), [Kanidm](#kanidm), [Zitadel](#zitadel) and domain restriction.
+Windmill supports Single Sign-On for [Google](#google-login), [Microsoft](#microsoft), [Okta](#okta), [GitHub](#github), [GitLab](#gitlab), [Jumpcloud](#jumpcloud), [Keycloak](#keycloak), [Authentik](#authentik), [Authelia](#authelia), [Kanidm](#kanidm), [Zitadel](#zitadel), [Nextcloud](#nextcloud) and domain restriction.
 
 Windmill supports [Slack](#slack), [GitHub](#github-1), [GitLab](#gitlab-1), [Bitbucket](#bitbucket), [Google Sheets](#google-sheets), [Google Drive](#google-drive-gdrive), [Gmail](#gmail), [Google Calendar](#google-calendar-gcal), [Google Forms](#google-forms-gforms), [Google Cloud](#google-cloud-gcloud), [Google Workspace](#google-workspace-gworkspace), [Basecamp](#basecamp), [LinkedIn](#linkedin), [QuickBooks](#quickbooks), [Visma](#visma), [Snowflake](#snowflake), and [Custom OAuth](#custom-oauth).
 
@@ -215,6 +215,28 @@ To integrate Windmill with Zitadel as an OAuth provider, follow these steps:
      - **Zitadel URL**: `https://<ZITADEL_URL>/oauth/v2/authorize`
      - **Client ID**: [from Zitadel]
      - **Client Secret**: [from Zitadel]
+   - Save your settings.
+
+### Nextcloud
+
+To integrate Windmill with Nextcloud as an OAuth provider, follow these steps:
+
+1. **Create OAuth Client in Nextcloud**:
+   - Go to your Nextcloud instance as an administrator.
+   - Navigate to **Administration settings** → **Security** → **OAuth 2.0 clients**.
+   - Click **Add client** to create a new OAuth2 application.
+   - Set the following values:
+     - **Redirect URI**: `https://<YOUR_INSTANCE>/user/login_callback/nextcloud`
+     - **Name**: `Windmill` (or any name you prefer)
+   - After saving the client, you will receive a **Client ID** and **Client Secret**.
+   - For more details, see the [Nextcloud OAuth2 documentation](https://docs.nextcloud.com/server/31/admin_manual/configuration_server/oauth2.html).
+
+2. **Instance settings in Windmill**:
+   - Go to Windmill's admin settings under 'SSO OAuth' - 'SSO'.
+   - Toggle "nextcloud" and enter:
+     - **Nextcloud Instance Domain**: `your.nextcloud.domain` (without https://)
+     - **Client ID**: [from Nextcloud]
+     - **Client Secret**: [from Nextcloud]
    - Save your settings.
 
 ### Custom OAuth
