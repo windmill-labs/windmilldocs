@@ -235,9 +235,11 @@ wmill script run u/user/path -d '{"example_oneof":{"label":"Option 2","attribute
 
 ## Dynamic select
 
-Dynamic select is an helper function within [scripts](../../script_editor/index.mdx) that allows you to create a select field with dynamic options.
+Dynamic select is a helper function that allows you to create a select field with dynamic options that recompute based on other input values. It's available in both [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx), but with different implementation requirements.
 
-You must export the string type as `DynSelect_<name>` and the function as `<name>` :
+### Dynamic select in scripts
+
+For scripts, you must export both the string type as `DynSelect_<name>` and the function as `<name>`:
 
 <Tabs className="unique-tabs">
 <TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -290,14 +292,94 @@ def main(x: str, y: int, xy: DynSelect_foo):
 </TabItem>
 </Tabs>
 
-The select options recompute dynamically based on the other arguments, in this case `x` and `y`. You can also use `text` as an arg in the function to have the current text select input be passed.
+### Dynamic select in flows
 
-You can also do your own filtering and sorting of the options. In the example above, if `x` is "bar", the options will be filtered to only one option.
+In flows, dynamic select is only available for flow input steps. You must define one function for each flow input field that is of dynamic select type. The function name must exactly match the name of the flow input field. No export type is required.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+// Function for flow input field named "foo"
+async function foo(x: string, y: number, text: string) {
+	if (text === '42') {
+		return [{ value: '42', label: 'The answer to the universe' }];
+	}
+	if (x === 'bar') {
+		return [{ value: 'barbar', label: 'barbarbar' }];
+	}
+	return [
+		{ value: '1', label: 'Foo' + x + y },
+		{ value: '2', label: 'Bar' },
+		{ value: '3', label: 'Foobar' }
+	];
+}
+
+// If you have another dynamic select input named "category"
+async function category(department: string) {
+	if (department === 'engineering') {
+		return [
+			{ value: 'frontend', label: 'Frontend' },
+			{ value: 'backend', label: 'Backend' }
+		];
+	}
+	return [
+		{ value: 'general', label: 'General' }
+	];
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+# Function for flow input field named "foo"
+def foo(x: str, y: int, text):
+  if text == "42":
+    return [{"value": "42", "label": "The answer to the universe"}]
+  if x == "bar":
+    return [{"value": "barbar", "label": "barbarbar"}]
+  return [
+    { "value": '1', "label": 'Foo' + x + str(y) },
+    { "value": '2', "label": 'Bar' },
+    { "value": '3', "label": 'Foobar' }
+  ]
+
+# If you have another dynamic select input named "category"
+def category(department: str):
+  if department == "engineering":
+    return [
+      {"value": "frontend", "label": "Frontend"},
+      {"value": "backend", "label": "Backend"}
+    ]
+  return [
+    {"value": "general", "label": "General"}
+  ]
+```
+
+</TabItem>
+</Tabs>
+
+### How dynamic select works
+
+The select options recompute dynamically based on other input arguments.
+
+You can implement custom filtering and sorting logic within your function. In the examples above in the foo function, when `x` equals "bar" or `text` equals "42", the options are filtered to show only one option.
+
+#### Dynamic select in scripts
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	controls
-	src="/videos/dynamic_select.mp4"
+	src="/videos/dynamic_select_script.mp4"
+/>
+
+#### Dynamic select in flows
+
+<video
+	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
+	controls
+		src="/videos/dynamic_select_flow.mp4"
 />
 
 ## Backend schema validation
