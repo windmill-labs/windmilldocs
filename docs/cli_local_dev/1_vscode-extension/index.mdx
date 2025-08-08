@@ -58,6 +58,8 @@ First of all, have your workspace synced locally with [Windmill CLI](../../advan
 
 With [wmill sync pull](../../advanced/3_cli/sync.mdx#pulling) and [wmill sync push](../../advanced/3_cli/sync.mdx) you can synchronize your remote workspace to a local directory which you would version with GitHub / GitLab.
 
+The `wmill init` command can now create cursor rules and CLAUDE.md files to enhance your AI experience when working with scripts and flows. These files provide context and guidelines for AI assistants to better understand your Windmill project structure and coding patterns.
+
 In the settings menu, set the remote url, workspace name and [token](../../core_concepts/4_webhooks/index.mdx#user-token).
 
 1. Install the [extension](https://marketplace.visualstudio.com/items?itemName=windmill-labs.windmill).
@@ -120,6 +122,10 @@ Editing the flow from the UI immediately modifies the YAML definition
 	src="/videos/yaml_to_ui.mp4"
 />
 
+### Flow YAML validation
+
+The VS Code extension includes syntax validation for flow.yaml files, making it easier to spot mistakes and ensure your flows are properly formatted before testing or deployment.
+
 ### Infer lockfile or use current lockfile
 
 With this toggle, you can choose to use the metadata lockfile ([derived from](../../advanced/3_cli/script.md#packagejson--requirementstxt) package.json or requirements.txt after [`wmill script generate-metadata`](../../advanced/3_cli/script.md#re-generating-a-script-metadata-file)) instead of inferring them directly from the script.
@@ -141,6 +147,8 @@ Access these commands through the Command Palette (Ctrl/Cmd+Shift+P):
 | **Windmill: Add a Windmill workspace**               | Adds a new workspace to your configuration.                                                                                                                                                         |
 
 ## Settings
+
+The extension automatically uses workspace settings from your Windmill CLI configuration if available. This provides seamless integration between the CLI and VS Code extension without needing to configure settings separately.
 
 The extension provides the following settings:
 
