@@ -62,6 +62,22 @@ Refer to [Google Cloud Pub/Sub - Managing Subscriptions](https://cloud.google.co
 
 - Select the **script** or **flow** to trigger when Pub/Sub messages are received.
 
+### Message acknowledgment control
+
+GCP Pub/Sub triggers provide two modes for handling message acknowledgments. This setting is configurable from the UI in the advanced section under the Settings tab.
+
+#### Automatic acknowledgment (default)
+- Windmill automatically acknowledges or negatively acknowledges messages based on execution results
+- If the script/flow succeeds: message is acknowledged (`ack`)  
+- If the script/flow fails: message is negatively acknowledged (`nack`) - the message will be redelivered immediately or through exponential backoff depending on the [Google Cloud Pub/Sub retry policy](https://cloud.google.com/pubsub/docs/handling-failures) you configured
+- No manual intervention required
+
+#### Manual acknowledgment  
+- The user receives the message `ack_id` and must manually acknowledge messages
+- **Note**: `ack_id` is only available for pull delivery type subscriptions. If you do not acknowledge messages, they will be redelivered through your retry logic and the same message will be processed again by Windmill
+- **Message deadline**: 600 seconds (maximum allowed by GCP, set by Windmill)
+- If you forget to acknowledge the message after the 600-second deadline, the message will be redelivered immediately or through exponential backoff depending on the [Google Cloud Pub/Sub retry policy](https://cloud.google.com/pubsub/docs/handling-failures) you configured
+- If you manually nack the message, the message will be redelivered immediately or through exponential backoff depending on the [Google Cloud Pub/Sub retry policy](https://cloud.google.com/pubsub/docs/handling-failures) you configured
 ---
 
 ## Implementation examples
@@ -107,6 +123,7 @@ If you configure a [preprocessor](../43_preprocessors/index.mdx), you can extrac
 - `delivery_type`: `"push"` or `"pull"` (the type of delivery)
 - `ordering_key`: Ordering key (optional, if message ordering is enabled)
 - `headers`: HTTP headers for push delivery (only present for push)
+- `ack_id?`: Acknowledgment ID for manual message acknowledgment (string, only available for pull delivery type)
 
 Example preprocessor:
 
@@ -122,6 +139,7 @@ export async function preprocessor(
     delivery_type: "push" | "pull",
     headers?: Record<string, string>,
     publish_time?: string,
+    ack_id?: string, // acknowledgment ID for manual acknowledgment (only for pull delivery)
   }
 ) {
   if (event.kind === 'gcp') {
@@ -144,7 +162,8 @@ export async function preprocessor(
       messageAsDecodedString: decodedString,
       contentType,
       parsedMessage,
-      attributes
+      attributes,
+      ack_id: event.ack_id
     };
   }
 
@@ -160,13 +179,68 @@ export async function main(
   contentType?: string,
   parsedMessage?: any,
   attributes?: Record<string, string>,
+  ack_id?: string,
 ) {
   console.log("Decoded String:", messageAsDecodedString);
   console.log("Content-Type:", contentType);
   console.log("Parsed Message:", parsedMessage);
   console.log("Attributes:", attributes);
+  console.log("Ack ID:", ack_id);
 }
 ```
+
+### Manual acknowledgment example
+
+When **Auto acknowledge messages** is set to `false`, you can manually control message acknowledgment using the `ack_id`. This is useful for complex business logic where acknowledgment depends on external factors.
+
+```typescript
+export async function main(payload: string, delivery_type: "push" | "pull", ack_id?: string) {
+  const decoded = new TextDecoder().decode(Uint8Array.from(atob(payload), c => c.charCodeAt(0)));
+  
+  try {
+    const jsonData = JSON.parse(decoded);
+    
+    // Process the message
+    const result = await processMessage(jsonData);
+    
+    // Only handle manual acknowledgment for pull delivery with ack_id
+    if (delivery_type === "pull" && ack_id) {
+      if (result.success) {
+        // Manually acknowledge the message
+        await acknowledgeMessage(ack_id, true); // ack
+        return { processed: true, acknowledged: true };
+      } else {
+        // Manually negative acknowledge the message  
+        await acknowledgeMessage(ack_id, false); // nack
+        return { processed: false, acknowledged: false };
+      }
+    }
+    
+    // For push delivery or when ack_id is not available
+    return { processed: result.success, delivery_type };
+  } catch (error) {
+    console.error("Processing failed:", error);
+    // Negative acknowledge on error (only for pull with ack_id)
+    if (delivery_type === "pull" && ack_id) {
+      await acknowledgeMessage(ack_id, false); // nack
+    }
+    throw error;
+  }
+}
+
+async function processMessage(data: any) {
+  // Your business logic here
+  return { success: true };
+}
+
+async function acknowledgeMessage(ackId: string, success: boolean) {
+  // Use GCP client library or REST API to acknowledge the message
+  // This is a placeholder - implement based on your preferred method
+  console.log(`${success ? 'Acknowledging' : 'Nack-ing'} message with ack_id: ${ackId}`);
+}
+```
+
+> **Note**: When using manual acknowledgment, you have 600 seconds (10 minutes) to acknowledge each message. GCP will redeliver messages according to your subscription's retry policy (immediate redelivery or exponential backoff) if the deadline is exceeded or if you manually `nack` them. Unacknowledged messages will be processed again by Windmill, so always ensure your script acknowledges messages within the deadline window.
 
 ---
 
@@ -175,5 +249,9 @@ export async function main(
 - **Permission issues**: Verify the service account has required Pub/Sub permissions. If the correct permissions are set but you still encounter `unauthorized` or `permission denied` errors, it might indicate that Google has updated required permissions. Please contact Windmill support so we can investigate and assist.
 - **Push delivery failures**: If using existing subscription ensure the push endpoint URL matches the required format (`{base_endpoint}/api/gcp/w/{workspace_id}/{trigger_path}`) and is unique across the workspace.
 - **Topic or subscription not found**: Refresh the list to fetch the latest available resources.
+- **Message redelivery behavior**: Message redelivery is controlled entirely by your GCP subscription's retry policy settings. Messages will be redelivered by GCP if:
+  - **Automatic acknowledgment**: Script fails (Windmill nacks the message)
+  - **Manual acknowledgment**: Deadline exceeded (600 seconds) or manual nack
+  The redelivery timing (immediate vs exponential backoff) depends on your subscription's retry policy configuration in GCP, not Windmill settings. For more details, see [Google Cloud Pub/Sub handling failures](https://cloud.google.com/pubsub/docs/handling-failures).
 
 ---
