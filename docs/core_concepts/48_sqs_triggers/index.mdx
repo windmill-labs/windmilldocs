@@ -103,3 +103,7 @@ export async function main(content: string, metadata: { sentAt: string, messageI
   console.log("Content:", content);
 }
 ```
+
+## Error handling
+
+SQS triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
