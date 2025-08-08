@@ -141,37 +141,148 @@ wmill sync push [options]
 
 Note that you can set the default TypeScript language and explicitly exclude (or include) specific files or folders to be taken into account with a [`wmill.yaml` file](https://github.com/windmill-labs/windmill-sync-example/blob/main/wmill.yaml).
 
-```yaml
-includes: ['f/**'] # uses "*" or uncomment this line to include everything. Note that wmill will only consider files with valid path (u/ or f/, with the right extension)
-excludes: [] # excludes patterns here
+### Basic configuration
 
-defaultTs: 'deno' # bun is the default, set it to deno if you primarily use deno to avoid needing the .deno.ts extension
+```yaml
+defaultTs: bun  # TypeScript runtime: 'bun' or 'deno'
+
+# File path filtering  
+includes:
+  - f/**  # Include patterns (glob format)
+excludes: [] # Exclude patterns
+extraIncludes: [] # Additional include patterns
+
+# Codebase bundling configuration
+codebases: []
+
+# Skip flags (what to exclude from sync)
+skipVariables: false
+skipResources: false  
+skipResourceTypes: false
+skipSecrets: true    # Secrets are skipped by default for security
+skipScripts: false
+skipFlows: false
+skipApps: false
+skipFolders: false
+
+# Include flags (what to explicitly include)
+includeSchedules: false
+includeTriggers: false
+includeUsers: false
+includeGroups: false
+includeSettings: false
+includeKey: false
+```
+
+### Git branch-specific configuration
+
+The CLI supports branch-specific settings through the `git_branches` configuration:
+
+```yaml
+git_branches:
+  main:  # Branch name
+    baseUrl: 'http://localhost:8000/'  # Windmill instance URL
+    workspaceId: test  # Workspace ID
+    overrides: {}  # Override settings for this branch
+    promotionOverrides:  # Settings used when promoting TO this branch
+      skipApps: true
+      skipFlows: true
+      
+  staging:
+    baseUrl: 'https://staging.windmill.dev/'
+    workspaceId: staging-workspace
+    overrides:
+      skipVariables: true
+      includeSettings: true
+    promotionOverrides:
+      skipSecrets: true
+      
+  production:
+    baseUrl: 'https://app.windmill.dev/'
+    workspaceId: prod-workspace
+    overrides:
+      includeSettings: true
+      skipSecrets: false
+    promotionOverrides:
+      skipApps: true      # Don't sync apps during promotion
+      skipFlows: true     # Don't sync flows during promotion
+```
+
+### Configuration resolution priority
+
+Settings are resolved in this order (highest priority first):
+
+1. **CLI flags** (highest priority)
+2. **Promotion overrides** (if `--promotion` flag is used)
+3. **Branch-specific overrides** (if current branch has `overrides` defined)
+4. **Top-level settings** (base configuration)
+
+### Codebase configuration
+
+Advanced bundling configuration for TypeScript/JavaScript projects:
+
+```yaml
+codebases:
+  - relative_path: './my-lib'
+    includes: ['**/*.ts']
+    excludes: ['**/*.test.ts']
+    assets:
+      - from: 'assets/'
+        to: 'static/'
+    customBundler: 'esbuild'
+    external: ['lodash', 'react']
+    define:
+      NODE_ENV: 'production'
+    inject: ['./polyfills.js']
 ```
 
 All sync options for your workspace can be found on this [file](https://github.com/windmill-labs/windmill/blob/main/cli/conf.ts#L3):
 
 ```ts
 export interface SyncOptions {
-	raw?: boolean;
-	yes?: boolean;
-	skipPull?: boolean;
-	failConflicts?: boolean;
-	plainSecrets?: boolean;
-	json?: boolean;
-	skipVariables?: boolean;
-	skipResources?: boolean;
-	skipResourceTypes?: boolean;
-	skipSecrets?: boolean;
-	includeSchedules?: boolean;
-	includeUsers?: boolean;
-	includeGroups?: boolean;
-	includeSettings?: boolean;
-	message?: string;
-	includes?: string[];
-	extraIncludes?: string[];
-	excludes?: string[];
-	defaultTs?: 'bun' | 'deno';
-	codebases?: Codebase[];
+  raw?: boolean;
+  yes?: boolean;
+  skipPull?: boolean;
+  failConflicts?: boolean;
+  plainSecrets?: boolean;
+  json?: boolean;
+  
+  // File filtering options
+  skipVariables?: boolean;
+  skipResources?: boolean;
+  skipResourceTypes?: boolean;
+  skipSecrets?: boolean;
+  skipScripts?: boolean;
+  skipFlows?: boolean;
+  skipApps?: boolean;
+  skipFolders?: boolean;
+  
+  // Include options
+  includeSchedules?: boolean;
+  includeTriggers?: boolean;
+  includeUsers?: boolean;
+  includeGroups?: boolean;
+  includeSettings?: boolean;
+  includeKey?: boolean;
+  
+  // Path and message options
+  message?: string;
+  includes?: string[];
+  extraIncludes?: string[];
+  excludes?: string[];
+  defaultTs?: 'bun' | 'deno';
+  codebases?: Codebase[];
+  
+  // Git branch configuration
+  git_branches?: {
+    [branchName: string]: SyncOptions & {
+      overrides?: Partial<SyncOptions>;
+      promotionOverrides?: Partial<SyncOptions>;
+      baseUrl?: string;
+      workspaceId?: string;
+    }
+  };
+  promotion?: string;
 }
 ```
 

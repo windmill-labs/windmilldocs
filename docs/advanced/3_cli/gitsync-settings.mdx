@@ -1,0 +1,157 @@
+# Git sync settings
+
+Managing git-sync configuration between your local `wmill.yaml` file and the Windmill workspace backend is made easy using the wmill CLI. Git-sync settings operations are behind the `wmill gitsync-settings` subcommand.
+
+The `gitsync-settings` command allows you to synchronize filter settings, path configurations, and branch-specific overrides without affecting the actual workspace content (scripts, flows, apps, etc.).
+
+Git-sync settings management is done using `wmill gitsync-settings pull` & `wmill gitsync-settings push`.
+
+Settings operations are configuration-only and work with your `wmill.yaml` file structure. The command will show you the list of changes and ask for confirmation before applying them.
+
+When pulling, the source is the remote workspace git-sync configuration and the target is your local `wmill.yaml` file, and when pushing, the source is your local `wmill.yaml` and the target is the remote workspace configuration.
+
+## Pull API
+
+The `wmill gitsync-settings pull` command is used to pull remote git-sync settings and apply them to your local `wmill.yaml` file. It synchronizes your local configuration with the workspace git-sync settings.
+
+```bash
+wmill gitsync-settings pull [options]
+```
+
+### Options
+
+| Option                        | Parameter             | Description                                                                                                                                                                                                          |
+| ----------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-h, --help`                  | None                  | Show help options.                                                                                                                                                                                                   |
+| `--repository`                | `<repository>`        | Specify repository path (e.g., u/user/repo). If not specified, will auto-select if only one repository exists or prompt for selection.                                                                              |
+| `--default`                   | None                  | Write settings to top-level defaults instead of branch-specific overrides.                                                                                                                                          |
+| `--replace`                   | None                  | Replace existing settings (non-interactive mode). Overwrites top-level wmill.yaml settings.                                                                                                                         |
+| `--override`                  | None                  | Add branch-specific override (non-interactive mode). Creates branch-specific configuration in git_branches section.                                                                                                 |
+| `--diff`                      | None                  | Show differences without applying changes. Preview what would be modified in your local configuration.                                                                                                              |
+| `--json-output`               | None                  | Output in JSON format. Useful for scripting and automation.                                                                                                                                                         |
+| `--with-backend-settings`     | `<json>`              | Use provided JSON settings instead of querying backend (primarily for testing purposes).                                                                                                                            |
+| `--yes`                       | None                  | Skip interactive prompts and use default behavior. The command proceeds automatically without user intervention.                                                                                                     |
+| `--promotion`                 | `<branch>`            | Use promotionOverrides from the specified branch instead of regular overrides.                                                                                                                                      |
+| `--workspace`                 | `<workspace>`         | Specify the target workspace. This overrides the default workspace.                                                                                                                                                  |
+| `--debug`, `--verbose`        | None                  | Show debug/verbose logs.                                                                                                                                                                                             |
+| `--token`                     | `<token>`             | Specify an API token. This will override any stored token.                                                                                                                                                           |
+| `--base-url`                  | `<baseUrl>`           | Specify the base URL of the API. If used, `--token` and `--workspace` are required and no local remote/workspace will be used.                                                                                       |
+
+## Push API
+
+The `wmill gitsync-settings push` command is used to push local git-sync settings and apply them to the remote workspace configuration. It synchronizes the workspace git-sync settings with your local `wmill.yaml`.
+
+```bash
+wmill gitsync-settings push [options]
+```
+
+### Options
+
+| Option                        | Parameter             | Description                                                                                                                                                                                         |
+| ----------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-h, --help`                  | None                  | Show help options.                                                                                                                                                                                  |
+| `--repository`                | `<repository>`        | Specify repository path (e.g., u/user/repo). If not specified, will auto-select if only one repository exists or prompt for selection.                                                             |
+| `--diff`                      | None                  | Show what would be pushed without applying changes. Preview the modifications that would be made to the workspace configuration.                                                                   |
+| `--json-output`               | None                  | Output in JSON format. Useful for scripting and automation.                                                                                                                                        |
+| `--with-backend-settings`     | `<json>`              | Use provided JSON settings instead of querying backend (primarily for testing purposes).                                                                                                           |
+| `--yes`                       | None                  | Skip interactive prompts and use default behavior. The command proceeds automatically without user intervention.                                                                                    |
+| `--promotion`                 | `<branch>`            | Use promotionOverrides from the specified branch instead of regular overrides.                                                                                                                     |
+| `--workspace`                 | `<workspace>`         | Specify the target workspace. This overrides the default workspace.                                                                                                                                 |
+| `--debug`, `--verbose`        | None                  | Show debug/verbose logs.                                                                                                                                                                            |
+| `--token`                     | `<token>`             | Specify an API token. This will override any stored token.                                                                                                                                          |
+| `--base-url`                  | `<baseUrl>`           | Specify the base URL of the API. If used, `--token` and `--workspace` are required and no local remote/workspace will be used.                                                                     |
+
+## Configuration management
+
+The `gitsync-settings` command manages git-sync filter settings and configuration options defined in your `wmill.yaml` file and the workspace backend.
+
+### Settings managed
+
+The command handles these git-sync configuration fields (see [wmill.yaml](./sync.mdx#wmillyaml) for complete details):
+
+- **Path filters**: `includes`, `excludes`, `extraIncludes` - control which files are synced based on path patterns
+- **Type filters**: Control which types of resources are synced:
+  - `skipScripts`, `skipFlows`, `skipApps`, `skipFolders` - resource type filters
+  - `skipVariables`, `skipResources`, `skipResourceTypes`, `skipSecrets` - additional type filters
+  - `includeSchedules`, `includeTriggers`, `includeUsers`, `includeGroups` - optional inclusions
+  - `includeSettings`, `includeKey` - system resource inclusions
+
+### Configuration modes
+
+The pull command supports different write modes when conflicts exist:
+
+- **Replace mode** (`--replace`): Overwrites top-level wmill.yaml settings
+- **Override mode** (`--override`): Creates branch-specific overrides in the `git_branches` section  
+- **Default mode** (`--default`): Writes to top-level defaults
+- **Interactive mode** (default): Prompts user to choose between replace/override when conflicts exist
+
+## Usage examples
+
+### Basic operations
+
+```bash
+# Pull git-sync settings from workspace to local wmill.yaml
+wmill gitsync-settings pull
+
+# Push local wmill.yaml git-sync settings to workspace
+wmill gitsync-settings push
+
+# Work with specific repository
+wmill gitsync-settings pull --repository u/user/my-repo
+wmill gitsync-settings push --repository u/user/my-repo
+```
+
+### Preview changes
+
+```bash
+# Show what would change in local configuration
+wmill gitsync-settings pull --diff
+
+# Show what would be pushed to workspace
+wmill gitsync-settings push --diff
+
+# JSON output for scripting
+wmill gitsync-settings pull --diff --json-output
+```
+
+### Configuration modes
+
+```bash
+# Replace top-level settings (non-interactive)
+wmill gitsync-settings pull --replace
+
+# Add branch-specific override (non-interactive)  
+wmill gitsync-settings pull --override
+
+# Write to defaults section
+wmill gitsync-settings pull --default
+
+# Skip prompts, use default behavior
+wmill gitsync-settings pull --yes
+```
+
+### Branch-specific operations
+
+```bash
+# Use promotion-specific overrides from main branch
+wmill gitsync-settings pull --promotion main
+
+# Push promotion settings to workspace
+wmill gitsync-settings push --promotion production
+```
+
+When using the `--promotion` flag, the command will use `promotionOverrides` instead of regular `overrides` from the specified branch in your `wmill.yaml`. This should be used when your git sync connection is configured in [promotion mode](../11_git_sync/index.mdx#promotion-mode).
+
+## Differences from sync command
+
+The `gitsync-settings` command is specifically for managing configuration, not workspace content:
+
+| Feature | `gitsync-settings` | `sync` |
+|---------|-------------------|---------|
+| **Purpose** | Manages git-sync configuration settings | Synchronizes actual workspace content (scripts, flows, etc.) |
+| **Scope** | Configuration metadata only | Workspace resources and files |
+| **Target** | `wmill.yaml` git-sync settings | Workspace scripts, flows, apps, resources |
+| **File Operations** | Modifies `wmill.yaml` structure | Creates/updates resource files in sync directory |
+| **Safety** | Configuration changes only | Can create/delete workspace resources |
+
+For more details on the `wmill.yaml` configuration structure, see [wmill.yaml](./sync.mdx#wmillyaml).
