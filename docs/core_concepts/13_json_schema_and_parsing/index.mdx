@@ -294,7 +294,7 @@ def main(x: str, y: int, xy: DynSelect_foo):
 
 ### Dynamic select in flows
 
-In flows, dynamic select is only available for flow input steps. You must define one function for each flow input field that is of dynamic select type. The function name must exactly match the name of the flow input field. No export type is required - just define the function inline within the flow editor:
+In flows, dynamic select is only available for flow input steps. You must define one function for each flow input field that is of dynamic select type. The function name must exactly match the name of the flow input field. No export type is required.
 
 <Tabs className="unique-tabs">
 <TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -362,26 +362,24 @@ def category(department: str):
 
 ### How dynamic select works
 
-The select options recompute dynamically based on other input arguments. You can also use `text` as an argument in the function to access the current text input value for filtering.
+The select options recompute dynamically based on other input arguments.
 
-You can implement custom filtering and sorting logic within your function. In the examples above, when `x` equals "bar", the options are filtered to show only one option.
+You can implement custom filtering and sorting logic within your function. In the examples above in the foo function, when `x` equals "bar" or `text` equals "42", the options are filtered to show only one option.
 
 #### Dynamic select in scripts
 
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	controls
-	src="/videos/dynamic_select.mp4"
+	src="/videos/dynamic_select_script.mp4"
 />
 
 #### Dynamic select in flows
 
-<!-- TODO: Add video showing dynamic select usage in flows -->
-
 <video
 	className="border-2 rounded-xl object-cover w-full h-full dark:border-gray-800"
 	controls
-	src="/videos/dynamic_select_flows.mp4"
+		src="/videos/dynamic_select_flow.mp4"
 />
 
 ## Backend schema validation
