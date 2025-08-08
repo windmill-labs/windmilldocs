@@ -57,10 +57,6 @@ export async function main(message_content: string, url: string) {
 }
 ```
 
-## Error handling
-
-WebSocket triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
-
 The trigger also supports additional configuration options:
 
 
@@ -89,6 +85,10 @@ Windmill supports the following filter:
 - **JSON**: The message is parsed as a JSON object and the filter checks that the filter `key` exists and the value at the key is equal or is a subset of the filter `value`.
 
 ![Filters](./filters.png 'Filters')
+
+## Error handling
+
+WebSocket triggers support local error handlers that override workspace error handlers for specific triggers. See the [error handling documentation](../10_error_handling/index.mdx#trigger-error-handlers) for configuration details and examples.
 
 
 
