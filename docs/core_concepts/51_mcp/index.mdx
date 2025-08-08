@@ -5,13 +5,11 @@ Windmill supports the [**Model Context Protocol (MCP)**](https://modelcontextpro
 With MCP, you can connect your favorite LLMs (like [Claude](https://claude.ai/download), [Cursor](https://www.cursor.com), or any [MCP compatible client](https://modelcontextprotocol.io/clients)) to Windmill, allowing you to trigger scripts and flows by chatting with them.
 
 Additionally, MCP provides access to Windmill's API endpoints for basic operations on:
-- **Jobs** - Monitor and manage job executions
-- **Scripts** - Create, read, update, and delete scripts
-- **Flows** - Manage workflow definitions and executions
-- **Resources** - Handle resource configurations
-- **Variables** - Manage workspace variables and secrets
-- **Schedules** - Control scheduled executions
-- **Workers** - Monitor worker status and configuration
+- **[Jobs](../20_jobs/index.mdx)** - Monitor and manage [job](../20_jobs/index.mdx) executions, including tracking their progress, retrieving logs, and viewing execution results
+- **[Resources](../3_resources_and_types/index.mdx)** - Create, read, update, and delete [resource configurations](../3_resources_and_types/index.mdx) for third-party system connections like databases and APIs
+- **[Variables](../2_variables_and_secrets/index.mdx)** - Manage workspace [variables and secrets](../2_variables_and_secrets/index.mdx) for secure credential storage and configuration management  
+- **[Schedules](../1_scheduling/index.mdx)** - Control [scheduled executions](../1_scheduling/index.mdx) with CRON-like automation for scripts and flows
+- **[Workers](../9_worker_groups/index.mdx)** - Monitor [worker status and configuration](../9_worker_groups/index.mdx), including worker groups and resource allocation
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
