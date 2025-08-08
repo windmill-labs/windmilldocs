@@ -24,6 +24,22 @@ const communityTestimonials = [
 	{
 		body: (
 			<span>
+				<strong>
+					<span className="text-blue-500">Windmill</span>
+				</strong>{' '}
+				is in a godsend tier. The fact that it's oss, is gonna make it go down in the history books and will probably be the defacto tool for automation in the future. Absolutely incredible stuff. Thank you to all who made it possible. 
+			</span>
+		),
+		author: {
+			handle: 'discord',
+			name: 'dankestofall on Discord',
+			date: 'July 11th 2025',
+			backlink: 'https://discord.com/channels/930051556043276338/930051949888405524/1393129025379237991'
+		}
+	},
+	{
+		body: (
+			<span>
 				We've been using windmill for our internal tooling and dashboards and its been great!{' '}
 				<strong>
 					<span className="text-blue-500">Windmill</span>
@@ -65,11 +81,11 @@ const communityTestimonials = [
 				<strong>
 					<span className="text-blue-500">Windmill</span>
 				</strong>{' '}
-				is amazing. This is the “just get the thing done” tool my brain has needed for my entire
-				career. I can see it becoming a hub for all kinds of logic in my system. I’m so pleased.
+				is amazing. This is the "just get the thing done" tool my brain has needed for my entire
+				career. I can see it becoming a hub for all kinds of logic in my system. I'm so pleased.
 				Thanks for making such a wonderful platform, and thanks for keeping it open source. the one
 				time I hit a snag, you helped me out within a minute. I got a lot done tonight without even
-				expecting to, and that’s a really cool feeling.
+				expecting to, and that's a really cool feeling.
 			</span>
 		),
 		author: {
@@ -159,13 +175,13 @@ const communityTestimonials = [
 	{
 		body: (
 			<span>
-				I had the same thought when it popped up on my radar a year ago. Now that I’ve been using it
-				for a few weeks, it’s difficult to go back to the exact tools you’re naming. I didn’t
+				I had the same thought when it popped up on my radar a year ago. Now that I've been using it
+				for a few weeks, it's difficult to go back to the exact tools you're naming. I didn't
 				realize how large of an impediment it is to move back and forth all of them.
 				<strong>
 					<span className="text-blue-500">Windmill</span>
 				</strong>{' '}
-				is the thing I never knew I needed. It’s changed how I think about delivering data
+				is the thing I never knew I needed. It's changed how I think about delivering data
 				products/solutions.
 			</span>
 		),
@@ -201,7 +217,7 @@ const clientTestimonials = [
 			dark: '/images/brands/pave-dark.svg',
 			light: '/images/brands/pave.svg',
 			anchor: 'pave',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517339626889?e=1743033600&v=beta&t=OAB_xIcFW_hKsvMuVxdGEiPia4ngcOiG9LDYhWsKM7A'
+			profile_picture: 'https://media.licdn.com/dms/image/v2/C5103AQHz-67l95QEtA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517339626889?e=1754524800&v=beta&t=yUaXMWCh7gH7D0G3Gy7lDi-yzhktIoEPRHYz9wLFads'
 		},
 		company_url: 'https://www.pave.com/',
 		linkedIn: 'https://www.linkedin.com/in/lewisjellis/',
@@ -229,7 +245,7 @@ const clientTestimonials = [
 			dark: '/images/brands/Investing-Dark.svg',
 			light: '/images/brands/Investing-Light.svg',
 			anchor: 'investing',
-			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQHh9uu2s-Aviw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1680507511387?e=1746057600&v=beta&t=uncSMmdMz0sB6nWEiWoIF7jc2CaFHiVCVjJmUG6d4kw'
+			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQHh9uu2s-Aviw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1680507511387?e=1754524800&v=beta&t=fwHCnO4SDxsdxWELbMbRqqv1AfA8egAp_D_twzSU1WA'
 		},
 		company_url: 'https://www.investing.com',
 		linkedIn: 'https://www.linkedin.com/in/yonatan-adest/',
@@ -246,7 +262,7 @@ const clientTestimonials = [
 			profile_picture: 'https://media.licdn.com/dms/image/D4E03AQFlNTUW60HFbQ/profile-displayphoto-shrink_400_400/0/1693895615653?e=2147483647&v=beta&t=nxGuC4K8eXsJ2YAq1wqG-m8mEkhj8gugGqhccdckJZc'
 		},
 		company_url: 'https://www.qovery.com',
-		linkedIn: 'https://www.linkedin.com/in/romaricphilogene/',
+		linkedIn: '/blog/qovery-case-study',
 		text: `Windmill has been able to cover all of our needs in terms of ETL & workflow orchestration and observability. We use Windmill to manage entirely our playground and complex billing engine. They made it simple to build, schedule, and monitor script & flows. The platform offers a clear DX for code editing, permission management and error handling.`
 	},
 	{
@@ -260,7 +276,7 @@ const clientTestimonials = [
 			profile_picture: 'https://avatars.githubusercontent.com/u/1047421?v=4'
 		},
 		company_url: 'https://motimateapp.com',
-		linkedIn: 'https://www.linkedin.com/in/sindresvendby/',
+		linkedIn: '/blog/kahoot-case-study',
 		text: `Currently, we employ 9 apps, 20 flows, and 63 scripts in our daily operations. They all serve as the foundation for essential tasks, allowing users to independently manage their activities according to their specific needs.`
 	},
 	{
@@ -276,6 +292,19 @@ const clientTestimonials = [
 		company_url: 'https://uaw.org/',
 		linkedIn: 'https://www.linkedin.com/in/benpaulryanpacker/',
 		text: `I've used Retool, Argo, Airflow, etc., and nothing comes close to Windmill. It's coherent and expertly designed for developers to interface with non-technical staff. It lets our small team move super fast and cover a huge surface area in a way that's maintainable, observable, and debuggable.<br/><br/>The responsiveness and speed of the Windmill team is also unheard of among SaaS providers. Feature requests have often been implemented within a day or week, and the one or two minor bug reports we've had have always been fixed within the day or even a few hours. Tthe team has treated us as partners and co-designers, and listened to our use cases and thought with us about the best way to approach a problem.<br/><br/>We now have 10+ apps, 15+ complex syncing schedules, and 75+ individual custom scripts and actions powered syncs between 7 different systems in daily use by dozens of organizers, and our use is expanding daily. Without Windmill, attempting this level of sophistication for a technical team of our size would not have been possible.`
+	},
+	{
+		author: {
+			name: 'Rudo Kemper',
+			company: 'Conservation Metrics',
+			position: 'Director, Indigenous Guardianship Program',
+			dark: '/images/brands/logo-conservation-metrics.png',
+			light: '/images/brands/logo-conservation-metrics.png',
+			profile_picture: 'https://media.licdn.com/dms/image/v2/D4D03AQGsDNU9khzxmQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1685649292887?e=1758153600&v=beta&t=l6BGPXXXfysecBGMq9YRgZt5thKAKvx-v59G7h8vaWQ'
+		},
+		company_url: 'https://conservationmetrics.com/',
+		linkedIn: '/blog/conservation-metrics-case-study',
+		text: `Windmill is invaluable for our end users, the indigenous communities. As simple as it is to deploy and scale, it saves them hours of work and provides near-instantaneous data access that previously took months of manual work.`
 	}
 ];
 
@@ -352,6 +381,11 @@ export default function Example() {
 					height: '42px',
 					width: 'auto',
 					maxWidth: '100px',
+					...((colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light).endsWith('.png') && {
+						height: 'auto',
+						width: '100px',
+						maxHeight: '42px'
+					})
 				}}
 				src={colorMode === 'dark' ? testimonial.author.dark : testimonial.author.light}
 				alt={testimonial.author.company}

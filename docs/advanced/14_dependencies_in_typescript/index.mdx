@@ -109,7 +109,7 @@ Although Windmill can [automatically resolve imports](#lockfile-per-script-infer
 <iframe
 	style={{ aspectRatio: '16/9' }}
 	src="https://www.youtube.com/embed/T8jMjpNvC2g"
-	title="Perpetual Scripts"
+	title="Override Inferred Dependencies with Custom Dependency Files"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
@@ -266,13 +266,13 @@ This applies to all methods above. Only, if using Codebases & bundles locally, t
 
 ![Private NPM registry](../6_imports/private_registry.png 'Private NPM registry')
 
-On [Enterprise Edition](/pricing), go to [Instance settings](../18_instance_settings/index.mdx#registries) -> Core -> NPM Config Registry.
+On [Enterprise Edition](/pricing), go to [Instance settings](../18_instance_settings/index.mdx#registries) -> Registries.
 
 Set the registry URL: `https://npm.pkg.github.com/OWNER` (replace `OWNER` with your GitHub username or organization name).
 
 Currently, Deno does not support private npm packages requiring tokens (but support private npm registries). Bun however does.
 
-If a token is required, append `:_authToken=<your url>` to the URL.
+If a token is required, append `:_authToken=<your token>` to the URL (replace `<your token>` with your actual token).
 
 Combining the two, you can import private packages from npm
 

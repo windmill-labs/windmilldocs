@@ -1,0 +1,93 @@
+import { EngineBenchmarks, getToc } from '@site/src/components/EngineBenchmarks';
+import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+export const toc = getToc("kestra");
+
+# Kestra benchmarks
+
+<DocCard
+	title="Benchmark conclusions"
+	description="Conclusions for each benchmark run for all engines in all languages and settings"
+	href="/docs/misc/benchmarks/competitors/results/conclusion/"
+/>
+
+## Summary
+
+[Kestra](https://kestra.io/) delivered middle-of-the-pack performance — relatively stable for long-running tasks, but slower than competitors in lightweight workloads. While more modern than [Airflow](../airflow/index.mdx) and [Prefect](../prefect/index.mdx), it falls short of the orchestration efficiency seen in [Temporal](../temporal/index.mdx), [Hatchet](../hatchet/index.mdx), or [Windmill](../windmill/index.mdx).
+
+## Kestra setup
+
+We set up Kestra version v0.22.3 using the [docker-compose.yml from their official Documentation](https://kestra.io/docs/installation/docker-compose). We made some adjustments to it to have a similar setup compared to the other orchestrator.
+
+The flow we used to run the benchmarks is the following:
+
+<Tabs>
+  <TabItem value="python" label="Python">
+    ```yaml
+id: benchmark
+namespace: company.team
+inputs:
+ - id: n
+   type: INT
+ - id: iters
+   type: INT
+tasks:
+  - id: processIterations
+    type: io.kestra.plugin.core.flow.ForEach
+    values: '{{ range(0, inputs.iters - 1) }}'
+    concurrencyLimit: 1
+    tasks:
+      - id: python
+        type: io.kestra.plugin.scripts.python.Script
+        containerImage: python:slim
+        taskRunner:
+          type: io.kestra.plugin.core.runner.Process
+        script: |
+
+          def fibo(n: int):
+            if n <= 1:
+                return n
+            else:
+                return fibo(n - 1) + fibo(n - 2)
+
+          print(str(fibo({{ inputs.n }})))
+    ```
+  </TabItem>
+  <TabItem value="js" label="JavaScript">
+    ```yaml
+id: benchmark_js
+namespace: company.team
+inputs:
+ - id: n
+   type: INT
+ - id: iters
+   type: INT
+tasks:
+  - id: processIterations
+    type: io.kestra.plugin.core.flow.ForEach
+    values: '{{ range(0, inputs.iters - 1) }}'
+    concurrencyLimit: 1
+    tasks:
+      - id: script
+        type: io.kestra.plugin.scripts.node.Script
+        taskRunner:
+          type: io.kestra.plugin.core.runner.Process
+        script: |
+            function fibo(n) {
+              if (n <= 1) {
+                return n
+              } else {
+                return fibo(n-1) + fibo(n-2)
+              }
+            }
+            console.log(fibo({{ inputs.n }}))
+
+    ```
+  </TabItem>
+</Tabs>
+
+We executed it once with `n=33`, `iters=10` and once with `n=10` and `iters=40`. Note that we set the concurrency limit to 1 meaning all task will run sequentially on one worker. Furthermore, no extra python dependencies had to be installed during the execution of those flows, , and we use a `Process` task runner to avoid starting a Docker container for each task execution.
+
+<EngineBenchmarks engine="kestra" />

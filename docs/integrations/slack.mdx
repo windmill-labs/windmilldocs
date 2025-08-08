@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Slack integration
 
@@ -181,6 +183,113 @@ export async function main(response_url: string, text: string) {
 
 will console.log `user = username`, username being the Slack username.
 
+### Slack approval steps
+
+[Approval steps](../flows/11_flow_approval.mdx) are a way to suspend a [flow](../flows/1_flow_editor.mdx) until specific event(s) are received, such as approvals or cancellations. You can use them to handle approvals from Slack.
+
+The Windmill [Python](../advanced/2_clients/python_client.md) and [TypeScript](../advanced/2_clients/ts_client.mdx) clients both have a helper function to request an interactive approval on Slack. An interactive approval is a Slack message that can be approved or rejected directly from Slack without having to go back to the Windmill UI.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/wUvqom8nmM4"
+	title="Slack approval step"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+The following hub scripts can be used:
+- Python: [Request Interactive Slack Approval](https://hub.windmill.dev/scripts/slack/11403/request-interactive-slack-approval-(python)-slack)
+- TypeScript: [Request Interactive Slack Approval](https://hub.windmill.dev/scripts/slack/11402/request-interactive-slack-approval-slack)
+
+If you define a [form](../flows/11_flow_approval.mdx#form) on the approval step, the form will be displayed in the Slack message as a modal.
+
+![Approval form slack](../assets/flows/tuto_approval_slack_form.png.webp)
+
+Both of these scripts are using the Windmill client helper function:
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```python
+wmill.request_interactive_slack_approval(
+    slack_resource_path="/u/username/my_slack_resource",
+    channel_id="admins-slack-channel",
+    message="Please approve this request",
+    approver="approver123",
+    default_args_json={"key1": "value1", "key2": 42},
+    dynamic_enums_json={"foo": ["choice1", "choice2"], "bar": ["optionA", "optionB"]},
+)
+```
+</TabItem>
+
+<TabItem value="bun" label="Bun" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```ts
+await wmill.requestInteractiveSlackApproval({
+    slackResourcePath: "/u/username/my_slack_resource",
+    channelId: "admins-slack-channel",
+    message: "Please approve this request",
+    approver: "approver123",
+    defaultArgsJson: { key1: "value1", key2: 42 },
+    dynamicEnumsJson: { foo: ["choice1", "choice2"], bar: ["optionA", "optionB"] },
+});
+```
+</TabItem>
+</Tabs>
+
+Where [dynamic_enums](../flows/11_flow_approval.mdx#dynamics-enums) can be used to dynamically set the options of enum form arguments and [default_args](../flows/11_flow_approval.mdx#default-args) can be used to dynamically set the default values of form arguments.
+
+If multiple approvals are required, you can use the client helper directly and send approval requests to different channels:
+
+<Tabs className="unique-tabs">
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```python
+import wmill
+
+def main():
+    # Send approval request to customers
+    wmill.request_interactive_slack_approval(
+        'u/username/slack_resource',
+        'customers',
+    )
+
+    # Send approval request to admins
+    wmill.request_interactive_slack_approval(
+        'u/username/slack_resource',
+        'admins',
+    )
+```
+</TabItem>
+
+<TabItem value="bun" label="Bun" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```ts
+import * as wmill from "windmill-client"
+
+export async function main() {
+  await wmill.requestInteractiveSlackApproval({
+    slackResourcePath: "/u/username/slack_resource",
+    channelId: "customers"
+  })
+  await wmill.requestInteractiveSlackApproval({
+    slackResourcePath: "/u/username/slack_resource",
+    channelId: "admins"
+  })
+}
+```
+</TabItem>
+</Tabs>
+
+For more details on approval steps and their features, check out the [Approval steps documentation](../flows/11_flow_approval.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Suspend & Approval / Prompts"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+</div>
+
 ## Action on Slack from Windmill
 
 The second way to make Slack and Windmill interact is through scripts triggered from Windmill to the Slack API. In other words, our goal here is to allow Windmill Scripts
@@ -262,6 +371,37 @@ Also, explore more Slack scripts, flows and apps on [Windmill Hub](https://hub.w
 Slack is an efficient way to be notified of errors on a Windmill run, whole workspace or instance. Windmill provides an integration for error handling on Slack.
 
 More details on [Error handling](../core_concepts/10_error_handling/index.mdx) page.
+
+### Critical alerts
+
+Slack can be used to receive [critical alerts](../core_concepts/37_critical_alerts/index.mdx) from Windmill. This feature is available in the [Enterprise Edition](/pricing).
+
+Critical alerts are generated under the following conditions:
+- [Job](../core_concepts/20_jobs/index.mdx) is re-run after a crash
+- [License key](../misc/7_plans_details/index.mdx#using-the-license-key-self-host) does not renew
+- [Workspace error handler](../core_concepts/10_error_handling/index.mdx#workspace-error-handler) fails
+- Number of running workers in a group falls below a specified threshold
+- Number of [jobs waiting in queue](../core_concepts/9_worker_groups/index.mdx#queue-metric-alerts) is above a threshold for more than a specified amount of time
+
+To set up critical alerts to Slack:
+
+1. Configure [SMTP](../advanced/18_instance_settings/index.mdx#smtp) in the instance settings
+2. Connect your instance to Slack in the [instance settings](../advanced/18_instance_settings/index.mdx#critical-alert-channels)
+3. Specify the Slack channel where alerts should be sent
+
+You can also set up worker group-specific alerts to receive notifications when the number of running workers in a group falls below a specified threshold. This can be configured in the [worker group config](../core_concepts/9_worker_groups/index.mdx#alerts).
+
+:::note
+Instance-wide critical alerts are only visible to users with the [superadmin](../core_concepts/16_roles_and_permissions/index.mdx#superadmin) or [devops](../core_concepts/16_roles_and_permissions/index.mdx#devops) roles. For workspace-specific alerts, users need to have admin privilege over that workspace.
+:::
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical alerts"
+		description="Get a notification for critical events such as everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alerts"
+	/>
+</div>
 
 <!-- Links -->
 

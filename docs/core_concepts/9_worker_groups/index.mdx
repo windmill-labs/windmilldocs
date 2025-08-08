@@ -45,7 +45,7 @@ In the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), workers can be 
 Examples of configurations include:
 
 1. [Assign different jobs to specific worker groups](#set-tags-to-assign-specific-queues) by giving them tags.
-2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
+2. [Set an init or periodic script](#worker-scripts) that will run at the start of the workers or periodically (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
 
 ## Assign custom worker groups
@@ -167,6 +167,8 @@ To make custom tags available from the UI, go to the dedicated "Workers" tab on 
 
 ![Worker Group Assignable Tags](./worker_group_ui_2.png.webp)
 
+#### Restrict tags to specific workspaces
+
 It is possible to restrict some tags to specific workspace using the following syntax:
 
 ```
@@ -223,11 +225,11 @@ See [Deploy to staging prod](../12_staging_prod/index.md) to see a full UI flow 
 
 ## Alerts
 
-You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+You can set an alert to receive notification via Email, Slack, or Microsoft Teams when the number of running workers in a group falls below a given number. It's available in the worker group config.
 
 ![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
 
-Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter a number of workers below which the notification will be sent.
 
 You need to configure [Critical alert channels](../37_critical_alerts/index.mdx) to receive notifications.
 
@@ -271,18 +273,19 @@ You can then configure it directly from the UI.
 Examples of configurations include:
 
 1. [Assign different jobs to specific worker groups](#set-tags-to-assign-specific-queues) by giving them tags.
-2. [Set an init script](#init-scripts) that will run at the start of the workers (e.g. to pre-install binaries).
+2. [Set an init or periodic script](#worker-scripts) that will run at the start of the workers or periodically (e.g. to pre-install binaries).
 3. [Dedicate your worker to a specific script or flow](#dedicated-workers--high-throughput) for high throughput.
+
 
 ## Alerts
 
-You can set an alert to receive notification via Email or Slack when the number of running workers in a group falls below a given number. It's available in the worker group config.
+You can set an alert to receive notification via Email, Slack, or Microsoft Teams when the number of running workers in a group falls below a given number. It's available in the worker group config.
 
 ![Workers alerts Slack](./critical_alert_slack.png 'Workers alerts Slack')
 
-Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter en number of workers below which the notificationi will be sent.
+Enable 'Send an alert when the number of alive workers falls below a given threshold', and enter a number of workers below which the notification will be sent.
 
-You need to configre [Critical alert channels](../37_critical_alerts/index.mdx) to receive notifications.
+You need to configure [Critical alert channels](../37_critical_alerts/index.mdx) to receive notifications.
 
 ![Workers alerts](./workers_alerts.png 'Workers alerts')
 
@@ -336,30 +339,63 @@ Autoscaling is available in the [Enterprise plan](/pricing).
 	/>
 </div>
 
-## Init scripts
+## Worker scripts
+
+Worker scripts provide methods to run bash scripts on workers at different stages of the worker lifecycle. There are two types of worker scripts: init scripts that run once at worker startup, and periodic scripts that run at regular intervals for ongoing maintenance.
+
+Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), both types of worker scripts can be configured from the Windmill UI in the worker group settings.
+
+When adjustments are made in the Worker Management UI, the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
+
+### Init scripts
 
 [Init scripts](../../advanced/8_preinstall_binaries/index.mdx#init-scripts) provide a method to pre-install binaries or set initial configurations without the need to modify the base image. This approach offers added convenience. Init scripts are executed at the beginning when the worker starts, ensuring that any necessary binaries or configurations are set up before the worker undertakes any other job.
-
-Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), they can be set from Windmill UI.
 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
 	<img
 		src={require('../../advanced/8_preinstall_binaries/init_scripts.png').default}
-		alt="Init scripts Infographics"
-		title="Init scripts Infographics"
+		alt="Worker scripts Infographics"
+		title="Worker scripts Infographics"
 		width="70%"
 	/>
 </div>
 
 <br />
 
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Init scripts"
-		description="Init scripts are executed at the beginning when the worker starts."
-		href="/docs/advanced/preinstall_binaries#init-scripts"
-	/>
-</div>
+The execution of init scripts is inspectable in the superadmin workspace, with Kind = All filter. The path of those executions are `init_script_{worker_name}`.
+
+### Periodic scripts
+
+Periodic scripts are bash scripts that run at regular intervals on workers, designed for ongoing maintenance tasks that need to be executed repeatedly during the worker's lifetime, with the **minimum interval settable between periodic script executions being 60 seconds**.
+
+
+The execution of periodic scripts is inspectable in the superadmin workspace, with Kind = All filter. The path of those executions are `periodic_script_{worker_name}_{timestamp}`.
+
+## Worker scripts
+
+Worker scripts are bash scripts that run at regular intervals on workers, complementing init scripts which only run at worker startup. While init scripts handle one-time setup tasks like installing dependencies or configuring the environment, worker scripts are designed for ongoing maintenance tasks that need to be executed repeatedly during the worker's lifetime.
+
+### Key differences from init scripts
+
+- **Init scripts**: Run once when the worker starts, ideal for setup and configuration tasks
+- **Worker scripts**: Run continuously at specified intervals (minimum 60 seconds), ideal for maintenance and monitoring tasks
+
+### Common use cases
+
+Worker scripts are particularly useful for:
+
+- **System maintenance**: Cleaning temporary files, rotating logs, or performing health checks
+- **Cache management**: Clearing expired cache entries or warming up caches  
+- **Resource monitoring**: Collecting metrics or monitoring system resources
+- **Security tasks**: Running periodic security scans or updating security configurations
+
+### Configuration and execution
+
+Under the [Cloud plans & Self-Hosted Enterprise Edition](/pricing), worker scripts can be configured from the Windmill UI in the worker group settings, similar to init scripts.
+
+When adjustments are made in the Worker Management UI, the workers will shut down and are expected to be restarted by their supervisor (Docker or k8s).
+
+The execution of worker scripts is inspectable in the superadmin workspace, with Kind = All filter. The path of those executions are `periodic_script_{worker_name}_{timestamp}`.
 
 ## Dedicated workers / High throughput
 
@@ -391,6 +427,25 @@ View logs from any workers or servers directly within the service logs section o
 		href="/docs/core_concepts/service_logs"
 	/>
 </div>
+
+## Interactive SSH REPL for worker host
+
+Windmill includes a built-in interactive SSH-like REPL for each worker. This allows you to execute bash commands directly on the machine running the worker, making it significantly easier to debug, explore the filesystem, or run quick system-level commands.
+
+### How to use
+
+- Go to the **Workers** page in the Windmill.
+- Find the worker you want to connect to in the table.
+- Click the **Command** button in the "Live Shell" column.
+- A drawer will open with an interactive bash shell.
+- Type and run bash commands directly in the terminal.
+
+> This feature is especially useful for debugging init scripts, verifying pre-installed binaries, inspecting the file system, or quickly running bash commands without needing to deploy a script.
+<br />
+**Note:**  
+- Use `cd` to navigate directories — the REPL remembers your working directory across commands.  
+- You can press `Ctrl+C` or use the **Cancel** button to stop a running job.  
+- If no command has run in the past 2 minutes, the first one may take up to ~15 seconds to start.
 
 ## Queue metrics
 

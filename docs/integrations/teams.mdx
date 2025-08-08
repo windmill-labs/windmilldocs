@@ -1,4 +1,6 @@
 import DocCard from '@site/src/components/DocCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Microsoft Teams integration
 
@@ -20,13 +22,7 @@ The goal here is to be able to invoke a Windmill Script from Microsoft Teams, by
 
 <br />
 
-First, you need to be a **workspace admin**. Then you
-should go to
-
-<a href="https://app.windmill.dev/workspace_settings" rel="nofollow">
-	Workspace Settings Page
-</a>
-and select the "Slack / Teams" tab. On there, click "Connect to Microsoft Teams".
+First, you need to be a **workspace admin**. Then you should go to <a href="https://app.windmill.dev/workspace_settings" rel="nofollow">Workspace Settings Page </a> and select the "Slack / Teams" tab. On there, click "Connect to Microsoft Teams".
 
 :::info Self-hosted
 
@@ -210,11 +206,201 @@ One of the parameters passed to the script is the "from_name" parameter, which i
 
 ```
 
+### Teams approval steps
+
+[Approval steps](../flows/11_flow_approval.mdx) are a way to suspend a [flow](../flows/1_flow_editor.mdx) until specific event(s) are received, such as approvals or cancellations. You can use them to handle approvals from Microsoft Teams.
+
+The Windmill [TypeScript](../advanced/2_clients/ts_client.mdx) client exposes helper functions to request approvals on Microsoft Teams. There are two types of approvals:
+
+1. **Interactive approval**: A Teams message that can be approved or rejected directly from Teams without having to go back to the Windmill UI
+2. **Basic approval**: A simple link that will open the approval page in the Windmill UI in your browser
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/gc6P7nnMORk"
+	title="Microsoft Teams approval step"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br />
+
+The following hub scripts can be used:
+- [Request Interactive Teams Approval](https://hub.windmill.dev/scripts/teams/13935/interactive-microsoft-teams-approval-teams)
+- [Request Basic Teams Approval](https://hub.windmill.dev/scripts/teams/13936/microsoft-teams-approval-teams)
+
+If you define a [form](../flows/11_flow_approval.mdx#form) on the approval step, the form will be displayed in the Teams message as a modal.
+
+![Approval form teams](../assets/flows/tuto_approval_teams.png.webp)
+
+Both of these scripts are using the Windmill client helper function:
+
+<Tabs className="unique-tabs">
+<TabItem value="ts_interactive" label="TypeScript Interactive" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```typescript
+await wmill.requestInteractiveTeamsApproval({
+    teamName: "Windmill",
+    channelName: "General",
+    message: "Please approve this request",
+    approver: "approver123",
+    defaultArgsJson: { key1: "value1", key2: 42 },
+    dynamicEnumsJson: { foo: ["choice1", "choice2"], bar: ["optionA", "optionB"] },
+});
+```
+</TabItem>
+
+<TabItem value="ts_basic" label="TypeScript Basic" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+```typescript
+const card_block = {
+    "type": "message",
+    "attachments": [
+        {
+            "contentType": "application/vnd.microsoft.card.adaptive",
+            "content": {
+                "type": "AdaptiveCard",
+                "$schema": "https://adaptivecards.io/schemas/adaptive-card.json",
+                "version": "1.6",
+                "body": [
+                    ... // card body
+                ],
+            },
+        }
+    ],
+    "conversation": {"id": `${conversation_id}`},
+}
+
+await wmill.TeamsService.sendMessageToConversation({
+    requestBody: { conversation_id, text: "A workflow has been suspended and is waiting for approval!", card_block }
+})
+```
+</TabItem>
+</Tabs>
+
+Where [dynamic_enums](../flows/11_flow_approval.mdx#dynamics-enums) can be used to dynamically set the options of enum form arguments and [default_args](../flows/11_flow_approval.mdx#default-args) can be used to dynamically set the default values of form arguments.
+
+If multiple approvals are required, you can use the client helper directly and send approval requests to different channels:
+
+```typescript
+import * as wmill from "windmill-client"
+
+export async function main() {
+  // Send approval request to team A
+  await wmill.requestInteractiveTeamsApproval({
+    teamName: "Team A",
+    channelName: "General",
+    message: "Please approve this request"
+  })
+  
+  // Send approval request to team B
+  await wmill.requestInteractiveTeamsApproval({
+    teamName: "Team B", 
+    channelName: "General",
+    message: "Please approve this request"
+  })
+}
+```
+
+For more details on approval steps and their features, check out the [Approval steps documentation](../flows/11_flow_approval.mdx).
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Suspend & Approval / Prompts"
+		description="Suspend a flow until specific event(s) are received, such as approvals or cancellations."
+		href="/docs/flows/flow_approval"
+	/>
+</div>
+
+## Action on Teams from Windmill
+
+### Write to Teams from Windmill
+
+The second way to make Teams and Windmill interact is through scripts triggered from Windmill to the Teams API. In other words, our goal here is to allow Windmill Scripts acting on Teams on your behalf.
+
+Let's navigate to the <a href="https://app.windmill.dev/resources" rel="nofollow">Resources page</a> and click "Add a resource/API".
+
+:::info
+
+You can read more about Resources in the documentation [here][docs-resource].
+
+:::
+
+![Create Teams resource](../assets/integrations/teams-resources.png)
+
+Select the `ms_teams_webhook` Resource Type from the resources list and add a webhook_url (see Teams [docs](https://learn.microsoft.com/en-us/microsoftteams/platform/webhooks-and-connectors/how-to/add-incoming-webhook?tabs=dotnet) for details on how to create a webhook).
+
+You can then use the resource in a script, like this script found on [WindmillHub](https://hub.windmill.dev/scripts/msteams/1582/send-a-message-to-ms-teams-channel-via-webhook-msteams) that "Sends a message to MS Teams channel via webhook":
+
+```typescript
+import { IncomingWebhook } from "npm:ms-teams-webhook@2.0.2";
+
+// See below for an example card you can pass in
+
+type MsTeamsWebhook = {
+  webhook_url: string;
+};
+export async function main(
+  ms_teams_webhook: MsTeamsWebhook,
+  messageCard: object,
+) {
+  const webhook = new IncomingWebhook(ms_teams_webhook.webhook_url);
+  const ret = await webhook.send(messageCard);
+  return ret;
+}
+
+const example_card = {
+  "@type": "MessageCard",
+  "@context": "https://schema.org/extensions",
+  summary: "This is a test summary",
+  themeColor: "0078D7",
+  title: "This is a test title",
+  sections: [
+    {
+      activityTitle: "Windmill Webhook",
+      activitySubtitle: "2023-05-25 17:57:55",
+      activityImage:
+        "https://connectorsdemo.azurewebsites.net/images/MSC12_Oscar_002.jpg",
+      text: "This is a test text",
+    },
+  ],
+};
+```
 ### Error handlers
 
 Microsoft Teams is an efficient way to be notified of errors on a Windmill run, whole workspace or instance. Windmill provides an integration for error / success / recovery handling on Microsoft Teams.
 
 More details on [Error handling](../core_concepts/10_error_handling/index.mdx) page.
+
+### Critical alerts
+
+Microsoft Teams can be used to receive [critical alerts](../core_concepts/37_critical_alerts/index.mdx) from Windmill. This feature is available in the [Enterprise Edition](/pricing).
+
+Critical alerts are generated under the following conditions:
+- [Job](../core_concepts/20_jobs/index.mdx) is re-run after a crash
+- [License key](../misc/7_plans_details/index.mdx#using-the-license-key-self-host) does not renew
+- [Workspace error handler](../core_concepts/10_error_handling/index.mdx#workspace-error-handler) fails
+- Number of running workers in a group falls below a specified threshold
+- Number of [jobs waiting in queue](../core_concepts/9_worker_groups/index.mdx#queue-metric-alerts) is above a threshold for more than a specified amount of time
+
+To set up critical alerts to Microsoft Teams:
+
+1. Configure [SMTP](../advanced/18_instance_settings/index.mdx#smtp) in the instance settings
+2. Connect your instance to Microsoft Teams in the [instance settings](../advanced/18_instance_settings/index.mdx#critical-alert-channels)
+3. Specify the Teams channel where alerts should be sent
+
+You can also set up worker group-specific alerts to receive notifications when the number of running workers in a group falls below a specified threshold. This can be configured in the [worker group config](../core_concepts/9_worker_groups/index.mdx#alerts).
+
+:::note
+Instance-wide critical alerts are only visible to users with the [superadmin](../core_concepts/16_roles_and_permissions/index.mdx#superadmin) or [devops](../core_concepts/16_roles_and_permissions/index.mdx#devops) roles. For workspace-specific alerts, users need to have admin privilege over that workspace.
+:::
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Critical alerts"
+		description="Get a notification for critical events such as everytime a job is re-run after a crash."
+		href="/docs/core_concepts/critical_alerts"
+	/>
+</div>
 
 <!-- Links -->
 

@@ -14,11 +14,75 @@ To enable Windmill AI, go to the "Windmill AI" tab in the workspace settings and
 
 ![Enable Windmill AI](./enable_ai.png 'Enable Windmill AI')
 
+## Windmill AI Chat
+
+The AI Chat in Windmill also includes a powerful navigation mode that serves as your personal assistant for understanding and using the platform. This mode goes beyond code generation to provide comprehensive help with Windmill itself.
+
+<iframe
+	style={{ aspectRatio: '16/9' }}
+	src="https://www.youtube.com/embed/ZAlotkJlQ2c"
+	title="Windmill AI Chat"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+	allowFullScreen
+	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
+></iframe>
+
+<br/>
+
+The navigation mode can assist you with:
+
+- **Answer questions about Windmill**: Get explanations about features, concepts, and best practices for using the platform effectively.
+- **Navigate the app**: The AI can guide you through the Windmill interface, helping you locate specific features, settings, and tools you need.
+- **Provide documentation links**: When you need more detailed information, the AI will direct you to relevant sections of this documentation for deeper learning.
+- **Fetch API information**: The AI can retrieve and explain relevant API details to help you understand what data and options are available for your use case. 
+- **Fill script and flow inputs**: Speed up your workflow by letting the AI automatically populate form fields for scripts and flows based on context and your requirements.
+- **Custom form filling instructions**: You can provide specific instructions to the AI on how to fill out forms in script and flow settings, making it adapt to your particular workflow needs.
+
+This navigation mode makes Windmill more accessible by providing contextual help exactly when and where you need it, whether you're learning the platform or looking for quick assistance during development.
+
 ## Windmill AI for scripts
 
-Generate Windmill-specific code from simple text. All languages that can be run on Windmill are supported.
+### AI Chat
 
-### Code generation
+The script editor includes an integrated AI chat panel designed to assist with coding tasks directly. 
+The assistant can generate code, identify and fix issues, suggest improvements, add documentation, and more.
+
+You can open the AI chat panel using **Cmd+L** (Mac) or **Ctrl+L** (Windows/Linux). When you have code selected, it will automatically include the selected code in your message to the AI.
+
+Key features:
+- When the AI suggests code changes, you can apply or discard specific parts of the suggestion, rather than having to accept or reject the entire block.
+- You can provide additional context to guide the AI's suggestions, such as database schemas, deployed script diffs, and runtime errors. Access the context menu by clicking the context button or typing `@` directly in the chat input.
+- The panel includes built-in shortcuts for common tasks like fixing bugs or optimizing code.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/ai_chat.mp4"
+/>
+
+### Code completion
+
+The script editor includes code autocomplete that provides real-time suggestions as you type. 
+Currently, this feature requires [Mistral Codestral](https://mistral.ai/news/codestral), which excels at code completion thanks to their specialized [FIM (Fill-in-Middle)](https://docs.mistral.ai/capabilities/code_generation/#fill-in-the-middle-endpoint) endpoint.
+
+The autocomplete feature can be enabled globally in the workspace settings. Individual users can then toggle it on or off in their personal script editor settings.
+
+### Summary copilot
+
+From your code, the AI assistant can generate a script summary.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	controls
+	src="/videos/summary_compilot.mp4"
+/>
+
+### Legacy AI features
+
+The following guides are still applicable for code editing of inline scripts inside flows and apps.
+
+#### Code generation
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
@@ -38,7 +102,7 @@ Moreover, you will get better results if you specify in the prompt what the scri
 For instance, in the demo video above we wanted to generate a script that fetches the commits of a GitHub repository passed as a parameter, so we wrote: `fetch and return the commits of a given repository on GitHub using octokit`.
 :::
 
-### Code editing
+#### Code editing
 
 Inside the `AI Gen` popup, you can choose to edit the existing code rather than generating a new one. The assistant will modify the code according to your prompt.
 
@@ -48,7 +112,7 @@ Inside the `AI Gen` popup, you can choose to edit the existing code rather than 
 	src="/videos/ai_edit.mp4"
 />
 
-### Code fixing
+#### Code fixing
 
 Upon error when executing code, you will be offered to "AI Fix" it. The assistant will automatically read the code, explain what went wrong, and suggest a way to fix it.
 
@@ -58,79 +122,31 @@ Upon error when executing code, you will be offered to "AI Fix" it. The assistan
 	src="/videos/ai_fix.mp4"
 />
 
-### Summary copilot
-
-From your code, the AI assistant can generate a script summary.
-
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	controls
-	src="/videos/summary_compilot.mp4"
-/>
 
 ## Windmill AI for flows
 
-Generate Workflows from prompts.
+### AI Flow Chat
 
-Windmill AI for Flows support two creation modes: Sequence Flows and Trigger Flows.
-In both cases, you specify a prompt for each step. The AI assistant will then generate the code step by step and link them together.
-You will have the opportunity at the end of each step to review, edit or even regenerate the step's code.
+The [flow editor](../../flows/1_flow_editor.mdx) includes an integrated AI chat panel that lets you create and modify flows using natural language. 
+Just describe what you want to achieve, and the AI will build the flow for you, step by step.
 
-For each action, you can either choose a script from the [Hub](https://hub.windmill.dev/) or generate one from scratch using Windmill AI.
-At the end of the process, flow inputs are inferred and you just need to fill them in.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Blog - Flow Builder Copilot"
-		description="Details on how the Flow Builder Copilot was built"
-		href="/blog/launch-week-1/ai-flow-builder"
-	/>
-</div>
-
-### Sequence flows
-
-Generate a flow consisting of a sequence of scripts.
+It can add scripts, [loops](../../flows/12_flow_loops.md), and [branches](../../flows/13_flow_branches.md), searching your workspace and [Windmill Hub](https://hub.windmill.dev/) for relevant scripts or generating new ones when needed or on request.
+It automatically sets up flow inputs and connects steps by filling in parameters based on context.
+For loops and branches, the AI sets suitable iterator expressions and predicates based on your flow's data.
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/y-pV6CShdZA"
-	title="YouTube video player"
+	src="https://www.youtube.com/embed/L7JPHDtbSNM"
+	title="AI Flow Chat"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 	allowFullScreen
 	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
 ></iframe>
 
-### Trigger flows
+### Script mode in AI Flow Chat
 
-[Trigger flows](../../flows/10_flow_trigger.mdx) are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks. A trigger script is intended to be used as scheduled poll with [schedules](../1_scheduling/index.mdx) and [states](../3_resources_and_types/index.mdx#states) (rich objects in JSON, persistent from one run to another) in order to compare the execution to the previous one and process each new item in a [for loop](../../flows/12_flow_loops.md).
-
-If there are no new items, the flow will be skipped.
-
-<iframe
-	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/4HTIKOAyVIg"
-	title="YouTube video player"
-	frameBorder="0"
-	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-	allowFullScreen
-	className="border-2 rounded-lg object-cover w-full dark:border-gray-800"
-></iframe>
-
-<br />
-
-The inputs of the for-loop action are automatically filled in with the outputs of the trigger step.
-
-Moreover, the flow is automatically set to run every 15 minutes when deployed. The [schedule](../1_scheduling/index.mdx) can then be customized (e.g. every 30 seconds etc.).
-This allows you to avoid relying on webhooks sent by external APIs, which can be tedious to configure.
-
-<div className="grid grid-cols-2 gap-6 mb-4">
-	<DocCard
-		title="Trigger scripts"
-		description="Trigger scripts are designed to pull data from an external source and return all of the new items since the last run, without resorting to external webhooks."
-		href="/docs/flows/flow_trigger"
-	/>
-</div>
+If you're working on an inline script in your flow, you can switch to script mode using the toggle to access the same AI assistance as in the script editor — including the ability to add context like database schemas, diffs, and preview errors, along with granular apply/reject controls and quick actions.
 
 ### Summary copilot for steps
 
@@ -172,14 +188,14 @@ When adding a [branch](../../flows/13_flow_branches.md), the AI assistant will s
 	src="/videos/branch_predicate_copilot.mp4"
 />
 
-## Windmill AI code completion
+## AI form filling
 
-When code completion is enabled, Windmill AI suggests completions as you type in all code editors (Script, Flow, Apps).
+The AI assistant can fill script and flow run forms based on your requirements. To enable it, go to the script or flow settings and enable "AI Form Filling". You will also be able to provide specific instructions to the AI on how to fill out the run form, making it adapt to your particular workflow needs.
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
 	controls
-	src="/videos/code_autopilot.mp4"
+	src="/videos/fill_form_inputs.mp4"
 />
 
 ## CRON schedules from prompt
@@ -196,6 +212,8 @@ The AI assistant can generate CRON [schedules](../1_scheduling/index.mdx) from a
 
 Windmill AI supports:
 - OpenAI's [models](https://platform.openai.com/docs/models) (o1 currently not supported)
+- Azure OpenAI's [models](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models)
+	- Base URL format: `https://{your-resource-name}.openai.azure.com/openai/deployments/{deployment-id}`
 - Anthropic's [models](https://docs.anthropic.com/en/docs/about-claude/models/all-models) (including Claude 3.7 Sonnet in extended thinking mode)
 - Mistral's [Codestral](https://mistral.ai/technology/#models)
 - DeepSeek's [models](https://api-docs.deepseek.com/quick_start/pricing)
@@ -203,11 +221,10 @@ Windmill AI supports:
 - Groq's [models](https://console.groq.com/docs/models)
 - OpenRouter's [models](https://openrouter.ai/models)
 - Together AI's [models](https://docs.together.ai/docs/serverless-models)
+- Custom AI: base URL and API key of any AI provider that is OpenAI API-compatible
 
 If you'd like to use a model that isn't in the default dropdown list, you can use any model supported by a provider (like `gpt-4o-2024-05-13` or `claude-3-7-sonnet-20250219`) by simply typing the model name in the model input field and pressing enter.
 
-### Custom models
+### AWS Bedrock
 
-[Enterprise](/pricing) customers can run all Windmill AI features on any custom AI provider that is OpenAI API-compatible using the `Custom AI` tab.
-
-For Azure OpenAI models, you should use the OpenAI provider and specify the base path of the model in the [instance settings](../../advanced/18_instance_settings/index.mdx#azure-openai-base-path).
+For models hosted on AWS Bedrock, you can use the `Custom AI` provider and follow the instructions in the [Windmill AI using AWS Bedrock](/docs/misc/9_guides/aws_bedrock/index.mdx) guide.

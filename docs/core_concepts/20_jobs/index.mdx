@@ -1,5 +1,8 @@
 import DocCard from '@site/src/components/DocCard';
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Jobs
 
 A job represents a past, present or future "task" or "work" to be executed by a
@@ -104,6 +107,137 @@ Jobs take a JSON object as input which can be empty. That input is passed as the
 
 If the payload contains keys that are not defined as parameters in the main function, they will be ignored. This allows you to handle arbitrary JSON payloads, as you can choose which keys to define as parameters in your script and process the data accordingly.
 
+## Result
+
+Jobs have as result the return of the main function serialized as a json object. We highly recommend to return small objects as they will be stored directly in the Database. For larger objects, use [Object Storage](../38_object_storage_in_windmill/index.mdx).
+
+### Result of jobs that failed
+
+If the jobs fail, it will have result an error object of the following shape:
+
+```
+{
+	"error": {
+		"name": "ErrorName",
+		"message": "Error message",
+		"stack": "full stack"
+	}
+}
+```
+
+In python and typescript, and similarly for all languages, this is constructed by extracting those information from the native Exception and Error objects that are raised by the code.
+
+### Result streaming
+
+In Python and Typescript (bun, nativets, deno), it's possible to stream back the result as a text stream (any `AsyncGenerator<string>` or `iter` compatible object) as a result OR to stream text before the result is fully returned.
+If not returning the stream directly, we introduce 2 new functions on our SDK: `wmill.streamResult(stream)` (TS) and `wmill.stream_result(stream)` (Python), to do it prior to the return.
+
+The stream only exists while the job is in the queue. Afterwards, the full stream becomes the result (or added as the field "wm_stream" if there is already a result).
+
+#### Returning a stream directly
+
+<Tabs className="unique-tabs">
+<TabItem value="bun" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+// can work with //native and recommended
+
+async function* streamWeatherReport(): AsyncGenerator<string> {
+	const reportLines = [
+		'📍 Current Weather Report\n',
+		'Location: San Francisco, CA\n\n',
+		'🌤️ Conditions: Partly Cloudy\n',
+		'🌡️ Temperature: 72°F (22°C)\n',
+		'💨 Wind: 8 mph SW\n',
+		'💧 Humidity: 65%\n',
+		'👁️ Visibility: 10 miles\n\n',
+		"📊 Today's Forecast:\n",
+		'Morning: Sunny, 68°F\n',
+		'Afternoon: Partly cloudy, 75°F\n',
+		'Evening: Clear skies, 70°F\n',
+		'Night: Cool and clear, 62°F\n\n',
+		'🔮 Tomorrow: Sunny with highs near 78°F\n',
+		'Perfect weather for outdoor activities! ☀️\n'
+	];
+
+	for (const line of reportLines) {
+		yield line;
+		// Sleep between 200-500ms for natural reading pace
+		await new Promise((resolve) => setTimeout(resolve, 200 + Math.random() * 300));
+	}
+}
+
+export async function main(x: string) {
+	return streamWeatherReport();
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+
+import time
+from typing import AsyncGenerator
+
+def stream_weather_report():
+    report_lines = [
+        "📍 Current Weather Report\n",
+        "Location: San Francisco, CA\n\n",
+        "🌤️ Conditions: Partly Cloudy\n",
+        "🌡️ Temperature: 72°F (22°C)\n",
+        "💨 Wind: 8 mph SW\n",
+        "💧 Humidity: 65%\n",
+        "👁️ Visibility: 10 miles\n\n",
+        "📊 Today's Forecast:\n",
+        "Morning: Sunny, 68°F\n",
+        "Afternoon: Partly cloudy, 75°F\n",
+        "Evening: Clear skies, 70°F\n",
+        "Night: Cool and clear, 62°F\n\n",
+        "🔮 Tomorrow: Sunny with highs near 78°F\n",
+        "Perfect weather for outdoor activities! ☀️\n"
+    ]
+
+    for line in report_lines:
+        yield line
+        # Sleep 0.2s for reading peace
+        time.sleep(0.2)
+
+def main() -> AsyncGenerator[str, None]:
+    return stream_weather_report()
+```
+
+</TabItem>
+</Tabs>
+
+#### Proxy the stream before returning the result
+
+<Tabs className="unique-tabs">
+<TabItem value="bun" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```typescript
+// similar as above
+
+export async function main(x: string) {
+	await wmill.streamResult(streamWeatherReport());
+	return { foo: 42 };
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+# similar as above
+
+def main() -> AsyncGenerator[str, None]:
+    wmill.stream_result(stream_weather_report())
+    return { "foo": 42}
+```
+
+</TabItem>
+</Tabs>
+
 ## Retention policy
 
 The retention policy for jobs runs details varies depending on your team's [plan](/pricing):
@@ -116,7 +250,7 @@ The retention policy for jobs runs details varies depending on your team's [plan
 
 You can set a custom retention period for the jobs runs details. The retention period can be configured in the [instance settings](../../advanced/18_instance_settings/index.mdx#retention-period-in-secs), in the "Core" tab.
 
-![Set Retention Period](./set_retention_policy.png "Set Retention Period")
+![Set Retention Period](./set_retention_policy.png 'Set Retention Period')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -125,6 +259,148 @@ You can set a custom retention period for the jobs runs details. The retention p
 		href="/pricing"
 	/>
 </div>
+
+## Job Progress Stream API
+
+This section is relevant if you want to use the API of Windmill to build your own client or frontend that watch the progress of a job, retrieve its new logs, result stream and get the job at completion with its result and all job metadata.
+
+Windmill provides an [SSE endpoint](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events) to watch a given job for new logs or completion. The API endpoint is [api/job/get/w/\{workspace\}/jobs_u/getupdate_sse/\{id\}](https://app.windmill.dev/openapi.html#tag/job/get/w/{workspace}/jobs_u/getupdate_sse/{id})
+
+It takes as query args:
+
+### Job progress SSE Query args
+
+``
+running (optional boolean, default false): was the job already running ? Optimization for the backend to not waste time checking if the job is running if we know it's already the case
+log_offset (optional integer, default 0): what was the last log offset known by the client to start from when streaming new logs
+stream_offset (optional integer, default 0): what was the last log offset known by the client to start from when streaming the result stream
+get_progress (optional integer, default false): should the updates contains [explicit job progress](/docs/advanced//19_explicit_progress/index.mdx)
+only_result (optional integer, default false): should we only care about the result and ignore all else
+no_logs (optionbal boolean, default false): should we skip streaming logs
+
+````
+
+### Job Progress Event Response
+
+The response from the SSE endpoint is a stream of JSON objects, each with a `type` field indicating the kind of event. The possible shapes are:
+
+- **Update**
+
+  The updates will only contain new updates since the last one, no update will be sent if there are no updates to share, otherwise the maximum frequency at which updates are sent is every 100ms.
+
+  with only_result = false (default):
+  ```json
+  {
+    "type": "update",
+    "running": true,                // optional, boolean: whether the job is running
+    "completed": false,             // optional, boolean: whether the job is completed
+    "new_logs": "string",           // optional, string: new logs since last update
+    "new_result_stream": "string",  // optional, string: new result stream data since last update
+    "log_offset": 123,              // optional, integer: current log offset
+    "stream_offset": 456,           // optional, integer: current result stream offset
+    "mem_peak": 789,                // optional, integer: peak memory usage
+    "progress": 50,                 // optional, integer: explicit job progress (0-100)
+    "flow_status": {...},           // optional, JSON: status of the flow (raw JSON)
+    "workflow_as_code_status": {...}, // optional, JSON: status of workflow as code (raw JSON)
+    "job": {...},                   // optional, JSON: job metadata
+  }
+````
+
+Once completed, the job field will contain the full completed job data, including its result but not only
+
+```
+
+- **workspace_id** (string): The unique identifier of the workspace where the job was run.
+- **id** (UUID): The unique identifier of the job.
+- **parent_job** (UUID, optional): The ID of the parent job, if this job was triggered by another job.
+- **created_by** (string): The user who created the job.
+- **created_at** (datetime): The timestamp when the job was created.
+- **started_at** (datetime, optional): The timestamp when the job started running.
+- **duration_ms** (integer): The duration of the job in milliseconds.
+- **success** (boolean): Whether the job completed successfully.
+- **script_hash** (string, optional): The hash of the script that was executed.
+- **script_path** (string, optional): The path to the script that was executed.
+- **args** (object, optional): The arguments passed to the job, as a JSON object.
+- **result** (object, optional): The result of the job, as a JSON object.
+- **result_columns** (array of strings, optional): The columns of the result, if applicable.
+- **logs** (string, optional): The logs generated by the job.
+- **deleted** (boolean): Whether the job has been deleted.
+- **canceled** (boolean): Whether the job was canceled.
+- **canceled_by** (string, optional): The user who canceled the job, if applicable.
+- **canceled_reason** (string, optional): The reason the job was canceled, if provided.
+- **job_kind** (enum): The kind of job (e.g., script, flow, etc.).
+- **schedule_path** (string, optional): The path of the schedule that triggered the job, if any.
+- **permissioned_as** (string): The permission context under which the job ran.
+- **flow_status** (object, optional): The status of the flow, as a JSON object.
+- **workflow_as_code_status** (object, optional): The status of the workflow as code, as a JSON object.
+- **is_flow_step** (boolean): Whether this job is a step in a flow.
+- **language** (enum, optional): The language of the script executed.
+- **is_skipped** (boolean): Whether this job was skipped.
+- **email** (string): The email of the user who created the job.
+- **visible_to_owner** (boolean): Whether the job is visible to the owner.
+- **mem_peak** (integer, optional): The peak memory usage during the job.
+- **tag** (string): The tag associated with the job.
+- **priority** (integer, optional): The priority of the job.
+- **labels** (object, optional): Arbitrary labels associated with the job, as a JSON object.
+
+This structure provides a comprehensive record of a completed job, including its metadata, execution details, results, and status.
+
+```
+
+with only_result = true, the updates are much lighter.
+
+```json
+{
+  "type": "update",
+  "running": true,                // optional, boolean: whether the job is running
+  "completed": false,             // optional, boolean: whether the job is completed
+  "new_result_stream": "string",  // optional, string: new result stream data since last update
+  "stream_offset": 456,           // optional, integer: current result stream offset
+  "only_result": {...}            // optional, JSON: only the result, only
+}
+```
+
+- **Error**
+
+  ```json
+  {
+  	"type": "error",
+  	"0": "Error message as string"
+  }
+  ```
+
+- **NotFound**
+
+  ```json
+  {
+  	"type": "notfound"
+  }
+  ```
+
+- **Timeout**
+
+  ```json
+  {
+  	"type": "timeout"
+  }
+  ```
+
+- **Ping**
+  ```json
+  {
+  	"type": "ping"
+  }
+  ```
+
+**Notes:**
+
+- All fields except `type` are optional and may be omitted if not relevant for the event.
+- The `update` event contains job status, logs, result stream, and progress information.
+- The `error` event contains a string error message.
+- The `notfound`, `timeout`, and `ping` events are signals with no additional data.
+
+```
+
 
 ## High priority jobs
 
@@ -144,7 +420,7 @@ For large logs storage (and display) and cache for distributed Python jobs, you 
 
 This feature has no overlap with the [Workspace object storage](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
 
-You can choose to use either S3 or Azure Blob Storage. For each you will find a button to test settings from a server or from a worker.
+You can choose to use S3, Azure Blob Storage, AWS OIDC or Google Cloud Storage. For each you will find a button to test settings from a server or from a worker.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -175,3 +451,11 @@ You can choose to use either S3 or Azure Blob Storage. For each you will find a 
 | Tenant ID      | string     | (optional) The unique identifier (GUID) for your Azure Active Directory (AAD) tenant. Required if using Azure Active Directory for authentication. |
 | Client ID      | string     | (optional) The unique identifier (GUID) for your application registered in Azure AD. Required if using service principal authentication via Azure AD. |
 | Endpoint       | string     | (optional) The specific endpoint for Azure Blob Storage, typically used when interacting with non-Azure Blob providers like Azurite or other emulators. For Azure Blob Storage, this is auto-generated and not usually needed. |
+
+#### Google Cloud Storage
+
+| Field | Description |
+|-------|-------------|
+| Bucket | The name of your Google Cloud Storage bucket |
+| Service Account Key | The service account key for your Google Cloud Storage bucket in JSON format |
+```

@@ -1,0 +1,74 @@
+# Ducklake
+
+Ducklake allows you to store massive amounts of data in S3, but still query it efficiently using DuckDB in natural SQL language.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	controls
+	id="main-video"
+	src="/videos/ducklake_demo.mp4"
+/>
+<br />
+
+[Learn more about Ducklake](https://ducklake.select//)
+
+## Getting started
+
+Prerequisites:
+
+- A workspace storage configured
+- A Postgres or MySQL resource (Optional for superusers)
+
+Superusers can use the Windmill database as a catalog for Ducklake with no additional configuration.
+
+Go to `workspace settings` -> `Object storage (S3)` and configure a Ducklake :
+
+![Ducklake settings](./ducklake_settings.png 'Ducklake settings')
+
+Clicking the "Explore" button will open the database manager. Your ducklake behaves like any other database : you can perform all CRUD operations through the UI or with the SQL Repl. You can also create and delete new tables.
+
+![Explore ducklake](./ducklake_db_manager.png 'Explore ducklake')
+
+If you explore your catalog database, you will see that Ducklake created some tables for you :
+
+![Catalog database](./ducklake_catalog_db.png 'Catalog database')
+
+These metadata tables store information about your data and where it is located in S3.
+If you go to your workspace storage settings, you can explore your selected workspace storage at the configured location and see your tables and their contents :
+
+![S3 content](./ducklake_s3_content.png 'S3 content')
+
+## Using Ducklake in DuckDB scripts
+
+Ducklakes can be accessed in DuckDB scripts using the `ATTACH` syntax. You can use the Ducklake button in the editor bar for convenience.
+
+In the example below, we pass a list of messages with positive, neutral or negative sentiment.  
+This list might come from a Python script which queries new reviews from the Google My Business API,
+and sends them to an LLM to determine their sentiment.  
+The messages are then inserted into a Ducklake table, which effectively creates a new parquet file.
+
+```sql
+-- $messages (json[])
+
+ATTACH 'ducklake://main' AS dl;
+USE dl;
+
+CREATE TABLE IF NOT EXISTS messages (
+  content STRING NOT NULL,
+  author STRING NOT NULL,
+  date STRING NOT NULL,
+  sentiment STRING
+);
+
+CREATE TEMP TABLE new_messages AS
+  SELECT
+    value->>'content' AS content,
+    value->>'author' AS author,
+    value->>'date' AS date,
+    value->>'sentiment' AS sentiment
+  FROM json_each($messages);
+
+INSERT INTO messages
+  SELECT * FROM new_messages;
+```

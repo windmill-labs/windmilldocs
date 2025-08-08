@@ -244,3 +244,46 @@ You are now ready to test the workflow. You can do so by:
 4. Go to the runs page, toggle the "Sync" kind of jobs. You should see at least 2 jobs, one to push back your change to the staging (if set) workspace (no-op), and one to create a branch that targets the main branch (the one that will be merged).
 5. Now in your repository, you should see a new branch named wm_deploy/[WORKSPACE_NAME]/[SCRIPT_PATH] (for instance wm_deploy/staging/f/example/script).
 6. Merge that branch, now the changes should trigger the "Deploy to prod" GitHub action in the main branch.
+
+## Managing multiple teams and folders
+
+When working with multiple teams in Windmill, there are several approaches to organize your workflows and prevent overlapping changes. Here are the recommended practices:
+
+### Option 1: Same workspace, different folders, different repositories
+
+This is the recommended approach for most cases:
+
+1. Keep all teams in the same [workspace](../../core_concepts/44_workspace_settings/index.mdx) but assign each team to different [folders](../../core_concepts/8_groups_and_folders/index.mdx)
+2. Create separate repositories for each team
+3. In each repository's [`wmill.yaml`](../11_git_sync/index.mdx#wmill-yaml), specify the folders that team has ownership of using the `includes` field:
+
+```yaml
+includes:
+  - "f/team1_folder/**"  # Team 1's folder
+  - "f/team2_folder/**"  # Team 2's folder
+```
+
+This setup ensures that:
+- Each team works in their own isolated space.
+- Changes from different teams won't overlap.
+- Teams can have the same initial code in their respective folders.
+- Each team's changes will be tracked in their own repository.
+
+### Option 2: Separate workspaces
+
+Alternatively, you can create separate workspaces for each team. This approach:
+- Provides complete isolation between teams.
+- Allows teams to have their own deployment workflows.
+- May require more maintenance overhead.
+- Is useful when teams need completely different configurations or environments.
+
+### Managing changes and pull requests
+
+When using the [per item change mode](../11_git_sync/index.mdx#git-sync---item-mode-deploy-to-prod-using-a-git-workflow) in Git sync:
+- Changes to the same item will be grouped into a single PR.
+- Different items will create separate PRs.
+- You can use the [group per folder](../11_git_sync/index.mdx#group-deployed-objects-by-folder) option to group changes by folder instead of by item.
+
+:::tip
+When setting up multiple repositories for different teams, ensure that each repository's `wmill.yaml` file correctly specifies the folders the team should have access to. This prevents accidental modifications to another team's code.
+:::

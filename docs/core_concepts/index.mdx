@@ -23,6 +23,11 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/advanced/email_triggers"
 	/>
 	<DocCard
+		title="Windmill MCP"
+		description="Connect LLMs to Windmill using the Model Context Protocol."
+		href="/docs/core_concepts/mcp"
+	/>
+	<DocCard
 		title="Custom HTTP routes"
 		description="Trigger scripts and flows from custom HTTP routes."
 		href="/docs/core_concepts/http_routing"
@@ -114,7 +119,7 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 	/>
 	<DocCard
 		title="Object storage in Windmill"
-		description="Windmill comes with native integrations with S3 and Azure Blob, making it the recommended storage for large objects like files and binary data."
+		description="Windmill comes with native integrations with S3, Azure Blob, AWS OIDC and Google Cloud Storage, making it the recommended storage for large objects like files and binary data."
 		href="/docs/core_concepts/object_storage_in_windmill"
 	/>
 	<DocCard
@@ -212,6 +217,16 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		description="Have AI complete code on Windmill."
 		href="/docs/core_concepts/ai_generation"
 	/>
+	<DocCard
+		title="Assets"
+		description="Visualize your data flow and automatically track where your assets are used"
+		href="/docs/core_concepts/assets"
+	/>
+	<DocCard
+		title="Ducklake"
+		description="Store massive amounts of data in parquet files on S3 while querying it with natural SQL syntax through DuckDB"
+		href="/docs/core_concepts/ducklake"
+	/>
 </div>
 
 ## Hosting & advanced
@@ -223,9 +238,9 @@ On top of its editors to build endpoints, flows and apps, Windmill comes with a 
 		href="/docs/advanced/self_host"
 	/>
 	<DocCard
-		title="Windmill on AWS ECS"
-		description="Windmill can be deployed on an ECS cluster."
-		href="/docs/advanced/self_host/aws_ecs"
+		title="Windmill on AWS ECS or EKS"
+		description="Windmill can be deployed on an ECS or EKS cluster."
+		href="/docs/advanced/self_host/aws_eks_ecs"
 	/>
 	<DocCard
 		title="Command-line interface"
@@ -476,7 +491,7 @@ All details on Flows can be found in the [Flows section](../flows/1_flow_editor.
 	/>
 	<DocCard
 		color="teal"
-		title="Step mocking"
+		title="Step mocking / Pin result"
 		description="When a step is mocked, it will immediately return the mocked value without performing any computation."
 		href="/docs/flows/step_mocking"
 	/>
@@ -517,6 +532,12 @@ All details on Apps can be found in the [Apps section](../apps/0_app_editor/inde
 		title="Schedule app reports"
 		description="Send a PDF or PNG preview of any app at a given schedule."
 		href="/docs/apps/schedule_reports"
+		color="orange"
+	/>
+	<DocCard
+		title="Lazy mode"
+		description="Lazy mode allows you to lazy render components which is ideal for apps with many components where most are not directly visible to the user."
+		href="/docs/apps/lazy_mode"
 		color="orange"
 	/>
 	<DocCard
@@ -651,7 +672,7 @@ All details & features on [Pricing page](/pricing).
 	/>
 	<DocCard
 		title="Windows workers"
-		description="Windows Native Workers are a Self-Hosted Enterprise Feature. You can use the Windows worker natively if you do not want to run Docker or WSL on Windows (e.g., for policy or security reasons). This feature supports the **Python**, **Bun**, **PowerShell** and **Nu** executors."
+		description="Windows workers enable you to run Windmill scripts and flows directly on Windows machines without requiring Docker or WSL, supporting Python, Bun, PowerShell, C#, and Nu executors for native Windows execution."
 		href="/docs/misc/windows_workers"
 	/>
 	<DocCard
@@ -668,5 +689,10 @@ All details & features on [Pricing page](/pricing).
 		title="Full text search"
 		description="Full text search on jobs and service logs, allowing quick access and good observability out of the box. Learn how to set it up."
 		href="/docs/misc/full_text_search"
+	/>
+	<DocCard
+		title="SQL to S3 streaming"
+		description="Stream an SQL query large result to a workspace storage file"
+		href="/docs/core_concepts/sql_to_s3_streaming"
 	/>
 </div>

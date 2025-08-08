@@ -112,24 +112,22 @@ Example preprocessor:
 
 ```typescript
 export async function preprocessor(
-  wm_trigger: {
+  event: {
     kind: 'gcp',
-    gcp?: {
-      message_id: string,
-      subscription: string,
-      ordering_key?: string,
-      attributes?: Record<string, string>,
-      delivery_type: "push" | "pull",
-      headers?: Record<string, string>,
-      publish_time?: string,
-    }
-  },
-  payload: string,
+    payload: string, // base64 encoded payload
+    message_id: string,
+    subscription: string,
+    ordering_key?: string,
+    attributes?: Record<string, string>,
+    delivery_type: "push" | "pull",
+    headers?: Record<string, string>,
+    publish_time?: string,
+  }
 ) {
-  if (wm_trigger.kind === 'gcp' && wm_trigger.gcp) {
-    const decodedString = new TextDecoder().decode(Uint8Array.from(atob(payload), c => c.charCodeAt(0)));
+  if (event.kind === 'gcp') {
+    const decodedString = atob(event.payload);
 
-    const attributes = wm_trigger.gcp.attributes || {};
+    const attributes = event.attributes || {};
     const contentType = attributes['content-type'] || attributes['Content-Type'];
     const isJson = contentType === 'application/json';
 
@@ -150,7 +148,7 @@ export async function preprocessor(
     };
   }
 
-  throw new Error(`Expected gcp trigger kind got: ${wm_trigger.kind}`);
+  throw new Error(`Expected gcp trigger kind got: ${event.kind}`);
 }
 ```
 

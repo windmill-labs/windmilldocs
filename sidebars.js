@@ -114,7 +114,9 @@ const sidebars = {
 								'misc/guides/table/index',
 								'misc/guides/sequin/index',
 								'misc/guides/snowflake_app_with_user_roles/index',
-								'misc/guides/otel/index'
+								'misc/guides/otel/index',
+								'misc/guides/aws_bedrock/index',
+								'misc/guides/aws_marketplace/index'
 							]
 						}
 					]
@@ -134,6 +136,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'advanced/email_triggers/index',
 							label: 'Emails'
+						},
+						{
+							type: 'doc',
+							id: 'core_concepts/mcp/index',
+							label: 'MCP'
 						},
 						'core_concepts/http_routing/index',
 						{
@@ -165,8 +172,7 @@ const sidebars = {
 							type: 'doc',
 							id: 'core_concepts/mqtt_triggers/index',
 							label: 'MQTT'
-						}
-						,
+						},
 						{
 							type: 'doc',
 							id: 'core_concepts/gcp_triggers/index',
@@ -213,12 +219,77 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'misc/benchmarks/competitors/index',
-							label: 'Airflow, Prefect, Temporal, Kestra'
+							label: 'Methodology'
 						},
 						{
 							type: 'doc',
-							id: 'misc/benchmarks/aws_lambda/index',
-							label: 'AWS Lambda'
+							id: 'misc/benchmarks/competitors/results/python/index',
+							label: 'Results: Python'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/js/index',
+							label: 'Results: JavaScript'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/go/index',
+							label: 'Results: Go'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/conclusion/index',
+							label: 'Conclusion'
+						},
+						{
+							type: 'doc',
+							id: 'misc/benchmarks/competitors/results/scaling/index',
+							label: 'Scaling'
+						},
+						{
+							type: 'category',
+							label: 'Engine benchmarks',
+							link: {
+								type: 'doc',
+								id: 'misc/benchmarks/competitors/results/index'
+							},
+							items: [
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/windmill/index',
+									label: 'Windmill'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/kestra/index',
+									label: 'Kestra'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/airflow/index',
+									label: 'Airflow'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/hatchet/index',
+									label: 'Hatchet'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/temporal/index',
+									label: 'Temporal'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/competitors/prefect/index',
+									label: 'Prefect'
+								},
+								{
+									type: 'doc',
+									id: 'misc/benchmarks/aws_lambda/index',
+									label: 'AWS Lambda'
+								}
+							]
 						}
 					]
 				},
@@ -275,7 +346,7 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'core_concepts/persistent_storage/large_data_files',
-							label: 'Large data (S3, R2, MinIO, Azure Blob)'
+							label: 'Large data (S3, R2, MinIO, Azure Blob, AWS OIDC, GCS)'
 						},
 						{
 							type: 'doc',
@@ -310,6 +381,8 @@ const sidebars = {
 				'core_concepts/collaboration/index',
 				'core_concepts/ai_generation/index',
 				'core_concepts/workspace_settings/index',
+				'core_concepts/assets/index',
+				'core_concepts/ducklake/index',
 				{
 					type: 'category',
 					label: 'Integrations',
@@ -360,6 +433,11 @@ const sidebars = {
 						},
 						{
 							type: 'doc',
+							id: 'integrations/duckdb',
+							label: 'DuckDB'
+						},
+						{
+							type: 'doc',
 							id: 'integrations/faunadb',
 							label: 'FaunaDB'
 						},
@@ -377,6 +455,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/gcp',
 							label: 'Google Cloud Platform'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/google-cloud-storage',
+							label: 'Google Cloud Storage'
 						},
 						{
 							type: 'doc',
@@ -452,6 +535,11 @@ const sidebars = {
 							type: 'doc',
 							id: 'integrations/microsoft-azure-blob',
 							label: 'Microsoft Azure Blob'
+						},
+						{
+							type: 'doc',
+							id: 'integrations/excel',
+							label: 'Microsoft Excel'
 						},
 						{
 							type: 'doc',
@@ -698,6 +786,7 @@ const sidebars = {
 								'apps/app_configuration_settings/button',
 								'apps/app_configuration_settings/carousel',
 								'apps/app_configuration_settings/chartjs',
+								'apps/app_configuration_settings/code_input',
 								'apps/app_configuration_settings/conditional_tabs',
 								'apps/app_configuration_settings/container',
 								'apps/app_configuration_settings/currency_input',
@@ -768,10 +857,11 @@ const sidebars = {
 						{
 							type: 'doc',
 							id: 'apps/download_files',
-							label: 'Download Files'
+							label: 'Download files'
 						},
 						'apps/public_apps',
 						'apps/schedule_reports',
+						'apps/lazy_mode',
 						'apps/app_configuration_settings/components_groups',
 						'apps/react_components',
 						'apps/default_app/index',
@@ -814,7 +904,7 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/self_host/index'
 					},
-					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_ecs']
+					items: ['advanced/instance_settings/index', 'advanced/self_host/aws_eks_ecs']
 				},
 				{
 					type: 'category',
@@ -845,7 +935,11 @@ const sidebars = {
 						type: 'doc',
 						id: 'advanced/deploy_to_prod/index'
 					},
-					items: ['core_concepts/draft_and_deploy/index', 'advanced/deploy_gh_gl/index', 'core_concepts/staging_prod/index'],
+					items: [
+						'core_concepts/draft_and_deploy/index',
+						'advanced/deploy_gh_gl/index',
+						'core_concepts/staging_prod/index'
+					],
 					collapsed: false
 				},
 				{
@@ -905,6 +999,7 @@ const sidebars = {
 				'advanced/sharing_common_logic/index',
 				'advanced/clients/ts_client',
 				'advanced/clients/python_client',
+				'advanced/clients/rust_client',
 				'advanced/explicit_progress/index',
 				'misc/share_on_hub/index'
 			]
@@ -936,6 +1031,7 @@ const sidebars = {
 				'core_concepts/private_hub/index',
 				'misc/white_labelling/index',
 				'misc/full_text_search/index',
+				'core_concepts/sql_to_s3_streaming/index',
 				'misc/partners/index'
 			]
 		}

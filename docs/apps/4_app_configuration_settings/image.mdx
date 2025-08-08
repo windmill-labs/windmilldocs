@@ -27,7 +27,7 @@ The following section details Image component's specific settings. For more deta
 
 | Name      |             Type             | Connectable | Templatable |  Default  | Description                                                        |
 | --------- | :--------------------------: | :---------: | :---------: | :-------: | ------------------------------------------------------------------ |
-| Source    |            string            |    true     |    false    | /logo.svg | The image.                                                         |
+| Source    |            string, S3Object          |    true     |    false    | /logo.svg | The image.                                                         |
 | Source Kind   | string: url, base64, s3  |    true     |    false    | url       | Source kind, one of bas64 (jpg,png,svg), url, or s3 url (workspace storage) |
 | Image Fit | string: contain, cover, fill |    false    |    false    |  contain  | How the image will fit the component box.                          |
 | Alt text  |            string            |    false    |    false    |     /     | This text will appear if the image can't be loaded for any reason. |

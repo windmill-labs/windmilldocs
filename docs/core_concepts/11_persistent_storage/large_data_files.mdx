@@ -2,17 +2,17 @@ import DocCard from '@site/src/components/DocCard';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Large data: S3, R2, MinIO, Azure Blob
+# Large data: S3, R2, MinIO, Azure Blob, Google Cloud Storage
 
 This page is part of our section on [Persistent storage & databases](./index.mdx) which covers where to effectively store and manage the data manipulated by Windmill. Check that page for more options on data storage.
 
-On heavier data objects & unstructured data storage, [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) and its alternatives [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/) and [MinIO](https://min.io/) as well as [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) are highly scalable and durable object storage service that provides secure, reliable, and cost-effective storage for a wide range of data types and use cases.
+On heavier data objects & unstructured data storage, [Amazon S3](https://aws.amazon.com/s3/) (Simple Storage Service) and its alternatives [Cloudflare R2](https://www.cloudflare.com/developer-platform/r2/) and [MinIO](https://min.io/) as well as [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs) and [Google Cloud Storage](https://cloud.google.com/storage) are highly scalable and durable object storage services that provide secure, reliable, and cost-effective storage for a wide range of data types and use cases.
 
-Windmill comes with a [native integration with S3 and Azure Blob](../38_object_storage_in_windmill/index.mdx), making it the recommended storage for large objects like files and binary data.
+Windmill comes with a [native integration with S3, Azure Blob, and Google Cloud Storage](../38_object_storage_in_windmill/index.mdx), making them the recommended storage for large objects like files and binary data.
 
 ## Workspace object storage
 
-Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials.
+Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or Google Cloud Storage to enable users to read and write from S3 without having to have access to the credentials.
 
 Windmill S3 bucket browser will not work for buckets containing more than 20 files and uploads are limited to files < 50MB. Consider upgrading to Windmill [Enterprise Edition](/pricing) to use this feature with large buckets.
 
@@ -21,7 +21,7 @@ Windmill S3 bucket browser will not work for buckets containing more than 20 fil
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Workspace object storage"
-		description="Connect your Windmill workspace to your S3 bucket or your Azure Blob storage to enable users to read and write from S3 without having to have access to the credentials."
+		description="Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or Google Cloud Storage to enable users to read and write from S3 without having to have access to the credentials."
 		href="/docs/core_concepts/object_storage_in_windmill#workspace-object-storage"
 	/>
 </div>
@@ -31,6 +31,27 @@ Windmill S3 bucket browser will not work for buckets containing more than 20 fil
 ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
 
 <Tabs className="unique-tabs">
+<TabItem value="duckdb-script" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```sql
+-- $file1 (s3object)
+
+-- Run queries directly on an S3 parquet file passed as an argument
+SELECT * FROM read_parquet($file1)
+
+-- Or using an explicit path in a workspace storage
+SELECT * FROM read_json('s3:///demo/data.json')
+
+-- You can also specify a secondary workspace storage
+SELECT * FROM read_csv('s3://secondary_storage/demo/data.csv')
+
+-- Write the result of a query to a different parquet file on S3
+COPY (
+    SELECT COUNT(*) FROM read_parquet($file1)
+) TO 's3:///demo/output.pq' (FORMAT 'parquet');
+```
+
+</TabItem>
 <TabItem value="polars" label="Polars" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
@@ -77,7 +98,7 @@ def main(input_file: S3Object):
 ```
 
 </TabItem>
-<TabItem value="duckdb" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+<TabItem value="duckdb" label="DuckDB (Python)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
 ```python
 #requirements:
@@ -152,14 +173,14 @@ For more info on how Data pipelines in Windmill, see [Data pipelines](../27_data
 	/>
 </div>
 
-## Use Amazon S3, R2, MinIO and Azure Blob directly
+## Use Amazon S3, R2, MinIO, Azure Blob, and Google Cloud Storage directly
 
-Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/). Azure Blob has a slightly different API than S3 but works with Windmill as well using its dedicated [resource type](https://hub.windmill.dev/resource_types/137/)
+Amazon S3, Cloudflare R2 and MinIO all follow the same API schema and therefore have a [common Windmill resource type](https://hub.windmill.dev/resource_types/42/). Azure Blob and Google Cloud Storage have slightly different APIs than S3 but work with Windmill as well using their dedicated resource types ([Azure Blob](https://hub.windmill.dev/resource_types/137/), [Google Cloud Storage](https://hub.windmill.dev/resource_types/268))
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="S3 APIs integrations"
-		description="Use Amazon S3, Cloudflare R2, MinIO and Azure Blob directly within scripts and flows."
+		description="Use Amazon S3, Cloudflare R2, MinIO, Azure Blob, and Google Cloud Storage directly within scripts and flows."
 		href="/docs/integrations/s3"
 	/>
 </div>

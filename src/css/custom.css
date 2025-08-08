@@ -593,3 +593,7 @@ div.testimonials a:hover .wm-name {
     right: 0;
     pointer-events: auto;
 }
+
+video:fullscreen {
+	object-fit: contain !important; 
+}

@@ -12,5 +12,5 @@ features:
     'Conditional logic within the function to filer and sort select options based on specified conditions.',
   ]
 docs: /docs/core_concepts/json_schema_and_parsing#dynamic-select
-video: /videos/dynamic_select.mp4
+video: /videos/dynamic_select_script.mp4
 ---

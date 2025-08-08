@@ -52,40 +52,40 @@ export default function BlogLayout(props) {
 										Watch latest Windmill weekly keynotes
 									</h3>
 									<ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300 mt-4">
-										<li>
+									<li>
 											<a
-												href="https://youtube.com/live/QsviBik0YH4"
+												href="https://www.youtube.com/watch?v=_DbT5xmR3wI"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												March 21, 2025
+												July 4, 2025
 											</a>
 										</li>
 										<li>
 											<a
-												href="https://youtube.com/live/rivi2IzUXYg"
+												href="https://www.youtube.com/watch?v=PHYMDmvuPLY"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												March 14, 2025
+												June 27, 2025
 											</a>
 										</li>
 										<li>
 											<a
-												href="https://youtube.com/live/6O9EGnvt8GA"
+												href="https://youtube.com/live/mITa8YBQUUs"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												February 21, 2025
+												June 13, 2025
 											</a>
 										</li>
 										<li>
 											<a
-												href="https://youtube.com/live/e1hVuaS2ruY"
+												href="https://youtube.com/live/wQLklVChth4"
 												target="_blank"
 												rel="noopener noreferrer"
 											>
-												February 14, 2025
+												June 6, 2025
 											</a>
 										</li>
 									</ul>

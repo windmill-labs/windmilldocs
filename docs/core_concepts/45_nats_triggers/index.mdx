@@ -16,12 +16,12 @@ Specify the subjects the trigger should listen to (wildcards are supported).
 Only one subject is supported in core NATS.
 
 Once the NATS resource and settings are set, select the runnable that should be triggered by this trigger.
-The received webhook message will be passed to the runnable as a string argument called `msg`.
+The received webhook base64 encoded payload will be passed to the runnable as a string argument called `payload`.
 
 Here's an example script:
 
 ```TypeScript
-export async function main(msg: string) {
+export async function main(payload: string) {
   // do something with the message
 }
 ```
@@ -30,27 +30,29 @@ And if you use a [preprocessor](../43_preprocessors/index.mdx), the script could
 
 ```TypeScript
 export async function preprocessor(
-  msg: string,
-  wm_trigger: {
+  event: {
     kind: "nats",
-    nats: {
-      servers: string[];
-      subject: string; // the specific subject the message was received from
-      length: number;
-      headers?: Record<string, string[]>;
-      status?: number;
-      description?: string;
-    }
-  },
+    payload: string, // base64 encoded payload
+    servers: string[];
+    subject: string; // the specific subject the message was received from
+    length: number;
+    headers?: Record<string, string[]>;
+    status?: number;
+    description?: string;
+  }
 ) {
+  if (event.kind !== "nats") {
+    throw new Error(`Expected a nats event`);
+  }
+
   // assuming the message is a JSON object
-  const msg = JSON.parse(msg); 
+  const msg = JSON.parse(atob(event.payload)); 
 
   // define args for the main function
   // let's assume we want to use the message content and the subject
   return {
     message_content: msg.content,
-    subject: wm_trigger.nats.subject
+    subject: event.subject
   };
 }
 

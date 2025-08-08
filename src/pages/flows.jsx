@@ -33,7 +33,7 @@ const hubExamples = [
 			</div>
 		),
 
-		link: 'https://hub.windmill.dev/scripts/github/768/create-issue-github'
+		link: 'https://hub.windmill.dev/flows/70/when-new-expenses-are-uploaded-to-google-drive%2C-extract-text-using-tesseract-and-notify-on-slack'
 	},
 	{
 		title: (
@@ -46,7 +46,7 @@ const hubExamples = [
 				<span className="px-2 py-0.5 rounded-md bg-green-800 text-white">Airtable</span> database.
 			</div>
 		),
-		link: 'https://hub.windmill.dev/flows/47/insert-zendesk-articles-into-supabase-with-openaiembedings'
+		link: 'https://hub.windmill.dev/flows/71/retrieve-articles-from-google-drive-%2C-use-a-for-loop-to-translate-each-one-with-openai-and-store-the-embeddings-in-a-airtable-database'
 	}
 ];
 

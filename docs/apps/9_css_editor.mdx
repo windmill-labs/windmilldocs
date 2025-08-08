@@ -53,9 +53,9 @@ In addition to the core features of the Global CSS editor, the Helper Block is d
 
 ## How to use the helper block
 
-1. Search for Components: Use the search bar to quickly find the component you are interested in styling.
-2. View Class Identifiers and Variables: Once you select a component, a list of its specific classes and modifiable CSS variables will be displayed.
-3. Insert to Code: Next to each class and variable, there is an "Insert" button. Clicking this will automatically insert the relevant item into the code editor.
+1. Search for components: Use the search bar to quickly find the component you are interested in styling.
+2. View class identifiers and variables: Once you select a component, a list of its specific classes and modifiable CSS variables will be displayed.
+3. Insert to code: Next to each class and variable, there is an "Insert" button. Clicking this will automatically insert the relevant item into the code editor.
 
 ![Use helper](../assets/apps/9_css_editor/use_helper.png 'Use helper')
 
@@ -107,3 +107,32 @@ In the Cloud & Enterprise Self-Hosted of the Global CSS editor, you can migrate 
 	controls
 	src="/videos/css-migration.mp4"
 />
+
+## Handling CSS specificity
+
+When working with the CSS editor, you might encounter situations where some styles don't take effect as expected. This can happen because of CSS specificity rules or styles being set elsewhere in the application.
+
+As a temporary solution, you can use the `!important` declaration to ensure your styles take precedence. For example:
+
+```css
+.wm-button {
+  border-radius: 40px !important;
+}
+
+.wm-tabs-selectedTab {
+  font-size: 50px !important;
+}
+```
+## Dark mode
+
+In dark mode, Windmill adds a `dark` class to the document root. To provide alternate styling, prefix your CSS selectors with `.dark` in the CSS editor.
+
+```css
+.dark .wm-button-blue {
+  background-color: green !important;
+}
+
+.wm-button-blue {
+  background-color: red !important;
+}
+```

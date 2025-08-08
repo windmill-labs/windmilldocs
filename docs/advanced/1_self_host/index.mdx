@@ -37,6 +37,7 @@ The docker-compose file [below](#docker) uses all six components, and we recomme
 For instances with specific cloud providers requirements:
 
 - [AWS, GCP, Azure](#aws-gcp-azure-neon)
+- [Ubicloud](#ubicloud)
 - [Fly.io](#flyio)
 - [Hetzner, Fargate, Digital Ocean, Linode, Scaleway, Vultr, OVH, ...](#hetzner-fargate-digital-ocean-linode-scaleway-vultr-ovh-)
 
@@ -65,9 +66,22 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 		href="/docs/core_concepts/worker_groups"
 	/>
 	<DocCard
-		title="Windmill on AWS ECS"
-		description="Windmill can also be deployed on AWS ECS"
-		href="/docs/advanced/self_host/aws_ecs"
+		title="Windmill on AWS EKS or ECS"
+		description="Windmill can also be deployed on AWS EKS or ECS"
+		href="/docs/advanced/self_host/aws_eks_ecs"
+	/>
+</div>
+
+### Ubicloud
+
+Ubicloud provides cost-efficient managed Kubernetes and Postgresql. They are a great compromise if you are cost sensitive but still want to get a multi-node Kubernetes Windmill setup. And they are open-source too as an infra layer on top of other cloud providers.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Ubicloud"
+		description="Ubicloud Community-Contributed Guide."
+		href="https://www.ubicloud.com/docs/managed-kubernetes/windmill-tutorial"
+		target="_blank"
 	/>
 </div>
 
@@ -78,6 +92,16 @@ To be able to use the AWS APIs within Windmill on ECS containers, just whitelist
 		title="Fly.io"
 		description="Fly.io Community-Contributed Guide."
 		href="https://dev.to/singee/deploy-windmill-on-flyio-3ii3"
+		target="_blank"
+	/>
+</div>
+
+### Render.com
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Render.com"
+		description="Render.com Setup Guide."
+		href="https://github.com/alpetric/wmilll_render"
 		target="_blank"
 	/>
 </div>
@@ -547,6 +571,10 @@ GRANT USAGE ON SCHEMA public TO windmill_admin;
 GRANT USAGE ON SCHEMA public TO windmill_user;
 ```
 
+:::note
+If you use a schema other than `public`, pass `PG_SCHEMA=<schema>` as an environment variable to every `windmill_server` container.
+:::
+
 ## First time login
 
 Once you have setup your environment for deployment and have access to the instance, you will be able to login with the default credentials `admin@windmill.dev` / `changeme` (even if you [setup OAuth](../../misc/2_setup_oauth/index.mdx)).
@@ -577,6 +605,8 @@ TL;DR: below
 2. Create a directory for CA certificates.
 3. Modify docker-compose.yml to mount this directory to /usr/local/share/ca-certificates in read-only mode.
 4. Use INIT_SCRIPT in the worker config to run update-ca-certificates in worker containers.
+
+Alternatively, you can use the `RUN_UPDATE_CA_CERTIFICATE_AT_START=true` [environment variable](../../core_concepts/47_environment_variables/index.mdx) to automatically run CA certificate updates at startup. You can also customize the command path using `RUN_UPDATE_CA_CERTIFICATE_PATH` if needed.
 
 ### Establish Deno’s trust
 

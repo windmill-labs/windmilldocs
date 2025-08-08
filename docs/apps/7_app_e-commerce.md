@@ -24,8 +24,6 @@ This app is available on the [Hub](https://hub.windmill.dev/apps/14/) and can be
 
 :::
 
-## Features
-
 We use [Supabase](https://supabase.com/) as a backend for this app. It is a great alternative to Firebase and it is free to use. It is a great way to get started with building your app. You can read more about Supabase [here](https://supabase.com/docs). Windmill has a [Supabase integration](../integrations/supabase.md) on the [Hub](https://hub.windmill.dev/) that allows you to easily connect your app to Supabase, and integrate it with your app.
 
 We will use the following scripts from the Hub:
@@ -59,9 +57,7 @@ We will structure the app as follows:
   - List of products `Table`
   - Form to create an cart
 
-### Products Tab
-
-/docs/apps/app_configuration_settings/app_component_library
+## Products tab
 
 We will split the product view into two parts, with the [vertical split](./4_app_configuration_settings/vertical_split_panes.mdx). The left part will be a list of products, and the right part will be a form to edit the currently selected product.
 
@@ -73,7 +69,7 @@ We will split the product view into two parts, with the [vertical split](./4_app
     src="/videos/app-builder-ecomm-step1.mp4"
 />
 
-#### Products List
+#### Products list
 
 A product has the folowing fields:
 
@@ -104,7 +100,7 @@ return result.data?.map((product) => {
 });
 ```
 
-#### Edit Product
+#### Edit product
 
 Now we can add the form to the right side of the split. We will use Text and inputs components to create the form.
 
@@ -153,7 +149,7 @@ The final result should look like this:
     src="/videos/app-builder-ecomm-step3.mp4"
 />
 
-### Orders Tab
+## Orders tab
 
 The orders tab will have three parts:
 
@@ -306,7 +302,7 @@ We can now connect the output of the previous script to the Map component as the
     src="/videos/app-builder-ecomm-step7.mp4"
 />
 
-### Manual order tab
+## Manual order tab
 
 The manual order tab will have the following parts:
 

@@ -1,0 +1,87 @@
+name: Process New Changelog Entry
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'changelog/**'
+
+jobs:
+  process-changelog:
+    runs-on: ubicloud-standard-2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find new changelog entry directories
+        id: find_entries
+        run: |
+          # Compare the state before and after the push to find added files.
+          new_files=$(git diff --name-only --diff-filter=A ${{ github.event.before }} ${{ github.event.after }} | grep '^changelog/.*/index.md$')
+          if [ -z "$new_files" ]; then
+            echo "entries=[]" >> $GITHUB_OUTPUT
+            echo "No new changelog entries found."
+          else
+            echo "Found new changelog files:"
+            echo "$new_files"
+            json_array=$(echo "$new_files" | while read -r file; do dirname "$file"; done | jq -R . | jq -sc .)
+            echo "entries=${json_array}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Node.js
+        if: steps.find_entries.outputs.entries != '[]'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate an installation token
+        id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.INTERNAL_APP_ID }}
+          private-key: ${{ secrets.INTERNAL_APP_KEY }}
+          owner: windmill-labs
+
+      - name: Update changelog in frontend repository
+        if: steps.find_entries.outputs.entries != '[]'
+        env:
+          NEW_ENTRIES: ${{ steps.find_entries.outputs.entries }}
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          FRONTEND_REPO: windmill-labs/windmill
+          GITHUB_RUN_ID: ${{ github.run_id }}
+        run: |
+          set -e
+          if [ -z "$GH_TOKEN" ]; then
+            echo "Error: GH_TOKEN secret is not set. Aborting."
+            exit 1
+          fi
+          echo "---"
+          echo "Starting changelog update."
+          # 1. Configure Git
+          git config --global user.name 'windmill-internal-app[bot]'
+          git config --global user.email 'windmill-internal-app[bot]@users.noreply.github.com'
+          # 2. Clone the frontend repository
+          echo "Cloning ${FRONTEND_REPO}..."
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${FRONTEND_REPO}.git" frontend_repo
+          cd frontend_repo
+          # 3. Create a new branch
+          BRANCH_NAME="changelog-update-${GITHUB_RUN_ID}"
+          git checkout -b "${BRANCH_NAME}"
+          # 4. Run the Node.js script to update the changelog file
+          node ../.github/scripts/update-changelog.js
+          # 5. Commit and push the changes if any were made
+          git add frontend/src/lib/components/sidebar/changelogs.ts
+          if git diff --staged --quiet; then
+            echo "No changes to commit. The changelog entries may already exist."
+          else
+            COMMIT_MESSAGE="docs(changelog): add new entries from changelog"
+            echo "Committing and pushing changes..."
+            git commit -m "${COMMIT_MESSAGE}"
+            git push origin "${BRANCH_NAME}"
+            echo "Successfully pushed changelog update to ${FRONTEND_REPO}."
+            gh pr create --title "${COMMIT_MESSAGE}" --body "This PR adds new changelog entries." --base main --head "${BRANCH_NAME}"
+          fi
+          echo "---"
