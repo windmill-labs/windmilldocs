@@ -970,6 +970,7 @@ const sidebars = {
 						'advanced/cli/installation',
 						'advanced/cli/workspace-management',
 						'advanced/cli/sync',
+						'advanced/cli/gitsync-settings',
 						'advanced/cli/user',
 						'advanced/cli/script',
 						'advanced/cli/flow',

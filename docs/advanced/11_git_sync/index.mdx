@@ -24,7 +24,7 @@ This video shows how to set up a Git repository for a workspace (Git sync - work
 
 <iframe
 	style={{ aspectRatio: '16/9' }}
-	src="https://www.youtube.com/embed/tmYcrfc_mAc"
+	src="https://www.youtube.com/embed/cHrREDmrnUM?vq=hd1080&hd=1&quality=highres"
 	title="Git sync"
 	frameBorder="0"
 	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -46,23 +46,29 @@ Note that you can explicitly exclude (or include) specific files or folders to b
 
 ### Setup
 
-#### Pull workspace locally
+#### 1. Initialize Git repository
 
-For the Git repo to be representative of the entire workspace, it is recommended to set it up using the [Windmill CLI](../3_cli/index.mdx) before turning this option on.
+First, create a Git repository to store your Windmill workspace:
 
-Use [Windmill CLI](../3_cli/index.mdx) to pull the workspace locally:
+**Option A: Create empty repository (Recommended)**
+
+Create an empty Git repository on your Git provider (GitHub, GitLab, etc.) without any initial files. Windmill will populate it automatically in the next step.
+
+**Option B: Manual CLI setup**
+
+For more control, you can set up the repository manually using the [Windmill CLI](../3_cli/index.mdx):
+
+1. Use [Windmill CLI](../3_cli/index.mdx) to pull the workspace locally:
 
 ```bash
 wmill sync pull
 ```
 
+Configure your [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file with the desired filter settings before pushing to Git.
+
 ![Pull workpsace](./pull_workspace.png 'Pull workspace')
 
-#### Push workspace to GitHub
-
-Create a Git repository (in the example, on GitHub).
-
-Run the following commands from the git repo folder to push the initial workspace content to the remote:
+2. Create a Git repository (in the example, on GitHub) and push the initial workspace content:
 
 ```bash
 git init
@@ -72,23 +78,32 @@ git commit -m 'Initial commit'
 git push -u origin main
 ```
 
-You now have your Windmill workspace on a GitHub repository. See the following section for an automated sync.
+You now have your Windmill workspace on a GitHub repository.
 
-#### Setup in Windmill & GitHub token
+#### 2. Setup in Windmill
 
-In Windmill, create a [git_repository](https://hub.windmill.dev/resource_types/135/git_repository) resource pointing to the GitHub repository and containing a [token](https://github.com/settings/tokens) (with Read-and-write on "Contents"). You URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`.
-
-Add this resource to the workspace settings, in "Git sync" tab and `Save Git sync settings`.
+1. Go to workspace settings → Git Sync tab
+2. Click **+ Add connection**
+3. Create or select a [git_repository](../../integrations/git_repository.mdx) resource pointing to your Git repository. You have two authentication options:
+   - **GitHub App**: Use the [GitHub App](../../integrations/git_repository.mdx#github-app) for simplified authentication and enhanced security
+   - **Personal Access Token**: Use a [token](https://github.com/settings/tokens) with Read-and-write on "Contents". Your URL should be `https://[USERNAME]:[TOKEN]@github.com/[ORG|USER]/[REPO_NAME].git`
+4. Select sync mode ([sync mode or promotion mode](#sync-modes))
+5. Complete the configuration of the connection and save
 
 ![Git sync Setup](./git_sync_setup.png 'Git sync Setup')
 
-And that's it! Now, all scripts, flows apps, resources, variables, schedules, resource types and triggers located in the workspace and `f/` [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be pushed to the Git repository.
+If you chose Option A (empty repository), use the "Initialize Git repository" operation to automatically:
+- Create the `wmill.yaml` configuration file with your filter settings
+- Push the entire workspace content to the Git repository
 
-You can filter on type if you don't want some items (e.g. variables) to be pushed to the Git repository.
+If the repository already contains a `wmill.yaml` file, the settings will be automatically imported and applied to your workspace configuration.
 
-Additionally, you can filter on [path](../../core_concepts/16_roles_and_permissions/index.mdx#path), meaning only scripts, flows and apps with their path matching one of those filters will be synced to the Git repositories below. The filters allow '*'' and '**' characters, with '*'' matching any character allowed in paths until the next slash (/) and '**' matching anything including slashes. By default everything in [folders](../../core_concepts/8_groups_and_folders/index.mdx) will be synced.
+**Configuration settings**: Git sync filter settings are pulled from the [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file in your repository. Once the connection is saved, you can update settings by changing `wmill.yaml` and pulling the settings via the corresponding button.
 
-##### Signing commits with GPG
+
+![Git sync Settings](./settings_pull.png 'Git sync Settings Pull')
+
+#### Signing commits with GPG
 
 If your repo requires signed commits, you can set up GPG on your Windmill instance.
 
@@ -120,7 +135,7 @@ All commits will now be signed and commited as the user matching the email addre
 :::
 
 #### Azure DevOps with Service Principal setup
-In Microsoft Entra ID, create an application and a secret (also known as Service Principal - an identity used by applications to access Azure resources). 
+In Microsoft Entra ID, create an application and a secret (also known as Service Principal - an identity used by applications to access Azure resources).
 Create an `azure` resource on your Windmill instance with the application's `client_id`, `client_secret` and `tenant_id`.
 On Azure DevOps, add the application to the DevOps organization with the appropriate permissions.
 In Git sync settings of your Windmill instance, define a new repository with URL:
@@ -136,42 +151,79 @@ https://AZURE_DEVOPS_TOKEN(<path_to_the_azure_resource>)@dev.azure.com/<organiza
 Only scripts, flows and apps with their path matching one of the set filters will be synced to the Git repositories below. The filters allow `*'` and `**'` characters, with `*'` matching any character allowed in paths until the next slash (`/`) and `**'` matching anything including slashes.
 By default everything in folders (with rule `f/**`) will be synced.
 
+You can configure:
+
+- **Include paths**: Primary patterns for what to sync (e.g., `f/**`)
+- **Exclude paths**: Patterns to exclude after include checks
+
 ### Type filters
 
 On top of the filter path [above](#path-filters), you can include only certain type of object to be synced with the Git repository.
 By default everything is synced.
 
 You can filter on:
-- Scripts
-- Flows
-- Apps
-- Folders
-- Resource
-- Variables
-	- Include secrets
-- Schedules
-- Resource types
-- Users
-- Groups
-- Triggers (HTTP routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT)
+- **Scripts** - Individual scripts
+- **Flows** - Workflow definitions
+- **Apps** - Application definitions
+- **Folders** - Folder structure
+- **Resources** - Resource instances
+- **Variables** - Workspace variables
+	- **Include secrets** - Option to include secret variables
+- **Schedules** - Scheduled job definitions
+- **Resource types**
+- **Users** - User definitions
+- **Groups** - Group definitions
+- **Triggers** - Event triggers (HTTP routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT)
+- **Workspace settings** - Global workspace configuration
+- **Encryption key** - Workspace encryption key
 
 ## Repositories to sync
 
 The changes will be deployed to all the repositories set in the Git sync settings.
 
-### Create one branch per deployed object
+### Sync modes
 
-If set, Windmill will create a unique branch per object being pushed based on its path, prefixed with 'wm_deploy/'.
+You can choose between two sync modes for each repository:
 
-It is used to [deploy to a prod workspace using a git workflow](#git-sync---item-mode-deploy-to-prod-using-a-git-workflow).
+#### Sync mode (default)
+Changes are committed directly to the branch specified in the [git_repository](../../integrations/git_repository.mdx) resource. This is the standard mode for simple workspace synchronization.
 
-### Group deployed objects by folder
+#### Promotion mode
+Windmill will create branches per deployed object based on its path, prefixed with 'wm_deploy/'. This enables advanced deployment workflows with pull requests and code review processes.
 
-Instead of creating a branch per object, Windmill will create a branch per folder containing objects being deployed.
+When promotion mode is enabled, you can choose to:
+- **Create one branch per deployed object** (default)
+- **Group deployed objects by folder**: Create a branch per folder containing objects being deployed instead
+
+You can configure promotion-specific sync behavior using `promotionOverrides` in your [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file. This allows different filter settings when promoting changes to specific branches.
+
+This promotion mode is used to [deploy to a prod workspace using a git workflow](#git-sync---item-mode-deploy-to-prod-using-a-git-workflow).
+
+## Repository operations
+
+Each configured repository supports several operations:
+
+- **Test connection**: Verify repository access and credentials
+- **Preview changes**: Perform a dry-run to see what would be synced
+- **Push to repository**: Send workspace content to git repository
+- **Pull from repository**: Get changes from git repository to workspace
+- **Pull settings**: Get only wmill.yaml configuration changes
+- **Initialize repository**: Set up new git repository with Windmill structure
+
+## wmill.yaml integration
+
+Git sync settings can be controlled via the [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file in your repository root. This enables:
+
+- **CLI compatibility**: Settings configured in the UI are compatible with [Windmill CLI](../3_cli/index.mdx)
+- **Version-controlled configuration**: Your sync settings are stored in git alongside your code
+- **Branch-specific overrides**: Different sync behavior per git branch
+- **Promotion-specific settings**: Special configuration for deployment workflows
+
+The frontend will detect existing `wmill.yaml` files and merge settings appropriately.
 
 ## Exclude specific types for this repository only
 
-You can exclude specific types (scripts, flows, apps, folders) per repository.
+You can exclude specific types per repository, overriding the global workspace filters.
 
 ## Git sync - Item mode: Deploy to prod using a git workflow
 
