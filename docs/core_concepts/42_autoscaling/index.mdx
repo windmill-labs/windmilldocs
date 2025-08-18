@@ -28,7 +28,9 @@ Autoscaling is configured in each [worker group](/core_concepts/9_worker_groups/
 | Custom script    | Use your own script to handle scaling workers           |
 | ECS              | Native ECS integration (coming soon)                    |
 | Nomad            | Native Nomad integration (coming soon)                  |
-| Kubernetes       | Native Kubernetes integration (coming soon)             |
+| Kubernetes       | Native Kubernetes integration                            |
+
+### Custom script
 
 When using a custom script, you'll need to provide a path to script in the [admins workspace](../../advanced/18_instance_settings/index.mdx#admins-workspace), and optionally a custom [tag](../9_worker_groups/index.mdx#set-tags-to-assign-specific-queues) for executing the script.
 
@@ -46,6 +48,57 @@ echo "Applying $event_type of $desired_workers to $worker_group bc $reason"
 # authenticate to the cluster here if needed
 kubectl scale deployment windmill-workers-$worker_group --replicas=$desired_workers -n $namespace
 ```
+
+### Kubernetes
+
+Kubernetes native autoscaling integration can automatically infer the worker-group, namespace and credentials when running within a Kubernetes cluster. This autoscaling will only work if you run your server in the k8s cluster and will only scale workers within the same cluster.
+
+For proper functionality, you need to configure RBAC roles and rolebindings to allow autoscaling from within the pod:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: deployment-scaler
+  namespace: <windmill-namespace>
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["patch", "get"]  # Crucial to include both verbs
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: deployment-scaler-binding
+  namespace: <windmill-namespace>
+subjects:
+- kind: ServiceAccount
+  name: <serviceaccount>
+  namespace: <windmill-namespace>
+roleRef:
+  kind: Role
+  name: deployment-scaler
+  apiGroup: rbac.authorization.k8s.io
+
+```
+
+You need to bind the role to the correct ServiceAccount which is bound to 'fullname' (the name you gave to your windmill deployment). You can verify which ServiceAccount name you have by running:
+
+```bash
+kubectl get serviceaccount -n <your-namespace>
+```
+
+Look for the non-default ServiceAccount name.
+
+After configuring RBAC, you can hit "Check Health" to verify everything is configured properly:
+
+![Healthy autoscaling configuration](./healthy_k8s_config.png)
+
+You are ready to go!
+
+For more sophisticated autoscaling designs, refer to the 'Custom script' section above.
 
 You can directly test scaling from the config.
 
