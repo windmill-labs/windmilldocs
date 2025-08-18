@@ -39,10 +39,10 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 Scripts consist of 2 parts:
 
 - [Code](#code): for Java scripts, it must have at least a **public** static main method inside a Main class.
-- [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
+- [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [JSON Schema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
 
-From the Home page, click `+Script`. This will take you to the first step of script creation: Metadata.
+From the Home page, click `+Script`. This will take you to the first step of script creation: [Metadata](../../../script_editor/settings.mdx#metadata).
 
 ## Settings
 
@@ -50,16 +50,11 @@ From the Home page, click `+Script`. This will take you to the first step of scr
 
 As part of the [settings](../../../script_editor/settings.mdx) menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
-- **Path** is the Script's unique identifier that consists of the
-  [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
-  The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
-- **Summary** (optional) is a short, human-readable summary of the Script. It
-  will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
-  default.
+- **Summary** (optional) is a short, human-readable summary of the Script. It will be displayed as a title across Windmill. If omitted, the UI will use the `path` by default.
+- **Path** is the Script's unique identifier that consists of the [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name. The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx) to users on how to run your Script. It supports markdown.
 - **Language** of the script.
-- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
-  to users on how to run your Script. It supports markdown.
-- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx), [Error handler](../../../flows/7_flow_error_handler.md) or [Preprocessor](../../../core_concepts/43_preprocessors/index.mdx). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
 
 This menu also has additional settings on [Runtime](../../../script_editor/settings.mdx#runtime), [Generated UI](#generated-ui) and [Triggers](../../../script_editor/settings.mdx#triggers).
 
