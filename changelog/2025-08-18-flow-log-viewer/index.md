@@ -1,6 +1,6 @@
 ---
 slug: flow-log-viewer
-version: v1.526.0
+version: v1.525.0
 title: Log viewer for flows
 tags: ['Flow editor']
 description: A new log explorer is available for flow job run detail, under the tab 'Logs', allowing fast exploration of steps logs.
