@@ -9,17 +9,9 @@ import DocCard from '@site/src/components/DocCard';
 
 In this quick start guide, we will write our first script in TypeScript. Windmill uses [Bun](https://bun.sh/), [Nodejs](#nodejs) and [Deno](https://deno.land/) as the available TypeScript runtimes.
 
-<video
-	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	autoPlay
-	controls
-	id="main-video"
-	src="/videos/typescript_quickstart.mp4"
-/>
+![Demo TS](./demo_ts.png 'Demo TS')
 
-<br />
-
-This tutorial covers how to create a simple "Hello World" script in TypeScript through Windmill web IDE, with the standard mode of handling dependencies in TypeScript (Lockfile per script inferred from imports). See the dedicated pages to [Develop Scripts Locally](../../../advanced/4_local_development/index.mdx) and other methods of [handling dependencies in TypeScript](../../../advanced/14_dependencies_in_typescript/index.mdx).
+This tutorial covers how to create a simple "Hello World" script in TypeScript through Windmill web IDE, with the standard mode of handling dependencies in TypeScript (Lockfile per script inferred from imports). See the dedicated pages to [develop scripts locally](../../../advanced/4_local_development/index.mdx) and other methods of [handling dependencies in TypeScript](../../../advanced/14_dependencies_in_typescript/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -52,7 +44,7 @@ Scripts are the basic building blocks in Windmill. They can be [run and schedule
 Scripts consist of 2 parts:
 
 - [Code](#code): for TypeScript scripts, it must have at least a main function.
-- [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [jsonschema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
+- [Settings](#settings): settings & metadata about the Script such as its path, summary, description, [JSON Schema](../../../core_concepts/13_json_schema_and_parsing/index.mdx) of its inputs (inferred from its signature).
 
 When stored in a code repository, those 2 parts are stored separately at `<path>.ts` and `<path>.script.yaml`.
 
@@ -77,10 +69,9 @@ export async function main(slack: Slack, channel: string, message: string): Prom
 }
 ```
 
-In this quick start guide, we'll create a script that greets the operat^or running it.
+In this quick start guide, we'll create a script that greets the operator running it.
 
-From the Home page, click `+Script`. This will take you to the
-first step of script creation: Metadata.
+From the Home page, click `+Script`. This will take you to the first step of script creation: [Metadata](../../../script_editor/settings.mdx#metadata).
 
 ## Settings
 
@@ -88,16 +79,11 @@ first step of script creation: Metadata.
 
 As part of the [settings](../../../script_editor/settings.mdx) menu, each script has metadata associated with it, enabling it to be defined and configured in depth.
 
-- **Path** is the Script's unique identifier that consists of the
-  [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name.
-  The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
-- **Summary** (optional) is a short, human-readable summary of the Script. It
-  will be displayed as a title across Windmill. If omitted, the UI will use the `path` by
-  default.
+- **Summary** (optional) is a short, human-readable summary of the Script. It will be displayed as a title across Windmill. If omitted, the UI will use the `path` by default.
+- **Path** is the Script's unique identifier that consists of the [script's owner](../../../core_concepts/16_roles_and_permissions/index.mdx), and the script's name. The owner can be either a user, or a group ([folder](../../../core_concepts/8_groups_and_folders/index.mdx#folders)).
+- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx) to users on how to run your Script. It supports markdown.
 - **Language** of the script.
-- **Description** is where you can give instructions through the [auto-generated UI](../../../core_concepts/6_auto_generated_uis/index.mdx)
-  to users on how to run your Script. It supports markdown.
-- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx) or [Error handler](../../../flows/7_flow_error_handler.md). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
+- **Script kind**: Action (by default), [Trigger](../../../flows/10_flow_trigger.mdx), [Approval](../../../flows/11_flow_approval.mdx), [Error handler](../../../flows/7_flow_error_handler.md) or [Preprocessor](../../../core_concepts/43_preprocessors/index.mdx). This acts as a tag to filter appropriate scripts from the [flow editor](../../6_flows_quickstart/index.mdx).
 
 This menu also has additional settings on [Runtime](../../../script_editor/settings.mdx#runtime), [Generated UI](#generated-ui) and [Triggers](../../../script_editor/settings.mdx#triggers).
 
@@ -118,7 +104,7 @@ the editor itself. The right-side [previews the UI](../../../core_concepts/6_aut
 generate from the Script's signature - this will be visible to the users of the
 Script. You can preview that UI, provide input values, and [test your script](#instant-preview--testing) there.
 
-![Editor for Deno](./editor_deno.png.webp)
+![Demo TS](./demo_ts.png 'Demo TS')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -141,21 +127,34 @@ There are two options for runtimes in TypeScript:
 As we picked `TypeScript (Bun)` for this example, Windmill provided some TypeScript boilerplate. Let's take a look:
 
 ```typescript
+// there are multiple modes to add as header: //nobundling //native //npm //nodejs
+// https://www.windmill.dev/docs/getting_started/scripts_quickstart/typescript#modes
+
 // import { toWords } from "number-to-words@1"
-import * as wmill from 'windmill-client@1.147.3';
+import * as wmill from "windmill-client"
 
 // fill the type, or use the +Resource type to get a type-safe reference to a resource
 // type Postgresql = object
 
+
 export async function main(
-	a: number,
-	b: 'my' | 'enum',
-	//c: Postgresql,
-	d = 'inferred type string from default arg',
-	e = { nested: 'object' }
+  a: number,
+  b: "my" | "enum",
+  //c: Postgresql,
+  //d: wmill.S3Object, // https://www.windmill.dev/docs/core_concepts/persistent_storage/large_data_files 
+  //d: DynSelect_foo, // https://www.windmill.dev/docs/core_concepts/json_schema_and_parsing#dynamic-select
+  e = "inferred type string from default arg",
+  f = { nested: "object" },
+  g: {
+    label: "Variant 1",
+    foo: string
+  } | {
+    label: "Variant 2",
+    bar: number
+  }
 ) {
-	// let x = await wmill.getVariable('u/user/foo')
-	return { foo: a };
+  // let x = await wmill.getVariable('u/user/foo')
+  return { foo: a };
 }
 ```
 
@@ -258,28 +257,27 @@ This is also exclusive to [Cloud plans and Self-Hosted Enterprise edition](/pric
 
 ### Deno
 
-As we picked `TypeScript (Deno)` for this example, Windmill provided some TypeScript
-boilerplate. Let's take a look:
+As we picked `TypeScript (Deno)` for this example, Windmill provided some TypeScript boilerplate. Let's take a look:
 
 ```typescript
 // Ctrl/CMD+. to cache dependencies on imports hover.
 
 // Deno uses "npm:" prefix to import from npm (https://deno.land/manual@v1.36.3/node/npm_specifiers)
-// import * as wmill from "npm:windmill-client@1.335.0"
+// import * as wmill from "npm:windmill-client@1.525.0"
 
 // fill the type, or use the +Resource type to get a type-safe reference to a resource
 // type Postgresql = object
 
 export async function main(
-	a: number,
-	b: 'my' | 'enum',
-	//c: Postgresql,
-	d = 'inferred type string from default arg',
-	e = { nested: 'object' }
-	//e: wmill.Base64
+  a: number,
+  b: "my" | "enum",
+  //c: Postgresql,
+  d = "inferred type string from default arg",
+  e = { nested: "object" },
+  //e: wmill.Base64
 ) {
-	// let x = await wmill.getVariable('u/user/foo')
-	return { foo: a };
+  // let x = await wmill.getVariable('u/user/foo')
+  return { foo: a };
 }
 ```
 
@@ -342,9 +340,7 @@ signature. Run a test (`Ctrl` + `Enter`) to verify everything works.
 
 <br />
 
-You can change how the UI behaves by changing the main signature. For example,
-if you add a default for the `name` argument, the UI won't consider this field
-as required anymore.
+You can change how the UI behaves by changing the main signature. For example, if you add a default for the `name` argument, the UI won't consider this field as required anymore.
 
 ```typescript
 main(name: string = "you")
