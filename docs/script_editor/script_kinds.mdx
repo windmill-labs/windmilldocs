@@ -2,14 +2,13 @@ import DocCard from '@site/src/components/DocCard';
 
 # Script kind
 
-You can attach additional functionalities to Scripts by specializing them into
-specific Script kinds.
+You can attach additional functionalities to Scripts by specializing them into specific Script kinds.
 
 From the [Settings](./settings.mdx) of a script, the "Metadata" tab lets you define the following Script kinds:
 
 ## Actions
 
-Actions - or Common Scripts - are the basic building blocks for the flows.
+Actions are the basic building blocks for the flows.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -26,10 +25,7 @@ Actions - or Common Scripts - are the basic building blocks for the flows.
 
 ## Trigger scripts
 
-These are used as the first step in flows, most commonly with an internal
-state and a schedule to watch for changes on a
-external system, and compare it to the previously saved state. If there are
-changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
+These are used as the first step in flows, most commonly with an internal state and a schedule to watch for changes on a external system, and compare it to the previously saved state. If there are changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -46,11 +42,7 @@ changes,it _triggers_ the rest of the flow, i.e. subsequent Scripts.
 
 ## Approval scripts
 
-Suspend a flow until it's approved. An Approval Script will interact with the
-Windmill API using any of the Windmill clients to retrieve a secret approval URL
-and resume/cancel endpoints. Most common scenario for Approval scripts is to
-send an external notification with an URL that can be used to resume or cancel a
-flow.
+Suspend a flow until it's approved. An Approval Script will interact with the Windmill API using any of the Windmill clients to retrieve a secret approval URL and resume/cancel endpoints. Most common scenario for Approval scripts is to send an external notification with an URL that can be used to resume or cancel a flow.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -62,15 +54,24 @@ flow.
 
 ## Error handlers
 
-Handle errors for Flows after all retries attempts have been exhausted. If it
-does not return an exception itself, the Flow is considered to be "recovered"
-and will have a success status. So in most cases, you will have to rethrow an
-error to have it be listed as a failed flow.
+Handle errors for Flows after all retries attempts have been exhausted. If it does not return an exception itself, the Flow is considered to be "recovered" and will have a success status. So in most cases, you will have to rethrow an error to have it be listed as a failed flow.
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
 		title="Error handler"
 		description="The error handler is a special flow step that is executed when an error occurs in the flow."
 		href="/docs/flows/flow_error_handler"
+	/>
+</div>
+
+## Preprocessors
+
+Preprocessors are used to preprocess the data before it is used in the flow.
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Preprocessors"
+		description="Preprocessors are used to preprocess the data before it is used in the flow."
+		href="/docs/core_concepts/preprocessors"
 	/>
 </div>
