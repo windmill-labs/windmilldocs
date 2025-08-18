@@ -84,6 +84,11 @@ const sidebars = {
 									type: 'doc',
 									id: 'getting_started/scripts_quickstart/java_quickstart/index',
 									label: 'Java'
+								},
+								{
+									type: 'doc',
+									id: 'getting_started/scripts_quickstart/ruby_quickstart/index',
+									label: 'Ruby'
 								}
 							]
 						},
