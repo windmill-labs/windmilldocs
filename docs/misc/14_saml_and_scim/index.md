@@ -131,4 +131,21 @@ When SCIM is properly configured, groups from your identity provider will be aut
 
 Instance groups appear in your Windmill groups interface with a special designation, and can be assigned permissions to folders and resources just like regular groups. This eliminates the need for manual group management while maintaining full integration with Windmill's permission system.
 
+### Workspace auto-assignment
+
+Instance groups can be automatically mapped to workspaces with specific role assignments. This powerful feature allows you to:
+
+- **Automatically add users to workspaces** when they join an instance group via SCIM
+- **Assign specific roles** (viewer, developer, admin) to instance group members per workspace
+- **Manage multiple instance groups** per workspace with different role configurations
+- **Track user origin** to distinguish between manually added users and those added via instance groups
+
+This mapping is configured in the [workspace settings](../../core_concepts/16_roles_and_permissions/index.mdx#workspace-settings) under "User Management" where you can:
+
+1. Select which instance groups should automatically add users to the workspace
+2. Define the role each instance group's members should receive
+3. View and manage existing auto-assignments
+
+When a user is added to an instance group in your identity provider, they will automatically gain access to all configured workspaces with their assigned roles. Similarly, when users are deleted from the group in the SCIM source, this will automatically propagate to remove them from all mapped workspaces, ensuring consistent access management across your organization.
+
 For more details about how to use instance groups within your workflows and permission structure, see [Groups and folders](../../core_concepts/8_groups_and_folders/index.mdx#instance-groups).
