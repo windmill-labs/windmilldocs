@@ -21,7 +21,6 @@ In this quick start guide, we will write our first script in [Ruby](https://www.
 	/>
 </div>
 
-<!-- This tutorial covers how to create a simple script through Windmill web IDE. See the dedicated page to [develop scripts locally](../../../advanced/4_local_development/index.mdx) and other methods of [handling dependencies in Ruby](../../../advanced/dependencies_in_ruby/index.mdx). -->
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -209,19 +208,6 @@ The first import line imports the Windmill Ruby client, which provides access to
 [variables](../../../core_concepts/2_variables_and_secrets/index.mdx) and
 [resources](../../../core_concepts/3_resources_and_types/index.mdx).
 
-<!-- <div className="grid grid-cols-2 gap-6 mb-4"> -->
-	<!-- <DocCard -->
-		<!-- title="Dependencies in Ruby" -->
-		<!-- description="How to manage dependencies in Ruby scripts." -->
-		<!-- href="/docs/advanced/dependencies_in_ruby" -->
-	<!-- /> -->
-	<!-- <DocCard -->
-		<!-- title="Ruby client" -->
-		<!-- description="The Ruby client methods for Windmill provide access to variables, resources, and other Windmill features." -->
-		<!-- href="/docs/advanced/clients/ruby_client" -->
-	<!-- /> -->
-<!-- </div> -->
-
 Back to our Hello World. We can clean up the boilerplate, change the
 main to take in the user's name. Let's also return the `name`, maybe we can use
 this later if we use this Script within a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) and need to pass its result on.
@@ -288,8 +274,6 @@ each script version is uniquely identified by a hash.
 Fill in the input field, then hit "Run". You should see a run view, as well as
 your logs. All script runs are also available in the [Runs](../../../core_concepts/5_monitor_past_and_future_runs/index.mdx) menu on
 the left.
-
-<!-- TODO-ruby-run-result.png -->
 
 You can also choose to [run the script from the CLI](../../../advanced/3_cli/index.mdx) with the pre-made Command-line interface call.
 
@@ -367,14 +351,6 @@ Windmill will automatically:
 - Generate a Gemfile and Gemfile.lock
 - Install dependencies in an isolated environment
 - Cache dependencies for faster execution
-
-<!-- <div className="grid grid-cols-2 gap-6 mb-4"> -->
-	<!-- <DocCard -->
-		<!-- title="Dependencies in Ruby" -->
-		<!-- description="How to manage Ruby dependencies and gems in Windmill scripts." -->
-		<!-- href="/docs/advanced/dependencies_in_ruby" -->
-	<!-- /> -->
-<!-- </div> -->
 
 ## Caching
 
