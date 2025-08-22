@@ -55,6 +55,18 @@ Kubernetes native autoscaling integration can automatically infer the worker-gro
 
 For proper functionality, you need to configure RBAC roles and rolebindings to allow autoscaling from within the pod:
 
+#### Using Helm
+
+In your values.yaml set:
+```yaml
+enterprise:
+  createKubernetesAutoscalingRolesAndBindings: true
+```
+
+#### Using pure manifests
+
+Sometimes creating a Role/RoleBinding is forbidden by RBAC or rejected by an admission controller, that's why you might want to do this outside this helm release.
+
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -92,15 +104,15 @@ kubectl get serviceaccount -n <your-namespace>
 
 Look for the non-default ServiceAccount name.
 
-After configuring RBAC, you can hit "Check Health" to verify everything is configured properly:
+#### Verifying configuration
+
+After configuring RBAC using either method above, you can hit "Check Health" to verify everything is configured properly:
 
 ![Healthy autoscaling configuration](./healthy_k8s_config.png)
 
 You are ready to go!
 
 For more sophisticated autoscaling designs, refer to the 'Custom script' section above.
-
-You can directly test scaling from the config.
 
 ### Advanced
 
