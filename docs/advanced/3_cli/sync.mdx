@@ -5,6 +5,8 @@ import DocCard from '@site/src/components/DocCard';
 Synchronizing folders & git repositories to a Windmill instance is made easy
 using the wmill CLI. Syncing operations are behind the `wmill sync` subcommand.
 
+The CLI supports [branch-specific items](./branch-specific-items.mdx) that allow different Git branches to have different versions of resources and variables.
+
 Having a Windmill instance synchronized to folders & git repositories allows for
 local development through the [VS Code extension](../../cli_local_dev/1_vscode-extension/index.mdx).
 
@@ -176,10 +178,10 @@ includeKey: false
 
 ### Git branch-specific configuration
 
-The CLI supports branch-specific settings through the `git_branches` configuration:
+The CLI supports branch-specific settings through the `gitBranches` configuration:
 
 ```yaml
-git_branches:
+gitBranches:
   main:  # Branch name
     baseUrl: 'http://localhost:8000/'  # Windmill instance URL
     workspaceId: test  # Workspace ID
@@ -187,6 +189,11 @@ git_branches:
     promotionOverrides:  # Settings used when promoting TO this branch
       skipApps: true
       skipFlows: true
+    specificItems:  # Branch-specific resources/variables
+      resources:
+        - "u/alex/prod_*"
+      variables:
+        - "u/alex/env_*"
       
   staging:
     baseUrl: 'https://staging.windmill.dev/'
@@ -206,6 +213,13 @@ git_branches:
     promotionOverrides:
       skipApps: true      # Don't sync apps during promotion
       skipFlows: true     # Don't sync flows during promotion
+      
+  # Common items that are branch-specific across all branches
+  commonSpecificItems:
+    resources:
+      - "u/alex/config/**"
+    variables:
+      - "u/alex/database_*"
 ```
 
 ### Configuration resolution priority
@@ -274,12 +288,20 @@ export interface SyncOptions {
   codebases?: Codebase[];
   
   // Git branch configuration
-  git_branches?: {
+  gitBranches?: {
+    commonSpecificItems?: {
+      variables?: string[];
+      resources?: string[];
+    };
     [branchName: string]: SyncOptions & {
       overrides?: Partial<SyncOptions>;
       promotionOverrides?: Partial<SyncOptions>;
       baseUrl?: string;
       workspaceId?: string;
+      specificItems?: {
+        variables?: string[];
+        resources?: string[];
+      };
     }
   };
   promotion?: string;
