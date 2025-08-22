@@ -270,15 +270,14 @@ It takes as query args:
 
 ### Job progress SSE Query args
 
-``
+```
 running (optional boolean, default false): was the job already running ? Optimization for the backend to not waste time checking if the job is running if we know it's already the case
 log_offset (optional integer, default 0): what was the last log offset known by the client to start from when streaming new logs
 stream_offset (optional integer, default 0): what was the last log offset known by the client to start from when streaming the result stream
 get_progress (optional integer, default false): should the updates contains [explicit job progress](/docs/advanced//19_explicit_progress/index.mdx)
 only_result (optional integer, default false): should we only care about the result and ignore all else
 no_logs (optionbal boolean, default false): should we skip streaming logs
-
-````
+```
 
 ### Job Progress Event Response
 
@@ -304,11 +303,9 @@ The response from the SSE endpoint is a stream of JSON objects, each with a `typ
     "workflow_as_code_status": {...}, // optional, JSON: status of workflow as code (raw JSON)
     "job": {...},                   // optional, JSON: job metadata
   }
-````
 
 Once completed, the job field will contain the full completed job data, including its result but not only
 
-```
 
 - **workspace_id** (string): The unique identifier of the workspace where the job was run.
 - **id** (UUID): The unique identifier of the job.
@@ -343,9 +340,8 @@ Once completed, the job field will contain the full completed job data, includin
 - **priority** (integer, optional): The priority of the job.
 - **labels** (object, optional): Arbitrary labels associated with the job, as a JSON object.
 
-This structure provides a comprehensive record of a completed job, including its metadata, execution details, results, and status.
 
-```
+This structure provides a comprehensive record of a completed job, including its metadata, execution details, results, and status.
 
 with only_result = true, the updates are much lighter.
 
@@ -398,8 +394,6 @@ with only_result = true, the updates are much lighter.
 - The `update` event contains job status, logs, result stream, and progress information.
 - The `error` event contains a string error message.
 - The `notfound`, `timeout`, and `ping` events are signals with no additional data.
-
-```
 
 
 ## High priority jobs
@@ -458,4 +452,3 @@ You can choose to use S3, Azure Blob Storage, AWS OIDC or Google Cloud Storage. 
 |-------|-------------|
 | Bucket | The name of your Google Cloud Storage bucket |
 | Service Account Key | The service account key for your Google Cloud Storage bucket in JSON format |
-```
