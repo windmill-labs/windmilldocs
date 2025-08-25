@@ -1,0 +1,209 @@
+# Branch-specific items
+
+Branch-specific items allow you to have different versions of resources and variables per Git branch. This enables teams to maintain environment-specific configurations (dev/staging/prod) that automatically sync to the correct branch-namespaced files locally while maintaining clean base paths in the Windmill workspace.
+
+## How branch-specific items work
+
+When a file is marked as branch-specific through pattern matching in your `wmill.yaml` configuration, the CLI automatically transforms the file path based on the current Git branch:
+
+- **Local files**: Use branch-suffixed names (e.g., `database.main.resource.yaml`)
+- **Windmill workspace**: Uses clean base paths (e.g., `database.resource.yaml`)
+
+This allows different branches to have different configurations for the same logical resource while keeping the workspace paths clean.
+
+## Configuration
+
+Branch-specific items are configured using two complementary patterns in your `wmill.yaml`:
+
+### Branch-specific items
+
+Items that should only be branch-specific for certain branches:
+
+```yaml
+gitBranches:
+  main:
+    specificItems:
+      variables:
+        - "u/alex/prod_*"
+      resources:
+        - "u/alex/production/**"
+
+  dev:
+    specificItems:
+      variables:
+        - "u/alex/dev_*"
+      resources:
+        - "u/alex/development/**"
+```
+
+### Common specific items
+
+Items that should be branch-specific across all branches:
+
+```yaml
+gitBranches:
+  commonSpecificItems:
+    variables:
+      - "u/alex/database_*"
+      - "f/config/**"
+    resources:
+      - "u/alex/api_keys/**"
+      - "f/environments/**"
+```
+
+### Pattern matching
+
+Patterns support standard glob syntax:
+
+- `*` matches any characters within a path segment
+- `**` matches any characters across path segments
+- `u/alex/database_*` matches `u/alex/database_config`, `u/alex/database_url`, etc.
+- `f/environments/**` matches all files under `f/environments/` recursively
+
+## Branch name safety
+
+Branch names containing certain characters are automatically sanitized for filesystem safety:
+
+- **Unsafe characters**: `/ \ : * ? " < > | .`
+- **Replacement**: All unsafe characters are replaced with `_`
+- **Warning**: The CLI shows a clear warning when sanitization occurs
+
+```bash
+Warning: Branch name "feature/api-v2.1" contains filesystem-unsafe characters (/ \ : * ? " < > | .)
+and was sanitized to "feature_api-v2_1". This may cause collisions with other similarly named branches.
+```
+
+## File path transformation
+
+### Transform logic
+
+When syncing branch-specific items, paths are transformed as follows:
+
+**Pull operation** (Windmill workspace → local):
+- Windmill workspace: `u/alex/database.resource.yaml`
+- Local: `u/alex/database.main.resource.yaml` (on main branch)
+
+**Push operation** (local → Windmill workspace):
+- Local: `u/alex/database.dev.resource.yaml` (on dev branch)
+- Windmill workspace: `u/alex/database.resource.yaml`
+
+### Supported file types
+
+Only these file types support branch-specific transformation:
+
+- **Variables**: `*.variable.yaml`
+- **Resources**: `*.resource.yaml`
+
+## Usage examples
+
+### Basic setup
+
+1. **Initialize branch-specific configuration**:
+
+```bash
+# Create wmill.yaml with branch configuration
+wmill init
+```
+
+2. **Configure patterns** in `wmill.yaml`:
+
+```yaml
+gitBranches:
+  main:
+    specificItems:
+      resources:
+        - "u/alex/config/**"
+      variables:
+        - "u/alex/env_*"
+    overrides:
+      skipSecrets: false
+
+  dev:
+    specificItems:
+      resources:
+        - "u/alex/config/**"
+      variables:
+        - "u/alex/env_*"
+    overrides:
+      skipSecrets: true
+```
+
+### Working with different environments
+
+**On main branch**:
+```bash
+git checkout main
+wmill sync pull
+# Creates: u/alex/config/database.main.resource.yaml
+# Creates: u/alex/env_api_key.main.variable.yaml
+```
+
+**On dev branch**:
+```bash
+git checkout dev
+wmill sync pull
+# Creates: u/alex/config/database.dev.resource.yaml
+# Creates: u/alex/env_api_key.dev.variable.yaml
+```
+
+**Making changes**:
+```bash
+# Edit the dev-specific database config
+vim u/alex/config/database.dev.resource.yaml
+
+# Push changes - only affects dev workspace
+wmill sync push
+```
+
+## Best practices
+
+### Configuration patterns
+
+- **Start broad**: Use `commonSpecificItems` for widely-used resources
+- **Be specific**: Target exact paths rather than overly broad patterns
+- **Group logically**: Organize patterns by team, environment, or function
+
+### Team workflows
+
+1. **Define patterns early**: Establish branch-specific patterns before team members start using them
+2. **Document conventions**: Make clear which resources should be branch-specific
+3. **Review warnings**: Pay attention to CLI warnings about unsafe characters
+4. **Test locally**: Verify branch-specific behavior works correctly before CI/CD integration
+
+## Troubleshooting
+
+### Files not being detected as branch-specific
+
+**Problem**: Files you expect to be branch-specific are not being transformed.
+
+**Solutions**:
+1. **Check patterns**: Ensure your glob patterns match the file paths exactly
+2. **Verify file types**: Only `.variable.yaml` and `.resource.yaml` files are supported
+3. **Pattern testing**: Use tools like [globtester.com](https://globtester.com) to test your patterns
+
+### Files in wrong workspace
+
+**Problem**: Branch-specific files are syncing to the wrong workspace.
+
+**Solutions**:
+1. **Check branch config**: Ensure your branch configuration is correct
+2. **Verify current branch**: Make sure you're on the expected Git branch
+3. **Configuration precedence**: Remember that CLI flags override branch settings
+
+## Git sync integration
+
+When [Git sync](../11_git_sync/index.mdx) is configured, branch-specific items work seamlessly with your Git repository setup. Git sync will automatically push changes to the correct branch-specific files based on the repository and branch configured in your `git_repository` resource.
+
+**Example workflow**:
+- **Production workspace**: Configured with `git_repository` pointing to `repoX` on `prod` branch
+  - Changes to `database.resource.yaml` → pushes to `database.prod.resource.yaml` in repository
+- **Development workspace**: Configured with `git_repository` pointing to `repoX` on `dev` branch  
+  - Changes to `database.resource.yaml` → pushes to `database.dev.resource.yaml` in repository
+
+This ensures that each workspace environment maintains its own branch-specific configurations while using the same logical resource names in the Windmill workspace.
+
+## Related documentation
+
+- [CLI sync](./sync.mdx) - Main sync operations and configuration
+- [Git sync settings](./gitsync-settings.mdx) - Managing sync configuration
+- [Git sync](../11_git_sync/index.mdx) - Backend Git integration
