@@ -15,21 +15,6 @@ This allows different branches to have different configurations for the same log
 
 Branch-specific items are configured using two complementary patterns in your `wmill.yaml`:
 
-### Common specific items
-
-Items that should be branch-specific across all branches:
-
-```yaml
-gitBranches:
-  commonSpecificItems:
-    variables:
-      - "u/alex/database_*"
-      - "f/config/**"
-    resources:
-      - "u/alex/api_keys/**"
-      - "f/environments/**"
-```
-
 ### Branch-specific items
 
 Items that should only be branch-specific for certain branches:
@@ -49,6 +34,21 @@ gitBranches:
         - "u/alex/dev_*"
       resources:
         - "u/alex/development/**"
+```
+
+### Common specific items
+
+Items that should be branch-specific across all branches:
+
+```yaml
+gitBranches:
+  commonSpecificItems:
+    variables:
+      - "u/alex/database_*"
+      - "f/config/**"
+    resources:
+      - "u/alex/api_keys/**"
+      - "f/environments/**"
 ```
 
 ### Pattern matching
@@ -109,17 +109,21 @@ wmill init
 
 ```yaml
 gitBranches:
-  commonSpecificItems:
-    resources:
-      - "u/alex/config/**"
-    variables:
-      - "u/alex/env_*"
-
   main:
+    specificItems:
+      resources:
+        - "u/alex/config/**"
+      variables:
+        - "u/alex/env_*"
     overrides:
       skipSecrets: false
 
   dev:
+    specificItems:
+      resources:
+        - "u/alex/config/**"
+      variables:
+        - "u/alex/env_*"
     overrides:
       skipSecrets: true
 ```
