@@ -9,7 +9,7 @@ OIDC is an [EE feature only](/pricing).
 
 Windmill OpenID Connect (OIDC) allows your scripts to authenticate to other APIs (such as AWS, GCP, or your own API) without having to store sensitive, long-lived credentials.
 Your Windmill scripts can generate short-lived ID tokens which are passed to a target API to authenticate and "prove" their identity. ID tokens contain subject and claim information specific to the script, flow or worker, allowing for fine-grained access control (e.g. allowing specific scripts to access AWS buckets).
-This page documents how to generate Windmill tokens and the token format. For guides on how to integrate OIDC with cloud providers like AWS or your own API, see:
+This page documents how to generate Windmill tokens and the token format.
 
 ## Generating OIDC/JWT tokens
 
@@ -204,6 +204,8 @@ Note that [AWS only supports conditions on the `aud`, `sub`, and `email` claims]
   "<base_url>/api/oidc/:sub": "*::*::<flow_path>::*"
 }
 ```
+
+For instance level AWS OIDC for [instance object storage](../../advanced/18_instance_settings/index.mdx#instance-object-storage), the sub claim is "instance". For [workspace level object storage](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage), the sub claim is "&lt;workspace_id&gt;".
 
 ### Get AWS credentials
 

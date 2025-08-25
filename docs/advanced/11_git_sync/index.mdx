@@ -188,6 +188,8 @@ You can choose between two sync modes for each repository:
 #### Sync mode (default)
 Changes are committed directly to the branch specified in the [git_repository](../../integrations/git_repository.mdx) resource. This is the standard mode for simple workspace synchronization.
 
+When combined with [branch-specific items](../3_cli/branch-specific-items.mdx), different workspaces can sync to different branches while maintaining environment-specific configurations (e.g., production workspace syncs to `prod` branch, development workspace syncs to `dev` branch).
+
 #### Promotion mode
 Windmill will create branches per deployed object based on its path, prefixed with 'wm_deploy/'. This enables advanced deployment workflows with pull requests and code review processes.
 
@@ -218,6 +220,7 @@ Git sync settings can be controlled via the [`wmill.yaml`](../3_cli/sync.mdx#wmi
 - **Version-controlled configuration**: Your sync settings are stored in git alongside your code
 - **Branch-specific overrides**: Different sync behavior per git branch
 - **Promotion-specific settings**: Special configuration for deployment workflows
+- **[Branch-specific items](../3_cli/branch-specific-items.mdx)**: Different versions of resources and variables per git branch for environment-specific configurations
 
 The frontend will detect existing `wmill.yaml` files and merge settings appropriately.
 
