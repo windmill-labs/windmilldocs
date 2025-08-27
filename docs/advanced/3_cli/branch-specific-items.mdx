@@ -27,6 +27,8 @@ gitBranches:
         - "u/alex/prod_*"
       resources:
         - "u/alex/production/**"
+      triggers:
+        - "u/alex/prod_kafka_*"
 
   dev:
     specificItems:
@@ -34,6 +36,8 @@ gitBranches:
         - "u/alex/dev_*"
       resources:
         - "u/alex/development/**"
+      triggers:
+        - "u/alex/dev_kafka_*"
 ```
 
 ### Common specific items
@@ -49,6 +53,9 @@ gitBranches:
     resources:
       - "u/alex/api_keys/**"
       - "f/environments/**"
+    triggers:
+      - "u/alex/kafka_*"
+      - "f/streaming/**"
 ```
 
 ### Pattern matching
@@ -82,17 +89,32 @@ When syncing branch-specific items, paths are transformed as follows:
 **Pull operation** (Windmill workspace → local):
 - Windmill workspace: `u/alex/database.resource.yaml`
 - Local: `u/alex/database.main.resource.yaml` (on main branch)
+- Windmill workspace: `u/alex/orders.kafka_trigger.yaml`
+- Local: `u/alex/orders.main.kafka_trigger.yaml` (on main branch)
 
 **Push operation** (local → Windmill workspace):
 - Local: `u/alex/database.dev.resource.yaml` (on dev branch)
 - Windmill workspace: `u/alex/database.resource.yaml`
+- Local: `u/alex/orders.dev.kafka_trigger.yaml` (on dev branch)
+- Windmill workspace: `u/alex/orders.kafka_trigger.yaml`
+
+### Resource files
+
+Resources can include associated files (certificates, config files, etc.) alongside their YAML definitions. These files follow the same branch-specific transformation:
+
+**Resource files naming**:
+- Base file: `u/alex/certificate.resource.file.pem`
+- Branch-specific: `u/alex/certificate.dev.resource.file.pem`
+
+When a resource YAML file is marked as branch-specific, all associated resource files are automatically treated as branch-specific as well.
 
 ### Supported file types
 
-Only these file types support branch-specific transformation:
+These file types support branch-specific transformation:
 
 - **Variables**: `*.variable.yaml`
-- **Resources**: `*.resource.yaml`
+- **Resources**: `*.resource.yaml` and resource files (`*.resource.file.*`)
+- **Triggers**: `*.kafka_trigger.yaml`, `*.http_trigger.yaml`, `*.websocket_trigger.yaml`, `*.nats_trigger.yaml`, `*.postgres_trigger.yaml`, `*.mqtt_trigger.yaml`, `*.sqs_trigger.yaml`, `*.gcp_trigger.yaml`
 
 ## Usage examples
 
@@ -115,6 +137,8 @@ gitBranches:
         - "u/alex/config/**"
       variables:
         - "u/alex/env_*"
+      triggers:
+        - "u/alex/kafka_*"
     overrides:
       skipSecrets: false
 
@@ -124,6 +148,8 @@ gitBranches:
         - "u/alex/config/**"
       variables:
         - "u/alex/env_*"
+      triggers:
+        - "u/alex/kafka_*"
     overrides:
       skipSecrets: true
 ```
@@ -136,6 +162,7 @@ git checkout main
 wmill sync pull
 # Creates: u/alex/config/database.main.resource.yaml
 # Creates: u/alex/env_api_key.main.variable.yaml
+# Creates: u/alex/kafka_orders.main.kafka_trigger.yaml
 ```
 
 **On dev branch**:
@@ -144,12 +171,16 @@ git checkout dev
 wmill sync pull
 # Creates: u/alex/config/database.dev.resource.yaml
 # Creates: u/alex/env_api_key.dev.variable.yaml
+# Creates: u/alex/kafka_orders.dev.kafka_trigger.yaml
 ```
 
 **Making changes**:
 ```bash
 # Edit the dev-specific database config
 vim u/alex/config/database.dev.resource.yaml
+
+# Edit the dev-specific Kafka trigger
+vim u/alex/kafka_orders.dev.kafka_trigger.yaml
 
 # Push changes - only affects dev workspace
 wmill sync push
@@ -178,7 +209,7 @@ wmill sync push
 
 **Solutions**:
 1. **Check patterns**: Ensure your glob patterns match the file paths exactly
-2. **Verify file types**: Only `.variable.yaml` and `.resource.yaml` files are supported
+2. **Verify file types**: Only variables, resources, resource files, and trigger files are supported
 3. **Pattern testing**: Use tools like [globtester.com](https://globtester.com) to test your patterns
 
 ### Files in wrong workspace
@@ -197,7 +228,7 @@ When [Git sync](../11_git_sync/index.mdx) is configured, branch-specific items w
 **Example workflow**:
 - **Production workspace**: Configured with `git_repository` pointing to `repoX` on `prod` branch
   - Changes to `database.resource.yaml` → pushes to `database.prod.resource.yaml` in repository
-- **Development workspace**: Configured with `git_repository` pointing to `repoX` on `dev` branch  
+- **Development workspace**: Configured with `git_repository` pointing to `repoX` on `dev` branch
   - Changes to `database.resource.yaml` → pushes to `database.dev.resource.yaml` in repository
 
 This ensures that each workspace environment maintains its own branch-specific configurations while using the same logical resource names in the Windmill workspace.
