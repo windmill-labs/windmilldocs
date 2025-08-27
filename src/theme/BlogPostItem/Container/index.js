@@ -125,7 +125,7 @@ export default function BlogPostItemContainer({ children, className }) {
 							/>
 						</div>
 					) : video ? (
-						<div className="relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg border my-8">
+						<div className={video.includes('asciinema.org') ? "my-8" : "relative pb-[56.25%] h-0 overflow-hidden rounded-lg shadow-lg border my-8"}>
 							{video.includes('youtube.com') ? (
 								<iframe
 									className="absolute top-0 left-0 w-full h-full"
@@ -133,6 +133,14 @@ export default function BlogPostItemContainer({ children, className }) {
 									title="YouTube video player"
 									frameBorder="0"
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowFullScreen
+								/>
+							) : video.includes('asciinema.org') ? (
+								<iframe
+									className="w-full h-96 rounded-lg shadow-lg border"
+									src={`data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cstyle%3Ebody{margin:0;padding:0;overflow:hidden;}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cscript src="${video}.js" id="asciicast-${video.split('/').pop()}" async="true"%3E%3C/script%3E%3C/body%3E%3C/html%3E`}
+									title="Asciinema recording"
+									frameBorder="0"
 									allowFullScreen
 								/>
 							) : (
