@@ -1,5 +1,5 @@
 # Email triggers
- 
+
 Scripts and flows can be triggered by email messages sent to a specific email address, leveraging [SMTP](https://www.cloudflare.com/learning/email-security/what-is-smtp/).
 
 Email triggers on Windmill [Community Edition](/pricing) are limited to 100 emails per day.
@@ -17,7 +17,7 @@ On [cloud](https://app.windmill.dev/) instances, Email triggers is already confi
 ### Self-hosted
 
 First, make sure that the port 25 is exposed either on your instance public IP or a separate IP and that it redirects to the Windmill app on port 2525.
-The Caddyfile already contains the necessary configuration for this. 
+The Caddyfile already contains the necessary configuration for this.
 For Kubernetes, you will find example configurations for some providers on the [Windmill helm charts repository](https://github.com/windmill-labs/windmill-helm-charts).
 
 In addition, you will need to create one or two records in your DNS provider depending on your setup.
@@ -36,9 +36,26 @@ Once you have defined the DNS settings, set the email domain in the [instance se
 
 ## How to use
 
-You will now find the specific email address to use in the webhooks panels for each script and flow. 
+You will now find the specific email address to use in the webhooks panels for each script and flow.
 The email address takes the form `<path/hash>+<workspace+path/hash+token base32 encoded>@<email domain>`.
-Your script will receive two arguments: 
+
+### Email extra arguments
+
+You can pass additional arguments to your script by adding them after the base32 encoded part, separated by a `+` and formatted as query parameters:
+
+```
+<path/hash>+<workspace+path/hash+token base32 encoded>+env=prod&debug=true&region=us-west@<email_domain>
+```
+
+These extra arguments are available in your script as `email_extra_args`:
+```json
+{
+  "env": "prod",
+  "debug": "true",
+  "region": "us-west"
+}
+```
+Your script will receive the following arguments:
 - `raw_email`: the raw email as a string
 - `parsed_email` the parsed email with the following attributes:
   - `headers` a dictionary with the email headers (e.g. `From`, `To`, `Subject`, `Date`)
@@ -47,6 +64,7 @@ Your script will receive two arguments:
   - `attachments` list of attachments with the following attributes:
     - `headers` a dictionary with the attachment headers
     - `body` the attachment data
+- `email_extra_args`: (optional) a dictionary containing extra arguments from the email address
 
 Attchments are uploaded to the [workspace object storage (s3)](../../core_concepts/38_object_storage_in_windmill/index.mdx#workspace-object-storage) and are replaced in `parsed_email` by s3 objects (`{ s3: "path/to/key" }`).
 A workspace object storage is required for attachments to be handled.
@@ -55,7 +73,18 @@ A workspace object storage is required for attachments to be handled.
 Here's an example script:
 
 ```TypeScript
-export async function main(raw_email: string, parsed_email: any) {
+export async function main(
+  raw_email: string,
+  parsed_email: any,
+  email_extra_args?: Record<string, string>
+) {
+  console.log("Email from:", parsed_email.headers["From"][0].address);
+
+  if (email_extra_args) {
+    console.log("Environment:", email_extra_args.env);
+    console.log("Debug mode:", email_extra_args.debug === "true");
+  }
+
   // do something with the email
 }
 ```
@@ -68,20 +97,37 @@ export async function preprocessor(
     kind: "email",
     raw_email: string,
     parsed_email: any,
+    email_extra_args?: Record<string, string>,
   }
 ) {
   if (event.kind !== "email") {
     throw new Error("Expected an email event");
   }
-  // return what you want to pass to the main function, for instance the sender email address and the email body
+
+  // Access extra args from the email address
+  const environment = event.email_extra_args?.env || "production";
+  const debugMode = event.email_extra_args?.debug === "true";
+
+  // return what you want to pass to the main function
   return {
     sender_address: event.parsed_email.headers["From"][0].address,
-    email_body: event.parsed_email.text_body
+    email_body: event.parsed_email.text_body,
+    environment,
+    debug_enabled: debugMode
   }
 }
 
-export async function main(sender_address: string, email_body: string) {
-  // do something with the sender email address and the email body
+export async function main(
+  sender_address: string,
+  email_body: string,
+  environment: string,
+  debug_enabled: boolean
+) {
+  console.log(`Processing email from ${sender_address} in ${environment} environment`);
+  if (debug_enabled) {
+    console.log("Debug mode enabled, email body:", email_body);
+  }
+  // do something with the processed data
 }
 ```
 
