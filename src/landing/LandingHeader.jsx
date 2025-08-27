@@ -80,7 +80,7 @@ export default function LandingHeader() {
 				<div className="flex items-center justify-between md:justify-start md:space-x-10">
 					<Link
 						to="/"
-						className="flex justify-start items-center gap-2 h-full lg:w-0 lg:flex-1 group !no-underline cursor-pointer w-min"
+						className="flex justify-start items-center gap-2 h-full lg:w-auto lg:flex-none group !no-underline cursor-pointer w-min"
 						onMouseEnter={() => setHoverLogo(true)}
 						onMouseLeave={() => setHoverLogo(false)}
 					>
@@ -96,13 +96,16 @@ export default function LandingHeader() {
 							Windmill
 						</div>
 					</Link>
-					<div className="-my-2 -mr-2 md:hidden">
+					
+					{/* Hamburger menu - shows when navigation is hidden OR when buttons are hidden */}
+					<div className="-my-2 -mr-2 md:hidden xl:block 2xl:hidden">
 						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
 							<span className="sr-only">Open menu</span>
 							<Bars3Icon className="h-6 w-6" aria-hidden="true" />
 						</Popover.Button>
 					</div>
-					<Popover.Group as="nav" className="hidden space-x-10 md:flex">
+					
+					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex">
 						<Popover className="relative">
 							{({ open }) => (
 								<>
@@ -234,7 +237,7 @@ export default function LandingHeader() {
 						</Popover>
 					</Popover.Group>
 
-					<div className="hidden items-center justify-end md:flex md:flex-1 gap-4 ml-8 ">
+					<div className="hidden items-center justify-end lg:flex lg:flex-1 gap-4 ml-8">
 						<ThemeToggleButton colorMode={colorMode} setColorMode={setColorMode} />
 
 						<a
@@ -262,7 +265,7 @@ export default function LandingHeader() {
 							href="https://www.windmill.dev/book-demo"
 							data-analytics='"schedule-demo"'
 							onClick={() => window.plausible('schedule-demo')}
-							className="ml-4 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
+							className="hidden xl:inline-flex ml-4 items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 !no-underline transition-all"
 						>
 							Book a demo
 						</a>
@@ -271,7 +274,7 @@ export default function LandingHeader() {
 							href="https://app.windmill.dev/user/login"
 							onClick={() => window.plausible('try-cloud')}
 							data-analytics='"try-cloud"'
-							className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
+							className="hidden 2xl:inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-800 hover:text-white transition-all !no-underline"
 							rel="nofollow"
 						>
 							Windmill cloud
@@ -289,7 +292,7 @@ export default function LandingHeader() {
 				>
 					<Popover.Panel
 						focus
-						className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden "
+						className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden xl:block 2xl:hidden"
 					>
 						<div className="divide-y-2 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
 							<div className="px-5 pt-5 pb-6">
@@ -306,7 +309,8 @@ export default function LandingHeader() {
 								</div>
 							</div>
 							<div className="py-6 px-5">
-								<div className="grid grid-cols-2 gap-4">
+								{/* Show navigation items only on mobile (md:hidden) */}
+								<div className="md:hidden grid grid-cols-2 gap-4">
 									<a
 										href="/pricing"
 										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
@@ -322,6 +326,13 @@ export default function LandingHeader() {
 										Docs
 									</a>
 
+									<a
+										href="https://hub.windmill.dev"
+										className="text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+									>
+										Hub
+									</a>
+
 									{resources.map((resource) => (
 										<a
 											key={resource.name}
@@ -332,7 +343,25 @@ export default function LandingHeader() {
 										</a>
 									))}
 								</div>
-								<div className="mt-6 flex justify-center items-center space-x-4 mb-4">
+
+								{/* Show Products dropdown items on mobile */}
+								<div className="md:hidden mt-4">
+									<div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Products</div>
+									<div className="space-y-2">
+										{products.map((product) => (
+											<a
+												key={product.name}
+												href={product.href}
+												className="block text-base font-medium text-gray-900 dark:text-white hover:text-gray-700"
+											>
+												{product.name}
+											</a>
+										))}
+									</div>
+								</div>
+
+								{/* Show social icons only on mobile (md:hidden) */}
+								<div className="md:hidden mt-6 flex justify-center items-center space-x-4 mb-4">
 									<a
 										href="https://github.com/windmill-labs/windmill"
 										data-analytics='"github"'
@@ -356,22 +385,32 @@ export default function LandingHeader() {
 									</a>
 								</div>
 
+								{/* Show buttons that are hidden on current screen size */}
 								<div className="mt-6">
-									<a
-										href="https://www.windmill.dev/book-demo"
-										data-analytics='"schedule-demo"'
-										onClick={() => window.plausible('schedule-demo')}
-										className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"
-									>
-										Book a demo
-									</a>
-									<a
-										href="https://app.windmill.dev"
-										className="!no-underline flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
-										rel="nofollow"
-									>
-										Windmill cloud
-									</a>
+									{/* Book a demo - hidden on xl screens, visible on 2xl+ */}
+									<div className="xl:block 2xl:hidden">
+										<a
+											href="https://www.windmill.dev/book-demo"
+											data-analytics='"schedule-demo"'
+											onClick={() => window.plausible('schedule-demo')}
+											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"
+										>
+											Book a demo
+										</a>
+									</div>
+									
+									{/* Windmill cloud - hidden on xl screens, visible on 2xl+ */}
+									<div className="xl:block 2xl:hidden">
+										<a
+											href="https://app.windmill.dev/user/login"
+											onClick={() => window.plausible('try-cloud')}
+											data-analytics='"try-cloud"'
+											className="!no-underline flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700"
+											rel="nofollow"
+										>
+											Windmill cloud
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
