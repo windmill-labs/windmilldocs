@@ -2,8 +2,6 @@
 
 The Python client library for Windmill provides a convenient way to interact with the Windmill platform's API from within your script jobs. By authenticating with the `WM_TOKEN` reserved variable, you can utilize the Python client to access various functionalities offered by Windmill.
 
-> **Note**: The Python client is not thread or multi-processing safe. When using multithreading or multiprocessing, create a separate client instance per thread/process using `wmill.Windmill()`.
-
 ## Installation
 
 To use the Python client library, you need to install the `wmill` package. You can install it via pip:
@@ -90,3 +88,5 @@ The `JobStatus` class is an enumeration that represents the different states of 
 - `WAITING`: Represents a job that is queued and waiting to be executed.
 
 The `JobStatus` enumeration is useful when retrieving the status of a job using the `get_job_status` method.
+
+> **Note**: The Python client is not thread or multi-processing safe. When using multithreading or multiprocessing, create a separate client instance per thread/process using `wmill.Windmill()`.
