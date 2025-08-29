@@ -48,6 +48,8 @@ def main(n: int):
 
 ```
 
+> **Note**: When using multiprocessing or multithreading with the Windmill client, create a separate client instance per thread/process using `wmill.Windmill()` as the client is not thread-safe.
+
 </TabItem>
 <TabItem value="deno" label="TypeScript (Bun)" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
 
