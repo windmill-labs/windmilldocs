@@ -33,7 +33,7 @@ Additionally, MCP provides access to Windmill's API endpoints for basic operatio
 Once created, your MCP URL will look like this:
 
 ```
-https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>
+https://app.windmill.dev/api/mcp/w/<your-workspace-id>/sse?token=<your-token>
 ```
 
 > This token is used to authenticate MCP clients and generate your personal MCP endpoint URL. Save this URL securely. Treat it like an API key—anyone with access can trigger actions in your workspace.
@@ -54,7 +54,7 @@ To connect with Cursor:
 {
   "mcpServers": {
     "windmill-mcp": {
-      "url": "https://app.windmill.dev/api/w/<your-workspace-id>/mcp/sse?token=<your-token>"
+      "url": "https://app.windmill.dev/api/mcp/w/<your-workspace-id>/sse?token=<your-token>"
     }
   }
 }
