@@ -13,7 +13,7 @@ As of writing this, assets are supported for the following languages:
 - [JavaScript / TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)
 - [DuckDB](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#duckdb)
 
-When the asset is a database resource or an S3 file, an explore button will appear next to the asset.
+When the asset is a database resource or an S3 file, an explore button will appear next to the asset with access to the [database manager](../3_resources_and_types/index.mdx#database-manager).
 
 Read / Write mode is infered from code context.
 For example, a `COPY (...) TO file` statement is always `Write`.
@@ -23,7 +23,6 @@ You can use the Add Resource / S3 Object buttons in the editor bar for convenien
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	autoPlay
 	controls
 	id="main-video"
 	src="/videos/assets_demo.mp4"
