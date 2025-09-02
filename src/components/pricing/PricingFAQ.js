@@ -114,6 +114,15 @@ const faqs = [
 		)
 	},
 	{
+		id: 'agent-workers',
+		question: 'What are agent workers?',
+		answer: (
+			<span>
+				Agent workers are specialized workers that handle AI agent tasks and workflows. Each agent worker counts as 1 Compute Unit on the self-hosted plan and 0.5 Compute Unit on the cloud plan (therefore same price as on the self-hosted plan).
+			</span>
+		)
+	},
+	{
 		id: 'compute-units',
 		question: 'What are compute units?',
 		answer: (

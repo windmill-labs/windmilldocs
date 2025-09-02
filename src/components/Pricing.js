@@ -64,7 +64,8 @@ const pricing = {
 						pricePerGB: workerDefaults.memoryPricePerGB,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
 					},
-					native: 50
+					native: 50,
+					agent: 50
 				},
 				seat: {
 					monthly: 20,
@@ -85,7 +86,8 @@ const pricing = {
 						pricePerGB: workerDefaults.memoryPricePerGB,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
 					},
-					native: 20
+					native: 20,
+					agent: 20
 				},
 				seat: {
 					monthly: 8,
@@ -106,7 +108,8 @@ const pricing = {
 						pricePerGB: workerDefaults.memoryPricePerGB,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
 					},
-					native: 20
+					native: 20,
+					agent: 20
 				},
 				seat: {
 					monthly: 8,
@@ -266,7 +269,8 @@ const pricing = {
 						pricePerGB: workerDefaults.memoryPricePerGB * 2,
 						maxPricedGB: workerDefaults.maxPricedMemoryGB
 					},
-					native: 100
+					native: 100,
+					agent: 100
 				},
 				seat: {
 					monthly: 40,
