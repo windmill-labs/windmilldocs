@@ -9,7 +9,7 @@ import LayoutProvider from '@theme/Layout/Provider';
 export default function PricingPage() {
 	return (
 		<LayoutProvider>
-			<main>
+			<main className="relative min-h-screen w-full overflow-x-hidden">
 				<LandingHeader />
 				<Head>
 					<title>Pricing | Windmill</title>
@@ -22,7 +22,7 @@ export default function PricingPage() {
 				</Head>
 				<>
 					<RadialBlur />
-					<div className="pt-32">
+					<div className="pt-32 max-w-full">
 						<Pricing />
 					</div>
 				</>
