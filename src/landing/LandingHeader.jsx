@@ -77,7 +77,7 @@ export default function LandingHeader() {
 	return (
 		<div className="w-full fixed z-[1000]  bg-white dark:bg-gray-950 shadow-sm">
 			<Popover className="relative bg-opacity-90 z-50 max-w-7xl mx-auto py-3 px-3 sm:px-4 lg:px-8">
-				<div className="flex items-center justify-between md:justify-start md:space-x-10">
+				<div className="flex items-center justify-between gap-8">
 					<Link
 						to="/"
 						className="flex justify-start items-center gap-2 h-full lg:w-auto lg:flex-none group !no-underline cursor-pointer w-min"
@@ -97,22 +97,14 @@ export default function LandingHeader() {
 						</div>
 					</Link>
 					
-					{/* Hamburger menu - shows when navigation is hidden OR when buttons are hidden */}
-					<div className="-my-2 -mr-2 md:hidden xl:block 2xl:hidden">
-						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
-							<span className="sr-only">Open menu</span>
-							<Bars3Icon className="h-6 w-6" aria-hidden="true" />
-						</Popover.Button>
-					</div>
-					
-					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex">
+					<Popover.Group as="nav" className="hidden space-x-8 lg:space-x-10 md:flex min-w-0 grow">
 						<Popover className="relative">
 							{({ open }) => (
 								<>
 									<Popover.Button
 										className={classNames(
 											open ? 'text-gray-900' : 'text-gray-500',
-											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 focus:ring-offset-2 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
+											'group inline-flex items-center rounded-md  text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-1 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-offset-1 dark:focus:ring-offset-gray-800 text-gray-500 !no-underline dark:text-gray-200 dark:hover:text-gray-300 '
 										)}
 									>
 										<span>Products</span>
@@ -280,6 +272,13 @@ export default function LandingHeader() {
 							Windmill cloud
 						</a>
 					</div>
+					{/* Hamburger menu - shows when navigation is hidden OR when buttons are hidden */}
+					<div className="-ml-4 xl:block 2xl:hidden">
+						<Popover.Button className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 p-2 text-gray-400 dark:text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
+							<span className="sr-only">Open menu</span>
+							<Bars3Icon className="h-6 w-6" aria-hidden="true" />
+						</Popover.Button>
+					</div>
 				</div>
 				<Transition
 					as={Fragment}
@@ -292,7 +291,7 @@ export default function LandingHeader() {
 				>
 					<Popover.Panel
 						focus
-						className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden xl:block 2xl:hidden"
+						className="absolute inset-x-0 top-0 md:right-0 md:inset-x-auto md:w-80 xl:inset-y-auto origin-top-right transform p-2 transition xl:block 2xl:hidden"
 					>
 						<div className="divide-y-2 divide-gray-50 dark:divide-gray-800 rounded-lg bg-white dark:bg-gray-900  shadow-lg ring-1 ring-black ring-opacity-5">
 							<div className="px-5 pt-5 pb-6">
@@ -346,7 +345,9 @@ export default function LandingHeader() {
 
 								{/* Show Products dropdown items on mobile */}
 								<div className="md:hidden mt-4">
-									<div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Products</div>
+									<div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+										Products
+									</div>
 									<div className="space-y-2">
 										{products.map((product) => (
 											<a
@@ -360,8 +361,8 @@ export default function LandingHeader() {
 									</div>
 								</div>
 
-								{/* Show social icons only on mobile (md:hidden) */}
-								<div className="md:hidden mt-6 flex justify-center items-center space-x-4 mb-4">
+								{/* Show social icons only on xl screens (xl:hidden) */}
+								<div className="lg:hidden mt-6 flex justify-center items-center space-x-4 mb-4">
 									<a
 										href="https://github.com/windmill-labs/windmill"
 										data-analytics='"github"'
@@ -388,12 +389,12 @@ export default function LandingHeader() {
 								{/* Show buttons that are hidden on current screen size */}
 								<div className="mt-6">
 									{/* Book a demo - hidden on xl screens, visible on 2xl+ */}
-									<div className="xl:block 2xl:hidden">
+									<div className="lg:block xl:hidden">
 										<a
 											href="https://www.windmill.dev/book-demo"
 											data-analytics='"schedule-demo"'
 											onClick={() => window.plausible('schedule-demo')}
-											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent text-base font-medium text-blue-600 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-500 mb-4"
+											className="!no-underline flex w-full dark:text-white items-center justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-base font-medium !text-blue-600 shadow-sm hover:bg-blue-200 hover:text-blue-800 mb-4"
 										>
 											Book a demo
 										</a>

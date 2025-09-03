@@ -468,8 +468,8 @@ export default function Pricing() {
 	};
 
 	return (
-		<div className="">
-			<div className="mx-auto max-w-7xl">
+		<div className="w-full overflow-x-hidden">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-4xl text-center">
 					<p className="text-4xl font-bold tracking-tight sm:text-5xl">Pricing</p>
 					<p className="text-lg font-medium text-gray-600 dark:text-gray-300 mt-2">Open source. Open pricing. No lock-in.</p>
@@ -535,7 +535,7 @@ export default function Pricing() {
 				</div>
 				<div
 					className={classNames(
-						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none w-full',
+						'isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-4 sm:gap-8 lg:mx-0 lg:max-w-none w-full',
 						{
 							'lg:grid-cols-3': frequency.value === 'cloud',
 							'lg:grid-cols-2': frequency.value === 'selfhost',
@@ -1084,7 +1084,7 @@ export default function Pricing() {
 											{/* Fake card borders */}
 											<div
 												className={twMerge(
-													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
+													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
 													frequency.value === 'cloud' ? 'grid-cols-4' : 'grid-cols-3'
 												)}
 												aria-hidden="true"
