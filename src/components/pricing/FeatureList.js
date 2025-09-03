@@ -423,18 +423,6 @@ export const sections = [
 				tooltip: 'Self-hosted only'
 			},
 			{
-				name: 'Agent workers',
-				tiers: {
-					'tier-free-selfhost': false,
-					'tier-enterprise-selfhost': true,
-					'tier-enterprise-cloud': false,
-					'tier-free': false,
-					'tier-team': false
-				},
-				link: '/docs/core_concepts/agent_workers',
-				tooltip: 'Self-hosted only'
-			},
-			{
 				name: 'Isolated & dedicated workers and database',
 				tiers: {
 					'tier-free-selfhost': false,
@@ -455,6 +443,17 @@ export const sections = [
 					'tier-team': true
 				},
 				link: '/docs/advanced/deploy_to_prod'
+			},
+			{
+				name: 'Agent workers',
+				tiers: {
+					'tier-free-selfhost': false,
+					'tier-enterprise-selfhost': true,
+					'tier-enterprise-cloud': true,
+					'tier-free': false,
+					'tier-team': false
+				},
+				link: '/docs/core_concepts/agent_workers'
 			},
 			{
 				name: 'Sync Windmill to a git repository (Git sync)',

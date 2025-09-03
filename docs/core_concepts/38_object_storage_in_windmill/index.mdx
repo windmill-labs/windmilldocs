@@ -14,7 +14,7 @@ Additionally, for [instance integration](#instance-object-storage), the Enterpri
 
 ## Workspace object storage
 
-Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or GCS bucket to enable users to read and write from S3 without having to have access to the credentials.
+Connect your Windmill workspace to your S3 bucket, Azure Blob storage, or GCS bucket to enable users to read and write from S3 without having to have access to the credentials. When you reference S3 objects in your code, Windmill automatically tracks these data flows through the [Assets](../52_assets/index.mdx) feature for better pipeline visibility.
 
 ![Workspace object storage infographic](../11_persistent_storage/s3_infographics.png 'Workspace object storage infographic')
 
@@ -381,8 +381,6 @@ Under [Enterprise Edition](/pricing), instance object storage offers advanced fe
 ![Instance object storage infographic](./instance_object_storage_infographic.png 'Instance object storage infographic')
 
 This can be configured from the [instance settings](../../advanced/18_instance_settings/index.mdx#instance-object-storage), with configuration options for S3, Azure Blob, Google Cloud Storage, or AWS OIDC.
-
-
 
 ![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
 

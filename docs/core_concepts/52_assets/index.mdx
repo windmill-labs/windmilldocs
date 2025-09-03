@@ -1,19 +1,19 @@
 # Assets
 
-Windmill auto detects when you reference assets directly in your code. Assets are referenced with URIs and include:
+Assets are designed to track data flows and visualize data sets, automatically detecting when you reference them directly in your code. Assets are referenced with URIs and include:
 
-- S3 Objects : s3://storage/path/to/file.csv
-- Resources : res://path/to/resource
+- [S3 objects](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) : s3://storage/path/to/file.csv
+- [Resources](../3_resources_and_types/index.mdx) : res://path/to/resource
 
 ![Assets in script editor](./assets_in_script_editor.png 'Assets in script editor')
 
 As of writing this, assets are supported for the following languages:
 
-- Python
-- JavaScript / TypeScript
-- DuckDB
+- [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index.mdx)
+- [JavaScript / TypeScript](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx)
+- [DuckDB](../../getting_started/0_scripts_quickstart/5_sql_quickstart/index.mdx#duckdb)
 
-When the asset is a database resource or an S3 file, an explore button will appear next to the asset.
+When the asset is a database resource or an S3 file, an explore button will appear next to the asset with access to the [database manager](../3_resources_and_types/index.mdx#database-manager).
 
 Read / Write mode is infered from code context.
 For example, a `COPY (...) TO file` statement is always `Write`.
@@ -23,7 +23,6 @@ You can use the Add Resource / S3 Object buttons in the editor bar for convenien
 
 <video
 	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
-	autoPlay
 	controls
 	id="main-video"
 	src="/videos/assets_demo.mp4"

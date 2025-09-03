@@ -17,6 +17,8 @@ needs to implement. Schemas implement the
 
 ![Recap Resources and Types](./recap_resources_and_types.png 'Recap Resources and Types')
 
+While resources store configuration and credentials for connections, [Assets](../52_assets/index.mdx) track data flows and visualize datasets. Assets automatically detect when you reference [S3 objects](../38_object_storage_in_windmill/index.mdx#workspace-object-storage) (`s3://storage/path/to/file.csv`) or resources (`res://path/to/resource`) directly in your code, creating a visual representation of your data pipeline. This helps you understand how data moves through your workflows and identify dependencies between different data sources.
+
 :::tip
 
 Check our [list of integrations](../../integrations/0_integrations_on_windmill.mdx) (or, pre-made resource types). If one is missing, this very page details how to [create your own](#create-a-resource-type).

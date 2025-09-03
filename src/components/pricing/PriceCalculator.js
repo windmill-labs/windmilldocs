@@ -91,7 +91,7 @@ const SeatsSummary = ({ developers, operators }) => (
 );
 
 // Update the ComputeUnitsSummary component
-const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption, tierId }) => {
+const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, agentWorkers, selectedOption, tierId }) => {
 	// Group workers by memory size
 	const groupedWorkers = workerGroups.reduce((acc, group) => {
 		// For self-hosted, group all workers with memoryGB >= 4 as 'large'
@@ -107,19 +107,19 @@ const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption, tier
 	}, {});
 
 	const totalComputeUnits = tierId === 'tier-enterprise-cloud'
-		? workerGroups.reduce((sum, group) => sum + (group.memoryGB/2 * group.workers), 0) + (nativeWorkers/8)
+		? workerGroups.reduce((sum, group) => sum + (group.memoryGB/2 * group.workers), 0) + (nativeWorkers/8) + (agentWorkers/2)
 		: Object.entries(groupedWorkers).reduce((sum, [memoryGB, workers]) => {
 			memoryGB = Number(memoryGB);
 			return sum + (memoryGB === 1 ? workers/2 : memoryGB === 2 ? workers : workers * 2);
-		}, 0) + (nativeWorkers/8);
+		}, 0) + (nativeWorkers/8) + (agentWorkers/1);
 	
 	return (
 		<div className="flex flex-col gap-1 text-sm text-gray-600 dark:text-gray-200 min-h-[6.5rem]">
 			<span className="text-gray-900 dark:text-white">
 				Total <a href="#compute-units" className="custom-link text-gray-900 hover:text-gray-600 dark:text-white dark:hover:text-gray-200">compute units</a> (CU):
-				{' '}<span className={selectedOption === 'Pro' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
+				{' '}<span className={selectedOption === 'Pro' && tierId === 'tier-enterprise-selfhost' && totalComputeUnits > 10 ? "text-rose-700 dark:text-red-400" : ""}>
 					{Math.round(totalComputeUnits)}
-					{selectedOption === 'Pro' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}
+					{selectedOption === 'Pro' && tierId === 'tier-enterprise-selfhost' && totalComputeUnits > 10 ? ' (max 10 CU on Pro plan)' : ''}
 				</span>
 			</span>
 			{Object.entries(groupedWorkers)
@@ -155,6 +155,9 @@ const ComputeUnitsSummary = ({ workerGroups, nativeWorkers, selectedOption, tier
 			{nativeWorkers > 0 && (
 				<span className="ml-4">{nativeWorkers} native {nativeWorkers === 1 ? 'worker' : 'workers'} = {nativeWorkers/8} CU</span>
 			)}
+			{agentWorkers > 0 && (
+				<span className="ml-4">{agentWorkers} agent {agentWorkers === 1 ? 'worker' : 'workers'} = {tierId === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1} CU</span>
+			)}
 		</div>
 	);
 };
@@ -184,6 +187,8 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 
 	// Update the initial state of nativeWorkers to 8
 	const [nativeWorkers, setNativeWorkers] = useState(8);
+	// Add agent workers state
+	const [agentWorkers, setAgentWorkers] = useState(0);
 
 	// Get the appropriate pricing based on selectedOption and tier.id
 	function getPriceByOption() {
@@ -223,6 +228,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				(counts.small / 2 || 0) + 
 				(counts.standard || 0) + 
 				((1/8) * nativeWorkers) + 
+				(tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1) + 
 				(2 * (counts.large || 0))
 			);
 
@@ -240,18 +246,24 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 				nativeWorkersCost = (pricing.worker.native * nativeWorkers / 8);
 			}
 
+			// Add agent workers cost
+			let agentWorkersCost = 0;
+			if (pricing.worker?.agent) {
+				agentWorkersCost = (pricing.worker.agent * (tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1));
+			}
+
 			// Apply minimum worker group pricing
 			let minimumWorkerPrice = tier.id === 'tier-enterprise-cloud' ? 200 : 100;
 			if (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'Pro' || selectedOption === 'Nonprofit')) {
 				minimumWorkerPrice = 40;
 			}
 			
-			const totalWorkersCost = workersTotal + nativeWorkersCost;
+			const totalWorkersCost = workersTotal + nativeWorkersCost + agentWorkersCost;
 			if (totalWorkersCost < minimumWorkerPrice) {
 				total += minimumWorkerPrice;
 			} else {
 				// Adjust the cost based on the ceiling of compute units
-				const adjustmentFactor = totalComputeUnits / ((counts.small / 2 || 0) + (counts.standard || 0) + ((1/8) * nativeWorkers) + (2 * (counts.large || 0)));
+				const adjustmentFactor = totalComputeUnits / ((counts.small / 2 || 0) + (counts.standard || 0) + ((1/8) * nativeWorkers) + (tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1) + (2 * (counts.large || 0)));
 				total += totalWorkersCost * adjustmentFactor;
 			}
 
@@ -300,7 +312,8 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 		if (tier.id === 'tier-enterprise-cloud') {
 			return {
 				workerGroups,  // Pass the full worker groups array for cloud
-				native: nativeWorkers / 8
+				native: nativeWorkers / 8,
+				agent: agentWorkers / 2
 			};
 		} else {
 			// For self-hosted, use the original categorization
@@ -339,26 +352,27 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										const pricePerWorker = calculateWorkerPrice(group.memoryGB, tier.id, selectedOption) * 
 											(tier.id === 'tier-enterprise-cloud' ? 2 : 1);
 										return sum + (pricePerWorker * group.workers);
-									}, 0) + (pricing.worker?.native * nativeWorkers / 8)) < 
+									}, 0) + (pricing.worker?.native * nativeWorkers / 8) + (pricing.worker?.agent * (tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1))) < 
 									(tier.id === 'tier-enterprise-cloud' ? 200 : 
-										(selectedOption === 'Pro' || selectedOption === 'Nonprofit' ? 40 : 100)) && (
+										(tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'Pro' || selectedOption === 'Nonprofit') ? 40 : 100)) && (
 										<span className="text-sm text-rose-700 dark:text-red-400">
 											Price for workers can't be below ${tier.id === 'tier-enterprise-cloud' 
 												? (period.value === 'annually' ? '2,000' : '200') 
-												: (selectedOption === 'Pro' || selectedOption === 'Nonprofit' 
+												: (tier.id === 'tier-enterprise-selfhost' && (selectedOption === 'Pro' || selectedOption === 'Nonprofit')
 													? (period.value === 'annually' ? '400' : '40')
 													: (period.value === 'annually' ? '1,000' : '100'))}
 											/{period.value === 'annually' ? 'yr' : 'mo'}
 										</span>
 									)}
 
-									{/* New CU limit warning for Pro */}
-									{selectedOption === 'Pro' && (
+									{/* New CU limit warning for Pro - only for self-hosted */}
+									{selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' && (
 										(() => {
 											const counts = getWorkerCounts(workerGroups);
 											const totalComputeUnits = (counts.small / 2 || 0) + 
 												(counts.standard || 0) + 
 												((1/8) * nativeWorkers) + 
+												(tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1) + 
 												(2 * (counts.large || 0));
 											
 											return totalComputeUnits > 10 ? (
@@ -379,8 +393,9 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							const totalComputeUnits = (counts.small / 2 || 0) + 
 								(counts.standard || 0) + 
 								((1/8) * nativeWorkers) + 
+								(tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1) + 
 								(2 * (counts.large || 0));
-							const isOverLimit = selectedOption === 'Pro' && totalComputeUnits > 10;
+							const isOverLimit = selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' && totalComputeUnits > 10;
 							const textColor = isOverLimit ? "text-rose-700 dark:text-red-400" : "text-gray-900 dark:text-white";
 							const subTextColor = isOverLimit ? "text-rose-700 dark:text-red-400" : "text-gray-500";
 
@@ -613,7 +628,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 										</div>
 										<Slider
 											min={1}
-											max={selectedOption === 'Pro' ? 10 : 1000}
+											max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 10 : 1000}
 											step={1}
 											defaultValue={group.workers}
 											onChange={(value) => updateWorkerGroup(index, 'workers', value)}
@@ -673,11 +688,43 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 								</div>
 								<Slider
 									min={0}
-									max={selectedOption === 'Pro' ? 32 : 200}
+									max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 32 : 200}
 									step={8}
 									defaultValue={8}
 									onChange={(value) => setNativeWorkers(value)}
 									noExponential={true}
+								/>
+							</li>
+						)}
+						{(tier.id === 'tier-enterprise-selfhost' || tier.id === 'tier-enterprise-cloud') && (
+							<li className="flex flex-col gap-2 p-4 border rounded-lg mt-8">
+								<h6 className="font-semibold">
+									Agent workers{' '}
+									<span className="relative group">
+										<svg className="inline-block w-3 h-3 text-blue-800 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-500 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+										</svg>
+										<span className="invisible group-hover:visible absolute z-10 w-96 p-2 mt-2 text-sm font-normal text-white bg-slate-800 rounded-lg shadow-lg">
+											<a href="#agent-workers" className="text-blue-400 hover:text-blue-500">Agent</a> workers are specialized workers that handle AI agent tasks and workflows. Each agent worker counts as 1 Compute Unit on the self-hosted plan and 0.5 Compute Unit on the cloud plan.
+										</span>
+									</span>
+								</h6>
+								
+								<div className="flex justify-between w-full items-center">
+									<span className="text-sm text-gray-600 dark:text-gray-200">
+										{agentWorkers} agent {agentWorkers === 1 ? 'worker' : 'workers'}
+									</span>
+									<span className="text-sm text-gray-900 font-semibold dark:text-white">
+										${(Math.round((pricing.worker.agent * (tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1)) * (period.value === 'annually' ? 10 : 1) * 10) / 10).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 1})} /{period.value === 'annually' ? 'yr' : 'mo'}
+									</span>
+								</div>
+								<Slider
+									min={0}
+									max={selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' ? 10 : 200}
+									step={tier.id === 'tier-enterprise-cloud' ? 2 : 1}
+									defaultValue={0}
+									onChange={(value) => setAgentWorkers(value)}
+									exponential={true}
 								/>
 							</li>
 						)}
@@ -734,6 +781,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 									const totalComputeUnits = (counts.small / 2 || 0) + 
 										(counts.standard || 0) + 
 										((1/8) * nativeWorkers) + 
+										(tier.id === 'tier-enterprise-cloud' ? agentWorkers/2 : agentWorkers/1) + 
 										(2 * (counts.large || 0));
 									
 									return (
@@ -741,7 +789,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 											amount={computeTotalPrice()} 
 											period={period.value} 
 											className={classNames(
-												selectedOption === 'Pro' && totalComputeUnits > 10 
+												selectedOption === 'Pro' && tier.id === 'tier-enterprise-selfhost' && totalComputeUnits > 10 
 													? "text-rose-700 dark:text-red-400" 
 													: "text-gray-900 dark:text-white"
 											)}
@@ -753,6 +801,7 @@ export default function PriceCalculator({ period, tier, selectedOption }) {
 							<ComputeUnitsSummary 
 								workerGroups={workerGroups} 
 								nativeWorkers={nativeWorkers} 
+								agentWorkers={agentWorkers}
 								selectedOption={selectedOption} 
 								tierId={tier.id}
 							/>
