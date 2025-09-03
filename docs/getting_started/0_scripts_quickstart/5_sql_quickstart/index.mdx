@@ -531,14 +531,14 @@ INSERT INTO demo VALUES ($name1, $name2)
 ```
 "name1", "name2" being the names of the arguments, and "default arg" the optional default value.  
 
-You can pass a file on S3 as an argument of type s3object. This will automatically setup httpfs with the s3 credentials of the corresponding storage.
+You can pass a file on S3 as an argument of type s3object. This will substitute it with the correct 's3:///...' path at runtime.
 You can then query this file using the standard read_csv/read_parquet/read_json functions :
 ```sql
 -- $file (s3object)
 SELECT * FROM read_parquet($file)
 ```
 
-Alternatively, you can reference files on the workspace directly using s3:// notation. This is equivalent to passing an s3 object as a parameter:
+Alternatively, you can reference files on the workspace directly using s3:// notation.
 
 For primary workspace storage:
 ```sql
@@ -554,6 +554,8 @@ This notation also works with glob patterns:
 ```sql
 SELECT * FROM read_parquet('s3:///myfiles/*.parquet')
 ```
+
+The s3:// notation now uses the Windmill S3 Proxy by default.
 
 You can also attach to other database resources (BigQuery, PostgreSQL and MySQL). We use the official and community DuckDB extensions under the hood :
 ```sql
