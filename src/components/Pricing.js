@@ -1080,7 +1080,7 @@ export default function Pricing() {
 											{/* Fake card borders */}
 											<div
 												className={twMerge(
-													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
+													'pointer-events-none absolute inset-x-8 inset-y-0 grid gap-x-8 before:block mt-4',
 													frequency.value === 'cloud' ? 'grid-cols-4' : 'grid-cols-3'
 												)}
 												aria-hidden="true"
