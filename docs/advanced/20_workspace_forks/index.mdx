@@ -1,0 +1,140 @@
+import DocCard from '@site/src/components/DocCard';
+
+# Workspace forks
+
+Workspace forks allow users to create independent copies of a workspace, enabling parallel development workflows similar to git branches and GitHub forks.
+
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/fork_workspace_demo.mp4"
+/>
+
+## How workspace forks work
+
+Workspace forks create a complete copy of your workspace, including scripts, flows, apps, resources, and variables. Each fork operates independently and changes can later be merged to a parent workspace through a couple of methods.
+
+Key features:
+- **Independent development**: Make changes without affecting the parent workspace
+- **Git integration**: Automatically creates corresponding git branches using the git sync workflow
+- **Team collaboration**: Multiple developers can work on separate forks simultaneously
+
+<!-- TODO: Add diagram showing fork relationship and git branch mapping -->
+
+## Example feature development workflow
+
+1. **Create fork**: Fork the main workspace for new feature development
+2. **Develop**: Make changes in the forked workspace
+3. **Create PR**: Use github/gitlab to create a pull request
+4. **Review & merge**: Team reviews changes before merging to main branch
+5. **Sync back changes**: Changes are automatically synced to the workspace linked to the main branch
+
+## Managing workspace forks
+
+### Prerequisites
+
+- Being on a self-hosted EE instance
+- [Git sync](../11_git_sync/index.mdx) configured (recommended for full functionality)
+- [CI/CD actions ](../9_deploy_gh_gl/index.mdx#github-actions-setup) to merge back from the git remote to Windmill
+
+### Fork creation
+
+#### From the UI
+
+1. Navigate to the workspace you want to fork.
+2. Click on the Workspace menu on the sidebar.
+3. Click on `Fork current workspace`.
+4. Configure the name and id and then press on the `Fork workspace` button.
+
+#### From the CLI
+
+1. Enter the local repo being synced with the workspace you want to fork.
+2. Run `wmill workspace fork` and follow the prompts to name your workspace. This will use your `gitBranches` settings on your `wmill.yaml` to determine which workspace to fork from based on the branch you are on.
+3. The fork will be created on your instance and is ready to be worked on.
+4. Run the command shown on your terminal to create the corresponding branch and start adding edits to your newly created fork!
+
+<!-- TODO: Add step-by-step screenshots of the fork creation process -->
+
+### Deleting a fork
+
+Workspace forks can be deleted by their creator, or by any workspace admin.
+
+#### From the UI
+
+Just press the cogwheel on the sidebar and select the option to delete the workspace fork.
+
+#### From the CLI
+
+1. Find the workspace profile corresponding to the workspace fork using the `wmill workspace` command.
+2. If missing, add it using `wmill workspace add`
+3. Now run `wmill workspace delete-fork <profile_name>`
+
+### Permissions and access
+
+Forks can be created by any user of the workspace. Roles and access will be the same as in the original workspace. All users of the original workspace can join the fork at any time, which will make it appear as another workspace on their menu.
+
+## Git sync integration
+
+When workspace forks are used with [git sync](../11_git_sync/index.mdx), Windmill will automatically create a git branch on the same repository as
+the parent workspace, and keep track of changes there. External changes to the branch are then synced back to the forked workspace if the appropriate
+CI/CD actions are setup. Once the changes are ready, a PR can be opened to sync back changes to the original workspace.
+
+Workspace forks are really meant to be used with git sync, so make sure to have it properly setup and in particular the CI/CD actions specific to forks should be setup.
+
+### Fork and branch naming
+
+Forks workspace IDs are always prefixed by `wm-forked-`. The associated branch name is always prefixed by `wm-fork/<originalBranch>/` where `<originalBranch>` is the branch that is associated with the original branch was worked from.
+
+For example:
+
+| Workspace ID | Default or selected branch of repo associated with workspace | Fork Workspace ID | Branch associated to fork |
+|--------------|--------------------------------------------------------------|-------------------|---------------------------|
+| windmill     | main                                                         | wm-fork-feature1  | wm-fork/main/feature1     |
+
+This naming convention is what enables Windmill to match branches to workspaces without having to reconfigure it for each branch. It is then important to understand that fork workspace ids and branch names cannot be changed.
+
+
+## Synchronization and merging
+
+### Simple edits with the deployement UI
+
+Once a fork is created, it is automatically setup to deploy to its parent branch. You can deploy any item to the parent branch directly from the UI by clicking it and selecting `Deploy to staging/prod`. Learn more about the [Deployment UI](../../core_concepts/12_staging_prod/index.md).
+
+There is currently no way to update the parent workspace changes back to the fork through the UI, but some features are planned to remediate to this.
+
+### Git sync based merging
+
+When git sync is properly setup, the workspace is synchronized with one of the branches in your repo, and the forks are also synchronized with their own branches. It is then possible your preferred git workflow to merge into or out of these branches to sync, so you can update the fork, or deploy changes into the parent workspace.
+
+## Related features
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Git sync"
+		description="Connect a Windmill workspace to a Git repository to automatically commit and push scripts, flows and apps to the repository on each deploy."
+		href="/docs/advanced/git_sync"
+	/>
+	<DocCard
+		title="Version control"
+		description="Manage changes to scripts workflows, apps and resources using commits & push on remote repositories."
+		href="/docs/advanced/version_control"
+	/>
+</div>
+
+<div className="grid grid-cols-2 gap-6 mb-4">
+	<DocCard
+		title="Deploy to prod"
+		description="Deploy to prod using a staging workspace"
+		href="/docs/advanced/deploy_to_prod"
+	/>
+	<DocCard
+		title="Collaboration in Windmill"
+		description="Collaboration in Windmill is simplified through various features and workflows."
+		href="/docs/core_concepts/collaboration"
+	/>
+</div>
+
+<!-- TODO: Add troubleshooting section -->
+<!-- TODO: Add FAQ section -->
+<!-- TODO: Add API reference for programmatic fork management -->
