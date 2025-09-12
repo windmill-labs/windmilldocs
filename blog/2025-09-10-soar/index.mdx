@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 
 # Windmill for SOAR: From Code to Security Operations in Minutes
 
-When major organizations with 10,000+ employees and 50+ person security operations teams move from platforms like Palo Alto Networks, Tines etc. to Windmill for security orchestration, they weren’t just swapping vendors; they adopted a different way to do SOAR. Instead of rigid, pre-built workflows that struggled with their complex environments, they used a platform that lets them write real code, iterate quickly, and automate the processes they actually run.
+A few major orgs (10k employees with 50+ security teams) have migrated from specialized SOAR product leaders like Palo Alto Networks, Tines etc. to Windmill thanks to the freedom, performance and flexibility they can find in a more generic and more power-user oriented tool like Windmill. In this blog post, we will see how Windmill is leveraged efficiently by those orgs for the SOAR use-case.
 
 This case study shows why teams pick Windmill for SOAR and walks through a live demo we presented to FEMA, including an automated incident response flow.
 
@@ -150,10 +150,11 @@ Let's see how this works in practice. In SOAR terminology, a "playbook" is a pre
 
 Common SOAR playbooks include incident response, threat hunting, vulnerability management, compliance reporting, and user provisioning. Windmill can handle all of these and more, from simple alert triage to complex multi-stage investigations. 
 
-The incident response workflow we demonstrated for FEMA's Office of the Chief Information Security Officer (OCISO) during their SOAR capabilities workshop shows Windmill's approach to security automation, from initial detection through complete remediation.
+After presenting Windmill's approach to security automation to FEMA's Office of the Chief Information Security Officer (OCISO) during their SOAR capabilities workshop, we decided to open-source the materials we had prepared for that event. This blog post shares those insights and the complete workflow demonstration, from initial detection through complete remediation.
 
 > **Try it yourself**: All the scripts, flows, and configurations shown in this example are available in our [GitHub repository](https://github.com/alpetric/windmill-soar). You can deploy the complete SOAR demo to your own Windmill instance and test the workflows with realistic mock services.
 
+<br />
 ![SOAR Incident Response Flow](./flow.png "Complete SOAR workflow from IDS alert to remediation")
 
 ### The Trigger: IDS Alert Webhook
@@ -281,6 +282,10 @@ def main(failed_logins: int, threats: List[str], infected: bool,
 **AI-Powered Incident Summary**
 
 The enrichment outputs are consolidated into a structured prompt for ChatGPT or Claude to generate a concise, human‑readable incident summary. The result includes the key signals, a rationale for the severity, and a prefilled ticket body with recommended next actions.
+
+This is where Windmill's AI Agent flow step comes into play. An AI flow step can use tools (e.g calling VirusTotal, a Threat Intelligence API, etc.) as well as outputs from other steps to generate a structured response based on an output schema provided.
+
+![SOAR Incident Response Flow](./ai_flow_step.png "AI-powered incident summary")
 
 **Automatic Ticket Creation**
 
