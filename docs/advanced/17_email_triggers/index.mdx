@@ -36,15 +36,36 @@ Once you have defined the DNS settings, set the email domain in the [instance se
 
 ## How to use
 
-You will now find the specific email address to use in the webhooks panels for each script and flow.
+There are two kind of email triggers: default runnable emails and custom email triggers.
+
+### Default runnable emails
+
+Each script and flow has a default trigger email address. You will find the specific email address to use in the triggers panels.
 The email address takes the form `<path/hash>+<workspace+path/hash+token base32 encoded>@<email domain>`.
+
+### Custom email triggers
+
+In addition to default runnable emails, you can also create email triggers with a custom address to trigger a script or flow.
+The local part can only contain lowercase letters, numbers, underscores, and dots (no dashes allowed).
+Only workspace admins can create custom email triggers or edit the local part of existing ones.
+
+You have the option to prefix the email address with the workspace id. 
+This is useful for avoiding conflicts when you have a staging and production workspace and you are deploying between the two (see [Deploy to prod](/docs/advanced/deploy_to_prod)).
+The format is `{workspace_id}-{local_part}@yourdomain.com`. 
+On Cloud, the option is always enabled.
 
 ### Email extra arguments
 
-You can pass additional arguments to your script by adding them after the base32 encoded part, separated by a `+` and formatted as query parameters:
+You can pass additional arguments to your script by adding them to the email address, formatted as query parameters.
 
+**For default runnable emails**, add them after the base32 encoded part, separated by a `+`:
 ```
 <path/hash>+<workspace+path/hash+token base32 encoded>+env=prod&debug=true&region=us-west@<email_domain>
+```
+
+**For custom email triggers**, add them before the `@` symbol, separated by a `+`:
+```
+alerts+env=prod&debug=true&region=us-west@yourdomain.com
 ```
 
 These extra arguments are available in your script as `email_extra_args`:
