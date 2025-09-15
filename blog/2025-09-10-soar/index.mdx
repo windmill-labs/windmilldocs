@@ -8,7 +8,7 @@ description: How security teams are migrating from rigid SOAR platforms to Windm
 ---
 
 import DocCard from '@site/src/components/DocCard';
-import aiFlowVideo from './aiflow.mov';
+import aiFlowVideo from './aiflow.mp4';
 import { useEffect } from 'react';
 
 # Windmill for SOAR: From Code to Security Operations in Minutes
@@ -283,7 +283,7 @@ def main(failed_logins: int, threats: List[str], infected: bool,
 
 The enrichment outputs are consolidated into a structured prompt for ChatGPT or Claude to generate a concise, human‑readable incident summary. The result includes the key signals, a rationale for the severity, and a prefilled ticket body with recommended next actions.
 
-This is where Windmill's AI Agent flow step comes into play. An AI flow step can use tools (e.g calling VirusTotal, a Threat Intelligence API, etc.) as well as outputs from other steps to generate a structured response based on an output schema provided.
+This is where Windmill's [AI Agent flow step](/docs/core_concepts/ai_agents) comes into play. An AI flow step can use tools (e.g calling VirusTotal, a Threat Intelligence API, etc.) as well as outputs from other steps to generate a structured response based on an output schema provided.
 
 ![SOAR Incident Response Flow](./ai_flow_step.png "AI-powered incident summary")
 
