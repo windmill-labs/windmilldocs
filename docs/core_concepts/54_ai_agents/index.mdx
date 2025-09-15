@@ -44,11 +44,11 @@ The system prompt that defines the AI's role, behavior, and context. This helps 
 
 #### output_type (text | image)
 Specifies the type of output the AI should generate:
-- `text` - Generate text responses (default)
-- `image` - Generate image outputs (supported by OpenAI, Google AI (Gemini), and OpenRouter)
+- `text` - Generate text responses (default).
+- `image` - Generate image outputs (supported by OpenAI, Google AI (Gemini), and OpenRouter). Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
 
 #### images (optional)
-Allows you to pass images as input to the AI model for analysis, processing, or context. The AI can analyze the image content and respond accordingly.
+Allows you to pass images as input to the AI model for analysis, processing, or context. The AI can analyze the image content and respond accordingly. Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
 
 #### max_completion_tokens (number)
 Controls the maximum number of tokens the AI can generate in its response. This helps manage costs and ensures responses stay within desired length limits.
@@ -68,13 +68,16 @@ The AI Agent step returns an object with two keys:
 
 #### output
 Contains the content of the final response from the AI agent:
-- **When no output schema is specified**: Returns the last message content, which can be a string or an array containing strings and/or S3 images
-- **When an output schema is specified**: Returns the structured output conforming to the defined JSON schema
+- Text output:
+    - **When no output schema is specified**: Returns the last message content, which can be a string or an array containing strings.
+    - **When an output schema is specified**: Returns the structured output conforming to the defined JSON schema.
+- Image output:
+    - Returns the S3 object of the image
 
 This is typically what you'll use in subsequent flow steps when you need the AI's final answer or result.
 
 #### messages
-Contains the complete conversation history, including:
+Only in text output mode, contains the complete conversation history, including:
 - User input messages
 - Assistant intermediate outputs
 - Tool calls made by the AI
