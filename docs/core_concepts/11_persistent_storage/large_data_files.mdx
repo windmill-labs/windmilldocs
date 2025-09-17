@@ -28,7 +28,7 @@ Windmill S3 bucket browser will not work for buckets containing more than 20 fil
 
 ## Windmill integration with Polars and DuckDB for data pipelines
 
-ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
+ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB to facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
 
 <Tabs className="unique-tabs">
 <TabItem value="duckdb-script" label="DuckDB" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
@@ -159,11 +159,12 @@ def main(input_file: S3Object):
 
 :::info
 
-Polars and DuckDB need to be configured to access S3 within the Windmill script. The job will need to accessed the S3 resources, which either needs to be accessible to the user running the job, or the S3 resource needs to be [set as public in the workspace settings](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
+We recommend using the native DuckDB scripts integration, which uses the Windmill S3 proxy with no additional configuration needed.
+When using Polars or DuckDB from Python, the S3 resource details need to be visible to the user, or [set to public in the workspace settings](../38_object_storage_in_windmill/index.mdx#workspace-object-storage).
 
 :::
 
-For more info on how Data pipelines in Windmill, see [Data pipelines](../27_data_pipelines/index.mdx).
+For more info on Data pipelines in Windmill, see [Data pipelines](../27_data_pipelines/index.mdx).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard

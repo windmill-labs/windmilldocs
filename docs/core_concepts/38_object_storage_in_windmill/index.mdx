@@ -35,13 +35,31 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 }
 ```
 
-### Resources permissions
+## Resources permissions
 
-The resource can be set to be public with toggle "S3 resource details can be accessed by all users of this workspace".
+The default rules enforce that users can only access files in S3 in paths that they would have access to in Windmill. For example, user `alice` can access files in the path `u/alice/**/*` and files shared with her in `g/group1/**/*` if she is part of `group1`.
 
-In this case, the [permissions](../16_roles_and_permissions/index.mdx#path) set on the resource will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
+If she has read-only access to `folder1`, and she tries to access the s3 object at path, `f/folder1/file.csv`, she will only be able to read the file, not write or delete it.
 
-When the resource is not set to be public, Windmill guarantees that users who don't have access to the resource won't be able to retrieve any of its details. That being said, access to a specific file inside the bucket will still be possible, and downloading and uploading objects will also be accessible to any workspace user. In short, as long as the user knows the path of the file they want to access, they will be able to read its content. The main difference is that users won't be able to browse the content of the bucket.
+These rules are enforced when accessing data with the Windmill client (e.g in Typescript or Python), or from the Windmill S3 Proxy (used by DuckDB scripts).
+
+![Advanced S3 permissions](./advanced_permissions.jpg 'Advanced S3 permissions')
+
+You can customise these rules however you'd like. The rules are read in order, and the first one to match decides of the access. If no rules match, the access is denied. We support the unix glob syntax (`**`, `*`, `?`, `{a,b}` ...)
+
+You can use interpolated variables like `{username}`, which will be replaced by the current user's username. A rule might get transformed to multiple ones, for example, for a user in group1 and group2, the rule `g/{group}/**/*` will expand to `['g/group1/**/*', 'g/group2/**/*']`.
+
+Admins can always access everything.
+
+All interactions with the S3 bucket are proxied through Windmill's backend. We guarantee that users who don't have access to the resource won't be able to retrieve any of its details (access key and secret key), unless the lecacy public mode is enabled (see below).
+
+:::note Legacy
+
+The resource can be set to be public by disabling advanced permissions which will show the "S3 resource details can be accessed by all users of this workspace" toggle.
+
+In this case, permissions will be ignored when users interact with the S3 bucket via Windmill. Note that when the resource is public, the users might be able to access all of its details (including access keys and secrets) via some Windmill endpoints.
+
+:::
 
 ### S3 input and output UI
 
@@ -65,7 +83,7 @@ export async function main() {
 }
 ```
 
-![S3 list of files download](../19_rich_display_rendering/s3_array.png "S3 list of files download")
+![S3 list of files download](../19_rich_display_rendering/s3_array.png 'S3 list of files download')
 
 :::warning
 
@@ -99,7 +117,6 @@ import * as wmill from 'windmill-client';
 import { S3Object } from 'windmill-client';
 
 export async function main() {
-
 	const example_file: S3Object = {
 		s3: 'path/to/file'
 	};
@@ -126,7 +143,6 @@ import * as wmill from 'npm:windmill-client@1.253.7';
 import { S3Object } from 'npm:windmill-client@1.253.7';
 
 export async function main() {
-
 	const example_file: S3Object = {
 		s3: 'path/to/file'
 	};
@@ -185,9 +201,7 @@ import * as wmill from 'windmill-client';
 import { S3Object } from 'windmill-client';
 
 export async function main(input_file: S3Object) {
-
-// rest of the code
-
+	// rest of the code
 }
 ```
 
@@ -200,9 +214,7 @@ import * as wmill from 'npm:windmill-client@1.253.7';
 import { S3Object } from 'npm:windmill-client@1.253.7';
 
 export async function main(input_file: S3Object) {
-
-// rest of the code
-
+	// rest of the code
 }
 ```
 
@@ -224,23 +236,23 @@ def main(input_file: S3Object):
 
 The [auto-generated UI](../6_auto_generated_uis/index.mdx) will display a file uploader:
 
-![S3 file uploader](./s3_file_input.png "S3 file uploader")
+![S3 file uploader](./s3_file_input.png 'S3 file uploader')
 
 or you can fill path manually if you enable 'Raw S3 object input':
 
-![S3 Raw Object Input](./s3_raw_object_input.png "S3 Raw Object Input")
+![S3 Raw Object Input](./s3_raw_object_input.png 'S3 Raw Object Input')
 
 and access bucket explorer if [resource permissions](#resources-permissions) allow it:
 
-![S3 Bucket Explorer](./s3_bucket_explorer.png "S3 Bucket Explorer")
+![S3 Bucket Explorer](./s3_bucket_explorer.png 'S3 Bucket Explorer')
 
 That's also the recommended way to [pass](../../flows/16_architecture.mdx) S3 files as input to steps within [flows](../../flows/1_flow_editor.mdx).
 
-![S3 file input in flow](./s3_file_input_in_flow.png "S3 file input in flow")
+![S3 file input in flow](./s3_file_input_in_flow.png 'S3 file input in flow')
 
-![S3 file input in flow 1](./s3_file_input_in_flow_1.png "S3 file input in flow 1")
+![S3 file input in flow 1](./s3_file_input_in_flow_1.png 'S3 file input in flow 1')
 
-![S3 file input in flow 2](./s3_file_input_in_flow_2.png "S3 file input in flow 2")
+![S3 file input in flow 2](./s3_file_input_in_flow_2.png 'S3 file input in flow 2')
 
 ### Create a file from S3 or object storage within a script
 
@@ -319,23 +331,23 @@ From the workspace settings, in tab "S3 Storage", just click on "Add secondary s
 Then from script, you can specify the secondary storage with an object with properties `s3` (path to the file) and `storage` (name of the secondary storage).
 
 ```ts
-const file = {s3: 'folder/hello.txt', storage: 'storage_1'}
+const file = { s3: 'folder/hello.txt', storage: 'storage_1' };
 ```
 
-Here is an example of the [Create](#create-a-file-from-s3-or-object-storage-within-a-script) then [Read](#read-a-file-from-s3-or-object-storage-within-a-script)  a file from S3 within a script with secondary storage named "storage_1":
+Here is an example of the [Create](#create-a-file-from-s3-or-object-storage-within-a-script) then [Read](#read-a-file-from-s3-or-object-storage-within-a-script) a file from S3 within a script with secondary storage named "storage_1":
 
 ```ts
 import * as wmill from 'windmill-client';
 
 export async function main() {
-  await wmill.writeS3File({ s3: "data.csv", storage: "storage_1" }, "fooo\n1")
+	await wmill.writeS3File({ s3: 'data.csv', storage: 'storage_1' }, 'fooo\n1');
 
-  const res = await wmill.loadS3File({ s3: "data.csv", storage: "storage_1" })
+	const res = await wmill.loadS3File({ s3: 'data.csv', storage: 'storage_1' });
 
-  const text = new TextDecoder().decode(res)
+	const text = new TextDecoder().decode(res);
 
-  console.log(text)
-  return { s3: "data.csv", storage: "storage_1" }
+	console.log(text);
+	return { s3: 'data.csv', storage: 'storage_1' };
 }
 ```
 
@@ -351,7 +363,7 @@ export async function main() {
 
 ### Windmill integration with Polars and DuckDB for data pipelines
 
-ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB for facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
+ETLs can be easily implemented in Windmill using its integration with Polars and DuckDB to facilitate working with tabular data. In this case, you don't need to manually interact with the S3 bucket, Polars/DuckDB does it natively and in a efficient way. Reading and Writing datasets to S3 can be done seamlessly.
 
 Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) section.
 
@@ -367,6 +379,7 @@ Learn more about it in the [Data pipelines](../27_data_pipelines/index.mdx) sect
 
 For security reasons, dynamic S3 objects are not accessible by default in public apps when users aren't logged in.
 To make them publicly accessible, you need to sign S3 objects using Windmill's built-in helpers:
+
 - TypeScript: `wmill.signS3Object()` (single) / `wmill.signS3Objects()` (multiple)
 - Python: `wmill.sign_s3_object()` (single) / `wmill.sign_s3_objects()` (multiple)
 
@@ -382,7 +395,7 @@ Under [Enterprise Edition](/pricing), instance object storage offers advanced fe
 
 This can be configured from the [instance settings](../../advanced/18_instance_settings/index.mdx#instance-object-storage), with configuration options for S3, Azure Blob, Google Cloud Storage, or AWS OIDC.
 
-![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png "S3/Azure for Python/Go cache & large logs")
+![S3/Azure for Python/Go cache & large logs](../../core_concepts/20_jobs/s3_azure_cache.png 'S3/Azure for Python/Go cache & large logs')
 
 ### Large job logs management
 
@@ -423,7 +436,7 @@ The first time a dependency is seen by a worker, if it is not cached locally, th
 
 [Logs are stored in S3](../36_service_logs/index.mdx) if S3 instance object storage is configured. This option provides more scalable storage and is ideal for larger-scale deployments or where long-term log retention is important.
 
-![Service logs](../36_service_logs/service_logs.png "Service logs")
+![Service logs](../36_service_logs/service_logs.png 'Service logs')
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
