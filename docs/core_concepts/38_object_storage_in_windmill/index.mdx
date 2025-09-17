@@ -37,9 +37,16 @@ S3 files in Windmill are just pointers to the S3 object using its key. As such, 
 
 ## Resources permissions
 
-The default rules enforce that users can only access files in S3 in paths that they would have access to in Windmill. For example, user `alice` can access files in the path `u/alice/**/*` and files shared with her in `g/group1/**/*` if she is part of `group1`.
+:::info
 
-If she has read-only access to `folder1`, and she tries to access the s3 object at path, `f/folder1/file.csv`, she will only be able to read the file, not write or delete it.
+Advanced S3 permissions are only available on [Enterprise Edition](/pricing). Without advanced permissions, all users have R/W to all files on an S3 workspace storage, but they cannot list them
+
+:::
+
+When you configure a workspace storage, you can enable advanced permissions to finely control which users can access which files in the bucket.
+The default rules enforce that users can only access files in S3 in paths that they would have access to in Windmill.
+
+For example, user `alice` can access files in the path `u/alice/**/*` and files shared with her in `g/group1/**/*` if she is part of `group1`. If she has read-only access to `folder1`, and she tries to access the s3 object at path, `f/folder1/file.csv`, she will only be able to read the file, not write or delete it.
 
 These rules are enforced when accessing data with the Windmill client (e.g in Typescript or Python), or from the Windmill S3 Proxy (used by DuckDB scripts).
 
