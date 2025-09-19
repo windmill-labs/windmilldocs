@@ -1,4 +1,4 @@
-# AI Agents
+# AI agents
 
 AI Agents steps allow you to integrate AI agents directly into your Windmill flows. They provide an interface to connect with various AI providers and models, allowing you to process data, generate content, execute actions (Windmill scripts), and make decisions as part of your automated workflows.
 
@@ -6,15 +6,15 @@ AI Agents steps allow you to integrate AI agents directly into your Windmill flo
 
 ## Configuration
 
-### Provider Selection
+### Provider selection
 
 Choose from supported AI providers including OpenAI, Azure OpenAI, Anthropic, Mistral, DeepSeek, Google AI (Gemini), Groq, OpenRouter, Together AI, or Custom AI endpoints.
 
-### Resource Configuration
+### Resource configuration
 
 Select or create an AI resource that contains your API credentials and endpoint configuration. [Resources](../3_resources_and_types/index.mdx) allow you to securely store and reuse AI provider credentials across multiple flows.
 
-### Model Selection
+### Model selection
 
 Choose the specific model you want to use from your selected provider. Available models depend on your chosen provider and resource configuration.
 
@@ -30,9 +30,9 @@ Each tool must have a unique name within the AI agent step and contain only lett
 
 When tools are configured, the AI agent can decide when and how to use them based on the user's request, combining text generation with practical actions.
 
-## Input Parameters
+## Input parameters
 
-### Required Parameters
+### Required parameters
 
 #### user_message (string)
 The main input message or prompt that will be sent to the AI model. This can include static text, dynamic content from previous flow steps, or templated strings with variable substitution.
@@ -40,7 +40,7 @@ The main input message or prompt that will be sent to the AI model. This can inc
 #### system_prompt (string) 
 The system prompt that defines the AI's role, behavior, and context. This helps guide the model's responses and ensures consistent behavior across interactions.
 
-### Optional Parameters
+### Optional parameters
 
 #### output_type (text | image)
 Specifies the type of output the AI should generate:
@@ -89,10 +89,10 @@ The `messages` array provides full visibility into the AI's reasoning process an
 
 ![AI Agent Debugging](./ai_agent_debugging.png 'AI Agent Debugging')
 
-### Flow-Level Visualization
+### Flow-level visualization
 Tool calls are displayed directly on the flow graph as separate nodes connected to the AI Agent step. You can click on these tool call nodes to view detailed execution information, including inputs, outputs, and execution logs.
 
-### Detailed Logging
+### Detailed logging
 In the logging panel of the AI Agent step, you can see the comprehensive logging:
 - All input parameters passed to the AI agent
 - Tool calls made by the AI, including which tools were selected and their inputs
