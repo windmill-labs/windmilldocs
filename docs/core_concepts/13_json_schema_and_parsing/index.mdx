@@ -70,6 +70,7 @@ In [Python](../../getting_started/0_scripts_quickstart/2_python_quickstart/index
 | `datetime`                       | `str, format: date-time`         |
 | `_`                              | `any`                            |
 | [DynSelect_foo](#dynamic-select) | `dynselect-<name>`               |
+| [DynMultiselect_foo](#dynamic-multiselect) | `dynmultiselect-<name>` |
 
 In [Deno, Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstart/index.mdx), [REST](../../getting_started/0_scripts_quickstart/6_rest_grapqhql_quickstart/index.mdx):
 
@@ -85,6 +86,7 @@ In [Deno, Bun](../../getting_started/0_scripts_quickstart/1_typescript_quickstar
 | `("foo" \| "bar")[]`             | `enum[]`                      |
 | [oneOf](#oneof)                  | `object`                      |
 | [DynSelect_foo](#dynamic-select) | `dynselect-<name>`            |
+| [DynMultiselect_foo](#dynamic-multiselect) | `dynmultiselect-<name>` |
 
 However in TypeScript there also some special types that are specific to Windmill.
 They are as follows:
@@ -235,7 +237,7 @@ wmill script run u/user/path -d '{"example_oneof":{"label":"Option 2","attribute
 
 ## Dynamic select
 
-Dynamic select is a helper function that allows you to create a select field with dynamic options that recompute based on other input values. It's available in both [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx), but with different implementation requirements.
+Dynamic select is a helper function that allows you to create a select field with dynamic options that recompute based on other input values. It's available in both [scripts](../../script_editor/index.mdx) and [flows](../../flows/1_flow_editor.mdx), but with different implementation requirements. For flows, dynamic select and multiselect can also be used for flow steps that are scripts.
 
 ### Dynamic select in scripts
 
@@ -381,6 +383,141 @@ You can implement custom filtering and sorting logic within your function. In th
 	controls
 		src="/videos/dynamic_select_flow.mp4"
 />
+
+## Dynamic multiselect
+
+Dynamic multiselect works exactly like dynamic select but renders a multiselect component that allows selecting multiple values from the dynamic options. The function implementation is identical to dynamic select, but it returns an array of selected values instead of a single value.
+
+### Dynamic multiselect in scripts
+
+For dynamic multiselect in scripts, you must export both the string array type as `DynMultiselect_<name>` and the function as `<name>`. The function implementation is identical to dynamic select, but the type is an array of strings:
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+export type DynMultiselect_categories = string[];
+
+export async function categories(x: string, y: number, text: string) {
+	if (text === '42') {
+		return [{ value: '42', label: 'The answer to the universe' }];
+	}
+	if (x === 'bar') {
+		return [{ value: 'barbar', label: 'barbarbar' }];
+	}
+	return [
+		{ value: '1', label: 'Foo' + x + y },
+		{ value: '2', label: 'Bar' },
+		{ value: '3', label: 'Foobar' }
+	];
+}
+
+export async function main(y: number, x: string, categories: DynMultiselect_categories) {
+	console.log(categories); // Array of selected values
+	return categories;
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+DynMultiselect_categories = list[str]
+
+def categories(x: str, y: int, text):
+  if text == "42":
+    return [{"value": "42", "label": "The answer to the universe"}]
+  if x == "bar":
+    return [{"value": "barbar", "label": "barbarbar"}]
+  return [
+    { "value": '1', "label": 'Foo' + x + str(y) },
+    { "value": '2', "label": 'Bar' },
+    { "value": '3', "label": 'Foobar' }
+  ]
+
+def main(x: str, y: int, categories: DynMultiselect_categories):
+	print(categories)  # Array of selected values
+	return categories
+```
+
+</TabItem>
+</Tabs>
+
+### Dynamic multiselect in flows
+
+In flows, dynamic multiselect works the same as dynamic select - it's only available for flow input steps. The function name must exactly match the name of the flow input field. The function implementation is identical to dynamic select, but the input field will render as a multiselect component that returns an array of selected values.
+
+<Tabs className="unique-tabs">
+<TabItem value="typescript" label="TypeScript" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```ts
+// Function for flow input field named "categories"
+async function categories(x: string, y: number, text: string) {
+	if (text === '42') {
+		return [{ value: '42', label: 'The answer to the universe' }];
+	}
+	if (x === 'bar') {
+		return [{ value: 'barbar', label: 'barbarbar' }];
+	}
+	return [
+		{ value: '1', label: 'Foo' + x + y },
+		{ value: '2', label: 'Bar' },
+		{ value: '3', label: 'Foobar' }
+	];
+}
+
+// If you have another dynamic multiselect input named "tags"
+async function tags(department: string) {
+	if (department === 'engineering') {
+		return [
+			{ value: 'frontend', label: 'Frontend' },
+			{ value: 'backend', label: 'Backend' },
+			{ value: 'devops', label: 'DevOps' }
+		];
+	}
+	return [
+		{ value: 'general', label: 'General' }
+	];
+}
+```
+
+</TabItem>
+<TabItem value="python" label="Python" attributes={{className: "text-xs p-4 !mt-0 !ml-0"}}>
+
+```python
+# Function for flow input field named "categories"
+def categories(x: str, y: int, text):
+  if text == "42":
+    return [{"value": "42", "label": "The answer to the universe"}]
+  if x == "bar":
+    return [{"value": "barbar", "label": "barbarbar"}]
+  return [
+    { "value": '1', "label": 'Foo' + x + str(y) },
+    { "value": '2', "label": 'Bar' },
+    { "value": '3', "label": 'Foobar' }
+  ]
+
+# If you have another dynamic multiselect input named "tags"
+def tags(department: str):
+  if department == "engineering":
+    return [
+      {"value": "frontend", "label": "Frontend"},
+      {"value": "backend", "label": "Backend"},
+      {"value": "devops", "label": "DevOps"}
+    ]
+  return [
+    {"value": "general", "label": "General"}
+  ]
+```
+
+</TabItem>
+</Tabs>
+
+### How dynamic multiselect works
+
+Dynamic multiselect works identically to dynamic select - the options recompute dynamically based on other input arguments. The only difference is that it renders a multiselect component allowing multiple value selection and returns an array of selected values instead of a single value.
+
+You can implement the same custom filtering and sorting logic within your function. When the available options change, any previously selected values that are no longer available will be automatically filtered out to maintain data consistency.
 
 ## Backend schema validation
 
