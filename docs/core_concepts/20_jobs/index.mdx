@@ -129,10 +129,12 @@ In python and typescript, and similarly for all languages, this is constructed b
 
 ### Result streaming
 
-In Python and Typescript (bun, nativets, deno), it's possible to stream back the result as a text stream (any `AsyncGenerator<string>` or `iter` compatible object) as a result OR to stream text before the result is fully returned.
+In Python and TypeScript (bun, nativets, deno), it's possible to stream back the result as a text stream (any `AsyncGenerator<string>` or `iter` compatible object) as a result OR to stream text before the result is fully returned.
 If not returning the stream directly, we introduce 2 new functions on our SDK: `wmill.streamResult(stream)` (TS) and `wmill.stream_result(stream)` (Python), to do it prior to the return.
 
 The stream only exists while the job is in the queue. Afterwards, the full stream becomes the result (or added as the field "wm_stream" if there is already a result).
+
+You can run a job and get an SSE stream of the result using the [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks).
 
 #### Returning a stream directly
 
@@ -394,6 +396,8 @@ with only_result = true, the updates are much lighter.
 - The `update` event contains job status, logs, result stream, and progress information.
 - The `error` event contains a string error message.
 - The `notfound`, `timeout`, and `ping` events are signals with no additional data.
+
+## Stream 
 
 
 ## High priority jobs
