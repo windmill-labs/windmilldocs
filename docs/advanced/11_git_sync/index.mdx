@@ -4,7 +4,7 @@ import DocCard from '@site/src/components/DocCard';
 
 From the workspace settings, you can set a [git_repository](../../integrations/git_repository.mdx) resource on which the workspace will automatically commit and push scripts, flows and apps to the repository on each [deploy](../../core_concepts/0_draft_and_deploy/index.mdx).
 
-You can use this feature to [Deploy to prod using a git workflow](#git-sync---item-mode-deploy-to-prod-using-a-git-workflow).
+You can use this feature to [Deploy to prod using a git workflow](#git-sync---promotion-mode-deploy-to-prod-using-a-git-workflow).
 
 <div className="grid grid-cols-2 gap-6 mb-4">
 	<DocCard
@@ -199,7 +199,7 @@ When promotion mode is enabled, you can choose to:
 
 You can configure promotion-specific sync behavior using `promotionOverrides` in your [`wmill.yaml`](../3_cli/sync.mdx#wmillyaml) file. This allows different filter settings when promoting changes to specific branches.
 
-This promotion mode is used to [deploy to a prod workspace using a git workflow](#git-sync---item-mode-deploy-to-prod-using-a-git-workflow).
+This promotion mode is used to [deploy to a prod workspace using a git workflow](#git-sync---promotion-mode-deploy-to-prod-using-a-git-workflow).
 
 ## Repository operations
 
@@ -228,7 +228,7 @@ The frontend will detect existing `wmill.yaml` files and merge settings appropri
 
 You can exclude specific types per repository, overriding the global workspace filters.
 
-## Git sync - Item mode: Deploy to prod using a git workflow
+## Git sync - Promotion mode: Deploy to prod using a git workflow
 
 This feature can be used alongside GiHub Actions to adopt a robust development process for your Windmill scripts, flows and apps,
 with for example a Staging Workspace making automatically PRs on a repo that pushes to a Prod workspace upon merge.
