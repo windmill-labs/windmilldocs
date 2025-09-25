@@ -28,9 +28,7 @@ AI Agents can be equipped with tools that extend their capabilities beyond text 
 
 Each tool must have a unique name within the AI agent step and contain only letters, numbers, and underscores. It should be descriptive of the tool's function to help the AI understand when to use them.
 
-Conceptually, tools here are equivalent to tools exposed by an MCP server. The AI agent acts as the MCP client: it selects a tool by name and issues a tool call with JSON arguments that conform to the tool’s input schema; Windmill executes the underlying `script` and returns a JSON result. The result is surfaced back to the model as a tool response message and is included in `messages`.
-
-When tools are configured, the AI agent can decide when and how to use them based on the user's request—invoking tools the same way an MCP client invokes MCP tools—combining text generation with practical actions.
+When tools are configured, the AI agent can decide when and how to use them based on the user's request. It selects the most appropriate tool by name, and issues a tool call with JSON arguments that conform to the tool’s input schema. Windmill executes the underlying `script` and returns a JSON result, which is surfaced back to the model as a tool response message and is included in `messages`.
 
 ## Input parameters
 
