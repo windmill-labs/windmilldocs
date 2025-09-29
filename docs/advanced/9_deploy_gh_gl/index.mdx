@@ -35,12 +35,12 @@ You can also trigger a webhook and push the changes to Windmill using [this Wind
     - It ensures that any automatically created metadata files are wrote-back (in case you pushed a script without its metadata for instance).
     - It ensures that any modification done in the UI is kept in sync with the git repository and guarantees a bi-sync between the repo and the UI.
 
-3. [Git sync](../11_git_sync/index.mdx) (Item mode): Windmill automatically creates a branch specific to that item (and whose name is derived from that item) that targets the branch set in the git sync settings, upon any change to any items, be it from the UI or from git ([Cloud and Enterprise Self-Hosted](/pricing)). This should be coupled with a GitHub action that automatically create a PR when a branch is created. This PR can then be reviewed and merged. Upon being merged to the prod branch, a GitHub action as described in 1. would then deploy it to the prod branch.
+3. [Git sync](../11_git_sync/index.mdx) (Promotion mode): Windmill automatically creates a branch specific to that item (and whose name is derived from that item) that targets the branch set in the git sync settings, upon any change to any items, be it from the UI or from git ([Cloud and Enterprise Self-Hosted](/pricing)). This should be coupled with a GitHub action that automatically create a PR when a branch is created. This PR can then be reviewed and merged. Upon being merged to the prod branch, a GitHub action as described in 1. would then deploy it to the prod branch.
 
 Once everything is set up, the process is as follows:
 
 - Users iterate and make their changes in the "staging" Windmill workspace UI or in the git staging branch directly.
-- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the GitHub action that deploys to staging upon any change), Windmill automatically sync it back to the repo on the "staging" branch (Git sync - Workspace mode) and also create a branch that targets prod and keep it in sync with any new changes (Git sync - Item mode)
+- Every time a Windmill App, Flow or Script is deployed to that workspace (via Windmill's UI or through the GitHub action that deploys to staging upon any change), Windmill automatically sync it back to the repo on the "staging" branch (Git sync - Workspace mode) and also create a branch that targets prod and keep it in sync with any new changes (Git sync - Promotion mode)
 - On every new branch created, PRs are automatically created via a GitHub Action. Approved GitHub users can review and merge those PRs.
 - Every time a PR is merged, another GitHub Action automatically deploys the change to a "production" Windmill workspace.
 
@@ -335,7 +335,7 @@ Alternatively, you can create separate workspaces for each team. This approach:
 
 ### Managing changes and pull requests
 
-When using the [per item change mode](../11_git_sync/index.mdx#git-sync---item-mode-deploy-to-prod-using-a-git-workflow) in Git sync:
+When using the [promotion mode](../11_git_sync/index.mdx#git-sync---promotion-mode-deploy-to-prod-using-a-git-workflow) in Git sync:
 - Changes to the same item will be grouped into a single PR.
 - Different items will create separate PRs.
 - You can use the [group per folder](../11_git_sync/index.mdx#group-deployed-objects-by-folder) option to group changes by folder instead of by item.
