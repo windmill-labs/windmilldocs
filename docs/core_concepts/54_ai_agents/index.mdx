@@ -2,7 +2,13 @@
 
 AI Agents steps allow you to integrate AI agents directly into your Windmill [flows](../../flows/1_flow_editor.mdx). They provide an interface to connect with various AI providers and models, allowing you to process data, generate content, execute actions (Windmill [scripts](../../script_editor/index.mdx)), and make decisions as part of your automated workflows.
 
-![AI Agent Overview](./ai_agent_overview.png 'AI Agent Overview')
+<video
+	className="border-2 rounded-lg object-cover w-full h-full dark:border-gray-800"
+	autoPlay
+	loop
+	src="/videos/ai_agent_step.mp4"
+/>
+
 
 ## Configuration
 
@@ -47,6 +53,60 @@ Specifies the type of output the AI should generate:
 - `text` - Generate text responses (default).
 - `image` - Generate image outputs (supported by OpenAI, Google AI (Gemini), and OpenRouter). Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
 
+#### streaming (optional)
+
+Whether to stream the progress of the AI agent.
+The stream will contain json payloads separated by newlines. The payloads can be of the following types:
+
+```json
+{
+	"type": "token_delta", // sent everytime the AI generates a new token
+	"content": "string",
+}
+```
+
+```json
+{
+	"type": "tool_call", // sent when the tool call is started
+	"call_id": "string",
+    "function_name": "string",
+    "function_arguments": "string",
+}
+```
+
+```json
+{
+	"type": "tool_call_arguments", // sent all arguments have been received
+	"call_id": "string",
+    "function_name": "string",
+    "function_arguments": "string",
+}
+```
+
+```json
+{
+	"type": "tool_execution", // sent when the tool job is started
+	"call_id": "string",
+    "function_name": "string",
+}
+```
+
+```json
+{
+	"type": "tool_result", // sent when the tool job is completed
+	"call_id": "string",
+    "function_name": "string",
+    "result": "string",
+    "success": true, // whether the tool job completed successfully
+}
+```
+
+The final result of the step will contain an additional field `wm_stream` with the complete stream.
+
+You can use the [SSE stream webhooks](../4_webhooks/index.mdx#sse-stream-webhooks) to get the stream. 
+The `new_result_stream` field of an SSE event can contain multiple payloads at a time, make sure to split on line breaks. 
+Only complete payloads are streamed, you do not need to handle partial JSON.
+
 #### user_images (optional)
 Allows you to pass images as input to the AI model for analysis, processing, or context. The AI can analyze the image content and respond accordingly. Requires an [S3 object storage](../38_object_storage_in_windmill/index.mdx) to be configured at the workspace level.
 
@@ -84,6 +144,10 @@ Only in text output mode, contains the complete conversation history, including:
 - Tool execution results
 
 The `messages` array provides full visibility into the AI's reasoning process and tool usage, which can be useful for debugging, logging, or understanding how the AI reached its conclusion.
+
+#### wm_stream (optional)
+
+Only included in streaming mode, contains the complete stream.
 
 ## Debugging
 
