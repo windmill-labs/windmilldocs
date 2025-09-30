@@ -181,7 +181,7 @@ As we picked `PowerShell` for this example, Windmill provided some PowerShell
 boilerplate. Let's take a look:
 
 ```powershell
-param($Msg, $Dflt = "default value", [int]$Nb = 3)
+param($Msg, [string[]]$Names, [PSCustomObject]$Obj, $Dflt = "default value", [int]$Nb = 3)
 
 # Import-Module MyModule
 
@@ -190,7 +190,8 @@ Write-Output "Hello $Msg"
 ```
 
 In PowerShell, the arguments are inferred from the param instruction. It has to be first in the script.
-Default arguments can be specified using the syntax above: `$argument_name = "Its default value"`.
+Arguments can be of type `string`, `int`/`long`/`double`/`decimal`/`single`, `PSCustomObject` (parsed from JSON), `datetime`, `bool` and array of these types.
+Default arguments can be specified using the following syntax: `$argument_name = "Its default value"`.
 
 The last line of the output, here `Write-Output "Hello $Msg"`, is the return value, which might be useful if the script is used in a [flow](../../../flows/1_flow_editor.mdx) or [app](../../../apps/0_app_editor/index.mdx) to pass its result on.
 
