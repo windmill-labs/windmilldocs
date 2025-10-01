@@ -100,6 +100,7 @@ wmill sync pull [options]
 | `--include-triggers`   | None          | Include syncing triggers (HTTP routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT).                                                                                                                    |
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                                  |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                                    |
+| `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                                             |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Overrides `wmill.yaml` includes. Patterns can include `*` (any string until '/') and `**` (any string). |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account. Overrides `wmill.yaml` excludes.                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy.                  |
@@ -134,6 +135,7 @@ wmill sync push [options]
 | `--include-triggers`   | None          | Include syncing triggers (HTTP routes, WebSocket, Postgres, Kafka, NATS, SQS, GCP Pub/Sub, MQTT).                                                                                                   |
 | `--include-settings`   | None          | Include syncing workspace settings.                                                                                                                                                                 |
 | `--include-key`        | None          | Include workspace encryption key.                                                                                                                                                                   |
+| `--skip-branch-validation` | None      | Skip git branch validation and prompts. Useful for temporary feature branches that don't need to be added to wmill.yaml.                                                                            |
 | `-i, --includes`       | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Patterns can include `*` (any string until '/') and `**` (any string).                 |
 | `-e, --excludes`       | `<patterns>`  | Comma-separated patterns to specify which files to NOT take into account.                                                                                                                           |
 | `--extra-includes`     | `<patterns>`  | Comma-separated patterns to specify which files to take into account (among files compatible with Windmill). Useful to still take `wmill.yaml` into account and act as a second pattern to satisfy. |
@@ -174,6 +176,9 @@ includeUsers: false
 includeGroups: false
 includeSettings: false
 includeKey: false
+
+# Git branch validation
+skipBranchValidation: false  # Skip validation for feature branches
 ```
 
 ### Git branch-specific configuration
@@ -278,7 +283,8 @@ export interface SyncOptions {
   includeGroups?: boolean;
   includeSettings?: boolean;
   includeKey?: boolean;
-  
+  skipBranchValidation?: boolean;
+
   // Path and message options
   message?: string;
   includes?: string[];

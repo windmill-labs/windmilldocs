@@ -125,6 +125,14 @@ e.g.:
 ```powershell
 Import-Module -Name MyModule
 ```
+
+### Private repository (Azure artifacts feed)
+
+To setup an Azure artifacts feed as a private PowerShell repository, follow the [Azure documentation](https://learn.microsoft.com/en-us/azure/devops/artifacts/tutorials/private-powershell-library).
+
+To configure the private repository in Windmill, set the Azure Artifacts url and Personal Access Token in the [Instance settings](../18_instance_settings/index.mdx#registries).
+Once configured, Windmill will check if imported modules are in the private repository (and not in cache) and will install them from there. It will fallback to the public repositories (e.g. PowerShell Gallery) if the module is not found.
+
 ## Imports in Nu
 
 For [Nu](../../getting_started/0_scripts_quickstart/4_bash_quickstart/index.mdx#nu) you can import stdlib.
